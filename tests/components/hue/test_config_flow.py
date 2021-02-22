@@ -53,14 +53,14 @@ async def test_flow_works.opp):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         return_value=[mock_bridge],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"id": mock_bridge.id}
     )
 
@@ -74,7 +74,7 @@ async def test_flow_works.opp):
     )
     assert flow["context"]["unique_id"] == "aabbccddeeff"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -100,14 +100,14 @@ async def test_manual_flow_works.opp, aioclient_mock):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         return_value=[mock_bridge],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"id": "manual"}
     )
 
@@ -122,7 +122,7 @@ async def test_manual_flow_works.opp, aioclient_mock):
         "aiohue.Bridge",
         return_value=bridge,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "2.2.2.2"}
         )
 
@@ -132,7 +132,7 @@ async def test_manual_flow_works.opp, aioclient_mock):
     with patch("openpeerpower.components.hue.config_flow.authenticate_bridge"), patch(
         "openpeerpower.components.hue.async_unload_entry", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["type"] == "create_entry"
     assert result["title"] == "Mock Bridge"
@@ -156,7 +156,7 @@ async def test_manual_flow_bridge_exist.opp, aioclient_mock):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         return_value=[],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
@@ -171,7 +171,7 @@ async def test_manual_flow_bridge_exist.opp, aioclient_mock):
         "aiohue.Bridge",
         return_value=bridge,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"host": "2.2.2.2"}
         )
 
@@ -183,7 +183,7 @@ async def test_manual_flow_no_discovered_bridges.opp, aioclient_mock):
     """Test config flow discovers no bridges."""
     aioclient_mock.get(URL_NUPNP, json=[])
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -197,7 +197,7 @@ async def test_flow_all_discovered_bridges_exist.opp, aioclient_mock):
         domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
     )
 
@@ -220,7 +220,7 @@ async def test_flow_bridges_discovered.opp, aioclient_mock):
         ],
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -247,7 +247,7 @@ async def test_flow_two_bridges_discovered_one_new.opp, aioclient_mock):
         domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
     )
 
@@ -265,7 +265,7 @@ async def test_flow_timeout_discovery.opp):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         side_effect=asyncio.TimeoutError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
@@ -282,15 +282,15 @@ async def test_flow_link_timeout.opp):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         return_value=[mock_bridge],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"id": mock_bridge.id}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -307,15 +307,15 @@ async def test_flow_link_unknown_error(opp):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         return_value=[mock_bridge],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"id": mock_bridge.id}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -333,15 +333,15 @@ async def test_flow_link_button_not_pressed.opp):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         return_value=[mock_bridge],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"id": mock_bridge.id}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -359,15 +359,15 @@ async def test_flow_link_unknown_host.opp):
         "openpeerpower.components.hue.config_flow.discover_nupnp",
         return_value=[mock_bridge],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": "user"}
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"id": mock_bridge.id}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -377,7 +377,7 @@ async def test_flow_link_unknown_host.opp):
 
 async def test_bridge_ssdp.opp):
     """Test a bridge being discovered."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -393,7 +393,7 @@ async def test_bridge_ssdp.opp):
 
 async def test_bridge_ssdp_discover_other_bridge.opp):
     """Test that discovery ignores other bridges."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={ssdp.ATTR_UPNP_MANUFACTURER_URL: "http://www.notphilips.com"},
@@ -405,7 +405,7 @@ async def test_bridge_ssdp_discover_other_bridge.opp):
 
 async def test_bridge_ssdp_emulated_hue.opp):
     """Test if discovery info is from an emulated hue instance."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -422,7 +422,7 @@ async def test_bridge_ssdp_emulated_hue.opp):
 
 async def test_bridge_ssdp_missing_location.opp):
     """Test if discovery info is missing a location attribute."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -437,7 +437,7 @@ async def test_bridge_ssdp_missing_location.opp):
 
 async def test_bridge_ssdp_missing_serial.opp):
     """Test if discovery info is a serial attribute."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -452,7 +452,7 @@ async def test_bridge_ssdp_missing_serial.opp):
 
 async def test_bridge_ssdp_espalexa.opp):
     """Test if discovery info is from an Espalexa based device."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -473,7 +473,7 @@ async def test_bridge_ssdp_already_configured.opp):
         domain="hue", unique_id="1234", data={"host": "0.0.0.0"}
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -489,7 +489,7 @@ async def test_bridge_ssdp_already_configured.opp):
 
 async def test_import_with_no_config(opp):
     """Test importing a host without an existing config file."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "import"},
         data={"host": "0.0.0.0"},
@@ -529,7 +529,7 @@ async def test_creating_entry_removes_entries_for_same_host_or_bridge.opp):
         "aiohue.Bridge",
         return_value=bridge,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             "hue", data={"host": "2.2.2.2"}, context={"source": "import"}
         )
 
@@ -539,7 +539,7 @@ async def test_creating_entry_removes_entries_for_same_host_or_bridge.opp):
     with patch("openpeerpower.components.hue.config_flow.authenticate_bridge"), patch(
         "openpeerpower.components.hue.async_unload_entry", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["type"] == "create_entry"
     assert result["title"] == "Mock Bridge"
@@ -558,7 +558,7 @@ async def test_bridge_homekit.opp, aioclient_mock):
     """Test a bridge being discovered via HomeKit."""
     aioclient_mock.get(URL_NUPNP, json=[{"internalipaddress": "1.2.3.4", "id": "bla"}])
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "homekit"},
         data={
@@ -579,7 +579,7 @@ async def test_bridge_import_already_configured.opp):
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "import"},
         data={"host": "0.0.0.0", "properties": {"id": "aa:bb:cc:dd:ee:ff"}},
@@ -595,7 +595,7 @@ async def test_bridge_homekit_already_configured.opp):
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "homekit"},
         data={"host": "0.0.0.0", "properties": {"id": "aa:bb:cc:dd:ee:ff"}},
@@ -612,7 +612,7 @@ async def test_ssdp_discovery_update_configuration.opp):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -636,12 +636,12 @@ async def test_options_flow.opp):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             const.CONF_ALLOW_HUE_GROUPS: True,

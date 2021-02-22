@@ -216,7 +216,7 @@ class FlicButton(BinarySensorEntity):
             return
 
         self._is_down = click_type == ClickType.ButtonDown
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _on_click(self, channel, click_type, was_queued, time_diff):
         """Fire click event, if event was not queued."""

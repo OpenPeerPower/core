@@ -35,7 +35,7 @@ ATTR_STATE_LOCKED = "is_locked"
 ATTR_STATE_LOW_BAT = "low_battery"
 ATTR_STATE_AWAY_END = "away_end"
 
-EQ_TO_HA_HVAC = {
+EQ_TO_OP_HVAC = {
     eq3.Mode.Open: HVAC_MODE_HEAT,
     eq3.Mode.Closed: HVAC_MODE_OFF,
     eq3.Mode.Auto: HVAC_MODE_AUTO,
@@ -50,7 +50,7 @@ HA_TO_EQ_HVAC = {
     HVAC_MODE_AUTO: eq3.Mode.Auto,
 }
 
-EQ_TO_HA_PRESET = {eq3.Mode.Boost: PRESET_BOOST, eq3.Mode.Away: PRESET_AWAY}
+EQ_TO_OP_PRESET = {eq3.Mode.Boost: PRESET_BOOST, eq3.Mode.Away: PRESET_AWAY}
 
 HA_TO_EQ_PRESET = {PRESET_BOOST: eq3.Mode.Boost, PRESET_AWAY: eq3.Mode.Away}
 
@@ -131,7 +131,7 @@ class EQ3BTSmartThermostat(ClimateEntity):
         """Return the current operation mode."""
         if self._thermostat.mode < 0:
             return HVAC_MODE_OFF
-        return EQ_TO_HA_HVAC[self._thermostat.mode]
+        return EQ_TO_OP_HVAC[self._thermostat.mode]
 
     @property
     def hvac_modes(self):
@@ -173,7 +173,7 @@ class EQ3BTSmartThermostat(ClimateEntity):
 
         Requires SUPPORT_PRESET_MODE.
         """
-        return EQ_TO_HA_PRESET.get(self._thermostat.mode)
+        return EQ_TO_OP_PRESET.get(self._thermostat.mode)
 
     @property
     def preset_modes(self):

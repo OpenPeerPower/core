@@ -90,7 +90,7 @@ class DeconzDevice(DeconzBase, Entity):
         if not force_update and self.gateway.ignore_state_updates:
             return
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def available(self):

@@ -239,7 +239,7 @@ class ZWaveDeviceEntity(Entity):
         """
         if value.value_id_key in (v.value_id_key for v in self.values if v):
             self.on_value_update()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @callback
     def _value_added(self):
@@ -256,7 +256,7 @@ class ZWaveDeviceEntity(Entity):
         Should not be overridden by subclasses.
         """
         self.on_value_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def should_poll(self):

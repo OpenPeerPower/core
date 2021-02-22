@@ -78,5 +78,5 @@ def mock_api(account, spa):
 async def setup_entry.opp, config_entry):
     """Initialize the config entry."""
     config_entry.add_to.opp.opp)
-    await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.async_block_till_done()

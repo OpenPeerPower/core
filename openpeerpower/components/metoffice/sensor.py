@@ -200,7 +200,7 @@ class MetOfficeCurrentSensor(Entity):
         self.metoffice_site_id = self._data.site_id
         self.metoffice_site_name = self._data.site_name
         self.metoffice_now = self._data.now
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def should_poll(self) -> bool:

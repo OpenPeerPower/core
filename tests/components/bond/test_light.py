@@ -107,7 +107,7 @@ async def test_fan_entity_registry.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await.opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
     entity = registry.entities["light.fan_name"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 
@@ -122,7 +122,7 @@ async def test_fan_up_light_entity_registry.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await.opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
     entity = registry.entities["light.fan_name_up_light"]
     assert entity.unique_id == "test-hub-id_test-device-id_up_light"
 
@@ -137,7 +137,7 @@ async def test_fan_down_light_entity_registry.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await.opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
     entity = registry.entities["light.fan_name_down_light"]
     assert entity.unique_id == "test-hub-id_test-device-id_down_light"
 
@@ -152,7 +152,7 @@ async def test_fireplace_entity_registry.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await.opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
     entity = registry.entities["light.fireplace_name"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 
@@ -167,7 +167,7 @@ async def test_fireplace_with_light_entity_registry.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await.opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
     entity_flame = registry.entities["light.fireplace_name"]
     assert entity_flame.unique_id == "test-hub-id_test-device-id"
     entity_light = registry.entities["light.fireplace_name_light"]
@@ -184,7 +184,7 @@ async def test_light_entity_registry.opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await.opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
     entity = registry.entities["light.light_name"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 
@@ -237,13 +237,13 @@ async def test_turn_on_light.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_light_on, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.name_1"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_light_on.assert_called_once_with("test-device-id", Action.turn_light_on())
 
@@ -255,13 +255,13 @@ async def test_turn_off_light.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_light_off, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.name_1"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_light_off.assert_called_once_with(
         "test-device-id", Action.turn_light_off()
@@ -304,13 +304,13 @@ async def test_turn_on_light_with_brightness.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_set_brightness, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.name_1", ATTR_BRIGHTNESS: 128},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_set_brightness.assert_called_once_with(
         "test-device-id", Action(Action.SET_BRIGHTNESS, 50)
@@ -327,13 +327,13 @@ async def test_turn_on_up_light.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_on, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.name_1_up_light"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_on.assert_called_once_with(
         "test-device-id", Action(Action.TURN_UP_LIGHT_ON)
@@ -350,13 +350,13 @@ async def test_turn_off_up_light.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.name_1_up_light"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_off.assert_called_once_with(
         "test-device-id", Action(Action.TURN_UP_LIGHT_OFF)
@@ -373,13 +373,13 @@ async def test_turn_on_down_light.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_on, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.name_1_down_light"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_on.assert_called_once_with(
         "test-device-id", Action(Action.TURN_DOWN_LIGHT_ON)
@@ -396,13 +396,13 @@ async def test_turn_off_down_light.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.name_1_down_light"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_off.assert_called_once_with(
         "test-device-id", Action(Action.TURN_DOWN_LIGHT_OFF)
@@ -415,7 +415,7 @@ async def test_update_reports_light_is_on.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"light": 1}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1").state == "on"
 
@@ -426,7 +426,7 @@ async def test_update_reports_light_is_off.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"light": 0}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1").state == "off"
 
@@ -437,7 +437,7 @@ async def test_update_reports_up_light_is_on.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"up_light": 1, "light": 1}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1_up_light").state == "on"
 
@@ -448,7 +448,7 @@ async def test_update_reports_up_light_is_off.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"up_light": 0, "light": 0}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1_up_light").state == "off"
 
@@ -459,7 +459,7 @@ async def test_update_reports_down_light_is_on.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"down_light": 1, "light": 1}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1_down_light").state == "on"
 
@@ -470,7 +470,7 @@ async def test_update_reports_down_light_is_off.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"down_light": 0, "light": 0}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1_down_light").state == "off"
 
@@ -482,13 +482,13 @@ async def test_turn_on_fireplace_with_brightness.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_set_flame, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.name_1", ATTR_BRIGHTNESS: 128},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_set_flame.assert_called_once_with("test-device-id", Action.set_flame(50))
 
@@ -500,13 +500,13 @@ async def test_turn_on_fireplace_without_brightness.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_on, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.name_1"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_on.assert_called_once_with("test-device-id", Action.turn_on())
 
@@ -518,13 +518,13 @@ async def test_turn_off_fireplace.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
-        await.opp.services.async_call(
+        await opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.name_1"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     mock_turn_off.assert_called_once_with("test-device-id", Action.turn_off())
 
@@ -535,7 +535,7 @@ async def test_flame_converted_to_brightness.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"power": 1, "flame": 50}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1").attributes[ATTR_BRIGHTNESS] == 128
 
@@ -553,6 +553,6 @@ async def test_parse_brightness.opp: core.OpenPeerPower):
 
     with patch_bond_device_state(return_value={"light": 1, "brightness": 50}):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("light.name_1").attributes[ATTR_BRIGHTNESS] == 128

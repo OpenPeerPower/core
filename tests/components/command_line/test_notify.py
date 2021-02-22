@@ -109,9 +109,9 @@ async def test_timeout.opp, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
-    assert await.opp.services.async_call(
+    await opp.async_block_till_done()
+    assert await opp.services.async_call(
         "notify", "test", {"message": "error"}, blocking=True
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert "Timeout" in caplog.text

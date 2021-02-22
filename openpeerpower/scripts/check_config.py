@@ -12,7 +12,7 @@ from unittest.mock import patch
 from openpeerpower import bootstrap, core
 from openpeerpower.config import get_default_config_dir
 from openpeerpower.exceptions import OpenPeerPowerError
-from openpeerpower.helpers.check_config import async_check_ha_config_file
+from openpeerpower.helpers.check_config import async_check_op_config_file
 import openpeerpower.util.yaml.loader as yaml_loader
 
 # mypy: allow-untyped-calls, allow-untyped-defs
@@ -229,8 +229,8 @@ async def async_check_config(config_dir):
     """Check the HA config."""
     opp =core.OpenPeerPower()
    .opp.config.config_dir = config_dir
-    components = await async_check_ha_config_file.opp)
-    await.opp.async_stop(force=True)
+    components = await async_check_op_config_file.opp)
+    await opp.async_stop(force=True)
     return components
 
 

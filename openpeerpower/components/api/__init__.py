@@ -183,7 +183,7 @@ class APIDiscoveryView(OpenPeerPowerView):
     async def get(self, request):
         """Get discovery information."""
         opp =request.app[.opp"]
-        uuid = await.opp.helpers.instance_id.async_get()
+        uuid = await opp.helpers.instance_id.async_get()
         system_info = await async_get_system_info.opp)
 
         data = {
@@ -377,7 +377,7 @@ class APIDomainServicesView(OpenPeerPowerView):
 
         with AsyncTrackStates.opp) as changed_states:
             try:
-                await.opp.services.async_call(
+                await opp.services.async_call(
                     domain, service, data, blocking=True, context=self.context(request)
                 )
             except (vol.Invalid, ServiceNotFound) as ex:

@@ -34,7 +34,7 @@ async def mock_impl.opp):
 
 async def test_abort_if_no_configuration.opp):
     """Check flow abort when no configuration."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -57,7 +57,7 @@ async def test_full_flow(
         },
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -94,7 +94,7 @@ async def test_full_flow(
         with patch(
             "openpeerpower.components.lyric.async_setup_entry", return_value=True
         ) as mock_setup:
-            result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+            result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == DOMAIN
 
@@ -118,7 +118,7 @@ async def test_abort_if_authorization_timeout(
    .opp, mock_impl, current_request_with_host
 ):
     """Check Somfy authorization timeout."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 

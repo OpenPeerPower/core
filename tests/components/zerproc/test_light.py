@@ -55,8 +55,8 @@ async def mock_light.opp, mock_entry):
     ), patch.object(light, "connect"), patch.object(
         light, "get_state", return_value=mock_state
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.async_block_till_done()
 
     light.is_connected.return_value = True
 
@@ -89,8 +89,8 @@ async def test_init.opp, mock_entry):
         "openpeerpower.components.zerproc.light.pyzerproc.discover",
         return_value=[mock_light_1, mock_light_2],
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.ledblue_ccddeeff")
     assert state.state == STATE_OFF
@@ -113,7 +113,7 @@ async def test_init.opp, mock_entry):
     }
 
     with patch.object.opp.loop, "stop"):
-        await.opp.async_stop()
+        await opp.async_stop()
 
     assert mock_light_1.disconnect.called
     assert mock_light_2.disconnect.called
@@ -129,8 +129,8 @@ async def test_discovery_exception.opp, mock_entry):
         "openpeerpower.components.zerproc.light.pyzerproc.discover",
         side_effect=pyzerproc.ZerprocException("TEST"),
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.async_block_till_done()
 
     # The exception should be captured and no entities should be added
     assert len.opp.data[DOMAIN]["addresses"]) == 0
@@ -158,8 +158,8 @@ async def test_connect_exception.opp, mock_entry):
     ), patch.object(
         mock_light_1, "connect", side_effect=pyzerproc.ZerprocException("TEST")
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.async_block_till_done()
 
     # The exception connecting to light 1 should be captured, but light 2
     # should still be added
@@ -169,7 +169,7 @@ async def test_connect_exception.opp, mock_entry):
 async def test_remove_entry.opp, mock_light, mock_entry):
     """Test platform setup."""
     with patch.object(mock_light, "disconnect") as mock_disconnect:
-        await.opp.config_entries.async_remove(mock_entry.entry_id)
+        await opp.config_entries.async_remove(mock_entry.entry_id)
 
     assert mock_disconnect.called
 
@@ -179,7 +179,7 @@ async def test_remove_entry_exceptions_caught.opp, mock_light, mock_entry):
     with patch.object(
         mock_light, "disconnect", side_effect=pyzerproc.ZerprocException("Mock error")
     ) as mock_disconnect:
-        await.opp.config_entries.async_remove(mock_entry.entry_id)
+        await opp.config_entries.async_remove(mock_entry.entry_id)
 
     assert mock_disconnect.called
 
@@ -188,23 +188,23 @@ async def test_light_turn_on.opp, mock_light):
     """Test ZerprocLight turn_on."""
     utcnow = dt_util.utcnow()
     with patch.object(mock_light, "turn_on") as mock_turn_on:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "light",
             "turn_on",
             {ATTR_ENTITY_ID: "light.ledblue_ccddeeff"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     mock_turn_on.assert_called()
 
     with patch.object(mock_light, "set_color") as mock_set_color:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "light",
             "turn_on",
             {ATTR_ENTITY_ID: "light.ledblue_ccddeeff", ATTR_BRIGHTNESS: 25},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     mock_set_color.assert_called_with(25, 25, 25)
 
     # Make sure no discovery calls are made while we emulate time passing
@@ -216,27 +216,27 @@ async def test_light_turn_on.opp, mock_light):
         ):
             utcnow = utcnow + SCAN_INTERVAL
             async_fire_time_changed.opp, utcnow)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         with patch.object(mock_light, "set_color") as mock_set_color:
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 "light",
                 "turn_on",
                 {ATTR_ENTITY_ID: "light.ledblue_ccddeeff", ATTR_BRIGHTNESS: 25},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         mock_set_color.assert_called_with(19, 17, 25)
 
         with patch.object(mock_light, "set_color") as mock_set_color:
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 "light",
                 "turn_on",
                 {ATTR_ENTITY_ID: "light.ledblue_ccddeeff", ATTR_HS_COLOR: (50, 50)},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         mock_set_color.assert_called_with(220, 201, 110)
 
@@ -247,21 +247,21 @@ async def test_light_turn_on.opp, mock_light):
         ):
             utcnow = utcnow + SCAN_INTERVAL
             async_fire_time_changed.opp, utcnow)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         with patch.object(mock_light, "set_color") as mock_set_color:
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 "light",
                 "turn_on",
                 {ATTR_ENTITY_ID: "light.ledblue_ccddeeff", ATTR_HS_COLOR: (50, 50)},
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         mock_set_color.assert_called_with(75, 68, 37)
 
         with patch.object(mock_light, "set_color") as mock_set_color:
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 "light",
                 "turn_on",
                 {
@@ -271,7 +271,7 @@ async def test_light_turn_on.opp, mock_light):
                 },
                 blocking=True,
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         mock_set_color.assert_called_with(162, 200, 50)
 
@@ -279,13 +279,13 @@ async def test_light_turn_on.opp, mock_light):
 async def test_light_turn_off.opp, mock_light):
     """Test ZerprocLight turn_on."""
     with patch.object(mock_light, "turn_off") as mock_turn_off:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "light",
             "turn_off",
             {ATTR_ENTITY_ID: "light.ledblue_ccddeeff"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     mock_turn_off.assert_called()
 
 
@@ -309,7 +309,7 @@ async def test_light_update.opp, mock_light):
         ):
             utcnow = utcnow + SCAN_INTERVAL
             async_fire_time_changed.opp, utcnow)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         state = opp.states.get("light.ledblue_ccddeeff")
         assert state.state == STATE_UNAVAILABLE
@@ -326,7 +326,7 @@ async def test_light_update.opp, mock_light):
         ):
             utcnow = utcnow + SCAN_INTERVAL
             async_fire_time_changed.opp, utcnow)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         state = opp.states.get("light.ledblue_ccddeeff")
         assert state.state == STATE_OFF
@@ -343,7 +343,7 @@ async def test_light_update.opp, mock_light):
         ):
             utcnow = utcnow + SCAN_INTERVAL
             async_fire_time_changed.opp, utcnow)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         state = opp.states.get("light.ledblue_ccddeeff")
         assert state.state == STATE_ON

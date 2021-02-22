@@ -20,8 +20,8 @@ async def test_unload_entry.opp, cfupdate):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_unload(entry.entry_id)
+    await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data.get(DOMAIN)
@@ -35,7 +35,7 @@ async def test_async_setup_raises_entry_not_ready.opp, cfupdate):
     entry.add_to.opp.opp)
 
     instance.get_zone_id.side_effect = CloudflareConnectionException()
-    await.opp.config_entries.async_setup(entry.entry_id)
+    await opp.config_entries.async_setup(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -47,12 +47,12 @@ async def test_integration_services.opp, cfupdate):
     entry = await init_integration.opp)
     assert entry.state == ENTRY_STATE_LOADED
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_UPDATE_RECORDS,
         {},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     instance.update_records.assert_called_once()

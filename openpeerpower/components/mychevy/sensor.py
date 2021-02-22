@@ -76,7 +76,7 @@ class MyChevyStatus(Entity):
         if self._state != MYCHEVY_SUCCESS:
             _LOGGER.debug("Successfully connected to mychevy website")
             self._state = MYCHEVY_SUCCESS
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def error(self):
@@ -86,7 +86,7 @@ class MyChevyStatus(Entity):
             "This probably means the mychevy to OnStar link is down"
         )
         self._state = MYCHEVY_ERROR
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def icon(self):
@@ -162,7 +162,7 @@ class EVSensor(Entity):
             self._state = getattr(self._car, self._attr, None)
             for attr in self._extra_attrs:
                 self._state_attributes[attr] = getattr(self._car, attr)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def state(self):

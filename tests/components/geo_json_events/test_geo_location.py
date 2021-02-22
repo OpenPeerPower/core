@@ -74,11 +74,11 @@ async def test_setup_opp, legacy_patchable_time):
         )
         with assert_setup_component(1, geo_location.DOMAIN):
             assert await async_setup_component.opp, geo_location.DOMAIN, CONFIG)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             # Artificially trigger update.
            .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 3
@@ -129,7 +129,7 @@ async def test_setup_opp, legacy_patchable_time):
                 [mock_entry_1, mock_entry_4, mock_entry_3],
             )
             async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 3
@@ -138,7 +138,7 @@ async def test_setup_opp, legacy_patchable_time):
             # so no changes to entities.
             mock_feed.return_value.update.return_value = "OK_NO_DATA", None
             async_fire_time_changed.opp, utcnow + 2 * SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 3
@@ -146,7 +146,7 @@ async def test_setup_opp, legacy_patchable_time):
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
             async_fire_time_changed.opp, utcnow + 3 * SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 0
@@ -164,12 +164,12 @@ async def test_setup_with_custom_location.opp):
             assert await async_setup_component(
                .opp, geo_location.DOMAIN, CONFIG_WITH_CUSTOM_LOCATION
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             # Artificially trigger update.
            .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
@@ -201,14 +201,14 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
     ) as mock_feed:
         with assert_setup_component(1, geo_location.DOMAIN):
             assert await async_setup_component.opp, geo_location.DOMAIN, CONFIG)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             mock_feed.return_value.update.return_value = "OK", [mock_entry_1]
 
             # Artificially trigger update.
            .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
@@ -218,7 +218,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
             async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 0
@@ -228,7 +228,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             # Simulate an update - 1 entry
             mock_feed.return_value.update.return_value = "OK", [mock_entry_1]
             async_fire_time_changed.opp, utcnow + 2 * SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
@@ -238,7 +238,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             # Simulate an update - 1 entry
             mock_feed.return_value.update.return_value = "OK", [mock_entry_1]
             async_fire_time_changed.opp, utcnow + 3 * SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
@@ -248,7 +248,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
             async_fire_time_changed.opp, utcnow + 4 * SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 0

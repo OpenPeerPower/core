@@ -35,7 +35,7 @@ async def test_no_host_shows_form.opp):
 async def test_cannot_connect_shows_error_form.opp, controller):
     """Test form is shown with error when cannot connect."""
     controller.connect.side_effect = HeosError()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         heos.DOMAIN, context={"source": "user"}, data={CONF_HOST: "127.0.0.1"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -51,7 +51,7 @@ async def test_create_entry_when_host_valid.opp, controller):
     """Test result type is create entry when host is valid."""
     data = {CONF_HOST: "127.0.0.1"}
     with patch("openpeerpower.components.heos.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             heos.DOMAIN, context={"source": "user"}, data=data
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -67,7 +67,7 @@ async def test_create_entry_when_friendly_name_valid.opp, controller):
    .opp.data[DATA_DISCOVERED_HOSTS] = {"Office (127.0.0.1)": "127.0.0.1"}
     data = {CONF_HOST: "Office (127.0.0.1)"}
     with patch("openpeerpower.components.heos.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             heos.DOMAIN, context={"source": "user"}, data=data
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -82,10 +82,10 @@ async def test_create_entry_when_friendly_name_valid.opp, controller):
 async def test_discovery_shows_create_form.opp, controller, discovery_data):
     """Test discovery shows form to confirm setup and subsequent abort."""
 
-    await.opp.config_entries.flow.async_init(
+    await opp.config_entries.flow.async_init(
         heos.DOMAIN, context={"source": "ssdp"}, data=discovery_data
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
@@ -95,10 +95,10 @@ async def test_discovery_shows_create_form.opp, controller, discovery_data):
     discovery_data[ssdp.ATTR_SSDP_LOCATION] = f"http://127.0.0.2:{port}/"
     discovery_data[ssdp.ATTR_UPNP_FRIENDLY_NAME] = "Bedroom"
 
-    await.opp.config_entries.flow.async_init(
+    await opp.config_entries.flow.async_init(
         heos.DOMAIN, context={"source": "ssdp"}, data=discovery_data
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
@@ -127,10 +127,10 @@ async def test_discovery_sets_the_unique_id.opp, controller, discovery_data):
     discovery_data[ssdp.ATTR_SSDP_LOCATION] = f"http://127.0.0.2:{port}/"
     discovery_data[ssdp.ATTR_UPNP_FRIENDLY_NAME] = "Bedroom"
 
-    await.opp.config_entries.flow.async_init(
+    await opp.config_entries.flow.async_init(
         heos.DOMAIN, context={"source": SOURCE_SSDP}, data=discovery_data
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
@@ -141,11 +141,11 @@ async def test_import_sets_the_unique_id.opp, controller):
     """Test import sets the unique id."""
 
     with patch("openpeerpower.components.heos.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             heos.DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_HOST: "127.0.0.2"},
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["result"].unique_id == DOMAIN

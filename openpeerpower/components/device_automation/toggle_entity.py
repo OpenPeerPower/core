@@ -116,7 +116,7 @@ async def async_call_action_from_config(
 
     service_data = {ATTR_ENTITY_ID: config[CONF_ENTITY_ID]}
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain, action, service_data, blocking=True, context=context
     )
 
@@ -174,7 +174,7 @@ async def _async_get_automations(
 ) -> List[dict]:
     """List device automations."""
     automations: List[Dict[str, Any]] = []
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entries = [
         entry

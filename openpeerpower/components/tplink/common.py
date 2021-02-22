@@ -99,7 +99,7 @@ async def async_discover_devices(
             else:
                 _LOGGER.error("Unknown smart device type: %s", type(dev))
 
-    await.opp.async_add_executor_job(process_devices)
+    await opp.async_add_executor_job(process_devices)
 
     return SmartDevices(lights, switches)
 

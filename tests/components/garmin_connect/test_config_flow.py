@@ -33,7 +33,7 @@ def mock_garmin():
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -46,7 +46,7 @@ async def test_step_user.opp, mock_garmin_connect):
     with patch(
         "openpeerpower.components.garmin_connect.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.garmin_connect.async_setup", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_CONF
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -56,7 +56,7 @@ async def test_step_user.opp, mock_garmin_connect):
 async def test_connection_error(opp, mock_garmin_connect):
     """Test for connection error."""
     mock_garmin_connect.login.side_effect = GarminConnectConnectionError("errormsg")
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -66,7 +66,7 @@ async def test_connection_error(opp, mock_garmin_connect):
 async def test_authentication_error(opp, mock_garmin_connect):
     """Test for authentication error."""
     mock_garmin_connect.login.side_effect = GarminConnectAuthenticationError("errormsg")
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -78,7 +78,7 @@ async def test_toomanyrequest_error(opp, mock_garmin_connect):
     mock_garmin_connect.login.side_effect = GarminConnectTooManyRequestsError(
         "errormsg"
     )
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -88,7 +88,7 @@ async def test_toomanyrequest_error(opp, mock_garmin_connect):
 async def test_unknown_error(opp, mock_garmin_connect):
     """Test for unknown error."""
     mock_garmin_connect.login.side_effect = Exception
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -99,7 +99,7 @@ async def test_abort_if_already_setup_opp, mock_garmin_connect):
     """Test abort if already setup."""
     entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONF, unique_id=MOCK_CONF[CONF_ID])
     entry.add_to.opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

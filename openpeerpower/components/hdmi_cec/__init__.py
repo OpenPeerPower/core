@@ -390,7 +390,7 @@ class CecEntity(Entity):
 
     def _update(self, device=None):
         """Device status changed, schedule an update."""
-        self.schedule_update_ha_state(True)
+        self.schedule_update_op_state(True)
 
     @property
     def should_poll(self):

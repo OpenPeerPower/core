@@ -39,7 +39,7 @@ MOCK_TOKEN_INFO = {
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -52,7 +52,7 @@ async def test_abort_if_already_setup_opp):
         domain=DOMAIN, data=MOCK_CONF, unique_id=MOCK_CONF[CONF_USERNAME]
     )
     entry.add_to.opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -66,7 +66,7 @@ async def test_invalid_credentials.opp):
         "openpeerpower.components.fireservicerota.FireServiceRota.request_tokens",
         side_effect=InvalidAuthError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_CONF
         )
         assert result["errors"] == {"base": "invalid_auth"}
@@ -87,11 +87,11 @@ async def test_step_user.opp):
         mock_fireservicerota = mock_fsr.return_value
         mock_fireservicerota.request_tokens.return_value = MOCK_TOKEN_INFO
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=MOCK_CONF
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == MOCK_CONF[CONF_USERNAME]

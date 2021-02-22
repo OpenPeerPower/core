@@ -203,7 +203,7 @@ class OpenUvEntity(Entity):
         def update():
             """Update the state."""
             self.update_from_latest_data()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self.async_on_remove(async_dispatcher_connect(self.opp, TOPIC_UPDATE, update))
 

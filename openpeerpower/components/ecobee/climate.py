@@ -188,7 +188,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in devices:
             if thermostat.entity_id == entity_id:
                 thermostat.create_vacation(service.data)
-                thermostat.schedule_update_ha_state(True)
+                thermostat.schedule_update_op_state(True)
                 break
 
     def delete_vacation_service(service):
@@ -199,7 +199,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in devices:
             if thermostat.entity_id == entity_id:
                 thermostat.delete_vacation(vacation_name)
-                thermostat.schedule_update_ha_state(True)
+                thermostat.schedule_update_op_state(True)
                 break
 
     def fan_min_on_time_set_service(service):
@@ -217,7 +217,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in target_thermostats:
             thermostat.set_fan_min_on_time(str(fan_min_on_time))
 
-            thermostat.schedule_update_ha_state(True)
+            thermostat.schedule_update_op_state(True)
 
     def resume_program_set_service(service):
         """Resume the program on the target thermostats."""
@@ -234,7 +234,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         for thermostat in target_thermostats:
             thermostat.resume_program(resume_all)
 
-            thermostat.schedule_update_ha_state(True)
+            thermostat.schedule_update_op_state(True)
 
    .opp.services.async_register(
         DOMAIN,

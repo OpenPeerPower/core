@@ -20,7 +20,7 @@ PRESET_MODES = {
     "Pro 3": {"mode": 0, "program": 3},
 }
 
-TOUCHLINE_HA_PRESETS = {
+TOUCHLINE_OP_PRESETS = {
     (settings["mode"], settings["program"]): preset
     for preset, settings in PRESET_MODES.items()
 }
@@ -65,7 +65,7 @@ class Touchline(ClimateEntity):
         self._name = self.unit.get_name()
         self._current_temperature = self.unit.get_current_temperature()
         self._target_temperature = self.unit.get_target_temperature()
-        self._preset_mode = TOUCHLINE_HA_PRESETS.get(
+        self._preset_mode = TOUCHLINE_OP_PRESETS.get(
             (self.unit.get_operation_mode(), self.unit.get_week_program())
         )
 

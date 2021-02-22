@@ -58,7 +58,7 @@ async def async_call_action_from_config(
     if config[CONF_TYPE] != ATYP_SET_VALUE:
         return
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         const.SERVICE_SET_VALUE,
         {

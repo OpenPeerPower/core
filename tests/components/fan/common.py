@@ -46,14 +46,14 @@ async def async_turn_on(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
 async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL) -> None:
     """Turn all or specified fan off."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
 
 
 async def async_oscillate(
@@ -69,7 +69,7 @@ async def async_oscillate(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_OSCILLATE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_OSCILLATE, data, blocking=True)
 
 
 async def async_set_speed.opp, entity_id=ENTITY_MATCH_ALL, speed: str = None) -> None:
@@ -80,7 +80,7 @@ async def async_set_speed.opp, entity_id=ENTITY_MATCH_ALL, speed: str = None) ->
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_SPEED, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_SPEED, data, blocking=True)
 
 
 async def async_set_preset_mode(
@@ -93,7 +93,7 @@ async def async_set_preset_mode(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_PRESET_MODE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_PRESET_MODE, data, blocking=True)
 
 
 async def async_set_percentage(
@@ -106,7 +106,7 @@ async def async_set_percentage(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_PERCENTAGE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_PERCENTAGE, data, blocking=True)
 
 
 async def async_increase_speed(
@@ -122,7 +122,7 @@ async def async_increase_speed(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_INCREASE_SPEED, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_INCREASE_SPEED, data, blocking=True)
 
 
 async def async_decrease_speed(
@@ -138,7 +138,7 @@ async def async_decrease_speed(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_DECREASE_SPEED, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_DECREASE_SPEED, data, blocking=True)
 
 
 async def async_set_direction(
@@ -151,4 +151,4 @@ async def async_set_direction(
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_DIRECTION, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_DIRECTION, data, blocking=True)

@@ -295,7 +295,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_entry_updated.opp: OpenPeerPower, entry: ConfigEntry):
     """Reload the config entry when options change."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 class KonnectedView(OpenPeerPowerView):

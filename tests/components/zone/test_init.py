@@ -121,7 +121,7 @@ async def test_active_zone_skips_passive_zones.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     active = zone.async_active_zone.opp, 32.880600, -117.237561)
     assert active is None
 
@@ -142,7 +142,7 @@ async def test_active_zone_skips_passive_zones_2.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     active = zone.async_active_zone.opp, 32.880700, -117.237561)
     assert "zone.active_zone" == active.entity_id
 
@@ -228,10 +228,10 @@ async def test_core_config_update.opp):
 
     home = opp.states.get("zone.home")
 
-    await.opp.config.async_update(
+    await opp.config.async_update(
         location_name="Updated Name", latitude=10, longitude=20
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     home_updated = opp.states.get("zone.home")
 
@@ -283,19 +283,19 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
         },
     ):
         with pytest.raises(Unauthorized):
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
                 context=Context(user_id.opp_read_only_user.id),
             )
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
 
@@ -343,7 +343,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
         config={DOMAIN: [{"name": "yaml option", "latitude": 3, "longitude": 4}]}
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -371,7 +371,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -408,7 +408,7 @@ async def test_update.opp, opp_ws_client, storage_setup):
     assert state.attributes["longitude"] == 2
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -441,7 +441,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup):
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -478,7 +478,7 @@ async def test_import_config_entry.opp):
     )
     entry.add_to.opp.opp)
     assert await setup.async_setup_component.opp, DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.config_entries.async_entries()) == 0
 
     state = opp.states.get("zone.from_config_entry")

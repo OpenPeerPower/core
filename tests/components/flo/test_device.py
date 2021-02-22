@@ -18,7 +18,7 @@ async def test_device.opp, config_entry, aioclient_mock_fixture, aioclient_mock)
     assert await async_setup_component(
        .opp, FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
     device: FloDeviceDataUpdateCoordinator = opp.data[FLO_DOMAIN][
@@ -53,6 +53,6 @@ async def test_device.opp, config_entry, aioclient_mock_fixture, aioclient_mock)
     call_count = aioclient_mock.call_count
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=90))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == call_count + 2

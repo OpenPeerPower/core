@@ -127,7 +127,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     # Get the Infos for configuration from config (YAML) or Discovery
     config_info = YamahaConfigInfo(config=config, discovery_info=discovery_info)
     # Async check if the Receivers are there in the network
-    receivers = await.opp.async_add_executor_job(_discovery, config_info)
+    receivers = await opp.async_add_executor_job(_discovery, config_info)
 
     entities = []
     for receiver in receivers:

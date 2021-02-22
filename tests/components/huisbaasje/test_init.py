@@ -21,7 +21,7 @@ from tests.components.huisbaasje.test_data import MOCK_CURRENT_MEASUREMENTS
 async def test_setup_opp: OpenPeerPower):
     """Test for successfully setting up the platform."""
     assert await async_setup_component.opp, huisbaasje.DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert huisbaasje.DOMAIN in.opp.config.components
 
 
@@ -52,8 +52,8 @@ async def test_setup_entry.opp: OpenPeerPower):
        .opp.config_entries._entries.append(config_entry)
 
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
 
         # Assert integration is loaded
         assert config_entry.state == ENTRY_STATE_LOADED
@@ -93,8 +93,8 @@ async def test_setup_entry_error(opp: OpenPeerPower):
        .opp.config_entries._entries.append(config_entry)
 
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
-        await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
 
         # Assert integration is loaded with error
         assert config_entry.state == ENTRY_STATE_SETUP_ERROR
@@ -135,14 +135,14 @@ async def test_unload_entry.opp: OpenPeerPower):
        .opp.config_entries._entries.append(config_entry)
 
         # Load config entry
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
         assert config_entry.state == ENTRY_STATE_LOADED
         entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 14
 
         # Unload config entry
-        await.opp.config_entries.async_unload(config_entry.entry_id)
+        await opp.config_entries.async_unload(config_entry.entry_id)
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
         entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 14
@@ -150,8 +150,8 @@ async def test_unload_entry.opp: OpenPeerPower):
             assert.opp.states.get(entity).state == STATE_UNAVAILABLE
 
         # Remove config entry
-        await.opp.config_entries.async_remove(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_remove(config_entry.entry_id)
+        await opp.async_block_till_done()
         entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 0
 

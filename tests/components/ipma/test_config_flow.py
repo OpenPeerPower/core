@@ -163,7 +163,7 @@ async def test_config_entry_migration.opp):
         return_value=MockLocation(),
     ):
         assert await async_setup_component.opp, DOMAIN, {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         ent_reg = await entity_registry.async_get_registry.opp)
 

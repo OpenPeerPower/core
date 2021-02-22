@@ -60,7 +60,7 @@ async def setup_light.opp):
     assert await async_setup_component(
        .opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(LIGHT_ENTITY)
     assert state
@@ -70,13 +70,13 @@ async def setup_light.opp):
     assert state.attributes.get(ATTR_BRIGHTNESS) == 180
     assert state.attributes.get(ATTR_RGB_COLOR) == (255, 63, 111)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         LIGHT_SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: LIGHT_ENTITY},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(LIGHT_ENTITY)
 
@@ -92,7 +92,7 @@ async def test_missing_url_and_path.opp):
         DOMAIN,
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Validate pre service call
     state = opp.states.get(LIGHT_ENTITY)
@@ -105,10 +105,10 @@ async def test_missing_url_and_path.opp):
     }
 
     with pytest.raises(MultipleInvalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, service_data, blocking=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # check light is still off, unchanged due to bad parameters on service call
     state = opp.states.get(LIGHT_ENTITY)
@@ -123,7 +123,7 @@ async def _async_load_color_extractor_url.opp, service_data):
         DOMAIN,
         {},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Validate pre service call
     state = opp.states.get(LIGHT_ENTITY)
@@ -131,11 +131,11 @@ async def _async_load_color_extractor_url.opp, service_data):
     assert state.state == STATE_OFF
 
     # Call the shared service, our above mock should return the base64 decoded fixture 1x1 pixel
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, service_data, blocking=True
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_url_success.opp, aioclient_mock):
@@ -261,7 +261,7 @@ async def test_file.opp):
    .opp.config.allowlist_external_dirs.add("/opt/")
 
     await async_setup_component.opp, DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify pre service check
     state = opp.states.get(LIGHT_ENTITY)
@@ -270,8 +270,8 @@ async def test_file.opp):
 
     # Mock the file handler read with our 1x1 base64 encoded fixture image
     with patch("openpeerpower.components.color_extractor._get_file", _get_file_mock):
-        await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, service_data)
-        await.opp.async_block_till_done()
+        await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, service_data)
+        await opp.async_block_till_done()
 
     state = opp.states.get(LIGHT_ENTITY)
 
@@ -299,7 +299,7 @@ async def test_file_denied_dir.opp):
     }
 
     await async_setup_component.opp, DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify pre service check
     state = opp.states.get(LIGHT_ENTITY)
@@ -308,8 +308,8 @@ async def test_file_denied_dir.opp):
 
     # Mock the file handler read with our 1x1 base64 encoded fixture image
     with patch("openpeerpower.components.color_extractor._get_file", _get_file_mock):
-        await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, service_data)
-        await.opp.async_block_till_done()
+        await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, service_data)
+        await opp.async_block_till_done()
 
     state = opp.states.get(LIGHT_ENTITY)
 

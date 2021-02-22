@@ -40,10 +40,10 @@ async def test_auth_fail(
     api.async_info.side_effect = ApiError(
         GogoGate2ApiErrorCode.CREDENTIALS_INCORRECT, "blah"
     )
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "gogogate2", context={"source": SOURCE_USER}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_DEVICE: DEVICE_TYPE_GOGOGATE2,
@@ -60,10 +60,10 @@ async def test_auth_fail(
 
     api.reset_mock()
     api.async_info.side_effect = Exception("Generic connection error.")
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "gogogate2", context={"source": SOURCE_USER}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_DEVICE: DEVICE_TYPE_GOGOGATE2,
@@ -81,7 +81,7 @@ async def test_form_homekit_unique_id_already_setup_opp):
     """Test that we abort from homekit if gogogate2 is already setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HOMEKIT},
         data={"host": "1.2.3.4", "properties": {"id": MOCK_MAC_ADDR}},
@@ -101,7 +101,7 @@ async def test_form_homekit_unique_id_already_setup_opp):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HOMEKIT},
         data={"host": "1.2.3.4", "properties": {"id": MOCK_MAC_ADDR}},
@@ -119,7 +119,7 @@ async def test_form_homekit_ip_address_already_setup_opp):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HOMEKIT},
         data={"host": "1.2.3.4", "properties": {"id": MOCK_MAC_ADDR}},
@@ -131,7 +131,7 @@ async def test_form_homekit_ip_address.opp):
     """Test homekit includes the defaults ip address."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HOMEKIT},
         data={"host": "1.2.3.4", "properties": {"id": MOCK_MAC_ADDR}},

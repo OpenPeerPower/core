@@ -115,7 +115,7 @@ class BondEntity(Entity):
 
         async with self._update_lock:
             await self._async_update_from_api()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def _async_update_from_api(self):
         """Fetch via the API."""
@@ -150,7 +150,7 @@ class BondEntity(Entity):
     def _async_bpup_callback(self, state):
         """Process a state change from BPUP."""
         self._async_state_callback(state)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to BPUP and start polling."""

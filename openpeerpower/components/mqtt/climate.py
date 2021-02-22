@@ -398,7 +398,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
             payload = render_template(msg, CONF_ACTION_TEMPLATE)
 
             self._action = payload
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         add_subscription(topics, CONF_ACTION_TOPIC, handle_action_received)
 
@@ -409,7 +409,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
 
             try:
                 setattr(self, attr, float(payload))
-                self.async_write_ha_state()
+                self.async_write_op_state()
             except ValueError:
                 _LOGGER.error("Could not parse temperature from %s", payload)
 
@@ -468,7 +468,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
                 _LOGGER.error("Invalid %s mode: %s", mode_list, payload)
             else:
                 setattr(self, attr, payload)
-                self.async_write_ha_state()
+                self.async_write_op_state()
 
         @callback
         @log_messages(self.opp, self.entity_id)
@@ -527,7 +527,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
             else:
                 _LOGGER.error("Invalid %s mode: %s", attr, payload)
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         @callback
         @log_messages(self.opp, self.entity_id)
@@ -555,7 +555,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
                 payload = None
 
             self._hold = payload
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         add_subscription(topics, CONF_HOLD_STATE_TOPIC, handle_hold_mode_received)
 
@@ -710,7 +710,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
         )
 
         # Always optimistic?
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_swing_mode(self, swing_mode):
         """Set new swing mode."""
@@ -722,7 +722,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
 
         if self._topic[CONF_SWING_MODE_STATE_TOPIC] is None:
             self._current_swing_mode = swing_mode
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_fan_mode(self, fan_mode):
         """Set new target temperature."""
@@ -732,7 +732,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
 
         if self._topic[CONF_FAN_MODE_STATE_TOPIC] is None:
             self._current_fan_mode = fan_mode
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_hvac_mode(self, hvac_mode) -> None:
         """Set new operation mode."""
@@ -746,7 +746,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
 
         if self._topic[CONF_MODE_STATE_TOPIC] is None:
             self._current_operation = hvac_mode
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def swing_mode(self):
@@ -779,7 +779,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
             optimistic_update = optimistic_update or self._set_hold_mode(hold_mode)
 
         if optimistic_update:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     def _set_away_mode(self, state):
         """Set away mode.
@@ -821,7 +821,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
 
         if self._topic[CONF_AUX_STATE_TOPIC] is None:
             self._aux = state
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_turn_aux_heat_on(self):
         """Turn auxiliary heater on."""

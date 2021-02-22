@@ -77,7 +77,7 @@ async def test_login_flow_validates_mfa.opp):
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
     ).add_to_auth_manager.opp.auth)
-    await.opp.auth.async_link_user(
+    await opp.auth.async_link_user(
         user,
         auth_models.Credentials(
             id="mock-id",
@@ -88,26 +88,26 @@ async def test_login_flow_validates_mfa.opp):
         ),
     )
 
-    await.opp.auth.async_enable_user_mfa(user, "totp", {})
+    await opp.auth.async_enable_user_mfa(user, "totp", {})
 
     provider = opp.auth.auth_providers[0]
 
-    result = await.opp.auth.login_flow.async_init((provider.type, provider.id))
+    result = await opp.auth.login_flow.async_init((provider.type, provider.id))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await.opp.auth.login_flow.async_configure(
+    result = await opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "incorrect-user", "password": "test-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
-    result = await.opp.auth.login_flow.async_configure(
+    result = await opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "test-user", "password": "incorrect-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"]["base"] == "invalid_auth"
 
-    result = await.opp.auth.login_flow.async_configure(
+    result = await opp.auth.login_flow.async_configure(
         result["flow_id"], {"username": "test-user", "password": "test-pass"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -115,7 +115,7 @@ async def test_login_flow_validates_mfa.opp):
     assert result["data_schema"].schema.get("code") == str
 
     with patch("pyotp.TOTP.verify", return_value=False):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": "invalid-code"}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -123,7 +123,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["errors"]["base"] == "invalid_code"
 
     with patch("pyotp.TOTP.verify", return_value=True):
-        result = await.opp.auth.login_flow.async_configure(
+        result = await opp.auth.login_flow.async_configure(
             result["flow_id"], {"code": MOCK_CODE}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY

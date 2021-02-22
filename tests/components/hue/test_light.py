@@ -183,9 +183,9 @@ async def setup_bridge.opp, mock_bridge):
     )
     mock_bridge.config_entry = config_entry
    .opp.data[hue.DOMAIN] = {config_entry.entry_id: mock_bridge}
-    await.opp.config_entries.async_forward_entry_setup(config_entry, "light")
+    await opp.config_entries.async_forward_entry_setup(config_entry, "light")
     # To flush out the service call to update the group
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_not_load_groups_if_old_bridge.opp, mock_bridge):
@@ -246,7 +246,7 @@ async def test_lights_color_mode.opp, mock_bridge):
     mock_bridge.mock_group_responses.append({})
 
     # Calling a service will trigger the updates to run
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.hue_lamp_2"}, blocking=True
     )
     # 2x light update, 1 turn on request
@@ -315,7 +315,7 @@ async def test_new_group_discovered.opp, mock_bridge):
     mock_bridge.mock_group_responses.append(new_group_response)
 
     # Calling a service will trigger the updates to run
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.group_1"}, blocking=True
     )
     # 2x group update, 1x light update, 1 turn on request
@@ -363,7 +363,7 @@ async def test_new_light_discovered.opp, mock_bridge):
     mock_bridge.mock_light_responses.append(new_light_response)
 
     # Calling a service will trigger the updates to run
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.hue_lamp_1"}, blocking=True
     )
     # 2x light update, 1 turn on request
@@ -389,7 +389,7 @@ async def test_group_removed.opp, mock_bridge):
     mock_bridge.mock_group_responses.append({"1": GROUP_RESPONSE["1"]})
 
     # Calling a service will trigger the updates to run
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.group_1"}, blocking=True
     )
 
@@ -416,7 +416,7 @@ async def test_light_removed.opp, mock_bridge):
     mock_bridge.mock_light_responses.append({"1": LIGHT_RESPONSE.get("1")})
 
     # Calling a service will trigger the updates to run
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.hue_lamp_1"}, blocking=True
     )
 
@@ -471,7 +471,7 @@ async def test_other_group_update.opp, mock_bridge):
     mock_bridge.mock_group_responses.append(updated_group_response)
 
     # Calling a service will trigger the updates to run
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.group_1"}, blocking=True
     )
     # 2x group update, 1x light update, 1 turn on request
@@ -523,7 +523,7 @@ async def test_other_light_update.opp, mock_bridge):
     mock_bridge.mock_light_responses.append(updated_light_response)
 
     # Calling a service will trigger the updates to run
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", {"entity_id": "light.hue_lamp_1"}, blocking=True
     )
     # 2x light update, 1 turn on request
@@ -569,7 +569,7 @@ async def test_light_turn_on_service.opp, mock_bridge):
 
     mock_bridge.mock_light_responses.append(updated_light_response)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": "light.hue_lamp_2", "brightness": 100, "color_temp": 300},
@@ -592,7 +592,7 @@ async def test_light_turn_on_service.opp, mock_bridge):
     assert light.state == "on"
 
     # test hue gamut in turn_on service
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": "light.hue_lamp_2", "rgb_color": [0, 0, 255]},
@@ -621,7 +621,7 @@ async def test_light_turn_off_service.opp, mock_bridge):
 
     mock_bridge.mock_light_responses.append(updated_light_response)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.hue_lamp_1"}, blocking=True
     )
     # 2x light update, 1 turn on request

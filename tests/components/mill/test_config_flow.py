@@ -18,7 +18,7 @@ def mill_setup_fixture():
 
 async def test_show_config_form.opp):
     """Test show configuration form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
 
@@ -34,7 +34,7 @@ async def test_create_entry.opp):
     }
 
     with patch("mill.Mill.connect", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=test_data
         )
 
@@ -59,7 +59,7 @@ async def test_flow_entry_already_exists(opp):
     first_entry.add_to.opp.opp)
 
     with patch("mill.Mill.connect", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=test_data
         )
 
@@ -83,7 +83,7 @@ async def test_connection_error(opp):
     first_entry.add_to.opp.opp)
 
     with patch("mill.Mill.connect", return_value=False):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=test_data
         )
 

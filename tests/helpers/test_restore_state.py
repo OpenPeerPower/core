@@ -26,7 +26,7 @@ async def test_caching_data.opp):
     ]
 
     data = await RestoreStateData.async_get_instance.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await data.store.async_save([state.as_dict() for state in stored_states])
 
     # Emulate a fresh load
@@ -41,7 +41,7 @@ async def test_caching_data.opp):
         "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data:
         state = await entity.async_get_last_state()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert state is not None
     assert state.entity_id == "input_boolean.b1"
@@ -62,7 +62,7 @@ async def test.opp_starting.opp):
     ]
 
     data = await RestoreStateData.async_get_instance.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await data.store.async_save([state.as_dict() for state in stored_states])
 
     # Emulate a fresh load
@@ -78,7 +78,7 @@ async def test.opp_starting.opp):
         "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data, patch.object.opp.states, "async_all", return_value=states):
         state = await entity.async_get_last_state()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert state is not None
     assert state.entity_id == "input_boolean.b1"
@@ -92,7 +92,7 @@ async def test.opp_starting.opp):
         "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Assert that this session states were written
     assert mock_write_data.called

@@ -253,7 +253,7 @@ class OpenPeerPower:
         """Start Open Peer Power.
 
         Note: This function is only used for testing.
-        For regular use, use "await.opp.run()".
+        For regular use, use "await opp.run()".
         """
         # Register the async start
         fire_coroutine_threadsafe(self.async_start(), self.loop)

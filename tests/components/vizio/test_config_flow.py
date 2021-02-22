@@ -62,13 +62,13 @@ async def test_user_flow_minimum_fields(
 ) -> None:
     """Test user config flow with minimum fields."""
     # test form shows
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_SPEAKER_CONFIG
     )
 
@@ -86,14 +86,14 @@ async def test_user_flow_all_fields(
 ) -> None:
     """Test user config flow with all fields."""
     # test form shows
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_USER_VALID_TV_CONFIG
     )
 
@@ -112,19 +112,19 @@ async def test_speaker_options_flow(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test options config flow for speaker."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_SPEAKER_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id, data=None)
+    result = await opp.config_entries.options.async_init(entry.entry_id, data=None)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_VOLUME_STEP: VOLUME_STEP}
     )
 
@@ -140,14 +140,14 @@ async def test_tv_options_flow_no_apps(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test options config flow for TV without providing apps option."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id, data=None)
+    result = await opp.config_entries.options.async_init(entry.entry_id, data=None)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
@@ -155,7 +155,7 @@ async def test_tv_options_flow_no_apps(
     options = {CONF_VOLUME_STEP: VOLUME_STEP}
     options.update(MOCK_INCLUDE_NO_APPS)
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input=options
     )
 
@@ -171,14 +171,14 @@ async def test_tv_options_flow_with_apps(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test options config flow for TV with providing apps option."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id, data=None)
+    result = await opp.config_entries.options.async_init(entry.entry_id, data=None)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
@@ -186,7 +186,7 @@ async def test_tv_options_flow_with_apps(
     options = {CONF_VOLUME_STEP: VOLUME_STEP}
     options.update(MOCK_INCLUDE_APPS)
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input=options
     )
 
@@ -203,14 +203,14 @@ async def test_tv_options_flow_start_with_volume(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test options config flow for TV with providing apps option after providing volume step in initial config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     entry = result["result"]
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp.config_entries.options.async_init(
         entry.entry_id, data={CONF_VOLUME_STEP: VOLUME_STEP}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -220,7 +220,7 @@ async def test_tv_options_flow_start_with_volume(
     assert CONF_APPS not in entry.options
     assert CONF_APPS_TO_INCLUDE_OR_EXCLUDE not in entry.options
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id, data=None)
+    result = await opp.config_entries.options.async_init(entry.entry_id, data=None)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
@@ -228,7 +228,7 @@ async def test_tv_options_flow_start_with_volume(
     options = {CONF_VOLUME_STEP: VOLUME_STEP}
     options.update(MOCK_INCLUDE_APPS)
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input=options
     )
 
@@ -255,7 +255,7 @@ async def test_user_host_already_configured(
     fail_entry = MOCK_SPEAKER_CONFIG.copy()
     fail_entry[CONF_NAME] = "newtestname"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=fail_entry
     )
 
@@ -279,7 +279,7 @@ async def test_user_serial_number_already_exists(
     fail_entry[CONF_HOST] = HOST2
     fail_entry[CONF_NAME] = NAME2
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=fail_entry
     )
 
@@ -291,7 +291,7 @@ async def test_user_error_on_could_not_connect(
     opp: OpenPeerPowerType, vizio_no_unique_id: pytest.fixture
 ) -> None:
     """Test with could_not_connect during user setup due to no connectivity."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
 
@@ -303,7 +303,7 @@ async def test_user_error_on_could_not_connect_invalid_token(
     opp: OpenPeerPowerType, vizio_cant_connect: pytest.fixture
 ) -> None:
     """Test with could_not_connect during user setup due to invalid token."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_USER_VALID_TV_CONFIG
     )
 
@@ -318,21 +318,21 @@ async def test_user_tv_pairing_no_apps(
     vizio_complete_pairing: pytest.fixture,
 ) -> None:
     """Test pairing config flow when access token not provided for tv during user entry and no apps configured."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_TV_CONFIG_NO_TOKEN
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pair_tv"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_PIN_CONFIG
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pairing_complete"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == NAME
@@ -349,7 +349,7 @@ async def test_user_start_pairing_failure(
     vizio_start_pairing_failure: pytest.fixture,
 ) -> None:
     """Test failure to start pairing from user config flow."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_TV_CONFIG_NO_TOKEN
     )
 
@@ -365,14 +365,14 @@ async def test_user_invalid_pin(
     vizio_invalid_pin_failure: pytest.fixture,
 ) -> None:
     """Test failure to complete pairing from user config flow."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_TV_CONFIG_NO_TOKEN
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pair_tv"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_PIN_CONFIG
     )
 
@@ -395,7 +395,7 @@ async def test_user_ignore(
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_SPEAKER_CONFIG
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -407,7 +407,7 @@ async def test_import_flow_minimum_fields(
     vizio_bypass_setup: pytest.fixture,
 ) -> None:
     """Test import config flow with minimum fields."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(
@@ -429,7 +429,7 @@ async def test_import_flow_all_fields(
     vizio_bypass_setup: pytest.fixture,
 ) -> None:
     """Test import config flow with all fields."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_IMPORT_VALID_TV_CONFIG),
@@ -458,7 +458,7 @@ async def test_import_entity_already_configured(
     entry.add_to.opp.opp)
     fail_entry = vol.Schema(VIZIO_SCHEMA)(MOCK_SPEAKER_CONFIG.copy())
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_IMPORT}, data=fail_entry
     )
 
@@ -472,12 +472,12 @@ async def test_import_flow_update_options(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test import config flow with updated options."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_SPEAKER_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].options == {CONF_VOLUME_STEP: DEFAULT_VOLUME_STEP}
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -485,7 +485,7 @@ async def test_import_flow_update_options(
 
     updated_config = MOCK_SPEAKER_CONFIG.copy()
     updated_config[CONF_VOLUME_STEP] = VOLUME_STEP + 1
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(updated_config),
@@ -503,12 +503,12 @@ async def test_import_flow_update_name_and_apps(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test import config flow with updated name and apps."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_IMPORT_VALID_TV_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -517,7 +517,7 @@ async def test_import_flow_update_name_and_apps(
     updated_config = MOCK_IMPORT_VALID_TV_CONFIG.copy()
     updated_config[CONF_NAME] = NAME2
     updated_config[CONF_APPS] = {CONF_INCLUDE: [CURRENT_APP]}
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(updated_config),
@@ -537,12 +537,12 @@ async def test_import_flow_update_remove_apps(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test import config flow with removed apps."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_TV_WITH_EXCLUDE_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -552,7 +552,7 @@ async def test_import_flow_update_remove_apps(
 
     updated_config = MOCK_TV_WITH_EXCLUDE_CONFIG.copy()
     updated_config.pop(CONF_APPS)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(updated_config),
@@ -571,28 +571,28 @@ async def test_import_needs_pairing(
     vizio_complete_pairing: pytest.fixture,
 ) -> None:
     """Test pairing config flow when access token not provided for tv during import."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_IMPORT}, data=MOCK_TV_CONFIG_NO_TOKEN
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_TV_CONFIG_NO_TOKEN
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pair_tv"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_PIN_CONFIG
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pairing_complete_import"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == NAME
@@ -611,7 +611,7 @@ async def test_import_with_apps_needs_pairing(
     import_config = MOCK_TV_CONFIG_NO_TOKEN.copy()
     import_config[CONF_APPS] = {CONF_INCLUDE: [CURRENT_APP]}
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_IMPORT}, data=import_config
     )
 
@@ -619,7 +619,7 @@ async def test_import_with_apps_needs_pairing(
     assert result["step_id"] == "user"
 
     # Mock inputting info without apps to make sure apps get stored
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input=_get_config_schema(MOCK_TV_CONFIG_NO_TOKEN)(MOCK_TV_CONFIG_NO_TOKEN),
     )
@@ -627,14 +627,14 @@ async def test_import_with_apps_needs_pairing(
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pair_tv"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_PIN_CONFIG
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "pairing_complete_import"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == NAME
@@ -650,12 +650,12 @@ async def test_import_flow_additional_configs(
     vizio_bypass_update: pytest.fixture,
 ) -> None:
     """Test import config flow with additional configs defined in CONF_APPS."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_TV_WITH_ADDITIONAL_APPS_CONFIG),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["result"].data[CONF_NAME] == NAME
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -681,7 +681,7 @@ async def test_import_error(
     fail_entry = MOCK_SPEAKER_CONFIG.copy()
     fail_entry[CONF_HOST] = "0.0.0.0"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(fail_entry),
@@ -712,7 +712,7 @@ async def test_import_ignore(
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_SPEAKER_CONFIG),
@@ -729,7 +729,7 @@ async def test_zeroconf_flow(
 ) -> None:
     """Test zeroconf config flow."""
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -741,7 +741,7 @@ async def test_zeroconf_flow(
     # defaults which were set from discovery parameters
     user_input = result["data_schema"](discovery_info)
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=user_input
     )
 
@@ -769,7 +769,7 @@ async def test_zeroconf_flow_already_configured(
 
     # Try rediscovering same device
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -798,7 +798,7 @@ async def test_zeroconf_flow_with_port_in_host(
     discovery_info[
         CONF_HOST
     ] = f"{discovery_info[CONF_HOST]}:{discovery_info[CONF_PORT]}"
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -815,7 +815,7 @@ async def test_zeroconf_dupe_fail(
 ) -> None:
     """Test zeroconf config flow when device gets discovered multiple times."""
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -824,7 +824,7 @@ async def test_zeroconf_dupe_fail(
     assert result["step_id"] == "user"
 
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -849,7 +849,7 @@ async def test_zeroconf_ignore(
     entry.add_to.opp.opp)
 
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -864,7 +864,7 @@ async def test_zeroconf_no_unique_id(
     """Test zeroconf discovery aborts when unique_id is None."""
 
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -889,7 +889,7 @@ async def test_zeroconf_abort_when_ignored(
     entry.add_to.opp.opp)
 
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -917,7 +917,7 @@ async def test_zeroconf_flow_already_configured_hostname(
 
     # Try rediscovering same device
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -940,7 +940,7 @@ async def test_import_flow_already_configured_hostname(
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_SPEAKER_CONFIG),

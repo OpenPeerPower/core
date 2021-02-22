@@ -192,7 +192,7 @@ async def async_setup_opp, config):
 
    .opp.http = server
 
-    local_ip = await.opp.async_add_executor_job.opp_util.get_local_ip)
+    local_ip = await opp.async_add_executor_job.opp_util.get_local_ip)
 
     host = local_ip
     if server_host is not None:

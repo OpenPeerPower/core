@@ -49,7 +49,7 @@ async def test_init(airsensor, opp, config):
 
     assert state.state == STATE_UNKNOWN
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My air sensor"

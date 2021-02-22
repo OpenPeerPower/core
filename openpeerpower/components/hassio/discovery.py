@@ -32,7 +32,7 @@ def async_setup_discovery_view.opp: OpenPeerPowerView, oppio):
     async def _async_discovery_start_handler(event):
         """Process all exists discovery on startup."""
         try:
-            data = await.oppio.retrieve_discovery_messages()
+            data = await oppio.retrieve_discovery_messages()
         except HassioAPIError as err:
             _LOGGER.error("Can't read discover info: %s", err)
             return

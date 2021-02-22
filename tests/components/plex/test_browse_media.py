@@ -12,7 +12,7 @@ from .const import DEFAULT_DATA
 
 async def test_browse_media.opp, opp_ws_client, mock_plex_server, requests_mock):
     """Test getting Plex clients from plex.tv."""
-    websocket_client = await.opp_ws_client.opp)
+    websocket_client = await opp_ws_client.opp)
 
     media_players = opp.states.async_entity_ids("media_player")
     msg_id = 1

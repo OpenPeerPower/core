@@ -71,7 +71,7 @@ class UniFiBase(Entity):
             self.entity_id,
             self.key,
         )
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def options_updated(self) -> None:
         """Config entry options are updated, remove entity if option is disabled."""

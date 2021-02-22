@@ -49,7 +49,7 @@ async def test_preserve_new_tracked_device_name.opp, mock_device_tracker_conf):
                .opp,
                 dt_util.utcnow() + config[CONF_SCAN_INTERVAL] + timedelta(seconds=1),
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state

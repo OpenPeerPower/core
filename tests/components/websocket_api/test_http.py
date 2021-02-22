@@ -47,7 +47,7 @@ async def test_pending_msg_peak.opp, mock_low_peak, opp_ws_client, caplog):
         "openpeerpower.components.websocket_api.http.WebSocketHandler",
         instantiate_handler,
     ):
-        websocket_client = await.opp_ws_client()
+        websocket_client = await opp_ws_client()
 
     # Kill writer task and fill queue past peak
     for _ in range(5):

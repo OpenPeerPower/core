@@ -70,13 +70,13 @@ async def test_minio_services.opp, caplog, minio_client):
         },
     )
 
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert "Setup of domain minio took" in caplog.text
 
     # Call services
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         "put",
         {"file_path": "/test/some_file", "key": "some_key", "bucket": "some_bucket"},
@@ -87,7 +87,7 @@ async def test_minio_services.opp, caplog, minio_client):
     )
     minio_client.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         "get",
         {"file_path": "/test/some_file", "key": "some_key", "bucket": "some_bucket"},
@@ -98,7 +98,7 @@ async def test_minio_services.opp, caplog, minio_client):
     )
     minio_client.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, "remove", {"key": "some_key", "bucket": "some_bucket"}, blocking=True
     )
     assert minio_client.remove_object.call_args == call("some_bucket", "some_key")
@@ -133,8 +133,8 @@ async def test_minio_listen.opp, caplog, minio_client_event):
         },
     )
 
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert "Setup of domain minio took" in caplog.text
 

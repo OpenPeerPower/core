@@ -158,7 +158,7 @@ class ValloxSensor(Entity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_update(self):
         """Fetch state from the ventilation unit."""

@@ -89,10 +89,10 @@ async def test_user_not_supervisor_create_entry.opp, mqtt):
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -108,7 +108,7 @@ async def test_user_not_supervisor_create_entry.opp, mqtt):
 
 async def test_mqtt_not_setup_opp):
     """Test that mqtt is required."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "abort"
@@ -120,7 +120,7 @@ async def test_one_instance_allowed.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE)
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "abort"
@@ -131,7 +131,7 @@ async def test_not_addon.opp, supervisor, mqtt):
     """Test opting out of add-on on Supervisor."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -141,10 +141,10 @@ async def test_not_addon.opp, supervisor, mqtt):
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"use_addon": False}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -164,7 +164,7 @@ async def test_addon_running.opp, supervisor, addon_running, addon_options):
     addon_options["network_key"] = "abc123"
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -174,10 +174,10 @@ async def test_addon_running.opp, supervisor, addon_running, addon_options):
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"use_addon": True}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -196,11 +196,11 @@ async def test_addon_info_failure.opp, supervisor, addon_info):
     addon_info.side_effect = HassioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"use_addon": True}
     )
 
@@ -214,10 +214,10 @@ async def test_addon_installed(
     """Test add-on already installed but not running on Supervisor."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"use_addon": True}
     )
 
@@ -227,10 +227,10 @@ async def test_addon_installed(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"usb_path": "/test", "network_key": "abc123"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -251,14 +251,14 @@ async def test_set_addon_config_failure(
     set_addon_options.side_effect = HassioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"use_addon": True}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"usb_path": "/test", "network_key": "abc123"}
     )
 
@@ -273,14 +273,14 @@ async def test_start_addon_failure(
     start_addon.side_effect = HassioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"use_addon": True}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"usb_path": "/test", "network_key": "abc123"}
     )
 
@@ -301,19 +301,19 @@ async def test_addon_not_installed(
     addon_installed.return_value["version"] = None
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"use_addon": True}
     )
 
     assert result["type"] == "progress"
 
     # Make sure the flow continues when the progress task is done.
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == "form"
     assert result["step_id"] == "start_addon"
@@ -324,10 +324,10 @@ async def test_addon_not_installed(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"usb_path": "/test", "network_key": "abc123"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -347,19 +347,19 @@ async def test_install_addon_failure.opp, supervisor, addon_installed, install_a
     install_addon.side_effect = HassioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"use_addon": True}
     )
 
     assert result["type"] == "progress"
 
     # Make sure the flow continues when the progress task is done.
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == "abort"
     assert result["reason"] == "addon_install_failed"
@@ -372,7 +372,7 @@ async def test_supervisor_discovery.opp, supervisor, addon_running, addon_option
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HASSIO},
         data=ADDON_DISCOVERY_INFO,
@@ -384,8 +384,8 @@ async def test_supervisor_discovery.opp, supervisor, addon_running, addon_option
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
-        await.opp.async_block_till_done()
+        result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
@@ -408,7 +408,7 @@ async def test_clean_discovery_on_user_create(
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HASSIO},
         data=ADDON_DISCOVERY_INFO,
@@ -416,7 +416,7 @@ async def test_clean_discovery_on_user_create(
 
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -426,10 +426,10 @@ async def test_clean_discovery_on_user_create(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"use_addon": False}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.flow.async_progress()) == 0
     assert result["type"] == "create_entry"
@@ -450,11 +450,11 @@ async def test_abort_discovery_with_user_flow(
     """Test discovery flow is aborted if a user flow is in progress."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    await.opp.config_entries.flow.async_init(
+    await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HASSIO},
         data=ADDON_DISCOVERY_INFO,
@@ -474,7 +474,7 @@ async def test_abort_discovery_with_existing_entry(
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE, unique_id=DOMAIN)
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HASSIO},
         data=ADDON_DISCOVERY_INFO,
@@ -491,7 +491,7 @@ async def test_discovery_addon_not_running(
     addon_options["device"] = None
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HASSIO},
         data=ADDON_DISCOVERY_INFO,
@@ -500,7 +500,7 @@ async def test_discovery_addon_not_running(
     assert result["step_id"] == oppio_confirm"
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["step_id"] == "start_addon"
     assert result["type"] == "form"
@@ -513,7 +513,7 @@ async def test_discovery_addon_not_installed(
     addon_installed.return_value["version"] = None
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_HASSIO},
         data=ADDON_DISCOVERY_INFO,
@@ -522,14 +522,14 @@ async def test_discovery_addon_not_installed(
     assert result["step_id"] == oppio_confirm"
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["step_id"] == "install_addon"
     assert result["type"] == "progress"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == "form"
     assert result["step_id"] == "start_addon"
@@ -542,7 +542,7 @@ async def test_import_addon_installed(
    .opp.config.components.add("mqtt")
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data={"usb_path": "/test/imported", "network_key": "imported123"},
@@ -551,7 +551,7 @@ async def test_import_addon_installed(
     assert result["type"] == "form"
     assert result["step_id"] == "on_supervisor"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"use_addon": True}
     )
 
@@ -567,10 +567,10 @@ async def test_import_addon_installed(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], default_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE

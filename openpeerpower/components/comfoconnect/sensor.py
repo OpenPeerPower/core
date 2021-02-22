@@ -295,7 +295,7 @@ class ComfoConnectSensor(Entity):
         self._ccb.data[self._sensor_id] = round(
             value * SENSOR_TYPES[self._sensor_type].get(ATTR_MULTIPLIER, 1), 2
         )
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def state(self):

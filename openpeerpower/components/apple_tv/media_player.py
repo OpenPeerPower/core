@@ -114,14 +114,14 @@ class AppleTvMediaPlayer(AppleTVEntity, MediaPlayerEntity):
     def playstatus_update(self, _, playing):
         """Print what is currently playing when it changes."""
         self._playing = playing
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def playstatus_error(self, _, exception):
         """Inform about an error and restart push updates."""
         _LOGGER.warning("A %s error occurred: %s", exception.__class__, exception)
         self._playing = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def app_id(self):

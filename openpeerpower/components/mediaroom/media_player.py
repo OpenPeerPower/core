@@ -184,7 +184,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self.set_state(stb_state)
             _LOGGER.debug("STB(%s) is [%s]", self.host, self._state)
             self._available = True
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self.async_on_remove(
             async_dispatcher_connect(
@@ -218,7 +218,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def unique_id(self):
@@ -260,7 +260,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self):
         """Turn off the receiver."""
@@ -272,7 +272,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_media_play(self):
         """Send play command."""
@@ -285,7 +285,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_media_pause(self):
         """Send pause command."""
@@ -297,7 +297,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_media_stop(self):
         """Send stop command."""
@@ -309,7 +309,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_media_previous_track(self):
         """Send Program Down command."""
@@ -321,7 +321,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_media_next_track(self):
         """Send Program Up command."""
@@ -333,7 +333,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_volume_up(self):
         """Send volume up command."""
@@ -343,7 +343,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self._available = True
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_volume_down(self):
         """Send volume up command."""
@@ -352,7 +352,7 @@ class MediaroomDevice(MediaPlayerEntity):
             await self.stb.send_cmd("VolDown")
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_mute_volume(self, mute):
         """Send mute command."""
@@ -361,4 +361,4 @@ class MediaroomDevice(MediaPlayerEntity):
             await self.stb.send_cmd("Mute")
         except PyMediaroomError:
             self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()

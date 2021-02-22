@@ -22,7 +22,7 @@ from openpeerpower.components.google_assistant import (
     smart_home as sh,
     trait,
 )
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import ATTR_UNIT_OF_MEASUREMENT, TEMP_CELSIUS, __version__
 from openpeerpower.core import EVENT_CALL_SERVICE, State
 from openpeerpower.helpers import device_registry
@@ -59,7 +59,7 @@ async def test_sync_message.opp):
     )
     light.opp = opp
     light.entity_id = "light.demo_light"
-    await light.async_update_ha_state()
+    await light.async_update_op_state()
 
     # This should not show up in the sync request
    .opp.states.async_set("sensor.no_match", "something")
@@ -145,7 +145,7 @@ async def test_sync_message.opp):
             ],
         },
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].event_type == EVENT_SYNC_RECEIVED
@@ -188,7 +188,7 @@ async def test_sync_in_area(area_on_device, opp, registries):
     )
     light.opp = opp
     light.entity_id = entity.entity_id
-    await light.async_update_ha_state()
+    await light.async_update_op_state()
 
     config = MockConfig(should_expose=lambda _: True, entity_config={})
 
@@ -262,7 +262,7 @@ async def test_sync_in_area(area_on_device, opp, registries):
             ],
         },
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].event_type == EVENT_SYNC_RECEIVED
@@ -281,19 +281,19 @@ async def test_query_message.opp):
     )
     light.opp = opp
     light.entity_id = "light.demo_light"
-    await light.async_update_ha_state()
+    await light.async_update_op_state()
 
     light2 = DemoLight(
         None, "Another Light", state=True, hs_color=(180, 75), ct=400, brightness=78
     )
     light2.opp = opp
     light2.entity_id = "light.another_light"
-    await light2.async_update_ha_state()
+    await light2.async_update_op_state()
 
     light3 = DemoLight(None, "Color temp Light", state=True, ct=400, brightness=200)
     light3.opp = opp
     light3.entity_id = "light.color_temp_light"
-    await light3.async_update_ha_state()
+    await light3.async_update_op_state()
 
     events = []
    .opp.bus.async_listen(EVENT_QUERY_RECEIVED, events.append)
@@ -349,7 +349,7 @@ async def test_query_message.opp):
         },
     }
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 4
     assert events[0].event_type == EVENT_QUERY_RECEIVED
@@ -381,9 +381,9 @@ async def test_query_message.opp):
 async def test_execute.opp):
     """Test an execute command."""
     await async_setup_component.opp, "light", {"light": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.ceiling_lights"}, blocking=True
     )
 
@@ -572,7 +572,7 @@ async def test_raising_error_trait.opp):
 
     events = []
    .opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     result = await sh.async_handle_message(
        .opp,
@@ -658,7 +658,7 @@ async def test_unavailable_state_does_sync.opp):
     light.opp = opp
     light.entity_id = "light.demo_light"
     light._available = False  # pylint: disable=protected-access
-    await light.async_update_ha_state()
+    await light.async_update_op_state()
 
     events = []
    .opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
@@ -724,7 +724,7 @@ async def test_unavailable_state_does_sync.opp):
             ],
         },
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].event_type == EVENT_SYNC_RECEIVED
@@ -751,7 +751,7 @@ async def test_device_class_switch.opp, device_class, google_type):
     )
     sensor.opp = opp
     sensor.entity_id = "switch.demo_sensor"
-    await sensor.async_update_ha_state()
+    await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
        .opp,
@@ -796,7 +796,7 @@ async def test_device_class_binary_sensor.opp, device_class, google_type):
     )
     sensor.opp = opp
     sensor.entity_id = "binary_sensor.demo_sensor"
-    await sensor.async_update_ha_state()
+    await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
        .opp,
@@ -840,7 +840,7 @@ async def test_device_class_cover.opp, device_class, google_type):
     sensor = DemoCover(None, opp, "Demo Sensor", device_class=device_class)
     sensor.opp = opp
     sensor.entity_id = "cover.demo_sensor"
-    await sensor.async_update_ha_state()
+    await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
        .opp,
@@ -885,7 +885,7 @@ async def test_device_media_player.opp, device_class, google_type):
     sensor = AbstractDemoPlayer("Demo", device_class=device_class)
     sensor.opp = opp
     sensor.entity_id = "media_player.demo"
-    await sensor.async_update_ha_state()
+    await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
        .opp,
@@ -938,7 +938,7 @@ async def test_query_disconnect.opp):
 
 async def test_trait_execute_adding_query_data.opp):
     """Test a trait execute influencing query data."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
@@ -1167,7 +1167,7 @@ async def test_sync_message_recovery.opp, caplog):
     )
     light.opp = opp
     light.entity_id = "light.demo_light"
-    await light.async_update_ha_state()
+    await light.async_update_op_state()
 
    .opp.states.async_set(
         "light.bad_light",

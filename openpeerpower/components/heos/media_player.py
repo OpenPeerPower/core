@@ -102,11 +102,11 @@ class HeosMediaPlayer(MediaPlayerEntity):
             return
         if event == heos_const.EVENT_PLAYER_NOW_PLAYING_PROGRESS:
             self._media_position_updated_at = utcnow()
-        await self.async_update_ha_state(True)
+        await self.async_update_op_state(True)
 
     async def _heos_updated(self):
         """Handle sources changed."""
-        await self.async_update_ha_state(True)
+        await self.async_update_op_state(True)
 
     async def async_added_to.opp(self):
         """Device added to.opp."""

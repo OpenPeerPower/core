@@ -125,7 +125,7 @@ class IcloudTrackerEntity(TrackerEntity):
     async def async_added_to.opp(self):
         """Register state update callback."""
         self._unsub_dispatcher = async_dispatcher_connect(
-            self.opp, self._account.signal_device_update, self.async_write_ha_state
+            self.opp, self._account.signal_device_update, self.async_write_op_state
         )
 
     async def async_will_remove_from.opp(self):

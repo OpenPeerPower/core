@@ -69,7 +69,7 @@ class AbstractOpenWeatherMapSensor(Entity):
     async def async_added_to.opp(self):
         """Connect to dispatcher listening for entity data notifications."""
         self.async_on_remove(
-            self._coordinator.async_add_listener(self.async_write_ha_state)
+            self._coordinator.async_add_listener(self.async_write_op_state)
         )
 
     async def async_update(self):

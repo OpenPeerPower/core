@@ -44,7 +44,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert state.attributes[ATTR_FAN_MODES] == ["Auto Low", "On Low"]
 
     # Test set target temperature
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": "climate.ct32_thermostat_mode", "temperature": 26.1},
@@ -58,7 +58,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert msg["payload"]["ValueIDKey"] == 281475099443218
 
     # Test hvac_mode with set_temperature
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {
@@ -76,7 +76,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert msg["payload"]["ValueIDKey"] == 281475099443218
 
     # Test set mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": "climate.ct32_thermostat_mode", "hvac_mode": HVAC_MODE_HEAT_COOL},
@@ -88,7 +88,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert msg["payload"] == {"Value": 3, "ValueIDKey": 122683412}
 
     # Test set missing mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": "climate.ct32_thermostat_mode", "hvac_mode": "fan_only"},
@@ -98,7 +98,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert "Received an invalid hvac mode: fan_only" in caplog.text
 
     # Test set fan mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_fan_mode",
         {"entity_id": "climate.ct32_thermostat_mode", "fan_mode": "On Low"},
@@ -110,7 +110,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert msg["payload"] == {"Value": 1, "ValueIDKey": 122748948}
 
     # Test set invalid fan mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_fan_mode",
         {"entity_id": "climate.ct32_thermostat_mode", "fan_mode": "invalid fan mode"},
@@ -122,7 +122,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     # Test incoming mode change to auto,
     # resulting in multiple setpoints
     receive_message(climate_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("climate.ct32_thermostat_mode")
     assert state is not None
     assert state.state == HVAC_MODE_HEAT_COOL
@@ -131,7 +131,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == 25.6
 
     # Test setting high/low temp on multiple setpoints
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {
@@ -171,7 +171,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     ]
 
     # Test set target temperature
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {
@@ -189,7 +189,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     }
 
     # Test set preset mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {
@@ -208,7 +208,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
 
     # Test set preset mode None
     # This preset should set and return to current hvac mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {
@@ -226,7 +226,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     }
 
     # Test set invalid preset mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {
@@ -253,7 +253,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert state.attributes.get(ATTR_PRESET_MODES) is None
 
     # Test set target temperature
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {
@@ -270,7 +270,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
         "ValueIDKey": 281475116220434,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {
@@ -297,7 +297,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
     assert state.attributes.get(ATTR_PRESET_MODES) is None
 
     # Test set target temperature
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {
@@ -314,7 +314,7 @@ async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
         "ValueIDKey": 281475267215378,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {

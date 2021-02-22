@@ -35,7 +35,7 @@ async def setup_demo_humidifier.opp):
     assert await async_setup_component(
        .opp, DOMAIN, {"humidifier": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_setup_params.opp):
@@ -58,13 +58,13 @@ async def test_set_target_humidity_bad_attr.opp):
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_SET_HUMIDITY,
             {ATTR_HUMIDITY: None, ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER},
             blocking=True,
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
@@ -75,13 +75,13 @@ async def test_set_target_humidity.opp):
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_HUMIDITY,
         {ATTR_HUMIDITY: 64, ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 64
@@ -89,13 +89,13 @@ async def test_set_target_humidity.opp):
 
 async def test_set_hold_mode_away.opp):
     """Test setting the hold mode away."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_MODE,
         {ATTR_MODE: MODE_AWAY, ATTR_ENTITY_ID: ENTITY_HYGROSTAT},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_HYGROSTAT)
     assert state.attributes.get(ATTR_MODE) == MODE_AWAY
@@ -103,13 +103,13 @@ async def test_set_hold_mode_away.opp):
 
 async def test_set_hold_mode_eco.opp):
     """Test setting the hold mode eco."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_MODE,
         {ATTR_MODE: MODE_ECO, ATTR_ENTITY_ID: ENTITY_HYGROSTAT},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_HYGROSTAT)
     assert state.attributes.get(ATTR_MODE) == MODE_ECO
@@ -117,13 +117,13 @@ async def test_set_hold_mode_eco.opp):
 
 async def test_turn_on.opp):
     """Test turn on device."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
@@ -132,13 +132,13 @@ async def test_turn_on.opp):
 
 async def test_turn_off.opp):
     """Test turn off device."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
@@ -147,19 +147,19 @@ async def test_turn_off.opp):
 
 async def test_toggle.opp):
     """Test toggle device."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
     )
     state = opp.states.get(ENTITY_DEHUMIDIFIER)

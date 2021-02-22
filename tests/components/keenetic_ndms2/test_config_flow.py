@@ -46,7 +46,7 @@ def mock_keenetic_connect_failed():
 async def test_flow_works.opp: OpenPeerPowerType, connect):
     """Test config flow."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         keenetic.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -57,11 +57,11 @@ async def test_flow_works.opp: OpenPeerPowerType, connect):
     ) as mock_setup, patch(
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input=MOCK_DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == MOCK_NAME
@@ -78,12 +78,12 @@ async def test_import_works.opp: OpenPeerPowerType, connect):
     ) as mock_setup, patch(
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             keenetic.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=MOCK_DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == MOCK_NAME
@@ -101,8 +101,8 @@ async def test_options.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
@@ -122,12 +122,12 @@ async def test_options.opp):
         )
     }
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input=MOCK_OPTIONS,
     )
@@ -144,11 +144,11 @@ async def test_host_already_configured.opp, connect):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         keenetic.DOMAIN, context={"source": "user"}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_DATA
     )
 
@@ -159,10 +159,10 @@ async def test_host_already_configured.opp, connect):
 async def test_connection_error(opp, connect_error):
     """Test error when connection is unsuccessful."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         keenetic.DOMAIN, context={"source": "user"}
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_DATA
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

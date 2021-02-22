@@ -83,7 +83,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if config_entry.data[CONF_TYPE] == CONF_TYPE_OWSERVER:
         onewirehub = opp.data[DOMAIN][config_entry.unique_id]
 
-        entities = await.opp.async_add_executor_job(get_entities, onewirehub)
+        entities = await opp.async_add_executor_job(get_entities, onewirehub)
         async_add_entities(entities, True)
 
 

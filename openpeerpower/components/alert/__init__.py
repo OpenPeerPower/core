@@ -144,7 +144,7 @@ async def async_setup_opp, config):
     )
 
     for alert in entities:
-        alert.async_write_ha_state()
+        alert.async_write_op_state()
 
     return True
 
@@ -245,7 +245,7 @@ class Alert(ToggleEntity):
         else:
             await self._schedule_notify()
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def end_alerting(self):
         """End the alert procedures."""
@@ -255,7 +255,7 @@ class Alert(ToggleEntity):
         self._firing = False
         if self._send_done_message:
             await self._notify_done_message()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def _schedule_notify(self):
         """Schedule a notification."""
@@ -316,13 +316,13 @@ class Alert(ToggleEntity):
         """Async Unacknowledge alert."""
         _LOGGER.debug("Reset Alert: %s", self._name)
         self._ack = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Async Acknowledge alert."""
         _LOGGER.debug("Acknowledged Alert: %s", self._name)
         self._ack = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_toggle(self, **kwargs):
         """Async toggle alert."""

@@ -117,7 +117,7 @@ async def test_init_gatecontroller(gatecontroller, opp, config):
     assert ATTR_CURRENT_POSITION not in state.attributes
     assert state.state == STATE_UNKNOWN
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My gate controller"
@@ -147,7 +147,7 @@ async def test_init_shutterbox(shutterbox, opp, config):
     assert ATTR_CURRENT_POSITION not in state.attributes
     assert state.state == STATE_UNKNOWN
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My shutter"
@@ -179,7 +179,7 @@ async def test_init_gatebox(gatebox, opp, config):
     assert ATTR_CURRENT_POSITION not in state.attributes
     assert state.state == STATE_UNKNOWN
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
 
     assert device.name == "My gatebox"
@@ -208,7 +208,7 @@ async def test_open(feature, opp, config):
     assert.opp.states.get(entity_id).state == STATE_CLOSED
 
     feature_mock.async_update = AsyncMock()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         SERVICE_OPEN_COVER,
         {"entity_id": entity_id},
@@ -236,7 +236,7 @@ async def test_close(feature, opp, config):
     assert.opp.states.get(entity_id).state == STATE_OPEN
 
     feature_mock.async_update = AsyncMock()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", SERVICE_CLOSE_COVER, {"entity_id": entity_id}, blocking=True
     )
     assert.opp.states.get(entity_id).state == STATE_CLOSING
@@ -266,7 +266,7 @@ async def test_stop(feature, opp, config):
     assert.opp.states.get(entity_id).state == STATE_OPENING
 
     feature_mock.async_update = AsyncMock()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", SERVICE_STOP_COVER, {"entity_id": entity_id}, blocking=True
     )
     assert.opp.states.get(entity_id).state == STATE_OPEN
@@ -314,7 +314,7 @@ async def test_set_position(feature, opp, config):
     assert.opp.states.get(entity_id).state == STATE_CLOSED
 
     feature_mock.async_update = AsyncMock()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         SERVICE_SET_COVER_POSITION,
         {"entity_id": entity_id, ATTR_POSITION: 1},

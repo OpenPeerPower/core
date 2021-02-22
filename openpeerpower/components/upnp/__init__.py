@@ -72,7 +72,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     _LOGGER.debug("async_setup, config: %s", config)
     conf_default = CONFIG_SCHEMA({DOMAIN: {}})[DOMAIN]
     conf = config.get(DOMAIN, conf_default)
-    local_ip = await.opp.async_add_executor_job(get_local_ip)
+    local_ip = await opp.async_add_executor_job(get_local_ip)
    .opp.data[DOMAIN] = {
         DOMAIN_CONFIG: conf,
         DOMAIN_COORDINATORS: {},

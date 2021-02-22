@@ -62,7 +62,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     async def open_connection(now=None):
         """Open a connection to AlarmDecoder."""
         try:
-            await.opp.async_add_executor_job(controller.open, baud)
+            await opp.async_add_executor_job(controller.open, baud)
         except NoDeviceError:
             _LOGGER.debug("Failed to connect. Retrying in 5 seconds")
            .opp.helpers.event.async_track_point_in_time(
@@ -155,7 +155,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
    .opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_UPDATE_LISTENER]()
    .opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_STOP_LISTENER]()
-    await.opp.async_add_executor_job.opp.data[DOMAIN][entry.entry_id][DATA_AD].close)
+    await opp.async_add_executor_job.opp.data[DOMAIN][entry.entry_id][DATA_AD].close)
 
     if opp.data[DOMAIN][entry.entry_id]:
        .opp.data[DOMAIN].pop(entry.entry_id)
@@ -168,4 +168,4 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 async def _update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle options update."""
     _LOGGER.debug("AlarmDecoder options updated: %s", entry.as_dict()["options"])
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)

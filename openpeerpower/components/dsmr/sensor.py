@@ -235,7 +235,7 @@ async def async_setup_entry(
         while.opp.state != CoreState.stopping:
             # Start DSMR asyncio.Protocol reader
             try:
-                transport, protocol = await.opp.loop.create_task(reader_factory())
+                transport, protocol = await opp.loop.create_task(reader_factory())
 
                 if transport:
                     # Register listener to close transport on HA shutdown
@@ -305,7 +305,7 @@ class DSMREntity(Entity):
         """Update data."""
         self.telegram = telegram
         if self.opp and self._obis in self.telegram:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     def get_dsmr_object_attr(self, attribute):
         """Read attribute from last received telegram for this DSMR object."""

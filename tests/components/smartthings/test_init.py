@@ -17,7 +17,7 @@ from openpeerpower.components.smartthings.const import (
     SIGNAL_SMARTTHINGS_UPDATE,
     SUPPORTED_PLATFORMS,
 )
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import HTTP_FORBIDDEN, HTTP_INTERNAL_SERVER_ERROR
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
@@ -33,7 +33,7 @@ async def test_migration_creates_new_flow.opp, smartthings_mock, config_entry):
     config_entry.add_to.opp.opp)
 
     await smartthings.async_migrate_entry.opp, config_entry)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
@@ -66,7 +66,7 @@ async def test_unrecoverable_api_errors_create_new_flow(
     assert not result
 
     # Assert entry was removed and new flow created
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not.opp.config_entries.async_entries(DOMAIN)
     flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
@@ -117,7 +117,7 @@ async def test_base_url_no_longer_https_does_not_load(
    .opp, config_entry, app, smartthings_mock
 ):
     """Test base_url no longer valid creates a new flow."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "http://example.local:8123"},
     )
@@ -173,7 +173,7 @@ async def test_scenes_unauthorized_loads_platforms(
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry.opp, config_entry)
         # Assert platforms loaded
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -205,7 +205,7 @@ async def test_config_entry_loads_platforms(
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry.opp, config_entry)
         # Assert platforms loaded
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -236,7 +236,7 @@ async def test_config_entry_loads_unconnected_cloud(
     smartthings_mock.subscriptions.return_value = subscriptions
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry.opp, config_entry)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -257,7 +257,7 @@ async def test_unload_entry.opp, config_entry):
         assert connect_disconnect.call_count == 1
         assert config_entry.entry_id not in.opp.data[DOMAIN][DATA_BROKERS]
         # Assert platforms unloaded
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
@@ -445,7 +445,7 @@ async def test_event_handler_dispatches_updated_devices(
 
     # pylint:disable=protected-access
     await broker._event_handler(request, None, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert called
     for device in devices:
@@ -472,7 +472,7 @@ async def test_event_handler_ignores_other_installed_app(
 
     # pylint:disable=protected-access
     await broker._event_handler(request, None, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not called
 
@@ -510,6 +510,6 @@ async def test_event_handler_fires_button_events(
 
     # pylint:disable=protected-access
     await broker._event_handler(request, None, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert called

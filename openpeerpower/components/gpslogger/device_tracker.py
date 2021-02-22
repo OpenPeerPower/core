@@ -170,4 +170,4 @@ class GPSLoggerEntity(TrackerEntity, RestoreEntity):
         self._battery = battery
         self._accuracy = accuracy
         self._attributes.update(attributes)
-        self.async_write_ha_state()
+        self.async_write_op_state()

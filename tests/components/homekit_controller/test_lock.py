@@ -32,12 +32,12 @@ async def test_switch_change_lock_state.opp, utcnow):
     """Test that we can turn a HomeKit lock on and off again."""
     helper = await setup_test_component.opp, create_lock_service)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "lock", "lock", {"entity_id": "lock.testdevice"}, blocking=True
     )
     assert helper.characteristics[LOCK_TARGET_STATE].value == 1
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "lock", "unlock", {"entity_id": "lock.testdevice"}, blocking=True
     )
     assert helper.characteristics[LOCK_TARGET_STATE].value == 0

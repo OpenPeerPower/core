@@ -405,7 +405,7 @@ class LIFXManager:
             entity = self.entities[bulb.mac_addr]
             _LOGGER.debug("%s unregister", entity.who)
             entity.registered = False
-            entity.async_write_ha_state()
+            entity.async_write_op_state()
 
 
 class AwaitAioLIFX:
@@ -549,7 +549,7 @@ class LIFXLight(LightEntity):
         """Request new status and push it to.opp."""
         self.postponed_update = None
         await self.async_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def update_during_transition(self, when):
         """Update state at the start and end of a transition."""

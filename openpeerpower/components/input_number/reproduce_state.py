@@ -44,7 +44,7 @@ async def _async_reproduce_state(
     service_data = {ATTR_ENTITY_ID: state.entity_id, ATTR_VALUE: state.state}
 
     try:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN, service, service_data, context=context, blocking=True
         )
     except vol.Invalid as err:

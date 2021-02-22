@@ -649,7 +649,7 @@ class SonosEntity(MediaPlayerEntity):
             self._seen_timer()
             self.async_unseen()
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_unseen(self, now=None):
@@ -668,7 +668,7 @@ class SonosEntity(MediaPlayerEntity):
 
         self._subscriptions = []
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def available(self) -> bool:
@@ -782,13 +782,13 @@ class SonosEntity(MediaPlayerEntity):
                 else:
                     self.update_media_music(update_position, track_info)
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
         # Also update slaves
         for entity in self.opp.data[DATA_SONOS].entities:
             coordinator = entity.coordinator
             if coordinator and coordinator.unique_id == self.unique_id:
-                entity.schedule_update_ha_state()
+                entity.schedule_update_op_state()
 
     def update_media_linein(self, source):
         """Update state when playing from line-in/tv."""
@@ -885,7 +885,7 @@ class SonosEntity(MediaPlayerEntity):
             if "dialog_level" in variables:
                 self._speech_enhance = variables["dialog_level"] == "1"
 
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
         else:
             self._player_volume = self.soco.volume
             self._player_muted = self.soco.mute
@@ -932,7 +932,7 @@ class SonosEntity(MediaPlayerEntity):
 
             self._coordinator = None
             self._sonos_group = sonos_group
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
             for slave_uid in group[1:]:
                 slave = _get_entity_from_soco_uid(self.opp, slave_uid)
@@ -940,7 +940,7 @@ class SonosEntity(MediaPlayerEntity):
                     # pylint: disable=protected-access
                     slave._coordinator = self
                     slave._sonos_group = sonos_group
-                    slave.async_schedule_update_ha_state()
+                    slave.async_schedule_update_op_state()
 
         async def _async_handle_group_event(event):
             """Get async lock and handle event."""
@@ -966,7 +966,7 @@ class SonosEntity(MediaPlayerEntity):
         """Update information about available content."""
         if event and "favorites_update_id" in event.variables:
             self._set_favorites()
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     @property
     def volume_level(self):
@@ -1268,7 +1268,7 @@ class SonosEntity(MediaPlayerEntity):
     async def join_multi.opp, master, entities):
         """Form a group with other players."""
         async with.opp.data[DATA_SONOS].topology_condition:
-            group = await.opp.async_add_executor_job(master.join, entities)
+            group = await opp.async_add_executor_job(master.join, entities)
             await SonosEntity.wait_for_groups.opp, [group])
 
     @soco_error()
@@ -1291,7 +1291,7 @@ class SonosEntity(MediaPlayerEntity):
                 entity.unjoin()
 
         async with.opp.data[DATA_SONOS].topology_condition:
-            await.opp.async_add_executor_job(_unjoin_all, entities)
+            await opp.async_add_executor_job(_unjoin_all, entities)
             await SonosEntity.wait_for_groups.opp, [[e] for e in entities])
 
     @soco_error()
@@ -1321,7 +1321,7 @@ class SonosEntity(MediaPlayerEntity):
                 entities.update(entity._sonos_group)
 
         async with.opp.data[DATA_SONOS].topology_condition:
-            await.opp.async_add_executor_job(_snapshot_all, entities)
+            await opp.async_add_executor_job(_snapshot_all, entities)
 
     @soco_error()
     def restore(self):
@@ -1377,13 +1377,13 @@ class SonosEntity(MediaPlayerEntity):
                 entities.update(entity._snapshot_group)
 
         async with.opp.data[DATA_SONOS].topology_condition:
-            groups = await.opp.async_add_executor_job(
+            groups = await opp.async_add_executor_job(
                 _restore_groups, entities, with_group
             )
 
             await SonosEntity.wait_for_groups.opp, groups)
 
-            await.opp.async_add_executor_job(_restore_players, entities)
+            await opp.async_add_executor_job(_restore_players, entities)
 
     @staticmethod
     async def wait_for_groups.opp, groups):
@@ -1409,7 +1409,7 @@ class SonosEntity(MediaPlayerEntity):
         try:
             with async_timeout.timeout(5):
                 while not _test_groups(groups):
-                    await.opp.data[DATA_SONOS].topology_condition.wait()
+                    await opp.data[DATA_SONOS].topology_condition.wait()
         except asyncio.TimeoutError:
             _LOGGER.warning("Timeout waiting for target groups %s", groups)
 

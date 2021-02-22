@@ -248,7 +248,7 @@ class TemplateEntity(Entity):
                     event, update.template, update.last_result, update.result
                 )
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def _async_template_startup(self, *_) -> None:
         template_var_tups = []

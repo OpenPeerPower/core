@@ -102,7 +102,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             return
 
         _LOGGER.debug("zhong_hong hub start listen event")
-        await.opp.async_add_executor_job(_start_hub)
+        await opp.async_add_executor_job(_start_hub)
         hub_is_initialized = True
 
     async_dispatcher_connect.opp, SIGNAL_DEVICE_ADDED, startup)
@@ -150,7 +150,7 @@ class ZhongHongClimate(ClimateEntity):
             self._current_fan_mode = self._device.current_fan_mode
         if self._device.target_temperature:
             self._target_temperature = self._device.target_temperature
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def should_poll(self):

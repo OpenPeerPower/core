@@ -149,7 +149,7 @@ class MetOfficeWeather(WeatherEntity):
     def _update_callback(self) -> None:
         """Load data from integration."""
         self.metoffice_now = self._data.now
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def should_poll(self) -> bool:

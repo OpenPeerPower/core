@@ -215,7 +215,7 @@ class ShellyBlockEntity(entity.Entity):
     @callback
     def _update_callback(self):
         """Handle device update."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class ShellyBlockAttributeEntity(ShellyBlockEntity, entity.Entity):

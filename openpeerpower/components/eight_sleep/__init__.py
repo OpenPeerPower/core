@@ -212,7 +212,7 @@ class EightSleepUserEntity(Entity):
         @callback
         def async_eight_user_update():
             """Update callback."""
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(
@@ -239,7 +239,7 @@ class EightSleepHeatEntity(Entity):
         @callback
         def async_eight_heat_update():
             """Update callback."""
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(

@@ -221,7 +221,7 @@ class SMAsensor(Entity):
             self._state = self._sensor.value
 
         if update:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def unique_id(self):

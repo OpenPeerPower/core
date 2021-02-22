@@ -83,7 +83,7 @@ class TasmotaLight(
         """Handle updated discovery message."""
         await super().discovery_update(update, write_state=False)
         self._setup_from_entity()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _setup_from_entity(self):
         """(Re)Setup the entity."""
@@ -134,7 +134,7 @@ class TasmotaLight(
                 self._white_value = None
             if self._white_value is not None and self._white_value > 0:
                 self._hs = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def brightness(self):

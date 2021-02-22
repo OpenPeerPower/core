@@ -153,7 +153,7 @@ class TimeDateSensor(Entity):
     def point_in_time_listener(self, time_date):
         """Get the latest data and update state."""
         self._update_internal_state(time_date)
-        self.async_write_ha_state()
+        self.async_write_op_state()
         self.unsub = async_track_point_in_utc_time(
             self.opp, self.point_in_time_listener, self.get_next_interval()
         )

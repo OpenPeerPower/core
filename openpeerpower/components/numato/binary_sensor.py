@@ -95,7 +95,7 @@ class NumatoGpioBinarySensor(BinarySensorEntity):
     def _async_update_state(self, level):
         """Update entity state."""
         self._state = level
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def should_poll(self):

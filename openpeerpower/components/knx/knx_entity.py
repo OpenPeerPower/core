@@ -34,7 +34,7 @@ class KnxEntity(Entity):
 
     async def after_update_callback(self, device: XknxDevice):
         """Call after device was updated."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self) -> None:
         """Store register state change callback."""

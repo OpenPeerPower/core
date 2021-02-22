@@ -18,7 +18,7 @@ HA_TO_TASMOTA_SPEED_MAP = {
     fan.SPEED_HIGH: tasmota_const.FAN_SPEED_HIGH,
 }
 
-TASMOTA_TO_HA_SPEED_MAP = {v: k for k, v in HA_TO_TASMOTA_SPEED_MAP.items()}
+TASMOTA_TO_OP_SPEED_MAP = {v: k for k, v in HA_TO_TASMOTA_SPEED_MAP.items()}
 
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
@@ -58,7 +58,7 @@ class TasmotaFan(
     @property
     def speed(self):
         """Return the current speed."""
-        return TASMOTA_TO_HA_SPEED_MAP.get(self._state)
+        return TASMOTA_TO_OP_SPEED_MAP.get(self._state)
 
     @property
     def speed_list(self):

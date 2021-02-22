@@ -330,7 +330,7 @@ class Zone(entity.Entity):
             return
         self._config = config
         self._generate_attrs()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _generate_attrs(self) -> None:

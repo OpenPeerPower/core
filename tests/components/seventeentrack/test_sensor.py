@@ -130,7 +130,7 @@ async def _setup_seventeentrack.opp, config=None, summary_data=None):
 
     ProfileMock.summary_data = summary_data
     assert await async_setup_component.opp, "sensor", config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def _goto_future.opp, future=None):
@@ -139,22 +139,22 @@ async def _goto_future.opp, future=None):
         future = utcnow() + datetime.timedelta(minutes=10)
     with patch("openpeerpower.util.utcnow", return_value=future):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_full_valid_config(opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_FULL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
 async def test_valid_config(opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 

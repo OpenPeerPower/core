@@ -72,8 +72,8 @@ async def setup_denonavr.opp):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_ID)
 
@@ -89,7 +89,7 @@ async def test_get_command.opp, client):
         ATTR_ENTITY_ID: ENTITY_ID,
         ATTR_COMMAND: "test_command",
     }
-    await.opp.services.async_call(DOMAIN, SERVICE_GET_COMMAND, data)
-    await.opp.async_block_till_done()
+    await opp.services.async_call(DOMAIN, SERVICE_GET_COMMAND, data)
+    await opp.async_block_till_done()
 
     client.send_get_command.assert_called_with("test_command")

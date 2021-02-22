@@ -39,12 +39,12 @@ class OPiGPIOBinarySensor(BinarySensorEntity):
 
         def gpio_edge_listener(port):
             """Update GPIO when edge change is detected."""
-            self.schedule_update_ha_state(True)
+            self.schedule_update_op_state(True)
 
         def setup_entity():
             setup_input(self._port)
             edge_detect(self._port, gpio_edge_listener)
-            self.schedule_update_ha_state(True)
+            self.schedule_update_op_state(True)
 
         await self.opp.async_add_executor_job(setup_entity)
 

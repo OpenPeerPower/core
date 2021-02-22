@@ -5,7 +5,7 @@ import ambiclimate
 
 from openpeerpower import data_entry_flow
 from openpeerpower.components.ambiclimate import config_flow
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util import aiohttp
@@ -13,7 +13,7 @@ from openpeerpower.util import aiohttp
 
 async def init_config_flow.opp):
     """Init a configuration flow."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )

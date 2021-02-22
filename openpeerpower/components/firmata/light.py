@@ -89,10 +89,10 @@ class FirmataLight(FirmataPinEntity, LightEntity):
         """Turn on light."""
         level = kwargs.get(ATTR_BRIGHTNESS, self._last_on_level)
         await self._api.set_level(level)
-        self.async_write_ha_state()
+        self.async_write_op_state()
         self._last_on_level = level
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn off light."""
         await self._api.set_level(0)
-        self.async_write_ha_state()
+        self.async_write_op_state()

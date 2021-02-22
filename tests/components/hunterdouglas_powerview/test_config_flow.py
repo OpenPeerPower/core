@@ -25,7 +25,7 @@ def _get_mock_powerview_userdata(userdata=None, get_resources=None):
 async def test_user_form.opp):
     """Test we get the user form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -42,11 +42,11 @@ async def test_user_form.opp):
         "openpeerpower.components.hunterdouglas_powerview.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.2.3.4"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "AlexanderHD"
@@ -56,13 +56,13 @@ async def test_user_form.opp):
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
-    result3 = await.opp.config_entries.flow.async_init(
+    result3 = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result3["type"] == "form"
     assert result3["errors"] == {}
 
-    result4 = await.opp.config_entries.flow.async_configure(
+    result4 = await opp.config_entries.flow.async_configure(
         result3["flow_id"],
         {"host": "1.2.3.4"},
     )
@@ -81,7 +81,7 @@ async def test_form_homekit.opp):
         "openpeerpower.components.hunterdouglas_powerview.UserData",
         return_value=mock_powerview_userdata,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "homekit"},
             data={
@@ -109,8 +109,8 @@ async def test_form_homekit.opp):
         "openpeerpower.components.hunterdouglas_powerview.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
-        await.opp.async_block_till_done()
+        result2 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "PowerViewHub"
@@ -120,7 +120,7 @@ async def test_form_homekit.opp):
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
-    result3 = await.opp.config_entries.flow.async_init(
+    result3 = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": "homekit"},
         data={
@@ -134,7 +134,7 @@ async def test_form_homekit.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -145,7 +145,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.hunterdouglas_powerview.UserData",
         return_value=mock_powerview_userdata,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.2.3.4"},
         )
@@ -156,7 +156,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_no_data.opp):
     """Test we handle no data being returned from the hub."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -165,7 +165,7 @@ async def test_form_no_data.opp):
         "openpeerpower.components.hunterdouglas_powerview.UserData",
         return_value=mock_powerview_userdata,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.2.3.4"},
         )
@@ -176,7 +176,7 @@ async def test_form_no_data.opp):
 
 async def test_form_unknown_exception.opp):
     """Test we handle unknown exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -185,7 +185,7 @@ async def test_form_unknown_exception.opp):
         "openpeerpower.components.hunterdouglas_powerview.UserData",
         return_value=mock_powerview_userdata,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.2.3.4"},
         )

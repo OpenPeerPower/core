@@ -68,7 +68,7 @@ async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, c
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == STATE_UNAVAILABLE
@@ -97,7 +97,7 @@ async def test_setting_sensor_value_expires.opp, mqtt_mock, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # State should be unavailable since expire_after is defined and > 0
     state = opp.states.get("binary_sensor.test")
@@ -113,7 +113,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
         async_fire_mqtt_message.opp, "test-topic", "ON")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Value was set correctly.
     state = opp.states.get("binary_sensor.test")
@@ -122,7 +122,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     # Time jump +3s
     now = now + timedelta(seconds=3)
     async_fire_time_changed.opp, now)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Value is not yet expired
     state = opp.states.get("binary_sensor.test")
@@ -132,7 +132,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
         async_fire_mqtt_message.opp, "test-topic", "OFF")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Value was updated correctly.
     state = opp.states.get("binary_sensor.test")
@@ -141,7 +141,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     # Time jump +3s
     now = now + timedelta(seconds=3)
     async_fire_time_changed.opp, now)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Value is not yet expired
     state = opp.states.get("binary_sensor.test")
@@ -150,7 +150,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
     # Time jump +2s
     now = now + timedelta(seconds=2)
     async_fire_time_changed.opp, now)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Value is expired now
     state = opp.states.get("binary_sensor.test")
@@ -178,7 +178,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
         async_fire_mqtt_message(
            .opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Test that binary_sensor is not available
     state = opp.states.get("binary_sensor.test")
@@ -187,7 +187,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     # Publish state message
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_mqtt_message.opp, "test-topic", "ON")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Test that binary_sensor has correct state
     state = opp.states.get("binary_sensor.test")
@@ -197,7 +197,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     now = now + timedelta(seconds=3)
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # binary_sensor is not yet expired
     state = opp.states.get("binary_sensor.test")
@@ -209,7 +209,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
         async_fire_mqtt_message(
            .opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Test that binary_sensor has not expired
     state = opp.states.get("binary_sensor.test")
@@ -219,7 +219,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     now = now + timedelta(seconds=2)
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Test that binary_sensor has expired
     state = opp.states.get("binary_sensor.test")
@@ -230,7 +230,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
         async_fire_mqtt_message(
            .opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Test that binary_sensor is still expired
     state = opp.states.get("binary_sensor.test")
@@ -252,7 +252,7 @@ async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
 
@@ -282,7 +282,7 @@ async def test_invalid_sensor_value_via_mqtt_message.opp, mqtt_mock, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
 
@@ -322,7 +322,7 @@ async def test_setting_sensor_value_via_mqtt_message_and_template.opp, mqtt_mock
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == STATE_OFF
@@ -354,7 +354,7 @@ async def test_setting_sensor_value_via_mqtt_message_and_template2(
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == STATE_OFF
@@ -391,7 +391,7 @@ async def test_setting_sensor_value_via_mqtt_message_empty_template(
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == STATE_OFF
@@ -420,7 +420,7 @@ async def test_valid_device_class.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.attributes.get("device_class") == "motion"
@@ -440,7 +440,7 @@ async def test_invalid_device_class.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state is None
@@ -489,7 +489,7 @@ async def test_force_update_disabled.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     events = []
 
@@ -501,11 +501,11 @@ async def test_force_update_disabled.opp, mqtt_mock):
    .opp.bus.async_listen(EVENT_STATE_CHANGED, callback)
 
     async_fire_mqtt_message.opp, "test-topic", "ON")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
 
     async_fire_mqtt_message.opp, "test-topic", "ON")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
 
 
@@ -525,7 +525,7 @@ async def test_force_update_enabled.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     events = []
 
@@ -537,11 +537,11 @@ async def test_force_update_enabled.opp, mqtt_mock):
    .opp.bus.async_listen(EVENT_STATE_CHANGED, callback)
 
     async_fire_mqtt_message.opp, "test-topic", "ON")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
 
     async_fire_mqtt_message.opp, "test-topic", "ON")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 2
 
 
@@ -562,7 +562,7 @@ async def test_off_delay.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     events = []
 
@@ -574,19 +574,19 @@ async def test_off_delay.opp, mqtt_mock):
    .opp.bus.async_listen(EVENT_STATE_CHANGED, callback)
 
     async_fire_mqtt_message.opp, "test-topic", "ON")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test")
     assert state.state == STATE_ON
     assert len(events) == 1
 
     async_fire_mqtt_message.opp, "test-topic", "ON")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test")
     assert state.state == STATE_ON
     assert len(events) == 2
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=30))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test")
     assert state.state == STATE_OFF
     assert len(events) == 3

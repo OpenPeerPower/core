@@ -84,7 +84,7 @@ PRESET_MODES = [
     "sleep_4",
 ]
 
-AC_TO_HA_STATE = {
+AC_TO_OP_STATE = {
     "0001": HVAC_MODE_HEAT,
     "0010": HVAC_MODE_COOL,
     "0011": HVAC_MODE_DRY,
@@ -99,7 +99,7 @@ HA_STATE_TO_AC = {
     HVAC_MODE_FAN_ONLY: "mode_fan",
 }
 
-AC_TO_HA_FAN_MODES = {
+AC_TO_OP_FAN_MODES = {
     "00000000": FAN_AUTO,  # fan value for heat mode
     "00000001": FAN_AUTO,
     "00000010": "mute",
@@ -116,7 +116,7 @@ HA_FAN_MODES_TO_AC = {
     FAN_AUTO: "speed_auto",
 }
 
-AC_TO_HA_SWING = {
+AC_TO_OP_SWING = {
     "00": SWING_OFF,
     "10": SWING_VERTICAL,
     "01": SWING_HORIZONTAL,
@@ -190,13 +190,13 @@ class ClimateAehW4a1(ClimateEntity):
 
         if self._on == "1":
             device_mode = status["mode_status"]
-            self._hvac_mode = AC_TO_HA_STATE[device_mode]
+            self._hvac_mode = AC_TO_OP_STATE[device_mode]
 
             fan_mode = status["wind_status"]
-            self._fan_mode = AC_TO_HA_FAN_MODES[fan_mode]
+            self._fan_mode = AC_TO_OP_FAN_MODES[fan_mode]
 
             swing_mode = f'{status["up_down"]}{status["left_right"]}'
-            self._swing_mode = AC_TO_HA_SWING[swing_mode]
+            self._swing_mode = AC_TO_OP_SWING[swing_mode]
 
             if self._hvac_mode in (HVAC_MODE_COOL, HVAC_MODE_HEAT):
                 self._target_temperature = int(status["indoor_temperature_setting"], 2)

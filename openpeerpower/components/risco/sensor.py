@@ -83,7 +83,7 @@ class RiscoSensor(CoordinatorEntity):
                 continue
 
             self._event = event
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def state(self):

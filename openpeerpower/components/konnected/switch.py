@@ -122,7 +122,7 @@ class KonnectedSwitch(ToggleEntity):
 
     def _set_state(self, state):
         self._state = state
-        self.async_write_ha_state()
+        self.async_write_op_state()
         _LOGGER.debug(
             "Setting status of %s actuator zone %s to %s",
             self._device_id,

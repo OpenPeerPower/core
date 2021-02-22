@@ -213,7 +213,7 @@ class MinMaxSensor(Entity):
         ]:
             self.states[entity] = STATE_UNKNOWN
             self._calc_values()
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         if self._unit_of_measurement is None:
@@ -239,7 +239,7 @@ class MinMaxSensor(Entity):
             )
 
         self._calc_values()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _calc_values(self):

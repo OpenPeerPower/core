@@ -72,7 +72,7 @@ class MinutPointAlarmControl(AlarmControlPanelEntity):
         _LOGGER.debug("Received webhook: %s", _type)
         self._home["alarm_status"] = _type
         self._changed_by = _changed_by
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def _home(self):

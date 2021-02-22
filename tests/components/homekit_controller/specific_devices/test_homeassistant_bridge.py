@@ -20,7 +20,7 @@ async def test_openpeerpower_bridge_fan_setup_opp):
     )
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Check that the fan is correctly found and set up
     fan_id = "fan.living_room_fan"
@@ -42,7 +42,7 @@ async def test_openpeerpower_bridge_fan_setup_opp):
         SUPPORT_DIRECTION | SUPPORT_SET_SPEED | SUPPORT_OSCILLATE
     )
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(fan.device_id)
     assert device.manufacturer == "Open Peer Power"

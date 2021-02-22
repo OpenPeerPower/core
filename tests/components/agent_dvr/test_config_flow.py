@@ -14,7 +14,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 async def test_show_user_form.opp: OpenPeerPower) -> None:
     """Test that the user set up form is served."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -29,7 +29,7 @@ async def test_user_device_exists_abort(
     """Test we abort flow if Agent device already configured."""
     await init_integration.opp, aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: "example.local", CONF_PORT: 8090},
@@ -43,7 +43,7 @@ async def test_connection_error(opp: OpenPeerPower, aioclient_mock) -> None:
 
     aioclient_mock.get("http://example.local:8090/command.cgi?cmd=getStatus", text="")
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: "example.local", CONF_PORT: 8090},
@@ -70,7 +70,7 @@ async def test_full_user_flow_implementation(
         headers={"Content-Type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -78,7 +78,7 @@ async def test_full_user_flow_implementation(
     assert result["step_id"] == "user"
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_HOST: "example.local", CONF_PORT: 8090}
     )
 

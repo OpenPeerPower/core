@@ -26,7 +26,7 @@ async def test_setup_entry_not_ready(setup_component, opp, config_entry, smarttu
     smarttub_api.login.side_effect = asyncio.TimeoutError
 
     config_entry.add_to.opp.opp)
-    await.opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.config_entries.async_setup(config_entry.entry_id)
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -35,7 +35,7 @@ async def test_setup_auth_failed(setup_component, opp, config_entry, smarttub_ap
     smarttub_api.login.side_effect = LoginFailed
 
     config_entry.add_to.opp.opp)
-    await.opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.config_entries.async_setup(config_entry.entry_id)
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
 
@@ -51,4 +51,4 @@ async def test_unload_entry.opp, config_entry):
 
     assert await async_setup_component.opp, smarttub.DOMAIN, {}) is True
 
-    assert await.opp.config_entries.async_unload(config_entry.entry_id)
+    assert await opp.config_entries.async_unload(config_entry.entry_id)

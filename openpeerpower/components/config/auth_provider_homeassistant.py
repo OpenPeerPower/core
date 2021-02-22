@@ -31,7 +31,7 @@ async def async_setup_opp):
 async def websocket_create.opp, connection, msg):
     """Create credentials and attach to a user."""
     provider = auth_ha.async_get_provider.opp)
-    user = await.opp.auth.async_get_user(msg["user_id"])
+    user = await opp.auth.async_get_user(msg["user_id"])
 
     if user is None:
         connection.send_error(msg["id"], "not_found", "User not found")
@@ -54,7 +54,7 @@ async def websocket_create.opp, connection, msg):
     credentials = await provider.async_get_or_create_credentials(
         {"username": msg["username"]}
     )
-    await.opp.auth.async_link_user(user, credentials)
+    await opp.auth.async_link_user(user, credentials)
 
     connection.send_result(msg["id"])
 
@@ -77,7 +77,7 @@ async def websocket_delete.opp, connection, msg):
     # if not new, an existing credential exists.
     # Removing the credential will also remove the auth.
     if not credentials.is_new:
-        await.opp.auth.async_remove_credentials(credentials)
+        await opp.auth.async_remove_credentials(credentials)
 
         connection.send_result(msg["id"])
         return
@@ -150,7 +150,7 @@ async def websocket_admin_change_password.opp, connection, msg):
     if not connection.user.is_owner:
         raise Unauthorized(context=connection.context(msg))
 
-    user = await.opp.auth.async_get_user(msg["user_id"])
+    user = await opp.auth.async_get_user(msg["user_id"])
 
     if user is None:
         connection.send_error(msg["id"], "user_not_found", "User not found")

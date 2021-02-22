@@ -176,7 +176,7 @@ async def test_tracked_wireless_clients.opp, aioclient_mock):
         "data": [client_1_copy],
     }
     controller.api.session_handler(SIGNAL_DATA)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "home"
@@ -191,7 +191,7 @@ async def test_tracked_wireless_clients.opp, aioclient_mock):
         "data": [EVENT_CLIENT_1_WIRELESS_DISCONNECTED],
     }
     controller.api.session_handler(SIGNAL_DATA)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "home"
@@ -199,7 +199,7 @@ async def test_tracked_wireless_clients.opp, aioclient_mock):
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
         async_fire_time_changed.opp, new_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "not_home"
@@ -209,7 +209,7 @@ async def test_tracked_wireless_clients.opp, aioclient_mock):
         "data": [EVENT_CLIENT_1_WIRELESS_CONNECTED],
     }
     controller.api.session_handler(SIGNAL_DATA)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "home"
@@ -256,7 +256,7 @@ async def test_tracked_clients.opp, aioclient_mock):
     client_1_copy = copy(CLIENT_1)
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_copy]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "home"
@@ -289,7 +289,7 @@ async def test_tracked_devices.opp, aioclient_mock):
     device_2_copy["next_interval"] = 50
     event = {"meta": {"message": MESSAGE_DEVICE}, "data": [device_2_copy]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device_1 = opp.states.get("device_tracker.device_1")
     assert device_1.state == "home"
@@ -299,7 +299,7 @@ async def test_tracked_devices.opp, aioclient_mock):
     new_time = dt_util.utcnow() + timedelta(seconds=90)
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
         async_fire_time_changed.opp, new_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     device_1 = opp.states.get("device_tracker.device_1")
     assert device_1.state == "not_home"
@@ -311,7 +311,7 @@ async def test_tracked_devices.opp, aioclient_mock):
     device_1_copy["disabled"] = True
     event = {"meta": {"message": MESSAGE_DEVICE}, "data": [device_1_copy]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device_1 = opp.states.get("device_tracker.device_1")
     assert device_1.state == STATE_UNAVAILABLE
@@ -323,12 +323,12 @@ async def test_tracked_devices.opp, aioclient_mock):
     controller.api.message_handler(message)
     event = {"meta": {"message": MESSAGE_EVENT}, "data": [EVENT_DEVICE_2_UPGRADED]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry has been updated
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
     entry = entity_registry.async_get("device_tracker.device_2")
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
     assert device.sw_version == EVENT_DEVICE_2_UPGRADED["version_to"]
 
@@ -352,8 +352,8 @@ async def test_remove_clients.opp, aioclient_mock):
         "data": [CLIENT_1],
     }
     controller.api.session_handler(SIGNAL_DATA)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
@@ -385,7 +385,7 @@ async def test_controller_state_change.opp, aioclient_mock):
     controller.async_unifi_signalling_callback(
         SIGNAL_CONNECTION_STATE, STATE_DISCONNECTED
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == STATE_UNAVAILABLE
@@ -395,7 +395,7 @@ async def test_controller_state_change.opp, aioclient_mock):
 
     # Controller available
     controller.async_unifi_signalling_callback(SIGNAL_CONNECTION_STATE, STATE_RUNNING)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "not_home"
@@ -427,7 +427,7 @@ async def test_option_track_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_CLIENTS: False},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is None
@@ -442,7 +442,7 @@ async def test_option_track_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_CLIENTS: True},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -477,7 +477,7 @@ async def test_option_track_wired_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_WIRED_CLIENTS: False},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -492,7 +492,7 @@ async def test_option_track_wired_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_WIRED_CLIENTS: True},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -527,7 +527,7 @@ async def test_option_track_devices.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_DEVICES: False},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -542,7 +542,7 @@ async def test_option_track_devices.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_DEVICES: True},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -580,7 +580,7 @@ async def test_option_ssid_filter.opp, aioclient_mock):
         config_entry,
         options={CONF_SSID_FILTER: ["ssid"]},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Not affected by SSID filter
     client_1 = opp.states.get("device_tracker.client_1")
@@ -600,7 +600,7 @@ async def test_option_ssid_filter.opp, aioclient_mock):
     client_3_copy["last_seen"] = dt_util.as_timestamp(dt_util.utcnow())
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_3_copy]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # SSID filter marks client as away
     client_1 = opp.states.get("device_tracker.client_1")
@@ -615,12 +615,12 @@ async def test_option_ssid_filter.opp, aioclient_mock):
         config_entry,
         options={CONF_SSID_FILTER: []},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_copy]}
     controller.api.message_handler(event)
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_3_copy]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "home"
@@ -631,14 +631,14 @@ async def test_option_ssid_filter.opp, aioclient_mock):
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
         async_fire_time_changed.opp, new_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "not_home"
 
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_3_copy]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     # Client won't go away until after next update
     client_3 = opp.states.get("device_tracker.client_3")
     assert client_3.state == "home"
@@ -646,14 +646,14 @@ async def test_option_ssid_filter.opp, aioclient_mock):
     # Trigger update to get client marked as away
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [CLIENT_3]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     new_time = (
         dt_util.utcnow() + controller.option_detection_time + timedelta(seconds=1)
     )
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
         async_fire_time_changed.opp, new_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     client_3 = opp.states.get("device_tracker.client_3")
     assert client_3.state == "not_home"
@@ -683,7 +683,7 @@ async def test_wireless_client_go_wired_issue.opp, aioclient_mock):
     client_1_client["is_wired"] = True
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_client]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Wired bug fix keeps client marked as wireless
     client_1 = opp.states.get("device_tracker.client_1")
@@ -694,7 +694,7 @@ async def test_wireless_client_go_wired_issue.opp, aioclient_mock):
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
         async_fire_time_changed.opp, new_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Marked as home according to the timer
     client_1 = opp.states.get("device_tracker.client_1")
@@ -704,7 +704,7 @@ async def test_wireless_client_go_wired_issue.opp, aioclient_mock):
     # Try to mark client as connected
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_client]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Make sure it don't go online again until wired bug disappears
     client_1 = opp.states.get("device_tracker.client_1")
@@ -715,7 +715,7 @@ async def test_wireless_client_go_wired_issue.opp, aioclient_mock):
     client_1_client["is_wired"] = False
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_client]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Client is no longer affected by wired bug and can be marked online
     client_1 = opp.states.get("device_tracker.client_1")
@@ -747,7 +747,7 @@ async def test_option_ignore_wired_bug.opp, aioclient_mock):
     client_1_client["is_wired"] = True
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_client]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Wired bug in effect
     client_1 = opp.states.get("device_tracker.client_1")
@@ -758,7 +758,7 @@ async def test_option_ignore_wired_bug.opp, aioclient_mock):
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
         async_fire_time_changed.opp, new_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Timer marks client as away
     client_1 = opp.states.get("device_tracker.client_1")
@@ -768,7 +768,7 @@ async def test_option_ignore_wired_bug.opp, aioclient_mock):
     # Mark client as connected again
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_client]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Ignoring wired bug allows client to go home again even while affected
     client_1 = opp.states.get("device_tracker.client_1")
@@ -779,7 +779,7 @@ async def test_option_ignore_wired_bug.opp, aioclient_mock):
     client_1_client["is_wired"] = False
     event = {"meta": {"message": MESSAGE_CLIENT}, "data": [client_1_client]}
     controller.api.message_handler(event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Client is wireless and still connected
     client_1 = opp.states.get("device_tracker.client_1")
@@ -851,7 +851,7 @@ async def test_dont_track_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_CLIENTS: True},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
@@ -883,7 +883,7 @@ async def test_dont_track_devices.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_DEVICES: True},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
@@ -914,7 +914,7 @@ async def test_dont_track_wired_clients.opp, aioclient_mock):
         config_entry,
         options={CONF_TRACK_WIRED_CLIENTS: True},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 

@@ -135,7 +135,7 @@ class DysonEntity(Entity):
 
     def on_message(self, message):
         """Handle new messages received."""
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def should_poll(self):

@@ -263,7 +263,7 @@ class XBeeDigitalIn(Entity):
             self._state = self._config.state2bool[
                 self._config.bool2state[sample[pin_name]]
             ]
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         async_dispatcher_connect(self.opp, SIGNAL_XBEE_FRAME_RECEIVED, handle_frame)
 
@@ -334,7 +334,7 @@ class XBeeDigitalOut(XBeeDigitalIn):
             return
         self._state = state
         if not self.should_poll:
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def turn_on(self, **kwargs):
         """Set the digital output to its 'on' state."""
@@ -393,7 +393,7 @@ class XBeeAnalogIn(Entity):
             self._value = convert_adc(
                 sample[pin_name], xb_const.ADC_PERCENTAGE, self._config.max_voltage
             )
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         async_dispatcher_connect(self.opp, SIGNAL_XBEE_FRAME_RECEIVED, handle_frame)
 

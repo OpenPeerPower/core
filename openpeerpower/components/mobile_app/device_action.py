@@ -67,7 +67,7 @@ async def async_call_action_from_config(
                 f"Error rendering {key}: {err}"
             ) from err
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         notify.DOMAIN, service_name, service_data, blocking=True, context=context
     )
 

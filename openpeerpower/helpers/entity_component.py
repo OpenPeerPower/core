@@ -50,7 +50,7 @@ async def async_update_entity.opp: OpenPeerPower, entity_id: str) -> None:
         )
         return
 
-    await entity_obj.async_update_ha_state(True)
+    await entity_obj.async_update_op_state(True)
 
 
 class EntityComponent:

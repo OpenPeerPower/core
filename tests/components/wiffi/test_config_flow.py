@@ -74,14 +74,14 @@ def mock_start_server_failed():
 
 async def test_form.opp, dummy_tcp_server):
     """Test how we get the form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["errors"] == {}
     assert result["step_id"] == config_entries.SOURCE_USER
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input=MOCK_CONFIG,
     )
@@ -90,11 +90,11 @@ async def test_form.opp, dummy_tcp_server):
 
 async def test_form_addr_in_use.opp, addr_in_use):
     """Test how we handle addr_in_use error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input=MOCK_CONFIG,
     )
@@ -104,11 +104,11 @@ async def test_form_addr_in_use.opp, addr_in_use):
 
 async def test_form_start_server_failed.opp, start_server_failed):
     """Test how we handle start_server_failed error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input=MOCK_CONFIG,
     )
@@ -123,12 +123,12 @@ async def test_option_flow.opp):
 
     assert not entry.options
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id, data=None)
+    result = await opp.config_entries.options.async_init(entry.entry_id, data=None)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_TIMEOUT: 9}
     )
 

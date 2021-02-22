@@ -28,6 +28,6 @@ async def test_unload_config_entry(
     entry = await init_integration.opp, aioclient_mock)
     assert.opp.data[DOMAIN]
 
-    await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_unload(entry.entry_id)
+    await opp.async_block_till_done()
     assert not.opp.data.get(DOMAIN)

@@ -90,7 +90,7 @@ class SmartyFan(FanEntity):
             )
 
         self._smarty_fan_speed = fan_speed
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_on(self, speed=None, percentage=None, preset_mode=None, **kwargs):
         """Turn on the fan."""
@@ -104,7 +104,7 @@ class SmartyFan(FanEntity):
             raise OpenPeerPowerError("Failed to turn off the fan")
 
         self._smarty_fan_speed = 0
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     async def async_added_to.opp(self):
         """Call to update fan."""
@@ -119,4 +119,4 @@ class SmartyFan(FanEntity):
         """Call update method."""
         _LOGGER.debug("Updating state")
         self._smarty_fan_speed = self._smarty.fan_speed
-        self.async_write_ha_state()
+        self.async_write_op_state()

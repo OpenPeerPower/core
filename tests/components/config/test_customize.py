@@ -12,7 +12,7 @@ async def test_get_entity.opp, opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp_client()
 
     def mock_read(path):
         """Mock reading data."""
@@ -33,7 +33,7 @@ async def test_update_entity.opp, opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp_client()
 
     orig_data = {
         "hello.beer": {"ignored": True},
@@ -63,7 +63,7 @@ async def test_update_entity.opp, opp_client):
                 {"name": "Beer", "entities": ["light.top", "light.bottom"]}
             ),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert resp.status == 200
     result = await resp.json()
@@ -88,7 +88,7 @@ async def test_update_entity_invalid_key.opp, opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp_client()
 
     resp = await client.post(
         "/api/config/customize/config/not_entity", data=json.dumps({"name": "YO"})
@@ -102,7 +102,7 @@ async def test_update_entity_invalid_json.opp, opp_client):
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
 
-    client = await.opp_client()
+    client = await opp_client()
 
     resp = await client.post("/api/config/customize/config/hello.beer", data="not json")
 

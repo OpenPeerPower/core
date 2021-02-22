@@ -108,7 +108,7 @@ def sent_messages_fixture():
 async def fan_msg_fixture.opp):
     """Return a mock MQTT msg with a fan actuator message."""
     fan_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/fan.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/fan.json")
     )
     message = MQTTMessage(topic=fan_json["topic"], payload=fan_json["payload"])
     message.encode()
@@ -119,7 +119,7 @@ async def fan_msg_fixture.opp):
 async def light_msg_fixture.opp):
     """Return a mock MQTT msg with a light actuator message."""
     light_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/light.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/light.json")
     )
     message = MQTTMessage(topic=light_json["topic"], payload=light_json["payload"])
     message.encode()
@@ -130,7 +130,7 @@ async def light_msg_fixture.opp):
 async def light_no_rgb_msg_fixture.opp):
     """Return a mock MQTT msg with a light actuator message."""
     light_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/light_no_rgb.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/light_no_rgb.json")
     )
     message = MQTTMessage(topic=light_json["topic"], payload=light_json["payload"])
     message.encode()
@@ -141,7 +141,7 @@ async def light_no_rgb_msg_fixture.opp):
 async def light_rgb_msg_fixture.opp):
     """Return a mock MQTT msg with a light actuator message."""
     light_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/light_rgb.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/light_rgb.json")
     )
     message = MQTTMessage(topic=light_json["topic"], payload=light_json["payload"])
     message.encode()
@@ -152,7 +152,7 @@ async def light_rgb_msg_fixture.opp):
 async def light_pure_rgb_msg_fixture.opp):
     """Return a mock MQTT msg with a pure rgb light actuator message."""
     light_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/light_pure_rgb.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/light_pure_rgb.json")
     )
     message = MQTTMessage(topic=light_json["topic"], payload=light_json["payload"])
     message.encode()
@@ -163,7 +163,7 @@ async def light_pure_rgb_msg_fixture.opp):
 async def switch_msg_fixture.opp):
     """Return a mock MQTT msg with a switch actuator message."""
     switch_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/switch.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/switch.json")
     )
     message = MQTTMessage(topic=switch_json["topic"], payload=switch_json["payload"])
     message.encode()
@@ -174,7 +174,7 @@ async def switch_msg_fixture.opp):
 async def sensor_msg_fixture.opp):
     """Return a mock MQTT msg with a sensor change message."""
     sensor_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/sensor.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/sensor.json")
     )
     message = MQTTMessage(topic=sensor_json["topic"], payload=sensor_json["payload"])
     message.encode()
@@ -185,7 +185,7 @@ async def sensor_msg_fixture.opp):
 async def binary_sensor_msg_fixture.opp):
     """Return a mock MQTT msg with a binary_sensor change message."""
     sensor_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/binary_sensor.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/binary_sensor.json")
     )
     message = MQTTMessage(topic=sensor_json["topic"], payload=sensor_json["payload"])
     message.encode()
@@ -196,7 +196,7 @@ async def binary_sensor_msg_fixture.opp):
 async def binary_sensor_alt_msg_fixture.opp):
     """Return a mock MQTT msg with a binary_sensor change message."""
     sensor_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/binary_sensor_alt.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/binary_sensor_alt.json")
     )
     message = MQTTMessage(topic=sensor_json["topic"], payload=sensor_json["payload"])
     message.encode()
@@ -207,7 +207,7 @@ async def binary_sensor_alt_msg_fixture.opp):
 async def cover_msg_fixture.opp):
     """Return a mock MQTT msg with a cover level change message."""
     sensor_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/cover.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/cover.json")
     )
     message = MQTTMessage(topic=sensor_json["topic"], payload=sensor_json["payload"])
     message.encode()
@@ -218,7 +218,7 @@ async def cover_msg_fixture.opp):
 async def cover_gdo_msg_fixture.opp):
     """Return a mock MQTT msg with a cover barrier state change message."""
     sensor_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/cover_gdo.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/cover_gdo.json")
     )
     message = MQTTMessage(topic=sensor_json["topic"], payload=sensor_json["payload"])
     message.encode()
@@ -229,7 +229,7 @@ async def cover_gdo_msg_fixture.opp):
 async def climate_msg_fixture.opp):
     """Return a mock MQTT msg with a climate mode change message."""
     sensor_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/climate.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/climate.json")
     )
     message = MQTTMessage(topic=sensor_json["topic"], payload=sensor_json["payload"])
     message.encode()
@@ -240,7 +240,7 @@ async def climate_msg_fixture.opp):
 async def lock_msg_fixture.opp):
     """Return a mock MQTT msg with a lock actuator message."""
     lock_json = json.loads(
-        await.opp.async_add_executor_job(load_fixture, "ozw/lock.json")
+        await opp.async_add_executor_job(load_fixture, "ozw/lock.json")
     )
     message = MQTTMessage(topic=lock_json["topic"], payload=lock_json["payload"])
     message.encode()

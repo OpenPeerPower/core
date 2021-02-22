@@ -58,7 +58,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
@@ -97,7 +97,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_ON
@@ -138,7 +138,7 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
@@ -222,7 +222,7 @@ async def test_custom_state_payload.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF

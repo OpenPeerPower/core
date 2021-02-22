@@ -22,29 +22,29 @@ async def setup_component.opp):
     assert await async_setup_component(
        .opp, remote.DOMAIN, {"remote": {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_methods.opp):
     """Test if services call the entity methods as expected."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
@@ -53,8 +53,8 @@ async def test_methods.opp):
         ATTR_COMMAND: ["test"],
     }
 
-    await.opp.services.async_call(remote.DOMAIN, SERVICE_SEND_COMMAND, data)
-    await.opp.async_block_till_done()
+    await opp.services.async_call(remote.DOMAIN, SERVICE_SEND_COMMAND, data)
+    await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
     assert state.attributes == {
         "friendly_name": "Remote One",

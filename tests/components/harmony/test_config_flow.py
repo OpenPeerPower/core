@@ -20,7 +20,7 @@ def _get_mock_harmonyapi(connect=None, close=None):
 async def test_user_form.opp):
     """Test we get the user form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -36,11 +36,11 @@ async def test_user_form.opp):
         "openpeerpower.components.harmony.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "1.2.3.4", "name": "friend"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "friend"
@@ -59,7 +59,7 @@ async def test_form_ssdp.opp):
         "openpeerpower.components.harmony.util.HarmonyAPI",
         return_value=harmonyapi,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_SSDP},
             data={
@@ -84,11 +84,11 @@ async def test_form_ssdp.opp):
         "openpeerpower.components.harmony.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Harmony Hub"
@@ -118,7 +118,7 @@ async def test_form_ssdp_aborts_before_checking_remoteid_if_host_known.opp):
         "openpeerpower.components.harmony.util.HarmonyAPI",
         return_value=harmonyapi,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_SSDP},
             data={
@@ -131,7 +131,7 @@ async def test_form_ssdp_aborts_before_checking_remoteid_if_host_known.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -139,7 +139,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.harmony.util.HarmonyAPI",
         side_effect=CannotConnect,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "host": "1.2.3.4",
@@ -163,17 +163,17 @@ async def test_options_flow.opp, mock_hc, mock_write_config):
     )
 
     config_entry.add_to.opp.opp)
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
-    await.opp.async_block_till_done()
-    assert await.opp.config_entries.async_unload(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.async_block_till_done()
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
+    await opp.async_block_till_done()
+    assert await opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"activity": PREVIOUS_ACTIVE_ACTIVITY, "delay_secs": 0.4},
     )

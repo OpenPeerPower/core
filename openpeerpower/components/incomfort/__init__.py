@@ -87,7 +87,7 @@ class IncomfortChild(IncomfortEntity):
 
     @callback
     def _refresh(self) -> None:
-        self.async_schedule_update_ha_state(force_refresh=True)
+        self.async_schedule_update_op_state(force_refresh=True)
 
     @property
     def should_poll(self) -> bool:

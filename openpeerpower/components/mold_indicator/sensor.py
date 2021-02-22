@@ -119,7 +119,7 @@ class MoldIndicator(Entity):
             )
 
             if self._update_sensor(entity, old_state, new_state):
-                self.async_schedule_update_ha_state(True)
+                self.async_schedule_update_op_state(True)
 
         @callback
         def mold_indicator_startup(event):
@@ -156,7 +156,7 @@ class MoldIndicator(Entity):
             )
 
             if schedule_update:
-                self.async_schedule_update_ha_state(True)
+                self.async_schedule_update_op_state(True)
 
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_START, mold_indicator_startup

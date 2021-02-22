@@ -101,7 +101,7 @@ class BinarySensor(ZhaEntity, BinarySensorEntity):
         if self.SENSOR_ATTR is None or self.SENSOR_ATTR != attr_name:
             return
         self._state = bool(value)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update(self):
         """Attempt to retrieve on off state from the binary sensor."""

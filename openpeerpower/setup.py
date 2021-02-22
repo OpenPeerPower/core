@@ -245,7 +245,7 @@ async def _async_setup_component(
 
     # Flush out async_setup calling create_task. Fragile but covered by test.
     await asyncio.sleep(0)
-    await.opp.config_entries.flow.async_wait_init_flow_finish(domain)
+    await opp.config_entries.flow.async_wait_init_flow_finish(domain)
 
     await asyncio.gather(
         *[

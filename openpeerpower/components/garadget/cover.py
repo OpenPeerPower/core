@@ -196,7 +196,7 @@ class GaradgetCover(CoverEntity):
 
     def _check_state(self, now):
         """Check the state of the service during an operation."""
-        self.schedule_update_ha_state(True)
+        self.schedule_update_op_state(True)
 
     def close_cover(self, **kwargs):
         """Close the cover."""

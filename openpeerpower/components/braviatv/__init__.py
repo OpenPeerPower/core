@@ -57,4 +57,4 @@ async def async_unload_entry.opp, config_entry):
 
 async def update_listener.opp, config_entry):
     """Handle options update."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)

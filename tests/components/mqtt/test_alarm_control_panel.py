@@ -109,7 +109,7 @@ async def test_update_state_via_state_topic.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
@@ -137,7 +137,7 @@ async def test_ignore_update_state_if_unknown_via_state_topic.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
@@ -154,7 +154,7 @@ async def test_arm_home_publishes_mqtt.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_home.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -190,7 +190,7 @@ async def test_arm_home_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         config,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_home.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -205,7 +205,7 @@ async def test_arm_away_publishes_mqtt.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_away.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -241,7 +241,7 @@ async def test_arm_away_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         config,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_away.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -256,7 +256,7 @@ async def test_arm_night_publishes_mqtt.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_night.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -292,7 +292,7 @@ async def test_arm_night_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         config,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_night.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -314,7 +314,7 @@ async def test_arm_custom_bypass_publishes_mqtt.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_custom_bypass.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -343,7 +343,7 @@ async def test_arm_custom_bypass_not_publishes_mqtt_with_invalid_code_when_req(
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     call_count = mqtt_mock.async_publish.call_count
     await common.async_alarm_arm_custom_bypass.opp, "abcd")
@@ -369,7 +369,7 @@ async def test_arm_custom_bypass_publishes_mqtt_when_code_not_req.opp, mqtt_mock
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_arm_custom_bypass.opp)
     mqtt_mock.async_publish.assert_called_once_with(
@@ -384,7 +384,7 @@ async def test_disarm_publishes_mqtt.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_disarm.opp)
     mqtt_mock.async_publish.assert_called_once_with("alarm/command", "DISARM", 0, False)
@@ -405,7 +405,7 @@ async def test_disarm_publishes_mqtt_with_template.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         config,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_disarm.opp, "0123")
     mqtt_mock.async_publish.assert_called_once_with(
@@ -426,7 +426,7 @@ async def test_disarm_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
         alarm_control_panel.DOMAIN,
         config,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await common.async_alarm_disarm.opp)
     mqtt_mock.async_publish.assert_called_once_with("alarm/command", "DISARM", 0, False)
@@ -468,7 +468,7 @@ async def test_update_state_via_state_topic_template.opp, mqtt_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("alarm_control_panel.test")
     assert state.state == STATE_UNKNOWN
@@ -485,7 +485,7 @@ async def test_attributes_code_number.opp, mqtt_mock):
     config[alarm_control_panel.DOMAIN]["code"] = CODE_NUMBER
 
     assert await async_setup_component.opp, alarm_control_panel.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("alarm_control_panel.test")
     assert (
@@ -500,7 +500,7 @@ async def test_attributes_code_text.opp, mqtt_mock):
     config[alarm_control_panel.DOMAIN]["code"] = CODE_TEXT
 
     assert await async_setup_component.opp, alarm_control_panel.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("alarm_control_panel.test")
     assert (

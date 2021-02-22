@@ -249,7 +249,7 @@ async def test_device_setup_registry.opp):
     entity_registry = mock_registry.opp)
 
     _, mock_entry = await device.setup_entry.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == 1
 
@@ -274,7 +274,7 @@ async def test_device_unload_works.opp):
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
-        await.opp.config_entries.async_unload(mock_entry.entry_id)
+        await opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
@@ -297,7 +297,7 @@ async def test_device_unload_authentication_error(opp):
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
-        await.opp.config_entries.async_unload(mock_entry.entry_id)
+        await opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
     assert mock_forward.call_count == 0
@@ -315,7 +315,7 @@ async def test_device_unload_update_failed.opp):
     with patch.object(
        .opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
-        await.opp.config_entries.async_unload(mock_entry.entry_id)
+        await opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
     assert mock_forward.call_count == 0
@@ -329,13 +329,13 @@ async def test_device_update_listener.opp):
     entity_registry = mock_registry.opp)
 
     mock_api, mock_entry = await device.setup_entry.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.broadlink.device.blk.gendevice", return_value=mock_api
     ):
        .opp.config_entries.async_update_entry(mock_entry, title="New Name")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
     assert device_entry.name == "New Name"

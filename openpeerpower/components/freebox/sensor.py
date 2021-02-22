@@ -118,7 +118,7 @@ class FreeboxSensor(Entity):
     def async_on_demand_update(self):
         """Update state."""
         self.async_update_state()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Register state update callback."""

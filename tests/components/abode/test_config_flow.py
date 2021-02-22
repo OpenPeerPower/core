@@ -101,7 +101,7 @@ async def test_step_import.opp):
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -121,7 +121,7 @@ async def test_step_user.opp):
         "abodepy.UTILS"
     ):
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 
@@ -142,7 +142,7 @@ async def test_step_mfa.opp):
         "openpeerpower.components.abode.config_flow.Abode",
         side_effect=AbodeAuthenticationException(MFA_CODE_REQUIRED),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 
@@ -153,7 +153,7 @@ async def test_step_mfa.opp):
         "openpeerpower.components.abode.config_flow.Abode",
         side_effect=AbodeAuthenticationException((HTTP_BAD_REQUEST, "invalid mfa")),
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={"mfa_code": "123456"}
         )
 
@@ -162,7 +162,7 @@ async def test_step_mfa.opp):
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={"mfa_code": "123456"}
         )
 
@@ -188,7 +188,7 @@ async def test_step_reauth.opp):
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth"},
             data=conf,
@@ -198,7 +198,7 @@ async def test_step_reauth.opp):
         assert result["step_id"] == "reauth_confirm"
 
         with patch("openpeerpower.config_entries.ConfigEntries.async_reload"):
-            result = await.opp.config_entries.flow.async_configure(
+            result = await opp.config_entries.flow.async_configure(
                 result["flow_id"],
                 user_input=conf,
             )

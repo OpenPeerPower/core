@@ -175,7 +175,7 @@ class EnOceanPowerSensor(EnOceanSensor):
             raw_val = packet.parsed["MR"]["raw_value"]
             divisor = packet.parsed["DIV"]["raw_value"]
             self._state = raw_val / (10 ** divisor)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
 
 class EnOceanTemperatureSensor(EnOceanSensor):
@@ -214,7 +214,7 @@ class EnOceanTemperatureSensor(EnOceanSensor):
         temperature = temp_scale / temp_range * (raw_val - self.range_from)
         temperature += self._scale_min
         self._state = round(temperature, 1)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class EnOceanHumiditySensor(EnOceanSensor):
@@ -236,7 +236,7 @@ class EnOceanHumiditySensor(EnOceanSensor):
             return
         humidity = packet.data[2] * 100 / 250
         self._state = round(humidity, 1)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class EnOceanWindowHandle(EnOceanSensor):
@@ -262,4 +262,4 @@ class EnOceanWindowHandle(EnOceanSensor):
         if action == 0x05:
             self._state = "tilt"
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

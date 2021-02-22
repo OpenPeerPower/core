@@ -82,7 +82,7 @@ SRV_RECORDS.set_result([QueryMock()])
 
 async def test_show_config_form.opp: OpenPeerPowerType) -> None:
     """Test if initial configuration form is shown."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -93,7 +93,7 @@ async def test_show_config_form.opp: OpenPeerPowerType) -> None:
 async def test_invalid_ip.opp: OpenPeerPowerType) -> None:
     """Test error in case of an invalid IP address."""
     with patch("getmac.get_mac_address", return_value=None):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_IPV4
         )
 
@@ -122,7 +122,7 @@ async def test_same_host.opp: OpenPeerPowerType) -> None:
             )
             mock_config_entry.add_to.opp.opp)
 
-            result = await.opp.config_entries.flow.async_init(
+            result = await opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
             )
 
@@ -136,7 +136,7 @@ async def test_port_too_small.opp: OpenPeerPowerType) -> None:
         "aiodns.DNSResolver.query",
         side_effect=aiodns.error.DNSError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_PORT_TOO_SMALL
         )
 
@@ -150,7 +150,7 @@ async def test_port_too_large.opp: OpenPeerPowerType) -> None:
         "aiodns.DNSResolver.query",
         side_effect=aiodns.error.DNSError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_PORT_TOO_LARGE
         )
 
@@ -165,7 +165,7 @@ async def test_connection_failed.opp: OpenPeerPowerType) -> None:
         side_effect=aiodns.error.DNSError,
     ):
         with patch("mcstatus.server.MinecraftServer.status", side_effect=OSError):
-            result = await.opp.config_entries.flow.async_init(
+            result = await opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
             )
 
@@ -183,7 +183,7 @@ async def test_connection_succeeded_with_srv_record.opp: OpenPeerPowerType) -> N
             "mcstatus.server.MinecraftServer.status",
             return_value=PingResponse(STATUS_RESPONSE_RAW),
         ):
-            result = await.opp.config_entries.flow.async_init(
+            result = await opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_SRV
             )
 
@@ -203,7 +203,7 @@ async def test_connection_succeeded_with_host.opp: OpenPeerPowerType) -> None:
             "mcstatus.server.MinecraftServer.status",
             return_value=PingResponse(STATUS_RESPONSE_RAW),
         ):
-            result = await.opp.config_entries.flow.async_init(
+            result = await opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
             )
 
@@ -224,7 +224,7 @@ async def test_connection_succeeded_with_ip4.opp: OpenPeerPowerType) -> None:
                 "mcstatus.server.MinecraftServer.status",
                 return_value=PingResponse(STATUS_RESPONSE_RAW),
             ):
-                result = await.opp.config_entries.flow.async_init(
+                result = await opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_IPV4
                 )
 
@@ -245,7 +245,7 @@ async def test_connection_succeeded_with_ip6.opp: OpenPeerPowerType) -> None:
                 "mcstatus.server.MinecraftServer.status",
                 return_value=PingResponse(STATUS_RESPONSE_RAW),
             ):
-                result = await.opp.config_entries.flow.async_init(
+                result = await opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_IPV6
                 )
 

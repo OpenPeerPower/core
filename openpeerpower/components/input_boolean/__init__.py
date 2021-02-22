@@ -202,14 +202,14 @@ class InputBoolean(ToggleEntity, RestoreEntity):
     async def async_turn_on(self, **kwargs):
         """Turn the entity on."""
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update_config(self, config: typing.Dict) -> None:
         """Handle when the config is updated."""
         self._config = config
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -43,7 +43,7 @@ class TasmotaEntity(Entity):
         self._tasmota_entity.config_update(update)
         await self._subscribe_topics()
         if write_state:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""
@@ -53,7 +53,7 @@ class TasmotaEntity(Entity):
     def state_updated(self, state, **kwargs):
         """Handle state updates."""
         self._state = state
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def device_info(self):
@@ -97,7 +97,7 @@ class TasmotaAvailability(TasmotaEntity):
         """Handle updated availability."""
         self._tasmota_entity.poll_status()
         self._available = available
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_mqtt_connected(self, _):
@@ -105,7 +105,7 @@ class TasmotaAvailability(TasmotaEntity):
         if not self.opp.is_stopping:
             if not mqtt_connected(self.opp):
                 self._available = False
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def available(self) -> bool:

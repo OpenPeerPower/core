@@ -60,4 +60,4 @@ class GC100Switch(ToggleEntity):
     def set_state(self, state):
         """Set the current state."""
         self._state = state == 1
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

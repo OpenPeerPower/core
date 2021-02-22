@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 import pytest
 
 from openpeerpower.components import cloud
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.network import (
     NoURLAvailableError,
@@ -27,7 +27,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
         _get_internal_url.opp, require_current_request=True)
 
     # Test with internal URL: http://example.local:8123
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
@@ -68,7 +68,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
         _get_internal_url.opp, require_current_request=True)
 
     # Test with internal URL: https://example.local:8123
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "https://example.local:8123"},
     )
@@ -82,7 +82,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
         _get_internal_url.opp, require_standard_port=True)
 
     # Test with internal URL: http://example.local:80/
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://example.local:80/"},
     )
@@ -96,7 +96,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
         _get_internal_url.opp, require_ssl=True)
 
     # Test with internal URL: https://example.local:443
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "https://example.local:443"},
     )
@@ -110,7 +110,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
     assert _get_internal_url.opp, require_ssl=True) == "https://example.local"
 
     # Test with internal URL: https://192.168.0.1
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "https://192.168.0.1"},
     )
@@ -124,7 +124,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
         _get_internal_url.opp, allow_ip=False)
 
     # Test with internal URL: http://192.168.0.1:8123
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://192.168.0.1:8123"},
     )
@@ -225,7 +225,7 @@ async def test_get_url_external.opp: OpenPeerPower):
         _get_external_url.opp, require_current_request=True)
 
     # Test with external URL: http://example.com:8123
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "http://example.com:8123"},
     )
@@ -268,7 +268,7 @@ async def test_get_url_external.opp: OpenPeerPower):
         _get_external_url.opp, require_current_request=True)
 
     # Test with external URL: http://example.com:80/
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "http://example.com:80/"},
     )
@@ -284,7 +284,7 @@ async def test_get_url_external.opp: OpenPeerPower):
         _get_external_url.opp, require_ssl=True)
 
     # Test with external url: https://example.com:443/
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com:443/"},
     )
@@ -297,7 +297,7 @@ async def test_get_url_external.opp: OpenPeerPower):
     assert _get_external_url.opp, require_standard_port=True) == "https://example.com"
 
     # Test with external URL: https://example.com:80
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com:80"},
     )
@@ -312,7 +312,7 @@ async def test_get_url_external.opp: OpenPeerPower):
         _get_external_url.opp, require_standard_port=True)
 
     # Test with external URL: https://192.168.0.1
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://192.168.0.1"},
     )
@@ -387,7 +387,7 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
     assert.opp.config.external_url is None
 
     # Test with external URL: http://1.1.1.1:8123
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "http://1.1.1.1:8123"},
     )
@@ -413,7 +413,7 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
         )
 
     # Test with external URL: https://example.com
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
@@ -459,7 +459,7 @@ async def test_get_url.opp: OpenPeerPower):
 
     # Test only external
    .opp.config.api = None
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
@@ -468,7 +468,7 @@ async def test_get_url.opp: OpenPeerPower):
     assert get_url.opp) == "https://example.com"
 
     # Test preference or allowance
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://example.local", "external_url": "https://example.com"},
     )
@@ -595,7 +595,7 @@ async def test_get_current_request_url_with_known_host(
 async def test_is_internal_request.opp: OpenPeerPower):
     """Test if accessing an instance on its internal URL."""
     # Test with internal URL: http://example.local:8123
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
@@ -615,7 +615,7 @@ async def test_is_internal_request.opp: OpenPeerPower):
         assert not is_internal_request.opp)
 
     # Test with internal URL: http://192.168.0.1:8123
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://192.168.0.1:8123"},
     )

@@ -166,11 +166,11 @@ async def test_float.opp):
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG_SWITCH) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 
     # Turn switch on
-    await.opp.services.async_call(
+    await opp.services.async_call(
         SWITCH_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
@@ -185,7 +185,7 @@ async def test_float.opp):
     assert math.isclose(power, ENTITY_SWITCH_POWER)
 
     # Turn off
-    await.opp.services.async_call(
+    await opp.services.async_call(
         SWITCH_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
@@ -209,11 +209,11 @@ async def test_switch_power.opp):
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG_SWITCH_NO_POWER) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 
     # Turn switch on
-    await.opp.services.async_call(
+    await opp.services.async_call(
         SWITCH_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
@@ -244,7 +244,7 @@ async def test_switch_power.opp):
     assert math.isclose(power, 120)
 
     # Turn off
-    await.opp.services.async_call(
+    await opp.services.async_call(
         SWITCH_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
@@ -266,14 +266,14 @@ async def test_template.opp):
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG_FAN) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 
     # Turn all devices on to known state
-    await.opp.services.async_call(
+    await opp.services.async_call(
         FAN_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_FAN}, blocking=True
     )
-    await.opp.services.async_call(
+    await opp.services.async_call(
         FAN_DOMAIN,
         SERVICE_SET_SPEED,
         {ATTR_ENTITY_ID: ENTITY_FAN, ATTR_SPEED: "low"},
@@ -291,7 +291,7 @@ async def test_template.opp):
     assert math.isclose(power, ENTITY_FAN_SPEED_LOW)
 
     # Fan High:
-    await.opp.services.async_call(
+    await opp.services.async_call(
         FAN_DOMAIN,
         SERVICE_SET_SPEED,
         {ATTR_ENTITY_ID: ENTITY_FAN, ATTR_SPEED: "high"},
@@ -304,7 +304,7 @@ async def test_template.opp):
     assert math.isclose(power, ENTITY_FAN_SPEED_HIGH)
 
     # Fan off:
-    await.opp.services.async_call(
+    await opp.services.async_call(
         FAN_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_FAN}, blocking=True
     )
     plug_it = emulated_kasa.get_plug_devices.opp, config)
@@ -330,10 +330,10 @@ async def test_sensor.opp):
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG_LIGHT) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
    .opp.states.async_set(ENTITY_SENSOR, 35)
@@ -360,7 +360,7 @@ async def test_sensor.opp):
     assert math.isclose(power, 40)
 
     # report 0 if device is off
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
 
@@ -384,7 +384,7 @@ async def test_sensor_state.opp):
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG_SENSOR) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 
    .opp.states.async_set(ENTITY_SENSOR, 35)
@@ -440,21 +440,21 @@ async def test_multiple_devices.opp):
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
         assert await emulated_kasa.async_setup_opp, CONFIG) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 
     # Turn all devices on to known state
-    await.opp.services.async_call(
+    await opp.services.async_call(
         SWITCH_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
    .opp.states.async_set(ENTITY_SENSOR, 35)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         FAN_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_FAN}, blocking=True
     )
-    await.opp.services.async_call(
+    await opp.services.async_call(
         FAN_DOMAIN,
         SERVICE_SET_SPEED,
         {ATTR_ENTITY_ID: ENTITY_FAN, ATTR_SPEED: "medium"},

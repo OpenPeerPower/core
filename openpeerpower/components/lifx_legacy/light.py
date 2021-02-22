@@ -110,7 +110,7 @@ class LIFX:
             )
             bulb.set_power(power)
             bulb.set_color(hue, sat, bri, kel)
-            bulb.schedule_update_ha_state()
+            bulb.schedule_update_op_state()
 
     def on_color(self, ipaddr, hue, sat, bri, kel):
         """Initialize the light."""
@@ -118,7 +118,7 @@ class LIFX:
 
         if bulb is not None:
             bulb.set_color(hue, sat, bri, kel)
-            bulb.schedule_update_ha_state()
+            bulb.schedule_update_op_state()
 
     def on_power(self, ipaddr, power):
         """Initialize the light."""
@@ -126,7 +126,7 @@ class LIFX:
 
         if bulb is not None:
             bulb.set_power(power)
-            bulb.schedule_update_ha_state()
+            bulb.schedule_update_op_state()
 
     def poll(self, now):
         """Set up polling for the light."""

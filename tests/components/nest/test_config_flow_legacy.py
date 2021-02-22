@@ -188,10 +188,10 @@ async def test_step_import.opp):
         assert await async_setup_component(
            .opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     flow = opp.config_entries.flow.async_progress()[0]
-    result = await.opp.config_entries.flow.async_configure(flow["flow_id"])
+    result = await opp.config_entries.flow.async_configure(flow["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "link"
@@ -208,7 +208,7 @@ async def test_step_import_with_token_cache.opp):
         assert await async_setup_component(
            .opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 

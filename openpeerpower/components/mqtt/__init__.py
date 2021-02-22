@@ -334,7 +334,7 @@ async def async_subscribe(
         )
         wrapped_msg_callback = wrap_msg_callback(msg_callback)
 
-    async_remove = await.opp.data[DATA_MQTT].async_subscribe(
+    async_remove = await opp.data[DATA_MQTT].async_subscribe(
         topic,
         catch_log_exception(
             wrapped_msg_callback,
@@ -448,11 +448,11 @@ async def async_setup_entry.opp, entry):
         conf,
     )
 
-    await.opp.data[DATA_MQTT].async_connect()
+    await opp.data[DATA_MQTT].async_connect()
 
     async def async_stop_mqtt(_event: Event):
         """Stop MQTT component."""
-        await.opp.data[DATA_MQTT].async_disconnect()
+        await opp.data[DATA_MQTT].async_disconnect()
 
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_mqtt)
 
@@ -478,7 +478,7 @@ async def async_setup_entry.opp, entry):
                 )
                 return
 
-        await.opp.data[DATA_MQTT].async_publish(msg_topic, payload, qos, retain)
+        await opp.data[DATA_MQTT].async_publish(msg_topic, payload, qos, retain)
 
    .opp.services.async_register(
         DOMAIN, SERVICE_PUBLISH, async_publish_service, schema=MQTT_PUBLISH_SCHEMA
@@ -502,7 +502,7 @@ async def async_setup_entry.opp, entry):
         async def finish_dump(_):
             """Write dump to file."""
             unsub()
-            await.opp.async_add_executor_job(write_dump)
+            await opp.async_add_executor_job(write_dump)
 
         event.async_call_later.opp, call.data["duration"], finish_dump)
 
@@ -554,7 +554,7 @@ class MQTT:
         self.conf = conf
         self.subscriptions: List[Subscription] = []
         self.connected = False
-        self._ha_started = asyncio.Event()
+        self._op_started = asyncio.Event()
         self._last_subscribe = time.time()
         self._mqttc: mqtt.Client = None
         self._paho_lock = asyncio.Lock()
@@ -562,12 +562,12 @@ class MQTT:
         self._pending_operations = {}
 
         if self.opp.state == CoreState.running:
-            self._ha_started.set()
+            self._op_started.set()
         else:
 
             @callback
             def ha_started(_):
-                self._ha_started.set()
+                self._op_started.set()
 
             self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, ha_started)
 
@@ -831,7 +831,7 @@ class MQTT:
         ):
 
             async def publish_birth_message(birth_message):
-                await self._ha_started.wait()  # Wait for Open Peer Power to start
+                await self._op_started.wait()  # Wait for Open Peer Power to start
                 await self._discovery_cooldown()  # Wait for MQTT discovery to cool down
                 await self.async_publish(  # pylint: disable=no-value-for-parameter
                     topic=birth_message.topic,
@@ -996,7 +996,7 @@ async def websocket_mqtt_info.opp, connection, msg):
 async def websocket_remove_device.opp, connection, msg):
     """Delete device."""
     device_id = msg["device_id"]
-    dev_registry = await.opp.helpers.device_registry.async_get_registry()
+    dev_registry = await opp.helpers.device_registry.async_get_registry()
 
     device = dev_registry.async_get(device_id)
     if not device:

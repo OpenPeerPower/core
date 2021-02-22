@@ -181,7 +181,7 @@ class NetatmoCamera(NetatmoBase, Camera):
             elif data["push_type"] == "NOC-light_mode":
                 self._light_state = data["sub_type"]
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
     def camera_image(self):

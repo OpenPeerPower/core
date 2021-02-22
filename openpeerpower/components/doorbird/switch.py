@@ -84,7 +84,7 @@ class DoorBirdSwitch(DoorBirdEntity, SwitchEntity):
             self.opp, self._async_turn_off, dt_util.utcnow() + self._time
         )
         await self.opp.async_add_executor_job(self._turn_on)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _turn_on(self):
         """Power the relay."""
@@ -102,4 +102,4 @@ class DoorBirdSwitch(DoorBirdEntity, SwitchEntity):
         """Wait for the correct amount of assumed time to pass."""
         self._state = False
         self._reset_sub = None
-        self.async_write_ha_state()
+        self.async_write_op_state()

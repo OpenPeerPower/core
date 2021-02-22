@@ -4,21 +4,21 @@ from unittest.mock import patch
 
 from openpeerpower import config_entries
 from openpeerpower.components.cast import open_peer_power_cast
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 
 from tests.common import MockConfigEntry, async_mock_signal
 
 
 async def test_service_show_view.opp, mock_zeroconf):
     """Test we don't set app id in prod."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
-    await open_peer_power_cast.async_setup_ha_cast.opp, MockConfigEntry())
+    await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
     calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_HASS_CAST_SHOW_VIEW)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cast",
         "show_lovelace_view",
         {"entity_id": "media_player.kitchen", "view_path": "mock_path"},
@@ -38,14 +38,14 @@ async def test_service_show_view.opp, mock_zeroconf):
 
 async def test_service_show_view_dashboard.opp, mock_zeroconf):
     """Test casting a specific dashboard."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
-    await open_peer_power_cast.async_setup_ha_cast.opp, MockConfigEntry())
+    await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
     calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_HASS_CAST_SHOW_VIEW)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cast",
         "show_lovelace_view",
         {
@@ -65,20 +65,20 @@ async def test_service_show_view_dashboard.opp, mock_zeroconf):
 
 async def test_use_cloud_url.opp, mock_zeroconf):
     """Test that we fall back to cloud url."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
    .opp.config.components.add("cloud")
 
-    await open_peer_power_cast.async_setup_ha_cast.opp, MockConfigEntry())
+    await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
     calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_HASS_CAST_SHOW_VIEW)
 
     with patch(
         "openpeerpower.components.cloud.async_remote_ui_url",
         return_value="https://something.nabu.casa",
     ):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "cast",
             "show_lovelace_view",
             {"entity_id": "media_player.kitchen", "view_path": "mock_path"},
@@ -108,12 +108,12 @@ async def test_remove_entry.opp, mock_zeroconf):
     ), patch(
         "pychromecast.discovery.stop_discovery"
     ):
-        assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
     assert "cast" in.opp.config.components
 
     user_id = entry.data.get("user_id")
-    assert await.opp.auth.async_get_user(user_id)
+    assert await opp.auth.async_get_user(user_id)
 
-    assert await.opp.config_entries.async_remove(entry.entry_id)
-    assert not await.opp.auth.async_get_user(user_id)
+    assert await opp.config_entries.async_remove(entry.entry_id)
+    assert not await opp.auth.async_get_user(user_id)

@@ -72,4 +72,4 @@ class SpeedtestSensor(RestoreEntity):
 
     @callback
     def _schedule_immediate_update(self):
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)

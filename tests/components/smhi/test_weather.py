@@ -47,8 +47,8 @@ async def test_setup_opp.opp: OpenPeerPower, aioclient_mock) -> None:
 
     entry = MockConfigEntry(domain="smhi", data=TEST_CONFIG)
 
-    await.opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
+    await opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
 
     #  Testing the actual entity state for

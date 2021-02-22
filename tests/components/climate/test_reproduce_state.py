@@ -37,7 +37,7 @@ async def test_with_hvac_mode.opp, state):
 
     await async_reproduce_states.opp, [State(ENTITY_1, state)])
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == {"entity_id": ENTITY_1, "hvac_mode": state}
@@ -51,7 +51,7 @@ async def test_multiple_state.opp):
        .opp, [State(ENTITY_1, HVAC_MODE_HEAT), State(ENTITY_2, HVAC_MODE_AUTO)]
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls_1) == 2
     # order is not guaranteed
@@ -71,7 +71,7 @@ async def test_state_with_none.opp):
 
     await async_reproduce_states.opp, [State(ENTITY_1, None)])
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -86,7 +86,7 @@ async def test_state_with_context.opp):
        .opp, [State(ENTITY_1, HVAC_MODE_HEAT)], context=context
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data == {"entity_id": ENTITY_1, "hvac_mode": HVAC_MODE_HEAT}
@@ -113,7 +113,7 @@ async def test_attribute.opp, service, attribute):
 
     await async_reproduce_states.opp, [State(ENTITY_1, None, {attribute: value})])
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls_1) == 1
     assert calls_1[0].data == {"entity_id": ENTITY_1, attribute: value}

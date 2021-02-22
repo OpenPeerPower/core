@@ -48,7 +48,7 @@ async def test_reproducing_states.opp, caplog):
     fan_speed_calls = async_mock_service.opp, "vacuum", SERVICE_SET_FAN_SPEED)
 
     # These calls should do nothing as entities already in desired state
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [
             State("vacuum.entity_off", STATE_OFF),
             State("vacuum.entity_on", STATE_ON),
@@ -70,7 +70,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(fan_speed_calls) == 0
 
     # Test invalid state is handled
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [State("vacuum.entity_off", "not_supported")]
     )
 
@@ -84,7 +84,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(fan_speed_calls) == 0
 
     # Make sure correct services are called
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [
             State("vacuum.entity_off", STATE_ON),
             State("vacuum.entity_on", STATE_OFF),

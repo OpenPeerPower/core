@@ -78,7 +78,7 @@ def _mock_powerwall_side_effect(site_info=None):
 
 
 async def _async_load_json_fixture.opp, path):
-    fixture = await.opp.async_add_executor_job(
+    fixture = await opp.async_add_executor_job(
         load_fixture, os.path.join("powerwall", path)
     )
     return json.loads(fixture)

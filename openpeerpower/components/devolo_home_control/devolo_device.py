@@ -87,7 +87,7 @@ class DevoloDeviceEntity(Entity):
             self._value = message[1]
         else:
             self._generic_message(message)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _generic_message(self, message):
         """Handle generic messages."""

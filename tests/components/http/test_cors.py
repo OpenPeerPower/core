@@ -17,7 +17,7 @@ from openpeerpower.components.http.cors import setup_cors
 from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.setup import async_setup_component
 
-from . import HTTP_HEADER_HA_AUTH
+from . import HTTP_HEADER_OP_AUTH
 
 TRUSTED_ORIGIN = "https://open-peer-power.io"
 
@@ -71,7 +71,7 @@ async def test_cors_requests(client):
 
     # With password in headers
     req = await client.get(
-        "/", headers={HTTP_HEADER_HA_AUTH: "some-pass", ORIGIN: TRUSTED_ORIGIN}
+        "/", headers={HTTP_HEADER_OP_AUTH: "some-pass", ORIGIN: TRUSTED_ORIGIN}
     )
     assert req.status == 200
     assert req.headers[ACCESS_CONTROL_ALLOW_ORIGIN] == TRUSTED_ORIGIN
@@ -127,7 +127,7 @@ async def test_cors_middleware_with_cors_allowed_view.opp):
    .opp.http.register_view(MyView("/api/test2", "api:test"))
 
    .opp.http.app._on_startup.freeze()
-    await.opp.http.app.startup()
+    await opp.http.app.startup()
 
 
 async def test_cors_works_with_frontend.opp, opp_client):
@@ -137,7 +137,7 @@ async def test_cors_works_with_frontend.opp, opp_client):
         "frontend",
         {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}},
     )
-    client = await.opp_client()
+    client = await opp_client()
     resp = await client.get("/")
     assert resp.status == 200
 
@@ -149,7 +149,7 @@ async def test_cors_on_static_files.opp, opp_client):
     )
    .opp.http.register_static_path("/something", str(Path(__file__).parent))
 
-    client = await.opp_client()
+    client = await opp_client()
     resp = await client.options(
         "/something/__init__.py",
         headers={

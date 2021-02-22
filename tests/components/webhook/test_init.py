@@ -1,7 +1,7 @@
 """Test the webhook component."""
 import pytest
 
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.setup import async_setup_component
 
 
@@ -36,7 +36,7 @@ async def test_unregistering_webhook.opp, mock_client):
 
 async def test_generate_webhook_url.opp):
     """Test we generate a webhook url correctly."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://example.com"},
     )
@@ -144,7 +144,7 @@ async def test_webhook_head.opp, mock_client):
 async def test_listing_webhook.opp, opp_ws_client, opp_access_token):
     """Test unregistering a webhook."""
     assert await async_setup_component.opp, "webhook", {})
-    client = await.opp_ws_client.opp, opp_access_token)
+    client = await opp_ws_client.opp, opp_access_token)
 
    .opp.components.webhook.async_register("test", "Test hook", "my-id", None)
 

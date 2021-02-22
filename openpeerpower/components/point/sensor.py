@@ -61,7 +61,7 @@ class MinutPointSensor(MinutPointEntity):
         if self.is_updated:
             self._value = await self.device.sensor(self.device_class)
             self._updated = parse_datetime(self.device.last_update)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def icon(self):

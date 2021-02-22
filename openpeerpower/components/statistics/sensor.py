@@ -123,7 +123,7 @@ class StatisticsSensor(Entity):
 
             self._add_state_to_queue(new_state)
 
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         @callback
         def async_stats_sensor_startup(_):
@@ -305,7 +305,7 @@ class StatisticsSensor(Entity):
             def _scheduled_update(now):
                 """Timer callback for sensor update."""
                 _LOGGER.debug("%s: executing scheduled update", self.entity_id)
-                self.async_schedule_update_ha_state(True)
+                self.async_schedule_update_op_state(True)
                 self._update_listener = None
 
             self._update_listener = async_track_point_in_utc_time(
@@ -349,6 +349,6 @@ class StatisticsSensor(Entity):
         for state in reversed(states):
             self._add_state_to_queue(state)
 
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
         _LOGGER.debug("%s: initializing from database completed", self.entity_id)

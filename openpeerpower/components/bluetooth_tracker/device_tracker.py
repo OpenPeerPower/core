@@ -135,13 +135,13 @@ async def async_setup_scanner(
 
         try:
             if track_new:
-                devices = await.opp.async_add_executor_job(discover_devices, device_id)
+                devices = await opp.async_add_executor_job(discover_devices, device_id)
                 for mac, device_name in devices:
                     if mac not in devices_to_track and mac not in devices_to_not_track:
                         devices_to_track.add(mac)
 
             for mac in devices_to_track:
-                device_name = await.opp.async_add_executor_job(lookup_name, mac)
+                device_name = await opp.async_add_executor_job(lookup_name, mac)
                 if device_name is None:
                     # Could not lookup device name
                     continue
@@ -149,7 +149,7 @@ async def async_setup_scanner(
                 rssi = None
                 if request_rssi:
                     client = BluetoothRSSI(mac)
-                    rssi = await.opp.async_add_executor_job(client.request_rssi)
+                    rssi = await opp.async_add_executor_job(client.request_rssi)
                     client.close()
 
                 tasks.append(see_device.opp, async_see, mac, device_name, rssi))

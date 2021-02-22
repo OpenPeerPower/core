@@ -158,7 +158,7 @@ class DemoVacuum(VacuumEntity):
         self._cleaned_area += 5.32
         self._battery_level -= 2
         self._status = "Cleaning"
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the vacuum off."""
@@ -167,7 +167,7 @@ class DemoVacuum(VacuumEntity):
 
         self._state = False
         self._status = "Charging"
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def stop(self, **kwargs):
         """Stop the vacuum."""
@@ -176,7 +176,7 @@ class DemoVacuum(VacuumEntity):
 
         self._state = False
         self._status = "Stopping the current task"
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def clean_spot(self, **kwargs):
         """Perform a spot clean-up."""
@@ -187,7 +187,7 @@ class DemoVacuum(VacuumEntity):
         self._cleaned_area += 1.32
         self._battery_level -= 1
         self._status = "Cleaning spot"
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def locate(self, **kwargs):
         """Locate the vacuum (usually by playing a song)."""
@@ -195,7 +195,7 @@ class DemoVacuum(VacuumEntity):
             return
 
         self._status = "Hi, I'm over here!"
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def start_pause(self, **kwargs):
         """Start, pause or resume the cleaning task."""
@@ -209,7 +209,7 @@ class DemoVacuum(VacuumEntity):
             self._battery_level -= 1
         else:
             self._status = "Pausing the current task"
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_fan_speed(self, fan_speed, **kwargs):
         """Set the vacuum's fan speed."""
@@ -218,7 +218,7 @@ class DemoVacuum(VacuumEntity):
 
         if fan_speed in self.fan_speed_list:
             self._fan_speed = fan_speed
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def return_to_base(self, **kwargs):
         """Tell the vacuum to return to its dock."""
@@ -228,7 +228,7 @@ class DemoVacuum(VacuumEntity):
         self._state = False
         self._status = "Returning home..."
         self._battery_level += 5
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def send_command(self, command, params=None, **kwargs):
         """Send a command to the vacuum."""
@@ -237,7 +237,7 @@ class DemoVacuum(VacuumEntity):
 
         self._status = f"Executing {command}({params})"
         self._state = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class StateDemoVacuum(StateVacuumEntity):
@@ -301,7 +301,7 @@ class StateDemoVacuum(StateVacuumEntity):
             self._state = STATE_CLEANING
             self._cleaned_area += 1.32
             self._battery_level -= 1
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def pause(self):
         """Pause the cleaning task."""
@@ -310,7 +310,7 @@ class StateDemoVacuum(StateVacuumEntity):
 
         if self._state == STATE_CLEANING:
             self._state = STATE_PAUSED
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def stop(self, **kwargs):
         """Stop the cleaning task, do not return to dock."""
@@ -318,7 +318,7 @@ class StateDemoVacuum(StateVacuumEntity):
             return
 
         self._state = STATE_IDLE
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def return_to_base(self, **kwargs):
         """Return dock to charging base."""
@@ -326,7 +326,7 @@ class StateDemoVacuum(StateVacuumEntity):
             return
 
         self._state = STATE_RETURNING
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
         self.opp.loop.call_later(30, self.__set_state_to_dock)
 
@@ -338,7 +338,7 @@ class StateDemoVacuum(StateVacuumEntity):
         self._state = STATE_CLEANING
         self._cleaned_area += 1.32
         self._battery_level -= 1
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_fan_speed(self, fan_speed, **kwargs):
         """Set the vacuum's fan speed."""
@@ -347,8 +347,8 @@ class StateDemoVacuum(StateVacuumEntity):
 
         if fan_speed in self.fan_speed_list:
             self._fan_speed = fan_speed
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def __set_state_to_dock(self):
         self._state = STATE_DOCKED
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

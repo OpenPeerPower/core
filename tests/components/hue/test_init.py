@@ -77,7 +77,7 @@ async def test_fixing_unique_id_other_ignored.opp, mock_bridge_setup):
     )
     entry.add_to.opp.opp)
     assert await async_setup_component.opp, hue.DOMAIN, {}) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert entry.unique_id == "mock-id"
     assert.opp.config_entries.async_entries() == [entry]
 
@@ -97,7 +97,7 @@ async def test_fixing_unique_id_other_correct.opp, mock_bridge_setup):
     )
     entry.add_to.opp.opp)
     assert await async_setup_component.opp, hue.DOMAIN, {}) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.config_entries.async_entries() == [correct_entry]
 
 
@@ -122,7 +122,7 @@ async def test_security_vuln_check.opp):
 
         assert await async_setup_component.opp, "hue", {})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("persistent_notification.hue_hub_firmware")
     assert state is not None

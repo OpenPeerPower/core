@@ -31,8 +31,8 @@ async def test_entity_and_device_attributes.opp, device_factory):
     device = device_factory(
         "Garage", [Capability.garage_door_control], {Attribute.door: "open"}
     )
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     # Act
     await setup_platform.opp, COVER_DOMAIN, devices=[device])
     # Assert
@@ -62,7 +62,7 @@ async def test_open.opp, device_factory):
     await setup_platform.opp, COVER_DOMAIN, devices=devices)
     entity_ids = ["cover.door", "cover.garage", "cover.shade"]
     # Act
-    await.opp.services.async_call(
+    await opp.services.async_call(
         COVER_DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: entity_ids}, blocking=True
     )
     # Assert
@@ -87,7 +87,7 @@ async def test_close.opp, device_factory):
     await setup_platform.opp, COVER_DOMAIN, devices=devices)
     entity_ids = ["cover.door", "cover.garage", "cover.shade"]
     # Act
-    await.opp.services.async_call(
+    await opp.services.async_call(
         COVER_DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: entity_ids}, blocking=True
     )
     # Assert
@@ -107,7 +107,7 @@ async def test_set_cover_position.opp, device_factory):
     )
     await setup_platform.opp, COVER_DOMAIN, devices=[device])
     # Act
-    await.opp.services.async_call(
+    await opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_POSITION: 50, "entity_id": "all"},
@@ -132,7 +132,7 @@ async def test_set_cover_position_unsupported.opp, device_factory):
     )
     await setup_platform.opp, COVER_DOMAIN, devices=[device])
     # Act
-    await.opp.services.async_call(
+    await opp.services.async_call(
         COVER_DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {"entity_id": "all", ATTR_POSITION: 50},
@@ -159,7 +159,7 @@ async def test_update_to_open_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.garage")
     assert state is not None
     assert state.state == STATE_OPEN
@@ -177,7 +177,7 @@ async def test_update_to_closed_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("cover.garage")
     assert state is not None
     assert state.state == STATE_CLOSED
@@ -191,6 +191,6 @@ async def test_unload_config_entry.opp, device_factory):
     )
     config_entry = await setup_platform.opp, COVER_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
+    await opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
     # Assert
     assert.opp.states.get("cover.garage").state == STATE_UNAVAILABLE

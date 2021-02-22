@@ -87,7 +87,7 @@ DPI_GROUPS = [
 async def test_flow_works.opp, aioclient_mock, mock_discovery):
     """Test config flow."""
     mock_discovery.return_value = "1"
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
     )
 
@@ -120,7 +120,7 @@ async def test_flow_works.opp, aioclient_mock, mock_discovery):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_HOST: "1.2.3.4",
@@ -153,7 +153,7 @@ async def test_flow_works.opp, aioclient_mock, mock_discovery):
 
 async def test_flow_multiple_sites.opp, aioclient_mock):
     """Test config flow works when finding multiple sites."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
     )
 
@@ -180,7 +180,7 @@ async def test_flow_multiple_sites.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_HOST: "1.2.3.4",
@@ -201,7 +201,7 @@ async def test_flow_raise_already_configured.opp, aioclient_mock):
     """Test config flow aborts since a connected config entry already exists."""
     await setup_unifi_integration.opp, aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
     )
 
@@ -229,7 +229,7 @@ async def test_flow_raise_already_configured.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_HOST: "1.2.3.4",
@@ -256,7 +256,7 @@ async def test_flow_aborts_configuration_updated.opp, aioclient_mock):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
     )
 
@@ -283,7 +283,7 @@ async def test_flow_aborts_configuration_updated.opp, aioclient_mock):
     )
 
     with patch("openpeerpower.components.unifi.async_setup_entry"):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -300,7 +300,7 @@ async def test_flow_aborts_configuration_updated.opp, aioclient_mock):
 
 async def test_flow_fails_user_credentials_faulty.opp, aioclient_mock):
     """Test config flow."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
     )
 
@@ -310,7 +310,7 @@ async def test_flow_fails_user_credentials_faulty.opp, aioclient_mock):
     aioclient_mock.get("https://1.2.3.4:1234", status=302)
 
     with patch("aiounifi.Controller.login", side_effect=aiounifi.errors.Unauthorized):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -327,7 +327,7 @@ async def test_flow_fails_user_credentials_faulty.opp, aioclient_mock):
 
 async def test_flow_fails_controller_unavailable.opp, aioclient_mock):
     """Test config flow."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
     )
 
@@ -337,7 +337,7 @@ async def test_flow_fails_controller_unavailable.opp, aioclient_mock):
     aioclient_mock.get("https://1.2.3.4:1234", status=302)
 
     with patch("aiounifi.Controller.login", side_effect=aiounifi.errors.RequestError):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_HOST: "1.2.3.4",
@@ -358,7 +358,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.available = False
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": SOURCE_REAUTH},
         data=config_entry,
@@ -388,7 +388,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_HOST: "1.2.3.4",
@@ -418,7 +418,7 @@ async def test_advanced_option_flow.opp, aioclient_mock):
         dpiapp_response=[],
     )
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": True}
     )
 
@@ -428,7 +428,7 @@ async def test_advanced_option_flow.opp, aioclient_mock):
         result["data_schema"].schema[CONF_SSID_FILTER].options.keys()
     ).intersection(("SSID 1", "SSID 2", "SSID 2_IOT", "SSID 3"))
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_TRACK_CLIENTS: False,
@@ -442,7 +442,7 @@ async def test_advanced_option_flow.opp, aioclient_mock):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "client_control"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_BLOCK_CLIENT: [CLIENTS[0]["mac"]],
@@ -454,7 +454,7 @@ async def test_advanced_option_flow.opp, aioclient_mock):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "statistics_sensors"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_ALLOW_BANDWIDTH_SENSORS: True,
@@ -489,14 +489,14 @@ async def test_simple_option_flow.opp, aioclient_mock):
         dpiapp_response=[],
     )
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp.config_entries.options.async_init(
         config_entry.entry_id, context={"show_advanced_options": False}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "simple_options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_TRACK_CLIENTS: False,
@@ -517,7 +517,7 @@ async def test_form_ssdp.opp):
     """Test we get the form with ssdp source."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -549,7 +549,7 @@ async def test_form_ssdp_aborts_if_host_already_exists(opp):
         data={"host": "192.168.208.1", "site": "site_id"},
     )
     entry.add_to.opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -572,7 +572,7 @@ async def test_form_ssdp_aborts_if_serial_already_exists(opp):
         unique_id="e0:63:da:20:14:a9",
     )
     entry.add_to.opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -595,7 +595,7 @@ async def test_form_ssdp_gets_form_with_ignored_entry.opp):
         source=config_entries.SOURCE_IGNORE,
     )
     entry.add_to.opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={

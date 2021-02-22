@@ -136,7 +136,7 @@ async def activate_automation(
         """Turn on lights."""
         if not anyone_home() or light.is_on(light_id):
             return
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN_LIGHT,
             SERVICE_TURN_ON,
             {

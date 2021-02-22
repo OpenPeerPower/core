@@ -43,7 +43,7 @@ class KNXCover(KnxEntity, CoverEntity):
     @callback
     async def after_update_callback(self, device):
         """Call after device was updated."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
         if self._device.is_traveling():
             self.start_auto_updater()
 
@@ -155,7 +155,7 @@ class KNXCover(KnxEntity, CoverEntity):
     @callback
     def auto_updater_hook(self, now):
         """Call for the autoupdater."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
         if self._device.position_reached():
             self.stop_auto_updater()
 

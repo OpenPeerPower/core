@@ -208,10 +208,10 @@ class TestMediaPlayer(unittest.TestCase):
         self opp =get_test_open_peer_power()
 
         self.mock_mp_1 = MockMediaPlayer(self.opp, "mock1")
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
 
         self.mock_mp_2 = MockMediaPlayer(self.opp, "mock2")
-        self.mock_mp_2.schedule_update_ha_state()
+        self.mock_mp_2.schedule_update_op_state()
 
         self.opp.block_till_done()
 
@@ -407,19 +407,19 @@ class TestMediaPlayer(unittest.TestCase):
         assert ump._child_state is None
 
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert self.mock_mp_1.entity_id == ump._child_state.entity_id
 
         self.mock_mp_2._state = STATE_PLAYING
-        self.mock_mp_2.schedule_update_ha_state()
+        self.mock_mp_2.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert self.mock_mp_1.entity_id == ump._child_state.entity_id
 
         self.mock_mp_1._state = STATE_OFF
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert self.mock_mp_2.entity_id == ump._child_state.entity_id
@@ -451,7 +451,7 @@ class TestMediaPlayer(unittest.TestCase):
         assert ump.state, STATE_OFF
 
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert STATE_PLAYING == ump.state
@@ -471,7 +471,7 @@ class TestMediaPlayer(unittest.TestCase):
         assert STATE_ON == ump.state
 
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert STATE_PLAYING == ump.state
@@ -491,13 +491,13 @@ class TestMediaPlayer(unittest.TestCase):
         assert ump.volume_level is None
 
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert 0 == ump.volume_level
 
         self.mock_mp_1._volume_level = 1
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert 1 == ump.volume_level
@@ -515,7 +515,7 @@ class TestMediaPlayer(unittest.TestCase):
 
         self.mock_mp_1._state = STATE_PLAYING
         self.mock_mp_1._media_image_url = test_url
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         # mock_mp_1 will convert the url to the api proxy url. This test
@@ -533,13 +533,13 @@ class TestMediaPlayer(unittest.TestCase):
         assert not ump.is_volume_muted
 
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert not ump.is_volume_muted
 
         self.mock_mp_1._is_volume_muted = True
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert ump.is_volume_muted
@@ -622,7 +622,7 @@ class TestMediaPlayer(unittest.TestCase):
 
         self.mock_mp_1._supported_features = 512
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
         assert 512 == ump.supported_features
@@ -657,7 +657,7 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
@@ -693,7 +693,7 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         self.mock_mp_1._state = STATE_PLAYING
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
@@ -710,9 +710,9 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         self.mock_mp_1._state = STATE_OFF
-        self.mock_mp_1.schedule_update_ha_state()
+        self.mock_mp_1.schedule_update_op_state()
         self.mock_mp_2._state = STATE_OFF
-        self.mock_mp_2.schedule_update_ha_state()
+        self.mock_mp_2.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
@@ -729,7 +729,7 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         self.mock_mp_2._state = STATE_PLAYING
-        self.mock_mp_2.schedule_update_ha_state()
+        self.mock_mp_2.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
@@ -838,7 +838,7 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         self.mock_mp_2._state = STATE_PLAYING
-        self.mock_mp_2.schedule_update_ha_state()
+        self.mock_mp_2.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
@@ -861,14 +861,14 @@ async def test_state_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 2
-    await.opp.async_start()
+    await opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_ON
    .opp.states.async_set("sensor.test_sensor", STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_OFF
 
 
@@ -887,7 +887,7 @@ async def test_device_class.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").attributes["device_class"] == "tv"
 
 
@@ -906,14 +906,14 @@ async def test_invalid_state_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 2
-    await.opp.async_start()
+    await opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
    .opp.states.async_set("sensor.test_sensor", "off")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
 
 
@@ -939,11 +939,11 @@ async def test_master_state_with_template.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 3
-    await.opp.async_start()
+    await opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.get("media_player.tv").state == STATE_ON
 
     events = []
@@ -954,7 +954,7 @@ async def test_master_state_with_template.opp):
 
     context = Context()
    .opp.states.async_set("input_boolean.test", STATE_ON, context=context)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.states.get("media_player.tv").state == STATE_OFF
     assert events[0].context == context
@@ -982,15 +982,15 @@ async def test_reload.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 3
-    await.opp.async_start()
+    await opp.async_start()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.states.get("media_player.tv").state == STATE_ON
 
    .opp.states.async_set("input_boolean.test", STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.states.get("media_player.tv").state == STATE_OFF
 
@@ -1007,13 +1007,13 @@ async def test_reload.opp):
         "universal/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "universal",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 5
 

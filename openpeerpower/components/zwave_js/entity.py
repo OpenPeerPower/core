@@ -126,7 +126,7 @@ class ZWaveBaseEntity(Entity):
         )
 
         self.on_value_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def get_zwave_value(

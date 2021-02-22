@@ -25,7 +25,7 @@ async def test_setup_missing_config(opp):
     assert await async_setup_component(
        .opp, sensor.DOMAIN, {"sensor": {"platform": "rest"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -36,7 +36,7 @@ async def test_setup_missing_schema.opp):
         sensor.DOMAIN,
         {"sensor": {"platform": "rest", "resource": "localhost", "method": "GET"}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -55,7 +55,7 @@ async def test_setup_failed_connect.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -68,7 +68,7 @@ async def test_setup_timeout.opp):
         sensor.DOMAIN,
         {"sensor": {"platform": "rest", "resource": "localhost", "method": "GET"}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -87,7 +87,7 @@ async def test_setup_minimum.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -109,12 +109,12 @@ async def test_manual_update.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     assert.opp.states.get("sensor.mysensor").state == "first"
 
     respx.get("http://localhost").respond(status_code=200, json={"data": "second"})
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "openpeerpower",
         "update_entity",
         {ATTR_ENTITY_ID: ["sensor.mysensor"]},
@@ -137,7 +137,7 @@ async def test_setup_minimum_resource_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -156,7 +156,7 @@ async def test_setup_duplicate_resource_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -186,17 +186,17 @@ async def test_setup_get.opp):
     )
     await async_setup_component.opp, "openpeerpower", {})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
     assert.opp.states.get("sensor.foo").state == ""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "openpeerpower",
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: "sensor.foo"},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get("sensor.foo").state == ""
 
 
@@ -225,7 +225,7 @@ async def test_setup_get_digest_auth.opp):
         },
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -254,7 +254,7 @@ async def test_setup_post.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -282,7 +282,7 @@ async def test_setup_get_xml.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
     state = opp.states.get("sensor.foo")
@@ -306,7 +306,7 @@ async def test_setup_query_params.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
 
@@ -335,7 +335,7 @@ async def test_update_with_json_attrs.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
     state = opp.states.get("sensor.foo")
@@ -368,7 +368,7 @@ async def test_update_with_no_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
     state = opp.states.get("sensor.foo")
@@ -402,7 +402,7 @@ async def test_update_with_json_attrs_no_data.opp, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
     state = opp.states.get("sensor.foo")
@@ -437,7 +437,7 @@ async def test_update_with_json_attrs_not_dict.opp, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
     state = opp.states.get("sensor.foo")
@@ -473,7 +473,7 @@ async def test_update_with_json_attrs_bad_JSON.opp, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
     state = opp.states.get("sensor.foo")
@@ -517,7 +517,7 @@ async def test_update_with_json_attrs_with_json_attrs_path.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     state = opp.states.get("sensor.foo")
 
@@ -553,7 +553,7 @@ async def test_update_with_xml_convert_json_attrs_with_json_attrs_path.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     state = opp.states.get("sensor.foo")
 
@@ -589,7 +589,7 @@ async def test_update_with_xml_convert_json_attrs_with_jsonattr_template.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     state = opp.states.get("sensor.foo")
 
@@ -630,7 +630,7 @@ async def test_update_with_application_xml_convert_json_attrs_with_jsonattr_temp
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     state = opp.states.get("sensor.foo")
 
@@ -665,7 +665,7 @@ async def test_update_with_xml_convert_bad_xml.opp, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     state = opp.states.get("sensor.foo")
 
@@ -700,7 +700,7 @@ async def test_update_with_failed_get.opp, caplog):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
     state = opp.states.get("sensor.foo")
 
@@ -727,9 +727,9 @@ async def test_reload.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -741,13 +741,13 @@ async def test_reload.opp):
         "rest/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.mockreset") is None
     assert.opp.states.get("sensor.rollout")

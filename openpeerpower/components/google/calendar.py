@@ -141,14 +141,14 @@ class GoogleCalendarData:
 
     async def async_get_events(self, opp, start_date, end_date):
         """Get all events in a specific time frame."""
-        service, params = await.opp.async_add_executor_job(self._prepare_query)
+        service, params = await opp.async_add_executor_job(self._prepare_query)
         if service is None:
             return []
         params["timeMin"] = start_date.isoformat("T")
         params["timeMax"] = end_date.isoformat("T")
 
-        events = await.opp.async_add_executor_job(service.events)
-        result = await.opp.async_add_executor_job(events.list(**params).execute)
+        events = await opp.async_add_executor_job(service.events)
+        result = await opp.async_add_executor_job(events.list(**params).execute)
 
         items = result.get("items", [])
         event_list = []

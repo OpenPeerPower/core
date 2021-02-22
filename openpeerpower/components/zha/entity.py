@@ -96,13 +96,13 @@ class BaseZhaEntity(LogMixin, entity.Entity):
     @callback
     def async_state_changed(self) -> None:
         """Entity state changed."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_update_state_attribute(self, key: str, value: Any) -> None:
         """Update a single device state attribute."""
         self._device_state_attributes.update({key: value})
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_set_state(self, attr_id: int, attr_name: str, value: Any) -> None:
@@ -267,7 +267,7 @@ class ZhaGroupEntity(BaseZhaEntity):
     @callback
     def async_state_changed_listener(self, event: Event):
         """Handle child updates."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_will_remove_from.opp(self) -> None:
         """Handle removal from Open Peer Power."""

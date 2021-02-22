@@ -51,7 +51,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Discover and add a discovered tuya sensor."""
         if not dev_ids:
             return
-        entities = await.opp.async_add_executor_job(
+        entities = await opp.async_add_executor_job(
             _setup_entities,
            .opp,
             dev_ids,

@@ -9,7 +9,7 @@ from openpeerpower.components.google_assistant.const import (  # noqa: F401
     EVENT_COMMAND_RECEIVED,
     NOT_EXPOSE_LOCAL,
 )
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.core import State
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util import dt
@@ -27,7 +27,7 @@ async def test_google_entity_sync_serialize_with_local_sdk.opp):
     """Test sync serialize attributes of a GoogleEntity."""
    .opp.states.async_set("light.ceiling_lights", "off")
    .opp.config.api = Mock(port=1234, use_ssl=True)
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://hostname:1234"},
     )
@@ -82,7 +82,7 @@ async def test_config_local_sdk.opp, opp_client):
         local_sdk_user_id="mock-user-id",
     )
 
-    client = await.opp_client()
+    client = await opp_client()
 
     config.async_enable_local_sdk()
 
@@ -141,7 +141,7 @@ async def test_config_local_sdk_if_disabled.opp, opp_client):
         enabled=False,
     )
 
-    client = await.opp_client()
+    client = await opp_client()
 
     config.async_enable_local_sdk()
 
@@ -183,7 +183,7 @@ async def test_agent_user_id_storage.opp, opp_storage):
 
     async def _check_after_delay(data):
         async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=2))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert.opp_storage["google_assistant"] == {
             "version": 1,

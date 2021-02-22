@@ -19,8 +19,8 @@ async def test_speedtestdotnet_sensors.opp):
         mock_api.return_value.get_best_server.return_value = MOCK_SERVERS[1][0]
         mock_api.return_value.results.dict.return_value = MOCK_RESULTS
 
-        await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
 

@@ -154,13 +154,13 @@ class DemoCover(CoverEntity):
             return
         if self._position is None:
             self._closed = True
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         self._is_closing = True
         self._listen_cover()
         self._requested_closing = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_close_cover_tilt(self, **kwargs):
         """Close the cover tilt."""
@@ -176,13 +176,13 @@ class DemoCover(CoverEntity):
             return
         if self._position is None:
             self._closed = False
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         self._is_opening = True
         self._listen_cover()
         self._requested_closing = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_open_cover_tilt(self, **kwargs):
         """Open the cover tilt."""
@@ -252,7 +252,7 @@ class DemoCover(CoverEntity):
             await self.async_stop_cover()
 
         self._closed = self.current_cover_position <= 0
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _listen_cover_tilt(self):
@@ -272,4 +272,4 @@ class DemoCover(CoverEntity):
         if self._tilt_position in (100, 0, self._set_tilt_position):
             await self.async_stop_cover_tilt()
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

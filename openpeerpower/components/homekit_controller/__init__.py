@@ -61,7 +61,7 @@ class HomeKitEntity(Entity):
         """Entity added to.opp."""
         self._signals.append(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
-                self._accessory.signal_state_updated, self.async_write_ha_state
+                self._accessory.signal_state_updated, self.async_write_op_state
             )
         )
 

@@ -23,7 +23,7 @@ mock_value_step_user = {
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -38,7 +38,7 @@ async def test_form.opp):
         "openpeerpower.components.progettihwsw.config_flow.ProgettiHWSWAPI.check_board",
         return_value=mock_value_step_user,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "", CONF_PORT: 80},
         )
@@ -54,7 +54,7 @@ async def test_form.opp):
         "openpeerpower.components.progettihwsw.async_setup_entry",
         return_value=True,
     ):
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp.config_entries.flow.async_configure(
             result2["flow_id"],
             mock_value_step_rm,
         )
@@ -68,7 +68,7 @@ async def test_form.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle unexisting board."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -78,7 +78,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.progettihwsw.config_flow.ProgettiHWSWAPI.check_board",
         return_value=False,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "", CONF_PORT: 80},
         )
@@ -90,7 +90,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_existing_entry_exception.opp):
     """Test we handle existing board."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -105,7 +105,7 @@ async def test_form_existing_entry_exception.opp):
     )
     entry.add_to.opp.opp)
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: "", CONF_PORT: 80},
     )
@@ -116,7 +116,7 @@ async def test_form_existing_entry_exception.opp):
 
 async def test_form_user_exception.opp):
     """Test we handle unknown exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -126,7 +126,7 @@ async def test_form_user_exception.opp):
         "openpeerpower.components.progettihwsw.config_flow.validate_input",
         side_effect=Exception,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: "", CONF_PORT: 80},
         )

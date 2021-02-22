@@ -64,7 +64,7 @@ class AbstractOAuth2Implementation(ABC):
 
         Pass external data in with:
 
-        await.opp.config_entries.flow.async_configure(
+        await opp.config_entries.flow.async_configure(
             flow_id=flow_id, user_input={'code': 'abcd', 'state': { … }
         )
 
@@ -427,7 +427,7 @@ class OAuth2AuthorizeCallbackView(http.OpenPeerPowerView):
         if state is None:
             return web.Response(text="Invalid state")
 
-        await.opp.config_entries.flow.async_configure(
+        await opp.config_entries.flow.async_configure(
             flow_id=state["flow_id"],
             user_input={"state": state, "code": request.query["code"]},
         )

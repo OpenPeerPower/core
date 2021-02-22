@@ -289,7 +289,7 @@ def setup_opp, config):
 
     async def async_extract_from_service(call):
         if call.context.user_id:
-            user = await.opp.auth.async_get_user(call.context.user_id)
+            user = await opp.auth.async_get_user(call.context.user_id)
             if user is None:
                 raise UnknownUser(context=call.context)
         else:

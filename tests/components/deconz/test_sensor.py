@@ -146,19 +146,19 @@ async def test_sensors.opp, aioclient_mock):
         "config": {"battery": 75},
     }
     gateway.api.event_handler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.switch_2_battery_level").state == "75"
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
     assert len.opp.states.async_all()) == 5
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_remove(config_entry.entry_id)
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -181,7 +181,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: False}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 5
     assert.opp.states.get("sensor.clip_light_level_sensor") is None
@@ -191,7 +191,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: True}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 6
     assert.opp.states.get("sensor.clip_light_level_sensor")
@@ -211,7 +211,7 @@ async def test_add_new_sensor.opp, aioclient_mock):
         "sensor": deepcopy(SENSORS["1"]),
     }
     gateway.api.event_handler(state_added_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
     assert.opp.states.get("sensor.light_level_sensor").state == "999.8"
@@ -232,7 +232,7 @@ async def test_add_battery_later.opp, aioclient_mock):
     assert len(remote._callbacks) == 2  # Event and battery tracker
 
     remote.update({"config": {"battery": 50}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
     assert len(gateway.events) == 1

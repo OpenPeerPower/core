@@ -55,7 +55,7 @@ class TasmotaBinarySensor(
         """Switch device off after a delay."""
         self._delay_listener = None
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def state_updated(self, state, **kwargs):
@@ -72,7 +72,7 @@ class TasmotaBinarySensor(
                 self.opp, off_delay, self.off_delay_listener
             )
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def force_update(self):

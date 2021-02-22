@@ -62,7 +62,7 @@ async def async_setup_opp, config):
                    .opp, p_config, discovery_info
                 )
             elif hasattr(platform, "get_handler"):
-                mailbox = await.opp.async_add_executor_job(
+                mailbox = await opp.async_add_executor_job(
                     platform.get_handler, opp, p_config, discovery_info
                 )
             else:
@@ -113,10 +113,10 @@ class MailboxEntity(Entity):
 
         @callback
         def _mailbox_updated(event):
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self.opp.bus.async_listen(EVENT, _mailbox_updated)
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     @property
     def state(self):

@@ -408,7 +408,7 @@ class Thermostat(ZhaEntity, ClimateEntity):
                 self._preset = PRESET_NONE
 
         self.debug("Attribute '%s' = %s update", record.attr_name, record.value)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         """Set fan mode."""
@@ -434,7 +434,7 @@ class Thermostat(ZhaEntity, ClimateEntity):
             return
 
         if await self._thrm.async_set_operation_mode(HVAC_MODE_2_SYSTEM[hvac_mode]):
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set new preset mode."""
@@ -452,7 +452,7 @@ class Thermostat(ZhaEntity, ClimateEntity):
                 self.debug("Couldn't turn on '%s' preset", preset_mode)
                 return
         self._preset = preset_mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
@@ -497,7 +497,7 @@ class Thermostat(ZhaEntity, ClimateEntity):
             return
 
         if success:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_preset_handler(self, preset: str, enable: bool = False) -> bool:
         """Set the preset mode via handler."""

@@ -172,7 +172,7 @@ class MqttAlarm(MqttEntity, alarm.AlarmControlPanelEntity):
                 _LOGGER.warning("Received unexpected payload: %s", msg.payload)
                 return
             self._state = payload
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self._sub_state = await subscription.async_subscribe_topics(
             self.opp,

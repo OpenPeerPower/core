@@ -66,7 +66,7 @@ class NexiaThermostatEntity(NexiaEntity):
             async_dispatcher_connect(
                 self.opp,
                 f"{SIGNAL_THERMOSTAT_UPDATE}-{self._thermostat.thermostat_id}",
-                self.async_write_ha_state,
+                self.async_write_op_state,
             )
         )
 
@@ -101,6 +101,6 @@ class NexiaThermostatZoneEntity(NexiaThermostatEntity):
             async_dispatcher_connect(
                 self.opp,
                 f"{SIGNAL_ZONE_UPDATE}-{self._zone.zone_id}",
-                self.async_write_ha_state,
+                self.async_write_op_state,
             )
         )

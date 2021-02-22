@@ -29,9 +29,9 @@ async def test_setup_with_config(opp):
         ],
     }
     assert await async_setup_component.opp, SENSOR_DOMAIN, config) is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     next_update = dt_util.utcnow() + timedelta(seconds=20)
     async_fire_time_changed.opp, next_update)
 
@@ -41,7 +41,7 @@ async def test_setup_with_config(opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=future_timestamp(1),
     ):
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 2
 
@@ -61,7 +61,7 @@ async def test_update_unique_id.opp):
         return_value=future_timestamp(1),
     ):
         assert await async_setup_component.opp, DOMAIN, {}) is True
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_LOADED
     assert entry.unique_id == f"{HOST}:{PORT}"
@@ -87,7 +87,7 @@ async def test_unload_config_entry(mock_now, opp):
         return_value=timestamp,
     ):
         assert await async_setup_component.opp, DOMAIN, {}) is True
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_LOADED
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
@@ -95,13 +95,13 @@ async def test_unload_config_entry(mock_now, opp):
     assert state.attributes.get("error") == "None"
     assert state.attributes.get("is_valid")
 
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_remove(entry.entry_id)
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state is None

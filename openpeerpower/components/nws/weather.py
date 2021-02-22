@@ -135,7 +135,7 @@ class NWSWeather(WeatherEntity):
         else:
             self._forecast = self.nws.forecast_hourly
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def should_poll(self) -> bool:

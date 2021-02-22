@@ -118,4 +118,4 @@ class IhcLight(IHCDevice, LightEntity):
             self._state = value > 0
             if self._state:
                 self._brightness = int(value * 255 / 100)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

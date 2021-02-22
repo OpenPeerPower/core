@@ -28,7 +28,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 async def test_show_user_form.opp: OpenPeerPowerType) -> None:
     """Test that the user set up form is served."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
     )
@@ -44,7 +44,7 @@ async def test_show_ssdp_form(
     mock_connection(aioclient_mock)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -60,7 +60,7 @@ async def test_cannot_connect(
     aioclient_mock.get("http://127.0.0.1:8080/info/getVersion", exc=HTTPClientError)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=user_input,
@@ -78,7 +78,7 @@ async def test_ssdp_cannot_connect(
     aioclient_mock.get("http://127.0.0.1:8080/info/getVersion", exc=HTTPClientError)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=discovery_info,
@@ -95,7 +95,7 @@ async def test_ssdp_confirm_cannot_connect(
     aioclient_mock.get("http://127.0.0.1:8080/info/getVersion", exc=HTTPClientError)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP, CONF_HOST: HOST, CONF_NAME: HOST},
         data=discovery_info,
@@ -112,7 +112,7 @@ async def test_user_device_exists_abort(
     await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=user_input,
@@ -129,7 +129,7 @@ async def test_ssdp_device_exists_abort(
     await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=discovery_info,
@@ -147,7 +147,7 @@ async def test_ssdp_with_receiver_id_device_exists_abort(
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
     discovery_info[ATTR_UPNP_SERIAL] = UPNP_SERIAL
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=discovery_info,
@@ -166,7 +166,7 @@ async def test_unknown_error(
         "openpeerpower.components.directv.config_flow.DIRECTV.update",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: SOURCE_USER},
             data=user_input,
@@ -185,7 +185,7 @@ async def test_ssdp_unknown_error(
         "openpeerpower.components.directv.config_flow.DIRECTV.update",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: SOURCE_SSDP},
             data=discovery_info,
@@ -204,7 +204,7 @@ async def test_ssdp_confirm_unknown_error(
         "openpeerpower.components.directv.config_flow.DIRECTV.update",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: SOURCE_SSDP, CONF_HOST: HOST, CONF_NAME: HOST},
             data=discovery_info,
@@ -220,7 +220,7 @@ async def test_full_user_flow_implementation(
     """Test the full manual user flow from start to finish."""
     mock_connection(aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
     )
@@ -232,7 +232,7 @@ async def test_full_user_flow_implementation(
     with patch(
         "openpeerpower.components.directv.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.directv.async_setup", return_value=True):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input=user_input,
         )
@@ -252,7 +252,7 @@ async def test_full_ssdp_flow_implementation(
     mock_connection(aioclient_mock)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -260,7 +260,7 @@ async def test_full_ssdp_flow_implementation(
     assert result["step_id"] == "ssdp_confirm"
     assert result["description_placeholders"] == {CONF_NAME: HOST}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 

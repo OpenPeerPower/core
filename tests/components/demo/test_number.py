@@ -22,7 +22,7 @@ ENTITY_PWM = "number.pwm_1"
 async def setup_demo_number.opp):
     """Initialize setup demo Number entity."""
     assert await async_setup_component.opp, DOMAIN, {"number": {"platform": "demo"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_setup_params.opp):
@@ -50,13 +50,13 @@ async def test_set_value_bad_attr.opp):
     assert state.state == "42.0"
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_SET_VALUE,
             {ATTR_VALUE: None, ATTR_ENTITY_ID: ENTITY_VOLUME},
             blocking=True,
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
@@ -68,13 +68,13 @@ async def test_set_value_bad_range.opp):
     assert state.state == "42.0"
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_SET_VALUE,
             {ATTR_VALUE: 1024, ATTR_ENTITY_ID: ENTITY_VOLUME},
             blocking=True,
         )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
@@ -85,13 +85,13 @@ async def test_set_set_value.opp):
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_VALUE,
         {ATTR_VALUE: 23, ATTR_ENTITY_ID: ENTITY_VOLUME},
         blocking=True,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "23.0"

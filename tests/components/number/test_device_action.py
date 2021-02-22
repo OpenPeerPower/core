@@ -104,7 +104,7 @@ async def test_action.opp):
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event_set_value")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 

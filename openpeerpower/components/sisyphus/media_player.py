@@ -63,7 +63,7 @@ class SisyphusPlayer(MediaPlayerEntity):
 
     async def async_added_to.opp(self):
         """Add listeners after this object has been initialized."""
-        self._table.add_listener(self.async_write_ha_state)
+        self._table.add_listener(self.async_write_op_state)
 
     async def async_update(self):
         """Force update table state."""

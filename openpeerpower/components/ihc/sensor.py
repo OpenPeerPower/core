@@ -50,4 +50,4 @@ class IHCSensor(IHCDevice, Entity):
     def on_ihc_change(self, ihc_id, value):
         """Handle IHC resource change."""
         self._state = value
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

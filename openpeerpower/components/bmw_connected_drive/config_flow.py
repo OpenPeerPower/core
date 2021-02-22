@@ -25,7 +25,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
     try:
-        await.opp.async_add_executor_job(
+        await opp.async_add_executor_job(
             ConnectedDriveAccount,
             data[CONF_USERNAME],
             data[CONF_PASSWORD],

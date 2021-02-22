@@ -121,7 +121,7 @@ def setup_opp, config):
             # servers. If that completes OK then trigger a fresh update to
             # pull the charging status from the car after waiting a minute
             # for the charging request to reach the car.
-            result = await.opp.async_add_executor_job(data_store.leaf.start_charging)
+            result = await opp.async_add_executor_job(data_store.leaf.start_charging)
             if result:
                 _LOGGER.debug("Start charging sent, request updated data in 1 minute")
                 check_charge_at = utcnow() + timedelta(minutes=1)
@@ -472,4 +472,4 @@ class LeafEntity(Entity):
     @callback
     def _update_callback(self):
         """Update the state."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)

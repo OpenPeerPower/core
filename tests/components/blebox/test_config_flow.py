@@ -53,14 +53,14 @@ def flow_feature_mock_fixture():
 async def test_flow_works.opp, valid_feature_mock, flow_feature_mock):
     """Test that config flow works."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == "form"
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={config_flow.CONF_HOST: "172.2.3.4", config_flow.CONF_PORT: 80},
@@ -89,7 +89,7 @@ async def test_flow_with_connection_failure.opp, product_class_mock):
             side_effect=blebox_uniapi.error.ConnectionError
         )
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data={config_flow.CONF_HOST: "172.2.3.4", config_flow.CONF_PORT: 80},
@@ -104,7 +104,7 @@ async def test_flow_with_api_failure.opp, product_class_mock):
             side_effect=blebox_uniapi.error.Error
         )
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data={config_flow.CONF_HOST: "172.2.3.4", config_flow.CONF_PORT: 80},
@@ -116,7 +116,7 @@ async def test_flow_with_unknown_failure.opp, product_class_mock):
     """Test that config flow works."""
     with product_class_mock as products_class:
         products_class.async_from_host = AsyncMock(side_effect=RuntimeError)
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data={config_flow.CONF_HOST: "172.2.3.4", config_flow.CONF_PORT: 80},
@@ -131,7 +131,7 @@ async def test_flow_with_unsupported_version.opp, product_class_mock):
             side_effect=blebox_uniapi.error.UnsupportedBoxVersion
         )
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data={config_flow.CONF_HOST: "172.2.3.4", config_flow.CONF_PORT: 80},
@@ -142,7 +142,7 @@ async def test_flow_with_unsupported_version.opp, product_class_mock):
 async def test_async_setup_opp):
     """Test async_setup (for coverage)."""
     assert await async_setup_component.opp, "blebox", {"host": "172.2.3.4"})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_already_configured.opp, valid_feature_mock):
@@ -151,10 +151,10 @@ async def test_already_configured.opp, valid_feature_mock):
     config = mock_config("172.2.3.4")
     config.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(config.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(config.entry_id)
+    await opp.async_block_till_done()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={config_flow.CONF_HOST: "172.2.3.4", config_flow.CONF_PORT: 80},
@@ -169,8 +169,8 @@ async def test_async_setup_entry.opp, valid_feature_mock):
     config = mock_config()
     config.add_to.opp.opp)
 
-    assert await.opp.config_entries.async_setup(config.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(config.entry_id)
+    await opp.async_block_till_done()
 
     assert.opp.config_entries.async_entries() == [config]
     assert config.state == config_entries.ENTRY_STATE_LOADED
@@ -182,11 +182,11 @@ async def test_async_remove_entry.opp, valid_feature_mock):
     config = mock_config()
     config.add_to.opp.opp)
 
-    assert await.opp.config_entries.async_setup(config.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(config.entry_id)
+    await opp.async_block_till_done()
 
-    assert await.opp.config_entries.async_remove(config.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_remove(config.entry_id)
+    await opp.async_block_till_done()
 
     assert.opp.config_entries.async_entries() == []
     assert config.state == config_entries.ENTRY_STATE_NOT_LOADED

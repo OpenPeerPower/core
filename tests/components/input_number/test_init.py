@@ -68,7 +68,7 @@ async def set_value.opp, entity_id, value):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_VALUE,
         {ATTR_ENTITY_ID: entity_id, ATTR_VALUE: value},
@@ -81,7 +81,7 @@ async def increment.opp, entity_id):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_INCREMENT, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
@@ -91,7 +91,7 @@ async def decrement.opp, entity_id):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_DECREMENT, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
@@ -150,13 +150,13 @@ async def test_increment.opp):
     assert 50 == float(state.state)
 
     await increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 51 == float(state.state)
 
     await increment.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 51 == float(state.state)
@@ -173,13 +173,13 @@ async def test_decrement.opp):
     assert 50 == float(state.state)
 
     await decrement.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 49 == float(state.state)
 
     await decrement.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 49 == float(state.state)
@@ -283,7 +283,7 @@ async def test_input_number_context.opp, opp_admin_user):
     state = opp.states.get("input_number.b1")
     assert state is not None
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "input_number",
         "increment",
         {"entity_id": state.entity_id},
@@ -339,19 +339,19 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
         },
     ):
         with pytest.raises(Unauthorized):
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
                 context=Context(user_id.opp_read_only_user.id),
             )
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -420,7 +420,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
         }
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -448,7 +448,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -485,7 +485,7 @@ async def test_update_min_max.opp, opp_ws_client, storage_setup):
     assert state.state
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/update", f"{DOMAIN}_id": f"{input_id}", "min": 9}
@@ -524,7 +524,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup):
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -553,12 +553,12 @@ async def test_setup_no_config(opp, opp_admin_user):
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}
     ):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

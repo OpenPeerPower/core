@@ -568,7 +568,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if model is None:
         try:
             miio_device = Device(host, token)
-            device_info = await.opp.async_add_executor_job(miio_device.info)
+            device_info = await opp.async_add_executor_job(miio_device.info)
             model = device_info.model
             unique_id = f"{model}-{device_info.mac_address}"
             _LOGGER.info(
@@ -628,7 +628,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             if not hasattr(device, method["method"]):
                 continue
             await getattr(device, method["method"])(**params)
-            update_tasks.append(device.async_update_ha_state(True))
+            update_tasks.append(device.async_update_op_state(True))
 
         if update_tasks:
             await asyncio.wait(update_tasks)

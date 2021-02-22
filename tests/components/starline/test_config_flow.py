@@ -41,13 +41,13 @@ async def test_flow_works.opp):
             text='{"code": 200, "devices": [{"device_id": "123", "imei": "123", "alias": "123", "battery": "123", "ctemp": "123", "etemp": "123", "fw_version": "123", "gsm_lvl": "123", "phone": "123", "status": "1", "ts_activity": "123", "typename": "123", "balance": {}, "car_state": {}, "car_alr_state": {}, "functions": [], "position": {}}], "shared_devices": []}',
         )
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             config_flow.DOMAIN, context={"source": "user"}
         )
         assert result["type"] == "form"
         assert result["step_id"] == "auth_app"
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 config_flow.CONF_APP_ID: TEST_APP_ID,
@@ -57,7 +57,7 @@ async def test_flow_works.opp):
         assert result["type"] == "form"
         assert result["step_id"] == "auth_user"
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 config_flow.CONF_USERNAME: TEST_APP_USERNAME,
@@ -74,7 +74,7 @@ async def test_step_auth_app_code_falls.opp):
         mock.get(
             "https://id.starline.ru/apiV3/application/getCode/", text='{"state": 0}}'
         )
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": "user"},
             data={
@@ -97,7 +97,7 @@ async def test_step_auth_app_token_falls.opp):
         mock.get(
             "https://id.starline.ru/apiV3/application/getToken/", text='{"state": 0}'
         )
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             config_flow.DOMAIN,
             context={"source": "user"},
             data={

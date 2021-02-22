@@ -73,7 +73,7 @@ class DynaliteBase(Entity):
             async_dispatcher_connect(
                 self.opp,
                 self._bridge.update_signal(self._device),
-                self.async_schedule_update_ha_state,
+                self.async_schedule_update_op_state,
             )
         )
         # register for wide update
@@ -81,7 +81,7 @@ class DynaliteBase(Entity):
             async_dispatcher_connect(
                 self.opp,
                 self._bridge.update_signal(),
-                self.async_schedule_update_ha_state,
+                self.async_schedule_update_op_state,
             )
         )
 

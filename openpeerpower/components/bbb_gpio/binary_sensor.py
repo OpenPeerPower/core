@@ -57,7 +57,7 @@ class BBBGPIOBinarySensor(BinarySensorEntity):
         def read_gpio(pin):
             """Read state from GPIO."""
             self._state = bbb_gpio.read_input(self._pin)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         bbb_gpio.edge_detect(self._pin, read_gpio, self._bouncetime)
 

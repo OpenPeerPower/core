@@ -15,7 +15,7 @@ async def test_lovelace_from_storage.opp, opp_ws_client, opp_storage):
     assert await async_setup_component.opp, "lovelace", {})
     assert.opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "storage"}
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/config"})
@@ -66,7 +66,7 @@ async def test_lovelace_from_storage_save_before_load(
 ):
     """Test we can load lovelace config from storage."""
     assert await async_setup_component.opp, "lovelace", {})
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Store new config
     await client.send_json(
@@ -82,7 +82,7 @@ async def test_lovelace_from_storage_save_before_load(
 async def test_lovelace_from_storage_delete.opp, opp_ws_client, opp_storage):
     """Test we delete lovelace config from storage."""
     assert await async_setup_component.opp, "lovelace", {})
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Store new config
     await client.send_json(
@@ -112,7 +112,7 @@ async def test_lovelace_from_yaml.opp, opp_ws_client):
     assert await async_setup_component.opp, "lovelace", {"lovelace": {"mode": "YAML"}})
     assert.opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "yaml"}
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/config"})
@@ -188,7 +188,7 @@ async def test_dashboard_from_yaml.opp, opp_ws_client, url_path):
         "mode": "yaml"
     }
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # List dashboards
     await client.send_json({"id": 4, "type": "lovelace/dashboards/list"})
@@ -291,7 +291,7 @@ async def test_storage_dashboards.opp, opp_ws_client, opp_storage):
     assert await async_setup_component.opp, "lovelace", {})
     assert.opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "storage"}
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/dashboards/list"})
@@ -458,7 +458,7 @@ async def test_storage_dashboard_migrate.opp, opp_ws_client, opp_storage):
 
     assert await async_setup_component.opp, "lovelace", {})
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/dashboards/list"})
@@ -498,7 +498,7 @@ async def test_websocket_list_dashboards.opp, opp_ws_client):
         },
     )
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Create a storage dashboard
     await client.send_json(

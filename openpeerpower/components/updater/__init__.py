@@ -58,7 +58,7 @@ async def async_setup_opp, config):
 
     conf = config.get(DOMAIN, {})
     if conf.get(CONF_REPORTING):
-        huuid = await.opp.helpers.instance_id.async_get()
+        huuid = await opp.helpers.instance_id.async_get()
     else:
         huuid = None
 
@@ -124,12 +124,12 @@ async def async_setup_opp, config):
 async def get_newest_version.opp, huuid, include_components):
     """Get the newest Open Peer Power version."""
     if huuid:
-        info_object = await.opp.helpers.system_info.async_get_system_info()
+        info_object = await opp.helpers.system_info.async_get_system_info()
 
         if include_components:
             info_object["components"] = list.opp.config.components)
 
-        linux_dist = await.opp.async_add_executor_job(linux_distribution, False)
+        linux_dist = await opp.async_add_executor_job(linux_distribution, False)
         info_object["distribution"] = linux_dist[0]
         info_object["os_version"] = linux_dist[1]
 

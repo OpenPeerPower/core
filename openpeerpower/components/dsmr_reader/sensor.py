@@ -50,7 +50,7 @@ class DSMRSensor(Entity):
             else:
                 self._state = message.payload
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         await mqtt.async_subscribe(self.opp, self._topic, message_received, 1)
 

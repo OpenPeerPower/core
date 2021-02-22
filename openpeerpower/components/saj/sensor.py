@@ -233,7 +233,7 @@ class SAJsensor(Entity):
             self._state = None
 
         if update:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def unique_id(self):

@@ -120,7 +120,7 @@ class NetioApiView(OpenPeerPowerView):
         ndev.start_dates = start_dates
 
         for dev in DEVICES[host].entities:
-            dev.async_write_ha_state()
+            dev.async_write_op_state()
 
         return self.json(True)
 
@@ -157,7 +157,7 @@ class NetioSwitch(SwitchEntity):
         val[int(self.outlet) - 1] = "1" if value else "0"
         self.netio.get("port list %s" % "".join(val))
         self.netio.states[int(self.outlet) - 1] = value
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def is_on(self):

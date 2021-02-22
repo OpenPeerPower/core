@@ -200,7 +200,7 @@ async def async_decode_stream.opp, packets, py_av=None):
     ):
         segment_buffer = SegmentBuffer(stream.outputs)
         stream_worker(STREAM_SOURCE, {}, segment_buffer, threading.Event())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return py_av.capture_buffer
 
@@ -213,7 +213,7 @@ async def test_stream_open_fails.opp):
         av_open.side_effect = av.error.InvalidDataError(-2, "error")
         segment_buffer = SegmentBuffer(stream.outputs)
         stream_worker(STREAM_SOURCE, {}, segment_buffer, threading.Event())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         av_open.assert_called_once()
 
 

@@ -161,7 +161,7 @@ class ZhaFan(BaseFan, ZhaEntity):
     @callback
     def async_set_state(self, attr_id, attr_name, value):
         """Handle state update from channel."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def _async_set_fan_mode(self, fan_mode: int) -> None:
         """Set the fan mode for the fan."""

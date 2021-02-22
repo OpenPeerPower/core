@@ -324,7 +324,7 @@ class AmcrestCam(Camera):
 
     async def async_on_demand_update(self):
         """Update state."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_added_to.opp(self):
         """Subscribe to signals and add camera to list."""
@@ -489,7 +489,7 @@ class AmcrestCam(Camera):
             else:
                 if attr:
                     setattr(self, attr, new_value)
-                    self.schedule_update_ha_state()
+                    self.schedule_update_op_state()
                 return
             tries -= 1
 

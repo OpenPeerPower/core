@@ -159,52 +159,52 @@ class AbstractDemoPlayer(MediaPlayerEntity):
     def turn_on(self):
         """Turn the media player on."""
         self._player_state = STATE_PLAYING
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self):
         """Turn the media player off."""
         self._player_state = STATE_OFF
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def mute_volume(self, mute):
         """Mute the volume."""
         self._volume_muted = mute
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def volume_up(self):
         """Increase volume."""
         self._volume_level = min(1.0, self._volume_level + 0.1)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def volume_down(self):
         """Decrease volume."""
         self._volume_level = max(0.0, self._volume_level - 0.1)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_volume_level(self, volume):
         """Set the volume level, range 0..1."""
         self._volume_level = volume
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def media_play(self):
         """Send play command."""
         self._player_state = STATE_PLAYING
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def media_pause(self):
         """Send pause command."""
         self._player_state = STATE_PAUSED
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_shuffle(self, shuffle):
         """Enable/disable shuffle mode."""
         self._shuffle = shuffle
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def select_sound_mode(self, sound_mode):
         """Select sound mode."""
         self._sound_mode = sound_mode
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class DemoYoutubePlayer(AbstractDemoPlayer):
@@ -281,7 +281,7 @@ class DemoYoutubePlayer(AbstractDemoPlayer):
     def play_media(self, media_type, media_id, **kwargs):
         """Play a piece of media."""
         self.youtube_id = media_id
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def media_pause(self):
         """Send pause command."""
@@ -378,25 +378,25 @@ class DemoMusicPlayer(AbstractDemoPlayer):
         """Send previous track command."""
         if self._cur_track > 0:
             self._cur_track -= 1
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def media_next_track(self):
         """Send next track command."""
         if self._cur_track < len(self.tracks) - 1:
             self._cur_track += 1
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def clear_playlist(self):
         """Clear players playlist."""
         self.tracks = []
         self._cur_track = 0
         self._player_state = STATE_OFF
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_repeat(self, repeat):
         """Enable/disable repeat mode."""
         self._repeat = repeat
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class DemoTVShowPlayer(AbstractDemoPlayer):
@@ -476,15 +476,15 @@ class DemoTVShowPlayer(AbstractDemoPlayer):
         """Send previous track command."""
         if self._cur_episode > 1:
             self._cur_episode -= 1
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def media_next_track(self):
         """Send next track command."""
         if self._cur_episode < self._episode_count:
             self._cur_episode += 1
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def select_source(self, source):
         """Set the input source."""
         self._source = source
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

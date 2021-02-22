@@ -11,7 +11,7 @@ from .common import setup_platform
 async def test_entity_registry.opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform.opp, CAMERA_DOMAIN)
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get("camera.test_cam")
     assert entry.unique_id == "d0a3a1c316891ceb00c20118aae2a133"
@@ -30,13 +30,13 @@ async def test_capture_image.opp):
     await setup_platform.opp, CAMERA_DOMAIN)
 
     with patch("abodepy.AbodeCamera.capture") as mock_capture:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             ABODE_DOMAIN,
             "capture_image",
             {ATTR_ENTITY_ID: "camera.test_cam"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_capture.assert_called_once()
 
 
@@ -45,13 +45,13 @@ async def test_camera_on.opp):
     await setup_platform.opp, CAMERA_DOMAIN)
 
     with patch("abodepy.AbodeCamera.privacy_mode") as mock_capture:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             CAMERA_DOMAIN,
             "turn_on",
             {ATTR_ENTITY_ID: "camera.test_cam"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_capture.assert_called_once_with(False)
 
 
@@ -60,11 +60,11 @@ async def test_camera_off.opp):
     await setup_platform.opp, CAMERA_DOMAIN)
 
     with patch("abodepy.AbodeCamera.privacy_mode") as mock_capture:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             CAMERA_DOMAIN,
             "turn_off",
             {ATTR_ENTITY_ID: "camera.test_cam"},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_capture.assert_called_once_with(True)

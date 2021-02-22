@@ -148,7 +148,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """Set up squeezebox platform from platform entry in configuration.yaml (deprecated)."""
 
     if config:
-        await.opp.config_entries.flow.async_init(
+        await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=config
         )
 

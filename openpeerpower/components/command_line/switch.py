@@ -163,10 +163,10 @@ class CommandSwitch(SwitchEntity):
         """Turn the device on."""
         if self._switch(self._command_on) and not self._command_state:
             self._state = True
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         if self._switch(self._command_off) and not self._command_state:
             self._state = False
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()

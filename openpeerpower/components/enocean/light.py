@@ -104,4 +104,4 @@ class EnOceanLight(EnOceanEntity, LightEntity):
             val = packet.data[2]
             self._brightness = math.floor(val / 100.0 * 256.0)
             self._on_state = bool(val != 0)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()

@@ -98,7 +98,7 @@ class PS4Device(MediaPlayerEntity):
     def status_callback(self):
         """Handle status callback. Parse status."""
         self._parse_status()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def subscribe_to_protocol(self):
@@ -281,7 +281,7 @@ class PS4Device(MediaPlayerEntity):
             self._media_type = media_type
 
             await self.opp.async_add_executor_job(self.update_list)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     def update_list(self):
         """Update Game List, Correct data if different."""

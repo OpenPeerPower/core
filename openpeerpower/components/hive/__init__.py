@@ -172,7 +172,7 @@ class HiveEntity(Entity):
     async def async_added_to.opp(self):
         """When entity is added to Open Peer Power."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_ha_state)
+            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op_state)
         )
         if self.device["hiveType"] in SERVICES:
             entity_lookup = self.opp.data[DOMAIN]["entity_lookup"]

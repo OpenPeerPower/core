@@ -145,4 +145,4 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
     def update_data(self, data):
         """Mark the device as seen."""
         self._data = data
-        self.async_write_ha_state()
+        self.async_write_op_state()

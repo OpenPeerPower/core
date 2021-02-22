@@ -145,7 +145,7 @@ class MikrotikHubTracker(ScannerEntity):
         """Client entity created."""
         _LOGGER.debug("New network device tracker %s (%s)", self.name, self.unique_id)
         self.unsub_dispatcher = async_dispatcher_connect(
-            self.opp, self.hub.signal_update, self.async_write_ha_state
+            self.opp, self.hub.signal_update, self.async_write_op_state
         )
 
     async def async_update(self):

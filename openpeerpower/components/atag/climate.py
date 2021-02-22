@@ -91,14 +91,14 @@ class AtagThermostat(AtagEntity, ClimateEntity):
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
         await self.coordinator.atag.climate.set_temp(kwargs.get(ATTR_TEMPERATURE))
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
         await self.coordinator.atag.climate.set_hvac_mode(hvac_mode)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set new preset mode."""
         await self.coordinator.atag.climate.set_preset_mode(preset_mode)
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -159,14 +159,14 @@ def mock_controller_service_validate_verification_code_failed():
 
 async def test_user.opp: OpenPeerPowerType, service: MagicMock):
     """Test user config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=None
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
     # test with required
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -180,7 +180,7 @@ async def test_user_with_cookie(
 ):
     """Test user config with presence of a cookie."""
     # test with all provided
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={
@@ -202,7 +202,7 @@ async def test_user_with_cookie(
 async def test_import.opp: OpenPeerPowerType, service: MagicMock):
     """Test import step."""
     # import with required
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -211,7 +211,7 @@ async def test_import.opp: OpenPeerPowerType, service: MagicMock):
     assert result["step_id"] == "trusted_device"
 
     # import with all
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={
@@ -231,7 +231,7 @@ async def test_import_with_cookie(
 ):
     """Test import step with presence of a cookie."""
     # import with required
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -246,7 +246,7 @@ async def test_import_with_cookie(
     assert result["data"][CONF_GPS_ACCURACY_THRESHOLD] == DEFAULT_GPS_ACCURACY_THRESHOLD
 
     # import with all
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={
@@ -278,7 +278,7 @@ async def test_two_accounts_setup(
     ).add_to.opp.opp)
 
     # import with required
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_USERNAME: USERNAME_2, CONF_PASSWORD: PASSWORD},
@@ -302,7 +302,7 @@ async def test_already_setup_opp: OpenPeerPowerType):
     ).add_to.opp.opp)
 
     # Should fail, same USERNAME (import)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_IMPORT},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -311,7 +311,7 @@ async def test_already_setup_opp: OpenPeerPowerType):
     assert result["reason"] == "already_configured"
 
     # Should fail, same USERNAME (flow)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -326,7 +326,7 @@ async def test_login_failed.opp: OpenPeerPowerType):
         "openpeerpower.components.icloud.config_flow.PyiCloudService.authenticate",
         side_effect=PyiCloudFailedLoginException(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -339,7 +339,7 @@ async def test_no_device(
     opp: OpenPeerPowerType, service_authenticated_no_device: MagicMock
 ):
     """Test when we have no devices."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -350,26 +350,26 @@ async def test_no_device(
 
 async def test_trusted_device.opp: OpenPeerPowerType, service: MagicMock):
     """Test trusted_device step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
     )
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == CONF_TRUSTED_DEVICE
 
 
 async def test_trusted_device_success.opp: OpenPeerPowerType, service: MagicMock):
     """Test trusted_device step success."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_TRUSTED_DEVICE: 0}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -380,13 +380,13 @@ async def test_send_verification_code_failed(
     opp: OpenPeerPowerType, service_send_verification_code_failed: MagicMock
 ):
     """Test when we have errors during send_verification_code."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_TRUSTED_DEVICE: 0}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -396,33 +396,33 @@ async def test_send_verification_code_failed(
 
 async def test_verification_code.opp: OpenPeerPowerType, service: MagicMock):
     """Test verification_code step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_TRUSTED_DEVICE: 0}
     )
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == CONF_VERIFICATION_CODE
 
 
 async def test_verification_code_success.opp: OpenPeerPowerType, service: MagicMock):
     """Test verification_code step success."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_TRUSTED_DEVICE: 0}
     )
     service.return_value.requires_2sa = False
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_VERIFICATION_CODE: "0"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -439,16 +439,16 @@ async def test_validate_verification_code_failed(
     opp: OpenPeerPowerType, service_validate_verification_code_failed: MagicMock
 ):
     """Test when we have errors during validate_verification_code."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
     )
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_TRUSTED_DEVICE: 0}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_VERIFICATION_CODE: "0"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -458,7 +458,7 @@ async def test_validate_verification_code_failed(
 
 async def test_2fa_code_success.opp: OpenPeerPowerType, service_2fa: MagicMock):
     """Test 2fa step success."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
@@ -466,7 +466,7 @@ async def test_2fa_code_success.opp: OpenPeerPowerType, service_2fa: MagicMock):
     service_2fa.return_value.requires_2fa = False
     service_2fa.return_value.requires_2sa = False
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_VERIFICATION_CODE: "0"}
     )
 
@@ -484,13 +484,13 @@ async def test_validate_2fa_code_failed(
     opp: OpenPeerPowerType, service_validate_2fa_code_failed: MagicMock
 ):
     """Test when we have errors during validate_verification_code."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_VERIFICATION_CODE: "0"}
     )
 
@@ -508,7 +508,7 @@ async def test_password_update(
     )
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_REAUTH},
         data={**MOCK_CONFIG, "unique_id": USERNAME},
@@ -516,7 +516,7 @@ async def test_password_update(
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {CONF_PASSWORD: PASSWORD_2}
     )
 
@@ -532,7 +532,7 @@ async def test_password_update_wrong_password.opp: OpenPeerPowerType):
     )
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_REAUTH},
         data={**MOCK_CONFIG, "unique_id": USERNAME},
@@ -544,7 +544,7 @@ async def test_password_update_wrong_password.opp: OpenPeerPowerType):
         "openpeerpower.components.icloud.config_flow.PyiCloudService.authenticate",
         side_effect=PyiCloudFailedLoginException(),
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_PASSWORD: PASSWORD_2}
         )
 

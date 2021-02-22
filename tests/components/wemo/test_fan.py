@@ -47,13 +47,13 @@ async def test_fan_registry_state_callback(
     # On state.
     pywemo_device.get_state.return_value = 1
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_ON
 
     # Off state.
     pywemo_device.get_state.return_value = 0
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
 
 
@@ -63,7 +63,7 @@ async def test_fan_update_entity.opp, pywemo_registry, pywemo_device, wemo_entit
 
     # On state.
     pywemo_device.get_state.return_value = 1
-    await.opp.services.async_call(
+    await opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -73,7 +73,7 @@ async def test_fan_update_entity.opp, pywemo_registry, pywemo_device, wemo_entit
 
     # Off state.
     pywemo_device.get_state.return_value = 0
-    await.opp.services.async_call(
+    await opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -84,7 +84,7 @@ async def test_fan_update_entity.opp, pywemo_registry, pywemo_device, wemo_entit
 
 async def test_fan_reset_filter_service.opp, pywemo_device, wemo_entity):
     """Verify that SERVICE_RESET_FILTER_LIFE is registered and works."""
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         fan.SERVICE_RESET_FILTER_LIFE,
         {ATTR_ENTITY_ID: wemo_entity.entity_id},
@@ -108,7 +108,7 @@ async def test_fan_set_humidity_service(
    .opp, pywemo_device, wemo_entity, test_input, expected
 ):
     """Verify that SERVICE_SET_HUMIDITY is registered and works."""
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         fan.SERVICE_SET_HUMIDITY,
         {

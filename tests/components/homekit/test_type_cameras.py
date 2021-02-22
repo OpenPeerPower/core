@@ -46,35 +46,35 @@ async def _async_start_streaming.opp, acc):
     """Start streaming a camera."""
     acc.set_selected_stream_configuration(MOCK_START_STREAM_TLV)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def _async_setup_endpoints.opp, acc):
     """Set camera endpoints."""
     acc.set_endpoints(MOCK_END_POINTS_TLV)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def _async_reconfigure_stream.opp, acc, session_info, stream_config):
     """Reconfigure the stream."""
     await acc.reconfigure_stream(session_info, stream_config)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def _async_stop_all_streams.opp, acc):
     """Stop all camera streams."""
     await acc.stop()
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def _async_stop_stream.opp, acc, session_info):
     """Stop a camera stream."""
     await acc.stop_stream(session_info)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.fixture()
@@ -130,12 +130,12 @@ async def test_camera_stream_source_configured.opp, run_driver, events):
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -245,12 +245,12 @@ async def test_camera_stream_source_configured_with_failing_ffmpeg(
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -297,12 +297,12 @@ async def test_camera_stream_source_found.opp, run_driver, events):
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -347,12 +347,12 @@ async def test_camera_stream_source_fails.opp, run_driver, events):
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -387,7 +387,7 @@ async def test_camera_with_no_stream.opp, run_driver, events):
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -417,12 +417,12 @@ async def test_camera_stream_source_configured_and_copy_codec.opp, run_driver, e
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -488,12 +488,12 @@ async def test_camera_streaming_fails_after_starting_ffmpeg.opp, run_driver, eve
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -560,17 +560,17 @@ async def test_camera_with_linked_motion_sensor.opp, run_driver, events):
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     motion_entity_id = "binary_sensor.motion"
 
    .opp.states.async_set(
         motion_entity_id, STATE_ON, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -603,22 +603,22 @@ async def test_camera_with_linked_motion_sensor.opp, run_driver, events):
    .opp.states.async_set(
         motion_entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert char.value is False
 
     char.set_value(True)
    .opp.states.async_set(
         motion_entity_id, STATE_ON, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert char.value is True
 
     # Ensure we do not throw when the linked
     # motion sensor is removed
    .opp.states.async_remove(motion_entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert char.value is True
 
 
@@ -628,11 +628,11 @@ async def test_camera_with_a_missing_linked_motion_sensor.opp, run_driver, event
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     motion_entity_id = "binary_sensor.motion"
     entity_id = "camera.demo_camera"
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -658,17 +658,17 @@ async def test_camera_with_linked_doorbell_sensor.opp, run_driver, events):
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     doorbell_entity_id = "binary_sensor.doorbell"
 
    .opp.states.async_set(
         doorbell_entity_id, STATE_ON, {ATTR_DEVICE_CLASS: DEVICE_CLASS_OCCUPANCY}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entity_id = "camera.demo_camera"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,
@@ -708,7 +708,7 @@ async def test_camera_with_linked_doorbell_sensor.opp, run_driver, events):
    .opp.states.async_set(
         doorbell_entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: DEVICE_CLASS_OCCUPANCY}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert char.value == 0
     assert char2.value == 0
 
@@ -717,16 +717,16 @@ async def test_camera_with_linked_doorbell_sensor.opp, run_driver, events):
    .opp.states.async_set(
         doorbell_entity_id, STATE_ON, {ATTR_DEVICE_CLASS: DEVICE_CLASS_OCCUPANCY}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert char.value == 0
     assert char2.value == 0
 
     # Ensure we do not throw when the linked
     # doorbell sensor is removed
    .opp.states.async_remove(doorbell_entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert char.value == 0
     assert char2.value == 0
 
@@ -737,11 +737,11 @@ async def test_camera_with_a_missing_linked_doorbell_sensor.opp, run_driver, eve
     await async_setup_component(
        .opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     doorbell_entity_id = "binary_sensor.doorbell"
     entity_id = "camera.demo_camera"
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Camera(
        .opp,
         run_driver,

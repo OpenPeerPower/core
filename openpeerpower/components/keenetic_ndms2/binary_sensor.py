@@ -67,6 +67,6 @@ class RouterOnlineBinarySensor(BinarySensorEntity):
             async_dispatcher_connect(
                 self.opp,
                 self._router.signal_update,
-                self.async_write_ha_state,
+                self.async_write_op_state,
             )
         )

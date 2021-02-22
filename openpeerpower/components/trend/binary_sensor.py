@@ -180,7 +180,7 @@ class SensorTrend(BinarySensorEntity):
                 if state not in (STATE_UNKNOWN, STATE_UNAVAILABLE):
                     sample = (new_state.last_updated.timestamp(), float(state))
                     self.samples.append(sample)
-                    self.async_schedule_update_ha_state(True)
+                    self.async_schedule_update_op_state(True)
             except (ValueError, TypeError) as ex:
                 _LOGGER.error(ex)
 

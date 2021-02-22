@@ -54,7 +54,7 @@ class ZWaveLogView(OpenPeerPowerView):
             return Response(text="Invalid datetime", status=HTTP_BAD_REQUEST)
 
         opp =request.app[.opp"]
-        response = await.opp.async_add_executor_job(self._get_log, opp, lines)
+        response = await opp.async_add_executor_job(self._get_log, opp, lines)
 
         return Response(text="\n".join(response))
 

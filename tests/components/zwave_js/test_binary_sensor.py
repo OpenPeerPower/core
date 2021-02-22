@@ -61,7 +61,7 @@ async def test_disabled_legacy_sensor.opp, multisensor_6, integration):
     """Test disabled legacy boolean binary sensor."""
     # this node has Notification CC implemented so legacy binary sensor should be disabled
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
     entity_id = DISABLED_LEGACY_BINARY_SENSOR
     state = opp.states.get(entity_id)
     assert state is None

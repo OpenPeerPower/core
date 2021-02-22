@@ -28,7 +28,7 @@ async def async_setup_opp, config):
     try:
        .opp.data[DATA_VELUX] = VeluxModule.opp, config[DOMAIN])
        .opp.data[DATA_VELUX].setup()
-        await.opp.data[DATA_VELUX].async_start()
+        await opp.data[DATA_VELUX].async_start()
 
     except PyVLXException as ex:
         _LOGGER.exception("Can't connect to velux interface: %s", ex)

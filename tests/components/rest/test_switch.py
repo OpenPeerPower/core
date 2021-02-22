@@ -81,7 +81,7 @@ async def test_setup_minimum.opp, aioclient_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
 
 
@@ -100,7 +100,7 @@ async def test_setup_query_params.opp, aioclient_mock):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     print(aioclient_mock)
     assert aioclient_mock.call_count == 1
@@ -123,7 +123,7 @@ async def test_setup_opp, aioclient_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
     assert_setup_component(1, SWITCH_DOMAIN)
 
@@ -147,7 +147,7 @@ async def test_setup_with_state_resource.opp, aioclient_mock):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert aioclient_mock.call_count == 1
     assert_setup_component(1, SWITCH_DOMAIN)
 

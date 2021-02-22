@@ -22,7 +22,7 @@ from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
-DICT_HA_TO_MYS = {
+DICT_OP_TO_MYS = {
     HVAC_MODE_AUTO: "AutoChangeOver",
     HVAC_MODE_COOL: "CoolOn",
     HVAC_MODE_HEAT: "HeatOn",
@@ -179,7 +179,7 @@ class MySensorsHVAC(mysensors.device.MySensorsEntity, ClimateEntity):
             if self.assumed_state:
                 # Optimistically assume that device has changed state
                 self._values[value_type] = value
-                self.async_write_ha_state()
+                self.async_write_op_state()
 
     async def async_set_fan_mode(self, fan_mode):
         """Set new target temperature."""
@@ -190,7 +190,7 @@ class MySensorsHVAC(mysensors.device.MySensorsEntity, ClimateEntity):
         if self.assumed_state:
             # Optimistically assume that device has changed state
             self._values[set_req.V_HVAC_SPEED] = fan_mode
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target temperature."""
@@ -198,13 +198,13 @@ class MySensorsHVAC(mysensors.device.MySensorsEntity, ClimateEntity):
             self.node_id,
             self.child_id,
             self.value_type,
-            DICT_HA_TO_MYS[hvac_mode],
+            DICT_OP_TO_MYS[hvac_mode],
             ack=1,
         )
         if self.assumed_state:
             # Optimistically assume that device has changed state
             self._values[self.value_type] = hvac_mode
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_update(self):
         """Update the controller with the latest value from a sensor."""

@@ -114,7 +114,7 @@ class WiLightDevice(Entity):
     def handle_event_callback(self, states):
         """Propagate changes through ha."""
         self._status = states
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update(self):
         """Synchronize state with api_device."""

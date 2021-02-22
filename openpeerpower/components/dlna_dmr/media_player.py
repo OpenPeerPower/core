@@ -250,7 +250,7 @@ class DlnaDmrDevice(MediaPlayerEntity):
 
     def _on_event(self, service, state_variables):
         """State variable(s) changed, let open-peer-power know."""
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def supported_features(self):

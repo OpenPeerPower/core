@@ -47,7 +47,7 @@ async def test_setup_fail.opp):
     }
     with assert_setup_component(0):
         assert await async_setup_component.opp, "sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_chain.opp, values):
@@ -68,11 +68,11 @@ async def test_chain.opp, values):
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, "sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         for value in values:
            .opp.states.async_set(config["sensor"]["entity_id"], value.state)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         state = opp.states.get("sensor.test")
         assert "18.05" == state.state
@@ -123,11 +123,11 @@ async def test_chain_history.opp, values, missing=False):
         ):
             with assert_setup_component(1, "sensor"):
                 assert await async_setup_component.opp, "sensor", config)
-                await.opp.async_block_till_done()
+                await opp.async_block_till_done()
 
             for value in values:
                .opp.states.async_set(config["sensor"]["entity_id"], value.state)
-                await.opp.async_block_till_done()
+                await opp.async_block_till_done()
 
             state = opp.states.get("sensor.test")
             if missing:
@@ -165,15 +165,15 @@ async def test_source_state_none.opp, values):
         ]
     }
     await async_setup_component.opp, "sensor", config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
    .opp.states.async_set("sensor.test_state", 0)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.template_test")
     assert state.state == "0"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("sensor.test")
     assert state.state == "0.0"
 
@@ -184,13 +184,13 @@ async def test_source_state_none.opp, values):
         "template/sensor_configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "template",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     # Template state gets to None
     state = opp.states.get("sensor.template_test")
@@ -241,9 +241,9 @@ async def test_history_time.opp):
         ):
             with assert_setup_component(1, "sensor"):
                 assert await async_setup_component.opp, "sensor", config)
-                await.opp.async_block_till_done()
+                await opp.async_block_till_done()
 
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             state = opp.states.get("sensor.test")
             assert "18.0" == state.state
 
@@ -265,14 +265,14 @@ async def test_setup_opp):
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, "sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
        .opp.states.async_set(
             "sensor.test_monitored",
             1,
             {"icon": "mdi:test", "device_class": DEVICE_CLASS_TEMPERATURE},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("sensor.test")
         assert state.attributes["icon"] == "mdi:test"
         assert state.attributes["device_class"] == DEVICE_CLASS_TEMPERATURE
@@ -296,16 +296,16 @@ async def test_invalid_state.opp):
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, "sensor", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
        .opp.states.async_set("sensor.test_monitored", STATE_UNAVAILABLE)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.test")
         assert state.state == STATE_UNAVAILABLE
 
        .opp.states.async_set("sensor.test_monitored", "invalid")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.test")
         assert state.state == STATE_UNAVAILABLE
@@ -462,9 +462,9 @@ async def test_reload.opp):
             }
         },
     )
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 
@@ -476,13 +476,13 @@ async def test_reload.opp):
         "filter/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 

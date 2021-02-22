@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 async def test_form_user.opp):
     """Test we get the user form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -28,11 +28,11 @@ async def test_form_user.opp):
         "openpeerpower.components.myq.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-username", "password": "test-password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-username"
@@ -46,7 +46,7 @@ async def test_form_user.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -54,7 +54,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.myq.config_flow.pymyq.login",
         side_effect=InvalidCredentialsError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-username", "password": "test-password"},
         )
@@ -65,7 +65,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -73,7 +73,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.myq.config_flow.pymyq.login",
         side_effect=MyQError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-username", "password": "test-password"},
         )
@@ -86,7 +86,7 @@ async def test_form_homekit.opp):
     """Test that we abort from homekit if myq is already setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": "homekit"},
         data={"properties": {"id": "AA:BB:CC:DD:EE:FF"}},
@@ -105,7 +105,7 @@ async def test_form_homekit.opp):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": "homekit"},
         data={"properties": {"id": "AA:BB:CC:DD:EE:FF"}},

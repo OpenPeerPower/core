@@ -80,7 +80,7 @@ class SmartThingsCover(SmartThingsEntity, CoverEntity):
         await self._device.close(set_status=True)
         # State is set optimistically in the commands above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""
@@ -88,7 +88,7 @@ class SmartThingsCover(SmartThingsEntity, CoverEntity):
         await self._device.open(set_status=True)
         # State is set optimistically in the commands above, therefore update
         # the entity state ahead of receiving the confirming push updates
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_set_cover_position(self, **kwargs):
         """Move the cover to a specific position."""

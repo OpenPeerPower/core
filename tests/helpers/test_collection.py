@@ -48,7 +48,7 @@ class MockEntity(entity.Entity):
     async def async_update_config(self, config):
         """Update entity config."""
         self._config = config
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class MockStorageCollection(collection.StorageCollection):
@@ -274,7 +274,7 @@ async def test_storage_collection_websocket.opp, opp_ws_client):
         {vol.Optional("name"): str},
     ).async_setup_opp)
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     # Create invalid
     await client.send_json(

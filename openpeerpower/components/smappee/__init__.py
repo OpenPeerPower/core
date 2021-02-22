@@ -77,7 +77,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if CONF_IP_ADDRESS in entry.data:
         smappee_api = api.api.SmappeeLocalApi(ip=entry.data[CONF_IP_ADDRESS])
         smappee = Smappee(api=smappee_api, serialnumber=entry.data[CONF_SERIALNUMBER])
-        await.opp.async_add_executor_job(smappee.load_local_service_location)
+        await opp.async_add_executor_job(smappee.load_local_service_location)
     else:
         implementation = (
             await config_entry_oauth2_flow.async_get_config_entry_implementation(
@@ -88,7 +88,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         smappee_api = api.ConfigEntrySmappeeApi.opp, entry, implementation)
 
         smappee = Smappee(api=smappee_api)
-        await.opp.async_add_executor_job(smappee.load_service_locations)
+        await opp.async_add_executor_job(smappee.load_service_locations)
 
    .opp.data[DOMAIN][entry.entry_id] = SmappeeBase.opp, smappee)
 

@@ -127,7 +127,7 @@ class TileDeviceTracker(CoordinatorEntity, TrackerEntity):
     def _handle_coordinator_update(self):
         """Respond to a DataUpdateCoordinator update."""
         self._update_from_latest_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _update_from_latest_data(self):

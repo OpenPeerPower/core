@@ -33,7 +33,7 @@ async def _async_manipulate_security_zones(
 
     home.update_home_only(json)
     home.fire_update_event(json)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_manually_configured_platform.opp):
@@ -65,7 +65,7 @@ async def test_hmip_alarm_control_panel.opp, default_mock_hap_factory):
 
     home = mock_hap.home
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "alarm_control_panel", "alarm_arm_away", {"entity_id": entity_id}, blocking=True
     )
     assert home.mock_calls[-1][0] == "set_security_zones_activation"
@@ -75,7 +75,7 @@ async def test_hmip_alarm_control_panel.opp, default_mock_hap_factory):
     )
     assert.opp.states.get(entity_id).state is STATE_ALARM_ARMED_AWAY
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "alarm_control_panel", "alarm_arm_home", {"entity_id": entity_id}, blocking=True
     )
     assert home.mock_calls[-1][0] == "set_security_zones_activation"
@@ -83,7 +83,7 @@ async def test_hmip_alarm_control_panel.opp, default_mock_hap_factory):
     await _async_manipulate_security_zones.opp, home, external_active=True)
     assert.opp.states.get(entity_id).state is STATE_ALARM_ARMED_HOME
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "alarm_control_panel", "alarm_disarm", {"entity_id": entity_id}, blocking=True
     )
     assert home.mock_calls[-1][0] == "set_security_zones_activation"
@@ -91,7 +91,7 @@ async def test_hmip_alarm_control_panel.opp, default_mock_hap_factory):
     await _async_manipulate_security_zones.opp, home)
     assert.opp.states.get(entity_id).state is STATE_ALARM_DISARMED
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "alarm_control_panel", "alarm_arm_away", {"entity_id": entity_id}, blocking=True
     )
     assert home.mock_calls[-1][0] == "set_security_zones_activation"
@@ -101,7 +101,7 @@ async def test_hmip_alarm_control_panel.opp, default_mock_hap_factory):
     )
     assert.opp.states.get(entity_id).state is STATE_ALARM_TRIGGERED
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "alarm_control_panel", "alarm_arm_home", {"entity_id": entity_id}, blocking=True
     )
     assert home.mock_calls[-1][0] == "set_security_zones_activation"

@@ -71,7 +71,7 @@ async def mock_client.opp, opp_client, registrations=None):
         "openpeerpower.components.html5.notify._load_config", return_value=registrations
     ):
         await async_setup_component.opp, "notify", {"notify": {"platform": "html5"}})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     return await opp_client()
 
@@ -478,7 +478,7 @@ async def test_callback_view_with_jwt.opp, opp_client):
     client = await mock_client.opp, opp_client, registrations)
 
     with patch("openpeerpower.components.html5.notify.WebPusher") as mock_wp:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "notify",
             "notify",
             {"message": "Hello", "target": ["device"], "data": {"icon": "beer.png"}},
@@ -514,7 +514,7 @@ async def test_send_fcm_without_targets.opp, opp_client):
     registrations = {"device": SUBSCRIPTION_5}
     await mock_client.opp, opp_client, registrations)
     with patch("openpeerpower.components.html5.notify.WebPusher") as mock_wp:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "notify",
             "notify",
             {"message": "Hello", "target": ["device"], "data": {"icon": "beer.png"}},

@@ -36,7 +36,7 @@ class WiLightParent:
         host = self._host
         opp =self.opp
 
-        api_device = await.opp.async_add_executor_job(create_api_device, host)
+        api_device = await opp.async_add_executor_job(create_api_device, host)
 
         if api_device is None:
             return False

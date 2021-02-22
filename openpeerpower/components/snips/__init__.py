@@ -163,7 +163,7 @@ async def async_setup_opp, config):
         except intent.IntentError:
             _LOGGER.exception("Error while handling intent: %s", intent_type)
 
-    await.opp.components.mqtt.async_subscribe(INTENT_TOPIC, message_received)
+    await opp.components.mqtt.async_subscribe(INTENT_TOPIC, message_received)
 
     async def snips_say(call):
         """Send a Snips notification message."""

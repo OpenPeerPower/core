@@ -98,10 +98,10 @@ async def test_turn_on.opp: OpenPeerPower):
 
     assert.opp.states.get(entity.entity_id).state == "off"
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_on", service_data={"entity_id": entity.entity_id}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -118,12 +118,12 @@ async def test_turn_on_with_brightness.opp: OpenPeerPower):
 
     assert.opp.states.get(entity.entity_id).state == "off"
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         service_data={"entity_id": entity.entity_id, "brightness": 255},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -137,10 +137,10 @@ async def test_turn_off.opp: OpenPeerPower):
 
     assert.opp.states.get(entity.entity_id).state == "on"
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_off", service_data={"entity_id": entity.entity_id}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -167,10 +167,10 @@ async def test_update_name.opp: OpenPeerPower):
    .opp.config_entries.async_get_entry(entity.unique_id).add_update_listener(on_update)
 
     client.change_name("new_device_name")
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_off", service_data={"entity_id": entity.entity_id}
     )  # We call turn_off which will automatically cause an async_update
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
 
@@ -185,7 +185,7 @@ async def test_unload.opp: OpenPeerPower):
     _, _, client = await _create_entries.opp)
     entry_id = client.id
 
-    assert await.opp.config_entries.async_unload(entry_id)
+    assert await opp.config_entries.async_unload(entry_id)
 
 
 async def _create_entries(
@@ -208,11 +208,11 @@ async def _create_entries(
             entry_id=client.id,
         )
         config_entry.add_to.opp.opp)
-        assert await.opp.config_entries.async_setup(client.id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(client.id)
+        await opp.async_block_till_done()
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entity_id = entity_registry.async_get_entity_id("light", TWINKLY_DOMAIN, client.id)
     entity = entity_registry.async_get(entity_id)

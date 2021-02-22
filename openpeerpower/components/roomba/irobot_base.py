@@ -131,7 +131,7 @@ class IRobotEntity(Entity):
         """Update state on message change."""
         state = json_data.get("state", {}).get("reported", {})
         if self.new_state_filter(state):
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
 
 class IRobotVacuum(IRobotEntity, StateVacuumEntity):
@@ -218,7 +218,7 @@ class IRobotVacuum(IRobotEntity, StateVacuumEntity):
         state = json_data.get("state", {}).get("reported", {})
         if self.new_state_filter(state):
             _LOGGER.debug("Got new state from the vacuum: %s", json_data)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     async def async_start(self):
         """Start or resume the cleaning task."""

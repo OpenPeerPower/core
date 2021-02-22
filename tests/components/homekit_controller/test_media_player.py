@@ -95,7 +95,7 @@ async def test_play_remote_key.opp, utcnow):
     helper.characteristics[CURRENT_MEDIA_STATE].value = 1
     await helper.poll_and_get_state()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_play",
         {"entity_id": "media_player.testdevice"},
@@ -108,7 +108,7 @@ async def test_play_remote_key.opp, utcnow):
     await helper.poll_and_get_state()
 
     helper.characteristics[REMOTE_KEY].value = None
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_play",
         {"entity_id": "media_player.testdevice"},
@@ -124,7 +124,7 @@ async def test_pause_remote_key.opp, utcnow):
     helper.characteristics[CURRENT_MEDIA_STATE].value = 0
     await helper.poll_and_get_state()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_pause",
         {"entity_id": "media_player.testdevice"},
@@ -137,7 +137,7 @@ async def test_pause_remote_key.opp, utcnow):
     await helper.poll_and_get_state()
 
     helper.characteristics[REMOTE_KEY].value = None
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_pause",
         {"entity_id": "media_player.testdevice"},
@@ -153,7 +153,7 @@ async def test_play.opp, utcnow):
     helper.characteristics[CURRENT_MEDIA_STATE].value = 1
     await helper.poll_and_get_state()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_play",
         {"entity_id": "media_player.testdevice"},
@@ -167,7 +167,7 @@ async def test_play.opp, utcnow):
     await helper.poll_and_get_state()
 
     helper.characteristics[TARGET_MEDIA_STATE].value = None
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_play",
         {"entity_id": "media_player.testdevice"},
@@ -184,7 +184,7 @@ async def test_pause.opp, utcnow):
     helper.characteristics[CURRENT_MEDIA_STATE].value = 0
     await helper.poll_and_get_state()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_pause",
         {"entity_id": "media_player.testdevice"},
@@ -198,7 +198,7 @@ async def test_pause.opp, utcnow):
     await helper.poll_and_get_state()
 
     helper.characteristics[REMOTE_KEY].value = None
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_pause",
         {"entity_id": "media_player.testdevice"},
@@ -211,7 +211,7 @@ async def test_stop.opp, utcnow):
     """Test that we can  stop a media player."""
     helper = await setup_test_component.opp, create_tv_service_with_target_media_state)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_stop",
         {"entity_id": "media_player.testdevice"},
@@ -224,7 +224,7 @@ async def test_stop.opp, utcnow):
     await helper.poll_and_get_state()
 
     helper.characteristics[TARGET_MEDIA_STATE].value = None
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "media_stop",
         {"entity_id": "media_player.testdevice"},
@@ -238,7 +238,7 @@ async def test_tv_set_source.opp, utcnow):
     """Test that we can set the input source of a HomeKit TV."""
     helper = await setup_test_component.opp, create_tv_service)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "media_player",
         "select_source",
         {"entity_id": "media_player.testdevice", "source": "HDMI 2"},
@@ -255,7 +255,7 @@ async def test_tv_set_source_fail.opp, utcnow):
     helper = await setup_test_component.opp, create_tv_service)
 
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "media_player",
             "select_source",
             {"entity_id": "media_player.testdevice", "source": "HDMI 999"},

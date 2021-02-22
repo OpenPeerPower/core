@@ -332,7 +332,7 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
 
         self._state = STATE_ALARM_DISARMED
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def alarm_arm_home(self, code=None):
         """Send arm home command."""
@@ -380,23 +380,23 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
         self._previous_state = self._state
         self._state = state
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
         pending_time = self._pending_time(state)
         if state == STATE_ALARM_TRIGGERED:
             track_point_in_time(
-                self.opp, self.async_update_ha_state, self._state_ts + pending_time
+                self.opp, self.async_update_op_state, self._state_ts + pending_time
             )
 
             trigger_time = self._trigger_time_by_state[self._previous_state]
             track_point_in_time(
                 self.opp,
-                self.async_update_ha_state,
+                self.async_update_op_state,
                 self._state_ts + pending_time + trigger_time,
             )
         elif state in SUPPORTED_PENDING_STATES and pending_time:
             track_point_in_time(
-                self.opp, self.async_update_ha_state, self._state_ts + pending_time
+                self.opp, self.async_update_op_state, self._state_ts + pending_time
             )
 
     def _validate_code(self, code, state):

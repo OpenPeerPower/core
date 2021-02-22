@@ -307,7 +307,7 @@ async def async_setup_opp, config):
                 need_update = True
 
             if need_update:
-                group.async_write_ha_state()
+                group.async_write_op_state()
 
             return
 
@@ -399,11 +399,11 @@ class GroupEntity(Entity):
 
         async def _update_at_start(_):
             await self.async_update()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _update_at_start)
 
-    async def async_defer_or_update_ha_state(self) -> None:
+    async def async_defer_or_update_op_state(self) -> None:
         """Only update once at start."""
         assert self.opp is not None
 
@@ -411,7 +411,7 @@ class GroupEntity(Entity):
             return
 
         await self.async_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @abstractmethod
     async def async_update(self) -> None:
@@ -606,7 +606,7 @@ class Group(Entity):
         """Start tracking members and write state."""
         self._reset_tracked_state()
         self._async_start_tracking()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_start_tracking(self):
@@ -669,7 +669,7 @@ class Group(Entity):
             self._reset_tracked_state()
 
         self._async_update_group_state(new_state)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _reset_tracked_state(self):
         """Reset tracked state."""

@@ -6,13 +6,13 @@ from openpeerpower.components.coronavirus.const import DOMAIN, OPTION_WORLDWIDE
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"country": OPTION_WORLDWIDE},
     )
@@ -22,5 +22,5 @@ async def test_form.opp):
     assert result2["data"] == {
         "country": OPTION_WORLDWIDE,
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 4

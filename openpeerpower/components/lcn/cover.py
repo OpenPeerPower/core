@@ -95,7 +95,7 @@ class LcnOutputsCover(LcnEntity, CoverEntity):
             return
         self._is_opening = False
         self._is_closing = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""
@@ -107,7 +107,7 @@ class LcnOutputsCover(LcnEntity, CoverEntity):
         self._is_closed = False
         self._is_opening = True
         self._is_closing = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_stop_cover(self, **kwargs):
         """Stop the cover."""
@@ -116,7 +116,7 @@ class LcnOutputsCover(LcnEntity, CoverEntity):
             return
         self._is_closing = False
         self._is_opening = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def input_received(self, input_obj):
         """Set cover states when LCN input object (command) is received."""
@@ -140,7 +140,7 @@ class LcnOutputsCover(LcnEntity, CoverEntity):
             self._is_closing = False
             self._is_opening = False
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class LcnRelayCover(LcnEntity, CoverEntity):
@@ -192,7 +192,7 @@ class LcnRelayCover(LcnEntity, CoverEntity):
             return
         self._is_opening = False
         self._is_closing = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""
@@ -203,7 +203,7 @@ class LcnRelayCover(LcnEntity, CoverEntity):
         self._is_closed = False
         self._is_opening = True
         self._is_closing = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_stop_cover(self, **kwargs):
         """Stop the cover."""
@@ -213,7 +213,7 @@ class LcnRelayCover(LcnEntity, CoverEntity):
             return
         self._is_closing = False
         self._is_opening = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def input_received(self, input_obj):
         """Set cover states when LCN input object (command) is received."""
@@ -229,4 +229,4 @@ class LcnRelayCover(LcnEntity, CoverEntity):
             self._is_closing = False
             self._is_closed = states[self.motor_port_updown]
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

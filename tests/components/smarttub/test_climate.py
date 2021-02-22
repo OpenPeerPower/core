@@ -50,7 +50,7 @@ async def test_thermostat_update(spa, setup_entry, opp):
     assert state.attributes[ATTR_MAX_TEMP] == DEFAULT_MAX_TEMP
     assert state.attributes[ATTR_MIN_TEMP] == DEFAULT_MIN_TEMP
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 37},
@@ -58,7 +58,7 @@ async def test_thermostat_update(spa, setup_entry, opp):
     )
     spa.set_temperature.assert_called_with(37)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_HVAC_MODE: HVAC_MODE_HEAT},

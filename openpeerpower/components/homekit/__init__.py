@@ -264,7 +264,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # If the previous instance hasn't cleaned up yet
     # we need to wait a bit
     try:
-        await.opp.async_add_executor_job(homekit.setup, zeroconf_instance)
+        await opp.async_add_executor_job(homekit.setup, zeroconf_instance)
     except (OSError, AttributeError) as ex:
         _LOGGER.warning(
             "%s could not be setup because the local port %s is in use", name, port
@@ -291,7 +291,7 @@ async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     if entry.source == SOURCE_IMPORT:
         return
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
@@ -306,7 +306,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         await homekit.async_stop()
 
     for _ in range(0, SHUTDOWN_TIMEOUT):
-        if not await.opp.async_add_executor_job(
+        if not await opp.async_add_executor_job(
             port_is_available, entry.data[CONF_PORT]
         ):
             _LOGGER.info("Waiting for the HomeKit server to shutdown")

@@ -29,7 +29,7 @@ def mock_setup_entry():
 
 async def test_import.opp, mock_setup, mock_setup_entry):
     """Test we get an item on import."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data=MOCK_USERINPUT,
@@ -44,7 +44,7 @@ async def test_import.opp, mock_setup, mock_setup_entry):
 
 async def test_import_exist.opp, mock_config_entry):
     """Test we get an item on import."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data=MOCK_USERINPUT,
@@ -56,17 +56,17 @@ async def test_import_exist.opp, mock_config_entry):
 
 async def test_form.opp, mock_setup, mock_setup_entry):
     """Test we get the form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         MOCK_USERINPUT,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Philips TV (1234567890)"
@@ -77,12 +77,12 @@ async def test_form.opp, mock_setup, mock_setup_entry):
 
 async def test_form_cannot_connect.opp, mock_tv):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     mock_tv.system = None
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], MOCK_USERINPUT
     )
 
@@ -92,12 +92,12 @@ async def test_form_cannot_connect.opp, mock_tv):
 
 async def test_form_unexpected_error(opp, mock_tv):
     """Test we handle unexpected exceptions."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     mock_tv.getSystem.side_effect = Exception("Unexpected exception")
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], MOCK_USERINPUT
     )
 

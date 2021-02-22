@@ -195,7 +195,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
             self._is_opening = True
         elif target.opp_position < current.opp_position:
             self._is_closing = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_update_from_command(self, raw_data):
@@ -230,7 +230,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
 
     @callback
     def _async_schedule_update_for_transition(self, steps):
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         # Cancel any previous updates
         self._async_cancel_scheduled_transition_update()
@@ -264,7 +264,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
         """Refresh the cover state and force the device cache to be bypassed."""
         await self._shade.refresh()
         self._async_update_current_cover_position()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """When entity is added to.opp."""
@@ -281,4 +281,4 @@ class PowerViewShade(ShadeEntity, CoverEntity):
             # the data will be wrong
             return
         self._async_process_new_shade_data(self.coordinator.data[self._shade.id])
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -19,7 +19,7 @@ from tests.common import MockConfigEntry
 async def test_bad_credentials.opp):
     """Test when provided credentials are rejected."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -31,7 +31,7 @@ async def test_bad_credentials.opp):
     ), patch("openpeerpower.components.econet.async_setup", return_value=True), patch(
         "openpeerpower.components.econet.async_setup_entry", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_EMAIL: "admin@localhost.com",
@@ -49,7 +49,7 @@ async def test_bad_credentials.opp):
 async def test_generic_error_from_library.opp):
     """Test when connection fails."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -61,7 +61,7 @@ async def test_generic_error_from_library.opp):
     ), patch("openpeerpower.components.econet.async_setup", return_value=True), patch(
         "openpeerpower.components.econet.async_setup_entry", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_EMAIL: "admin@localhost.com",
@@ -79,7 +79,7 @@ async def test_generic_error_from_library.opp):
 async def test_auth_worked.opp):
     """Test when provided credentials are accepted."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -91,7 +91,7 @@ async def test_auth_worked.opp):
     ), patch("openpeerpower.components.econet.async_setup", return_value=True), patch(
         "openpeerpower.components.econet.async_setup_entry", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_EMAIL: "admin@localhost.com",
@@ -116,7 +116,7 @@ async def test_already_configured.opp):
         domain=DOMAIN, data=config, unique_id="admin@localhost.com"
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -128,7 +128,7 @@ async def test_already_configured.opp):
     ), patch("openpeerpower.components.econet.async_setup", return_value=True), patch(
         "openpeerpower.components.econet.async_setup_entry", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_EMAIL: "admin@localhost.com",

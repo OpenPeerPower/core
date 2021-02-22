@@ -331,13 +331,13 @@ class GPMDP(MediaPlayerEntity):
         """Send media_play command to media player."""
         self.send_gpmdp_msg("playback", "playPause", False)
         self._status = STATE_PLAYING
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def media_pause(self):
         """Send media_pause command to media player."""
         self.send_gpmdp_msg("playback", "playPause", False)
         self._status = STATE_PAUSED
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def media_seek(self, position):
         """Send media_seek command to media player."""
@@ -353,7 +353,7 @@ class GPMDP(MediaPlayerEntity):
                 }
             )
         )
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def volume_up(self):
         """Send volume_up command to media player."""
@@ -361,7 +361,7 @@ class GPMDP(MediaPlayerEntity):
         if websocket is None:
             return
         websocket.send('{"namespace": "volume", "method": "increaseVolume"}')
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def volume_down(self):
         """Send volume_down command to media player."""
@@ -369,7 +369,7 @@ class GPMDP(MediaPlayerEntity):
         if websocket is None:
             return
         websocket.send('{"namespace": "volume", "method": "decreaseVolume"}')
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_volume_level(self, volume):
         """Set volume on media player, range(0..1)."""
@@ -385,4 +385,4 @@ class GPMDP(MediaPlayerEntity):
                 }
             )
         )
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

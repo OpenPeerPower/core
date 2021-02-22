@@ -203,7 +203,7 @@ class ServiceIntentHandler(IntentHandler):
         slots = self.async_validate_slots(intent_obj.slots)
         state = async_match_state.opp, slots["name"]["value"])
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             self.domain,
             self.service,
             {ATTR_ENTITY_ID: state.entity_id},

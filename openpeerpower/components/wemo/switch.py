@@ -142,7 +142,7 @@ class WemoSwitch(WemoSubscriptionEntity, SwitchEntity):
             if self.wemo.on():
                 self._state = WEMO_ON
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the switch off."""
@@ -150,7 +150,7 @@ class WemoSwitch(WemoSubscriptionEntity, SwitchEntity):
             if self.wemo.off():
                 self._state = WEMO_OFF
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _update(self, force_update=True):
         """Update the device state."""

@@ -63,7 +63,7 @@ async def test_binary_sensors.opp):
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.event.update(EVENTS)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 2
 

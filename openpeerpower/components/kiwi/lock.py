@@ -94,7 +94,7 @@ class KiwiLock(LockEntity):
     def clear_unlock_state(self, _):
         """Clear unlock state automatically."""
         self._state = STATE_LOCKED
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def unlock(self, **kwargs):
         """Unlock the device."""

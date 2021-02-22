@@ -14,14 +14,14 @@ from tests.common import MockConfigEntry
 
 async def test_abort_if_no_configuration.opp):
     """Check flow aborts when no configuration is present."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "missing_configuration"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}
     )
 
@@ -33,7 +33,7 @@ async def test_zeroconf_abort_if_existing_entry.opp):
     """Check zeroconf flow aborts when an entry already exist."""
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}
     )
 
@@ -54,7 +54,7 @@ async def test_full_flow(
         },
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -98,7 +98,7 @@ async def test_full_flow(
             "id": "fake_id",
             "display_name": "frenck",
         }
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == DOMAIN
     result["data"]["token"].pop("expires_at")
@@ -124,7 +124,7 @@ async def test_abort_if_spotify_error(
         },
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -153,7 +153,7 @@ async def test_abort_if_spotify_error(
         "openpeerpower.components.spotify.config_flow.Spotify.current_user",
         side_effect=SpotifyException(400, -1, "message"),
     ):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "connection_error"
@@ -180,14 +180,14 @@ async def test_reauthentication(
     )
     old_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=old_entry.data
     )
 
     flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
 
-    result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
@@ -212,7 +212,7 @@ async def test_reauthentication(
 
     with patch("openpeerpower.components.spotify.config_flow.Spotify") as spotify_mock:
         spotify_mock.return_value.current_user.return_value = {"id": "frenck"}
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == DOMAIN
     result["data"]["token"].pop("expires_at")
@@ -245,12 +245,12 @@ async def test_reauth_account_mismatch(
     )
     old_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=old_entry.data
     )
 
     flows = opp.config_entries.flow.async_progress()
-    result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
@@ -275,7 +275,7 @@ async def test_reauth_account_mismatch(
 
     with patch("openpeerpower.components.spotify.config_flow.Spotify") as spotify_mock:
         spotify_mock.return_value.current_user.return_value = {"id": "fake_id"}
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "reauth_account_mismatch"

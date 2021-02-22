@@ -67,7 +67,7 @@ class ComfoConnectFan(FanEntity):
             "Handle update for fan speed (%d): %s", SENSOR_FAN_SPEED_MODE, value
         )
         self._ccb.data[SENSOR_FAN_SPEED_MODE] = value
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def should_poll(self) -> bool:
@@ -132,4 +132,4 @@ class ComfoConnectFan(FanEntity):
         self._ccb.comfoconnect.cmd_rmi_request(cmd)
 
         # Update current mode
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

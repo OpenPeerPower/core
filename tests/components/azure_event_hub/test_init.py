@@ -100,7 +100,7 @@ async def _setup_opp, mock_call_later, filter_config):
     config[azure_event_hub.DOMAIN].update(MIN_CONFIG)
 
     assert await async_setup_component.opp, azure_event_hub.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_call_later.assert_called_once()
     return mock_call_later.call_args[0][2]
 
@@ -109,7 +109,7 @@ async def _run_filter_tests.opp, tests, process_queue, mock_batch):
     """Run a series of filter tests on azure event hub."""
     for test in tests:
        .opp.states.async_set(test.id, STATE_ON)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await process_queue(None)
 
         if test.should_pass:

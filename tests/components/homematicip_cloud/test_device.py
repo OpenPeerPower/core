@@ -50,7 +50,7 @@ async def test_hmip_remove_device.opp, default_mock_hap_factory):
 
     hmip_device.fire_remove_event()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count - 1
     assert len(entity_registry.entities) == pre_entity_count - 3
@@ -81,7 +81,7 @@ async def test_hmip_add_device.opp, default_mock_hap_factory, hmip_config_entry)
     pre_mapping_count = len(mock_hap.hmip_device_by_entity_id)
 
     hmip_device.fire_remove_event()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count - 1
     assert len(entity_registry.entities) == pre_entity_count - 3
@@ -97,7 +97,7 @@ async def test_hmip_add_device.opp, default_mock_hap_factory, hmip_config_entry)
         "openpeerpower.components.homematicip_cloud.hap.asyncio.sleep"
     ):
         mock_hap.home.fire_create_event(event_type=EventType.DEVICE_ADDED)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count
     assert len(entity_registry.entities) == pre_entity_count
@@ -127,7 +127,7 @@ async def test_hmip_remove_group.opp, default_mock_hap_factory):
     pre_mapping_count = len(mock_hap.hmip_device_by_entity_id)
 
     hmip_device.fire_remove_event()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(device_registry.devices) == pre_device_count
     assert len(entity_registry.entities) == pre_entity_count - 1
@@ -185,7 +185,7 @@ async def test_hap_reconnected.opp, default_mock_hap_factory):
 
     mock_hap._accesspoint_connected = False  # pylint: disable=protected-access
     await async_manipulate_test_data.opp, mock_hap.home, "connected", True)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
@@ -226,7 +226,7 @@ async def test_hmip_reset_energy_counter_services.opp, default_mock_hap_factory)
     )
     assert ha_state
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "reset_energy_counter",
         {"entity_id": "switch.pc"},
@@ -235,7 +235,7 @@ async def test_hmip_reset_energy_counter_services.opp, default_mock_hap_factory)
     assert hmip_device.mock_calls[-1][0] == "reset_energy_counter"
     assert len(hmip_device._connection.mock_calls) == 2  # pylint: disable=W0212
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud", "reset_energy_counter", {"entity_id": "all"}, blocking=True
     )
     assert hmip_device.mock_calls[-1][0] == "reset_energy_counter"

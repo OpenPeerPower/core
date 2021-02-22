@@ -127,13 +127,13 @@ class ResponseSwitch(SwitchEntity):
             )
         )
         self.async_on_remove(
-            self._coordinator.async_add_listener(self.async_write_ha_state)
+            self._coordinator.async_add_listener(self.async_write_op_state)
         )
 
     @callback
     def client_update(self) -> None:
         """Handle updated incident data from the client."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_update(self) -> bool:
         """Update FireServiceRota response data."""

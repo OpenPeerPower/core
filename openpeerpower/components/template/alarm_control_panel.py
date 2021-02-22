@@ -239,7 +239,7 @@ class AlarmControlPanelTemplate(TemplateEntity, AlarmControlPanelEntity):
             _LOGGER.error("No script action defined for %s", state)
 
         if optimistic_set:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_alarm_arm_away(self, code=None):
         """Arm the panel to Away."""

@@ -35,7 +35,7 @@ async def test_sensors(
     """Test the creation and values of the WLED sensors."""
 
     entry = await init_integration.opp, aioclient_mock, skip_setup=True)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Pre-create registry entries for disabled by default sensors
     registry.async_get_or_create(
@@ -89,8 +89,8 @@ async def test_sensors(
     # Setup
     test_time = datetime(2019, 11, 11, 9, 10, 32, tzinfo=dt_util.UTC)
     with patch("openpeerpower.components.wled.sensor.utcnow", return_value=test_time):
-        await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
 
     state = opp.states.get("sensor.wled_rgb_light_estimated_current")
     assert state
@@ -185,7 +185,7 @@ async def test_disabled_by_default_sensors(
 ) -> None:
     """Test the disabled by default WLED sensors."""
     await init_integration.opp, aioclient_mock)
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get(entity_id)
     assert state is None

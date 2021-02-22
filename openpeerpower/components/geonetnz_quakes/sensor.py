@@ -73,7 +73,7 @@ class GeonetnzQuakesSensor(Entity):
     def _update_status_callback(self):
         """Call status update method."""
         _LOGGER.debug("Received status update for %s", self._config_entry_id)
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     @property
     def should_poll(self):

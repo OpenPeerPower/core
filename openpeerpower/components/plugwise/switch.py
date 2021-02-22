@@ -84,7 +84,7 @@ class GwSwitch(SmileGateway, SwitchEntity):
             )
             if state_on:
                 self._is_on = True
-                self.async_write_ha_state()
+                self.async_write_op_state()
         except PlugwiseException:
             _LOGGER.error("Error while communicating to device")
 
@@ -96,7 +96,7 @@ class GwSwitch(SmileGateway, SwitchEntity):
             )
             if state_off:
                 self._is_on = False
-                self.async_write_ha_state()
+                self.async_write_op_state()
         except PlugwiseException:
             _LOGGER.error("Error while communicating to device")
 
@@ -107,10 +107,10 @@ class GwSwitch(SmileGateway, SwitchEntity):
 
         if not data:
             _LOGGER.error("Received no data for device %s", self._name)
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         if "relay" in data:
             self._is_on = data["relay"]
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

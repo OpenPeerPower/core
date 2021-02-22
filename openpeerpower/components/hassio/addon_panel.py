@@ -20,7 +20,7 @@ async def async_setup_addon_panel.opp: OpenPeerPowerType, oppio):
    .opp.http.register_view.oppio_addon_panel)
 
     # If panels are exists
-    panels = await.oppio_addon_panel.get_panels()
+    panels = await oppio_addon_panel.get_panels()
     if not panels:
         return
 
@@ -77,7 +77,7 @@ class HassIOAddonPanel(OpenPeerPowerView):
 
 async def _register_panel.opp, addon, data):
     """Init coroutine to register the panel."""
-    await.opp.components.panel_custom.async_register_panel(
+    await opp.components.panel_custom.async_register_panel(
         frontend_url_path=addon,
         webcomponent_name= oppio-main",
         sidebar_title=data[ATTR_TITLE],

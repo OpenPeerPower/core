@@ -19,7 +19,7 @@ class ConnectionStateMixin:
     async def got_connected(self, _=None):
         """Notification that we're connected to the HUB."""
         _LOGGER.debug("%s: connected to the HUB", self._name)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         self._clear_disconnection_delay()
 
@@ -41,4 +41,4 @@ class ConnectionStateMixin:
         self._unsub_mark_disconnected = None
         if not self.available:
             # Still disconnected. Let the state engine know.
-            self.async_write_ha_state()
+            self.async_write_op_state()

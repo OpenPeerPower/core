@@ -221,7 +221,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
                 STATE_UNKNOWN,
             ):
                 self._async_update_temp(sensor_state)
-                self.async_write_ha_state()
+                self.async_write_op_state()
 
         if self.opp.state == CoreState.running:
             _async_startup()
@@ -359,7 +359,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
             _LOGGER.error("Unrecognized hvac mode: %s", hvac_mode)
             return
         # Ensure we update the current operation after changing the mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
@@ -368,7 +368,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
             return
         self._target_temp = temperature
         await self._async_control_heating(force=True)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def min_temp(self):
@@ -396,7 +396,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
 
         self._async_update_temp(new_state)
         await self._async_control_heating()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_switch_changed(self, event):
@@ -404,7 +404,7 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
         new_state = event.data.get("new_state")
         if new_state is None:
             return
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_update_temp(self, state):
@@ -508,4 +508,4 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
             self._target_temp = self._saved_target_temp
             await self._async_control_heating(force=True)
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

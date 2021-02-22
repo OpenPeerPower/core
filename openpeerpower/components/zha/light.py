@@ -171,7 +171,7 @@ class BaseLight(LogMixin, light.LightEntity):
         """
         value = max(0, min(254, value))
         self._brightness = value
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def hs_color(self):
@@ -304,7 +304,7 @@ class BaseLight(LogMixin, light.LightEntity):
 
         self._off_brightness = None
         self.debug("turned on: %s", t_log)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
@@ -326,7 +326,7 @@ class BaseLight(LogMixin, light.LightEntity):
             # store current brightness so that the next turn_on uses it.
             self._off_brightness = self._brightness
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 @STRICT_MATCH(channel_names=CHANNEL_ON_OFF, aux_channels={CHANNEL_COLOR, CHANNEL_LEVEL})
@@ -389,7 +389,7 @@ class Light(BaseLight, ZhaEntity):
         self._state = bool(value)
         if value:
             self._off_brightness = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Run when about to be added to.opp."""
@@ -492,13 +492,13 @@ class Light(BaseLight, ZhaEntity):
     async def _refresh(self, time):
         """Call async_get_state at an interval."""
         await self.async_get_state()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def _maybe_force_refresh(self, signal):
         """Force update the state if the signal contains the entity id for this entity."""
         if self.entity_id in signal["entity_ids"]:
             await self.async_get_state()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
 
 @STRICT_MATCH(

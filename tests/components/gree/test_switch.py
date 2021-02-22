@@ -23,14 +23,14 @@ async def async_setup_gree.opp):
     """Set up the gree switch platform."""
     MockConfigEntry(domain=GREE_DOMAIN).add_to.opp.opp)
     await async_setup_component.opp, GREE_DOMAIN, {GREE_DOMAIN: {DOMAIN: {}}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_send_panel_light_on.opp, discovery, device):
     """Test for sending power on command to the device."""
     await async_setup_gree.opp)
 
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: ENTITY_ID},
@@ -48,7 +48,7 @@ async def test_send_panel_light_on_device_timeout.opp, discovery, device):
 
     await async_setup_gree.opp)
 
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: ENTITY_ID},
@@ -64,7 +64,7 @@ async def test_send_panel_light_off.opp, discovery, device):
     """Test for sending power on command to the device."""
     await async_setup_gree.opp)
 
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: ENTITY_ID},
@@ -81,7 +81,7 @@ async def test_send_panel_light_toggle.opp, discovery, device):
     await async_setup_gree.opp)
 
     # Turn the service on first
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: ENTITY_ID},
@@ -93,7 +93,7 @@ async def test_send_panel_light_toggle.opp, discovery, device):
     assert state.state == STATE_ON
 
     # Toggle it off
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         SERVICE_TOGGLE,
         {ATTR_ENTITY_ID: ENTITY_ID},
@@ -105,7 +105,7 @@ async def test_send_panel_light_toggle.opp, discovery, device):
     assert state.state == STATE_OFF
 
     # Toggle is back on
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         DOMAIN,
         SERVICE_TOGGLE,
         {ATTR_ENTITY_ID: ENTITY_ID},

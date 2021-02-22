@@ -67,7 +67,7 @@ async def test_locks.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_handler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("lock.door_lock").state == STATE_LOCKED
 
@@ -77,7 +77,7 @@ async def test_locks.opp, aioclient_mock):
 
     # Service lock door
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LOCK_DOMAIN,
         SERVICE_LOCK,
         {ATTR_ENTITY_ID: "lock.door_lock"},
@@ -87,7 +87,7 @@ async def test_locks.opp, aioclient_mock):
 
     # Service unlock door
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LOCK_DOMAIN,
         SERVICE_UNLOCK,
         {ATTR_ENTITY_ID: "lock.door_lock"},
@@ -95,13 +95,13 @@ async def test_locks.opp, aioclient_mock):
     )
     assert aioclient_mock.mock_calls[2][2] == {"on": False}
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
     assert len.opp.states.async_all()) == 1
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_remove(config_entry.entry_id)
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0

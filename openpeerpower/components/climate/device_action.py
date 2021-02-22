@@ -90,7 +90,7 @@ async def async_call_action_from_config(
         service = const.SERVICE_SET_PRESET_MODE
         service_data[const.ATTR_PRESET_MODE] = config[const.ATTR_PRESET_MODE]
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, service, service_data, blocking=True, context=context
     )
 

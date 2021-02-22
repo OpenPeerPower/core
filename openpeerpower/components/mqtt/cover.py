@@ -288,7 +288,7 @@ class MqttCover(MqttEntity, CoverEntity):
 
                 level = self.find_percentage_in_range(float(payload))
                 self._tilt_value = level
-                self.async_write_ha_state()
+                self.async_write_op_state()
 
         @callback
         @log_messages(self.opp, self.entity_id)
@@ -325,7 +325,7 @@ class MqttCover(MqttEntity, CoverEntity):
                 )
                 return
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         @callback
         @log_messages(self.opp, self.entity_id)
@@ -357,7 +357,7 @@ class MqttCover(MqttEntity, CoverEntity):
             else:
                 _LOGGER.warning("Payload '%s' is not numeric", payload)
                 return
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         if self._config.get(CONF_GET_POSITION_TOPIC):
             topics["get_position_topic"] = {
@@ -477,7 +477,7 @@ class MqttCover(MqttEntity, CoverEntity):
                 self._position = self.find_percentage_in_range(
                     self._config[CONF_POSITION_OPEN], COVER_PAYLOAD
                 )
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_close_cover(self, **kwargs):
         """Move the cover down.
@@ -498,7 +498,7 @@ class MqttCover(MqttEntity, CoverEntity):
                 self._position = self.find_percentage_in_range(
                     self._config[CONF_POSITION_CLOSED], COVER_PAYLOAD
                 )
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_stop_cover(self, **kwargs):
         """Stop the device.
@@ -526,7 +526,7 @@ class MqttCover(MqttEntity, CoverEntity):
             self._tilt_value = self.find_percentage_in_range(
                 float(self._config[CONF_TILT_OPEN_POSITION])
             )
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_close_cover_tilt(self, **kwargs):
         """Tilt the cover closed."""
@@ -541,7 +541,7 @@ class MqttCover(MqttEntity, CoverEntity):
             self._tilt_value = self.find_percentage_in_range(
                 float(self._config[CONF_TILT_CLOSED_POSITION])
             )
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_cover_tilt_position(self, **kwargs):
         """Move the cover tilt to a specific position."""
@@ -561,7 +561,7 @@ class MqttCover(MqttEntity, CoverEntity):
         )
         if self._tilt_optimistic:
             self._tilt_value = percentage_tilt
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_cover_position(self, **kwargs):
         """Move the cover to a specific position."""
@@ -586,7 +586,7 @@ class MqttCover(MqttEntity, CoverEntity):
                 else STATE_OPEN
             )
             self._position = percentage_position
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_toggle_tilt(self, **kwargs):
         """Toggle the entity."""

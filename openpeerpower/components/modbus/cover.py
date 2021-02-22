@@ -176,7 +176,7 @@ class ModbusCover(CoverEntity, RestoreEntity):
         else:
             self._value = self._read_status_register()
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _read_status_register(self) -> Optional[int]:
         """Read status register using the Modbus hub slave."""

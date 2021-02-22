@@ -85,7 +85,7 @@ class RflinkBinarySensor(RflinkDevice, BinarySensorEntity):
                 """Switch device off after a delay."""
                 self._delay_listener = None
                 self._state = False
-                self.async_write_ha_state()
+                self.async_write_op_state()
 
             if self._delay_listener is not None:
                 self._delay_listener()

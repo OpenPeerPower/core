@@ -12,7 +12,7 @@ from openpeerpower.components.media_player.const import (
     SERVICE_PLAY_MEDIA,
 )
 import openpeerpower.components.tts as tts
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
@@ -37,7 +37,7 @@ async def calls.opp):
 @pytest.fixture(autouse=True)
 async def setup_internal_url.opp):
     """Set up internal url."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp, {"internal_url": "http://example.local:8123"}
     )
 
@@ -56,7 +56,7 @@ async def test_service_say.opp, mock_gtts, calls):
        .opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "google_translate_say",
         {
@@ -85,7 +85,7 @@ async def test_service_say_german_config(opp, mock_gtts, calls):
         {tts.DOMAIN: {"platform": "google_translate", "language": "de"}},
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "google_translate_say",
         {
@@ -112,7 +112,7 @@ async def test_service_say_german_service.opp, mock_gtts, calls):
 
     await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "google_say",
         {
@@ -138,7 +138,7 @@ async def test_service_say_error(opp, mock_gtts, calls):
        .opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "google_translate"}}
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "google_translate_say",
         {

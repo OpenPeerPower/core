@@ -38,7 +38,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert ha_state.attributes["current_position"] == 0
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -49,7 +49,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": entity_id, "position": "50"},
@@ -63,7 +63,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 5
@@ -74,7 +74,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 7
@@ -104,7 +104,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -117,7 +117,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_tilt_position",
         {"entity_id": entity_id, "tilt_position": "50"},
@@ -132,7 +132,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 6
@@ -144,7 +144,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 8
@@ -182,7 +182,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -195,7 +195,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_tilt_position",
         {"entity_id": entity_id, "tilt_position": "50"},
@@ -210,7 +210,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 6
@@ -222,7 +222,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 8
@@ -256,7 +256,7 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -268,7 +268,7 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", 0)
     await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", 0)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 4
@@ -283,13 +283,13 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", 0.5)
     await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", 0.5)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_tilt_position",
         {"entity_id": entity_id, "tilt_position": "50"},
         blocking=True,
     )
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": entity_id, "position": "50"},
@@ -306,10 +306,10 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", 1)
     await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", 1)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover", {"entity_id": entity_id}, blocking=True
     )
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 12
@@ -325,14 +325,14 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 13
     assert hmip_device.mock_calls[-1][0] == "stop"
     assert hmip_device.mock_calls[-1][1] == ()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 14
@@ -365,7 +365,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert ha_state.attributes["current_position"] == 0
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -376,7 +376,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -387,7 +387,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 5
@@ -412,7 +412,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert ha_state.attributes["current_position"] == 0
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -423,7 +423,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -434,7 +434,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 5
@@ -457,7 +457,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -468,7 +468,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 100
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": entity_id, "position": "50"},
@@ -482,7 +482,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OPEN
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 5
@@ -493,7 +493,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_CLOSED
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 7
@@ -523,13 +523,13 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": entity_id, "position": "50"},
         blocking=True,
     )
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "open_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
 
@@ -543,7 +543,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_tilt_position",
         {"entity_id": entity_id, "tilt_position": "50"},
@@ -558,7 +558,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "close_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 7
@@ -570,7 +570,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert ha_state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover", "stop_cover_tilt", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 9

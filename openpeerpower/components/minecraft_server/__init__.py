@@ -296,4 +296,4 @@ class MinecraftServerEntity(Entity):
     @callback
     def _update_callback(self) -> None:
         """Triggers update of properties after receiving signal from server."""
-        self.async_schedule_update_ha_state(force_refresh=True)
+        self.async_schedule_update_op_state(force_refresh=True)

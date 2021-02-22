@@ -83,11 +83,11 @@ async def _add_config_entry_to.opp(
     opp: OpenPeerPowerType, config_entry: MockConfigEntry
 ) -> None:
     config_entry.add_to.opp.opp)
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.async_block_till_done()
 
 
-def _get_ha_power_state(vizio_power_state: Optional[bool]) -> str:
+def _get_op_power_state(vizio_power_state: Optional[bool]) -> str:
     """Return HA power state given Vizio power state."""
     if vizio_power_state:
         return STATE_ON
@@ -143,7 +143,7 @@ async def _test_setup_tv(
     opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio TV entity setup."""
-    ha_power_state = _get_ha_power_state(vizio_power_state)
+    ha_power_state = _get_op_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -167,7 +167,7 @@ async def _test_setup_speaker(
     opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio Speaker entity setup."""
-    ha_power_state = _get_ha_power_state(vizio_power_state)
+    ha_power_state = _get_op_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -268,7 +268,7 @@ async def _test_service(
     with patch(
         f"openpeerpower.components.vizio.media_player.VizioAsync.{vizio_func_name}"
     ) as service_call:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             domain,
             ha_service_name,
             service_data=service_data,
@@ -486,7 +486,7 @@ async def _test_update_availability_switch(
             "openpeerpower.util.utcnow", return_value=future
         ):
             async_fire_time_changed.opp, future)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
             if final_power_state is None:
                 assert.opp.states.get(ENTITY_ID).state == STATE_UNAVAILABLE
             else:
@@ -643,7 +643,7 @@ async def test_setup_with_apps_additional_apps_config(
     ) as service_call1, patch(
         "openpeerpower.components.vizio.media_player.VizioAsync.launch_app_config"
     ) as service_call2:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             MP_DOMAIN,
             SERVICE_SELECT_SOURCE,
             service_data={ATTR_ENTITY_ID: ENTITY_ID, ATTR_INPUT_SOURCE: "_"},
@@ -745,7 +745,7 @@ async def test_apps_update(
                 return_value=APP_LIST,
             ):
                 async_fire_time_changed.opp, dt_util.now() + timedelta(days=2))
-                await.opp.async_block_till_done()
+                await opp.async_block_till_done()
                 # Check source list, remove TV inputs, and verify that the integration is
                 # now using the APP_LIST list
                 sources = opp.states.get(ENTITY_ID).attributes["source_list"]

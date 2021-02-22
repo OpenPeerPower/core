@@ -111,7 +111,7 @@ class ZWaveBarrierEventSignalingSwitch(ZWaveBaseEntity, SwitchEntity):
         )
         # this value is not refreshed, so assume success
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the switch off."""
@@ -120,7 +120,7 @@ class ZWaveBarrierEventSignalingSwitch(ZWaveBaseEntity, SwitchEntity):
         )
         # this value is not refreshed, so assume success
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _update_state(self) -> None:

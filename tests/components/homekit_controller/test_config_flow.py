@@ -176,7 +176,7 @@ async def test_discovery_works.opp, controller, upper_case_props, missing_csharp
     discovery_info = get_device_discovery_info(device, upper_case_props, missing_csharp)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "form"
@@ -189,12 +189,12 @@ async def test_discovery_works.opp, controller, upper_case_props, missing_csharp
     }
 
     # User initiates pairing - device enters pairing mode and displays code
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == "form"
     assert result["step_id"] == "pair"
 
     # Pairing doesn't error error and pairing results
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"pairing_code": "111-22-333"}
     )
     assert result["type"] == "create_entry"
@@ -208,13 +208,13 @@ async def test_abort_duplicate_flow.opp, controller):
     discovery_info = get_device_discovery_info(device)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "form"
     assert result["step_id"] == "pair"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "abort"
@@ -230,7 +230,7 @@ async def test_pair_already_paired_1.opp, controller):
     discovery_info["properties"]["sf"] = 0x0
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "abort"
@@ -246,7 +246,7 @@ async def test_id_missing.opp, controller):
     del discovery_info["properties"]["id"]
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "abort"
@@ -261,7 +261,7 @@ async def test_discovery_ignored_model.opp, controller):
     discovery_info["properties"]["md"] = "HHKBridge1,1"
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "abort"
@@ -293,7 +293,7 @@ async def test_discovery_ignored_hk_bridge.opp, controller):
     discovery_info["properties"]["id"] = "AA:BB:CC:DD:EE:FF"
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "abort"
@@ -315,7 +315,7 @@ async def test_discovery_invalid_config_entry.opp, controller):
     discovery_info = get_device_discovery_info(device)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
@@ -344,7 +344,7 @@ async def test_discovery_already_configured.opp, controller):
     discovery_info["properties"]["sf"] = 0x00
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
     assert result["type"] == "abort"
@@ -359,14 +359,14 @@ async def test_pair_abort_errors_on_start.opp, controller, exception, expected):
     discovery_info = get_device_discovery_info(device)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
     # User initiates pairing - device refuses to enter pairing mode
     test_exc = exception("error")
     with patch.object(device, "start_pairing", side_effect=test_exc):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == "abort"
     assert result["reason"] == expected
 
@@ -379,26 +379,26 @@ async def test_pair_try_later_errors_on_start.opp, controller, exception, expect
     discovery_info = get_device_discovery_info(device)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
     # User initiates pairing - device refuses to enter pairing mode but may be successful after entering pairing mode or rebooting
     test_exc = exception("error")
     with patch.object(device, "start_pairing", side_effect=test_exc):
-        result2 = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result2 = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result2["step_id"] == expected
     assert result2["type"] == "form"
 
     # Device is rebooted or placed into pairing mode as they have been instructed
 
     # We start pairing again
-    result3 = await.opp.config_entries.flow.async_configure(
+    result3 = await opp.config_entries.flow.async_configure(
         result2["flow_id"], user_input={"any": "key"}
     )
 
     # .. and successfully complete pair
-    result4 = await.opp.config_entries.flow.async_configure(
+    result4 = await opp.config_entries.flow.async_configure(
         result3["flow_id"], user_input={"pairing_code": "111-22-333"}
     )
 
@@ -414,7 +414,7 @@ async def test_pair_form_errors_on_start.opp, controller, exception, expected):
     discovery_info = get_device_discovery_info(device)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
@@ -428,7 +428,7 @@ async def test_pair_form_errors_on_start.opp, controller, exception, expected):
     # User initiates pairing - device refuses to enter pairing mode
     test_exc = exception("error")
     with patch.object(device, "start_pairing", side_effect=test_exc):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={"pairing_code": "111-22-333"}
         )
     assert result["type"] == "form"
@@ -442,12 +442,12 @@ async def test_pair_form_errors_on_start.opp, controller, exception, expected):
     }
 
     # User gets back the form
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == "form"
     assert result["errors"] == {}
 
     # User re-tries entering pairing code
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"pairing_code": "111-22-333"}
     )
 
@@ -462,7 +462,7 @@ async def test_pair_abort_errors_on_finish.opp, controller, exception, expected)
     discovery_info = get_device_discovery_info(device)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
@@ -477,7 +477,7 @@ async def test_pair_abort_errors_on_finish.opp, controller, exception, expected)
     # and then HA to show a pairing form
     finish_pairing = unittest.mock.AsyncMock(side_effect=exception("error"))
     with patch.object(device, "start_pairing", return_value=finish_pairing):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == "form"
     assert get_flow_context.opp, result) == {
@@ -488,7 +488,7 @@ async def test_pair_abort_errors_on_finish.opp, controller, exception, expected)
     }
 
     # User enters pairing code
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"pairing_code": "111-22-333"}
     )
     assert result["type"] == "abort"
@@ -502,7 +502,7 @@ async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
     discovery_info = get_device_discovery_info(device)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
@@ -517,7 +517,7 @@ async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
     # and then HA to show a pairing form
     finish_pairing = unittest.mock.AsyncMock(side_effect=exception("error"))
     with patch.object(device, "start_pairing", return_value=finish_pairing):
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == "form"
     assert get_flow_context.opp, result) == {
@@ -528,7 +528,7 @@ async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
     }
 
     # User enters pairing code
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"pairing_code": "111-22-333"}
     )
     assert result["type"] == "form"
@@ -547,7 +547,7 @@ async def test_user_works.opp, controller):
     setup_mock_accessory(controller)
 
     # Device is discovered
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "user"}
     )
 
@@ -557,7 +557,7 @@ async def test_user_works.opp, controller):
         "source": "user",
     }
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"device": "TestDevice"}
     )
     assert result["type"] == "form"
@@ -569,7 +569,7 @@ async def test_user_works.opp, controller):
         "title_placeholders": {"name": "TestDevice"},
     }
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"pairing_code": "111-22-333"}
     )
     assert result["type"] == "create_entry"
@@ -578,7 +578,7 @@ async def test_user_works.opp, controller):
 
 async def test_user_no_devices.opp, controller):
     """Test user initiated pairing where no devices discovered."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "user"}
     )
     assert result["type"] == "abort"
@@ -594,7 +594,7 @@ async def test_user_no_unpaired_devices.opp, controller):
     await finish_pairing(device.pairing_code)
 
     # Device discovery is requested
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "user"}
     )
 
@@ -607,7 +607,7 @@ async def test_unignore_works.opp, controller):
     device = setup_mock_accessory(controller)
 
     # Device is unignored
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller",
         context={"source": "unignore"},
         data={"unique_id": device.device_id},
@@ -622,12 +622,12 @@ async def test_unignore_works.opp, controller):
     }
 
     # User initiates pairing by clicking on 'configure' - device enters pairing mode and displays code
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+    result = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == "form"
     assert result["step_id"] == "pair"
 
     # Pairing finalized
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"pairing_code": "111-22-333"}
     )
     assert result["type"] == "create_entry"
@@ -639,7 +639,7 @@ async def test_unignore_ignores_missing_devices.opp, controller):
     setup_mock_accessory(controller)
 
     # Device is unignored
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "homekit_controller",
         context={"source": "unignore"},
         data={"unique_id": "00:00:00:00:00:01"},

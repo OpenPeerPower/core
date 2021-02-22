@@ -24,7 +24,7 @@ async def async_setup_entry(
     entities = []
 
     if SynoSurveillanceStation.INFO_API_KEY in api.dsm.apis:
-        info = await.opp.async_add_executor_job(api.dsm.surveillance_station.get_info)
+        info = await opp.async_add_executor_job(api.dsm.surveillance_station.get_info)
         version = info["data"]["CMSMinVersion"]
         entities += [
             SynoDSMSurveillanceHomeModeToggle(

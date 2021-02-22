@@ -57,7 +57,7 @@ async def test_thermostat_v2(
     assert state.attributes[ATTR_FAN_STATE] == "Idle / off"
 
     # Test setting preset mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {
@@ -93,7 +93,7 @@ async def test_thermostat_v2(
     client.async_send_command.reset_mock()
 
     # Test setting hvac mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {
@@ -129,7 +129,7 @@ async def test_thermostat_v2(
     client.async_send_command.reset_mock()
 
     # Test setting temperature
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -238,7 +238,7 @@ async def test_thermostat_v2(
     client.async_send_command.reset_mock()
 
     # Test setting temperature with heat_cool
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -298,7 +298,7 @@ async def test_thermostat_v2(
 
     with pytest.raises(ValueError):
         # Test setting unknown preset mode
-        await.opp.services.async_call(
+        await opp.services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {
@@ -312,7 +312,7 @@ async def test_thermostat_v2(
 
     # Test setting invalid hvac mode
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_HVAC_MODE,
             {
@@ -324,7 +324,7 @@ async def test_thermostat_v2(
 
     # Test setting invalid preset mode
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {
@@ -337,7 +337,7 @@ async def test_thermostat_v2(
     client.async_send_command.reset_mock()
 
     # Test setting fan mode
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_FAN_MODE,
         {
@@ -375,7 +375,7 @@ async def test_thermostat_v2(
 
     # Test setting invalid fan mode
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_FAN_MODE,
             {
@@ -409,7 +409,7 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
     client.async_send_command.reset_mock()
 
     # Test setting temperature
-    await.opp.services.async_call(
+    await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {

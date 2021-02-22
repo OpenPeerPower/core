@@ -104,7 +104,7 @@ class KebaBinarySensor(BinarySensorEntity):
 
     def update_callback(self):
         """Schedule a state update."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_added_to.opp(self):
         """Add update callback after being added to.opp."""

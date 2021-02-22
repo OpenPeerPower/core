@@ -317,7 +317,7 @@ class LutronCasetaDevice(Entity):
 
     async def async_added_to.opp(self):
         """Register callbacks."""
-        self._smartbridge.add_subscriber(self.device_id, self.async_write_ha_state)
+        self._smartbridge.add_subscriber(self.device_id, self.async_write_op_state)
 
     @property
     def device_id(self):

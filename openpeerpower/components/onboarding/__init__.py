@@ -51,7 +51,7 @@ async def async_setup_opp, config):
         # If so, mark the user step as done.
         has_owner = False
 
-        for user in await.opp.auth.async_get_users():
+        for user in await opp.auth.async_get_users():
             if user.is_owner:
                 has_owner = True
                 break

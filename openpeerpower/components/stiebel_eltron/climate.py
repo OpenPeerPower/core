@@ -27,7 +27,7 @@ SUPPORT_HVAC = [HVAC_MODE_AUTO, HVAC_MODE_HEAT, HVAC_MODE_OFF]
 SUPPORT_PRESET = [PRESET_ECO, PRESET_DAY, PRESET_EMERGENCY, PRESET_SETBACK]
 
 # Mapping STIEBEL ELTRON states to openpeerpower states/preset.
-STE_TO_HA_HVAC = {
+STE_TO_OP_HVAC = {
     "AUTOMATIC": HVAC_MODE_AUTO,
     "MANUAL MODE": HVAC_MODE_HEAT,
     "STANDBY": HVAC_MODE_AUTO,
@@ -37,7 +37,7 @@ STE_TO_HA_HVAC = {
     "EMERGENCY OPERATION": HVAC_MODE_AUTO,
 }
 
-STE_TO_HA_PRESET = {
+STE_TO_OP_PRESET = {
     "STANDBY": PRESET_ECO,
     "DAY MODE": PRESET_DAY,
     "SETBACK MODE": PRESET_SETBACK,
@@ -50,7 +50,7 @@ HA_TO_STE_HVAC = {
     HVAC_MODE_OFF: "DHW",
 }
 
-HA_TO_STE_PRESET = {k: i for i, k in STE_TO_HA_PRESET.items()}
+HA_TO_STE_PRESET = {k: i for i, k in STE_TO_OP_PRESET.items()}
 
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
@@ -149,12 +149,12 @@ class StiebelEltron(ClimateEntity):
     @property
     def hvac_mode(self):
         """Return current operation ie. heat, cool, idle."""
-        return STE_TO_HA_HVAC.get(self._operation)
+        return STE_TO_OP_HVAC.get(self._operation)
 
     @property
     def preset_mode(self):
         """Return the current preset mode, e.g., home, away, temp."""
-        return STE_TO_HA_PRESET.get(self._operation)
+        return STE_TO_OP_PRESET.get(self._operation)
 
     @property
     def preset_modes(self):

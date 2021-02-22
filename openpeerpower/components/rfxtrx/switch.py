@@ -122,7 +122,7 @@ class RfxtrxSwitch(RfxtrxCommandEntity, SwitchEntity):
 
         self._apply_event(event)
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def is_on(self):
@@ -133,10 +133,10 @@ class RfxtrxSwitch(RfxtrxCommandEntity, SwitchEntity):
         """Turn the device on."""
         await self._async_send(self._device.send_on)
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
         await self._async_send(self._device.send_off)
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()

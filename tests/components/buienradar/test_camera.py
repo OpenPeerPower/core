@@ -23,9 +23,9 @@ async def test_fetching_url_and_caching(aioclient_mock, opp, opp_client):
     await async_setup_component(
        .opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
@@ -56,9 +56,9 @@ async def test_expire_delta(aioclient_mock, opp, opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
@@ -80,9 +80,9 @@ async def test_only_one_fetch_at_a_time(aioclient_mock, opp, opp_client):
     await async_setup_component(
        .opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     resp_1 = client.get("/api/camera_proxy/camera.config_test")
     resp_2 = client.get("/api/camera_proxy/camera.config_test")
@@ -104,9 +104,9 @@ async def test_dimension(aioclient_mock, opp, opp_client):
         "camera",
         {"camera": {"name": "config_test", "platform": "buienradar", "dimension": 700}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     await client.get("/api/camera_proxy/camera.config_test")
 
@@ -128,9 +128,9 @@ async def test_belgium_country(aioclient_mock, opp, opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     await client.get("/api/camera_proxy/camera.config_test")
 
@@ -144,9 +144,9 @@ async def test_failure_response_not_cached(aioclient_mock, opp, opp_client):
     await async_setup_component(
        .opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     await client.get("/api/camera_proxy/camera.config_test")
     await client.get("/api/camera_proxy/camera.config_test")
@@ -178,9 +178,9 @@ async def test_last_modified_updates(aioclient_mock, opp, opp_client):
             }
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     resp_1 = await client.get("/api/camera_proxy/camera.config_test")
     # It is not possible to check if header was sent.
@@ -207,9 +207,9 @@ async def test_retries_after_error(aioclient_mock, opp, opp_client):
     await async_setup_component(
        .opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    client = await.opp_client()
+    client = await opp_client()
 
     aioclient_mock.get(radar_map_url(), text=None, status=HTTP_INTERNAL_SERVER_ERROR)
 

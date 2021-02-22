@@ -74,7 +74,7 @@ async def test_setup_opp, mock_feed):
             # Artificially trigger update.
            .opp.bus.fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
@@ -95,7 +95,7 @@ async def test_setup_opp, mock_feed):
             # so no changes to entities.
             mock_feed.return_value.update.return_value = "OK_NO_DATA", None
             async_fire_time_changed.opp, utcnow + geo_rss_events.SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
@@ -105,7 +105,7 @@ async def test_setup_opp, mock_feed):
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
             async_fire_time_changed.opp, utcnow + 2 * geo_rss_events.SCAN_INTERVAL)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
@@ -136,7 +136,7 @@ async def test_setup_with_categories.opp, mock_feed):
         # Artificially trigger update.
        .opp.bus.fire(EVENT_OPENPEERPOWER_START)
         # Collect events.
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
         assert len(all_states) == 1

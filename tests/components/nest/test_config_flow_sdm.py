@@ -95,7 +95,7 @@ async def test_full_flow.opp, oauth):
     """Check full flow."""
     assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     await oauth.async_oauth_flow(result)
@@ -137,7 +137,7 @@ async def test_reauth.opp, oauth):
         "access_token": "some-revoked-token",
     }
 
-    await.opp.config_entries.flow.async_init(
+    await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=old_entry.data
     )
 
@@ -147,7 +147,7 @@ async def test_reauth.opp, oauth):
     assert flows[0]["step_id"] == "reauth_confirm"
 
     # Run the oauth flow
-    result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
     await oauth.async_oauth_flow(result)
 
     # Verify existing tokens are replaced
@@ -171,7 +171,7 @@ async def test_single_config_entry.opp):
 
     assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "abort"
@@ -200,7 +200,7 @@ async def test_unexpected_existing_config_entries.opp, oauth):
     assert len(entries) == 2
 
     # Invoke the reauth flow
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=old_entry.data
     )
     assert result["type"] == "form"
@@ -208,7 +208,7 @@ async def test_unexpected_existing_config_entries.opp, oauth):
 
     flows = opp.config_entries.flow.async_progress()
 
-    result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
     await oauth.async_oauth_flow(result)
 
     # Only a single entry now exists, and the other was cleaned up

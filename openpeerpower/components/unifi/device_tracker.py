@@ -223,7 +223,7 @@ class UniFiClientTracker(UniFiClient, ScannerEntity):
     def _make_disconnected(self, *_):
         """No heart beat by device."""
         self._is_connected = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def is_connected(self):
@@ -370,7 +370,7 @@ class UniFiDeviceTracker(UniFiBase, ScannerEntity):
     def _make_disconnected(self, *_):
         """No heart beat by device."""
         self._is_connected = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def is_connected(self):

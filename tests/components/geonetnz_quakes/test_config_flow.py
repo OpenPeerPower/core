@@ -22,7 +22,7 @@ async def test_duplicate_error(opp, config_entry):
     conf = {CONF_LATITUDE: -41.2, CONF_LONGITUDE: 174.7, CONF_RADIUS: 25}
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=conf
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -31,7 +31,7 @@ async def test_duplicate_error(opp, config_entry):
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -53,7 +53,7 @@ async def test_step_import.opp):
     with patch(
         "openpeerpower.components.geonetnz_quakes.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.geonetnz_quakes.async_setup", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data=conf
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -78,7 +78,7 @@ async def test_step_user.opp):
     with patch(
         "openpeerpower.components.geonetnz_quakes.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.geonetnz_quakes.async_setup", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=conf
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY

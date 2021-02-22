@@ -130,7 +130,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         gps_accuracy_threshold,
         entry,
     )
-    await.opp.async_add_executor_job(account.setup)
+    await opp.async_add_executor_job(account.setup)
 
    .opp.data[DOMAIN][entry.unique_id] = account
 

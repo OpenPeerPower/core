@@ -130,7 +130,7 @@ class AlarmDecoderAlarmPanel(AlarmControlPanelEntity):
         self._ready = message.ready
         self._zone_bypassed = message.zone_bypassed
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def name(self):

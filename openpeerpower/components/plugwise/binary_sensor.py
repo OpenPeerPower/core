@@ -116,11 +116,11 @@ class PwBinarySensor(SmileBinarySensor, BinarySensorEntity):
 
         if not data:
             _LOGGER.error("Received no data for device %s", self._binary_sensor)
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         if self._binary_sensor not in data:
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         self._is_on = data[self._binary_sensor]
@@ -130,7 +130,7 @@ class PwBinarySensor(SmileBinarySensor, BinarySensorEntity):
         if self._binary_sensor == "slave_boiler_state":
             self._icon = FLAME_ICON if self._is_on else IDLE_ICON
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class PwNotifySensor(SmileBinarySensor, BinarySensorEntity):
@@ -169,4 +169,4 @@ class PwNotifySensor(SmileBinarySensor, BinarySensorEntity):
 
                     self._attributes[f"{msg_type.lower()}_msg"].append(msg)
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

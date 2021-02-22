@@ -15,7 +15,7 @@ class RiscoEntity(CoordinatorEntity):
 
     def _refresh_from_coordinator(self):
         self._get_data_from_coordinator()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """When entity is added to.opp."""

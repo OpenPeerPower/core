@@ -36,10 +36,10 @@ async def test_sensors_unknown.opp):
         "openpeerpower.components.dexcom.Dexcom.get_current_glucose_reading",
         return_value=None,
     ):
-        await.opp.helpers.entity_component.async_update_entity(
+        await opp.helpers.entity_component.async_update_entity(
             "sensor.dexcom_test_username_glucose_value"
         )
-        await.opp.helpers.entity_component.async_update_entity(
+        await opp.helpers.entity_component.async_update_entity(
             "sensor.dexcom_test_username_glucose_trend"
         )
 
@@ -61,10 +61,10 @@ async def test_sensors_update_failed.opp):
         "openpeerpower.components.dexcom.Dexcom.get_current_glucose_reading",
         side_effect=SessionError,
     ):
-        await.opp.helpers.entity_component.async_update_entity(
+        await opp.helpers.entity_component.async_update_entity(
             "sensor.dexcom_test_username_glucose_value"
         )
-        await.opp.helpers.entity_component.async_update_entity(
+        await opp.helpers.entity_component.async_update_entity(
             "sensor.dexcom_test_username_glucose_trend"
         )
 
@@ -102,7 +102,7 @@ async def test_sensors_options_changed.opp):
             entry=entry,
             options={CONF_UNIT_OF_MEASUREMENT: MMOL_L},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert entry.options == {CONF_UNIT_OF_MEASUREMENT: MMOL_L}
 

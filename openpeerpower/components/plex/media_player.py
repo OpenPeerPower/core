@@ -156,7 +156,7 @@ class PlexMediaPlayer(MediaPlayerEntity):
         self.session = session
         if source:
             self.player_source = source
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
         async_dispatcher_send(
             self.opp,
@@ -167,7 +167,7 @@ class PlexMediaPlayer(MediaPlayerEntity):
     def async_update_from_websocket(self, state):
         """Update the entity based on new websocket data."""
         self.update_state(state)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         async_dispatcher_send(
             self.opp,

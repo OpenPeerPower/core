@@ -56,7 +56,7 @@ class MockScannerEntity(ScannerEntity):
     def set_connected(self):
         """Set connected to True."""
         self.connected = True
-        self.async_schedule_update_ha_state()
+        self.async_schedule_update_op_state()
 
 
 async def async_setup_entry.opp, config_entry, async_add_entities):

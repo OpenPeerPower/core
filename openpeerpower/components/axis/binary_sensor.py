@@ -77,14 +77,14 @@ class AxisBinarySensor(AxisEventBase, BinarySensorEntity):
         def scheduled_update(now):
             """Timer callback for sensor update."""
             self.cancel_scheduled_update = None
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         if self.cancel_scheduled_update is not None:
             self.cancel_scheduled_update()
             self.cancel_scheduled_update = None
 
         if self.is_on or self.device.option_trigger_time == 0 or no_delay:
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         self.cancel_scheduled_update = async_track_point_in_utc_time(

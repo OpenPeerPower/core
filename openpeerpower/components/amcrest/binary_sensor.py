@@ -167,16 +167,16 @@ class AmcrestBinarySensor(BinarySensorEntity):
         if self._sensor_type == BINARY_SENSOR_ONLINE:
             _LOGGER.debug(_UPDATE_MSG, self._name)
             self._state = self._api.available
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     @callback
     def async_event_received(self, start):
         """Update state from received event."""
         _LOGGER.debug(_UPDATE_MSG, self._name)
         self._state = start
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to signals."""

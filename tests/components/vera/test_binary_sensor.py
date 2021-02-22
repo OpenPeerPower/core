@@ -28,10 +28,10 @@ async def test_binary_sensor(
 
     vera_device.is_tripped = False
     update_callback(vera_device)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == "off"
 
     vera_device.is_tripped = True
     update_callback(vera_device)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == "on"

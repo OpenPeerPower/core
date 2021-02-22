@@ -37,7 +37,7 @@ class ISYEntity(Entity):
 
     def on_update(self, event: object) -> None:
         """Handle the update event from the ISY994 Node."""
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def on_control(self, event: NodeProperty) -> None:
         """Handle a control event from the ISY994 Node."""
@@ -52,7 +52,7 @@ class ISYEntity(Entity):
 
         if event.control not in EVENT_PROPS_IGNORED:
             # New state attributes may be available, update the state.
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         self.opp.bus.fire("isy994_control", event_data)
 

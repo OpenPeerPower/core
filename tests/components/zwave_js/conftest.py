@@ -325,8 +325,8 @@ async def integration_fixture.opp, client):
     """Set up the zwave_js integration."""
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
     entry.add_to.opp.opp)
-    await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(entry.entry_id)
+    await opp.async_block_till_done()
 
     return entry
 

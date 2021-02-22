@@ -128,7 +128,7 @@ class IOSSensor(Entity):
         """Get the latest state of the sensor."""
         self._device = device
         self._state = self._device[ios.ATTR_BATTERY][self.type]
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self) -> None:
         """Added to.opp so need to register to dispatch."""

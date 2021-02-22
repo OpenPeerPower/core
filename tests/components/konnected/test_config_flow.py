@@ -27,7 +27,7 @@ async def mock_panel_fixture():
 
 async def test_flow_works.opp, mock_panel):
     """Test config flow ."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -37,7 +37,7 @@ async def test_flow_works.opp, mock_panel):
         "mac": "11:22:33:44:55:66",
         "model": "Konnected",
     }
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"port": 1234, "host": "1.2.3.4"}
     )
     assert result["type"] == "form"
@@ -49,7 +49,7 @@ async def test_flow_works.opp, mock_panel):
         "port": 1234,
     }
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"
@@ -64,7 +64,7 @@ async def test_flow_works.opp, mock_panel):
 
 async def test_pro_flow_works.opp, mock_panel):
     """Test config flow ."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
@@ -76,7 +76,7 @@ async def test_pro_flow_works.opp, mock_panel):
         "mac": "11:22:33:44:55:66",
         "model": "Konnected Pro",
     }
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"port": 1234, "host": "1.2.3.4"}
     )
     assert result["type"] == "form"
@@ -88,7 +88,7 @@ async def test_pro_flow_works.opp, mock_panel):
         "port": 1234,
     }
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"
@@ -108,7 +108,7 @@ async def test_ssdp.opp, mock_panel):
         "model": "Konnected",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -135,7 +135,7 @@ async def test_import_no_host_user_finish.opp, mock_panel):
         "model": "Konnected Pro",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "import"},
         data={
@@ -168,14 +168,14 @@ async def test_import_no_host_user_finish.opp, mock_panel):
     assert result["step_id"] == "import_confirm"
     assert result["description_placeholders"]["id"] == "aabbccddeeff"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "user"
 
     # confirm user is prompted to enter host
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"host": "1.1.1.1", "port": 1234}
     )
     assert result["type"] == "form"
@@ -188,7 +188,7 @@ async def test_import_no_host_user_finish.opp, mock_panel):
     }
 
     # final confirmation
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"
@@ -202,7 +202,7 @@ async def test_import_ssdp_host_user_finish.opp, mock_panel):
         "model": "Konnected Pro",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "import"},
         data={
@@ -236,7 +236,7 @@ async def test_import_ssdp_host_user_finish.opp, mock_panel):
     assert result["description_placeholders"]["id"] == "somechipid"
 
     # discover the panel via ssdp
-    ssdp_result = await.opp.config_entries.flow.async_init(
+    ssdp_result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -248,7 +248,7 @@ async def test_import_ssdp_host_user_finish.opp, mock_panel):
     assert ssdp_result["type"] == "abort"
     assert ssdp_result["reason"] == "already_in_progress"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "form"
@@ -261,7 +261,7 @@ async def test_import_ssdp_host_user_finish.opp, mock_panel):
     }
 
     # final confirmation
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"
@@ -279,7 +279,7 @@ async def test_ssdp_already_configured.opp, mock_panel):
         "model": "Konnected Pro",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -355,7 +355,7 @@ async def test_ssdp_host_update.opp, mock_panel):
         "model": "Konnected Pro",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "ssdp"},
         data={
@@ -380,7 +380,7 @@ async def test_import_existing_config(opp, mock_panel):
         "model": "Konnected Pro",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "import"},
         data=konnected.DEVICE_SCHEMA_YAML(
@@ -425,7 +425,7 @@ async def test_import_existing_config(opp, mock_panel):
     assert result["type"] == "form"
     assert result["step_id"] == "confirm"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"
@@ -513,7 +513,7 @@ async def test_import_existing_config_entry.opp, mock_panel):
 
     # utilize a global access token this time
    .opp.data[config_flow.DOMAIN] = {"access_token": "SUPERSECRETTOKEN"}
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "import"},
         data={
@@ -571,7 +571,7 @@ async def test_import_pin_config(opp, mock_panel):
         "model": "Konnected Pro",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "import"},
         data=konnected.DEVICE_SCHEMA_YAML(
@@ -605,7 +605,7 @@ async def test_import_pin_config(opp, mock_panel):
     assert result["type"] == "form"
     assert result["step_id"] == "confirm"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"
@@ -684,13 +684,13 @@ async def test_option_flow.opp, mock_panel):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_io"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "1": "Disabled",
@@ -709,7 +709,7 @@ async def test_option_flow.opp, mock_panel):
     }
 
     # zone 2
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "door"}
     )
     assert result["type"] == "form"
@@ -719,7 +719,7 @@ async def test_option_flow.opp, mock_panel):
     }
 
     # zone 6
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"type": "window", "name": "winder", "inverse": True},
     )
@@ -730,7 +730,7 @@ async def test_option_flow.opp, mock_panel):
     }
 
     # zone 3
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "dht"}
     )
     assert result["type"] == "form"
@@ -741,7 +741,7 @@ async def test_option_flow.opp, mock_panel):
     }
 
     # zone 4
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "form"
@@ -752,7 +752,7 @@ async def test_option_flow.opp, mock_panel):
     }
 
     # zone out
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "name": "switcher",
@@ -772,7 +772,7 @@ async def test_option_flow.opp, mock_panel):
     }
 
     # zone out - state 2
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "name": "alarm",
@@ -787,7 +787,7 @@ async def test_option_flow.opp, mock_panel):
     assert result["type"] == "form"
     assert result["step_id"] == "options_misc"
     # make sure we enforce url format
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "discovery": False,
@@ -799,7 +799,7 @@ async def test_option_flow.opp, mock_panel):
 
     assert result["type"] == "form"
     assert result["step_id"] == "options_misc"
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "discovery": False,
@@ -870,13 +870,13 @@ async def test_option_flow_pro.opp, mock_panel):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_io"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "1": "Disabled",
@@ -891,7 +891,7 @@ async def test_option_flow_pro.opp, mock_panel):
     assert result["type"] == "form"
     assert result["step_id"] == "options_io_ext"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "8": "Switchable Output",
@@ -908,14 +908,14 @@ async def test_option_flow_pro.opp, mock_panel):
     assert result["step_id"] == "options_binary"
 
     # zone 2
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "door"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_binary"
 
     # zone 6
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"type": "window", "name": "winder", "inverse": True},
     )
@@ -923,42 +923,42 @@ async def test_option_flow_pro.opp, mock_panel):
     assert result["step_id"] == "options_binary"
 
     # zone 10
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "door"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_binary"
 
     # zone 11
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "window"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_digital"
 
     # zone 3
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "dht"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_digital"
 
     # zone 7
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "ds18b20", "name": "temper"}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_switch"
 
     # zone 4
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_switch"
 
     # zone 8
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "name": "switcher",
@@ -972,20 +972,20 @@ async def test_option_flow_pro.opp, mock_panel):
     assert result["step_id"] == "options_switch"
 
     # zone out1
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_switch"
 
     # zone alarm1
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "options_misc"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"discovery": False, "blink": True, "override_api_host": False},
     )
@@ -1083,7 +1083,7 @@ async def test_option_flow_import.opp, mock_panel):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}
     )
     assert result["type"] == "form"
@@ -1095,7 +1095,7 @@ async def test_option_flow_import.opp, mock_panel):
     assert schema["2"] == "Digital Sensor"
     assert schema["3"] == "Switchable Output"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             "1": "Binary Sensor",
@@ -1108,7 +1108,7 @@ async def test_option_flow_import.opp, mock_panel):
     schema = result["data_schema"]({})
     assert schema["8"] == "Disabled"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={},
     )
@@ -1120,7 +1120,7 @@ async def test_option_flow_import.opp, mock_panel):
     assert schema["type"] == "window"
     assert schema["name"] == "winder"
     assert schema["inverse"] is True
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"type": "door"}
     )
     assert result["type"] == "form"
@@ -1130,7 +1130,7 @@ async def test_option_flow_import.opp, mock_panel):
     schema = result["data_schema"]({})
     assert schema["type"] == "ds18b20"
     assert schema["name"] == "temper"
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"type": "dht"},
     )
@@ -1145,7 +1145,7 @@ async def test_option_flow_import.opp, mock_panel):
     assert schema["pause"] == 100
     assert schema["repeat"] == 4
     assert schema["more_states"] == "Yes"
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={"activation": "high", "more_states": "No"}
     )
     assert result["type"] == "form"
@@ -1154,7 +1154,7 @@ async def test_option_flow_import.opp, mock_panel):
     schema = result["data_schema"]({})
     assert schema["blink"] is True
     assert schema["discovery"] is True
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"discovery": True, "blink": False, "override_api_host": False},
     )
@@ -1230,7 +1230,7 @@ async def test_option_flow_existing.opp, mock_panel):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(
+    result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}
     )
     assert result["type"] == "form"

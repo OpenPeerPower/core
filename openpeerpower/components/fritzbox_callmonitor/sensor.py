@@ -284,4 +284,4 @@ class FritzBoxCallMonitor:
             self._sensor.set_state(STATE_IDLE)
             att = {"duration": line[3], "closed": isotime}
             self._sensor.set_attributes(att)
-        self._sensor.schedule_update_ha_state()
+        self._sensor.schedule_update_op_state()

@@ -67,9 +67,9 @@ class EcovacsVacuum(VacuumEntity):
 
     async def async_added_to.opp(self) -> None:
         """Set up the event listeners now that.opp is ready."""
-        self.device.statusEvents.subscribe(lambda _: self.schedule_update_ha_state())
-        self.device.batteryEvents.subscribe(lambda _: self.schedule_update_ha_state())
-        self.device.lifespanEvents.subscribe(lambda _: self.schedule_update_ha_state())
+        self.device.statusEvents.subscribe(lambda _: self.schedule_update_op_state())
+        self.device.batteryEvents.subscribe(lambda _: self.schedule_update_op_state())
+        self.device.lifespanEvents.subscribe(lambda _: self.schedule_update_op_state())
         self.device.errorEvents.subscribe(self.on_error)
 
     def on_error(self, error):
@@ -86,7 +86,7 @@ class EcovacsVacuum(VacuumEntity):
         self.opp.bus.fire(
             "ecovacs_error", {"entity_id": self.entity_id, "error": error}
         )
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def should_poll(self) -> bool:

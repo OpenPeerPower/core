@@ -161,7 +161,7 @@ async def async_migrate.opp, migration_map):
         )
 
     zwave_config_entry = opp.config_entries.async_entries("zwave")[0]
-    await.opp.config_entries.async_remove(zwave_config_entry.entry_id)
+    await opp.config_entries.async_remove(zwave_config_entry.entry_id)
 
     ozw_config_entry = opp.config_entries.async_entries("ozw")[0]
     updates = {

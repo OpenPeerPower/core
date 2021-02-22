@@ -17,7 +17,7 @@ async def test_registration.opp, opp_client, opp_admin_user):
     """Test that registrations happen."""
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
-    api_client = await.opp_client()
+    api_client = await opp_client()
 
     with patch(
         "openpeerpower.components.person.async_add_user_device_tracker",
@@ -67,7 +67,7 @@ async def test_registration_encryption.opp, opp_client):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
-    api_client = await.opp_client()
+    api_client = await opp_client()
 
     resp = await api_client.post("/api/mobile_app/registrations", json=REGISTER)
 

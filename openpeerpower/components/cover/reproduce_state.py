@@ -83,7 +83,7 @@ async def _async_reproduce_state(
             else:
                 service = SERVICE_OPEN_COVER
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN, service, service_data, context=context, blocking=True
         )
 
@@ -104,7 +104,7 @@ async def _async_reproduce_state(
                 ATTR_CURRENT_TILT_POSITION
             ]
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             service_tilting,
             service_data_tilting,

@@ -56,7 +56,7 @@ async def test_update_alarm_device.opp):
         ):
             assert await async_setup_component.opp, "spc", config) is True
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.house"
 
@@ -65,8 +65,8 @@ async def test_update_alarm_device.opp):
 
     area_mock.mode = AreaMode.UNSET
     area_mock.last_changed_by = "Anna"
-    await.opp.data[DATA_API]._async_callback(area_mock)
-    await.opp.async_block_till_done()
+    await opp.data[DATA_API]._async_callback(area_mock)
+    await opp.async_block_till_done()
 
     assert.opp.states.get(entity_id).state == STATE_ALARM_DISARMED
     assert.opp.states.get(entity_id).attributes["changed_by"] == "Anna"

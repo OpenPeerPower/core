@@ -423,28 +423,28 @@ async def test_if_state.opp, calls):
     )
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_open - event - test_event1"
 
    .opp.states.async_set("cover.entity", STATE_CLOSED)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_closed - event - test_event2"
 
    .opp.states.async_set("cover.entity", STATE_OPENING)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event3")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_opening - event - test_event3"
 
    .opp.states.async_set("cover.entity", STATE_CLOSING)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event4")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_closing - event - test_event4"
 
@@ -455,7 +455,7 @@ async def test_if_position.opp, calls):
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -526,7 +526,7 @@ async def test_if_position.opp, calls):
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
    .opp.bus.async_fire("test_event3")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[0].data["some"] == "is_pos_gt_45 - event - test_event1"
     assert calls[1].data["some"] == "is_pos_lt_90 - event - test_event2"
@@ -538,7 +538,7 @@ async def test_if_position.opp, calls):
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
    .opp.bus.async_fire("test_event3")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_pos_lt_90 - event - test_event2"
 
@@ -548,7 +548,7 @@ async def test_if_position.opp, calls):
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
    .opp.bus.async_fire("test_event3")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 5
     assert calls[4].data["some"] == "is_pos_gt_45 - event - test_event1"
 
@@ -559,7 +559,7 @@ async def test_if_tilt_position.opp, calls):
     platform.init()
     ent = platform.ENTITIES[2]
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -630,7 +630,7 @@ async def test_if_tilt_position.opp, calls):
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
    .opp.bus.async_fire("test_event3")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[0].data["some"] == "is_pos_gt_45 - event - test_event1"
     assert calls[1].data["some"] == "is_pos_lt_90 - event - test_event2"
@@ -642,7 +642,7 @@ async def test_if_tilt_position.opp, calls):
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
    .opp.bus.async_fire("test_event3")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_pos_lt_90 - event - test_event2"
 
@@ -652,6 +652,6 @@ async def test_if_tilt_position.opp, calls):
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
    .opp.bus.async_fire("test_event3")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 5
     assert calls[4].data["some"] == "is_pos_gt_45 - event - test_event1"

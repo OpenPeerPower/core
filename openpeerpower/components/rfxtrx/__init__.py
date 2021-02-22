@@ -231,7 +231,7 @@ async def async_unload_entry.opp, entry: config_entries.ConfigEntry):
     listener()
 
     rfx_object = opp.data[DOMAIN][DATA_RFXOBJECT]
-    await.opp.async_add_executor_job(rfx_object.close_connection)
+    await opp.async_add_executor_job(rfx_object.close_connection)
 
    .opp.data.pop(DOMAIN)
 
@@ -273,13 +273,13 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
 
     # Initialize library
     async with async_timeout.timeout(30):
-        rfx_object = await.opp.async_add_executor_job(_create_rfx, config)
+        rfx_object = await opp.async_add_executor_job(_create_rfx, config)
 
     # Setup some per device config
     devices = _get_device_lookup(config[CONF_DEVICES])
 
     device_registry: DeviceRegistry = (
-        await.opp.helpers.device_registry.async_get_registry()
+        await opp.helpers.device_registry.async_get_registry()
     )
 
     # Declare the Handle event

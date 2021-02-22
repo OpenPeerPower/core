@@ -154,7 +154,7 @@ class AfterShipSensor(Entity):
     async def _force_update(self):
         """Force update of data."""
         await self.async_update(no_throttle=True)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     async def async_update(self, **kwargs):

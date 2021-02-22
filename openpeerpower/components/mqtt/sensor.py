@@ -142,7 +142,7 @@ class MqttSensor(MqttEntity, Entity):
                     payload, self._state
                 )
             self._state = payload
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self._sub_state = await subscription.async_subscribe_topics(
             self.opp,
@@ -161,7 +161,7 @@ class MqttSensor(MqttEntity, Entity):
         """Triggered when value is expired."""
         self._expiration_trigger = None
         self._expired = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def name(self):

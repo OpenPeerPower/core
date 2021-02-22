@@ -14,7 +14,7 @@ from openpeerpower.components.media_player.const import (
 )
 import openpeerpower.components.tts as tts
 from openpeerpower.components.tts import _get_cache_files
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import HTTP_NOT_FOUND
 from openpeerpower.setup import async_setup_component
 
@@ -87,7 +87,7 @@ def mutagen_mock():
 @pytest.fixture(autouse=True)
 async def internal_url_mock.opp):
     """Mock internal URL of the instance."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
@@ -124,7 +124,7 @@ async def test_setup_component_and_test_service.opp, empty_cache_dir):
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -140,7 +140,7 @@ async def test_setup_component_and_test_service.opp, empty_cache_dir):
         calls[0].data[ATTR_MEDIA_CONTENT_ID]
         == "http://example.local:8123/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
     ).is_file()
@@ -157,7 +157,7 @@ async def test_setup_component_and_test_service_with_config_language(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -172,7 +172,7 @@ async def test_setup_component_and_test_service_with_config_language(
         calls[0].data[ATTR_MEDIA_CONTENT_ID]
         == "http://example.local:8123/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_de_-_demo.mp3"
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_de_-_demo.mp3"
     ).is_file()
@@ -192,7 +192,7 @@ async def test_setup_component_and_test_service_with_config_language_special(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -207,7 +207,7 @@ async def test_setup_component_and_test_service_with_config_language_special(
         calls[0].data[ATTR_MEDIA_CONTENT_ID]
         == "http://example.local:8123/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_en-us_-_demo.mp3"
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_en-us_-_demo.mp3"
     ).is_file()
@@ -232,7 +232,7 @@ async def test_setup_component_and_test_service_with_service_language(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -248,7 +248,7 @@ async def test_setup_component_and_test_service_with_service_language(
         calls[0].data[ATTR_MEDIA_CONTENT_ID]
         == "http://example.local:8123/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_de_-_demo.mp3"
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_de_-_demo.mp3"
     ).is_file()
@@ -265,7 +265,7 @@ async def test_setup_component_test_service_with_wrong_service_language(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -276,7 +276,7 @@ async def test_setup_component_test_service_with_wrong_service_language(
         blocking=True,
     )
     assert len(calls) == 0
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_lang_-_demo.mp3"
     ).is_file()
@@ -293,7 +293,7 @@ async def test_setup_component_and_test_service_with_service_options(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -312,7 +312,7 @@ async def test_setup_component_and_test_service_with_service_options(
         calls[0].data[ATTR_MEDIA_CONTENT_ID]
         == f"http://example.local:8123/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_de_{opt_hash}_demo.mp3"
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert (
         empty_cache_dir
         / f"42f18378fd4393d18c8dd11d03fa9563c1e54491_de_{opt_hash}_demo.mp3"
@@ -331,7 +331,7 @@ async def test_setup_component_and_test_with_service_options_def.opp, empty_cach
     ):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             tts.DOMAIN,
             "demo_say",
             {
@@ -349,7 +349,7 @@ async def test_setup_component_and_test_with_service_options_def.opp, empty_cach
             calls[0].data[ATTR_MEDIA_CONTENT_ID]
             == f"http://example.local:8123/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_de_{opt_hash}_demo.mp3"
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert (
             empty_cache_dir
             / f"42f18378fd4393d18c8dd11d03fa9563c1e54491_de_{opt_hash}_demo.mp3"
@@ -367,7 +367,7 @@ async def test_setup_component_and_test_service_with_service_options_wrong(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -381,7 +381,7 @@ async def test_setup_component_and_test_service_with_service_options_wrong(
     opt_hash = tts._hash_options({"speed": 1})
 
     assert len(calls) == 0
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not (
         empty_cache_dir
         / f"42f18378fd4393d18c8dd11d03fa9563c1e54491_de_{opt_hash}_demo.mp3"
@@ -397,7 +397,7 @@ async def test_setup_component_and_test_service_with_base_url_set.opp):
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -424,7 +424,7 @@ async def test_setup_component_and_test_service_clear_cache.opp, empty_cache_dir
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -434,18 +434,18 @@ async def test_setup_component_and_test_service_clear_cache.opp, empty_cache_dir
         blocking=True,
     )
     # To make sure the file is persisted
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
     ).is_file()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN, tts.SERVICE_CLEAR_CACHE, {}, blocking=True
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
     ).is_file()
@@ -462,9 +462,9 @@ async def test_setup_component_and_test_service_with_receive_voice(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    client = await.opp_client()
+    client = await opp_client()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -500,9 +500,9 @@ async def test_setup_component_and_test_service_with_receive_voice_german(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    client = await.opp_client()
+    client = await opp_client()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -533,7 +533,7 @@ async def test_setup_component_and_web_view_wrong_file.opp, opp_client):
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    client = await.opp_client()
+    client = await opp_client()
 
     url = "/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
 
@@ -548,7 +548,7 @@ async def test_setup_component_and_web_view_wrong_filename.opp, opp_client):
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    client = await.opp_client()
+    client = await opp_client()
 
     url = "/api/tts_proxy/265944dsk32c1b2a621be5930510bb2cd_en_-_demo.mp3"
 
@@ -565,7 +565,7 @@ async def test_setup_component_test_without_cache.opp, empty_cache_dir):
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -575,7 +575,7 @@ async def test_setup_component_test_without_cache.opp, empty_cache_dir):
         blocking=True,
     )
     assert len(calls) == 1
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
     ).is_file()
@@ -592,7 +592,7 @@ async def test_setup_component_test_with_cache_call_service_without_cache(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         tts.DOMAIN,
         "demo_say",
         {
@@ -603,7 +603,7 @@ async def test_setup_component_test_with_cache_call_service_without_cache(
         blocking=True,
     )
     assert len(calls) == 1
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not (
         empty_cache_dir / "42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
     ).is_file()
@@ -632,7 +632,7 @@ async def test_setup_component_test_with_cache_dir(
         "openpeerpower.components.demo.tts.DemoProvider.get_tts_audio",
         return_value=(None, None),
     ):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             tts.DOMAIN,
             "demo_say",
             {
@@ -676,7 +676,7 @@ async def test_setup_component_load_cache_retrieve_without_mem_cache(
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component.opp, tts.DOMAIN, config)
 
-    client = await.opp_client()
+    client = await opp_client()
 
     url = "/api/tts_proxy/42f18378fd4393d18c8dd11d03fa9563c1e54491_en_-_demo.mp3"
 
@@ -691,7 +691,7 @@ async def test_setup_component_and_web_get_url.opp, opp_client):
 
     await async_setup_component.opp, tts.DOMAIN, config)
 
-    client = await.opp_client()
+    client = await opp_client()
 
     url = "/api/tts_get_url"
     data = {"platform": "demo", "message": "There is someone at the door."}
@@ -711,7 +711,7 @@ async def test_setup_component_and_web_get_url_bad_config(opp, opp_client):
 
     await async_setup_component.opp, tts.DOMAIN, config)
 
-    client = await.opp_client()
+    client = await opp_client()
 
     url = "/api/tts_get_url"
     data = {"message": "There is someone at the door."}

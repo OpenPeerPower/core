@@ -320,13 +320,13 @@ class ZhaNumber(ZhaEntity, NumberEntity):
     @callback
     def async_set_state(self, attr_id, attr_name, value):
         """Handle value update from channel."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_value(self, value):
         """Update the current value from HA."""
         num_value = float(value)
         if await self._analog_output_channel.async_set_present_value(num_value):
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_update(self):
         """Attempt to retrieve the state of the entity."""

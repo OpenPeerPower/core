@@ -159,7 +159,7 @@ class IQVIAEntity(CoordinatorEntity):
             return
 
         self.update_from_latest_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Register callbacks."""

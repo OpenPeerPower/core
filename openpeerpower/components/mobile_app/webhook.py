@@ -217,7 +217,7 @@ async def handle_webhook(
 async def webhook_call_service.opp, config_entry, data):
     """Handle a call service webhook."""
     try:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             data[ATTR_DOMAIN],
             data[ATTR_SERVICE],
             data[ATTR_SERVICE_DATA],
@@ -272,7 +272,7 @@ async def webhook_stream_camera.opp, config_entry, data):
 
     if camera.attributes[ATTR_SUPPORTED_FEATURES] & CAMERA_SUPPORT_STREAM:
         try:
-            resp["hls_path"] = await.opp.components.camera.async_request_stream(
+            resp["hls_path"] = await opp.components.camera.async_request_stream(
                 camera.entity_id, "hls"
             )
         except OpenPeerPowerError:
@@ -354,7 +354,7 @@ async def webhook_update_registration.opp, config_entry, data):
 
    .opp.config_entries.async_update_entry(config_entry, data=new_registration)
 
-    await.opp_notify.async_reload.opp, DOMAIN)
+    await opp_notify.async_reload.opp, DOMAIN)
 
     return webhook_response(
         safe_registration(new_registration),

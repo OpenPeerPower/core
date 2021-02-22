@@ -123,8 +123,8 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
         "openpeerpower.components.hyperion.client.HyperionClient",
         side_effect=[master_client, entity_client, entity_client],
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is not None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -150,7 +150,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 ],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -174,7 +174,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 const.KEY_DATA: [TEST_INSTANCE_2, TEST_INSTANCE_3],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -198,7 +198,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 ],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -215,7 +215,7 @@ async def test_setup_config_entry_dynamic_instances.opp: OpenPeerPowerType) -> N
                 const.KEY_DATA: [TEST_INSTANCE_1, TEST_INSTANCE_2, TEST_INSTANCE_3],
             }
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get(TEST_ENTITY_ID_1) is not None
     assert.opp.states.get(TEST_ENTITY_ID_2) is not None
@@ -250,7 +250,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
 
     # On (=), 100% (=), solid (=), [255,255,255] (=)
     client.async_send_set_color = AsyncMock(return_value=True)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: TEST_ENTITY_ID_1}, blocking=True
     )
 
@@ -268,7 +268,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     client.async_send_set_color = AsyncMock(return_value=True)
     client.async_send_set_adjustment = AsyncMock(return_value=True)
     client.adjustment = [{const.KEY_ID: TEST_ID}]
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_BRIGHTNESS: brightness},
@@ -289,7 +289,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     # Simulate a false return of async_send_set_adjustment
     client.async_send_set_adjustment = AsyncMock(return_value=False)
     client.adjustment = [{const.KEY_ID: TEST_ID}]
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_BRIGHTNESS: brightness},
@@ -307,7 +307,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     # On (=), 50% (=), solid (=), [0,255,255] (!)
     hs_color = (180.0, 100.0)
     client.async_send_set_color = AsyncMock(return_value=True)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_HS_COLOR: hs_color},
@@ -340,7 +340,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     client.async_send_set_adjustment = AsyncMock(return_value=True)
     client.adjustment = [{const.KEY_ID: TEST_ID}]
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_BRIGHTNESS: brightness},
@@ -367,7 +367,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     effect = const.KEY_COMPONENTID_EXTERNAL_SOURCES[2]  # V4L
     client.async_send_clear = AsyncMock(return_value=True)
     client.async_send_set_component = AsyncMock(return_value=True)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_EFFECT: effect},
@@ -415,7 +415,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     client.async_send_clear = AsyncMock(return_value=True)
     client.async_send_set_effect = AsyncMock(return_value=True)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_EFFECT: effect},
@@ -446,7 +446,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     # Ensure changing the color will move the effect to 'Solid' automatically.
     hs_color = (240.0, 100.0)
     client.async_send_set_color = AsyncMock(return_value=True)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_HS_COLOR: hs_color},
@@ -478,7 +478,7 @@ async def test_light_async_turn_on.opp: OpenPeerPowerType) -> None:
     client.async_send_clear = AsyncMock(return_value=True)
     client.async_send_set_effect = AsyncMock(return_value=True)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: TEST_ENTITY_ID_1}, blocking=True
     )
 
@@ -494,7 +494,7 @@ async def test_light_async_turn_on_error_conditions.opp: OpenPeerPowerType) -> N
     await setup_test_config_entry.opp, hyperion_client=client)
 
     # On (=), 100% (=), solid (=), [255,255,255] (=)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: TEST_ENTITY_ID_1}, blocking=True
     )
 
@@ -514,7 +514,7 @@ async def test_light_async_turn_off_error_conditions.opp: OpenPeerPowerType) -> 
     client.async_send_set_component = AsyncMock(return_value=False)
     await setup_test_config_entry.opp, hyperion_client=client)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1},
@@ -537,7 +537,7 @@ async def test_light_async_turn_off.opp: OpenPeerPowerType) -> None:
     await setup_test_config_entry.opp, hyperion_client=client)
 
     client.async_send_set_component = AsyncMock(return_value=True)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1},
@@ -563,7 +563,7 @@ async def test_light_async_turn_off.opp: OpenPeerPowerType) -> None:
     client.async_send_set_component = AsyncMock(return_value=True)
     call_registered_callback(client, "client-update", {"loaded-state": False})
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1},
@@ -721,7 +721,7 @@ async def test_unload_entry.opp: OpenPeerPowerType) -> None:
     entry = _get_config_entry_from_unique_id.opp, TEST_SYSINFO_ID)
     assert entry
 
-    await.opp.config_entries.async_unload(entry.entry_id)
+    await opp.config_entries.async_unload(entry.entry_id)
     assert client.async_client_disconnect.call_count == 2
 
 
@@ -752,7 +752,7 @@ async def test_setup_entry_no_token_reauth.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
-        assert not await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert not await opp.config_entries.async_setup(config_entry.entry_id)
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
             DOMAIN,
@@ -776,7 +776,7 @@ async def test_setup_entry_bad_token_reauth.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
-        assert not await.opp.config_entries.async_setup(config_entry.entry_id)
+        assert not await opp.config_entries.async_setup(config_entry.entry_id)
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
             DOMAIN,
@@ -970,7 +970,7 @@ async def test_priority_light_async_updates_off_sets_black(
     client.async_send_clear = AsyncMock(return_value=True)
     client.async_send_set_color = AsyncMock(return_value=True)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: TEST_PRIORITY_LIGHT_ENTITY_ID_1},
@@ -1024,7 +1024,7 @@ async def test_priority_light_prior_color_preserved_after_black(
     hs_color = (240.0, 100.0)
     rgb_color = (0, 0, 255)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_PRIORITY_LIGHT_ENTITY_ID_1, ATTR_HS_COLOR: hs_color},
@@ -1054,7 +1054,7 @@ async def test_priority_light_prior_color_preserved_after_black(
     assert entity_state.attributes["hs_color"] == hs_color
 
     # Then turn it off.
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: TEST_PRIORITY_LIGHT_ENTITY_ID_1},
@@ -1084,7 +1084,7 @@ async def test_priority_light_prior_color_preserved_after_black(
 
     # Then turn it back on and ensure it's still green.
     # On (=), 100% (=), solid (=), [0,0,255] (=)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: TEST_PRIORITY_LIGHT_ENTITY_ID_1},

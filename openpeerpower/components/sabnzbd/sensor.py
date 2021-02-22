@@ -68,4 +68,4 @@ class SabnzbdSensor(Entity):
         elif "size" in self._type:
             self._state = round(float(self._state), 2)
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

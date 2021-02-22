@@ -55,7 +55,7 @@ async def async_setup_opp, config):
 
     async def update_slides(now=None):
         """Update slide information."""
-        result = await.opp.data[DOMAIN][API].slides_overview()
+        result = await opp.data[DOMAIN][API].slides_overview()
 
         if result is None:
             _LOGGER.error("Slide API does not work or returned an error")
@@ -148,7 +148,7 @@ async def async_setup_opp, config):
    .opp.data[DOMAIN][API] = GoSlideCloud(username, password)
 
     try:
-        result = await.opp.data[DOMAIN][API].login()
+        result = await opp.data[DOMAIN][API].login()
     except (goslideapi.ClientConnectionError, goslideapi.ClientTimeoutError) as err:
         _LOGGER.error(
             "Error connecting to Slide Cloud: %s, going to retry in %s second(s)",

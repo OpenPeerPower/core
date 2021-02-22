@@ -178,7 +178,7 @@ async def test_sensor(
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     await async_enable_traffic.opp, [zha_device], enabled=False)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     # ensure the sensor entity was created
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
@@ -211,10 +211,10 @@ def.opp_ms.opp):
     """Hass instance with measurement system."""
 
     async def .opp_ms(meas_sys):
-        await config_util.async_process_ha_core_config(
+        await config_util.async_process_op_core_config(
            .opp, {CONF_UNIT_SYSTEM: meas_sys}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         return.opp
 
     return .opp_ms
@@ -277,7 +277,7 @@ async def test_temp_uom(
     if restore:
         core_rs(entity_id, uom, state=(expected - 2))
 
-    opp =await.opp_ms(
+    opp =await opp_ms(
         CONF_UNIT_SYSTEM_METRIC if uom == TEMP_CELSIUS else CONF_UNIT_SYSTEM_IMPERIAL
     )
 
@@ -309,7 +309,7 @@ async def test_temp_uom(
         assert.opp.states.get(entity_id).state == STATE_UNKNOWN
 
     await send_attribute_report.opp, cluster, 0, raw_temp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state is not None
     assert round(float(state.state)) == expected

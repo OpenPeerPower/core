@@ -16,7 +16,7 @@ async def test_rainmachine_pro_8_setup_opp):
     accessories = await setup_accessories_from_file.opp, "rainmachine-pro-8.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Assert that the entity is correctly added to the entity registry
     entry = entity_registry.async_get("switch.rainmachine_00ce4a")
@@ -30,7 +30,7 @@ async def test_rainmachine_pro_8_setup_opp):
     # Assert that the friendly name is detected correctly
     assert state.attributes["friendly_name"] == "RainMachine-00ce4a"
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(entry.device_id)
     assert device.manufacturer == "Green Electronics LLC"

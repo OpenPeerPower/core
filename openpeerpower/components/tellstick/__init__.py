@@ -208,7 +208,7 @@ class TellstickDevice(Entity):
         """Return true if the device is on."""
         return self._state
 
-    def _parse_ha_data(self, kwargs):
+    def _parse_op_data(self, kwargs):
         """Turn the value from HA into something useful."""
         raise NotImplementedError
 
@@ -253,11 +253,11 @@ class TellstickDevice(Entity):
             # Sooner or later this will propagate to the model from the
             # callback, but for a fluid UI experience update it directly.
             self._update_model(new_state, data)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def turn_on(self, **kwargs):
         """Turn the switch on."""
-        self._change_device_state(True, self._parse_ha_data(kwargs))
+        self._change_device_state(True, self._parse_op_data(kwargs))
 
     def turn_off(self, **kwargs):
         """Turn the switch off."""
@@ -281,7 +281,7 @@ class TellstickDevice(Entity):
             return
 
         self._update_model_from_command(tellcore_command, tellcore_data)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
         # This is a benign race on _repeats_left -- it's checked with the lock
         # in _send_repeated_command.

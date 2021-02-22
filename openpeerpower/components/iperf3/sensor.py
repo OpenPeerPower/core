@@ -94,4 +94,4 @@ class Iperf3Sensor(RestoreEntity):
     @callback
     def _schedule_immediate_update(self, host):
         if host == self._iperf3_data.host:
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)

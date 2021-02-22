@@ -230,7 +230,7 @@ class ModbusThermostat(ClimateEntity):
             self._current_temperature_register_type, self._current_temperature_register
         )
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _read_register(self, register_type, register) -> Optional[float]:
         """Read register using the Modbus hub slave."""

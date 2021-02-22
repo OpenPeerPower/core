@@ -78,7 +78,7 @@ class VelbusClimate(VelbusEntity, ClimateEntity):
         except VelbusException as err:
             _LOGGER.error("A Velbus error occurred: %s", err)
             return
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""

@@ -152,7 +152,7 @@ class TadoDeviceBinarySensor(TadoDeviceEntity, BinarySensorEntity):
     def _async_update_callback(self):
         """Update and write state."""
         self._async_update_device_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_update_device_data(self):
@@ -233,7 +233,7 @@ class TadoZoneBinarySensor(TadoZoneEntity, BinarySensorEntity):
     def _async_update_callback(self):
         """Update and write state."""
         self._async_update_zone_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_update_zone_data(self):

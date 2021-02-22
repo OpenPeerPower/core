@@ -31,7 +31,7 @@ async def test_sensor_platform.opp, aioclient_mock):
     )
     await add_mock_config(opp)
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert len(aioclient_mock.mock_calls) == 1
 
@@ -46,7 +46,7 @@ async def test_sensor_platform.opp, aioclient_mock):
     assert entry.unique_id == "uniqueid-ac1-timetoOn"
 
     value = 20
-    await.opp.services.async_call(
+    await opp.services.async_call(
         ADVANTAGE_AIR_DOMAIN,
         ADVANTAGE_AIR_SERVICE_SET_TIME_TO,
         {ATTR_ENTITY_ID: [entity_id], ADVANTAGE_AIR_SET_COUNTDOWN_VALUE: value},
@@ -71,7 +71,7 @@ async def test_sensor_platform.opp, aioclient_mock):
     assert entry.unique_id == "uniqueid-ac1-timetoOff"
 
     value = 0
-    await.opp.services.async_call(
+    await opp.services.async_call(
         ADVANTAGE_AIR_DOMAIN,
         ADVANTAGE_AIR_SERVICE_SET_TIME_TO,
         {ATTR_ENTITY_ID: [entity_id], ADVANTAGE_AIR_SET_COUNTDOWN_VALUE: value},

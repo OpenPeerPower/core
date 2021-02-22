@@ -132,7 +132,7 @@ class HistoryStatsSensor(Entity):
             @callback
             def force_refresh(*args):
                 """Force the component to refresh."""
-                self.async_schedule_update_ha_state(True)
+                self.async_schedule_update_op_state(True)
 
             force_refresh()
             self.async_on_remove(

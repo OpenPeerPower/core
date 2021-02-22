@@ -99,19 +99,19 @@ class DemoWaterHeater(WaterHeaterEntity):
     def set_temperature(self, **kwargs):
         """Set new target temperatures."""
         self._target_temperature = kwargs.get(ATTR_TEMPERATURE)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_operation_mode(self, operation_mode):
         """Set new operation mode."""
         self._current_operation = operation_mode
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_away_mode_on(self):
         """Turn away mode on."""
         self._away = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_away_mode_off(self):
         """Turn away mode off."""
         self._away = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

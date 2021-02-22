@@ -79,7 +79,7 @@ async def test_bridge_import_flow.opp):
     ) as create_tls:
         create_tls.return_value = MockBridge(can_connect=True)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_mock_data,
@@ -88,7 +88,7 @@ async def test_bridge_import_flow.opp):
     assert result["type"] == "create_entry"
     assert result["title"] == CasetaConfigFlow.ENTRY_DEFAULT_TITLE
     assert result["data"] == entry_mock_data
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -105,7 +105,7 @@ async def test_bridge_cannot_connect.opp):
     with patch.object(Smartbridge, "create_tls") as create_tls:
         create_tls.return_value = MockBridge(can_connect=False)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_mock_data,
@@ -115,7 +115,7 @@ async def test_bridge_cannot_connect.opp):
     assert result["step_id"] == STEP_IMPORT_FAILED
     assert result["errors"] == {"base": ERROR_CANNOT_CONNECT}
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == CasetaConfigFlow.ABORT_REASON_CANNOT_CONNECT
@@ -128,7 +128,7 @@ async def test_bridge_cannot_connect_unknown_error(opp):
         mock_bridge = MockBridge()
         mock_bridge.connect = AsyncMock(side_effect=asyncio.TimeoutError)
         create_tls.return_value = mock_bridge
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=EMPTY_MOCK_CONFIG_ENTRY,
@@ -138,7 +138,7 @@ async def test_bridge_cannot_connect_unknown_error(opp):
     assert result["step_id"] == STEP_IMPORT_FAILED
     assert result["errors"] == {"base": ERROR_CANNOT_CONNECT}
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == CasetaConfigFlow.ABORT_REASON_CANNOT_CONNECT
@@ -148,7 +148,7 @@ async def test_bridge_invalid_ssl_error(opp):
     """Test checking for connection and encountering invalid ssl certs."""
 
     with patch.object(Smartbridge, "create_tls", side_effect=ssl.SSLError):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=EMPTY_MOCK_CONFIG_ENTRY,
@@ -158,7 +158,7 @@ async def test_bridge_invalid_ssl_error(opp):
     assert result["step_id"] == STEP_IMPORT_FAILED
     assert result["errors"] == {"base": ERROR_CANNOT_CONNECT}
 
-    result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == CasetaConfigFlow.ABORT_REASON_CANNOT_CONNECT
@@ -181,7 +181,7 @@ async def test_duplicate_bridge_import.opp):
         return_value=True,
     ) as mock_setup_entry:
         # Mock entry added, try initializing flow with duplicate host
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=entry_mock_data,
@@ -199,7 +199,7 @@ async def test_already_configured_with_ignored.opp):
     config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={
@@ -215,24 +215,24 @@ async def test_already_configured_with_ignored.opp):
 async def test_form_user.opp, tmpdir):
     """Test we get the form and can pair."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-   .opp.config.config_dir = await.opp.async_add_executor_job(
+   .opp.config.config_dir = await opp.async_add_executor_job(
         tmpdir.mkdir, "tls_assets"
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {
             CONF_HOST: "1.1.1.1",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result2["type"] == "form"
     assert result2["step_id"] == "link"
 
@@ -245,11 +245,11 @@ async def test_form_user.opp, tmpdir):
         "openpeerpower.components.lutron_caseta.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "1.1.1.1"
@@ -266,24 +266,24 @@ async def test_form_user.opp, tmpdir):
 async def test_form_user_pairing_fails.opp, tmpdir):
     """Test we get the form and we handle pairing failure."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-   .opp.config.config_dir = await.opp.async_add_executor_job(
+   .opp.config.config_dir = await opp.async_add_executor_job(
         tmpdir.mkdir, "tls_assets"
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {
             CONF_HOST: "1.1.1.1",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result2["type"] == "form"
     assert result2["step_id"] == "link"
 
@@ -296,11 +296,11 @@ async def test_form_user_pairing_fails.opp, tmpdir):
         "openpeerpower.components.lutron_caseta.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "form"
     assert result3["errors"] == {"base": "cannot_connect"}
@@ -311,24 +311,24 @@ async def test_form_user_pairing_fails.opp, tmpdir):
 async def test_form_user_reuses_existing_assets_when_pairing_again.opp, tmpdir):
     """Test the tls assets saved on disk are reused when pairing again."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-   .opp.config.config_dir = await.opp.async_add_executor_job(
+   .opp.config.config_dir = await opp.async_add_executor_job(
         tmpdir.mkdir, "tls_assets"
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] is None
     assert result["step_id"] == "user"
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {
             CONF_HOST: "1.1.1.1",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert result2["type"] == "form"
     assert result2["step_id"] == "link"
 
@@ -341,11 +341,11 @@ async def test_form_user_reuses_existing_assets_when_pairing_again.opp, tmpdir):
         "openpeerpower.components.lutron_caseta.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "1.1.1.1"
@@ -361,12 +361,12 @@ async def test_form_user_reuses_existing_assets_when_pairing_again.opp, tmpdir):
     with patch(
         "openpeerpower.components.lutron_caseta.async_unload_entry", return_value=True
     ) as mock_unload:
-        await.opp.config_entries.async_remove(result3["result"].entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_remove(result3["result"].entry_id)
+        await opp.async_block_till_done()
 
     assert len(mock_unload.mock_calls) == 1
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -375,13 +375,13 @@ async def test_form_user_reuses_existing_assets_when_pairing_again.opp, tmpdir):
 
     with patch.object(Smartbridge, "create_tls") as create_tls:
         create_tls.return_value = MockBridge(can_connect=True)
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_HOST: "1.1.1.1",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "form"
     assert result2["step_id"] == "link"
@@ -392,11 +392,11 @@ async def test_form_user_reuses_existing_assets_when_pairing_again.opp, tmpdir):
         "openpeerpower.components.lutron_caseta.async_setup_entry",
         return_value=True,
     ):
-        result3 = await.opp.config_entries.flow.async_configure(
+        result3 = await opp.config_entries.flow.async_configure(
             result2["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result3["type"] == "create_entry"
     assert result3["title"] == "1.1.1.1"
@@ -411,7 +411,7 @@ async def test_form_user_reuses_existing_assets_when_pairing_again.opp, tmpdir):
 async def test_zeroconf_host_already_configured.opp, tmpdir):
     """Test starting a flow from discovery when the host is already configured."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-   .opp.config.config_dir = await.opp.async_add_executor_job(
+   .opp.config.config_dir = await opp.async_add_executor_job(
         tmpdir.mkdir, "tls_assets"
     )
 
@@ -419,7 +419,7 @@ async def test_zeroconf_host_already_configured.opp, tmpdir):
 
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -427,7 +427,7 @@ async def test_zeroconf_host_already_configured.opp, tmpdir):
             ATTR_HOSTNAME: "lutron-abc.local.",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -443,7 +443,7 @@ async def test_zeroconf_lutron_id_already_configured.opp):
 
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -451,7 +451,7 @@ async def test_zeroconf_lutron_id_already_configured.opp):
             ATTR_HOSTNAME: "lutron-abc.local.",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -462,7 +462,7 @@ async def test_zeroconf_not_lutron_device.opp):
     """Test starting a flow from discovery when it is not a lutron device."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -470,7 +470,7 @@ async def test_zeroconf_not_lutron_device.opp):
             ATTR_HOSTNAME: "notlutron-abc.local.",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "not_lutron_device"
@@ -482,11 +482,11 @@ async def test_zeroconf_not_lutron_device.opp):
 async def test_zeroconf.opp, source, tmpdir):
     """Test starting a flow from discovery."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-   .opp.config.config_dir = await.opp.async_add_executor_job(
+   .opp.config.config_dir = await opp.async_add_executor_job(
         tmpdir.mkdir, "tls_assets"
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": source},
         data={
@@ -494,7 +494,7 @@ async def test_zeroconf.opp, source, tmpdir):
             ATTR_HOSTNAME: "lutron-abc.local.",
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == "form"
     assert result["step_id"] == "link"
@@ -508,11 +508,11 @@ async def test_zeroconf.opp, source, tmpdir):
         "openpeerpower.components.lutron_caseta.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "abc"

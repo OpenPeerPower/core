@@ -225,7 +225,7 @@ class BroadlinkRemote(RemoteEntity, RestoreEntity):
         self._state = state is None or state.state != STATE_OFF
 
         self.async_on_remove(
-            self._coordinator.async_add_listener(self.async_write_ha_state)
+            self._coordinator.async_add_listener(self.async_write_op_state)
         )
 
     async def async_update(self):
@@ -235,12 +235,12 @@ class BroadlinkRemote(RemoteEntity, RestoreEntity):
     async def async_turn_on(self, **kwargs):
         """Turn on the remote."""
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn off the remote."""
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_load_storage_files(self):
         """Load codes and toggle flags from storage files."""

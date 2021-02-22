@@ -101,7 +101,7 @@ class EgardiaAlarm(alarm.AlarmControlPanelEntity):
         if statuscode is not None:
             status = self.lookupstatusfromcode(statuscode)
             self.parsestatus(status)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def lookupstatusfromcode(self, statuscode):
         """Look at the rs_codes and returns the status from the code."""

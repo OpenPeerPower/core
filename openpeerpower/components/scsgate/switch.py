@@ -117,7 +117,7 @@ class SCSGateSwitch(SwitchEntity):
         self._scsgate.append_task(ToggleStatusTask(target=self._scs_id, toggled=True))
 
         self._toggled = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
@@ -125,7 +125,7 @@ class SCSGateSwitch(SwitchEntity):
         self._scsgate.append_task(ToggleStatusTask(target=self._scs_id, toggled=False))
 
         self._toggled = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def process_event(self, message):
         """Handle a SCSGate message related with this switch."""
@@ -139,7 +139,7 @@ class SCSGateSwitch(SwitchEntity):
             return
 
         self._toggled = message.toggled
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
         command = "off"
         if self._toggled:

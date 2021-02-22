@@ -21,7 +21,7 @@ async def test_lennox_e30_setup_opp):
     accessories = await setup_accessories_from_file.opp, "lennox_e30.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     climate = entity_registry.async_get("climate.lennox")
     assert climate.unique_id == "homekit-XXXXXXXX-100"
@@ -35,7 +35,7 @@ async def test_lennox_e30_setup_opp):
         SUPPORT_TARGET_TEMPERATURE | SUPPORT_TARGET_TEMPERATURE_RANGE
     )
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(climate.device_id)
     assert device.manufacturer == "Lennox"

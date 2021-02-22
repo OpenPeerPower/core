@@ -28,7 +28,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 51
 
     # Test turning on
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY},
@@ -85,7 +85,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     assert state.attributes[ATTR_COLOR_TEMP] == 370
 
     # Test turning on with same brightness
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_BRIGHTNESS: 255},
@@ -97,7 +97,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with brightness
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_BRIGHTNESS: 129},
@@ -129,7 +129,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with rgb color
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_RGB_COLOR: (255, 76, 255)},
@@ -233,7 +233,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with same rgb color
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_RGB_COLOR: (255, 76, 255)},
@@ -245,7 +245,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with color temp
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_COLOR_TEMP: 170},
@@ -353,7 +353,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     assert state.attributes[ATTR_RGB_COLOR] == (255, 255, 255)
 
     # Test turning on with same color temp
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_COLOR_TEMP: 170},
@@ -365,7 +365,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning off
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_off",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY},

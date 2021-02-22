@@ -86,7 +86,7 @@ class MqttScene(
         config = PLATFORM_SCHEMA(discovery_payload)
         self._setup_from_config(config)
         await self.availability_discovery_update(config)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _setup_from_config(self, config):
         """(Re)Setup the entity."""

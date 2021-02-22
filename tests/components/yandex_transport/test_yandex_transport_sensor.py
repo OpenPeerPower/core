@@ -51,7 +51,7 @@ async def assert_setup_sensor.opp, config, count=1):
     """Set up the sensor and assert it's been created."""
     with assert_setup_component(count):
         assert await async_setup_component.opp, sensor.DOMAIN, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_setup_platform_valid_config(opp, mock_requester):

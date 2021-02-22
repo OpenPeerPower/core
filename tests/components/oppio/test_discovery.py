@@ -42,7 +42,7 @@ async def test.oppio_discovery_startup.opp, aioclient_mock, oppio_client):
         return_value={"type": "abort"},
     ) as mock_mqtt:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 2
         assert mock_mqtt.called
@@ -101,9 +101,9 @@ async def test.oppio_discovery_startup_done.opp, aioclient_mock, oppio_client):
         "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step.oppio",
         return_value={"type": "abort"},
     ) as mock_mqtt:
-        await.opp.async_start()
+        await opp.async_start()
         await async_setup_component.opp, .oppio", {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 2
         assert mock_mqtt.called
@@ -148,11 +148,11 @@ async def test.oppio_discovery_webhook.opp, aioclient_mock, oppio_client):
         "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step.oppio",
         return_value={"type": "abort"},
     ) as mock_mqtt:
-        resp = await.oppio_client.post(
+        resp = await oppio_client.post(
             "/api.oppio_push/discovery/testuuid",
             json={"addon": "mosquitto", "service": "mqtt", "uuid": "testuuid"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert resp.status == 200
         assert aioclient_mock.call_count == 2

@@ -85,7 +85,7 @@ async def test_config_flow_manual_host_success.opp):
 
     Host specified.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -93,7 +93,7 @@ async def test_config_flow_manual_host_success.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: TEST_HOST},
     )
@@ -116,7 +116,7 @@ async def test_config_flow_manual_discover_1_success.opp):
 
     Without the host specified and 1 receiver discovered.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -128,7 +128,7 @@ async def test_config_flow_manual_discover_1_success.opp):
         "openpeerpower.components.denonavr.config_flow.denonavr.ssdp.identify_denonavr_receivers",
         return_value=TEST_DISCOVER_1_RECEIVER,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
@@ -151,7 +151,7 @@ async def test_config_flow_manual_discover_2_success.opp):
 
     Without the host specified and 2 receiver discovered.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -163,7 +163,7 @@ async def test_config_flow_manual_discover_2_success.opp):
         "openpeerpower.components.denonavr.config_flow.denonavr.ssdp.identify_denonavr_receivers",
         return_value=TEST_DISCOVER_2_RECEIVER,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
@@ -172,7 +172,7 @@ async def test_config_flow_manual_discover_2_success.opp):
     assert result["step_id"] == "select"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"select_host": TEST_HOST2},
     )
@@ -195,7 +195,7 @@ async def test_config_flow_manual_discover_error(opp):
 
     Without the host specified and no receiver discovered.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -207,7 +207,7 @@ async def test_config_flow_manual_discover_error(opp):
         "openpeerpower.components.denonavr.config_flow.denonavr.ssdp.identify_denonavr_receivers",
         return_value=[],
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
@@ -223,7 +223,7 @@ async def test_config_flow_manual_host_no_serial.opp):
 
     Host specified and an error getting the serial number.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -235,7 +235,7 @@ async def test_config_flow_manual_host_no_serial.opp):
         "openpeerpower.components.denonavr.receiver.denonavr.DenonAVR.serial_number",
         None,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )
@@ -258,7 +258,7 @@ async def test_config_flow_manual_host_no_mac.opp):
 
     Host specified and an error getting the mac address.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -270,7 +270,7 @@ async def test_config_flow_manual_host_no_mac.opp):
         "openpeerpower.components.denonavr.config_flow.get_mac_address",
         return_value=None,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )
@@ -293,7 +293,7 @@ async def test_config_flow_manual_host_no_serial_no_mac.opp):
 
     Host specified and an error getting the serial number and mac address.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -308,7 +308,7 @@ async def test_config_flow_manual_host_no_serial_no_mac.opp):
         "openpeerpower.components.denonavr.config_flow.get_mac_address",
         return_value=None,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )
@@ -331,7 +331,7 @@ async def test_config_flow_manual_host_no_serial_no_mac_exception.opp):
 
     Host specified and an error getting the serial number and exception getting mac address.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -346,7 +346,7 @@ async def test_config_flow_manual_host_no_serial_no_mac_exception.opp):
         "openpeerpower.components.denonavr.config_flow.get_mac_address",
         side_effect=OSError,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )
@@ -369,7 +369,7 @@ async def test_config_flow_manual_host_connection_error(opp):
 
     Host specified and a connection error.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -384,7 +384,7 @@ async def test_config_flow_manual_host_connection_error(opp):
         "openpeerpower.components.denonavr.receiver.denonavr.DenonAVR.receiver_type",
         None,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )
@@ -399,7 +399,7 @@ async def test_config_flow_manual_host_no_device_info.opp):
 
     Host specified and no device info (due to receiver power off).
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -411,7 +411,7 @@ async def test_config_flow_manual_host_no_device_info.opp):
         "openpeerpower.components.denonavr.receiver.denonavr.DenonAVR.receiver_type",
         None,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )
@@ -422,7 +422,7 @@ async def test_config_flow_manual_host_no_device_info.opp):
 
 async def test_config_flow_ssdp.opp):
     """Successful flow initialized by ssdp discovery."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -436,7 +436,7 @@ async def test_config_flow_ssdp.opp):
     assert result["type"] == "form"
     assert result["step_id"] == "confirm"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -459,7 +459,7 @@ async def test_config_flow_ssdp_not_denon.opp):
 
     Not supported manufacturer.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -480,7 +480,7 @@ async def test_config_flow_ssdp_missing_info.opp):
 
     Missing information.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -499,7 +499,7 @@ async def test_config_flow_ssdp_ignored_model.opp):
 
     Model in the ignored models list.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -531,15 +531,15 @@ async def test_options_flow.opp):
     )
     config_entry.add_to.opp.opp)
 
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_SHOW_ALL_SOURCES: True, CONF_ZONE2: True, CONF_ZONE3: True},
     )
@@ -558,7 +558,7 @@ async def test_config_flow_manual_host_no_serial_double_config(opp):
 
     Host specified and an error getting the serial number.
     """
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -570,7 +570,7 @@ async def test_config_flow_manual_host_no_serial_double_config(opp):
         "openpeerpower.components.denonavr.receiver.denonavr.DenonAVR.serial_number",
         None,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )
@@ -586,7 +586,7 @@ async def test_config_flow_manual_host_no_serial_double_config(opp):
         CONF_SERIAL_NUMBER: None,
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -598,7 +598,7 @@ async def test_config_flow_manual_host_no_serial_double_config(opp):
         "openpeerpower.components.denonavr.receiver.denonavr.DenonAVR.serial_number",
         None,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST},
         )

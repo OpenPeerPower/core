@@ -88,7 +88,7 @@ class ZHADeviceScannerEntity(ScannerEntity, ZhaEntity):
         self.debug("battery_percentage_remaining updated: %s", value)
         self._connected = True
         self._battery_level = Battery.formatter(value)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def battery_level(self):

@@ -46,7 +46,7 @@ class StarlineEntity(Entity):
 
     def update(self):
         """Read new state data."""
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     async def async_added_to.opp(self):
         """Call when entity about to be added to Open Peer Power."""

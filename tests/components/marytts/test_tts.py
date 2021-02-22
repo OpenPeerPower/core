@@ -10,7 +10,7 @@ from openpeerpower.components.media_player.const import (
     SERVICE_PLAY_MEDIA,
 )
 import openpeerpower.components.tts as tts
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.setup import setup_component
 
 from tests.common import assert_setup_component, get_test_open_peer_power, mock_service
@@ -24,7 +24,7 @@ class TestTTSMaryTTSPlatform:
         self opp =get_test_open_peer_power()
 
         asyncio.run_coroutine_threadsafe(
-            async_process_ha_core_config(
+            async_process_op_core_config(
                 self.opp, {"internal_url": "http://example.local:8123"}
             ),
             self.opp.loop,

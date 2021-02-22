@@ -78,7 +78,7 @@ async def async_setup_legacy_entry.opp, entry, async_add_entities):
     """Set up the Nest climate device based on a config entry."""
     temp_unit = opp.config.units.temperature_unit
 
-    thermostats = await.opp.async_add_executor_job.opp.data[DATA_NEST].thermostats)
+    thermostats = await opp.async_add_executor_job.opp.data[DATA_NEST].thermostats)
 
     all_devices = [
         NestThermostat(structure, device, temp_unit)
@@ -149,7 +149,7 @@ class NestThermostat(ClimateEntity):
 
         async def async_update_state():
             """Update device state."""
-            await self.async_update_ha_state(True)
+            await self.async_update_op_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(self.opp, SIGNAL_NEST_UPDATE, async_update_state)
@@ -252,7 +252,7 @@ class NestThermostat(ClimateEntity):
         except APIError as api_error:
             _LOGGER.error("An error occurred while setting temperature: %s", api_error)
             # restore target temperature
-            self.schedule_update_ha_state(True)
+            self.schedule_update_op_state(True)
 
     def set_hvac_mode(self, hvac_mode):
         """Set operation mode."""

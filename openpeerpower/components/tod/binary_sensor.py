@@ -233,7 +233,7 @@ class TodSensor(BinarySensorEntity):
     def _point_in_time_listener(self, now):
         """Run when the state of the sensor should be updated."""
         self._calculate_next_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         event.async_track_point_in_utc_time(
             self.opp, self._point_in_time_listener, self.next_update

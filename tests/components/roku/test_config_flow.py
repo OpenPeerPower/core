@@ -33,7 +33,7 @@ async def test_duplicate_error(
     mock_connection(aioclient_mock)
 
     user_input = {CONF_HOST: HOST}
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}, data=user_input
     )
 
@@ -41,7 +41,7 @@ async def test_duplicate_error(
     assert result["reason"] == "already_configured"
 
     user_input = {CONF_HOST: HOST}
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}, data=user_input
     )
 
@@ -49,7 +49,7 @@ async def test_duplicate_error(
     assert result["reason"] == "already_configured"
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -64,7 +64,7 @@ async def test_form(
     await async_setup_component.opp, "persistent_notification", {})
     mock_connection(aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -77,10 +77,10 @@ async def test_form(
         "openpeerpower.components.roku.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input=user_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == UPNP_FRIENDLY_NAME
@@ -98,11 +98,11 @@ async def test_form_cannot_connect(
     """Test we handle cannot connect roku error."""
     mock_connection(aioclient_mock, error=True)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         flow_id=result["flow_id"], user_input={CONF_HOST: HOST}
     )
 
@@ -112,7 +112,7 @@ async def test_form_cannot_connect(
 
 async def test_form_unknown_error(opp: OpenPeerPowerType) -> None:
     """Test we handle unknown error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
 
@@ -121,14 +121,14 @@ async def test_form_unknown_error(opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.roku.config_flow.Roku.update",
         side_effect=Exception,
     ) as mock_validate_input:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input=user_input
         )
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "unknown"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_validate_input.mock_calls) == 1
 
 
@@ -143,7 +143,7 @@ async def test_homekit_cannot_connect(
     )
 
     discovery_info = MOCK_HOMEKIT_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_HOMEKIT},
         data=discovery_info,
@@ -162,7 +162,7 @@ async def test_homekit_unknown_error(
         "openpeerpower.components.roku.config_flow.Roku.update",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: SOURCE_HOMEKIT},
             data=discovery_info,
@@ -179,7 +179,7 @@ async def test_homekit_discovery(
     mock_connection(aioclient_mock, device="rokutv", host=HOMEKIT_HOST)
 
     discovery_info = MOCK_HOMEKIT_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_HOMEKIT}, data=discovery_info
     )
 
@@ -193,10 +193,10 @@ async def test_homekit_discovery(
         "openpeerpower.components.roku.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == NAME_ROKUTV
@@ -210,7 +210,7 @@ async def test_homekit_discovery(
 
     # test abort on existing host
     discovery_info = MOCK_HOMEKIT_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_HOMEKIT}, data=discovery_info
     )
 
@@ -225,7 +225,7 @@ async def test_ssdp_cannot_connect(
     mock_connection(aioclient_mock, error=True)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=discovery_info,
@@ -244,7 +244,7 @@ async def test_ssdp_unknown_error(
         "openpeerpower.components.roku.config_flow.Roku.update",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: SOURCE_SSDP},
             data=discovery_info,
@@ -261,7 +261,7 @@ async def test_ssdp_discovery(
     mock_connection(aioclient_mock)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -275,10 +275,10 @@ async def test_ssdp_discovery(
         "openpeerpower.components.roku.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == UPNP_FRIENDLY_NAME

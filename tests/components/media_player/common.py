@@ -40,7 +40,7 @@ from openpeerpower.loader import bind.opp
 async def async_turn_on.opp, entity_id=ENTITY_MATCH_ALL):
     """Turn on specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
 @bind.opp
@@ -52,7 +52,7 @@ def turn_on.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL):
     """Turn off specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
 
 
 @bind.opp
@@ -64,7 +64,7 @@ def turn_off.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_toggle.opp, entity_id=ENTITY_MATCH_ALL):
     """Toggle specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_TOGGLE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TOGGLE, data, blocking=True)
 
 
 @bind.opp
@@ -76,7 +76,7 @@ def toggle.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_volume_up.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for volume up."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_VOLUME_UP, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_VOLUME_UP, data, blocking=True)
 
 
 @bind.opp
@@ -88,7 +88,7 @@ def volume_up.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_volume_down.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for volume down."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_VOLUME_DOWN, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_VOLUME_DOWN, data, blocking=True)
 
 
 @bind.opp
@@ -104,7 +104,7 @@ async def async_mute_volume.opp, mute, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_VOLUME_MUTE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_VOLUME_MUTE, data, blocking=True)
 
 
 @bind.opp
@@ -120,7 +120,7 @@ async def async_set_volume_level.opp, volume, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_VOLUME_SET, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_VOLUME_SET, data, blocking=True)
 
 
 @bind.opp
@@ -132,7 +132,7 @@ def set_volume_level.opp, volume, entity_id=ENTITY_MATCH_ALL):
 async def async_media_play_pause.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for play/pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_MEDIA_PLAY_PAUSE, data, blocking=True
     )
 
@@ -146,7 +146,7 @@ def media_play_pause.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_media_play.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for play/pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_MEDIA_PLAY, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_MEDIA_PLAY, data, blocking=True)
 
 
 @bind.opp
@@ -158,7 +158,7 @@ def media_play.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_media_pause.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_MEDIA_PAUSE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_MEDIA_PAUSE, data, blocking=True)
 
 
 @bind.opp
@@ -170,7 +170,7 @@ def media_pause.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_media_stop.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for stop."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_MEDIA_STOP, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_MEDIA_STOP, data, blocking=True)
 
 
 @bind.opp
@@ -182,7 +182,7 @@ def media_stop.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_media_next_track.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for next track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_MEDIA_NEXT_TRACK, data, blocking=True
     )
 
@@ -196,7 +196,7 @@ def media_next_track.opp, entity_id=ENTITY_MATCH_ALL):
 async def async_media_previous_track.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for prev track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_MEDIA_PREVIOUS_TRACK, data, blocking=True
     )
 
@@ -211,7 +211,7 @@ async def async_media_seek.opp, position, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command to seek in current playing media."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
     data[ATTR_MEDIA_SEEK_POSITION] = position
-    await.opp.services.async_call(DOMAIN, SERVICE_MEDIA_SEEK, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_MEDIA_SEEK, data, blocking=True)
 
 
 @bind.opp
@@ -232,7 +232,7 @@ async def async_play_media(
     if enqueue:
         data[ATTR_MEDIA_ENQUEUE] = enqueue
 
-    await.opp.services.async_call(DOMAIN, SERVICE_PLAY_MEDIA, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_PLAY_MEDIA, data, blocking=True)
 
 
 @bind.opp
@@ -248,7 +248,7 @@ async def async_select_source.opp, source, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SELECT_SOURCE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SELECT_SOURCE, data, blocking=True)
 
 
 @bind.opp
@@ -260,7 +260,7 @@ def select_source.opp, source, entity_id=ENTITY_MATCH_ALL):
 async def async_clear_playlist.opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for clear playlist."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(DOMAIN, SERVICE_CLEAR_PLAYLIST, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_CLEAR_PLAYLIST, data, blocking=True)
 
 
 @bind.opp

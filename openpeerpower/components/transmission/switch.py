@@ -97,7 +97,7 @@ class TransmissionSwitch(ToggleEntity):
 
     @callback
     def _schedule_immediate_update(self):
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def will_remove_from.opp(self):
         """Unsubscribe from update dispatcher."""

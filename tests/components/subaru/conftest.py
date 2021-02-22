@@ -117,8 +117,8 @@ async def setup_subaru_integration(
     ), patch(
         MOCK_API_FETCH, side_effect=fetch_effect
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
 
     return config_entry
 

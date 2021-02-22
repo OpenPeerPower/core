@@ -187,14 +187,14 @@ class SwitchTemplate(TemplateEntity, SwitchEntity, RestoreEntity):
         await self._on_script.async_run(context=self._context)
         if self._template is None:
             self._state = True
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Fire the off action."""
         await self._off_script.async_run(context=self._context)
         if self._template is None:
             self._state = False
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def assumed_state(self):

@@ -102,7 +102,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     password = entry.data.get(CONF_PASSWORD)
     power_wall = Powerwall(entry.data[CONF_IP_ADDRESS], http_session=http_session)
     try:
-        powerwall_data = await.opp.async_add_executor_job(
+        powerwall_data = await opp.async_add_executor_job(
             _login_and_fetch_base_info, power_wall, password
         )
     except PowerwallUnreachableError as err:
@@ -135,7 +135,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 raise
 
             # If the session expired, relogin, and try again
-            await.opp.async_add_executor_job(power_wall.login, "", password)
+            await opp.async_add_executor_job(power_wall.login, "", password)
             return await _async_update_powerwall_data.opp, entry, power_wall)
 
     coordinator = DataUpdateCoordinator(

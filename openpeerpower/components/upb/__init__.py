@@ -127,7 +127,7 @@ class UpbEntity(Entity):
     def _element_callback(self, element, changeset):
         """Handle callback from an UPB element that has changed."""
         self._element_changed(element, changeset)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Register callback for UPB changes and update entity state."""

@@ -80,7 +80,7 @@ class TransmissionSensor(Entity):
         @callback
         def update():
             """Update the state."""
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(

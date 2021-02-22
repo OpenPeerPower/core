@@ -41,12 +41,12 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     temp_unit = opp.config.units.temperature_unit
 
     bus = smbus.SMBus(config.get(CONF_I2C_BUS))
-    sensor = await.opp.async_add_executor_job(partial(HTU21D, bus, logger=_LOGGER))
+    sensor = await opp.async_add_executor_job(partial(HTU21D, bus, logger=_LOGGER))
     if not sensor.sample_ok:
         _LOGGER.error("HTU21D sensor not detected in bus %s", bus_number)
         return False
 
-    sensor_handler = await.opp.async_add_executor_job(HTU21DHandler, sensor)
+    sensor_handler = await opp.async_add_executor_job(HTU21DHandler, sensor)
 
     dev = [
         HTU21DSensor(sensor_handler, name, SENSOR_TEMPERATURE, temp_unit),

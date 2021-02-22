@@ -106,7 +106,7 @@ async def async_setup_opp(
     safe_mode = runtime_config.safe_mode
 
     if not safe_mode:
-        await opp_async_add_executor_job(conf_util.process_ha_config_upgrade, opp)
+        await opp_async_add_executor_job(conf_util.process_op_config_upgrade, opp)
 
         try:
             config_dict = await conf_util.async_opp_config_yaml(opp)

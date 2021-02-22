@@ -130,7 +130,7 @@ class XboxSensor(Entity):
         @callback
         def async_update(event_time=None):
             """Update the entity."""
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         async_track_time_interval(self.opp, async_update, self._interval)
 

@@ -60,7 +60,7 @@ class VeraCover(VeraDevice[veraApi.VeraCurtain], CoverEntity):
     def set_cover_position(self, **kwargs) -> None:
         """Move the cover to a specific position."""
         self.vera_device.set_level(kwargs.get(ATTR_POSITION))
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def is_closed(self) -> bool:
@@ -71,14 +71,14 @@ class VeraCover(VeraDevice[veraApi.VeraCurtain], CoverEntity):
     def open_cover(self, **kwargs: Any) -> None:
         """Open the cover."""
         self.vera_device.open()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def close_cover(self, **kwargs: Any) -> None:
         """Close the cover."""
         self.vera_device.close()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def stop_cover(self, **kwargs: Any) -> None:
         """Stop the cover."""
         self.vera_device.stop()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

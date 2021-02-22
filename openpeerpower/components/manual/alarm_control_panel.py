@@ -298,7 +298,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
 
         self._state = STATE_ALARM_DISARMED
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def alarm_arm_home(self, code=None):
         """Send arm home command."""
@@ -355,7 +355,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
         self._previous_state = self._state
         self._state = state
         self._state_ts = dt_util.utcnow()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
         if state == STATE_ALARM_TRIGGERED:
             pending_time = self._pending_time(state)
@@ -406,7 +406,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
     @callback
     def async_scheduled_update(self, now):
         """Update state at a scheduled point in time."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Run when entity about to be added to.opp."""

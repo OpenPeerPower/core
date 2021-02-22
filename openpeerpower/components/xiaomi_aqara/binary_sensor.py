@@ -225,7 +225,7 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
         """Set state to False."""
         self._unsub_set_no_motion = None
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def parse_data(self, data, raw_data):
         """Parse data sent by gateway.

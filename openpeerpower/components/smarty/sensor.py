@@ -80,7 +80,7 @@ class SmartySensor(Entity):
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
 
 class SupplyAirTemperatureSensor(SmartySensor):

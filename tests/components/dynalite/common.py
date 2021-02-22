@@ -39,11 +39,11 @@ async def create_entity_from_device.opp, device):
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
         mock_dyn_dev().async_setup = AsyncMock(return_value=True)
-        assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
         new_device_func = mock_dyn_dev.mock_calls[1][2]["new_device_func"]
         new_device_func([device])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return mock_dyn_dev.mock_calls[1][2]["update_device_func"]
 
 
@@ -53,8 +53,8 @@ async def run_service_tests.opp, device, platform, services):
         service = cur_item[ATTR_SERVICE]
         args = cur_item.get(ATTR_ARGS, {})
         service_data = {"entity_id": f"{platform}.name", **args}
-        await.opp.services.async_call(platform, service, service_data, blocking=True)
-        await.opp.async_block_till_done()
+        await opp.services.async_call(platform, service, service_data, blocking=True)
+        await opp.async_block_till_done()
         for check_item in services:
             check_method = getattr(device, check_item[ATTR_METHOD])
             if check_item[ATTR_SERVICE] == service:

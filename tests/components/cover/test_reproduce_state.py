@@ -61,7 +61,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # These calls should do nothing as entities already in desired state
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [
             State("cover.entity_close", STATE_CLOSED),
             State(
@@ -104,7 +104,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(position_tilt_calls) == 0
 
     # Test invalid state is handled
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [State("cover.entity_close", "not_supported")]
     )
 
@@ -117,7 +117,7 @@ async def test_reproducing_states.opp, caplog):
     assert len(position_tilt_calls) == 0
 
     # Make sure correct services are called
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [
             State("cover.entity_close", STATE_OPEN),
             State(

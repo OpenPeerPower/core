@@ -96,7 +96,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     hub = NeatoHub.opp, Account(neato_session))
 
     try:
-        await.opp.async_add_executor_job(hub.update_robots)
+        await opp.async_add_executor_job(hub.update_robots)
     except NeatoException as ex:
         _LOGGER.debug("Failed to connect to Neato API")
         raise ConfigEntryNotReady from ex

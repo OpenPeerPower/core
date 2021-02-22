@@ -48,13 +48,13 @@ class VeraSwitch(VeraDevice[veraApi.VeraSwitch], SwitchEntity):
         """Turn device on."""
         self.vera_device.switch_on()
         self._state = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs: Any) -> None:
         """Turn device off."""
         self.vera_device.switch_off()
         self._state = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def current_power_w(self) -> Optional[float]:

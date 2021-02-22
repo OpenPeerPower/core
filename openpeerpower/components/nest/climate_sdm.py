@@ -128,7 +128,7 @@ class ThermostatEntity(ClimateEntity):
         """Run when entity is added to register update signal handler."""
         self._supported_features = self._get_supported_features()
         self.async_on_remove(
-            self._device.add_update_listener(self.async_write_ha_state)
+            self._device.add_update_listener(self.async_write_op_state)
         )
 
     @property

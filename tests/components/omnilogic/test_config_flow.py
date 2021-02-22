@@ -14,7 +14,7 @@ DATA = {"username": "test-username", "password": "test-password"}
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -29,11 +29,11 @@ async def test_form.opp):
         "openpeerpower.components.omnilogic.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Omnilogic"
@@ -47,7 +47,7 @@ async def test_already_configured.opp):
     MockConfigEntry(domain="omnilogic", data=DATA).add_to.opp.opp)
 
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -59,7 +59,7 @@ async def test_with_invalid_credentials.opp):
     """Test with invalid credentials."""
 
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -67,7 +67,7 @@ async def test_with_invalid_credentials.opp):
         "openpeerpower.components.omnilogic.OmniLogic.connect",
         side_effect=LoginException,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             DATA,
         )
@@ -81,7 +81,7 @@ async def test_form_cannot_connect.opp):
     """Test if invalid response or no connection returned from Hayward."""
 
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -89,7 +89,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.omnilogic.OmniLogic.connect",
         side_effect=OmniLogicException,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             DATA,
         )
@@ -102,7 +102,7 @@ async def test_form_cannot_connect.opp):
 async def test_with_unknown_error(opp):
     """Test with unknown error response from Hayward."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -110,7 +110,7 @@ async def test_with_unknown_error(opp):
         "openpeerpower.components.omnilogic.OmniLogic.connect",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             DATA,
         )
@@ -130,7 +130,7 @@ async def test_option_flow.opp):
     with patch(
         "openpeerpower.components.omnilogic.async_setup_entry", return_value=True
     ):
-        result = await.opp.config_entries.options.async_init(
+        result = await opp.config_entries.options.async_init(
             entry.entry_id,
             data=None,
         )
@@ -138,7 +138,7 @@ async def test_option_flow.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"polling_interval": 9},
     )

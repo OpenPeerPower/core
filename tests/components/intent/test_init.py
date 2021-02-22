@@ -34,7 +34,7 @@ async def test_http_handle_intent.opp, opp_client, opp_admin_user):
     result = await async_setup_component.opp, "intent", {})
     assert result
 
-    client = await.opp_client()
+    client = await opp_client()
     resp = await client.post(
         "/api/intent/handle", json={"name": "OrderBeer", "data": {"type": "Belgian"}}
     )
@@ -67,7 +67,7 @@ async def test_cover_intents_loading.opp):
     response = await intent.async_handle(
        .opp, "test", "HassOpenCover", {"name": {"value": "garage door"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Opened garage door"
     assert len(calls) == 1
@@ -89,7 +89,7 @@ async def test_turn_on_intent.opp):
     response = await intent.async_handle(
        .opp, "test", "HassTurnOn", {"name": {"value": "test light"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Turned test light on"
     assert len(calls) == 1
@@ -111,7 +111,7 @@ async def test_turn_off_intent.opp):
     response = await intent.async_handle(
        .opp, "test", "HassTurnOff", {"name": {"value": "test light"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Turned test light off"
     assert len(calls) == 1
@@ -133,7 +133,7 @@ async def test_toggle_intent.opp):
     response = await intent.async_handle(
        .opp, "test", "HassToggle", {"name": {"value": "test light"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Toggled test light"
     assert len(calls) == 1
@@ -160,7 +160,7 @@ async def test_turn_on_multiple_intent.opp):
     response = await intent.async_handle(
        .opp, "test", "HassTurnOn", {"name": {"value": "test lights"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Turned test lights 2 on"
     assert len(calls) == 1

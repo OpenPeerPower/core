@@ -78,7 +78,7 @@ class EnOceanBinarySensor(EnOceanEntity, BinarySensorEntity):
         elif packet.data[6] == 0x20:
             pushed = 0
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
         action = packet.data[1]
         if action == 0x70:

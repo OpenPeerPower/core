@@ -81,7 +81,7 @@ async def async_turn_on(
 ) -> None:
     """Turn on specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_TURN_ON, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_TURN_ON, data)
 
 
 async def async_turn_off(
@@ -89,7 +89,7 @@ async def async_turn_off(
 ) -> None:
     """Turn off specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_TURN_OFF, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_TURN_OFF, data)
 
 
 async def async_media_pause(
@@ -97,7 +97,7 @@ async def async_media_pause(
 ) -> None:
     """Send the media player the command for pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PAUSE, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PAUSE, data)
 
 
 async def async_media_play(
@@ -105,7 +105,7 @@ async def async_media_play(
 ) -> None:
     """Send the media player the command for play/pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PLAY, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PLAY, data)
 
 
 async def async_media_stop(
@@ -113,7 +113,7 @@ async def async_media_stop(
 ) -> None:
     """Send the media player the command for stop."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_STOP, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_STOP, data)
 
 
 async def async_media_next_track(
@@ -121,7 +121,7 @@ async def async_media_next_track(
 ) -> None:
     """Send the media player the command for next track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_NEXT_TRACK, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_NEXT_TRACK, data)
 
 
 async def async_media_previous_track(
@@ -129,7 +129,7 @@ async def async_media_previous_track(
 ) -> None:
     """Send the media player the command for prev track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PREVIOUS_TRACK, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PREVIOUS_TRACK, data)
 
 
 async def async_play_media(
@@ -148,7 +148,7 @@ async def async_play_media(
     if enqueue:
         data[ATTR_MEDIA_ENQUEUE] = enqueue
 
-    await.opp.services.async_call(MP_DOMAIN, SERVICE_PLAY_MEDIA, data)
+    await opp.services.async_call(MP_DOMAIN, SERVICE_PLAY_MEDIA, data)
 
 
 async def test_setup(
@@ -167,7 +167,7 @@ async def test_unique_id(
     """Test unique id."""
     await setup_integration.opp, aioclient_mock)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     main = entity_registry.async_get(MAIN_ENTITY_ID)
     assert main.device_class == DEVICE_CLASS_RECEIVER
@@ -339,7 +339,7 @@ async def test_attributes_paused(
         "openpeerpower.util.dt.utcnow", return_value=mock_now + timedelta(minutes=5)
     ):
         await async_media_pause.opp, CLIENT_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     state = opp.states.get(CLIENT_ENTITY_ID)
     assert state.state == STATE_PAUSED
@@ -356,40 +356,40 @@ async def test_main_services(
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_turn_off.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("poweroff", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_turn_on.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("poweron", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_pause.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("pause", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_play.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("play", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_next_track.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("ffwd", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_previous_track.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("rew", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await async_media_stop.opp, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         remote_mock.assert_called_once_with("stop", "0")
 
     with patch("directv.DIRECTV.tune") as tune_mock:
         await async_play_media.opp, "channel", 312, MAIN_ENTITY_ID)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         tune_mock.assert_called_once_with("312", "0")

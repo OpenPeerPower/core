@@ -74,13 +74,13 @@ class RingCam(RingEntityMixin, Camera):
         """Call update method."""
         if history_data:
             self._last_event = history_data[0]
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
         else:
             self._last_event = None
             self._last_video_id = None
             self._video_url = None
             self._expires_at = dt_util.utcnow()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def name(self):

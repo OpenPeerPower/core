@@ -245,7 +245,7 @@ async def async_setup_opp, config):
     """Set up the iOS component."""
     conf = config.get(DOMAIN)
 
-    ios_config = await.opp.async_add_executor_job(
+    ios_config = await opp.async_add_executor_job(
         load_json, opp.config.path(CONFIGURATION_FILE)
     )
 

@@ -153,7 +153,7 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         else:
             await self._async_send(self._device.send_open)
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_close_cover(self, **kwargs):
         """Move the cover down."""
@@ -164,13 +164,13 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         else:
             await self._async_send(self._device.send_close)
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_stop_cover(self, **kwargs):
         """Stop the cover."""
         await self._async_send(self._device.send_stop)
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_open_cover_tilt(self, **kwargs):
         """Tilt the cover up."""
@@ -190,7 +190,7 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         """Stop the cover tilt."""
         await self._async_send(self._device.send_stop)
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _apply_event(self, event):
         """Apply command from rfxtrx."""
@@ -208,4 +208,4 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
 
         self._apply_event(event)
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

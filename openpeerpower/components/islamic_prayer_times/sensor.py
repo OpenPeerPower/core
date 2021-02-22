@@ -65,5 +65,5 @@ class IslamicPrayerTimeSensor(Entity):
     async def async_added_to.opp(self):
         """Handle entity which will be added."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DATA_UPDATED, self.async_write_ha_state)
+            async_dispatcher_connect(self.opp, DATA_UPDATED, self.async_write_op_state)
         )

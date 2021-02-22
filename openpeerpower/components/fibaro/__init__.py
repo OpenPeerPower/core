@@ -404,7 +404,7 @@ class FibaroDevice(Entity):
 
     def _update_callback(self):
         """Update the state."""
-        self.schedule_update_ha_state(True)
+        self.schedule_update_op_state(True)
 
     @property
     def level(self):

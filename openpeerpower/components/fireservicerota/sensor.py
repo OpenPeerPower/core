@@ -130,4 +130,4 @@ class IncidentsSensor(RestoreEntity):
         self._state_attributes = data
         if "id" in self._state_attributes:
             self._client.incident_id = self._state_attributes["id"]
-        self.async_write_ha_state()
+        self.async_write_op_state()

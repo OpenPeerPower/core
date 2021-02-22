@@ -29,7 +29,7 @@ async def test_sensor.opp, create_registrations, webhook_client):
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity = opp.states.get("sensor.test_1_battery_state")
     assert entity is not None
@@ -73,13 +73,13 @@ async def test_sensor.opp, create_registrations, webhook_client):
 
     # Reload to verify state is restored
     config_entry = opp.config_entries.async_entries("mobile_app")[1]
-    await.opp.config_entries.async_unload(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.async_block_till_done()
     unloaded_entity = opp.states.get("sensor.test_1_battery_state")
     assert unloaded_entity.state == "unavailable"
 
-    await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.async_block_till_done()
     restored_entity = opp.states.get("sensor.test_1_battery_state")
     assert restored_entity.state == updated_entity.state
     assert restored_entity.attributes == updated_entity.attributes
@@ -129,7 +129,7 @@ async def test_sensor_id_no_dupes.opp, create_registrations, webhook_client, cap
 
     reg_json = await reg_resp.json()
     assert reg_json == {"success": True}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "Re-register" not in caplog.text
 
@@ -150,7 +150,7 @@ async def test_sensor_id_no_dupes.opp, create_registrations, webhook_client, cap
     assert dupe_resp.status == 201
     dupe_reg_json = await dupe_resp.json()
     assert dupe_reg_json == {"success": True}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "Re-register" in caplog.text
 
@@ -188,7 +188,7 @@ async def test_register_sensor_no_state.opp, create_registrations, webhook_clien
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity = opp.states.get("sensor.test_1_battery_state")
     assert entity is not None
@@ -213,7 +213,7 @@ async def test_register_sensor_no_state.opp, create_registrations, webhook_clien
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity = opp.states.get("sensor.test_1_backup_battery_state")
     assert entity
@@ -245,7 +245,7 @@ async def test_update_sensor_no_state.opp, create_registrations, webhook_client)
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity = opp.states.get("sensor.test_1_battery_state")
     assert entity is not None

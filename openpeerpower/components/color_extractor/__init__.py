@@ -75,7 +75,7 @@ async def async_setup_opp, opp_config):
             elif ATTR_PATH in service_data:
                 image_type = "file path"
                 image_reference = service_data.pop(ATTR_PATH)
-                color = await.opp.async_add_executor_job(
+                color = await opp.async_add_executor_job(
                     extract_color_from_path, image_reference
                 )
 
@@ -91,7 +91,7 @@ async def async_setup_opp, opp_config):
         if color:
             service_data[ATTR_RGB_COLOR] = color
 
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 LIGHT_DOMAIN, LIGHT_SERVICE_TURN_ON, service_data, blocking=True
             )
 

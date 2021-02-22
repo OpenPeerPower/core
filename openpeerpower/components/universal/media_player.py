@@ -172,7 +172,7 @@ class UniversalMediaPlayer(MediaPlayerEntity):
         def _async_on_dependency_update(event):
             """Update ha state when dependencies update."""
             self.async_set_context(event.context)
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         @callback
         def _async_on_template_update(event, updates):
@@ -187,7 +187,7 @@ class UniversalMediaPlayer(MediaPlayerEntity):
             if event:
                 self.async_set_context(event.context)
 
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         if self._state_template is not None:
             result = async_track_template_result(

@@ -193,7 +193,7 @@ def state(new_state):
             # Update state.
             self._is_on = new_state
             self.group.enqueue(pipeline)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         return wrapper
 

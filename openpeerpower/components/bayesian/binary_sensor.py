@@ -244,7 +244,7 @@ class BayesianBinarySensor(BinarySensorEntity):
     def _recalculate_and_write_state(self):
         self.probability = self._calculate_new_probability()
         self._deviation = bool(self.probability >= self._probability_threshold)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _initialize_current_observations(self):
         local_observations = OrderedDict({})

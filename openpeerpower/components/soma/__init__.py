@@ -47,7 +47,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Soma from a config entry."""
    .opp.data[DOMAIN] = {}
    .opp.data[DOMAIN][API] = SomaApi(entry.data[HOST], entry.data[PORT])
-    devices = await.opp.async_add_executor_job.opp.data[DOMAIN][API].list_devices)
+    devices = await opp.async_add_executor_job.opp.data[DOMAIN][API].list_devices)
    .opp.data[DOMAIN][DEVICES] = devices["shades"]
 
     for component in SOMA_COMPONENTS:

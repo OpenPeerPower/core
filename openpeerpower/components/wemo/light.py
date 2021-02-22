@@ -43,7 +43,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if device.model_name == "Dimmer":
             async_add_entities([WemoDimmer(device)])
         else:
-            await.opp.async_add_executor_job(
+            await opp.async_add_executor_job(
                 setup_bridge, opp, device, async_add_entities
             )
 
@@ -166,7 +166,7 @@ class WemoLight(WemoEntity, LightEntity):
             if self.wemo.turn_on(**turn_on_kwargs):
                 self._state["onoff"] = WEMO_ON
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the light off."""
@@ -176,7 +176,7 @@ class WemoLight(WemoEntity, LightEntity):
             if self.wemo.turn_off(transition=transition_time):
                 self._state["onoff"] = WEMO_OFF
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _update(self, force_update=True):
         """Synchronize state with bridge."""
@@ -238,7 +238,7 @@ class WemoDimmer(WemoSubscriptionEntity, LightEntity):
 
             self.wemo.set_brightness(brightness)
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the dimmer off."""
@@ -246,4 +246,4 @@ class WemoDimmer(WemoSubscriptionEntity, LightEntity):
             if self.wemo.off():
                 self._state = WEMO_OFF
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

@@ -154,7 +154,7 @@ async def async_get_client_id.opp):
 
     Note that SimpliSafe requires full, "dashed" versions of UUIDs.
     """
-   .opp_id = await.opp.helpers.instance_id.async_get()
+   .opp_id = await opp.helpers.instance_id.async_get()
     return str(UUID.opp_id))
 
 
@@ -342,7 +342,7 @@ async def async_unload_entry.opp, entry):
 
 async def async_reload_entry.opp, config_entry):
     """Handle an options update."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 class SimpliSafeWebsocket:
@@ -682,7 +682,7 @@ class SimpliSafeEntity(CoordinatorEntity):
     def _handle_coordinator_update(self):
         """Update the entity with new REST API data."""
         self.async_update_from_rest_api()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _handle_websocket_update(self, event):
@@ -704,7 +704,7 @@ class SimpliSafeEntity(CoordinatorEntity):
             return
 
         self._async_internal_update_from_websocket_event(event)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Register callbacks."""

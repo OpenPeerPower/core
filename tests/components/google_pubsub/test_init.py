@@ -80,7 +80,7 @@ async def test_minimal_config(opp, mock_client):
         }
     }
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert mock_client.PublisherClient.from_service_account_json.call_count == 1
@@ -107,7 +107,7 @@ async def test_full_config(opp, mock_client):
         }
     }
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert mock_client.PublisherClient.from_service_account_json.call_count == 1
@@ -140,7 +140,7 @@ async def _setup_opp, filter_config):
         }
     }
     assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return.opp.bus.listen.call_args_list[0][0][1]
 
 

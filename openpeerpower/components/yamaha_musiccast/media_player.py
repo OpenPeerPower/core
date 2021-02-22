@@ -230,7 +230,7 @@ class YamahaDevice(MediaPlayerEntity):
         """Push updates to Open Peer Power."""
         if self.entity_id:
             _LOGGER.debug("update.opp: pushing updates")
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             return True
 
     def turn_on(self):

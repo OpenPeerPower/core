@@ -97,7 +97,7 @@ class I2CHatBinarySensor(BinarySensorEntity):
 
         def online_callback():
             """Call fired when board is online."""
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         self.I2C_HATS_MANAGER.register_online_callback(
             self._address, self._channel, online_callback
@@ -106,7 +106,7 @@ class I2CHatBinarySensor(BinarySensorEntity):
         def edge_callback(state):
             """Read digital input state."""
             self._state = state
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         self.I2C_HATS_MANAGER.register_di_callback(
             self._address, self._channel, edge_callback

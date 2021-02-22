@@ -27,7 +27,7 @@ def get_cert(host, port):
 async def get_cert_expiry_timestamp.opp, hostname, port):
     """Return the certificate's expiration timestamp."""
     try:
-        cert = await.opp.async_add_executor_job(get_cert, hostname, port)
+        cert = await opp.async_add_executor_job(get_cert, hostname, port)
     except socket.gaierror as err:
         raise ResolveFailed(f"Cannot resolve hostname: {hostname}") from err
     except socket.timeout as err:

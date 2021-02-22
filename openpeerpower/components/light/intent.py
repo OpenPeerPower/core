@@ -57,7 +57,7 @@ class SetIntentHandler(intent.IntentHandler):
             service_data[ATTR_BRIGHTNESS_PCT] = slots["brightness"]["value"]
             speech_parts.append(f"{slots['brightness']['value']}% brightness")
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, service_data, context=intent_obj.context
         )
 

@@ -129,7 +129,7 @@ async def async_call_action_from_config(
     elif config[CONF_TYPE] == "trigger":
         service = SERVICE_ALARM_TRIGGER
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, service, service_data, blocking=True, context=context
     )
 

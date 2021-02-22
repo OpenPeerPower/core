@@ -391,7 +391,7 @@ async def test_permit_ha12(
 ):
     """Test permit service."""
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 1
@@ -426,7 +426,7 @@ async def test_permit_with_install_code(
 ):
     """Test permit service with install code."""
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 0
@@ -478,7 +478,7 @@ async def test_permit_with_install_code_fail(
     """Test permit service with install code."""
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
         )
     assert app_controller.permit.await_count == 0
@@ -515,7 +515,7 @@ async def test_permit_with_qr_code(
 ):
     """Test permit service with install code from qr code."""
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 0

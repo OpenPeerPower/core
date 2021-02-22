@@ -356,7 +356,7 @@ class LTEEntity(Entity):
         """Register callback."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, DISPATCHER_NETGEAR_LTE, self.async_write_ha_state
+                self.opp, DISPATCHER_NETGEAR_LTE, self.async_write_op_state
             )
         )
 

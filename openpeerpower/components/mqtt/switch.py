@@ -140,7 +140,7 @@ class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
             elif payload == self._state_off:
                 self._state = False
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         if self._config.get(CONF_STATE_TOPIC) is None:
             # Force into optimistic mode.
@@ -198,7 +198,7 @@ class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
         if self._optimistic:
             # Optimistically assume that switch has changed state.
             self._state = True
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off.
@@ -215,4 +215,4 @@ class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
         if self._optimistic:
             # Optimistically assume that switch has changed state.
             self._state = False
-            self.async_write_ha_state()
+            self.async_write_op_state()

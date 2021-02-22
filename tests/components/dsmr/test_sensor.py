@@ -47,7 +47,7 @@ async def test_setup_platform.opp, dsmr_connection_fixture):
         assert await async_setup_component(
            .opp, SENSOR_DOMAIN, {SENSOR_DOMAIN: entry_data}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert not async_add_entities.called
 
@@ -104,10 +104,10 @@ async def test_default_setup_opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get("sensor.power_consumption")
     assert entry
@@ -164,10 +164,10 @@ async def test_setup_only_energy.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get("sensor.power_consumption")
     assert entry
@@ -255,8 +255,8 @@ async def test_v4_meter.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -315,8 +315,8 @@ async def test_v5_meter.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -381,8 +381,8 @@ async def test_luxembourg_meter.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -444,8 +444,8 @@ async def test_belgian_meter.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -493,8 +493,8 @@ async def test_belgian_meter_low.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     telegram_callback = connection_factory.call_args_list[0][0][2]
 
@@ -530,8 +530,8 @@ async def test_tcp.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     assert connection_factory.call_args_list[0][0][0] == "localhost"
     assert connection_factory.call_args_list[0][0][1] == "1234"
@@ -566,11 +566,11 @@ async def test_connection_errors_retry.opp, dsmr_connection_fixture):
         "openpeerpower.components.dsmr.sensor.create_dsmr_reader",
         first_fail_connection_factory,
     ):
-        await.opp.config_entries.async_setup(mock_entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(mock_entry.entry_id)
+        await opp.async_block_till_done()
 
         # wait for sleep to resolve
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert first_fail_connection_factory.call_count >= 2, "connecting not retried"
 
 
@@ -604,8 +604,8 @@ async def test_reconnect.opp, dsmr_connection_fixture):
 
     mock_entry.add_to.opp.opp)
 
-    await.opp.config_entries.async_setup(mock_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(mock_entry.entry_id)
+    await opp.async_block_till_done()
 
     assert connection_factory.call_count == 1
 
@@ -616,12 +616,12 @@ async def test_reconnect.opp, dsmr_connection_fixture):
     closed2.clear()
     closed.clear()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert connection_factory.call_count >= 2, "connecting not retried"
     # setting it so teardown can be successful
     closed.set()
 
-    await.opp.config_entries.async_unload(mock_entry.entry_id)
+    await opp.config_entries.async_unload(mock_entry.entry_id)
 
     assert mock_entry.state == "not_loaded"

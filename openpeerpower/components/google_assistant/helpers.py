@@ -67,7 +67,7 @@ async def _get_area.opp, entity_entry, device_entry) -> Optional[AreaEntry]:
     else:
         return None
 
-    area_reg = await.opp.helpers.area_registry.async_get_registry()
+    area_reg = await opp.helpers.area_registry.async_get_registry()
     return area_reg.areas.get(area_id)
 
 

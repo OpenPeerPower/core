@@ -89,7 +89,7 @@ class ZWaveTriggerSensor(ZWaveBinarySensor):
             seconds=self.re_arm_sec
         )
         track_point_in_time(
-            self.opp, self.async_update_ha_state, self.invalidate_after
+            self.opp, self.async_update_op_state, self.invalidate_after
         )
 
     @property

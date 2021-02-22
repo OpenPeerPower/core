@@ -4,7 +4,7 @@ import voluptuous as vol
 
 from openpeerpower.components import websocket_api
 from openpeerpower.components.http import OpenPeerPowerView
-from openpeerpower.config import async_check_ha_config_file
+from openpeerpower.config import async_check_op_config_file
 from openpeerpower.const import CONF_UNIT_SYSTEM_IMPERIAL, CONF_UNIT_SYSTEM_METRIC
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.util import location
@@ -26,7 +26,7 @@ class CheckConfigView(OpenPeerPowerView):
 
     async def post(self, request):
         """Validate configuration and return results."""
-        errors = await async_check_ha_config_file(request.app[.opp"])
+        errors = await async_check_op_config_file(request.app[.opp"])
 
         state = "invalid" if errors else "valid"
 
@@ -55,7 +55,7 @@ async def websocket_update_config(opp, connection, msg):
     data.pop("type")
 
     try:
-        await.opp.config.async_update(**data)
+        await opp.config.async_update(**data)
         connection.send_result(msg["id"])
     except ValueError as err:
         connection.send_error(msg["id"], "invalid_info", str(err))

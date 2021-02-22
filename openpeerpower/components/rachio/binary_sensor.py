@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Rachio binary sensors."""
-    entities = await.opp.async_add_executor_job(_create_entities, opp, config_entry)
+    entities = await opp.async_add_executor_job(_create_entities, opp, config_entry)
     async_add_entities(entities)
     _LOGGER.info("%d Rachio binary sensor(s) added", len(entities))
 
@@ -109,7 +109,7 @@ class RachioControllerOnlineBinarySensor(RachioControllerBinarySensor):
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_OFFLINE:
             self._state = False
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to updates."""
@@ -155,7 +155,7 @@ class RachioRainSensor(RachioControllerBinarySensor):
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_RAIN_SENSOR_DETECTION_OFF:
             self._state = False
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to updates."""

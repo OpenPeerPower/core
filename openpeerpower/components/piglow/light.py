@@ -102,11 +102,11 @@ class PiglowLight(LightEntity):
         piglow.blue(rgb[2])
         piglow.show()
         self._is_on = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Instruct the light to turn off."""
         piglow.clear()
         piglow.show()
         self._is_on = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

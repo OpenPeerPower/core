@@ -94,7 +94,7 @@ class AnthemAVR(MediaPlayerEntity):
     async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_ha_state)
+            async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op_state)
         )
 
     @property

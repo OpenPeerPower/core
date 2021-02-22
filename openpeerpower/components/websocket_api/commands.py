@@ -134,7 +134,7 @@ async def handle_call_service.opp, connection, msg):
 
     try:
         context = connection.context(msg)
-        await.opp.services.async_call(
+        await opp.services.async_call(
             msg["domain"],
             msg["service"],
             msg.get("service_data"),

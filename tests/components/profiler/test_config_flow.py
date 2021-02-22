@@ -10,7 +10,7 @@ from tests.common import MockConfigEntry
 async def test_form_user.opp):
     """Test we can setup by the user."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -22,11 +22,11 @@ async def test_form_user.opp):
         "openpeerpower.components.profiler.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Profiler"
@@ -39,7 +39,7 @@ async def test_form_user_only_once.opp):
     """Test we can setup by the user only once."""
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "abort"

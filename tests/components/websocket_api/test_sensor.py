@@ -12,7 +12,7 @@ async def test_websocket_api.opp, aiohttp_client, opp_access_token, legacy_auth)
     await async_setup_component(
        .opp, "sensor", {"sensor": {"platform": "websocket_api"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
     ws = await client.ws_connect(URL)
@@ -32,7 +32,7 @@ async def test_websocket_api.opp, aiohttp_client, opp_access_token, legacy_auth)
     assert state.state == "1"
 
     await ws.close()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.connected_clients")
     assert state.state == "0"

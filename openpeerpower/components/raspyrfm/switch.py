@@ -121,7 +121,7 @@ class RaspyRFMSwitch(SwitchEntity):
 
         self._raspyrfm_client.send(self._gateway, self._controlunit, Action.ON)
         self._state = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the switch off."""
@@ -132,4 +132,4 @@ class RaspyRFMSwitch(SwitchEntity):
             self._raspyrfm_client.send(self._gateway, self._controlunit, Action.ON)
 
         self._state = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

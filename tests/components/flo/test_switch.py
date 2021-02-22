@@ -13,19 +13,19 @@ async def test_valve_switches.opp, config_entry, aioclient_mock_fixture):
     assert await async_setup_component(
        .opp, FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
     entity_id = "switch.shutoff_valve"
     assert.opp.states.get(entity_id).state == STATE_ON
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert.opp.states.get(entity_id).state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert.opp.states.get(entity_id).state == STATE_ON

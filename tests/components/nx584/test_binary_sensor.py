@@ -152,7 +152,7 @@ def test_nx584_zone_sensor_normal():
     assert not sensor.is_on
 
 
-@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_ha_state")
+@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_op_state")
 def test_nx584_watcher_process_zone_event(mock_update):
     """Test the processing of zone events."""
     zone1 = {"number": 1, "name": "foo", "state": True}
@@ -167,7 +167,7 @@ def test_nx584_watcher_process_zone_event(mock_update):
     assert mock_update.call_count == 1
 
 
-@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_ha_state")
+@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_op_state")
 def test_nx584_watcher_process_zone_event_missing_zone(mock_update):
     """Test the processing of zone events with missing zones."""
     watcher = nx584.NX584Watcher(None, {})

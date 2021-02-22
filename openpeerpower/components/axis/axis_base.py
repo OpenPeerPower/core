@@ -35,7 +35,7 @@ class AxisEntityBase(Entity):
     @callback
     def update_callback(self, no_delay=None):
         """Update the entities state."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class AxisEventBase(AxisEntityBase):

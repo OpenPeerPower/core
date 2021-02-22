@@ -135,7 +135,7 @@ async def async_api_turn_on.opp, config, directive, context):
         if not supported & power_features:
             service = media_player.SERVICE_MEDIA_PLAY
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain,
         service,
         {ATTR_ENTITY_ID: entity.entity_id},
@@ -172,7 +172,7 @@ async def async_api_turn_off.opp, config, directive, context):
         if not supported & power_features:
             service = media_player.SERVICE_MEDIA_STOP
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain,
         service,
         {ATTR_ENTITY_ID: entity.entity_id},
@@ -189,7 +189,7 @@ async def async_api_set_brightness.opp, config, directive, context):
     entity = directive.entity
     brightness = int(directive.payload["brightness"])
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity.entity_id, light.ATTR_BRIGHTNESS_PCT: brightness},
@@ -216,7 +216,7 @@ async def async_api_adjust_brightness.opp, config, directive, context):
 
     # set brightness
     brightness = max(0, brightness_delta + current)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity.entity_id, light.ATTR_BRIGHTNESS_PCT: brightness},
@@ -237,7 +237,7 @@ async def async_api_set_color.opp, config, directive, context):
         float(directive.payload["color"]["brightness"]),
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity.entity_id, light.ATTR_RGB_COLOR: rgb},
@@ -254,7 +254,7 @@ async def async_api_set_color_temperature.opp, config, directive, context):
     entity = directive.entity
     kelvin = int(directive.payload["colorTemperatureInKelvin"])
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity.entity_id, light.ATTR_KELVIN: kelvin},
@@ -273,7 +273,7 @@ async def async_api_decrease_color_temp.opp, config, directive, context):
     max_mireds = int(entity.attributes.get(light.ATTR_MAX_MIREDS))
 
     value = min(max_mireds, current + 50)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity.entity_id, light.ATTR_COLOR_TEMP: value},
@@ -292,7 +292,7 @@ async def async_api_increase_color_temp.opp, config, directive, context):
     min_mireds = int(entity.attributes.get(light.ATTR_MIN_MIREDS))
 
     value = max(min_mireds, current - 50)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity.entity_id, light.ATTR_COLOR_TEMP: value},
@@ -309,7 +309,7 @@ async def async_api_activate.opp, config, directive, context):
     entity = directive.entity
     domain = entity.domain
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: entity.entity_id},
@@ -333,7 +333,7 @@ async def async_api_deactivate.opp, config, directive, context):
     entity = directive.entity
     domain = entity.domain
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: entity.entity_id},
@@ -363,7 +363,7 @@ async def async_api_set_percentage.opp, config, directive, context):
         percentage = int(directive.payload["percentage"])
         data[fan.ATTR_PERCENTAGE] = percentage
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, service, data, blocking=False, context=context
     )
 
@@ -386,7 +386,7 @@ async def async_api_adjust_percentage.opp, config, directive, context):
         percentage = min(100, max(0, percentage_delta + current))
         data[fan.ATTR_PERCENTAGE] = percentage
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, service, data, blocking=False, context=context
     )
 
@@ -397,7 +397,7 @@ async def async_api_adjust_percentage.opp, config, directive, context):
 async def async_api_lock.opp, config, directive, context):
     """Process a lock request."""
     entity = directive.entity
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_LOCK,
         {ATTR_ENTITY_ID: entity.entity_id},
@@ -420,7 +420,7 @@ async def async_api_unlock.opp, config, directive, context):
         raise AlexaInvalidDirectiveError(msg)
 
     entity = directive.entity
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_UNLOCK,
         {ATTR_ENTITY_ID: entity.entity_id},
@@ -447,7 +447,7 @@ async def async_api_set_volume.opp, config, directive, context):
         media_player.const.ATTR_MEDIA_VOLUME_LEVEL: volume,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, SERVICE_VOLUME_SET, data, blocking=False, context=context
     )
 
@@ -487,7 +487,7 @@ async def async_api_select_input.opp, config, directive, context):
         media_player.const.ATTR_INPUT_SOURCE: media_input,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         media_player.SERVICE_SELECT_SOURCE,
         data,
@@ -519,7 +519,7 @@ async def async_api_adjust_volume.opp, config, directive, context):
         media_player.const.ATTR_MEDIA_VOLUME_LEVEL: volume,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, SERVICE_VOLUME_SET, data, blocking=False, context=context
     )
 
@@ -551,7 +551,7 @@ async def async_api_adjust_volume_step.opp, config, directive, context):
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
     for _ in range(abs(volume_int)):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             entity.domain, service_volume, data, blocking=False, context=context
         )
 
@@ -569,7 +569,7 @@ async def async_api_set_mute.opp, config, directive, context):
         media_player.const.ATTR_MEDIA_VOLUME_MUTED: mute,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, SERVICE_VOLUME_MUTE, data, blocking=False, context=context
     )
 
@@ -582,7 +582,7 @@ async def async_api_play.opp, config, directive, context):
     entity = directive.entity
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, SERVICE_MEDIA_PLAY, data, blocking=False, context=context
     )
 
@@ -595,7 +595,7 @@ async def async_api_pause.opp, config, directive, context):
     entity = directive.entity
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, SERVICE_MEDIA_PAUSE, data, blocking=False, context=context
     )
 
@@ -608,7 +608,7 @@ async def async_api_stop.opp, config, directive, context):
     entity = directive.entity
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, SERVICE_MEDIA_STOP, data, blocking=False, context=context
     )
 
@@ -621,7 +621,7 @@ async def async_api_next.opp, config, directive, context):
     entity = directive.entity
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, SERVICE_MEDIA_NEXT_TRACK, data, blocking=False, context=context
     )
 
@@ -634,7 +634,7 @@ async def async_api_previous.opp, config, directive, context):
     entity = directive.entity
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         SERVICE_MEDIA_PREVIOUS_TRACK,
         data,
@@ -710,7 +710,7 @@ async def async_api_set_target_temp.opp, config, directive, context):
             }
         )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         climate.SERVICE_SET_TEMPERATURE,
         data,
@@ -740,7 +740,7 @@ async def async_api_adjust_target_temp.opp, config, directive, context):
     data = {ATTR_ENTITY_ID: entity.entity_id, ATTR_TEMPERATURE: target_temp}
 
     response = directive.response()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         climate.SERVICE_SET_TEMPERATURE,
         data,
@@ -807,7 +807,7 @@ async def async_api_set_thermostat_mode.opp, config, directive, context):
         data[climate.ATTR_HVAC_MODE] = ha_mode
 
     response = directive.response()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         climate.DOMAIN, service, data, blocking=False, context=context
     )
     response.add_context_property(
@@ -839,7 +839,7 @@ async def async_api_set_power_level.opp, config, directive, context):
         percentage = int(directive.payload["powerLevel"])
         data[fan.ATTR_PERCENTAGE] = percentage
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, service, data, blocking=False, context=context
     )
 
@@ -862,7 +862,7 @@ async def async_api_adjust_power_level.opp, config, directive, context):
         percentage = min(100, max(0, percentage_delta + current))
         data[fan.ATTR_PERCENTAGE] = percentage
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, service, data, blocking=False, context=context
     )
 
@@ -888,7 +888,7 @@ async def async_api_arm.opp, config, directive, context):
     elif arm_state == "ARMED_STAY":
         service = SERVICE_ALARM_ARM_HOME
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, service, data, blocking=False, context=context
     )
 
@@ -928,7 +928,7 @@ async def async_api_disarm.opp, config, directive, context):
         if payload["authorization"]["type"] == "FOUR_DIGIT_PIN":
             data["code"] = value
 
-    if not await.opp.services.async_call(
+    if not await opp.services.async_call(
         entity.domain, SERVICE_ALARM_DISARM, data, blocking=True, context=context
     ):
         msg = "Invalid Code"
@@ -977,7 +977,7 @@ async def async_api_set_mode.opp, config, directive, context):
         msg = "Entity does not support directive"
         raise AlexaInvalidDirectiveError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain, service, data, blocking=False, context=context
     )
 
@@ -1024,7 +1024,7 @@ async def async_api_toggle_on.opp, config, directive, context):
         msg = "Entity does not support directive"
         raise AlexaInvalidDirectiveError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain, service, data, blocking=False, context=context
     )
 
@@ -1058,7 +1058,7 @@ async def async_api_toggle_off.opp, config, directive, context):
         msg = "Entity does not support directive"
         raise AlexaInvalidDirectiveError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain, service, data, blocking=False, context=context
     )
 
@@ -1149,7 +1149,7 @@ async def async_api_set_range.opp, config, directive, context):
         msg = "Entity does not support directive"
         raise AlexaInvalidDirectiveError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain, service, data, blocking=False, context=context
     )
 
@@ -1264,7 +1264,7 @@ async def async_api_adjust_range.opp, config, directive, context):
         msg = "Entity does not support directive"
         raise AlexaInvalidDirectiveError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         domain, service, data, blocking=False, context=context
     )
 
@@ -1312,7 +1312,7 @@ async def async_api_changechannel.opp, config, directive, context):
         media_player.const.ATTR_MEDIA_CONTENT_TYPE: media_player.const.MEDIA_TYPE_CHANNEL,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         media_player.const.SERVICE_PLAY_MEDIA,
         data,
@@ -1347,7 +1347,7 @@ async def async_api_skipchannel.opp, config, directive, context):
         service_media = SERVICE_MEDIA_NEXT_TRACK
 
     for _ in range(abs(channel)):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             entity.domain, service_media, data, blocking=False, context=context
         )
 
@@ -1389,7 +1389,7 @@ async def async_api_seek.opp, config, directive, context):
         media_player.ATTR_MEDIA_SEEK_POSITION: seek_position,
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         media_player.DOMAIN,
         media_player.SERVICE_MEDIA_SEEK,
         data,
@@ -1420,7 +1420,7 @@ async def async_api_set_eq_mode.opp, config, directive, context):
         msg = f"failed to map sound mode {mode} to a mode on {entity.entity_id}"
         raise AlexaInvalidValueError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain,
         media_player.SERVICE_SELECT_SOUND_MODE,
         data,
@@ -1460,7 +1460,7 @@ async def async_api_hold.opp, config, directive, context):
         msg = "Entity does not support directive"
         raise AlexaInvalidDirectiveError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, service, data, blocking=False, context=context
     )
 
@@ -1483,7 +1483,7 @@ async def async_api_resume.opp, config, directive, context):
         msg = "Entity does not support directive"
         raise AlexaInvalidDirectiveError(msg)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         entity.domain, service, data, blocking=False, context=context
     )
 

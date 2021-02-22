@@ -33,7 +33,7 @@ async def test_form.opp):
     ) as mock_setup_entry, requests_mock.mock() as _m:
         aemet_requests_mock(_m)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}
         )
 
@@ -41,11 +41,11 @@ async def test_form.opp):
         assert result["step_id"] == SOURCE_USER
         assert result["errors"] == {}
 
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], CONFIG
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         conf_entries = opp.config_entries.async_entries(DOMAIN)
         entry = conf_entries[0]
@@ -75,7 +75,7 @@ async def test_form_duplicated_id.opp):
         )
         entry.add_to.opp.opp)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -93,7 +93,7 @@ async def test_form_api_offline.opp):
         "openpeerpower.components.aemet.config_flow.AEMET",
         return_value=mocked_aemet,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 

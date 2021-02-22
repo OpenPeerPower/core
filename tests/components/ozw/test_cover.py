@@ -17,7 +17,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
     # Test setting position
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": "cover.roller_shutter_3_instance_1_level", "position": 50},
@@ -33,10 +33,10 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     cover_msg.payload["Value"] = 50
     cover_msg.encode()
     receive_message(cover_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Test opening
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "open_cover",
         {"entity_id": "cover.roller_shutter_3_instance_1_level"},
@@ -48,7 +48,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert msg["payload"] == {"Value": True, "ValueIDKey": 281475602284568}
 
     # Test stopping after opening
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": "cover.roller_shutter_3_instance_1_level"},
@@ -64,7 +64,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert msg["payload"] == {"Value": False, "ValueIDKey": 562950578995224}
 
     # Test closing
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "close_cover",
         {"entity_id": "cover.roller_shutter_3_instance_1_level"},
@@ -76,7 +76,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert msg["payload"] == {"Value": True, "ValueIDKey": 562950578995224}
 
     # Test stopping after closing
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": "cover.roller_shutter_3_instance_1_level"},
@@ -92,7 +92,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert msg["payload"] == {"Value": False, "ValueIDKey": 562950578995224}
 
     # Test stopping after no open/close
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "stop_cover",
         {"entity_id": "cover.roller_shutter_3_instance_1_level"},
@@ -109,7 +109,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert msg["payload"] == {"Value": False, "ValueIDKey": 562950578995224}
 
     # Test converting position to zwave range for position > 0
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": "cover.roller_shutter_3_instance_1_level", "position": 100},
@@ -121,7 +121,7 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert msg["payload"] == {"Value": 99, "ValueIDKey": 625573905}
 
     # Test converting position to zwave range for position = 0
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "set_cover_position",
         {"entity_id": "cover.roller_shutter_3_instance_1_level", "position": 0},
@@ -142,7 +142,7 @@ async def test_barrier.opp, cover_gdo_data, sent_messages, cover_gdo_msg):
     assert state.state == "closed"
 
     # Test opening
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "open_cover",
         {"entity_id": "cover.gd00z_4_barrier_state"},
@@ -158,14 +158,14 @@ async def test_barrier.opp, cover_gdo_data, sent_messages, cover_gdo_msg):
     cover_gdo_msg.payload[VALUE_ID][VALUE_SELECTED_ID] = 4
     cover_gdo_msg.encode()
     receive_message(cover_gdo_msg)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("cover.gd00z_4_barrier_state")
     assert state is not None
     assert state.state == "open"
 
     # Test closing
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "cover",
         "close_cover",
         {"entity_id": "cover.gd00z_4_barrier_state"},

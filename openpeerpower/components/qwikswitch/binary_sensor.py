@@ -52,7 +52,7 @@ class QSBinarySensor(QSEntity, BinarySensorEntity):
         )
         if val is not None:
             self._val = bool(val)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @property
     def is_on(self):

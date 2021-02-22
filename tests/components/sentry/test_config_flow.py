@@ -25,7 +25,7 @@ from tests.common import MockConfigEntry
 async def test_full_user_flow_implementation.opp):
     """Test we get the form."""
     await async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -37,7 +37,7 @@ async def test_full_user_flow_implementation.opp):
         "openpeerpower.components.sentry.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"dsn": "http://public@sentry.local/1"},
         )
@@ -47,7 +47,7 @@ async def test_full_user_flow_implementation.opp):
     assert result2["data"] == {
         "dsn": "http://public@sentry.local/1",
     }
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
@@ -57,7 +57,7 @@ async def test_integration_already_exists(opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_ABORT
@@ -66,7 +66,7 @@ async def test_integration_already_exists(opp):
 
 async def test_user_flow_bad_dsn.opp):
     """Test we handle bad dsn error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -74,7 +74,7 @@ async def test_user_flow_bad_dsn.opp):
         "openpeerpower.components.sentry.config_flow.Dsn",
         side_effect=BadDsn,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"dsn": "foo"},
         )
@@ -85,7 +85,7 @@ async def test_user_flow_bad_dsn.opp):
 
 async def test_user_flow_unkown_exception.opp):
     """Test we handle any unknown exception error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -93,7 +93,7 @@ async def test_user_flow_unkown_exception.opp):
         "openpeerpower.components.sentry.config_flow.Dsn",
         side_effect=Exception,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"dsn": "foo"},
         )
@@ -111,15 +111,15 @@ async def test_options_flow.opp):
     entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.sentry.async_setup_entry", return_value=True):
-        assert await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_ENVIRONMENT: "Test",

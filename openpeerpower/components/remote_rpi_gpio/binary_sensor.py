@@ -69,7 +69,7 @@ class RemoteRPiGPIOBinarySensor(BinarySensorEntity):
         def read_gpio():
             """Read state from GPIO."""
             self._state = remote_rpi_gpio.read_input(self._button)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         self._button.when_released = read_gpio
         self._button.when_pressed = read_gpio

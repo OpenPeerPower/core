@@ -37,7 +37,7 @@ class KiraReceiver(Entity):
         _LOGGER.debug("Kira Code: %s", code_name)
         self._state = code_name
         self._device = device
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def name(self):

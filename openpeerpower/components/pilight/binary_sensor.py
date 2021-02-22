@@ -115,7 +115,7 @@ class PilightBinarySensor(BinarySensorEntity):
                 return
             value = call.data[self._variable]
             self._state = value == self._on_value
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
 
 class PilightTriggerSensor(BinarySensorEntity):
@@ -151,7 +151,7 @@ class PilightTriggerSensor(BinarySensorEntity):
     def _reset_state(self, call):
         self._state = False
         self._delay_after = None
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _handle_code(self, call):
         """Handle received code by the pilight-daemon.
@@ -179,4 +179,4 @@ class PilightTriggerSensor(BinarySensorEntity):
                     seconds=self._reset_delay_sec
                 )
                 track_point_in_time(self.opp, self._reset_state, self._delay_after)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()

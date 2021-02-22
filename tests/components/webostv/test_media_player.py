@@ -49,7 +49,7 @@ async def setup_webostv.opp):
         DOMAIN,
         {DOMAIN: {CONF_HOST: "fake", CONF_NAME: NAME}},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_mute.opp, client):
@@ -61,8 +61,8 @@ async def test_mute.opp, client):
         ATTR_ENTITY_ID: ENTITY_ID,
         ATTR_MEDIA_VOLUME_MUTED: True,
     }
-    await.opp.services.async_call(media_player.DOMAIN, SERVICE_VOLUME_MUTE, data)
-    await.opp.async_block_till_done()
+    await opp.services.async_call(media_player.DOMAIN, SERVICE_VOLUME_MUTE, data)
+    await opp.async_block_till_done()
 
     client.set_mute.assert_called_once()
 
@@ -76,8 +76,8 @@ async def test_select_source_with_empty_source_list.opp, client):
         ATTR_ENTITY_ID: ENTITY_ID,
         ATTR_INPUT_SOURCE: "nonexistent",
     }
-    await.opp.services.async_call(media_player.DOMAIN, SERVICE_SELECT_SOURCE, data)
-    await.opp.async_block_till_done()
+    await opp.services.async_call(media_player.DOMAIN, SERVICE_SELECT_SOURCE, data)
+    await opp.async_block_till_done()
 
     client.launch_app.assert_not_called()
     client.set_input.assert_not_called()
@@ -92,8 +92,8 @@ async def test_button.opp, client):
         ATTR_ENTITY_ID: ENTITY_ID,
         ATTR_BUTTON: "test",
     }
-    await.opp.services.async_call(DOMAIN, SERVICE_BUTTON, data)
-    await.opp.async_block_till_done()
+    await opp.services.async_call(DOMAIN, SERVICE_BUTTON, data)
+    await opp.async_block_till_done()
 
     client.button.assert_called_once()
     client.button.assert_called_with("test")
@@ -107,8 +107,8 @@ async def test_command.opp, client):
         ATTR_ENTITY_ID: ENTITY_ID,
         ATTR_COMMAND: "test",
     }
-    await.opp.services.async_call(DOMAIN, SERVICE_COMMAND, data)
-    await.opp.async_block_till_done()
+    await opp.services.async_call(DOMAIN, SERVICE_COMMAND, data)
+    await opp.async_block_till_done()
 
     client.request.assert_called_with("test", payload=None)
 
@@ -122,8 +122,8 @@ async def test_command_with_optional_arg.opp, client):
         ATTR_COMMAND: "test",
         ATTR_PAYLOAD: {"target": "https://www.google.com"},
     }
-    await.opp.services.async_call(DOMAIN, SERVICE_COMMAND, data)
-    await.opp.async_block_till_done()
+    await opp.services.async_call(DOMAIN, SERVICE_COMMAND, data)
+    await opp.async_block_till_done()
 
     client.request.assert_called_with(
         "test", payload={"target": "https://www.google.com"}

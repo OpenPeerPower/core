@@ -166,7 +166,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
         "state": {"on": False},
     }
     gateway.api.event_handler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     rgb_light = opp.states.get("light.rgb_light")
     assert rgb_light.state == STATE_OFF
@@ -177,7 +177,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
 
     # Service turn on light with short color loop
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -200,7 +200,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
 
     # Service turn on light disabling color loop with long flashing
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -219,7 +219,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
 
     # Service turn on light with short flashing not supported
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {
@@ -239,11 +239,11 @@ async def test_lights_and_groups.opp, aioclient_mock):
         "state": {"on": True},
     }
     gateway.api.event_handler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Service turn off light with short flashing
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {
@@ -261,7 +261,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
 
     # Service turn off light with long flashing
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "light.rgb_light", ATTR_FLASH: FLASH_LONG},
@@ -269,15 +269,15 @@ async def test_lights_and_groups.opp, aioclient_mock):
     )
     assert aioclient_mock.mock_calls[4][2] == {"alert": "lselect"}
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
     assert len.opp.states.async_all()) == 6
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
-    await.opp.config_entries.async_remove(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_remove(config_entry.entry_id)
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
@@ -302,7 +302,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: True}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 6
     assert.opp.states.get("light.light_group")
@@ -310,7 +310,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
    .opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: False}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 5
     assert.opp.states.get("light.light_group") is None
@@ -371,7 +371,7 @@ async def test_lidl_christmas_light.opp, aioclient_mock):
 
     mock_deconz_put_request(aioclient_mock, config_entry.data, "/lights/0/state")
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -494,7 +494,7 @@ async def test_non_color_light_reports_color.opp, aioclient_mock):
         "uniqueid": "ec:1b:bd:ff:fe:ee:ed:dd-01",
     }
     gateway.api.event_handler(state_changed_event)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Bug is fixed if we reach this point, but device won't have neither color temp nor color
     with pytest.raises(KeyError):

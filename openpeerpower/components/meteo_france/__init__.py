@@ -63,7 +63,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     client = MeteoFranceClient()
     # Migrate from previous config
     if not latitude:
-        places = await.opp.async_add_executor_job(
+        places = await opp.async_add_executor_job(
             client.search_places, entry.data[CONF_CITY]
         )
        .opp.config_entries.async_update_entry(
@@ -212,4 +212,4 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)

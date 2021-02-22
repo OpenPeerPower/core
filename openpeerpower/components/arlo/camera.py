@@ -70,7 +70,7 @@ class ArloCam(Camera):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(
-                self.opp, SIGNAL_UPDATE_ARLO, self.async_write_ha_state
+                self.opp, SIGNAL_UPDATE_ARLO, self.async_write_op_state
             )
         )
 

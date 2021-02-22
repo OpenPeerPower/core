@@ -138,4 +138,4 @@ class SenseDevice(BinarySensorEntity):
             return
         self._available = True
         self._state = new_state
-        self.async_write_ha_state()
+        self.async_write_op_state()

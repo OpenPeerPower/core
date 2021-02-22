@@ -63,7 +63,7 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
     respx.get("http://localhost").respond(
@@ -78,11 +78,11 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
 
     # Refresh the coordinator
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=31))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Wait for platform setup retry
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=61))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 4
 
@@ -96,7 +96,7 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
 
     # Refresh the coordinator
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=31))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.sensor1").state == STATE_UNAVAILABLE
     assert.opp.states.get("sensor.sensor2").state == STATE_UNAVAILABLE
@@ -116,7 +116,7 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
         },
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "openpeerpower",
         "update_entity",
         {ATTR_ENTITY_ID: ["sensor.sensor1"]},
@@ -177,7 +177,7 @@ async def test_setup_minimum_resource_template.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 4
 
     assert.opp.states.get("sensor.sensor1").state == "1"
@@ -211,9 +211,9 @@ async def test_reload.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -225,13 +225,13 @@ async def test_reload.opp):
         "rest/configuration_top_level.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.mockreset") is None
     assert.opp.states.get("sensor.rollout")
@@ -263,9 +263,9 @@ async def test_reload_and_remove_all.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -277,13 +277,13 @@ async def test_reload_and_remove_all.opp):
         "rest/configuration_empty.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.mockreset") is None
 
@@ -313,9 +313,9 @@ async def test_reload_fails_to_read_configuration.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 
@@ -325,13 +325,13 @@ async def test_reload_fails_to_read_configuration.opp):
         "rest/configuration_invalid.notyaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
 

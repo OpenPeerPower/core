@@ -112,7 +112,7 @@ class CoverGroup(GroupEntity, CoverEntity):
             for values in self._tilts.values():
                 values.discard(entity_id)
             if update_state:
-                await self.async_defer_or_update_ha_state()
+                await self.async_defer_or_update_op_state()
             return
 
         features = new_state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
@@ -144,7 +144,7 @@ class CoverGroup(GroupEntity, CoverEntity):
             self._tilts[KEY_POSITION].discard(entity_id)
 
         if update_state:
-            await self.async_defer_or_update_ha_state()
+            await self.async_defer_or_update_op_state()
 
     async def async_added_to.opp(self):
         """Register listeners."""

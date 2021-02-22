@@ -293,7 +293,7 @@ class AdsEntity(Entity):
                 self._state_dict[state_key] = value / factor
 
             asyncio.run_coroutine_threadsafe(async_event_set(), self.opp.loop)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         async def async_event_set():
             """Set event in async context."""

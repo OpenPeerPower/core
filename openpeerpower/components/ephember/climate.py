@@ -44,13 +44,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {vol.Required(CONF_USERNAME): cv.string, vol.Required(CONF_PASSWORD): cv.string}
 )
 
-EPH_TO_HA_STATE = {
+EPH_TO_OP_STATE = {
     "AUTO": HVAC_MODE_HEAT_COOL,
     "ON": HVAC_MODE_HEAT,
     "OFF": HVAC_MODE_OFF,
 }
 
-HA_STATE_TO_EPH = {value: key for key, value in EPH_TO_HA_STATE.items()}
+HA_STATE_TO_EPH = {value: key for key, value in EPH_TO_OP_STATE.items()}
 
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
@@ -205,4 +205,4 @@ class EphEmberThermostat(ClimateEntity):
     @staticmethod
     def map_mode_eph.opp(operation_mode):
         """Map from eph mode to Open Peer Power mode."""
-        return EPH_TO_HA_STATE.get(operation_mode.name, HVAC_MODE_HEAT_COOL)
+        return EPH_TO_OP_STATE.get(operation_mode.name, HVAC_MODE_HEAT_COOL)

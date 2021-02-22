@@ -168,7 +168,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
 
         self.coordinator.device.target_temperature = round(temperature)
         await self.coordinator.push_state_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def min_temp(self) -> float:
@@ -207,7 +207,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
         if hvac_mode == HVAC_MODE_OFF:
             self.coordinator.device.power = False
             await self.coordinator.push_state_update()
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         if not self.coordinator.device.power:
@@ -215,7 +215,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
 
         self.coordinator.device.mode = HVAC_MODES_REVERSE.get(hvac_mode)
         await self.coordinator.push_state_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_on(self) -> None:
         """Turn on the device."""
@@ -223,7 +223,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
 
         self.coordinator.device.power = True
         await self.coordinator.push_state_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self) -> None:
         """Turn off the device."""
@@ -231,7 +231,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
 
         self.coordinator.device.power = False
         await self.coordinator.push_state_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def hvac_modes(self) -> List[str]:
@@ -279,7 +279,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
             self.coordinator.device.sleep = True
 
         await self.coordinator.push_state_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def preset_modes(self) -> List[str]:
@@ -299,7 +299,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
 
         self.coordinator.device.fan_speed = FAN_MODES_REVERSE.get(fan_mode)
         await self.coordinator.push_state_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def fan_modes(self) -> List[str]:
@@ -339,7 +339,7 @@ class GreeClimateEntity(CoordinatorEntity, ClimateEntity):
             self.coordinator.device.vertical_swing = VerticalSwing.FullSwing
 
         await self.coordinator.push_state_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def swing_modes(self) -> List[str]:

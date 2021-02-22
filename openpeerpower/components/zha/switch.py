@@ -61,7 +61,7 @@ class BaseSwitch(SwitchEntity):
         if not isinstance(result, list) or result[1] is not Status.SUCCESS:
             return
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the entity off."""
@@ -69,7 +69,7 @@ class BaseSwitch(SwitchEntity):
         if not isinstance(result, list) or result[1] is not Status.SUCCESS:
             return
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 @STRICT_MATCH(channel_names=CHANNEL_ON_OFF)
@@ -85,7 +85,7 @@ class Switch(BaseSwitch, ZhaEntity):
     def async_set_state(self, attr_id: int, attr_name: str, value: Any):
         """Handle state update from channel."""
         self._state = bool(value)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self) -> None:
         """Run when about to be added to.opp."""

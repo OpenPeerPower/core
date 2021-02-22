@@ -57,7 +57,7 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
     zigpy_device_dt.last_seen = time.time() - 120
     next_update = dt_util.utcnow() + timedelta(seconds=30)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
@@ -73,7 +73,7 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
     zigpy_device_dt.last_seen = time.time() + 10
     next_update = dt_util.utcnow() + timedelta(seconds=30)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.states.get(entity_id).state == STATE_HOME
 

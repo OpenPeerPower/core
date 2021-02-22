@@ -59,7 +59,7 @@ async def test_firing_event_basic.opp, caplog):
     )
 
     await script_obj.async_run(context=context)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].context is context
@@ -99,7 +99,7 @@ async def test_firing_event_template.opp):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(MappingProxyType({"is_world": "yes"}), context=context)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].context is context
@@ -123,7 +123,7 @@ async def test_calling_service_basic.opp, caplog):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=context)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].context is context
@@ -158,7 +158,7 @@ async def test_calling_service_template.opp):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(MappingProxyType({"is_world": "yes"}), context=context)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].context is context
@@ -178,7 +178,7 @@ async def test_data_template_with_templated_key.opp):
     await script_obj.async_run(
         MappingProxyType({"hello_var": "hello"}), context=context
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].context is context
@@ -253,7 +253,7 @@ async def test_multiple_runs_no_wait.opp):
         MappingProxyType({"fire1": "2", "listen1": "3", "fire2": "4", "listen2": "4"}),
         Context(),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 4
 
@@ -268,7 +268,7 @@ async def test_activating_scene.opp, caplog):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=context)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].context is context
@@ -319,7 +319,7 @@ async def test_stop_no_wait.opp, count):
    .opp.async_create_task(script_obj.async_stop())
     finish_service_event.set()
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert script_was_runing
     assert were_no_events
@@ -345,7 +345,7 @@ async def test_delay_basic.opp):
         raise
     else:
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert script_obj.last_action is None
@@ -385,7 +385,7 @@ async def test_multiple_runs_delay.opp):
        .opp.async_create_task(script_obj.async_run(context=Context()))
         await asyncio.wait_for(delay_started_flag.wait(), 1)
         async_fire_time_changed.opp, dt_util.utcnow() + delay)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 4
@@ -410,7 +410,7 @@ async def test_delay_template_ok.opp):
         raise
     else:
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
 
@@ -431,7 +431,7 @@ async def test_delay_template_invalid.opp, caplog):
     start_idx = len(caplog.records)
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert any(
         rec.levelname == "ERROR" and "Error rendering" in rec.message
@@ -457,7 +457,7 @@ async def test_delay_template_complex_ok.opp):
         raise
     else:
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
 
@@ -478,7 +478,7 @@ async def test_delay_template_complex_invalid.opp, caplog):
     start_idx = len(caplog.records)
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert any(
         rec.levelname == "ERROR" and "Error rendering" in rec.message
@@ -514,7 +514,7 @@ async def test_cancel_delay.opp):
         # Make sure the script is really stopped.
 
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 0
@@ -549,7 +549,7 @@ async def test_wait_basic.opp, action_type):
         raise
     else:
        .opp.states.async_set("switch.test", "off")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert script_obj.last_action is None
@@ -587,9 +587,9 @@ async def test_wait_for_trigger_variables.opp):
         assert script_obj.last_action == wait_alias
        .opp.states.async_set("switch.test", "off")
         # the script task +  2 tasks created by wait_for_trigger script step
-        await.opp.async_wait_for_task_count(3)
+        await opp.async_wait_for_task_count(3)
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
     except (AssertionError, asyncio.TimeoutError):
         await script_obj.async_stop()
         raise
@@ -625,7 +625,7 @@ async def test_wait_basic_times_out.opp, action_type):
        .opp.states.async_set("switch.test", "not_on")
 
         with timeout(0.1):
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
     except asyncio.TimeoutError:
         timed_out = True
         await script_obj.async_stop()
@@ -678,7 +678,7 @@ async def test_multiple_runs_wait.opp, action_type):
         raise
     else:
        .opp.states.async_set("switch.test", "off")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 4
@@ -724,7 +724,7 @@ async def test_cancel_wait.opp, action_type):
         # Make sure the script is really stopped.
 
        .opp.states.async_set("switch.test", "off")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 0
@@ -745,7 +745,7 @@ async def test_wait_template_not_schedule.opp):
 
    .opp.states.async_set("switch.test", "on")
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert not script_obj.is_running
     assert len(events) == 2
@@ -793,7 +793,7 @@ async def test_wait_timeout.opp, caplog, timeout_param, action_type):
         assert len(events) == 0
 
         async_fire_time_changed.opp, cur_time + timedelta(seconds=5))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 1
@@ -839,7 +839,7 @@ async def test_wait_continue_on_timeout(
         raise
     else:
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == n_events
@@ -864,7 +864,7 @@ async def test_wait_template_variables_in.opp):
         raise
     else:
        .opp.states.async_set("switch.test", "off")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
 
@@ -890,7 +890,7 @@ async def test_wait_template_with_utcnow.opp):
         await script_obj.async_stop()
         raise
     else:
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert not script_obj.is_running
 
 
@@ -916,7 +916,7 @@ async def test_wait_template_with_utcnow_no_match.opp):
             async_fire_time_changed.opp, second_non_maching_time)
 
         with timeout(0.1):
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
     except asyncio.TimeoutError:
         timed_out = True
         await script_obj.async_stop()
@@ -974,7 +974,7 @@ async def test_wait_variables_out.opp, mode, action_type):
             async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
         else:
            .opp.states.async_set("switch.test", "off")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 1
@@ -1012,7 +1012,7 @@ async def test_wait_for_trigger_bad.opp, caplog):
         wraps=async_attach_trigger_mock,
     ):
        .opp.async_create_task(script_obj.async_run())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "Unknown error while setting up trigger" in caplog.text
 
@@ -1036,7 +1036,7 @@ async def test_wait_for_trigger_generated_exception.opp, caplog):
         wraps=async_attach_trigger_mock,
     ):
        .opp.async_create_task(script_obj.async_run())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "Error setting up trigger" in caplog.text
     assert "ValueError" in caplog.text
@@ -1065,7 +1065,7 @@ async def test_condition_warning.opp, caplog):
 
    .opp.states.async_set("test.entity", "string")
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(caplog.record_tuples) == 1
     assert caplog.record_tuples[0][1] == logging.WARNING
@@ -1093,7 +1093,7 @@ async def test_condition_basic.opp, caplog):
 
    .opp.states.async_set("test.entity", "hello")
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert f"Test condition {alias}: True" in caplog.text
     caplog.clear()
@@ -1102,7 +1102,7 @@ async def test_condition_basic.opp, caplog):
    .opp.states.async_set("test.entity", "goodbye")
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert f"Test condition {alias}: False" in caplog.text
     assert len(events) == 3
@@ -1126,7 +1126,7 @@ async def test_condition_created_once(async_from_config, opp):
    .opp.states.async_set("test.entity", "hello")
     await script_obj.async_run(context=Context())
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_from_config.assert_called_once()
     assert len(script_obj._config_cache) == 1
@@ -1150,7 +1150,7 @@ async def test_condition_all_cached.opp):
 
    .opp.states.async_set("test.entity", "hello")
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(script_obj._config_cache) == 2
 
@@ -1181,7 +1181,7 @@ async def test_repeat_count.opp, caplog):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == count
     for index, event in enumerate(events):
@@ -1471,13 +1471,13 @@ async def test_choose_warning.opp, caplog):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
    .opp.states.async_set("test.entity", "9")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     caplog.clear()
     caplog.set_level(logging.WARNING)
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(caplog.record_tuples) == 2
     assert caplog.record_tuples[0][1] == logging.WARNING
@@ -1531,7 +1531,7 @@ async def test_choose.opp, caplog, var, result):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(MappingProxyType({"var": var}), Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].data["choice"] == result
@@ -1564,7 +1564,7 @@ async def test_multiple_runs_repeat_choose.opp, caplog, action):
     events = async_capture_events.opp, "abc")
     for _ in range(max_runs):
        .opp.async_create_task(script_obj.async_run(context=Context()))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "WARNING" not in caplog.text
     assert "ERROR" not in caplog.text
@@ -1582,7 +1582,7 @@ async def test_last_triggered.opp):
     time = dt_util.utcnow()
     with mock.patch("openpeerpower.helpers.script.utcnow", return_value=time):
         await script_obj.async_run(context=Context())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert script_obj.last_triggered == time
 
@@ -1784,7 +1784,7 @@ async def test_script_mode_single.opp, caplog):
         raise
     else:
        .opp.states.async_set("switch.test", "off")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 2
@@ -1823,7 +1823,7 @@ async def test_max_exceeded.opp, caplog, max_exceeded, script_mode, max_runs):
     for _ in range(max_runs + 1):
        .opp.async_create_task(script_obj.async_run(context=Context()))
    .opp.states.async_set("switch.test", "off")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     if max_exceeded is None:
         max_exceeded = "WARNING"
     if max_exceeded == "SILENT":
@@ -1905,7 +1905,7 @@ async def test_script_mode_2.opp, caplog, script_mode, messages, last_events):
         raise
     else:
        .opp.states.async_set("switch.test", "off")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == 2 + len(last_events)
@@ -2002,7 +2002,7 @@ async def test_script_mode_queued.opp):
        .opp.states.async_set("switch.test", "off")
         await asyncio.sleep(0)
        .opp.states.async_set("switch.test", "on")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert script_obj.runs == 0
@@ -2078,7 +2078,7 @@ async def test_shutdown_at.opp, caplog):
         raise
     else:
        .opp.bus.async_fire("openpeerpower_stop")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert "Stopping scripts running at shutdown: test script" in caplog.text
@@ -2093,7 +2093,7 @@ async def test_shutdown_after.opp, caplog):
 
    .opp.state = CoreState.stopping
    .opp.bus.async_fire("openpeerpower_stop")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     try:
        .opp.async_create_task(script_obj.async_run(context=Context()))
@@ -2106,7 +2106,7 @@ async def test_shutdown_after.opp, caplog):
         raise
     else:
         async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=60))
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert (
@@ -2121,7 +2121,7 @@ async def test_update_logger.opp, caplog):
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert script.__name__ in caplog.text
 
@@ -2129,7 +2129,7 @@ async def test_update_logger.opp, caplog):
     script_obj.update_logger(logging.getLogger(log_name))
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert log_name in caplog.text
 
@@ -2148,7 +2148,7 @@ async def test_started_action.opp, caplog):
         logger.info(log_message)
 
     await script_obj.async_run(context=Context(), started_action=started_action)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert log_message in caplog.text
 
@@ -2167,7 +2167,7 @@ async def test_set_variable.opp, caplog):
     mock_calls = async_mock_service.opp, "test", "script")
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert mock_calls[0].data["value"] == "value"
     assert f"Executing step {alias}" in caplog.text
@@ -2188,7 +2188,7 @@ async def test_set_redefines_variable.opp, caplog):
     mock_calls = async_mock_service.opp, "test", "script")
 
     await script_obj.async_run(context=Context())
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert mock_calls[0].data["value"] == 1
     assert mock_calls[1].data["value"] == 2
@@ -2300,6 +2300,6 @@ async def test_embedded_wait_for_trigger_in_automation.opp):
     # Start automation
    .opp.bus.async_fire("test_event")
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(mock_calls) == 1

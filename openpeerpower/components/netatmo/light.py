@@ -120,7 +120,7 @@ class NetatmoLight(NetatmoBase, LightEntity):
         ):
             self._is_on = bool(data["sub_type"] == "on")
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
     @property

@@ -185,7 +185,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def async_reload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Handle an options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 class RainMachineEntity(CoordinatorEntity):
@@ -238,7 +238,7 @@ class RainMachineEntity(CoordinatorEntity):
     def _handle_coordinator_update(self):
         """Respond to a DataUpdateCoordinator update."""
         self.update_from_latest_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Handle entity which will be added."""

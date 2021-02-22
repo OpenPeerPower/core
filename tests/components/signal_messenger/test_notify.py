@@ -29,7 +29,7 @@ async def test_signal_messenger_init.opp):
 
     with patch("pysignalclirestapi.SignalCliRestApi.send_message", return_value=None):
         assert await async_setup_component.opp, BASE_COMPONENT, config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Test that service loads successfully
         assert.opp.services.has_service(BASE_COMPONENT, "test")

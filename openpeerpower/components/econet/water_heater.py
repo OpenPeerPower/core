@@ -70,7 +70,7 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
             # Water heater running state has changed so check usage on next update
             self._poll = True
             self._running = self.water_heater.running
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def is_away_mode_on(self):

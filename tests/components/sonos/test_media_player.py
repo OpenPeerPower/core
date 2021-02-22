@@ -11,7 +11,7 @@ async def setup_platform.opp, config_entry, config):
     """Set up the media player platform for testing."""
     config_entry.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_async_setup_entry_hosts.opp, config_entry, config, soco):
@@ -35,7 +35,7 @@ async def test_services.opp, config_entry, config, opp_read_only_user):
     await setup_platform.opp, config_entry, config)
 
     with pytest.raises(Unauthorized):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             media_player.SERVICE_JOIN,
             {"master": "media_player.bla", "entity_id": "media_player.blub"},
@@ -48,7 +48,7 @@ async def test_device_registry.opp, config_entry, config, soco):
     """Test sonos device registered in the device registry."""
     await setup_platform.opp, config_entry, config)
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     reg_device = device_registry.async_get_device(
         identifiers={("sonos", "RINCON_test")}
     )

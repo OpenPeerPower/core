@@ -157,7 +157,7 @@ class VelbusEntity(Entity):
         self._module.on_status_update(self._channel, self._on_update)
 
     def _on_update(self, state):
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def device_info(self):

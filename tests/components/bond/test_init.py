@@ -46,7 +46,7 @@ async def test_async_setup_raises_entry_not_ready.opp: OpenPeerPower):
     config_entry.add_to.opp.opp)
 
     with patch_bond_version(side_effect=ClientConnectionError()):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -72,7 +72,7 @@ async def test_async_setup_entry_sets_up_hub_and_supported_domains.opp: OpenPeer
     ) as mock_switch_async_setup_entry:
         result = await setup_bond_entity.opp, config_entry, patch_device_ids=True)
         assert result is True
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert config_entry.entry_id in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
@@ -109,10 +109,10 @@ async def test_unload_config_entry.opp: OpenPeerPower):
         patch_bridge=True,
     )
     assert result is True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.config_entries.async_unload(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_unload(config_entry.entry_id)
+    await opp.async_block_till_done()
 
     assert config_entry.entry_id not in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_NOT_LOADED
@@ -127,7 +127,7 @@ async def test_old_identifiers_are_removed.opp: OpenPeerPower):
 
     old_identifers = (DOMAIN, "device_id")
     new_identifiers = (DOMAIN, "test-bond-id", "device_id")
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         identifiers={old_identifers},
@@ -155,8 +155,8 @@ async def test_old_identifiers_are_removed.opp: OpenPeerPower):
     ), patch_bond_device_state(
         return_value={}
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id) is True
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id) is True
+        await opp.async_block_till_done()
 
     assert config_entry.entry_id in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
@@ -197,14 +197,14 @@ async def test_smart_by_bond_device_suggested_area.opp: OpenPeerPower):
     ), patch_bond_device_state(
         return_value={}
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id) is True
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id) is True
+        await opp.async_block_till_done()
 
     assert config_entry.entry_id in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
     assert config_entry.unique_id == "test-bond-id"
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get_device(identifiers={(DOMAIN, "test-bond-id")})
     assert device is not None
     assert device.suggested_area == "Den"
@@ -243,14 +243,14 @@ async def test_bridge_device_suggested_area.opp: OpenPeerPower):
     ), patch_bond_device_state(
         return_value={}
     ):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id) is True
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id) is True
+        await opp.async_block_till_done()
 
     assert config_entry.entry_id in.opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
     assert config_entry.unique_id == "test-bond-id"
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get_device(identifiers={(DOMAIN, "test-bond-id")})
     assert device is not None
     assert device.suggested_area == "Office"

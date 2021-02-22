@@ -269,7 +269,7 @@ class BrSensor(Entity):
     def data_updated(self, data):
         """Update data."""
         if self._load_data(data) and self.opp:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     @callback
     def _load_data(self, data):

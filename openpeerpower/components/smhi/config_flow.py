@@ -51,7 +51,7 @@ class SmhiFlowHandler(config_entries.ConfigFlow):
             else:
                 self._errors["base"] = "wrong_location"
 
-        # If.opp config has the location set and is a valid coordinate the
+        # If opp config has the location set and is a valid coordinate the
         # default location is set as default values in the form
         if not smhi_locations(self.opp):
             if await self._openpeerpower_location_exists():

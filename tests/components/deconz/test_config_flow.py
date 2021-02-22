@@ -51,14 +51,14 @@ async def test_flow_discovered_bridges.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_HOST: "1.2.3.4"}
     )
 
@@ -71,7 +71,7 @@ async def test_flow_discovered_bridges.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -92,18 +92,18 @@ async def test_flow_manual_configuration_decision.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_HOST: CONF_MANUAL_INPUT}
     )
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "manual_input"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_HOST: "1.2.3.4", CONF_PORT: 80},
     )
@@ -123,7 +123,7 @@ async def test_flow_manual_configuration_decision.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -144,14 +144,14 @@ async def test_flow_manual_configuration.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "manual_input"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_HOST: "1.2.3.4", CONF_PORT: 80},
     )
@@ -171,7 +171,7 @@ async def test_flow_manual_configuration.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -188,7 +188,7 @@ async def test_manual_configuration_after_discovery_timeout.opp, aioclient_mock)
     """Test failed discovery fallbacks to manual configuration."""
     aioclient_mock.get(pydeconz.utils.URL_DISCOVER, exc=asyncio.TimeoutError)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -201,7 +201,7 @@ async def test_manual_configuration_after_discovery_Responseerror(opp, aioclient
     """Test failed discovery fallbacks to manual configuration."""
     aioclient_mock.get(pydeconz.utils.URL_DISCOVER, exc=pydeconz.errors.ResponseError)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -220,14 +220,14 @@ async def test_manual_configuration_update_configuration.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "manual_input"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_HOST: "2.3.4.5", CONF_PORT: 80},
     )
@@ -247,7 +247,7 @@ async def test_manual_configuration_update_configuration.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -266,14 +266,14 @@ async def test_manual_configuration_dont_update_configuration.opp, aioclient_moc
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "manual_input"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_HOST: "1.2.3.4", CONF_PORT: 80},
     )
@@ -293,7 +293,7 @@ async def test_manual_configuration_dont_update_configuration.opp, aioclient_moc
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -309,14 +309,14 @@ async def test_manual_configuration_timeout_get_bridge.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "manual_input"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={CONF_HOST: "1.2.3.4", CONF_PORT: 80},
     )
@@ -334,7 +334,7 @@ async def test_manual_configuration_timeout_get_bridge.opp, aioclient_mock):
         f"http://1.2.3.4:80/api/{API_KEY}/config", exc=asyncio.TimeoutError
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -350,11 +350,11 @@ async def test_link_get_api_key_Responseerror(opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN, context={"source": SOURCE_USER}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_HOST: "1.2.3.4"}
     )
 
@@ -363,7 +363,7 @@ async def test_link_get_api_key_Responseerror(opp, aioclient_mock):
 
     aioclient_mock.post("http://1.2.3.4:80/api", exc=pydeconz.errors.ResponseError)
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -376,7 +376,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
     """Verify reauth flow can update gateway API key."""
     config_entry = await setup_deconz_integration.opp, aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
         data=config_entry.data,
         context={"source": SOURCE_REAUTH},
@@ -399,7 +399,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -410,7 +410,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
 
 async def test_flow_ssdp_discovery.opp, aioclient_mock):
     """Test that config flow for one discovered bridge works."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
         data={
             ATTR_SSDP_LOCATION: "http://1.2.3.4:80/",
@@ -429,7 +429,7 @@ async def test_flow_ssdp_discovery.opp, aioclient_mock):
         headers={"content-type": CONTENT_TYPE_JSON},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -450,7 +450,7 @@ async def test_ssdp_discovery_update_configuration.opp, aioclient_mock):
         "openpeerpower.components.deconz.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DECONZ_DOMAIN,
             data={
                 ATTR_SSDP_LOCATION: "http://2.3.4.5:80/",
@@ -459,7 +459,7 @@ async def test_ssdp_discovery_update_configuration.opp, aioclient_mock):
             },
             context={"source": SOURCE_SSDP},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -471,7 +471,7 @@ async def test_ssdp_discovery_dont_update_configuration.opp, aioclient_mock):
     """Test if a discovered bridge has already been configured."""
     config_entry = await setup_deconz_integration.opp, aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
         data={
             ATTR_SSDP_LOCATION: "http://1.2.3.4:80/",
@@ -494,7 +494,7 @@ async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
        .opp, aioclient_mock, source=SOURCE_HASSIO
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
         data={
             ATTR_SSDP_LOCATION: "http://1.2.3.4:80/",
@@ -511,7 +511,7 @@ async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
 
 async def test_flow.oppio_discovery.opp):
     """Test.oppio discovery flow works."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
         data={
             "addon": "Mock Addon",
@@ -532,10 +532,10 @@ async def test_flow.oppio_discovery.opp):
         "openpeerpower.components.deconz.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["result"].data == {
@@ -555,7 +555,7 @@ async def test.oppio_discovery_update_configuration.opp, aioclient_mock):
         "openpeerpower.components.deconz.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DECONZ_DOMAIN,
             data={
                 CONF_HOST: "2.3.4.5",
@@ -565,7 +565,7 @@ async def test.oppio_discovery_update_configuration.opp, aioclient_mock):
             },
             context={"source": SOURCE_HASSIO},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -579,7 +579,7 @@ async def test.oppio_discovery_dont_update_configuration.opp, aioclient_mock):
     """Test we can update an existing config entry."""
     await setup_deconz_integration.opp, aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
         data={
             CONF_HOST: "1.2.3.4",
@@ -598,12 +598,12 @@ async def test_option_flow.opp, aioclient_mock):
     """Test config flow options."""
     config_entry = await setup_deconz_integration.opp, aioclient_mock)
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "deconz_devices"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_ALLOW_CLIP_SENSOR: False,

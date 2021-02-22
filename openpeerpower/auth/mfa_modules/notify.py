@@ -298,8 +298,8 @@ class NotifySetupFlow(SetupFlow):
         if user_input:
             self._notify_service = user_input["notify_service"]
             self._target = user_input.get("target")
-            self._secret = await.opp.async_add_executor_job(_generate_secret)
-            self._count = await.opp.async_add_executor_job(_generate_random)
+            self._secret = await opp.async_add_executor_job(_generate_secret)
+            self._count = await opp.async_add_executor_job(_generate_random)
 
             return await self.async_step_setup()
 
@@ -322,7 +322,7 @@ class NotifySetupFlow(SetupFlow):
 
         opp =self._auth_module.opp
         if user_input:
-            verified = await.opp.async_add_executor_job(
+            verified = await opp.async_add_executor_job(
                 _verify_otp, self._secret, user_input["code"], self._count
             )
             if verified:
@@ -336,7 +336,7 @@ class NotifySetupFlow(SetupFlow):
 
         # generate code every time, no retry logic
         assert self._secret and self._count
-        code = await.opp.async_add_executor_job(
+        code = await opp.async_add_executor_job(
             _generate_otp, self._secret, self._count
         )
 

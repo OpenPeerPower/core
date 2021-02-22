@@ -316,7 +316,7 @@ async def async_handle_waypoint.opp, name_base, waypoint):
     )
     zone.opp = opp
     zone.entity_id = entity_id
-    zone.async_write_ha_state()
+    zone.async_write_op_state()
 
 
 @HANDLERS.register("waypoint")

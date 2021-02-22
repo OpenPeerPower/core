@@ -36,7 +36,7 @@ from .conftest import (
 async def test_setup_with_no_config(opp):
     """Test DOMAIN is empty if there is no config."""
     assert await async_setup_component.opp, DOMAIN, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert DOMAIN not in.opp.config_entries.async_domains()
 
 
@@ -105,14 +105,14 @@ async def test_update_skip_unsubscribed.opp):
     )
 
     with patch(MOCK_API_FETCH) as mock_fetch:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             HA_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: TEST_ENTITY_ID},
             blocking=True,
         )
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_fetch.assert_not_called()
 
 
@@ -121,13 +121,13 @@ async def test_update_disabled.opp, ev_entry):
     with patch(MOCK_API_FETCH, side_effect=SubaruException("403 Error"),), patch(
         MOCK_API_UPDATE,
     ) as mock_update:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             HA_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: TEST_ENTITY_ID},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         mock_update.assert_not_called()
 
 
@@ -148,6 +148,6 @@ async def test_fetch_failed.opp):
 async def test_unload_entry.opp, ev_entry):
     """Test that entry is unloaded."""
     assert ev_entry.state == ENTRY_STATE_LOADED
-    assert await.opp.config_entries.async_unload(ev_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_unload(ev_entry.entry_id)
+    await opp.async_block_till_done()
     assert ev_entry.state == ENTRY_STATE_NOT_LOADED

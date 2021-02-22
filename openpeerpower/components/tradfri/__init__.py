@@ -66,7 +66,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         entry.data.get("host") for entry in.opp.config_entries.async_entries(DOMAIN)
     ]
 
-    legacy_hosts = await.opp.async_add_executor_job(
+    legacy_hosts = await opp.async_add_executor_job(
         load_json, opp.config.path(CONFIG_FILE)
     )
 
@@ -136,7 +136,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     tradfri_data[DEVICES] = devices
     tradfri_data[GROUPS] = groups
 
-    dev_reg = await.opp.helpers.device_registry.async_get_registry()
+    dev_reg = await opp.helpers.device_registry.async_get_registry()
     dev_reg.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections=set(),

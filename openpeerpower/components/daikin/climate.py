@@ -51,7 +51,7 @@ HA_STATE_TO_DAIKIN = {
     HVAC_MODE_OFF: "off",
 }
 
-DAIKIN_TO_HA_STATE = {
+DAIKIN_TO_OP_STATE = {
     "fan": HVAC_MODE_FAN_ONLY,
     "dry": HVAC_MODE_DRY,
     "cool": HVAC_MODE_COOL,
@@ -192,7 +192,7 @@ class DaikinClimate(ClimateEntity):
     def hvac_mode(self):
         """Return current operation ie. heat, cool, idle."""
         daikin_mode = self._api.device.represent(HA_ATTR_TO_DAIKIN[ATTR_HVAC_MODE])[1]
-        return DAIKIN_TO_HA_STATE.get(daikin_mode, HVAC_MODE_HEAT_COOL)
+        return DAIKIN_TO_OP_STATE.get(daikin_mode, HVAC_MODE_HEAT_COOL)
 
     @property
     def hvac_modes(self):

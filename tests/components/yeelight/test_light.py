@@ -134,8 +134,8 @@ async def test_services.opp: OpenPeerPower, caplog):
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
 
     async def _async_test_service(
         service,
@@ -150,7 +150,7 @@ async def test_services.opp: OpenPeerPower, caplog):
         # success
         mocked_method = MagicMock()
         setattr(type(mocked_bulb), method, mocked_method)
-        await.opp.services.async_call(domain, service, data, blocking=True)
+        await opp.services.async_call(domain, service, data, blocking=True)
         if payload is None:
             mocked_method.assert_called_once()
         elif type(payload) == list:
@@ -165,7 +165,7 @@ async def test_services.opp: OpenPeerPower, caplog):
         if failure_side_effect:
             mocked_method = MagicMock(side_effect=failure_side_effect)
             setattr(type(mocked_bulb), method, mocked_method)
-            await.opp.services.async_call(domain, service, data, blocking=True)
+            await opp.services.async_call(domain, service, data, blocking=True)
             assert (
                 len([x for x in caplog.records if x.levelno == logging.ERROR])
                 == err_count + 1
@@ -175,7 +175,7 @@ async def test_services.opp: OpenPeerPower, caplog):
     brightness = 100
     color_temp = 200
     transition = 1
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {
@@ -320,7 +320,7 @@ async def test_services.opp: OpenPeerPower, caplog):
     err_count = len([x for x in caplog.records if x.levelno == logging.ERROR])
     type(mocked_bulb).turn_on = MagicMock()
     type(mocked_bulb).set_brightness = MagicMock(side_effect=BulbException)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: ENTITY_LIGHT, ATTR_BRIGHTNESS: 50},
@@ -341,8 +341,8 @@ async def test_device_types.opp: OpenPeerPower):
 
     async def _async_setup(config_entry):
         with patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
-            await.opp.config_entries.async_setup(config_entry.entry_id)
-            await.opp.async_block_till_done()
+            await opp.config_entries.async_setup(config_entry.entry_id)
+            await opp.async_block_till_done()
 
     async def _async_test(
         bulb_type,
@@ -374,7 +374,7 @@ async def test_device_types.opp: OpenPeerPower):
         target_properties["music_mode"] = False
         assert dict(state.attributes) == target_properties
 
-        await.opp.config_entries.async_unload(config_entry.entry_id)
+        await opp.config_entries.async_unload(config_entry.entry_id)
         await config_entry.async_remove.opp)
         registry = await entity_registry.async_get_registry.opp)
         registry.async_clear_config_entry(config_entry.entry_id)
@@ -402,7 +402,7 @@ async def test_device_types.opp: OpenPeerPower):
         nightlight_properties["music_mode"] = False
         assert dict(state.attributes) == nightlight_properties
 
-        await.opp.config_entries.async_unload(config_entry.entry_id)
+        await opp.config_entries.async_unload(config_entry.entry_id)
         await config_entry.async_remove.opp)
         registry.async_clear_config_entry(config_entry.entry_id)
 
@@ -571,8 +571,8 @@ async def test_effects.opp: OpenPeerPower):
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
 
     assert.opp.states.get(ENTITY_LIGHT).attributes.get(
         "effect_list"
@@ -581,7 +581,7 @@ async def test_effects.opp: OpenPeerPower):
     async def _async_test_effect(name, target=None, called=True):
         mocked_start_flow = MagicMock()
         type(mocked_bulb).start_flow = mocked_start_flow
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "light",
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: ENTITY_LIGHT, ATTR_EFFECT: name},

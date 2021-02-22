@@ -98,7 +98,7 @@ class RepetierSensor(Entity):
     @callback
     def update_callback(self):
         """Get new data and update state."""
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def async_added_to.opp(self):
         """Connect update callbacks."""

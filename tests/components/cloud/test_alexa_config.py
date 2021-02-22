@@ -45,14 +45,14 @@ async def test_alexa_config_report_state.opp, cloud_prefs):
 
     with patch.object(conf, "async_get_access_token", AsyncMock(return_value="hello")):
         await cloud_prefs.async_update(alexa_report_state=True)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert cloud_prefs.alexa_report_state is True
     assert conf.should_report_state is True
     assert conf.is_reporting_states is True
 
     await cloud_prefs.async_update(alexa_report_state=False)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert cloud_prefs.alexa_report_state is False
     assert conf.should_report_state is False
@@ -125,9 +125,9 @@ async def test_alexa_update_expose_trigger_sync.opp, cloud_prefs):
         await cloud_prefs.async_update_alexa_entity_config(
             entity_id="light.kitchen", should_expose=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert to_update == ["light.kitchen"]
     assert to_remove == []
@@ -142,9 +142,9 @@ async def test_alexa_update_expose_trigger_sync.opp, cloud_prefs):
         await cloud_prefs.async_update_alexa_entity_config(
             entity_id="sensor.temp", should_expose=True
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert sorted(to_update) == ["binary_sensor.door", "sensor.temp"]
     assert to_remove == ["light.kitchen"]
@@ -161,7 +161,7 @@ async def test_alexa_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "create", "entity_id": "light.kitchen"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert to_update == ["light.kitchen"]
     assert to_remove == []
@@ -171,7 +171,7 @@ async def test_alexa_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "remove", "entity_id": "light.kitchen"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert to_update == []
     assert to_remove == ["light.kitchen"]
@@ -186,7 +186,7 @@ async def test_alexa_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
                 "old_entity_id": "light.living_room",
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert to_update == ["light.kitchen"]
     assert to_remove == ["light.living_room"]
@@ -196,7 +196,7 @@ async def test_alexa_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "update", "entity_id": "light.kitchen", "changes": ["icon"]},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert to_update == []
     assert to_remove == []
@@ -212,7 +212,7 @@ async def test_alexa_update_report_state.opp, cloud_prefs):
         "openpeerpower.components.cloud.alexa_config.AlexaConfig.async_enable_proactive_mode",
     ):
         await cloud_prefs.async_update(alexa_report_state=True)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_sync.mock_calls) == 1
 

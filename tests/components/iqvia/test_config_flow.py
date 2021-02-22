@@ -14,7 +14,7 @@ async def test_duplicate_error(opp):
 
     MockConfigEntry(domain=DOMAIN, unique_id="12345", data=conf).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -26,7 +26,7 @@ async def test_invalid_zip_code.opp):
     """Test that an invalid ZIP code key throws an error."""
     conf = {CONF_ZIP_CODE: "abcde"}
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -36,7 +36,7 @@ async def test_invalid_zip_code.opp):
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -49,7 +49,7 @@ async def test_step_user.opp):
     conf = {CONF_ZIP_CODE: "12345"}
 
     with patch("openpeerpower.components.iqvia.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 

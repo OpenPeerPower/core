@@ -272,7 +272,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
                 _LOGGER.debug(
                     "%s Called delayed (%ssec) update", self._name, self._delay
                 )
-                self.schedule_update_ha_state()
+                self.schedule_update_op_state()
                 self._timer = None
 
             if self._timer is not None:
@@ -289,7 +289,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
                 self._timer()
                 self._timer = None
 
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         else:
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()

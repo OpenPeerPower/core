@@ -103,7 +103,7 @@ async def mock_hap_with_service_fixture(
     """Create a fake homematic access point with.opp services."""
     mock_hap = await default_mock_hap_factory.async_get_mock_hap()
     await hmip_async_setup_opp, dummy_config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.data[HMIPC_DOMAIN] = {HAPID: mock_hap}
     return mock_hap
 

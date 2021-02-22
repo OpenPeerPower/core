@@ -48,7 +48,7 @@ class TradfriBaseClass(Entity):
     def _async_start_observe(self, exc=None):
         """Start observation of device."""
         if exc:
-            self.async_write_ha_state()
+            self.async_write_op_state()
             _LOGGER.warning("Observation failed for %s", self._name, exc_info=exc)
 
         try:
@@ -85,7 +85,7 @@ class TradfriBaseClass(Entity):
     def _observe_update(self, device):
         """Receive new state data for this device."""
         self._refresh(device)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _refresh(self, device):
         """Refresh the device data."""

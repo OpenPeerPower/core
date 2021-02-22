@@ -75,17 +75,17 @@ def tuya_setup_fixture():
 
 async def test_user.opp, tuya):
     """Test user config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=TUYA_USER_DATA
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == USERNAME
@@ -98,12 +98,12 @@ async def test_user.opp, tuya):
 
 async def test_import.opp, tuya):
     """Test import step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_IMPORT},
         data=TUYA_USER_DATA,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == USERNAME
@@ -119,7 +119,7 @@ async def test_abort_if_already_setup_opp, tuya):
     MockConfigEntry(domain=DOMAIN, data=TUYA_USER_DATA).add_to.opp.opp)
 
     # Should fail, config exist (import)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=TUYA_USER_DATA
     )
 
@@ -127,7 +127,7 @@ async def test_abort_if_already_setup_opp, tuya):
     assert result["reason"] == RESULT_SINGLE_INSTANCE
 
     # Should fail, config exist (flow)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=TUYA_USER_DATA
     )
 
@@ -139,14 +139,14 @@ async def test_abort_on_invalid_credentials.opp, tuya):
     """Test when we have invalid credentials."""
     tuya().init.side_effect = TuyaAPIException("Boom")
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=TUYA_USER_DATA
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {"base": RESULT_AUTH_FAILED}
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=TUYA_USER_DATA
     )
 
@@ -158,14 +158,14 @@ async def test_abort_on_connection_error(opp, tuya):
     """Test when we have a network error."""
     tuya().init.side_effect = TuyaNetException("Boom")
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=TUYA_USER_DATA
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == RESULT_CONN_ERROR
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=TUYA_USER_DATA
     )
 
@@ -182,30 +182,30 @@ async def test_options_flow.opp):
     config_entry.add_to.opp.opp)
 
     # Set up the integration to make sure the config flow module is loaded.
-    assert await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.async_block_till_done()
 
     # Unload the integration to prepare for the test.
     with patch("openpeerpower.components.tuya.async_unload_entry", return_value=True):
-        assert await.opp.config_entries.async_unload(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_unload(config_entry.entry_id)
+        await opp.async_block_till_done()
 
     # Test check for integration not loaded
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == RESULT_CONN_ERROR
 
     # Load integration and enter options
-    await.opp.config_entries.async_setup(config_entry.entry_id)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_setup(config_entry.entry_id)
+    await opp.async_block_till_done()
    .opp.data[DOMAIN] = {TUYA_DATA: MockTuya()}
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
     # Test dev not found error
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_LIST_DEVICES: [f"light-{LIGHT_ID_FAKE1}"]},
     )
@@ -215,7 +215,7 @@ async def test_options_flow.opp):
     assert result["errors"] == {"base": ERROR_DEV_NOT_FOUND}
 
     # Test dev type error
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_LIST_DEVICES: [f"light-{LIGHT_ID_FAKE2}"]},
     )
@@ -225,7 +225,7 @@ async def test_options_flow.opp):
     assert result["errors"] == {"base": ERROR_DEV_NOT_CONFIG}
 
     # Test multi dev error
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_LIST_DEVICES: [f"climate-{CLIMATE_ID}", f"light-{LIGHT_ID}"]},
     )
@@ -235,14 +235,14 @@ async def test_options_flow.opp):
     assert result["errors"] == {"base": ERROR_DEV_MULTI_TYPE}
 
     # Test climate options form
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_LIST_DEVICES: [f"climate-{CLIMATE_ID}"]}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "device"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_UNIT_OF_MEASUREMENT: TEMP_CELSIUS,
@@ -259,14 +259,14 @@ async def test_options_flow.opp):
     assert result["step_id"] == "init"
 
     # Test light options form
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_LIST_DEVICES: [f"light-{LIGHT_ID}"]}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "device"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_SUPPORT_COLOR: True,
@@ -281,7 +281,7 @@ async def test_options_flow.opp):
     assert result["step_id"] == "init"
 
     # Test common options
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             CONF_DISCOVERY_INTERVAL: 100,

@@ -22,11 +22,11 @@ async def test_user_connection_successful.opp, mock_auth, mock_entry_setup):
     """Test a successful connection."""
     mock_auth.side_effect = lambda.opp, host, code: {"host": host, "gateway_id": "bla"}
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri", context={"source": "user"}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         flow["flow_id"], {"host": "123.123.123.123", "security_code": "abcd"}
     )
 
@@ -44,11 +44,11 @@ async def test_user_connection_timeout.opp, mock_auth, mock_entry_setup):
     """Test a connection timeout."""
     mock_auth.side_effect = config_flow.AuthError("timeout")
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri", context={"source": "user"}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         flow["flow_id"], {"host": "127.0.0.1", "security_code": "abcd"}
     )
 
@@ -62,11 +62,11 @@ async def test_user_connection_bad_key.opp, mock_auth, mock_entry_setup):
     """Test a connection with bad key."""
     mock_auth.side_effect = config_flow.AuthError("invalid_security_code")
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri", context={"source": "user"}
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         flow["flow_id"], {"host": "127.0.0.1", "security_code": "abcd"}
     )
 
@@ -80,13 +80,13 @@ async def test_discovery_connection.opp, mock_auth, mock_entry_setup):
     """Test a connection via discovery."""
     mock_auth.side_effect = lambda.opp, host, code: {"host": host, "gateway_id": "bla"}
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "homekit"},
         data={"host": "123.123.123.123", "properties": {"id": "homekit-id"}},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         flow["flow_id"], {"security_code": "abcd"}
     )
 
@@ -110,13 +110,13 @@ async def test_import_connection.opp, mock_auth, mock_entry_setup):
         "key": "mock-key",
     }
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "import"},
         data={"host": "123.123.123.123", "import_groups": True},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         flow["flow_id"], {"security_code": "abcd"}
     )
 
@@ -141,13 +141,13 @@ async def test_import_connection_no_groups.opp, mock_auth, mock_entry_setup):
         "key": "mock-key",
     }
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "import"},
         data={"host": "123.123.123.123", "import_groups": False},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         flow["flow_id"], {"security_code": "abcd"}
     )
 
@@ -172,7 +172,7 @@ async def test_import_connection_legacy.opp, mock_gateway_info, mock_entry_setup
         "gateway_id": "mock-gateway",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "import"},
         data={"host": "123.123.123.123", "key": "mock-key", "import_groups": True},
@@ -202,7 +202,7 @@ async def test_import_connection_legacy_no_groups(
         "gateway_id": "mock-gateway",
     }
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "import"},
         data={"host": "123.123.123.123", "key": "mock-key", "import_groups": False},
@@ -228,7 +228,7 @@ async def test_discovery_duplicate_aborted.opp):
     )
     entry.add_to.opp.opp)
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "homekit"},
         data={"host": "new-host", "properties": {"id": "homekit-id"}},
@@ -244,7 +244,7 @@ async def test_import_duplicate_aborted.opp):
     """Test a duplicate import host is ignored."""
     MockConfigEntry(domain="tradfri", data={"host": "some-host"}).add_to.opp.opp)
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri", context={"source": "import"}, data={"host": "some-host"}
     )
 
@@ -254,7 +254,7 @@ async def test_import_duplicate_aborted.opp):
 
 async def test_duplicate_discovery.opp, mock_auth, mock_entry_setup):
     """Test a duplicate discovery in progress is ignored."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "homekit"},
         data={"host": "123.123.123.123", "properties": {"id": "homekit-id"}},
@@ -262,7 +262,7 @@ async def test_duplicate_discovery.opp, mock_auth, mock_entry_setup):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result2 = await.opp.config_entries.flow.async_init(
+    result2 = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "homekit"},
         data={"host": "123.123.123.123", "properties": {"id": "homekit-id"}},
@@ -279,7 +279,7 @@ async def test_discovery_updates_unique_id.opp):
     )
     entry.add_to.opp.opp)
 
-    flow = await.opp.config_entries.flow.async_init(
+    flow = await opp.config_entries.flow.async_init(
         "tradfri",
         context={"source": "homekit"},
         data={"host": "some-host", "properties": {"id": "homekit-id"}},

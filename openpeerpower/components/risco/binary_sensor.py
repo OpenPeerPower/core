@@ -77,7 +77,7 @@ class RiscoBinarySensor(BinarySensorEntity, RiscoEntity):
     async def _bypass(self, bypass):
         alarm = await self._risco.bypass_zone(self._zone_id, bypass)
         self._zone = alarm.zones[self._zone_id]
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_bypass_zone(self):
         """Bypass this zone."""

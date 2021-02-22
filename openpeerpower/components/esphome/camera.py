@@ -63,7 +63,7 @@ class EsphomeCamera(Camera, EsphomeBaseEntity):
 
     async def _on_state_update(self) -> None:
         """Notify listeners of new image when update arrives."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
         async with self._image_cond:
             self._image_cond.notify_all()
 

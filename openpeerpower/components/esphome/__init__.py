@@ -225,7 +225,7 @@ async def _setup_auto_reconnect_logic(
             # When removing/disconnecting manually
             return
 
-        device_registry = await.opp.helpers.device_registry.async_get_registry()
+        device_registry = await opp.helpers.device_registry.async_get_registry()
         devices = dr.async_entries_for_config_entry(device_registry, entry.entry_id)
         for device in devices:
             # There is only one device in ESPHome
@@ -540,7 +540,7 @@ class EsphomeBaseEntity(Entity):
             # Only update the HA state when the full state arrives
             # through the next entity state packet.
             return
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def _entry_data(self) -> RuntimeEntryData:
@@ -623,6 +623,6 @@ class EsphomeEntity(EsphomeBaseEntity):
                     f"esphome_{self._entry_id}"
                     f"_update_{self._component_key}_{self._key}"
                 ),
-                self.async_write_ha_state,
+                self.async_write_op_state,
             )
         )

@@ -161,7 +161,7 @@ class UtilityMeterSensor(RestoreEntity):
             _LOGGER.warning(
                 "Invalid state (%s > %s): %s", old_state.state, new_state.state, err
             )
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_tariff_change(self, event):
@@ -189,7 +189,7 @@ class UtilityMeterSensor(RestoreEntity):
             self._sensor_source_id,
         )
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def _async_reset_meter(self, event):
         """Determine cycle - Helper function for larger than daily cycles."""
@@ -228,13 +228,13 @@ class UtilityMeterSensor(RestoreEntity):
         self._last_reset = dt_util.now()
         self._last_period = str(self._state)
         self._state = 0
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_calibrate(self, value):
         """Calibrate the Utility Meter with a given value."""
         _LOGGER.debug("Calibrate %s = %s", self._name, value)
         self._state = value
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Handle entity which will be added."""

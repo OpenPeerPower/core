@@ -359,7 +359,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
             mode = "ip"
     except ValueError:
         mode = "hostname"
-    mac = await.opp.async_add_executor_job(partial(get_mac_address, **{mode: host}))
+    mac = await opp.async_add_executor_job(partial(get_mac_address, **{mode: host}))
 
     def get_connection() -> Connection:
         """
@@ -382,7 +382,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         dispatcher_send.opp, UPDATE_SIGNAL, url)
 
     try:
-        connection = await.opp.async_add_executor_job(get_connection)
+        connection = await opp.async_add_executor_job(get_connection)
     except Timeout as ex:
         raise ConfigEntryNotReady from ex
 
@@ -391,7 +391,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
    .opp.data[DOMAIN].routers[url] = router
 
     # Do initial data update
-    await.opp.async_add_executor_job(router.update)
+    await opp.async_add_executor_job(router.update)
 
     # Clear all subscriptions, enabled entities will push back theirs
     router.subscriptions.clear()
@@ -467,11 +467,11 @@ async def async_unload_entry(
 
     # Forward config entry unload to platforms
     for domain in CONFIG_ENTRY_PLATFORMS:
-        await.opp.config_entries.async_forward_entry_unload(config_entry, domain)
+        await opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
     # Forget about the router and invoke its cleanup
     router = opp.data[DOMAIN].routers.pop(config_entry.data[CONF_URL])
-    await.opp.async_add_executor_job(router.cleanup)
+    await opp.async_add_executor_job(router.cleanup)
 
     return True
 
@@ -649,7 +649,7 @@ class HuaweiLteBaseEntity(Entity):
     async def _async_maybe_update(self, url: str) -> None:
         """Update state if the update signal comes from our router."""
         if url == self.router.url:
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
     async def _async_maybe_update_options(self, config_entry: ConfigEntry) -> None:
         """Update options if the update signal comes from our router."""

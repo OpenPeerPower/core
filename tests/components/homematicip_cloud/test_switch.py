@@ -38,7 +38,7 @@ async def test_hmip_switch.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_ON
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -48,7 +48,7 @@ async def test_hmip_switch.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -75,7 +75,7 @@ async def test_hmip_switch_input.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_ON
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -85,7 +85,7 @@ async def test_hmip_switch_input.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -112,7 +112,7 @@ async def test_hmip_switch_measuring.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_ON
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -122,7 +122,7 @@ async def test_hmip_switch_measuring.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -154,7 +154,7 @@ async def test_hmip_group_switch.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_ON
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -164,7 +164,7 @@ async def test_hmip_group_switch.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -202,7 +202,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -212,7 +212,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_ON
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3
@@ -251,7 +251,7 @@ async def test_hmip_wired_multi_switch.opp, default_mock_hap_factory):
     assert ha_state.state == STATE_ON
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 1
@@ -261,7 +261,7 @@ async def test_hmip_wired_multi_switch.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == STATE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert len(hmip_device.mock_calls) == service_call_counter + 3

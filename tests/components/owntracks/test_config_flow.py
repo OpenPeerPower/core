@@ -7,7 +7,7 @@ from openpeerpower import data_entry_flow
 from openpeerpower.components.owntracks import config_flow
 from openpeerpower.components.owntracks.config_flow import CONF_CLOUDHOOK, CONF_SECRET
 from openpeerpower.components.owntracks.const import DOMAIN
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import CONF_WEBHOOK_ID
 from openpeerpower.setup import async_setup_component
 
@@ -50,7 +50,7 @@ def mock_not_supports_encryption():
 
 async def init_config_flow.opp):
     """Init a configuration flow."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": BASE_URL},
     )
@@ -91,14 +91,14 @@ async def test_import.opp, webhook_id, secret):
 
 async def test_import_setup_opp):
     """Test that we automatically create a config flow."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "http://example.com"},
     )
 
     assert not.opp.config_entries.async_entries(DOMAIN)
     assert await async_setup_component.opp, DOMAIN, {"owntracks": {}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.config_entries.async_entries(DOMAIN)
 
 
@@ -134,7 +134,7 @@ async def test_user_not_supports_encryption.opp, not_supports_encryption):
 
 async def test_unload.opp):
     """Test unloading a config flow."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "http://example.com"},
     )
@@ -142,7 +142,7 @@ async def test_unload.opp):
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup"
     ) as mock_forward:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "import"}, data={}
         )
 
@@ -157,7 +157,7 @@ async def test_unload.opp):
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_unload",
         return_value=None,
     ) as mock_unload:
-        assert await.opp.config_entries.async_unload(entry.entry_id)
+        assert await opp.config_entries.async_unload(entry.entry_id)
 
     assert len(mock_unload.mock_calls) == 1
     assert mock_forward.mock_calls[0][1][0] is entry
@@ -174,7 +174,7 @@ async def test_with_cloud_sub.opp):
         "openpeerpower.components.cloud.async_create_cloudhook",
         return_value="https://hooks.nabu.casa/ABCD",
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data={}
         )
 

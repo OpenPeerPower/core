@@ -228,7 +228,7 @@ class DeviceTrackerPlatform:
                    .opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "get_scanner"):
-                scanner = await.opp.async_add_executor_job(
+                scanner = await opp.async_add_executor_job(
                     self.platform.get_scanner, opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "async_setup_scanner"):
@@ -236,7 +236,7 @@ class DeviceTrackerPlatform:
                    .opp, self.config, tracker.async_see, discovery_info
                 )
             elif hasattr(self.platform, "setup_scanner"):
-                setup = await.opp.async_add_executor_job(
+                setup = await opp.async_add_executor_job(
                     self.platform.setup_scanner,
                    .opp,
                     self.config,
@@ -488,7 +488,7 @@ class DeviceTracker:
                 consider_home,
             )
             if device.track:
-                device.async_write_ha_state()
+                device.async_write_op_state()
             return
 
         # Guard from calling see on entity registry entities.
@@ -525,7 +525,7 @@ class DeviceTracker:
         )
 
         if device.track:
-            device.async_write_ha_state()
+            device.async_write_op_state()
 
         self.opp.bus.async_fire(
             EVENT_NEW_DEVICE,
@@ -561,7 +561,7 @@ class DeviceTracker:
         """
         for device in self.devices.values():
             if (device.track and device.last_update_home) and device.stale(now):
-                self.opp.async_create_task(device.async_update_ha_state(True))
+                self.opp.async_create_task(device.async_update_op_state(True))
 
     async def async_setup_tracked_device(self):
         """Set up all not exists tracked devices.
@@ -572,7 +572,7 @@ class DeviceTracker:
         async def async_init_single_device(dev):
             """Init a single device_tracker entity."""
             await dev.async_added_to.opp()
-            dev.async_write_ha_state()
+            dev.async_write_op_state()
 
         tasks = []
         for device in self.devices.values():
@@ -835,7 +835,7 @@ async def async_load_config(
     )
     result = []
     try:
-        devices = await.opp.async_add_executor_job(load_yaml_config_file, path)
+        devices = await opp.async_add_executor_job(load_yaml_config_file, path)
     except OpenPeerPowerError as err:
         LOGGER.error("Unable to load %s: %s", path, str(err))
         return []

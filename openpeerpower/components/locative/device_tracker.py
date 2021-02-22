@@ -79,4 +79,4 @@ class LocativeEntity(TrackerEntity):
             return
         self._location_name = location_name
         self._location = location
-        self.async_write_ha_state()
+        self.async_write_op_state()

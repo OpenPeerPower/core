@@ -114,7 +114,7 @@ class MqttNumber(MqttEntity, NumberEntity, RestoreEntity):
                     self._current_number = int(msg.payload)
                 else:
                     self._current_number = float(msg.payload)
-                self.async_write_ha_state()
+                self.async_write_op_state()
             except ValueError:
                 _LOGGER.warning("We received <%s> which is not a Number", msg.payload)
 
@@ -154,7 +154,7 @@ class MqttNumber(MqttEntity, NumberEntity, RestoreEntity):
 
         if self._optimistic:
             self._current_number = current_number
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         mqtt.async_publish(
             self.opp,

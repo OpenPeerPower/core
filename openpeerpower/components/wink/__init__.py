@@ -428,7 +428,7 @@ def setup_opp, config):
             # Throttle the calls to Wink API
             for entity in entity_list:
                 time.sleep(1)
-                entity.schedule_update_ha_state(True)
+                entity.schedule_update_op_state(True)
 
    .opp.services.register(DOMAIN, SERVICE_REFRESH_STATES, force_update)
 
@@ -741,15 +741,15 @@ class WinkDevice(Entity):
                     "Error on pubnub update for %s polling API for current state",
                     self.name,
                 )
-                self.schedule_update_ha_state(True)
+                self.schedule_update_op_state(True)
             else:
                 self.wink.pubnub_update(message)
-                self.schedule_update_ha_state()
+                self.schedule_update_op_state()
         except (ValueError, KeyError, AttributeError):
             _LOGGER.error(
                 "Error in pubnub JSON for %s polling API for current state", self.name
             )
-            self.schedule_update_ha_state(True)
+            self.schedule_update_op_state(True)
 
     @property
     def name(self):

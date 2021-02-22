@@ -23,7 +23,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry: config_entries.ConfigEntry):
     """Set up Cast from a config entry."""
-    await open_peer_power_cast.async_setup_ha_cast.opp, entry)
+    await open_peer_power_cast.async_setup_op_cast.opp, entry)
 
    .opp.async_create_task(
        .opp.config_entries.async_forward_entry_setup(entry, "media_player")

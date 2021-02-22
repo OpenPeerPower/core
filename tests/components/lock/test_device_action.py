@@ -35,7 +35,7 @@ async def test_get_actions_support_open.opp, device_reg, entity_reg):
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to.opp.opp)
@@ -79,7 +79,7 @@ async def test_get_actions_not_support_open.opp, device_reg, entity_reg):
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to.opp.opp)
@@ -149,26 +149,26 @@ async def test_action.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     lock_calls = async_mock_service.opp, "lock", "lock")
     unlock_calls = async_mock_service.opp, "lock", "unlock")
     open_calls = async_mock_service.opp, "lock", "open")
 
    .opp.bus.async_fire("test_event_lock")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 0
     assert len(open_calls) == 0
 
    .opp.bus.async_fire("test_event_unlock")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 1
     assert len(open_calls) == 0
 
    .opp.bus.async_fire("test_event_open")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 1
     assert len(open_calls) == 1

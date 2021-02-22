@@ -299,7 +299,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
                 self.name,
             )
             self._computed_state = False
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             self._heartbeat()
 
     def _positive_node_control_handler(self, event: object) -> None:
@@ -315,7 +315,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
                 self.name,
             )
             self._computed_state = True
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             self._heartbeat()
         if event.control == CMD_OFF:
             _LOGGER.debug(
@@ -323,7 +323,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
                 self.name,
             )
             self._computed_state = False
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             self._heartbeat()
 
     def on_update(self, event: object) -> None:
@@ -339,7 +339,7 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
         if self._status_was_unknown and self._computed_state is None:
             self._computed_state = bool(self._node.status)
             self._status_was_unknown = False
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             self._heartbeat()
 
     @property
@@ -406,7 +406,7 @@ class ISYBinarySensorHeartbeat(ISYNodeEntity, BinarySensorEntity):
         """
         self._computed_state = False
         self._restart_timer()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def _restart_timer(self):
         """Restart the 25 hour timer."""
@@ -422,7 +422,7 @@ class ISYBinarySensorHeartbeat(ISYNodeEntity, BinarySensorEntity):
             """Heartbeat missed; set state to ON to indicate dead battery."""
             self._computed_state = True
             self._heartbeat_timer = None
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         point_in_time = dt_util.utcnow() + timedelta(hours=25)
         _LOGGER.debug(

@@ -132,7 +132,7 @@ async def test_async_locked_update_with_exception(
     update_polling_method = update_polling_method or pywemo_device.get_state
     update_polling_method.side_effect = ActionException
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -160,7 +160,7 @@ async def test_async_update_with_timeout_and_recovery.opp, wemo_entity, pywemo_d
     timeout = async_timeout.timeout(0)
 
     with patch("async_timeout.timeout", return_value=timeout):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             HA_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -171,5 +171,5 @@ async def test_async_update_with_timeout_and_recovery.opp, wemo_entity, pywemo_d
 
     # Check that the entity recovers and is available after the update succeeds.
     event.set()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF

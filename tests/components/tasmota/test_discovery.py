@@ -37,7 +37,7 @@ async def test_future_discovery_message.opp, mqtt_mock, caplog):
         async_fire_mqtt_message(
            .opp, f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert mock_tasmota_get_device_config.called
 
 
@@ -54,7 +54,7 @@ async def test_valid_discovery_message.opp, mqtt_mock, caplog):
         async_fire_mqtt_message(
            .opp, f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert mock_tasmota_get_device_config.called
 
 
@@ -66,7 +66,7 @@ async def test_invalid_topic.opp, mqtt_mock):
         await setup_tasmota_helper.opp)
 
         async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/123456/configuration", "{}")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert not mock_tasmota_get_device_config.called
 
 
@@ -78,7 +78,7 @@ async def test_invalid_message.opp, mqtt_mock, caplog):
         await setup_tasmota_helper.opp)
 
         async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/123456/config", "asd")
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert "Invalid discovery message" in caplog.text
         assert not mock_tasmota_get_device_config.called
 
@@ -95,7 +95,7 @@ async def test_invalid_mac.opp, mqtt_mock, caplog):
         async_fire_mqtt_message(
            .opp, f"{DEFAULT_PREFIX}/00000049A3BA/config", json.dumps(config)
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert "MAC mismatch" in caplog.text
         assert not mock_tasmota_get_device_config.called
 
@@ -113,7 +113,7 @@ async def test_correct_config_discovery(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device and registry entries are created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -140,7 +140,7 @@ async def test_device_discover(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device and registry entries are created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -163,7 +163,7 @@ async def test_device_discover_deprecated(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device and registry entries are created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -189,7 +189,7 @@ async def test_device_update(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -205,7 +205,7 @@ async def test_device_update(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device entry is updated
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -227,7 +227,7 @@ async def test_device_remove(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -238,7 +238,7 @@ async def test_device_remove(
         f"{DEFAULT_PREFIX}/{mac}/config",
         "",
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -281,7 +281,7 @@ async def test_device_rediscover(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry1 = device_reg.async_get_device(set(), {("mac", mac)})
@@ -292,7 +292,7 @@ async def test_device_rediscover(
         f"{DEFAULT_PREFIX}/{mac}/config",
         "",
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device entry is removed
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -303,7 +303,7 @@ async def test_device_rediscover(
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device entry is created, and id is reused
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -327,7 +327,7 @@ async def test_entity_duplicate_discovery.opp, mqtt_mock, caplog, setup_tasmota)
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("switch.test")
     state_duplicate = opp.states.get("binary_sensor.beer1")
@@ -352,13 +352,13 @@ async def test_entity_duplicate_removal.opp, mqtt_mock, caplog, setup_tasmota):
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     config["rl"][0] = 0
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert f"Removing entity: switch ('{mac}', 'switch', 'relay', 0)" in caplog.text
 
     caplog.clear()
     async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert "Removing entity: switch" not in caplog.text

@@ -37,18 +37,18 @@ async def test_template_state.opp):
             },
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.test_template_lock")
     assert state.state == lock.STATE_LOCKED
 
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.test_template_lock")
     assert state.state == lock.STATE_UNLOCKED
@@ -76,9 +76,9 @@ async def test_template_state_boolean_on.opp):
             },
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_LOCKED
@@ -106,9 +106,9 @@ async def test_template_state_boolean_off.opp):
             },
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_UNLOCKED
@@ -136,9 +136,9 @@ async def test_template_syntax_error(opp):
             },
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -166,9 +166,9 @@ async def test_invalid_name_does_not_create.opp):
             },
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -182,9 +182,9 @@ async def test_invalid_lock_does_not_create.opp):
             {"lock": {"platform": "template", "value_template": "Invalid"}},
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -211,9 +211,9 @@ async def test_missing_template_does_not_create.opp):
             },
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert.opp.states.async_all() == []
 
@@ -240,15 +240,15 @@ async def test_template_static.opp, caplog):
             },
         )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_UNLOCKED
 
    .opp.states.async_set("lock.template_lock", lock.STATE_LOCKED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_LOCKED
 
@@ -271,20 +271,20 @@ async def test_lock_action.opp, calls):
         },
     )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_UNLOCKED
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         lock.DOMAIN, lock.SERVICE_LOCK, {ATTR_ENTITY_ID: "lock.template_lock"}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -307,20 +307,20 @@ async def test_unlock_action.opp, calls):
         },
     )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("lock.template_lock")
     assert state.state == lock.STATE_LOCKED
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         lock.DOMAIN, lock.SERVICE_UNLOCK, {ATTR_ENTITY_ID: "lock.template_lock"}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -345,20 +345,20 @@ async def test_available_template_with_entities.opp):
         },
     )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     # When template returns true..
    .opp.states.async_set("availability_state.state", STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Device State should not be unavailable
     assert.opp.states.get("lock.template_lock").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
    .opp.states.async_set("availability_state.state", STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # device state should be unavailable
     assert.opp.states.get("lock.template_lock").state == STATE_UNAVAILABLE
@@ -383,9 +383,9 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
         },
     )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert.opp.states.get("lock.template_lock").state != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
@@ -429,8 +429,8 @@ async def test_unique_id.opp):
         },
     )
 
-    await.opp.async_block_till_done()
-    await.opp.async_start()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_start()
+    await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1

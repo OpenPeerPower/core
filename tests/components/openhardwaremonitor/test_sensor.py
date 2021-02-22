@@ -20,7 +20,7 @@ async def test_setup_opp, requests_mock):
     )
 
     await async_setup_component.opp, "sensor", config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entities = opp.states.async_entity_ids("sensor")
     assert len(entities) == 38

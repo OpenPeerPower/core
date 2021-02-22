@@ -107,7 +107,7 @@ class ModemCalleridSensor(Entity):
                 }
                 self.set_attributes(att)
             self._state = STATE_RING
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
         elif newstate == self.modem.STATE_CALLERID:
             att = {
                 "cid_time": self.modem.get_cidtime,
@@ -116,7 +116,7 @@ class ModemCalleridSensor(Entity):
             }
             self.set_attributes(att)
             self._state = STATE_CALLERID
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
         elif newstate == self.modem.STATE_IDLE:
             self._state = STATE_IDLE
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()

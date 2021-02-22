@@ -72,7 +72,7 @@ class SirenSwitch(BaseRingSwitch):
             return
 
         self._siren_on = self._device.siren > 0
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _set_switch(self, new_state):
         """Update switch state, and causes Open Peer Power to correctly update."""
@@ -84,7 +84,7 @@ class SirenSwitch(BaseRingSwitch):
 
         self._siren_on = new_state > 0
         self._no_updates_until = dt_util.utcnow() + SKIP_UPDATES_DELAY
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def is_on(self):

@@ -194,17 +194,17 @@ class DemoFan(BaseDemoFan, FanEntity):
     def set_speed(self, speed: str) -> None:
         """Set the speed of the fan."""
         self._speed = speed
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_direction(self, direction: str) -> None:
         """Set the direction of the fan."""
         self._direction = direction
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def oscillate(self, oscillating: bool) -> None:
         """Set oscillation."""
         self._oscillating = oscillating
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class DemoPercentageFan(BaseDemoFan, FanEntity):
@@ -224,7 +224,7 @@ class DemoPercentageFan(BaseDemoFan, FanEntity):
         """Set the speed of the fan, as a percentage."""
         self._percentage = percentage
         self._preset_mode = None
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def preset_mode(self) -> Optional[str]:
@@ -241,7 +241,7 @@ class DemoPercentageFan(BaseDemoFan, FanEntity):
         if preset_mode in self.preset_modes:
             self._preset_mode = preset_mode
             self._percentage = None
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
         else:
             raise ValueError(f"Invalid preset mode: {preset_mode}")
 
@@ -284,7 +284,7 @@ class AsyncDemoPercentageFan(BaseDemoFan, FanEntity):
         """Set the speed of the fan, as a percentage."""
         self._percentage = percentage
         self._preset_mode = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def preset_mode(self) -> Optional[str]:
@@ -304,7 +304,7 @@ class AsyncDemoPercentageFan(BaseDemoFan, FanEntity):
             )
         self._preset_mode = preset_mode
         self._percentage = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_on(
         self,
@@ -331,9 +331,9 @@ class AsyncDemoPercentageFan(BaseDemoFan, FanEntity):
     async def async_set_direction(self, direction: str) -> None:
         """Set the direction of the fan."""
         self._direction = direction
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_oscillate(self, oscillating: bool) -> None:
         """Set oscillation."""
         self._oscillating = oscillating
-        self.async_write_ha_state()
+        self.async_write_op_state()

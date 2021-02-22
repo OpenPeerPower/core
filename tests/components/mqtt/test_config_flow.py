@@ -32,12 +32,12 @@ async def test_user_connection_works.opp, mock_try_connection, mock_finish_setup
     """Test we can finish a config flow."""
     mock_try_connection.return_value = True
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "mqtt", context={"source": "user"}
     )
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"broker": "127.0.0.1"}
     )
 
@@ -57,12 +57,12 @@ async def test_user_connection_fails.opp, mock_try_connection, mock_finish_setup
     """Test if connection cannot be made."""
     mock_try_connection.return_value = False
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "mqtt", context={"source": "user"}
     )
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"broker": "127.0.0.1"}
     )
 
@@ -78,12 +78,12 @@ async def test_user_connection_fails.opp, mock_try_connection, mock_finish_setup
 async def test_manual_config_set.opp, mock_try_connection, mock_finish_setup):
     """Test we ignore entry if manual config available."""
     assert await async_setup_component.opp, "mqtt", {"mqtt": {"broker": "bla"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_finish_setup.mock_calls) == 1
 
     mock_try_connection.return_value = True
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "mqtt", context={"source": "user"}
     )
     assert result["type"] == "abort"
@@ -93,7 +93,7 @@ async def test_user_single_instance.opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(domain="mqtt").add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "mqtt", context={"source": "user"}
     )
     assert result["type"] == "abort"
@@ -104,7 +104,7 @@ async def test.oppio_single_instance.opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(domain="mqtt").add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "mqtt", context={"source": .oppio"}
     )
     assert result["type"] == "abort"
@@ -115,7 +115,7 @@ async def test.oppio_confirm.opp, mock_try_connection, mock_finish_setup):
     """Test we can finish a config flow."""
     mock_try_connection.return_value = True
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "mqtt",
         data={
             "addon": "Mock Addon",
@@ -131,7 +131,7 @@ async def test.oppio_confirm.opp, mock_try_connection, mock_finish_setup):
     assert result["step_id"] == oppio_confirm"
     assert result["description_placeholders"] == {"addon": "Mock Addon"}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"discovery": True}
     )
 
@@ -161,11 +161,11 @@ async def test_option_flow.opp, mqtt_mock, mock_try_connection):
 
     mqtt_mock.async_connect.reset_mock()
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "broker"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             mqtt.CONF_BROKER: "another-broker",
@@ -177,10 +177,10 @@ async def test_option_flow.opp, mqtt_mock, mock_try_connection):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "options"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 0
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             mqtt.CONF_DISCOVERY: True,
@@ -218,7 +218,7 @@ async def test_option_flow.opp, mqtt_mock, mock_try_connection):
         },
     }
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 1
 
 
@@ -233,11 +233,11 @@ async def test_disable_birth_will.opp, mqtt_mock, mock_try_connection):
 
     mqtt_mock.async_connect.reset_mock()
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "broker"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             mqtt.CONF_BROKER: "another-broker",
@@ -249,10 +249,10 @@ async def test_disable_birth_will.opp, mqtt_mock, mock_try_connection):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "options"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 0
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             mqtt.CONF_DISCOVERY: True,
@@ -280,7 +280,7 @@ async def test_disable_birth_will.opp, mqtt_mock, mock_try_connection):
         mqtt.CONF_WILL_MESSAGE: {},
     }
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_connect.call_count == 1
 
 
@@ -329,7 +329,7 @@ async def test_option_flow_default_suggested_values(
     }
 
     # Test default/suggested values from config
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "broker"
     defaults = {
@@ -345,7 +345,7 @@ async def test_option_flow_default_suggested_values(
     for k, v in suggested.items():
         assert get_suggested(result["data_schema"].schema, k) == v
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             mqtt.CONF_BROKER: "another-broker",
@@ -374,7 +374,7 @@ async def test_option_flow_default_suggested_values(
     for k, v in suggested.items():
         assert get_suggested(result["data_schema"].schema, k) == v
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             mqtt.CONF_DISCOVERY: False,
@@ -391,7 +391,7 @@ async def test_option_flow_default_suggested_values(
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
     # Test updated default/suggested values from config
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "broker"
     defaults = {
@@ -407,7 +407,7 @@ async def test_option_flow_default_suggested_values(
     for k, v in suggested.items():
         assert get_suggested(result["data_schema"].schema, k) == v
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={mqtt.CONF_BROKER: "another-broker", mqtt.CONF_PORT: 2345},
     )
@@ -431,7 +431,7 @@ async def test_option_flow_default_suggested_values(
     for k, v in suggested.items():
         assert get_suggested(result["data_schema"].schema, k) == v
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={
             mqtt.CONF_DISCOVERY: True,
@@ -459,10 +459,10 @@ async def test_options_user_connection_fails.opp, mock_try_connection):
 
     mock_try_connection.return_value = False
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={mqtt.CONF_BROKER: "bad-broker", mqtt.CONF_PORT: 2345},
     )
@@ -490,10 +490,10 @@ async def test_options_bad_birth_message_fails.opp, mock_try_connection):
 
     mock_try_connection.return_value = True
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={mqtt.CONF_BROKER: "another-broker", mqtt.CONF_PORT: 2345},
     )
@@ -501,7 +501,7 @@ async def test_options_bad_birth_message_fails.opp, mock_try_connection):
     assert result["type"] == "form"
     assert result["step_id"] == "options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"birth_topic": "ha_state/online/#"},
     )
@@ -526,10 +526,10 @@ async def test_options_bad_will_message_fails.opp, mock_try_connection):
 
     mock_try_connection.return_value = True
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == "form"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={mqtt.CONF_BROKER: "another-broker", mqtt.CONF_PORT: 2345},
     )
@@ -537,7 +537,7 @@ async def test_options_bad_will_message_fails.opp, mock_try_connection):
     assert result["type"] == "form"
     assert result["step_id"] == "options"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"will_topic": "ha_state/offline/#"},
     )

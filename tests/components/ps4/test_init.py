@@ -110,7 +110,7 @@ MOCK_GAMES_LOCKED = {MOCK_ID: MOCK_GAMES_DATA_LOCKED}
 async def test_ps4_integration_setup_opp):
     """Test PS4 integration is setup."""
     await ps4.async_setup_opp, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.data[PS4_DATA].protocol is not None
 
 
@@ -121,12 +121,12 @@ async def test_creating_entry_sets_up_media_player.opp):
         "openpeerpower.components.ps4.media_player.async_setup_entry",
         return_value=True,
     ) as mock_setup, patch(mock_flow, return_value=MOCK_FLOW_RESULT):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -159,7 +159,7 @@ async def test_config_flow_entry_migrate.opp):
     ):
         await ps4.async_migrate_entry.opp, mock_entry)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(mock_e_registry.entities) == 1
     for entity in mock_e_registry.entities.values():
@@ -191,7 +191,7 @@ async def setup_mock_component.opp):
     entry = MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA, version=VERSION)
     entry.add_to_manager.opp.config_entries)
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_games_reformat_to_dict.opp):
@@ -283,10 +283,10 @@ async def test_send_command.opp):
     # Test that all commands call service function.
     with patch(mock_func, return_value=True) as mock_service:
         for mock_command in COMMANDS:
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 DOMAIN,
                 "send_command",
                 {ATTR_ENTITY_ID: mock_entity.entity_id, ATTR_COMMAND: mock_command},
             )
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
     assert len(mock_service.mock_calls) == len(COMMANDS)

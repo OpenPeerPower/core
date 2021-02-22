@@ -122,7 +122,7 @@ class HarmonyRemote(ConnectionStateMixin, remote.RemoteEntity, RestoreEntity):
     def _new_activity_finished(self, activity_info: tuple) -> None:
         """Call for finished updated current activity."""
         self._activity_starting = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Complete the initialization."""
@@ -214,7 +214,7 @@ class HarmonyRemote(ConnectionStateMixin, remote.RemoteEntity, RestoreEntity):
             # when turning on
             self._last_activity = activity_name
         self._state = bool(activity_id != -1)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def new_config(self, _=None):
         """Call for updating the current activity."""

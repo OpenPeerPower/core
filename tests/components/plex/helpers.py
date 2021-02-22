@@ -36,4 +36,4 @@ async def wait_for_debouncer.opp):
     """Move time forward to wait for sensor debouncer."""
     next_update = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

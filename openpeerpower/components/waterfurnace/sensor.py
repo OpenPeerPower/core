@@ -116,4 +116,4 @@ class WaterFurnaceSensor(Entity):
         """Update state."""
         if self.client.data is not None:
             self._state = getattr(self.client.data, self._attr, None)
-            self.async_write_ha_state()
+            self.async_write_op_state()

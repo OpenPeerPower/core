@@ -252,7 +252,7 @@ class NuHeatThermostat(CoordinatorEntity, ClimateEntity):
             return
 
         # Update the new state
-        self.schedule_update_ha_state(False)
+        self.schedule_update_op_state(False)
 
         # nuheat has a delay switching state
         # so we schedule a poll of the api
@@ -281,7 +281,7 @@ class NuHeatThermostat(CoordinatorEntity, ClimateEntity):
     def _handle_coordinator_update(self):
         """Get the latest state from the thermostat."""
         self._update_internal_state()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def device_info(self):

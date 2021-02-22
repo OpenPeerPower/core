@@ -98,6 +98,6 @@ class AquaLogicSwitch(SwitchEntity):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
-                UPDATE_TOPIC, self.async_write_ha_state
+                UPDATE_TOPIC, self.async_write_op_state
             )
         )

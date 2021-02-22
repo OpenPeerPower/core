@@ -33,12 +33,12 @@ async def test_state_none.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
@@ -48,7 +48,7 @@ async def test_state_none.opp):
         state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},
@@ -79,12 +79,12 @@ async def test_state_value.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
@@ -94,7 +94,7 @@ async def test_state_value.opp):
         state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},
@@ -127,12 +127,12 @@ async def test_state_json_value.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
@@ -142,7 +142,7 @@ async def test_state_json_value.opp):
         state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},
@@ -172,12 +172,12 @@ async def test_state_code.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("switch.test")
         assert STATE_OFF == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.test"},
@@ -187,7 +187,7 @@ async def test_state_code.opp):
         state = opp.states.get("switch.test")
         assert STATE_ON == state.state
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.test"},

@@ -304,7 +304,7 @@ class AndroidIPCamEntity(Entity):
             """Update callback."""
             if self._host != host:
                 return
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self.async_on_remove(
             async_dispatcher_connect(self.opp, SIGNAL_UPDATE_DATA, async_ipcam_update)

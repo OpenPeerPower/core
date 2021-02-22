@@ -56,7 +56,7 @@ class PlexSensor(Entity):
         """Set instance object and trigger an entity state update."""
         _LOGGER.debug("Refreshing sensor [%s]", self.unique_id)
         self._state = len(self._server.sensor_attributes)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def name(self):

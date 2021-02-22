@@ -50,10 +50,10 @@ async def test_garage_door_open_close.opp, hk_driver, events):
     entity_id = "cover.garage_door"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = GarageDoorOpener.opp, hk_driver, "Garage Door", entity_id, 2, None)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 4  # GarageDoorOpener
@@ -62,13 +62,13 @@ async def test_garage_door_open_close.opp, hk_driver, events):
     assert acc.char_target_state.value == HK_DOOR_OPEN
 
    .opp.states.async_set(entity_id, STATE_CLOSED, {ATTR_OBSTRUCTION_DETECTED: False})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_CLOSED
     assert acc.char_target_state.value == HK_DOOR_CLOSED
     assert acc.char_obstruction_detected.value is False
 
    .opp.states.async_set(entity_id, STATE_OPEN, {ATTR_OBSTRUCTION_DETECTED: True})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_OPEN
     assert acc.char_target_state.value == HK_DOOR_OPEN
     assert acc.char_obstruction_detected.value is True
@@ -76,13 +76,13 @@ async def test_garage_door_open_close.opp, hk_driver, events):
    .opp.states.async_set(
         entity_id, STATE_UNAVAILABLE, {ATTR_OBSTRUCTION_DETECTED: False}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_OPEN
     assert acc.char_target_state.value == HK_DOOR_OPEN
     assert acc.char_obstruction_detected.value is False
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_OPEN
     assert acc.char_target_state.value == HK_DOOR_OPEN
 
@@ -90,8 +90,8 @@ async def test_garage_door_open_close.opp, hk_driver, events):
     call_close_cover = async_mock_service.opp, DOMAIN, "close_cover")
     call_open_cover = async_mock_service.opp, DOMAIN, "open_cover")
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
+    await opp.async_block_till_done()
     assert call_close_cover
     assert call_close_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_state.value == HK_DOOR_CLOSING
@@ -100,17 +100,17 @@ async def test_garage_door_open_close.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
    .opp.states.async_set(entity_id, STATE_CLOSED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_CLOSED
     assert acc.char_target_state.value == HK_DOOR_CLOSED
     assert len(events) == 2
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
+    await opp.async_block_till_done()
     assert call_open_cover
     assert call_open_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_state.value == HK_DOOR_OPENING
@@ -119,10 +119,10 @@ async def test_garage_door_open_close.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
    .opp.states.async_set(entity_id, STATE_OPEN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_OPEN
     assert acc.char_target_state.value == HK_DOOR_OPEN
     assert len(events) == 4
@@ -134,10 +134,10 @@ async def test_windowcovering_set_cover_position.opp, hk_driver, events):
     entity_id = "cover.window"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = WindowCovering.opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 14  # WindowCovering
@@ -146,31 +146,31 @@ async def test_windowcovering_set_cover_position.opp, hk_driver, events):
     assert acc.char_target_position.value == 0
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_CURRENT_POSITION: None})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 0
     assert acc.char_target_position.value == 0
     assert acc.char_position_state.value == 2
 
    .opp.states.async_set(entity_id, STATE_OPENING, {ATTR_CURRENT_POSITION: 60})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 60
     assert acc.char_target_position.value == 60
     assert acc.char_position_state.value == 1
 
    .opp.states.async_set(entity_id, STATE_OPENING, {ATTR_CURRENT_POSITION: 70.0})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 70
     assert acc.char_target_position.value == 70
     assert acc.char_position_state.value == 1
 
    .opp.states.async_set(entity_id, STATE_CLOSING, {ATTR_CURRENT_POSITION: 50})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 50
     assert acc.char_target_position.value == 50
     assert acc.char_position_state.value == 0
 
    .opp.states.async_set(entity_id, STATE_OPEN, {ATTR_CURRENT_POSITION: 50})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 50
     assert acc.char_target_position.value == 50
     assert acc.char_position_state.value == 2
@@ -178,8 +178,8 @@ async def test_windowcovering_set_cover_position.opp, hk_driver, events):
     # Set from HomeKit
     call_set_cover_position = async_mock_service.opp, DOMAIN, "set_cover_position")
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
+    await opp.async_block_till_done()
     assert call_set_cover_position[0]
     assert call_set_cover_position[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_cover_position[0].data[ATTR_POSITION] == 25
@@ -188,8 +188,8 @@ async def test_windowcovering_set_cover_position.opp, hk_driver, events):
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] == 25
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 75)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 75)
+    await opp.async_block_till_done()
     assert call_set_cover_position[1]
     assert call_set_cover_position[1].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_cover_position[1].data[ATTR_POSITION] == 75
@@ -204,10 +204,10 @@ async def test_window_instantiate.opp, hk_driver, events):
     entity_id = "cover.window"
 
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = Window.opp, hk_driver, "Window", entity_id, 2, None)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 13  # Window
@@ -223,10 +223,10 @@ async def test_windowcovering_cover_set_tilt.opp, hk_driver, events):
    .opp.states.async_set(
         entity_id, STATE_UNKNOWN, {ATTR_SUPPORTED_FEATURES: SUPPORT_SET_TILT_POSITION}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = WindowCovering.opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 14  # CATEGORY_WINDOW_COVERING
@@ -235,22 +235,22 @@ async def test_windowcovering_cover_set_tilt.opp, hk_driver, events):
     assert acc.char_target_tilt.value == 0
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_CURRENT_TILT_POSITION: None})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_tilt.value == 0
     assert acc.char_target_tilt.value == 0
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_CURRENT_TILT_POSITION: 100})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_tilt.value == 90
     assert acc.char_target_tilt.value == 90
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_CURRENT_TILT_POSITION: 50})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_tilt.value == 0
     assert acc.char_target_tilt.value == 0
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_CURRENT_TILT_POSITION: 0})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_tilt.value == -90
     assert acc.char_target_tilt.value == -90
 
@@ -262,8 +262,8 @@ async def test_windowcovering_cover_set_tilt.opp, hk_driver, events):
     # HomeKit sets tilts between -90 and 90 (degrees), whereas
     #  OpenPeerPower expects a % between 0 and 100. Keep that in mind
     # when comparing
-    await.opp.async_add_executor_job(acc.char_target_tilt.client_update_value, 90)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_tilt.client_update_value, 90)
+    await opp.async_block_till_done()
     assert call_set_tilt_position[0]
     assert call_set_tilt_position[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_tilt_position[0].data[ATTR_TILT_POSITION] == 100
@@ -272,8 +272,8 @@ async def test_windowcovering_cover_set_tilt.opp, hk_driver, events):
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] == 100
 
-    await.opp.async_add_executor_job(acc.char_target_tilt.client_update_value, 45)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_tilt.client_update_value, 45)
+    await opp.async_block_till_done()
     assert call_set_tilt_position[1]
     assert call_set_tilt_position[1].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_tilt_position[1].data[ATTR_TILT_POSITION] == 75
@@ -290,7 +290,7 @@ async def test_windowcovering_open_close.opp, hk_driver, events):
    .opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_SUPPORTED_FEATURES: 0})
     acc = WindowCoveringBasic.opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 14  # WindowCovering
@@ -300,31 +300,31 @@ async def test_windowcovering_open_close.opp, hk_driver, events):
     assert acc.char_position_state.value == 2
 
    .opp.states.async_set(entity_id, STATE_UNKNOWN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 0
     assert acc.char_target_position.value == 0
     assert acc.char_position_state.value == 2
 
    .opp.states.async_set(entity_id, STATE_OPENING)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 0
     assert acc.char_target_position.value == 0
     assert acc.char_position_state.value == 1
 
    .opp.states.async_set(entity_id, STATE_OPEN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 100
     assert acc.char_target_position.value == 100
     assert acc.char_position_state.value == 2
 
    .opp.states.async_set(entity_id, STATE_CLOSING)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 100
     assert acc.char_target_position.value == 100
     assert acc.char_position_state.value == 0
 
    .opp.states.async_set(entity_id, STATE_CLOSED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_position.value == 0
     assert acc.char_target_position.value == 0
     assert acc.char_position_state.value == 2
@@ -333,8 +333,8 @@ async def test_windowcovering_open_close.opp, hk_driver, events):
     call_close_cover = async_mock_service.opp, DOMAIN, "close_cover")
     call_open_cover = async_mock_service.opp, DOMAIN, "open_cover")
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
+    await opp.async_block_till_done()
     assert call_close_cover
     assert call_close_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_position.value == 0
@@ -343,8 +343,8 @@ async def test_windowcovering_open_close.opp, hk_driver, events):
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 90)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 90)
+    await opp.async_block_till_done()
     assert call_open_cover[0]
     assert call_open_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_position.value == 100
@@ -353,8 +353,8 @@ async def test_windowcovering_open_close.opp, hk_driver, events):
     assert len(events) == 2
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 55)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 55)
+    await opp.async_block_till_done()
     assert call_open_cover[1]
     assert call_open_cover[1].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_position.value == 100
@@ -373,15 +373,15 @@ async def test_windowcovering_open_close_stop.opp, hk_driver, events):
     )
     acc = WindowCoveringBasic.opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Set from HomeKit
     call_close_cover = async_mock_service.opp, DOMAIN, "close_cover")
     call_open_cover = async_mock_service.opp, DOMAIN, "open_cover")
     call_stop_cover = async_mock_service.opp, DOMAIN, "stop_cover")
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
+    await opp.async_block_till_done()
     assert call_close_cover
     assert call_close_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_position.value == 0
@@ -390,8 +390,8 @@ async def test_windowcovering_open_close_stop.opp, hk_driver, events):
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 90)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 90)
+    await opp.async_block_till_done()
     assert call_open_cover
     assert call_open_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_position.value == 100
@@ -400,8 +400,8 @@ async def test_windowcovering_open_close_stop.opp, hk_driver, events):
     assert len(events) == 2
     assert events[-1].data[ATTR_VALUE] is None
 
-    await.opp.async_add_executor_job(acc.char_target_position.client_update_value, 55)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_target_position.client_update_value, 55)
+    await opp.async_block_till_done()
     assert call_stop_cover
     assert call_stop_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_current_position.value == 50
@@ -424,17 +424,17 @@ async def test_windowcovering_open_close_with_position_and_stop(
     )
     acc = WindowCovering.opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Set from HomeKit
     call_stop_cover = async_mock_service.opp, DOMAIN, "stop_cover")
 
-    await.opp.async_add_executor_job(acc.char_hold_position.client_update_value, 0)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_hold_position.client_update_value, 0)
+    await opp.async_block_till_done()
     assert not call_stop_cover
 
-    await.opp.async_add_executor_job(acc.char_hold_position.client_update_value, 1)
-    await.opp.async_block_till_done()
+    await opp.async_add_executor_job(acc.char_hold_position.client_update_value, 1)
+    await opp.async_block_till_done()
     assert call_stop_cover
     assert call_stop_cover[0].data[ATTR_ENTITY_ID] == entity_id
     assert acc.char_hold_position.value == 1
@@ -465,7 +465,7 @@ async def test_windowcovering_basic_restore.opp, hk_driver, events):
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     acc = WindowCoveringBasic.opp, hk_driver, "Cover", "cover.simple", 2, None)
     assert acc.category == 14
@@ -503,7 +503,7 @@ async def test_windowcovering_restore.opp, hk_driver, events):
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     acc = WindowCovering.opp, hk_driver, "Cover", "cover.simple", 2, None)
     assert acc.category == 14
@@ -525,7 +525,7 @@ async def test_garage_door_with_linked_obstruction_sensor.opp, hk_driver, events
 
    .opp.states.async_set(linked_obstruction_sensor_entity_id, STATE_OFF)
    .opp.states.async_set(entity_id, None)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     acc = GarageDoorOpener(
        .opp,
         hk_driver,
@@ -535,7 +535,7 @@ async def test_garage_door_with_linked_obstruction_sensor.opp, hk_driver, events
         {CONF_LINKED_OBSTRUCTION_SENSOR: linked_obstruction_sensor_entity_id},
     )
     await acc.run()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 4  # GarageDoorOpener
@@ -544,25 +544,25 @@ async def test_garage_door_with_linked_obstruction_sensor.opp, hk_driver, events
     assert acc.char_target_state.value == HK_DOOR_OPEN
 
    .opp.states.async_set(entity_id, STATE_CLOSED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_CLOSED
     assert acc.char_target_state.value == HK_DOOR_CLOSED
     assert acc.char_obstruction_detected.value is False
 
    .opp.states.async_set(entity_id, STATE_OPEN)
    .opp.states.async_set(linked_obstruction_sensor_entity_id, STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_OPEN
     assert acc.char_target_state.value == HK_DOOR_OPEN
     assert acc.char_obstruction_detected.value is True
 
    .opp.states.async_set(entity_id, STATE_CLOSED)
    .opp.states.async_set(linked_obstruction_sensor_entity_id, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert acc.char_current_state.value == HK_DOOR_CLOSED
     assert acc.char_target_state.value == HK_DOOR_CLOSED
     assert acc.char_obstruction_detected.value is False
 
    .opp.states.async_remove(entity_id)
    .opp.states.async_remove(linked_obstruction_sensor_entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()

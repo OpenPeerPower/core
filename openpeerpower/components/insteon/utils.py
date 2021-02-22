@@ -293,7 +293,7 @@ def async_register_services.opp):
         """Remove the device and all entities from.opp."""
         signal = f"{address.id}_{SIGNAL_REMOVE_ENTITY}"
         async_dispatcher_send.opp, signal)
-        dev_registry = await.opp.helpers.device_registry.async_get_registry()
+        dev_registry = await opp.helpers.device_registry.async_get_registry()
         device = dev_registry.async_get_device(identifiers={(DOMAIN, str(address))})
         if device:
             dev_registry.async_remove_device(device.id)

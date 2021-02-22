@@ -30,7 +30,7 @@ class YeelightNightlightModeSensor(YeelightEntity, BinarySensorEntity):
             async_dispatcher_connect(
                 self.opp,
                 DATA_UPDATED.format(self._device.host),
-                self.async_write_ha_state,
+                self.async_write_op_state,
             )
         )
 

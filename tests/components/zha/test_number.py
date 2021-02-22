@@ -70,7 +70,7 @@ async def test_number.opp, zha_device_joined_restored, zigpy_analog_output_devic
     # allow traffic to flow through the gateway and device
     assert cluster.read_attributes.call_count == 2
     await async_enable_traffic.opp, [zha_device])
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert cluster.read_attributes.call_count == 4
 
     # test that the state has changed from unavailable to 15.0
@@ -102,7 +102,7 @@ async def test_number.opp, zha_device_joined_restored, zigpy_analog_output_devic
         return_value=mock_coro([zcl_f.Status.SUCCESS, zcl_f.Status.SUCCESS]),
     ):
         # set value via UI
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN, "set_value", {"entity_id": entity_id, "value": 30.0}, blocking=True
         )
         assert len(cluster.write_attributes.mock_calls) == 1
@@ -121,9 +121,9 @@ async def test_number.opp, zha_device_joined_restored, zigpy_analog_output_devic
     assert.opp.states.get(entity_id).state == "30.0"
 
     await async_setup_component.opp, "openpeerpower", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "openpeerpower", "update_entity", {"entity_id": entity_id}, blocking=True
     )
     assert.opp.states.get(entity_id).state == "40.0"

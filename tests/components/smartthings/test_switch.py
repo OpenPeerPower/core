@@ -22,8 +22,8 @@ async def test_entity_and_device_attributes.opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory("Switch_1", [Capability.switch], {Attribute.switch: "on"})
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     # Act
     await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
     # Assert
@@ -44,7 +44,7 @@ async def test_turn_off.opp, device_factory):
     device = device_factory("Switch_1", [Capability.switch], {Attribute.switch: "on"})
     await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
     # Act
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_off", {"entity_id": "switch.switch_1"}, blocking=True
     )
     # Assert
@@ -63,7 +63,7 @@ async def test_turn_on.opp, device_factory):
     )
     await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
     # Act
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.switch_1"}, blocking=True
     )
     # Assert
@@ -83,7 +83,7 @@ async def test_update_from_signal.opp, device_factory):
     # Act
     async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     state = opp.states.get("switch.switch_1")
     assert state is not None
     assert state.state == "on"
@@ -95,6 +95,6 @@ async def test_unload_config_entry.opp, device_factory):
     device = device_factory("Switch 1", [Capability.switch], {Attribute.switch: "on"})
     config_entry = await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
     # Act
-    await.opp.config_entries.async_forward_entry_unload(config_entry, "switch")
+    await opp.config_entries.async_forward_entry_unload(config_entry, "switch")
     # Assert
     assert.opp.states.get("switch.switch_1").state == STATE_UNAVAILABLE

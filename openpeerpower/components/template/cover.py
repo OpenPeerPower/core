@@ -370,7 +370,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             )
         if self._optimistic:
             self._position = 100
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_close_cover(self, **kwargs):
         """Move the cover down."""
@@ -382,7 +382,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             )
         if self._optimistic:
             self._position = 0
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_stop_cover(self, **kwargs):
         """Fire the stop action."""
@@ -396,7 +396,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"position": self._position}, context=self._context
         )
         if self._optimistic:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_open_cover_tilt(self, **kwargs):
         """Tilt the cover open."""
@@ -405,7 +405,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"tilt": self._tilt_value}, context=self._context
         )
         if self._tilt_optimistic:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_close_cover_tilt(self, **kwargs):
         """Tilt the cover closed."""
@@ -414,7 +414,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"tilt": self._tilt_value}, context=self._context
         )
         if self._tilt_optimistic:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_cover_tilt_position(self, **kwargs):
         """Move the cover tilt to a specific position."""
@@ -423,4 +423,4 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             {"tilt": self._tilt_value}, context=self._context
         )
         if self._tilt_optimistic:
-            self.async_write_ha_state()
+            self.async_write_op_state()

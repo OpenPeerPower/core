@@ -62,7 +62,7 @@ async def test_setup_opp, remote):
     """Test Samsung TV integration is setup."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
         await async_setup_component.opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get(ENTITY_ID)
 
         # test name and turn_on
@@ -74,7 +74,7 @@ async def test_setup_opp, remote):
         )
 
         # test host and port
-        assert await.opp.services.async_call(
+        assert await opp.services.async_call(
             DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
         )
         assert remote.call_args == call(REMOTE_CALL)
@@ -89,7 +89,7 @@ async def test_setup_duplicate_config(opp, remote, caplog):
         ]
     }
     await async_setup_component.opp, SAMSUNGTV_DOMAIN, DUPLICATE)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(ENTITY_ID) is None
     assert len.opp.states.async_all()) == 0
     assert "duplicate host entries found" in caplog.text
@@ -98,7 +98,7 @@ async def test_setup_duplicate_config(opp, remote, caplog):
 async def test_setup_duplicate_entries.opp, remote, caplog):
     """Test duplicate setup of platform."""
     await async_setup_component.opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(ENTITY_ID)
     assert len.opp.states.async_all()) == 1
     await async_setup_component.opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)

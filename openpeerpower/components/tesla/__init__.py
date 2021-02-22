@@ -338,4 +338,4 @@ class TeslaDevice(CoordinatorEntity):
         """
         self.tesla_device.refresh()
         self._attributes = self.tesla_device.attrs.copy()
-        self.async_write_ha_state()
+        self.async_write_op_state()

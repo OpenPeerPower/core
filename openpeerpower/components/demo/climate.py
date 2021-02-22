@@ -279,39 +279,39 @@ class DemoClimate(ClimateEntity):
         ):
             self._target_temperature_high = kwargs.get(ATTR_TARGET_TEMP_HIGH)
             self._target_temperature_low = kwargs.get(ATTR_TARGET_TEMP_LOW)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_humidity(self, humidity):
         """Set new humidity level."""
         self._target_humidity = humidity
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_swing_mode(self, swing_mode):
         """Set new swing mode."""
         self._current_swing_mode = swing_mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_fan_mode(self, fan_mode):
         """Set new fan mode."""
         self._current_fan_mode = fan_mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new operation mode."""
         self._hvac_mode = hvac_mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_preset_mode(self, preset_mode):
         """Update preset_mode on."""
         self._preset = preset_mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_aux_heat_on(self):
         """Turn auxiliary heater on."""
         self._aux = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_aux_heat_off(self):
         """Turn auxiliary heater off."""
         self._aux = False
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -42,7 +42,7 @@ class LiteJetLight(LightEntity):
     def _on_load_changed(self):
         """Handle state changes."""
         _LOGGER.debug("Updating due to notification for %s", self._name)
-        self.schedule_update_ha_state(True)
+        self.schedule_update_op_state(True)
 
     @property
     def supported_features(self):

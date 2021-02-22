@@ -40,7 +40,7 @@ async def prometheus_client.opp, opp_client):
     await async_setup_component(
        .opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     await async_setup_component(
        .opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
@@ -51,7 +51,7 @@ async def prometheus_client.opp, opp_client):
     )
     sensor1.opp = opp
     sensor1.entity_id = "sensor.television_energy"
-    await sensor1.async_update_ha_state()
+    await sensor1.async_update_op_state()
 
     sensor2 = DemoSensor(
         None, "Radio Energy", 14, DEVICE_CLASS_POWER, ENERGY_KILO_WATT_HOUR, None
@@ -62,19 +62,19 @@ async def prometheus_client.opp, opp_client):
         "openpeerpower.util.dt.utcnow",
         return_value=datetime.datetime(1970, 1, 2, tzinfo=dt_util.UTC),
     ):
-        await sensor2.async_update_ha_state()
+        await sensor2.async_update_op_state()
 
     sensor3 = DemoSensor(
         None, "Electricity price", 0.123, None, f"SEK/{ENERGY_KILO_WATT_HOUR}", None
     )
     sensor3.opp = opp
     sensor3.entity_id = "sensor.electricity_price"
-    await sensor3.async_update_ha_state()
+    await sensor3.async_update_op_state()
 
     sensor4 = DemoSensor(None, "Wind Direction", 25, None, DEGREE, None)
     sensor4.opp = opp
     sensor4.entity_id = "sensor.wind_direction"
-    await sensor4.async_update_ha_state()
+    await sensor4.async_update_op_state()
 
     sensor5 = DemoSensor(
         None,
@@ -86,7 +86,7 @@ async def prometheus_client.opp, opp_client):
     )
     sensor5.opp = opp
     sensor5.entity_id = "sensor.sps30_pm_1um_weight_concentration"
-    await sensor5.async_update_ha_state()
+    await sensor5.async_update_op_state()
 
     return await opp_client()
 
@@ -222,7 +222,7 @@ async def test_minimal_config(opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {prometheus.DOMAIN: {}}
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
@@ -249,7 +249,7 @@ async def test_full_config(opp, mock_client):
         }
     }
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
@@ -271,7 +271,7 @@ async def _setup_opp, filter_config):
     """Shared set up for filtering tests."""
     config = {prometheus.DOMAIN: {"filter": filter_config}}
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return.opp.bus.listen.call_args_list[0][0][1]
 
 

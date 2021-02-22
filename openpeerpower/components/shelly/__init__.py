@@ -170,7 +170,7 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
         )
         self._last_input_events_count = {}
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._handle_ha_stop)
+       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._handle_op_stop)
 
     @callback
     def _async_device_updates_handler(self):
@@ -261,7 +261,7 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
         self._async_remove_device_updates_handler()
 
     @callback
-    def _handle_ha_stop(self, _):
+    def _handle_op_stop(self, _):
         """Handle Open Peer Power stopping."""
         _LOGGER.debug("Stopping ShellyDeviceWrapper for %s", self.name)
         self.shutdown()

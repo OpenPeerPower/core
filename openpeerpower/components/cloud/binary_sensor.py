@@ -65,7 +65,7 @@ class CloudRemoteBinary(BinarySensorEntity):
         async def async_state_update(data):
             """Update callback."""
             await asyncio.sleep(WAIT_UNTIL_CHANGE)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, DISPATCHER_REMOTE_UPDATE, async_state_update

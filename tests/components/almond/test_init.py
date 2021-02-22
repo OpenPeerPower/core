@@ -6,7 +6,7 @@ import pytest
 
 from openpeerpower import config_entries, core
 from openpeerpower.components.almond import const
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import EVENT_OPENPEERPOWER_START
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.dt import utcnow
@@ -46,9 +46,9 @@ async def test_set_up_oauth_remote_url.opp, aioclient_mock):
         return_value="https://example.nabu.casa",
     ), patch("pyalmond.WebAlmondAPI.async_create_device") as mock_create_device:
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_create_device.mock_calls) == 1
 
@@ -98,7 +98,7 @@ async def test_set_up_local.opp, aioclient_mock):
     """Test we do not set up Almond to connect to HA if we use local."""
 
     # Set up an internal URL, as Almond won't be set up if there is no URL available
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "https://192.168.0.1"},
     )

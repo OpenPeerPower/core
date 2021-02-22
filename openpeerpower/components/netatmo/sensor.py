@@ -182,7 +182,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     ]:
         async_add_entities(await find_entities(data_class_name), True)
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
 
     async def add_public_entities(update=True):
         """Retrieve Netatmo public weather entities."""

@@ -244,7 +244,7 @@ class KeeneticTracker(ScannerEntity):
                 self._device = new_device
                 self._last_seen = dt_util.utcnow()
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self.async_on_remove(
             async_dispatcher_connect(

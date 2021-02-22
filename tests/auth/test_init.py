@@ -175,7 +175,7 @@ async def test_create_new_user.opp):
     assert user.is_owner is False
     assert user.name == "Test Name"
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["user_id"] == user.id
 
@@ -377,7 +377,7 @@ async def test_generating_system_user.opp):
     assert token is not None
     assert token.client_id is None
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["user_id"] == user.id
 
@@ -938,12 +938,12 @@ async def test_async_remove_user.opp):
     )
     assert len(user.credentials) == 1
 
-    await.opp.auth.async_remove_user(user)
+    await opp.auth.async_remove_user(user)
 
     assert len(await manager.async_get_users()) == 0
     assert len(user.credentials) == 0
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(events) == 1
     assert events[0].data["user_id"] == user.id
 

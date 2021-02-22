@@ -23,5 +23,5 @@ async def test_init_success.opp):
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
         config_entry.add_to.opp.opp)
-        assert await.opp.config_entries.async_setup(config_entry.entry_id)
-        await.opp.async_block_till_done()
+        assert await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()

@@ -107,7 +107,7 @@ class ThresholdSensor(BinarySensorEntity):
                 _LOGGER.warning("State is not numerical")
 
             self._update_state()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         async_track_state_change_event(
            .opp, [entity_id], async_threshold_sensor_state_listener

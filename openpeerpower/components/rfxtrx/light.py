@@ -138,14 +138,14 @@ class RfxtrxLight(RfxtrxCommandEntity, LightEntity):
             await self._async_send(self._device.send_dim, brightness * 100 // 255)
             self._brightness = brightness
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
         await self._async_send(self._device.send_off)
         self._state = False
         self._brightness = 0
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _apply_event(self, event):
         """Apply command from rfxtrx."""
@@ -166,4 +166,4 @@ class RfxtrxLight(RfxtrxCommandEntity, LightEntity):
 
         self._apply_event(event)
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

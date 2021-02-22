@@ -274,7 +274,7 @@ class CastDevice(MediaPlayerEntity):
         self.cast_status = chromecast.status
         self.media_status = chromecast.media_controller.status
         self._chromecast.start()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def _async_disconnect(self):
         """Disconnect Chromecast object if it is set."""
@@ -287,13 +287,13 @@ class CastDevice(MediaPlayerEntity):
             self._cast_info.friendly_name,
         )
         self._available = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         await self.opp.async_add_executor_job(self._chromecast.disconnect)
 
         self._invalidate()
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _invalidate(self):
         """Invalidate some attributes."""
@@ -313,7 +313,7 @@ class CastDevice(MediaPlayerEntity):
     def new_cast_status(self, cast_status):
         """Handle updates of the cast status."""
         self.cast_status = cast_status
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def new_media_status(self, media_status):
         """Handle updates of the media status."""
@@ -361,7 +361,7 @@ class CastDevice(MediaPlayerEntity):
 
         self.media_status = media_status
         self.media_status_received = dt_util.utcnow()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def new_connection_status(self, connection_status):
         """Handle updates of connection status."""
@@ -374,7 +374,7 @@ class CastDevice(MediaPlayerEntity):
         if connection_status.status == CONNECTION_STATUS_DISCONNECTED:
             self._available = False
             self._invalidate()
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             return
 
         new_available = connection_status.status == CONNECTION_STATUS_CONNECTED
@@ -389,7 +389,7 @@ class CastDevice(MediaPlayerEntity):
                 connection_status.status,
             )
             self._available = new_available
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def multizone_new_media_status(self, group_uuid, media_status):
         """Handle updates of audio group media status."""
@@ -402,7 +402,7 @@ class CastDevice(MediaPlayerEntity):
         )
         self.mz_media_status[group_uuid] = media_status
         self.mz_media_status_received[group_uuid] = dt_util.utcnow()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     # ========== Service Calls ==========
     def _media_controller(self):

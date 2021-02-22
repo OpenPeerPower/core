@@ -114,18 +114,18 @@ class ZHADevice(LogMixin):
                 self.opp, self._check_available, timedelta(seconds=keep_alive_interval)
             )
         )
-        self._ha_device_id = None
+        self._op_device_id = None
         self.status = DeviceStatus.CREATED
         self._channels = channels.Channels(self)
 
     @property
     def device_id(self):
         """Return the HA device registry device id."""
-        return self._ha_device_id
+        return self._op_device_id
 
     def set_device_id(self, device_id):
         """Set the HA device registry device id."""
-        self._ha_device_id = device_id
+        self._op_device_id = device_id
 
     @property
     def device(self) -> zha_typing.ZigpyDeviceType:

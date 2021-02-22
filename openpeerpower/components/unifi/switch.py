@@ -51,7 +51,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     # Store previously known POE control entities in case their POE are turned off.
     previously_known_poe_clients = []
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
     for entity in entity_registry.entities.values():
 
         if (

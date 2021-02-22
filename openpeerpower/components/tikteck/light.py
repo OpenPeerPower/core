@@ -121,10 +121,10 @@ class TikteckLight(LightEntity):
         rgb = color_util.color_hs_to_RGB(*self._hs)
 
         self.set_state(rgb[0], rgb[1], rgb[2], self.brightness)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the specified light off."""
         self._state = False
         self.set_state(0, 0, 0, 0)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

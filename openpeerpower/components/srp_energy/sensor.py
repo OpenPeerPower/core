@@ -41,7 +41,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
             start_date = datetime.now() + timedelta(days=-1)
             end_date = datetime.now()
             with async_timeout.timeout(10):
-                hourly_usage = await.opp.async_add_executor_job(
+                hourly_usage = await opp.async_add_executor_job(
                     api.usage,
                     start_date,
                     end_date,
@@ -140,7 +140,7 @@ class SrpEntity(entity.Entity):
     async def async_added_to.opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
-            self.coordinator.async_add_listener(self.async_write_ha_state)
+            self.coordinator.async_add_listener(self.async_write_op_state)
         )
         if self.coordinator.data:
             self._state = self.coordinator.data

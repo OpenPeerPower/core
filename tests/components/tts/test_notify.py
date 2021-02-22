@@ -11,7 +11,7 @@ from openpeerpower.components.media_player.const import (
 )
 import openpeerpower.components.notify as notify
 import openpeerpower.components.tts as tts
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component, async_mock_service
@@ -35,7 +35,7 @@ def mutagen_mock():
 @pytest.fixture(autouse=True)
 async def internal_url_mock.opp):
     """Mock internal URL of the instance."""
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
@@ -79,7 +79,7 @@ async def test_setup_component_and_test_service.opp):
     with assert_setup_component(1, notify.DOMAIN):
         assert await async_setup_component.opp, notify.DOMAIN, config)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         notify.DOMAIN,
         "tts_test",
         {
@@ -88,6 +88,6 @@ async def test_setup_component_and_test_service.opp):
         blocking=True,
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1

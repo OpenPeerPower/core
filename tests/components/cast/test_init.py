@@ -17,17 +17,17 @@ async def test_creating_entry_sets_up_media_player.opp):
     ), patch(
         "pychromecast.discovery.stop_discovery"
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             cast.DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
         # Confirmation form
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-        result = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+        result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -40,7 +40,7 @@ async def test_configuring_cast_creates_entry.opp):
         await async_setup_component(
            .opp, cast.DOMAIN, {"cast": {"some_config": "to_trigger_import"}}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -51,6 +51,6 @@ async def test_not_configuring_cast_not_creates_entry.opp):
         "openpeerpower.components.cast.async_setup_entry", return_value=True
     ) as mock_setup:
         await async_setup_component.opp, cast.DOMAIN, {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 0

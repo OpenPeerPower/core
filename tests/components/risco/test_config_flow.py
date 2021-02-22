@@ -29,7 +29,7 @@ TEST_RISCO_TO_HA = {
     "D": "armed_night",
 }
 
-TEST_HA_TO_RISCO = {
+TEST_OP_TO_RISCO = {
     "armed_away": "arm",
     "armed_home": "partial_arm",
     "armed_night": "C",
@@ -44,7 +44,7 @@ TEST_OPTIONS = {
 
 async def test_form.opp):
     """Test we get the form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -64,10 +64,10 @@ async def test_form.opp):
         "openpeerpower.components.risco.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_DATA
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_SITE_NAME
@@ -79,7 +79,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -87,7 +87,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.risco.config_flow.RiscoAPI.login",
         side_effect=UnauthorizedError,
     ), patch("openpeerpower.components.risco.config_flow.RiscoAPI.close") as mock_close:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_DATA
         )
 
@@ -98,7 +98,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -106,7 +106,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.risco.config_flow.RiscoAPI.login",
         side_effect=CannotConnectError,
     ), patch("openpeerpower.components.risco.config_flow.RiscoAPI.close") as mock_close:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_DATA
         )
 
@@ -117,7 +117,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_exception.opp):
     """Test we handle unknown exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -125,7 +125,7 @@ async def test_form_exception.opp):
         "openpeerpower.components.risco.config_flow.RiscoAPI.login",
         side_effect=Exception,
     ), patch("openpeerpower.components.risco.config_flow.RiscoAPI.close") as mock_close:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_DATA
         )
 
@@ -144,11 +144,11 @@ async def test_form_already_exists(opp):
 
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"], TEST_DATA
     )
 
@@ -166,19 +166,19 @@ async def test_options_flow.opp):
 
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input=TEST_OPTIONS,
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "risco_to_ha"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input=TEST_RISCO_TO_HA,
     )
@@ -187,20 +187,20 @@ async def test_options_flow.opp):
     assert result["step_id"] == "ha_to_risco"
 
     with patch("openpeerpower.components.risco.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp.config_entries.options.async_configure(
             result["flow_id"],
-            user_input=TEST_HA_TO_RISCO,
+            user_input=TEST_OP_TO_RISCO,
         )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert entry.options == {
         **TEST_OPTIONS,
         "risco_states_to_ha": TEST_RISCO_TO_HA,
-        "ha_states_to_risco": TEST_HA_TO_RISCO,
+        "ha_states_to_risco": TEST_OP_TO_RISCO,
     }
 
 
-async def test_ha_to_risco_schema.opp):
+async def test_op_to_risco_schema.opp):
     """Test that the schema for the ha-to-risco mapping step is generated properly."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -210,27 +210,27 @@ async def test_ha_to_risco_schema.opp):
 
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input=TEST_OPTIONS,
     )
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input=TEST_RISCO_TO_HA,
     )
 
     # Test an HA state that isn't used
     with pytest.raises(vol.error.MultipleInvalid):
-        await.opp.config_entries.options.async_configure(
+        await opp.config_entries.options.async_configure(
             result["flow_id"],
-            user_input={**TEST_HA_TO_RISCO, "armed_custom_bypass": "D"},
+            user_input={**TEST_OP_TO_RISCO, "armed_custom_bypass": "D"},
         )
 
     # Test a combo that can't be selected
     with pytest.raises(vol.error.MultipleInvalid):
-        await.opp.config_entries.options.async_configure(
+        await opp.config_entries.options.async_configure(
             result["flow_id"],
-            user_input={**TEST_HA_TO_RISCO, "armed_night": "A"},
+            user_input={**TEST_OP_TO_RISCO, "armed_night": "A"},
         )

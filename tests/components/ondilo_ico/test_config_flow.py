@@ -22,7 +22,7 @@ async def test_abort_if_existing_entry.opp):
     """Check flow abort when an entry already exist."""
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -42,7 +42,7 @@ async def test_full_flow(
         },
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -78,7 +78,7 @@ async def test_full_flow(
     with patch(
         "openpeerpower.components.ondilo_ico.async_setup_entry", return_value=True
     ) as mock_setup:
-        await.opp.config_entries.flow.async_configure(result["flow_id"])
+        await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1

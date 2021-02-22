@@ -44,7 +44,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
         "hello",
         {"latitude": 32.881011, "longitude": -117.234758, "source": "test_source"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -82,7 +82,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
         {"latitude": 32.880586, "longitude": -117.237564},
         context=context,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
@@ -97,9 +97,9 @@ async def test_if_fires_on_zone_enter.opp, calls):
         "hello",
         {"latitude": 32.881011, "longitude": -117.234758},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         automation.DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL},
@@ -111,7 +111,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
         "hello",
         {"latitude": 32.880586, "longitude": -117.237564},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -123,7 +123,7 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
         "hello",
         {"latitude": 32.880586, "longitude": -117.237564, "source": "test_source"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -146,7 +146,7 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
         "hello",
         {"latitude": 32.881011, "longitude": -117.234758},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -158,7 +158,7 @@ async def test_if_fires_on_zone_leave.opp, calls):
         "hello",
         {"latitude": 32.880586, "longitude": -117.237564, "source": "test_source"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -181,7 +181,7 @@ async def test_if_fires_on_zone_leave.opp, calls):
         "hello",
         {"latitude": 32.881011, "longitude": -117.234758, "source": "test_source"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
 
@@ -193,7 +193,7 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
         "hello",
         {"latitude": 32.881011, "longitude": -117.234758, "source": "test_source"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -216,7 +216,7 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
         "hello",
         {"latitude": 32.880586, "longitude": -117.237564},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -261,7 +261,7 @@ async def test_if_fires_on_zone_appear.opp, calls):
         {"latitude": 32.880586, "longitude": -117.237564, "source": "test_source"},
         context=context,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
@@ -277,7 +277,7 @@ async def test_if_fires_on_zone_disappear.opp, calls):
         "hello",
         {"latitude": 32.880586, "longitude": -117.237564, "source": "test_source"},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await async_setup_component(
        .opp,
@@ -311,7 +311,7 @@ async def test_if_fires_on_zone_disappear.opp, calls):
 
     # Entity disappears from zone without new coordinates outside the zone.
    .opp.states.async_remove("geo_location.entity")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert (

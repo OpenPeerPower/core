@@ -217,7 +217,7 @@ class TotpSetupFlow(SetupFlow):
                 self._ota_secret,
                 self._url,
                 self._image,
-            ) = await.opp.async_add_executor_job(
+            ) = await opp.async_add_executor_job(
                 _generate_secret_and_qr_code,  # type: ignore
                 str(self._user.name),
             )

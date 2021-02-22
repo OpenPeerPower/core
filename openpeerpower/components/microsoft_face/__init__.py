@@ -96,7 +96,7 @@ async def async_setup_opp, config):
             face.store[g_id] = {}
 
             entities[g_id] = MicrosoftFaceGroupEntity.opp, face, g_id, name)
-            entities[g_id].async_write_ha_state()
+            entities[g_id].async_write_op_state()
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't create group '%s' with error: %s", g_id, err)
 
@@ -145,7 +145,7 @@ async def async_setup_opp, config):
             )
 
             face.store[g_id][name] = user_data["personId"]
-            entities[g_id].async_write_ha_state()
+            entities[g_id].async_write_op_state()
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't create person '%s' with error: %s", name, err)
 
@@ -163,7 +163,7 @@ async def async_setup_opp, config):
             await face.call_api("delete", f"persongroups/{g_id}/persons/{p_id}")
 
             face.store[g_id].pop(name)
-            entities[g_id].async_write_ha_state()
+            entities[g_id].async_write_op_state()
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't delete person '%s' with error: %s", p_id, err)
 
@@ -276,7 +276,7 @@ class MicrosoftFace:
                 self._store[g_id][person["name"]] = person["personId"]
 
             tasks.append(
-                asyncio.create_task(self._entities[g_id].async_update_ha_state())
+                asyncio.create_task(self._entities[g_id].async_update_op_state())
             )
 
         if tasks:

@@ -196,7 +196,7 @@ class DemoLight(LightEntity):
 
         # As we have disabled polling, we need to inform
         # Open Peer Power about updates in our state ourselves.
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the light off."""
@@ -204,4 +204,4 @@ class DemoLight(LightEntity):
 
         # As we have disabled polling, we need to inform
         # Open Peer Power about updates in our state ourselves.
-        self.async_write_ha_state()
+        self.async_write_op_state()

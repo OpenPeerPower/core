@@ -910,7 +910,7 @@ async def async_get_entity_id(
 ) -> Optional[str]:
     """Get an entity id for a user's attribute."""
     entity_registry: EntityRegistry = (
-        await.opp.helpers.entity_registry.async_get_registry()
+        await opp.helpers.entity_registry.async_get_registry()
     )
     unique_id = get_attribute_unique_id(attribute, user_id)
 
@@ -997,7 +997,7 @@ class BaseWithingsSensor(Entity):
     def _update_state_data(self, data: MeasurementData) -> None:
         """Update the state data."""
         self._state_data = data.get(self._attribute.measurement)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self) -> None:
         """Register update dispatcher."""

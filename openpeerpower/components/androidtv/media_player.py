@@ -197,7 +197,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         _LOGGER.warning("Platform already setup on %s, skipping", address)
         return
 
-    adbkey, signer, adb_log = await.opp.async_add_executor_job(
+    adbkey, signer, adb_log = await opp.async_add_executor_job(
         setup_androidtv, opp, config
     )
 
@@ -522,7 +522,7 @@ class ADBDevice(MediaPlayerEntity):
 
         # If an exception occurred and the device is no longer available, write the state
         if not self.available:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         return None, None
 
@@ -591,7 +591,7 @@ class ADBDevice(MediaPlayerEntity):
 
         if cmd == "GET_PROPERTIES":
             self._adb_response = str(await self.aftv.get_properties_dict())
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return self._adb_response
 
         try:
@@ -601,7 +601,7 @@ class ADBDevice(MediaPlayerEntity):
 
         if isinstance(response, str) and response.strip():
             self._adb_response = response.strip()
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         return self._adb_response
 
@@ -611,7 +611,7 @@ class ADBDevice(MediaPlayerEntity):
         output = await self.aftv.learn_sendevent()
         if output:
             self._adb_response = output
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
             msg = f"Output from service '{SERVICE_LEARN_SENDEVENT}' from {self.entity_id}: '{output}'"
             self.opp.components.persistent_notification.async_create(

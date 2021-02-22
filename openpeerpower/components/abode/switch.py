@@ -58,12 +58,12 @@ class AbodeAutomationSwitch(AbodeAutomation, SwitchEntity):
     def turn_on(self, **kwargs):
         """Enable the automation."""
         if self._automation.enable(True):
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Disable the automation."""
         if self._automation.enable(False):
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def trigger(self):
         """Trigger the automation."""

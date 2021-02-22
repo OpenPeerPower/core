@@ -134,7 +134,7 @@ class Sensor(ZhaEntity):
     @callback
     def async_set_state(self, attr_id: int, attr_name: str, value: Any) -> None:
         """Handle state update from channel."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def formatter(self, value: int) -> Union[int, float]:
         """Numeric pass-through formatter."""

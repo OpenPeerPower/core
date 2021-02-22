@@ -146,13 +146,13 @@ class AlarmDecoderBinarySensor(BinarySensorEntity):
         """Update the zone's state, if needed."""
         if zone is None or int(zone) == self._zone_number:
             self._state = 1
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def _restore_callback(self, zone):
         """Update the zone's state, if needed."""
         if zone is None or (int(zone) == self._zone_number and not self._loop):
             self._state = 0
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def _rfx_message_callback(self, message):
         """Update RF state."""
@@ -160,7 +160,7 @@ class AlarmDecoderBinarySensor(BinarySensorEntity):
             self._rfstate = message.value
             if self._loop:
                 self._state = 1 if message.loop[self._loop - 1] else 0
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
     def _rel_message_callback(self, message):
         """Update relay / expander state."""
@@ -174,4 +174,4 @@ class AlarmDecoderBinarySensor(BinarySensorEntity):
                 message.value,
             )
             self._state = message.value
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()

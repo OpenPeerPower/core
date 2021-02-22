@@ -189,8 +189,8 @@ async def stop_opp():
             continue
 
         with patch.object.opp_inst.loop, "stop"):
-            await.opp_inst.async_block_till_done()
-            await.opp_inst.async_stop(force=True)
+            await opp_inst.async_block_till_done()
+            await opp_inst.async_stop(force=True)
 
 
 @pytest.fixture

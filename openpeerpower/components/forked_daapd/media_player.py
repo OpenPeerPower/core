@@ -146,7 +146,7 @@ class ForkedDaapdZone(MediaPlayerEntity):
         self._available = bool(new_output)
         if self._available:
             self._output = new_output
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def unique_id(self):
@@ -309,7 +309,7 @@ class ForkedDaapdMaster(MediaPlayerEntity):
     def _update_callback(self, available):
         """Call update method."""
         self._available = available
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def update_options(self, options):
@@ -738,7 +738,7 @@ class ForkedDaapdMaster(MediaPlayerEntity):
             await self._api.add_to_queue(uris=self._sources_uris[source], clear=True)
         elif source == SOURCE_NAME_CLEAR:  # clear playlist
             await self._api.clear_queue()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _use_pipe_control(self):
         """Return which pipe control from KNOWN_PIPES to use."""

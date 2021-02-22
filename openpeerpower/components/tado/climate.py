@@ -40,13 +40,13 @@ from .const import (
     ORDERED_KNOWN_TADO_MODES,
     SIGNAL_TADO_UPDATE_RECEIVED,
     SUPPORT_PRESET,
-    TADO_HVAC_ACTION_TO_HA_HVAC_ACTION,
+    TADO_HVAC_ACTION_TO_OP_HVAC_ACTION,
     TADO_MODES_WITH_NO_TEMP_SETTING,
     TADO_SWING_OFF,
     TADO_SWING_ON,
-    TADO_TO_HA_FAN_MODE_MAP,
-    TADO_TO_HA_HVAC_MODE_MAP,
-    TADO_TO_HA_OFFSET_MAP,
+    TADO_TO_OP_FAN_MODE_MAP,
+    TADO_TO_OP_HVAC_MODE_MAP,
+    TADO_TO_OP_OFFSET_MAP,
     TEMP_OFFSET,
     TYPE_AIR_CONDITIONING,
     TYPE_HEATING,
@@ -79,7 +79,7 @@ async def async_setup_entry(
     """Set up the Tado climate platform."""
 
     tado = opp.data[DOMAIN][entry.entry_id][DATA]
-    entities = await.opp.async_add_executor_job(_generate_entities, tado)
+    entities = await opp.async_add_executor_job(_generate_entities, tado)
 
     platform = entity_platform.current_platform.get()
 
@@ -120,8 +120,8 @@ def create_climate_entity(tado, name: str, zone_id: int, device_info: dict):
     zone_type = capabilities["type"]
     support_flags = SUPPORT_PRESET_MODE | SUPPORT_TARGET_TEMPERATURE
     supported_hvac_modes = [
-        TADO_TO_HA_HVAC_MODE_MAP[CONST_MODE_OFF],
-        TADO_TO_HA_HVAC_MODE_MAP[CONST_MODE_SMART_SCHEDULE],
+        TADO_TO_OP_HVAC_MODE_MAP[CONST_MODE_OFF],
+        TADO_TO_OP_HVAC_MODE_MAP[CONST_MODE_SMART_SCHEDULE],
     ]
     supported_fan_modes = None
     heat_temperatures = None
@@ -133,7 +133,7 @@ def create_climate_entity(tado, name: str, zone_id: int, device_info: dict):
             if mode not in capabilities:
                 continue
 
-            supported_hvac_modes.append(TADO_TO_HA_HVAC_MODE_MAP[mode])
+            supported_hvac_modes.append(TADO_TO_OP_HVAC_MODE_MAP[mode])
             if capabilities[mode].get("swings"):
                 support_flags |= SUPPORT_SWING_MODE
 
@@ -146,7 +146,7 @@ def create_climate_entity(tado, name: str, zone_id: int, device_info: dict):
                 continue
 
             supported_fan_modes = [
-                TADO_TO_HA_FAN_MODE_MAP[speed]
+                TADO_TO_OP_FAN_MODE_MAP[speed]
                 for speed in capabilities[mode]["fanSpeeds"]
             ]
 
@@ -305,7 +305,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
 
         Need to be one of HVAC_MODE_*.
         """
-        return TADO_TO_HA_HVAC_MODE_MAP.get(self._current_tado_hvac_mode, HVAC_MODE_OFF)
+        return TADO_TO_OP_HVAC_MODE_MAP.get(self._current_tado_hvac_mode, HVAC_MODE_OFF)
 
     @property
     def hvac_modes(self):
@@ -321,7 +321,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
 
         Need to be one of CURRENT_HVAC_*.
         """
-        return TADO_HVAC_ACTION_TO_HA_HVAC_ACTION.get(
+        return TADO_HVAC_ACTION_TO_OP_HVAC_ACTION.get(
             self._tado_zone_data.current_hvac_action, CURRENT_HVAC_OFF
         )
 
@@ -329,7 +329,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
     def fan_mode(self):
         """Return the fan setting."""
         if self._ac_device:
-            return TADO_TO_HA_FAN_MODE_MAP.get(self._current_tado_fan_speed, FAN_AUTO)
+            return TADO_TO_OP_FAN_MODE_MAP.get(self._current_tado_fan_speed, FAN_AUTO)
         return None
 
     @property
@@ -475,7 +475,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
         """Load tado data into zone."""
         self._tado_zone_data = self._tado.data["zone"][self.zone_id]
         # Assign offset values to mapped attributes
-        for offset_key, attr in TADO_TO_HA_OFFSET_MAP.items():
+        for offset_key, attr in TADO_TO_OP_OFFSET_MAP.items():
             if (
                 self._device_id in self._tado.data["device"]
                 and offset_key
@@ -493,7 +493,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
     def _async_update_callback(self):
         """Load tado data and update state."""
         self._async_update_zone_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _normalize_target_temp_for_hvac_mode(self):
         # Set a target temperature if we don't have any

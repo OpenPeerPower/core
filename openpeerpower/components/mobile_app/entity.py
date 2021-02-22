@@ -108,4 +108,4 @@ class MobileAppEntity(RestoreEntity):
             return
 
         self._config = {**self._config, **data}
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -142,7 +142,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
             self._changed_by_time = keypad.last_user_time.isoformat()
             self._changed_by_id = keypad.last_user + 1
             self._changed_by = username(self._elk, keypad.last_user)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     def _watch_area(self, area, changeset):
         last_log = changeset.get("last_log")
@@ -155,7 +155,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
         self._changed_by_id = last_log["user_number"]
         self._changed_by = username(self._elk, self._changed_by_id - 1)
         self._changed_by_time = last_log["timestamp"]
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def code_format(self):

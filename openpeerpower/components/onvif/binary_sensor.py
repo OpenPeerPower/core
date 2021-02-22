@@ -80,5 +80,5 @@ class ONVIFBinarySensor(ONVIFBaseEntity, BinarySensorEntity):
     async def async_added_to.opp(self):
         """Connect to dispatcher listening for entity data notifications."""
         self.async_on_remove(
-            self.device.events.async_add_listener(self.async_write_ha_state)
+            self.device.events.async_add_listener(self.async_write_op_state)
         )

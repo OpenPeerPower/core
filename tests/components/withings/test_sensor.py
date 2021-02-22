@@ -305,7 +305,7 @@ async def test_sensor_default_enabled_entities(
 ) -> None:
     """Test entities enabled by default."""
     entity_registry: EntityRegistry = (
-        await.opp.helpers.entity_registry.async_get_registry()
+        await opp.helpers.entity_registry.async_get_registry()
     )
 
     await component_factory.configure_component(profile_configs=(PERSON0,))
@@ -348,7 +348,7 @@ async def test_all_entities(
 ) -> None:
     """Test all entities."""
     entity_registry: EntityRegistry = (
-        await.opp.helpers.entity_registry.async_get_registry()
+        await opp.helpers.entity_registry.async_get_registry()
     )
 
     with patch(

@@ -32,7 +32,7 @@ async def test_setup_component.opp, google_setup):
 
 async def test_get_calendar_info.opp, test_calendar):
     """Test getting the calendar info."""
-    calendar_info = await.opp.async_add_executor_job(
+    calendar_info = await opp.async_add_executor_job(
         google.get_calendar_info, opp, test_calendar
     )
     assert calendar_info == {
@@ -60,7 +60,7 @@ async def test_found_calendar.opp, google_setup, mock_next_event, test_calendar)
     assert await async_setup_component.opp, "google", config)
     assert.opp.data[google.DATA_INDEX] == {}
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "google", google.SERVICE_FOUND_CALENDARS, test_calendar, blocking=True
     )
 

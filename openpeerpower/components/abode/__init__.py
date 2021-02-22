@@ -119,13 +119,13 @@ async def async_setup_entry.opp, config_entry):
         )
 
     try:
-        abode = await.opp.async_add_executor_job(
+        abode = await opp.async_add_executor_job(
             Abode, username, password, True, True, True, cache
         )
 
     except AbodeAuthenticationException as ex:
         LOGGER.error("Invalid credentials: %s", ex)
-        await.opp.config_entries.flow.async_init(
+        await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_REAUTH},
             data=config_entry.data,
@@ -144,8 +144,8 @@ async def async_setup_entry.opp, config_entry):
         )
 
     await setup_opp_events.opp)
-    await.opp.async_add_executor_job(setup_opp_services, opp)
-    await.opp.async_add_executor_job(setup_abode_events, opp)
+    await opp.async_add_executor_job(setup_opp_services, opp)
+    await opp.async_add_executor_job(setup_abode_events, opp)
 
     return True
 
@@ -165,8 +165,8 @@ async def async_unload_entry.opp, config_entry):
 
     await gather(*tasks)
 
-    await.opp.async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
-    await.opp.async_add_executor_job.opp.data[DOMAIN].abode.logout)
+    await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
+    await opp.async_add_executor_job.opp.data[DOMAIN].abode.logout)
 
    .opp.data[DOMAIN].logout_listener()
    .opp.data.pop(DOMAIN)
@@ -240,7 +240,7 @@ async def setup_opp_events.opp):
         LOGGER.info("Logged out of Abode")
 
     if not.opp.data[DOMAIN].polling:
-        await.opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
+        await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
 
    .opp.data[DOMAIN].logout_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, logout
@@ -326,7 +326,7 @@ class AbodeEntity(Entity):
     def _update_connection_status(self):
         """Update the entity available property."""
         self._available = self._data.abode.events.connected
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class AbodeDevice(AbodeEntity):
@@ -390,7 +390,7 @@ class AbodeDevice(AbodeEntity):
 
     def _update_callback(self, device):
         """Update the device state."""
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
 
 class AbodeAutomation(AbodeEntity):

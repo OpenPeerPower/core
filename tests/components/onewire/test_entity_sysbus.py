@@ -150,7 +150,7 @@ async def test_onewiredirect_setup_valid_device.opp, device_id):
         side_effect=read_side_effect,
     ):
         assert await async_setup_component.opp, SENSOR_DOMAIN, MOCK_CONFIG)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)
 

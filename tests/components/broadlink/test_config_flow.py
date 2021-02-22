@@ -32,7 +32,7 @@ async def test_flow_user_works.opp):
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -41,7 +41,7 @@ async def test_flow_user_works.opp):
     assert result["errors"] == {}
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]) as mock_discover:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
@@ -50,7 +50,7 @@ async def test_flow_user_works.opp):
     assert result["step_id"] == "finish"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"name": device.name},
     )
@@ -67,22 +67,22 @@ async def test_flow_user_already_in_progress.opp):
     """Test we do not accept more than one config flow per device."""
     device = get_device("Living Room")
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[device.get_mock_api()]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[device.get_mock_api()]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
@@ -100,7 +100,7 @@ async def test_flow_user_mac_already_configured.opp):
     mock_entry = device.get_mock_entry()
     mock_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -109,7 +109,7 @@ async def test_flow_user_mac_already_configured.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
@@ -123,12 +123,12 @@ async def test_flow_user_mac_already_configured.opp):
 
 async def test_flow_user_invalid_ip_address.opp):
     """Test we handle an invalid IP address in the user step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, side_effect=OSError(errno.EINVAL, None)):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "0.0.0.1"},
         )
@@ -140,12 +140,12 @@ async def test_flow_user_invalid_ip_address.opp):
 
 async def test_flow_user_invalid_hostname.opp):
     """Test we handle an invalid hostname in the user step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, side_effect=OSError(socket.EAI_NONAME, None)):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "pancakemaster.local"},
         )
@@ -159,12 +159,12 @@ async def test_flow_user_device_not_found.opp):
     """Test we handle a device not found in the user step."""
     device = get_device("Living Room")
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host},
         )
@@ -179,12 +179,12 @@ async def test_flow_user_device_not_supported.opp):
     device = get_device("Kitchen")
     mock_api = device.get_mock_api()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host},
         )
@@ -195,12 +195,12 @@ async def test_flow_user_device_not_supported.opp):
 
 async def test_flow_user_network_unreachable.opp):
     """Test we handle a network unreachable in the user step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, side_effect=OSError(errno.ENETUNREACH, None)):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "192.168.1.32"},
         )
@@ -212,12 +212,12 @@ async def test_flow_user_network_unreachable.opp):
 
 async def test_flow_user_os_error(opp):
     """Test we handle an OS error in the user step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, side_effect=OSError()):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": "192.168.1.32"},
         )
@@ -233,12 +233,12 @@ async def test_flow_auth_authentication_error(opp):
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
@@ -254,12 +254,12 @@ async def test_flow_auth_network_timeout.opp):
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.NetworkTimeoutError()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host},
         )
@@ -275,12 +275,12 @@ async def test_flow_auth_firmware_error(opp):
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.BroadlinkException()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host},
         )
@@ -296,12 +296,12 @@ async def test_flow_auth_network_unreachable.opp):
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = OSError(errno.ENETUNREACH, None)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host},
         )
@@ -317,12 +317,12 @@ async def test_flow_auth_os_error(opp):
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = OSError()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host},
         )
@@ -338,23 +338,23 @@ async def test_flow_reset_works.opp):
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
     with patch(DEVICE_DISCOVERY, return_value=[device.get_mock_api()]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"name": device.name},
     )
@@ -370,12 +370,12 @@ async def test_flow_unlock_works.opp):
     mock_api = device.get_mock_api()
     mock_api.is_locked = True
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
@@ -384,12 +384,12 @@ async def test_flow_unlock_works.opp):
     assert result["step_id"] == "unlock"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"unlock": True},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"name": device.name},
     )
@@ -409,17 +409,17 @@ async def test_flow_unlock_network_timeout.opp):
     mock_api.is_locked = True
     mock_api.set_lock.side_effect = blke.NetworkTimeoutError()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"unlock": True},
     )
@@ -436,17 +436,17 @@ async def test_flow_unlock_firmware_error(opp):
     mock_api.is_locked = True
     mock_api.set_lock.side_effect = blke.BroadlinkException
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"unlock": True},
     )
@@ -463,17 +463,17 @@ async def test_flow_unlock_network_unreachable.opp):
     mock_api.is_locked = True
     mock_api.set_lock.side_effect = OSError(errno.ENETUNREACH, None)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"unlock": True},
     )
@@ -490,17 +490,17 @@ async def test_flow_unlock_os_error(opp):
     mock_api.is_locked = True
     mock_api.set_lock.side_effect = OSError()
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"unlock": True},
     )
@@ -516,22 +516,22 @@ async def test_flow_do_not_unlock.opp):
     mock_api = device.get_mock_api()
     mock_api.is_locked = True
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"unlock": False},
     )
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"name": device.name},
     )
@@ -549,7 +549,7 @@ async def test_flow_import_works.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]) as mock_discover:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": device.host},
@@ -559,7 +559,7 @@ async def test_flow_import_works.opp):
     assert result["step_id"] == "finish"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"name": device.name},
     )
@@ -580,12 +580,12 @@ async def test_flow_import_already_in_progress.opp):
     data = {"host": device.host}
 
     with patch(DEVICE_DISCOVERY, return_value=[device.get_mock_api()]):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=data
         )
 
     with patch(DEVICE_DISCOVERY, return_value=[device.get_mock_api()]):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=data
         )
 
@@ -601,7 +601,7 @@ async def test_flow_import_host_already_configured.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": device.host},
@@ -624,7 +624,7 @@ async def test_flow_import_mac_already_configured.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": device.host},
@@ -642,7 +642,7 @@ async def test_flow_import_mac_already_configured.opp):
 async def test_flow_import_device_not_found.opp):
     """Test we handle a device not found in the import step."""
     with patch(DEVICE_DISCOVERY, return_value=[]):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "192.168.1.32"},
@@ -658,7 +658,7 @@ async def test_flow_import_device_not_supported.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": device.host},
@@ -671,7 +671,7 @@ async def test_flow_import_device_not_supported.opp):
 async def test_flow_import_invalid_ip_address.opp):
     """Test we handle an invalid IP address in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError(errno.EINVAL, None)):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "0.0.0.1"},
@@ -684,7 +684,7 @@ async def test_flow_import_invalid_ip_address.opp):
 async def test_flow_import_invalid_hostname.opp):
     """Test we handle an invalid hostname in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError(socket.EAI_NONAME, None)):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "hotdog.local"},
@@ -697,7 +697,7 @@ async def test_flow_import_invalid_hostname.opp):
 async def test_flow_import_network_unreachable.opp):
     """Test we handle a network unreachable in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError(errno.ENETUNREACH, None)):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "192.168.1.64"},
@@ -710,7 +710,7 @@ async def test_flow_import_network_unreachable.opp):
 async def test_flow_import_os_error(opp):
     """Test we handle an OS error in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError()):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": "192.168.1.64"},
@@ -730,7 +730,7 @@ async def test_flow_reauth_works.opp):
     data = {"name": device.name, **device.get_entry_data()}
 
     with patch(DEVICE_FACTORY, return_value=mock_api):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=data
         )
 
@@ -740,7 +740,7 @@ async def test_flow_reauth_works.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]) as mock_discover:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
@@ -766,7 +766,7 @@ async def test_flow_reauth_invalid_host.opp):
     data = {"name": device.name, **device.get_entry_data()}
 
     with patch(DEVICE_FACTORY, return_value=mock_api):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=data
         )
 
@@ -774,7 +774,7 @@ async def test_flow_reauth_invalid_host.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]) as mock_discover:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )
@@ -800,7 +800,7 @@ async def test_flow_reauth_valid_host.opp):
     data = {"name": device.name, **device.get_entry_data()}
 
     with patch(DEVICE_FACTORY, return_value=mock_api):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=data
         )
 
@@ -808,7 +808,7 @@ async def test_flow_reauth_valid_host.opp):
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]) as mock_discover:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"host": device.host, "timeout": device.timeout},
         )

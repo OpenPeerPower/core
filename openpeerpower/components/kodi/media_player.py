@@ -308,7 +308,7 @@ class KodiEntity(MediaPlayerEntity):
             # If a new item is playing, force a complete refresh
             force_refresh = data["item"]["id"] != self._item.get("id")
 
-        self.async_schedule_update_ha_state(force_refresh)
+        self.async_schedule_update_op_state(force_refresh)
 
     @callback
     def async_on_stop(self, sender, data):
@@ -318,14 +318,14 @@ class KodiEntity(MediaPlayerEntity):
             return
 
         self._reset_state([])
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_on_volume_changed(self, sender, data):
         """Handle the volume changes."""
         self._app_properties["volume"] = data["volume"]
         self._app_properties["muted"] = data["muted"]
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_on_quit(self, sender, data):
         """Reset the player state on quit action."""
@@ -333,7 +333,7 @@ class KodiEntity(MediaPlayerEntity):
 
     async def _clear_connection(self, close=True):
         self._reset_state()
-        self.async_write_ha_state()
+        self.async_write_op_state()
         if close:
             await self._connection.close()
 
@@ -401,7 +401,7 @@ class KodiEntity(MediaPlayerEntity):
         device = dev_reg.async_get_device({(DOMAIN, self.unique_id)})
         dev_reg.async_update_device(device.id, sw_version=sw_version)
 
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)
 
     async def _async_ws_connect(self):
         """Connect to Kodi via websocket protocol."""

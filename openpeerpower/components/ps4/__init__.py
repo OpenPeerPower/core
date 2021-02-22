@@ -70,7 +70,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a PS4 config entry."""
-    await.opp.config_entries.async_forward_entry_unload(entry, "media_player")
+    await opp.config_entries.async_forward_entry_unload(entry, "media_player")
     return True
 
 

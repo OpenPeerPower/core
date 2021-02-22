@@ -18,7 +18,7 @@ def tibber_setup_fixture():
 
 async def test_show_config_form.opp):
     """Test show configuration form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
 
@@ -41,7 +41,7 @@ async def test_create_entry.opp):
     type(tibber_mock).name = PropertyMock(return_value=title)
 
     with patch("tibber.Tibber", return_value=tibber_mock):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=test_data
         )
 
@@ -64,7 +64,7 @@ async def test_flow_entry_already_exists(opp):
     }
 
     with patch("tibber.Tibber.update_info", return_value=None):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}, data=test_data
         )
 

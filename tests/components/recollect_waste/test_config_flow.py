@@ -23,7 +23,7 @@ async def test_duplicate_error(opp):
        .opp
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -39,7 +39,7 @@ async def test_invalid_place_or_service_id.opp):
         "aiorecollect.client.Client.async_get_next_pickup_event",
         side_effect=RecollectError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
 
@@ -57,13 +57,13 @@ async def test_options_flow.opp):
     with patch(
         "openpeerpower.components.recollect_waste.async_setup_entry", return_value=True
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
+        result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_FRIENDLY_NAME: True}
         )
 
@@ -73,7 +73,7 @@ async def test_options_flow.opp):
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -90,10 +90,10 @@ async def test_step_import.opp):
     ), patch(
         "aiorecollect.client.Client.async_get_next_pickup_event", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == "12345, 12345"
         assert result["data"] == {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
@@ -108,10 +108,10 @@ async def test_step_user.opp):
     ), patch(
         "aiorecollect.client.Client.async_get_next_pickup_event", return_value=True
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == "12345, 12345"
         assert result["data"] == {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}

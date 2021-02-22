@@ -111,7 +111,7 @@ class HealthDataRingSensor(RingSensor):
     @callback
     def _health_update_callback(self, _health_data):
         """Call update method."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def entity_registry_enabled_default(self) -> bool:
@@ -169,7 +169,7 @@ class HistoryRingSensor(RingSensor):
             return
 
         self._latest_event = found
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def state(self):

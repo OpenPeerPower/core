@@ -57,7 +57,7 @@ async def test_switch_change_light_state.opp, utcnow):
     """Test that we can turn a HomeKit light on and off again."""
     helper = await setup_test_component.opp, create_lightbulb_service_with_hs)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": "light.testdevice", "brightness": 255, "hs_color": [4, 5]},
@@ -69,7 +69,7 @@ async def test_switch_change_light_state.opp, utcnow):
     assert helper.characteristics[LIGHT_HUE].value == 4
     assert helper.characteristics[LIGHT_SATURATION].value == 5
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.testdevice"}, blocking=True
     )
     assert helper.characteristics[LIGHT_ON].value == 0
@@ -79,7 +79,7 @@ async def test_switch_change_light_state_color_temp.opp, utcnow):
     """Test that we can turn change color_temp."""
     helper = await setup_test_component.opp, create_lightbulb_service_with_color_temp)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": "light.testdevice", "brightness": 255, "color_temp": 400},
@@ -229,7 +229,7 @@ async def test_light_unloaded_removed.opp, utcnow):
     assert not conn.pollable_characteristics
 
     await helper.config_entry.async_remove.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Make sure entity is removed
     assert.opp.states.get(helper.entity_id).state == STATE_UNAVAILABLE

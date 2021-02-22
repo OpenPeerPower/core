@@ -25,7 +25,7 @@ class RingEntityMixin:
     @callback
     def _update_callback(self):
         """Call update method."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def ring_objects(self):

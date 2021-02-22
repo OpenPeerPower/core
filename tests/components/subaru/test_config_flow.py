@@ -52,7 +52,7 @@ async def test_user_form_repeat_identifier.opp, user_form):
         MOCK_API_CONNECT,
         return_value=True,
     ) as mock_connect:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             user_form["flow_id"],
             TEST_CREDS,
         )
@@ -67,7 +67,7 @@ async def test_user_form_cannot_connect.opp, user_form):
         MOCK_API_CONNECT,
         side_effect=SubaruException(None),
     ) as mock_connect:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             user_form["flow_id"],
             TEST_CREDS,
         )
@@ -82,7 +82,7 @@ async def test_user_form_invalid_auth.opp, user_form):
         MOCK_API_CONNECT,
         side_effect=InvalidCredentials("invalidAccount"),
     ) as mock_connect:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             user_form["flow_id"],
             TEST_CREDS,
         )
@@ -97,7 +97,7 @@ async def test_user_form_pin_not_required.opp, user_form):
         MOCK_API_IS_PIN_REQUIRED,
         return_value=False,
     ) as mock_is_pin_required:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             user_form["flow_id"],
             TEST_CREDS,
         )
@@ -140,7 +140,7 @@ async def test_pin_form_bad_pin_format.opp, pin_form):
         MOCK_API_UPDATE_SAVED_PIN,
         return_value=True,
     ) as mock_update_saved_pin:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             pin_form["flow_id"], user_input={CONF_PIN: "abcd"}
         )
     assert len(mock_test_pin.mock_calls) == 0
@@ -155,7 +155,7 @@ async def test_pin_form_success.opp, pin_form):
         MOCK_API_UPDATE_SAVED_PIN,
         return_value=True,
     ) as mock_update_saved_pin:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             pin_form["flow_id"], user_input={CONF_PIN: TEST_PIN}
         )
 
@@ -185,7 +185,7 @@ async def test_pin_form_incorrect_pin.opp, pin_form):
         MOCK_API_UPDATE_SAVED_PIN,
         return_value=True,
     ) as mock_update_saved_pin:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             pin_form["flow_id"], user_input={CONF_PIN: TEST_PIN}
         )
     assert len(mock_test_pin.mock_calls) == 1
@@ -210,7 +210,7 @@ async def test_option_flow_form(options_form):
 
 async def test_option_flow.opp, options_form):
     """Test config flow options."""
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         options_form["flow_id"],
         user_input={
             CONF_UPDATE_ENABLED: False,

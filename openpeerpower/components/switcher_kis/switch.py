@@ -30,7 +30,7 @@ from . import (
 CONF_AUTO_OFF = "auto_off"
 CONF_TIMER_MINUTES = "timer_minutes"
 
-DEVICE_PROPERTIES_TO_HA_ATTRIBUTES = {
+DEVICE_PROPERTIES_TO_OP_ATTRIBUTES = {
     "power_consumption": ATTR_CURRENT_POWER_W,
     "electric_current": ATTR_ELECTRIC_CURRENT,
     "remaining_time": ATTR_REMAINING_TIME,
@@ -143,7 +143,7 @@ class SwitcherControl(SwitchEntity):
         """Return the optional state attributes."""
         attribs = {}
 
-        for prop, attr in DEVICE_PROPERTIES_TO_HA_ATTRIBUTES.items():
+        for prop, attr in DEVICE_PROPERTIES_TO_OP_ATTRIBUTES.items():
             value = getattr(self._device_data, prop)
             if value and value is not WAITING_TEXT:
                 attribs[attr] = value
@@ -171,7 +171,7 @@ class SwitcherControl(SwitchEntity):
             else:
                 self._device_data = device_data
                 self._state = self._device_data.state
-                self.async_write_ha_state()
+                self.async_write_op_state()
 
     async def async_turn_on(self, **kwargs: Dict) -> None:
         """Turn the entity on."""
@@ -198,4 +198,4 @@ class SwitcherControl(SwitchEntity):
         if response and response.successful:
             self._self_initiated = True
             self._state = SWITCHER_STATE_ON if send_on else SWITCHER_STATE_OFF
-            self.async_write_ha_state()
+            self.async_write_op_state()

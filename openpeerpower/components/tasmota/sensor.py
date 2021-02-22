@@ -159,7 +159,7 @@ class TasmotaSensor(TasmotaAvailability, TasmotaDiscoveryUpdate, Entity):
     def state_updated(self, state, **kwargs):
         """Handle state updates."""
         self._state = state
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def device_class(self) -> Optional[str]:

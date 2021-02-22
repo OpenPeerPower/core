@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
 async def async_update_options.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Update options."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
@@ -237,4 +237,4 @@ class WiffiEntity(Entity):
             and utcnow() > self._expiration_date
         ):
             self._value = None
-            self.async_write_ha_state()
+            self.async_write_op_state()

@@ -29,7 +29,7 @@ async def test_reload_notify.opp):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service(notify.DOMAIN, DOMAIN)
 
@@ -39,13 +39,13 @@ async def test_reload_notify.opp):
         "rest/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert not.opp.services.has_service(notify.DOMAIN, DOMAIN)
     assert.opp.services.has_service(notify.DOMAIN, "rest_reloaded")

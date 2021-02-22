@@ -48,7 +48,7 @@ class VeluxCover(CoverEntity):
 
         async def after_update_callback(device):
             """Call after device was updated."""
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self.node.register_device_updated_cb(after_update_callback)
 

@@ -36,9 +36,9 @@ async def test_device_registry_insert.opp):
     ), patch("pyotgw.pyotgw.connect", return_value=MINIMAL_STATUS):
         await setup.async_setup_component.opp, DOMAIN, {})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
 
     gw_dev = device_registry.async_get_device(identifiers={(DOMAIN, MOCK_GATEWAY_ID)})
     assert gw_dev.sw_version == VERSION_OLD
@@ -64,6 +64,6 @@ async def test_device_registry_update.opp):
     ), patch("pyotgw.pyotgw.connect", return_value=MINIMAL_STATUS_UPD):
         await setup.async_setup_component.opp, DOMAIN, {})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     gw_dev = dev_reg.async_get_device(identifiers={(DOMAIN, MOCK_GATEWAY_ID)})
     assert gw_dev.sw_version == VERSION_NEW

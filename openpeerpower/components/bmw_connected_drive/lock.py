@@ -77,7 +77,7 @@ class BMWLock(BMWConnectedDriveBaseEntity, LockEntity):
         # Optimistic state set here because it takes some time before the
         # update callback response
         self._state = STATE_LOCKED
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
         self._vehicle.remote_services.trigger_remote_door_lock()
 
     def unlock(self, **kwargs):
@@ -86,7 +86,7 @@ class BMWLock(BMWConnectedDriveBaseEntity, LockEntity):
         # Optimistic state set here because it takes some time before the
         # update callback response
         self._state = STATE_UNLOCKED
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
         self._vehicle.remote_services.trigger_remote_door_unlock()
 
     def update(self):

@@ -112,9 +112,9 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     controller = veraApi.VeraController(base_url, subscription_registry)
 
     try:
-        all_devices = await.opp.async_add_executor_job(controller.get_devices)
+        all_devices = await opp.async_add_executor_job(controller.get_devices)
 
-        all_scenes = await.opp.async_add_executor_job(controller.get_scenes)
+        all_scenes = await opp.async_add_executor_job(controller.get_scenes)
     except RequestException as exception:
         # There was a network related error connecting to the Vera controller.
         _LOGGER.exception("Error communicating with Vera API")
@@ -152,7 +152,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         """Stop SubscriptionRegistry updates."""
         controller.stop()
 
-    await.opp.async_add_executor_job(controller.start)
+    await opp.async_add_executor_job(controller.start)
    .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_subscription)
 
     return True
@@ -230,7 +230,7 @@ class VeraDevice(Generic[DeviceType], Entity):
 
     def _update_callback(self, _device: DeviceType) -> None:
         """Update the state."""
-        self.schedule_update_ha_state(True)
+        self.schedule_update_op_state(True)
 
     def update(self):
         """Force a refresh from the device if the device is unavailable."""

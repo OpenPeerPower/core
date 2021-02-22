@@ -33,7 +33,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 async def test_show_user_form.opp: OpenPeerPowerType) -> None:
     """Test that the user set up form is served."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
     )
@@ -49,7 +49,7 @@ async def test_cannot_connect(
     mock_connection_error(aioclient_mock)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=user_input,
@@ -67,7 +67,7 @@ async def test_invalid_auth(
     mock_connection_invalid_auth(aioclient_mock)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
         data=user_input,
@@ -87,7 +87,7 @@ async def test_unknown_error(
         "openpeerpower.components.sonarr.config_flow.Sonarr.update",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: SOURCE_USER},
             data=user_input,
@@ -104,7 +104,7 @@ async def test_full_reauth_flow_implementation(
     entry = await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
     assert entry
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_REAUTH},
         data={"config_entry_id": entry.entry_id, **entry.data},
@@ -113,7 +113,7 @@ async def test_full_reauth_flow_implementation(
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -122,10 +122,10 @@ async def test_full_reauth_flow_implementation(
 
     user_input = MOCK_REAUTH_INPUT.copy()
     with _patch_async_setup(), _patch_async_setup_entry() as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=user_input
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "reauth_successful"
@@ -141,7 +141,7 @@ async def test_full_user_flow_implementation(
     """Test the full manual user flow from start to finish."""
     mock_connection(aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_USER},
     )
@@ -152,7 +152,7 @@ async def test_full_user_flow_implementation(
     user_input = MOCK_USER_INPUT.copy()
 
     with _patch_async_setup(), _patch_async_setup_entry():
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input=user_input,
         )
@@ -170,7 +170,7 @@ async def test_full_user_flow_advanced_options(
     """Test the full manual user flow with advanced options."""
     mock_connection(aioclient_mock)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER, "show_advanced_options": True}
     )
 
@@ -183,7 +183,7 @@ async def test_full_user_flow_advanced_options(
     }
 
     with _patch_async_setup(), _patch_async_setup_entry():
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input=user_input,
         )
@@ -204,17 +204,17 @@ async def test_options_flow.opp, aioclient_mock: AiohttpClientMocker):
     assert entry.options[CONF_UPCOMING_DAYS] == DEFAULT_UPCOMING_DAYS
     assert entry.options[CONF_WANTED_MAX_ITEMS] == DEFAULT_WANTED_MAX_ITEMS
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
     with _patch_async_setup(), _patch_async_setup_entry():
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_UPCOMING_DAYS: 2, CONF_WANTED_MAX_ITEMS: 100},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_UPCOMING_DAYS] == 2

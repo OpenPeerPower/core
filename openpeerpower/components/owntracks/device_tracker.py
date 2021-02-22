@@ -148,4 +148,4 @@ class OwnTracksEntity(TrackerEntity, RestoreEntity):
         """Mark the device as seen."""
         self._data = data
         if self.opp:
-            self.async_write_ha_state()
+            self.async_write_op_state()

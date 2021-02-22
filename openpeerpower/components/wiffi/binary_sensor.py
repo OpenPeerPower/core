@@ -50,4 +50,4 @@ class BoolEntity(WiffiEntity, BinarySensorEntity):
         """
         self.reset_expiration_date()
         self._value = metric.value
-        self.async_write_ha_state()
+        self.async_write_op_state()

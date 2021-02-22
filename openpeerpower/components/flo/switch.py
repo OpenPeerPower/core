@@ -75,19 +75,19 @@ class FloSwitch(FloEntity, SwitchEntity):
         """Open the valve."""
         await self._device.api_client.device.open_valve(self._device.id)
         self._state = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Close the valve."""
         await self._device.api_client.device.close_valve(self._device.id)
         self._state = False
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_update_state(self) -> None:
         """Retrieve the latest valve state and update the state machine."""
         self._state = self._device.last_known_valve_state == "open"
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """When entity is added to.opp."""

@@ -59,7 +59,7 @@ async def setup_push_receiver.opp, aioclient_mock):
     entry.add_to.opp.opp)
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     loaded_late_entry = MockConfigEntry(
         connection_class="cloud_push",
@@ -85,20 +85,20 @@ async def setup_push_receiver.opp, aioclient_mock):
         version=1,
     )
     loaded_late_entry.add_to.opp.opp)
-    assert await.opp.config_entries.async_setup(loaded_late_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(loaded_late_entry.entry_id)
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_loaded_late")
 
-    assert await.opp.config_entries.async_remove(loaded_late_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_remove(loaded_late_entry.entry_id)
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_test")
     assert not.opp.services.has_service("notify", "mobile_app_loaded_late")
 
     loaded_late_entry.add_to.opp.opp)
-    assert await.opp.config_entries.async_setup(loaded_late_entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(loaded_late_entry.entry_id)
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_test")
     assert.opp.services.has_service("notify", "mobile_app_loaded_late")
@@ -107,7 +107,7 @@ async def setup_push_receiver.opp, aioclient_mock):
 async def test_notify_works.opp, aioclient_mock, setup_push_receiver):
     """Test notify works."""
     assert.opp.services.has_service("notify", "mobile_app_test") is True
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         "notify", "mobile_app_test", {"message": "Hello world"}, blocking=True
     )
 

@@ -94,13 +94,13 @@ class PlaatoEntity(entity.Entity):
         """When entity is added to.opp."""
         if self._coordinator is not None:
             self.async_on_remove(
-                self._coordinator.async_add_listener(self.async_write_ha_state)
+                self._coordinator.async_add_listener(self.async_write_op_state)
             )
         else:
             self.async_on_remove(
                 self.opp.helpers.dispatcher.async_dispatcher_connect(
                     SENSOR_SIGNAL % (self._device_id, self._sensor_type),
-                    self.async_write_ha_state,
+                    self.async_write_op_state,
                 )
             )
 

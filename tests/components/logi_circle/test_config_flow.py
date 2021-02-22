@@ -214,5 +214,5 @@ async def test_callback_view_accepts_code(
     resp = await view.get(MockRequest.opp, {"code": "456"}))
     assert resp.status == 200
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     mock_logi_circle.authorize.assert_called_with("456")

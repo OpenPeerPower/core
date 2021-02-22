@@ -34,13 +34,13 @@ class CecSwitchEntity(CecEntity, SwitchEntity):
         """Turn device on."""
         self._device.turn_on()
         self._state = STATE_ON
-        self.schedule_update_ha_state(force_refresh=False)
+        self.schedule_update_op_state(force_refresh=False)
 
     def turn_off(self, **kwargs) -> None:
         """Turn device off."""
         self._device.turn_off()
         self._state = STATE_OFF
-        self.schedule_update_ha_state(force_refresh=False)
+        self.schedule_update_op_state(force_refresh=False)
 
     def toggle(self, **kwargs):
         """Toggle the entity."""
@@ -49,7 +49,7 @@ class CecSwitchEntity(CecEntity, SwitchEntity):
             self._state = STATE_OFF
         else:
             self._state = STATE_ON
-        self.schedule_update_ha_state(force_refresh=False)
+        self.schedule_update_op_state(force_refresh=False)
 
     @property
     def is_on(self) -> bool:

@@ -24,7 +24,7 @@ from openpeerpower.components.media_player.const import (
     SUPPORT_VOLUME_STEP,
 )
 import openpeerpower.components.vacuum as vacuum
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import TEMP_CELSIUS, TEMP_FAHRENHEIT
 from openpeerpower.core import Context, callback
 from openpeerpower.helpers import entityfilter
@@ -61,14 +61,14 @@ async def mock_camera.opp):
     assert await async_setup_component(
        .opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.fixture
 async def mock_stream.opp):
     """Initialize a demo camera platform with streaming."""
     assert await async_setup_component.opp, "stream", {"stream": {}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 def test_create_api_message_defaults.opp):
@@ -2175,7 +2175,7 @@ async def test_exclude_filters.opp):
     )
 
     msg = await smart_home.async_handle_message.opp, alexa_config, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2206,7 +2206,7 @@ async def test_include_filters.opp):
     )
 
     msg = await smart_home.async_handle_message.opp, alexa_config, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2231,7 +2231,7 @@ async def test_never_exposed_entities.opp):
     )
 
     msg = await smart_home.async_handle_message.opp, alexa_config, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     msg = msg["event"]
 
@@ -2245,7 +2245,7 @@ async def test_api_entity_not_exists(opp):
     call_switch = async_mock_service.opp, "switch", "turn_on")
 
     msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -2284,7 +2284,7 @@ async def test_api_accept_grant.opp):
 
     # setup test devices
     msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -2339,7 +2339,7 @@ async def test_logging_request.opp, events):
     await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     event = events[0]
@@ -2359,7 +2359,7 @@ async def test_logging_request_with_entity.opp, events):
     await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert len(events) == 1
     event = events[0]
@@ -2384,7 +2384,7 @@ async def test_disabled.opp):
     msg = await smart_home.async_handle_message(
        .opp, DEFAULT_CONFIG, request, enabled=False
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert "event" in msg
     msg = msg["event"]
@@ -3833,7 +3833,7 @@ async def test_camera.opp_urls.opp, mock_stream, url, result):
         "idle",
         {"friendly_name": "Test camera", "supported_features": 3},
     )
-    await async_process_ha_core_config(opp, {"external_url": url})
+    await async_process_op_core_config(opp, {"external_url": url})
 
     appliance = await discovery_test(device, opp)
     assert len(appliance["capabilities"]) == result
@@ -3845,7 +3845,7 @@ async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
         "Alexa.CameraStreamController", "InitializeCameraStreams", "camera#demo_camera"
     )
 
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp, {"external_url": "https://mycamerastream.test"}
     )
 
@@ -3854,7 +3854,7 @@ async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
         return_value="rtsp://example.local",
     ):
         msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert "event" in msg
     response = msg["event"]

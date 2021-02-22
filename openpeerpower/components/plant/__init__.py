@@ -261,7 +261,7 @@ class Plant(Entity):
             self._state = STATE_OK
             self._problems = PROBLEM_NONE
         _LOGGER.debug("New data processed")
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def _check_min(self, sensor_name, value, params):
         """If configured, check the value against the defined minimum value."""
@@ -283,7 +283,7 @@ class Plant(Entity):
         if ENABLE_LOAD_HISTORY and "recorder" in self.opp.config.components:
             # only use the database if it's configured
             await self.opp.async_add_executor_job(self._load_history_from_db)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         async_track_state_change_event(
             self.opp, list(self._sensormap), self._state_changed_event

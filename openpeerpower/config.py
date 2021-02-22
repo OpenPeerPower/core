@@ -312,14 +312,14 @@ def _write_default_config(config_dir: str) -> bool:
         return False
 
 
-async def async.opp_config_yaml.opp: OpenPeerPower) -> Dict:
+async def async.opp_config_yaml(opp: OpenPeerPower) -> Dict:
     """Load YAML from a Open Peer Power configuration file.
 
     This function allow a component inside the asyncio loop to reload its
     configuration by itself. Include package merge.
     """
     # Not using async_add_executor_job because this is an internal method.
-    config = await.opp.loop.run_in_executor(
+    config = await opp.loop.run_in_executor(
         None, load_yaml_config_file, opp.config.path(YAML_CONFIG_FILE)
     )
     core_config = config.get(CONF_CORE, {})
@@ -350,7 +350,7 @@ def load_yaml_config_file(config_path: str) -> Dict[Any, Any]:
     return conf_dict
 
 
-def process_ha_config_upgrade.opp: OpenPeerPower) -> None:
+def process_op_config_upgrade(opp: OpenPeerPower) -> None:
     """Upgrade configuration if necessary.
 
     This method needs to run in an executor.
@@ -418,7 +418,7 @@ def async_log_exception(
 
     This method must be run in the event loop.
     """
-    if.opp is not None:
+    if opp is not None:
         async_notify_setup_error(opp, domain, link)
     message, is_friendly = _format_config_error(ex, domain, config, link)
     _LOGGER.error(message, exc_info=not is_friendly and ex)
@@ -463,7 +463,7 @@ def _format_config_error(
     return message, is_friendly
 
 
-async def async_process_ha_core_config(opp: OpenPeerPower, config: Dict) -> None:
+async def async_process_op_core_config(opp: OpenPeerPower, config: Dict) -> None:
     """Process the [openpeerpower] section from the configuration.
 
     This method is a coroutine.
@@ -486,7 +486,7 @@ async def async_process_ha_core_config(opp: OpenPeerPower, config: Dict) -> None
            .opp, "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
         )
 
-    await.opp.config.async_load()
+    await opp.config.async_load()
 
     hac = opp.config
 
@@ -874,7 +874,7 @@ def config_without_domain(config: Dict, domain: str) -> Dict:
     return {key: value for key, value in config.items() if key not in filter_keys}
 
 
-async def async_check_ha_config_file.opp: OpenPeerPower) -> Optional[str]:
+async def async_check_op_config_file.opp: OpenPeerPower) -> Optional[str]:
     """Check if Open Peer Power configuration file is valid.
 
     This method is a coroutine.
@@ -882,7 +882,7 @@ async def async_check_ha_config_file.opp: OpenPeerPower) -> Optional[str]:
     # pylint: disable=import-outside-toplevel
     import openpeerpower.helpers.check_config as check_config
 
-    res = await check_config.async_check_ha_config_file.opp)
+    res = await check_config.async_check_op_config_file.opp)
 
     if not res.errors:
         return None

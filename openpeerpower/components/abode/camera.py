@@ -94,7 +94,7 @@ class AbodeCamera(AbodeDevice, Camera):
         """Update the image with the device then refresh device."""
         self._device.update_image_location(capture)
         self.get_image()
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def is_on(self):

@@ -85,4 +85,4 @@ class PowerViewShadeBatterySensor(ShadeEntity):
     def _async_update_shade_from_group(self):
         """Update with new data from the coordinator."""
         self._shade.raw_data = self.coordinator.data[self._shade.id]
-        self.async_write_ha_state()
+        self.async_write_op_state()

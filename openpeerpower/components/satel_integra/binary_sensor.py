@@ -111,4 +111,4 @@ class SatelIntegraBinarySensor(BinarySensorEntity):
         """Update the zone's state, if needed."""
         if self._device_number in zones and self._state != zones[self._device_number]:
             self._state = zones[self._device_number]
-            self.async_write_ha_state()
+            self.async_write_op_state()

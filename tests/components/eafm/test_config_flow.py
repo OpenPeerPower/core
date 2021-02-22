@@ -10,7 +10,7 @@ from openpeerpower.components.eafm import const
 async def test_flow_no_discovered_stations.opp, mock_get_stations):
     """Test config flow discovers no station."""
     mock_get_stations.return_value = []
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "abort"
@@ -23,13 +23,13 @@ async def test_flow_invalid_station.opp, mock_get_stations):
         {"label": "My station", "stationReference": "L12345"}
     ]
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
 
     with pytest.raises(MultipleInvalid):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={"station": "My other station"}
         )
 
@@ -43,13 +43,13 @@ async def test_flow_works.opp, mock_get_stations, mock_get_station):
         {"label": "My station", "stationReference": "L12345"}
     ]
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
     )
     assert result["type"] == "form"
 
     with patch("openpeerpower.components.eafm.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={"station": "My station"}
         )
 

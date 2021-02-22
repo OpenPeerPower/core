@@ -80,7 +80,7 @@ class SmartMeterTexasSensor(CoordinatorEntity, RestoreEntity):
         self._available = self.coordinator.last_update_success
         if self._available:
             self._state = self.meter.reading
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to updates."""

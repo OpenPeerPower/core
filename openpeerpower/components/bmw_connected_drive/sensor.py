@@ -20,7 +20,7 @@ from .const import CONF_ACCOUNT, DATA_ENTRIES
 
 _LOGGER = logging.getLogger(__name__)
 
-ATTR_TO_HA_METRIC = {
+ATTR_TO_OP_METRIC = {
     "mileage": ["mdi:speedometer", LENGTH_KILOMETERS],
     "remaining_range_total": ["mdi:map-marker-distance", LENGTH_KILOMETERS],
     "remaining_range_electric": ["mdi:map-marker-distance", LENGTH_KILOMETERS],
@@ -33,7 +33,7 @@ ATTR_TO_HA_METRIC = {
     "charging_level_hv": [None, PERCENTAGE],
 }
 
-ATTR_TO_HA_IMPERIAL = {
+ATTR_TO_OP_IMPERIAL = {
     "mileage": ["mdi:speedometer", LENGTH_MILES],
     "remaining_range_total": ["mdi:map-marker-distance", LENGTH_MILES],
     "remaining_range_electric": ["mdi:map-marker-distance", LENGTH_MILES],
@@ -50,9 +50,9 @@ ATTR_TO_HA_IMPERIAL = {
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the BMW ConnectedDrive sensors from config entry."""
     if opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
-        attribute_info = ATTR_TO_HA_IMPERIAL
+        attribute_info = ATTR_TO_OP_IMPERIAL
     else:
-        attribute_info = ATTR_TO_HA_METRIC
+        attribute_info = ATTR_TO_OP_METRIC
 
     account = opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
     entities = []

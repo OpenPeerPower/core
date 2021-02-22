@@ -55,7 +55,7 @@ async def mock_rflink(
 
     await async_setup_component.opp, "rflink", config)
     await async_setup_component.opp, domain, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # hook into mock config for injecting events
     event_callback = mock_create.call_args_list[0][1]["event_callback"]
@@ -112,7 +112,7 @@ async def test_send_no_wait.opp, monkeypatch):
             domain, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "switch.test"}
         )
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert protocol.send_command.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command.call_args_list[0][0][1] == "off"
 
@@ -138,7 +138,7 @@ async def test_cover_send_no_wait.opp, monkeypatch):
             domain, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}
         )
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert protocol.send_command.call_args_list[0][0][0] == "RTS_0100F2_0"
     assert protocol.send_command.call_args_list[0][0][1] == "STOP"
 
@@ -158,7 +158,7 @@ async def test_send_command.opp, monkeypatch):
             {"device_id": "newkaku_0000c6c2_1", "command": "on"},
         )
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert protocol.send_command_ack.call_args_list[0][0][0] == "newkaku_0000c6c2_1"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "on"
 
@@ -173,22 +173,22 @@ async def test_send_command_invalid_arguments.opp, monkeypatch):
 
     # one argument missing
     with pytest.raises(MultipleInvalid):
-        await.opp.services.async_call(domain, SERVICE_SEND_COMMAND, {"command": "on"})
+        await opp.services.async_call(domain, SERVICE_SEND_COMMAND, {"command": "on"})
 
     with pytest.raises(MultipleInvalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             domain, SERVICE_SEND_COMMAND, {"device_id": "newkaku_0000c6c2_1"}
         )
 
     # no arguments
     with pytest.raises(MultipleInvalid):
-        await.opp.services.async_call(domain, SERVICE_SEND_COMMAND, {})
+        await opp.services.async_call(domain, SERVICE_SEND_COMMAND, {})
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert protocol.send_command_ack.call_args_list == []
 
     # bad command (no_command)
-    success = await.opp.services.async_call(
+    success = await opp.services.async_call(
         domain,
         SERVICE_SEND_COMMAND,
         {"device_id": "newkaku_0000c6c2_1", "command": "no_command"},
@@ -214,7 +214,7 @@ async def test_reconnecting_after_disconnect.opp, monkeypatch):
     # rflink initiated disconnect
     disconnect_callback(None)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # we expect 2 call, the initial and reconnect
     assert mock_create.call_count == 2
@@ -240,8 +240,8 @@ async def test_reconnecting_after_failure.opp, monkeypatch):
     disconnect_callback(None)
 
     # wait for reconnects to have happened
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # we expect 3 calls, the initial and 2 reconnects
     assert mock_create.call_count == 3
@@ -271,7 +271,7 @@ async def test_error_when_not_connected.opp, monkeypatch):
     # rflink initiated disconnect
     disconnect_callback(None)
 
-    success = await.opp.services.async_call(
+    success = await opp.services.async_call(
         domain, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "switch.test"}
     )
     assert not success, "changing state should not succeed when disconnected"
@@ -287,12 +287,12 @@ async def test_async_send_command_error(opp, monkeypatch):
        .opp, config, domain, monkeypatch, failcommand=True
     )
 
-    success = await.opp.services.async_call(
+    success = await opp.services.async_call(
         domain,
         SERVICE_SEND_COMMAND,
         {"device_id": "newkaku_0000c6c2_1", "command": SERVICE_TURN_OFF},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert not success, "send command should not succeed if failcommand=True"
     assert protocol.send_command_ack.call_args_list[0][0][0] == "newkaku_0000c6c2_1"
     assert protocol.send_command_ack.call_args_list[0][0][1] == SERVICE_TURN_OFF
@@ -316,7 +316,7 @@ async def test_race_condition.opp, monkeypatch):
     # tmp_entity must no be added to EVENT_KEY_SENSOR
     assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR]["test3"]
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test  state of new sensor
     new_sensor = opp.states.get(f"{domain}.test3")
@@ -324,7 +324,7 @@ async def test_race_condition.opp, monkeypatch):
     assert new_sensor.state == "off"
 
     event_callback({"id": "test3", "command": "on"})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     # tmp_entity must be deleted from EVENT_KEY_COMMAND
     assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_COMMAND]["test3"]
 

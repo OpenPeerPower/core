@@ -80,7 +80,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def validate_configs.opp, entity_configs):
     """Validate that entities exist and ensure templates are ready to use."""
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
     for entity_id, entity_config in entity_configs.items():
         state = opp.states.get(entity_id)
         if state is None:

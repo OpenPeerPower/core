@@ -28,7 +28,7 @@ async def test_sensors.opp):
     """Test states of the sensors."""
     entry = await init_integration.opp, skip_setup=True)
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Pre-create registry entries for disabled by default sensors
     registry.async_get_or_create(
@@ -43,8 +43,8 @@ async def test_sensors.opp):
         "brother.Brother._get_data",
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
-        await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
+        await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
 
     state = opp.states.get("sensor.hl_l2340dw_status")
     assert state
@@ -241,7 +241,7 @@ async def test_disabled_by_default_sensors.opp):
     """Test the disabled by default Brother sensors."""
     await init_integration.opp)
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
     state = opp.states.get("sensor.hl_l2340dw_uptime")
     assert state is None
 
@@ -264,7 +264,7 @@ async def test_availability.opp):
     future = utcnow() + timedelta(minutes=5)
     with patch("brother.Brother._get_data", side_effect=ConnectionError()):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.hl_l2340dw_status")
         assert state
@@ -276,7 +276,7 @@ async def test_availability.opp):
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
         async_fire_time_changed.opp, future)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.hl_l2340dw_status")
         assert state
@@ -290,7 +290,7 @@ async def test_manual_update_entity.opp):
 
     await async_setup_component.opp, "openpeerpower", {})
     with patch("openpeerpower.components.brother.Brother.async_update") as mock_update:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "openpeerpower",
             "update_entity",
             {ATTR_ENTITY_ID: ["sensor.hl_l2340dw_status"]},

@@ -150,20 +150,20 @@ def test_validate_or_move_away_sqlite_database_without_integrity_check(
 async def test_last_run_was_recently_clean.opp):
     """Test we can check if the last recorder run was recently clean."""
     await async_init_recorder_component.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
     assert (
-        await.opp.async_add_executor_job(util.last_run_was_recently_clean, cursor)
+        await opp.async_add_executor_job(util.last_run_was_recently_clean, cursor)
         is False
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
-        await.opp.async_add_executor_job(util.last_run_was_recently_clean, cursor)
+        await opp.async_add_executor_job(util.last_run_was_recently_clean, cursor)
         is True
     )
 
@@ -174,7 +174,7 @@ async def test_last_run_was_recently_clean.opp):
         return_value=thirty_min_future_time,
     ):
         assert (
-            await.opp.async_add_executor_job(util.last_run_was_recently_clean, cursor)
+            await opp.async_add_executor_job(util.last_run_was_recently_clean, cursor)
             is False
         )
 

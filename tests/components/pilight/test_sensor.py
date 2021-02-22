@@ -40,7 +40,7 @@ async def test_sensor_value_from_code.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         state = opp.states.get("sensor.test")
         assert state.state == "unknown"
@@ -50,7 +50,7 @@ async def test_sensor_value_from_code.opp):
 
         # Set value from data with correct payload
         fire_pilight_message.opp, protocol="test-protocol", data={"test": 42})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("sensor.test")
         assert state.state == "42"
 
@@ -70,13 +70,13 @@ async def test_disregard_wrong_payload.opp):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Try set value from data with incorrect payload
         fire_pilight_message(
            .opp, protocol="test-protocol_2", data={"test": "data", "uuid": "0-0-0-0"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("sensor.test_2")
         assert state.state == "unknown"
 
@@ -84,7 +84,7 @@ async def test_disregard_wrong_payload.opp):
         fire_pilight_message(
            .opp, protocol="wrong-protocol", data={"test": "data", "uuid": "1-2-3-4"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("sensor.test_2")
         assert state.state == "unknown"
 
@@ -94,7 +94,7 @@ async def test_disregard_wrong_payload.opp):
             protocol="test-protocol_2",
             data={"test": "data", "uuid": "1-2-3-4", "other_payload": 3.141},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         state = opp.states.get("sensor.test_2")
         assert state.state == "data"
 
@@ -115,7 +115,7 @@ async def test_variable_missing.opp, caplog):
                 }
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # Create code without sensor variable
         fire_pilight_message(
@@ -123,7 +123,7 @@ async def test_variable_missing.opp, caplog):
             protocol="test-protocol",
             data={"uuid": "1-2-3-4", "other_variable": 3.141},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         logs = caplog.text
 

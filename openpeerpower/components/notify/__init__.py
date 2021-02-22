@@ -241,7 +241,7 @@ async def async_setup_opp, config):
             title.opp = opp
             payload[ATTR_TITLE] = title.async_render(parse_result=False)
 
-        await.opp.services.async_call(
+        await opp.services.async_call(
             pn.DOMAIN, pn.SERVICE_CREATE, payload, blocking=True
         )
 
@@ -268,7 +268,7 @@ async def async_setup_opp, config):
                    .opp, p_config, discovery_info
                 )
             elif hasattr(platform, "get_service"):
-                notify_service = await.opp.async_add_executor_job(
+                notify_service = await opp.async_add_executor_job(
                     platform.get_service, opp, p_config, discovery_info
                 )
             else:

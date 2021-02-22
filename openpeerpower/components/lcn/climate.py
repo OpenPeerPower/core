@@ -130,13 +130,13 @@ class LcnClimate(LcnEntity, ClimateEntity):
             ):
                 return
             self._is_on = True
-            self.async_write_ha_state()
+            self.async_write_op_state()
         elif hvac_mode == const.HVAC_MODE_OFF:
             if not await self.device_connection.lock_regulator(self.regulator_id, True):
                 return
             self._is_on = False
             self._target_temperature = None
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
@@ -149,7 +149,7 @@ class LcnClimate(LcnEntity, ClimateEntity):
         ):
             return
         self._target_temperature = temperature
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def input_received(self, input_obj):
         """Set temperature value when LCN input object is received."""
@@ -163,4 +163,4 @@ class LcnClimate(LcnEntity, ClimateEntity):
             if self._is_on:
                 self._target_temperature = input_obj.get_value().to_var_unit(self.unit)
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

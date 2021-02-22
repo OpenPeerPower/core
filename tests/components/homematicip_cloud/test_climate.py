@@ -64,7 +64,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
 
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": entity_id, "temperature": 22.5},
@@ -77,7 +77,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_CURRENT_TEMPERATURE] == 22.5
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_HEAT},
@@ -90,7 +90,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_HEAT
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_AUTO},
@@ -103,7 +103,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": entity_id, "preset_mode": PRESET_BOOST},
@@ -116,7 +116,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_MODE] == PRESET_BOOST
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": entity_id, "preset_mode": "STD"},
@@ -130,7 +130,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_PRESET_MODE] == "STD"
 
     # Not required for hmip, but a possibility to send no temperature.
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": entity_id, "target_temp_low": 10, "target_temp_high": 10},
@@ -163,7 +163,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_MODE] == PRESET_ECO
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": entity_id, "preset_mode": "Winter"},
@@ -182,7 +182,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.attributes[ATTR_PRESET_END_TIME] == PERMANENT_END_TIME
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_HEAT},
@@ -195,7 +195,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_HEAT
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": entity_id, "preset_mode": "Winter"},
@@ -210,7 +210,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": "dry"},
@@ -262,7 +262,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_hap_factory):
 
     service_call_counter = len(hmip_device.mock_calls)
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_COOL},
@@ -275,7 +275,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_COOL
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": entity_id, "hvac_mode": HVAC_MODE_AUTO},
@@ -288,7 +288,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_hap_factory):
     ha_state = opp.states.get(entity_id)
     assert ha_state.state == HVAC_MODE_AUTO
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": entity_id, "preset_mode": "Cool2"},
@@ -319,7 +319,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_PRESET_MODE] == "none"
     assert ha_state.attributes[ATTR_PRESET_MODES] == []
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": entity_id, "preset_mode": "Cool2"},
@@ -340,7 +340,7 @@ async def test_hmip_heating_group_cool.opp, default_mock_hap_factory):
     assert ha_state.attributes[ATTR_PRESET_MODE] == "Cool2"
     assert ha_state.attributes[ATTR_PRESET_MODES] == ["Cool1", "Cool2"]
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": entity_id, "preset_mode": "Cool2"},
@@ -404,7 +404,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
 
     home = mock_hap_with_service.home
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "activate_eco_mode_with_duration",
         {"duration": 60, "accesspoint_id": HAPID},
@@ -414,7 +414,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == (60,)
     assert len(home._connection.mock_calls) == 1  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "activate_eco_mode_with_duration",
         {"duration": 60},
@@ -424,7 +424,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == (60,)
     assert len(home._connection.mock_calls) == 2  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "activate_eco_mode_with_period",
         {"endtime": "2019-02-17 14:00", "accesspoint_id": HAPID},
@@ -434,7 +434,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == (datetime.datetime(2019, 2, 17, 14, 0),)
     assert len(home._connection.mock_calls) == 3  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "activate_eco_mode_with_period",
         {"endtime": "2019-02-17 14:00"},
@@ -444,7 +444,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == (datetime.datetime(2019, 2, 17, 14, 0),)
     assert len(home._connection.mock_calls) == 4  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "activate_vacation",
         {"endtime": "2019-02-17 14:00", "temperature": 18.5, "accesspoint_id": HAPID},
@@ -454,7 +454,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == (datetime.datetime(2019, 2, 17, 14, 0), 18.5)
     assert len(home._connection.mock_calls) == 5  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "activate_vacation",
         {"endtime": "2019-02-17 14:00", "temperature": 18.5},
@@ -464,7 +464,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == (datetime.datetime(2019, 2, 17, 14, 0), 18.5)
     assert len(home._connection.mock_calls) == 6  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "deactivate_eco_mode",
         {"accesspoint_id": HAPID},
@@ -474,14 +474,14 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == ()
     assert len(home._connection.mock_calls) == 7  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud", "deactivate_eco_mode", blocking=True
     )
     assert home.mock_calls[-1][0] == "deactivate_absence"
     assert home.mock_calls[-1][1] == ()
     assert len(home._connection.mock_calls) == 8  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "deactivate_vacation",
         {"accesspoint_id": HAPID},
@@ -491,7 +491,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert home.mock_calls[-1][1] == ()
     assert len(home._connection.mock_calls) == 9  # pylint: disable=protected-access
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud", "deactivate_vacation", blocking=True
     )
     assert home.mock_calls[-1][0] == "deactivate_vacation"
@@ -499,7 +499,7 @@ async def test_hmip_climate_services.opp, mock_hap_with_service):
     assert len(home._connection.mock_calls) == 10  # pylint: disable=protected-access
 
     not_existing_hap_id = "5555F7110000000000000001"
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "deactivate_vacation",
         {"accesspoint_id": not_existing_hap_id},
@@ -525,7 +525,7 @@ async def test_hmip_heating_group_services.opp, default_mock_hap_factory):
     )
     assert ha_state
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "set_active_climate_profile",
         {"climate_profile_index": 2, "entity_id": "climate.badezimmer"},
@@ -537,7 +537,7 @@ async def test_hmip_heating_group_services.opp, default_mock_hap_factory):
         len(hmip_device._connection.mock_calls) == 2  # pylint: disable=protected-access
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "homematicip_cloud",
         "set_active_climate_profile",
         {"climate_profile_index": 2, "entity_id": "all"},

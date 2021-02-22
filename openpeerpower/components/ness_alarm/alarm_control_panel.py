@@ -113,4 +113,4 @@ class NessAlarmPanel(alarm.AlarmControlPanelEntity):
         else:
             _LOGGER.warning("Unhandled arming state: %s", arming_state)
 
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -254,19 +254,19 @@ class Counter(RestoreEntity):
     def async_decrement(self) -> None:
         """Decrement the counter."""
         self._state = self.compute_next_state(self._state - self._config[CONF_STEP])
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_increment(self) -> None:
         """Increment a counter."""
         self._state = self.compute_next_state(self._state + self._config[CONF_STEP])
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_reset(self) -> None:
         """Reset a counter."""
         self._state = self.compute_next_state(self._config[CONF_INITIAL])
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_configure(self, **kwargs) -> None:
@@ -274,10 +274,10 @@ class Counter(RestoreEntity):
         new_state = kwargs.pop(VALUE, self._state)
         self._config = {**self._config, **kwargs}
         self._state = self.compute_next_state(new_state)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update_config(self, config: Dict) -> None:
         """Change the counter's settings WS CRUD."""
         self._config = config
         self._state = self.compute_next_state(self._state)
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -53,7 +53,7 @@ def mock_daikin_discovery():
 
 async def test_user.opp, mock_daikin):
     """Test user config."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": SOURCE_USER},
     )
@@ -61,7 +61,7 @@ async def test_user.opp, mock_daikin):
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": SOURCE_USER},
         data={CONF_HOST: HOST},
@@ -75,7 +75,7 @@ async def test_user.opp, mock_daikin):
 async def test_abort_if_already_setup_opp, mock_daikin):
     """Test we abort if Daikin is already setup."""
     MockConfigEntry(domain="daikin", unique_id=MAC).add_to.opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": SOURCE_USER},
         data={CONF_HOST: HOST, KEY_MAC: MAC},
@@ -87,7 +87,7 @@ async def test_abort_if_already_setup_opp, mock_daikin):
 
 async def test_import.opp, mock_daikin):
     """Test import step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": SOURCE_IMPORT},
         data={},
@@ -95,7 +95,7 @@ async def test_import.opp, mock_daikin):
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": SOURCE_IMPORT},
         data={CONF_HOST: HOST},
@@ -119,7 +119,7 @@ async def test_device_abort.opp, mock_daikin, s_effect, reason):
     """Test device abort."""
     mock_daikin.factory.side_effect = s_effect
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": SOURCE_USER},
         data={CONF_HOST: HOST, KEY_MAC: MAC},
@@ -140,7 +140,7 @@ async def test_discovery_zeroconf(
    .opp, mock_daikin, mock_daikin_discovery, source, data, unique_id
 ):
     """Test discovery/zeroconf step."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": source},
         data=data,
@@ -149,7 +149,7 @@ async def test_discovery_zeroconf(
     assert result["step_id"] == "user"
 
     MockConfigEntry(domain="daikin", unique_id=unique_id).add_to.opp.opp)
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": SOURCE_USER, "unique_id": unique_id},
         data={CONF_HOST: HOST},
@@ -158,7 +158,7 @@ async def test_discovery_zeroconf(
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         "daikin",
         context={"source": source},
         data=data,

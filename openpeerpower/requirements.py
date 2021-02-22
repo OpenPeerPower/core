@@ -77,7 +77,7 @@ async def async_get_integration_with_requirements(
 
     if integration.requirements:
         await async_process_requirements(
-           .opp, integration.domain, integration.requirements
+            opp, integration.domain, integration.requirements
         )
 
     deps_to_check = [
@@ -130,7 +130,7 @@ async def async_process_requirements(
                 """Install requirement."""
                 return pkg_util.install_package(req, **kwargs)
 
-            ret = await.opp.async_add_executor_job(_install, req, kwargs)
+            ret = await opp.async_add_executor_job(_install, req, kwargs)
 
             if not ret:
                 raise RequirementsNotFound(name, [req])

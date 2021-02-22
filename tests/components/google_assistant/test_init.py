@@ -23,7 +23,7 @@ async def test_request_sync_service(aioclient_mock, opp):
     )
 
     assert aioclient_mock.call_count == 0
-    await.opp.services.async_call(
+    await opp.services.async_call(
         ga.const.DOMAIN,
         ga.const.SERVICE_REQUEST_SYNC,
         blocking=True,

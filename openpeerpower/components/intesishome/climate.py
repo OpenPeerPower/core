@@ -262,7 +262,7 @@ class IntesisAC(ClimateEntity):
             self._target_temp = temperature
 
         # Write updated temperature to HA state to avoid flapping (API confirmation is slow)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set operation mode."""
@@ -271,7 +271,7 @@ class IntesisAC(ClimateEntity):
             self._power = False
             await self._controller.set_power_off(self._device_id)
             # Write changes to HA, API can be slow to push changes
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         # First check device is turned on
@@ -288,7 +288,7 @@ class IntesisAC(ClimateEntity):
 
         # Updates can take longer than 2 seconds, so update locally
         self._hvac_mode = hvac_mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_fan_mode(self, fan_mode):
         """Set fan mode (from quiet, low, medium, high, auto)."""
@@ -296,7 +296,7 @@ class IntesisAC(ClimateEntity):
 
         # Updates can take longer than 2 seconds, so update locally
         self._fan_speed = fan_mode
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_preset_mode(self, preset_mode):
         """Set preset mode."""
@@ -392,7 +392,7 @@ class IntesisAC(ClimateEntity):
                 self._device_type,
                 device_id,
             )
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
     @property
     def min_temp(self):

@@ -66,7 +66,7 @@ async def async_setup_entry(
     """Set up the Tado water heater platform."""
 
     tado = opp.data[DOMAIN][entry.entry_id][DATA]
-    entities = await.opp.async_add_executor_job(_generate_entities, tado)
+    entities = await opp.async_add_executor_job(_generate_entities, tado)
 
     platform = entity_platform.current_platform.get()
 
@@ -260,7 +260,7 @@ class TadoWaterHeater(TadoZoneEntity, WaterHeaterEntity):
     def _async_update_callback(self):
         """Load tado data and update state."""
         self._async_update_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_update_data(self):

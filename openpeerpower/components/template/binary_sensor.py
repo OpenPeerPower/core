@@ -186,7 +186,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
         def _set_state(_):
             """Set state of template binary sensor."""
             self._state = state
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         delay = (self._delay_on if state else self._delay_off).seconds
         # state with delay. Cancelled if template result changes.

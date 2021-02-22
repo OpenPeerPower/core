@@ -124,7 +124,7 @@ class VeSyncFanHA(VeSyncDevice, FanEntity):
         self.smartfan.change_fan_speed(
             math.ceil(percentage_to_ranged_value(SPEED_RANGE, percentage))
         )
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def set_preset_mode(self, preset_mode):
         """Set the preset mode of device."""
@@ -141,7 +141,7 @@ class VeSyncFanHA(VeSyncDevice, FanEntity):
         elif preset_mode == FAN_MODE_SLEEP:
             self.smartfan.sleep_mode()
 
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_on(
         self,

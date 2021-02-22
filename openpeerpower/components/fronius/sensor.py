@@ -193,7 +193,7 @@ class FroniusAdapter:
 
         # Schedule an update for all included sensors
         for sensor in self._registered_sensors:
-            sensor.async_schedule_update_ha_state(True)
+            sensor.async_schedule_update_op_state(True)
 
     async def _update(self) -> Dict:
         """Return values of interest."""

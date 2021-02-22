@@ -128,7 +128,7 @@ class TwenteMilieuSensor(Entity):
     def _schedule_immediate_update(self, unique_id: str) -> None:
         """Schedule an immediate update of the entity."""
         if unique_id == self._unique_id:
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
     @property
     def state(self):

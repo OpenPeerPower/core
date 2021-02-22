@@ -152,7 +152,7 @@ class PilightBaseDevice(RestoreEntity):
                 )
 
         self._is_on = turn_on
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_on(self, **kwargs):
         """Turn the switch on by calling pilight.send service with on code."""

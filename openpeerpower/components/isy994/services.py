@@ -184,12 +184,12 @@ def async_setup_services.opp: OpenPeerPowerType):
                     address,
                     isy.configuration["uuid"],
                 )
-                await.opp.async_add_executor_job(isy.query, address)
+                await opp.async_add_executor_job(isy.query, address)
                 return
             _LOGGER.debug(
                 "Requesting system query of ISY %s", isy.configuration["uuid"]
             )
-            await.opp.async_add_executor_job(isy.query)
+            await opp.async_add_executor_job(isy.query)
 
     async def async_run_network_resource_service_handler(service):
         """Handle a network resource service call."""
@@ -209,7 +209,7 @@ def async_setup_services.opp: OpenPeerPowerType):
             if name:
                 command = isy.networking.get_by_name(name)
             if command is not None:
-                await.opp.async_add_executor_job(command.run)
+                await opp.async_add_executor_job(command.run)
                 return
         _LOGGER.error(
             "Could not run network resource command. Not found or enabled on the ISY"
@@ -232,7 +232,7 @@ def async_setup_services.opp: OpenPeerPowerType):
             if name:
                 program = isy.programs.get_by_name(name)
             if program is not None:
-                await.opp.async_add_executor_job(getattr(program, command))
+                await opp.async_add_executor_job(getattr(program, command))
                 return
         _LOGGER.error("Could not send program command. Not found or enabled on the ISY")
 
@@ -255,7 +255,7 @@ def async_setup_services.opp: OpenPeerPowerType):
             if address and vtype:
                 variable = isy.variables.vobjs[vtype].get(address)
             if variable is not None:
-                await.opp.async_add_executor_job(variable.set_value, value, init)
+                await opp.async_add_executor_job(variable.set_value, value, init)
                 return
         _LOGGER.error("Could not set variable value. Not found or enabled on the ISY")
 
@@ -355,7 +355,7 @@ def async_setup_services.opp: OpenPeerPowerType):
     )
 
     async def _async_send_raw_node_command(call: ServiceCall):
-        await.opp.helpers.service.entity_service_call(
+        await opp.helpers.service.entity_service_call(
             async_get_platforms.opp, DOMAIN), SERVICE_SEND_RAW_NODE_COMMAND, call
         )
 
@@ -367,7 +367,7 @@ def async_setup_services.opp: OpenPeerPowerType):
     )
 
     async def _async_send_node_command(call: ServiceCall):
-        await.opp.helpers.service.entity_service_call(
+        await opp.helpers.service.entity_service_call(
             async_get_platforms.opp, DOMAIN), SERVICE_SEND_NODE_COMMAND, call
         )
 

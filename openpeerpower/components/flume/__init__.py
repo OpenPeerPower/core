@@ -49,7 +49,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     http_session = Session()
 
     try:
-        flume_auth = await.opp.async_add_executor_job(
+        flume_auth = await opp.async_add_executor_job(
             partial(
                 FlumeAuth,
                 username,
@@ -60,7 +60,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 http_session=http_session,
             )
         )
-        flume_devices = await.opp.async_add_executor_job(
+        flume_devices = await opp.async_add_executor_job(
             partial(
                 FlumeDeviceList,
                 flume_auth,

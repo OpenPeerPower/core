@@ -87,7 +87,7 @@ HW_MODE_TO_HVAC_MODE = {
     "cool": HVAC_MODE_COOL,
     "auto": HVAC_MODE_HEAT_COOL,
 }
-HW_MODE_TO_HA_HVAC_ACTION = {
+HW_MODE_TO_OP_HVAC_ACTION = {
     "off": CURRENT_HVAC_IDLE,
     "fan": CURRENT_HVAC_FAN,
     "heat": CURRENT_HVAC_HEAT,
@@ -254,7 +254,7 @@ class HoneywellUSThermostat(ClimateEntity):
         """Return the current running hvac operation if supported."""
         if self.hvac_mode == HVAC_MODE_OFF:
             return None
-        return HW_MODE_TO_HA_HVAC_ACTION[self._device.equipment_output_status]
+        return HW_MODE_TO_OP_HVAC_ACTION[self._device.equipment_output_status]
 
     @property
     def current_temperature(self) -> Optional[float]:

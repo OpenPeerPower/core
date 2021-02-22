@@ -60,7 +60,7 @@ async def _async_reproduce_state(
     elif state.state == STATUS_IDLE:
         service = SERVICE_CANCEL
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, service, service_data, context=context, blocking=True
     )
 

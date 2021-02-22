@@ -25,7 +25,7 @@ async def test_koogeek_ls1_setup_opp):
     accessories = await setup_accessories_from_file.opp, "koogeek_ls1.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Assert that the entity is correctly added to the entity registry
     entry = entity_registry.async_get("light.koogeek_ls1_20833f")
@@ -44,7 +44,7 @@ async def test_koogeek_ls1_setup_opp):
         SUPPORT_BRIGHTNESS | SUPPORT_COLOR
     )
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(entry.device_id)
     assert device.manufacturer == "Koogeek"
@@ -92,7 +92,7 @@ async def test_recover_from_failure.opp, utcnow, failure_cls):
     # Test that entity changes state when network error goes away
     next_update += timedelta(seconds=60)
     async_fire_time_changed.opp, next_update)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = await helper.poll_and_get_state()
     assert state.state == "on"

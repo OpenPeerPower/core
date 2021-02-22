@@ -298,8 +298,8 @@ async def test_extract_entity_ids.opp):
    .opp.states.async_set("light.Kitchen", STATE_OFF)
 
     assert await async_setup_component.opp, "group", {})
-    await.opp.async_block_till_done()
-    await.opp.components.group.Group.async_create_group(
+    await opp.async_block_till_done()
+    await opp.components.group.Group.async_create_group(
        .opp, "test", ["light.Ceiling", "light.Kitchen"]
     )
 
@@ -645,7 +645,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
     )
 
     with pytest.raises(exceptions.UnknownUser):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "test",
             "test",
             {},
@@ -655,7 +655,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
     assert len(calls) == 0
 
     with pytest.raises(exceptions.Unauthorized):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "test",
             "test",
             {},
@@ -665,7 +665,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
     assert len(calls) == 0
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "test",
             "test",
             {"invalid": True},
@@ -675,7 +675,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
     assert len(calls) == 0
 
     with pytest.raises(vol.Invalid):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "test",
             "test2",
             {},
@@ -684,7 +684,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
         )
     assert len(calls) == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "test",
         "test2",
         {"required": True},
@@ -728,7 +728,7 @@ async def test_domain_control_unknown.opp, mock_entities):
         )
 
         with pytest.raises(exceptions.UnknownUser):
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 "test_domain",
                 "test_service",
                 {},
@@ -766,7 +766,7 @@ async def test_domain_control_unauthorized.opp, opp_read_only_user):
     )
 
     with pytest.raises(exceptions.Unauthorized):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             "test_domain",
             "test_service",
             {},
@@ -804,7 +804,7 @@ async def test_domain_control_admin.opp, opp_admin_user):
         "test_domain", "test_service", protected_mock_service, schema=None
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "test_domain",
         "test_service",
         {},
@@ -842,7 +842,7 @@ async def test_domain_control_no_user.opp):
         "test_domain", "test_service", protected_mock_service, schema=None
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "test_domain",
         "test_service",
         {},

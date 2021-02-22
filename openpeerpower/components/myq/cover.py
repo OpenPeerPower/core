@@ -113,13 +113,13 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
             return
 
         # Write closing state to HASS
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         if not await wait_task:
             _LOGGER.error("Closing of cover %s failed", self._device.name)
 
         # Write final state to HASS
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_open_cover(self, **kwargs):
         """Issue open command to cover."""
@@ -135,13 +135,13 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
             return
 
         # Write opening state to HASS
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         if not await wait_task:
             _LOGGER.error("Opening of cover %s failed", self._device.name)
 
         # Write final state to HASS
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def device_info(self):
@@ -162,5 +162,5 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
     async def async_added_to.opp(self):
         """Subscribe to updates."""
         self.async_on_remove(
-            self.coordinator.async_add_listener(self.async_write_ha_state)
+            self.coordinator.async_add_listener(self.async_write_op_state)
         )

@@ -23,7 +23,7 @@ async def _async_has_devices.opp):
     if zeroconf_instance is None:
         zeroconf_instance = await zeroconf.async_get_instance.opp)
 
-    casts, browser = await.opp.async_add_executor_job(
+    casts, browser = await opp.async_add_executor_job(
         functools.partial(discover_chromecasts, zeroconf_instance=zeroconf_instance)
     )
     stop_discovery(browser)

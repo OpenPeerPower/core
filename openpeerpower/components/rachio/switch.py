@@ -92,7 +92,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Rachio switches."""
     zone_entities = []
     has_flex_sched = False
-    entities = await.opp.async_add_executor_job(_create_entities, opp, config_entry)
+    entities = await opp.async_add_executor_job(_create_entities, opp, config_entry)
     for entity in entities:
         if isinstance(entity, RachioZone):
             zone_entities.append(entity)
@@ -227,7 +227,7 @@ class RachioStandbySwitch(RachioSwitch):
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_SLEEP_MODE_OFF:
             self._state = False
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def turn_on(self, **kwargs) -> None:
         """Put the controller in standby mode."""
@@ -291,14 +291,14 @@ class RachioRainDelay(RachioSwitch):
         elif args[0][0][KEY_SUBTYPE] == SUBTYPE_RAIN_DELAY_OFF:
             self._state = False
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _delay_expiration(self, *args) -> None:
         """Trigger when a rain delay expires."""
         self._state = False
         self._cancel_update = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def turn_on(self, **kwargs) -> None:
         """Activate a 24 hour rain delay on the controller."""
@@ -452,7 +452,7 @@ class RachioZone(RachioSwitch):
         ]:
             self._state = False
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to updates."""
@@ -538,7 +538,7 @@ class RachioSchedule(RachioSwitch):
         except KeyError:
             pass
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to updates."""

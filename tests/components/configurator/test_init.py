@@ -63,13 +63,13 @@ async def test_callback_called_on_configure.opp):
        .opp, "Test Request", lambda _: calls.append(1)
     )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         configurator.DOMAIN,
         configurator.SERVICE_CONFIGURE,
         {configurator.ATTR_CONFIGURE_ID: request_id},
     )
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert 1 == len(calls), "Callback not called"
 
 
@@ -97,7 +97,7 @@ async def test_request_done_works.opp):
     assert 1 == len.opp.states.async_all())
 
    .opp.bus.async_fire(EVENT_TIME_CHANGED)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert 0 == len.opp.states.async_all())
 
 

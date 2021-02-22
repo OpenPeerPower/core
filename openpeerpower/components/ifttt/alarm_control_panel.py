@@ -109,7 +109,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         for device in devices:
             device.push_alarm_state(state)
-            device.async_schedule_update_ha_state()
+            device.async_schedule_update_op_state()
 
    .opp.services.register(
         DOMAIN,

@@ -24,7 +24,7 @@ async def test_duplicate_error(opp):
        .opp
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -72,13 +72,13 @@ async def test_options_flow.opp):
     with patch(
         "openpeerpower.components.rainmachine.async_setup_entry", return_value=True
     ):
-        await.opp.config_entries.async_setup(config_entry.entry_id)
-        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+        await opp.config_entries.async_setup(config_entry.entry_id)
+        result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await.opp.config_entries.options.async_configure(
+        result = await opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_ZONE_RUN_TIME: 600}
         )
 

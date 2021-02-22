@@ -26,7 +26,7 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -40,10 +40,10 @@ async def test_form.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.tesla.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"], {CONF_PASSWORD: "test", CONF_USERNAME: "test@email.com"}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == "test@email.com"
@@ -59,7 +59,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -67,7 +67,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.tesla.config_flow.TeslaAPI.connect",
         side_effect=TeslaException(401),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "test-username", CONF_PASSWORD: "test-password"},
         )
@@ -78,7 +78,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -86,7 +86,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.tesla.config_flow.TeslaAPI.connect",
         side_effect=TeslaException(code=HTTP_NOT_FOUND),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_PASSWORD: "test-password", CONF_USERNAME: "test-username"},
         )
@@ -105,14 +105,14 @@ async def test_form_repeat_identifier.opp):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     with patch(
         "openpeerpower.components.tesla.config_flow.TeslaAPI.connect",
         return_value=("test-refresh-token", "test-access-token"),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "test-username", CONF_PASSWORD: "test-password"},
         )
@@ -131,7 +131,7 @@ async def test_form_reauth.opp):
     )
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_REAUTH},
         data={"username": "test-username"},
@@ -140,7 +140,7 @@ async def test_form_reauth.opp):
         "openpeerpower.components.tesla.config_flow.TeslaAPI.connect",
         return_value=("test-refresh-token", "test-access-token"),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_USERNAME: "test-username", CONF_PASSWORD: "new-password"},
         )
@@ -156,7 +156,7 @@ async def test_import.opp):
         "openpeerpower.components.tesla.config_flow.TeslaAPI.connect",
         return_value=("test-refresh-token", "test-access-token"),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_PASSWORD: "test-password", CONF_USERNAME: "test-username"},
@@ -173,12 +173,12 @@ async def test_option_flow.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={CONF_SCAN_INTERVAL: 350, CONF_WAKE_ON_START: True},
     )
@@ -191,12 +191,12 @@ async def test_option_flow_defaults.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
     assert result["type"] == "create_entry"
@@ -211,12 +211,12 @@ async def test_option_flow_input_floor.opp):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(entry.entry_id)
+    result = await opp.config_entries.options.async_init(entry.entry_id)
 
     assert result["type"] == "form"
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_SCAN_INTERVAL: 1}
     )
     assert result["type"] == "create_entry"

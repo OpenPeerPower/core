@@ -77,7 +77,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if entry.data.get(CONF_USE_ADDON):
         # Do not use MQTT integration. Use own MQTT client.
         # Retrieve discovery info from the OpenZWave add-on.
-        discovery_info = await.opp.components.oppio.async_get_addon_discovery_info(
+        discovery_info = await opp.components.oppio.async_get_addon_discovery_info(
             "core_zwave"
         )
 
@@ -339,12 +339,12 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
         return
 
     try:
-        await.opp.components.oppio.async_stop_addon("core_zwave")
+        await opp.components.oppio.async_stop_addon("core_zwave")
     except HassioAPIError as err:
         _LOGGER.error("Failed to stop the OpenZWave add-on: %s", err)
         return
     try:
-        await.opp.components.oppio.async_uninstall_addon("core_zwave")
+        await opp.components.oppio.async_uninstall_addon("core_zwave")
     except HassioAPIError as err:
         _LOGGER.error("Failed to uninstall the OpenZWave add-on: %s", err)
 

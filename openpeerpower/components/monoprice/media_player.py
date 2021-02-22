@@ -231,7 +231,7 @@ class MonopriceZone(MediaPlayerEntity):
         """Restore saved state."""
         if self._snapshot:
             self._monoprice.restore_zone(self._snapshot)
-            self.schedule_update_ha_state(True)
+            self.schedule_update_op_state(True)
 
     def select_source(self, source):
         """Set input source."""

@@ -54,7 +54,7 @@ async def test_flow_ssdp_discovery.opp: OpenPeerPowerType):
         Device, "async_supplement_discovery", AsyncMock(return_value=discoveries[0])
     ):
         # Discovered via step ssdp.
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_SSDP},
             data={
@@ -68,7 +68,7 @@ async def test_flow_ssdp_discovery.opp: OpenPeerPowerType):
         assert result["step_id"] == "ssdp_confirm"
 
         # Confirm via step ssdp_confirm.
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={},
         )
@@ -89,7 +89,7 @@ async def test_flow_ssdp_incomplete_discovery.opp: OpenPeerPowerType):
     mock_device = MockDevice(udn)
 
     # Discovered via step ssdp.
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
         data={
@@ -137,7 +137,7 @@ async def test_flow_ssdp_discovery_ignored.opp: OpenPeerPowerType):
         Device, "async_supplement_discovery", AsyncMock(return_value=discoveries[0])
     ):
         # Discovered via step ssdp, but ignored.
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_SSDP},
             data={
@@ -176,14 +176,14 @@ async def test_flow_user.opp: OpenPeerPowerType):
         Device, "async_supplement_discovery", AsyncMock(return_value=discoveries[0])
     ):
         # Discovered via step user.
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
         # Confirmed via step user.
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={"unique_id": mock_device.unique_id},
         )
@@ -222,7 +222,7 @@ async def test_flow_import.opp: OpenPeerPowerType):
         Device, "async_supplement_discovery", AsyncMock(return_value=discoveries[0])
     ):
         # Discovered via step import.
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
         )
 
@@ -253,7 +253,7 @@ async def test_flow_import_already_configured.opp: OpenPeerPowerType):
     config_entry.add_to.opp.opp)
 
     # Discovered via step import.
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
     )
 
@@ -280,7 +280,7 @@ async def test_flow_import_incomplete.opp: OpenPeerPowerType):
 
     with patch.object(Device, "async_discover", AsyncMock(return_value=discoveries)):
         # Discovered via step import.
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
         )
 
@@ -324,20 +324,20 @@ async def test_options_flow.opp: OpenPeerPowerType):
     ), patch.object(Device, "async_discover", AsyncMock(return_value=discoveries)):
         # Initialisation of component.
         await async_setup_component.opp, "upnp", config)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         # DataUpdateCoordinator gets a default of 30 seconds for updates.
         coordinator = opp.data[DOMAIN][DOMAIN_COORDINATORS][mock_device.udn]
         assert coordinator.update_interval == timedelta(seconds=DEFAULT_SCAN_INTERVAL)
 
         # Options flow with no input results in form.
-        result = await.opp.config_entries.options.async_init(
+        result = await opp.config_entries.options.async_init(
             config_entry.entry_id,
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
         # Options flow with input results in update to entry.
-        result2 = await.opp.config_entries.options.async_configure(
+        result2 = await opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONFIG_ENTRY_SCAN_INTERVAL: 60},
         )

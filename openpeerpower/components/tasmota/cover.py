@@ -52,7 +52,7 @@ class TasmotaCover(
         """Handle state updates."""
         self._direction = kwargs["direction"]
         self._position = kwargs["position"]
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def current_cover_position(self):

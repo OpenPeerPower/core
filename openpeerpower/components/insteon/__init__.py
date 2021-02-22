@@ -153,7 +153,7 @@ async def async_setup_entry.opp, entry):
     register_new_device_callback.opp)
     async_register_services.opp)
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, str(devices.modem.address))},

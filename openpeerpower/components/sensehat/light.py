@@ -96,10 +96,10 @@ class SenseHatLight(LightEntity):
         self._sensehat.clear(*rgb)
 
         self._is_on = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Instruct the light to turn off."""
         self._sensehat.clear()
         self._is_on = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

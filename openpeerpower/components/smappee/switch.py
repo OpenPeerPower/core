@@ -176,7 +176,7 @@ class SmappeeActuator(SwitchEntity):
         new_state = self._service_location.actuators.get(self._actuator_id).state
         if new_state != self._state:
             self._state = new_state
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self._connection_state = self._service_location.actuators.get(
             self._actuator_id

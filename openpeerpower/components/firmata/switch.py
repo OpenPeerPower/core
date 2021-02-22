@@ -58,9 +58,9 @@ class FirmataSwitch(FirmataPinEntity, SwitchEntity):
     async def async_turn_on(self, **kwargs) -> None:
         """Turn on switch."""
         await self._api.turn_on()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn off switch."""
         await self._api.turn_off()
-        self.async_write_ha_state()
+        self.async_write_op_state()

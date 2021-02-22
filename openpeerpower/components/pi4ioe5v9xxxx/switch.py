@@ -77,11 +77,11 @@ class Pi4ioe5v9Switch(SwitchEntity):
         pi4ioe5v9xxxx.pin_to_memory(self._pin, not self._invert_logic)
         pi4ioe5v9xxxx.memory_to_hw()
         self._state = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         pi4ioe5v9xxxx.pin_to_memory(self._pin, self._invert_logic)
         pi4ioe5v9xxxx.memory_to_hw()
         self._state = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

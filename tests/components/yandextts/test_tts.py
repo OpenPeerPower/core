@@ -8,7 +8,7 @@ from openpeerpower.components.media_player.const import (
     SERVICE_PLAY_MEDIA,
 )
 import openpeerpower.components.tts as tts
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import HTTP_FORBIDDEN
 from openpeerpower.setup import setup_component
 
@@ -27,7 +27,7 @@ class TestTTSYandexPlatform:
         self._base_url = "https://tts.voicetech.yandex.net/generate?"
 
         asyncio.run_coroutine_threadsafe(
-            async_process_ha_core_config(
+            async_process_op_core_config(
                 self.opp, {"internal_url": "http://example.local:8123"}
             ),
             self.opp.loop,

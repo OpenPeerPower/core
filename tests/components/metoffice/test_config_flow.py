@@ -27,7 +27,7 @@ async def test_form.opp, requests_mock):
     requests_mock.get("/public/data/val/wxfcs/all/json/sitelist/", text=all_sites)
 
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -39,10 +39,10 @@ async def test_form.opp, requests_mock):
         "openpeerpower.components.metoffice.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"api_key": TEST_API_KEY}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_SITE_NAME_WAVERTREE
@@ -78,7 +78,7 @@ async def test_form_already_configured.opp, requests_mock):
         data=METOFFICE_CONFIG_WAVERTREE,
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data=METOFFICE_CONFIG_WAVERTREE,
@@ -95,11 +95,11 @@ async def test_form_cannot_connect.opp, requests_mock):
 
     requests_mock.get("/public/data/val/wxfcs/all/json/sitelist/", text="")
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"api_key": TEST_API_KEY},
     )
@@ -113,11 +113,11 @@ async def test_form_unknown_error(opp, mock_simple_manager_fail):
     mock_instance = mock_simple_manager_fail.return_value
     mock_instance.get_nearest_forecast_site.side_effect = ValueError
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"api_key": TEST_API_KEY},
     )

@@ -42,16 +42,16 @@ async def test_shutdown_before_startup_finishes.opp):
    .opp.state = CoreState.not_running
 
     await async_init_recorder_component.opp)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    session = await.opp.async_add_executor_job.opp.data[DATA_INSTANCE].get_session)
+    session = await opp.async_add_executor_job.opp.data[DATA_INSTANCE].get_session)
 
     with patch.object.opp.data[DATA_INSTANCE], "engine"):
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await.opp.async_block_till_done()
-        await.opp.async_stop()
+        await opp.async_block_till_done()
+        await opp.async_stop()
 
-    run_info = await.opp.async_add_executor_job(run_information_with_session, session)
+    run_info = await opp.async_add_executor_job(run_information_with_session, session)
 
     assert run_info.run_id == 1
     assert run_info.start is not None
@@ -528,17 +528,17 @@ async def test_database_corruption_while_running.opp, tmpdir, caplog):
     def _create_tmpdir_for_test_db():
         return tmpdir.mkdir("sqlite").join("test.db")
 
-    test_db_file = await.opp.async_add_executor_job(_create_tmpdir_for_test_db)
+    test_db_file = await opp.async_add_executor_job(_create_tmpdir_for_test_db)
     dburl = f"{SQLITE_URL_PREFIX}//{test_db_file}"
 
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_DB_URL: dburl}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     caplog.clear()
 
    .opp.states.async_set("test.lost", "on", {})
 
     await async_wait_recording_done.opp)
-    await.opp.async_add_executor_job(corrupt_db_file, test_db_file)
+    await opp.async_add_executor_job(corrupt_db_file, test_db_file)
     await async_wait_recording_done.opp)
 
     # This state will not be recorded because
@@ -562,10 +562,10 @@ async def test_database_corruption_while_running.opp, tmpdir, caplog):
             assert db_states[0].event_id > 0
             return db_states[0].to_native()
 
-    state = await.opp.async_add_executor_job(_get_last_state)
+    state = await opp.async_add_executor_job(_get_last_state)
     assert state.entity_id == "test.two"
     assert state.state == "on"
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
    .opp.stop()

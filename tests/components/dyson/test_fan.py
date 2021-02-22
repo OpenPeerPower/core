@@ -236,7 +236,7 @@ async def test_commands_purecoollink(
     configuration_args: dict,
 ) -> None:
     """Test sending commands to a PureCoolLink fan."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         PLATFORM_DOMAIN,
         service,
         {
@@ -303,7 +303,7 @@ async def test_commands_purecool(
     command_args: list,
 ) -> None:
     """Test sending commands to a PureCool fan."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         PLATFORM_DOMAIN,
         service,
         {
@@ -346,7 +346,7 @@ async def test_custom_services_purecoollink(
     configuration_args: dict,
 ) -> None:
     """Test custom services of a PureCoolLink fan."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         service,
         {
@@ -404,7 +404,7 @@ async def test_custom_services_purecool(
     command_args: list,
 ) -> None:
     """Test custom services of a PureCool fan."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         service,
         {
@@ -430,7 +430,7 @@ async def test_custom_services_invalid_data(
 ) -> None:
     """Test custom services calling with invalid data."""
     with pytest.raises(ValueError):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             domain,
             service,
             {

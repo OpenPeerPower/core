@@ -85,7 +85,7 @@ async def test_default_supported_features.opp, mqtt_mock):
     assert await async_setup_component(
        .opp, vacuum.DOMAIN, {vacuum.DOMAIN: DEFAULT_CONFIG}
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entity = opp.states.get("vacuum.mqtttest")
     entity_features = entity.attributes.get(mqttvacuum.CONF_SUPPORTED_FEATURES, 0)
     assert sorted(services_to_strings(entity_features, SERVICE_TO_STRING)) == sorted(
@@ -101,33 +101,33 @@ async def test_all_commands.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_START, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_called_once_with(COMMAND_TOPIC, "start", 0, False)
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_STOP, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_called_once_with(COMMAND_TOPIC, "stop", 0, False)
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_PAUSE, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_called_once_with(COMMAND_TOPIC, "pause", 0, False)
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_LOCATE, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_called_once_with(COMMAND_TOPIC, "locate", 0, False)
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_CLEAN_SPOT, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_called_once_with(
@@ -135,7 +135,7 @@ async def test_all_commands.opp, mqtt_mock):
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_RETURN_TO_BASE, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_called_once_with(
@@ -173,39 +173,39 @@ async def test_commands_without_supported_features.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_START, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_PAUSE, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_STOP, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_RETURN_TO_BASE, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_LOCATE, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_CLEAN_SPOT, {"entity_id": ENTITY_MATCH_ALL}, blocking=True
     )
     mqtt_mock.async_publish.assert_not_called()
@@ -229,7 +229,7 @@ async def test_status.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     message = """{
         "battery_level": 54,
@@ -267,7 +267,7 @@ async def test_no_fan_vacuum.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     message = """{
         "battery_level": 54,
@@ -317,7 +317,7 @@ async def test_status_invalid_json.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "vacuum/state", '{"asdfasas false}')
     state = opp.states.get("vacuum.mqtttest")

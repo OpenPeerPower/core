@@ -80,7 +80,7 @@ def motion_blinds_connect_fixture():
 
 async def test_config_flow_manual_host_success.opp):
     """Successful flow manually initialized by the user."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -88,7 +88,7 @@ async def test_config_flow_manual_host_success.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: TEST_HOST},
     )
@@ -97,7 +97,7 @@ async def test_config_flow_manual_host_success.opp):
     assert result["step_id"] == "connect"
     assert result["errors"] is None
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_API_KEY: TEST_API_KEY},
     )
@@ -112,7 +112,7 @@ async def test_config_flow_manual_host_success.opp):
 
 async def test_config_flow_discovery_1_success.opp):
     """Successful flow with 1 gateway discovered."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -120,7 +120,7 @@ async def test_config_flow_discovery_1_success.opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -129,7 +129,7 @@ async def test_config_flow_discovery_1_success.opp):
     assert result["step_id"] == "connect"
     assert result["errors"] is None
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_API_KEY: TEST_API_KEY},
     )
@@ -144,7 +144,7 @@ async def test_config_flow_discovery_1_success.opp):
 
 async def test_config_flow_discovery_2_success.opp):
     """Successful flow with 2 gateway discovered."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -156,7 +156,7 @@ async def test_config_flow_discovery_2_success.opp):
         "openpeerpower.components.motion_blinds.config_flow.MotionDiscovery.discover",
         return_value=TEST_DISCOVERY_2,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )
@@ -169,7 +169,7 @@ async def test_config_flow_discovery_2_success.opp):
     ]
     assert result["errors"] is None
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"select_ip": TEST_HOST2},
     )
@@ -178,7 +178,7 @@ async def test_config_flow_discovery_2_success.opp):
     assert result["step_id"] == "connect"
     assert result["errors"] is None
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_API_KEY: TEST_API_KEY},
     )
@@ -193,7 +193,7 @@ async def test_config_flow_discovery_2_success.opp):
 
 async def test_config_flow_connection_error(opp):
     """Failed flow manually initialized by the user with connection timeout."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -201,7 +201,7 @@ async def test_config_flow_connection_error(opp):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    result = await.opp.config_entries.flow.async_configure(
+    result = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {CONF_HOST: TEST_HOST},
     )
@@ -214,7 +214,7 @@ async def test_config_flow_connection_error(opp):
         "openpeerpower.components.motion_blinds.gateway.MotionGateway.GetDeviceList",
         side_effect=socket.timeout,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_API_KEY: TEST_API_KEY},
         )
@@ -225,7 +225,7 @@ async def test_config_flow_connection_error(opp):
 
 async def test_config_flow_discovery_fail.opp):
     """Failed flow with no gateways discovered."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -237,7 +237,7 @@ async def test_config_flow_discovery_fail.opp):
         "openpeerpower.components.motion_blinds.config_flow.MotionDiscovery.discover",
         return_value={},
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {},
         )

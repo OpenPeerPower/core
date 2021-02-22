@@ -265,7 +265,7 @@ async def async_setup_opp, config):
         """Update tokens of the entities."""
         for entity in component.entities:
             entity.async_update_token()
-            entity.async_write_ha_state()
+            entity.async_write_op_state()
 
    .opp.helpers.event.async_track_time_interval(update_tokens, TOKEN_CHANGE_INTERVAL)
 
@@ -646,7 +646,7 @@ async def async_handle_snapshot_service(camera, service):
             img_file.write(image_data)
 
     try:
-        await.opp.async_add_executor_job(_write_image, snapshot_file, image)
+        await opp.async_add_executor_job(_write_image, snapshot_file, image)
     except OSError as err:
         _LOGGER.error("Can't write image to file: %s", err)
 
@@ -672,7 +672,7 @@ async def async_handle_play_stream_service(camera, service_call):
     other_entity_ids = list(set(entity_ids) - set(cast_entity_ids))
 
     if cast_entity_ids:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN_MP,
             SERVICE_PLAY_MEDIA,
             {
@@ -690,7 +690,7 @@ async def async_handle_play_stream_service(camera, service_call):
         )
 
     if other_entity_ids:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN_MP,
             SERVICE_PLAY_MEDIA,
             {

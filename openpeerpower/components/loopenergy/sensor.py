@@ -113,7 +113,7 @@ class LoopEnergyDevice(Entity):
         return self._unit_of_measurement
 
     def _callback(self):
-        self.schedule_update_ha_state(True)
+        self.schedule_update_op_state(True)
 
 
 class LoopEnergyElec(LoopEnergyDevice):

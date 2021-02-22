@@ -101,7 +101,7 @@ class LightGroup(GroupEntity, light.LightEntity):
         async def async_state_changed_listener(event):
             """Handle child updates."""
             self.async_set_context(event.context)
-            await self.async_defer_or_update_ha_state()
+            await self.async_defer_or_update_op_state()
 
         assert self.opp
         self.async_on_remove(

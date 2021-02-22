@@ -338,7 +338,7 @@ class RflinkDevice(Entity):
         self._handle_event(event)
 
         # Propagate changes through ha
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         # Put command onto bus for user to subscribe to
         if self._should_fire_event and identify_event_type(event) == EVENT_KEY_COMMAND:
@@ -385,7 +385,7 @@ class RflinkDevice(Entity):
     def _availability_callback(self, availability):
         """Update availability state."""
         self._available = availability
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Register update callback."""
@@ -523,7 +523,7 @@ class RflinkCommand(RflinkDevice):
         await self._async_send_command(cmd, self._signal_repetitions)
 
         # Update state of entity
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     def cancel_queued_send_commands(self):
         """Cancel queued signal repetition commands.

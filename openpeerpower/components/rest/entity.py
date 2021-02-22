@@ -71,7 +71,7 @@ class RestEntity(Entity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
         self._update_from_rest_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update(self):
         """Get the latest data from REST API and update the state."""

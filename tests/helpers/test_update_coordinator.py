@@ -161,7 +161,7 @@ async def test_update_interval.opp, crd):
     """Test update interval works."""
     # Test we don't update without subscriber
     async_fire_time_changed.opp, utcnow() + crd.update_interval)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data is None
 
     # Add subscriber
@@ -170,18 +170,18 @@ async def test_update_interval.opp, crd):
 
     # Test twice we update with subscriber
     async_fire_time_changed.opp, utcnow() + crd.update_interval)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data == 1
 
     async_fire_time_changed.opp, utcnow() + crd.update_interval)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data == 2
 
     # Test removing listener
     crd.async_remove_listener(update_callback)
 
     async_fire_time_changed.opp, utcnow() + crd.update_interval)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Test we stop updating after we lose last subscriber
     assert crd.data == 2
@@ -192,7 +192,7 @@ async def test_update_interval_not_present.opp, crd_without_update_interval):
     crd = crd_without_update_interval
     # Test we don't update without subscriber with no update interval
     async_fire_time_changed.opp, utcnow() + DEFAULT_UPDATE_INTERVAL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data is None
 
     # Add subscriber
@@ -201,18 +201,18 @@ async def test_update_interval_not_present.opp, crd_without_update_interval):
 
     # Test twice we don't update with subscriber with no update interval
     async_fire_time_changed.opp, utcnow() + DEFAULT_UPDATE_INTERVAL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data is None
 
     async_fire_time_changed.opp, utcnow() + DEFAULT_UPDATE_INTERVAL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data is None
 
     # Test removing listener
     crd.async_remove_listener(update_callback)
 
     async_fire_time_changed.opp, utcnow() + DEFAULT_UPDATE_INTERVAL)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Test we stop don't update after we lose last subscriber
     assert crd.data is None
@@ -288,7 +288,7 @@ async def test_async_set_updated_data(crd):
     assert crd._unsub_refresh is not old_refresh
 
 
-async def test_stop_refresh_on_ha_stop.opp, crd):
+async def test_stop_refresh_on_op_stop.opp, crd):
     """Test no update interval refresh when Open Peer Power is stopping."""
     # Add subscriber
     update_callback = Mock()
@@ -298,15 +298,15 @@ async def test_stop_refresh_on_ha_stop.opp, crd):
 
     # Test we update with subscriber
     async_fire_time_changed.opp, utcnow() + update_interval)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data == 1
 
     # Fire Open Peer Power stop event
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
    .opp.state = CoreState.stopping
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Make sure no update with subscriber after stop event
     async_fire_time_changed.opp, utcnow() + update_interval)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert crd.data == 1

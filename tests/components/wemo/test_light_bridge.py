@@ -96,7 +96,7 @@ async def test_light_update_entity(
 
     # On state.
     pywemo_bridge_light.state = {"onoff": 1}
-    await.opp.services.async_call(
+    await opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -106,7 +106,7 @@ async def test_light_update_entity(
 
     # Off state.
     pywemo_bridge_light.state = {"onoff": 0}
-    await.opp.services.async_call(
+    await opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},

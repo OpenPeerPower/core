@@ -43,7 +43,7 @@ async def _async_reproduce_states(
 
     service = SERVICE_TURN_ON if state.state == STATE_ON else SERVICE_TURN_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         service,
         {ATTR_ENTITY_ID: state.entity_id},

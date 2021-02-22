@@ -59,7 +59,7 @@ VICARE_TEMP_HEATING_MAX = 37
 
 SUPPORT_FLAGS_HEATING = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 
-VICARE_TO_HA_HVAC_HEATING = {
+VICARE_TO_OP_HVAC_HEATING = {
     VICARE_MODE_DHW: HVAC_MODE_OFF,
     VICARE_MODE_HEATING: HVAC_MODE_HEAT,
     VICARE_MODE_DHWANDHEATING: HVAC_MODE_AUTO,
@@ -75,7 +75,7 @@ HA_TO_VICARE_HVAC_HEATING = {
     HVAC_MODE_AUTO: VICARE_MODE_DHWANDHEATING,
 }
 
-VICARE_TO_HA_PRESET_HEATING = {
+VICARE_TO_OP_PRESET_HEATING = {
     VICARE_PROGRAM_COMFORT: PRESET_COMFORT,
     VICARE_PROGRAM_ECO: PRESET_ECO,
 }
@@ -110,7 +110,7 @@ async def async_setup_platform(
         SERVICE_SET_VICARE_MODE,
         {
             vol.Required(SERVICE_SET_VICARE_MODE_ATTR_MODE): vol.In(
-                VICARE_TO_HA_HVAC_HEATING
+                VICARE_TO_OP_HVAC_HEATING
             ),
         },
         "set_vicare_mode",
@@ -208,7 +208,7 @@ class ViCareClimate(ClimateEntity):
     @property
     def hvac_mode(self):
         """Return current hvac mode."""
-        return VICARE_TO_HA_HVAC_HEATING.get(self._current_mode)
+        return VICARE_TO_OP_HVAC_HEATING.get(self._current_mode)
 
     def set_hvac_mode(self, hvac_mode):
         """Set a new hvac mode on the ViCare API."""
@@ -258,12 +258,12 @@ class ViCareClimate(ClimateEntity):
     @property
     def preset_mode(self):
         """Return the current preset mode, e.g., home, away, temp."""
-        return VICARE_TO_HA_PRESET_HEATING.get(self._current_program)
+        return VICARE_TO_OP_PRESET_HEATING.get(self._current_program)
 
     @property
     def preset_modes(self):
         """Return the available preset mode."""
-        return list(VICARE_TO_HA_PRESET_HEATING)
+        return list(VICARE_TO_OP_PRESET_HEATING)
 
     def set_preset_mode(self, preset_mode):
         """Set new preset mode and deactivate any existing programs."""
@@ -284,7 +284,7 @@ class ViCareClimate(ClimateEntity):
 
     def set_vicare_mode(self, vicare_mode):
         """Service function to set vicare modes directly."""
-        if vicare_mode not in VICARE_TO_HA_HVAC_HEATING:
+        if vicare_mode not in VICARE_TO_OP_HVAC_HEATING:
             raise ValueError(f"Cannot set invalid vicare mode: {vicare_mode}")
 
         self._api.setMode(vicare_mode)

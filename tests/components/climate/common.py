@@ -39,7 +39,7 @@ async def async_set_preset_mode.opp, preset_mode, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_PRESET_MODE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_PRESET_MODE, data, blocking=True)
 
 
 @bind.opp
@@ -60,7 +60,7 @@ async def async_set_aux_heat.opp, aux_heat, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_AUX_HEAT, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_AUX_HEAT, data, blocking=True)
 
 
 @bind.opp
@@ -95,7 +95,7 @@ async def async_set_temperature(
         if value is not None
     }
     _LOGGER.debug("set_temperature start data=%s", kwargs)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_SET_TEMPERATURE, kwargs, blocking=True
     )
 
@@ -132,7 +132,7 @@ async def async_set_humidity.opp, humidity, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_HUMIDITY, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_HUMIDITY, data, blocking=True)
 
 
 @bind.opp
@@ -153,7 +153,7 @@ async def async_set_fan_mode.opp, fan, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_FAN_MODE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_FAN_MODE, data, blocking=True)
 
 
 @bind.opp
@@ -174,7 +174,7 @@ async def async_set_hvac_mode.opp, hvac_mode, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_HVAC_MODE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_HVAC_MODE, data, blocking=True)
 
 
 @bind.opp
@@ -195,7 +195,7 @@ async def async_set_swing_mode.opp, swing_mode, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_SWING_MODE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_SWING_MODE, data, blocking=True)
 
 
 @bind.opp
@@ -216,7 +216,7 @@ async def async_turn_on.opp, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
 async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL):
@@ -226,4 +226,4 @@ async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)

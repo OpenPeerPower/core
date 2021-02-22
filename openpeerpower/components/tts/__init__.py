@@ -142,7 +142,7 @@ async def async_setup_opp, config):
                    .opp, p_config, discovery_info
                 )
             else:
-                provider = await.opp.async_add_executor_job(
+                provider = await opp.async_add_executor_job(
                     platform.get_engine, opp, p_config, discovery_info
                 )
 
@@ -180,7 +180,7 @@ async def async_setup_opp, config):
                 ATTR_ENTITY_ID: entity_ids,
             }
 
-            await.opp.services.async_call(
+            await opp.services.async_call(
                 DOMAIN_MP,
                 SERVICE_PLAY_MEDIA,
                 data,

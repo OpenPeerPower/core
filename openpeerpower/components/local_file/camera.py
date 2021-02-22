@@ -97,7 +97,7 @@ class LocalFile(Camera):
         """Update the file_path."""
         self.check_file_path_access(file_path)
         self._file_path = file_path
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     @property
     def name(self):

@@ -74,4 +74,4 @@ class IHCBinarySensor(IHCDevice, BinarySensorEntity):
             self._state = not value
         else:
             self._state = value
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

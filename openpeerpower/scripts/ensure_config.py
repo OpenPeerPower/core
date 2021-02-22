@@ -42,5 +42,5 @@ async def async_run(config_dir):
     opp =OpenPeerPower()
    .opp.config.config_dir = config_dir
     path = await config_util.async_ensure_config_exists(opp)
-    await.opp.async_stop(force=True)
+    await opp.async_stop(force=True)
     return path

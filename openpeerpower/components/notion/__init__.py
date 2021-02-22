@@ -253,7 +253,7 @@ class NotionEntity(CoordinatorEntity):
             self.opp.async_create_task(self._async_update_bridge_id())
             self._async_update_from_latest_data()
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Handle entity which will be added."""

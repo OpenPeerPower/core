@@ -233,7 +233,7 @@ class Sun(Entity):
             self.solar_elevation,
             self.solar_azimuth,
         )
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
         # Next update as per the current phase
         delta = _PHASE_UPDATES[self.phase]

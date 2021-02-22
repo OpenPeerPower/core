@@ -294,7 +294,7 @@ class Timer(RestoreEntity):
         self._listener = async_track_point_in_utc_time(
             self.opp, self._async_finished, self._end
         )
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_pause(self):
@@ -308,7 +308,7 @@ class Timer(RestoreEntity):
         self._state = STATUS_PAUSED
         self._end = None
         self.opp.bus.async_fire(EVENT_TIMER_PAUSED, {"entity_id": self.entity_id})
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_cancel(self):
@@ -320,7 +320,7 @@ class Timer(RestoreEntity):
         self._end = None
         self._remaining = None
         self.opp.bus.async_fire(EVENT_TIMER_CANCELLED, {"entity_id": self.entity_id})
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_finish(self):
@@ -333,7 +333,7 @@ class Timer(RestoreEntity):
         self._end = None
         self._remaining = None
         self.opp.bus.async_fire(EVENT_TIMER_FINISHED, {"entity_id": self.entity_id})
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _async_finished(self, time):
@@ -346,10 +346,10 @@ class Timer(RestoreEntity):
         self._end = None
         self._remaining = None
         self.opp.bus.async_fire(EVENT_TIMER_FINISHED, {"entity_id": self.entity_id})
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update_config(self, config: Dict) -> None:
         """Handle when the config is updated."""
         self._config = config
         self._duration = cv.time_period_str(config[CONF_DURATION])
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -32,14 +32,14 @@ def mock_setup_entry():
 
 async def test_user_input_device_not_found.opp, mrp_device):
     """Test when user specifies a non-existing device."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["description_placeholders"] == {"devices": "`MRP Device (127.0.0.1)`"}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "none"},
     )
@@ -50,12 +50,12 @@ async def test_user_input_device_not_found.opp, mrp_device):
 
 async def test_user_input_unexpected_error(opp, mock_scan):
     """Test that unexpected error yields an error message."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     mock_scan.side_effect = Exception
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "dummy"},
     )
@@ -66,34 +66,34 @@ async def test_user_input_unexpected_error(opp, mock_scan):
 
 async def test_user_adds_full_device.opp, full_device, pairing):
     """Test adding device with all services."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "MRP Device"},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["description_placeholders"] == {"name": "MRP Device"}
 
-    result3 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result3 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result3["description_placeholders"] == {"protocol": "MRP"}
 
-    result4 = await.opp.config_entries.flow.async_configure(
+    result4 = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"pin": 1111}
     )
     assert result4["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result4["description_placeholders"] == {"protocol": "DMAP", "pin": 1111}
 
-    result5 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result5 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result5["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result5["description_placeholders"] == {"protocol": "AirPlay"}
 
-    result6 = await.opp.config_entries.flow.async_configure(
+    result6 = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"pin": 1234}
     )
     assert result6["type"] == "create_entry"
@@ -111,22 +111,22 @@ async def test_user_adds_full_device.opp, full_device, pairing):
 
 async def test_user_adds_dmap_device.opp, dmap_device, dmap_pin, pairing):
     """Test adding device with only DMAP service."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "DMAP Device"},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["description_placeholders"] == {"name": "DMAP Device"}
 
-    result3 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result3 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result3["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result3["description_placeholders"] == {"pin": 1111, "protocol": "DMAP"}
 
-    result6 = await.opp.config_entries.flow.async_configure(
+    result6 = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"pin": 1234}
     )
     assert result6["type"] == "create_entry"
@@ -142,36 +142,36 @@ async def test_user_adds_dmap_device_failed.opp, dmap_device, dmap_pin, pairing)
     """Test adding DMAP device where remote device did not attempt to pair."""
     pairing.always_fail = True
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "DMAP Device"},
     )
 
-    await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
-    result2 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result2 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result2["reason"] == "device_did_not_pair"
 
 
 async def test_user_adds_device_with_credentials.opp, dmap_device_with_credentials):
     """Test adding DMAP device with existing credentials (home sharing)."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "DMAP Device"},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["description_placeholders"] == {"name": "DMAP Device"}
 
-    result3 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result3 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result3["type"] == "create_entry"
     assert result3["data"] == {
         "address": "127.0.0.1",
@@ -185,18 +185,18 @@ async def test_user_adds_device_with_ip_filter(
    .opp, dmap_device_with_credentials, mock_scan
 ):
     """Test add device filtering by IP."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "127.0.0.1"},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["description_placeholders"] == {"name": "DMAP Device"}
 
-    result3 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result3 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result3["type"] == "create_entry"
     assert result3["data"] == {
         "address": "127.0.0.1",
@@ -208,11 +208,11 @@ async def test_user_adds_device_with_ip_filter(
 
 async def test_user_adds_device_by_ip_uses_unicast_scan.opp, mock_scan):
     """Test add device by IP-address, verify unicast scan is used."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "127.0.0.1"},
     )
@@ -224,11 +224,11 @@ async def test_user_adds_existing_device.opp, mrp_device):
     """Test that it is not possible to add existing device."""
     MockConfigEntry(domain="apple_tv", unique_id="mrpid").add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "127.0.0.1"},
     )
@@ -238,11 +238,11 @@ async def test_user_adds_existing_device.opp, mrp_device):
 
 async def test_user_adds_unusable_device.opp, airplay_device):
     """Test that it is not possible to add pure AirPlay device."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "AirPlay Device"},
     )
@@ -254,21 +254,21 @@ async def test_user_connection_failed.opp, mrp_device, pairing_mock):
     """Test error message when connection to device fails."""
     pairing_mock.begin.side_effect = exceptions.ConnectionFailedError
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "MRP Device"},
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -280,16 +280,16 @@ async def test_user_start_pair_error_failed.opp, mrp_device, pairing_mock):
     """Test initiating pairing fails."""
     pairing_mock.begin.side_effect = exceptions.PairingError
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "MRP Device"},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -301,21 +301,21 @@ async def test_user_pair_invalid_pin.opp, mrp_device, pairing_mock):
     """Test pairing with invalid pin."""
     pairing_mock.finish.side_effect = exceptions.PairingError
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "MRP Device"},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"pin": 1111},
     )
@@ -327,21 +327,21 @@ async def test_user_pair_unexpected_error(opp, mrp_device, pairing_mock):
     """Test unexpected error when entering PIN code."""
 
     pairing_mock.finish.side_effect = Exception
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "MRP Device"},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"pin": 1111},
     )
@@ -353,16 +353,16 @@ async def test_user_pair_backoff_error(opp, mrp_device, pairing_mock):
     """Test that backoff error is displayed in case device requests it."""
     pairing_mock.begin.side_effect = exceptions.BackOffError
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "MRP Device"},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -374,16 +374,16 @@ async def test_user_pair_begin_unexpected_error(opp, mrp_device, pairing_mock):
     """Test unexpected error during start of pairing."""
     pairing_mock.begin.side_effect = Exception
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    await.opp.config_entries.flow.async_configure(
+    await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {"device_input": "MRP Device"},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -396,7 +396,7 @@ async def test_user_pair_begin_unexpected_error(opp, mrp_device, pairing_mock):
 
 async def test_zeroconf_unsupported_service_aborts.opp):
     """Test discovering unsupported zeroconf service."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -410,7 +410,7 @@ async def test_zeroconf_unsupported_service_aborts.opp):
 
 async def test_zeroconf_add_mrp_device.opp, mrp_device, pairing):
     """Test add MRP device discovered by zeroconf."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -421,14 +421,14 @@ async def test_zeroconf_add_mrp_device.opp, mrp_device, pairing):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["description_placeholders"] == {"name": "MRP Device"}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["description_placeholders"] == {"protocol": "MRP"}
 
-    result3 = await.opp.config_entries.flow.async_configure(
+    result3 = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"pin": 1111}
     )
     assert result3["type"] == "create_entry"
@@ -442,20 +442,20 @@ async def test_zeroconf_add_mrp_device.opp, mrp_device, pairing):
 
 async def test_zeroconf_add_dmap_device.opp, dmap_device, dmap_pin, pairing):
     """Test add DMAP device discovered by zeroconf."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["description_placeholders"] == {"name": "DMAP Device"}
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["description_placeholders"] == {"protocol": "DMAP", "pin": 1111}
 
-    result3 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
+    result3 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result3["type"] == "create_entry"
     assert result3["data"] == {
         "address": "127.0.0.1",
@@ -467,11 +467,11 @@ async def test_zeroconf_add_dmap_device.opp, dmap_device, dmap_pin, pairing):
 
 async def test_zeroconf_add_existing_aborts.opp, dmap_device):
     """Test start new zeroconf flow while existing flow is active aborts."""
-    await.opp.config_entries.flow.async_init(
+    await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -480,7 +480,7 @@ async def test_zeroconf_add_existing_aborts.opp, dmap_device):
 
 async def test_zeroconf_add_but_device_not_found.opp, mock_scan):
     """Test add device which is not found with another scan."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -491,7 +491,7 @@ async def test_zeroconf_add_existing_device.opp, dmap_device):
     """Test add already existing device from zeroconf."""
     MockConfigEntry(domain="apple_tv", unique_id="dmapid").add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -502,7 +502,7 @@ async def test_zeroconf_unexpected_error(opp, mock_scan):
     """Test unexpected error aborts in zeroconf."""
     mock_scan.side_effect = Exception
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -517,20 +517,20 @@ async def test_reconfigure_update_credentials.opp, mrp_device, pairing):
     config_entry = MockConfigEntry(domain="apple_tv", unique_id="mrpid")
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": "reauth"},
         data={"identifier": "mrpid", "name": "apple tv"},
     )
 
-    result2 = await.opp.config_entries.flow.async_configure(
+    result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
     assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result2["description_placeholders"] == {"protocol": "MRP"}
 
-    result3 = await.opp.config_entries.flow.async_configure(
+    result3 = await opp.config_entries.flow.async_configure(
         result["flow_id"], {"pin": 1111}
     )
     assert result3["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -551,11 +551,11 @@ async def test_reconfigure_ongoing_aborts.opp, mrp_device):
         "name": "Apple TV",
     }
 
-    await.opp.config_entries.flow.async_init(
+    await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=data
     )
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=data
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -572,10 +572,10 @@ async def test_option_start_off.opp):
     )
     config_entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
+    result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result2 = await.opp.config_entries.options.async_configure(
+    result2 = await opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_START_OFF: True}
     )
     assert result2["type"] == "create_entry"

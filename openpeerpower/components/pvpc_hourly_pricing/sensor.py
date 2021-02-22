@@ -120,7 +120,7 @@ class ElecPriceSensor(RestoreEntity):
     def update_current_price(self, now):
         """Update the sensor state, by selecting the current price for this hour."""
         self._pvpc_data.process_state_and_attributes(now)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update_prices(self, now):
         """Update electricity prices from the ESIOS API."""

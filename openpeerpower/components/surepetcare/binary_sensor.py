@@ -121,7 +121,7 @@ class SurePetcareBinarySensor(BinarySensorEntity):
         @callback
         def update() -> None:
             """Update the state."""
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self._async_unsub_dispatcher_connect = async_dispatcher_connect(
             self.opp, TOPIC_UPDATE, update

@@ -30,26 +30,26 @@ async def test_lock(
 
     assert.opp.states.get(entity_id).state == STATE_UNLOCKED
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "lock",
         "lock",
         {"entity_id": entity_id},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     vera_device.lock.assert_called()
     vera_device.is_locked.return_value = True
     update_callback(vera_device)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_LOCKED
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "lock",
         "unlock",
         {"entity_id": entity_id},
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     vera_device.unlock.assert_called()
     vera_device.is_locked.return_value = False
     update_callback(vera_device)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_UNLOCKED

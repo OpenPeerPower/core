@@ -25,7 +25,7 @@ from openpeerpower.const import (
 from .const import (
     CONF_CODE_ARM_REQUIRED,
     CONF_CODE_DISARM_REQUIRED,
-    CONF_HA_STATES_TO_RISCO,
+    CONF_OP_STATES_TO_RISCO,
     CONF_RISCO_STATES_TO_HA,
     DATA_COORDINATOR,
     DEFAULT_OPTIONS,
@@ -70,9 +70,9 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
         self._code_arm_required = options[CONF_CODE_ARM_REQUIRED]
         self._code_disarm_required = options[CONF_CODE_DISARM_REQUIRED]
         self._risco_to_ha = options[CONF_RISCO_STATES_TO_HA]
-        self._ha_to_risco = options[CONF_HA_STATES_TO_RISCO]
+        self._op_to_risco = options[CONF_OP_STATES_TO_RISCO]
         self._supported_states = 0
-        for state in self._ha_to_risco:
+        for state in self._op_to_risco:
             self._supported_states |= STATES_TO_SUPPORTED_FEATURES[state]
 
     def _get_data_from_coordinator(self):
@@ -164,7 +164,7 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
             _LOGGER.warning("Wrong code entered for %s", mode)
             return
 
-        risco_state = self._ha_to_risco[mode]
+        risco_state = self._op_to_risco[mode]
         if not risco_state:
             _LOGGER.warning("No mapping for mode %s", mode)
             return
@@ -177,4 +177,4 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
     async def _call_alarm_method(self, method, *args):
         alarm = await getattr(self._risco, method)(self._partition_id, *args)
         self._partition = alarm.partitions[self._partition_id]
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -20,12 +20,12 @@ async def test_simple_function.opp):
 
     async_dispatcher_connect.opp, "test", test_funct)
     async_dispatcher_send.opp, "test", 3)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls == [3]
 
     async_dispatcher_send.opp, "test", "bla")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls == [3, "bla"]
 
@@ -47,7 +47,7 @@ async def test_simple_function_unsub.opp):
     unsub = async_dispatcher_connect.opp, "test2", test_funct2)
     async_dispatcher_send.opp, "test1", 3)
     async_dispatcher_send.opp, "test2", 4)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls1 == [3]
     assert calls2 == [4]
@@ -56,7 +56,7 @@ async def test_simple_function_unsub.opp):
 
     async_dispatcher_send.opp, "test1", 5)
     async_dispatcher_send.opp, "test2", 6)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls1 == [3, 5]
     assert calls2 == [4]
@@ -66,7 +66,7 @@ async def test_simple_function_unsub.opp):
 
     async_dispatcher_send.opp, "test1", 7)
     async_dispatcher_send.opp, "test2", 8)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls1 == [3, 5, 7]
     assert calls2 == [4]
@@ -83,12 +83,12 @@ async def test_simple_callback.opp):
 
     async_dispatcher_connect.opp, "test", test_funct)
     async_dispatcher_send.opp, "test", 3)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls == [3]
 
     async_dispatcher_send.opp, "test", "bla")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls == [3, "bla"]
 
@@ -103,12 +103,12 @@ async def test_simple_coro.opp):
 
     async_dispatcher_connect.opp, "test", async_test_funct)
     async_dispatcher_send.opp, "test", 3)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls == [3]
 
     async_dispatcher_send.opp, "test", "bla")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls == [3, "bla"]
 
@@ -125,7 +125,7 @@ async def test_simple_function_multiargs.opp):
 
     async_dispatcher_connect.opp, "test", test_funct)
     async_dispatcher_send.opp, "test", 3, 2, "bla")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert calls == [3, 2, "bla"]
 
@@ -142,8 +142,8 @@ async def test_callback_exception_gets_logged.opp, caplog):
     # wrap in partial to test message logging.
     async_dispatcher_connect.opp, "test", partial(bad_handler))
     async_dispatcher_send.opp, "test", "bad")
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert (
         f"Exception in functools.partial({bad_handler}) when dispatching 'test': ('bad',)"

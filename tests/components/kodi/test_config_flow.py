@@ -29,7 +29,7 @@ from tests.common import MockConfigEntry
 @pytest.fixture
 async def user_flow.opp):
     """Return a user-initiated flow after filling in host info."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -52,8 +52,8 @@ async def test_user_flow.opp, user_flow):
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
-        await.opp.async_block_till_done()
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -79,7 +79,7 @@ async def test_form_valid_auth.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "credentials"
@@ -97,10 +97,10 @@ async def test_form_valid_auth.opp, user_flow):
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_CREDENTIALS
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -129,7 +129,7 @@ async def test_form_valid_ws_port.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "ws_port"
@@ -147,10 +147,10 @@ async def test_form_valid_ws_port.opp, user_flow):
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_WS_PORT
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -180,7 +180,7 @@ async def test_form_empty_ws_port.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "ws_port"
@@ -192,10 +192,10 @@ async def test_form_empty_ws_port.opp, user_flow):
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], {"ws_port": 0}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_HOST["host"]
@@ -221,7 +221,7 @@ async def test_form_invalid_auth.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "credentials"
@@ -234,7 +234,7 @@ async def test_form_invalid_auth.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_CREDENTIALS
         )
 
@@ -249,7 +249,7 @@ async def test_form_invalid_auth.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_CREDENTIALS
         )
 
@@ -264,7 +264,7 @@ async def test_form_invalid_auth.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_CREDENTIALS
         )
 
@@ -283,7 +283,7 @@ async def test_form_invalid_auth.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_CREDENTIALS
         )
 
@@ -301,7 +301,7 @@ async def test_form_cannot_connect_http.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "user"
@@ -317,7 +317,7 @@ async def test_form_exception_http.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "user"
@@ -337,7 +337,7 @@ async def test_form_cannot_connect_ws.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "ws_port"
@@ -352,7 +352,7 @@ async def test_form_cannot_connect_ws.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_WS_PORT
         )
 
@@ -367,7 +367,7 @@ async def test_form_cannot_connect_ws.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_WS_PORT
         )
 
@@ -389,7 +389,7 @@ async def test_form_exception_ws.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
+        result = await opp.config_entries.flow.async_configure(user_flow, TEST_HOST)
 
     assert result["type"] == "form"
     assert result["step_id"] == "ws_port"
@@ -404,7 +404,7 @@ async def test_form_exception_ws.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"], TEST_WS_PORT
         )
 
@@ -422,7 +422,7 @@ async def test_discovery.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
 
@@ -435,10 +435,10 @@ async def test_discovery.opp):
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             flow_id=result["flow_id"], user_input={}
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "hostname"
@@ -464,7 +464,7 @@ async def test_discovery_cannot_connect_http.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
 
@@ -485,7 +485,7 @@ async def test_discovery_cannot_connect_ws.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         new=get_kodi_connection,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
 
@@ -503,7 +503,7 @@ async def test_discovery_exception_http.opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
 
@@ -520,7 +520,7 @@ async def test_discovery_invalid_auth.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
 
@@ -538,14 +538,14 @@ async def test_discovery_duplicate_data.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
 
     assert result["type"] == "form"
     assert result["step_id"] == "discovery_confirm"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
     )
 
@@ -563,7 +563,7 @@ async def test_discovery_updates_unique_id.opp):
 
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
     )
 
@@ -577,7 +577,7 @@ async def test_discovery_updates_unique_id.opp):
 
 async def test_discovery_without_unique_id.opp):
     """Test a discovery flow with no unique id aborts."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY_WO_UUID
     )
 
@@ -599,12 +599,12 @@ async def test_form_import.opp):
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=TEST_IMPORT,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == TEST_IMPORT["name"]
@@ -623,7 +623,7 @@ async def test_form_import_invalid_auth.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=TEST_IMPORT,
@@ -642,7 +642,7 @@ async def test_form_import_cannot_connect.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=TEST_IMPORT,
@@ -661,7 +661,7 @@ async def test_form_import_exception.opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=TEST_IMPORT,

@@ -133,4 +133,4 @@ class DevoloRemoteControl(DevoloDeviceEntity, BinarySensorEntity):
             self._state = False
         else:
             self._generic_message(message)
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

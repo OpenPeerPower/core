@@ -15,7 +15,7 @@ async def test_reproducing_states.opp):
             }
         },
     )
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [
             State("input_boolean.initial_on", "off"),
             State("input_boolean.initial_off", "on"),
@@ -26,7 +26,7 @@ async def test_reproducing_states.opp):
     assert.opp.states.get("input_boolean.initial_off").state == "on"
     assert.opp.states.get("input_boolean.initial_on").state == "off"
 
-    await.opp.helpers.state.async_reproduce_state(
+    await opp.helpers.state.async_reproduce_state(
         [
             # Test invalid state
             State("input_boolean.initial_on", "invalid_state"),

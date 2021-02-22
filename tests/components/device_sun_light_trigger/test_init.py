@@ -82,7 +82,7 @@ async def test_lights_on_when_sun_sets.opp, scanner):
            .opp, device_sun_light_trigger.DOMAIN, {device_sun_light_trigger.DOMAIN: {}}
         )
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         light.DOMAIN,
         light.SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: "test.light"},
@@ -92,7 +92,7 @@ async def test_lights_on_when_sun_sets.opp, scanner):
     test_time = test_time.replace(hour=3)
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
         async_fire_time_changed.opp, test_time)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert all(
        .opp.states.get(ent_id).state == STATE_ON
@@ -105,7 +105,7 @@ async def test_lights_turn_off_when_everyone_leaves.opp):
     assert await async_setup_component(
        .opp, "light", {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await.opp.services.async_call(
+    await opp.services.async_call(
         light.DOMAIN,
         light.SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: "test.light"},
@@ -119,7 +119,7 @@ async def test_lights_turn_off_when_everyone_leaves.opp):
 
    .opp.states.async_set("device_tracker.bla", STATE_NOT_HOME)
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert all(
        .opp.states.get(ent_id).state == STATE_OFF
@@ -131,7 +131,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set.opp, scanner):
     """Test lights turn on when coming home after sun set."""
     test_time = datetime(2017, 4, 5, 3, 2, 3, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             light.DOMAIN, light.SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "all"}, blocking=True
         )
 
@@ -141,7 +141,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set.opp, scanner):
 
        .opp.states.async_set(f"{DOMAIN}.device_2", STATE_HOME)
 
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert all(
        .opp.states.get(ent_id).state == light.STATE_ON
@@ -156,12 +156,12 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
 
     test_time = datetime(2017, 4, 5, 3, 2, 3, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
-        await.opp.services.async_call(
+        await opp.services.async_call(
             light.DOMAIN, light.SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "all"}, blocking=True
         )
        .opp.states.async_set(device_1, STATE_NOT_HOME)
        .opp.states.async_set(device_2, STATE_NOT_HOME)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert all(
             not light.is_on.opp, ent_id)
@@ -177,7 +177,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
         )
 
         assert await async_setup_component.opp, "group", {})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         await group.Group.async_create_group.opp, "person_me", ["person.me"])
 
         assert await async_setup_component(
@@ -196,7 +196,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
 
         # Unrelated device has no impact
        .opp.states.async_set(device_2, STATE_HOME)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert all(
            .opp.states.get(ent_id).state == STATE_OFF
@@ -208,8 +208,8 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
 
         # person home switches on
        .opp.states.async_set(device_1, STATE_HOME)
-        await.opp.async_block_till_done()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
+        await opp.async_block_till_done()
 
         assert all(
            .opp.states.get(ent_id).state == light.STATE_ON
@@ -233,6 +233,6 @@ async def test_initialize_start.opp):
         "openpeerpower.components.device_sun_light_trigger.activate_automation"
     ) as mock_activate:
        .opp.bus.fire(EVENT_OPENPEERPOWER_START)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(mock_activate.mock_calls) == 1

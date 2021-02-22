@@ -159,7 +159,7 @@ class BaseEditConfigView(OpenPeerPowerView):
             current = await self.read_config(opp)
             self._write_value.opp, current, config_key, data)
 
-            await.opp.async_add_executor_job(_write, path, current)
+            await opp.async_add_executor_job(_write, path, current)
 
         if self.post_write_hook is not None:
            .opp.async_create_task(
@@ -180,7 +180,7 @@ class BaseEditConfigView(OpenPeerPowerView):
                 return self.json_message("Resource not found", HTTP_NOT_FOUND)
 
             self._delete_value.opp, current, config_key)
-            await.opp.async_add_executor_job(_write, path, current)
+            await opp.async_add_executor_job(_write, path, current)
 
         if self.post_write_hook is not None:
            .opp.async_create_task(self.post_write_hook(ACTION_DELETE, config_key))
@@ -189,7 +189,7 @@ class BaseEditConfigView(OpenPeerPowerView):
 
     async def read_config(self, opp):
         """Read the config."""
-        current = await.opp.async_add_executor_job(_read, opp.config.path(self.path))
+        current = await opp.async_add_executor_job(_read, opp.config.path(self.path))
         if not current:
             current = self._empty_config()
         return current

@@ -42,7 +42,7 @@ async def async_setup_platform(
 ) -> None:
     """Initialize Light Switch platform."""
 
-    registry = await.opp.helpers.entity_registry.async_get_registry()
+    registry = await opp.helpers.entity_registry.async_get_registry()
     wrapped_switch = registry.async_get(config[CONF_ENTITY_ID])
     unique_id = wrapped_switch.unique_id if wrapped_switch else None
 
@@ -134,7 +134,7 @@ class LightSwitch(LightEntity):
         @callback
         def async_state_changed_listener(*_: Any) -> None:
             """Handle child updates."""
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         assert self.opp is not None
         self._async_unsub_state_changed = async_track_state_change_event(

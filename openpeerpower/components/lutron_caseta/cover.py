@@ -69,13 +69,13 @@ class LutronCasetaCover(LutronCasetaDevice, CoverEntity):
         """Close the cover."""
         await self._smartbridge.lower_cover(self.device_id)
         self.async_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""
         await self._smartbridge.raise_cover(self.device_id)
         self.async_update()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_cover_position(self, **kwargs):
         """Move the shade to a specific position."""

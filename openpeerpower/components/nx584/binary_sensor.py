@@ -127,7 +127,7 @@ class NX584Watcher(threading.Thread):
         if not zone_sensor:
             return
         zone_sensor._zone["state"] = event["zone_state"]
-        zone_sensor.schedule_update_ha_state()
+        zone_sensor.schedule_update_op_state()
 
     def _process_events(self, events):
         for event in events:

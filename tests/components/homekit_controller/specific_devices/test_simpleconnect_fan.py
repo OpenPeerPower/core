@@ -18,7 +18,7 @@ async def test_simpleconnect_fan_setup_opp):
     accessories = await setup_accessories_from_file.opp, "simpleconnect_fan.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Check that the fan is correctly found and set up
     fan_id = "fan.simpleconnect_fan_06f674"
@@ -40,7 +40,7 @@ async def test_simpleconnect_fan_setup_opp):
         SUPPORT_DIRECTION | SUPPORT_SET_SPEED
     )
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(fan.device_id)
     assert device.manufacturer == "Hunter Fan"

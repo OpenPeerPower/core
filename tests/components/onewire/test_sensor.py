@@ -62,7 +62,7 @@ async def test_setup_minimum.opp):
     config = {"sensor": {"platform": "onewire"}}
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, SENSOR_DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_setup_sysbus.opp):
@@ -75,7 +75,7 @@ async def test_setup_sysbus.opp):
     }
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, SENSOR_DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_setup_owserver.opp):
@@ -83,7 +83,7 @@ async def test_setup_owserver.opp):
     config = {"sensor": {"platform": "onewire", "host": "localhost"}}
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, SENSOR_DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 async def test_setup_owserver_with_port.opp):
@@ -91,7 +91,7 @@ async def test_setup_owserver_with_port.opp):
     config = {"sensor": {"platform": "onewire", "host": "localhost", "port": "1234"}}
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component.opp, SENSOR_DOMAIN, config)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("device_id", ["1F.111111111111"])
@@ -136,7 +136,7 @@ async def test_sensors_on_owserver_coupler(owproxy, opp, device_id):
 
     with patch("openpeerpower.components.onewire.SUPPORTED_PLATFORMS", [SENSOR_DOMAIN]):
         await setup_onewire_patched_owserver_integration.opp)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)
 

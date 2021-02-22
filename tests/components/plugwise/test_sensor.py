@@ -23,7 +23,7 @@ async def test_adam_climate_sensor_entities.opp, mock_smile_adam):
     state = opp.states.get("sensor.cv_pomp_electricity_consumed_interval")
     assert float(state.state) == 7.37
 
-    await.opp.helpers.entity_component.async_update_entity(
+    await opp.helpers.entity_component.async_update_entity(
         "sensor.zone_lisa_wk_battery"
     )
 

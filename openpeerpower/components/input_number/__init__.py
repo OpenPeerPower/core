@@ -293,7 +293,7 @@ class InputNumber(RestoreEntity):
             )
 
         self._current_value = num_value
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_increment(self):
         """Increment value."""
@@ -309,4 +309,4 @@ class InputNumber(RestoreEntity):
         # just in case min/max values changed
         self._current_value = min(self._current_value, self._maximum)
         self._current_value = max(self._current_value, self._minimum)
-        self.async_write_ha_state()
+        self.async_write_op_state()

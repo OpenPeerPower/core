@@ -281,7 +281,7 @@ def _mock_calendar(name):
 async def test_setup_component.opp, mock_dav_client):
     """Test setup component with calendars."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.first")
     assert state.name == "First"
@@ -295,7 +295,7 @@ async def test_setup_component_with_no_calendar_matching.opp, mock_dav_client):
     config["calendars"] = ["none"]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     all_calendar_states = opp.states.async_entity_ids("calendar")
     assert not all_calendar_states
@@ -307,7 +307,7 @@ async def test_setup_component_with_a_calendar_match.opp, mock_dav_client):
     config["calendars"] = ["Second"]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     all_calendar_states = opp.states.async_entity_ids("calendar")
     assert len(all_calendar_states) == 1
@@ -323,7 +323,7 @@ async def test_setup_component_with_one_custom_calendar.opp, mock_dav_client):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     all_calendar_states = opp.states.async_entity_ids("calendar")
     assert len(all_calendar_states) == 1
@@ -335,7 +335,7 @@ async def test_setup_component_with_one_custom_calendar.opp, mock_dav_client):
 async def test_ongoing_event(mock_now, opp, calendar):
     """Test that the ongoing event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -356,7 +356,7 @@ async def test_ongoing_event(mock_now, opp, calendar):
 async def test_just_ended_event(mock_now, opp, calendar):
     """Test that the next ongoing event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -377,7 +377,7 @@ async def test_just_ended_event(mock_now, opp, calendar):
 async def test_ongoing_event_different_tz(mock_now, opp, calendar):
     """Test that the ongoing event with another timezone is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -398,7 +398,7 @@ async def test_ongoing_event_different_tz(mock_now, opp, calendar):
 async def test_ongoing_floating_event_returned(mock_now, opp, calendar):
     """Test that floating events without timezones work."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     print(dt.DEFAULT_TIME_ZONE)
@@ -421,7 +421,7 @@ async def test_ongoing_floating_event_returned(mock_now, opp, calendar):
 async def test_ongoing_event_with_offset(mock_now, opp, calendar):
     """Test that the offset is taken into account."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -447,7 +447,7 @@ async def test_matching_filter(mock_now, opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private_private")
     assert state.name == calendar.name
@@ -473,7 +473,7 @@ async def test_matching_filter_real_regexp(mock_now, opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private_private")
     assert state.name == calendar.name
@@ -499,7 +499,7 @@ async def test_filter_matching_past_event(mock_now, opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private_private")
     assert state.name == calendar.name
@@ -519,7 +519,7 @@ async def test_no_result_with_filtering(mock_now, opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private_private")
     assert state.name == calendar.name
@@ -535,7 +535,7 @@ async def test_all_day_event_returned(mock_now, opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private_private")
     assert state.name == calendar.name
@@ -556,7 +556,7 @@ async def test_all_day_event_returned(mock_now, opp, calendar):
 async def test_event_rrule(mock_now, opp, calendar):
     """Test that the future recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -577,7 +577,7 @@ async def test_event_rrule(mock_now, opp, calendar):
 async def test_event_rrule_ongoing(mock_now, opp, calendar):
     """Test that the current recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -598,7 +598,7 @@ async def test_event_rrule_ongoing(mock_now, opp, calendar):
 async def test_event_rrule_duration(mock_now, opp, calendar):
     """Test that the future recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -619,7 +619,7 @@ async def test_event_rrule_duration(mock_now, opp, calendar):
 async def test_event_rrule_duration_ongoing(mock_now, opp, calendar):
     """Test that the ongoing recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -640,7 +640,7 @@ async def test_event_rrule_duration_ongoing(mock_now, opp, calendar):
 async def test_event_rrule_endless(mock_now, opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -669,7 +669,7 @@ async def test_event_rrule_all_day(mock_now, opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private_private")
     assert state.name == calendar.name
@@ -693,7 +693,7 @@ async def test_event_rrule_all_day(mock_now, opp, calendar):
 async def test_event_rrule_hourly_on_first(mock_now, opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -717,7 +717,7 @@ async def test_event_rrule_hourly_on_first(mock_now, opp, calendar):
 async def test_event_rrule_hourly_on_last(mock_now, opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -741,7 +741,7 @@ async def test_event_rrule_hourly_on_last(mock_now, opp, calendar):
 async def test_event_rrule_hourly_off_first(mock_now, opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -755,7 +755,7 @@ async def test_event_rrule_hourly_off_first(mock_now, opp, calendar):
 async def test_event_rrule_hourly_off_last(mock_now, opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -769,7 +769,7 @@ async def test_event_rrule_hourly_off_last(mock_now, opp, calendar):
 async def test_event_rrule_hourly_ended(mock_now, opp, calendar):
     """Test that the endless recurring event is returned."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
     assert state.name == calendar.name
@@ -779,7 +779,7 @@ async def test_event_rrule_hourly_ended(mock_now, opp, calendar):
 async def test_get_events.opp, calendar):
     """Test that all events are returned on API."""
     assert await async_setup_component.opp, "calendar", {"calendar": CALDAV_CONFIG})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     entity = opp.data["calendar"].get_entity("calendar.private")
     events = await entity.async_get_events(
        .opp, datetime.date(2015, 11, 27), datetime.date(2015, 11, 28)
@@ -795,7 +795,7 @@ async def test_get_events_custom_calendars.opp, calendar):
     ]
 
     assert await async_setup_component.opp, "calendar", {"calendar": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     entity = opp.data["calendar"].get_entity("calendar.private_private")
     events = await entity.async_get_events(

@@ -332,7 +332,7 @@ class VizioDevice(MediaPlayerEntity):
         def apps_list_update():
             """Update list of all apps."""
             self._all_apps = self._apps_coordinator.data
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         if self._device_class == DEVICE_CLASS_TV:
             self.async_on_remove(

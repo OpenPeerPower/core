@@ -55,7 +55,7 @@ async def test_capped_setup_opp, aioclient_mock):
     )
 
     await async_setup_component.opp, "sensor", {"sensor": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.start_ca_usage_ratio")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
@@ -151,7 +151,7 @@ async def test_unlimited_setup_opp, aioclient_mock):
     )
 
     await async_setup_component.opp, "sensor", {"sensor": config})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.start_ca_usage_ratio")
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE

@@ -245,7 +245,7 @@ async def test_commands_purehotcoollink(
     configuration_data: dict,
 ) -> None:
     """Test sending commands to a PureHotCoolLink entity."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         PLATFORM_DOMAIN,
         service,
         {
@@ -306,7 +306,7 @@ async def test_commands_purehotcool(
     command_args: list,
 ) -> None:
     """Test sending commands to a PureHotCool entity."""
-    await.opp.services.async_call(
+    await opp.services.async_call(
         PLATFORM_DOMAIN,
         service,
         {
@@ -337,7 +337,7 @@ async def test_set_hvac_mode_purehotcool(
     """Test setting HVAC mode of a PureHotCool entity turns on the device when it's off."""
     device.state.fan_power = fan_power
     await async_update_device.opp, device)
-    await.opp.services.async_call(
+    await opp.services.async_call(
         PLATFORM_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {

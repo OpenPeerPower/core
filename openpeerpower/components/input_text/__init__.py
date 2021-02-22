@@ -280,9 +280,9 @@ class InputText(RestoreEntity):
             )
             return
         self._current_value = value
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update_config(self, config: typing.Dict) -> None:
         """Handle when the config is updated."""
         self._config = config
-        self.async_write_ha_state()
+        self.async_write_op_state()

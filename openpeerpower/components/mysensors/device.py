@@ -215,7 +215,7 @@ class MySensorsEntity(MySensorsDevice, Entity):
 
     async def _async_update_callback(self):
         """Update the entity."""
-        await self.async_update_ha_state(True)
+        await self.async_update_op_state(True)
 
     async def async_added_to.opp(self):
         """Register update callback."""

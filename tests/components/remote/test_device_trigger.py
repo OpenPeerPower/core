@@ -97,7 +97,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
 
@@ -157,19 +157,19 @@ async def test_if_fires_on_state_change.opp, calls):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
    .opp.states.async_set(ent1.entity_id, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "turn_off device - {} - on - off - None".format(
         ent1.entity_id
     )
 
    .opp.states.async_set(ent1.entity_id, STATE_ON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "turn_on device - {} - off - on - None".format(
         ent1.entity_id
@@ -182,7 +182,7 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
 
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
 
@@ -219,17 +219,17 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
             ]
         },
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
    .opp.states.async_set(ent1.entity_id, STATE_OFF)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(calls) == 1
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert calls[0].data["some"] == "turn_off device - {} - on - off - 0:00:05".format(
         ent1.entity_id
     )

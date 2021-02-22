@@ -40,7 +40,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     async def async_update_data():
         try:
-            thermostats = await.opp.async_add_executor_job(
+            thermostats = await opp.async_add_executor_job(
                 api.get_thermostats, session_id
             )
         except RequestException as err:

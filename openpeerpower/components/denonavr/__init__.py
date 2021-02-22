@@ -90,7 +90,7 @@ async def async_unload_entry(
    .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
-    unload_ok = await.opp.config_entries.async_forward_entry_unload(
+    unload_ok = await opp.config_entries.async_forward_entry_unload(
         config_entry, "media_player"
     )
 
@@ -119,4 +119,4 @@ async def update_listener(
    .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Handle options update."""
-    await.opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)

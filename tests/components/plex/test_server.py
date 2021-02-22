@@ -111,7 +111,7 @@ async def test_network_error_during_refresh.opp, caplog, mock_plex_server):
 
     with patch("plexapi.server.PlexServer.clients", side_effect=RequestException):
         await loaded_server._async_update_platforms()
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert (
         f"Could not connect to Plex server: {DEFAULT_DATA[CONF_SERVER]}" in caplog.text
@@ -124,7 +124,7 @@ async def test_gdm_client_failure.opp, mock_websocket, setup_plex_server):
         "openpeerpower.components.plex.server.PlexClient", side_effect=ConnectionError
     ):
         mock_plex_server = await setup_plex_server(disable_gdm=False)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     active_sessions = mock_plex_server._plex_server.sessions()
     await wait_for_debouncer.opp)
@@ -134,7 +134,7 @@ async def test_gdm_client_failure.opp, mock_websocket, setup_plex_server):
 
     with patch("plexapi.server.PlexServer.clients", side_effect=RequestException):
         trigger_plex_update(mock_websocket)
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
 
 async def test_mark_sessions_idle(
@@ -153,7 +153,7 @@ async def test_mark_sessions_idle(
     requests_mock.get(f"{url}/status/sessions", text=empty_payload)
 
     trigger_plex_update(mock_websocket)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     await wait_for_debouncer.opp)
 
     sensor = opp.states.get("sensor.plex_plex_server_1")
@@ -189,7 +189,7 @@ async def test_media_lookups.opp, mock_plex_server, requests_mock, playqueue_cre
     media_player_id = opp.states.async_entity_ids("media_player")[0]
     requests_mock.post("/playqueues", text=playqueue_created)
     requests_mock.get("/player/playback/playMedia", status_code=200)
-    assert await.opp.services.async_call(
+    assert await opp.services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -200,7 +200,7 @@ async def test_media_lookups.opp, mock_plex_server, requests_mock, playqueue_cre
         True,
     )
     with patch("plexapi.server.PlexServer.fetchItem", side_effect=NotFound):
-        assert await.opp.services.async_call(
+        assert await opp.services.async_call(
             MP_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {

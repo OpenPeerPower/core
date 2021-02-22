@@ -82,10 +82,10 @@ class MCP23017Switch(ToggleEntity):
         """Turn the device on."""
         self._pin.value = not self._invert_logic
         self._state = True
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
         self._pin.value = self._invert_logic
         self._state = False
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()

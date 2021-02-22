@@ -110,7 +110,7 @@ async def device_fan_1.opp, zigpy_device_mock, zha_device_joined):
     )
     zha_device = await zha_device_joined(zigpy_device)
     zha_device.available = True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return zha_device
 
 
@@ -135,7 +135,7 @@ async def device_fan_2.opp, zigpy_device_mock, zha_device_joined):
     )
     zha_device = await zha_device_joined(zigpy_device)
     zha_device.available = True
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     return zha_device
 
 
@@ -210,14 +210,14 @@ async def async_turn_on.opp, entity_id, speed=None):
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
 async def async_turn_off.opp, entity_id):
     """Turn fan off."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
 
-    await.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
 
 
 async def async_set_speed.opp, entity_id, speed=None):
@@ -228,7 +228,7 @@ async def async_set_speed.opp, entity_id, speed=None):
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_SPEED, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_SPEED, data, blocking=True)
 
 
 async def async_set_preset_mode.opp, entity_id, preset_mode=None):
@@ -239,7 +239,7 @@ async def async_set_preset_mode.opp, entity_id, preset_mode=None):
         if value is not None
     }
 
-    await.opp.services.async_call(DOMAIN, SERVICE_SET_PRESET_MODE, data, blocking=True)
+    await opp.services.async_call(DOMAIN, SERVICE_SET_PRESET_MODE, data, blocking=True)
 
 
 @patch(
@@ -259,7 +259,7 @@ async def test_zha_group_fan_entity.opp, device_fan_1, device_fan_2, coordinator
 
     # test creating a group with 2 members
     zha_group = await zha_gateway.async_create_zigpy_group("Test Group", members)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert zha_group is not None
     assert len(zha_group.members) == 2
@@ -283,7 +283,7 @@ async def test_zha_group_fan_entity.opp, device_fan_1, device_fan_2, coordinator
     dev2_fan_cluster = device_fan_2.device.endpoints[1].fan
 
     await async_enable_traffic.opp, [device_fan_1, device_fan_2], enabled=False)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     # test that the fans were created and that they are unavailable
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
@@ -296,7 +296,7 @@ async def test_zha_group_fan_entity.opp, device_fan_1, device_fan_2, coordinator
     # turn on from HA
     group_fan_cluster.write_attributes.reset_mock()
     await async_turn_on.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(group_fan_cluster.write_attributes.mock_calls) == 1
     assert group_fan_cluster.write_attributes.call_args[0][0] == {"fan_mode": 2}
 
@@ -338,13 +338,13 @@ async def test_zha_group_fan_entity.opp, device_fan_1, device_fan_2, coordinator
     assert.opp.states.get(entity_id).state == STATE_OFF
 
     await send_attributes_report.opp, dev2_fan_cluster, {0: 2})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test that group fan is speed medium
     assert.opp.states.get(entity_id).state == STATE_ON
 
     await send_attributes_report.opp, dev2_fan_cluster, {0: 0})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # test that group fan is now off
     assert.opp.states.get(entity_id).state == STATE_OFF
@@ -369,7 +369,7 @@ async def test_zha_group_fan_entity_failure_state(
 
     # test creating a group with 2 members
     zha_group = await zha_gateway.async_create_zigpy_group("Test Group", members)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert zha_group is not None
     assert len(zha_group.members) == 2
@@ -390,7 +390,7 @@ async def test_zha_group_fan_entity_failure_state(
     group_fan_cluster = zha_group.endpoint[hvac.Fan.cluster_id]
 
     await async_enable_traffic.opp, [device_fan_1, device_fan_2], enabled=False)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     # test that the fans were created and that they are unavailable
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
@@ -403,7 +403,7 @@ async def test_zha_group_fan_entity_failure_state(
     # turn on from HA
     group_fan_cluster.write_attributes.reset_mock()
     await async_turn_on.opp, entity_id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(group_fan_cluster.write_attributes.mock_calls) == 1
     assert group_fan_cluster.write_attributes.call_args[0][0] == {"fan_mode": 2}
 
@@ -464,9 +464,9 @@ async def test_fan_update_entity(
     assert cluster.read_attributes.await_count == 1
 
     await async_setup_component.opp, "openpeerpower", {})
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "openpeerpower", "update_entity", {"entity_id": entity_id}, blocking=True
     )
     assert.opp.states.get(entity_id).state == STATE_OFF
@@ -474,7 +474,7 @@ async def test_fan_update_entity(
     assert cluster.read_attributes.await_count == 2
 
     cluster.PLUGGED_ATTR_READS = {"fan_mode": 1}
-    await.opp.services.async_call(
+    await opp.services.async_call(
         "openpeerpower", "update_entity", {"entity_id": entity_id}, blocking=True
     )
     assert.opp.states.get(entity_id).state == STATE_ON

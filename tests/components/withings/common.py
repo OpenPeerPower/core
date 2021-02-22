@@ -26,7 +26,7 @@ from openpeerpower.components.withings.common import (
     get_all_data_managers,
 )
 import openpeerpower.components.withings.const as const
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.config_entries import SOURCE_USER, ConfigEntry
 from openpeerpower.const import (
     CONF_CLIENT_ID,
@@ -144,7 +144,7 @@ class ComponentFactory:
             },
         }
 
-        await async_process_ha_core_config(self.opp, opp_config.get("openpeerpower"))
+        await async_process_op_core_config(self.opp, opp_config.get("openpeerpower"))
         assert await async_setup_component(self.opp, HA_DOMAIN, {})
         assert await async_setup_component(self.opp, webhook.DOMAIN, opp_config)
 

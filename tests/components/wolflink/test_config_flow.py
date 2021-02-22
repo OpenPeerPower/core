@@ -35,7 +35,7 @@ DEVICE = Device(CONFIG[DEVICE_ID], CONFIG[DEVICE_GATEWAY], CONFIG[DEVICE_NAME])
 async def test_show_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -48,7 +48,7 @@ async def test_device_step_form.opp):
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
         return_value=[DEVICE],
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}, data=INPUT_CONFIG
         )
 
@@ -62,11 +62,11 @@ async def test_create_entry.opp):
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
         return_value=[DEVICE],
     ), patch("openpeerpower.components.wolflink.async_setup_entry", return_value=True):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}, data=INPUT_CONFIG
         )
 
-        result_create_entry = await.opp.config_entries.flow.async_configure(
+        result_create_entry = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"device_name": CONFIG[DEVICE_NAME]},
         )
@@ -82,7 +82,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
         side_effect=InvalidAuth,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}, data=INPUT_CONFIG
         )
 
@@ -96,7 +96,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
         side_effect=ConnectError,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}, data=INPUT_CONFIG
         )
 
@@ -110,7 +110,7 @@ async def test_form_unknown_exception.opp):
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}, data=INPUT_CONFIG
         )
 
@@ -129,11 +129,11 @@ async def test_already_configured_error(opp):
             domain=DOMAIN, unique_id=CONFIG[DEVICE_ID], data=CONFIG
         ).add_to.opp.opp)
 
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}, data=INPUT_CONFIG
         )
 
-        result_create_entry = await.opp.config_entries.flow.async_configure(
+        result_create_entry = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"device_name": CONFIG[DEVICE_NAME]},
         )

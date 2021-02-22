@@ -23,7 +23,7 @@ async def test_import_from_yaml.opp, canary) -> None:
         return_value=True,
     ):
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: YAML_CONFIG})
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
@@ -47,7 +47,7 @@ async def test_import_from_yaml_ffmpeg.opp, canary) -> None:
                 CAMERA_DOMAIN: [{"platform": DOMAIN, CONF_FFMPEG_ARGUMENTS: "-v"}],
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
@@ -66,8 +66,8 @@ async def test_unload_entry.opp, canary):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_unload(entry.entry_id)
+    await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data.get(DOMAIN)

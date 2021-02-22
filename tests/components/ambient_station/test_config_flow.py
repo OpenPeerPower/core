@@ -35,7 +35,7 @@ async def test_duplicate_error(opp):
         domain=DOMAIN, unique_id="67890fghij67890fghij", data=conf
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 

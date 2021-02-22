@@ -84,7 +84,7 @@ async def base_test(
                 )
                 config_device = None
             assert await async_setup_component.opp, DOMAIN, config_modbus)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
             # setup platform old style
             if config_device is not None:
@@ -101,7 +101,7 @@ async def base_test(
                 if scan_interval is not None:
                     config_device[entity_domain][CONF_SCAN_INTERVAL] = scan_interval
                 assert await async_setup_component.opp, entity_domain, config_device)
-                await.opp.async_block_till_done()
+                await opp.async_block_till_done()
 
         assert DOMAIN in.opp.data
         if config_device is not None:
@@ -116,7 +116,7 @@ async def base_test(
         now = now + timedelta(seconds=scan_interval + 60)
         with mock.patch("openpeerpower.helpers.event.dt_util.utcnow", return_value=now):
             async_fire_time_changed.opp, now)
-            await.opp.async_block_till_done()
+            await opp.async_block_till_done()
 
         # Check state
         entity_id = f"{entity_domain}.{device_name}"

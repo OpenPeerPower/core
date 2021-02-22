@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -30,11 +30,11 @@ async def test_form.opp):
         "openpeerpower.components.habitica.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"api_user": "test-api-user", "api_key": "test-api-key"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Default username"
@@ -49,7 +49,7 @@ async def test_form.opp):
 
 async def test_form_invalid_credentials.opp):
     """Test we handle invalid credentials error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -60,7 +60,7 @@ async def test_form_invalid_credentials.opp):
         "openpeerpower.components.habitica.config_flow.HabitipyAsync",
         return_value=mock_obj,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "url": DEFAULT_URL,
@@ -75,7 +75,7 @@ async def test_form_invalid_credentials.opp):
 
 async def test_form_unexpected_exception.opp):
     """Test we handle unexpected exception error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -86,7 +86,7 @@ async def test_form_unexpected_exception.opp):
         "openpeerpower.components.habitica.config_flow.HabitipyAsync",
         return_value=mock_obj,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "url": DEFAULT_URL,
@@ -107,7 +107,7 @@ async def test_manual_flow_config_exist.opp):
         data={"api_user": "test-api-user", "api_key": "test-api-key"},
     ).add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
     )
 
@@ -121,7 +121,7 @@ async def test_manual_flow_config_exist.opp):
         "openpeerpower.components.habitica.config_flow.HabitipyAsync",
         return_value=mock_obj,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 "url": DEFAULT_URL,

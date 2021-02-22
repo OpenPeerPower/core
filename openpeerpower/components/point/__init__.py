@@ -138,7 +138,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     await session.remove_webhook()
 
     for component in ("binary_sensor", "sensor"):
-        await.opp.config_entries.async_forward_entry_unload(entry, component)
+        await opp.config_entries.async_forward_entry_unload(entry, component)
 
     if not.opp.data[DOMAIN]:
        .opp.data.pop(DOMAIN)

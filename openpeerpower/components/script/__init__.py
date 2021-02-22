@@ -304,7 +304,7 @@ class ScriptEntity(ToggleEntity):
     @callback
     def async_change_listener(self):
         """Update state."""
-        self.async_write_ha_state()
+        self.async_write_op_state()
         self._changed.set()
 
     async def async_turn_on(self, **kwargs):

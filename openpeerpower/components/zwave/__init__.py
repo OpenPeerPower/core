@@ -443,7 +443,7 @@ async def async_setup_entry.opp, config_entry):
     if config.get(CONF_NETWORK_KEY):
         options.addOption("NetworkKey", config[CONF_NETWORK_KEY])
 
-    await.opp.async_add_executor_job(options.lock)
+    await opp.async_add_executor_job(options.lock)
     network = opp.data[DATA_NETWORK] = ZWaveNetwork(options, autostart=False)
    .opp.data[DATA_DEVICES] = {}
    .opp.data[DATA_ENTITY_VALUES] = []
@@ -1300,7 +1300,7 @@ class ZWaveDeviceEntity(ZWaveBaseEntity):
                 ent_reg.async_update_entity(self.entity_id, new_entity_id=new_entity_id)
                 return
         # else for the above two ifs, update if not using update_entity
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Add device to dict."""

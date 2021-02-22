@@ -259,7 +259,7 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
     async def post(self, request):
         """Retrieve if API is running."""
         opp =request.app[.opp"]
-        await.opp.data[DOMAIN].async_clear_completed()
+        await opp.data[DOMAIN].async_clear_completed()
        .opp.bus.async_fire(EVENT)
         return self.json_message("Cleared completed items.")
 
@@ -275,7 +275,7 @@ def websocket_handle_items.opp, connection, msg):
 @websocket_api.async_response
 async def websocket_handle_add.opp, connection, msg):
     """Handle add item to shopping_list."""
-    item = await.opp.data[DOMAIN].async_add(msg["name"])
+    item = await opp.data[DOMAIN].async_add(msg["name"])
    .opp.bus.async_fire(EVENT, {"action": "add", "item": item})
     connection.send_message(websocket_api.result_message(msg["id"], item))
 
@@ -289,7 +289,7 @@ async def websocket_handle_update.opp, connection, msg):
     data = msg
 
     try:
-        item = await.opp.data[DOMAIN].async_update(item_id, data)
+        item = await opp.data[DOMAIN].async_update(item_id, data)
        .opp.bus.async_fire(EVENT, {"action": "update", "item": item})
         connection.send_message(websocket_api.result_message(msg_id, item))
     except KeyError:
@@ -301,7 +301,7 @@ async def websocket_handle_update.opp, connection, msg):
 @websocket_api.async_response
 async def websocket_handle_clear.opp, connection, msg):
     """Handle clearing shopping_list items."""
-    await.opp.data[DOMAIN].async_clear_completed()
+    await opp.data[DOMAIN].async_clear_completed()
    .opp.bus.async_fire(EVENT, {"action": "clear"})
     connection.send_message(websocket_api.result_message(msg["id"]))
 

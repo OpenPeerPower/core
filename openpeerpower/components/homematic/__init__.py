@@ -527,10 +527,10 @@ def _get_devices.opp, discovery_type, keys, interface):
                 "%s: Handling %s: %s: %s", discovery_type, key, param, channels
             )
             for channel in channels:
-                name = _create_ha_id(
+                name = _create_op_id(
                     name=device.NAME, channel=channel, param=param, count=len(channels)
                 )
-                unique_id = _create_ha_id(
+                unique_id = _create_op_id(
                     name=key, channel=channel, param=param, count=len(channels)
                 )
                 device_dict = {
@@ -554,7 +554,7 @@ def _get_devices.opp, discovery_type, keys, interface):
     return device_arr
 
 
-def _create_ha_id(name, channel, param, count):
+def _create_op_id(name, channel, param, count):
     """Generate a unique entity id."""
     # HMDevice is a simple device
     if count == 1 and param is None:

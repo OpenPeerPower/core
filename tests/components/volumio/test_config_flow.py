@@ -32,7 +32,7 @@ TEST_DISCOVERY_RESULT = {
 
 async def test_form.opp):
     """Test we get the form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -47,11 +47,11 @@ async def test_form.opp):
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             TEST_CONNECTION,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "TestVolumio"
@@ -76,7 +76,7 @@ async def test_form_updates_unique_id.opp):
 
     entry.add_to.opp.opp)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     with patch(
@@ -86,11 +86,11 @@ async def test_form_updates_unique_id.opp):
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             TEST_CONNECTION,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "already_configured"
@@ -100,7 +100,7 @@ async def test_form_updates_unique_id.opp):
 
 async def test_empty_system_info.opp):
     """Test old volumio versions with empty system info."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -115,11 +115,11 @@ async def test_empty_system_info.opp):
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             TEST_CONNECTION,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_CONNECTION["host"]
@@ -136,7 +136,7 @@ async def test_empty_system_info.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -144,7 +144,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.volumio.config_flow.Volumio.get_system_info",
         side_effect=CannotConnectError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             TEST_CONNECTION,
         )
@@ -155,7 +155,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_exception.opp):
     """Test we handle generic error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -163,7 +163,7 @@ async def test_form_exception.opp):
         "openpeerpower.components.volumio.config_flow.Volumio.get_system_info",
         side_effect=Exception,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             TEST_CONNECTION,
         )
@@ -175,7 +175,7 @@ async def test_form_exception.opp):
 async def test_discovery.opp):
     """Test discovery flow works."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
     )
 
@@ -188,11 +188,11 @@ async def test_discovery.opp):
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_DISCOVERY_RESULT["name"]
@@ -208,7 +208,7 @@ async def test_discovery.opp):
 async def test_discovery_cannot_connect.opp):
     """Test discovery aborts if cannot connect."""
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
     )
 
@@ -216,7 +216,7 @@ async def test_discovery_cannot_connect.opp):
         "openpeerpower.components.volumio.config_flow.Volumio.get_system_info",
         side_effect=CannotConnectError,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={},
         )
@@ -227,13 +227,13 @@ async def test_discovery_cannot_connect.opp):
 
 async def test_discovery_duplicate_data.opp):
     """Test discovery aborts if same mDNS packet arrives."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
     )
     assert result["type"] == "form"
     assert result["step_id"] == "discovery_confirm"
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
     )
     assert result["type"] == "abort"
@@ -262,10 +262,10 @@ async def test_discovery_updates_unique_id.opp):
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"

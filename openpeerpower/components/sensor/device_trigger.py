@@ -121,7 +121,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
 async def async_get_triggers.opp, device_id):
     """List device triggers."""
     triggers = []
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entries = [
         entry

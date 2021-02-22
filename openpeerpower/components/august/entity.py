@@ -42,7 +42,7 @@ class AugustEntityMixin(Entity):
     @callback
     def _update_from_data_and_write_state(self):
         self._update_from_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_added_to.opp(self):
         """Subscribe to updates."""

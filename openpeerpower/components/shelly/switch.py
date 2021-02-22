@@ -63,12 +63,12 @@ class RelaySwitch(ShellyBlockEntity, SwitchEntity):
     async def async_turn_on(self, **kwargs):
         """Turn on relay."""
         self.control_result = await self.block.set_state(turn="on")
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self, **kwargs):
         """Turn off relay."""
         self.control_result = await self.block.set_state(turn="off")
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def _update_callback(self):

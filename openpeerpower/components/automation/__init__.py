@@ -231,7 +231,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         self._async_detach_triggers = None
         self._cond_func = cond_func
         self.action_script = action_script
-        self.action_script.change_listener = self.async_write_ha_state
+        self.action_script.change_listener = self.async_write_op_state
         self._initial_state = initial_state
         self._is_enabled = False
         self._referenced_entities: Optional[Set[str]] = None
@@ -434,7 +434,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         # OpenPeerPower is starting up
         if self.opp.state != CoreState.not_running:
             self._async_detach_triggers = await self._async_attach_triggers(False)
-            self.async_write_ha_state()
+            self.async_write_op_state()
             return
 
         async def async_enable_automation(event):
@@ -448,7 +448,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_STARTED, async_enable_automation
         )
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_disable(self, stop_actions=DEFAULT_STOP_ACTIONS):
         """Disable the automation entity."""
@@ -464,7 +464,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         if stop_actions:
             await self.action_script.async_stop()
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def _async_attach_triggers(
         self, open_peer_power_start: bool

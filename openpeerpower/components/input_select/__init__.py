@@ -274,14 +274,14 @@ class InputSelect(RestoreEntity):
             )
             return
         self._current_option = option
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_select_index(self, idx):
         """Select new option by index."""
         new_index = idx % len(self._options)
         self._current_option = self._options[new_index]
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_offset_index(self, offset, cycle):
@@ -296,7 +296,7 @@ class InputSelect(RestoreEntity):
             elif new_index >= len(self._options):
                 new_index = len(self._options) - 1
         self._current_option = self._options[new_index]
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @callback
     def async_next(self, cycle):
@@ -313,9 +313,9 @@ class InputSelect(RestoreEntity):
         """Set options."""
         self._current_option = options[0]
         self._config[CONF_OPTIONS] = options
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update_config(self, config: typing.Dict) -> None:
         """Handle when the config is updated."""
         self._config = config
-        self.async_write_ha_state()
+        self.async_write_op_state()

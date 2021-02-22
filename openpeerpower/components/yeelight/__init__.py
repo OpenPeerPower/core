@@ -277,7 +277,7 @@ def _async_unique_name(capabilities: dict) -> str:
 
 async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
-    await.opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
 class YeelightScanner:
@@ -603,6 +603,6 @@ async def _async_get_device(
     # Set up device
     bulb = Bulb(host, model=model or None)
     if capabilities is None:
-        capabilities = await.opp.async_add_executor_job(bulb.get_capabilities)
+        capabilities = await opp.async_add_executor_job(bulb.get_capabilities)
 
     return YeelightDevice.opp, host, entry.options, bulb, capabilities)

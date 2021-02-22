@@ -18,7 +18,7 @@ async def test_random_sensor.opp):
         "sensor",
         config,
     )
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     state = opp.states.get("sensor.test")
 

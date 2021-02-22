@@ -89,7 +89,7 @@ def setup_proximity_component.opp, name, config):
     )
     proximity.entity_id = f"{DOMAIN}.{proximity_zone}"
 
-    proximity.schedule_update_ha_state()
+    proximity.schedule_update_op_state()
 
     track_state_change.opp, proximity_devices, proximity.check_proximity_state_change)
 
@@ -185,7 +185,7 @@ class Proximity(Entity):
             self.dist_to = "not set"
             self.dir_of_travel = "not set"
             self.nearest = "not set"
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             return
 
         # At least one device is in the monitored zone so update the entity.
@@ -193,7 +193,7 @@ class Proximity(Entity):
             self.dist_to = 0
             self.dir_of_travel = "arrived"
             self.nearest = devices_in_zone
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             return
 
         # We can't check proximity because latitude and longitude don't exist.
@@ -241,7 +241,7 @@ class Proximity(Entity):
             self.dir_of_travel = "unknown"
             device_state = self.opp.states.get(closest_device)
             self.nearest = device_state.name
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             return
 
         # Stop if we cannot calculate the direction of travel (i.e. we don't
@@ -250,7 +250,7 @@ class Proximity(Entity):
             self.dist_to = round(distances_to_zone[entity])
             self.dir_of_travel = "unknown"
             self.nearest = entity_name
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
             return
 
         # Reset the variables
@@ -283,7 +283,7 @@ class Proximity(Entity):
         self.dist_to = round(dist_to_zone)
         self.dir_of_travel = direction_of_travel
         self.nearest = entity_name
-        self.schedule_update_ha_state()
+        self.schedule_update_op_state()
         _LOGGER.debug(
             "proximity.%s update entity: distance=%s: direction=%s: device=%s",
             self.friendly_name,

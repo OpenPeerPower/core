@@ -26,11 +26,11 @@ async def test_entry_setup_unload.opp, aioclient_mock):
         json={"data": {"api_user": "test-api-user", "profile": {"name": "test_user"}}},
     )
 
-    assert await.opp.config_entries.async_setup(entry.entry_id)
-    await.opp.async_block_till_done()
+    assert await opp.config_entries.async_setup(entry.entry_id)
+    await opp.async_block_till_done()
 
     assert.opp.services.has_service(DOMAIN, SERVICE_API_CALL)
 
-    assert await.opp.config_entries.async_unload(entry.entry_id)
+    assert await opp.config_entries.async_unload(entry.entry_id)
 
     assert not.opp.services.has_service(DOMAIN, SERVICE_API_CALL)

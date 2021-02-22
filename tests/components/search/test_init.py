@@ -8,9 +8,9 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 async def test_search.opp):
     """Test that search works."""
-    area_reg = await.opp.helpers.area_registry.async_get_registry()
-    device_reg = await.opp.helpers.device_registry.async_get_registry()
-    entity_reg = await.opp.helpers.entity_registry.async_get_registry()
+    area_reg = await opp.helpers.area_registry.async_get_registry()
+    device_reg = await opp.helpers.device_registry.async_get_registry()
+    entity_reg = await opp.helpers.entity_registry.async_get_registry()
 
     living_room_area = area_reg.async_create("Living Room")
 
@@ -275,8 +275,8 @@ async def test_ws_api.opp, opp_ws_client):
     """Test WS API."""
     assert await async_setup_component.opp, "search", {})
 
-    area_reg = await.opp.helpers.area_registry.async_get_registry()
-    device_reg = await.opp.helpers.device_registry.async_get_registry()
+    area_reg = await opp.helpers.area_registry.async_get_registry()
+    device_reg = await opp.helpers.device_registry.async_get_registry()
 
     kitchen_area = area_reg.async_create("Kitchen")
 
@@ -291,7 +291,7 @@ async def test_ws_api.opp, opp_ws_client):
 
     device_reg.async_update_device(hue_device.id, area_id=kitchen_area.id)
 
-    client = await.opp_ws_client.opp)
+    client = await opp_ws_client.opp)
 
     await client.send_json(
         {

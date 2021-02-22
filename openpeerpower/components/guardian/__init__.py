@@ -267,7 +267,7 @@ class GuardianEntity(CoordinatorEntity):
     def _async_update_state_callback(self):
         """Update the entity's state."""
         self._async_update_from_latest_data()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class PairedSensorEntity(GuardianEntity):

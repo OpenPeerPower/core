@@ -108,14 +108,14 @@ class AppleTVEntity(Entity):
             """Handle that a connection was made to a device."""
             self.atv = atv
             self.async_device_connected(atv)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         @callback
         def _async_disconnected():
             """Handle that a connection to a device was lost."""
             self.async_device_disconnected()
             self.atv = None
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self.async_on_remove(
             async_dispatcher_connect(

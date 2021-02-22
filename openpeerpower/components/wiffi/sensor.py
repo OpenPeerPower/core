@@ -97,7 +97,7 @@ class NumberEntity(WiffiEntity):
             metric.unit_of_measurement, metric.unit_of_measurement
         )
         self._value = metric.value
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class StringEntity(WiffiEntity):
@@ -122,4 +122,4 @@ class StringEntity(WiffiEntity):
         """
         self.reset_expiration_date()
         self._value = metric.value
-        self.async_write_ha_state()
+        self.async_write_op_state()

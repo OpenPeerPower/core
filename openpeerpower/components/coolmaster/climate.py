@@ -21,7 +21,7 @@ from .const import CONF_SUPPORTED_MODES, DATA_COORDINATOR, DATA_INFO, DOMAIN
 
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_FAN_MODE
 
-CM_TO_HA_STATE = {
+CM_TO_OP_STATE = {
     "heat": HVAC_MODE_HEAT,
     "cool": HVAC_MODE_COOL,
     "auto": HVAC_MODE_HEAT_COOL,
@@ -29,7 +29,7 @@ CM_TO_HA_STATE = {
     "fan": HVAC_MODE_FAN_ONLY,
 }
 
-HA_STATE_TO_CM = {value: key for key, value in CM_TO_HA_STATE.items()}
+HA_STATE_TO_CM = {value: key for key, value in CM_TO_OP_STATE.items()}
 
 FAN_MODES = ["low", "med", "high", "auto"]
 
@@ -124,7 +124,7 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         if not is_on:
             return HVAC_MODE_OFF
 
-        return CM_TO_HA_STATE[mode]
+        return CM_TO_OP_STATE[mode]
 
     @property
     def hvac_modes(self):
@@ -147,13 +147,13 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         if temp is not None:
             _LOGGER.debug("Setting temp of %s to %s", self.unique_id, str(temp))
             self._unit = await self._unit.set_thermostat(temp)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_set_fan_mode(self, fan_mode):
         """Set new fan mode."""
         _LOGGER.debug("Setting fan mode of %s to %s", self.unique_id, fan_mode)
         self._unit = await self._unit.set_fan_speed(fan_mode)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new operation mode."""
@@ -169,10 +169,10 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         """Turn on."""
         _LOGGER.debug("Turning %s on", self.unique_id)
         self._unit = await self._unit.turn_on()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_turn_off(self):
         """Turn off."""
         _LOGGER.debug("Turning %s off", self.unique_id)
         self._unit = await self._unit.turn_off()
-        self.async_write_ha_state()
+        self.async_write_op_state()

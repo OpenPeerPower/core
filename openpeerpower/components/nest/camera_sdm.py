@@ -166,7 +166,7 @@ class NestCamera(Camera):
     async def async_added_to.opp(self):
         """Run when entity is added to register update signal handler."""
         self.async_on_remove(
-            self._device.add_update_listener(self.async_write_ha_state)
+            self._device.add_update_listener(self.async_write_op_state)
         )
 
     async def async_camera_image(self):

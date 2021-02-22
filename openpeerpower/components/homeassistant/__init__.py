@@ -114,7 +114,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             return
 
         try:
-            errors = await conf_util.async_check_ha_config_file.opp)
+            errors = await conf_util.async_check_op_config_file.opp)
         except OpenPeerPowerError:
             return
 
@@ -133,7 +133,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
     async def async_handle_update_service(call):
         """Service handler for updating an entity."""
         if call.context.user_id:
-            user = await.opp.auth.async_get_user(call.context.user_id)
+            user = await opp.auth.async_get_user(call.context.user_id)
 
             if user is None:
                 raise UnknownUser(
@@ -184,7 +184,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             return
 
         # auth only processed during startup
-        await conf_util.async_process_ha_core_config(opp, conf.get(ha.DOMAIN) or {})
+        await conf_util.async_process_op_core_config(opp, conf.get(ha.DOMAIN) or {})
 
    .opp.helpers.service.async_register_admin_service(
         ha.DOMAIN, SERVICE_RELOAD_CORE_CONFIG, async_handle_reload_config
@@ -192,7 +192,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
 
     async def async_set_location(call):
         """Service handler to set location."""
-        await.opp.config.async_update(
+        await opp.config.async_update(
             latitude=call.data[ATTR_LATITUDE], longitude=call.data[ATTR_LONGITUDE]
         )
 

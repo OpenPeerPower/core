@@ -151,7 +151,7 @@ async def async_setup_platform(
     api_key = config[CONF_API_KEY]
     here_client = herepy.RoutingApi(api_key)
 
-    if not await.opp.async_add_executor_job(
+    if not await opp.async_add_executor_job(
         _are_valid_client_credentials, here_client
     ):
         _LOGGER.error(
@@ -248,7 +248,7 @@ class HERETravelTimeSensor(Entity):
         @callback
         def delayed_sensor_update(event):
             """Update sensor after Open Peer Power started."""
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self.opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_START, delayed_sensor_update

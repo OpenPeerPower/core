@@ -31,7 +31,7 @@ async def test_unique_id(
     """Test unique id."""
     await setup_integration.opp, aioclient_mock)
 
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     main = entity_registry.async_get(MAIN_ENTITY_ID)
     assert main.unique_id == UPNP_SERIAL
@@ -44,7 +44,7 @@ async def test_main_services(
     await setup_integration.opp, aioclient_mock)
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             REMOTE_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -53,7 +53,7 @@ async def test_main_services(
         remote_mock.assert_called_once_with("poweroff")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             REMOTE_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID},
@@ -62,7 +62,7 @@ async def test_main_services(
         remote_mock.assert_called_once_with("poweron")
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             REMOTE_DOMAIN,
             SERVICE_SEND_COMMAND,
             {ATTR_ENTITY_ID: MAIN_ENTITY_ID, ATTR_COMMAND: ["home"]},

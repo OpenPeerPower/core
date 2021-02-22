@@ -167,7 +167,7 @@ class MiFloraSensor(Entity):
 
         @callback
         def on_startup(_):
-            self.async_schedule_update_ha_state(True)
+            self.async_schedule_update_op_state(True)
 
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, on_startup)
 

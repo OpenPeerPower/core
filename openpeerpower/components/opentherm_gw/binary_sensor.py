@@ -123,7 +123,7 @@ class OpenThermBinarySensor(BinarySensorEntity):
         """Handle status updates from the component."""
         state = status[self._source].get(self._var)
         self._state = None if state is None else bool(state)
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def name(self):

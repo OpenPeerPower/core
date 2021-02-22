@@ -46,7 +46,7 @@ def mock_request_info():
 
 async def test_form.opp, mock_login, mock_get_devices):
     """Test we get the form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -57,11 +57,11 @@ async def test_form.opp, mock_login, mock_get_devices):
     ) as mock_setup, patch(
         "openpeerpower.components.melcloud.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "test-email@test-domain.com", "password": "test-password"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "test-email@test-domain.com"
@@ -81,7 +81,7 @@ async def test_form_errors.opp, mock_login, mock_get_devices, error, reason):
     """Test we handle cannot connect error."""
     mock_login.side_effect = error
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={"username": "test-email@test-domain.com", "password": "test-password"},
@@ -106,7 +106,7 @@ async def test_form_response_errors(
     """Test we handle response errors."""
     mock_login.side_effect = ClientResponseError(mock_request_info(), (), status=error)
 
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={"username": "test-email@test-domain.com", "password": "test-password"},
@@ -123,12 +123,12 @@ async def test_import_with_token.opp, mock_login, mock_get_devices):
     ) as mock_setup, patch(
         "openpeerpower.components.melcloud.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"username": "test-email@test-domain.com", "token": "test-token"},
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result["type"] == "create_entry"
     assert result["title"] == "test-email@test-domain.com"
@@ -154,7 +154,7 @@ async def test_token_refresh.opp, mock_login, mock_get_devices):
     ) as mock_setup, patch(
         "openpeerpower.components.melcloud.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data={
@@ -165,7 +165,7 @@ async def test_token_refresh.opp, mock_login, mock_get_devices):
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 

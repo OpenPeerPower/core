@@ -215,13 +215,13 @@ class SerialSensor(Entity):
 
                         _LOGGER.debug("Received: %s", line)
                         self._state = line
-                        self.async_write_ha_state()
+                        self.async_write_op_state()
 
     async def _handle_error(self):
         """Handle error for serial connection."""
         self._state = None
         self._attributes = None
-        self.async_write_ha_state()
+        self.async_write_op_state()
         await asyncio.sleep(5)
 
     @callback

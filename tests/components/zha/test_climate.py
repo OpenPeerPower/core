@@ -144,7 +144,7 @@ def device_climate_mock.opp, zigpy_device_mock, zha_device_joined):
         zigpy_device.endpoints[1].thermostat.PLUGGED_ATTR_READS = plugged_attrs
         zha_device = await zha_device_joined(zigpy_device)
         await async_enable_traffic.opp, [zha_device])
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
         return zha_device
 
     return _dev
@@ -442,7 +442,7 @@ async def test_target_temperature(
         )
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     if preset:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: preset},
@@ -482,7 +482,7 @@ async def test_target_temperature_high(
         )
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     if preset:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: preset},
@@ -522,7 +522,7 @@ async def test_target_temperature_low(
         )
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
     if preset:
-        await.opp.services.async_call(
+        await opp.services.async_call(
             DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: preset},
@@ -553,7 +553,7 @@ async def test_set_hvac_mode.opp, device_climate, hvac_mode, sys_mode):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_HVAC_MODE: hvac_mode},
@@ -572,7 +572,7 @@ async def test_set_hvac_mode.opp, device_climate, hvac_mode, sys_mode):
 
     # turn off
     thrm_cluster.write_attributes.reset_mock()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_HVAC_MODE: HVAC_MODE_OFF},
@@ -600,7 +600,7 @@ async def test_preset_setting.opp, device_climate_sinope):
         zcl_f.WriteAttributesResponse.deserialize(b"\x01\x00\x00")[0]
     ]
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_AWAY},
@@ -617,7 +617,7 @@ async def test_preset_setting.opp, device_climate_sinope):
     thrm_cluster.write_attributes.return_value = [
         zcl_f.WriteAttributesResponse.deserialize(b"\x00")[0]
     ]
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_AWAY},
@@ -634,7 +634,7 @@ async def test_preset_setting.opp, device_climate_sinope):
     thrm_cluster.write_attributes.return_value = [
         zcl_f.WriteAttributesResponse.deserialize(b"\x01\x01\x01")[0]
     ]
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_NONE},
@@ -651,7 +651,7 @@ async def test_preset_setting.opp, device_climate_sinope):
     thrm_cluster.write_attributes.return_value = [
         zcl_f.WriteAttributesResponse.deserialize(b"\x00")[0]
     ]
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_NONE},
@@ -673,7 +673,7 @@ async def test_preset_setting_invalid.opp, device_climate_sinope):
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: "invalid_preset"},
@@ -694,7 +694,7 @@ async def test_set_temperature_hvac_mode.opp, device_climate):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -738,7 +738,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_HEAT_COOL
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 21},
@@ -750,7 +750,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == 25.0
     assert thrm_cluster.write_attributes.await_count == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -772,7 +772,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
         "occupied_cooling_setpoint": 2600
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_AWAY},
@@ -780,7 +780,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
     )
     thrm_cluster.write_attributes.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -828,7 +828,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_HEAT
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -845,7 +845,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
     assert state.attributes[ATTR_TEMPERATURE] == 20.0
     assert thrm_cluster.write_attributes.await_count == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 21},
@@ -861,7 +861,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
         "occupied_heating_setpoint": 2100
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_AWAY},
@@ -869,7 +869,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
     )
     thrm_cluster.write_attributes.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 22},
@@ -911,7 +911,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_COOL
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -928,7 +928,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
     assert state.attributes[ATTR_TEMPERATURE] == 25.0
     assert thrm_cluster.write_attributes.await_count == 0
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 21},
@@ -944,7 +944,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
         "occupied_cooling_setpoint": 2100
     }
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_AWAY},
@@ -952,7 +952,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
     )
     thrm_cluster.write_attributes.reset_mock()
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 22},
@@ -994,7 +994,7 @@ async def test_set_temperature_wrong_mode.opp, device_climate_mock):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_DRY
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {ATTR_ENTITY_ID: entity_id, ATTR_TEMPERATURE: 24},
@@ -1017,7 +1017,7 @@ async def test_occupancy_reset.opp, device_climate_sinope):
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_PRESET_MODE: PRESET_AWAY},
@@ -1070,7 +1070,7 @@ async def test_set_fan_mode_not_supported.opp, device_climate_fan):
     entity_id = await find_entity_id(DOMAIN, device_climate_fan, opp)
     fan_cluster = device_climate_fan.device.endpoints[1].fan
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_FAN_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_FAN_MODE: FAN_LOW},
@@ -1088,7 +1088,7 @@ async def test_set_fan_mode.opp, device_climate_fan):
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_FAN_MODE] == FAN_AUTO
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_FAN_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_FAN_MODE: FAN_ON},
@@ -1098,7 +1098,7 @@ async def test_set_fan_mode.opp, device_climate_fan):
     assert fan_cluster.write_attributes.call_args[0][0] == {"fan_mode": 4}
 
     fan_cluster.write_attributes.reset_mock()
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN,
         SERVICE_SET_FAN_MODE,
         {ATTR_ENTITY_ID: entity_id, ATTR_FAN_MODE: FAN_AUTO},

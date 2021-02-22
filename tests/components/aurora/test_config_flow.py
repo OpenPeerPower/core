@@ -19,7 +19,7 @@ DATA = {
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -34,11 +34,11 @@ async def test_form.opp):
         "openpeerpower.components.aurora.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             DATA,
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Aurora - Home"
@@ -51,7 +51,7 @@ async def test_form_cannot_connect.opp):
     """Test if invalid response or no connection returned from the API."""
 
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -59,7 +59,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.aurora.AuroraForecast.get_forecast_data",
         side_effect=ClientError,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             DATA,
         )
@@ -72,7 +72,7 @@ async def test_form_cannot_connect.opp):
 async def test_with_unknown_error(opp):
     """Test with unknown error response from the API."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -80,7 +80,7 @@ async def test_with_unknown_error(opp):
         "openpeerpower.components.aurora.AuroraForecast.get_forecast_data",
         side_effect=Exception,
     ):
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             DATA,
         )
@@ -98,9 +98,9 @@ async def test_option_flow.opp):
     assert not entry.options
 
     with patch("openpeerpower.components.aurora.async_setup_entry", return_value=True):
-        await.opp.config_entries.async_setup(entry.entry_id)
-        await.opp.async_block_till_done()
-        result = await.opp.config_entries.options.async_init(
+        await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
+        result = await opp.config_entries.options.async_init(
             entry.entry_id,
             data=None,
         )
@@ -108,7 +108,7 @@ async def test_option_flow.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result = await.opp.config_entries.options.async_configure(
+    result = await opp.config_entries.options.async_configure(
         result["flow_id"],
         user_input={"forecast_threshold": 65},
     )

@@ -164,7 +164,7 @@ async def async_setup_opp, config):
         already_discovered.add(discovery_hash)
 
         if service in CONFIG_ENTRY_HANDLERS:
-            await.opp.config_entries.flow.async_init(
+            await opp.config_entries.flow.async_init(
                 CONFIG_ENTRY_HANDLERS[service],
                 context={"source": config_entries.SOURCE_DISCOVERY},
                 data=info,
@@ -193,7 +193,7 @@ async def async_setup_opp, config):
     async def scan_devices(now):
         """Scan for devices."""
         try:
-            results = await.opp.async_add_executor_job(
+            results = await opp.async_add_executor_job(
                 _discover, netdisco, zeroconf_instance
             )
 

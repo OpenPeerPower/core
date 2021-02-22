@@ -64,4 +64,4 @@ class HomeConnectEntity(Entity):
     def async_entity_update(self):
         """Update the entity."""
         _LOGGER.debug("Entity update triggered on %s", self)
-        self.async_schedule_update_ha_state(True)
+        self.async_schedule_update_op_state(True)

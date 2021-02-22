@@ -56,7 +56,7 @@ class RPiPFIOBinarySensor(BinarySensorEntity):
         def read_pfio(port):
             """Read state from PFIO."""
             self._state = rpi_pfio.read_input(self._port)
-            self.schedule_update_ha_state()
+            self.schedule_update_op_state()
 
         rpi_pfio.edge_detect.opp, self._port, read_pfio, settle_time)
 

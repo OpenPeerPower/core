@@ -36,7 +36,7 @@ from openpeerpower.components.smartthings.const import (
     STORAGE_KEY,
     STORAGE_VERSION,
 )
-from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.config_entries import CONN_CLASS_CLOUD_PUSH, SOURCE_USER, ConfigEntry
 from openpeerpower.const import (
     CONF_ACCESS_TOKEN,
@@ -69,8 +69,8 @@ async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
     )
 
    .opp.data[DOMAIN] = {DATA_BROKERS: {config_entry.entry_id: broker}}
-    await.opp.config_entries.async_forward_entry_setup(config_entry, platform)
-    await.opp.async_block_till_done()
+    await opp.config_entries.async_forward_entry_setup(config_entry, platform)
+    await opp.async_block_till_done()
     return config_entry
 
 
@@ -78,7 +78,7 @@ async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
 async def setup_component.opp, config_file, opp_storage):
     """Load the SmartThing component."""
    .opp_storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
-    await async_process_ha_core_config(
+    await async_process_op_core_config(
        .opp,
         {"external_url": "https://test.local"},
     )

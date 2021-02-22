@@ -423,7 +423,7 @@ class SmartThingsEntity(Entity):
         async def async_update_state(devices):
             """Update device state."""
             if self._device.device_id in devices:
-                await self.async_update_ha_state(True)
+                await self.async_update_op_state(True)
 
         self._dispatcher_remove = async_dispatcher_connect(
             self.opp, SIGNAL_SMARTTHINGS_UPDATE, async_update_state

@@ -82,7 +82,7 @@ def vizio_no_unique_id_fixture():
 def vizio_connect_fixture():
     """Mock valid vizio device and entry setup."""
     with patch(
-        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_ha_config",
+        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_op_config",
         AsyncMock(return_value=True),
     ):
         yield
@@ -155,7 +155,7 @@ def vizio_guess_device_type_fixture():
 def vizio_cant_connect_fixture():
     """Mock vizio device can't connect with valid auth."""
     with patch(
-        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_ha_config",
+        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_op_config",
         AsyncMock(return_value=False),
     ):
         yield

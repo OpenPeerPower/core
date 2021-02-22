@@ -63,17 +63,17 @@ async def test_discover_bad_tag.opp, device_reg, entity_reg, mqtt_mock, tag_mock
     # Test sending bad data
     data0 = '{ "device":{"identifiers":["0AFFD2"]}, "topics": "foobar/tag_scanned" }'
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", data0)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert device_reg.async_get_device({("mqtt", "0AFFD2")}) is None
 
     # Test sending correct data
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", json.dumps(config1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
 
@@ -84,12 +84,12 @@ async def test_if_fires_on_mqtt_message_with_device(
     config = copy.deepcopy(DEFAULT_CONFIG_DEVICE)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
 
@@ -100,11 +100,11 @@ async def test_if_fires_on_mqtt_message_without_device(
     config = copy.deepcopy(DEFAULT_CONFIG)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, None)
 
 
@@ -115,12 +115,12 @@ async def test_if_fires_on_mqtt_message_with_template(
     config = copy.deepcopy(DEFAULT_CONFIG_JSON)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN_JSON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
 
@@ -129,11 +129,11 @@ async def test_strip_tag_id.opp, device_reg, mqtt_mock, tag_mock):
     config = copy.deepcopy(DEFAULT_CONFIG)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", "123456   ")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, "123456", None)
 
 
@@ -146,38 +146,38 @@ async def test_if_fires_on_mqtt_message_after_update_with_device(
     config2["topic"] = "foobar/tag_scanned2"
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
     # Update the tag scanner with different topic
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config2))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned2", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
     # Update the tag scanner with same topic
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config2))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned2", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
 
@@ -190,37 +190,37 @@ async def test_if_fires_on_mqtt_message_after_update_without_device(
     config2["topic"] = "foobar/tag_scanned2"
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, None)
 
     # Update the tag scanner with different topic
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config2))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned2", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, None)
 
     # Update the tag scanner with same topic
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config2))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned2", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, None)
 
 
@@ -234,38 +234,38 @@ async def test_if_fires_on_mqtt_message_after_update_with_template(
     tag_scan_2 = '{"Time":"2020-09-28T17:02:10","RDM6300":{"UID":"E9F35959", "DATA":"ILOVETASMOTA"}}'
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN_JSON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
     # Update the tag scanner with different template
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config2))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN_JSON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", tag_scan_2)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
     # Update the tag scanner with same template
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config2))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN_JSON)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", tag_scan_2)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
 
@@ -274,12 +274,12 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock):
     config = copy.deepcopy(DEFAULT_CONFIG_DEVICE)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     call_count = mqtt_mock.async_subscribe.call_count
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     assert mqtt_mock.async_subscribe.call_count == call_count
 
 
@@ -290,29 +290,29 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt_with_device(
     config = copy.deepcopy(DEFAULT_CONFIG_DEVICE)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
     # Remove the tag scanner
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     # Rediscover the tag scanner
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
 
@@ -323,28 +323,28 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt_without_device(
     config = copy.deepcopy(DEFAULT_CONFIG)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, None)
 
     # Remove the tag scanner
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
     # Rediscover the tag scanner
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, None)
 
 
@@ -358,27 +358,27 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
     config = copy.deepcopy(DEFAULT_CONFIG_DEVICE)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     # Fake tag scan.
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, DEFAULT_TAG_ID, device_entry.id)
 
     # Remove the device
     device_reg.async_remove_device(device_entry.id)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.reset_mock()
 
     async_fire_mqtt_message.opp, "foobar/tag_scanned", DEFAULT_TAG_SCAN)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_not_called()
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT device registry integration."""
-    registry = await.opp.helpers.device_registry.async_get_registry()
+    registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(
         {
@@ -393,7 +393,7 @@ async def test_entity_device_info_with_connection.opp, mqtt_mock):
         }
     )
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device = registry.async_get_device(set(), {("mac", "02:5b:26:a8:dc:12")})
     assert device is not None
@@ -406,7 +406,7 @@ async def test_entity_device_info_with_connection.opp, mqtt_mock):
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT device registry integration."""
-    registry = await.opp.helpers.device_registry.async_get_registry()
+    registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(
         {
@@ -421,7 +421,7 @@ async def test_entity_device_info_with_identifier.opp, mqtt_mock):
         }
     )
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -434,7 +434,7 @@ async def test_entity_device_info_with_identifier.opp, mqtt_mock):
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
-    registry = await.opp.helpers.device_registry.async_get_registry()
+    registry = await opp.helpers.device_registry.async_get_registry()
 
     config = {
         "topic": "test-topic",
@@ -450,7 +450,7 @@ async def test_entity_device_info_update.opp, mqtt_mock):
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -459,7 +459,7 @@ async def test_entity_device_info_update.opp, mqtt_mock):
     config["device"]["name"] = "Milk"
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -475,15 +475,15 @@ async def test_cleanup_tag.opp, device_reg, entity_reg, mqtt_mock):
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
     assert device_entry is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await.opp.async_block_till_done()
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -504,14 +504,14 @@ async def test_cleanup_device.opp, device_reg, entity_reg, mqtt_mock):
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", data)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
     assert device_entry is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -533,16 +533,16 @@ async def test_cleanup_device_several_tags(
     }
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", json.dumps(config1))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla2/config", json.dumps(config2))
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
     assert device_entry is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is not cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -551,11 +551,11 @@ async def test_cleanup_device_several_tags(
     # Fake tag scan.
     async_fire_mqtt_message.opp, "test-topic1", "12345")
     async_fire_mqtt_message.opp, "test-topic2", "23456")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     tag_mock.assert_called_once_with(ANY, "23456", device_entry.id)
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla2/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -593,11 +593,11 @@ async def test_cleanup_device_with_entity_and_trigger_1(
     data2 = json.dumps(config2)
     data3 = json.dumps(config3)
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", data1)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", data2)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla3/config", data3)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -607,17 +607,17 @@ async def test_cleanup_device_with_entity_and_trigger_1(
     assert len(triggers) == 3  # 2 binary_sensor triggers + device trigger
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is not cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
     assert device_entry is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla3/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -653,11 +653,11 @@ async def test_cleanup_device_with_entity2.opp, device_reg, entity_reg, mqtt_moc
     data2 = json.dumps(config2)
     data3 = json.dumps(config3)
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", data1)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", data2)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla3/config", data3)
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is created
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
@@ -667,17 +667,17 @@ async def test_cleanup_device_with_entity2.opp, device_reg, entity_reg, mqtt_moc
     assert len(triggers) == 3  # 2 binary_sensor triggers + device trigger
 
     async_fire_mqtt_message.opp, "openpeerpower/device_automation/bla2/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla3/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is not cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})
     assert device_entry is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/tag/bla1/config", "")
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     # Verify device registry entry is cleared
     device_entry = device_reg.async_get_device({("mqtt", "helloworld")})

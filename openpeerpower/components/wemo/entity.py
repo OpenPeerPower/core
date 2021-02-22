@@ -112,7 +112,7 @@ class WemoEntity(Entity):
             # update was involved and the state also needs to be updated
             # asynchronously.
             if not timeout or timeout.expired:
-                self.async_write_ha_state()
+                self.async_write_op_state()
 
 
 class WemoSubscriptionEntity(WemoEntity):

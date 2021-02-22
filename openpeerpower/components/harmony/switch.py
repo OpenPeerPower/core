@@ -90,4 +90,4 @@ class HarmonyActivitySwitch(ConnectionStateMixin, SwitchEntity):
         self.async_on_remove(self._data.async_subscribe(HarmonyCallback(**callbacks)))
 
     def _activity_update(self, activity_info: tuple):
-        self.async_write_ha_state()
+        self.async_write_op_state()

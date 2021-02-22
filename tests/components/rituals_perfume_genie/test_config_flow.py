@@ -15,7 +15,7 @@ WRONG_PASSWORD = "wrong-passw0rd"
 
 async def test_form.opp):
     """Test we get the form."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -27,14 +27,14 @@ async def test_form.opp):
         "openpeerpower.components.rituals_perfume_genie.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_EMAIL: TEST_EMAIL,
                 CONF_PASSWORD: VALID_PASSWORD,
             },
         )
-        await.opp.async_block_till_done()
+        await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_EMAIL
@@ -45,7 +45,7 @@ async def test_form.opp):
 
 async def test_form_invalid_auth.opp):
     """Test we handle invalid auth."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -53,7 +53,7 @@ async def test_form_invalid_auth.opp):
         "openpeerpower.components.rituals_perfume_genie.config_flow.Account.authenticate",
         side_effect=AuthenticationException,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_EMAIL: TEST_EMAIL,
@@ -67,7 +67,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_auth_exception.opp):
     """Test we handle auth exception."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -75,7 +75,7 @@ async def test_form_auth_exception.opp):
         "openpeerpower.components.rituals_perfume_genie.config_flow.Account.authenticate",
         side_effect=Exception,
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_EMAIL: TEST_EMAIL,
@@ -89,7 +89,7 @@ async def test_form_auth_exception.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -97,7 +97,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.rituals_perfume_genie.config_flow.Account.authenticate",
         side_effect=ClientResponseError(None, None, status=500),
     ):
-        result2 = await.opp.config_entries.flow.async_configure(
+        result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_EMAIL: TEST_EMAIL,

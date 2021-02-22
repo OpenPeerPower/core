@@ -226,6 +226,6 @@ class FFmpegBase(Entity):
         async def async_start_handle(event):
             """Start FFmpeg process."""
             await self._async_start_ffmpeg(None)
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_start_handle)

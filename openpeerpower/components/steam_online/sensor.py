@@ -65,7 +65,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     @callback
     def do_update(time):
         nonlocal entity_next
-        entities[entity_next].async_schedule_update_ha_state(True)
+        entities[entity_next].async_schedule_update_op_state(True)
         entity_next = (entity_next + 1) % len(entities)
 
     track_time_interval.opp, do_update, BASE_INTERVAL)

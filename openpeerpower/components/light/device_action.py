@@ -73,7 +73,7 @@ async def async_call_action_from_config(
         else:
             data[ATTR_FLASH] = FLASH_SHORT
 
-    await.opp.services.async_call(
+    await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, data, blocking=True, context=context
     )
 

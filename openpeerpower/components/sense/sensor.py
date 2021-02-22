@@ -204,7 +204,7 @@ class SenseActiveSensor(Entity):
             return
         self._state = new_state
         self._available = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class SenseVoltageSensor(Entity):
@@ -284,7 +284,7 @@ class SenseVoltageSensor(Entity):
             return
         self._available = True
         self._state = new_state
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
 
 class SenseTrendsSensor(Entity):
@@ -356,7 +356,7 @@ class SenseTrendsSensor(Entity):
     def _async_update(self):
         """Track if we had an update so we do not report zero data."""
         self._had_any_update = True
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_update(self):
         """Update the entity.
@@ -451,4 +451,4 @@ class SenseEnergyDevice(Entity):
             return
         self._state = new_state
         self._available = True
-        self.async_write_ha_state()
+        self.async_write_op_state()

@@ -103,7 +103,7 @@ async def test_unload_entry.opp):
 
     assert emulated_roku.DOMAIN in.opp.data
 
-    await.opp.async_block_till_done()
+    await opp.async_block_till_done()
 
     assert await emulated_roku.async_unload_entry.opp, entry)
 

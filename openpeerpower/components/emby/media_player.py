@@ -164,7 +164,7 @@ class EmbyDevice(MediaPlayerEntity):
             self.media_status_last_position = None
             self.media_status_received = None
 
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     @property
     def available(self):

@@ -48,7 +48,7 @@ async def async_start(
         """Handle adding or updating a discovered entity."""
         if not tasmota_entity_config:
             # Entity disabled, clean up entity registry
-            entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+            entity_registry = await opp.helpers.entity_registry.async_get_registry()
             unique_id = unique_id_from_hash(discovery_hash)
             entity_id = entity_registry.async_get_entity_id(platform, DOMAIN, unique_id)
             if entity_id:
@@ -134,8 +134,8 @@ async def async_start(
         """Handle discovery of (additional) sensors."""
         platform = sensor.DOMAIN
 
-        device_registry = await.opp.helpers.device_registry.async_get_registry()
-        entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+        device_registry = await opp.helpers.device_registry.async_get_registry()
+        entity_registry = await opp.helpers.entity_registry.async_get_registry()
         device = device_registry.async_get_device(set(), {("mac", mac)})
 
         if device is None:

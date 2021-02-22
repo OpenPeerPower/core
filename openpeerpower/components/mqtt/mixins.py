@@ -199,7 +199,7 @@ class MqttAttributes(Entity):
                 json_dict = json.loads(payload)
                 if isinstance(json_dict, dict):
                     self._attributes = json_dict
-                    self.async_write_ha_state()
+                    self.async_write_op_state()
                 else:
                     _LOGGER.warning("JSON result was not a dictionary")
                     self._attributes = None
@@ -292,7 +292,7 @@ class MqttAvailability(Entity):
                 self._available[topic] = False
                 self._available_latest = False
 
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
         self._available = {topic: False for topic in self._avail_topics}
         topics = {
@@ -314,7 +314,7 @@ class MqttAvailability(Entity):
     def async_mqtt_connect(self):
         """Update state on connection/disconnection to MQTT broker."""
         if not self.opp.is_stopping:
-            self.async_write_ha_state()
+            self.async_write_op_state()
 
     async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
@@ -342,8 +342,8 @@ async def cleanup_device_registry.opp, device_id):
     # pylint: disable=import-outside-toplevel
     from . import device_trigger, tag
 
-    device_registry = await.opp.helpers.device_registry.async_get_registry()
-    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
+    device_registry = await opp.helpers.device_registry.async_get_registry()
+    entity_registry = await opp.helpers.entity_registry.async_get_registry()
     if (
         device_id
         and not.opp.helpers.entity_registry.async_entries_for_device(
@@ -552,7 +552,7 @@ class MqttEntity(
         await self.availability_discovery_update(config)
         await self.device_info_discovery_update(config)
         await self._subscribe_topics()
-        self.async_write_ha_state()
+        self.async_write_op_state()
 
     async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""

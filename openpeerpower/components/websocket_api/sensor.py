@@ -57,4 +57,4 @@ class APICount(Entity):
     @callback
     def _update_count(self):
         self.count = self.opp.data.get(DATA_CONNECTIONS, 0)
-        self.async_write_ha_state()
+        self.async_write_op_state()

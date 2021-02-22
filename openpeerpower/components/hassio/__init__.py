@@ -213,7 +213,7 @@ async def async_get_addon_discovery_info(
 ) -> Optional[dict]:
     """Return discovery data for an add-on."""
    .oppio = opp.data[DOMAIN]
-    data = await.oppio.retrieve_discovery_messages()
+    data = await oppio.retrieve_discovery_messages()
     discovered_addons = data[ATTR_DISCOVERY]
     return next((addon for addon in discovered_addons if addon["addon"] == slug), None)
 
@@ -301,7 +301,7 @@ async def async_setup_opp, config):
     websession = opp.helpers.aiohttp_client.async_get_clientsession()
    .opp.data[DOMAIN] = oppio = HassIO.opp.loop, websession, host)
 
-    if not await.oppio.is_connected():
+    if not await oppio.is_connected():
         _LOGGER.warning("Not connected with Hass.io / system too busy!")
 
     store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
@@ -312,17 +312,17 @@ async def async_setup_opp, config):
 
     refresh_token = None
     if .oppio_user" in data:
-        user = await.opp.auth.async_get_user(data[.oppio_user"])
+        user = await opp.auth.async_get_user(data[.oppio_user"])
         if user and user.refresh_tokens:
             refresh_token = list(user.refresh_tokens.values())[0]
 
             # Migrate old Hass.io users to be admin.
             if not user.is_admin:
-                await.opp.auth.async_update_user(user, group_ids=[GROUP_ID_ADMIN])
+                await opp.auth.async_update_user(user, group_ids=[GROUP_ID_ADMIN])
 
     if refresh_token is None:
-        user = await.opp.auth.async_create_system_user("Hass.io", [GROUP_ID_ADMIN])
-        refresh_token = await.opp.auth.async_create_refresh_token(user)
+        user = await opp.auth.async_create_system_user("Hass.io", [GROUP_ID_ADMIN])
+        refresh_token = await opp.auth.async_create_refresh_token(user)
         data[.oppio_user"] = user.id
         await store.async_save(data)
 
@@ -335,7 +335,7 @@ async def async_setup_opp, config):
 
    .opp.http.register_view(HassIOView(host, websession))
 
-    await.opp.components.panel_custom.async_register_panel(
+    await opp.components.panel_custom.async_register_panel(
         frontend_url_path= oppio",
         webcomponent_name= oppio-main",
         sidebar_title="Supervisor",
@@ -345,7 +345,7 @@ async def async_setup_opp, config):
         require_admin=True,
     )
 
-    await.oppio.update.opp_api(config.get("http", {}), refresh_token)
+    await oppio.update.opp_api(config.get("http", {}), refresh_token)
 
     last_timezone = None
 
@@ -359,7 +359,7 @@ async def async_setup_opp, config):
             return
 
         last_timezone = new_timezone
-        await.oppio.update.opp_timezone(new_timezone)
+        await oppio.update.opp_timezone(new_timezone)
 
    .opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, push_config)
 
@@ -381,7 +381,7 @@ async def async_setup_opp, config):
 
         # Call API
         try:
-            await.oppio.send_command(
+            await oppio.send_command(
                 api_command.format(addon=addon, snapshot=snapshot),
                 payload=payload,
                 timeout=MAP_SERVICE_API[service.service][2],
@@ -397,11 +397,11 @@ async def async_setup_opp, config):
     async def update_info_data(now):
         """Update last available supervisor information."""
         try:
-           .opp.data[DATA_INFO] = await.oppio.get_info()
-           .opp.data[DATA_HOST_INFO] = await.oppio.get_host_info()
-           .opp.data[DATA_CORE_INFO] = await.oppio.get_core_info()
-           .opp.data[DATA_SUPERVISOR_INFO] = await.oppio.get_supervisor_info()
-           .opp.data[DATA_OS_INFO] = await.oppio.get_os_info()
+           .opp.data[DATA_INFO] = await oppio.get_info()
+           .opp.data[DATA_HOST_INFO] = await oppio.get_host_info()
+           .opp.data[DATA_CORE_INFO] = await oppio.get_core_info()
+           .opp.data[DATA_SUPERVISOR_INFO] = await oppio.get_supervisor_info()
+           .opp.data[DATA_OS_INFO] = await oppio.get_os_info()
         except HassioAPIError as err:
             _LOGGER.warning("Can't read last version: %s", err)
 
@@ -415,11 +415,11 @@ async def async_setup_opp, config):
     async def async_handle_core_service(call):
         """Service handler for handling core services."""
         if call.service == SERVICE_OPENPEERPOWER_STOP:
-            await.oppio.stop_openpeerpower()
+            await oppio.stop_openpeerpower()
             return
 
         try:
-            errors = await conf_util.async_check_ha_config_file.opp)
+            errors = await conf_util.async_check_op_config_file.opp)
         except OpenPeerPowerError:
             return
 
@@ -433,7 +433,7 @@ async def async_setup_opp, config):
             return
 
         if call.service == SERVICE_OPENPEERPOWER_RESTART:
-            await.oppio.restart_openpeerpower()
+            await oppio.restart_openpeerpower()
 
     # Mock core services
     for service in (

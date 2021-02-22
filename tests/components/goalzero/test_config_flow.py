@@ -43,11 +43,11 @@ async def test_flow_user.opp):
     """Test user initialized flow."""
     mocked_yeti = await _create_mocked_yeti()
     with _patch_config_flow_yeti(mocked_yeti), _patch_setup():
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
         )
-        result = await.opp.config_entries.flow.async_configure(
+        result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input=CONF_CONFIG_FLOW,
         )
@@ -69,7 +69,7 @@ async def test_flow_user_already_configured.opp):
         "host": "1.2.3.4",
         "name": "Yeti",
     }
-    result = await.opp.config_entries.flow.async_init(
+    result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=service_info
     )
 
@@ -82,7 +82,7 @@ async def test_flow_user_cannot_connect.opp):
     mocked_yeti = await _create_mocked_yeti(True)
     with _patch_config_flow_yeti(mocked_yeti) as yetimock:
         yetimock.side_effect = exceptions.ConnectError
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONF_CONFIG_FLOW
         )
         assert result["type"] == RESULT_TYPE_FORM
@@ -95,7 +95,7 @@ async def test_flow_user_invalid_host.opp):
     mocked_yeti = await _create_mocked_yeti(True)
     with _patch_config_flow_yeti(mocked_yeti) as yetimock:
         yetimock.side_effect = exceptions.InvalidHost
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONF_CONFIG_FLOW
         )
         assert result["type"] == RESULT_TYPE_FORM
@@ -108,7 +108,7 @@ async def test_flow_user_unknown_error(opp):
     mocked_yeti = await _create_mocked_yeti(True)
     with _patch_config_flow_yeti(mocked_yeti) as yetimock:
         yetimock.side_effect = Exception
-        result = await.opp.config_entries.flow.async_init(
+        result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONF_CONFIG_FLOW
         )
         assert result["type"] == RESULT_TYPE_FORM
