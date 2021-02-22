@@ -117,7 +117,7 @@ class TownNotFound(UpdateFailed):
 class WeatherUpdateCoordinator(DataUpdateCoordinator):
     """Weather data update coordinator."""
 
-    def __init__(self,.opp, aemet, latitude, longitude):
+    def __init__(self, opp, aemet, latitude, longitude):
         """Initialize coordinator."""
         super().__init__(
            .opp, _LOGGER, name=DOMAIN, update_interval=WEATHER_UPDATE_INTERVAL

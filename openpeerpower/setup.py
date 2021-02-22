@@ -37,7 +37,7 @@ def async_set_domains_to_be_loaded.opp: core.OpenPeerPower, domains: Set[str]) -
 def setup_component.opp: core.OpenPeerPower, domain: str, config: ConfigType) -> bool:
     """Set up a component and all its dependencies."""
     return asyncio.run_coroutine_threadsafe(
-        async_setup_component.opp, domain, config),.opp.loop
+        async_setup_component.opp, domain, config), opp.loop
     ).result()
 
 
@@ -202,7 +202,7 @@ async def _async_setup_component(
             # This should not be replaced with.opp.async_add_executor_job because
             # we don't want to track this task in case it blocks startup.
             task =.opp.loop.run_in_executor(
-                None, component.setup,.opp, processed_config  # type: ignore
+                None, component.setup, opp, processed_config  # type: ignore
             )
         else:
             log_error("No setup function defined.")
@@ -267,7 +267,7 @@ async def _async_setup_component(
 
 
 async def async_prepare_setup_platform(
-   .opp: core.OpenPeerPower,.opp_config: ConfigType, domain: str, platform_name: str
+   .opp: core.OpenPeerPower, opp_config: ConfigType, domain: str, platform_name: str
 ) -> Optional[ModuleType]:
     """Load a platform and makes sure dependencies are setup.
 
@@ -289,7 +289,7 @@ async def async_prepare_setup_platform(
     # Process deps and reqs as soon as possible, so that requirements are
     # available when we import the platform.
     try:
-        await async_process_deps_reqs.opp,.opp_config, integration)
+        await async_process_deps_reqs.opp, opp_config, integration)
     except OpenPeerPowerError as err:
         log_error(str(err))
         return None
@@ -314,7 +314,7 @@ async def async_prepare_setup_platform(
             return None
 
         if hasattr(component, "setup") or hasattr(component, "async_setup"):
-            if not await async_setup_component.opp, integration.domain,.opp_config):
+            if not await async_setup_component.opp, integration.domain, opp_config):
                 log_error("Unable to set up component.")
                 return None
 

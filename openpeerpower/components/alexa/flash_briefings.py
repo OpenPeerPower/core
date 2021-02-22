@@ -44,7 +44,7 @@ class AlexaFlashBriefingView(http.OpenPeerPowerView):
     requires_auth = False
     name = "api:alexa:flash_briefings"
 
-    def __init__(self,.opp, flash_briefings):
+    def __init__(self, opp, flash_briefings):
         """Initialize Alexa view."""
         super().__init__()
         self.flash_briefings = copy.deepcopy(flash_briefings)

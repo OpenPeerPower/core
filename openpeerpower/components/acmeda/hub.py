@@ -13,7 +13,7 @@ from .helpers import update_devices
 class PulseHub:
     """Manages a single Pulse Hub."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the system."""
         self.config_entry = config_entry
         self.opp =.opp

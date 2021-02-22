@@ -111,7 +111,7 @@ def track_changes(coll: collection.ObservableCollection):
     return changes
 
 
-async def test_tag_id_exists.opp,.opp_ws_client, storage_setup):
+async def test_tag_id_exists(opp,.opp_ws_client, storage_setup):
     """Test scanning tags."""
     assert await storage_setup()
     changes = track_changes.opp.data[DOMAIN][TAGS])

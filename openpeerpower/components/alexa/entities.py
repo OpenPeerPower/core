@@ -251,7 +251,7 @@ class AlexaEntity:
     The API handlers should manipulate entities only through this interface.
     """
 
-    def __init__(self,.opp: OpenPeerPower, config: "AbstractConfig", entity: State):
+    def __init__(self, opp: OpenPeerPower, config: "AbstractConfig", entity: State):
         """Initialize Alexa Entity."""
         self.opp =.opp
         self.config = config

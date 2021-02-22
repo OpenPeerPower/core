@@ -159,7 +159,7 @@ async def test_host_already_configured.opp, auth_error):
     assert result["reason"] == "already_configured"
 
 
-async def test_name_exists.opp, api):
+async def test_name_exists(opp, api):
     """Test name already configured."""
 
     entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=DEMO_CONFIG_ENTRY)

@@ -167,7 +167,7 @@ async def test_form_unexpected.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_entry_already_exists.opp):
+async def test_entry_already_exists(opp):
     """Test that the form aborts if the Lat/Lng is already configured."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

@@ -134,7 +134,7 @@ async def test_form_exception.opp):
     mock_close.assert_awaited_once()
 
 
-async def test_form_already_exists.opp):
+async def test_form_already_exists(opp):
     """Test that a flow with an existing username aborts."""
     entry = MockConfigEntry(
         domain=DOMAIN,

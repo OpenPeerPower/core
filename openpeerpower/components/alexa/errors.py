@@ -65,7 +65,7 @@ class AlexaTempRangeError(AlexaError):
     namespace = "Alexa"
     error_type = "TEMPERATURE_VALUE_OUT_OF_RANGE"
 
-    def __init__(self,.opp, temp, min_temp, max_temp):
+    def __init__(self, opp, temp, min_temp, max_temp):
         """Initialize TempRange error."""
         unit = opp.config.units.temperature_unit
         temp_range = {

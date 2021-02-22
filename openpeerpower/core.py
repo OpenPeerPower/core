@@ -358,7 +358,7 @@ class OpenPeerPower:
 
     @callback
     def async_add.opp_job(
-        self,.oppjob: HassJob, *args: Any
+        self, oppjob: HassJob, *args: Any
     ) -> Optional[asyncio.Future]:
         """Add a HassJob from within the event loop.
 
@@ -373,7 +373,7 @@ class OpenPeerPower:
             return None
         else:
             task = self.loop.run_in_executor(  # type: ignore
-                None,.oppjob.target, *args
+                None, oppjob.target, *args
             )
 
         # If a task is scheduled
@@ -422,7 +422,7 @@ class OpenPeerPower:
 
     @callback
     def async_run.opp_job(
-        self,.oppjob: HassJob, *args: Any
+        self, oppjob: HassJob, *args: Any
     ) -> Optional[asyncio.Future]:
         """Run a HassJob from within the event loop.
 
@@ -660,7 +660,7 @@ class Event:
 class EventBus:
     """Allow the firing of and listening for events."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize a new event bus."""
         self._listeners: Dict[str, List[Tuple[HassJob, Optional[Callable]]]] = {}
         self.opp = opp
@@ -1279,7 +1279,7 @@ class ServiceCall:
 class ServiceRegistry:
     """Offer the services over the eventbus."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize a service registry."""
         self._services: Dict[str, Dict[str, Service]] = {}
         self.opp = opp
@@ -1530,7 +1530,7 @@ class ServiceRegistry:
 class Config:
     """Configuration settings for Open Peer Power."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize a new config object."""
         self.opp =.opp
 

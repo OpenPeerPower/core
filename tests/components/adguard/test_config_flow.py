@@ -84,7 +84,7 @@ async def test_full_flow_implementation.opp, aioclient_mock):
     assert result["data"][CONF_VERIFY_SSL] == FIXTURE_USER_INPUT[CONF_VERIFY_SSL]
 
 
-async def test_integration_already_exists.opp):
+async def test_integration_already_exists(opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 

@@ -142,7 +142,7 @@ async def _async_get_custom_components(
     integrations = await asyncio.gather(
         *(
            .opp.async_add_executor_job(
-                Integration.resolve_from_root,.opp, custom_components, comp.name
+                Integration.resolve_from_root, opp, custom_components, comp.name
             )
             for comp in dirs
         )
@@ -172,7 +172,7 @@ async def async_get_custom_components(
 
     if isinstance(reg_or_evt, asyncio.Event):
         await reg_or_evt.wait()
-        return cast(Dict[str, "Integration"],.opp.data.get(DATA_CUSTOM_COMPONENTS))
+        return cast(Dict[str, "Integration"], opp.data.get(DATA_CUSTOM_COMPONENTS))
 
     return cast(Dict[str, "Integration"], reg_or_evt)
 
@@ -288,7 +288,7 @@ class Integration:
 
     @classmethod
     def resolve_from_root(
-        cls,.opp: "OpenPeerPower", root_module: ModuleType, domain: str
+        cls, opp: "OpenPeerPower", root_module: ModuleType, domain: str
     ) -> Optional[Integration]:
         """Resolve an integration from a root module."""
         for base in root_module.__path__:  # type: ignore
@@ -313,7 +313,7 @@ class Integration:
 
     @classmethod
     def resolve_legacy(
-        cls,.opp: "OpenPeerPower", domain: str
+        cls, opp: "OpenPeerPower", domain: str
     ) -> Optional[Integration]:
         """Resolve legacy component.
 
@@ -545,7 +545,7 @@ async def async_get_integration.opp: "OpenPeerPower", domain: str) -> Integratio
     from openpeerpower import components  # pylint: disable=import-outside-toplevel
 
     integration = await.opp.async_add_executor_job(
-        Integration.resolve_from_root,.opp, components, domain
+        Integration.resolve_from_root, opp, components, domain
     )
 
     if integration is not None:
@@ -654,7 +654,7 @@ def _load_file(
 class ModuleWrapper:
     """Class to wrap a Python module and auto fill in.opp argument."""
 
-    def __init__(self,.opp: "OpenPeerPower", module: ModuleType) -> None:
+    def __init__(self, opp: "OpenPeerPower", module: ModuleType) -> None:
         """Initialize the module wrapper."""
         self.opp = opp
         self._module = module
@@ -673,7 +673,7 @@ class ModuleWrapper:
 class Components:
     """Helper to load components."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the Components class."""
         self.opp = opp
 
@@ -699,7 +699,7 @@ class Components:
 class Helpers:
     """Helper to load helpers."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the Helpers class."""
         self.opp = opp
 
@@ -769,7 +769,7 @@ def _async_mount_config_dir.opp: OpenPeerPower) -> bool:
         _LOGGER.error("Can't load integrations - configuration directory is not set")
         return False
     if.opp.config.config_dir not in sys.path:
-        sys.path.insert(0,.opp.config.config_dir)
+        sys.path.insert(0, opp.config.config_dir)
     return True
 
 

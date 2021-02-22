@@ -123,7 +123,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     name = discovery_info[CONF_NAME]
     device =.opp.data[DATA_AMCREST][DEVICES][name]
-    async_add_entities([AmcrestCam(name, device,.opp.data[DATA_FFMPEG])], True)
+    async_add_entities([AmcrestCam(name, device, opp.data[DATA_FFMPEG])], True)
 
 
 class CannotSnapshot(Exception):

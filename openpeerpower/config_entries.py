@@ -202,7 +202,7 @@ class ConfigEntry:
 
     async def async_setup(
         self,
-       .opp: OpenPeerPower,
+        opp: OpenPeerPower,
         *,
         integration: Optional[loader.Integration] = None,
         tries: int = 0,
@@ -212,9 +212,9 @@ class ConfigEntry:
             return
 
         if integration is None:
-            integration = await loader.async_get_integration.opp, self.domain)
+            integration = await loader.async_get_integration(opp, self.domain)
 
-        self.supports_unload = await support_entry_unload.opp, self.domain)
+        self.supports_unload = await support_entry_unload(opp, self.domain)
 
         try:
             component = integration.get_component()
@@ -243,12 +243,12 @@ class ConfigEntry:
                 return
 
             # Perform migration
-            if not await self.async_migrate.opp):
+            if not await self.async_migrate(opp):
                 self.state = ENTRY_STATE_MIGRATION_ERROR
                 return
 
         try:
-            result = await component.async_setup_entry.opp, self)  # type: ignore
+            result = await component.async_setup_entry(opp, self)  # type: ignore
 
             if not isinstance(result, bool):
                 _LOGGER.error(
@@ -271,7 +271,7 @@ class ConfigEntry:
                 self._async_cancel_retry_setup = None
                 await self.async_setup_opp, integration=integration, tries=tries)
 
-            self._async_cancel_retry_setup =.opp.helpers.event.async_call_later(
+            self._async_cancel_retry_setup = opp.helpers.event.async_call_later(
                 wait_time, setup_again
             )
             return
@@ -291,7 +291,7 @@ class ConfigEntry:
             self.state = ENTRY_STATE_SETUP_ERROR
 
     async def async_unload(
-        self,.opp: OpenPeerPower, *, integration: Optional[loader.Integration] = None
+        self, opp: OpenPeerPower, *, integration: Optional[loader.Integration] = None
     ) -> bool:
         """Unload an entry.
 
@@ -303,7 +303,7 @@ class ConfigEntry:
 
         if integration is None:
             try:
-                integration = await loader.async_get_integration.opp, self.domain)
+                integration = await loader.async_get_integration(opp, self.domain)
             except loader.IntegrationNotFound:
                 # The integration was likely a custom_component
                 # that was uninstalled, or an integration
@@ -334,7 +334,7 @@ class ConfigEntry:
             return False
 
         try:
-            result = await component.async_unload_entry.opp, self)  # type: ignore
+            result = await component.async_unload_entry(opp, self)  # type: ignore
 
             assert isinstance(result, bool)
 
@@ -351,13 +351,13 @@ class ConfigEntry:
                 self.state = ENTRY_STATE_FAILED_UNLOAD
             return False
 
-    async def async_remove(self,.opp: OpenPeerPower) -> None:
+    async def async_remove(self, opp: OpenPeerPower) -> None:
         """Invoke remove callback on component."""
         if self.source == SOURCE_IGNORE:
             return
 
         try:
-            integration = await loader.async_get_integration.opp, self.domain)
+            integration = await loader.async_get_integration opp, self.domain)
         except loader.IntegrationNotFound:
             # The integration was likely a custom_component
             # that was uninstalled, or an integration
@@ -369,7 +369,7 @@ class ConfigEntry:
         if not hasattr(component, "async_remove_entry"):
             return
         try:
-            await component.async_remove_entry.opp, self)  # type: ignore
+            await component.async_remove_entry(opp, self)  # type: ignore
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception(
                 "Error calling entry remove callback %s for %s",
@@ -377,7 +377,7 @@ class ConfigEntry:
                 integration.domain,
             )
 
-    async def async_migrate(self,.opp: OpenPeerPower) -> bool:
+    async def async_migrate(self, opp: OpenPeerPower) -> bool:
         """Migrate an entry.
 
         Returns True if config entry is up-to-date or has been migrated.
@@ -395,7 +395,7 @@ class ConfigEntry:
         if self.version == handler.VERSION:
             return True
 
-        integration = await loader.async_get_integration.opp, self.domain)
+        integration = await loader.async_get_integration(opp, self.domain)
         component = integration.get_component()
         supports_migrate = hasattr(component, "async_migrate_entry")
         if not supports_migrate:
@@ -407,7 +407,7 @@ class ConfigEntry:
             return False
 
         try:
-            result = await component.async_migrate_entry.opp, self)  # type: ignore
+            result = await component.async_migrate_entry(opp, self)  # type: ignore
             if not isinstance(result, bool):
                 _LOGGER.error(
                     "%s.async_migrate_entry did not return boolean", self.domain
@@ -459,12 +459,12 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
     """Manage all the config entry flows that are in progress."""
 
     def __init__(
-        self,.opp: OpenPeerPower, config_entries: "ConfigEntries",.opp_config: dict
+        self, opp: OpenPeerPower, config_entries: "ConfigEntries", opp_config: dict
     ):
         """Initialize the config entry flow manager."""
-        super().__init__.opp)
+        super().__init__( opp)
         self.config_entries = config_entries
-        self.opp_config =.opp_config
+        self opp_config = opp_config
 
     async def async_finish_flow(
         self, flow: data_entry_flow.FlowHandler, result: Dict[str, Any]
@@ -606,18 +606,18 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
 class ConfigEntries:
     """Manage the configuration entries.
 
-    An instance of this object is available via .opp.config_entries`.
+    An instance of this object is available via  opp.config_entries`.
     """
 
-    def __init__(self,.opp: OpenPeerPower,.opp_config: dict) -> None:
+    def __init__(self, opp: OpenPeerPower, opp_config: dict) -> None:
         """Initialize the entry manager."""
-        self.opp =.opp
-        self.flow = ConfigEntriesFlowManager.opp, self,.opp_config)
-        self.options = OptionsFlowManager.opp)
-        self.opp_config =.opp_config
+        self.opp = opp
+        self.flow = ConfigEntriesFlowManager(opp, self, opp_config)
+        self.options = OptionsFlowManager(opp)
+        self.opp_config = opp_config
         self._entries: List[ConfigEntry] = []
-        self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
-        EntityRegistryDisabledHandler.opp).async_setup()
+        self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
+        EntityRegistryDisabledHandler(opp).async_setup()
 
     @callback
     def async_domains(self) -> List[str]:
@@ -1093,7 +1093,7 @@ class ConfigFlow(data_entry_flow.FlowHandler):
             reason=reason, description_placeholders=description_placeholders
         )
 
-    async_step.oppio = async_step_discovery
+    async_step_oppio = async_step_discovery
     async_step_homekit = async_step_discovery
     async_step_mqtt = async_step_discovery
     async_step_ssdp = async_step_discovery
@@ -1170,9 +1170,9 @@ class SystemOptions:
 class EntityRegistryDisabledHandler:
     """Handler to handle when entities related to config entries updating disabled_by."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the handler."""
-        self.opp =.opp
+        self.opp = opp
         self.registry: Optional[entity_registry.EntityRegistry] = None
         self.changed: Set[str] = set()
         self._remove_call_later: Optional[Callable[[], None]] = None
@@ -1249,8 +1249,8 @@ def _handle_entry_updated_filter(event: Event) -> bool:
     return True
 
 
-async def support_entry_unload.opp: OpenPeerPower, domain: str) -> bool:
+async def support_entry_unload(opp: OpenPeerPower, domain: str) -> bool:
     """Test if a domain supports entry unloading."""
-    integration = await loader.async_get_integration.opp, domain)
+    integration = await loader.async_get_integration(opp, domain)
     component = integration.get_component()
     return hasattr(component, "async_unload_entry")

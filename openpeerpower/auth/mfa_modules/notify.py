@@ -92,7 +92,7 @@ class NotifyAuthModule(MultiFactorAuthModule):
 
     DEFAULT_TITLE = "Notify One-Time Password"
 
-    def __init__(self,.opp: OpenPeerPower, config: Dict[str, Any]) -> None:
+    def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the user data store."""
         super().__init__.opp, config)
         self._user_settings: Optional[_UsersDict] = None

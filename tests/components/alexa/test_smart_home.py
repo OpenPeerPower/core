@@ -2238,7 +2238,7 @@ async def test_never_exposed_entities.opp):
     assert len(msg["payload"]["endpoints"]) == 1
 
 
-async def test_api_entity_not_exists.opp):
+async def test_api_entity_not_exists(opp):
     """Test api turn on process without entity."""
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#test")
 

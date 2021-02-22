@@ -53,7 +53,7 @@ async def test_full_user_flow_implementation.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_integration_already_exists.opp):
+async def test_integration_already_exists(opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 

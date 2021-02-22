@@ -171,7 +171,7 @@ async def test_form_import_with_entity_config.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_import_already_exists.opp):
+async def test_form_import_already_exists(opp):
     """Test we get the form with import source."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 

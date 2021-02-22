@@ -116,7 +116,7 @@ CONFIG_SCHEMA = vol.Schema(
 class AmcrestChecker(Http):
     """amcrest.Http wrapper for catching errors."""
 
-    def __init__(self,.opp, name, host, port, user, password):
+    def __init__(self, opp, name, host, port, user, password):
         """Initialize."""
         self.opp = opp
         self._wrap_name = name

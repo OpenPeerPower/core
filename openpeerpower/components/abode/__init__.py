@@ -144,8 +144,8 @@ async def async_setup_entry.opp, config_entry):
         )
 
     await setup_opp_events.opp)
-    await.opp.async_add_executor_job(setup_opp_services,.opp)
-    await.opp.async_add_executor_job(setup_abode_events,.opp)
+    await.opp.async_add_executor_job(setup_opp_services, opp)
+    await.opp.async_add_executor_job(setup_abode_events, opp)
 
     return True
 

@@ -220,7 +220,7 @@ def resolve_slot_synonyms(key, request):
 class AlexaResponse:
     """Help generating the response for Alexa."""
 
-    def __init__(self,.opp, intent_info):
+    def __init__(self, opp, intent_info):
         """Initialize the response."""
         self.opp =.opp
         self.speech = None

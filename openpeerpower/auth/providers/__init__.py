@@ -42,7 +42,7 @@ class AuthProvider:
     DEFAULT_TITLE = "Unnamed auth provider"
 
     def __init__(
-        self,.opp: OpenPeerPower, store: AuthStore, config: Dict[str, Any]
+        self, opp: OpenPeerPower, store: AuthStore, config: Dict[str, Any]
     ) -> None:
         """Initialize an auth provider."""
         self.opp =.opp

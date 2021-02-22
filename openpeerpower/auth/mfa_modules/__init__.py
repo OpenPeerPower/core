@@ -38,7 +38,7 @@ class MultiFactorAuthModule:
     DEFAULT_TITLE = "Unnamed auth module"
     MAX_RETRY_TIME = 3
 
-    def __init__(self,.opp: OpenPeerPower, config: Dict[str, Any]) -> None:
+    def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize an auth module."""
         self.opp =.opp
         self.config = config

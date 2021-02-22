@@ -29,7 +29,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     station_id = config[CONF_STATION_ID]
 
     session = async_get_clientsession.opp)
-    api = AmpioSmogMapData(AmpioSmog(station_id,.opp.loop, session))
+    api = AmpioSmogMapData(AmpioSmog(station_id, opp.loop, session))
 
     await api.async_update()
 

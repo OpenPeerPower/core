@@ -763,7 +763,7 @@ def test_render_with_possible_json_value_non_string_value.opp):
     assert tpl.async_render_with_possible_json_value(value) == expected
 
 
-def test_if_state_exists.opp):
+def test_if_state_exists(opp):
     """Test if state exists works."""
    .opp.states.async_set("test.object", "available")
     tpl = template.Template(

@@ -193,7 +193,7 @@ async def async_send_add_or_update_message.opp, config, entity_ids):
         if domain not in ENTITY_ADAPTERS:
             continue
 
-        alexa_entity = ENTITY_ADAPTERS[domain].opp, config,.opp.states.get(entity_id))
+        alexa_entity = ENTITY_ADAPTERS[domain].opp, config, opp.states.get(entity_id))
         endpoints.append(alexa_entity.serialize_discovery())
 
     payload = {"endpoints": endpoints, "scope": {"type": "BearerToken", "token": token}}

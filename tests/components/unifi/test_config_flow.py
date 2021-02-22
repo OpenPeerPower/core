@@ -541,7 +541,7 @@ async def test_form_ssdp.opp):
     }
 
 
-async def test_form_ssdp_aborts_if_host_already_exists.opp):
+async def test_form_ssdp_aborts_if_host_already_exists(opp):
     """Test we abort if the host is already configured."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     entry = MockConfigEntry(
@@ -563,7 +563,7 @@ async def test_form_ssdp_aborts_if_host_already_exists.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_form_ssdp_aborts_if_serial_already_exists.opp):
+async def test_form_ssdp_aborts_if_serial_already_exists(opp):
     """Test we abort if the serial is already configured."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     entry = MockConfigEntry(

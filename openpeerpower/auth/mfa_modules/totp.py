@@ -69,7 +69,7 @@ class TotpAuthModule(MultiFactorAuthModule):
     DEFAULT_TITLE = "Time-based One Time Password"
     MAX_RETRY_TIME = 5
 
-    def __init__(self,.opp: OpenPeerPower, config: Dict[str, Any]) -> None:
+    def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the user data store."""
         super().__init__.opp, config)
         self._users: Optional[Dict[str, str]] = None

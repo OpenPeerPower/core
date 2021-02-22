@@ -801,7 +801,7 @@ async def test_serviceregistry_remove_service.opp):
     assert calls_remove[-1].data["service"] == "test_service"
 
 
-async def test_serviceregistry_service_that_not_exists.opp):
+async def test_serviceregistry_service_that_not_exists(opp):
     """Test remove service that not exists."""
     calls_remove = async_capture_events.opp, EVENT_SERVICE_REMOVED)
     assert not.opp.services.has_service("test_xxx", "test_yyy")

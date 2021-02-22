@@ -97,7 +97,7 @@ async def test_ensure_config_exists_creates_config.opp):
     If not creates a new config file.
     """
     with patch("builtins.print") as mock_print:
-        await config_util.async_ensure_config_exists.opp)
+        await config_util.async_ensure_config_exists(opp)
 
     assert os.path.isfile(YAML_PATH)
     assert mock_print.called
@@ -106,7 +106,7 @@ async def test_ensure_config_exists_creates_config.opp):
 async def test_ensure_config_exists_uses_existing_config.opp):
     """Test that calling ensure_config_exists uses existing config."""
     create_file(YAML_PATH)
-    await config_util.async_ensure_config_exists.opp)
+    await config_util.async_ensure_config_exists(opp)
 
     with open(YAML_PATH) as fp:
         content = fp.read()

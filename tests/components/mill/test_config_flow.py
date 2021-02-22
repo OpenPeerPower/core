@@ -43,7 +43,7 @@ async def test_create_entry.opp):
     assert result["data"] == test_data
 
 
-async def test_flow_entry_already_exists.opp):
+async def test_flow_entry_already_exists(opp):
     """Test user input for config_entry that already exists."""
 
     test_data = {

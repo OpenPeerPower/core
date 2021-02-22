@@ -28,7 +28,7 @@ class InsecureExampleModule(MultiFactorAuthModule):
 
     DEFAULT_TITLE = "Insecure Personal Identify Number"
 
-    def __init__(self,.opp: OpenPeerPower, config: Dict[str, Any]) -> None:
+    def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the user data store."""
         super().__init__.opp, config)
         self._data = config["data"]

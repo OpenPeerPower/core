@@ -144,7 +144,7 @@ def _write_device(out, device):
 class ApnsNotificationService(BaseNotificationService):
     """Implement the notification service for the APNS service."""
 
-    def __init__(self,.opp, app_name, topic, sandbox, cert_file):
+    def __init__(self, opp, app_name, topic, sandbox, cert_file):
         """Initialize APNS application."""
         self.opp =.opp
         self.app_name = app_name

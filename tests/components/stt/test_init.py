@@ -10,7 +10,7 @@ async def test_setup_comp.opp):
     assert await async_setup_component.opp, stt.DOMAIN, {"stt": {}})
 
 
-async def test_demo_settings_not_exists.opp,.opp_client):
+async def test_demo_settings_not_exists(opp,.opp_client):
     """Test retrieve settings from demo provider."""
     assert await async_setup_component.opp, stt.DOMAIN, {"stt": {}})
     client = await.opp_client()
@@ -20,7 +20,7 @@ async def test_demo_settings_not_exists.opp,.opp_client):
     assert response.status == HTTP_NOT_FOUND
 
 
-async def test_demo_speech_not_exists.opp,.opp_client):
+async def test_demo_speech_not_exists(opp,.opp_client):
     """Test retrieve settings from demo provider."""
     assert await async_setup_component.opp, stt.DOMAIN, {"stt": {}})
     client = await.opp_client()

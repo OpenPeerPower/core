@@ -119,7 +119,7 @@ async def test_form_unknown_error.opp):
     assert form_result["errors"] == {"base": "unknown"}
 
 
-async def test_form_entry_exists.opp):
+async def test_form_entry_exists(opp):
     """Test we handle an already existing entry."""
     MockConfigEntry(
         unique_id="test-id",

@@ -30,7 +30,7 @@ class AlexaDirective:
 
         self.entity = self.entity_id = self.endpoint = self.instance = None
 
-    def load_entity(self,.opp, config):
+    def load_entity(self, opp, config):
         """Set attributes related to the entity for this request.
 
         Sets these attributes when self.has_endpoint is True:

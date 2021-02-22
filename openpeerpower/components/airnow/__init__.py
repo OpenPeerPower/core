@@ -96,7 +96,7 @@ class AirNowDataUpdateCoordinator(DataUpdateCoordinator):
     """Define an object to hold Airly data."""
 
     def __init__(
-        self,.opp, session, api_key, latitude, longitude, distance, update_interval
+        self, opp, session, api_key, latitude, longitude, distance, update_interval
     ):
         """Initialize."""
         self.latitude = latitude

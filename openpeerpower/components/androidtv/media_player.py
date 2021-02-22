@@ -168,7 +168,7 @@ ANDROIDTV_STATES = {
 
 def setup_androidtv.opp, config):
     """Generate an ADB key (if needed) and load it."""
-    adbkey = config.get(CONF_ADBKEY,.opp.config.path(STORAGE_DIR, "androidtv_adbkey"))
+    adbkey = config.get(CONF_ADBKEY, opp.config.path(STORAGE_DIR, "androidtv_adbkey"))
     if CONF_ADB_SERVER_IP not in config:
         # Use "adb_shell" (Python ADB implementation)
         if not os.path.isfile(adbkey):
@@ -198,7 +198,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return
 
     adbkey, signer, adb_log = await.opp.async_add_executor_job(
-        setup_androidtv,.opp, config
+        setup_androidtv, opp, config
     )
 
     aftv = await setup(

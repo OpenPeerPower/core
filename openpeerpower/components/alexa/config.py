@@ -11,7 +11,7 @@ class AbstractConfig(ABC):
 
     _unsub_proactive_report = None
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize abstract config."""
         self.opp =.opp
 

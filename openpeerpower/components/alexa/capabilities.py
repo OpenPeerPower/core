@@ -316,7 +316,7 @@ class AlexaEndpointHealth(AlexaCapability):
         "ja-JP",
     }
 
-    def __init__(self,.opp, entity):
+    def __init__(self, opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
         self.opp =.opp
@@ -843,7 +843,7 @@ class AlexaTemperatureSensor(AlexaCapability):
         "ja-JP",
     }
 
-    def __init__(self,.opp, entity):
+    def __init__(self, opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
         self.opp =.opp
@@ -909,7 +909,7 @@ class AlexaContactSensor(AlexaCapability):
         "ja-JP",
     }
 
-    def __init__(self,.opp, entity):
+    def __init__(self, opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
         self.opp =.opp
@@ -958,7 +958,7 @@ class AlexaMotionSensor(AlexaCapability):
         "pt-BR",
     }
 
-    def __init__(self,.opp, entity):
+    def __init__(self, opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
         self.opp =.opp
@@ -1009,7 +1009,7 @@ class AlexaThermostatController(AlexaCapability):
         "pt-BR",
     }
 
-    def __init__(self,.opp, entity):
+    def __init__(self, opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
         self.opp =.opp
@@ -1180,7 +1180,7 @@ class AlexaSecurityPanelController(AlexaCapability):
         "pt-BR",
     }
 
-    def __init__(self,.opp, entity):
+    def __init__(self, opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
         self.opp =.opp
@@ -1842,7 +1842,7 @@ class AlexaEventDetectionSensor(AlexaCapability):
 
     supported_locales = {"en-US"}
 
-    def __init__(self,.opp, entity):
+    def __init__(self, opp, entity):
         """Initialize the entity."""
         super().__init__(entity)
         self.opp =.opp

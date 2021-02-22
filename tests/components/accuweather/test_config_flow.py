@@ -97,7 +97,7 @@ async def test_requests_exceeded_error.opp):
         assert result["errors"] == {CONF_API_KEY: "requests_exceeded"}
 
 
-async def test_integration_already_exists.opp):
+async def test_integration_already_exists(opp):
     """Test we only allow a single config flow."""
     with patch(
         "accuweather.AccuWeather._async_get_data",

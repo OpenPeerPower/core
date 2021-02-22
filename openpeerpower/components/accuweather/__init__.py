@@ -92,7 +92,7 @@ async def update_listener.opp, config_entry):
 class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching AccuWeather data API."""
 
-    def __init__(self,.opp, session, api_key, location_key, forecast: bool):
+    def __init__(self, opp, session, api_key, location_key, forecast: bool):
         """Initialize."""
         self.location_key = location_key
         self.forecast = forecast

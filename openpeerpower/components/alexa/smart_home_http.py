@@ -18,7 +18,7 @@ SMART_HOME_HTTP_ENDPOINT = "/api/alexa/smart_home"
 class AlexaConfig(AbstractConfig):
     """Alexa config."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize Alexa config."""
         super().__init__.opp)
         self._config = config

@@ -356,7 +356,7 @@ async def async_migrate_entry.opp, config_entry):
 class AmbientStation:
     """Define a class to handle the Ambient websocket."""
 
-    def __init__(self,.opp, config_entry, client):
+    def __init__(self, opp, config_entry, client):
         """Initialize."""
         self._config_entry = config_entry
         self._entry_setup_complete = False

@@ -244,7 +244,7 @@ def get_default_config_dir() -> str:
     return os.path.join(data_dir, CONFIG_DIR_NAME)  # type: ignore
 
 
-async def async_ensure_config_exists.opp: OpenPeerPower) -> bool:
+async def async_ensure_config_exists(opp: OpenPeerPower) -> bool:
     """Ensure a configuration file exists in given configuration directory.
 
     Creating a default one if needed.
@@ -256,7 +256,7 @@ async def async_ensure_config_exists.opp: OpenPeerPower) -> bool:
         return True
 
     print(
-        "Unable to find configuration. Creating default one in",.opp.config.config_dir
+        "Unable to find configuration. Creating default one in", opp.config.config_dir
     )
     return await async_create_default_config.opp)
 
@@ -267,7 +267,7 @@ async def async_create_default_config.opp: OpenPeerPower) -> bool:
     Return if creation was successful.
     """
     return await.opp.async_add_executor_job(
-        _write_default_config,.opp.config.config_dir
+        _write_default_config, opp.config.config_dir
     )
 
 
@@ -320,7 +320,7 @@ async def async.opp_config_yaml.opp: OpenPeerPower) -> Dict:
     """
     # Not using async_add_executor_job because this is an internal method.
     config = await.opp.loop.run_in_executor(
-        None, load_yaml_config_file,.opp.config.path(YAML_CONFIG_FILE)
+        None, load_yaml_config_file, opp.config.path(YAML_CONFIG_FILE)
     )
     core_config = config.get(CONF_CORE, {})
     await merge_packages_config.opp, config, core_config.get(CONF_PACKAGES, {}))
@@ -777,7 +777,7 @@ async def async_process_component_config(
                .opp, config
             )
         except (vol.Invalid, OpenPeerPowerError) as ex:
-            async_log_exception(ex, domain, config,.opp, integration.documentation)
+            async_log_exception(ex, domain, config, opp, integration.documentation)
             return None
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception("Unknown error calling %s config validator", domain)
@@ -788,7 +788,7 @@ async def async_process_component_config(
         try:
             return component.CONFIG_SCHEMA(config)  # type: ignore
         except vol.Invalid as ex:
-            async_log_exception(ex, domain, config,.opp, integration.documentation)
+            async_log_exception(ex, domain, config, opp, integration.documentation)
             return None
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception("Unknown error calling %s CONFIG_SCHEMA", domain)
@@ -807,7 +807,7 @@ async def async_process_component_config(
         try:
             p_validated = component_platform_schema(p_config)
         except vol.Invalid as ex:
-            async_log_exception(ex, domain, p_config,.opp, integration.documentation)
+            async_log_exception(ex, domain, p_config, opp, integration.documentation)
             continue
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception(

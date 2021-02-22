@@ -56,7 +56,7 @@ class InvalidUser(OpenPeerPowerError):
 class Data:
     """Hold the user data."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the user data store."""
         self.opp =.opp
         self._store =.opp.helpers.storage.Store(

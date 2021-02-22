@@ -163,7 +163,7 @@ async def _configure_almond_for_ha(
         # If no URL is available, we're not going to configure Almond to connect to HA.
         return
 
-    _LOGGER.debug("Configuring Almond to connect to Open Peer Power at %s",.opp_url)
+    _LOGGER.debug("Configuring Almond to connect to Open Peer Power at %s", opp_url)
     store = storage.Store.opp, STORAGE_VERSION, STORAGE_KEY)
     data = await store.async_load()
 
@@ -247,7 +247,7 @@ class AlmondAgent(conversation.AbstractConversationAgent):
     """Almond conversation agent."""
 
     def __init__(
-        self,.opp: OpenPeerPower, api: WebAlmondAPI, entry: config_entries.ConfigEntry
+        self, opp: OpenPeerPower, api: WebAlmondAPI, entry: config_entries.ConfigEntry
     ):
         """Initialize the agent."""
         self.opp =.opp

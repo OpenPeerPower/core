@@ -31,7 +31,7 @@ class AuthStore:
     called that needs it.
     """
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the auth store."""
         self.opp =.opp
         self._users: Optional[Dict[str, models.User]] = None

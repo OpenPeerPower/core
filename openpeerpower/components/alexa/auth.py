@@ -28,7 +28,7 @@ STORAGE_REFRESH_TOKEN = "refresh_token"
 class Auth:
     """Handle authentication to send events to Alexa."""
 
-    def __init__(self,.opp, client_id, client_secret):
+    def __init__(self, opp, client_id, client_secret):
         """Initialize the Auth class."""
         self.opp =.opp
 
