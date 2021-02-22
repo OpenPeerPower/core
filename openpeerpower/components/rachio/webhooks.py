@@ -115,7 +115,7 @@ async def async_get_or_create_registered_webhook_id_and_url.opp, entry):
         config[CONF_WEBHOOK_ID] = webhook_id
         updated_config = True
 
-    if.opp.components.cloud.async_active_subscription():
+    if opp.components.cloud.async_active_subscription():
         cloudhook_url = config.get(CONF_CLOUDHOOK_URL)
         if not cloudhook_url:
             cloudhook_url = await.opp.components.cloud.async_create_cloudhook(

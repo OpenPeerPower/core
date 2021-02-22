@@ -154,7 +154,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
 
     async def async_keep_alive(now):
-        if.opp.is_stopping:
+        if opp.is_stopping:
             return
 
         try:

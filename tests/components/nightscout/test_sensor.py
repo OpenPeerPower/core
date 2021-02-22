@@ -26,7 +26,7 @@ async def test_sensor_state.opp):
     )
 
 
-async def test_sensor_error.opp):
+async def test_sensor_error(opp):
     """Test sensor state data."""
     await init_integration_unavailable.opp)
 

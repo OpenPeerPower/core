@@ -197,7 +197,7 @@ async def test_logout_view_request_timeout.opp, cloud_client):
     assert req.status == 502
 
 
-async def test_logout_view_unknown_error.opp, cloud_client):
+async def test_logout_view_unknown_error(opp, cloud_client):
     """Test unknown error while logging out."""
     cloud =.opp.data["cloud"] = MagicMock()
     cloud.logout.side_effect = UnknownError

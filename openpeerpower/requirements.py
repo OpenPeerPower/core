@@ -49,7 +49,7 @@ async def async_get_integration_with_requirements(
 
     integration = await async_get_integration.opp, domain)
 
-    if.opp.config.skip_pip:
+    if opp.config.skip_pip:
         return integration
 
     cache =.opp.data.get(DATA_INTEGRATIONS_WITH_REQS)

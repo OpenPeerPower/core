@@ -283,7 +283,7 @@ def _request_oauth_completion.opp, config):
 def setup_opp, config):
     """Set up the Wink component."""
 
-    if.opp.data.get(DOMAIN) is None:
+    if opp.data.get(DOMAIN) is None:
        .opp.data[DOMAIN] = {
             "unique_ids": [],
             "entities": {},
@@ -376,7 +376,7 @@ def setup_opp, config):
     # All other methods will complete setup before
     # EVENT_OPENPEERPOWER_START is called meaning they
     # will call subscribe via the method below. (start_subscription)
-    if.opp.data[DOMAIN]["configurator"]:
+    if opp.data[DOMAIN]["configurator"]:
         _subscribe()
 
     def keep_alive_call(event_time):
@@ -410,7 +410,7 @@ def setup_opp, config):
 
     def save_credentials(event):
         """Save currently set OAuth credentials."""
-        if.opp.data[DOMAIN]["oauth"].get("email") is None:
+        if opp.data[DOMAIN]["oauth"].get("email") is None:
             config_path = opp.config.path(WINK_CONFIG_FILE)
             _config = pywink.get_current_oauth_credentials()
             save_json(config_path, _config)

@@ -120,7 +120,7 @@ async def test_config_uses_defaults.opp, mock_socket):
 
 
 @pytest.mark.parametrize("sock_attr", ["connect", "send"])
-async def test_update_socket_error.opp, mock_socket, sock_attr):
+async def test_update_socket_error(opp, mock_socket, sock_attr):
     """Test socket errors during update."""
     socket_method = getattr(mock_socket, sock_attr)
     socket_method.side_effect = OSError("Boom")

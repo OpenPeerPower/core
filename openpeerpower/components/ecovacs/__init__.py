@@ -84,7 +84,7 @@ def setup_opp, config):
     # Listen for HA stop to disconnect.
    .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop)
 
-    if.opp.data[ECOVACS_DEVICES]:
+    if opp.data[ECOVACS_DEVICES]:
         _LOGGER.debug("Starting vacuum components")
         discovery.load_platform.opp, "vacuum", DOMAIN, {}, config)
 

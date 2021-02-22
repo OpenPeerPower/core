@@ -186,7 +186,7 @@ class TwinklyLight(LightEntity):
 
                 if self._conf is not None:
                     # If the name has changed, persist it in conf entry,
-                    # so we will be able to restore this new name if.opp is started while the LED string is offline.
+                    # so we will be able to restore this new name if opp is started while the LED string is offline.
                     self.opp.config_entries.async_update_entry(
                         self._conf,
                         data={

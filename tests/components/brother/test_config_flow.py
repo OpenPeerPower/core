@@ -69,7 +69,7 @@ async def test_invalid_hostname.opp):
     assert result["errors"] == {CONF_HOST: "wrong_host"}
 
 
-async def test_connection_error.opp):
+async def test_connection_error(opp):
     """Test connection to host error."""
     with patch("brother.Brother._get_data", side_effect=ConnectionError()):
         result = await.opp.config_entries.flow.async_init(
@@ -79,7 +79,7 @@ async def test_connection_error.opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_snmp_error.opp):
+async def test_snmp_error(opp):
     """Test SNMP error."""
     with patch("brother.Brother._get_data", side_effect=SnmpError("error")):
         result = await.opp.config_entries.flow.async_init(
@@ -89,7 +89,7 @@ async def test_snmp_error.opp):
         assert result["errors"] == {"base": "snmp_error"}
 
 
-async def test_unsupported_model_error.opp):
+async def test_unsupported_model_error(opp):
     """Test unsupported printer model error."""
     with patch("brother.Brother._get_data", side_effect=UnsupportedModel("error")):
 
@@ -128,7 +128,7 @@ async def test_zeroconf_no_data.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_zeroconf_not_brother_printer_error.opp):
+async def test_zeroconf_not_brother_printer_error(opp):
     """Test we abort zeroconf flow if printer isn't Brother."""
     with patch(
         "brother.Brother._get_data",
@@ -145,7 +145,7 @@ async def test_zeroconf_not_brother_printer_error.opp):
         assert result["reason"] == "not_brother_printer"
 
 
-async def test_zeroconf_snmp_error.opp):
+async def test_zeroconf_snmp_error(opp):
     """Test we abort zeroconf flow on SNMP error."""
     with patch("brother.Brother._get_data", side_effect=SnmpError("error")):
 

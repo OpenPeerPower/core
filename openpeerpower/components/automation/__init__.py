@@ -563,7 +563,7 @@ async def _async_process_config(
             )
 
             if CONF_CONDITION in config_block:
-                cond_func = await _async_process_if.opp, config, config_block)
+                cond_func = await _async_process_if opp, config, config_block)
 
                 if cond_func is None:
                     continue
@@ -601,7 +601,7 @@ async def _async_process_config(
     return blueprints_used
 
 
-async def _async_process_if.opp, config, p_config):
+async def _async_process_if opp, config, p_config):
     """Process if checks."""
     if_configs = p_config[CONF_CONDITION]
 

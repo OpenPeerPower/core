@@ -1376,7 +1376,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         self.globals["timedelta"] = timedelta
         self.globals["strptime"] = strptime
         self.globals["urlencode"] = urlencode
-        if.opp is None:
+        if opp is None:
             return
 
         # We mark these as a context functions to ensure they get

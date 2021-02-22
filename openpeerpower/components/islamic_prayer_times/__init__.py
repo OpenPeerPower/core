@@ -60,7 +60,7 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload Islamic Prayer entry from config_entry."""
-    if.opp.data[DOMAIN].event_unsub:
+    if opp.data[DOMAIN].event_unsub:
        .opp.data[DOMAIN].event_unsub()
    .opp.data.pop(DOMAIN)
     await.opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
@@ -201,6 +201,6 @@ class IslamicPrayerClient:
     @staticmethod
     async def async_options_updated.opp, entry):
         """Triggered by config entry options updates."""
-        if.opp.data[DOMAIN].event_unsub:
+        if opp.data[DOMAIN].event_unsub:
            .opp.data[DOMAIN].event_unsub()
         await.opp.data[DOMAIN].async_update()

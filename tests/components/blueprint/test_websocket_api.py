@@ -149,7 +149,7 @@ async def test_save_existing_file.opp, aioclient_mock, opp_ws_client):
     assert msg["error"] == {"code": "already_exists", "message": "File already exists"}
 
 
-async def test_save_file_error.opp, aioclient_mock, opp_ws_client):
+async def test_save_file_error(opp, aioclient_mock, opp_ws_client):
     """Test saving blueprints with OS error."""
     with patch("pathlib.Path.write_text", side_effect=OSError):
         client = await.opp_ws_client.opp)

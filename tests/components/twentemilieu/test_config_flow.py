@@ -31,7 +31,7 @@ async def test_show_set_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_connection_error.opp, aioclient_mock):
+async def test_connection_error(opp, aioclient_mock):
     """Test we show user form on Twente Milieu connection error."""
     aioclient_mock.post(
         "https://twentemilieuapi.ximmio.com/api/FetchAdress", exc=aiohttp.ClientError

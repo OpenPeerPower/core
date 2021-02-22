@@ -35,7 +35,7 @@ async def test_invalid_access_token.opp):
         assert result["errors"] == {CONF_ACCESS_TOKEN: "invalid_access_token"}
 
 
-async def test_unexpected_api_error.opp):
+async def test_unexpected_api_error(opp):
     """Test that we abort on generic errors."""
 
     with patch("python_awair.AwairClient.query", side_effect=AwairError()):
@@ -47,7 +47,7 @@ async def test_unexpected_api_error.opp):
         assert result["reason"] == "unknown"
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when adding a duplicate config."""
 
     with patch(
@@ -68,7 +68,7 @@ async def test_duplicate_error.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_no_devices_error.opp):
+async def test_no_devices_error(opp):
     """Test that errors are shown when the API returns no devices."""
 
     with patch(
@@ -103,7 +103,7 @@ async def test_import.opp):
         assert result["result"].unique_id == UNIQUE_ID
 
 
-async def test_import_aborts_on_api_error.opp):
+async def test_import_aborts_on_api_error(opp):
     """Test config.yaml imports on api error."""
 
     with patch("python_awair.AwairClient.query", side_effect=AwairError()):

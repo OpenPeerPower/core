@@ -30,7 +30,7 @@ from tests.components.ruckus_unleashed import (
 )
 
 
-async def test_setup_entry_login_error.opp):
+async def test_setup_entry_login_error(opp):
     """Test entry setup failed due to login error."""
     entry = mock_config_entry()
     with patch(
@@ -44,7 +44,7 @@ async def test_setup_entry_login_error.opp):
     assert result is False
 
 
-async def test_setup_entry_connection_error.opp):
+async def test_setup_entry_connection_error(opp):
     """Test entry setup failed due to connection error."""
     entry = mock_config_entry()
     with patch(

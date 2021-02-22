@@ -8,7 +8,7 @@ from openpeerpower.config_entries import SOURCE_USER
 from tests.common import MockConfigEntry
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_ZIP_CODE: "12345"}
 

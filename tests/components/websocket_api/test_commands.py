@@ -208,7 +208,7 @@ async def test_call_service_schema_validation_error(
     assert len(calls) == 0
 
 
-async def test_call_service_error.opp, websocket_client):
+async def test_call_service_error(opp, websocket_client):
     """Test call service command with error."""
 
     @callback
@@ -604,7 +604,7 @@ async def test_render_template_manual_entity_ids_no_longer_needed(
     }
 
 
-async def test_render_template_with_error.opp, websocket_client, caplog):
+async def test_render_template_with_error(opp, websocket_client, caplog):
     """Test a template with an error."""
     await websocket_client.send_json(
         {"id": 5, "type": "render_template", "template": "{{ my_unknown_var() + 1 }}"}
@@ -619,7 +619,7 @@ async def test_render_template_with_error.opp, websocket_client, caplog):
     assert "TemplateError" not in caplog.text
 
 
-async def test_render_template_with_timeout_and_error.opp, websocket_client, caplog):
+async def test_render_template_with_timeout_and_error(opp, websocket_client, caplog):
     """Test a template with an error with a timeout."""
     await websocket_client.send_json(
         {
@@ -654,7 +654,7 @@ async def test_render_template_error_in_template_code.opp, websocket_client, cap
     assert "TemplateError" not in caplog.text
 
 
-async def test_render_template_with_delayed_error.opp, websocket_client, caplog):
+async def test_render_template_with_delayed_error(opp, websocket_client, caplog):
     """Test a template with an error that only happens after a state change."""
    .opp.states.async_set("sensor.test", "on")
     await.opp.async_block_till_done()

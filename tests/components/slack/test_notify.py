@@ -67,7 +67,7 @@ async def test_setup_opp: OpenPeerPowerType, caplog: LogCaptureFixture):
         client.auth_test.assert_called_once_with()
 
 
-async def test_setup_clientError.opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup_clienterror(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
     """Test setup slack notify with aiohttp.ClientError exception."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config[notify.DOMAIN][0].update({CONF_USERNAME: "user", CONF_ICON: "icon"})
@@ -88,7 +88,7 @@ async def test_setup_clientError.opp: OpenPeerPowerType, caplog: LogCaptureFixtu
         assert aiohttp.ClientError.__qualname__ in record.message
 
 
-async def test_setup_slackApiError.opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup_slackApierror(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
     """Test setup slack notify with SlackApiError exception."""
     config = DEFAULT_CONFIG
 

@@ -73,7 +73,7 @@ async def test_invalid_credentials.opp):
         assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_connection_error.opp):
+async def test_connection_error(opp):
     """Test other than invalid credentials throws an error."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 

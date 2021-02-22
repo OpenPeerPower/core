@@ -161,15 +161,15 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
     tasks = []
 
-    if.opp.data[DOMAIN][BINARY_SENSOR_DOMAIN]:
+    if opp.data[DOMAIN][BINARY_SENSOR_DOMAIN]:
         tasks += [forward_unload(entry, BINARY_SENSOR_DOMAIN)]
-    if.opp.data[DOMAIN][CLIMATE_DOMAIN]:
+    if opp.data[DOMAIN][CLIMATE_DOMAIN]:
         tasks += [forward_unload(entry, CLIMATE_DOMAIN)]
-    if.opp.data[DOMAIN][LIGHT_DOMAIN]:
+    if opp.data[DOMAIN][LIGHT_DOMAIN]:
         tasks += [forward_unload(entry, LIGHT_DOMAIN)]
-    if.opp.data[DOMAIN][SENSOR_DOMAIN]:
+    if opp.data[DOMAIN][SENSOR_DOMAIN]:
         tasks += [forward_unload(entry, SENSOR_DOMAIN)]
-    if.opp.data[DOMAIN][SWITCH_DOMAIN]:
+    if opp.data[DOMAIN][SWITCH_DOMAIN]:
         tasks += [forward_unload(entry, SWITCH_DOMAIN)]
 
    .opp.data[DOMAIN].clear()

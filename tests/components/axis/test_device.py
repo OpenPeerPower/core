@@ -422,7 +422,7 @@ async def test_device_trigger_reauth_flow.opp):
     assert.opp.data[AXIS_DOMAIN] == {}
 
 
-async def test_device_unknown_error.opp):
+async def test_device_unknown_error(opp):
     """Unknown errors are handled."""
     with patch.object(axis.device, "get_device", side_effect=Exception):
         await setup_axis_integration.opp)
@@ -474,7 +474,7 @@ async def test_get_device_device_unavailable.opp):
         await axis.device.get_device.opp, host="", port="", username="", password="")
 
 
-async def test_get_device_unknown_error.opp):
+async def test_get_device_unknown_error(opp):
     """Device yield unknown error."""
     with patch(
         "axis.vapix.Vapix.request", side_effect=axislib.AxisException

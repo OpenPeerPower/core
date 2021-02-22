@@ -54,7 +54,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
    .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = {}
    .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = None
 
-    temperature_unit = "C" if.opp.config.units.is_metric else "F"
+    temperature_unit = "C" if opp.config.units.is_metric else "F"
 
     options = aioshelly.ConnectionOptions(
         entry.data[CONF_HOST],

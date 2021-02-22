@@ -121,7 +121,7 @@ async def test_package_invalid.opp):
         assert res.keys() == {"openpeerpower"}
 
 
-async def test_bootstrap_error.opp):
+async def test_bootstrap_error(opp):
     """Test a valid platform setup."""
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "automation: !include no.yaml"}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):

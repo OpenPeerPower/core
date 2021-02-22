@@ -21,7 +21,7 @@ def get_snmp_engine.opp):
 
     @callback
     def shutdown_listener(ev):
-        if.opp.data.get(DOMAIN):
+        if opp.data.get(DOMAIN):
             _LOGGER.debug("Unconfiguring SNMP engine")
             lcd.unconfigure.opp.data[DOMAIN][SNMP], None)
 

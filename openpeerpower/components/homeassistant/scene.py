@@ -153,7 +153,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     _process_scenes_config(opp, async_add_entities, config)
 
     # This platform can be loaded multiple times. Only first time register the service.
-    if.opp.services.has_service(SCENE_DOMAIN, SERVICE_RELOAD):
+    if opp.services.has_service(SCENE_DOMAIN, SERVICE_RELOAD):
         return
 
     # Store platform for later.

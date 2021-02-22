@@ -850,7 +850,7 @@ async def test_track_template.opp):
     assert iterate_calls[0][2].state == "on"
 
 
-async def test_track_template_error.opp, caplog):
+async def test_track_template_error(opp, caplog):
     """Test tracking template with error."""
     template_error = Template("{{ (states.switch | lunch) > 0 }}", opp)
     error_calls = []
@@ -2094,7 +2094,7 @@ async def test_async_track_template_result_multiple_templates_mixing_domain.opp)
     ]
 
 
-async def test_async_track_template_result_raise_on_template_error.opp):
+async def test_async_track_template_result_raise_on_template_error(opp):
     """Test that we raise as soon as we encounter a failed template."""
 
     with pytest.raises(TemplateError):

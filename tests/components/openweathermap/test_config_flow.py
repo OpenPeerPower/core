@@ -143,7 +143,7 @@ async def test_form_invalid_api_key.opp):
         assert result["errors"] == {"base": "invalid_api_key"}
 
 
-async def test_form_api_call_error.opp):
+async def test_form_api_call_error(opp):
     """Test setting up with api call error."""
     mocked_owm = _create_mocked_owm(True)
 

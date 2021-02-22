@@ -226,7 +226,7 @@ class FlicButton(BinarySensorEntity):
 
         # Return if click event is in ignored click types
        .opp_click_type = self.opp_click_types[click_type]
-        if.opp_click_type in self._ignored_click_types:
+        if opp_click_type in self._ignored_click_types:
             return
 
         self.opp.bus.fire(

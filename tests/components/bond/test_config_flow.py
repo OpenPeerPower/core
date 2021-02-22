@@ -141,7 +141,7 @@ async def test_user_form_old_firmware.opp: core.OpenPeerPower):
     assert result2["errors"] == {"base": "old_firmware"}
 
 
-async def test_user_form_unexpected_client_error.opp: core.OpenPeerPower):
+async def test_user_form_unexpected_client_error(opp: core.OpenPeerPower):
     """Test we handle unexpected client error gracefully."""
     await _help_test_form_unexpected_error(
        .opp,
@@ -151,7 +151,7 @@ async def test_user_form_unexpected_client_error.opp: core.OpenPeerPower):
     )
 
 
-async def test_user_form_unexpected_error.opp: core.OpenPeerPower):
+async def test_user_form_unexpected_error(opp: core.OpenPeerPower):
     """Test we handle unexpected error gracefully."""
     await _help_test_form_unexpected_error(
        .opp,
@@ -251,7 +251,7 @@ async def test_zeroconf_already_configured.opp: core.OpenPeerPower):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_zeroconf_form_unexpected_error.opp: core.OpenPeerPower):
+async def test_zeroconf_form_unexpected_error(opp: core.OpenPeerPower):
     """Test we handle unexpected error gracefully."""
     await _help_test_form_unexpected_error(
        .opp,

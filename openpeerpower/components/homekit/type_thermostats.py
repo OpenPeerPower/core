@@ -575,7 +575,7 @@ class WaterHeater(HomeAccessory):
         """Change operation mode to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set heat-cool to %d", self.entity_id, value)
        .opp_value = HC_HOMEKIT_TO_HASS[value]
-        if.opp_value != HVAC_MODE_HEAT:
+        if opp_value != HVAC_MODE_HEAT:
             if self.char_target_heat_cool.value != 1:
                 self.char_target_heat_cool.set_value(1)  # Heat
 

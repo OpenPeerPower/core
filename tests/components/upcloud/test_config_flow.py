@@ -30,7 +30,7 @@ async def test_show_set_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_connection_error.opp, requests_mock):
+async def test_connection_error(opp, requests_mock):
     """Test we show user form on connection error."""
     requests_mock.request(ANY, ANY, exc=requests.exceptions.ConnectionError())
     result = await.opp.config_entries.flow.async_init(
@@ -42,7 +42,7 @@ async def test_connection_error.opp, requests_mock):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_login_error.opp, requests_mock):
+async def test_login_error(opp, requests_mock):
     """Test we show user form with appropriate error on response failure."""
     requests_mock.request(
         ANY,

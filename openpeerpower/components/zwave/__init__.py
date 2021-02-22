@@ -261,7 +261,7 @@ async def async_get_ozw_migration_data.opp):
         _LOGGER.error("Config entry not set up")
         return data_to_migrate
 
-    if.opp.data.get(DATA_ZWAVE_CONFIG_YAML_PRESENT):
+    if opp.data.get(DATA_ZWAVE_CONFIG_YAML_PRESENT):
         _LOGGER.warning(
             "Remove %s from configuration.yaml "
             "to avoid setting up this integration on restart "
@@ -512,7 +512,7 @@ async def async_setup_entry.opp, config_entry):
         entity = ZWaveNodeEntity(node, network)
 
         async def _add_node_to_component():
-            if.opp.data[DATA_DEVICES].get(entity.unique_id):
+            if opp.data[DATA_DEVICES].get(entity.unique_id):
                 return
 
             name = node_name(node)
@@ -655,7 +655,7 @@ async def async_setup_entry.opp, config_entry):
         """Stop Z-Wave network."""
         _LOGGER.info("Stopping Z-Wave network")
         network.stop()
-        if.opp.state == CoreState.running:
+        if opp.state == CoreState.running:
            .opp.bus.fire(const.EVENT_NETWORK_STOP)
 
     async def rename_node(service):

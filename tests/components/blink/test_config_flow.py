@@ -98,7 +98,7 @@ async def test_form_2fa.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_2fa_connect_error.opp):
+async def test_form_2fa_connect_error(opp):
     """Test we report a connect error during 2fa setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     result = await.opp.config_entries.flow.async_init(
@@ -180,7 +180,7 @@ async def test_form_2fa_invalid_key.opp):
     assert result3["errors"] == {"base": "invalid_access_token"}
 
 
-async def test_form_2fa_unknown_error.opp):
+async def test_form_2fa_unknown_error(opp):
     """Test we report an unknown error during 2fa setup."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     result = await.opp.config_entries.flow.async_init(
@@ -239,7 +239,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_unknown_error.opp):
+async def test_form_unknown_error(opp):
     """Test we handle unknown error at startup."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

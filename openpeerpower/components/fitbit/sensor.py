@@ -270,7 +270,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         if unit_system == "default":
             authd_client.system = authd_client.user_profile_get()["user"]["locale"]
             if authd_client.system != "en_GB":
-                if.opp.config.units.is_metric:
+                if opp.config.units.is_metric:
                     authd_client.system = "metric"
                 else:
                     authd_client.system = "en_US"

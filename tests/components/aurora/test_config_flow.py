@@ -69,7 +69,7 @@ async def test_form_cannot_connect.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_with_unknown_error.opp):
+async def test_with_unknown_error(opp):
     """Test with unknown error response from the API."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     result = await.opp.config_entries.flow.async_init(

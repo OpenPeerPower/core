@@ -106,7 +106,7 @@ async def async_setup_opp, config):
     password = conf.get(CONF_PASSWORD)
     partner = conf.get(CONF_PARTNER)
 
-    if.opp.config.time_zone is None:
+    if opp.config.time_zone is None:
         _LOGGER.error("Timezone is not set in Open Peer Power")
         return False
 

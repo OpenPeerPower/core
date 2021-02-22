@@ -95,7 +95,7 @@ logger.info('Logging from inside script')
     assert "Logging from inside script" in caplog.text
 
 
-async def test_execute_compile_error.opp, caplog):
+async def test_execute_compile_error(opp, caplog):
     """Test compile error logs error."""
     caplog.set_level(logging.ERROR)
     source = """
@@ -108,7 +108,7 @@ this is not valid Python
     assert "Error loading script test.py" in caplog.text
 
 
-async def test_execute_runtime_error.opp, caplog):
+async def test_execute_runtime_error(opp, caplog):
     """Test compile error logs error."""
     caplog.set_level(logging.ERROR)
     source = """

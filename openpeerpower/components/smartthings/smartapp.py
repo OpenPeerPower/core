@@ -94,9 +94,9 @@ async def validate_installed_app(api, installed_app_id: str):
 
 def validate_webhook_requirements.opp: OpenPeerPowerType) -> bool:
     """Ensure Open Peer Power is setup properly to receive webhooks."""
-    if.opp.components.cloud.async_active_subscription():
+    if opp.components.cloud.async_active_subscription():
         return True
-    if.opp.data[DOMAIN][CONF_CLOUDHOOK_URL] is not None:
+    if opp.data[DOMAIN][CONF_CLOUDHOOK_URL] is not None:
         return True
     return get_webhook_url.opp).lower().startswith("https://")
 
@@ -108,7 +108,7 @@ def get_webhook_url.opp: OpenPeerPowerType) -> str:
     Return the cloudhook if available, otherwise local webhook.
     """
     cloudhook_url =.opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
-    if.opp.components.cloud.async_active_subscription() and cloudhook_url is not None:
+    if opp.components.cloud.async_active_subscription() and cloudhook_url is not None:
         return cloudhook_url
     return webhook.async_generate_url.opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
 

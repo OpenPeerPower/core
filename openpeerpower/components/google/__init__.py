@@ -236,7 +236,7 @@ def setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
     def _found_calendar(call):
         """Check if we know about a calendar and generate PLATFORM_DISCOVER."""
         calendar = get_calendar_info.opp, call.data)
-        if.opp.data[DATA_INDEX].get(calendar[CONF_CAL_ID]) is not None:
+        if opp.data[DATA_INDEX].get(calendar[CONF_CAL_ID]) is not None:
             return
 
        .opp.data[DATA_INDEX].update({calendar[CONF_CAL_ID]: calendar})

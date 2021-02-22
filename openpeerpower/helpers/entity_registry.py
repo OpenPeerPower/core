@@ -706,7 +706,7 @@ def async_setup_entity_restore(
         event_filter=cleanup_restored_states_filter,
     )
 
-    if.opp.is_running:
+    if opp.is_running:
         return
 
     @callback

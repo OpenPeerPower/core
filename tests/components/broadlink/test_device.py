@@ -39,7 +39,7 @@ async def test_device_setup_opp):
     assert mock_init.call_count == 0
 
 
-async def test_device_setup_authentication_error.opp):
+async def test_device_setup_authentication_error(opp):
     """Test we handle an authentication error."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -82,7 +82,7 @@ async def test_device_setup_network_timeout.opp):
     assert mock_init.call_count == 0
 
 
-async def test_device_setup_os_error.opp):
+async def test_device_setup_os_error(opp):
     """Test we handle an OS error."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
@@ -140,7 +140,7 @@ async def test_device_setup_update_network_timeout.opp):
     assert mock_init.call_count == 0
 
 
-async def test_device_setup_update_authorization_error.opp):
+async def test_device_setup_update_authorization_error(opp):
     """Test we handle an authorization error in the update step."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
@@ -163,7 +163,7 @@ async def test_device_setup_update_authorization_error.opp):
     assert mock_init.call_count == 0
 
 
-async def test_device_setup_update_authentication_error.opp):
+async def test_device_setup_update_authentication_error(opp):
     """Test we handle an authentication error in the update step."""
     device = get_device("Garage")
     mock_api = device.get_mock_api()
@@ -225,7 +225,7 @@ async def test_device_setup_get_fwversion_broadlink_exception.opp):
     assert forward_entries == domains
 
 
-async def test_device_setup_get_fwversion_os_error.opp):
+async def test_device_setup_get_fwversion_os_error(opp):
     """Test we load the device even if we cannot read the firmware version."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
@@ -283,7 +283,7 @@ async def test_device_unload_works.opp):
     assert forward_entries == domains
 
 
-async def test_device_unload_authentication_error.opp):
+async def test_device_unload_authentication_error(opp):
     """Test we unload a device that failed the authentication step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()

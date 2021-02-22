@@ -160,7 +160,7 @@ def test_load_yaml_config_preserves_key_order():
     )
 
 
-async def test_create_default_config_returns_none_if_write_error.opp):
+async def test_create_default_config_returns_none_if_write_error(opp):
     """Test the writing of a default configuration.
 
     Non existing folder returns None.

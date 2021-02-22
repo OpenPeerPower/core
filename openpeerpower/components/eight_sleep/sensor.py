@@ -48,7 +48,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     sensors = discovery_info[CONF_SENSORS]
     eight =.opp.data[DATA_EIGHT]
 
-    if.opp.config.units.is_metric:
+    if opp.config.units.is_metric:
         units = "si"
     else:
         units = "us"

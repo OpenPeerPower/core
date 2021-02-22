@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_enti
     if entities:
         async_add_entities(entities, update_before_add=True)
 
-    if.opp.data[TPLINK_DOMAIN][f"{CONF_LIGHT}_remaining"]:
+    if opp.data[TPLINK_DOMAIN][f"{CONF_LIGHT}_remaining"]:
         raise PlatformNotReady
 
 

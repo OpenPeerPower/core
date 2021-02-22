@@ -390,7 +390,7 @@ async def _async_setup_themes.opp, themes):
         config = await async.opp_config_yaml.opp)
         new_themes = config[DOMAIN].get(CONF_THEMES, {})
        .opp.data[DATA_THEMES] = new_themes
-        if.opp.data[DATA_DEFAULT_THEME] not in new_themes:
+        if opp.data[DATA_DEFAULT_THEME] not in new_themes:
            .opp.data[DATA_DEFAULT_THEME] = DEFAULT_THEME
         if (
            .opp.data.get(DATA_DEFAULT_DARK_THEME)
@@ -550,7 +550,7 @@ def websocket_get_panels.opp, connection, msg):
 @websocket_api.websocket_command({"type": "frontend/get_themes"})
 def websocket_get_themes.opp, connection, msg):
     """Handle get themes command."""
-    if.opp.config.safe_mode:
+    if opp.config.safe_mode:
         connection.send_message(
             websocket_api.result_message(
                 msg["id"],

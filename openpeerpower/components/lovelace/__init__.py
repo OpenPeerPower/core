@@ -145,7 +145,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         "yaml_dashboards": config[DOMAIN].get(CONF_DASHBOARDS, {}),
     }
 
-    if.opp.config.safe_mode:
+    if opp.config.safe_mode:
         return True
 
     async def storage_dashboard_changed(change_type, item_id, item):

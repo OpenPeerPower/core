@@ -40,7 +40,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if value_template is not None:
         value_template.opp =.opp
 
-    if.opp.config.is_allowed_path(file_path):
+    if opp.config.is_allowed_path(file_path):
         async_add_entities([FileSensor(name, file_path, unit, value_template)], True)
     else:
         _LOGGER.error("'%s' is not an allowed directory", file_path)

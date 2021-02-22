@@ -67,7 +67,7 @@ async def test_flow_entry_already_exists(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_connection_error.opp):
+async def test_connection_error(opp):
     """Test connection error."""
 
     test_data = {

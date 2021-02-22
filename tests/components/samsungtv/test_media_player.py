@@ -391,7 +391,7 @@ async def test_send_key_websocketexception.opp, remote):
     assert state.state == STATE_ON
 
 
-async def test_send_key_os_error.opp, remote):
+async def test_send_key_os_error(opp, remote):
     """Testing broken pipe Exception."""
     await setup_samsungtv.opp, MOCK_CONFIG)
     remote.control = Mock(side_effect=OSError("Boom"))
@@ -490,7 +490,7 @@ async def test_turn_off_legacy.opp, remote):
     assert remote.control.call_args_list == [call("KEY_POWEROFF")]
 
 
-async def test_turn_off_os_error.opp, remote, caplog):
+async def test_turn_off_os_error(opp, remote, caplog):
     """Test for turn_off with OSError."""
     caplog.set_level(logging.DEBUG)
     await setup_samsungtv.opp, MOCK_CONFIG)

@@ -172,7 +172,7 @@ async def test_dump_data.opp):
     assert written_states[1]["state"]["state"] == "off"
 
 
-async def test_dump_error.opp):
+async def test_dump_error(opp):
     """Test that we cache data."""
     states = [
         State("input_boolean.b0", "on"),
@@ -201,7 +201,7 @@ async def test_dump_error.opp):
     assert mock_write_data.called
 
 
-async def test_load_error.opp):
+async def test_load_error(opp):
     """Test that we cache data."""
     entity = RestoreEntity()
     entity.opp =.opp

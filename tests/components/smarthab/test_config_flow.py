@@ -58,7 +58,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_service_error.opp):
+async def test_form_service_error(opp):
     """Test we handle service errors."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -77,7 +77,7 @@ async def test_form_service_error.opp):
     assert result2["errors"] == {"base": "service"}
 
 
-async def test_form_unknown_error.opp):
+async def test_form_unknown_error(opp):
     """Test we handle unknown errors."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

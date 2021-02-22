@@ -223,7 +223,7 @@ async def test_attribute_templates.opp):
     assert state.attributes["test_attribute"] == "It Works."
 
 
-async def test_template_syntax_error.opp):
+async def test_template_syntax_error(opp):
     """Test templating syntax error."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(

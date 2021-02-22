@@ -453,7 +453,7 @@ async def test_zeroconf_sleeping_device.opp):
         (asyncio.TimeoutError, "cannot_connect"),
     ],
 )
-async def test_zeroconf_sleeping_device_error.opp, error):
+async def test_zeroconf_sleeping_device_error(opp, error):
     """Test sleeping device configuration via zeroconf with error."""
     exc = error
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -482,7 +482,7 @@ async def test_zeroconf_sleeping_device_error.opp, error):
 @pytest.mark.parametrize(
     "error", [(asyncio.TimeoutError, "cannot_connect"), (ValueError, "unknown")]
 )
-async def test_zeroconf_confirm_error.opp, error):
+async def test_zeroconf_confirm_error(opp, error):
     """Test we get the form."""
     exc, base_error = error
     await setup.async_setup_component.opp, "persistent_notification", {})

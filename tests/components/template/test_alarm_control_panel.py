@@ -235,7 +235,7 @@ async def test_no_action_scripts.opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
 
-async def test_template_syntax_error.opp, caplog):
+async def test_template_syntax_error(opp, caplog):
     """Test templating syntax error."""
     await setup.async_setup_component(
        .opp,

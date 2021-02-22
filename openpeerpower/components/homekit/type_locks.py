@@ -67,7 +67,7 @@ class Lock(HomeAccessory):
     def async_update_state(self, new_state):
         """Update lock after state changed."""
        .opp_state = new_state.state
-        if.opp_state in HASS_TO_HOMEKIT:
+        if opp_state in HASS_TO_HOMEKIT:
             current_lock_state = HASS_TO_HOMEKIT.opp_state]
             _LOGGER.debug(
                 "%s: Updated current state to %s (%d)",
@@ -78,7 +78,7 @@ class Lock(HomeAccessory):
             # LockTargetState only supports locked and unlocked
             # Must set lock target state before current state
             # or there will be no notification
-            if.opp_state in (STATE_LOCKED, STATE_UNLOCKED):
+            if opp_state in (STATE_LOCKED, STATE_UNLOCKED):
                 if self.char_target_state.value != current_lock_state:
                     self.char_target_state.set_value(current_lock_state)
 

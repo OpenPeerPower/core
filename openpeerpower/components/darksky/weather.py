@@ -93,7 +93,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     units = config.get(CONF_UNITS)
     if not units:
-        units = "ca" if.opp.config.units.is_metric else "us"
+        units = "ca" if opp.config.units.is_metric else "us"
 
     dark_sky = DarkSkyData(config.get(CONF_API_KEY), latitude, longitude, units)
 

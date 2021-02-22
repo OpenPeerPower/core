@@ -26,7 +26,7 @@ async def test_show_form.opp: OpenPeerPower) -> None:
     assert result["step_id"] == "user"
 
 
-async def test_authorization_error.opp: OpenPeerPower) -> None:
+async def test_authorization_error(opp: OpenPeerPower) -> None:
     """Test we show user form on connection error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -49,7 +49,7 @@ async def test_authorization_error.opp: OpenPeerPower) -> None:
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_connection_error.opp: OpenPeerPower) -> None:
+async def test_connection_error(opp: OpenPeerPower) -> None:
     """Test we show user form on connection error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -101,7 +101,7 @@ async def test_full_flow_implementation.opp: OpenPeerPower) -> None:
     assert result2["data"][CONF_PASSWORD] == FIXTURE_USER_INPUT[CONF_PASSWORD]
 
 
-async def test_reauth_authorization_error.opp: OpenPeerPower) -> None:
+async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
     """Test we show user form on authorization error."""
     with patch(
         "openpeerpower.components.ovo_energy.config_flow.OVOEnergy.authenticate",
@@ -125,7 +125,7 @@ async def test_reauth_authorization_error.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "authorization_error"}
 
 
-async def test_reauth_connection_error.opp: OpenPeerPower) -> None:
+async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
     """Test we show user form on connection error."""
     with patch(
         "openpeerpower.components.ovo_energy.config_flow.OVOEnergy.authenticate",

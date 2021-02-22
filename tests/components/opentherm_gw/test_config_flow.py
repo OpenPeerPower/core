@@ -151,7 +151,7 @@ async def test_form_connection_timeout.opp):
     assert len(mock_connect.mock_calls) == 1
 
 
-async def test_form_connection_error.opp):
+async def test_form_connection_error(opp):
     """Test we handle serial connection error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

@@ -125,7 +125,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Firmata domain."""
     # Delete specific entries that no longer exist in the config
-    if.opp.config_entries.async_entries(DOMAIN):
+    if opp.config_entries.async_entries(DOMAIN):
         for entry in.opp.config_entries.async_entries(DOMAIN):
             remove = True
             for board in config[DOMAIN]:

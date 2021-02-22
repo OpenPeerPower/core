@@ -48,7 +48,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     if CONF_UNIT_SYSTEM in config:
         unit_system = config[CONF_UNIT_SYSTEM]
-    elif.opp.config.units.is_metric:
+    elif opp.config.units.is_metric:
         unit_system = UNIT_SYSTEMS[1]
     else:
         unit_system = UNIT_SYSTEMS[0]

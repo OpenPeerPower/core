@@ -131,7 +131,7 @@ async def test_service_say_german_service.opp, mock_gtts, calls):
     }
 
 
-async def test_service_say_error.opp, mock_gtts, calls):
+async def test_service_say_error(opp, mock_gtts, calls):
     """Test service call say with http response 400."""
     mock_gtts.return_value.write_to_fp.side_effect = gTTSError
     await async_setup_component(

@@ -456,7 +456,7 @@ async def test_credential_timeout.opp):
     assert result["errors"] == {"base": "credential_timeout"}
 
 
-async def test_wrong_pin_error.opp):
+async def test_wrong_pin_error(opp):
     """Test that incorrect pin throws an error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await.opp.config_entries.flow.async_init(
@@ -488,7 +488,7 @@ async def test_wrong_pin_error.opp):
     assert result["errors"] == {"base": "login_failed"}
 
 
-async def test_device_connection_error.opp):
+async def test_device_connection_error(opp):
     """Test that device not connected or on throws an error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await.opp.config_entries.flow.async_init(
@@ -520,7 +520,7 @@ async def test_device_connection_error.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_manual_mode_no_ip_error.opp):
+async def test_manual_mode_no_ip_error(opp):
     """Test no IP specified in manual mode throws an error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await.opp.config_entries.flow.async_init(

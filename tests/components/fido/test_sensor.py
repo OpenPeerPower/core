@@ -62,7 +62,7 @@ async def test_fido_sensor(loop, opp):
         assert state.state == "100.33"
 
 
-async def test_error.opp, caplog):
+async def test_error(opp, caplog):
     """Test the Fido sensor errors."""
     caplog.set_level(logging.ERROR)
 

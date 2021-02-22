@@ -110,9 +110,9 @@ async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     forward_unload = opp.config_entries.async_forward_entry_unload
     remove_lights = remove_switches = False
-    if.opp.data[DOMAIN][CONF_LIGHT]:
+    if opp.data[DOMAIN][CONF_LIGHT]:
         remove_lights = await forward_unload(entry, "light")
-    if.opp.data[DOMAIN][CONF_SWITCH]:
+    if opp.data[DOMAIN][CONF_SWITCH]:
         remove_switches = await forward_unload(entry, "switch")
 
     if remove_lights or remove_switches:

@@ -34,7 +34,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicate entries are added."""
     geography_conf = {
         CONF_API_KEY: "abcde12345",

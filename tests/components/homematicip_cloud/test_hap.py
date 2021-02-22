@@ -32,7 +32,7 @@ async def test_auth_setup_opp):
         assert await hmip_auth.async_setup()
 
 
-async def test_auth_setup_connection_error.opp):
+async def test_auth_setup_connection_error(opp):
     """Test auth setup connection error behaviour."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
     hmip_auth = HomematicipAuth.opp, config)

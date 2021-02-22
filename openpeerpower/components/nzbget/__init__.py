@@ -64,7 +64,7 @@ async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
     """Set up the NZBGet integration."""
    .opp.data.setdefault(DOMAIN, {})
 
-    if.opp.config_entries.async_entries(DOMAIN):
+    if opp.config_entries.async_entries(DOMAIN):
         return True
 
     if DOMAIN in config:

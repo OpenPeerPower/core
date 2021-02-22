@@ -862,7 +862,7 @@ async def test_unique_id.opp):
     assert len.opp.states.async_all()) == 1
 
 
-async def test_template_validation_error.opp, caplog):
+async def test_template_validation_error(opp, caplog):
     """Test binary sensor template delay on."""
     caplog.set_level(logging.ERROR)
     config = {

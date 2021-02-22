@@ -142,7 +142,7 @@ async def test_verify_code_invalid.opp):
     assert result["errors"] == {"code": "invalid_pin"}
 
 
-async def test_verify_code_unknown_error.opp):
+async def test_verify_code_unknown_error(opp):
     """Test verify code unknown error."""
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=config_flow.NestAuthError)

@@ -118,7 +118,7 @@ async def _async_get_custom_components(
    .opp: "OpenPeerPower",
 ) -> Dict[str, Integration]:
     """Return list of custom integrations."""
-    if.opp.config.safe_mode:
+    if opp.config.safe_mode:
         return {}
 
     try:
@@ -765,17 +765,17 @@ def _async_mount_config_dir.opp: OpenPeerPower) -> bool:
 
     Async friendly but not a coroutine.
     """
-    if.opp.config.config_dir is None:
+    if opp.config.config_dir is None:
         _LOGGER.error("Can't load integrations - configuration directory is not set")
         return False
-    if.opp.config.config_dir not in sys.path:
+    if opp.config.config_dir not in sys.path:
         sys.path.insert(0, opp.config.config_dir)
     return True
 
 
 def _lookup_path.opp: OpenPeerPower) -> List[str]:
     """Return the lookup paths for legacy lookups."""
-    if.opp.config.safe_mode:
+    if opp.config.safe_mode:
         return [PACKAGE_BUILTIN]
     return [PACKAGE_CUSTOM_COMPONENTS, PACKAGE_BUILTIN]
 

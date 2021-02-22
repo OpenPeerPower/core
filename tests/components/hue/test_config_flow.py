@@ -298,7 +298,7 @@ async def test_flow_link_timeout.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_flow_link_unknown_error.opp):
+async def test_flow_link_unknown_error(opp):
     """Test if a unknown error happened during the linking processes."""
     mock_bridge = get_mock_bridge(
         mock_create_user=AsyncMock(side_effect=OSError),

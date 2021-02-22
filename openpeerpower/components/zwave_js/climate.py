@@ -196,7 +196,7 @@ class ZWaveClimate(ZWaveBaseEntity, ClimateEntity):
             if mode_id in THERMOSTAT_MODES:
                 # treat value as hvac mode
                .opp_mode = ZW_HVAC_MODE_MAP.get(mode_id)
-                if.opp_mode:
+                if opp_mode:
                     all_modes.opp_mode] = mode_id
             else:
                 # treat value as hvac preset

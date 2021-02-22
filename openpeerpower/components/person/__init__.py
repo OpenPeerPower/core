@@ -427,7 +427,7 @@ class Person(RestoreEntity):
             self._parse_source_state(state)
 
         if self.opp.is_running:
-            # Update person now if.opp is already running.
+            # Update person now if opp is already running.
             await self.async_update_config(self._config)
         else:
             # Wait for.opp start to not have race between person

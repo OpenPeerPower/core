@@ -53,7 +53,7 @@ async def test_form.opp):
         (TypeError, "unknown"),
     ],
 )
-async def test_form_error.opp: OpenPeerPower, exc: Exception, base_error: str):
+async def test_form_error(opp: OpenPeerPower, exc: Exception, base_error: str):
     """Test form errors."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

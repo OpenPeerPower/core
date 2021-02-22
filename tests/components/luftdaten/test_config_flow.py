@@ -10,7 +10,7 @@ from openpeerpower.const import CONF_SCAN_INTERVAL, CONF_SHOW_ON_MAP
 from tests.common import MockConfigEntry
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_SENSOR_ID: "12345abcde"}
 
@@ -22,7 +22,7 @@ async def test_duplicate_error.opp):
     assert result["errors"] == {CONF_SENSOR_ID: "already_configured"}
 
 
-async def test_communication_error.opp):
+async def test_communication_error(opp):
     """Test that no sensor is added while unable to communicate with API."""
     conf = {CONF_SENSOR_ID: "12345abcde"}
 

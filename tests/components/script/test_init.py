@@ -343,7 +343,7 @@ async def test_shared_context.opp):
     assert state.context == context
 
 
-async def test_logging_script_error.opp, caplog):
+async def test_logging_script_error(opp, caplog):
     """Test logging script error."""
     assert await async_setup_component(
        .opp,

@@ -38,7 +38,7 @@ async def test_user_device_exists_abort(
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_connection_error.opp: OpenPeerPower, aioclient_mock) -> None:
+async def test_connection_error(opp: OpenPeerPower, aioclient_mock) -> None:
     """Test we show user form on Agent connection error."""
 
     aioclient_mock.get("http://example.local:8090/command.cgi?cmd=getStatus", text="")

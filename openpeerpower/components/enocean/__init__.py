@@ -21,7 +21,7 @@ async def async_setup_opp, config):
     if DOMAIN not in config:
         return True
 
-    if.opp.config_entries.async_entries(DOMAIN):
+    if opp.config_entries.async_entries(DOMAIN):
         # We can only have one dongle. If there is already one in the config,
         # there is no need to import the yaml based config.
         return True

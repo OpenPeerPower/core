@@ -178,7 +178,7 @@ async def test_name_exists(opp, api):
     assert result["errors"] == {CONF_NAME: "name_exists"}
 
 
-async def test_connection_error.opp, conn_error):
+async def test_connection_error(opp, conn_error):
     """Test error when connection is unsuccessful."""
 
     result = await.opp.config_entries.flow.async_init(

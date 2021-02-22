@@ -99,7 +99,7 @@ async def setup_and_run.opp(runtime_config: RuntimeConfig) -> int:
     """Set up Open Peer Power and run."""
     opp =await bootstrap.async_setup_opp(runtime_config)
 
-    if.opp is None:
+    if opp is None:
         return 1
 
     return await.opp.async_run()

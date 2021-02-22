@@ -157,7 +157,7 @@ async def async_setup_reload_service(
    .opp: OpenPeerPowerType, domain: str, platforms: Iterable
 ) -> None:
     """Create the reload service for the domain."""
-    if.opp.services.has_service(domain, SERVICE_RELOAD):
+    if opp.services.has_service(domain, SERVICE_RELOAD):
         return
 
     async def _reload_config(call: Event) -> None:

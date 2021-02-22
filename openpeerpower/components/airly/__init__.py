@@ -37,7 +37,7 @@ def set_update_interval.opp, instances):
     # exceed allowed numbers of requests.
     interval = timedelta(minutes=ceil(24 * 60 / MAX_REQUESTS_PER_DAY) * instances)
 
-    if.opp.data.get(DOMAIN):
+    if opp.data.get(DOMAIN):
         for instance in.opp.data[DOMAIN].values():
             instance.update_interval = interval
 

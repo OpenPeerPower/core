@@ -105,7 +105,7 @@ async def test_import_no_ip_control.opp):
         assert result["reason"] == "no_ip_control"
 
 
-async def test_import_duplicate_error.opp):
+async def test_import_duplicate_error(opp):
     """Test that errors are shown when duplicates are added during import."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -179,7 +179,7 @@ async def test_authorize_no_ip_control.opp):
         assert result["reason"] == "no_ip_control"
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

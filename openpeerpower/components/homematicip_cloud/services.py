@@ -110,7 +110,7 @@ SCHEMA_RESET_ENERGY_COUNTER = vol.Schema(
 async def async_setup_services.opp: OpenPeerPowerType) -> None:
     """Set up the HomematicIP Cloud services."""
 
-    if.opp.services.async_services().get(HMIPC_DOMAIN):
+    if opp.services.async_services().get(HMIPC_DOMAIN):
         return
 
     @verify_domain_control.opp, HMIPC_DOMAIN)
@@ -196,7 +196,7 @@ async def async_setup_services.opp: OpenPeerPowerType) -> None:
 
 async def async_unload_services.opp: OpenPeerPowerType):
     """Unload HomematicIP Cloud services."""
-    if.opp.data[HMIPC_DOMAIN]:
+    if opp.data[HMIPC_DOMAIN]:
         return
 
     for hmipc_service in HMIPC_SERVICES:

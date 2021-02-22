@@ -89,7 +89,7 @@ class RestoreStateData:
                 }
                 _LOGGER.debug("Created cache with %s", list(data.last_states))
 
-            if.opp.state == CoreState.running:
+            if opp.state == CoreState.running:
                 data.async_setup_dump()
             else:
                .opp.bus.async_listen_once(

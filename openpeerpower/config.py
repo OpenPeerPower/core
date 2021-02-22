@@ -419,7 +419,7 @@ def async_log_exception(
     This method must be run in the event loop.
     """
     if.opp is not None:
-        async_notify_setup_error.opp, domain, link)
+        async_notify_setup_error(opp, domain, link)
     message, is_friendly = _format_config_error(ex, domain, config, link)
     _LOGGER.error(message, exc_info=not is_friendly and ex)
 

@@ -444,7 +444,7 @@ async def test_invalid_webhook_aborts.opp):
     assert "component_url" in result["description_placeholders"]
 
 
-async def test_invalid_token_shows_error.opp):
+async def test_invalid_token_shows_error(opp):
     """Test an error is shown for invalid token formats."""
     token = "123456789"
 
@@ -477,7 +477,7 @@ async def test_invalid_token_shows_error.opp):
     assert "component_url" in result["description_placeholders"]
 
 
-async def test_unauthorized_token_shows_error.opp, smartthings_mock):
+async def test_unauthorized_token_shows_error(opp, smartthings_mock):
     """Test an error is shown for unauthorized token formats."""
     token = str(uuid4())
     request_info = Mock(real_url="http://example.com")
@@ -514,7 +514,7 @@ async def test_unauthorized_token_shows_error.opp, smartthings_mock):
     assert "component_url" in result["description_placeholders"]
 
 
-async def test_forbidden_token_shows_error.opp, smartthings_mock):
+async def test_forbidden_token_shows_error(opp, smartthings_mock):
     """Test an error is shown for forbidden token formats."""
     token = str(uuid4())
     request_info = Mock(real_url="http://example.com")
@@ -551,7 +551,7 @@ async def test_forbidden_token_shows_error.opp, smartthings_mock):
     assert "component_url" in result["description_placeholders"]
 
 
-async def test_webhook_problem_shows_error.opp, smartthings_mock):
+async def test_webhook_problem_shows_error(opp, smartthings_mock):
     """Test an error is shown when there's an problem with the webhook endpoint."""
     token = str(uuid4())
     data = {"error": {}}
@@ -591,7 +591,7 @@ async def test_webhook_problem_shows_error.opp, smartthings_mock):
     assert "component_url" in result["description_placeholders"]
 
 
-async def test_api_error_shows_error.opp, smartthings_mock):
+async def test_api_error_shows_error(opp, smartthings_mock):
     """Test an error is shown when other API errors occur."""
     token = str(uuid4())
     data = {"error": {}}
@@ -630,7 +630,7 @@ async def test_api_error_shows_error.opp, smartthings_mock):
     assert "component_url" in result["description_placeholders"]
 
 
-async def test_unknown_response_error_shows_error.opp, smartthings_mock):
+async def test_unknown_response_error_shows_error(opp, smartthings_mock):
     """Test an error is shown when there is an unknown API error."""
     token = str(uuid4())
     request_info = Mock(real_url="http://example.com")
@@ -668,7 +668,7 @@ async def test_unknown_response_error_shows_error.opp, smartthings_mock):
     assert "component_url" in result["description_placeholders"]
 
 
-async def test_unknown_error_shows_error.opp, smartthings_mock):
+async def test_unknown_error_shows_error(opp, smartthings_mock):
     """Test an error is shown when there is an unknown API error."""
     token = str(uuid4())
     smartthings_mock.apps.side_effect = Exception("Unknown error")

@@ -46,7 +46,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_connection_error.opp):
+async def test_connection_error(opp):
     """Test we show user form on BMW connected drive connection error."""
 
     def _mock_get_oauth_token(*args, **kwargs):

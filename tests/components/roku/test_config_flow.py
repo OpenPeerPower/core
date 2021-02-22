@@ -110,7 +110,7 @@ async def test_form_cannot_connect(
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_error.opp: OpenPeerPowerType) -> None:
+async def test_form_unknown_error(opp: OpenPeerPowerType) -> None:
     """Test we handle unknown error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}

@@ -104,7 +104,7 @@ async def test_async_step_import_success_with_legacy_unique_id(
         assert result["result"].unique_id == controller.serial_number
 
 
-async def test_async_step_finish_error.opp: OpenPeerPower) -> None:
+async def test_async_step_finish_error(opp: OpenPeerPower) -> None:
     """Test finish step with error."""
     with patch("pyvera.VeraController") as vera_controller_class_mock:
         controller = MagicMock()

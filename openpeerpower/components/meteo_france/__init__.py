@@ -182,7 +182,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-    if.opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]:
+    if opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]:
 
         department =.opp.data[DOMAIN][entry.entry_id][
             COORDINATOR_FORECAST

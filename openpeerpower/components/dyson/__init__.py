@@ -103,7 +103,7 @@ def setup_opp, config):
                 _LOGGER.warning("Unable to connect to device %s", device)
 
     # Start fan/sensors components
-    if.opp.data[DYSON_DEVICES]:
+    if opp.data[DYSON_DEVICES]:
         _LOGGER.debug("Starting sensor/fan components")
         for platform in DYSON_PLATFORMS:
             discovery.load_platform.opp, platform, DOMAIN, {}, config)

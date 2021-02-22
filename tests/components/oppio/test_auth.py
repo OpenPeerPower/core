@@ -53,7 +53,7 @@ async def test_auth_fails_no_auth.opp, oppio_noauth_client):
         assert not mock_login.called
 
 
-async def test_login_error.opp, oppio_client_supervisor):
+async def test_login_error(opp, oppio_client_supervisor):
     """Test no auth needed for error."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."

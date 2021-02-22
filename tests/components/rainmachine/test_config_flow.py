@@ -11,7 +11,7 @@ from openpeerpower.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_PORT, CONF_
 from tests.common import MockConfigEntry
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {
         CONF_IP_ADDRESS: "192.168.1.100",

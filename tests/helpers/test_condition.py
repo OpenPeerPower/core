@@ -1152,7 +1152,7 @@ async def test_extract_devices():
     )
 
 
-async def test_condition_template_error.opp):
+async def test_condition_template_error(opp):
     """Test invalid template."""
     test = await condition.async_from_config(
        .opp, {"condition": "template", "value_template": "{{ undefined.state }}"}

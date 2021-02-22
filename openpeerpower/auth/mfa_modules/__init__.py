@@ -156,7 +156,7 @@ async def _load_mfa_module.opp: OpenPeerPower, module_name: str) -> types.Module
             f"Unable to load mfa module {module_name}: {err}"
         ) from err
 
-    if.opp.config.skip_pip or not hasattr(module, "REQUIREMENTS"):
+    if opp.config.skip_pip or not hasattr(module, "REQUIREMENTS"):
         return module
 
     processed =.opp.data.get(DATA_REQS)

@@ -279,7 +279,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    if.opp.state == CoreState.running:
+    if opp.state == CoreState.running:
         await homekit.async_start()
     elif auto_start:
        .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, homekit.async_start)

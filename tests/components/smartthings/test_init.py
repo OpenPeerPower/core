@@ -353,7 +353,7 @@ async def test_remove_entry_installedapp_unknown_error(
     assert smartthings_mock.delete_app.call_count == 0
 
 
-async def test_remove_entry_app_api_error.opp, config_entry, smartthings_mock):
+async def test_remove_entry_app_api_error(opp, config_entry, smartthings_mock):
     """Test raises exceptions removing the app."""
     # Arrange
     request_info = Mock(real_url="http://example.com")
@@ -368,7 +368,7 @@ async def test_remove_entry_app_api_error.opp, config_entry, smartthings_mock):
     assert smartthings_mock.delete_app.call_count == 1
 
 
-async def test_remove_entry_app_unknown_error.opp, config_entry, smartthings_mock):
+async def test_remove_entry_app_unknown_error(opp, config_entry, smartthings_mock):
     """Test raises exceptions removing the app."""
     # Arrange
     smartthings_mock.delete_app.side_effect = Exception

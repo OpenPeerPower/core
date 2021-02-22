@@ -35,7 +35,7 @@ async def test_set_config_entry_unique_id.opp, entry, mock_plex_server):
     )
 
 
-async def test_setup_config_entry_with_error.opp, entry):
+async def test_setup_config_entry_with_error(opp, entry):
     """Test setup component from config entry with errors."""
     with patch(
         "openpeerpower.components.plex.PlexServer.connect",

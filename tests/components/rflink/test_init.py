@@ -277,7 +277,7 @@ async def test_error_when_not_connected.opp, monkeypatch):
     assert not success, "changing state should not succeed when disconnected"
 
 
-async def test_async_send_command_error.opp, monkeypatch):
+async def test_async_send_command_error(opp, monkeypatch):
     """Sending command should error when protocol fails."""
     domain = "rflink"
     config = {"rflink": {"port": "/dev/ttyABC0"}}

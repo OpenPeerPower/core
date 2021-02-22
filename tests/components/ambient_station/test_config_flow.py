@@ -27,7 +27,7 @@ def mock_aioambient(get_devices_response):
         yield Client
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 

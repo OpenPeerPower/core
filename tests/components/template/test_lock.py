@@ -114,7 +114,7 @@ async def test_template_state_boolean_off.opp):
     assert state.state == lock.STATE_UNLOCKED
 
 
-async def test_template_syntax_error.opp):
+async def test_template_syntax_error(opp):
     """Test templating syntax error."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(

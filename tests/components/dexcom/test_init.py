@@ -10,7 +10,7 @@ from tests.common import MockConfigEntry
 from tests.components.dexcom import CONFIG, init_integration
 
 
-async def test_setup_entry_account_error.opp):
+async def test_setup_entry_account_error(opp):
     """Test entry setup failed due to account error."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -30,7 +30,7 @@ async def test_setup_entry_account_error.opp):
     assert result is False
 
 
-async def test_setup_entry_session_error.opp):
+async def test_setup_entry_session_error(opp):
     """Test entry setup failed due to session error."""
     entry = MockConfigEntry(
         domain=DOMAIN,

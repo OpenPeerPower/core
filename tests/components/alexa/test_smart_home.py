@@ -1441,7 +1441,7 @@ async def test_media_player_seek.opp):
     assert {"name": "positionMilliseconds", "value": 600000} in properties
 
 
-async def test_media_player_seek_error.opp):
+async def test_media_player_seek_error(opp):
     """Test media player seek capability for media_position Error."""
     device = (
         "media_player.test_seek",

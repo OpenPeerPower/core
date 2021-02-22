@@ -121,7 +121,7 @@ async def test_bridge_cannot_connect.opp):
     assert result["reason"] == CasetaConfigFlow.ABORT_REASON_CANNOT_CONNECT
 
 
-async def test_bridge_cannot_connect_unknown_error.opp):
+async def test_bridge_cannot_connect_unknown_error(opp):
     """Test checking for connection and encountering an unknown error."""
 
     with patch.object(Smartbridge, "create_tls") as create_tls:
@@ -144,7 +144,7 @@ async def test_bridge_cannot_connect_unknown_error.opp):
     assert result["reason"] == CasetaConfigFlow.ABORT_REASON_CANNOT_CONNECT
 
 
-async def test_bridge_invalid_ssl_error.opp):
+async def test_bridge_invalid_ssl_error(opp):
     """Test checking for connection and encountering invalid ssl certs."""
 
     with patch.object(Smartbridge, "create_tls", side_effect=ssl.SSLError):

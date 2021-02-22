@@ -232,7 +232,7 @@ async def async_setup_opp, config):
         async_dispatcher_send.opp, SIGNAL_AVAILABILITY, False)
 
         # If HA is not stopping, initiate new connection
-        if.opp.state != CoreState.stopping:
+        if opp.state != CoreState.stopping:
             _LOGGER.warning("disconnected from Rflink, reconnecting")
            .opp.async_create_task(connect())
 

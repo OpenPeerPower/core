@@ -39,7 +39,7 @@ async def test_setup_entry_maintenance.opp: OpenPeerPower):
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_setup_connection_error.opp: OpenPeerPower):
+async def test_setup_connection_error(opp: OpenPeerPower):
     """Test setup entry fails on connection error."""
     entry = configure_integration.opp)
     with patch(

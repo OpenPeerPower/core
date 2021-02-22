@@ -411,7 +411,7 @@ async def test_status_no_fan_speed_list.opp, mqtt_mock):
     assert state.attributes.get(ATTR_FAN_SPEED_LIST) is None
 
 
-async def test_status_error.opp, mqtt_mock):
+async def test_status_error(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(

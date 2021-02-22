@@ -96,7 +96,7 @@ async def test_setups.opp: OpenPeerPower, protocol, connection, title):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_setup_connection_error.opp: OpenPeerPower):
+async def test_setup_connection_error(opp: OpenPeerPower):
     """Test flow for setup with a connection error."""
 
     port = 1001

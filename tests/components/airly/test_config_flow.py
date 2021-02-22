@@ -67,7 +67,7 @@ async def test_invalid_location.opp, aioclient_mock):
     assert result["errors"] == {"base": "wrong_location"}
 
 
-async def test_duplicate_error.opp, aioclient_mock):
+async def test_duplicate_error(opp, aioclient_mock):
     """Test that errors are shown when duplicates are added."""
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
     MockConfigEntry(domain=DOMAIN, unique_id="123-456", data=CONFIG).add_to.opp.opp)

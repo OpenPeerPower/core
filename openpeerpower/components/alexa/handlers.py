@@ -676,7 +676,7 @@ async def async_api_set_target_temp.opp, config, directive, context):
     if "targetSetpoint" in payload:
         temp = temperature_from_object.opp, payload["targetSetpoint"])
         if temp < min_temp or temp > max_temp:
-            raise AlexaTempRangeError.opp, temp, min_temp, max_temp)
+            raise AlexaTempRangeerror(opp, temp, min_temp, max_temp)
         data[ATTR_TEMPERATURE] = temp
         response.add_context_property(
             {
@@ -688,7 +688,7 @@ async def async_api_set_target_temp.opp, config, directive, context):
     if "lowerSetpoint" in payload:
         temp_low = temperature_from_object.opp, payload["lowerSetpoint"])
         if temp_low < min_temp or temp_low > max_temp:
-            raise AlexaTempRangeError.opp, temp_low, min_temp, max_temp)
+            raise AlexaTempRangeerror(opp, temp_low, min_temp, max_temp)
         data[climate.ATTR_TARGET_TEMP_LOW] = temp_low
         response.add_context_property(
             {
@@ -700,7 +700,7 @@ async def async_api_set_target_temp.opp, config, directive, context):
     if "upperSetpoint" in payload:
         temp_high = temperature_from_object.opp, payload["upperSetpoint"])
         if temp_high < min_temp or temp_high > max_temp:
-            raise AlexaTempRangeError.opp, temp_high, min_temp, max_temp)
+            raise AlexaTempRangeerror(opp, temp_high, min_temp, max_temp)
         data[climate.ATTR_TARGET_TEMP_HIGH] = temp_high
         response.add_context_property(
             {
@@ -735,7 +735,7 @@ async def async_api_adjust_target_temp.opp, config, directive, context):
     target_temp = float(entity.attributes.get(ATTR_TEMPERATURE)) + temp_delta
 
     if target_temp < min_temp or target_temp > max_temp:
-        raise AlexaTempRangeError.opp, target_temp, min_temp, max_temp)
+        raise AlexaTempRangeerror(opp, target_temp, min_temp, max_temp)
 
     data = {ATTR_ENTITY_ID: entity.entity_id, ATTR_TEMPERATURE: target_temp}
 

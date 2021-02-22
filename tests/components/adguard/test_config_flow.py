@@ -39,7 +39,7 @@ async def test_show_authenticate_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_connection_error.opp, aioclient_mock):
+async def test_connection_error(opp, aioclient_mock):
     """Test we show user form on AdGuard Home connection error."""
     aioclient_mock.get(
         f"{'https' if FIXTURE_USER_INPUT[CONF_SSL] else 'http'}"
@@ -220,7 +220,7 @@ async def test.oppio_confirm.opp, aioclient_mock):
     assert result["data"][CONF_VERIFY_SSL]
 
 
-async def test.oppio_connection_error.opp, aioclient_mock):
+async def test.oppio_connection_error(opp, aioclient_mock):
     """Test we show Hass.io confirm form on AdGuard Home connection error."""
     aioclient_mock.get(
         "http://mock-adguard:3000/control/status", exc=aiohttp.ClientError

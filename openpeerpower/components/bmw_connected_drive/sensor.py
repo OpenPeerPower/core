@@ -49,7 +49,7 @@ ATTR_TO_HA_IMPERIAL = {
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the BMW ConnectedDrive sensors from config entry."""
-    if.opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
+    if opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
         attribute_info = ATTR_TO_HA_IMPERIAL
     else:
         attribute_info = ATTR_TO_HA_METRIC

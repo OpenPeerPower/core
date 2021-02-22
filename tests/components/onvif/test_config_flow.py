@@ -503,7 +503,7 @@ async def test_flow_import_no_h264.opp):
         assert result["reason"] == "no_h264"
 
 
-async def test_flow_import_onvif_api_error.opp):
+async def test_flow_import_onvif_api_error(opp):
     """Test that config flow fails when ONVIF API fails."""
     with patch(
         "openpeerpower.components.onvif.config_flow.get_device"
@@ -529,7 +529,7 @@ async def test_flow_import_onvif_api_error.opp):
         assert result["reason"] == "onvif_error"
 
 
-async def test_flow_import_onvif_auth_error.opp):
+async def test_flow_import_onvif_auth_error(opp):
     """Test that config flow fails when ONVIF API fails."""
     with patch(
         "openpeerpower.components.onvif.config_flow.get_device"

@@ -63,7 +63,7 @@ async def test_invalid_api_key.opp):
         assert result["errors"] == {CONF_API_KEY: "invalid_api_key"}
 
 
-async def test_api_error.opp):
+async def test_api_error(opp):
     """Test API error."""
     with patch(
         "accuweather.AccuWeather._async_get_data",
@@ -79,7 +79,7 @@ async def test_api_error.opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_requests_exceeded_error.opp):
+async def test_requests_exceeded_error(opp):
     """Test requests exceeded error."""
     with patch(
         "accuweather.AccuWeather._async_get_data",

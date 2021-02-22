@@ -37,7 +37,7 @@ async def test_import_cannot_connect.opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_import_duplicate_error.opp):
+async def test_import_duplicate_error(opp):
     """Test that errors are shown when duplicates are added during import."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -74,7 +74,7 @@ async def test_user_cannot_connect.opp):
         assert result["errors"] == {CONF_HOST: "cannot_connect"}
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

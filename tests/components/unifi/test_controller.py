@@ -269,7 +269,7 @@ async def test_controller_trigger_reauth_flow.opp):
     assert.opp.data[UNIFI_DOMAIN] == {}
 
 
-async def test_controller_unknown_error.opp):
+async def test_controller_unknown_error(opp):
     """Unknown errors are handled."""
     with patch(
         "openpeerpower.components.unifi.controller.get_controller",
@@ -378,7 +378,7 @@ async def test_get_controller_login_required.opp):
         await get_controller.opp, **CONTROLLER_DATA)
 
 
-async def test_get_controller_unknown_error.opp):
+async def test_get_controller_unknown_error(opp):
     """Check that get_controller can handle unknown errors."""
     with patch("aiounifi.Controller.check_unifi_os", return_value=True), patch(
         "aiounifi.Controller.login", side_effect=aiounifi.AiounifiException

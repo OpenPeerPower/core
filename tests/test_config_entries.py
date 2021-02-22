@@ -326,7 +326,7 @@ async def test_remove_entry.opp, manager):
     assert not entity_entry_list
 
 
-async def test_remove_entry_handles_callback_error.opp, manager):
+async def test_remove_entry_handles_callback_error(opp, manager):
     """Test that exceptions in the remove callback are handled."""
     mock_setup_entry = AsyncMock(return_value=True)
     mock_unload_entry = AsyncMock(return_value=True)
@@ -1079,7 +1079,7 @@ async def test_entry_reload_not_loaded.opp, manager, state):
         config_entries.ENTRY_STATE_FAILED_UNLOAD,
     ),
 )
-async def test_entry_reload_error.opp, manager, state):
+async def test_entry_reload_error(opp, manager, state):
     """Test that we can reload an entry."""
     entry = MockConfigEntry(domain="comp", state=state)
     entry.add_to_opp.opp)

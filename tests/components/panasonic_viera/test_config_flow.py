@@ -122,7 +122,7 @@ async def test_flow_non_encrypted.opp):
     }
 
 
-async def test_flow_not_connected_error.opp):
+async def test_flow_not_connected_error(opp):
     """Test flow with connection error."""
 
     result = await.opp.config_entries.flow.async_init(
@@ -270,7 +270,7 @@ async def test_flow_encrypted_valid_pin_code.opp):
     }
 
 
-async def test_flow_encrypted_invalid_pin_code_error.opp):
+async def test_flow_encrypted_invalid_pin_code_error(opp):
     """Test flow with encryption and invalid PIN code error during pairing step."""
 
     result = await.opp.config_entries.flow.async_init(
@@ -504,7 +504,7 @@ async def test_imported_flow_encrypted_valid_pin_code.opp):
     }
 
 
-async def test_imported_flow_encrypted_invalid_pin_code_error.opp):
+async def test_imported_flow_encrypted_invalid_pin_code_error(opp):
     """Test imported flow with encryption and invalid PIN code error during pairing step."""
 
     mock_remote = get_mock_remote(encrypted=True, authorize_error=SOAPError)
@@ -605,7 +605,7 @@ async def test_imported_flow_encrypted_unknown_abort.opp):
     assert result["reason"] == "unknown"
 
 
-async def test_imported_flow_not_connected_error.opp):
+async def test_imported_flow_not_connected_error(opp):
     """Test imported flow with connection error abortion."""
 
     with patch(

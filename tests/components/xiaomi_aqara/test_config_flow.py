@@ -249,7 +249,7 @@ async def test_config_flow_user_host_mac_success.opp):
     }
 
 
-async def test_config_flow_user_discovery_error.opp):
+async def test_config_flow_user_discovery_error(opp):
     """Test a failed config flow initialized by the user with no gateways discoverd."""
     result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}

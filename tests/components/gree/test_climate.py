@@ -106,7 +106,7 @@ async def test_discovery_setup_opp, discovery, device):
     assert len.opp.states.async_all(DOMAIN)) == 2
 
 
-async def test_discovery_setup_connection_error.opp, discovery, device):
+async def test_discovery_setup_connection_error(opp, discovery, device):
     """Test gree integration is setup."""
     MockDevice1 = build_device_mock(name="fake-device-1")
     MockDevice1.bind = AsyncMock(side_effect=DeviceNotBoundError)

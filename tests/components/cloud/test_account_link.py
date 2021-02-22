@@ -96,7 +96,7 @@ async def test_get_services_cached.opp):
         assert await account_link._get_services.opp) == 4
 
 
-async def test_get_services_error.opp):
+async def test_get_services_error(opp):
     """Test that we cache services."""
    .opp.data["cloud"] = None
 

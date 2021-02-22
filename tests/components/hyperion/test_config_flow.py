@@ -219,7 +219,7 @@ async def test_user_confirm_cannot_connect.opp: OpenPeerPowerType) -> None:
         assert result["reason"] == "cannot_connect"
 
 
-async def test_user_confirm_id_error.opp: OpenPeerPowerType) -> None:
+async def test_user_confirm_id_error(opp: OpenPeerPowerType) -> None:
     """Test a failure fetching the server id during confirmation."""
     result = await _init_flow.opp)
 

@@ -1444,7 +1444,7 @@ async def test_encrypted_payload_not_supports_encryption(
     assert.opp.states.get(DEVICE_TRACKER_STATE) is None
 
 
-async def test_encrypted_payload_get_cipher_error.opp, setup_comp, get_cipher_error):
+async def test_encrypted_payload_get_cipher_error(opp, setup_comp, get_cipher_error):
     """Test encrypted payload with no supported encryption."""
     await setup_owntracks.opp, {CONF_SECRET: TEST_SECRET_KEY})
     await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)

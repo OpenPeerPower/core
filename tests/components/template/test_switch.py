@@ -226,7 +226,7 @@ async def test_entity_picture_template.opp):
     assert state.attributes["entity_picture"] == "/local/switch.png"
 
 
-async def test_template_syntax_error.opp):
+async def test_template_syntax_error(opp):
     """Test templating syntax error."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(

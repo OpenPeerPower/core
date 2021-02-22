@@ -191,7 +191,7 @@ async def test_config_flow_discovery_2_success.opp):
     }
 
 
-async def test_config_flow_connection_error.opp):
+async def test_config_flow_connection_error(opp):
     """Failed flow manually initialized by the user with connection timeout."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

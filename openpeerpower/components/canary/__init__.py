@@ -48,7 +48,7 @@ async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
     """Set up the Canary integration."""
    .opp.data.setdefault(DOMAIN, {})
 
-    if.opp.config_entries.async_entries(DOMAIN):
+    if opp.config_entries.async_entries(DOMAIN):
         return True
 
     ffmpeg_arguments = DEFAULT_FFMPEG_ARGUMENTS

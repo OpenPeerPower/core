@@ -31,7 +31,7 @@ async def test_show_user_form.opp: OpenPeerPower) -> None:
     assert result["step_id"] == "user"
 
 
-async def test_authorization_error.opp: OpenPeerPower) -> None:
+async def test_authorization_error(opp: OpenPeerPower) -> None:
     """Test we show user form on Azure DevOps authorization error."""
     with patch(
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
@@ -55,7 +55,7 @@ async def test_authorization_error.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_reauth_authorization_error.opp: OpenPeerPower) -> None:
+async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
     """Test we show user form on Azure DevOps authorization error."""
     with patch(
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
@@ -79,7 +79,7 @@ async def test_reauth_authorization_error.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_connection_error.opp: OpenPeerPower) -> None:
+async def test_connection_error(opp: OpenPeerPower) -> None:
     """Test we show user form on Azure DevOps connection error."""
     with patch(
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
@@ -103,7 +103,7 @@ async def test_connection_error.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_reauth_connection_error.opp: OpenPeerPower) -> None:
+async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
     """Test we show user form on Azure DevOps connection error."""
     with patch(
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
@@ -127,7 +127,7 @@ async def test_reauth_connection_error.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_project_error.opp: OpenPeerPower) -> None:
+async def test_project_error(opp: OpenPeerPower) -> None:
     """Test we show user form on Azure DevOps connection error."""
     with patch(
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorized",
@@ -156,7 +156,7 @@ async def test_project_error.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "project_error"}
 
 
-async def test_reauth_project_error.opp: OpenPeerPower) -> None:
+async def test_reauth_project_error(opp: OpenPeerPower) -> None:
     """Test we show user form on Azure DevOps project error."""
     with patch(
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",

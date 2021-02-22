@@ -42,7 +42,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_account_error.opp):
+async def test_form_account_error(opp):
     """Test we handle account error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -61,7 +61,7 @@ async def test_form_account_error.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_session_error.opp):
+async def test_form_session_error(opp):
     """Test we handle session error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -80,7 +80,7 @@ async def test_form_session_error.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_error.opp):
+async def test_form_unknown_error(opp):
     """Test we handle unknown error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

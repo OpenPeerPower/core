@@ -99,7 +99,7 @@ async def websocket_update_entity.opp, connection, msg):
 
     if "new_entity_id" in msg and msg["new_entity_id"] != msg["entity_id"]:
         changes["new_entity_id"] = msg["new_entity_id"]
-        if.opp.states.get(msg["new_entity_id"]) is not None:
+        if opp.states.get(msg["new_entity_id"]) is not None:
             connection.send_message(
                 websocket_api.error_message(
                     msg["id"],

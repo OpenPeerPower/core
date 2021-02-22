@@ -132,7 +132,7 @@ def test_invalid_entity_id.opp):
         template.Template('{{ states["invalid/domain"] }}', opp).async_render()
 
 
-def test_raise_exception_on_error.opp):
+def test_raise_exception_on_error(opp):
     """Test raising an exception on error."""
     with pytest.raises(TemplateError):
         template.Template("{{ invalid_syntax").ensure_valid()
@@ -256,7 +256,7 @@ def test_rounding_value.opp):
     )
 
 
-def test_rounding_value_get_original_value_on_error.opp):
+def test_rounding_value_get_original_value_on_error(opp):
     """Test rounding value get original value on error."""
     assert template.Template("{{ None | round }}", opp).async_render() is None
 

@@ -67,7 +67,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     if CONF_UNITS in config:
         units = config.get(CONF_UNITS)
-    elif.opp.config.units.is_metric:
+    elif opp.config.units.is_metric:
         units = UNITS[0]
     else:
         units = UNITS[2]

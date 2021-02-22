@@ -105,7 +105,7 @@ async def test_template_vars_run_args_no_default.opp):
     }
 
 
-async def test_template_vars_error.opp):
+async def test_template_vars_error(opp):
     """Test template vars."""
     var = cv.SCRIPT_VARIABLES_SCHEMA({"hello": "{{ canont.work }}"})
     with pytest.raises(template.TemplateError):

@@ -198,7 +198,7 @@ def async_condition_from_config(
     )
 
     @callback
-    def template_if.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+    def template_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
         value_template.opp =.opp
 

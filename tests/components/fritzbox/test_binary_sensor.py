@@ -75,7 +75,7 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
     assert fritz().login.call_count == 1
 
 
-async def test_update_error.opp: OpenPeerPowerType, fritz: Mock):
+async def test_update_error(opp: OpenPeerPowerType, fritz: Mock):
     """Test update with error."""
     device = FritzDeviceBinarySensorMock()
     device.update.side_effect = [mock.DEFAULT, HTTPError("Boom")]

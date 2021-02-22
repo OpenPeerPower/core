@@ -118,7 +118,7 @@ async def test_form_unknown_exception.opp):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_already_configured_error.opp):
+async def test_already_configured_error(opp):
     """Test already configured while creating entry."""
     with patch(
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",

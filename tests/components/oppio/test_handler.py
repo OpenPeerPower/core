@@ -14,7 +14,7 @@ async def test_api_ping.oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_ping_error.oppio_handler, aioclient_mock):
+async def test_api_ping_error(oppio_handler, aioclient_mock):
     """Test setup with API ping error."""
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", json={"result": "error"})
 
@@ -47,7 +47,7 @@ async def test_api_info.oppio_handler, aioclient_mock):
     assert data["supervisor"] == "222"
 
 
-async def test_api_info_error.oppio_handler, aioclient_mock):
+async def test_api_info_error(oppio_handler, aioclient_mock):
     """Test setup with API Open Peer Power info error."""
     aioclient_mock.get(
         "http://127.0.0.1/info", json={"result": "error", "message": None}
@@ -113,7 +113,7 @@ async def test_api_os_info.oppio_handler, aioclient_mock):
     assert data["version"] == "2020.11.1"
 
 
-async def test_api_host_info_error.oppio_handler, aioclient_mock):
+async def test_api_host_info_error(oppio_handler, aioclient_mock):
     """Test setup with API Open Peer Power info error."""
     aioclient_mock.get(
         "http://127.0.0.1/host/info", json={"result": "error", "message": None}
@@ -137,7 +137,7 @@ async def test_api_core_info.oppio_handler, aioclient_mock):
     assert data["version_latest"] == "1.0.0"
 
 
-async def test_api_core_info_error.oppio_handler, aioclient_mock):
+async def test_api_core_info_error(oppio_handler, aioclient_mock):
     """Test setup with API Open Peer Power Core info error."""
     aioclient_mock.get(
         "http://127.0.0.1/core/info", json={"result": "error", "message": None}

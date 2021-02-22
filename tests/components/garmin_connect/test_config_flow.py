@@ -53,7 +53,7 @@ async def test_step_user.opp, mock_garmin_connect):
     assert result["data"] == MOCK_CONF
 
 
-async def test_connection_error.opp, mock_garmin_connect):
+async def test_connection_error(opp, mock_garmin_connect):
     """Test for connection error."""
     mock_garmin_connect.login.side_effect = GarminConnectConnectionError("errormsg")
     result = await.opp.config_entries.flow.async_init(
@@ -63,7 +63,7 @@ async def test_connection_error.opp, mock_garmin_connect):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_authentication_error.opp, mock_garmin_connect):
+async def test_authentication_error(opp, mock_garmin_connect):
     """Test for authentication error."""
     mock_garmin_connect.login.side_effect = GarminConnectAuthenticationError("errormsg")
     result = await.opp.config_entries.flow.async_init(
@@ -73,7 +73,7 @@ async def test_authentication_error.opp, mock_garmin_connect):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_toomanyrequest_error.opp, mock_garmin_connect):
+async def test_toomanyrequest_error(opp, mock_garmin_connect):
     """Test for toomanyrequests error."""
     mock_garmin_connect.login.side_effect = GarminConnectTooManyRequestsError(
         "errormsg"
@@ -85,7 +85,7 @@ async def test_toomanyrequest_error.opp, mock_garmin_connect):
     assert result["errors"] == {"base": "too_many_requests"}
 
 
-async def test_unknown_error.opp, mock_garmin_connect):
+async def test_unknown_error(opp, mock_garmin_connect):
     """Test for unknown error."""
     mock_garmin_connect.login.side_effect = Exception
     result = await.opp.config_entries.flow.async_init(

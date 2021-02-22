@@ -58,7 +58,7 @@ async def test_form_invalid_auth.opp):
         assert result["errors"]["base"] == "invalid_auth"
 
 
-async def test_form_value_error.opp):
+async def test_form_value_error(opp):
     """Test user config that throws a value error."""
     result = await.opp.config_entries.flow.async_init(
         SRP_ENERGY_DOMAIN, context={"source": "user"}

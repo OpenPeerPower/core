@@ -66,7 +66,7 @@ async def test_async_setup_entry_sets_up_light.opp: OpenPeerPower):
     assert len(mock_light_async_setup_entry.mock_calls) == 1
 
 
-async def test_async_setup_entry_handles_auth_error.opp: OpenPeerPower):
+async def test_async_setup_entry_handles_auth_error(opp: OpenPeerPower):
     """Test that configuring entry handles Plum Cloud authentication error."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -86,7 +86,7 @@ async def test_async_setup_entry_handles_auth_error.opp: OpenPeerPower):
     assert len(mock_light_async_setup_entry.mock_calls) == 0
 
 
-async def test_async_setup_entry_handles_http_error.opp: OpenPeerPower):
+async def test_async_setup_entry_handles_http_error(opp: OpenPeerPower):
     """Test that configuring entry handles HTTP error."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

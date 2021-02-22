@@ -101,7 +101,7 @@ async def validate_configs.opp, entity_configs):
                 entity_config[CONF_POWER].opp =.opp
         elif CONF_POWER_ENTITY in entity_config:
             power_val = entity_config[CONF_POWER_ENTITY]
-            if.opp.states.get(power_val) is None:
+            if opp.states.get(power_val) is None:
                 _LOGGER.debug("Sensor Entity not found: %s", power_val)
             else:
                 entity_config[CONF_POWER] = power_val

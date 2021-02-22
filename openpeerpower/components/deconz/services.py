@@ -49,7 +49,7 @@ SELECT_GATEWAY_SCHEMA = vol.All(vol.Schema({vol.Optional(CONF_BRIDGE_ID): str}))
 
 async def async_setup_services.opp):
     """Set up services for deCONZ integration."""
-    if.opp.data.get(DECONZ_SERVICES, False):
+    if opp.data.get(DECONZ_SERVICES, False):
         return
 
    .opp.data[DECONZ_SERVICES] = True

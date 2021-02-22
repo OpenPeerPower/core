@@ -56,7 +56,7 @@ async def test_default_setup_opp, aioclient_mock):
         assert state.attributes.get("unit_of_measurement") == value[1]
 
 
-async def test_setup_timeout_error.opp, aioclient_mock):
+async def test_setup_timeout_error(opp, aioclient_mock):
     """Expected failures caused by a timeout in API response."""
     fake_async_add_entities = MagicMock()
 
@@ -69,7 +69,7 @@ async def test_setup_timeout_error.opp, aioclient_mock):
         )
 
 
-async def test_setup_permanent_error.opp, aioclient_mock):
+async def test_setup_permanent_error(opp, aioclient_mock):
     """Expected failures caused by permanent errors in API response."""
     fake_async_add_entities = MagicMock()
 
@@ -82,7 +82,7 @@ async def test_setup_permanent_error.opp, aioclient_mock):
         assert result is None
 
 
-async def test_setup_temporary_error.opp, aioclient_mock):
+async def test_setup_temporary_error(opp, aioclient_mock):
     """Expected failures caused by temporary errors in API response."""
     fake_async_add_entities = MagicMock()
 

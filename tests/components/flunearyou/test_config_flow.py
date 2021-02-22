@@ -11,7 +11,7 @@ from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE
 from tests.common import MockConfigEntry
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that an error is shown when duplicates are added."""
     conf = {CONF_LATITUDE: "51.528308", CONF_LONGITUDE: "-0.3817765"}
 
@@ -27,7 +27,7 @@ async def test_duplicate_error.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_general_error.opp):
+async def test_general_error(opp):
     """Test that an error is shown on a library error."""
     conf = {CONF_LATITUDE: "51.528308", CONF_LONGITUDE: "-0.3817765"}
 

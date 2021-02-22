@@ -303,7 +303,7 @@ async def test_all_day_offset_event.opp, mock_next_event):
     }
 
 
-async def test_update_error.opp, google_service):
+async def test_update_error(opp, google_service):
     """Test that the calendar handles a server error."""
     google_service.return_value.get = Mock(
         side_effect=httplib2.ServerNotFoundError("unit test")

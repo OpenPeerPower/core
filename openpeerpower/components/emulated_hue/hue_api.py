@@ -292,7 +292,7 @@ class HueOneLightStateView(OpenPeerPowerView):
         opp =request.app[.opp"]
        .opp_entity_id = self.config.number_to_entity_id(entity_id)
 
-        if.opp_entity_id is None:
+        if opp_entity_id is None:
             _LOGGER.error(
                 "Unknown entity number: %s not found in emulated_hue_ids.json",
                 entity_id,

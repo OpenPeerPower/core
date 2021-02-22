@@ -32,7 +32,7 @@ async def test_async_setup_entry.opp):
     await async_setup_entry.opp, fake_config, fake_async_add_entities)
 
 
-async def test_async_setup_entry_timeout_error.opp):
+async def test_async_setup_entry_timeout_error(opp):
     """Test fetching usage data. Failed the first time because was too get response."""
     fake_async_add_entities = MagicMock()
     fake_srp_energy_client = MagicMock()
@@ -55,7 +55,7 @@ async def test_async_setup_entry_timeout_error.opp):
     ].coordinator.last_update_success
 
 
-async def test_async_setup_entry_connect_error.opp):
+async def test_async_setup_entry_connect_error(opp):
     """Test fetching usage data. Failed the first time because was too get response."""
     fake_async_add_entities = MagicMock()
     fake_srp_energy_client = MagicMock()

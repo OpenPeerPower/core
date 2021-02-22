@@ -305,7 +305,7 @@ async def test_api_template.opp, mock_api_client):
     assert body == "10"
 
 
-async def test_api_template_error.opp, mock_api_client):
+async def test_api_template_error(opp, mock_api_client):
     """Test the template API."""
    .opp.states.async_set("sensor.temperature", 10)
 

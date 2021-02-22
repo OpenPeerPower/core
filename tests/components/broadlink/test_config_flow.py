@@ -210,7 +210,7 @@ async def test_flow_user_network_unreachable.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_user_os_error.opp):
+async def test_flow_user_os_error(opp):
     """Test we handle an OS error in the user step."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -227,7 +227,7 @@ async def test_flow_user_os_error.opp):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_flow_auth_authentication_error.opp):
+async def test_flow_auth_authentication_error(opp):
     """Test we handle an authentication error in the auth step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -269,7 +269,7 @@ async def test_flow_auth_network_timeout.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_auth_firmware_error.opp):
+async def test_flow_auth_firmware_error(opp):
     """Test we handle a firmware error in the auth step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -311,7 +311,7 @@ async def test_flow_auth_network_unreachable.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_auth_os_error.opp):
+async def test_flow_auth_os_error(opp):
     """Test we handle an OS error in the auth step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -429,7 +429,7 @@ async def test_flow_unlock_network_timeout.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_unlock_firmware_error.opp):
+async def test_flow_unlock_firmware_error(opp):
     """Test we handle a firmware error in the unlock step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -483,7 +483,7 @@ async def test_flow_unlock_network_unreachable.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_unlock_os_error.opp):
+async def test_flow_unlock_os_error(opp):
     """Test we handle an OS error in the unlock step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -707,7 +707,7 @@ async def test_flow_import_network_unreachable.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_flow_import_os_error.opp):
+async def test_flow_import_os_error(opp):
     """Test we handle an OS error in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError()):
         result = await.opp.config_entries.flow.async_init(

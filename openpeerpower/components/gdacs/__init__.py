@@ -87,7 +87,7 @@ async def async_setup_entry.opp, config_entry):
     feeds =.opp.data[DOMAIN].setdefault(FEED, {})
 
     radius = config_entry.data[CONF_RADIUS]
-    if.opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
+    if opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
         radius = METRIC_SYSTEM.length(radius, LENGTH_MILES)
     # Create feed entity manager for all platforms.
     manager = GdacsFeedEntityManager.opp, config_entry, radius)

@@ -185,7 +185,7 @@ async def stop_opp():
         yield
 
     for.opp_inst in created:
-        if.opp_inst.state == op.CoreState.stopped:
+        if opp_inst.state == op.CoreState.stopped:
             continue
 
         with patch.object.opp_inst.loop, "stop"):

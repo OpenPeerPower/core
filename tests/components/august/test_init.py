@@ -65,7 +65,7 @@ async def test_august_is_offline.opp):
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_unlock_throws_august_api_http_error.opp):
+async def test_unlock_throws_august_api_http_error(opp):
     """Test unlock throws correct error on http error."""
     mocked_lock_detail = await _mock_operative_august_lock_detail.opp)
 
@@ -91,7 +91,7 @@ async def test_unlock_throws_august_api_http_error.opp):
     )
 
 
-async def test_lock_throws_august_api_http_error.opp):
+async def test_lock_throws_august_api_http_error(opp):
     """Test lock throws correct error on http error."""
     mocked_lock_detail = await _mock_operative_august_lock_detail.opp)
 

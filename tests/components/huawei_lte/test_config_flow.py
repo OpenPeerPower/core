@@ -77,7 +77,7 @@ async def test_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_connection_error.opp, requests_mock):
+async def test_connection_error(opp, requests_mock):
     """Test we show user form on connection error."""
     requests_mock.request(ANY, ANY, exc=ConnectionError())
     result = await.opp.config_entries.flow.async_init(
@@ -119,7 +119,7 @@ def login_requests_mock(requests_mock):
         (ResponseCodeEnum.ERROR_SYSTEM_UNKNOWN, {"base": "response_error"}),
     ),
 )
-async def test_login_error.opp, login_requests_mock, code, errors):
+async def test_login_error(opp, login_requests_mock, code, errors):
     """Test we show user form with appropriate error on response failure."""
     login_requests_mock.request(
         ANY,

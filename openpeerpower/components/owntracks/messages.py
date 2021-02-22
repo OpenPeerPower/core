@@ -301,7 +301,7 @@ async def async_handle_waypoint.opp, name_base, waypoint):
     entity_id = zone_comp.ENTITY_ID_FORMAT.format(slugify(pretty_name))
 
     # Check if state already exists
-    if.opp.states.get(entity_id) is not None:
+    if opp.states.get(entity_id) is not None:
         return
 
     zone = zone_comp.Zone.from_yaml(

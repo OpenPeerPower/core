@@ -104,7 +104,7 @@ async def test_warning.opp, simple_queue, opp_client):
     assert_log(log, "", "warning message", "WARNING")
 
 
-async def test_error.opp, simple_queue, opp_client):
+async def test_error(opp, simple_queue, opp_client):
     """Test that errors are logged and retrieved correctly."""
     await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
     _LOGGER.error("error message")

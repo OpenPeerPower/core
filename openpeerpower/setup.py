@@ -136,7 +136,7 @@ async def _async_setup_component(
     def log_error(msg: str, link: Optional[str] = None) -> None:
         """Log helper."""
         _LOGGER.error("Setup failed for %s: %s", domain, msg)
-        async_notify_setup_error.opp, domain, link)
+        async_notify_setup_error(opp, domain, link)
 
     try:
         integration = await loader.async_get_integration.opp, domain)
@@ -222,7 +222,7 @@ async def _async_setup_component(
         return False
     except Exception:  # pylint: disable=broad-except
         _LOGGER.exception("Error during setup of component %s", domain)
-        async_notify_setup_error.opp, domain, integration.documentation)
+        async_notify_setup_error(opp, domain, integration.documentation)
        .opp.data[DATA_SETUP_STARTED].pop(domain)
         return False
     finally:
@@ -278,7 +278,7 @@ async def async_prepare_setup_platform(
     def log_error(msg: str) -> None:
         """Log helper."""
         _LOGGER.error("Unable to prepare setup for platform %s: %s", platform_path, msg)
-        async_notify_setup_error.opp, platform_path)
+        async_notify_setup_error(opp, platform_path)
 
     try:
         integration = await loader.async_get_integration.opp, platform_name)

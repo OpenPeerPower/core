@@ -30,7 +30,7 @@ def mock_setup():
         yield
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {
         CONF_API_KEY: "12345abcde",

@@ -77,7 +77,7 @@ async def test_show_zeroconf_connection_error_form.opp):
         assert len.opp.config_entries.async_entries(DOMAIN)) == 0
 
 
-async def test_connection_error.opp):
+async def test_connection_error(opp):
     """Test we show user form on Smappee connection error."""
     with patch("pysmappee.api.SmappeeLocalApi.logon", return_value=None):
         result = await.opp.config_entries.flow.async_init(

@@ -154,7 +154,7 @@ async def test_abort_on_invalid_credentials.opp, tuya):
     assert result["reason"] == RESULT_AUTH_FAILED
 
 
-async def test_abort_on_connection_error.opp, tuya):
+async def test_abort_on_connection_error(opp, tuya):
     """Test when we have a network error."""
     tuya().init.side_effect = TuyaNetException("Boom")
 

@@ -258,7 +258,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     _LOGGER.debug("Setup %s at %s %s", device_name, address, adb_log)
    .opp.data[ANDROIDTV_DOMAIN][address] = device
 
-    if.opp.services.has_service(ANDROIDTV_DOMAIN, SERVICE_ADB_COMMAND):
+    if opp.services.has_service(ANDROIDTV_DOMAIN, SERVICE_ADB_COMMAND):
         return
 
     platform = entity_platform.current_platform.get()

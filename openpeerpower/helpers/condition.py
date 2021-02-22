@@ -472,7 +472,7 @@ def sun_from_config(
     before_offset = config.get("before_offset")
     after_offset = config.get("after_offset")
 
-    def time_if.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+    def time_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate time based if-condition."""
         return sun.opp, before, after, before_offset, after_offset)
 
@@ -508,7 +508,7 @@ def async_template_from_config(
         config = cv.TEMPLATE_CONDITION_SCHEMA(config)
     value_template = cast(Template, config.get(CONF_VALUE_TEMPLATE))
 
-    def template_if.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+    def template_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
         value_template.opp =.opp
 
@@ -592,7 +592,7 @@ def time_from_config(
     after = config.get(CONF_AFTER)
     weekday = config.get(CONF_WEEKDAY)
 
-    def time_if.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+    def time_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate time based if-condition."""
         return time.opp, before, after, weekday)
 

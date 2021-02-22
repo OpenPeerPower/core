@@ -63,7 +63,7 @@ async def test_flow_works.opp, simple_mock_home):
     assert result["result"].unique_id == "ABC123"
 
 
-async def test_flow_init_connection_error.opp):
+async def test_flow_init_connection_error(opp):
     """Test config flow with accesspoint connection error."""
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipAuth.async_setup",
@@ -77,7 +77,7 @@ async def test_flow_init_connection_error.opp):
     assert result["step_id"] == "init"
 
 
-async def test_flow_link_connection_error.opp):
+async def test_flow_link_connection_error(opp):
     """Test config flow client registration connection error."""
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipAuth.async_checkbutton",

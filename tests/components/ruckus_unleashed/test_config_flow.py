@@ -86,7 +86,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_error.opp):
+async def test_form_unknown_error(opp):
     """Test we handle unknown error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -132,7 +132,7 @@ async def test_form_cannot_connect_unknown_serial.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_duplicate_error.opp):
+async def test_form_duplicate_error(opp):
     """Test we handle duplicate error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

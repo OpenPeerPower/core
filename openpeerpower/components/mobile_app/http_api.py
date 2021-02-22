@@ -65,7 +65,7 @@ class RegistrationsView(OpenPeerPowerView):
 
         webhook_id = secrets.token_hex()
 
-        if.opp.components.cloud.async_active_subscription():
+        if opp.components.cloud.async_active_subscription():
             data[
                 CONF_CLOUDHOOK_URL
             ] = await.opp.components.cloud.async_create_cloudhook(webhook_id)

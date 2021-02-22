@@ -50,7 +50,7 @@ async def test_error_status.opp):
     assert result["reason"] == "result_error"
 
 
-async def test_key_error.opp):
+async def test_key_error(opp):
     """Test Connect returning empty string."""
     flow = config_flow.SomaFlowHandler()
     flow.opp =.opp

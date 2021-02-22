@@ -256,7 +256,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_error.opp):
+async def test_form_unknown_error(opp):
     """Test we handle broad exception."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

@@ -22,7 +22,7 @@ def mock_api():
     return api
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {
         CONF_USERNAME: "user@email.com",
@@ -202,7 +202,7 @@ async def test_step_user_mfa.opp):
         }
 
 
-async def test_unknown_error.opp):
+async def test_unknown_error(opp):
     """Test that an unknown error raises the correct error."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 

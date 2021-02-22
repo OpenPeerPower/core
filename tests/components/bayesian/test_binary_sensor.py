@@ -499,7 +499,7 @@ async def test_state_attributes_are_serializable.opp):
         json.dumps(attrs)
 
 
-async def test_template_error.opp, caplog):
+async def test_template_error(opp, caplog):
     """Test sensor with template error."""
     config = {
         "binary_sensor": {

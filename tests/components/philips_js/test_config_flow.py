@@ -90,7 +90,7 @@ async def test_form_cannot_connect.opp, mock_tv):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unexpected_error.opp, mock_tv):
+async def test_form_unexpected_error(opp, mock_tv):
     """Test we handle unexpected exceptions."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

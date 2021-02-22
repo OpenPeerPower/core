@@ -104,7 +104,7 @@ async def async_setup_entry.opp, entry):
            .opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-    if.opp.services.has_service(DOMAIN, "update"):
+    if opp.services.has_service(DOMAIN, "update"):
         return True
 
     async def async_refresh_all(_):

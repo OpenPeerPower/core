@@ -44,7 +44,7 @@ def get_mock_info(
     return gateway_info
 
 
-async def test_config_flow_step_gateway_connect_error.opp):
+async def test_config_flow_step_gateway_connect_error(opp):
     """Test config flow, gateway connection error."""
     result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -180,7 +180,7 @@ async def test_zeroconf_missing_data.opp):
     assert result["reason"] == "not_xiaomi_miio"
 
 
-async def test_config_flow_step_device_connect_error.opp):
+async def test_config_flow_step_device_connect_error(opp):
     """Test config flow, device connection error."""
     result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}

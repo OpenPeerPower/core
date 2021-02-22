@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from err
     except MissingAttributeError as err:
         http_session.close()
-        await _async_handle_api_changed_error.opp, err)
+        await _async_handle_api_changed_error(opp, err)
         return False
     except AccessDeniedError as err:
         _LOGGER.debug("Authentication failed", exc_info=err)
@@ -124,7 +124,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         """Fetch data from API endpoint."""
         # Check if we had an error before
         _LOGGER.debug("Checking if update failed")
-        if.opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED]:
+        if opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED]:
             return.opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
 
         _LOGGER.debug("Updating data")
@@ -175,7 +175,7 @@ async def _async_update_powerwall_data(
     except PowerwallUnreachableError as err:
         raise UpdateFailed("Unable to fetch data from powerwall") from err
     except MissingAttributeError as err:
-        await _async_handle_api_changed_error.opp, err)
+        await _async_handle_api_changed_error(opp, err)
        .opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED] = True
         # Returns the cached data. This data can also be None
         return.opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data

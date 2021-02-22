@@ -132,7 +132,7 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
     assert state.attributes[ATTR_TEMPERATURE] == 20
 
 
-async def test_update_error.opp: OpenPeerPowerType, fritz: Mock):
+async def test_update_error(opp: OpenPeerPowerType, fritz: Mock):
     """Test update with error."""
     device = FritzDeviceClimateMock()
     device.update.side_effect = HTTPError("Boom")

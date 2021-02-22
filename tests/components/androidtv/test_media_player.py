@@ -797,7 +797,7 @@ async def test_adb_command.opp):
         assert state.attributes["adb_response"] == response
 
 
-async def test_adb_command_unicode_decode_error.opp):
+async def test_adb_command_unicode_decode_error(opp):
     """Test sending a command via the `androidtv.adb_command` service that raises a UnicodeDecodeError exception."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
     command = "test command"

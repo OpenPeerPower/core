@@ -280,7 +280,7 @@ def _included(ranges, set_to, values):
 def _find_elk_by_prefix.opp, prefix):
     """Search all config entries for a given prefix."""
     for entry_id in.opp.data[DOMAIN]:
-        if.opp.data[DOMAIN][entry_id]["prefix"] == prefix:
+        if opp.data[DOMAIN][entry_id]["prefix"] == prefix:
             return.opp.data[DOMAIN][entry_id]["elk"]
 
 

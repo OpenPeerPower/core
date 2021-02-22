@@ -126,7 +126,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_error.opp):
+async def test_form_unknown_error(opp):
     """Test we handle unknown error."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -186,7 +186,7 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
         assert result2["reason"] == "reauth_successful"
 
 
-async def test_reauth_authorization_error.opp: OpenPeerPower) -> None:
+async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
     """Test we show user form on authorization error."""
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
@@ -234,7 +234,7 @@ async def test_reauth_account_locked.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "account_locked"}
 
 
-async def test_reauth_connection_error.opp: OpenPeerPower) -> None:
+async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
     """Test we show user form on connection error."""
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
@@ -258,7 +258,7 @@ async def test_reauth_connection_error.opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_reauth_unknown_error.opp: OpenPeerPower) -> None:
+async def test_reauth_unknown_error(opp: OpenPeerPower) -> None:
     """Test we show user form on unknown error."""
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",

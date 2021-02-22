@@ -60,7 +60,7 @@ async def test_form_cannot_connect.opp, mock_simple_nws_config):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_error.opp, mock_simple_nws_config):
+async def test_form_unknown_error(opp, mock_simple_nws_config):
     """Test we handle unknown error."""
     mock_instance = mock_simple_nws_config.return_value
     mock_instance.set_station.side_effect = ValueError

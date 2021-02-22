@@ -157,7 +157,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
    .opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_STOP_LISTENER]()
     await.opp.async_add_executor_job.opp.data[DOMAIN][entry.entry_id][DATA_AD].close)
 
-    if.opp.data[DOMAIN][entry.entry_id]:
+    if opp.data[DOMAIN][entry.entry_id]:
        .opp.data[DOMAIN].pop(entry.entry_id)
         if not.opp.data[DOMAIN]:
            .opp.data.pop(DOMAIN)

@@ -197,7 +197,7 @@ async def test_manual_configuration_after_discovery_timeout.opp, aioclient_mock)
     assert not.opp.config_entries.flow._progress[result["flow_id"]].bridges
 
 
-async def test_manual_configuration_after_discovery_ResponseError.opp, aioclient_mock):
+async def test_manual_configuration_after_discovery_Responseerror(opp, aioclient_mock):
     """Test failed discovery fallbacks to manual configuration."""
     aioclient_mock.get(pydeconz.utils.URL_DISCOVER, exc=pydeconz.errors.ResponseError)
 
@@ -342,7 +342,7 @@ async def test_manual_configuration_timeout_get_bridge.opp, aioclient_mock):
     assert result["reason"] == "no_bridges"
 
 
-async def test_link_get_api_key_ResponseError.opp, aioclient_mock):
+async def test_link_get_api_key_Responseerror(opp, aioclient_mock):
     """Test config flow should abort if no API key was possible to retrieve."""
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,

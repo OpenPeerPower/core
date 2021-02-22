@@ -286,7 +286,7 @@ async def test_error_on_connection_failure.opp, conn_error):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_error_on_unknwon_error.opp, unknown_error):
+async def test_error_on_unknwon_error(opp, unknown_error):
     """Test when connection to host fails."""
     flow = init_config_flow.opp)
 

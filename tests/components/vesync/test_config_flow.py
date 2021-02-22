@@ -21,7 +21,7 @@ async def test_abort_already_setup_opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_invalid_login_error.opp):
+async def test_invalid_login_error(opp):
     """Test if we return error for invalid username and password."""
     test_dict = {CONF_USERNAME: "user", CONF_PASSWORD: "pass"}
     flow = config_flow.VeSyncFlowHandler()

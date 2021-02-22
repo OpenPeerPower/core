@@ -141,7 +141,7 @@ async def test_discovery_lock.opp, mock_entry):
             mock_run_discovery.assert_called_once()
 
 
-async def test_discovery_connection_error.opp, mock_entry):
+async def test_discovery_connection_error(opp, mock_entry):
     """Test that invalid devices are skipped."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 

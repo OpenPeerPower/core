@@ -162,7 +162,7 @@ async def load_auth_provider_module(
             f"Unable to load auth provider {provider}: {err}"
         ) from err
 
-    if.opp.config.skip_pip or not hasattr(module, "REQUIREMENTS"):
+    if opp.config.skip_pip or not hasattr(module, "REQUIREMENTS"):
         return module
 
     processed =.opp.data.get(DATA_REQS)

@@ -189,7 +189,7 @@ async def test_config_flow_manual_discover_2_success.opp):
     }
 
 
-async def test_config_flow_manual_discover_error.opp):
+async def test_config_flow_manual_discover_error(opp):
     """
     Failed flow manually initialized by the user.
 
@@ -363,7 +363,7 @@ async def test_config_flow_manual_host_no_serial_no_mac_exception.opp):
     }
 
 
-async def test_config_flow_manual_host_connection_error.opp):
+async def test_config_flow_manual_host_connection_error(opp):
     """
     Failed flow manually initialized by the user.
 

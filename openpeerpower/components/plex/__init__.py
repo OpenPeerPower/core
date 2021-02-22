@@ -193,7 +193,7 @@ async def async_setup_entry.opp, entry):
 
     def start_websocket_session(platform, _):
        .opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id].add(platform)
-        if.opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id] == PLATFORMS:
+        if opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id] == PLATFORMS:
            .opp.loop.create_task(websocket.listen())
 
     def close_websocket_session(_):

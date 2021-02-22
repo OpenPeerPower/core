@@ -64,7 +64,7 @@ async def test_sign_in_failed.opp, config_entry, controller, caplog):
     assert "Sign in failed: Invalid credentials (6)" in caplog.text
 
 
-async def test_sign_in_unknown_error.opp, config_entry, controller, caplog):
+async def test_sign_in_unknown_error(opp, config_entry, controller, caplog):
     """Test sign-in service logs error for failure."""
     await setup_component.opp, config_entry)
     controller.sign_in.side_effect = HeosError()
@@ -100,7 +100,7 @@ async def test_sign_out_not_connected.opp, config_entry, controller, caplog):
     assert "Unable to sign out because HEOS is not connected" in caplog.text
 
 
-async def test_sign_out_unknown_error.opp, config_entry, controller, caplog):
+async def test_sign_out_unknown_error(opp, config_entry, controller, caplog):
     """Test the sign-out service."""
     await setup_component.opp, config_entry)
     controller.sign_out.side_effect = HeosError()

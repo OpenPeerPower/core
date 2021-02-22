@@ -377,7 +377,7 @@ def setup_opp, base_config):
                     controller.fibaro_devices[component]
                 )
 
-    if.opp.data[FIBARO_CONTROLLERS]:
+    if opp.data[FIBARO_CONTROLLERS]:
         for component in FIBARO_COMPONENTS:
             discovery.load_platform.opp, component, DOMAIN, {}, base_config)
         for controller in.opp.data[FIBARO_CONTROLLERS].values():

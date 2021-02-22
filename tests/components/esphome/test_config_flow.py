@@ -78,7 +78,7 @@ async def test_user_connection_works.opp, mock_client):
     assert mock_client.password == ""
 
 
-async def test_user_resolve_error.opp, mock_api_connection_error, mock_client):
+async def test_user_resolve_error(opp, mock_api_connection_error, mock_client):
     """Test user step with IP resolve error."""
 
     class MockResolveError(mock_api_connection_error):
@@ -108,7 +108,7 @@ async def test_user_resolve_error.opp, mock_api_connection_error, mock_client):
     assert len(mock_client.disconnect.mock_calls) == 1
 
 
-async def test_user_connection_error.opp, mock_api_connection_error, mock_client):
+async def test_user_connection_error(opp, mock_api_connection_error, mock_client):
     """Test user step with connection error."""
     mock_client.device_info.side_effect = mock_api_connection_error
 

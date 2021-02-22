@@ -156,7 +156,7 @@ class SecuritySystem(HomeAccessory):
     def async_update_state(self, new_state):
         """Update security state after state changed."""
        .opp_state = new_state.state
-        if.opp_state in HASS_TO_HOMEKIT:
+        if opp_state in HASS_TO_HOMEKIT:
             current_security_state = HASS_TO_HOMEKIT.opp_state]
             if self.char_current_state.value != current_security_state:
                 self.char_current_state.set_value(current_security_state)

@@ -17,7 +17,7 @@ from openpeerpower.const import (
 )
 
 
-async def test_duplicate_error.opp, config_entry):
+async def test_duplicate_error(opp, config_entry):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_LATITUDE: -41.2, CONF_LONGITUDE: 174.7, CONF_RADIUS: 25}
     config_entry.add_to.opp.opp)

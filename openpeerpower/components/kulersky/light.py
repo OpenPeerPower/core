@@ -57,7 +57,7 @@ async def async_setup_entry(
         # Since discovery needs to connect to all discovered bluetooth devices, and
         # only rules out devices after a timeout, it can potentially take a long
         # time. If there's already a discovery running, just skip this poll.
-        if.opp.data[DOMAIN]["discovery"].locked():
+        if opp.data[DOMAIN]["discovery"].locked():
             return
 
         async with.opp.data[DOMAIN]["discovery"]:

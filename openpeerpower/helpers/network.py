@@ -87,13 +87,13 @@ def get_url(
         and request_host is not None
         and.opp.config.api is not None
     ):
-        scheme = "https" if.opp.config.api.use_ssl else "http"
+        scheme = "https" if opp.config.api.use_ssl else "http"
         current_url = yarl.URL.build(
             scheme=scheme, host=request_host, port.opp.config.api.port
         )
 
         known_hostnames = ["localhost"]
-        if.opp.components.oppio.is.oppio():
+        if opp.components.oppio.is.oppio():
             host_info =.opp.components.oppio.get_host_info()
             known_hostnames.extend(
                 [host_info["hostname"], f"{host_info['hostname']}.local"]
@@ -135,7 +135,7 @@ def _get_internal_url(
     require_standard_port: bool = False,
 ) -> str:
     """Get internal URL of this instance."""
-    if.opp.config.internal_url:
+    if opp.config.internal_url:
         internal_url = yarl.URL.opp.config.internal_url)
         if (
             (not require_current_request or internal_url.host == _get_request_host())
@@ -180,7 +180,7 @@ def _get_external_url(
         except NoURLAvailableError:
             pass
 
-    if.opp.config.external_url:
+    if opp.config.external_url:
         external_url = yarl.URL.opp.config.external_url)
         if (
             (allow_ip or not is_ip_address(str(external_url.host)))

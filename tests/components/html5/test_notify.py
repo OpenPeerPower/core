@@ -438,7 +438,7 @@ async def test_unregister_device_view_handle_unknown_subscription.opp, opp_clien
     assert len(mock_save.mock_calls) == 0
 
 
-async def test_unregistering_device_view_handles_save_error.opp, opp_client):
+async def test_unregistering_device_view_handles_save_error(opp, opp_client):
     """Test that the HTML unregister view handles save errors."""
     registrations = {"some device": SUBSCRIPTION_1, "other device": SUBSCRIPTION_2}
     client = await mock_client.opp, opp_client, registrations)

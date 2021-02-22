@@ -156,7 +156,7 @@ async def test_host_already_configured.opp, connect):
     assert result2["reason"] == "already_configured"
 
 
-async def test_connection_error.opp, connect_error):
+async def test_connection_error(opp, connect_error):
     """Test error when connection is unsuccessful."""
 
     result = await.opp.config_entries.flow.async_init(

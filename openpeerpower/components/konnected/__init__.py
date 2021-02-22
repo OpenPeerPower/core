@@ -322,7 +322,7 @@ class KonnectedView(OpenPeerPowerView):
 
         auth = request.headers.get(AUTHORIZATION)
         tokens = []
-        if.opp.data[DOMAIN].get(CONF_ACCESS_TOKEN):
+        if opp.data[DOMAIN].get(CONF_ACCESS_TOKEN):
             tokens.extend(.opp.data[DOMAIN][CONF_ACCESS_TOKEN]])
         tokens.extend(
             [

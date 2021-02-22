@@ -230,7 +230,7 @@ class RememberTheMilkConfiguration:
     def delete_rtm_id(self, profile_name, opp_id):
         """Delete a key mapping."""
         self._initialize_profile(profile_name)
-        if.opp_id in self._config[profile_name][CONF_ID_MAP]:
+        if opp_id in self._config[profile_name][CONF_ID_MAP]:
             del self._config[profile_name][CONF_ID_MAP].opp_id]
             self.save_config()
 
@@ -279,12 +279,12 @@ class RememberTheMilk(Entity):
             task_name = call.data.get(CONF_NAME)
            .opp_id = call.data.get(CONF_ID)
             rtm_id = None
-            if.opp_id is not None:
+            if opp_id is not None:
                 rtm_id = self._rtm_config.get_rtm_id(self._name, opp_id)
             result = self._rtm_api.rtm.timelines.create()
             timeline = result.timeline.value
 
-            if.opp_id is None or rtm_id is None:
+            if opp_id is None or rtm_id is None:
                 result = self._rtm_api.rtm.tasks.add(
                     timeline=timeline, name=task_name, parse="1"
                 )

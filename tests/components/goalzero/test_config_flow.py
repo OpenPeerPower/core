@@ -103,7 +103,7 @@ async def test_flow_user_invalid_host.opp):
         assert result["errors"] == {"base": "invalid_host"}
 
 
-async def test_flow_user_unknown_error.opp):
+async def test_flow_user_unknown_error(opp):
     """Test user initialized flow with unreachable server."""
     mocked_yeti = await _create_mocked_yeti(True)
     with _patch_config_flow_yeti(mocked_yeti) as yetimock:

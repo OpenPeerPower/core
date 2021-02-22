@@ -382,7 +382,7 @@ def async_setup_services.opp: OpenPeerPowerType):
 @callback
 def async_unload_services.opp: OpenPeerPowerType):
     """Unload services for the ISY integration."""
-    if.opp.data[DOMAIN]:
+    if opp.data[DOMAIN]:
         # There is still another config entry for this domain, don't remove services.
         return
 

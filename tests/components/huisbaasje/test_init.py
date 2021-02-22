@@ -71,7 +71,7 @@ async def test_setup_entry.opp: OpenPeerPower):
         assert len(mock_current_measurements.mock_calls) == 1
 
 
-async def test_setup_entry_error.opp: OpenPeerPower):
+async def test_setup_entry_error(opp: OpenPeerPower):
     """Test for successfully setting a config entry."""
     with patch(
         "huisbaasje.Huisbaasje.authenticate", side_effect=HuisbaasjeException

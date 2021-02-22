@@ -1000,7 +1000,7 @@ async def test_event_on_update.opp):
     assert events[0].data == {"latitude": 12}
 
 
-async def test_bad_timezone_raises_value_error.opp):
+async def test_bad_timezone_raises_value_error(opp):
     """Test bad timezone raises ValueError."""
     with pytest.raises(ValueError):
         await opp.config.async_update(time_zone="not_a_timezone")

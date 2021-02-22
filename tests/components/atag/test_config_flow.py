@@ -48,7 +48,7 @@ async def test_adding_second_device(
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_connection_error.opp):
+async def test_connection_error(opp):
     """Test we show user form on Atag connection error."""
     with patch("pyatag.AtagOne.authorize", side_effect=errors.AtagException()):
         result = await.opp.config_entries.flow.async_init(

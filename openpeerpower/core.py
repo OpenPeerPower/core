@@ -366,9 +366,9 @@ class OpenPeerPower:
        .oppjob: HassJob to call.
         args: parameters for method to call.
         """
-        if.oppjob.job_type == HassJobType.Coroutinefunction:
+        if oppjob.job_type == HassJobType.Coroutinefunction:
             task = self.loop.create_task.oppjob.target(*args))
-        elif.oppjob.job_type == HassJobType.Callback:
+        elif oppjob.job_type == HassJobType.Callback:
             self.loop.call_soon.oppjob.target, *args)
             return None
         else:
@@ -431,7 +431,7 @@ class OpenPeerPower:
        .oppjob: HassJob
         args: parameters for method to call.
         """
-        if.oppjob.job_type == HassJobType.Callback:
+        if oppjob.job_type == HassJobType.Callback:
            .oppjob.target(*args)
             return None
 

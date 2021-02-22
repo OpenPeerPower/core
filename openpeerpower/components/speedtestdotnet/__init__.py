@@ -82,7 +82,7 @@ async def async_setup_entry.opp, config_entry):
         await coordinator.async_refresh()
 
     if not config_entry.options[CONF_MANUAL]:
-        if.opp.state == CoreState.running:
+        if opp.state == CoreState.running:
             await _enable_scheduled_speedtests()
             if not coordinator.last_update_success:
                 raise ConfigEntryNotReady

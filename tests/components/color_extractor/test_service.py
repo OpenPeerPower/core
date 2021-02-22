@@ -207,7 +207,7 @@ async def test_url_exception.opp, aioclient_mock):
     assert state.state == STATE_OFF
 
 
-async def test_url_error.opp, aioclient_mock):
+async def test_url_error(opp, aioclient_mock):
     """Test that a HTTP Error (non 200) doesn't turn light on."""
     service_data = {
         ATTR_URL: "http://example.com/images/logo.png",

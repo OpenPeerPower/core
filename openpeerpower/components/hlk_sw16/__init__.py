@@ -129,7 +129,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = await.opp.config_entries.async_forward_entry_unload(entry, "switch")
 
     if unload_ok:
-        if.opp.data[DOMAIN][entry.entry_id]:
+        if opp.data[DOMAIN][entry.entry_id]:
            .opp.data[DOMAIN].pop(entry.entry_id)
         if not.opp.data[DOMAIN]:
            .opp.data.pop(DOMAIN)

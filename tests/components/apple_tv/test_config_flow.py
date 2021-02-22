@@ -48,7 +48,7 @@ async def test_user_input_device_not_found.opp, mrp_device):
     assert result2["errors"] == {"base": "no_devices_found"}
 
 
-async def test_user_input_unexpected_error.opp, mock_scan):
+async def test_user_input_unexpected_error(opp, mock_scan):
     """Test that unexpected error yields an error message."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -323,7 +323,7 @@ async def test_user_pair_invalid_pin.opp, mrp_device, pairing_mock):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_user_pair_unexpected_error.opp, mrp_device, pairing_mock):
+async def test_user_pair_unexpected_error(opp, mrp_device, pairing_mock):
     """Test unexpected error when entering PIN code."""
 
     pairing_mock.finish.side_effect = Exception
@@ -349,7 +349,7 @@ async def test_user_pair_unexpected_error.opp, mrp_device, pairing_mock):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_user_pair_backoff_error.opp, mrp_device, pairing_mock):
+async def test_user_pair_backoff_error(opp, mrp_device, pairing_mock):
     """Test that backoff error is displayed in case device requests it."""
     pairing_mock.begin.side_effect = exceptions.BackOffError
 
@@ -370,7 +370,7 @@ async def test_user_pair_backoff_error.opp, mrp_device, pairing_mock):
     assert result2["reason"] == "backoff"
 
 
-async def test_user_pair_begin_unexpected_error.opp, mrp_device, pairing_mock):
+async def test_user_pair_begin_unexpected_error(opp, mrp_device, pairing_mock):
     """Test unexpected error during start of pairing."""
     pairing_mock.begin.side_effect = Exception
 
@@ -498,7 +498,7 @@ async def test_zeroconf_add_existing_device.opp, dmap_device):
     assert result["reason"] == "already_configured"
 
 
-async def test_zeroconf_unexpected_error.opp, mock_scan):
+async def test_zeroconf_unexpected_error(opp, mock_scan):
     """Test unexpected error aborts in zeroconf."""
     mock_scan.side_effect = Exception
 

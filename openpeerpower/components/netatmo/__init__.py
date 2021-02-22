@@ -132,7 +132,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             data = {**entry.data, CONF_WEBHOOK_ID: secrets.token_hex()}
            .opp.config_entries.async_update_entry(entry, data=data)
 
-        if.opp.components.cloud.async_active_subscription():
+        if opp.components.cloud.async_active_subscription():
             if CONF_CLOUDHOOK_URL not in entry.data:
                 webhook_url = await.opp.components.cloud.async_create_cloudhook(
                     entry.data[CONF_WEBHOOK_ID]
@@ -188,7 +188,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
        .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, unregister_webhook)
 
-    if.opp.state == CoreState.running:
+    if opp.state == CoreState.running:
         await register_webhook(None)
     else:
        .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, register_webhook)

@@ -108,7 +108,7 @@ async def test_form_cannot_connect.opp, requests_mock):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_error.opp, mock_simple_manager_fail):
+async def test_form_unknown_error(opp, mock_simple_manager_fail):
     """Test we handle unknown error."""
     mock_instance = mock_simple_manager_fail.return_value
     mock_instance.get_nearest_forecast_site.side_effect = ValueError

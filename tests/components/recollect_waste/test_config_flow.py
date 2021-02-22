@@ -15,7 +15,7 @@ from openpeerpower.const import CONF_FRIENDLY_NAME
 from tests.common import MockConfigEntry
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 

@@ -7,7 +7,7 @@ from .const import DOMAIN, EVENT_TEMPLATE_RELOADED, PLATFORMS
 
 async def async_setup_reload_service.opp):
     """Create the reload service for the template domain."""
-    if.opp.services.has_service(DOMAIN, SERVICE_RELOAD):
+    if opp.services.has_service(DOMAIN, SERVICE_RELOAD):
         return
 
     async def _reload_config(call):

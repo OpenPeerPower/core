@@ -26,7 +26,7 @@ def mock_aionotion(mock_client):
         yield mock_
 
 
-async def test_duplicate_error.opp):
+async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 
