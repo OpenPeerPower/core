@@ -2,7 +2,7 @@
 from unittest.mock import MagicMock, patch
 
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 MOCK_CONFIG = {
     "sensor": {
@@ -24,10 +24,10 @@ async def test_sensor_state.opp):
         patched_connector.return_value = pickup_instance
 
         await async_setup_component.opp, SENSOR_DOMAIN, MOCK_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         entity_id = "sensor.test_name"
-        test_openerz_state = opp.states.get(entity_id)
+        test_openerz_state =.opp.states.get(entity_id)
 
         assert test_openerz_state.state == "2020-12-12"
         assert test_openerz_state.name == "test_name"

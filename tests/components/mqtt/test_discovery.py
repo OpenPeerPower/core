@@ -13,7 +13,7 @@ from openpeerpower.components.mqtt.abbreviations import (
 )
 from openpeerpower.components.mqtt.discovery import ALREADY_DISCOVERED, async_start
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_OFF, STATE_ON
-import openpeerpowerr.core as ha
+import openpeerpower.core as ha
 
 from tests.common import (
     async_fire_mqtt_message,
@@ -41,9 +41,9 @@ def entity_reg.opp):
 )
 async def test_subscribing_config_topic.opp, mqtt_mock):
     """Test setting up discovery."""
-    entry = opp.config_entries.async_entries(mqtt.DOMAIN)[0]
+    entry =.opp.config_entries.async_entries(mqtt.DOMAIN)[0]
 
-    discovery_topic = "openpeerpowerr"
+    discovery_topic = "openpeerpower"
     await async_start.opp, discovery_topic, entry)
 
     call_args1 = mqtt_mock.async_subscribe.mock_calls[0][1]
@@ -65,7 +65,7 @@ async def test_invalid_topic.opp, mqtt_mock):
         async_fire_mqtt_message(
            .opp, "openpeerpower/binary_sensor/bla/not_config", "{}"
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert not mock_dispatcher_send.called
 
 
@@ -80,7 +80,7 @@ async def test_invalid_json.opp, mqtt_mock, caplog):
         async_fire_mqtt_message(
            .opp, "openpeerpower/binary_sensor/bla/config", "not json"
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert "Unable to parse JSON" in caplog.text
         assert not mock_dispatcher_send.called
 
@@ -99,7 +99,7 @@ async def test_only_valid_components.opp, mqtt_mock, caplog):
            .opp, f"openpeerpower/{invalid_component}/bla/config", "{}"
         )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert f"Integration {invalid_component} is not supported" in caplog.text
 
@@ -113,9 +113,9 @@ async def test_correct_config_discovery.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.beer")
+    state =.opp.states.get("binary_sensor.beer")
 
     assert state is not None
     assert state.name == "Beer"
@@ -129,9 +129,9 @@ async def test_discover_fan.opp, mqtt_mock, caplog):
         "openpeerpower/fan/bla/config",
         ('{ "name": "Beer",' '  "command_topic": "test_topic" }'),
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("fan.beer")
+    state =.opp.states.get("fan.beer")
 
     assert state is not None
     assert state.name == "Beer"
@@ -147,9 +147,9 @@ async def test_discover_climate.opp, mqtt_mock, caplog):
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/climate/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("climate.ClimateTest")
+    state =.opp.states.get("climate.ClimateTest")
 
     assert state is not None
     assert state.name == "ClimateTest"
@@ -165,9 +165,9 @@ async def test_discover_alarm_control_panel.opp, mqtt_mock, caplog):
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/alarm_control_panel/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("alarm_control_panel.AlarmControlPanelTest")
+    state =.opp.states.get("alarm_control_panel.AlarmControlPanelTest")
 
     assert state is not None
     assert state.name == "AlarmControlPanelTest"
@@ -181,9 +181,9 @@ async def test_discovery_incl_nodeid.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/my_node_id/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.beer")
+    state =.opp.states.get("binary_sensor.beer")
 
     assert state is not None
     assert state.name == "Beer"
@@ -202,10 +202,10 @@ async def test_non_duplicate_discovery.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.beer")
-    state_duplicate = opp.states.get("binary_sensor.beer1")
+    state =.opp.states.get("binary_sensor.beer")
+    state_duplicate =.opp.states.get("binary_sensor.beer1")
 
     assert state is not None
     assert state.name == "Beer"
@@ -220,13 +220,13 @@ async def test_removal.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.beer")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.beer")
     assert state is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla/config", "")
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.beer")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.beer")
     assert state is None
 
 
@@ -237,13 +237,13 @@ async def test_rediscover.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.beer")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.beer")
     assert state is not None
 
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla/config", "")
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.beer")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.beer")
     assert state is None
 
     async_fire_mqtt_message(
@@ -251,8 +251,8 @@ async def test_rediscover.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.beer")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.beer")
     assert state is not None
 
 
@@ -261,7 +261,7 @@ async def test_rapid_rediscover.opp, mqtt_mock, caplog):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)
@@ -273,8 +273,8 @@ async def test_rapid_rediscover.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.beer")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.beer")
     assert state is not None
     assert len(events) == 1
 
@@ -291,10 +291,10 @@ async def test_rapid_rediscover.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Milk", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids("binary_sensor")) == 1
-    state = opp.states.get("binary_sensor.milk")
+    state =.opp.states.get("binary_sensor.milk")
     assert state is not None
 
     assert len(events) == 5
@@ -317,7 +317,7 @@ async def test_rapid_rediscover_unique.opp, mqtt_mock, caplog):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)
@@ -329,8 +329,8 @@ async def test_rapid_rediscover_unique.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla2/config",
         '{ "name": "Ale", "state_topic": "test-topic", "unique_id": "very_unique" }',
     )
-    await opp..async_block_till_done()
-    state = opp.states.get("binary_sensor.ale")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("binary_sensor.ale")
     assert state is not None
     assert len(events) == 1
 
@@ -351,12 +351,12 @@ async def test_rapid_rediscover_unique.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Milk", "state_topic": "test-topic", "unique_id": "even_uniquer" }',
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids("binary_sensor")) == 2
-    state = opp.states.get("binary_sensor.ale")
+    state =.opp.states.get("binary_sensor.ale")
     assert state is not None
-    state = opp.states.get("binary_sensor.milk")
+    state =.opp.states.get("binary_sensor.milk")
     assert state is not None
 
     assert len(events) == 4
@@ -378,13 +378,13 @@ async def test_duplicate_removal.opp, mqtt_mock, caplog):
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla/config", "")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "Component has already been discovered: binary_sensor bla" in caplog.text
     caplog.clear()
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla/config", "")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert "Component has already been discovered: binary_sensor bla" not in caplog.text
 
@@ -398,7 +398,7 @@ async def test_cleanup_device.opp, device_reg, entity_reg, mqtt_mock):
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device and registry entries are created
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
@@ -406,12 +406,12 @@ async def test_cleanup_device.opp, device_reg, entity_reg, mqtt_mock):
     entity_entry = entity_reg.async_get("sensor.mqtt_sensor")
     assert entity_entry is not None
 
-    state = opp.states.get("sensor.mqtt_sensor")
+    state =.opp.states.get("sensor.mqtt_sensor")
     assert state is not None
 
     device_reg.async_remove_device(device_entry.id)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device and registry entries are cleared
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
@@ -420,9 +420,9 @@ async def test_cleanup_device.opp, device_reg, entity_reg, mqtt_mock):
     assert entity_entry is None
 
     # Verify state is removed
-    state = opp.states.get("sensor.mqtt_sensor")
+    state =.opp.states.get("sensor.mqtt_sensor")
     assert state is None
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify retained discovery topic has been cleared
     mqtt_mock.async_publish.assert_called_once_with(
@@ -448,9 +448,9 @@ async def test_discovery_expansion.opp, mqtt_mock, caplog):
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/switch/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.DiscoveryExpansionTest1")
+    state =.opp.states.get("switch.DiscoveryExpansionTest1")
     assert state is not None
     assert state.name == "DiscoveryExpansionTest1"
     assert ("switch", "bla") in.opp.data[ALREADY_DISCOVERED]
@@ -458,7 +458,7 @@ async def test_discovery_expansion.opp, mqtt_mock, caplog):
 
     async_fire_mqtt_message.opp, "test_topic/some/base/topic", "ON")
 
-    state = opp.states.get("switch.DiscoveryExpansionTest1")
+    state =.opp.states.get("switch.DiscoveryExpansionTest1")
     assert state.state == STATE_ON
 
 
@@ -523,10 +523,10 @@ async def test_no_implicit_state_topic_switch.opp, mqtt_mock, caplog):
     data = '{ "name": "Test1",' '  "command_topic": "cmnd"' "}"
 
     async_fire_mqtt_message.opp, "openpeerpower/switch/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "implicit state_topic is deprecated" not in caplog.text
 
-    state = opp.states.get("switch.Test1")
+    state =.opp.states.get("switch.Test1")
     assert state is not None
     assert state.name == "Test1"
     assert ("switch", "bla") in.opp.data[ALREADY_DISCOVERED]
@@ -535,7 +535,7 @@ async def test_no_implicit_state_topic_switch.opp, mqtt_mock, caplog):
 
     async_fire_mqtt_message.opp, "openpeerpower/switch/bla/state", "ON")
 
-    state = opp.states.get("switch.Test1")
+    state =.opp.states.get("switch.Test1")
     assert state.state == "off"
 
 
@@ -555,9 +555,9 @@ async def test_complex_discovery_topic_prefix.opp, mqtt_mock, caplog):
         ("my_home/openpeerpower/register/binary_sensor/node1/object1/config"),
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("binary_sensor.beer")
+    state =.opp.states.get("binary_sensor.beer")
 
     assert state is not None
     assert state.name == "Beer"
@@ -570,15 +570,15 @@ async def test_mqtt_integration_discovery_subscribe_unsubscribe(
     """Check MQTT integration discovery subscribe and unsubscribe."""
     mock_entity_platform.opp, "config_flow.comp", None)
 
-    entry = opp.config_entries.async_entries("mqtt")[0]
+    entry =.opp.config_entries.async_entries("mqtt")[0]
     mqtt_mock().connected = True
 
     with patch(
         "openpeerpower.components.mqtt.discovery.async_get_mqtt",
         return_value={"comp": ["comp/discovery/#"]},
     ):
-        await async_start.opp, "openpeerpowerr", entry)
-        await opp..async_block_till_done()
+        await async_start.opp, "openpeerpower", entry)
+        await.opp.async_block_till_done()
 
     mqtt_client_mock.subscribe.assert_any_call("comp/discovery/#", 0)
     assert not mqtt_client_mock.unsubscribe.called
@@ -595,12 +595,12 @@ async def test_mqtt_integration_discovery_subscribe_unsubscribe(
         assert not mqtt_client_mock.unsubscribe.called
 
         async_fire_mqtt_message.opp, "comp/discovery/bla/config", "")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         mqtt_client_mock.unsubscribe.assert_called_once_with("comp/discovery/#")
         mqtt_client_mock.unsubscribe.reset_mock()
 
         async_fire_mqtt_message.opp, "comp/discovery/bla/config", "")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert not mqtt_client_mock.unsubscribe.called
 
 
@@ -608,15 +608,15 @@ async def test_mqtt_discovery_unsubscribe_once.opp, mqtt_client_mock, mqtt_mock)
     """Check MQTT integration discovery unsubscribe once."""
     mock_entity_platform.opp, "config_flow.comp", None)
 
-    entry = opp.config_entries.async_entries("mqtt")[0]
+    entry =.opp.config_entries.async_entries("mqtt")[0]
     mqtt_mock().connected = True
 
     with patch(
         "openpeerpower.components.mqtt.discovery.async_get_mqtt",
         return_value={"comp": ["comp/discovery/#"]},
     ):
-        await async_start.opp, "openpeerpowerr", entry)
-        await opp..async_block_till_done()
+        await async_start.opp, "openpeerpower", entry)
+        await.opp.async_block_till_done()
 
     mqtt_client_mock.subscribe.assert_any_call("comp/discovery/#", 0)
     assert not mqtt_client_mock.unsubscribe.called
@@ -631,6 +631,6 @@ async def test_mqtt_discovery_unsubscribe_once.opp, mqtt_client_mock, mqtt_mock)
     with patch.dict(config_entries.HANDLERS, {"comp": TestFlow}):
         async_fire_mqtt_message.opp, "comp/discovery/bla/config", "")
         async_fire_mqtt_message.opp, "comp/discovery/bla/config", "")
-        await opp..async_block_till_done()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
+        await.opp.async_block_till_done()
         mqtt_client_mock.unsubscribe.assert_called_once_with("comp/discovery/#")

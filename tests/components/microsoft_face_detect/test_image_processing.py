@@ -4,12 +4,12 @@ from unittest.mock import PropertyMock, patch
 import openpeerpower.components.image_processing as ip
 import openpeerpower.components.microsoft_face as mf
 from openpeerpower.const import ATTR_ENTITY_PICTURE
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import setup_component
 
 from tests.common import (
     assert_setup_component,
-    get_test_home_assistant,
+    get_test_open_peer_power,
     load_fixture,
     mock_coro,
 )
@@ -21,7 +21,7 @@ class TestMicrosoftFaceDetectSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""
@@ -76,7 +76,7 @@ class TestMicrosoftFaceDetect:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         self.config = {
             ip.DOMAIN: {

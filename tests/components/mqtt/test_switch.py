@@ -7,8 +7,8 @@ import pytest
 
 from openpeerpower.components import switch
 from openpeerpower.const import ATTR_ASSUMED_STATE, STATE_OFF, STATE_ON
-import openpeerpowerr.core as ha
-from openpeerpowerr.setup import async_setup_component
+import openpeerpower.core as ha
+from openpeerpower.setup import async_setup_component
 
 from .test_common import (
     help_test_availability_when_connection_lost,
@@ -58,29 +58,29 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "1")
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", "0")
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 
 async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     """Test the sending MQTT commands in optimistic mode."""
-    fake_state = op.State("switch.test", "on")
+    fake_state = ha.State("switch.test", "on")
 
     with patch(
-        "openpeerpowerr.helpers.restore_state.RestoreEntity.async_get_last_state",
+        "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",
         return_value=fake_state,
     ):
         assert await async_setup_component(
@@ -97,9 +97,9 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -109,7 +109,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         "command-topic", "beer on", 2, False
     )
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     await common.async_turn_off.opp, "switch.test")
@@ -117,7 +117,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     mqtt_mock.async_publish.assert_called_once_with(
         "command-topic", "beer off", 2, False
     )
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 
@@ -138,19 +138,19 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"beer on"}')
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"beer off"}')
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 
@@ -222,20 +222,20 @@ async def test_custom_state_payload.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "HIGH")
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_ON
 
     async_fire_mqtt_message.opp, "state-topic", "LOW")
 
-    state = opp.states.get("switch.test")
+    state =.opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 

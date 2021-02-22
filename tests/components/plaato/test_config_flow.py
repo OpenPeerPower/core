@@ -12,7 +12,7 @@ from openpeerpower.components.plaato.const import (
     DOMAIN,
 )
 from openpeerpower.const import CONF_SCAN_INTERVAL, CONF_TOKEN, CONF_WEBHOOK_ID
-from openpeerpowerr.data_entry_flow import RESULT_TYPE_CREATE_ENTRY, RESULT_TYPE_FORM
+from openpeerpower.data_entry_flow import RESULT_TYPE_CREATE_ENTRY, RESULT_TYPE_FORM
 
 from tests.common import MockConfigEntry
 
@@ -35,7 +35,7 @@ def mock_webhook_id():
 async def test_show_config_form.opp):
     """Test show configuration form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -45,7 +45,7 @@ async def test_show_config_form.opp):
 
 async def test_show_config_form_device_type_airlock.opp):
     """Test show configuration form."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={
@@ -62,7 +62,7 @@ async def test_show_config_form_device_type_airlock.opp):
 
 async def test_show_config_form_device_type_keg.opp):
     """Test show configuration form."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={CONF_DEVICE_TYPE: PlaatoDeviceType.Keg, CONF_DEVICE_NAME: "device_name"},
@@ -77,14 +77,14 @@ async def test_show_config_form_device_type_keg.opp):
 async def test_show_config_form_validate_webhook.opp, webhook_id):
     """Test show configuration form."""
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "user"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_DEVICE_TYPE: PlaatoDeviceType.Airlock,
@@ -102,7 +102,7 @@ async def test_show_config_form_validate_webhook.opp, webhook_id):
         "openpeerpower.components.cloud.async_create_cloudhook",
         return_value="https://hooks.nabu.casa/ABCD",
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={
                 CONF_TOKEN: "",
@@ -117,11 +117,11 @@ async def test_show_config_form_validate_webhook.opp, webhook_id):
 async def test_show_config_form_validate_token.opp):
     """Test show configuration form."""
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_DEVICE_TYPE: PlaatoDeviceType.Keg,
@@ -133,7 +133,7 @@ async def test_show_config_form_validate_token.opp):
     assert result["step_id"] == "api_method"
 
     with patch("openpeerpower.components.plaato.async_setup_entry", return_value=True):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={CONF_TOKEN: "valid_token"}
         )
 
@@ -150,11 +150,11 @@ async def test_show_config_form_validate_token.opp):
 async def test_show_config_form_no_cloud_webhook.opp, webhook_id):
     """Test show configuration form."""
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_DEVICE_TYPE: PlaatoDeviceType.Airlock,
@@ -165,7 +165,7 @@ async def test_show_config_form_no_cloud_webhook.opp, webhook_id):
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "api_method"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_USE_WEBHOOK: True,
@@ -182,11 +182,11 @@ async def test_show_config_form_api_method_no_auth_token.opp, webhook_id):
     """Test show configuration form."""
 
     # Using Keg
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_DEVICE_TYPE: PlaatoDeviceType.Keg,
@@ -197,7 +197,7 @@ async def test_show_config_form_api_method_no_auth_token.opp, webhook_id):
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "api_method"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_TOKEN: ""}
     )
 
@@ -207,11 +207,11 @@ async def test_show_config_form_api_method_no_auth_token.opp, webhook_id):
     assert result["errors"]["base"] == "no_auth_token"
 
     # Using Airlock
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         user_input={
             CONF_DEVICE_TYPE: PlaatoDeviceType.Airlock,
@@ -222,7 +222,7 @@ async def test_show_config_form_api_method_no_auth_token.opp, webhook_id):
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "api_method"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_TOKEN: ""}
     )
 
@@ -240,7 +240,7 @@ async def test_options.opp):
         data={},
         options={CONF_SCAN_INTERVAL: 5},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.plaato.async_setup", return_value=True
@@ -248,20 +248,20 @@ async def test_options.opp):
         "openpeerpower.components.plaato.async_setup_entry", return_value=True
     ) as mock_setup_entry:
 
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_SCAN_INTERVAL: 10},
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"][CONF_SCAN_INTERVAL] == 10
@@ -278,7 +278,7 @@ async def test_options_webhook.opp, webhook_id):
         data={CONF_USE_WEBHOOK: True, CONF_WEBHOOK_ID: None},
         options={CONF_SCAN_INTERVAL: 5},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.plaato.async_setup", return_value=True
@@ -286,21 +286,21 @@ async def test_options_webhook.opp, webhook_id):
         "openpeerpower.components.plaato.async_setup_entry", return_value=True
     ) as mock_setup_entry:
 
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "webhook"
         assert result["description_placeholders"] == {"webhook_url": ""}
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_WEBHOOK_ID: WEBHOOK_ID},
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"][CONF_WEBHOOK_ID] == CONF_WEBHOOK_ID

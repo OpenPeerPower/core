@@ -22,8 +22,8 @@ from openpeerpower.components.lutron_caseta.const import (
 )
 from openpeerpower.components.lutron_caseta.device_trigger import CONF_SUBTYPE
 from openpeerpower.const import CONF_DEVICE_ID, CONF_DOMAIN, CONF_PLATFORM, CONF_TYPE
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -70,7 +70,7 @@ async def _async_setup_lutron_with_picos.opp, device_reg):
     await async_setup_component.opp, DOMAIN, {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     dr_button_devices = {}
 
     for device in MOCK_BUTTON_DEVICES:
@@ -91,7 +91,7 @@ async def _async_setup_lutron_with_picos.opp, device_reg):
 async def test_get_triggers.opp, device_reg):
     """Test we get the expected triggers from a lutron pico."""
     config_entry_id = await _async_setup_lutron_with_picos.opp, device_reg)
-    dr_button_devices = opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
+    dr_button_devices =.opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
     device_id = list(dr_button_devices)[0]
 
     expected_triggers = [
@@ -188,7 +188,7 @@ async def test_if_fires_on_button_event.opp, calls, device_reg):
     """Test for press trigger firing."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     config_entry_id = await _async_setup_lutron_with_picos.opp, device_reg)
-    dr_button_devices = opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
+    dr_button_devices =.opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
     device_id = list(dr_button_devices)[0]
     device = dr_button_devices[device_id]
     assert await async_setup_component(
@@ -222,7 +222,7 @@ async def test_if_fires_on_button_event.opp, calls, device_reg):
         ATTR_ACTION: "press",
     }
    .opp.bus.async_fire(LUTRON_CASETA_BUTTON_EVENT, message)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "test_trigger_button_press"
@@ -262,7 +262,7 @@ async def test_validate_trigger_config_no_device.opp, calls, device_reg):
         ATTR_ACTION: "press",
     }
    .opp.bus.async_fire(LUTRON_CASETA_BUTTON_EVENT, message)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -271,7 +271,7 @@ async def test_validate_trigger_config_unknown_device.opp, calls, device_reg):
     """Test for no press with an unknown device."""
     await setup.async_setup_component.opp, "persistent_notification", {})
     config_entry_id = await _async_setup_lutron_with_picos.opp, device_reg)
-    dr_button_devices = opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
+    dr_button_devices =.opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
     device_id = list(dr_button_devices)[0]
     device = dr_button_devices[device_id]
     device["type"] = "unknown"
@@ -306,7 +306,7 @@ async def test_validate_trigger_config_unknown_device.opp, calls, device_reg):
         ATTR_ACTION: "press",
     }
    .opp.bus.async_fire(LUTRON_CASETA_BUTTON_EVENT, message)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 0
 
@@ -315,7 +315,7 @@ async def test_validate_trigger_invalid_triggers.opp, device_reg):
     """Test for click_event with invalid triggers."""
     notification_calls = async_mock_service.opp, "persistent_notification", "create")
     config_entry_id = await _async_setup_lutron_with_picos.opp, device_reg)
-    dr_button_devices = opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
+    dr_button_devices =.opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
     device_id = list(dr_button_devices)[0]
     assert await async_setup_component(
        .opp,

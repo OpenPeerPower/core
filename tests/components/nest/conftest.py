@@ -41,7 +41,7 @@ class FakeAuth(AbstractAuth):
         self.captured_requests.append((method, url, self.json, self.headers))
         return await self.client.get("/")
 
-    async def response_op.dler(self, request):
+    async def response_handler(self, request):
         """Handle fake responess for aiohttp_server."""
         if len(self.responses) > 0:
             return self.responses.pop(0)
@@ -53,7 +53,7 @@ async def auth(aiohttp_client):
     """Fixture for an AbstractAuth."""
     auth = FakeAuth()
     app = aiohttp.web.Application()
-    app.router.add_get("/", auth.response_op.dler)
-    app.router.add_post("/", auth.response_op.dler)
+    app.router.add_get("/", auth.response_handler)
+    app.router.add_post("/", auth.response_handler)
     auth.client = await aiohttp_client(app)
     return auth

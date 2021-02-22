@@ -14,9 +14,9 @@ from openpeerpower.const import (
     STATE_ALARM_PENDING,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpowerr.core import CoreState, State
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import CoreState, State
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed, mock_component, mock_restore_cache
 from tests.components.alarm_control_panel import common
@@ -47,15 +47,15 @@ async def test_arm_home_no_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_home.opp, CODE)
 
-    assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_HOME ==.opp.states.get(entity_id).state
 
 
 async def test_arm_home_no_pending_when_code_not_req.opp):
@@ -74,15 +74,15 @@ async def test_arm_home_no_pending_when_code_not_req.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_home.opp, 0)
 
-    assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_HOME ==.opp.states.get(entity_id).state
 
 
 async def test_arm_home_with_pending.opp):
@@ -100,17 +100,17 @@ async def test_arm_home_with_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_home.opp, CODE, entity_id)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes["next_state"] == STATE_ALARM_ARMED_HOME
 
     future = dt_util.utcnow() + timedelta(seconds=1)
@@ -119,9 +119,9 @@ async def test_arm_home_with_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_ARMED_HOME
 
 
@@ -140,15 +140,15 @@ async def test_arm_home_with_invalid_code.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_home.opp, CODE + "2")
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_arm_away_no_pending.opp):
@@ -166,15 +166,15 @@ async def test_arm_away_no_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE, entity_id)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
 
 async def test_arm_away_no_pending_when_code_not_req.opp):
@@ -193,15 +193,15 @@ async def test_arm_away_no_pending_when_code_not_req.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, 0, entity_id)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
 
 async def test_arm_home_with_template_code.opp):
@@ -219,15 +219,15 @@ async def test_arm_home_with_template_code.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_home.opp, "abc")
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_ARMED_HOME == state.state
 
 
@@ -246,17 +246,17 @@ async def test_arm_away_with_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes["next_state"] == STATE_ALARM_ARMED_AWAY
 
     future = dt_util.utcnow() + timedelta(seconds=1)
@@ -265,9 +265,9 @@ async def test_arm_away_with_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_ARMED_AWAY
 
 
@@ -286,15 +286,15 @@ async def test_arm_away_with_invalid_code.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE + "2")
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_arm_night_no_pending.opp):
@@ -312,15 +312,15 @@ async def test_arm_night_no_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_night.opp, CODE)
 
-    assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_NIGHT ==.opp.states.get(entity_id).state
 
 
 async def test_arm_night_no_pending_when_code_not_req.opp):
@@ -339,15 +339,15 @@ async def test_arm_night_no_pending_when_code_not_req.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_night.opp, 0)
 
-    assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_NIGHT ==.opp.states.get(entity_id).state
 
 
 async def test_arm_night_with_pending.opp):
@@ -365,17 +365,17 @@ async def test_arm_night_with_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_night.opp, CODE, entity_id)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes["next_state"] == STATE_ALARM_ARMED_NIGHT
 
     future = dt_util.utcnow() + timedelta(seconds=1)
@@ -384,15 +384,15 @@ async def test_arm_night_with_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_ARMED_NIGHT
 
     # Do not go to the pending state when updating to the same state
     await common.async_alarm_arm_night.opp, CODE, entity_id)
 
-    assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_NIGHT ==.opp.states.get(entity_id).state
 
 
 async def test_arm_night_with_invalid_code.opp):
@@ -410,15 +410,15 @@ async def test_arm_night_with_invalid_code.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_night.opp, CODE + "2")
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_no_pending.opp):
@@ -435,15 +435,15 @@ async def test_trigger_no_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
+    assert STATE_ALARM_PENDING ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=60)
     with patch(
@@ -451,9 +451,9 @@ async def test_trigger_no_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_delay.opp):
@@ -472,19 +472,19 @@ async def test_trigger_with_delay.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_PENDING == state.state
     assert STATE_ALARM_TRIGGERED == state.attributes["next_state"]
 
@@ -494,9 +494,9 @@ async def test_trigger_with_delay.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_TRIGGERED == state.state
 
 
@@ -515,15 +515,15 @@ async def test_trigger_zero_trigger_time.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp)
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_zero_trigger_time_with_pending.opp):
@@ -541,15 +541,15 @@ async def test_trigger_zero_trigger_time_with_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp)
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_pending.opp):
@@ -567,17 +567,17 @@ async def test_trigger_with_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp)
 
-    assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
+    assert STATE_ALARM_PENDING ==.opp.states.get(entity_id).state
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes["next_state"] == STATE_ALARM_TRIGGERED
 
     future = dt_util.utcnow() + timedelta(seconds=2)
@@ -586,9 +586,9 @@ async def test_trigger_with_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
     future = dt_util.utcnow() + timedelta(seconds=5)
@@ -597,9 +597,9 @@ async def test_trigger_with_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_DISARMED
 
 
@@ -620,19 +620,19 @@ async def test_trigger_with_unused_specific_delay.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_PENDING == state.state
     assert STATE_ALARM_TRIGGERED == state.attributes["next_state"]
 
@@ -642,9 +642,9 @@ async def test_trigger_with_unused_specific_delay.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
@@ -665,19 +665,19 @@ async def test_trigger_with_specific_delay.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_PENDING == state.state
     assert STATE_ALARM_TRIGGERED == state.attributes["next_state"]
 
@@ -687,9 +687,9 @@ async def test_trigger_with_specific_delay.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
@@ -709,19 +709,19 @@ async def test_trigger_with_pending_and_delay.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_PENDING
     assert state.attributes["next_state"] == STATE_ALARM_TRIGGERED
 
@@ -731,9 +731,9 @@ async def test_trigger_with_pending_and_delay.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_PENDING
     assert state.attributes["next_state"] == STATE_ALARM_TRIGGERED
 
@@ -743,9 +743,9 @@ async def test_trigger_with_pending_and_delay.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
@@ -766,19 +766,19 @@ async def test_trigger_with_pending_and_specific_delay.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_PENDING
     assert state.attributes["next_state"] == STATE_ALARM_TRIGGERED
 
@@ -788,9 +788,9 @@ async def test_trigger_with_pending_and_specific_delay.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_PENDING
     assert state.attributes["next_state"] == STATE_ALARM_TRIGGERED
 
@@ -800,9 +800,9 @@ async def test_trigger_with_pending_and_specific_delay.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
@@ -820,13 +820,13 @@ async def test_armed_home_with_specific_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
     await common.async_alarm_arm_home.opp)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=2)
     with patch(
@@ -834,9 +834,9 @@ async def test_armed_home_with_specific_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_HOME ==.opp.states.get(entity_id).state
 
 
 async def test_armed_away_with_specific_pending.opp):
@@ -853,13 +853,13 @@ async def test_armed_away_with_specific_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
     await common.async_alarm_arm_away.opp)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=2)
     with patch(
@@ -867,9 +867,9 @@ async def test_armed_away_with_specific_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
 
 async def test_armed_night_with_specific_pending.opp):
@@ -886,13 +886,13 @@ async def test_armed_night_with_specific_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
     await common.async_alarm_arm_night.opp)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=2)
     with patch(
@@ -900,9 +900,9 @@ async def test_armed_night_with_specific_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_NIGHT ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_specific_pending.opp):
@@ -921,13 +921,13 @@ async def test_trigger_with_specific_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
     await common.async_alarm_trigger.opp)
 
-    assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
+    assert STATE_ALARM_PENDING ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=2)
     with patch(
@@ -935,9 +935,9 @@ async def test_trigger_with_specific_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -945,9 +945,9 @@ async def test_trigger_with_specific_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_disarm_after_trigger.opp):
@@ -965,15 +965,15 @@ async def test_trigger_with_disarm_after_trigger.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -981,9 +981,9 @@ async def test_trigger_with_disarm_after_trigger.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_zero_specific_trigger_time.opp):
@@ -1002,15 +1002,15 @@ async def test_trigger_with_zero_specific_trigger_time.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_unused_zero_specific_trigger_time.opp):
@@ -1029,15 +1029,15 @@ async def test_trigger_with_unused_zero_specific_trigger_time.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -1045,9 +1045,9 @@ async def test_trigger_with_unused_zero_specific_trigger_time.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_specific_trigger_time.opp):
@@ -1065,15 +1065,15 @@ async def test_trigger_with_specific_trigger_time.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -1081,9 +1081,9 @@ async def test_trigger_with_specific_trigger_time.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_trigger_with_no_disarm_after_trigger.opp):
@@ -1102,19 +1102,19 @@ async def test_trigger_with_no_disarm_after_trigger.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE, entity_id)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -1122,9 +1122,9 @@ async def test_trigger_with_no_disarm_after_trigger.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
 
 async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
@@ -1143,19 +1143,19 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE, entity_id)
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -1163,13 +1163,13 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -1177,9 +1177,9 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_AWAY ==.opp.states.get(entity_id).state
 
 
 async def test_disarm_while_pending_trigger.opp):
@@ -1196,19 +1196,19 @@ async def test_disarm_while_pending_trigger.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp)
 
-    assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
+    assert STATE_ALARM_PENDING ==.opp.states.get(entity_id).state
 
     await common.async_alarm_disarm.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -1216,9 +1216,9 @@ async def test_disarm_while_pending_trigger.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_disarm_during_trigger_with_invalid_code.opp):
@@ -1236,19 +1236,19 @@ async def test_disarm_during_trigger_with_invalid_code.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_trigger.opp)
 
-    assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
+    assert STATE_ALARM_PENDING ==.opp.states.get(entity_id).state
 
     await common.async_alarm_disarm.opp, entity_id=entity_id)
 
-    assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
+    assert STATE_ALARM_PENDING ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=5)
     with patch(
@@ -1256,9 +1256,9 @@ async def test_disarm_during_trigger_with_invalid_code.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+    assert STATE_ALARM_TRIGGERED ==.opp.states.get(entity_id).state
 
 
 async def test_disarm_with_template_code.opp):
@@ -1276,25 +1276,25 @@ async def test_disarm_with_template_code.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_home.opp, "def")
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_ARMED_HOME == state.state
 
     await common.async_alarm_disarm.opp, "def")
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_ARMED_HOME == state.state
 
     await common.async_alarm_disarm.opp, "abc")
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_DISARMED == state.state
 
 
@@ -1313,15 +1313,15 @@ async def test_arm_custom_bypass_no_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_custom_bypass.opp, CODE)
 
-    assert STATE_ALARM_ARMED_CUSTOM_BYPASS == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_CUSTOM_BYPASS ==.opp.states.get(entity_id).state
 
 
 async def test_arm_custom_bypass_no_pending_when_code_not_req.opp):
@@ -1340,15 +1340,15 @@ async def test_arm_custom_bypass_no_pending_when_code_not_req.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_custom_bypass.opp, 0)
 
-    assert STATE_ALARM_ARMED_CUSTOM_BYPASS == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_CUSTOM_BYPASS ==.opp.states.get(entity_id).state
 
 
 async def test_arm_custom_bypass_with_pending.opp):
@@ -1366,17 +1366,17 @@ async def test_arm_custom_bypass_with_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_custom_bypass.opp, CODE, entity_id)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes["next_state"] == STATE_ALARM_ARMED_CUSTOM_BYPASS
 
     future = dt_util.utcnow() + timedelta(seconds=1)
@@ -1385,9 +1385,9 @@ async def test_arm_custom_bypass_with_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_ALARM_ARMED_CUSTOM_BYPASS
 
 
@@ -1406,15 +1406,15 @@ async def test_arm_custom_bypass_with_invalid_code.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_custom_bypass.opp, CODE + "2")
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
 
 async def test_armed_custom_bypass_with_specific_pending.opp):
@@ -1431,13 +1431,13 @@ async def test_armed_custom_bypass_with_specific_pending.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
     await common.async_alarm_arm_custom_bypass.opp)
 
-    assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMING ==.opp.states.get(entity_id).state
 
     future = dt_util.utcnow() + timedelta(seconds=2)
     with patch(
@@ -1445,9 +1445,9 @@ async def test_armed_custom_bypass_with_specific_pending.opp):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    assert STATE_ALARM_ARMED_CUSTOM_BYPASS == opp.states.get(entity_id).state
+    assert STATE_ALARM_ARMED_CUSTOM_BYPASS ==.opp.states.get(entity_id).state
 
 
 async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time):
@@ -1468,22 +1468,22 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.test"
 
-    assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
+    assert STATE_ALARM_DISARMED ==.opp.states.get(entity_id).state
 
     await common.async_alarm_arm_away.opp, CODE)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_ARMING == state.state
     assert STATE_ALARM_DISARMED == state.attributes["previous_state"]
     assert STATE_ALARM_ARMED_AWAY == state.attributes["next_state"]
 
     await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_ARMING == state.state
     assert STATE_ALARM_DISARMED == state.attributes["previous_state"]
     assert STATE_ALARM_ARMED_AWAY == state.attributes["next_state"]
@@ -1494,14 +1494,14 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
         assert STATE_ALARM_ARMED_AWAY == state.state
 
         await common.async_alarm_trigger.opp, entity_id=entity_id)
 
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
         assert STATE_ALARM_PENDING == state.state
         assert STATE_ALARM_ARMED_AWAY == state.attributes["previous_state"]
         assert STATE_ALARM_TRIGGERED == state.attributes["next_state"]
@@ -1512,9 +1512,9 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time):
         return_value=future,
     ):
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert STATE_ALARM_TRIGGERED == state.state
 
 
@@ -1540,9 +1540,9 @@ async def test_restore_armed_state.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("alarm_control_panel.test")
+    state =.opp.states.get("alarm_control_panel.test")
     assert state
     assert state.state == STATE_ALARM_ARMED_AWAY
 
@@ -1567,8 +1567,8 @@ async def test_restore_disarmed_state.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("alarm_control_panel.test")
+    state =.opp.states.get("alarm_control_panel.test")
     assert state
     assert state.state == STATE_ALARM_DISARMED

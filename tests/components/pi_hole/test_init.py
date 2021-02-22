@@ -23,7 +23,7 @@ from openpeerpower.const import (
     CONF_SSL,
     CONF_VERIFY_SSL,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import (
     CONF_CONFIG_ENTRY,
@@ -45,7 +45,7 @@ async def test_setup_minimal_config.opp):
            .opp, pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
         )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
        .opp.states.get("sensor.pi_hole_ads_blocked_today").name
@@ -105,7 +105,7 @@ async def test_setup_name_config.opp):
             {pi_hole.DOMAIN: [{"host": "pi.hole", "name": "Custom"}]},
         )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
        .opp.states.get("sensor.custom_ads_blocked_today").name
@@ -123,9 +123,9 @@ async def test_switch.opp, caplog):
             {pi_hole.DOMAIN: [{"host": "pi.hole1", "api_key": "1"}]},
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             switch.SERVICE_TURN_ON,
             {"entity_id": SWITCH_ENTITY_ID},
@@ -133,7 +133,7 @@ async def test_switch.opp, caplog):
         )
         mocked_hole.enable.assert_called_once()
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             switch.SERVICE_TURN_OFF,
             {"entity_id": SWITCH_ENTITY_ID},
@@ -143,14 +143,14 @@ async def test_switch.opp, caplog):
 
         # Failed calls
         type(mocked_hole).enable = AsyncMock(side_effect=HoleError("Error1"))
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             switch.SERVICE_TURN_ON,
             {"entity_id": SWITCH_ENTITY_ID},
             blocking=True,
         )
         type(mocked_hole).disable = AsyncMock(side_effect=HoleError("Error2"))
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             switch.SERVICE_TURN_OFF,
             {"entity_id": SWITCH_ENTITY_ID},
@@ -176,16 +176,16 @@ async def test_disable_service_call.opp):
             },
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             pi_hole.DOMAIN,
             SERVICE_DISABLE,
             {ATTR_ENTITY_ID: "all", SERVICE_DISABLE_ATTR_DURATION: "00:00:01"},
             blocking=True,
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         mocked_hole.disable.assert_called_once_with(1)
 
@@ -203,27 +203,27 @@ async def test_unload.opp):
             CONF_STATISTICS_ONLY: True,
         },
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
     assert entry.entry_id in.opp.data[pi_hole.DOMAIN]
 
-    assert await opp..config_entries.async_unload(entry.entry_id)
-    await opp..async_block_till_done()
+    assert await.opp.config_entries.async_unload(entry.entry_id)
+    await.opp.async_block_till_done()
     assert entry.entry_id not in.opp.data[pi_hole.DOMAIN]
 
 
 async def test_migrate.opp):
     """Test migrate from old config entry."""
     entry = MockConfigEntry(domain=pi_hole.DOMAIN, data=CONF_DATA)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert entry.data == CONF_CONFIG_ENTRY
 
@@ -233,12 +233,12 @@ async def test_migrate_statistics_only.opp):
     conf_data = {**CONF_DATA}
     conf_data[CONF_API_KEY] = ""
     entry = MockConfigEntry(domain=pi_hole.DOMAIN, data=conf_data)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     config_entry_data = {**CONF_CONFIG_ENTRY}
     config_entry_data[CONF_STATISTICS_ONLY] = True

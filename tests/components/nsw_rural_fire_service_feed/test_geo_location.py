@@ -33,8 +33,8 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STOP,
     LENGTH_KILOMETERS,
 )
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import assert_setup_component, async_fire_time_changed
 
@@ -117,7 +117,7 @@ async def test_setup.opp):
 
     # Patching 'utcnow' to gain more control over the timed update.
     utcnow = dt_util.utcnow()
-    with patch("openpeerpowerr.util.dt.utcnow", return_value=utcnow), patch(
+    with patch("openpeerpower.util.dt.utcnow", return_value=utcnow), patch(
         "aio_geojson_client.feed.GeoJsonFeed.update"
     ) as mock_feed_update:
         mock_feed_update.return_value = (
@@ -126,16 +126,16 @@ async def test_setup.opp):
         )
         with assert_setup_component(1, geo_location.DOMAIN):
             assert await async_setup_component.opp, geo_location.DOMAIN, CONFIG)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
             # Artificially trigger update.
            .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
+            all_states =.opp.states.async_all()
             assert len(all_states) == 3
 
-            state = opp.states.get("geo_location.title_1")
+            state =.opp.states.get("geo_location.title_1")
             assert state is not None
             assert state.name == "Title 1"
             assert state.attributes == {
@@ -161,7 +161,7 @@ async def test_setup.opp):
             }
             assert round(abs(float(state.state) - 15.5), 7) == 0
 
-            state = opp.states.get("geo_location.title_2")
+            state =.opp.states.get("geo_location.title_2")
             assert state is not None
             assert state.name == "Title 2"
             assert state.attributes == {
@@ -176,7 +176,7 @@ async def test_setup.opp):
             }
             assert round(abs(float(state.state) - 20.5), 7) == 0
 
-            state = opp.states.get("geo_location.title_3")
+            state =.opp.states.get("geo_location.title_3")
             assert state is not None
             assert state.name == "Title 3"
             assert state.attributes == {
@@ -198,32 +198,32 @@ async def test_setup.opp):
                 [mock_entry_1, mock_entry_4, mock_entry_3],
             )
             async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
+            all_states =.opp.states.async_all()
             assert len(all_states) == 3
 
             # Simulate an update - empty data, but successful update,
             # so no changes to entities.
             mock_feed_update.return_value = "OK_NO_DATA", None
             async_fire_time_changed.opp, utcnow + 2 * SCAN_INTERVAL)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
+            all_states =.opp.states.async_all()
             assert len(all_states) == 3
 
             # Simulate an update - empty data, removes all entities
             mock_feed_update.return_value = "ERROR", None
             async_fire_time_changed.opp, utcnow + 3 * SCAN_INTERVAL)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
+            all_states =.opp.states.async_all()
             assert len(all_states) == 0
 
             # Artificially trigger update.
            .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
             # Collect events.
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
 
 async def test_setup_with_custom_location.opp):
@@ -243,14 +243,14 @@ async def test_setup_with_custom_location.opp):
             assert await async_setup_component(
                .opp, geo_location.DOMAIN, CONFIG_WITH_CUSTOM_LOCATION
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
             # Artificially trigger update.
            .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
+            all_states =.opp.states.async_all()
             assert len(all_states) == 1
 
             assert mock_feed_manager.call_args == call(

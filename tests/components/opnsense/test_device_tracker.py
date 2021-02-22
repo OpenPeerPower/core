@@ -7,7 +7,7 @@ import pytest
 from openpeerpower.components import opnsense
 from openpeerpower.components.opnsense import CONF_API_SECRET, DOMAIN
 from openpeerpower.const import CONF_API_KEY, CONF_URL, CONF_VERIFY_SSL
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(name="mocked_opnsense")
@@ -55,10 +55,10 @@ async def test_get_scanner.opp, mocked_opnsense, mock_device_tracker_conf):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert result
-    device_1 = opp.states.get("device_tracker.desktop")
+    device_1 =.opp.states.get("device_tracker.desktop")
     assert device_1 is not None
     assert device_1.state == "home"
-    device_2 = opp.states.get("device_tracker.ff_ff_ff_ff_ff_ff")
+    device_2 =.opp.states.get("device_tracker.ff_ff_ff_ff_ff_ff")
     assert device_2.state == "home"

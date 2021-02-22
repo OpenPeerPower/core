@@ -7,7 +7,7 @@ pubsub subscriber.
 from google_nest_sdm.device import Device
 from google_nest_sdm.event import EventMessage
 
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.util.dt import utcnow
 
 from .common import async_setup_sdm_platform
 
@@ -91,14 +91,14 @@ async def test_doorbell_chime_event.opp):
         create_device_traits("sdm.devices.traits.DoorbellChime"),
     )
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("camera.front")
     assert entry is not None
     assert entry.unique_id == "some-device-id-camera"
     assert entry.original_name == "Front"
     assert entry.domain == "camera"
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
     assert device.name == "Front"
     assert device.model == "Doorbell"
@@ -108,7 +108,7 @@ async def test_doorbell_chime_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.DoorbellChime.Chime", timestamp=timestamp)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -127,7 +127,7 @@ async def test_camera_motion_event.opp):
         "sdm.devices.types.CAMERA",
         create_device_traits("sdm.devices.traits.CameraMotion"),
     )
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("camera.front")
     assert entry is not None
 
@@ -135,7 +135,7 @@ async def test_camera_motion_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.CameraMotion.Motion", timestamp=timestamp)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -154,7 +154,7 @@ async def test_camera_sound_event.opp):
         "sdm.devices.types.CAMERA",
         create_device_traits("sdm.devices.traits.CameraSound"),
     )
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("camera.front")
     assert entry is not None
 
@@ -162,7 +162,7 @@ async def test_camera_sound_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.CameraSound.Sound", timestamp=timestamp)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -181,7 +181,7 @@ async def test_camera_person_event.opp):
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.CameraEventImage"),
     )
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("camera.front")
     assert entry is not None
 
@@ -189,7 +189,7 @@ async def test_camera_person_event.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.CameraPerson.Person", timestamp=timestamp)
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 1
@@ -208,7 +208,7 @@ async def test_camera_multiple_event.opp):
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.CameraEventImage"),
     )
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("camera.front")
     assert entry is not None
 
@@ -225,7 +225,7 @@ async def test_camera_multiple_event.opp):
 
     timestamp = utcnow()
     await subscriber.async_receive_event(create_events(event_map, timestamp=timestamp))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     event_time = timestamp.replace(microsecond=0)
     assert len(events) == 2
@@ -250,7 +250,7 @@ async def test_unknown_event.opp):
         create_device_traits("sdm.devices.traits.DoorbellChime"),
     )
     await subscriber.async_receive_event(create_event("some-event-id"))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 0
 
@@ -266,7 +266,7 @@ async def test_unknown_device_id.opp):
     await subscriber.async_receive_event(
         create_event("sdm.devices.events.DoorbellChime.Chime", "invalid-device-id")
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 0
 
@@ -288,6 +288,6 @@ async def test_event_message_without_device_event.opp):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 0

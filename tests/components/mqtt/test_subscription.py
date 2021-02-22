@@ -5,7 +5,7 @@ from openpeerpower.components.mqtt.subscription import (
     async_subscribe_topics,
     async_unsubscribe_topics,
 )
-from openpeerpowerr.core import callback
+from openpeerpower.core import callback
 
 from tests.common import async_fire_mqtt_message
 

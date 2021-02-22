@@ -7,12 +7,12 @@ async def test_switch.opp, generic_data, sent_messages, switch_msg):
     receive_message = await setup_ozw.opp, fixture=generic_data)
 
     # Test loaded
-    state = opp.states.get("switch.smart_plug_switch")
+    state =.opp.states.get("switch.smart_plug_switch")
     assert state is not None
     assert state.state == "off"
 
     # Test turning on
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.smart_plug_switch"}, blocking=True
     )
     assert len(sent_messages) == 1
@@ -25,14 +25,14 @@ async def test_switch.opp, generic_data, sent_messages, switch_msg):
     switch_msg.payload["Value"] = True
     switch_msg.encode()
     receive_message(switch_msg)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.smart_plug_switch")
+    state =.opp.states.get("switch.smart_plug_switch")
     assert state is not None
     assert state.state == "on"
 
     # Test turning off
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch", "turn_off", {"entity_id": "switch.smart_plug_switch"}, blocking=True
     )
     assert len(sent_messages) == 2

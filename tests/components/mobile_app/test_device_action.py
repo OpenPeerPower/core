@@ -1,7 +1,7 @@
 """The tests for Mobile App device actions."""
 from openpeerpower.components import automation, device_automation
 from openpeerpower.components.mobile_app import DATA_DEVICES, DOMAIN, util
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_get_device_automations, patch
 
@@ -9,7 +9,7 @@ from tests.common import async_get_device_automations, patch
 async def test_get_actions.opp, push_registration):
     """Test we get the expected actions from a mobile_app."""
     webhook_id = push_registration["webhook_id"]
-    device_id = opp.data[DOMAIN][DATA_DEVICES][webhook_id].id
+    device_id =.opp.data[DOMAIN][DATA_DEVICES][webhook_id].id
 
     assert await async_get_device_automations.opp, "action", device_id) == [
         {"domain": DOMAIN, "device_id": device_id, "type": "notify"}
@@ -58,7 +58,7 @@ async def test_action.opp, push_registration):
         "openpeerpower.components.mobile_app.notify.MobileAppNotificationService.async_send_message"
     ) as mock_send_message:
        .opp.bus.async_fire("test_notify")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert len(mock_send_message.mock_calls) == 1
 
     assert mock_send_message.mock_calls[0][2] == {

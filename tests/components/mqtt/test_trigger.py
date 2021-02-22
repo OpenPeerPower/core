@@ -5,7 +5,7 @@ import pytest
 
 import openpeerpower.components.automation as automation
 from openpeerpower.const import ATTR_ENTITY_ID, ENTITY_MATCH_ALL, SERVICE_TURN_OFF
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_fire_mqtt_message, async_mock_service, mock_component
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
@@ -44,18 +44,18 @@ async def test_if_fires_on_topic_match.opp, calls):
     )
 
     async_fire_mqtt_message.opp, "test-topic", '{ "hello": "world" }')
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert 'mqtt - test-topic - { "hello": "world" } - world' == calls[0].data["some"]
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         automation.DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL},
         blocking=True,
     )
     async_fire_mqtt_message.opp, "test-topic", "test_payload")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -77,7 +77,7 @@ async def test_if_fires_on_topic_and_payload_match.opp, calls):
     )
 
     async_fire_mqtt_message.opp, "test-topic", "hello")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -99,15 +99,15 @@ async def test_if_fires_on_templated_topic_and_payload_match.opp, calls):
     )
 
     async_fire_mqtt_message.opp, "test-topic-", "foo")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
     async_fire_mqtt_message.opp, "test-topic-4", "foo")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
     async_fire_mqtt_message.opp, "test-topic-4", "bar")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -151,7 +151,7 @@ async def test_if_not_fires_on_topic_but_no_payload_match.opp, calls):
     )
 
     async_fire_mqtt_message.opp, "test-topic", "no-hello")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 

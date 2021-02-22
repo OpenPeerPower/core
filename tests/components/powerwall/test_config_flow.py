@@ -23,7 +23,7 @@ VALID_CONFIG = {CONF_IP_ADDRESS: "1.2.3.4", CONF_PASSWORD: "00GGX"}
 async def test_form_source_user.opp):
     """Test we get config flow setup form as a user."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -40,11 +40,11 @@ async def test_form_source_user.opp):
         "openpeerpower.components.powerwall.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "My site"
@@ -55,7 +55,7 @@ async def test_form_source_user.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -65,7 +65,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.powerwall.config_flow.Powerwall",
         return_value=mock_powerwall,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
@@ -76,7 +76,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_invalid_auth.opp):
     """Test we handle invalid auth error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -86,7 +86,7 @@ async def test_invalid_auth.opp):
         "openpeerpower.components.powerwall.config_flow.Powerwall",
         return_value=mock_powerwall,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
@@ -97,7 +97,7 @@ async def test_invalid_auth.opp):
 
 async def test_form_unknown_exeption.opp):
     """Test we handle an unknown exception."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -107,7 +107,7 @@ async def test_form_unknown_exeption.opp):
         "openpeerpower.components.powerwall.config_flow.Powerwall",
         return_value=mock_powerwall,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"], VALID_CONFIG
         )
 
@@ -117,7 +117,7 @@ async def test_form_unknown_exeption.opp):
 
 async def test_form_wrong_version.opp):
     """Test we can handle wrong version error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -129,7 +129,7 @@ async def test_form_wrong_version.opp):
         "openpeerpower.components.powerwall.config_flow.Powerwall",
         return_value=mock_powerwall,
     ):
-        result3 = await opp..config_entries.flow.async_configure(
+        result3 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
@@ -143,9 +143,9 @@ async def test_already_configured.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_IP_ADDRESS: "1.1.1.1"})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_DHCP},
         data={
@@ -163,9 +163,9 @@ async def test_already_configured_with_ignored.opp):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_DHCP},
         data={
@@ -180,7 +180,7 @@ async def test_already_configured_with_ignored.opp):
 async def test_dhcp_discovery.opp):
     """Test we can process the discovery from dhcp."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_DHCP},
         data={
@@ -202,11 +202,11 @@ async def test_dhcp_discovery.opp):
         "openpeerpower.components.powerwall.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             VALID_CONFIG,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Some site"
@@ -223,9 +223,9 @@ async def test_form_reauth.opp):
         data=VALID_CONFIG,
         unique_id="1.2.3.4",
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=entry.data
     )
     assert result["type"] == "form"
@@ -242,14 +242,14 @@ async def test_form_reauth.opp):
         "openpeerpower.components.powerwall.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {
                 CONF_IP_ADDRESS: "1.2.3.4",
                 CONF_PASSWORD: "new-test-password",
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "reauth_successful"

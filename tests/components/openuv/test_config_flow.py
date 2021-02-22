@@ -41,9 +41,9 @@ async def test_duplicate_error.opp):
 
     MockConfigEntry(
         domain=DOMAIN, unique_id="39.128712, -104.9812612", data=conf
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -64,7 +64,7 @@ async def test_invalid_api_key.opp):
         "pyopenuv.client.Client.uv_index",
         side_effect=InvalidApiKeyError,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -83,13 +83,13 @@ async def test_step_user.opp):
     with patch(
         "openpeerpower.components.airvisual.async_setup_entry", return_value=True
     ), patch("pyopenuv.client.Client.uv_index"):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "user"
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=conf
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY

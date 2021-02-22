@@ -8,7 +8,7 @@ import requests
 import openpeerpower.components.mfi.sensor as mfi
 import openpeerpower.components.sensor as sensor_component
 from openpeerpower.const import TEMP_CELSIUS
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 PLATFORM = mfi
 COMPONENT = sensor_component
@@ -54,7 +54,7 @@ async def test_setup_minimum.opp):
         config = dict(GOOD_CONFIG)
         del config[THING]["port"]
         assert await async_setup_component.opp, COMPONENT.DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert mock_client.call_count == 1
         assert mock_client.call_args == mock.call(
             "foo", "user", "pass", port=6443, use_tls=True, verify=True
@@ -67,7 +67,7 @@ async def test_setup_with_port.opp):
         config = dict(GOOD_CONFIG)
         config[THING]["port"] = 6123
         assert await async_setup_component.opp, COMPONENT.DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert mock_client.call_count == 1
         assert mock_client.call_args == mock.call(
             "foo", "user", "pass", port=6123, use_tls=True, verify=True
@@ -82,7 +82,7 @@ async def test_setup_with_tls_disabled.opp):
         config[THING]["ssl"] = False
         config[THING]["verify_ssl"] = False
         assert await async_setup_component.opp, COMPONENT.DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert mock_client.call_count == 1
         assert mock_client.call_args == mock.call(
             "foo", "user", "pass", port=6080, use_tls=False, verify=False
@@ -105,7 +105,7 @@ async def test_setup_adds_proper_devices.opp):
             mock.MagicMock(ports=ports)
         ]
         assert await async_setup_component.opp, COMPONENT.DOMAIN, GOOD_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         for ident, port in ports.items():
             if ident != "bad":
                 mock_sensor.assert_any_call(port,.opp)

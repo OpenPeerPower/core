@@ -14,8 +14,8 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_TYPE,
 )
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed
 
@@ -76,7 +76,7 @@ async def base_test(
 
         # mock timer and add old/new config
         now = dt_util.utcnow()
-        with mock.patch("openpeerpowerr.helpers.event.dt_util.utcnow", return_value=now):
+        with mock.patch("openpeerpower.helpers.event.dt_util.utcnow", return_value=now):
             if method_discovery and config_device is not None:
                 # setup modbus which in turn does setup for the devices
                 config_modbus[DOMAIN].update(
@@ -84,7 +84,7 @@ async def base_test(
                 )
                 config_device = None
             assert await async_setup_component.opp, DOMAIN, config_modbus)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
             # setup platform old style
             if config_device is not None:
@@ -101,12 +101,12 @@ async def base_test(
                 if scan_interval is not None:
                     config_device[entity_domain][CONF_SCAN_INTERVAL] = scan_interval
                 assert await async_setup_component.opp, entity_domain, config_device)
-                await opp..async_block_till_done()
+                await.opp.async_block_till_done()
 
         assert DOMAIN in.opp.data
         if config_device is not None:
             entity_id = f"{entity_domain}.{device_name}"
-            device = opp.states.get(entity_id)
+            device =.opp.states.get(entity_id)
             if device is None:
                 pytest.fail("CONFIG failed, see output")
         if check_config_only:
@@ -114,9 +114,9 @@ async def base_test(
 
         # Trigger update call with time_changed event
         now = now + timedelta(seconds=scan_interval + 60)
-        with mock.patch("openpeerpowerr.helpers.event.dt_util.utcnow", return_value=now):
+        with mock.patch("openpeerpower.helpers.event.dt_util.utcnow", return_value=now):
             async_fire_time_changed.opp, now)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
         # Check state
         entity_id = f"{entity_domain}.{device_name}"

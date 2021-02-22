@@ -41,7 +41,7 @@ async def test_new_users_available.opp, entry, setup_plex_server):
 
     server_id = mock_plex_server.machine_identifier
 
-    monitored_users = opp.data[DOMAIN][SERVERS][server_id].option_monitored_users
+    monitored_users =.opp.data[DOMAIN][SERVERS][server_id].option_monitored_users
 
     ignored_users = [x for x in monitored_users if not monitored_users[x]["enabled"]]
     assert len(monitored_users) == 1
@@ -76,7 +76,7 @@ async def test_new_ignored_users_available(
     server_id = mock_plex_server.machine_identifier
 
     active_sessions = mock_plex_server._plex_server.sessions()
-    monitored_users = opp.data[DOMAIN][SERVERS][server_id].option_monitored_users
+    monitored_users =.opp.data[DOMAIN][SERVERS][server_id].option_monitored_users
     ignored_users = [x for x in mock_plex_server.accounts if x not in monitored_users]
 
     assert len(monitored_users) == 1
@@ -94,24 +94,24 @@ async def test_new_ignored_users_available(
 
     await wait_for_debouncer.opp)
 
-    sensor = opp.states.get("sensor.plex_plex_server_1")
+    sensor =.opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == str(len(active_sessions))
 
 
 async def test_network_error_during_refresh.opp, caplog, mock_plex_server):
     """Test network failures during refreshes."""
     server_id = mock_plex_server.machine_identifier
-    loaded_server = opp.data[DOMAIN][SERVERS][server_id]
+    loaded_server =.opp.data[DOMAIN][SERVERS][server_id]
     active_sessions = mock_plex_server._plex_server.sessions()
 
     await wait_for_debouncer.opp)
 
-    sensor = opp.states.get("sensor.plex_plex_server_1")
+    sensor =.opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == str(len(active_sessions))
 
     with patch("plexapi.server.PlexServer.clients", side_effect=RequestException):
         await loaded_server._async_update_platforms()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert (
         f"Could not connect to Plex server: {DEFAULT_DATA[CONF_SERVER]}" in caplog.text
@@ -124,17 +124,17 @@ async def test_gdm_client_failure.opp, mock_websocket, setup_plex_server):
         "openpeerpower.components.plex.server.PlexClient", side_effect=ConnectionError
     ):
         mock_plex_server = await setup_plex_server(disable_gdm=False)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     active_sessions = mock_plex_server._plex_server.sessions()
     await wait_for_debouncer.opp)
 
-    sensor = opp.states.get("sensor.plex_plex_server_1")
+    sensor =.opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == str(len(active_sessions))
 
     with patch("plexapi.server.PlexServer.clients", side_effect=RequestException):
         trigger_plex_update(mock_websocket)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_mark_sessions_idle(
@@ -145,7 +145,7 @@ async def test_mark_sessions_idle(
 
     active_sessions = mock_plex_server._plex_server.sessions()
 
-    sensor = opp.states.get("sensor.plex_plex_server_1")
+    sensor =.opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == str(len(active_sessions))
 
     url = mock_plex_server.url_in_use
@@ -153,10 +153,10 @@ async def test_mark_sessions_idle(
     requests_mock.get(f"{url}/status/sessions", text=empty_payload)
 
     trigger_plex_update(mock_websocket)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await wait_for_debouncer.opp)
 
-    sensor = opp.states.get("sensor.plex_plex_server_1")
+    sensor =.opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == "0"
 
 
@@ -172,10 +172,10 @@ async def test_ignore_plex_web_client.opp, entry, setup_plex_server):
     await wait_for_debouncer.opp)
 
     active_sessions = mock_plex_server._plex_server.sessions()
-    sensor = opp.states.get("sensor.plex_plex_server_1")
+    sensor =.opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == str(len(active_sessions))
 
-    media_players = opp.states.async_entity_ids("media_player")
+    media_players =.opp.states.async_entity_ids("media_player")
 
     assert len(media_players) == int(sensor.state) - 1
 
@@ -183,13 +183,13 @@ async def test_ignore_plex_web_client.opp, entry, setup_plex_server):
 async def test_media_lookups.opp, mock_plex_server, requests_mock, playqueue_created):
     """Test media lookups to Plex server."""
     server_id = mock_plex_server.machine_identifier
-    loaded_server = opp.data[DOMAIN][SERVERS][server_id]
+    loaded_server =.opp.data[DOMAIN][SERVERS][server_id]
 
     # Plex Key searches
-    media_player_id = opp.states.async_entity_ids("media_player")[0]
+    media_player_id =.opp.states.async_entity_ids("media_player")[0]
     requests_mock.post("/playqueues", text=playqueue_created)
     requests_mock.get("/player/playback/playMedia", status_code=200)
-    assert await opp..services.async_call(
+    assert await.opp.services.async_call(
         MP_DOMAIN,
         SERVICE_PLAY_MEDIA,
         {
@@ -200,7 +200,7 @@ async def test_media_lookups.opp, mock_plex_server, requests_mock, playqueue_cre
         True,
     )
     with patch("plexapi.server.PlexServer.fetchItem", side_effect=NotFound):
-        assert await opp..services.async_call(
+        assert await.opp.services.async_call(
             MP_DOMAIN,
             SERVICE_PLAY_MEDIA,
             {

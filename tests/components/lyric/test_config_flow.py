@@ -9,7 +9,7 @@ from openpeerpower.components.http import CONF_BASE_URL, DOMAIN as DOMAIN_HTTP
 from openpeerpower.components.lyric import config_flow
 from openpeerpower.components.lyric.const import DOMAIN, OAUTH2_AUTHORIZE, OAUTH2_TOKEN
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers import config_entry_oauth2_flow
 
 CLIENT_ID = "1234"
 CLIENT_SECRET = "5678"
@@ -34,7 +34,7 @@ async def mock_impl.opp):
 
 async def test_abort_if_no_configuration.opp):
     """Check flow abort when no configuration."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -57,7 +57,7 @@ async def test_full_flow(
         },
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -94,7 +94,7 @@ async def test_full_flow(
         with patch(
             "openpeerpower.components.lyric.async_setup_entry", return_value=True
         ) as mock_setup:
-            result = await opp..config_entries.flow.async_configure(result["flow_id"])
+            result = await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["data"]["auth_implementation"] == DOMAIN
 
@@ -107,7 +107,7 @@ async def test_full_flow(
     }
 
     assert DOMAIN in.opp.config.components
-    entry = opp.config_entries.async_entries(DOMAIN)[0]
+    entry =.opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
@@ -118,12 +118,12 @@ async def test_abort_if_authorization_timeout(
    .opp, mock_impl, current_request_with_host
 ):
     """Check Somfy authorization timeout."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     flow = config_flow.OAuth2FlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     with patch.object(
         mock_impl, "async_generate_authorize_url", side_effect=asyncio.TimeoutError

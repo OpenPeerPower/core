@@ -35,7 +35,7 @@ def mock_tv():
 async def mock_config_entry.opp):
     """Get standard player."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, title=MOCK_NAME)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     return config_entry
 
 
@@ -48,8 +48,8 @@ def mock_device_reg.opp):
 @fixture
 async def mock_entity.opp, mock_device_reg, mock_config_entry):
     """Get standard player."""
-    assert await opp..config_entries.async_setup(mock_config_entry.entry_id)
-    await opp..async_block_till_done()
+    assert await.opp.config_entries.async_setup(mock_config_entry.entry_id)
+    await.opp.async_block_till_done()
     return MOCK_ENTITY_ID
 
 

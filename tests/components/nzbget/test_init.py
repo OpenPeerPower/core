@@ -10,7 +10,7 @@ from openpeerpower.config_entries import (
     ENTRY_STATE_SETUP_RETRY,
 )
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import (
     ENTRY_CONFIG,
@@ -29,9 +29,9 @@ async def test_import_from_yaml.opp) -> None:
     """Test import from YAML."""
     with _patch_version(), _patch_status(), _patch_history(), _patch_async_setup_entry():
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: YAML_CONFIG})
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
 
     assert entries[0].data[CONF_NAME] == "GetNZBsTest"
@@ -46,8 +46,8 @@ async def test_unload_entry.opp, nzbget_api):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    assert await opp..config_entries.async_unload(entry.entry_id)
-    await opp..async_block_till_done()
+    assert await.opp.config_entries.async_unload(entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert not.opp.data.get(DOMAIN)
@@ -56,12 +56,12 @@ async def test_unload_entry.opp, nzbget_api):
 async def test_async_setup_raises_entry_not_ready.opp):
     """Test that it throws ConfigEntryNotReady when exception occurs during setup."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with _patch_version(), patch(
         "openpeerpower.components.nzbget.coordinator.NZBGetAPI.status",
         side_effect=NZBGetAPIException(),
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
 
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY

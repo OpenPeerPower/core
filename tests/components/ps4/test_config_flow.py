@@ -21,7 +21,7 @@ from openpeerpower.const import (
     CONF_REGION,
     CONF_TOKEN,
 )
-from openpeerpowerr.util import location
+from openpeerpower.util import location
 
 from tests.common import MockConfigEntry
 
@@ -100,7 +100,7 @@ async def test_full_flow_implementation.opp):
     """Test registering an implementation and flow works."""
     # User Step Started, results in Step Creds
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -108,7 +108,7 @@ async def test_full_flow_implementation.opp):
 
     # Step Creds results with form in Step Mode.
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -118,7 +118,7 @@ async def test_full_flow_implementation.opp):
     with patch(
         "pyps4_2ndscreen.Helper.has_devices", return_value=[{"host-ip": MOCK_HOST}]
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -128,7 +128,7 @@ async def test_full_flow_implementation.opp):
     with patch("pyps4_2ndscreen.Helper.link", return_value=(True, True)), patch(
         "pyps4_2ndscreen.Helper.has_devices", return_value=[{"host-ip": MOCK_HOST}]
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_CONFIG
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -141,7 +141,7 @@ async def test_multiple_flow_implementation.opp):
     """Test multiple device flows."""
     # User Step Started, results in Step Creds
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -149,7 +149,7 @@ async def test_multiple_flow_implementation.opp):
 
     # Step Creds results with form in Step Mode.
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -160,7 +160,7 @@ async def test_multiple_flow_implementation.opp):
         "pyps4_2ndscreen.Helper.has_devices",
         return_value=[{"host-ip": MOCK_HOST}, {"host-ip": MOCK_HOST_ADDITIONAL}],
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -171,7 +171,7 @@ async def test_multiple_flow_implementation.opp):
         "pyps4_2ndscreen.Helper.has_devices",
         return_value=[{"host-ip": MOCK_HOST}, {"host-ip": MOCK_HOST_ADDITIONAL}],
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_CONFIG
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -180,7 +180,7 @@ async def test_multiple_flow_implementation.opp):
     assert result["title"] == MOCK_TITLE
 
     # Check if entry exists.
-    entries = opp.config_entries.async_entries()
+    entries =.opp.config_entries.async_entries()
     assert len(entries) == 1
     # Check if there is a device config in entry.
     entry_1 = entries[0]
@@ -193,7 +193,7 @@ async def test_multiple_flow_implementation.opp):
         "pyps4_2ndscreen.Helper.has_devices",
         return_value=[{"host-ip": MOCK_HOST}, {"host-ip": MOCK_HOST_ADDITIONAL}],
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -201,7 +201,7 @@ async def test_multiple_flow_implementation.opp):
 
     # Step Creds results with form in Step Mode.
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -212,7 +212,7 @@ async def test_multiple_flow_implementation.opp):
         "pyps4_2ndscreen.Helper.has_devices",
         return_value=[{"host-ip": MOCK_HOST}, {"host-ip": MOCK_HOST_ADDITIONAL}],
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -223,7 +223,7 @@ async def test_multiple_flow_implementation.opp):
         "pyps4_2ndscreen.Helper.has_devices",
         return_value=[{"host-ip": MOCK_HOST}, {"host-ip": MOCK_HOST_ADDITIONAL}],
     ), patch("pyps4_2ndscreen.Helper.link", return_value=(True, True)):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_CONFIG_ADDITIONAL
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -232,7 +232,7 @@ async def test_multiple_flow_implementation.opp):
     assert result["title"] == MOCK_TITLE
 
     # Check if there are 2 entries.
-    entries = opp.config_entries.async_entries()
+    entries =.opp.config_entries.async_entries()
     assert len(entries) == 2
     # Check if there is device config in the last entry.
     entry_2 = entries[-1]
@@ -246,7 +246,7 @@ async def test_port_bind_abort.opp):
     """Test that flow aborted when cannot bind to ports 987, 997."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=MOCK_UDP_PORT):
         reason = "port_987_bind_error"
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -254,7 +254,7 @@ async def test_port_bind_abort.opp):
 
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=MOCK_TCP_PORT):
         reason = "port_997_bind_error"
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -263,17 +263,17 @@ async def test_port_bind_abort.opp):
 
 async def test_duplicate_abort.opp):
     """Test that Flow aborts when found devices already configured."""
-    MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA).add_to_opp.opp)
+    MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA).add_to.opp.opp)
 
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -282,7 +282,7 @@ async def test_duplicate_abort.opp):
     with patch(
         "pyps4_2ndscreen.Helper.has_devices", return_value=[{"host-ip": MOCK_HOST}]
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -293,17 +293,17 @@ async def test_additional_device.opp):
     """Test that Flow can configure another device."""
     # Mock existing entry.
     entry = MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -313,12 +313,12 @@ async def test_additional_device.opp):
         "pyps4_2ndscreen.Helper.has_devices",
         return_value=[{"host-ip": MOCK_HOST}, {"host-ip": MOCK_HOST_ADDITIONAL}],
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
 
     with patch("pyps4_2ndscreen.Helper.link", return_value=(True, True)):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_CONFIG_ADDITIONAL
         )
 
@@ -331,7 +331,7 @@ async def test_additional_device.opp):
 async def test_0_pin.opp):
     """Test Pin with leading '0' is passed correctly."""
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "creds"},
             data={},
@@ -345,7 +345,7 @@ async def test_0_pin.opp):
         "openpeerpower.components.ps4.config_flow.location.async_detect_location_info",
         return_value=MOCK_LOCATION,
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], MOCK_AUTO
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -358,7 +358,7 @@ async def test_0_pin.opp):
     ) as mock_call, patch(
         "pyps4_2ndscreen.Helper.has_devices", return_value=[{"host-ip": MOCK_HOST}]
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], mock_config
         )
     mock_call.assert_called_once_with(
@@ -369,21 +369,21 @@ async def test_0_pin.opp):
 async def test_no_devices_found_abort.opp):
     """Test that failure to find devices aborts flow."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "mode"
 
     with patch("pyps4_2ndscreen.Helper.has_devices", return_value=[]):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
 
@@ -394,14 +394,14 @@ async def test_no_devices_found_abort.opp):
 async def test_manual_mode.opp):
     """Test host specified in manual mode is passed to Step Link."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -411,7 +411,7 @@ async def test_manual_mode.opp):
     with patch(
         "pyps4_2ndscreen.Helper.has_devices", return_value=[{"host-ip": MOCK_HOST}]
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_MANUAL
         )
 
@@ -422,14 +422,14 @@ async def test_manual_mode.opp):
 async def test_credential_abort.opp):
     """Test that failure to get credentials aborts flow."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=None):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
 
@@ -440,14 +440,14 @@ async def test_credential_abort.opp):
 async def test_credential_timeout.opp):
     """Test that Credential Timeout shows error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", side_effect=CredentialTimeout):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
 
@@ -459,14 +459,14 @@ async def test_credential_timeout.opp):
 async def test_wrong_pin_error.opp):
     """Test that incorrect pin throws an error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -475,12 +475,12 @@ async def test_wrong_pin_error.opp):
     with patch(
         "pyps4_2ndscreen.Helper.has_devices", return_value=[{"host-ip": MOCK_HOST}]
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
 
     with patch("pyps4_2ndscreen.Helper.link", return_value=(True, False)):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_CONFIG
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -491,14 +491,14 @@ async def test_wrong_pin_error.opp):
 async def test_device_connection_error.opp):
     """Test that device not connected or on throws an error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -507,12 +507,12 @@ async def test_device_connection_error.opp):
     with patch(
         "pyps4_2ndscreen.Helper.has_devices", return_value=[{"host-ip": MOCK_HOST}]
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_AUTO
         )
 
     with patch("pyps4_2ndscreen.Helper.link", return_value=(False, True)):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=MOCK_CONFIG
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -523,20 +523,20 @@ async def test_device_connection_error.opp):
 async def test_manual_mode_no_ip_error.opp):
     """Test no IP specified in manual mode throws an error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "user"}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "creds"
 
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "mode"
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={"Config Mode": "Manual Entry"}
     )
 

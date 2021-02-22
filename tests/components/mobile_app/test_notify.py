@@ -3,7 +3,7 @@
 import pytest
 
 from openpeerpower.components.mobile_app.const import DOMAIN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -11,7 +11,7 @@ from tests.common import MockConfigEntry
 @pytest.fixture
 async def setup_push_receiver.opp, aioclient_mock):
     """Fixture that sets up a mocked push receiver."""
-    push_url = "https://mobile-push.openpeerpower.dev/push"
+    push_url = "https://mobile-push.open-peer-power.dev/push"
 
     from datetime import datetime, timedelta
 
@@ -37,7 +37,7 @@ async def setup_push_receiver.opp, aioclient_mock):
         connection_class="cloud_push",
         data={
             "app_data": {"push_token": "PUSH_TOKEN", "push_url": push_url},
-            "app_id": "io.openpeerpowerr.mobile_app",
+            "app_id": "io.openpeerpower.mobile_app",
             "app_name": "mobile_app tests",
             "app_version": "1.0",
             "device_id": "4d5e6f",
@@ -56,16 +56,16 @@ async def setup_push_receiver.opp, aioclient_mock):
         title="mobile_app test entry",
         version=1,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     loaded_late_entry = MockConfigEntry(
         connection_class="cloud_push",
         data={
             "app_data": {"push_token": "PUSH_TOKEN2", "push_url": f"{push_url}2"},
-            "app_id": "io.openpeerpowerr.mobile_app",
+            "app_id": "io.openpeerpower.mobile_app",
             "app_name": "mobile_app tests",
             "app_version": "1.0",
             "device_id": "4d5e6f2",
@@ -84,21 +84,21 @@ async def setup_push_receiver.opp, aioclient_mock):
         title="mobile_app 2 test entry",
         version=1,
     )
-    loaded_late_entry.add_to_opp.opp)
-    assert await opp..config_entries.async_setup(loaded_late_entry.entry_id)
-    await opp..async_block_till_done()
+    loaded_late_entry.add_to.opp.opp)
+    assert await.opp.config_entries.async_setup(loaded_late_entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_loaded_late")
 
-    assert await opp..config_entries.async_remove(loaded_late_entry.entry_id)
-    await opp..async_block_till_done()
+    assert await.opp.config_entries.async_remove(loaded_late_entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_test")
     assert not.opp.services.has_service("notify", "mobile_app_loaded_late")
 
-    loaded_late_entry.add_to_opp.opp)
-    assert await opp..config_entries.async_setup(loaded_late_entry.entry_id)
-    await opp..async_block_till_done()
+    loaded_late_entry.add_to.opp.opp)
+    assert await.opp.config_entries.async_setup(loaded_late_entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert.opp.services.has_service("notify", "mobile_app_test")
     assert.opp.services.has_service("notify", "mobile_app_loaded_late")
@@ -107,7 +107,7 @@ async def setup_push_receiver.opp, aioclient_mock):
 async def test_notify_works.opp, aioclient_mock, setup_push_receiver):
     """Test notify works."""
     assert.opp.services.has_service("notify", "mobile_app_test") is True
-    assert await opp..services.async_call(
+    assert await.opp.services.async_call(
         "notify", "mobile_app_test", {"message": "Hello world"}, blocking=True
     )
 
@@ -118,5 +118,5 @@ async def test_notify_works.opp, aioclient_mock, setup_push_receiver):
 
     assert call_json["push_token"] == "PUSH_TOKEN"
     assert call_json["message"] == "Hello world"
-    assert call_json["registration_info"]["app_id"] == "io.openpeerpowerr.mobile_app"
+    assert call_json["registration_info"]["app_id"] == "io.openpeerpower.mobile_app"
     assert call_json["registration_info"]["app_version"] == "1.0"

@@ -2,7 +2,7 @@
 from unittest.mock import Mock, patch
 
 from openpeerpower.components import onboarding
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import mock_storage
 
@@ -39,7 +39,7 @@ async def test_setup_views_if_not_onboarded.opp):
 
 async def test_is_onboarded():
     """Test the is onboarded function."""
-    opp = Mock()
+   .opp = Mock()
    .opp.data = {}
 
     assert onboarding.async_is_onboarded.opp)
@@ -53,7 +53,7 @@ async def test_is_onboarded():
 
 async def test_is_user_onboarded():
     """Test the is onboarded function."""
-    opp = Mock()
+   .opp = Mock()
    .opp.data = {}
 
     assert onboarding.async_is_user_onboarded.opp)
@@ -65,9 +65,9 @@ async def test_is_user_onboarded():
     assert not onboarding.async_is_user_onboarded.opp)
 
 
-async def test_op.ing_owner_finishes_user_step.opp,.opp_storage):
+async def test_having_owner_finishes_user_step.opp,.opp_storage):
     """If owner user already exists, mark user step as complete."""
-    MockUser(is_owner=True).add_to_opp.opp)
+    MockUser(is_owner=True).add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.onboarding.views.async_setup"
@@ -78,7 +78,7 @@ async def test_op.ing_owner_finishes_user_step.opp,.opp_storage):
     assert onboarding.DOMAIN not in.opp.data
     assert onboarding.async_is_onboarded.opp)
 
-    done = opp_storage[onboarding.STORAGE_KEY]["data"]["done"]
+    done =.opp_storage[onboarding.STORAGE_KEY]["data"]["done"]
     assert onboarding.STEP_USER in done
 
 

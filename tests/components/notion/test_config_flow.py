@@ -30,11 +30,11 @@ async def test_duplicate_error.opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 
-    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to_opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to.opp(
        .opp
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
     )
 
@@ -50,7 +50,7 @@ async def test_invalid_credentials.opp, mock_aionotion):
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 
     flow = config_flow.NotionFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=conf)
@@ -60,7 +60,7 @@ async def test_invalid_credentials.opp, mock_aionotion):
 async def test_show_form.opp):
     """Test that the form is served with no input."""
     flow = config_flow.NotionFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=None)
@@ -74,7 +74,7 @@ async def test_step_user.opp, mock_aionotion):
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 
     flow = config_flow.NotionFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_USER}
 
     result = await flow.async_step_user(user_input=conf)

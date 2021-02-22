@@ -20,6 +20,6 @@ async def setup_nuki_integration.opp):
         unique_id=HW_ID,
         data={"host": HOST, "port": 8080, "token": "test-token"},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     return entry

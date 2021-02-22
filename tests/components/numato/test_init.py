@@ -3,7 +3,7 @@ from numato_gpio import NumatoGpioError
 import pytest
 
 from openpeerpower.components import numato
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .common import NUMATO_CFG, mockup_raise, mockup_return
 
@@ -26,10 +26,10 @@ async def test_fail_setup_raising_discovery.opp, numato_fixture, caplog, monkeyp
     """
     monkeypatch.setattr(numato_fixture, "discover", mockup_raise)
     assert not await async_setup_component.opp, "numato", NUMATO_CFG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
-async def test_opp_numato_api_wrong_port_directions.opp, numato_fixture):
+async def test.opp_numato_api_wrong_port_directions.opp, numato_fixture):
     """Test handling of wrong port directions.
 
     This won't happen in the current platform implementation but would raise
@@ -46,7 +46,7 @@ async def test_opp_numato_api_wrong_port_directions.opp, numato_fixture):
         api.write_output(0, 2, 1)  # write to input
 
 
-async def test_opp_numato_api_errors.opp, numato_fixture, monkeypatch):
+async def test.opp_numato_api_errors.opp, numato_fixture, monkeypatch):
     """Test whether Open Peer Power numato API (re-)raises errors."""
     numato_fixture.discover()
     monkeypatch.setattr(numato_fixture.devices[0], "setup", mockup_raise)
@@ -68,7 +68,7 @@ async def test_invalid_port_number.opp, numato_fixture, config):
     sensorports_cfg["one"] = port1_config
     del sensorports_cfg["1"]
     assert not await async_setup_component.opp, "numato", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert not numato_fixture.devices
 
 

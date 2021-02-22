@@ -16,9 +16,9 @@ from openpeerpower.const import (
     ENERGY_KILO_WATT_HOUR,
     EVENT_STATE_CHANGED,
 )
-from openpeerpowerr.core import split_entity_id
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import split_entity_id
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util
 
 PROMETHEUS_PATH = "openpeerpower.components.prometheus"
 
@@ -40,7 +40,7 @@ async def prometheus_client.opp,.opp_client):
     await async_setup_component(
        .opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     await async_setup_component(
        .opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
@@ -49,32 +49,32 @@ async def prometheus_client.opp,.opp_client):
     sensor1 = DemoSensor(
         None, "Television Energy", 74, None, ENERGY_KILO_WATT_HOUR, None
     )
-    sensor1.opp = opp
+    sensor1.opp =.opp
     sensor1.entity_id = "sensor.television_energy"
-    await sensor1.async_update_op.state()
+    await sensor1.async_update_ha_state()
 
     sensor2 = DemoSensor(
         None, "Radio Energy", 14, DEVICE_CLASS_POWER, ENERGY_KILO_WATT_HOUR, None
     )
-    sensor2.opp = opp
+    sensor2.opp =.opp
     sensor2.entity_id = "sensor.radio_energy"
     with mock.patch(
-        "openpeerpowerr.util.dt.utcnow",
+        "openpeerpower.util.dt.utcnow",
         return_value=datetime.datetime(1970, 1, 2, tzinfo=dt_util.UTC),
     ):
-        await sensor2.async_update_op.state()
+        await sensor2.async_update_ha_state()
 
     sensor3 = DemoSensor(
         None, "Electricity price", 0.123, None, f"SEK/{ENERGY_KILO_WATT_HOUR}", None
     )
-    sensor3.opp = opp
+    sensor3.opp =.opp
     sensor3.entity_id = "sensor.electricity_price"
-    await sensor3.async_update_op.state()
+    await sensor3.async_update_ha_state()
 
     sensor4 = DemoSensor(None, "Wind Direction", 25, None, DEGREE, None)
-    sensor4.opp = opp
+    sensor4.opp =.opp
     sensor4.entity_id = "sensor.wind_direction"
-    await sensor4.async_update_op.state()
+    await sensor4.async_update_ha_state()
 
     sensor5 = DemoSensor(
         None,
@@ -84,11 +84,11 @@ async def prometheus_client.opp,.opp_client):
         CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
         None,
     )
-    sensor5.opp = opp
+    sensor5.opp =.opp
     sensor5.entity_id = "sensor.sps30_pm_1um_weight_concentration"
-    await sensor5.async_update_op.state()
+    await sensor5.async_update_ha_state()
 
-    return await opp._client()
+    return await.opp_client()
 
 
 async def test_view.opp,.opp_client):
@@ -222,9 +222,9 @@ async def test_minimal_config.opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {prometheus.DOMAIN: {}}
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
 
 
 @pytest.mark.usefixtures("mock_bus")
@@ -249,9 +249,9 @@ async def test_full_config.opp, mock_client):
         }
     }
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
 
 
 def make_event(entity_id):
@@ -271,7 +271,7 @@ async def _setup.opp, filter_config):
     """Shared set up for filtering tests."""
     config = {prometheus.DOMAIN: {"filter": filter_config}}
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     return.opp.bus.listen.call_args_list[0][0][1]
 
 

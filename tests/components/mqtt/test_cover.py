@@ -29,7 +29,7 @@ from openpeerpower.const import (
     STATE_OPENING,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_common import (
     help_test_availability_when_connection_lost,
@@ -80,20 +80,20 @@ async def test_state_via_state_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", STATE_CLOSED)
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
     async_fire_mqtt_message.opp, "state-topic", STATE_OPEN)
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
 
@@ -117,25 +117,25 @@ async def test_opening_and_closing_state_via_custom_state_payload.opp, mqtt_mock
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "34")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPENING
 
     async_fire_mqtt_message.opp, "state-topic", "--43")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSING
 
     async_fire_mqtt_message.opp, "state-topic", STATE_CLOSED)
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
 
@@ -158,30 +158,30 @@ async def test_open_closed_state_from_position_optimistic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_POSITION: 0},
         blocking=True,
     )
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_POSITION: 100},
         blocking=True,
     )
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -206,20 +206,20 @@ async def test_position_via_position_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "get-position-topic", "0")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
     async_fire_mqtt_message.opp, "get-position-topic", "100")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
 
@@ -244,19 +244,19 @@ async def test_state_via_template.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
     async_fire_mqtt_message.opp, "state-topic", "10000")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "state-topic", "99")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
 
@@ -276,24 +276,24 @@ async def test_position_via_template.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
     async_fire_mqtt_message.opp, "get-position-topic", "10000")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "5000")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "99")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
 
@@ -311,45 +311,45 @@ async def test_optimistic_state_change.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "OPEN", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "CLOSE", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert STATE_CLOSED == state.state
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "OPEN", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert STATE_OPEN == state.state
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "CLOSE", 0, False)
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
 
@@ -369,49 +369,49 @@ async def test_optimistic_state_change_with_position.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
     assert state.attributes.get(ATTR_ASSUMED_STATE)
     assert state.attributes.get(ATTR_CURRENT_POSITION) is None
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "OPEN", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
     assert state.attributes.get(ATTR_CURRENT_POSITION) == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "CLOSE", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert STATE_CLOSED == state.state
     assert state.attributes.get(ATTR_CURRENT_POSITION) == 0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "OPEN", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert STATE_OPEN == state.state
     assert state.attributes.get(ATTR_CURRENT_POSITION) == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "CLOSE", 0, False)
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
     assert state.attributes.get(ATTR_CURRENT_POSITION) == 0
 
@@ -431,17 +431,17 @@ async def test_send_open_cover_command.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "OPEN", 2, False)
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
 
@@ -460,17 +460,17 @@ async def test_send_close_cover_command.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "CLOSE", 2, False)
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
 
@@ -489,17 +489,17 @@ async def test_send_stop__cover_command.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "STOP", 2, False)
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
 
 
@@ -522,33 +522,33 @@ async def test_current_cover_position.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state_attributes_dict = opp.states.get("cover.test").attributes
+    state_attributes_dict =.opp.states.get("cover.test").attributes
     assert not (ATTR_CURRENT_POSITION in state_attributes_dict)
     assert not (ATTR_CURRENT_TILT_POSITION in state_attributes_dict)
     assert not (4 &.opp.states.get("cover.test").attributes["supported_features"] == 4)
 
     async_fire_mqtt_message.opp, "get-position-topic", "0")
-    current_cover_position = opp.states.get("cover.test").attributes[
+    current_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_cover_position == 0
 
     async_fire_mqtt_message.opp, "get-position-topic", "50")
-    current_cover_position = opp.states.get("cover.test").attributes[
+    current_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_cover_position == 50
 
     async_fire_mqtt_message.opp, "get-position-topic", "non-numeric")
-    current_cover_position = opp.states.get("cover.test").attributes[
+    current_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_cover_position == 50
 
     async_fire_mqtt_message.opp, "get-position-topic", "101")
-    current_cover_position = opp.states.get("cover.test").attributes[
+    current_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_cover_position == 100
@@ -573,43 +573,43 @@ async def test_current_cover_position_inverted.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state_attributes_dict = opp.states.get("cover.test").attributes
+    state_attributes_dict =.opp.states.get("cover.test").attributes
     assert not (ATTR_CURRENT_POSITION in state_attributes_dict)
     assert not (ATTR_CURRENT_TILT_POSITION in state_attributes_dict)
     assert not (4 &.opp.states.get("cover.test").attributes["supported_features"] == 4)
 
     async_fire_mqtt_message.opp, "get-position-topic", "100")
-    current_percentage_cover_position = opp.states.get("cover.test").attributes[
+    current_percentage_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_percentage_cover_position == 0
     assert.opp.states.get("cover.test").state == STATE_CLOSED
 
     async_fire_mqtt_message.opp, "get-position-topic", "0")
-    current_percentage_cover_position = opp.states.get("cover.test").attributes[
+    current_percentage_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_percentage_cover_position == 100
     assert.opp.states.get("cover.test").state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "50")
-    current_percentage_cover_position = opp.states.get("cover.test").attributes[
+    current_percentage_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_percentage_cover_position == 50
     assert.opp.states.get("cover.test").state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "non-numeric")
-    current_percentage_cover_position = opp.states.get("cover.test").attributes[
+    current_percentage_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_percentage_cover_position == 50
     assert.opp.states.get("cover.test").state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "101")
-    current_percentage_cover_position = opp.states.get("cover.test").attributes[
+    current_percentage_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_percentage_cover_position == 0
@@ -630,9 +630,9 @@ async def test_optimistic_position.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state is None
 
 
@@ -656,18 +656,18 @@ async def test_position_update.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state_attributes_dict = opp.states.get("cover.test").attributes
+    state_attributes_dict =.opp.states.get("cover.test").attributes
     assert not (ATTR_CURRENT_POSITION in state_attributes_dict)
     assert not (ATTR_CURRENT_TILT_POSITION in state_attributes_dict)
     assert 4 &.opp.states.get("cover.test").attributes["supported_features"] == 4
 
     async_fire_mqtt_message.opp, "get-position-topic", "22")
-    state_attributes_dict = opp.states.get("cover.test").attributes
+    state_attributes_dict =.opp.states.get("cover.test").attributes
     assert ATTR_CURRENT_POSITION in state_attributes_dict
     assert not (ATTR_CURRENT_TILT_POSITION in state_attributes_dict)
-    current_cover_position = opp.states.get("cover.test").attributes[
+    current_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_cover_position == 22
@@ -694,9 +694,9 @@ async def test_set_position_templated.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_POSITION: 100},
@@ -726,9 +726,9 @@ async def test_set_position_untemplated.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_POSITION: 62},
@@ -758,9 +758,9 @@ async def test_set_position_untemplated_custom_percentage_range.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_POSITION: 38},
@@ -788,7 +788,7 @@ async def test_no_command_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("cover.test").attributes["supported_features"] == 240
 
@@ -810,7 +810,7 @@ async def test_no_payload_stop.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("cover.test").attributes["supported_features"] == 3
 
@@ -834,7 +834,7 @@ async def test_with_command_topic_and_tilt.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("cover.test").attributes["supported_features"] == 251
 
@@ -859,12 +859,12 @@ async def test_tilt_defaults.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state_attributes_dict = opp.states.get("cover.test").attributes
+    state_attributes_dict =.opp.states.get("cover.test").attributes
     assert ATTR_CURRENT_TILT_POSITION in state_attributes_dict
 
-    current_cover_position = opp.states.get("cover.test").attributes[
+    current_cover_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_position == STATE_UNKNOWN
@@ -890,9 +890,9 @@ async def test_tilt_via_invocation_defaults.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_OPEN_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -904,7 +904,7 @@ async def test_tilt_via_invocation_defaults.opp, mqtt_mock):
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_CLOSE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -917,12 +917,12 @@ async def test_tilt_via_invocation_defaults.opp, mqtt_mock):
     # Close tilt status would be received from device when non-optimistic
     async_fire_mqtt_message.opp, "tilt-status-topic", "0")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_TOGGLE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -937,12 +937,12 @@ async def test_tilt_via_invocation_defaults.opp, mqtt_mock):
     # Open tilt status would be received from device when non-optimistic
     async_fire_mqtt_message.opp, "tilt-status-topic", "100")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_TOGGLE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -974,9 +974,9 @@ async def test_tilt_given_value.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_OPEN_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -988,7 +988,7 @@ async def test_tilt_given_value.opp, mqtt_mock):
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_CLOSE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -1003,12 +1003,12 @@ async def test_tilt_given_value.opp, mqtt_mock):
     # Close tilt status would be received from device when non-optimistic
     async_fire_mqtt_message.opp, "tilt-status-topic", "25")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 25
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_TOGGLE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -1023,12 +1023,12 @@ async def test_tilt_given_value.opp, mqtt_mock):
     # Open tilt status would be received from device when non-optimistic
     async_fire_mqtt_message.opp, "tilt-status-topic", "80")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 80
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_TOGGLE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
@@ -1063,16 +1063,16 @@ async def test_tilt_given_value_optimistic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_OPEN_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
         blocking=True,
     )
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 80
@@ -1082,14 +1082,14 @@ async def test_tilt_given_value_optimistic.opp, mqtt_mock):
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_TILT_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_TILT_POSITION: 50},
         blocking=True,
     )
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 50
@@ -1099,14 +1099,14 @@ async def test_tilt_given_value_optimistic.opp, mqtt_mock):
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_CLOSE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
         blocking=True,
     )
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 25
@@ -1141,16 +1141,16 @@ async def test_tilt_given_value_altered_range.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_OPEN_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
         blocking=True,
     )
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 50
@@ -1160,14 +1160,14 @@ async def test_tilt_given_value_altered_range.opp, mqtt_mock):
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_CLOSE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
         blocking=True,
     )
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 0
@@ -1175,14 +1175,14 @@ async def test_tilt_given_value_altered_range.opp, mqtt_mock):
     mqtt_mock.async_publish.assert_called_once_with("tilt-command-topic", "0", 0, False)
     mqtt_mock.async_publish.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_TOGGLE_COVER_TILT,
         {ATTR_ENTITY_ID: "cover.test"},
         blocking=True,
     )
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 50
@@ -1212,18 +1212,18 @@ async def test_tilt_via_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "0")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 0
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "50")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 50
@@ -1252,18 +1252,18 @@ async def test_tilt_via_topic_template.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "99")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 0
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "5000")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 50
@@ -1291,25 +1291,25 @@ async def test_tilt_via_topic_altered_range.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "0")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 0
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "50")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 100
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "25")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 50
@@ -1340,25 +1340,25 @@ async def test_tilt_via_topic_template_altered_range.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "99")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 0
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "5000")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 100
 
     async_fire_mqtt_message.opp, "tilt-status-topic", "2500")
 
-    current_cover_tilt_position = opp.states.get("cover.test").attributes[
+    current_cover_tilt_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_TILT_POSITION
     ]
     assert current_cover_tilt_position == 50
@@ -1384,9 +1384,9 @@ async def test_tilt_position.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_TILT_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_TILT_POSITION: 50},
@@ -1419,9 +1419,9 @@ async def test_tilt_position_templated.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_TILT_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_TILT_POSITION: 100},
@@ -1457,9 +1457,9 @@ async def test_tilt_position_altered_range.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         cover.DOMAIN,
         SERVICE_SET_COVER_TILT_POSITION,
         {ATTR_ENTITY_ID: "cover.test", ATTR_TILT_POSITION: 50},
@@ -1865,9 +1865,9 @@ async def test_valid_device_class.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.attributes.get("device_class") == "garage"
 
 
@@ -1885,9 +1885,9 @@ async def test_invalid_device_class.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state is None
 
 
@@ -2050,7 +2050,7 @@ async def test_deprecated_value_template_for_position_topic_warning(
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         "using 'value_template' for 'position_topic' is deprecated "
@@ -2073,7 +2073,7 @@ async def test_deprecated_tilt_invert_state_warning.opp, caplog, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         "'tilt_invert_state' is deprecated "
@@ -2095,7 +2095,7 @@ async def test_no_deprecated_tilt_invert_state_warning.opp, caplog, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         "'tilt_invert_state' is deprecated "
@@ -2122,7 +2122,7 @@ async def test_no_deprecated_warning_for_position_topic_using_position_template(
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         "using 'value_template' for 'position_topic' is deprecated "
@@ -2153,40 +2153,40 @@ async def test_state_and_position_topics_state_not_set_via_position_topic(
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "OPEN")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "0")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "100")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "state-topic", "CLOSE")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
     async_fire_mqtt_message.opp, "get-position-topic", "0")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
     async_fire_mqtt_message.opp, "get-position-topic", "100")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
 
@@ -2211,35 +2211,35 @@ async def test_set_state_via_position_using_stopped_state.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "OPEN")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "get-position-topic", "0")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "state-topic", "STOPPED")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
     async_fire_mqtt_message.opp, "get-position-topic", "100")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
 
     async_fire_mqtt_message.opp, "state-topic", "STOPPED")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
 
@@ -2260,18 +2260,18 @@ async def test_position_via_position_topic_template.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "get-position-topic", "99")
 
-    current_cover_position_position = opp.states.get("cover.test").attributes[
+    current_cover_position_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_cover_position_position == 0
 
     async_fire_mqtt_message.opp, "get-position-topic", "5000")
 
-    current_cover_position_position = opp.states.get("cover.test").attributes[
+    current_cover_position_position =.opp.states.get("cover.test").attributes[
         ATTR_CURRENT_POSITION
     ]
     assert current_cover_position_position == 50
@@ -2298,29 +2298,29 @@ async def test_set_state_via_stopped_state_no_position_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "state-topic", "OPEN")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "state-topic", "OPENING")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPENING
 
     async_fire_mqtt_message.opp, "state-topic", "STOPPED")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
     async_fire_mqtt_message.opp, "state-topic", "CLOSING")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSING
 
     async_fire_mqtt_message.opp, "state-topic", "STOPPED")
 
-    state = opp.states.get("cover.test")
+    state =.opp.states.get("cover.test")
     assert state.state == STATE_CLOSED

@@ -5,8 +5,8 @@ from aiohttp import ContentTypeError
 from requests.exceptions import HTTPError
 
 from openpeerpower.components.plum_lightpad.const import DOMAIN
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -37,7 +37,7 @@ async def test_async_setup_imports_from_config.opp: OpenPeerPower):
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result is True
     assert len(mock_loadCloudData.mock_calls) == 1
@@ -50,29 +50,29 @@ async def test_async_setup_entry_sets_up_light.opp: OpenPeerPower):
         domain=DOMAIN,
         data={"username": "test-plum-username", "password": "test-plum-password"},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData"
     ) as mock_loadCloudData, patch(
         "openpeerpower.components.plum_lightpad.light.async_setup_entry"
     ) as mock_light_async_setup_entry:
-        result = await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await.opp.config_entries.async_setup(config_entry.entry_id)
         assert result is True
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_loadCloudData.mock_calls) == 1
     assert len(mock_light_async_setup_entry.mock_calls) == 1
 
 
-async def test_async_setup_entry_op.dles_auth_error.opp: OpenPeerPower):
+async def test_async_setup_entry_handles_auth_error.opp: OpenPeerPower):
     """Test that configuring entry handles Plum Cloud authentication error."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={"username": "test-plum-username", "password": "test-plum-password"},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData",
@@ -80,19 +80,19 @@ async def test_async_setup_entry_op.dles_auth_error.opp: OpenPeerPower):
     ), patch(
         "openpeerpower.components.plum_lightpad.light.async_setup_entry"
     ) as mock_light_async_setup_entry:
-        result = await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await.opp.config_entries.async_setup(config_entry.entry_id)
 
     assert result is False
     assert len(mock_light_async_setup_entry.mock_calls) == 0
 
 
-async def test_async_setup_entry_op.dles_http_error.opp: OpenPeerPower):
+async def test_async_setup_entry_handles_http_error.opp: OpenPeerPower):
     """Test that configuring entry handles HTTP error."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={"username": "test-plum-username", "password": "test-plum-password"},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData",
@@ -100,7 +100,7 @@ async def test_async_setup_entry_op.dles_http_error.opp: OpenPeerPower):
     ), patch(
         "openpeerpower.components.plum_lightpad.light.async_setup_entry"
     ) as mock_light_async_setup_entry:
-        result = await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await.opp.config_entries.async_setup(config_entry.entry_id)
 
     assert result is False
     assert len(mock_light_async_setup_entry.mock_calls) == 0

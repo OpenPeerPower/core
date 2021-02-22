@@ -16,7 +16,7 @@ def init_config_flow.opp, side_effect=None):
     flow._get_authorization_url = AsyncMock(  # pylint: disable=protected-access
         return_value="https://example.com", side_effect=side_effect
     )
-    flow.opp = opp
+    flow.opp =.opp
     return flow
 
 
@@ -45,7 +45,7 @@ def mock_pypoint(is_authorized):  # pylint: disable=redefined-outer-name
 async def test_abort_if_no_implementation_registered.opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.PointFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

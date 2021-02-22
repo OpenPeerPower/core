@@ -3,20 +3,20 @@ import pytest
 
 from openpeerpower.components import media_source
 from openpeerpower.components.media_source import const
-from openpeerpower.config import async_process_op.core_config
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.setup import async_setup_component
 
 
 async def test_async_browse_media.opp):
     """Test browse media."""
-    local_media = opp.config.path("media")
-    await async_process_op.core_config(
+    local_media =.opp.config.path("media")
+    await async_process_ha_core_config(
        .opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Test path not exists
     with pytest.raises(media_source.BrowseError) as excinfo:
@@ -65,16 +65,16 @@ async def test_async_browse_media.opp):
 
 async def test_media_view.opp,.opp_client):
     """Test media view."""
-    local_media = opp.config.path("media")
-    await async_process_op.core_config(
+    local_media =.opp.config.path("media")
+    await async_process_ha_core_config(
        .opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Protects against non-existent files
     resp = await client.get("/media/local/invalid.txt")

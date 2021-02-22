@@ -2,7 +2,7 @@
 import pytest
 
 from openpeerpower.components import owntracks
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, mock_component
 
@@ -47,13 +47,13 @@ def mock_client.opp, aiohttp_client):
 
     MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
    .opp.loop.run_until_complete(async_setup_component.opp, "owntracks", {}))
 
     return.opp.loop.run_until_complete(aiohttp_client.opp.http.app))
 
 
-async def test_op.dle_valid_message(mock_client):
+async def test_handle_valid_message(mock_client):
     """Test that we forward messages correctly to OwnTracks."""
     resp = await mock_client.post(
         "/api/webhook/owntracks_test",
@@ -67,7 +67,7 @@ async def test_op.dle_valid_message(mock_client):
     assert json == []
 
 
-async def test_op.dle_valid_minimal_message(mock_client):
+async def test_handle_valid_minimal_message(mock_client):
     """Test that we forward messages correctly to OwnTracks."""
     resp = await mock_client.post(
         "/api/webhook/owntracks_test",
@@ -81,7 +81,7 @@ async def test_op.dle_valid_minimal_message(mock_client):
     assert json == []
 
 
-async def test_op.dle_value_error(mock_client):
+async def test_handle_value_error(mock_client):
     """Test we don't disclose that this is a valid webhook."""
     resp = await mock_client.post(
         "/api/webhook/owntracks_test",

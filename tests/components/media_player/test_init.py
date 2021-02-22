@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from openpeerpower.components import media_player
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_get_image.opp,.opp_ws_client, caplog):
@@ -12,9 +12,9 @@ async def test_get_image.opp,.opp_ws_client, caplog):
     await async_setup_component(
        .opp, "media_player", {"media_player": {"platform": "demo"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
         "openpeerpower.components.media_player.MediaPlayerEntity."
@@ -45,9 +45,9 @@ async def test_get_image_http.opp, aiohttp_client):
     await async_setup_component(
        .opp, "media_player", {"media_player": {"platform": "demo"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("media_player.bedroom")
+    state =.opp.states.get("media_player.bedroom")
     assert "entity_picture_local" not in state.attributes
 
     client = await aiohttp_client.opp.http.app)
@@ -73,9 +73,9 @@ async def test_get_image_http_remote.opp, aiohttp_client):
         await async_setup_component(
            .opp, "media_player", {"media_player": {"platform": "demo"}}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("media_player.bedroom")
+        state =.opp.states.get("media_player.bedroom")
         assert "entity_picture_local" in state.attributes
 
         client = await aiohttp_client.opp.http.app)
@@ -96,9 +96,9 @@ async def test_get_async_get_browse_image.opp, aiohttp_client,.opp_ws_client):
     await async_setup_component(
        .opp, "media_player", {"media_player": {"platform": "demo"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity_comp = opp.data.get("entity_components", {}).get("media_player")
+    entity_comp =.opp.data.get("entity_components", {}).get("media_player")
     assert entity_comp
 
     player = entity_comp.get_entity("media_player.bedroom")
@@ -133,9 +133,9 @@ async def test_media_browse.opp,.opp_ws_client):
     await async_setup_component(
        .opp, "media_player", {"media_player": {"platform": "demo"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     with patch(
         "openpeerpower.components.demo.media_player.YOUTUBE_PLAYER_SUPPORT",

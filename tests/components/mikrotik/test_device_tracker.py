@@ -3,9 +3,9 @@ from datetime import timedelta
 
 from openpeerpower.components import mikrotik
 import openpeerpower.components.device_tracker as device_tracker
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.helpers import entity_registry
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from . import DEVICE_2_WIRELESS, DHCP_DATA, MOCK_DATA, MOCK_OPTIONS, WIRELESS_DATA
 from .test_hub import setup_mikrotik_entry
@@ -45,7 +45,7 @@ async def test_device_trackers.opp, legacy_patchable_time):
     # test devices are added from wireless list only
     hub = await setup_mikrotik_entry.opp)
 
-    device_1 = opp.states.get("device_tracker.device_1")
+    device_1 =.opp.states.get("device_tracker.device_1")
     assert device_1 is not None
     assert device_1.state == "home"
     assert device_1.attributes["ip"] == "0.0.0.1"
@@ -53,7 +53,7 @@ async def test_device_trackers.opp, legacy_patchable_time):
     assert device_1.attributes["mac"] == "00:00:00:00:00:01"
     assert device_1.attributes["host_name"] == "Device_1"
     assert "mac_address" not in device_1.attributes
-    device_2 = opp.states.get("device_tracker.device_2")
+    device_2 =.opp.states.get("device_tracker.device_2")
     assert device_2 is None
 
     with patch.object(mikrotik.hub.MikrotikData, "command", new=mock_command):
@@ -61,9 +61,9 @@ async def test_device_trackers.opp, legacy_patchable_time):
         WIRELESS_DATA.append(DEVICE_2_WIRELESS)
 
         await hub.async_update()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        device_2 = opp.states.get("device_tracker.device_2")
+        device_2 =.opp.states.get("device_tracker.device_2")
         assert device_2 is not None
         assert device_2.state == "home"
         assert device_2.attributes["ip"] == "0.0.0.2"
@@ -78,9 +78,9 @@ async def test_device_trackers.opp, legacy_patchable_time):
             minutes=4
         )
         await hub.async_update()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        device_2 = opp.states.get("device_tracker.device_2")
+        device_2 =.opp.states.get("device_tracker.device_2")
         assert device_2.state != "not_home"
 
         # test state changes to away if last_seen > consider_home_interval
@@ -88,9 +88,9 @@ async def test_device_trackers.opp, legacy_patchable_time):
             minutes=5
         )
         await hub.async_update()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        device_2 = opp.states.get("device_tracker.device_2")
+        device_2 =.opp.states.get("device_tracker.device_2")
         assert device_2.state == "not_home"
 
 
@@ -99,7 +99,7 @@ async def test_restoring_devices.opp):
     config_entry = MockConfigEntry(
         domain=mikrotik.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     registry = await entity_registry.async_get_registry.opp)
     registry.async_get_or_create(
@@ -120,9 +120,9 @@ async def test_restoring_devices.opp):
     await setup_mikrotik_entry.opp)
 
     # test device_2 which is not in wireless list is restored
-    device_1 = opp.states.get("device_tracker.device_1")
+    device_1 =.opp.states.get("device_tracker.device_1")
     assert device_1 is not None
     assert device_1.state == "home"
-    device_2 = opp.states.get("device_tracker.device_2")
+    device_2 =.opp.states.get("device_tracker.device_2")
     assert device_2 is not None
     assert device_2.state == "not_home"

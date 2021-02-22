@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.components import camera
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_common import (
     help_test_availability_when_connection_lost,
@@ -46,9 +46,9 @@ async def test_run_camera_setup.opp, aiohttp_client, mqtt_mock):
         "camera",
         {"camera": {"platform": "mqtt", "topic": topic, "name": "Test Camera"}},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    url = opp.states.get("camera.test_camera").attributes["entity_picture"]
+    url =.opp.states.get("camera.test_camera").attributes["entity_picture"]
 
     async_fire_mqtt_message.opp, topic, "beer")
 

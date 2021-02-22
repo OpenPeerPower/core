@@ -10,7 +10,7 @@ from openpeerpower.components.meraki.device_tracker import (
     URL,
 )
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
@@ -121,13 +121,13 @@ async def test_data_will_be_saved(mock_device_tracker_conf,.opp, meraki_client):
     }
     req = await meraki_client.post(URL, data=json.dumps(data))
     assert req.status == 200
-    await opp..async_block_till_done()
-    state_name = opp.states.get(
+    await.opp.async_block_till_done()
+    state_name =.opp.states.get(
         "{}.{}".format("device_tracker", "00_26_ab_b8_a9_a4")
     ).state
     assert "home" == state_name
 
-    state_name = opp.states.get(
+    state_name =.opp.states.get(
         "{}.{}".format("device_tracker", "00_26_ab_b8_a9_a5")
     ).state
     assert "home" == state_name

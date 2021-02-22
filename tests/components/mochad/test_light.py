@@ -6,7 +6,7 @@ import pytest
 
 from openpeerpower.components import light
 from openpeerpower.components.mochad import light as mochad
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)
@@ -56,7 +56,7 @@ async def test_turn_on_with_no_brightness(light_mock, expected):
 async def test_turn_on_with_brightness(light_mock, expected):
     """Test turn_on."""
     light_mock.turn_on(brightness=45)
-    light_mock.light.send_cmd.assert_op._calls(expected)
+    light_mock.light.send_cmd.assert_has_calls(expected)
 
 
 @pytest.mark.parametrize("brightness", [32])

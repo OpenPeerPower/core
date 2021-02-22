@@ -41,7 +41,7 @@ async def test_form.opp):
         "pyowm.weatherapi25.weather_manager.WeatherManager",
         return_value=mocked_owm,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}
         )
 
@@ -49,18 +49,18 @@ async def test_form.opp):
         assert result["step_id"] == SOURCE_USER
         assert result["errors"] == {}
 
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        conf_entries = opp.config_entries.async_entries(DOMAIN)
+        conf_entries =.opp.config_entries.async_entries(DOMAIN)
         entry = conf_entries[0]
         assert entry.state == "loaded"
 
-        await opp..config_entries.async_unload(conf_entries[0].entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_unload(conf_entries[0].entry_id)
+        await.opp.async_block_till_done()
         assert entry.state == "not_loaded"
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -81,19 +81,19 @@ async def test_form_options.opp):
         config_entry = MockConfigEntry(
             domain=DOMAIN, unique_id="openweathermap_unique_id", data=CONFIG
         )
-        config_entry.add_to_opp.opp)
+        config_entry.add_to.opp.opp)
 
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
         assert config_entry.state == "loaded"
 
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_MODE: "daily"}
         )
 
@@ -103,16 +103,16 @@ async def test_form_options.opp):
             CONF_LANGUAGE: DEFAULT_LANGUAGE,
         }
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert config_entry.state == "loaded"
 
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"], user_input={CONF_MODE: "onecall_daily"}
         )
 
@@ -122,7 +122,7 @@ async def test_form_options.opp):
             CONF_LANGUAGE: DEFAULT_LANGUAGE,
         }
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert config_entry.state == "loaded"
 
@@ -136,7 +136,7 @@ async def test_form_invalid_api_key.opp):
         return_value=mocked_owm,
         side_effect=UnauthorizedError(""),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -152,7 +152,7 @@ async def test_form_api_call_error.opp):
         return_value=mocked_owm,
         side_effect=APIRequestError(""),
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 
@@ -167,7 +167,7 @@ async def test_form_api_offline.opp):
         "openpeerpower.components.openweathermap.config_flow.OWM",
         return_value=mocked_owm,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
         )
 

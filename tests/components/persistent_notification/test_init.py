@@ -1,9 +1,9 @@
 """The tests for the persistent notification component."""
 import openpeerpower.components.persistent_notification as pn
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
-from openpeerpowerr.setup import async_setup_component, setup_component
+from openpeerpower.setup import async_setup_component, setup_component
 
-from tests.common import get_test_home_assistant
+from tests.common import get_test_open_peer_power
 
 
 class TestPersistentNotification:
@@ -11,7 +11,7 @@ class TestPersistentNotification:
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         setup_component(self.opp, pn.DOMAIN, {})
 
     def teardown_method(self, method):
@@ -143,7 +143,7 @@ async def test_ws_get_notifications.opp,.opp_ws_client):
     """Test websocket endpoint for retrieving persistent notifications."""
     await async_setup_component.opp, pn.DOMAIN, {})
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json({"id": 5, "type": "persistent_notification/get"})
     msg = await client.receive_json()
@@ -172,7 +172,7 @@ async def test_ws_get_notifications.opp,.opp_ws_client):
     assert notification["created_at"] is not None
 
     # Mark Read
-    await opp..services.async_call(
+    await.opp.services.async_call(
         pn.DOMAIN, pn.SERVICE_MARK_READ, {"notification_id": "Beer 2"}
     )
     await client.send_json({"id": 7, "type": "persistent_notification/get"})

@@ -4,7 +4,7 @@ from unittest.mock import patch
 from openpeerpower.components import luftdaten
 from openpeerpower.components.luftdaten.const import CONF_SENSOR_ID, DOMAIN
 from openpeerpower.const import CONF_SCAN_INTERVAL, CONF_SHOW_ON_MAP
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_config_with_sensor_passed_to_config_entry.opp):

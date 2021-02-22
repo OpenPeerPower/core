@@ -3,10 +3,10 @@ from unittest.mock import MagicMock, PropertyMock, patch
 
 import openpeerpower.components.image_processing as ip
 from openpeerpower.const import ATTR_ENTITY_PICTURE
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant, load_fixture
+from tests.common import assert_setup_component, get_test_open_peer_power, load_fixture
 from tests.components.image_processing import common
 
 
@@ -28,7 +28,7 @@ class TestOpenAlprLocalSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""
@@ -88,7 +88,7 @@ class TestOpenAlprLocal:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         config = {
             ip.DOMAIN: {

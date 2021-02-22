@@ -16,9 +16,9 @@ from openpeerpower.components.microsoft_face import (
     SERVICE_TRAIN_GROUP,
 )
 from openpeerpower.const import ATTR_NAME
-from openpeerpowerr.setup import setup_component
+from openpeerpower.setup import setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant, load_fixture
+from tests.common import assert_setup_component, get_test_open_peer_power, load_fixture
 
 
 def create_group.opp, name):
@@ -80,7 +80,7 @@ class TestMicrosoftFaceSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         self.config = {mf.DOMAIN: {"api_key": "12345678abcdef"}}
 

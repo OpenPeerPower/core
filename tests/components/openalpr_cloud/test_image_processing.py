@@ -4,10 +4,10 @@ from unittest.mock import PropertyMock, patch
 
 from openpeerpower.components import camera, image_processing as ip
 from openpeerpower.components.openalpr_cloud.image_processing import OPENALPR_API_URL
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant, load_fixture
+from tests.common import assert_setup_component, get_test_open_peer_power, load_fixture
 from tests.components.image_processing import common
 
 
@@ -16,7 +16,7 @@ class TestOpenAlprCloudSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""
@@ -92,7 +92,7 @@ class TestOpenAlprCloud:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         config = {
             ip.DOMAIN: {

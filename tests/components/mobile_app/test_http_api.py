@@ -6,7 +6,7 @@ import pytest
 
 from openpeerpower.components.mobile_app.const import CONF_SECRET, DOMAIN
 from openpeerpower.const import CONF_WEBHOOK_ID
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .const import REGISTER, REGISTER_CLEARTEXT, RENDER_TEMPLATE
 
@@ -17,7 +17,7 @@ async def test_registration.opp,.opp_client,.opp_admin_user):
     """Test that registrations happen."""
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
-    api_client = await opp._client()
+    api_client = await.opp_client()
 
     with patch(
         "openpeerpower.components.person.async_add_user_device_tracker",
@@ -29,7 +29,7 @@ async def test_registration.opp,.opp_client,.opp_admin_user):
         )
 
     assert len(add_user_dev_track.mock_calls) == 1
-    assert add_user_dev_track.mock_calls[0][1][1] == opp_admin_user.id
+    assert add_user_dev_track.mock_calls[0][1][1] ==.opp_admin_user.id
     assert add_user_dev_track.mock_calls[0][1][2] == "device_tracker.test_1"
 
     assert resp.status == 201
@@ -37,9 +37,9 @@ async def test_registration.opp,.opp_client,.opp_admin_user):
     assert CONF_WEBHOOK_ID in register_json
     assert CONF_SECRET in register_json
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
 
-    assert entries[0].unique_id == "io.openpeerpowerr.mobile_app_test-mock-device-id"
+    assert entries[0].unique_id == "io.openpeerpower.mobile_app_test-mock-device-id"
     assert entries[0].data["device_id"] == REGISTER_CLEARTEXT["device_id"]
     assert entries[0].data["app_data"] == REGISTER_CLEARTEXT["app_data"]
     assert entries[0].data["app_id"] == REGISTER_CLEARTEXT["app_id"]
@@ -67,7 +67,7 @@ async def test_registration_encryption.opp,.opp_client):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
-    api_client = await opp._client()
+    api_client = await.opp_client()
 
     resp = await api_client.post("/api/mobile_app/registrations", json=REGISTER)
 

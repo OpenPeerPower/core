@@ -24,8 +24,8 @@ from openpeerpower.components.mysensors.const import (
     CONF_TOPIC_IN_PREFIX,
     CONF_TOPIC_OUT_PREFIX,
 )
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.mark.parametrize(
@@ -240,7 +240,7 @@ async def test_import(
     ) as mock_setup_entry:
         result = await async_setup_component.opp, DOMAIN, config)
         assert result == expected_to_succeed
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_setup_entry.mock_calls) == expected_calls
 

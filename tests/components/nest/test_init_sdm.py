@@ -17,7 +17,7 @@ from openpeerpower.config_entries import (
     ENTRY_STATE_SETUP_ERROR,
     ENTRY_STATE_SETUP_RETRY,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .common import CONFIG, async_setup_sdm_platform, create_config_entry
 
@@ -30,7 +30,7 @@ async def test_setup_success.opp, caplog):
         await async_setup_sdm_platform.opp, PLATFORM)
         assert not caplog.records
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_LOADED
 
@@ -39,7 +39,7 @@ async def async_setup_sdm.opp, config=CONFIG):
     """Prepare test setup."""
     create_config_entry.opp)
     with patch(
-        "openpeerpowerr.helpers.config_entry_oauth2_flow.async_get_config_entry_implementation"
+        "openpeerpower.helpers.config_entry_oauth2_flow.async_get_config_entry_implementation"
     ):
         return await async_setup_component.opp, DOMAIN, config)
 
@@ -52,7 +52,7 @@ async def test_setup_configuration_failure.opp, caplog):
     result = await async_setup_sdm.opp, config)
     assert result
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_SETUP_ERROR
 
@@ -71,7 +71,7 @@ async def test_setup_susbcriber_failure.opp, caplog):
         assert result
         assert "Subscriber error:" in caplog.text
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_SETUP_RETRY
 
@@ -87,7 +87,7 @@ async def test_setup_device_manager_failure.opp, caplog):
         assert len(caplog.messages) == 1
         assert "Device manager error:" in caplog.text
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_SETUP_RETRY
 
@@ -101,11 +101,11 @@ async def test_subscriber_auth_failure.opp, caplog):
         result = await async_setup_sdm.opp, CONFIG)
         assert result
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_SETUP_ERROR
 
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["step_id"] == "reauth_confirm"
 
@@ -119,7 +119,7 @@ async def test_setup_missing_subscriber_id.opp, caplog):
         assert not result
         assert "Configuration option" in caplog.text
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     assert entries[0].state == ENTRY_STATE_NOT_LOADED
 
@@ -131,5 +131,5 @@ async def test_empty_config.opp, caplog):
         assert result
         assert not caplog.records
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 0

@@ -5,8 +5,8 @@ from pybotvac.neato import Neato
 
 from openpeerpower import config_entries, data_entry_flow, setup
 from openpeerpower.components.neato.const import NEATO_DOMAIN
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 
@@ -31,7 +31,7 @@ async def test_full_flow(
         },
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "neato", context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -68,7 +68,7 @@ async def test_full_flow(
     with patch(
         "openpeerpower.components.neato.async_setup_entry", return_value=True
     ) as mock_setup:
-        await opp..config_entries.flow.async_configure(result["flow_id"])
+        await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert len.opp.config_entries.async_entries(NEATO_DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1
@@ -80,10 +80,10 @@ async def test_abort_if_already_setup.opp: OpenPeerPowerType):
         domain=NEATO_DOMAIN,
         data={"auth_implementation": "neato", "token": {"some": "data"}},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # Should fail
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "neato", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -107,17 +107,17 @@ async def test_reauth(
         entry_id="my_entry",
         domain=NEATO_DOMAIN,
         data={"username": "abcdef", "password": "123456", "vendor": "neato"},
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     # Should show form
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "neato", context={"source": config_entries.SOURCE_REAUTH}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
     # Confirm reauth flow
-    result2 = await opp..config_entries.flow.async_configure(result["flow_id"], {})
+    result2 = await.opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     state = config_entry_oauth2_flow._encode_jwt(
        .opp,
@@ -145,10 +145,10 @@ async def test_reauth(
     with patch(
         "openpeerpower.components.neato.async_setup_entry", return_value=True
     ) as mock_setup:
-        result3 = await opp..config_entries.flow.async_configure(result2["flow_id"])
-        await opp..async_block_till_done()
+        result3 = await.opp.config_entries.flow.async_configure(result2["flow_id"])
+        await.opp.async_block_till_done()
 
-    new_entry = opp.config_entries.async_get_entry("my_entry")
+    new_entry =.opp.config_entries.async_get_entry("my_entry")
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result3["reason"] == "reauth_successful"

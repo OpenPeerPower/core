@@ -7,7 +7,7 @@ import pytest
 from openpeerpower.components.onewire.const import DEFAULT_SYSBUS_MOUNT_DIR, DOMAIN
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.const import DEVICE_CLASS_TEMPERATURE, TEMP_CELSIUS
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_device_registry, mock_registry
 
@@ -150,7 +150,7 @@ async def test_onewiredirect_setup_valid_device.opp, device_id):
         side_effect=read_side_effect,
     ):
         assert await async_setup_component.opp, SENSOR_DOMAIN, MOCK_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)
 
@@ -171,5 +171,5 @@ async def test_onewiredirect_setup_valid_device.opp, device_id):
         assert registry_entry.unique_id == expected_sensor["unique_id"]
         assert registry_entry.unit_of_measurement == expected_sensor["unit"]
         assert registry_entry.device_class == expected_sensor["class"]
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
         assert state.state == expected_sensor["result"]

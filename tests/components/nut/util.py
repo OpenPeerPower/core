@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from openpeerpower.components.nut.const import DOMAIN
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_RESOURCES
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry, load_fixture
 
@@ -35,9 +35,9 @@ async def async_init_integration(
             domain=DOMAIN,
             data={CONF_HOST: "mock", CONF_PORT: "mock", CONF_RESOURCES: resources},
         )
-        entry.add_to_opp.opp)
+        entry.add_to.opp.opp)
 
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

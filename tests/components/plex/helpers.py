@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from plexwebsocket import SIGNAL_CONNECTION_STATE, SIGNAL_DATA, STATE_CONNECTED
 
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed
 
@@ -36,4 +36,4 @@ async def wait_for_debouncer.opp):
     """Move time forward to wait for sensor debouncer."""
     next_update = dt_util.utcnow() + timedelta(seconds=3)
     async_fire_time_changed.opp, next_update)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()

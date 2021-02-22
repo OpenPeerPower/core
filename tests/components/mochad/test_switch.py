@@ -5,7 +5,7 @@ import pytest
 
 from openpeerpower.components import switch
 from openpeerpower.components.mochad import switch as mochad
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)

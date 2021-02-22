@@ -8,9 +8,9 @@ import pytest
 
 import openpeerpower.components.sensor as sensor
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_UNAVAILABLE
-import openpeerpowerr.core as ha
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.core as ha
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from .test_common import (
     help_test_availability_when_connection_lost,
@@ -66,10 +66,10 @@ async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "test-topic", "100")
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
 
     assert state.state == "100"
     assert state.attributes.get("unit_of_measurement") == "fav unit"
@@ -91,15 +91,15 @@ async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, c
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message.opp, "availability-topic", "online")
 
     # State should be unavailable since expire_after is defined and > 0
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
     await expires_helper.opp, mqtt_mock, caplog)
@@ -121,10 +121,10 @@ async def test_setting_sensor_value_expires.opp, mqtt_mock, caplog):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # State should be unavailable since expire_after is defined and > 0
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
     await expires_helper.opp, mqtt_mock, caplog)
@@ -134,50 +134,50 @@ async def expires_helper.opp, mqtt_mock, caplog):
     """Run the basic expiry code."""
     realnow = dt_util.utcnow()
     now = datetime(realnow.year + 1, 1, 1, 1, tzinfo=dt_util.UTC)
-    with patch(("openpeerpowerr.helpers.event.dt_util.utcnow"), return_value=now):
+    with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
         async_fire_mqtt_message.opp, "test-topic", "100")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Value was set correctly.
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == "100"
 
     # Time jump +3s
     now = now + timedelta(seconds=3)
     async_fire_time_changed.opp, now)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Value is not yet expired
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == "100"
 
     # Next message resets timer
-    with patch(("openpeerpowerr.helpers.event.dt_util.utcnow"), return_value=now):
+    with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed.opp, now)
         async_fire_mqtt_message.opp, "test-topic", "101")
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     # Value was updated correctly.
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == "101"
 
     # Time jump +3s
     now = now + timedelta(seconds=3)
     async_fire_time_changed.opp, now)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Value is not yet expired
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == "101"
 
     # Time jump +2s
     now = now + timedelta(seconds=2)
     async_fire_time_changed.opp, now)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Value is expired now
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state.state == STATE_UNAVAILABLE
 
 
@@ -196,10 +196,10 @@ async def test_setting_sensor_value_via_mqtt_json_message.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "test-topic", '{ "val": "100" }')
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
 
     assert state.state == "100"
 
@@ -218,22 +218,22 @@ async def test_force_update_disabled.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         events.append(event)
 
    .opp.bus.async_listen(EVENT_STATE_CHANGED, callback)
 
     async_fire_mqtt_message.opp, "test-topic", "100")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 1
 
     async_fire_mqtt_message.opp, "test-topic", "100")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 1
 
 
@@ -252,22 +252,22 @@ async def test_force_update_enabled.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         events.append(event)
 
    .opp.bus.async_listen(EVENT_STATE_CHANGED, callback)
 
     async_fire_mqtt_message.opp, "test-topic", "100")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 1
 
     async_fire_mqtt_message.opp, "test-topic", "100")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 2
 
 
@@ -348,9 +348,9 @@ async def test_invalid_device_class.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
     assert state is None
 
 
@@ -371,11 +371,11 @@ async def test_valid_device_class.opp, mqtt_mock):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_1")
+    state =.opp.states.get("sensor.test_1")
     assert state.attributes["device_class"] == "temperature"
-    state = opp.states.get("sensor.test_2")
+    state =.opp.states.get("sensor.test_2")
     assert "device_class" not in state.attributes
 
 
@@ -574,7 +574,7 @@ async def test_entity_id_update_discovery_update.opp, mqtt_mock):
 
 async def test_entity_device_info_with_hub.opp, mqtt_mock):
     """Test MQTT sensor device registry integration."""
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
     hub = registry.async_get_or_create(
         config_entry_id="123",
         connections=set(),
@@ -593,7 +593,7 @@ async def test_entity_device_info_with_hub.opp, mqtt_mock):
         }
     )
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None

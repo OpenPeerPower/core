@@ -7,8 +7,8 @@ from pymazda import Client as MazdaAPI
 
 from openpeerpower.components.mazda.const import DOMAIN
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD, CONF_REGION
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers import aiohttp_client
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import aiohttp_client
 
 from tests.common import MockConfigEntry, load_fixture
 
@@ -30,7 +30,7 @@ async def init_integration.opp: OpenPeerPower, use_nickname=True) -> MockConfigE
     )
 
     config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     client_mock = MagicMock(
         MazdaAPI(
@@ -47,7 +47,7 @@ async def init_integration.opp: OpenPeerPower, use_nickname=True) -> MockConfigE
         "openpeerpower.components.mazda.config_flow.MazdaAPI",
         return_value=client_mock,
     ), patch("openpeerpower.components.mazda.MazdaAPI", return_value=client_mock):
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     return config_entry

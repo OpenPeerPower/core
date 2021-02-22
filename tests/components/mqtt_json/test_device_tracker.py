@@ -11,7 +11,7 @@ from openpeerpower.components.device_tracker.legacy import (
     YAML_DEVICES,
 )
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_fire_mqtt_message
 
@@ -28,7 +28,7 @@ LOCATION_MESSAGE_INCOMPLETE = {"longitude": 2.0}
 @pytest.fixture(autouse=True)
 def setup_comp.opp, mqtt_mock):
     """Initialize components."""
-    yaml_devices = opp.config.path(YAML_DEVICES)
+    yaml_devices =.opp.config.path(YAML_DEVICES)
     yield
     if os.path.isfile(yaml_devices):
         os.remove(yaml_devices)
@@ -69,8 +69,8 @@ async def test_json_message.opp):
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: topic}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp..async_block_till_done()
-    state = opp.states.get("device_tracker.zanzito")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
     assert state.attributes.get("longitude") == 1.0
 
@@ -90,7 +90,7 @@ async def test_non_json_message.opp, caplog):
     caplog.set_level(logging.ERROR)
     caplog.clear()
     async_fire_mqtt_message.opp, topic, location)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert "Error parsing JSON payload: home" in caplog.text
 
 
@@ -109,7 +109,7 @@ async def test_incomplete_message.opp, caplog):
     caplog.set_level(logging.ERROR)
     caplog.clear()
     async_fire_mqtt_message.opp, topic, location)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert (
         "Skipping update for following data because of missing "
         'or malformatted data: {"longitude": 2.0}' in caplog.text
@@ -129,8 +129,8 @@ async def test_single_level_wildcard_topic.opp):
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp..async_block_till_done()
-    state = opp.states.get("device_tracker.zanzito")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
     assert state.attributes.get("longitude") == 1.0
 
@@ -148,8 +148,8 @@ async def test_multi_level_wildcard_topic.opp):
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp..async_block_till_done()
-    state = opp.states.get("device_tracker.zanzito")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
     assert state.attributes.get("longitude") == 1.0
 
@@ -168,7 +168,7 @@ async def test_single_level_wildcard_topic_not_matching.opp):
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id) is None
 
 
@@ -186,5 +186,5 @@ async def test_multi_level_wildcard_topic_not_matching.opp):
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
     async_fire_mqtt_message.opp, topic, location)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id) is None

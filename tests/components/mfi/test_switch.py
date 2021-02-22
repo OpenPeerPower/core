@@ -5,7 +5,7 @@ import pytest
 
 import openpeerpower.components.mfi.switch as mfi
 import openpeerpower.components.switch as switch_component
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 PLATFORM = mfi
 COMPONENT = switch_component
@@ -42,7 +42,7 @@ async def test_setup_adds_proper_devices.opp):
             mock.MagicMock(ports=ports)
         ]
         assert await async_setup_component.opp, COMPONENT.DOMAIN, GOOD_CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         for ident, port in ports.items():
             if ident != "bad":
                 mock_switch.assert_any_call(port)

@@ -7,9 +7,9 @@ from openpeerpower.components.camera import SUPPORT_STREAM as CAMERA_SUPPORT_STR
 from openpeerpower.components.mobile_app.const import CONF_SECRET
 from openpeerpower.components.zone import DOMAIN as ZONE_DOMAIN
 from openpeerpower.const import CONF_WEBHOOK_ID
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import callback
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.setup import async_setup_component
 
 from .const import CALL_SERVICE, FIRE_EVENT, REGISTER_CLEARTEXT, RENDER_TEMPLATE, UPDATE
 
@@ -63,7 +63,7 @@ def decrypt_payload(secret_key, encrypted_data):
     return json.loads(decrypted_data)
 
 
-async def test_webhook_op.dle_render_template(create_registrations, webhook_client):
+async def test_webhook_handle_render_template(create_registrations, webhook_client):
     """Test that we render templates properly."""
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),
@@ -89,7 +89,7 @@ async def test_webhook_op.dle_render_template(create_registrations, webhook_clie
     }
 
 
-async def test_webhook_op.dle_call_services.opp, create_registrations, webhook_client):
+async def test_webhook_handle_call_services.opp, create_registrations, webhook_client):
     """Test that we call services properly."""
     calls = async_mock_service.opp, "test", "mobile_app")
 
@@ -103,7 +103,7 @@ async def test_webhook_op.dle_call_services.opp, create_registrations, webhook_c
     assert len(calls) == 1
 
 
-async def test_webhook_op.dle_fire_event.opp, create_registrations, webhook_client):
+async def test_webhook_handle_fire_event.opp, create_registrations, webhook_client):
     """Test that we can fire events."""
     events = []
 
@@ -150,7 +150,7 @@ async def test_webhook_update_registration(webhook_client, authed_api_client):
     assert CONF_SECRET not in update_json
 
 
-async def test_webhook_op.dle_get_zones.opp, create_registrations, webhook_client):
+async def test_webhook_handle_get_zones.opp, create_registrations, webhook_client):
     """Test that we can get zones properly."""
     await async_setup_component(
        .opp,
@@ -171,7 +171,7 @@ async def test_webhook_op.dle_get_zones.opp, create_registrations, webhook_clien
     assert zones[0]["entity_id"] == "zone.home"
 
 
-async def test_webhook_op.dle_get_config.opp, create_registrations, webhook_client):
+async def test_webhook_handle_get_config.opp, create_registrations, webhook_client):
     """Test that we can get config properly."""
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),
@@ -186,7 +186,7 @@ async def test_webhook_op.dle_get_config.opp, create_registrations, webhook_clie
     if "allowlist_external_dirs" in json:
         json["allowlist_external_dirs"] = set(json["allowlist_external_dirs"])
 
-   .opp_config = opp.config.as_dict()
+   .opp_config =.opp.config.as_dict()
 
     expected_dict = {
         "latitude":.opp_config["latitude"],
@@ -217,7 +217,7 @@ async def test_webhook_returns_error_incorrect_json(
     assert "invalid JSON" in caplog.text
 
 
-async def test_webhook_op.dle_decryption(webhook_client, create_registrations):
+async def test_webhook_handle_decryption(webhook_client, create_registrations):
     """Test that we can encrypt/decrypt properly."""
     key = create_registrations[0]["secret"]
     data = encrypt_payload(key, RENDER_TEMPLATE["data"])
@@ -265,7 +265,7 @@ async def test_webhook_update_location.opp, webhook_client, create_registrations
 
     assert resp.status == 200
 
-    state = opp.states.get("device_tracker.test_1_2")
+    state =.opp.states.get("device_tracker.test_1_2")
     assert state is not None
     assert state.attributes["latitude"] == 1.0
     assert state.attributes["longitude"] == 2.0
@@ -422,7 +422,7 @@ async def test_webhook_camera_stream_stream_available_but_errors(
     assert webhook_json["mjpeg_path"] == "/api/camera_proxy_stream/camera.stream_camera"
 
 
-async def test_webhook_op.dle_scan_tag.opp, create_registrations, webhook_client):
+async def test_webhook_handle_scan_tag.opp, create_registrations, webhook_client):
     """Test that we can scan tags."""
     events = []
 

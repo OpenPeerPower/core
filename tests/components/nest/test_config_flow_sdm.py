@@ -7,7 +7,7 @@ import pytest
 from openpeerpower import config_entries, setup
 from openpeerpower.components.nest.const import DOMAIN, OAUTH2_AUTHORIZE, OAUTH2_TOKEN
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers import config_entry_oauth2_flow
 
 from .common import MockConfigEntry
 
@@ -29,7 +29,7 @@ CONFIG = {
 
 def get_config_entry.opp):
     """Return a single config entry."""
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     return entries[0]
 
@@ -39,7 +39,7 @@ class OAuthFixture:
 
     def __init__(self,.opp, aiohttp_client, aioclient_mock):
         """Initialize OAuthFixture."""
-        self.opp = opp
+        self.opp =.opp
         self.aiohttp_client = aiohttp_client
         self.aioclient_mock = aioclient_mock
 
@@ -95,7 +95,7 @@ async def test_full_flow.opp, oauth):
     """Check full flow."""
     assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     await oauth.async_oauth_flow(result)
@@ -130,24 +130,24 @@ async def test_reauth.opp, oauth):
         },
         unique_id=DOMAIN,
     )
-    old_entry.add_to_opp.opp)
+    old_entry.add_to.opp.opp)
 
     entry = get_config_entry.opp)
     assert entry.data["token"] == {
         "access_token": "some-revoked-token",
     }
 
-    await opp..config_entries.flow.async_init(
+    await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=old_entry.data
     )
 
     # Advance through the reauth flow
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["step_id"] == "reauth_confirm"
 
     # Run the oauth flow
-    result = await opp..config_entries.flow.async_configure(flows[0]["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
     await oauth.async_oauth_flow(result)
 
     # Verify existing tokens are replaced
@@ -167,11 +167,11 @@ async def test_single_config_entry.opp):
     old_entry = MockConfigEntry(
         domain=DOMAIN, data={"auth_implementation": DOMAIN, "sdm": {}}
     )
-    old_entry.add_to_opp.opp)
+    old_entry.add_to.opp.opp)
 
     assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "abort"
@@ -189,30 +189,30 @@ async def test_unexpected_existing_config_entries.opp, oauth):
     old_entry = MockConfigEntry(
         domain=DOMAIN, data={"auth_implementation": DOMAIN, "sdm": {}}
     )
-    old_entry.add_to_opp.opp)
+    old_entry.add_to.opp.opp)
 
     old_entry = MockConfigEntry(
         domain=DOMAIN, data={"auth_implementation": DOMAIN, "sdm": {}}
     )
-    old_entry.add_to_opp.opp)
+    old_entry.add_to.opp.opp)
 
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 2
 
     # Invoke the reauth flow
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=old_entry.data
     )
     assert result["type"] == "form"
     assert result["step_id"] == "reauth_confirm"
 
-    flows = opp.config_entries.flow.async_progress()
+    flows =.opp.config_entries.flow.async_progress()
 
-    result = await opp..config_entries.flow.async_configure(flows[0]["flow_id"], {})
+    result = await.opp.config_entries.flow.async_configure(flows[0]["flow_id"], {})
     await oauth.async_oauth_flow(result)
 
     # Only a single entry now exists, and the other was cleaned up
-    entries = opp.config_entries.async_entries(DOMAIN)
+    entries =.opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
     entry = entries[0]
     assert entry.unique_id == DOMAIN

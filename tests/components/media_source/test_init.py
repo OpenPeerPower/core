@@ -8,7 +8,7 @@ from openpeerpower.components.media_player.const import MEDIA_CLASS_DIRECTORY
 from openpeerpower.components.media_player.errors import BrowseError
 from openpeerpower.components.media_source import const
 from openpeerpower.components.media_source.error import Unresolvable
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_is_media_source_id():
@@ -39,7 +39,7 @@ async def test_generate_media_source_id():
 async def test_async_browse_media.opp):
     """Test browse media."""
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Test non-media ignored (/media has test.mp3 and not_media.txt)
     media = await media_source.async_browse_media.opp, "")
@@ -61,7 +61,7 @@ async def test_async_browse_media.opp):
 async def test_async_resolve_media.opp):
     """Test browse media."""
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     media = await media_source.async_resolve_media(
        .opp,
@@ -73,7 +73,7 @@ async def test_async_resolve_media.opp):
 async def test_async_unresolve_media.opp):
     """Test browse media."""
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Test no media content
     with pytest.raises(Unresolvable):
@@ -83,9 +83,9 @@ async def test_async_unresolve_media.opp):
 async def test_websocket_browse_media.opp,.opp_ws_client):
     """Test browse media websocket."""
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     media = media_source.models.BrowseMediaSource(
         domain=const.DOMAIN,
@@ -136,9 +136,9 @@ async def test_websocket_browse_media.opp,.opp_ws_client):
 async def test_websocket_resolve_media.opp,.opp_ws_client):
     """Test browse media websocket."""
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     media = media_source.models.PlayMedia("/media/local/test.mp3", "audio/mpeg")
 

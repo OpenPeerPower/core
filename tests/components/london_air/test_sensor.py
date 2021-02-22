@@ -1,7 +1,7 @@
 """The tests for the london_air platform."""
 from openpeerpower.components.london_air.sensor import CONF_LOCATIONS, URL
 from openpeerpower.const import HTTP_OK, HTTP_SERVICE_UNAVAILABLE
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import load_fixture
 
@@ -12,9 +12,9 @@ async def test_valid_state.opp, requests_mock):
     """Test for operational london_air sensor with proper attributes."""
     requests_mock.get(URL, text=load_fixture("london_air.json"), status_code=HTTP_OK)
     assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.merton")
+    state =.opp.states.get("sensor.merton")
     assert state is not None
     assert state.state == "Low"
     assert state.attributes["icon"] == "mdi:cloud-outline"
@@ -43,9 +43,9 @@ async def test_api_failure.opp, requests_mock):
     """Test for failure in the API."""
     requests_mock.get(URL, status_code=HTTP_SERVICE_UNAVAILABLE)
     assert await async_setup_component.opp, "sensor", VALID_CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.merton")
+    state =.opp.states.get("sensor.merton")
     assert state is not None
     assert state.attributes["updated"] is None
     assert state.attributes["sites"] == 0

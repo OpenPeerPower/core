@@ -3,7 +3,7 @@ import logging
 from unittest.mock import patch
 
 from openpeerpower.components import mythicbeastsdns
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ async def test_update.opp):
             mythicbeastsdns.DOMAIN: {
                 "domain": "example.org",
                 "password": "correct",
-                "host": "opp",
+                "host": .opp",
             }
         },
     )
@@ -46,7 +46,7 @@ async def test_update_fails_if_wrong_token.opp):
             mythicbeastsdns.DOMAIN: {
                 "domain": "example.org",
                 "password": "incorrect",
-                "host": "opp",
+                "host": .opp",
             }
         },
     )

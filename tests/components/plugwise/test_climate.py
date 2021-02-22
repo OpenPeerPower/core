@@ -13,7 +13,7 @@ async def test_adam_climate_entity_attributes.opp, mock_smile_adam):
     entry = await async_init_integration.opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state = opp.states.get("climate.zone_lisa_wk")
+    state =.opp.states.get("climate.zone_lisa_wk")
     attrs = state.attributes
 
     assert attrs["hvac_modes"] == [HVAC_MODE_HEAT, HVAC_MODE_AUTO]
@@ -29,7 +29,7 @@ async def test_adam_climate_entity_attributes.opp, mock_smile_adam):
 
     assert attrs["supported_features"] == 17
 
-    state = opp.states.get("climate.zone_thermostat_jessie")
+    state =.opp.states.get("climate.zone_thermostat_jessie")
     attrs = state.attributes
 
     assert attrs["hvac_modes"] == [HVAC_MODE_HEAT, HVAC_MODE_AUTO]
@@ -52,33 +52,33 @@ async def test_adam_climate_adjust_negative_testing.opp, mock_smile_adam):
     entry = await async_init_integration.opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": "climate.zone_lisa_wk", "temperature": 25},
         blocking=True,
     )
-    state = opp.states.get("climate.zone_lisa_wk")
+    state =.opp.states.get("climate.zone_lisa_wk")
     attrs = state.attributes
     assert attrs["temperature"] == 21.5
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": "climate.zone_thermostat_jessie", "preset_mode": "home"},
         blocking=True,
     )
-    state = opp.states.get("climate.zone_thermostat_jessie")
+    state =.opp.states.get("climate.zone_thermostat_jessie")
     attrs = state.attributes
     assert attrs["preset_mode"] == "asleep"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": "climate.zone_thermostat_jessie", "hvac_mode": HVAC_MODE_AUTO},
         blocking=True,
     )
-    state = opp.states.get("climate.zone_thermostat_jessie")
+    state =.opp.states.get("climate.zone_thermostat_jessie")
     attrs = state.attributes
 
 
@@ -87,49 +87,49 @@ async def test_adam_climate_entity_climate_changes.opp, mock_smile_adam):
     entry = await async_init_integration.opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": "climate.zone_lisa_wk", "temperature": 25},
         blocking=True,
     )
-    state = opp.states.get("climate.zone_lisa_wk")
+    state =.opp.states.get("climate.zone_lisa_wk")
     attrs = state.attributes
 
     assert attrs["temperature"] == 25.0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": "climate.zone_lisa_wk", "preset_mode": "away"},
         blocking=True,
     )
-    state = opp.states.get("climate.zone_lisa_wk")
+    state =.opp.states.get("climate.zone_lisa_wk")
     attrs = state.attributes
 
     assert attrs["preset_mode"] == "away"
 
     assert attrs["supported_features"] == 17
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": "climate.zone_thermostat_jessie", "temperature": 25},
         blocking=True,
     )
 
-    state = opp.states.get("climate.zone_thermostat_jessie")
+    state =.opp.states.get("climate.zone_thermostat_jessie")
     attrs = state.attributes
 
     assert attrs["temperature"] == 25.0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": "climate.zone_thermostat_jessie", "preset_mode": "home"},
         blocking=True,
     )
-    state = opp.states.get("climate.zone_thermostat_jessie")
+    state =.opp.states.get("climate.zone_thermostat_jessie")
     attrs = state.attributes
 
     assert attrs["preset_mode"] == "home"
@@ -140,7 +140,7 @@ async def test_anna_climate_entity_attributes.opp, mock_smile_anna):
     entry = await async_init_integration.opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state = opp.states.get("climate.anna")
+    state =.opp.states.get("climate.anna")
     attrs = state.attributes
 
     assert "hvac_modes" in attrs
@@ -165,38 +165,38 @@ async def test_anna_climate_entity_climate_changes.opp, mock_smile_anna):
     entry = await async_init_integration.opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_temperature",
         {"entity_id": "climate.anna", "temperature": 25},
         blocking=True,
     )
 
-    state = opp.states.get("climate.anna")
+    state =.opp.states.get("climate.anna")
     attrs = state.attributes
 
     assert attrs["temperature"] == 25.0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_preset_mode",
         {"entity_id": "climate.anna", "preset_mode": "away"},
         blocking=True,
     )
 
-    state = opp.states.get("climate.anna")
+    state =.opp.states.get("climate.anna")
     attrs = state.attributes
 
     assert attrs["preset_mode"] == "away"
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_hvac_mode",
         {"entity_id": "climate.anna", "hvac_mode": "heat_cool"},
         blocking=True,
     )
 
-    state = opp.states.get("climate.anna")
+    state =.opp.states.get("climate.anna")
     attrs = state.attributes
 
     assert state.state == "heat_cool"

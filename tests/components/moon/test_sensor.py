@@ -2,13 +2,13 @@
 from datetime import datetime
 from unittest.mock import patch
 
-from openpeerpower.components.openpeerpowerr import (
+from openpeerpower.components.openpeerpower import (
     DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.const import ATTR_ENTITY_ID
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 DAY1 = datetime(2017, 1, 1, 1, tzinfo=dt_util.UTC)
 DAY2 = datetime(2017, 1, 18, 1, tzinfo=dt_util.UTC)
@@ -20,7 +20,7 @@ async def test_moon_day1.opp):
 
     await async_setup_component.opp, HA_DOMAIN, {})
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("sensor.moon_day1")
 
@@ -38,7 +38,7 @@ async def test_moon_day2.opp):
 
     await async_setup_component.opp, HA_DOMAIN, {})
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("sensor.moon_day2")
 
@@ -52,10 +52,10 @@ async def test_moon_day2.opp):
 
 async def async_update_entity.opp, entity_id):
     """Run an update action for an entity."""
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: entity_id},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()

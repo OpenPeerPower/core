@@ -4,7 +4,7 @@ from unittest.mock import patch
 import uuid
 
 from openpeerpower.components.lovelace import dashboard, resources
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 RESOURCE_EXAMPLES = [
     {"type": "js", "url": "/local/bla.js"},
@@ -18,7 +18,7 @@ async def test_yaml_resources.opp,.opp_ws_client):
        .opp, "lovelace", {"lovelace": {"mode": "yaml", "resources": RESOURCE_EXAMPLES}}
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/resources"})
@@ -37,7 +37,7 @@ async def test_yaml_resources_backwards.opp,.opp_ws_client):
            .opp, "lovelace", {"lovelace": {"mode": "yaml"}}
         )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/resources"})
@@ -56,7 +56,7 @@ async def test_storage_resources.opp,.opp_ws_client,.opp_storage):
     }
     assert await async_setup_component.opp, "lovelace", {})
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/resources"})
@@ -74,7 +74,7 @@ async def test_storage_resources_import.opp,.opp_ws_client,.opp_storage):
         "data": {"config": {"resources": copy.deepcopy(RESOURCE_EXAMPLES)}},
     }
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/resources"})
@@ -82,7 +82,7 @@ async def test_storage_resources_import.opp,.opp_ws_client,.opp_storage):
     assert response["success"]
     assert (
         response["result"]
-        == opp_storage[resources.RESOURCE_STORAGE_KEY]["data"]["items"]
+        ==.opp_storage[resources.RESOURCE_STORAGE_KEY]["data"]["items"]
     )
     assert (
         "resources"
@@ -160,7 +160,7 @@ async def test_storage_resources_import_invalid.opp,.opp_ws_client,.opp_storage)
         "data": {"config": {"resources": [{"invalid": "resource"}]}},
     }
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     # Fetch data
     await client.send_json({"id": 5, "type": "lovelace/resources"})

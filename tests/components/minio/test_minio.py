@@ -1,4 +1,4 @@
-"""Tests for Minio Opp related code."""
+"""Tests for Minio Hass related code."""
 import asyncio
 import json
 from unittest.mock import MagicMock, call, patch
@@ -16,8 +16,8 @@ from openpeerpower.components.minio import (
     DOMAIN,
     QueueListener,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import async_setup_component
 
 from tests.components.minio.common import TEST_EVENT
 
@@ -70,13 +70,13 @@ async def test_minio_services.opp, caplog, minio_client):
         },
     )
 
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert "Setup of domain minio took" in caplog.text
 
     # Call services
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         "put",
         {"file_path": "/test/some_file", "key": "some_key", "bucket": "some_bucket"},
@@ -87,7 +87,7 @@ async def test_minio_services.opp, caplog, minio_client):
     )
     minio_client.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         "get",
         {"file_path": "/test/some_file", "key": "some_key", "bucket": "some_bucket"},
@@ -98,7 +98,7 @@ async def test_minio_services.opp, caplog, minio_client):
     )
     minio_client.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "remove", {"key": "some_key", "bucket": "some_bucket"}, blocking=True
     )
     assert minio_client.remove_object.call_args == call("some_bucket", "some_key")
@@ -133,8 +133,8 @@ async def test_minio_listen.opp, caplog, minio_client_event):
         },
     )
 
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert "Setup of domain minio took" in caplog.text
 
@@ -155,7 +155,7 @@ async def test_minio_listen.opp, caplog, minio_client_event):
 
 async def test_queue_listener():
     """Tests QueueListener firing events on Open Peer Power event bus."""
-    opp = MagicMock()
+   .opp = MagicMock()
 
     queue_listener = QueueListener.opp)
     queue_listener.start()
@@ -172,7 +172,7 @@ async def test_queue_listener():
 
     queue_listener.stop()
 
-    call_domain, call_event = opp.bus.fire.call_args[0]
+    call_domain, call_event =.opp.bus.fire.call_args[0]
 
     expected_event = {
         "event_name": "s3:ObjectCreated:Put",

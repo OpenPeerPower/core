@@ -11,7 +11,7 @@ from tests.common import MockConfigEntry
 async def setup_ozw.opp, entry=None, fixture=None):
     """Set up OZW and load a dump."""
     mqtt_entry = MockConfigEntry(domain="mqtt", state=config_entries.ENTRY_STATE_LOADED)
-    mqtt_entry.add_to_opp.opp)
+    mqtt_entry.add_to.opp.opp)
 
     if entry is None:
         entry = MockConfigEntry(
@@ -20,12 +20,12 @@ async def setup_ozw.opp, entry=None, fixture=None):
             connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
         )
 
-        entry.add_to_opp.opp)
+        entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.mqtt.async_subscribe") as mock_subscribe:
         mock_subscribe.return_value = Mock()
-        assert await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert "ozw" in.opp.config.components
     assert len(mock_subscribe.mock_calls) == 1
@@ -39,7 +39,7 @@ async def setup_ozw.opp, entry=None, fixture=None):
             topic, payload = line.split(",", 1)
             receive_message(Mock(topic=topic, payload=payload))
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     return receive_message
 

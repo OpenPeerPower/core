@@ -2,7 +2,7 @@
 from unittest.mock import AsyncMock, Mock, patch
 
 from openpeerpower.components import mikrotik
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import MOCK_DATA
 
@@ -21,11 +21,11 @@ async def test_successful_config_entry.opp):
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     mock_registry = Mock()
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub, patch(
-        "openpeerpowerr.helpers.device_registry.async_get_registry",
+        "openpeerpower.helpers.device_registry.async_get_registry",
         return_value=mock_registry,
     ):
         mock_hub.return_value.async_setup = AsyncMock(return_value=True)
@@ -36,9 +36,9 @@ async def test_successful_config_entry.opp):
         assert await mikrotik.async_setup_entry.opp, entry) is True
 
     assert len(mock_hub.mock_calls) == 2
-    p_opp, p_entry = mock_hub.mock_calls[0][1]
+    p.opp, p_entry = mock_hub.mock_calls[0][1]
 
-    assert p_opp is.opp
+    assert p.opp is.opp
     assert p_entry is entry
 
     assert len(mock_registry.mock_calls) == 1
@@ -58,7 +58,7 @@ async def test_hub_fail_setup.opp):
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub:
         mock_hub.return_value.async_setup = AsyncMock(return_value=False)
@@ -73,10 +73,10 @@ async def test_unload_entry.opp):
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub, patch(
-        "openpeerpowerr.helpers.device_registry.async_get_registry",
+        "openpeerpower.helpers.device_registry.async_get_registry",
         return_value=Mock(),
     ):
         mock_hub.return_value.async_setup = AsyncMock(return_value=True)

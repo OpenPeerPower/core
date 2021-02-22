@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from openpeerpower.components.nuheat.const import DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from .mocks import (
     MOCK_CONFIG_ENTRY,
@@ -28,11 +28,11 @@ async def test_climate_thermostat_run.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("climate.master_bathroom")
+    state =.opp.states.get("climate.master_bathroom")
     assert state.state == "auto"
     expected_attributes = {
         "current_temperature": 22.2,
@@ -61,11 +61,11 @@ async def test_climate_thermostat_schedule_hold_unavailable.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("climate.guest_bathroom")
+    state =.opp.states.get("climate.guest_bathroom")
 
     assert state.state == "unavailable"
     expected_attributes = {
@@ -91,11 +91,11 @@ async def test_climate_thermostat_schedule_hold_available.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("climate.available_bathroom")
+    state =.opp.states.get("climate.available_bathroom")
 
     assert state.state == "auto"
     expected_attributes = {
@@ -125,11 +125,11 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to_opp.opp)
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("climate.temp_bathroom")
+    state =.opp.states.get("climate.temp_bathroom")
 
     assert state.state == "auto"
     expected_attributes = {
@@ -148,22 +148,22 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
     # HA changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "climate",
         "set_temperature",
         service_data={ATTR_ENTITY_ID: "climate.temp_bathroom", "temperature": 90},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # opportunistic set
-    state = opp.states.get("climate.temp_bathroom")
+    state =.opp.states.get("climate.temp_bathroom")
     assert state.attributes["preset_mode"] == "Temporary Hold"
     assert state.attributes["temperature"] == 50.0
 
     # and the api poll returns it to the mock
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=3))
-    await opp..async_block_till_done()
-    state = opp.states.get("climate.temp_bathroom")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("climate.temp_bathroom")
     assert state.attributes["preset_mode"] == "Run Schedule"
     assert state.attributes["temperature"] == 37.2

@@ -7,7 +7,7 @@ from pymyq.const import ACCOUNTS_ENDPOINT, DEVICES_ENDPOINT
 
 from openpeerpower.components.myq.const import DOMAIN
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry, load_fixture
 
@@ -24,10 +24,10 @@ async def async_init_integration(
     devices_json = load_fixture(devices_fixture)
     devices_dict = json.loads(devices_json)
 
-    def _op.dle_mock_api_oauth_authenticate():
+    def _handle_mock_api_oauth_authenticate():
         return 1234, 1800
 
-    def _op.dle_mock_api_request(method, returns, url, **kwargs):
+    def _handle_mock_api_request(method, returns, url, **kwargs):
         _LOGGER.debug("URL: %s", url)
         if url == ACCOUNTS_ENDPOINT:
             _LOGGER.debug("Accounts")
@@ -40,15 +40,15 @@ async def async_init_integration(
 
     with patch(
         "pymyq.api.API._oauth_authenticate",
-        side_effect=_op.dle_mock_api_oauth_authenticate,
-    ), patch("pymyq.api.API.request", side_effect=_op.dle_mock_api_request):
+        side_effect=_handle_mock_api_oauth_authenticate,
+    ), patch("pymyq.api.API.request", side_effect=_handle_mock_api_request):
         entry = MockConfigEntry(
             domain=DOMAIN, data={CONF_USERNAME: "mock", CONF_PASSWORD: "mock"}
         )
-        entry.add_to_opp.opp)
+        entry.add_to.opp.opp)
 
         if not skip_setup:
-            await opp..config_entries.async_setup(entry.entry_id)
-            await opp..async_block_till_done()
+            await.opp.config_entries.async_setup(entry.entry_id)
+            await.opp.async_block_till_done()
 
     return entry

@@ -25,9 +25,9 @@ from openpeerpower.const import (
     CONF_REGION,
     CONF_TOKEN,
 )
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import location
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import location
 
 from tests.common import MockConfigEntry, mock_registry
 
@@ -110,7 +110,7 @@ MOCK_GAMES_LOCKED = {MOCK_ID: MOCK_GAMES_DATA_LOCKED}
 async def test_ps4_integration_setup.opp):
     """Test PS4 integration is setup."""
     await ps4.async_setup.opp, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.data[PS4_DATA].protocol is not None
 
 
@@ -121,12 +121,12 @@ async def test_creating_entry_sets_up_media_player.opp):
         "openpeerpower.components.ps4.media_player.async_setup_entry",
         return_value=True,
     ) as mock_setup, patch(mock_flow, return_value=MOCK_FLOW_RESULT):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -134,7 +134,7 @@ async def test_creating_entry_sets_up_media_player.opp):
 async def test_config_flow_entry_migrate.opp):
     """Test that config flow entry is migrated correctly."""
     # Start with the config entry at Version 1.
-    manager = opp.config_entries
+    manager =.opp.config_entries
     mock_entry = MOCK_ENTRY_VERSION_1
     mock_entry.add_to_manager(manager)
     mock_e_registry = mock_registry.opp)
@@ -151,15 +151,15 @@ async def test_config_flow_entry_migrate.opp):
     assert mock_e_entry.unique_id == MOCK_UNIQUE_ID
 
     with patch(
-        "openpeerpowerr.util.location.async_detect_location_info",
+        "openpeerpower.util.location.async_detect_location_info",
         return_value=MOCK_LOCATION,
     ), patch(
-        "openpeerpowerr.helpers.entity_registry.async_get_registry",
+        "openpeerpower.helpers.entity_registry.async_get_registry",
         return_value=mock_e_registry,
     ):
         await ps4.async_migrate_entry.opp, mock_entry)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_e_registry.entities) == 1
     for entity in mock_e_registry.entities.values():
@@ -191,7 +191,7 @@ async def setup_mock_component.opp):
     entry = MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA, version=VERSION)
     entry.add_to_manager.opp.config_entries)
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 def test_games_reformat_to_dict.opp):
@@ -275,7 +275,7 @@ async def test_send_command.opp):
         "openpeerpower.components.ps4", ".media_player.PS4Device.async_send_command"
     )
 
-    mock_devices = opp.data[PS4_DATA].devices
+    mock_devices =.opp.data[PS4_DATA].devices
     assert len(mock_devices) == 1
     mock_entity = mock_devices[0]
     assert mock_entity.entity_id == f"media_player.{MOCK_NAME}"
@@ -283,10 +283,10 @@ async def test_send_command.opp):
     # Test that all commands call service function.
     with patch(mock_func, return_value=True) as mock_service:
         for mock_command in COMMANDS:
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN,
                 "send_command",
                 {ATTR_ENTITY_ID: mock_entity.entity_id, ATTR_COMMAND: mock_command},
             )
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
     assert len(mock_service.mock_calls) == len(COMMANDS)

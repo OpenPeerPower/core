@@ -6,7 +6,7 @@ import pytest
 
 from openpeerpower.components import owntracks
 from openpeerpower.const import STATE_NOT_HOME
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, async_fire_mqtt_message, mock_coro
 
@@ -300,11 +300,11 @@ async def setup_owntracks.opp, config, ctx_cls=owntracks.OwnTracksContext):
     """Set up OwnTracks."""
     MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     with patch.object(owntracks, "OwnTracksContext", ctx_cls):
         assert await async_setup_component.opp, "owntracks", {"owntracks": config})
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 @pytest.fixture
@@ -348,65 +348,65 @@ async def send_message.opp, topic, message, corrupt=False):
     else:
         mod_message = str_message
     async_fire_mqtt_message.opp, topic, mod_message)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 def assert_location_state.opp, location):
     """Test the assertion of a location state."""
-    state = opp.states.get(DEVICE_TRACKER_STATE)
+    state =.opp.states.get(DEVICE_TRACKER_STATE)
     assert state.state == location
 
 
 def assert_location_latitude.opp, latitude):
     """Test the assertion of a location latitude."""
-    state = opp.states.get(DEVICE_TRACKER_STATE)
+    state =.opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("latitude") == latitude
 
 
 def assert_location_longitude.opp, longitude):
     """Test the assertion of a location longitude."""
-    state = opp.states.get(DEVICE_TRACKER_STATE)
+    state =.opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("longitude") == longitude
 
 
 def assert_location_accuracy.opp, accuracy):
     """Test the assertion of a location accuracy."""
-    state = opp.states.get(DEVICE_TRACKER_STATE)
+    state =.opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("gps_accuracy") == accuracy
 
 
 def assert_location_source_type.opp, source_type):
     """Test the assertion of source_type."""
-    state = opp.states.get(DEVICE_TRACKER_STATE)
+    state =.opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("source_type") == source_type
 
 
 def assert_mobile_tracker_state.opp, location, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker state."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
-    state = opp.states.get(dev_id)
+    state =.opp.states.get(dev_id)
     assert state.state == location
 
 
 def assert_mobile_tracker_latitude.opp, latitude, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker latitude."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
-    state = opp.states.get(dev_id)
+    state =.opp.states.get(dev_id)
     assert state.attributes.get("latitude") == latitude
 
 
 def assert_mobile_tracker_accuracy.opp, accuracy, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker accuracy."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
-    state = opp.states.get(dev_id)
+    state =.opp.states.get(dev_id)
     assert state.attributes.get("gps_accuracy") == accuracy
 
 
 async def test_location_invalid_devid.opp, context):
     """Test the update of a location."""
     await send_message.opp, "owntracks/paulus/nexus-5x", LOCATION_MESSAGE)
-    state = opp.states.get("device_tracker.paulus_nexus_5x")
+    state =.opp.states.get("device_tracker.paulus_nexus_5x")
     assert state.state == "outer"
 
 
@@ -969,7 +969,7 @@ async def test_mobile_multiple_async_enter_exit.opp, context):
        .opp, EVENT_TOPIC, json.dumps(MOBILE_BEACON_ENTER_EVENT_MESSAGE)
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
     assert len(context().mobile_beacons_active["greg_phone"]) == 0
 
@@ -1222,9 +1222,9 @@ async def test_waypoint_import_simple.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
     # Check if it made it into states
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp is not None
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[1])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[1])
     assert wayp is not None
 
 
@@ -1233,9 +1233,9 @@ async def test_waypoint_import_block.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
     # Check if it made it into states
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is None
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[3])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[3])
     assert wayp is None
 
 
@@ -1253,9 +1253,9 @@ async def test_waypoint_import_no_whitelist.opp, setup_comp):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
     # Check if it made it into states
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is not None
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[3])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[3])
     assert wayp is not None
 
 
@@ -1264,9 +1264,9 @@ async def test_waypoint_import_bad_json.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message, True)
     # Check if it made it into states
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is None
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[3])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[3])
     assert wayp is None
 
 
@@ -1275,11 +1275,11 @@ async def test_waypoint_import_existing.opp, context):
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
     # Get the first waypoint exported
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     # Send an update
     waypoints_message = WAYPOINTS_UPDATED_MESSAGE.copy()
     await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
-    new_wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    new_wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp == new_wayp
 
 
@@ -1287,30 +1287,30 @@ async def test_single_waypoint_import.opp, context):
     """Test single waypoint message."""
     waypoint_message = WAYPOINT_MESSAGE.copy()
     await send_message.opp, WAYPOINT_TOPIC, waypoint_message)
-    wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
+    wayp =.opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp is not None
 
 
 async def test_not_implemented_message.opp, context):
     """Handle not implemented message type."""
-    patch_op.dler = patch(
-        "openpeerpower.components.owntracks.messages.async_op.dle_not_impl_msg",
+    patch_handler = patch(
+        "openpeerpower.components.owntracks.messages.async_handle_not_impl_msg",
         return_value=mock_coro(False),
     )
-    patch_op.dler.start()
+    patch_handler.start()
     assert not await send_message.opp, LWT_TOPIC, LWT_MESSAGE)
-    patch_op.dler.stop()
+    patch_handler.stop()
 
 
 async def test_unsupported_message.opp, context):
     """Handle not implemented message type."""
-    patch_op.dler = patch(
-        "openpeerpower.components.owntracks.messages.async_op.dle_unsupported_msg",
+    patch_handler = patch(
+        "openpeerpower.components.owntracks.messages.async_handle_unsupported_msg",
         return_value=mock_coro(False),
     )
-    patch_op.dler.start()
+    patch_handler.start()
     assert not await send_message.opp, BAD_TOPIC, BAD_MESSAGE)
-    patch_op.dler.stop()
+    patch_handler.stop()
 
 
 def generate_ciphers(secret):
@@ -1528,27 +1528,27 @@ async def test_restore_state.opp,.opp_client):
     entry = MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post(
         "/api/webhook/owntracks_test",
         json=LOCATION_MESSAGE,
         headers={"X-Limit-u": "Paulus", "X-Limit-d": "Pixel"},
     )
     assert resp.status == 200
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state_1 = opp.states.get("device_tracker.paulus_pixel")
+    state_1 =.opp.states.get("device_tracker.paulus_pixel")
     assert state_1 is not None
 
-    await opp..config_entries.async_reload(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_reload(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state_2 = opp.states.get("device_tracker.paulus_pixel")
+    state_2 =.opp.states.get("device_tracker.paulus_pixel")
     assert state_2 is not None
 
     assert state_1 is not state_2
@@ -1566,12 +1566,12 @@ async def test_returns_empty_friends.opp,.opp_client):
     entry = MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post(
         "/api/webhook/owntracks_test",
         json=LOCATION_MESSAGE,
@@ -1587,10 +1587,10 @@ async def test_returns_array_friends.opp,.opp_client):
     otracks = MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
     )
-    otracks.add_to_opp.opp)
+    otracks.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(otracks.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(otracks.entry_id)
+    await.opp.async_block_till_done()
 
     # Setup device_trackers
     assert await async_setup_component(
@@ -1615,7 +1615,7 @@ async def test_returns_array_friends.opp,.opp_client):
         "device_tracker.person_1_tracker_1", "home", {"latitude": 10, "longitude": 20}
     )
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post(
         "/api/webhook/owntracks_test",
         json=LOCATION_MESSAGE,

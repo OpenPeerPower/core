@@ -31,7 +31,7 @@ async def setup_mikrotik_entry.opp, **kwargs):
     config_entry = MockConfigEntry(
         domain=mikrotik.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     if "force_dhcp" in kwargs:
         config_entry.options = {**config_entry.options, "force_dhcp": True}
@@ -42,8 +42,8 @@ async def setup_mikrotik_entry.opp, **kwargs):
     with patch("librouteros.connect"), patch.object(
         mikrotik.hub.MikrotikData, "command", new=mock_command
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
         return.opp.data[mikrotik.DOMAIN][config_entry.entry_id]
 
 
@@ -78,19 +78,19 @@ async def test_hub_setup_failed.opp):
     """Failed setup of Mikrotik hub."""
 
     config_entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=MOCK_DATA)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     # error when connection fails
     with patch(
         "librouteros.connect", side_effect=librouteros.exceptions.ConnectionClosed
     ):
 
-        await opp..config_entries.async_setup(config_entry.entry_id)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
 
         assert config_entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
 
     # error when username or password is invalid
     config_entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=MOCK_DATA)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup"
     ) as forward_entry_setup, patch(
@@ -98,7 +98,7 @@ async def test_hub_setup_failed.opp):
         side_effect=librouteros.exceptions.TrapError("invalid user name or password"),
     ):
 
-        result = await opp..config_entries.async_setup(config_entry.entry_id)
+        result = await.opp.config_entries.async_setup(config_entry.entry_id)
 
         assert result is False
         assert len(forward_entry_setup.mock_calls) == 0

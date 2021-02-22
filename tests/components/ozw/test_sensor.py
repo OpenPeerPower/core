@@ -16,27 +16,27 @@ async def test_sensor.opp, generic_data):
     await setup_ozw.opp, fixture=generic_data)
 
     # Test standard sensor
-    state = opp.states.get("sensor.smart_plug_electric_v")
+    state =.opp.states.get("sensor.smart_plug_electric_v")
     assert state is not None
     assert state.state == "123.9"
     assert state.attributes["unit_of_measurement"] == "V"
 
     # Test device classes
-    state = opp.states.get("sensor.trisensor_relative_humidity")
+    state =.opp.states.get("sensor.trisensor_relative_humidity")
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_HUMIDITY
-    state = opp.states.get("sensor.trisensor_pressure")
+    state =.opp.states.get("sensor.trisensor_pressure")
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_PRESSURE
-    state = opp.states.get("sensor.trisensor_fake_power")
+    state =.opp.states.get("sensor.trisensor_fake_power")
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_POWER
-    state = opp.states.get("sensor.trisensor_fake_energy")
+    state =.opp.states.get("sensor.trisensor_fake_energy")
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_POWER
-    state = opp.states.get("sensor.trisensor_fake_electric")
+    state =.opp.states.get("sensor.trisensor_fake_electric")
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_POWER
 
     # Test ZWaveListSensor disabled by default
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entity_id = "sensor.water_sensor_6_instance_1_water"
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state is None
 
     entry = registry.async_get(entity_id)
@@ -55,7 +55,7 @@ async def test_sensor.opp, generic_data):
 async def test_sensor_enabled.opp, generic_data, sensor_msg):
     """Test enabling an advanced sensor."""
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get_or_create(
         SENSOR_DOMAIN,
@@ -68,9 +68,9 @@ async def test_sensor_enabled.opp, generic_data, sensor_msg):
 
     receive_msg = await setup_ozw.opp, fixture=generic_data)
     receive_msg(sensor_msg)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entry.entity_id)
+    state =.opp.states.get(entry.entity_id)
     assert state is not None
     assert state.state == "0"
     assert state.attributes["label"] == "Clear"
@@ -79,7 +79,7 @@ async def test_sensor_enabled.opp, generic_data, sensor_msg):
 async def test_string_sensor.opp, string_sensor_data):
     """Test so the returned type is a string sensor."""
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get_or_create(
         SENSOR_DOMAIN,
@@ -90,8 +90,8 @@ async def test_string_sensor.opp, string_sensor_data):
     )
 
     await setup_ozw.opp, fixture=string_sensor_data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entry.entity_id)
+    state =.opp.states.get(entry.entity_id)
     assert state is not None
     assert state.state == "asdfgh"

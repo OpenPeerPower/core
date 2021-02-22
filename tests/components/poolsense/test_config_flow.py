@@ -9,7 +9,7 @@ from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
 
 async def test_show_form.opp):
     """Test that the form is served with no input."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -23,7 +23,7 @@ async def test_invalid_credentials.opp):
         "poolsense.PoolSense.test_poolsense_credentials",
         return_value=False,
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={CONF_EMAIL: "test-email", CONF_PASSWORD: "test-password"},
@@ -42,12 +42,12 @@ async def test_valid_credentials.opp):
     ) as mock_setup, patch(
         "openpeerpower.components.poolsense.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={CONF_EMAIL: "test-email", CONF_PASSWORD: "test-password"},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "test-email"

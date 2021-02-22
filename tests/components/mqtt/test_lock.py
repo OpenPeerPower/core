@@ -11,7 +11,7 @@ from openpeerpower.components.lock import (
     STATE_UNLOCKED,
 )
 from openpeerpower.const import ATTR_ASSUMED_STATE, ATTR_ENTITY_ID
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_common import (
     help_test_availability_when_connection_lost,
@@ -62,20 +62,20 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "LOCKED")
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
     async_fire_mqtt_message.opp, "state-topic", "UNLOCKED")
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
 
@@ -97,20 +97,20 @@ async def test_controlling_non_default_state_via_topic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     async_fire_mqtt_message.opp, "state-topic", "closed")
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
     async_fire_mqtt_message.opp, "state-topic", "open")
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
 
@@ -133,19 +133,19 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"LOCKED"}')
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"UNLOCKED"}')
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
 
@@ -170,19 +170,19 @@ async def test_controlling_non_default_state_via_topic_and_json_message(
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"closed"}')
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
     async_fire_mqtt_message.opp, "state-topic", '{"val":"open"}')
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
 
@@ -203,29 +203,29 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "LOCK", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "UNLOCK", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
@@ -249,29 +249,29 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_LOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "LOCK", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN, SERVICE_UNLOCK, {ATTR_ENTITY_ID: "lock.test"}, blocking=True
     )
 
     mqtt_mock.async_publish.assert_called_once_with("command-topic", "UNLOCK", 0, False)
     mqtt_mock.async_publish.reset_mock()
-    state = opp.states.get("lock.test")
+    state =.opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 

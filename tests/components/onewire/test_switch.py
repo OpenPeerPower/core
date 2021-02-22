@@ -8,7 +8,7 @@ import pytest
 from openpeerpower.components.onewire.switch import DEVICE_SWITCHES
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TOGGLE, STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import setup_onewire_patched_owserver_integration
 
@@ -99,7 +99,7 @@ async def test_owserver_switch(owproxy,.opp, device_id):
         "openpeerpower.components.onewire.switch.DEVICE_SWITCHES", patch_device_switches
     ):
         await setup_onewire_patched_owserver_integration.opp)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)
 
@@ -107,7 +107,7 @@ async def test_owserver_switch(owproxy,.opp, device_id):
         entity_id = expected_sensor["entity_id"]
         registry_entry = entity_registry.entities.get(entity_id)
         assert registry_entry is not None
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
         assert state.state == expected_sensor["result"]
 
         if state.state == STATE_ON:
@@ -117,15 +117,15 @@ async def test_owserver_switch(owproxy,.opp, device_id):
             owproxy.return_value.read.side_effect = [b"         1"]
             expected_sensor["result"] = STATE_ON
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             SWITCH_DOMAIN,
             SERVICE_TOGGLE,
             {ATTR_ENTITY_ID: entity_id},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
         assert state.state == expected_sensor["result"]
         assert state.attributes["device_file"] == expected_sensor.get(
             "device_file", registry_entry.unique_id

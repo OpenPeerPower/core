@@ -15,7 +15,7 @@ from openpeerpower.components.plex.const import (
 )
 from openpeerpower.components.plex.services import play_on_sonos
 from openpeerpower.const import CONF_URL
-from openpeerpowerr.exceptions import OpenPeerPowerError
+from openpeerpower.exceptions import OpenPeerPowerError
 
 from .const import DEFAULT_OPTIONS, SECONDARY_DATA
 
@@ -37,7 +37,7 @@ async def test_refresh_library(
 
     # Test with non-existent server
     with pytest.raises(OpenPeerPowerError):
-        assert await opp..services.async_call(
+        assert await.opp.services.async_call(
             DOMAIN,
             SERVICE_REFRESH_LIBRARY,
             {"server_name": "Not a Server", "library_name": "Movies"},
@@ -46,7 +46,7 @@ async def test_refresh_library(
     assert not refresh.called
 
     # Test with non-existent library
-    assert await opp..services.async_call(
+    assert await.opp.services.async_call(
         DOMAIN,
         SERVICE_REFRESH_LIBRARY,
         {"library_name": "Not a Library"},
@@ -55,7 +55,7 @@ async def test_refresh_library(
     assert not refresh.called
 
     # Test with valid library
-    assert await opp..services.async_call(
+    assert await.opp.services.async_call(
         DOMAIN,
         SERVICE_REFRESH_LIBRARY,
         {"library_name": "Movies"},
@@ -88,7 +88,7 @@ async def test_refresh_library(
 
     # Test multiple servers available but none specified
     with pytest.raises(OpenPeerPowerError) as excinfo:
-        assert await opp..services.async_call(
+        assert await.opp.services.async_call(
             DOMAIN,
             SERVICE_REFRESH_LIBRARY,
             {"library_name": "Movies"},
@@ -100,7 +100,7 @@ async def test_refresh_library(
 
 async def test_scan_clients.opp, mock_plex_server):
     """Test scan_for_clients service call."""
-    assert await opp..services.async_call(
+    assert await.opp.services.async_call(
         DOMAIN,
         SERVICE_SCAN_CLIENTS,
         blocking=True,
@@ -146,7 +146,7 @@ async def test_sonos_play_media(
         assert "No Plex servers available" in str(excinfo.value)
 
     # Complete setup of a Plex server
-    await opp..config_entries.async_unload(entry.entry_id)
+    await.opp.config_entries.async_unload(entry.entry_id)
     mock_plex_server = await setup_plex_server()
 
     # Test with no speakers available

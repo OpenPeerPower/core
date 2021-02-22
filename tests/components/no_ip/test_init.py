@@ -4,8 +4,8 @@ from datetime import timedelta
 import pytest
 
 from openpeerpower.components import no_ip
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed
 
@@ -51,7 +51,7 @@ async def test_setup.opp, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
     async_fire_time_changed.opp, utcnow() + timedelta(minutes=5))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 

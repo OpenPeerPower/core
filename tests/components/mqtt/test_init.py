@@ -18,10 +18,10 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STOP,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.core import callback
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.core import callback
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import utcnow
 
 from tests.common import (
     MockConfigEntry,
@@ -77,18 +77,18 @@ def record_calls(calls):
     return record_calls
 
 
-async def test_mqtt_connects_on_home_assistant_mqtt_setup(
+async def test_mqtt_connects_on_open_peer_power_mqtt_setup(
    .opp, mqtt_client_mock, mqtt_mock
 ):
     """Test if client is connected after mqtt init on bootstrap."""
     assert mqtt_client_mock.connect.call_count == 1
 
 
-async def test_mqtt_disconnects_on_home_assistant_stop.opp, mqtt_mock):
+async def test_mqtt_disconnects_on_open_peer_power_stop.opp, mqtt_mock):
     """Test if client stops on HA stop."""
    .opp.bus.fire(EVENT_OPENPEERPOWER_STOP)
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
     assert mqtt_mock.async_disconnect.called
 
 
@@ -98,7 +98,7 @@ async def test_publish_calls_service.opp, mqtt_mock, calls, record_calls):
 
     mqtt.async_publish.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0][0].data["service_data"][mqtt.ATTR_TOPIC] == "test-topic"
@@ -111,7 +111,7 @@ async def test_service_call_without_topic_does_not_publish.opp, mqtt_mock):
         EVENT_CALL_SERVICE,
         {ATTR_DOMAIN: mqtt.DOMAIN, ATTR_SERVICE: mqtt.SERVICE_PUBLISH},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert not mqtt_mock.async_publish.called
 
 
@@ -121,7 +121,7 @@ async def test_service_call_with_template_payload_renders_template.opp, mqtt_moc
     If 'payload_template' is provided and 'payload' is not, then render it.
     """
     mqtt.async_publish_template.opp, "test/topic", "{{ 1+1 }}")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert mqtt_mock.async_publish.called
     assert mqtt_mock.async_publish.call_args[0][1] == "2"
 
@@ -134,7 +134,7 @@ async def test_service_call_with_payload_doesnt_render_template.opp, mqtt_mock):
     payload = "not a template"
     payload_template = "a template"
     with pytest.raises(vol.Invalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             mqtt.DOMAIN,
             mqtt.SERVICE_PUBLISH,
             {
@@ -152,7 +152,7 @@ async def test_service_call_with_ascii_qos_retain_flags.opp, mqtt_mock):
 
     Empty payload message and ascii formatted qos and retain flags.
     """
-    await opp..services.async_call(
+    await.opp.services.async_call(
         mqtt.DOMAIN,
         mqtt.SERVICE_PUBLISH,
         {
@@ -294,7 +294,7 @@ async def test_receiving_non_utf8_message_gets_logged(
 
     async_fire_mqtt_message.opp, "test-topic", b"\x9a")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert (
         "Can't decode payload b'\\x9a' on test-topic with encoding utf-8" in caplog.text
     )
@@ -309,7 +309,7 @@ async def test_all_subscriptions_run_when_decode_fails(
 
     async_fire_mqtt_message.opp, "test-topic", TEMP_CELSIUS)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -319,7 +319,7 @@ async def test_subscribe_topic.opp, mqtt_mock, calls, record_calls):
 
     async_fire_mqtt_message.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "test-topic"
     assert calls[0][0].payload == "test-payload"
@@ -328,7 +328,7 @@ async def test_subscribe_topic.opp, mqtt_mock, calls, record_calls):
 
     async_fire_mqtt_message.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -345,7 +345,7 @@ async def test_subscribe_deprecated.opp, mqtt_mock):
 
     async_fire_mqtt_message.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0] == "test-topic"
     assert calls[0][1] == "test-payload"
@@ -354,7 +354,7 @@ async def test_subscribe_deprecated.opp, mqtt_mock):
 
     async_fire_mqtt_message.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -370,7 +370,7 @@ async def test_subscribe_deprecated_async.opp, mqtt_mock):
 
     async_fire_mqtt_message.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0] == "test-topic"
     assert calls[0][1] == "test-payload"
@@ -379,7 +379,7 @@ async def test_subscribe_deprecated_async.opp, mqtt_mock):
 
     async_fire_mqtt_message.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
 
 
@@ -389,7 +389,7 @@ async def test_subscribe_topic_not_match.opp, mqtt_mock, calls, record_calls):
 
     async_fire_mqtt_message.opp, "another-test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -399,7 +399,7 @@ async def test_subscribe_topic_level_wildcard.opp, mqtt_mock, calls, record_call
 
     async_fire_mqtt_message.opp, "test-topic/bier/on", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "test-topic/bier/on"
     assert calls[0][0].payload == "test-payload"
@@ -413,7 +413,7 @@ async def test_subscribe_topic_level_wildcard_no_subtree_match(
 
     async_fire_mqtt_message.opp, "test-topic/bier", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -425,7 +425,7 @@ async def test_subscribe_topic_level_wildcard_root_topic_no_subtree_match(
 
     async_fire_mqtt_message.opp, "test-topic-123", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -437,7 +437,7 @@ async def test_subscribe_topic_subtree_wildcard_subtree_topic(
 
     async_fire_mqtt_message.opp, "test-topic/bier/on", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "test-topic/bier/on"
     assert calls[0][0].payload == "test-payload"
@@ -451,7 +451,7 @@ async def test_subscribe_topic_subtree_wildcard_root_topic(
 
     async_fire_mqtt_message.opp, "test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "test-topic"
     assert calls[0][0].payload == "test-payload"
@@ -465,7 +465,7 @@ async def test_subscribe_topic_subtree_wildcard_no_match(
 
     async_fire_mqtt_message.opp, "another-test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -477,7 +477,7 @@ async def test_subscribe_topic_level_wildcard_and_wildcard_root_topic(
 
     async_fire_mqtt_message.opp, "hi/test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "hi/test-topic"
     assert calls[0][0].payload == "test-payload"
@@ -491,7 +491,7 @@ async def test_subscribe_topic_level_wildcard_and_wildcard_subtree_topic(
 
     async_fire_mqtt_message.opp, "hi/test-topic/here-iam", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "hi/test-topic/here-iam"
     assert calls[0][0].payload == "test-payload"
@@ -505,7 +505,7 @@ async def test_subscribe_topic_level_wildcard_and_wildcard_level_no_match(
 
     async_fire_mqtt_message.opp, "hi/here-iam/test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -517,7 +517,7 @@ async def test_subscribe_topic_level_wildcard_and_wildcard_no_match(
 
     async_fire_mqtt_message.opp, "hi/another-test-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 0
 
 
@@ -527,7 +527,7 @@ async def test_subscribe_topic_sys_root.opp, mqtt_mock, calls, record_calls):
 
     async_fire_mqtt_message.opp, "$test-topic/subtree/on", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "$test-topic/subtree/on"
     assert calls[0][0].payload == "test-payload"
@@ -541,7 +541,7 @@ async def test_subscribe_topic_sys_root_and_wildcard_topic(
 
     async_fire_mqtt_message.opp, "$test-topic/some-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "$test-topic/some-topic"
     assert calls[0][0].payload == "test-payload"
@@ -555,7 +555,7 @@ async def test_subscribe_topic_sys_root_and_wildcard_subtree_topic(
 
     async_fire_mqtt_message.opp, "$test-topic/subtree/some-topic", "test-payload")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == "$test-topic/subtree/some-topic"
     assert calls[0][0].payload == "test-payload"
@@ -569,7 +569,7 @@ async def test_subscribe_special_characters.opp, mqtt_mock, calls, record_calls)
     await mqtt.async_subscribe.opp, topic, record_calls)
 
     async_fire_mqtt_message.opp, topic, payload)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0][0].topic == topic
     assert calls[0][0].payload == payload
@@ -591,7 +591,7 @@ async def test_subscribe_same_topic.opp, mqtt_client_mock, mqtt_mock):
     async_fire_mqtt_message(
        .opp, "test/state", "online"
     )  # Simulate a (retained) message
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert calls_a.called
     mqtt_client_mock.subscribe.assert_called()
     calls_a.reset_mock()
@@ -602,7 +602,7 @@ async def test_subscribe_same_topic.opp, mqtt_client_mock, mqtt_mock):
     async_fire_mqtt_message(
        .opp, "test/state", "online"
     )  # Simulate a (retained) message
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert calls_a.called
     assert calls_b.called
     mqtt_client_mock.subscribe.assert_called()
@@ -617,11 +617,11 @@ async def test_not_calling_unsubscribe_with_active_subscribers(
 
     unsub = await mqtt.async_subscribe.opp, "test/state", None)
     await mqtt.async_subscribe.opp, "test/state", None)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert mqtt_client_mock.subscribe.called
 
     unsub()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert not mqtt_client_mock.unsubscribe.called
 
 
@@ -635,13 +635,13 @@ async def test_restore_subscriptions_on_reconnect.opp, mqtt_client_mock, mqtt_mo
     mqtt_mock().connected = True
 
     await mqtt.async_subscribe.opp, "test/state", None)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert mqtt_client_mock.subscribe.call_count == 1
 
     mqtt_mock._mqtt_on_disconnect(None, None, 0)
     with patch("openpeerpower.components.mqtt.DISCOVERY_COOLDOWN", 0):
         mqtt_mock._mqtt_on_connect(None, None, None, 0)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     assert mqtt_client_mock.subscribe.call_count == 2
 
 
@@ -659,7 +659,7 @@ async def test_restore_all_active_subscriptions_on_reconnect(
     unsub = await mqtt.async_subscribe.opp, "test/state", None, qos=2)
     await mqtt.async_subscribe.opp, "test/state", None)
     await mqtt.async_subscribe.opp, "test/state", None, qos=1)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     expected = [
         call("test/state", 2),
@@ -669,13 +669,13 @@ async def test_restore_all_active_subscriptions_on_reconnect(
     assert mqtt_client_mock.subscribe.mock_calls == expected
 
     unsub()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert mqtt_client_mock.unsubscribe.call_count == 0
 
     mqtt_mock._mqtt_on_disconnect(None, None, 0)
     with patch("openpeerpower.components.mqtt.DISCOVERY_COOLDOWN", 0):
         mqtt_mock._mqtt_on_connect(None, None, None, 0)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     expected.append(call("test/state", 1))
     assert mqtt_client_mock.subscribe.mock_calls == expected
@@ -777,7 +777,7 @@ async def test_custom_birth_message.opp, mqtt_client_mock, mqtt_mock):
     with patch("openpeerpower.components.mqtt.DISCOVERY_COOLDOWN", 0.1):
         await mqtt.async_subscribe.opp, "birth", wait_birth)
         mqtt_mock._mqtt_on_connect(None, None, 0, 0)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         await birth.wait()
         mqtt_client_mock.publish.assert_called_with("birth", "birth", 0, False)
 
@@ -805,7 +805,7 @@ async def test_default_birth_message.opp, mqtt_client_mock, mqtt_mock):
     with patch("openpeerpower.components.mqtt.DISCOVERY_COOLDOWN", 0.1):
         await mqtt.async_subscribe.opp, "openpeerpower/status", wait_birth)
         mqtt_mock._mqtt_on_connect(None, None, 0, 0)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         await birth.wait()
         mqtt_client_mock.publish.assert_called_with(
             "openpeerpower/status", "online", 0, False
@@ -820,7 +820,7 @@ async def test_no_birth_message.opp, mqtt_client_mock, mqtt_mock):
     """Test disabling birth message."""
     with patch("openpeerpower.components.mqtt.DISCOVERY_COOLDOWN", 0.1):
         mqtt_mock._mqtt_on_connect(None, None, 0, 0)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         await asyncio.sleep(0.2)
         mqtt_client_mock.publish.assert_not_called()
 
@@ -880,7 +880,7 @@ async def test_mqtt_subscribes_topics_on_connect.opp, mqtt_client_mock, mqtt_moc
    .opp.add_job = MagicMock()
     mqtt_mock._mqtt_on_connect(None, None, 0, 0)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert mqtt_client_mock.disconnect.call_count == 0
 
@@ -899,23 +899,23 @@ async def test_message_callback_exception_gets_logged.opp, caplog, mqtt_mock):
     """Test exception raised by message handler."""
 
     @callback
-    def bad_op.dler(*args):
+    def bad_handler(*args):
         """Record calls."""
         raise Exception("This is a bad message callback")
 
-    await mqtt.async_subscribe.opp, "test-topic", bad_op.dler)
+    await mqtt.async_subscribe.opp, "test-topic", bad_handler)
     async_fire_mqtt_message.opp, "test-topic", "test")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
-        "Exception in bad_op.dler when handling msg on 'test-topic':"
+        "Exception in bad_handler when handling msg on 'test-topic':"
         " 'test'" in caplog.text
     )
 
 
 async def test_mqtt_ws_subscription.opp,.opp_ws_client, mqtt_mock):
     """Test MQTT websocket subscription."""
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "mqtt/subscribe", "topic": "test-topic"})
     response = await client.receive_json()
     assert response["success"]
@@ -941,7 +941,7 @@ async def test_dump_service.opp, mqtt_mock):
     """Test that we can dump a topic."""
     mopen = mock_open()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "mqtt", "dump", {"topic": "bla/#", "duration": 3}, blocking=True
     )
     async_fire_mqtt_message.opp, "bla/1", "test1")
@@ -949,7 +949,7 @@ async def test_dump_service.opp, mqtt_mock):
 
     with patch("openpeerpower.components.mqtt.open", mopen):
         async_fire_time_changed.opp, utcnow() + timedelta(seconds=3))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     writes = mopen.return_value.write.mock_calls
     assert len(writes) == 2
@@ -968,13 +968,13 @@ async def test_mqtt_ws_remove_discovered_device(
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -997,12 +997,12 @@ async def test_mqtt_ws_remove_discovered_device_twice(
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -1029,12 +1029,12 @@ async def test_mqtt_ws_remove_discovered_device_same_topic(
     )
 
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -1054,7 +1054,7 @@ async def test_mqtt_ws_remove_non_mqtt_device(
 ):
     """Test MQTT websocket device removal of device belonging to other domain."""
     config_entry = MockConfigEntry(domain="test")
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -1062,7 +1062,7 @@ async def test_mqtt_ws_remove_non_mqtt_device(
     )
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -1084,13 +1084,13 @@ async def test_mqtt_ws_get_device_debug_info(
     data = json.dumps(config)
 
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Verify device entry is created
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/debug_info", "device_id": device_entry.id}
     )
@@ -1157,14 +1157,14 @@ async def test_debug_info_multiple_devices.opp, mqtt_mock):
         },
     ]
 
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
 
     for d in devices:
         data = json.dumps(d["config"])
         domain = d["domain"]
         id = d["config"]["device"]["identifiers"][0]
         async_fire_mqtt_message.opp, f"openpeerpower/{domain}/{id}/config", data)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     for d in devices:
         domain = d["domain"]
@@ -1236,7 +1236,7 @@ async def test_debug_info_multiple_entities_triggers.opp, mqtt_mock):
         },
     ]
 
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
 
     for c in config:
         data = json.dumps(c["config"])
@@ -1244,7 +1244,7 @@ async def test_debug_info_multiple_entities_triggers.opp, mqtt_mock):
         # Use topic as discovery_id
         id = c["config"].get("topic", c["config"].get("state_topic"))
         async_fire_mqtt_message.opp, f"openpeerpower/{domain}/{id}/config", data)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     device_id = config[0]["config"]["device"]["identifiers"][0]
     device = registry.async_get_device({("mqtt", device_id)})
@@ -1281,7 +1281,7 @@ async def test_debug_info_non_mqtt.opp, device_reg, entity_reg):
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -1311,11 +1311,11 @@ async def test_debug_info_wildcard.opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -1327,7 +1327,7 @@ async def test_debug_info_wildcard.opp, mqtt_mock):
     ]
 
     start_dt = datetime(2019, 1, 1, 0, 0, 0)
-    with patch("openpeerpowerr.util.dt.utcnow") as dt_utcnow:
+    with patch("openpeerpower.util.dt.utcnow") as dt_utcnow:
         dt_utcnow.return_value = start_dt
         async_fire_mqtt_message.opp, "sensor/abc", "123")
 
@@ -1357,11 +1357,11 @@ async def test_debug_info_filter_same.opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -1374,7 +1374,7 @@ async def test_debug_info_filter_same.opp, mqtt_mock):
 
     dt1 = datetime(2019, 1, 1, 0, 0, 0)
     dt2 = datetime(2019, 1, 1, 0, 0, 1)
-    with patch("openpeerpowerr.util.dt.utcnow") as dt_utcnow:
+    with patch("openpeerpower.util.dt.utcnow") as dt_utcnow:
         dt_utcnow.return_value = dt1
         async_fire_mqtt_message.opp, "sensor/abc", "123")
         async_fire_mqtt_message.opp, "sensor/abc", "123")
@@ -1416,11 +1416,11 @@ async def test_debug_info_same_topic.opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -1432,7 +1432,7 @@ async def test_debug_info_same_topic.opp, mqtt_mock):
     ]
 
     start_dt = datetime(2019, 1, 1, 0, 0, 0)
-    with patch("openpeerpowerr.util.dt.utcnow") as dt_utcnow:
+    with patch("openpeerpower.util.dt.utcnow") as dt_utcnow:
         dt_utcnow.return_value = start_dt
         async_fire_mqtt_message.opp, "sensor/status", "123", qos=0, retain=False)
 
@@ -1449,10 +1449,10 @@ async def test_debug_info_same_topic.opp, mqtt_mock):
     config["availability_topic"] = "sensor/availability"
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     start_dt = datetime(2019, 1, 1, 0, 0, 0)
-    with patch("openpeerpowerr.util.dt.utcnow") as dt_utcnow:
+    with patch("openpeerpower.util.dt.utcnow") as dt_utcnow:
         dt_utcnow.return_value = start_dt
         async_fire_mqtt_message.opp, "sensor/status", "123", qos=0, retain=False)
 
@@ -1467,11 +1467,11 @@ async def test_debug_info_qos_retain.opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp..helpers.device_registry.async_get_registry()
+    registry = await.opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
     async_fire_mqtt_message.opp, "openpeerpower/sensor/bla/config", data)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
@@ -1483,7 +1483,7 @@ async def test_debug_info_qos_retain.opp, mqtt_mock):
     ]
 
     start_dt = datetime(2019, 1, 1, 0, 0, 0)
-    with patch("openpeerpowerr.util.dt.utcnow") as dt_utcnow:
+    with patch("openpeerpower.util.dt.utcnow") as dt_utcnow:
         dt_utcnow.return_value = start_dt
         async_fire_mqtt_message.opp, "sensor/abc", "123", qos=0, retain=False)
         async_fire_mqtt_message.opp, "sensor/abc", "123", qos=1, retain=True)
@@ -1543,8 +1543,8 @@ async def test_publish_json_from_template.opp, mqtt_mock):
         },
     )
 
-    await opp..services.async_call("script", "test_script_payload", blocking=True)
-    await opp..async_block_till_done()
+    await.opp.services.async_call("script", "test_script_payload", blocking=True)
+    await.opp.async_block_till_done()
 
     assert mqtt_mock.async_publish.called
     assert mqtt_mock.async_publish.call_args[0][1] == test_str
@@ -1552,10 +1552,10 @@ async def test_publish_json_from_template.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
     assert not mqtt_mock.async_publish.called
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "script", "test_script_payload_template", blocking=True
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert mqtt_mock.async_publish.called
     assert mqtt_mock.async_publish.call_args[0][1] == test_str

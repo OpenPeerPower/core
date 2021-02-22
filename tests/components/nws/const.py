@@ -28,9 +28,9 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.util.distance import convert as convert_distance
-from openpeerpowerr.util.pressure import convert as convert_pressure
-from openpeerpowerr.util.temperature import convert as convert_temperature
+from openpeerpower.util.distance import convert as convert_distance
+from openpeerpower.util.pressure import convert as convert_pressure
+from openpeerpower.util.temperature import convert as convert_temperature
 
 NWS_CONFIG = {
     CONF_API_KEY: "test",

@@ -33,7 +33,7 @@ from openpeerpower.const import (
     SERVICE_VOLUME_SET,
     SERVICE_VOLUME_UP,
 )
-from openpeerpowerr.helpers.entity_component import async_update_entity
+from openpeerpower.helpers.entity_component import async_update_entity
 
 from tests.common import MockConfigEntry
 
@@ -101,9 +101,9 @@ async def test_cannot_connect.opp):
         side_effect=SerialException,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
         assert.opp.states.get(ZONE_1_ID) is None
 
 
@@ -113,9 +113,9 @@ async def _setup_monoprice.opp, monoprice):
         new=lambda *a: monoprice,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
 
 async def _setup_monoprice_with_options.opp, monoprice):
@@ -126,9 +126,9 @@ async def _setup_monoprice_with_options.opp, monoprice):
         config_entry = MockConfigEntry(
             domain=DOMAIN, data=MOCK_CONFIG, options=MOCK_OPTIONS
         )
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
 
 async def _setup_monoprice_not_first_run.opp, monoprice):
@@ -138,25 +138,25 @@ async def _setup_monoprice_not_first_run.opp, monoprice):
     ):
         data = {**MOCK_CONFIG, CONF_NOT_FIRST_RUN: True}
         config_entry = MockConfigEntry(domain=DOMAIN, data=data)
-        config_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        config_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
 
 async def _call_media_player_service.opp, name, data):
-    await opp..services.async_call(
+    await.opp.services.async_call(
         MEDIA_PLAYER_DOMAIN, name, service_data=data, blocking=True
     )
 
 
-async def _call_openpeerpowerr_service.opp, name, data):
-    await opp..services.async_call(
-        "openpeerpowerr", name, service_data=data, blocking=True
+async def _call_openpeerpower_service.opp, name, data):
+    await.opp.services.async_call(
+        "openpeerpower", name, service_data=data, blocking=True
     )
 
 
 async def _call_monoprice_service.opp, name, data):
-    await opp..services.async_call(DOMAIN, name, service_data=data, blocking=True)
+    await.opp.services.async_call(DOMAIN, name, service_data=data, blocking=True)
 
 
 async def test_service_calls_with_entity_id.opp):
@@ -185,19 +185,19 @@ async def test_service_calls_with_entity_id.opp):
     # Restoring other media player to its previous state
     # The zone should not be restored
     await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": ZONE_2_ID})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Checking that values were not (!) restored
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 1.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
 
     # Restoring media player to its previous state
     await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": ZONE_1_ID})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -228,9 +228,9 @@ async def test_service_calls_with_all_entities.opp):
 
     # Restoring media player to its previous state
     await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": "all"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -261,9 +261,9 @@ async def test_service_calls_without_relevant_entities.opp):
 
     # Restoring media player to its previous state
     await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": "light.demo"})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 1.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
@@ -275,7 +275,7 @@ async def test_restore_without_snapshort.opp):
 
     with patch.object(MockMonoprice, "restore_zone") as method_call:
         await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": ZONE_1_ID})
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert not method_call.called
 
@@ -297,9 +297,9 @@ async def test_update.opp):
     monoprice.set_volume(11, 38)
 
     await async_update_entity.opp, ZONE_1_ID)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 1.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
@@ -323,9 +323,9 @@ async def test_failed_update.opp):
 
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
         await async_update_entity.opp, ZONE_1_ID)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -349,9 +349,9 @@ async def test_empty_update.opp):
 
     with patch.object(MockMonoprice, "zone_status", return_value=None):
         await async_update_entity.opp, ZONE_1_ID)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.0
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
@@ -361,7 +361,7 @@ async def test_supported_features.opp):
     """Test supported features property."""
     await _setup_monoprice.opp, MockMonoprice())
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
     assert (
         SUPPORT_VOLUME_MUTE
         | SUPPORT_VOLUME_SET
@@ -377,7 +377,7 @@ async def test_source_list.opp):
     """Test source list property."""
     await _setup_monoprice.opp, MockMonoprice())
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
     # Note, the list is sorted!
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == ["one", "three"]
 
@@ -386,7 +386,7 @@ async def test_source_list_with_options.opp):
     """Test source list property."""
     await _setup_monoprice_with_options.opp, MockMonoprice())
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
     # Note, the list is sorted!
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == ["two", "four"]
 
@@ -420,9 +420,9 @@ async def test_unknown_source.opp):
     monoprice.set_source(11, 5)
 
     await async_update_entity.opp, ZONE_1_ID)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(ZONE_1_ID)
+    state =.opp.states.get(ZONE_1_ID)
 
     assert state.attributes.get(ATTR_INPUT_SOURCE) is None
 
@@ -497,7 +497,7 @@ async def test_first_run_with_available_zones.opp):
     monoprice = MockMonoprice()
     await _setup_monoprice.opp, monoprice)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get(ZONE_7_ID)
     assert not entry.disabled
@@ -510,7 +510,7 @@ async def test_first_run_with_failing_zones.opp):
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
         await _setup_monoprice.opp, monoprice)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get(ZONE_1_ID)
     assert not entry.disabled
@@ -527,7 +527,7 @@ async def test_not_first_run_with_failing_zone.opp):
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
         await _setup_monoprice_not_first_run.opp, monoprice)
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get(ZONE_1_ID)
     assert not entry.disabled

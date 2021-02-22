@@ -16,7 +16,7 @@ class ExtendedMediaPlayer(mp.MediaPlayerEntity):
 
     def __init__(self,.opp):
         """Initialize the test media player."""
-        self.opp = opp
+        self.opp =.opp
         self._volume = 0
         self._state = STATE_OFF
 
@@ -92,7 +92,7 @@ class SimpleMediaPlayer(mp.MediaPlayerEntity):
 
     def __init__(self,.opp):
         """Initialize the test media player."""
-        self.opp = opp
+        self.opp =.opp
         self._volume = 0
         self._state = STATE_OFF
 

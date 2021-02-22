@@ -5,7 +5,7 @@ import pytest
 import voluptuous as vol
 
 from openpeerpower.components.mysensors.gateway import is_serial_port
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 
 @pytest.mark.parametrize(

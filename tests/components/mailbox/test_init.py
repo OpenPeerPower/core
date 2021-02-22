@@ -3,7 +3,7 @@ from hashlib import sha1
 
 import pytest
 
-from openpeerpowerr.bootstrap import async_setup_component
+from openpeerpower.bootstrap import async_setup_component
 import openpeerpower.components.mailbox as mailbox
 from openpeerpower.const import HTTP_INTERNAL_SERVER_ERROR, HTTP_NOT_FOUND
 

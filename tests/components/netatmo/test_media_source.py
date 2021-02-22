@@ -7,7 +7,7 @@ from openpeerpower.components import media_source
 from openpeerpower.components.media_source import const
 from openpeerpower.components.media_source.models import PlayMedia
 from openpeerpower.components.netatmo import DATA_CAMERAS, DATA_EVENTS, DOMAIN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import load_fixture
 
@@ -28,7 +28,7 @@ async def test_async_browse_media.opp):
     }
 
     assert await async_setup_component.opp, const.DOMAIN, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Test camera not exists
     with pytest.raises(media_source.BrowseError) as excinfo:

@@ -28,7 +28,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     VOLT,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import setup_onewire_patched_owserver_integration
 
@@ -784,7 +784,7 @@ async def test_owserver_setup_valid_device(owproxy,.opp, device_id, platform):
 
     with patch("openpeerpower.components.onewire.SUPPORTED_PLATFORMS", [platform]):
         await setup_onewire_patched_owserver_integration.opp)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)
 
@@ -806,7 +806,7 @@ async def test_owserver_setup_valid_device(owproxy,.opp, device_id, platform):
         assert registry_entry.unit_of_measurement == expected_sensor["unit"]
         assert registry_entry.device_class == expected_sensor["class"]
         assert registry_entry.disabled == expected_sensor.get("disabled", False)
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
         if registry_entry.disabled:
             assert state is None
         else:

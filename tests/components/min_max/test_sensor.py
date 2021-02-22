@@ -14,7 +14,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 VALUES = [17, 20, 15.3]
 COUNT = len(VALUES)
@@ -38,15 +38,15 @@ async def test_min_sensor.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_min")
+    state =.opp.states.get("sensor.test_min")
 
     assert str(float(MIN_VALUE)) == state.state
     assert entity_ids[2] == state.attributes.get("min_entity_id")
@@ -68,15 +68,15 @@ async def test_max_sensor.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_max")
+    state =.opp.states.get("sensor.test_max")
 
     assert str(float(MAX_VALUE)) == state.state
     assert entity_ids[2] == state.attributes.get("min_entity_id")
@@ -98,15 +98,15 @@ async def test_mean_sensor.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_mean")
+    state =.opp.states.get("sensor.test_mean")
 
     assert str(float(MEAN)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -129,15 +129,15 @@ async def test_mean_1_digit_sensor.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_mean")
+    state =.opp.states.get("sensor.test_mean")
 
     assert str(float(MEAN_1_DIGIT)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -160,15 +160,15 @@ async def test_mean_4_digit_sensor.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_mean")
+    state =.opp.states.get("sensor.test_mean")
 
     assert str(float(MEAN_4_DIGITS)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -190,15 +190,15 @@ async def test_median_sensor.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_median")
+    state =.opp.states.get("sensor.test_median")
 
     assert str(float(MEDIAN)) == state.state
     assert MIN_VALUE == state.attributes.get("min_value")
@@ -220,14 +220,14 @@ async def test_not_enough_sensor_value.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
    .opp.states.async_set(entity_ids[0], STATE_UNKNOWN)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_max")
+    state =.opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("min_entity_id") is None
     assert state.attributes.get("min_value") is None
@@ -236,9 +236,9 @@ async def test_not_enough_sensor_value.opp):
     assert state.attributes.get("median") is None
 
    .opp.states.async_set(entity_ids[1], VALUES[1])
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_max")
+    state =.opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN != state.state
     assert entity_ids[1] == state.attributes.get("min_entity_id")
     assert VALUES[1] == state.attributes.get("min_value")
@@ -246,9 +246,9 @@ async def test_not_enough_sensor_value.opp):
     assert VALUES[1] == state.attributes.get("max_value")
 
    .opp.states.async_set(entity_ids[2], STATE_UNKNOWN)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_max")
+    state =.opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN != state.state
     assert entity_ids[1] == state.attributes.get("min_entity_id")
     assert VALUES[1] == state.attributes.get("min_value")
@@ -256,9 +256,9 @@ async def test_not_enough_sensor_value.opp):
     assert VALUES[1] == state.attributes.get("max_value")
 
    .opp.states.async_set(entity_ids[1], STATE_UNAVAILABLE)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test_max")
+    state =.opp.states.get("sensor.test_max")
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("min_entity_id") is None
     assert state.attributes.get("min_value") is None
@@ -278,16 +278,16 @@ async def test_different_unit_of_measurement.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
    .opp.states.async_set(
         entity_ids[0], VALUES[0], {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
 
     assert str(float(VALUES[0])) == state.state
     assert state.attributes.get("unit_of_measurement") == TEMP_CELSIUS
@@ -295,9 +295,9 @@ async def test_different_unit_of_measurement.opp):
    .opp.states.async_set(
         entity_ids[1], VALUES[1], {ATTR_UNIT_OF_MEASUREMENT: TEMP_FAHRENHEIT}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
 
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("unit_of_measurement") == "ERR"
@@ -305,9 +305,9 @@ async def test_different_unit_of_measurement.opp):
    .opp.states.async_set(
         entity_ids[2], VALUES[2], {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.test")
+    state =.opp.states.get("sensor.test")
 
     assert STATE_UNKNOWN == state.state
     assert state.attributes.get("unit_of_measurement") == "ERR"
@@ -325,14 +325,14 @@ async def test_last_sensor.opp):
     }
 
     assert await async_setup_component.opp, "sensor", config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
 
     for entity_id, value in dict(zip(entity_ids, VALUES)).items():
        .opp.states.async_set(entity_id, value)
-        await opp..async_block_till_done()
-        state = opp.states.get("sensor.test_last")
+        await.opp.async_block_till_done()
+        state =.opp.states.get("sensor.test_last")
         assert str(float(value)) == state.state
         assert entity_id == state.attributes.get("last_entity_id")
 
@@ -359,7 +359,7 @@ async def test_reload.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
 
@@ -371,13 +371,13 @@ async def test_reload.opp):
         "min_max/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
 

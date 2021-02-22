@@ -10,7 +10,7 @@ async def test_climate_zones.opp):
 
     await async_init_integration.opp)
 
-    state = opp.states.get("climate.nick_office")
+    state =.opp.states.get("climate.nick_office")
     assert state.state == HVAC_MODE_HEAT_COOL
     expected_attributes = {
         "attribution": "Data provided by mynexia.com",
@@ -44,7 +44,7 @@ async def test_climate_zones.opp):
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
-    state = opp.states.get("climate.kitchen")
+    state =.opp.states.get("climate.kitchen")
     assert state.state == HVAC_MODE_HEAT_COOL
 
     expected_attributes = {

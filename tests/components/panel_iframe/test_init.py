@@ -2,13 +2,13 @@
 import pytest
 
 from openpeerpower.components import frontend
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 @pytest.mark.parametrize(
     "config_to_try",
     (
-        {"invalid space": {"url": "https://openpeerpower.io"}},
+        {"invalid space": {"url": "https://open-peer-power.io"}},
         {"router": {"url": "not-a-url"}},
     ),
 )
@@ -48,7 +48,7 @@ async def test_correct_config.opp):
         },
     )
 
-    panels = opp.data[frontend.DATA_PANELS]
+    panels =.opp.data[frontend.DATA_PANELS]
 
     assert panels.get("router").to_response() == {
         "component_name": "iframe",

@@ -7,8 +7,8 @@ import pytest
 
 from openpeerpower.components import scene
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_ON
-import openpeerpowerr.core as ha
-from openpeerpowerr.setup import async_setup_component
+import openpeerpower.core as ha
+from openpeerpower.setup import async_setup_component
 
 from .test_common import (
     help_test_availability_when_connection_lost,
@@ -34,10 +34,10 @@ DEFAULT_CONFIG = {
 
 async def test_sending_mqtt_commands.opp, mqtt_mock):
     """Test the sending MQTT commands."""
-    fake_state = op.State("scene.test", scene.STATE)
+    fake_state = ha.State("scene.test", scene.STATE)
 
     with patch(
-        "openpeerpowerr.helpers.restore_state.RestoreEntity.async_get_last_state",
+        "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",
         return_value=fake_state,
     ):
         assert await async_setup_component(
@@ -52,13 +52,13 @@ async def test_sending_mqtt_commands.opp, mqtt_mock):
                 },
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("scene.test")
+    state =.opp.states.get("scene.test")
     assert state.state == scene.STATE
 
     data = {ATTR_ENTITY_ID: "scene.test"}
-    await opp..services.async_call(scene.DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await.opp.services.async_call(scene.DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
     mqtt_mock.async_publish.assert_called_once_with(
         "command-topic", "beer on", 0, False

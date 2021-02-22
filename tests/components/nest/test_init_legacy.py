@@ -3,7 +3,7 @@
 import time
 from unittest.mock import MagicMock, PropertyMock, patch
 
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -59,7 +59,7 @@ async def test_thermostat.opp):
     type(nest).structures = PropertyMock(return_value=[structure])
 
     config_entry = MockConfigEntry(domain=DOMAIN, data=CONFIG_ENTRY_DATA)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     with patch("openpeerpower.components.nest.legacy.Nest", return_value=nest), patch(
         "openpeerpower.components.nest.legacy.sensor._VALID_SENSOR_TYPES",
         ["humidity", "temperature"],
@@ -68,20 +68,20 @@ async def test_thermostat.opp):
         {"fan": None},
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    climate = opp.states.get("climate.my_thermostat")
+    climate =.opp.states.get("climate.my_thermostat")
     assert climate is not None
     assert climate.state == "off"
 
-    temperature = opp.states.get("sensor.my_thermostat_temperature")
+    temperature =.opp.states.get("sensor.my_thermostat_temperature")
     assert temperature is not None
     assert temperature.state == "-1.1"
 
-    humidity = opp.states.get("sensor.my_thermostat_humidity")
+    humidity =.opp.states.get("sensor.my_thermostat_humidity")
     assert humidity is not None
     assert humidity.state == "40.4"
 
-    fan = opp.states.get("binary_sensor.my_thermostat_fan")
+    fan =.opp.states.get("binary_sensor.my_thermostat_fan")
     assert fan is not None
     assert fan.state == "on"

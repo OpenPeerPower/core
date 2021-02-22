@@ -44,21 +44,21 @@ async def test_thermostat_device.opp):
     }
     await async_setup_sensor.opp, devices)
 
-    temperature = opp.states.get("sensor.my_sensor_temperature")
+    temperature =.opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None
     assert temperature.state == "25.1"
 
-    humidity = opp.states.get("sensor.my_sensor_humidity")
+    humidity =.opp.states.get("sensor.my_sensor_humidity")
     assert humidity is not None
     assert humidity.state == "35.0"
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.my_sensor_temperature")
     assert entry.unique_id == "some-device-id-temperature"
     assert entry.original_name == "My Sensor Temperature"
     assert entry.domain == "sensor"
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
     assert device.name == "My Sensor"
     assert device.model == "Thermostat"
@@ -69,10 +69,10 @@ async def test_no_devices.opp):
     """Test no devices returned by the api."""
     await async_setup_sensor.opp)
 
-    temperature = opp.states.get("sensor.my_sensor_temperature")
+    temperature =.opp.states.get("sensor.my_sensor_temperature")
     assert temperature is None
 
-    humidity = opp.states.get("sensor.my_sensor_humidity")
+    humidity =.opp.states.get("sensor.my_sensor_humidity")
     assert humidity is None
 
 
@@ -90,10 +90,10 @@ async def test_device_no_sensor_traits.opp):
     }
     await async_setup_sensor.opp, devices)
 
-    temperature = opp.states.get("sensor.my_sensor_temperature")
+    temperature =.opp.states.get("sensor.my_sensor_temperature")
     assert temperature is None
 
-    humidity = opp.states.get("sensor.my_sensor_humidity")
+    humidity =.opp.states.get("sensor.my_sensor_humidity")
     assert humidity is None
 
 
@@ -118,7 +118,7 @@ async def test_device_name_from_structure.opp):
     }
     await async_setup_sensor.opp, devices)
 
-    temperature = opp.states.get("sensor.some_room_temperature")
+    temperature =.opp.states.get("sensor.some_room_temperature")
     assert temperature is not None
     assert temperature.state == "25.2"
 
@@ -144,7 +144,7 @@ async def test_event_updates_sensor.opp):
     }
     subscriber = await async_setup_sensor.opp, devices)
 
-    temperature = opp.states.get("sensor.my_sensor_temperature")
+    temperature =.opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None
     assert temperature.state == "25.1"
 
@@ -165,9 +165,9 @@ async def test_event_updates_sensor.opp):
         auth=None,
     )
     await subscriber.async_receive_event(event)
-    await opp..async_block_till_done()  # Process dispatch/update signal
+    await.opp.async_block_till_done()  # Process dispatch/update signal
 
-    temperature = opp.states.get("sensor.my_sensor_temperature")
+    temperature =.opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None
     assert temperature.state == "26.2"
 
@@ -193,17 +193,17 @@ async def test_device_with_unknown_type.opp):
     }
     await async_setup_sensor.opp, devices)
 
-    temperature = opp.states.get("sensor.my_sensor_temperature")
+    temperature =.opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None
     assert temperature.state == "25.1"
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.my_sensor_temperature")
     assert entry.unique_id == "some-device-id-temperature"
     assert entry.original_name == "My Sensor Temperature"
     assert entry.domain == "sensor"
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(entry.device_id)
     assert device.name == "My Sensor"
     assert device.model is None

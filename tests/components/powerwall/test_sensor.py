@@ -16,17 +16,17 @@ async def test_sensors.opp):
     mock_powerwall = await _mock_powerwall_with_fixtures.opp)
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_IP_ADDRESS: "1.2.3.4"})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     with patch(
         "openpeerpower.components.powerwall.config_flow.Powerwall",
         return_value=mock_powerwall,
     ), patch(
         "openpeerpower.components.powerwall.Powerwall", return_value=mock_powerwall
     ):
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
     reg_device = device_registry.async_get_device(
         identifiers={("powerwall", "TG0123456789AB_TG9876543210BA")},
     )
@@ -35,7 +35,7 @@ async def test_sensors.opp):
     assert reg_device.manufacturer == "Tesla"
     assert reg_device.name == "MySite"
 
-    state = opp.states.get("sensor.powerwall_site_now")
+    state =.opp.states.get("sensor.powerwall_site_now")
     assert state.state == "0.032"
     expected_attributes = {
         "frequency": 60,
@@ -52,7 +52,7 @@ async def test_sensors.opp):
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
-    state = opp.states.get("sensor.powerwall_load_now")
+    state =.opp.states.get("sensor.powerwall_load_now")
     assert state.state == "1.971"
     expected_attributes = {
         "frequency": 60,
@@ -69,7 +69,7 @@ async def test_sensors.opp):
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
-    state = opp.states.get("sensor.powerwall_battery_now")
+    state =.opp.states.get("sensor.powerwall_battery_now")
     assert state.state == "-8.55"
     expected_attributes = {
         "frequency": 60.0,
@@ -86,7 +86,7 @@ async def test_sensors.opp):
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
-    state = opp.states.get("sensor.powerwall_solar_now")
+    state =.opp.states.get("sensor.powerwall_solar_now")
     assert state.state == "10.49"
     expected_attributes = {
         "frequency": 60,
@@ -103,7 +103,7 @@ async def test_sensors.opp):
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
-    state = opp.states.get("sensor.powerwall_charge")
+    state =.opp.states.get("sensor.powerwall_charge")
     assert state.state == "47"
     expected_attributes = {
         "unit_of_measurement": PERCENTAGE,

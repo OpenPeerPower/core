@@ -3,7 +3,7 @@
 from unittest import mock
 
 from openpeerpower.components.my import URL_PATH
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_setup.opp):

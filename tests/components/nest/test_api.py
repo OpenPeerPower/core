@@ -13,8 +13,8 @@ from unittest.mock import patch
 
 from openpeerpower.components.nest import DOMAIN
 from openpeerpower.components.nest.const import API_URL, OAUTH2_TOKEN, SDM_SCOPES
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 from .common import (
     CLIENT_ID,
@@ -32,7 +32,7 @@ FAKE_UPDATED_TOKEN = "fake-updated-token"
 async def async_setup_sdm.opp):
     """Set up the integration."""
     assert await async_setup_component.opp, DOMAIN, CONFIG)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_auth.opp, aioclient_mock):

@@ -18,7 +18,7 @@ from openpeerpower.components.panasonic_viera.const import (
 )
 from openpeerpower.config_entries import ENTRY_STATE_NOT_LOADED
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT, STATE_UNAVAILABLE
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -67,7 +67,7 @@ async def test_setup_entry_encrypted.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_ENCRYPTION_DATA, **MOCK_DEVICE_INFO},
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     mock_remote = get_mock_remote()
 
@@ -75,10 +75,10 @@ async def test_setup_entry_encrypted.opp):
         "openpeerpower.components.panasonic_viera.Remote",
         return_value=mock_remote,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("media_player.panasonic_viera_tv")
+        state =.opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -92,7 +92,7 @@ async def test_setup_entry_encrypted_missing_device_info.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_ENCRYPTION_DATA},
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     mock_remote = get_mock_remote()
 
@@ -100,13 +100,13 @@ async def test_setup_entry_encrypted_missing_device_info.opp):
         "openpeerpower.components.panasonic_viera.Remote",
         return_value=mock_remote,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
         assert mock_entry.data[ATTR_DEVICE_INFO] == MOCK_DEVICE_INFO
         assert mock_entry.unique_id == MOCK_DEVICE_INFO[ATTR_UDN]
 
-        state = opp.states.get("media_player.panasonic_viera_tv")
+        state =.opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -120,7 +120,7 @@ async def test_setup_entry_encrypted_missing_device_info_none.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_ENCRYPTION_DATA},
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     mock_remote = get_mock_remote(device_info=None)
 
@@ -128,13 +128,13 @@ async def test_setup_entry_encrypted_missing_device_info_none.opp):
         "openpeerpower.components.panasonic_viera.Remote",
         return_value=mock_remote,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
         assert mock_entry.data[ATTR_DEVICE_INFO] is None
         assert mock_entry.unique_id == MOCK_CONFIG_DATA[CONF_HOST]
 
-        state = opp.states.get("media_player.panasonic_viera_tv")
+        state =.opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -148,7 +148,7 @@ async def test_setup_entry_unencrypted.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_DEVICE_INFO},
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     mock_remote = get_mock_remote()
 
@@ -156,10 +156,10 @@ async def test_setup_entry_unencrypted.opp):
         "openpeerpower.components.panasonic_viera.Remote",
         return_value=mock_remote,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("media_player.panasonic_viera_tv")
+        state =.opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -173,7 +173,7 @@ async def test_setup_entry_unencrypted_missing_device_info.opp):
         data=MOCK_CONFIG_DATA,
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     mock_remote = get_mock_remote()
 
@@ -181,13 +181,13 @@ async def test_setup_entry_unencrypted_missing_device_info.opp):
         "openpeerpower.components.panasonic_viera.Remote",
         return_value=mock_remote,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
         assert mock_entry.data[ATTR_DEVICE_INFO] == MOCK_DEVICE_INFO
         assert mock_entry.unique_id == MOCK_DEVICE_INFO[ATTR_UDN]
 
-        state = opp.states.get("media_player.panasonic_viera_tv")
+        state =.opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -201,7 +201,7 @@ async def test_setup_entry_unencrypted_missing_device_info_none.opp):
         data=MOCK_CONFIG_DATA,
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     mock_remote = get_mock_remote(device_info=None)
 
@@ -209,13 +209,13 @@ async def test_setup_entry_unencrypted_missing_device_info_none.opp):
         "openpeerpower.components.panasonic_viera.Remote",
         return_value=mock_remote,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
         assert mock_entry.data[ATTR_DEVICE_INFO] is None
         assert mock_entry.unique_id == MOCK_CONFIG_DATA[CONF_HOST]
 
-        state = opp.states.get("media_player.panasonic_viera_tv")
+        state =.opp.states.get("media_player.panasonic_viera_tv")
 
         assert state
         assert state.name == DEFAULT_NAME
@@ -241,7 +241,7 @@ async def test_setup_unload_entry.opp):
         domain=DOMAIN, unique_id=MOCK_DEVICE_INFO[ATTR_UDN], data=MOCK_CONFIG_DATA
     )
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     mock_remote = get_mock_remote()
 
@@ -249,15 +249,15 @@ async def test_setup_unload_entry.opp):
         "openpeerpower.components.panasonic_viera.Remote",
         return_value=mock_remote,
     ):
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
-    await opp..config_entries.async_unload(mock_entry.entry_id)
+    await.opp.config_entries.async_unload(mock_entry.entry_id)
     assert mock_entry.state == ENTRY_STATE_NOT_LOADED
-    state = opp.states.get("media_player.panasonic_viera_tv")
+    state =.opp.states.get("media_player.panasonic_viera_tv")
     assert state.state == STATE_UNAVAILABLE
 
-    await opp..config_entries.async_remove(mock_entry.entry_id)
-    await opp..async_block_till_done()
-    state = opp.states.get("media_player.panasonic_viera_tv")
+    await.opp.config_entries.async_remove(mock_entry.entry_id)
+    await.opp.async_block_till_done()
+    state =.opp.states.get("media_player.panasonic_viera_tv")
     assert state is None

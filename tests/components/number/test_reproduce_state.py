@@ -5,7 +5,7 @@ from openpeerpower.components.number.const import (
     DOMAIN,
     SERVICE_SET_VALUE,
 )
-from openpeerpowerr.core import State
+from openpeerpower.core import State
 
 from tests.common import async_mock_service
 
@@ -21,7 +21,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # These calls should do nothing as entities already in desired state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("number.test_number", VALID_NUMBER1),
             # Should not raise
@@ -33,7 +33,7 @@ async def test_reproducing_states.opp, caplog):
 
     # Test reproducing with different state
     calls = async_mock_service.opp, DOMAIN, SERVICE_SET_VALUE)
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("number.test_number", VALID_NUMBER2),
             # Should not raise
@@ -46,7 +46,7 @@ async def test_reproducing_states.opp, caplog):
     assert calls[0].data == {"entity_id": "number.test_number", "value": VALID_NUMBER2}
 
     # Test invalid state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [State("number.test_number", "invalid_state")]
     )
 

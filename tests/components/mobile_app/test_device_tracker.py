@@ -21,8 +21,8 @@ async def test_sending_location.opp, create_registrations, webhook_client):
     )
 
     assert resp.status == 200
-    await opp..async_block_till_done()
-    state = opp.states.get("device_tracker.test_1_2")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("device_tracker.test_1_2")
     assert state is not None
     assert state.name == "Test 1"
     assert state.state == "bar"
@@ -53,8 +53,8 @@ async def test_sending_location.opp, create_registrations, webhook_client):
     )
 
     assert resp.status == 200
-    await opp..async_block_till_done()
-    state = opp.states.get("device_tracker.test_1_2")
+    await.opp.async_block_till_done()
+    state =.opp.states.get("device_tracker.test_1_2")
     assert state is not None
     assert state.state == "not_home"
     assert state.attributes["source_type"] == "gps"
@@ -88,18 +88,18 @@ async def test_restoring_location.opp, create_registrations, webhook_client):
     )
 
     assert resp.status == 200
-    await opp..async_block_till_done()
-    state_1 = opp.states.get("device_tracker.test_1_2")
+    await.opp.async_block_till_done()
+    state_1 =.opp.states.get("device_tracker.test_1_2")
     assert state_1 is not None
 
-    config_entry = opp.config_entries.async_entries("mobile_app")[1]
+    config_entry =.opp.config_entries.async_entries("mobile_app")[1]
 
     # mobile app doesn't support unloading, so we just reload device tracker
-    await opp..config_entries.async_forward_entry_unload(config_entry, "device_tracker")
-    await opp..config_entries.async_forward_entry_setup(config_entry, "device_tracker")
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_forward_entry_unload(config_entry, "device_tracker")
+    await.opp.config_entries.async_forward_entry_setup(config_entry, "device_tracker")
+    await.opp.async_block_till_done()
 
-    state_2 = opp.states.get("device_tracker.test_1_2")
+    state_2 =.opp.states.get("device_tracker.test_1_2")
     assert state_2 is not None
 
     assert state_1 is not state_2

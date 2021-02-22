@@ -1,6 +1,6 @@
 """Entity tests for mobile_app."""
 from openpeerpower.const import STATE_OFF
-from openpeerpowerr.helpers import device_registry
+from openpeerpower.helpers import device_registry
 
 
 async def test_sensor.opp, create_registrations, webhook_client):
@@ -28,9 +28,9 @@ async def test_sensor.opp, create_registrations, webhook_client):
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity = opp.states.get("binary_sensor.test_1_is_charging")
+    entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert entity is not None
 
     assert entity.attributes["device_class"] == "plug"
@@ -66,7 +66,7 @@ async def test_sensor.opp, create_registrations, webhook_client):
     json = await update_resp.json()
     assert json["invalid_state"]["success"] is False
 
-    updated_entity = opp.states.get("binary_sensor.test_1_is_charging")
+    updated_entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert updated_entity.state == "off"
     assert "foo" not in updated_entity.attributes
 
@@ -74,15 +74,15 @@ async def test_sensor.opp, create_registrations, webhook_client):
     assert len(dev_reg.devices) == len(create_registrations)
 
     # Reload to verify state is restored
-    config_entry = opp.config_entries.async_entries("mobile_app")[1]
-    await opp..config_entries.async_unload(config_entry.entry_id)
-    await opp..async_block_till_done()
-    unloaded_entity = opp.states.get("binary_sensor.test_1_is_charging")
+    config_entry =.opp.config_entries.async_entries("mobile_app")[1]
+    await.opp.config_entries.async_unload(config_entry.entry_id)
+    await.opp.async_block_till_done()
+    unloaded_entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert unloaded_entity.state == "unavailable"
 
-    await opp..config_entries.async_setup(config_entry.entry_id)
-    await opp..async_block_till_done()
-    restored_entity = opp.states.get("binary_sensor.test_1_is_charging")
+    await.opp.config_entries.async_setup(config_entry.entry_id)
+    await.opp.async_block_till_done()
+    restored_entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert restored_entity.state == updated_entity.state
     assert restored_entity.attributes == updated_entity.attributes
 
@@ -132,11 +132,11 @@ async def test_sensor_id_no_dupes.opp, create_registrations, webhook_client, cap
 
     reg_json = await reg_resp.json()
     assert reg_json == {"success": True}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert "Re-register" not in caplog.text
 
-    entity = opp.states.get("binary_sensor.test_1_is_charging")
+    entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert entity is not None
 
     assert entity.attributes["device_class"] == "plug"
@@ -152,11 +152,11 @@ async def test_sensor_id_no_dupes.opp, create_registrations, webhook_client, cap
     assert dupe_resp.status == 201
     dupe_reg_json = await dupe_resp.json()
     assert dupe_reg_json == {"success": True}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert "Re-register" in caplog.text
 
-    entity = opp.states.get("binary_sensor.test_1_is_charging")
+    entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert entity is not None
 
     assert entity.attributes["device_class"] == "plug"
@@ -189,9 +189,9 @@ async def test_register_sensor_no_state.opp, create_registrations, webhook_clien
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity = opp.states.get("binary_sensor.test_1_is_charging")
+    entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert entity is not None
 
     assert entity.domain == "binary_sensor"
@@ -214,9 +214,9 @@ async def test_register_sensor_no_state.opp, create_registrations, webhook_clien
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity = opp.states.get("binary_sensor.test_1_backup_is_charging")
+    entity =.opp.states.get("binary_sensor.test_1_backup_is_charging")
     assert entity
 
     assert entity.domain == "binary_sensor"
@@ -246,9 +246,9 @@ async def test_update_sensor_no_state.opp, create_registrations, webhook_client)
 
     json = await reg_resp.json()
     assert json == {"success": True}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    entity = opp.states.get("binary_sensor.test_1_is_charging")
+    entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert entity is not None
     assert entity.state == "on"
 
@@ -267,5 +267,5 @@ async def test_update_sensor_no_state.opp, create_registrations, webhook_client)
     json = await update_resp.json()
     assert json == {"is_charging": {"success": True}}
 
-    updated_entity = opp.states.get("binary_sensor.test_1_is_charging")
+    updated_entity =.opp.states.get("binary_sensor.test_1_is_charging")
     assert updated_entity.state == STATE_OFF  # Binary sensor defaults to off

@@ -6,12 +6,12 @@ from pynzbgetapi import NZBGetAPIException
 from openpeerpower.components.nzbget.const import DOMAIN
 from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import CONF_SCAN_INTERVAL, CONF_VERIFY_SSL
-from openpeerpowerr.data_entry_flow import (
+from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import (
     ENTRY_CONFIG,
@@ -30,18 +30,18 @@ async def test_user_form.opp):
     """Test we get the user initiated form."""
     await async_setup_component.opp, "persistent_notification", {})
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["errors"] == {}
 
     with _patch_version(), _patch_status(), _patch_history(), _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             USER_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "10.10.10.30"
@@ -55,7 +55,7 @@ async def test_user_form_show_advanced_options.opp):
     """Test we get the user initiated form with advanced options shown."""
     await async_setup_component.opp, "persistent_notification", {})
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER, "show_advanced_options": True}
     )
     assert result["type"] == RESULT_TYPE_FORM
@@ -67,11 +67,11 @@ async def test_user_form_show_advanced_options.opp):
     }
 
     with _patch_version(), _patch_status(), _patch_history(), _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input_advanced,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "10.10.10.30"
@@ -83,7 +83,7 @@ async def test_user_form_show_advanced_options.opp):
 
 async def test_user_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -91,7 +91,7 @@ async def test_user_form_cannot_connect.opp):
         "openpeerpower.components.nzbget.coordinator.NZBGetAPI.version",
         side_effect=NZBGetAPIException(),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             USER_INPUT,
         )
@@ -102,7 +102,7 @@ async def test_user_form_cannot_connect.opp):
 
 async def test_user_form_unexpected_exception.opp):
     """Test we handle unexpected exception."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
 
@@ -110,7 +110,7 @@ async def test_user_form_unexpected_exception.opp):
         "openpeerpower.components.nzbget.coordinator.NZBGetAPI.version",
         side_effect=Exception(),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             USER_INPUT,
         )
@@ -122,9 +122,9 @@ async def test_user_form_unexpected_exception.opp):
 async def test_user_form_single_instance_allowed.opp):
     """Test that configuring more than one instance is rejected."""
     entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=USER_INPUT,
@@ -140,24 +140,24 @@ async def test_options_flow.opp, nzbget_api):
         data=ENTRY_CONFIG,
         options={CONF_SCAN_INTERVAL: 5},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.nzbget.PLATFORMS", []):
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     assert entry.options[CONF_SCAN_INTERVAL] == 5
 
-    result = await opp..config_entries.options.async_init(entry.entry_id)
+    result = await.opp.config_entries.options.async_init(entry.entry_id)
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
     with _patch_async_setup(), _patch_async_setup_entry():
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_SCAN_INTERVAL: 15},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_SCAN_INTERVAL] == 15

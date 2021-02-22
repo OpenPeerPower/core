@@ -6,8 +6,8 @@ from unittest.mock import patch
 from openpeerpower.components.mqtt import CONF_QOS, CONF_STATE_TOPIC, DEFAULT_QOS
 import openpeerpower.components.sensor as sensor
 from openpeerpower.const import CONF_NAME, CONF_PLATFORM
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 from tests.common import async_fire_mqtt_message
 
@@ -34,19 +34,19 @@ REALLY_FAR_MESSAGE = {"id": DEVICE_ID, "name": NAME, "distance": 20}
 async def send_message.opp, topic, message):
     """Test the sending of a message."""
     async_fire_mqtt_message.opp, topic, json.dumps(message))
-    await opp..async_block_till_done()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def assert_state.opp, room):
     """Test the assertion of a room state."""
-    state = opp.states.get(SENSOR_STATE)
+    state =.opp.states.get(SENSOR_STATE)
     assert state.state == room
 
 
 async def assert_distance.opp, distance):
     """Test the assertion of a distance state."""
-    state = opp.states.get(SENSOR_STATE)
+    state =.opp.states.get(SENSOR_STATE)
     assert state.attributes.get("distance") == distance
 
 
@@ -66,7 +66,7 @@ async def test_room_update.opp, mqtt_mock):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     await send_message.opp, BEDROOM_TOPIC, FAR_MESSAGE)
     await assert_state.opp, BEDROOM)
@@ -81,7 +81,7 @@ async def test_room_update.opp, mqtt_mock):
     await assert_distance.opp, 1)
 
     time = dt.utcnow() + datetime.timedelta(seconds=7)
-    with patch("openpeerpowerr.helpers.condition.dt_util.utcnow", return_value=time):
+    with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=time):
         await send_message.opp, BEDROOM_TOPIC, FAR_MESSAGE)
         await assert_state.opp, BEDROOM)
         await assert_distance.opp, 10)

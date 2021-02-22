@@ -11,23 +11,23 @@ async def test_adam_climate_sensor_entities.opp, mock_smile_adam):
     entry = await async_init_integration.opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state = opp.states.get("sensor.adam_outdoor_temperature")
+    state =.opp.states.get("sensor.adam_outdoor_temperature")
     assert float(state.state) == 7.81
 
-    state = opp.states.get("sensor.cv_pomp_electricity_consumed")
+    state =.opp.states.get("sensor.cv_pomp_electricity_consumed")
     assert float(state.state) == 35.6
 
-    state = opp.states.get("sensor.auxiliary_water_temperature")
+    state =.opp.states.get("sensor.auxiliary_water_temperature")
     assert float(state.state) == 70.0
 
-    state = opp.states.get("sensor.cv_pomp_electricity_consumed_interval")
+    state =.opp.states.get("sensor.cv_pomp_electricity_consumed_interval")
     assert float(state.state) == 7.37
 
-    await opp..helpers.entity_component.async_update_entity(
+    await.opp.helpers.entity_component.async_update_entity(
         "sensor.zone_lisa_wk_battery"
     )
 
-    state = opp.states.get("sensor.zone_lisa_wk_battery")
+    state =.opp.states.get("sensor.zone_lisa_wk_battery")
     assert int(state.state) == 34
 
 
@@ -36,13 +36,13 @@ async def test_anna_as_smt_climate_sensor_entities.opp, mock_smile_anna):
     entry = await async_init_integration.opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state = opp.states.get("sensor.auxiliary_outdoor_temperature")
+    state =.opp.states.get("sensor.auxiliary_outdoor_temperature")
     assert float(state.state) == 18.0
 
-    state = opp.states.get("sensor.auxiliary_water_temperature")
+    state =.opp.states.get("sensor.auxiliary_water_temperature")
     assert float(state.state) == 29.1
 
-    state = opp.states.get("sensor.anna_illuminance")
+    state =.opp.states.get("sensor.anna_illuminance")
     assert float(state.state) == 86.0
 
 
@@ -52,7 +52,7 @@ async def test_anna_climate_sensor_entities.opp, mock_smile_anna):
     entry = await async_init_integration.opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state = opp.states.get("sensor.auxiliary_outdoor_temperature")
+    state =.opp.states.get("sensor.auxiliary_outdoor_temperature")
     assert float(state.state) == 18.0
 
 
@@ -61,19 +61,19 @@ async def test_p1_dsmr_sensor_entities.opp, mock_smile_p1):
     entry = await async_init_integration.opp, mock_smile_p1)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state = opp.states.get("sensor.p1_net_electricity_point")
+    state =.opp.states.get("sensor.p1_net_electricity_point")
     assert float(state.state) == -2761.0
 
-    state = opp.states.get("sensor.p1_electricity_consumed_off_peak_cumulative")
+    state =.opp.states.get("sensor.p1_electricity_consumed_off_peak_cumulative")
     assert float(state.state) == 551.09
 
-    state = opp.states.get("sensor.p1_electricity_produced_peak_point")
+    state =.opp.states.get("sensor.p1_electricity_produced_peak_point")
     assert float(state.state) == 2761.0
 
-    state = opp.states.get("sensor.p1_electricity_consumed_peak_cumulative")
+    state =.opp.states.get("sensor.p1_electricity_consumed_peak_cumulative")
     assert float(state.state) == 442.932
 
-    state = opp.states.get("sensor.p1_gas_consumed_cumulative")
+    state =.opp.states.get("sensor.p1_gas_consumed_cumulative")
     assert float(state.state) == 584.85
 
 
@@ -82,8 +82,8 @@ async def test_stretch_sensor_entities.opp, mock_stretch):
     entry = await async_init_integration.opp, mock_stretch)
     assert entry.state == ENTRY_STATE_LOADED
 
-    state = opp.states.get("sensor.koelkast_92c4a_electricity_consumed")
+    state =.opp.states.get("sensor.koelkast_92c4a_electricity_consumed")
     assert float(state.state) == 50.5
 
-    state = opp.states.get("sensor.droger_52559_electricity_consumed_interval")
+    state =.opp.states.get("sensor.droger_52559_electricity_consumed_interval")
     assert float(state.state) == 0.0

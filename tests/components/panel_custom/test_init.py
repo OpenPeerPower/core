@@ -24,7 +24,7 @@ async def test_webcomponent_custom_path_not_found.opp):
         result = await setup.async_setup_component.opp, "panel_custom", config)
         assert not result
 
-        panels = opp.data.get(frontend.DATA_PANELS, [])
+        panels =.opp.data.get(frontend.DATA_PANELS, [])
 
         assert panels
         assert "nice_url" not in panels
@@ -48,7 +48,7 @@ async def test_js_webcomponent.opp):
     result = await setup.async_setup_component.opp, "panel_custom", config)
     assert result
 
-    panels = opp.data.get(frontend.DATA_PANELS, [])
+    panels =.opp.data.get(frontend.DATA_PANELS, [])
 
     assert panels
     assert "nice_url" in panels
@@ -88,7 +88,7 @@ async def test_module_webcomponent.opp):
     result = await setup.async_setup_component.opp, "panel_custom", config)
     assert result
 
-    panels = opp.data.get(frontend.DATA_PANELS, [])
+    panels =.opp.data.get(frontend.DATA_PANELS, [])
 
     assert panels
     assert "nice_url" in panels
@@ -123,7 +123,7 @@ async def test_latest_and_es5_build.opp):
 
     assert await setup.async_setup_component.opp, "panel_custom", config)
 
-    panels = opp.data.get(frontend.DATA_PANELS, {})
+    panels =.opp.data.get(frontend.DATA_PANELS, {})
 
     assert panels
     assert "nice_url" in panels

@@ -11,7 +11,7 @@ from openpeerpower.components.netatmo.const import (
     OAUTH2_TOKEN,
 )
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers import config_entry_oauth2_flow
 
 from tests.common import MockConfigEntry
 
@@ -23,18 +23,18 @@ VALID_CONFIG = {}
 
 async def test_abort_if_existing_entry.opp):
     """Check flow abort when an entry already exist."""
-    MockConfigEntry(domain=DOMAIN).add_to_opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
 
     flow = config_flow.NetatmoFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "netatmo", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "netatmo",
         context={"source": "homekit"},
         data={"host": "0.0.0.0", "properties": {"id": "aa:bb:cc:dd:ee:ff"}},
@@ -56,7 +56,7 @@ async def test_full_flow(
         },
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "netatmo", context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -107,7 +107,7 @@ async def test_full_flow(
     with patch(
         "openpeerpower.components.netatmo.async_setup_entry", return_value=True
     ) as mock_setup:
-        await opp..config_entries.flow.async_configure(result["flow_id"])
+        await.opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1
@@ -141,28 +141,28 @@ async def test_option_flow.opp):
         data=VALID_CONFIG,
         options={},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    result = await opp..config_entries.options.async_init(config_entry.entry_id)
+    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "public_weather_areas"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_NEW_AREA: "Home"}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "public_weather"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"], user_input=valid_option
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "public_weather_areas"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
 
@@ -199,28 +199,28 @@ async def test_option_flow_wrong_coordinates.opp):
         data=VALID_CONFIG,
         options={},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    result = await opp..config_entries.options.async_init(config_entry.entry_id)
+    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "public_weather_areas"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_NEW_AREA: "Home"}
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "public_weather"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"], user_input=valid_option
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "public_weather_areas"
 
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"], user_input={}
     )
 

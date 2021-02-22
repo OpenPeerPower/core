@@ -10,7 +10,7 @@ from google_nest_sdm.google_nest_subscriber import GoogleNestSubscriber
 
 from openpeerpower.components.nest import DOMAIN
 from openpeerpower.components.nest.const import SDM_SCOPES
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -47,7 +47,7 @@ def create_config_entry.opp, token_expiration_time=None):
             "expires_at": token_expiration_time,
         },
     }
-    MockConfigEntry(domain=DOMAIN, data=config_entry_data).add_to_opp.opp)
+    MockConfigEntry(domain=DOMAIN, data=config_entry_data).add_to.opp.opp)
 
 
 class FakeDeviceManager(DeviceManager):
@@ -95,7 +95,7 @@ class FakeSubscriber(GoogleNestSubscriber):
     async def async_receive_event(self, event_message: EventMessage):
         """Simulate a received pubsub message, invoked by tests."""
         # Update device state, then invoke OpenPeerPower to refresh
-        await self._device_manager.async_op.dle_event(event_message)
+        await self._device_manager.async_handle_event(event_message)
         await self._callback(event_message)
 
 
@@ -105,10 +105,10 @@ async def async_setup_sdm_platform.opp, platform, devices={}, structures={}):
     device_manager = FakeDeviceManager(devices=devices, structures=structures)
     subscriber = FakeSubscriber(device_manager)
     with patch(
-        "openpeerpowerr.helpers.config_entry_oauth2_flow.async_get_config_entry_implementation"
+        "openpeerpower.helpers.config_entry_oauth2_flow.async_get_config_entry_implementation"
     ), patch("openpeerpower.components.nest.PLATFORMS", [platform]), patch(
         "openpeerpower.components.nest.GoogleNestSubscriber", return_value=subscriber
     ):
         assert await async_setup_component.opp, DOMAIN, CONFIG)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     return subscriber

@@ -36,7 +36,7 @@ from openpeerpower.const import (
     STATE_STANDBY,
     STATE_UNKNOWN,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, mock_device_registry, mock_registry
 
@@ -137,13 +137,13 @@ async def setup_mock_component.opp, entry=None):
     else:
         mock_entry = entry
 
-    mock_entry.add_to_opp.opp)
+    mock_entry.add_to.opp.opp)
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    mock_entities = opp.states.async_entity_ids()
+    mock_entities =.opp.states.async_entity_ids()
 
     mock_entity_id = mock_entities[0]
 
@@ -152,7 +152,7 @@ async def setup_mock_component.opp, entry=None):
 
 async def mock_ddp_response.opp, mock_status_data):
     """Mock raw UDP response from device."""
-    mock_protocol = opp.data[PS4_DATA].protocol
+    mock_protocol =.opp.data[PS4_DATA].protocol
     assert mock_protocol.local_port == DEFAULT_UDP_PORT
     mock_code = mock_status_data.get("status_code")
     mock_status = mock_status_data.get("status")
@@ -160,13 +160,13 @@ async def mock_ddp_response.opp, mock_status_data):
     mock_response = get_ddp_message(mock_status_header, mock_status_data).encode()
 
     mock_protocol.datagram_received(mock_response, (MOCK_HOST, MOCK_RANDOM_PORT))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_media_player_is_setup_correctly_with_entry.opp):
     """Test entity is setup correctly with entry correctly."""
     mock_entity_id = await setup_mock_component.opp)
-    mock_state = opp.states.get(mock_entity_id).state
+    mock_state =.opp.states.get(mock_entity_id).state
 
     # Assert status updated callback is added to protocol.
     assert len.opp.data[PS4_DATA].protocol.callbacks) == 1
@@ -233,7 +233,7 @@ async def test_media_attributes_are_fetched.opp):
     with patch(mock_func, return_value=mock_result) as mock_fetch:
         await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
 
-    mock_state = opp.states.get(mock_entity_id)
+    mock_state =.opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
 
     assert len(mock_fetch.mock_calls) == 1
@@ -254,7 +254,7 @@ async def test_media_attributes_are_fetched.opp):
     with patch(mock_func, return_value=mock_result) as mock_fetch_app:
         await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
 
-    mock_state = opp.states.get(mock_entity_id)
+    mock_state =.opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
 
     assert len(mock_fetch_app.mock_calls) == 1
@@ -273,7 +273,7 @@ async def test_media_attributes_are_loaded.opp, patch_load_json):
     ) as mock_fetch:
         await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
 
-    mock_state = opp.states.get(mock_entity_id)
+    mock_state =.opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
 
     # Ensure that data is not fetched.
@@ -294,14 +294,14 @@ async def test_device_info_is_set_from_status_correctly.opp, patch_get_status):
     patch_get_status.return_value = MOCK_STATUS_STANDBY
     mock_entity_id = await setup_mock_component.opp)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # Reformat mock status-sw_version for assertion.
     mock_version = MOCK_STATUS_STANDBY["system-version"]
     mock_version = mock_version[1:4]
     mock_version = "{}.{}".format(mock_version[0], mock_version[1:])
 
-    mock_state = opp.states.get(mock_entity_id).state
+    mock_state =.opp.states.get(mock_entity_id).state
 
     mock_d_entries = mock_d_registry.devices
     mock_entry = mock_d_registry.async_get_device(identifiers={(DOMAIN, MOCK_HOST_ID)})
@@ -339,13 +339,13 @@ async def test_device_info_is_assummed.opp):
     )
 
     mock_entity_id = await setup_mock_component.opp)
-    mock_state = opp.states.get(mock_entity_id).state
+    mock_state =.opp.states.get(mock_entity_id).state
 
     # Ensure that state is not set.
     assert mock_state == STATE_UNKNOWN
 
     # Ensure that entity_id is the same as the existing.
-    mock_entities = opp.states.async_entity_ids()
+    mock_entities =.opp.states.async_entity_ids()
     assert len(mock_entities) == 1
     assert mock_entities[0] == mock_entity_id
 
@@ -354,7 +354,7 @@ async def test_device_info_assummed_works.opp):
     """Reverse test that device info assumption works."""
     mock_d_registry = mock_device_registry.opp)
     mock_entity_id = await setup_mock_component.opp)
-    mock_state = opp.states.get(mock_entity_id).state
+    mock_state =.opp.states.get(mock_entity_id).state
     mock_d_entries = mock_d_registry.devices
 
     # Ensure that state is not set.
@@ -372,10 +372,10 @@ async def test_turn_on.opp):
     )
 
     with patch(mock_func) as mock_call:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player", "turn_on", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -388,10 +388,10 @@ async def test_turn_off.opp):
     )
 
     with patch(mock_func) as mock_call:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player", "turn_off", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -404,10 +404,10 @@ async def test_toggle.opp):
     )
 
     with patch(mock_func) as mock_call:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player", "toggle", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -420,10 +420,10 @@ async def test_media_pause.opp):
     )
 
     with patch(mock_func) as mock_call:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player", "media_pause", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -436,10 +436,10 @@ async def test_media_stop.opp):
     )
 
     with patch(mock_func) as mock_call:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player", "media_stop", {ATTR_ENTITY_ID: mock_entity_id}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
 
@@ -454,7 +454,7 @@ async def test_select_source.opp, patch_load_json):
         "openpeerpower.components.ps4.media_player.PS4Device.async_update"
     ):
         # Test with title name.
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player",
             "select_source",
             {ATTR_ENTITY_ID: mock_entity_id, ATTR_INPUT_SOURCE: MOCK_TITLE_NAME},
@@ -474,7 +474,7 @@ async def test_select_source_caps.opp, patch_load_json):
         "openpeerpower.components.ps4.media_player.PS4Device.async_update"
     ):
         # Test with title name in caps.
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player",
             "select_source",
             {
@@ -497,7 +497,7 @@ async def test_select_source_id.opp, patch_load_json):
         "openpeerpower.components.ps4.media_player.PS4Device.async_update"
     ):
         # Test with title ID.
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "media_player",
             "select_source",
             {ATTR_ENTITY_ID: mock_entity_id, ATTR_INPUT_SOURCE: MOCK_TITLE_ID},
@@ -512,7 +512,7 @@ async def test_ps4_send_command.opp):
     mock_entity_id = await setup_mock_component.opp)
 
     with patch("pyps4_2ndscreen.ps4.Ps4Async.remote_control") as mock_call:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             "send_command",
             {ATTR_ENTITY_ID: mock_entity_id, ATTR_COMMAND: "ps"},

@@ -11,7 +11,7 @@ from openpeerpower.components.logi_circle.config_flow import (
     AuthorizationFailed,
     LogiCircleAuthCallbackView,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_coro
 
@@ -21,7 +21,7 @@ class MockRequest:
 
     def __init__(self,.opp, query):
         """Init request object."""
-        self.app = {"opp":.opp}
+        self.app = {.opp":.opp}
         self.query = query
 
 
@@ -40,7 +40,7 @@ def init_config_flow.opp):
     flow._get_authorization_url = Mock(  # pylint: disable=protected-access
         return_value="http://example.com"
     )
-    flow.opp = opp
+    flow.opp =.opp
     return flow
 
 
@@ -111,7 +111,7 @@ async def test_we_reprompt_user_to_follow_link.opp):
 async def test_abort_if_no_implementation_registered.opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.LogiCircleFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -188,7 +188,7 @@ async def test_gen_auth_url(
         sensors=None,
     )
     flow = config_flow.LogiCircleFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.flow_impl = "test-auth-url"
     await async_setup_component.opp, "http", {})
 
@@ -214,5 +214,5 @@ async def test_callback_view_accepts_code(
     resp = await view.get(MockRequest.opp, {"code": "456"}))
     assert resp.status == 200
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     mock_logi_circle.authorize.assert_called_with("456")

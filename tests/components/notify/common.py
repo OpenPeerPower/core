@@ -10,10 +10,10 @@ from openpeerpower.components.notify import (
     DOMAIN,
     SERVICE_NOTIFY,
 )
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 
-@bind_opp
+@bind.opp
 def send_message.opp, message, title=None, data=None):
     """Send a notification message."""
     info = {ATTR_MESSAGE: message}

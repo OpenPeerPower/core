@@ -20,8 +20,8 @@ async def init_integration.opp) -> MockConfigEntry:
         "openpeerpower.components.met.metno.MetWeatherData.fetching_data",
         return_value=True,
     ):
-        entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

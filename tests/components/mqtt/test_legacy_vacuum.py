@@ -21,7 +21,7 @@ from openpeerpower.components.vacuum import (
     ATTR_STATUS,
 )
 from openpeerpower.const import CONF_NAME, CONF_PLATFORM, STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .test_common import (
     help_test_availability_when_connection_lost,
@@ -79,8 +79,8 @@ async def test_default_supported_features.opp, mqtt_mock):
     assert await async_setup_component(
        .opp, vacuum.DOMAIN, {vacuum.DOMAIN: DEFAULT_CONFIG}
     )
-    await opp..async_block_till_done()
-    entity = opp.states.get("vacuum.mqtttest")
+    await.opp.async_block_till_done()
+    entity =.opp.states.get("vacuum.mqtttest")
     entity_features = entity.attributes.get(mqttvacuum.CONF_SUPPORTED_FEATURES, 0)
     assert sorted(services_to_strings(entity_features, SERVICE_TO_STRING)) == sorted(
         [
@@ -103,7 +103,7 @@ async def test_all_commands.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     await common.async_turn_on.opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
@@ -183,7 +183,7 @@ async def test_commands_without_supported_features.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     await common.async_turn_on.opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
@@ -231,7 +231,7 @@ async def test_attributes_without_supported_features.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "battery_level": 54,
@@ -241,7 +241,7 @@ async def test_attributes_without_supported_features.opp, mqtt_mock):
         "fan_speed": "max"
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_BATTERY_LEVEL) is None
     assert state.attributes.get(ATTR_BATTERY_ICON) is None
@@ -257,7 +257,7 @@ async def test_status.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "battery_level": 54,
@@ -267,7 +267,7 @@ async def test_status.opp, mqtt_mock):
         "fan_speed": "max"
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-50"
     assert state.attributes.get(ATTR_BATTERY_LEVEL) == 54
@@ -282,7 +282,7 @@ async def test_status.opp, mqtt_mock):
     }"""
 
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-charging-60"
     assert state.attributes.get(ATTR_BATTERY_LEVEL) == 61
@@ -297,13 +297,13 @@ async def test_status_battery.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "battery_level": 54
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-50"
 
 
@@ -315,13 +315,13 @@ async def test_status_cleaning.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "cleaning": true
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_ON
 
 
@@ -333,13 +333,13 @@ async def test_status_docked.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "docked": true
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_OFF
 
 
@@ -351,13 +351,13 @@ async def test_status_charging.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "charging": true
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-outline"
 
 
@@ -369,13 +369,13 @@ async def test_status_fan_speed.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "fan_speed": "max"
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_FAN_SPEED) == "max"
 
 
@@ -387,9 +387,9 @@ async def test_status_fan_speed_list.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_FAN_SPEED_LIST) == ["min", "medium", "high", "max"]
 
 
@@ -405,9 +405,9 @@ async def test_status_no_fan_speed_list.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_FAN_SPEED_LIST) is None
 
 
@@ -419,20 +419,20 @@ async def test_status_error.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     message = """{
         "error": "Error1"
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_STATUS) == "Error: Error1"
 
     message = """{
         "error": ""
     }"""
     async_fire_mqtt_message.opp, "vacuum/state", message)
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_STATUS) == "Stopped"
 
 
@@ -450,10 +450,10 @@ async def test_battery_template.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "retroroomba/battery_level", "54")
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_BATTERY_LEVEL) == 54
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-50"
 
@@ -466,10 +466,10 @@ async def test_status_invalid_json.opp, mqtt_mock):
     )
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     async_fire_mqtt_message.opp, "vacuum/state", '{"asdfasas false}')
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_STATUS) == "Stopped"
 
@@ -480,9 +480,9 @@ async def test_missing_battery_template.opp, mqtt_mock):
     config.pop(mqttvacuum.CONF_BATTERY_LEVEL_TEMPLATE)
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
@@ -492,9 +492,9 @@ async def test_missing_charging_template.opp, mqtt_mock):
     config.pop(mqttvacuum.CONF_CHARGING_TEMPLATE)
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
@@ -504,9 +504,9 @@ async def test_missing_cleaning_template.opp, mqtt_mock):
     config.pop(mqttvacuum.CONF_CLEANING_TEMPLATE)
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
@@ -516,9 +516,9 @@ async def test_missing_docked_template.opp, mqtt_mock):
     config.pop(mqttvacuum.CONF_DOCKED_TEMPLATE)
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
@@ -528,9 +528,9 @@ async def test_missing_error_template.opp, mqtt_mock):
     config.pop(mqttvacuum.CONF_ERROR_TEMPLATE)
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
@@ -540,9 +540,9 @@ async def test_missing_fan_speed_template.opp, mqtt_mock):
     config.pop(mqttvacuum.CONF_FAN_SPEED_TEMPLATE)
 
     assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("vacuum.mqtttest")
+    state =.opp.states.get("vacuum.mqtttest")
     assert state is None
 
 

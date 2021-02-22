@@ -3,7 +3,7 @@
 import pytest
 
 from openpeerpower.components.mobile_app.const import DOMAIN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .const import REGISTER, REGISTER_CLEARTEXT
 
@@ -27,7 +27,7 @@ async def create_registrations.opp, authed_api_client):
     assert clear_reg.status == 201
     clear_reg_json = await clear_reg.json()
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     return (enc_reg_json, clear_reg_json)
 
@@ -66,12 +66,12 @@ async def webhook_client.opp, authed_api_client, aiohttp_client):
 async def authed_api_client.opp,.opp_client):
     """Provide an authenticated client for mobile_app to use."""
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
-    await opp..async_block_till_done()
-    return await opp._client()
+    await.opp.async_block_till_done()
+    return await.opp_client()
 
 
 @pytest.fixture(autouse=True)
 async def setup_ws.opp):
     """Configure the websocket_api component."""
     assert await async_setup_component.opp, "websocket_api", {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()

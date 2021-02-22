@@ -4,8 +4,8 @@ import voluptuous_serialize
 
 import openpeerpower.components.automation as automation
 from openpeerpower.components.number import DOMAIN, device_action
-from openpeerpowerr.helpers import config_validation as cv, device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import config_validation as cv, device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -33,7 +33,7 @@ def entity_reg.opp):
 async def test_get_actions.opp, device_reg, entity_reg):
     """Test we get the expected actions for an entity."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -55,7 +55,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
 async def test_get_action_no_state.opp, device_reg, entity_reg):
     """Test we get the expected actions for an entity."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -104,7 +104,7 @@ async def test_action.opp):
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event_set_value")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 1
 

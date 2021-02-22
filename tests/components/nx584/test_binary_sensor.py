@@ -6,7 +6,7 @@ import pytest
 import requests
 
 from openpeerpower.components.nx584 import binary_sensor as nx584
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 class StopMe(Exception):
@@ -58,7 +58,7 @@ def test_nx584_sensor_setup_defaults(mock_nx, mock_watcher,.opp, fake_zones):
         "zone_types": {},
     }
     assert nx584.setup_platform.opp, config, add_entities)
-    mock_nx.assert_op._calls([mock.call(zone, "opening") for zone in fake_zones])
+    mock_nx.assert_has_calls([mock.call(zone, "opening") for zone in fake_zones])
     assert add_entities.called
     assert nx584_client.Client.call_count == 1
     assert nx584_client.Client.call_args == mock.call("http://localhost:5007")
@@ -77,7 +77,7 @@ def test_nx584_sensor_setup_full_config(mock_nx, mock_watcher,.opp, fake_zones):
     }
     add_entities = mock.MagicMock()
     assert nx584.setup_platform.opp, config, add_entities)
-    mock_nx.assert_op._calls(
+    mock_nx.assert_has_calls(
         [
             mock.call(fake_zones[0], "opening"),
             mock.call(fake_zones[2], "motion"),
@@ -152,7 +152,7 @@ def test_nx584_zone_sensor_normal():
     assert not sensor.is_on
 
 
-@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_op.state")
+@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_ha_state")
 def test_nx584_watcher_process_zone_event(mock_update):
     """Test the processing of zone events."""
     zone1 = {"number": 1, "name": "foo", "state": True}
@@ -167,7 +167,7 @@ def test_nx584_watcher_process_zone_event(mock_update):
     assert mock_update.call_count == 1
 
 
-@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_op.state")
+@mock.patch.object(nx584.NX584ZoneSensor, "schedule_update_ha_state")
 def test_nx584_watcher_process_zone_event_missing_zone(mock_update):
     """Test the processing of zone events with missing zones."""
     watcher = nx584.NX584Watcher(None, {})
@@ -225,4 +225,4 @@ def test_nx584_watcher_run_retries_failures(mock_sleep):
         with pytest.raises(StopMe):
             watcher.run()
         assert 3 == mock_inner.call_count
-    mock_sleep.assert_op._calls([mock.call(10), mock.call(10)])
+    mock_sleep.assert_has_calls([mock.call(10), mock.call(10)])

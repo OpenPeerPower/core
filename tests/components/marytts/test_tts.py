@@ -10,10 +10,10 @@ from openpeerpower.components.media_player.const import (
     SERVICE_PLAY_MEDIA,
 )
 import openpeerpower.components.tts as tts
-from openpeerpower.config import async_process_op.core_config
-from openpeerpowerr.setup import setup_component
+from openpeerpower.config import async_process_ha_core_config
+from openpeerpower.setup import setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant, mock_service
+from tests.common import assert_setup_component, get_test_open_peer_power, mock_service
 
 
 class TestTTSMaryTTSPlatform:
@@ -21,10 +21,10 @@ class TestTTSMaryTTSPlatform:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         asyncio.run_coroutine_threadsafe(
-            async_process_op.core_config(
+            async_process_ha_core_config(
                 self.opp, {"internal_url": "http://example.local:8123"}
             ),
             self.opp.loop,

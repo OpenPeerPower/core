@@ -12,9 +12,9 @@ from openpeerpower.components.weather import (
     DOMAIN as WEATHER_DOMAIN,
 )
 from openpeerpower.const import STATE_UNAVAILABLE, STATE_UNKNOWN
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
-from openpeerpowerr.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
+from openpeerpower.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM
 
 from tests.common import MockConfigEntry, async_fire_time_changed
 from tests.components.nws.const import (
@@ -40,7 +40,7 @@ async def test_imperial_metric(
 ):
     """Test with imperial and metric units."""
     # enable the hourly entity
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     registry.async_get_or_create(
         WEATHER_DOMAIN,
         nws.DOMAIN,
@@ -54,11 +54,11 @@ async def test_imperial_metric(
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.abc_hourly")
+    state =.opp.states.get("weather.abc_hourly")
 
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
@@ -71,7 +71,7 @@ async def test_imperial_metric(
     for key, value in result_forecast.items():
         assert forecast[0].get(key) == value
 
-    state = opp.states.get("weather.abc_daynight")
+    state =.opp.states.get("weather.abc_daynight")
 
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
@@ -95,11 +95,11 @@ async def test_none_values.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.abc_daynight")
+    state =.opp.states.get("weather.abc_daynight")
     assert state.state == STATE_UNKNOWN
     data = state.attributes
     for key in EXPECTED_OBSERVATION_IMPERIAL:
@@ -120,11 +120,11 @@ async def test_none.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.abc_daynight")
+    state =.opp.states.get("weather.abc_daynight")
     assert state
     assert state.state == STATE_UNKNOWN
 
@@ -146,9 +146,9 @@ async def test_error_station.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("weather.abc_hourly") is None
     assert.opp.states.get("weather.abc_daynight") is None
@@ -158,26 +158,26 @@ async def test_entity_refresh.opp, mock_simple_nws):
     """Test manual refresh."""
     instance = mock_simple_nws.return_value
 
-    await async_setup_component.opp, "openpeerpowerr", {})
+    await async_setup_component.opp, "openpeerpower", {})
 
     entry = MockConfigEntry(
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
     instance.update_observation.assert_called_once()
     instance.update_forecast.assert_called_once()
     instance.update_forecast_hourly.assert_called_once()
 
-    await opp..services.async_call(
-        "openpeerpowerr",
+    await.opp.services.async_call(
+        "openpeerpower",
         "update_entity",
         {"entity_id": "weather.abc_daynight"},
         blocking=True,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert instance.update_observation.call_count == 2
     assert instance.update_forecast.call_count == 2
     instance.update_forecast_hourly.assert_called_once()
@@ -205,24 +205,24 @@ async def test_error_observation.opp, mock_simple_nws):
             domain=nws.DOMAIN,
             data=NWS_CONFIG,
         )
-        entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
         instance.update_observation.assert_called_once()
 
-        state = opp.states.get("weather.abc_daynight")
+        state =.opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
         # second update happens faster and succeeds
         instance.update_observation.side_effect = None
         increment_time(timedelta(minutes=1))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert instance.update_observation.call_count == 2
 
-        state = opp.states.get("weather.abc_daynight")
+        state =.opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == ATTR_CONDITION_SUNNY
 
@@ -230,19 +230,19 @@ async def test_error_observation.opp, mock_simple_nws):
         instance.update_observation.side_effect = aiohttp.ClientError
 
         increment_time(timedelta(minutes=10))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert instance.update_observation.call_count == 3
 
-        state = opp.states.get("weather.abc_daynight")
+        state =.opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == ATTR_CONDITION_SUNNY
 
         # after 20 minutes data caching expires, data is no longer shown
         increment_time(timedelta(minutes=10))
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("weather.abc_daynight")
+        state =.opp.states.get("weather.abc_daynight")
         assert state
         assert state.state == STATE_UNAVAILABLE
 
@@ -256,24 +256,24 @@ async def test_error_forecast.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     instance.update_forecast.assert_called_once()
 
-    state = opp.states.get("weather.abc_daynight")
+    state =.opp.states.get("weather.abc_daynight")
     assert state
     assert state.state == STATE_UNAVAILABLE
 
     instance.update_forecast.side_effect = None
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(minutes=1))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert instance.update_forecast.call_count == 2
 
-    state = opp.states.get("weather.abc_daynight")
+    state =.opp.states.get("weather.abc_daynight")
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
 
@@ -284,7 +284,7 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
     instance.update_forecast_hourly.side_effect = aiohttp.ClientError
 
     # enable the hourly entity
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     registry.async_get_or_create(
         WEATHER_DOMAIN,
         nws.DOMAIN,
@@ -297,11 +297,11 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.abc_hourly")
+    state =.opp.states.get("weather.abc_hourly")
     assert state
     assert state.state == STATE_UNAVAILABLE
 
@@ -310,11 +310,11 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
     instance.update_forecast_hourly.side_effect = None
 
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(minutes=1))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert instance.update_forecast_hourly.call_count == 2
 
-    state = opp.states.get("weather.abc_hourly")
+    state =.opp.states.get("weather.abc_hourly")
     assert state
     assert state.state == ATTR_CONDITION_SUNNY
 
@@ -325,12 +325,12 @@ async def test_forecast_hourly_disable_enable.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get_or_create(
         WEATHER_DOMAIN,
         nws.DOMAIN,
