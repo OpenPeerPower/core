@@ -8,7 +8,7 @@ from openpeerpower import data_entry_flow
 from openpeerpower.components.wled import config_flow
 from openpeerpower.config_entries import SOURCE_USER, SOURCE_ZEROCONF
 from openpeerpower.const import CONF_HOST, CONF_MAC, CONF_NAME, CONTENT_TYPE_JSON
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from . import init_integration
 
@@ -18,7 +18,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 async def test_show_user_form.opp: OpenPeerPower) -> None:
     """Test that the user set up form is served."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -30,7 +30,7 @@ async def test_show_user_form.opp: OpenPeerPower) -> None:
 async def test_show_zeroconf_confirm_form.opp: OpenPeerPower) -> None:
     """Test that the zeroconf confirmation form is served."""
     flow = config_flow.WLEDFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_ZEROCONF, CONF_NAME: "test"}
     result = await flow.async_step_zeroconf_confirm()
 
@@ -50,7 +50,7 @@ async def test_show_zerconf_form(
     )
 
     flow = config_flow.WLEDFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_ZEROCONF}
     result = await flow.async_step_zeroconf(
         {"host": "192.168.1.123", "hostname": "example.local.", "properties": {}}
@@ -70,7 +70,7 @@ async def test_connection_error(
     """Test we show user form on WLED connection error."""
     aioclient_mock.get("http://example.com/json/", exc=aiohttp.ClientError)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: "example.com"},
@@ -88,7 +88,7 @@ async def test_zeroconf_connection_error(
     """Test we abort zeroconf flow on WLED connection error."""
     aioclient_mock.get("http://192.168.1.123/json/", exc=aiohttp.ClientError)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data={"host": "192.168.1.123", "hostname": "example.local.", "properties": {}},
@@ -105,7 +105,7 @@ async def test_zeroconf_confirm_connection_error(
     """Test we abort zeroconf flow on WLED connection error."""
     aioclient_mock.get("http://192.168.1.123:80/json/", exc=aiohttp.ClientError)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={
             "source": SOURCE_ZEROCONF,
@@ -125,7 +125,7 @@ async def test_zeroconf_no_data(
 ) -> None:
     """Test we abort if zeroconf provides no data."""
     flow = config_flow.WLEDFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     result = await flow.async_step_zeroconf()
 
     assert result["reason"] == "cannot_connect"
@@ -138,7 +138,7 @@ async def test_user_device_exists_abort(
     """Test we abort zeroconf flow if WLED device already configured."""
     await init_integration.opp, aioclient_mock)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
         data={CONF_HOST: "192.168.1.123"},
@@ -154,7 +154,7 @@ async def test_zeroconf_device_exists_abort(
     """Test we abort zeroconf flow if WLED device already configured."""
     await init_integration.opp, aioclient_mock)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data={"host": "192.168.1.123", "hostname": "example.local.", "properties": {}},
@@ -170,7 +170,7 @@ async def test_zeroconf_with_mac_device_exists_abort(
     """Test we abort zeroconf flow if WLED device already configured."""
     await init_integration.opp, aioclient_mock)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data={
@@ -194,7 +194,7 @@ async def test_full_user_flow_implementation(
         headers={"Content-Type": CONTENT_TYPE_JSON},
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -202,7 +202,7 @@ async def test_full_user_flow_implementation(
     assert result["step_id"] == "user"
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={CONF_HOST: "192.168.1.123"}
     )
 
@@ -223,7 +223,7 @@ async def test_full_zeroconf_flow_implementation(
     )
 
     flow = config_flow.WLEDFlowHandler()
-    flow.opp = opp
+    flow.opp =.opp
     flow.context = {"source": SOURCE_ZEROCONF}
     result = await flow.async_step_zeroconf(
         {"host": "192.168.1.123", "hostname": "example.local.", "properties": {}}

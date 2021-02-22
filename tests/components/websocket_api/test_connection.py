@@ -28,7 +28,7 @@ async def test_send_big_result.opp, websocket_client):
     assert msg["result"] == {"big": "result"}
 
 
-async def test_exception_op.dling():
+async def test_exception_handling():
     """Test handling of exceptions."""
     send_messages = []
     conn = websocket_api.ActiveConnection(
@@ -51,7 +51,7 @@ async def test_exception_op.dling():
         (ValueError("Really bad"), websocket_api.ERR_UNKNOWN_ERROR, "Unknown error"),
     ):
         send_messages.clear()
-        conn.async_op.dle_exception({"id": 5}, exc)
+        conn.async_handle_exception({"id": 5}, exc)
         assert len(send_messages) == 1
         assert send_messages[0]["error"]["code"] == code
         assert send_messages[0]["error"]["message"] == err

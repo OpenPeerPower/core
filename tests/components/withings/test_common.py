@@ -15,8 +15,8 @@ from openpeerpower.components.withings.common import (
     DataManager,
     WebhookConfig,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers.config_entry_oauth2_flow import AbstractOAuth2Implementation
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.config_entry_oauth2_flow import AbstractOAuth2Implementation
 
 from tests.common import MockConfigEntry
 from tests.components.withings.common import (
@@ -32,7 +32,7 @@ async def test_config_entry_withings_api.opp: OpenPeerPower) -> None:
     config_entry = MockConfigEntry(
         data={"token": {"access_token": "mock_access_token", "expires_at": 1111111}}
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     implementation_mock = MagicMock(spec=AbstractOAuth2Implementation)
     implementation_mock.async_refresh_token.return_value = {
@@ -48,7 +48,7 @@ async def test_config_entry_withings_api.opp: OpenPeerPower) -> None:
         )
 
         api = ConfigEntryWithingsApi.opp, config_entry, implementation_mock)
-        response = await opp..async_add_executor_job(
+        response = await.opp.async_add_executor_job(
             api.request, "test", {"arg1": "val1", "arg2": "val2"}
         )
         assert response == {"message": "success"}
@@ -95,7 +95,7 @@ async def test_webhook_post(
     )
 
     # Wait for remaining tasks to complete.
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     data = await resp.json()
     resp.close()
@@ -136,7 +136,7 @@ async def test_webhook_put(
     resp = await client.put(urlparse(data_manager.webhook_config.url).path)
 
     # Wait for remaining tasks to complete.
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert resp.status == 200
     data = await resp.json()

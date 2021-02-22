@@ -1,17 +1,18 @@
 """Test the Z-Wave JS Websocket API."""
+import json
 from unittest.mock import patch
 
 from zwave_js_server.event import Event
 
 from openpeerpower.components.zwave_js.api import ENTRY_ID, ID, NODE_ID, TYPE
 from openpeerpower.components.zwave_js.const import DOMAIN
-from openpeerpowerr.helpers.device_registry import async_get_registry
+from openpeerpower.helpers.device_registry import async_get_registry
 
 
 async def test_websocket_api.opp, integration, multisensor_6,.opp_ws_client):
     """Test the network and node status websocket commands."""
     entry = integration
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     await ws_client.send_json(
         {ID: 2, TYPE: "zwave_js/network_status", ENTRY_ID: entry.entry_id}
@@ -46,7 +47,7 @@ async def test_add_node(
 ):
     """Test the add_node websocket command."""
     entry = integration
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     client.async_send_command.return_value = {"success": True}
 
@@ -78,7 +79,7 @@ async def test_add_node(
 async def test_cancel_inclusion_exclusion.opp, integration, client,.opp_ws_client):
     """Test cancelling the inclusion and exclusion process."""
     entry = integration
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     client.async_send_command.return_value = {"success": True}
 
@@ -107,7 +108,7 @@ async def test_remove_node(
 ):
     """Test the remove_node websocket command."""
     entry = integration
-    ws_client = await opp._ws_client.opp)
+    ws_client = await.opp_ws_client.opp)
 
     client.async_send_command.return_value = {"success": True}
 
@@ -157,18 +158,18 @@ async def test_remove_node(
 
 async def test_dump_view(integration,.opp_client):
     """Test the HTTP dump view."""
-    client = await opp._client()
+    client = await.opp_client()
     with patch(
         "zwave_js_server.dump.dump_msgs",
         return_value=[{"hello": "world"}, {"second": "msg"}],
     ):
         resp = await client.get(f"/api/zwave_js/dump/{integration.entry_id}")
     assert resp.status == 200
-    assert await resp.text() == '{"hello": "world"}\n{"second": "msg"}\n'
+    assert json.loads(await resp.text()) == [{"hello": "world"}, {"second": "msg"}]
 
 
 async def test_dump_view_invalid_entry_id(integration,.opp_client):
     """Test an invalid config entry id parameter."""
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.get("/api/zwave_js/dump/INVALID")
     assert resp.status == 400

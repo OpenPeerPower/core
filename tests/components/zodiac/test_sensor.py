@@ -17,8 +17,8 @@ from openpeerpower.components.zodiac.const import (
     SIGN_SCORPIO,
     SIGN_TAURUS,
 )
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 DAY1 = datetime(2020, 11, 15, tzinfo=dt_util.UTC)
 DAY2 = datetime(2020, 4, 20, tzinfo=dt_util.UTC)
@@ -39,9 +39,9 @@ async def test_zodiac_day.opp, now, sign, element, modality):
 
     with patch("openpeerpower.components.zodiac.sensor.utcnow", return_value=now):
         assert await async_setup_component.opp, DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.zodiac")
+    state =.opp.states.get("sensor.zodiac")
     assert state
     assert state.state == sign
     assert state.attributes

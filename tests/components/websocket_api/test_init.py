@@ -28,10 +28,10 @@ async def test_invalid_json(websocket_client):
     assert msg.type == WSMsgType.close
 
 
-async def test_quiting_opp.opp, websocket_client):
+async def test_quiting.opp.opp, websocket_client):
     """Test sending invalid JSON."""
     with patch.object.opp.loop, "stop"):
-        await opp..async_stop()
+        await.opp.async_stop()
 
     msg = await websocket_client.receive()
 
@@ -47,7 +47,7 @@ async def test_unknown_command(websocket_client):
     assert msg["error"]["code"] == const.ERR_UNKNOWN_COMMAND
 
 
-async def test_op.dler_failing.opp, websocket_client):
+async def test_handler_failing.opp, websocket_client):
     """Test a command that raises."""
    .opp.components.websocket_api.async_register_command(
         "bla",

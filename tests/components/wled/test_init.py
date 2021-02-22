@@ -5,7 +5,7 @@ from wled import WLEDConnectionError
 
 from openpeerpower.components.wled.const import DOMAIN
 from openpeerpower.config_entries import ENTRY_STATE_SETUP_RETRY
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.components.wled import init_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -27,8 +27,8 @@ async def test_unload_config_entry(
     entry = await init_integration.opp, aioclient_mock)
     assert.opp.data[DOMAIN]
 
-    await opp..config_entries.async_unload(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_unload(entry.entry_id)
+    await.opp.async_block_till_done()
     assert not.opp.data.get(DOMAIN)
 
 

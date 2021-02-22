@@ -9,13 +9,13 @@ from unittest.mock import patch
 import async_timeout
 from pywemo.ouimeaux_device.api.service import ActionException
 
-from openpeerpower.components.openpeerpowerr import (
+from openpeerpower.components.openpeerpower import (
     DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF, STATE_UNAVAILABLE
-from openpeerpowerr.core import callback
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import callback
+from openpeerpower.setup import async_setup_component
 
 
 def _perform_registry_callback.opp, pywemo_registry, pywemo_device):
@@ -31,7 +31,7 @@ def _perform_registry_callback.opp, pywemo_registry, pywemo_device):
 
 
 def _perform_async_update.opp, wemo_entity):
-    """Return a callable method to cause opp to update the state of the entity."""
+    """Return a callable method to cause.opp to update the state of the entity."""
 
     @callback
     def async_callback():
@@ -91,7 +91,7 @@ async def test_async_update_locked_callback_and_update(
     """Test that a callback and a state update request can't both happen at the same time.
 
     When a state update is received via a callback from the device at the same time
-    as opp is calling `async_update`, verify that only one of the updates proceeds.
+    as.opp is calling `async_update`, verify that only one of the updates proceeds.
     """
     await async_setup_component.opp, HA_DOMAIN, {})
     callback = _perform_registry_callback.opp, pywemo_registry, pywemo_device)
@@ -104,7 +104,7 @@ async def test_async_update_locked_callback_and_update(
 async def test_async_update_locked_multiple_updates(
    .opp, pywemo_registry, wemo_entity, pywemo_device, **kwargs
 ):
-    """Test that two opp async_update state updates do not proceed at the same time."""
+    """Test that two.opp async_update state updates do not proceed at the same time."""
     await async_setup_component.opp, HA_DOMAIN, {})
     update = _perform_async_update.opp, wemo_entity)
     await _async_multiple_call_helper(
@@ -132,7 +132,7 @@ async def test_async_locked_update_with_exception(
     update_polling_method = update_polling_method or pywemo_device.get_state
     update_polling_method.side_effect = ActionException
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -160,7 +160,7 @@ async def test_async_update_with_timeout_and_recovery.opp, wemo_entity, pywemo_d
     timeout = async_timeout.timeout(0)
 
     with patch("async_timeout.timeout", return_value=timeout):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             HA_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -171,5 +171,5 @@ async def test_async_update_with_timeout_and_recovery.opp, wemo_entity, pywemo_d
 
     # Check that the entity recovers and is available after the update succeeds.
     event.set()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF

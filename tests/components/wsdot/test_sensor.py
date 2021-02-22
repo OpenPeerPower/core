@@ -13,7 +13,7 @@ from openpeerpower.components.wsdot.sensor import (
     RESOURCE,
     SCAN_INTERVAL,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import load_fixture
 

@@ -7,8 +7,8 @@ import pytest
 
 import openpeerpower.components.sensor as sensor
 from openpeerpower.const import CONF_NAME
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import assert_setup_component, load_fixture
 
@@ -51,7 +51,7 @@ async def assert_setup_sensor.opp, config, count=1):
     """Set up the sensor and assert it's been created."""
     with assert_setup_component(count):
         assert await async_setup_component.opp, sensor.DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_setup_platform_valid_config.opp, mock_requester):
@@ -69,20 +69,20 @@ async def test_setup_platform_invalid_config.opp, mock_requester):
 async def test_name.opp, mock_requester):
     """Return the name if set in the configuration."""
     await assert_setup_sensor.opp, TEST_CONFIG)
-    state = opp.states.get("sensor.test_name")
+    state =.opp.states.get("sensor.test_name")
     assert state.name == TEST_CONFIG["sensor"][CONF_NAME]
 
 
 async def test_state.opp, mock_requester):
     """Return the contents of _state."""
     await assert_setup_sensor.opp, TEST_CONFIG)
-    state = opp.states.get("sensor.test_name")
+    state =.opp.states.get("sensor.test_name")
     assert state.state == RESULT_STATE
 
 
 async def test_filtered_attributes.opp, mock_requester):
     """Return the contents of attributes."""
     await assert_setup_sensor.opp, TEST_CONFIG)
-    state = opp.states.get("sensor.test_name")
+    state =.opp.states.get("sensor.test_name")
     state_attrs = {key: state.attributes[key] for key in FILTERED_ATTRS}
     assert state_attrs == FILTERED_ATTRS

@@ -7,8 +7,8 @@ from openpeerpower.components.withings.common import (
 )
 from openpeerpower.components.withings.const import Measurement
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers.entity_registry import EntityRegistry
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.entity_registry import EntityRegistry
 
 from .common import ComponentFactory, new_profile_config
 
@@ -22,7 +22,7 @@ async def test_binary_sensor(
     person1 = new_profile_config("person1", 1)
 
     entity_registry: EntityRegistry = (
-        await opp..helpers.entity_registry.async_get_registry()
+        await.opp.helpers.entity_registry.async_get_registry()
     )
 
     await component_factory.configure_component(profile_configs=(person0, person1))
@@ -43,12 +43,12 @@ async def test_binary_sensor(
 
     resp = await component_factory.call_webhook(person0.user_id, NotifyAppli.BED_IN)
     assert resp.message_code == 0
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id0).state == STATE_ON
 
     resp = await component_factory.call_webhook(person0.user_id, NotifyAppli.BED_OUT)
     assert resp.message_code == 0
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id0).state == STATE_OFF
 
     # person 1
@@ -56,7 +56,7 @@ async def test_binary_sensor(
 
     resp = await component_factory.call_webhook(person1.user_id, NotifyAppli.BED_IN)
     assert resp.message_code == 0
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id1).state == STATE_ON
 
     # Unload

@@ -12,8 +12,8 @@ from openpeerpower.components.device_automation import (
     _async_get_device_automations as async_get_device_automations,
 )
 from openpeerpower.components.zha import DOMAIN
-from openpeerpowerr.helpers.device_registry import async_get_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.device_registry import async_get_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service, mock_coro
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
@@ -40,7 +40,7 @@ async def device_ias.opp, zigpy_device_mock, zha_device_joined_restored):
 
     zha_device = await zha_device_joined_restored(zigpy_device)
     zha_device.update_available(True)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     return zigpy_device, zha_device
 
 
@@ -50,7 +50,7 @@ async def test_get_actions.opp, device_ias):
     ieee_address = str(device_ias[0].ieee)
 
     ha_device_registry = await async_get_registry.opp)
-    reg_device = op.device_registry.async_get_device({(DOMAIN, ieee_address)})
+    reg_device = ha_device_registry.async_get_device({(DOMAIN, ieee_address)})
 
     actions = await async_get_device_automations.opp, "action", reg_device.id)
 
@@ -73,7 +73,7 @@ async def test_action.opp, device_ias):
     ieee_address = str(zha_device.ieee)
 
     ha_device_registry = await async_get_registry.opp)
-    reg_device = op.device_registry.async_get_device({(DOMAIN, ieee_address)})
+    reg_device = ha_device_registry.async_get_device({(DOMAIN, ieee_address)})
 
     with patch(
         "zigpy.zcl.Cluster.request",
@@ -102,12 +102,12 @@ async def test_action.opp, device_ias):
             },
         )
 
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         calls = async_mock_service.opp, DOMAIN, "warning_device_warn")
 
         channel = zha_device.channels.pools[0].client_channels["1:0x0006"]
         channel.zha_send_event(COMMAND_SINGLE, [])
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert len(calls) == 1
         assert calls[0].domain == DOMAIN

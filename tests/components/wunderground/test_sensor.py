@@ -9,8 +9,8 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.exceptions import PlatformNotReady
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component, load_fixture
 
@@ -66,7 +66,7 @@ async def test_setup.opp, aioclient_mock):
 
     with assert_setup_component(1, "sensor"):
         await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
 
 async def test_setup_pws.opp, aioclient_mock):
@@ -90,9 +90,9 @@ async def test_sensor.opp, aioclient_mock):
     aioclient_mock.get(URL, text=load_fixture("wunderground-valid.json"))
 
     await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.pws_weather")
+    state =.opp.states.get("sensor.pws_weather")
     assert state.state == "Clear"
     assert state.name == "Weather Summary"
     assert ATTR_UNIT_OF_MEASUREMENT not in state.attributes
@@ -100,32 +100,32 @@ async def test_sensor.opp, aioclient_mock):
         state.attributes["entity_picture"] == "https://icons.wxug.com/i/c/k/clear.gif"
     )
 
-    state = opp.states.get("sensor.pws_alerts")
+    state =.opp.states.get("sensor.pws_alerts")
     assert state.state == "1"
     assert state.name == "Alerts"
     assert state.attributes["Message"] == "This is a test alert message"
     assert state.attributes["icon"] == "mdi:alert-circle-outline"
     assert "entity_picture" not in state.attributes
 
-    state = opp.states.get("sensor.pws_location")
+    state =.opp.states.get("sensor.pws_location")
     assert state.state == "Holly Springs, NC"
     assert state.name == "Location"
 
-    state = opp.states.get("sensor.pws_elevation")
+    state =.opp.states.get("sensor.pws_elevation")
     assert state.state == "413"
     assert state.name == "Elevation"
 
-    state = opp.states.get("sensor.pws_feelslike_c")
+    state =.opp.states.get("sensor.pws_feelslike_c")
     assert state.state == "40"
     assert state.name == "Feels Like"
     assert "entity_picture" not in state.attributes
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == TEMP_CELSIUS
 
-    state = opp.states.get("sensor.pws_weather_1d_metric")
+    state =.opp.states.get("sensor.pws_weather_1d_metric")
     assert state.state == "Mostly Cloudy. Fog overnight."
     assert state.name == "Tuesday"
 
-    state = opp.states.get("sensor.pws_precip_1d_in")
+    state =.opp.states.get("sensor.pws_precip_1d_in")
     assert state.state == "0.03"
     assert state.name == "Precipitation Intensity Today"
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == LENGTH_INCHES
@@ -143,10 +143,10 @@ async def test_invalid_data.opp, aioclient_mock):
     aioclient_mock.get(URL, text=load_fixture("wunderground-invalid.json"))
 
     await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     for condition in VALID_CONFIG["monitored_conditions"]:
-        state = opp.states.get(f"sensor.pws_{condition}")
+        state =.opp.states.get(f"sensor.pws_{condition}")
         assert state.state == STATE_UNKNOWN
 
 
@@ -157,13 +157,13 @@ async def test_entity_id_with_multiple_stations.opp, aioclient_mock):
 
     config = [VALID_CONFIG, {**VALID_CONFIG_PWS, "entity_namespace": "hi"}]
     await async_setup_component.opp, "sensor", {"sensor": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.pws_weather")
+    state =.opp.states.get("sensor.pws_weather")
     assert state is not None
     assert state.state == "Clear"
 
-    state = opp.states.get("sensor.hi_pws_weather")
+    state =.opp.states.get("sensor.hi_pws_weather")
     assert state is not None
     assert state.state == "Clear"
 
@@ -179,9 +179,9 @@ async def test_fails_because_of_unique_id.opp, aioclient_mock):
         VALID_CONFIG_PWS,
     ]
     await async_setup_component.opp, "sensor", {"sensor": config})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    states = opp.states.async_all()
+    states =.opp.states.async_all()
     expected = len(VALID_CONFIG["monitored_conditions"]) + len(
         VALID_CONFIG_PWS["monitored_conditions"]
     )

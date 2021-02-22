@@ -19,7 +19,7 @@ EATON_RF9640_ENTITY = "light.allloaddimmer"
 async def test_light.opp, client, bulb_6_multi_color, integration):
     """Test the light entity."""
     node = bulb_6_multi_color
-    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
 
     assert state
     assert state.state == STATE_OFF
@@ -28,7 +28,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 51
 
     # Test turning on
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY},
@@ -79,13 +79,13 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     )
     node.receive_event(event)
 
-    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes[ATTR_COLOR_TEMP] == 370
 
     # Test turning on with same brightness
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_BRIGHTNESS: 255},
@@ -97,7 +97,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with brightness
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_BRIGHTNESS: 129},
@@ -129,7 +129,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with rgb color
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_RGB_COLOR: (255, 76, 255)},
@@ -203,24 +203,28 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
                 "property": "currentColor",
                 "newValue": 255,
                 "prevValue": 0,
+                "propertyKey": 2,
                 "propertyKeyName": "Red",
             },
         },
     )
     green_event = deepcopy(red_event)
-    green_event.data["args"].update({"newValue": 76, "propertyKeyName": "Green"})
+    green_event.data["args"].update(
+        {"newValue": 76, "propertyKey": 3, "propertyKeyName": "Green"}
+    )
     blue_event = deepcopy(red_event)
+    blue_event.data["args"]["propertyKey"] = 4
     blue_event.data["args"]["propertyKeyName"] = "Blue"
     warm_white_event = deepcopy(red_event)
     warm_white_event.data["args"].update(
-        {"newValue": 0, "propertyKeyName": "Warm White"}
+        {"newValue": 0, "propertyKey": 0, "propertyKeyName": "Warm White"}
     )
     node.receive_event(warm_white_event)
     node.receive_event(red_event)
     node.receive_event(green_event)
     node.receive_event(blue_event)
 
-    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes[ATTR_COLOR_TEMP] == 370
@@ -229,7 +233,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with same rgb color
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_RGB_COLOR: (255, 76, 255)},
@@ -241,7 +245,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning on with color temp
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_COLOR_TEMP: 170},
@@ -316,23 +320,25 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
                 "property": "currentColor",
                 "newValue": 0,
                 "prevValue": 255,
+                "propertyKey": 2,
                 "propertyKeyName": "Red",
             },
         },
     )
     green_event = deepcopy(red_event)
     green_event.data["args"].update(
-        {"newValue": 0, "prevValue": 76, "propertyKeyName": "Green"}
+        {"newValue": 0, "prevValue": 76, "propertyKey": 3, "propertyKeyName": "Green"}
     )
     blue_event = deepcopy(red_event)
+    blue_event.data["args"]["propertyKey"] = 4
     blue_event.data["args"]["propertyKeyName"] = "Blue"
     warm_white_event = deepcopy(red_event)
     warm_white_event.data["args"].update(
-        {"newValue": 20, "propertyKeyName": "Warm White"}
+        {"newValue": 20, "propertyKey": 0, "propertyKeyName": "Warm White"}
     )
     cold_white_event = deepcopy(red_event)
     cold_white_event.data["args"].update(
-        {"newValue": 235, "propertyKeyName": "Cold White"}
+        {"newValue": 235, "propertyKey": 1, "propertyKeyName": "Cold White"}
     )
     node.receive_event(red_event)
     node.receive_event(green_event)
@@ -340,14 +346,14 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     node.receive_event(warm_white_event)
     node.receive_event(cold_white_event)
 
-    state = opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
+    state =.opp.states.get(BULB_6_MULTI_COLOR_LIGHT_ENTITY)
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 255
     assert state.attributes[ATTR_COLOR_TEMP] == 170
     assert state.attributes[ATTR_RGB_COLOR] == (255, 255, 255)
 
     # Test turning on with same color temp
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY, ATTR_COLOR_TEMP: 170},
@@ -359,7 +365,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
     client.async_send_command.reset_mock()
 
     # Test turning off
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_off",
         {"entity_id": BULB_6_MULTI_COLOR_LIGHT_ENTITY},
@@ -391,7 +397,7 @@ async def test_light.opp, client, bulb_6_multi_color, integration):
 
 async def test_v4_dimmer_light.opp, client, eaton_rf9640_dimmer, integration):
     """Test a light that supports MultiLevelSwitch CommandClass version 4."""
-    state = opp.states.get(EATON_RF9640_ENTITY)
+    state =.opp.states.get(EATON_RF9640_ENTITY)
 
     assert state
     assert state.state == STATE_ON

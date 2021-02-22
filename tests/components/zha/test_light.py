@@ -13,7 +13,7 @@ from openpeerpower.components.light import DOMAIN, FLASH_LONG, FLASH_SHORT
 from openpeerpower.components.zha.core.group import GroupMember
 from openpeerpower.components.zha.light import FLASH_EFFECTS
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from .common import (
     async_enable_traffic,
@@ -186,7 +186,7 @@ async def test_light_refresh.opp, zigpy_device_mock, zha_device_joined_restored)
 
     # not enough time passed
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(minutes=20))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert on_off_cluster.read_attributes.call_count == 0
     assert on_off_cluster.read_attributes.await_count == 0
     assert.opp.states.get(entity_id).state == STATE_OFF
@@ -194,7 +194,7 @@ async def test_light_refresh.opp, zigpy_device_mock, zha_device_joined_restored)
     # 1 interval - 1 call
     on_off_cluster.read_attributes.return_value = [{"on_off": 1}, {}]
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(minutes=80))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert on_off_cluster.read_attributes.call_count == 1
     assert on_off_cluster.read_attributes.await_count == 1
     assert.opp.states.get(entity_id).state == STATE_ON
@@ -202,7 +202,7 @@ async def test_light_refresh.opp, zigpy_device_mock, zha_device_joined_restored)
     # 2 intervals - 2 calls
     on_off_cluster.read_attributes.return_value = [{"on_off": 0}, {}]
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(minutes=80))
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert on_off_cluster.read_attributes.call_count == 2
     assert on_off_cluster.read_attributes.await_count == 2
     assert.opp.states.get(entity_id).state == STATE_OFF
@@ -260,15 +260,15 @@ async def test_light(
     await async_test_on_off_from_light.opp, cluster_on_off, entity_id)
 
     # test turning the lights on and off from the HA
-    await async_test_on_off_from_opp.opp, cluster_on_off, entity_id)
+    await async_test_on_off_from.opp.opp, cluster_on_off, entity_id)
 
     # test short flashing the lights from the HA
     if cluster_identify:
-        await async_test_flash_from_opp.opp, cluster_identify, entity_id, FLASH_SHORT)
+        await async_test_flash_from.opp.opp, cluster_identify, entity_id, FLASH_SHORT)
 
     # test turning the lights on and off from the HA
     if cluster_level:
-        await async_test_level_on_off_from_opp(
+        await async_test_level_on_off_from.opp(
            .opp, cluster_on_off, cluster_level, entity_id
         )
 
@@ -279,7 +279,7 @@ async def test_light(
         )
 
     # test rejoin
-    await async_test_off_from_opp.opp, cluster_on_off, entity_id)
+    await async_test_off_from.opp.opp, cluster_on_off, entity_id)
     clusters = [cluster_on_off]
     if cluster_level:
         clusters.append(cluster_level)
@@ -289,19 +289,19 @@ async def test_light(
 
     # test long flashing the lights from the HA
     if cluster_identify:
-        await async_test_flash_from_opp.opp, cluster_identify, entity_id, FLASH_LONG)
+        await async_test_flash_from.opp.opp, cluster_identify, entity_id, FLASH_LONG)
 
 
 async def async_test_on_off_from_light.opp, cluster, entity_id):
     """Test on off functionality from the light."""
     # turn on at light
     await send_attributes_report.opp, cluster, {1: 0, 0: 1, 2: 3})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_ON
 
     # turn off at light
     await send_attributes_report.opp, cluster, {1: 1, 0: 0, 2: 3})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_OFF
 
 
@@ -309,15 +309,15 @@ async def async_test_on_from_light.opp, cluster, entity_id):
     """Test on off functionality from the light."""
     # turn on at light
     await send_attributes_report.opp, cluster, {1: -1, 0: 1, 2: 2})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == STATE_ON
 
 
-async def async_test_on_off_from_opp.opp, cluster, entity_id):
+async def async_test_on_off_from.opp.opp, cluster, entity_id):
     """Test on off functionality from.opp."""
     # turn on via UI
     cluster.request.reset_mock()
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert cluster.request.call_count == 1
@@ -326,15 +326,15 @@ async def async_test_on_off_from_opp.opp, cluster, entity_id):
         False, ON, (), expect_reply=True, manufacturer=None, tries=1, tsn=None
     )
 
-    await async_test_off_from_opp.opp, cluster, entity_id)
+    await async_test_off_from.opp.opp, cluster, entity_id)
 
 
-async def async_test_off_from_opp.opp, cluster, entity_id):
+async def async_test_off_from.opp.opp, cluster, entity_id):
     """Test turning off the light from Open Peer Power."""
 
     # turn off via UI
     cluster.request.reset_mock()
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "turn_off", {"entity_id": entity_id}, blocking=True
     )
     assert cluster.request.call_count == 1
@@ -344,7 +344,7 @@ async def async_test_off_from_opp.opp, cluster, entity_id):
     )
 
 
-async def async_test_level_on_off_from_opp(
+async def async_test_level_on_off_from.opp(
    .opp, on_off_cluster, level_cluster, entity_id
 ):
     """Test on off functionality from.opp."""
@@ -352,7 +352,7 @@ async def async_test_level_on_off_from_opp(
     on_off_cluster.request.reset_mock()
     level_cluster.request.reset_mock()
     # turn on via UI
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": entity_id}, blocking=True
     )
     assert on_off_cluster.request.call_count == 1
@@ -365,7 +365,7 @@ async def async_test_level_on_off_from_opp(
     on_off_cluster.request.reset_mock()
     level_cluster.request.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": entity_id, "transition": 10}, blocking=True
     )
     assert on_off_cluster.request.call_count == 1
@@ -389,7 +389,7 @@ async def async_test_level_on_off_from_opp(
     on_off_cluster.request.reset_mock()
     level_cluster.request.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": entity_id, "brightness": 10}, blocking=True
     )
     assert on_off_cluster.request.call_count == 1
@@ -413,7 +413,7 @@ async def async_test_level_on_off_from_opp(
     on_off_cluster.request.reset_mock()
     level_cluster.request.reset_mock()
 
-    await async_test_off_from_opp.opp, on_off_cluster, entity_id)
+    await async_test_off_from.opp.opp, on_off_cluster, entity_id)
 
 
 async def async_test_dimmer_from_light.opp, cluster, entity_id, level, expected_state):
@@ -422,19 +422,19 @@ async def async_test_dimmer_from_light.opp, cluster, entity_id, level, expected_
     await send_attributes_report(
        .opp, cluster, {1: level + 10, 0: level, 2: level - 10 or 22}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == expected_state
-    # opp uses None for brightness of 0 in state attributes
+    #.opp uses None for brightness of 0 in state attributes
     if level == 0:
         level = None
     assert.opp.states.get(entity_id).attributes.get("brightness") == level
 
 
-async def async_test_flash_from_opp.opp, cluster, entity_id, flash):
+async def async_test_flash_from.opp.opp, cluster, entity_id, flash):
     """Test flash functionality from.opp."""
     # turn on via UI
     cluster.request.reset_mock()
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": entity_id, "flash": flash}, blocking=True
     )
     assert cluster.request.call_count == 1
@@ -485,7 +485,7 @@ async def test_zha_group_light_entity(
 
     # test creating a group with 2 members
     zha_group = await zha_gateway.async_create_zigpy_group("Test Group", members)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert zha_group is not None
     assert len(zha_group.members) == 2
@@ -524,22 +524,22 @@ async def test_zha_group_light_entity(
     await async_enable_traffic(
        .opp, [device_light_1, device_light_2, device_light_3], enabled=False
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # test that the lights were created and that they are unavailable
     assert.opp.states.get(group_entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [device_light_1, device_light_2, device_light_3])
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # test that the lights were created and are off
     assert.opp.states.get(group_entity_id).state == STATE_OFF
 
     # test turning the lights on and off from the HA
-    await async_test_on_off_from_opp.opp, group_cluster_on_off, group_entity_id)
+    await async_test_on_off_from.opp.opp, group_cluster_on_off, group_entity_id)
 
     # test short flashing the lights from the HA
-    await async_test_flash_from_opp(
+    await async_test_flash_from.opp(
        .opp, group_cluster_identify, group_entity_id, FLASH_SHORT
     )
 
@@ -547,7 +547,7 @@ async def test_zha_group_light_entity(
     await async_test_on_off_from_light.opp, dev1_cluster_on_off, group_entity_id)
 
     # test turning the lights on and off from the HA
-    await async_test_level_on_off_from_opp(
+    await async_test_level_on_off_from.opp(
        .opp, group_cluster_on_off, group_cluster_level, group_entity_id
     )
 
@@ -558,7 +558,7 @@ async def test_zha_group_light_entity(
     )
 
     # test long flashing the lights from the HA
-    await async_test_flash_from_opp(
+    await async_test_flash_from.opp(
        .opp, group_cluster_identify, group_entity_id, FLASH_LONG
     )
 
@@ -566,7 +566,7 @@ async def test_zha_group_light_entity(
     # test some of the group logic to make sure we key off states correctly
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 1})
     await send_attributes_report.opp, dev2_cluster_on_off, {0: 1})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # test that group light is on
     assert.opp.states.get(device_1_entity_id).state == STATE_ON
@@ -574,7 +574,7 @@ async def test_zha_group_light_entity(
     assert.opp.states.get(group_entity_id).state == STATE_ON
 
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 0})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # test that group light is still on
     assert.opp.states.get(device_1_entity_id).state == STATE_OFF
@@ -582,7 +582,7 @@ async def test_zha_group_light_entity(
     assert.opp.states.get(group_entity_id).state == STATE_ON
 
     await send_attributes_report.opp, dev2_cluster_on_off, {0: 0})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # test that group light is now off
     assert.opp.states.get(device_1_entity_id).state == STATE_OFF
@@ -590,7 +590,7 @@ async def test_zha_group_light_entity(
     assert.opp.states.get(group_entity_id).state == STATE_OFF
 
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 1})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # test that group light is now back on
     assert.opp.states.get(device_1_entity_id).state == STATE_ON
@@ -599,7 +599,7 @@ async def test_zha_group_light_entity(
 
     # turn it off to test a new member add being tracked
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 0})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(device_1_entity_id).state == STATE_OFF
     assert.opp.states.get(device_2_entity_id).state == STATE_OFF
     assert.opp.states.get(group_entity_id).state == STATE_OFF
@@ -607,7 +607,7 @@ async def test_zha_group_light_entity(
     # add a new member and test that his state is also tracked
     await zha_group.async_add_members([GroupMember(device_light_3.ieee, 1)])
     await send_attributes_report.opp, dev3_cluster_on_off, {0: 1})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert device_3_entity_id in zha_group.member_entity_ids
     assert len(zha_group.members) == 3
 
@@ -631,14 +631,14 @@ async def test_zha_group_light_entity(
     # add a member back and ensure that the group entity was created again
     await zha_group.async_add_members([GroupMember(device_light_3.ieee, 1)])
     await send_attributes_report.opp, dev3_cluster_on_off, {0: 1})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(zha_group.members) == 2
     assert.opp.states.get(group_entity_id).state == STATE_ON
 
     # add a 3rd member and ensure we still have an entity and we track the new one
     await send_attributes_report.opp, dev1_cluster_on_off, {0: 0})
     await send_attributes_report.opp, dev3_cluster_on_off, {0: 0})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(group_entity_id).state == STATE_OFF
 
     # this will test that _reprobe_group is used correctly
@@ -646,12 +646,12 @@ async def test_zha_group_light_entity(
         [GroupMember(device_light_2.ieee, 1), GroupMember(coordinator.ieee, 1)]
     )
     await send_attributes_report.opp, dev2_cluster_on_off, {0: 1})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(zha_group.members) == 4
     assert.opp.states.get(group_entity_id).state == STATE_ON
 
     await zha_group.async_remove_members([GroupMember(coordinator.ieee, 1)])
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(group_entity_id).state == STATE_ON
     assert len(zha_group.members) == 3
 

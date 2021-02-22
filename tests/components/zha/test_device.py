@@ -10,8 +10,8 @@ import zigpy.zcl.clusters.general as general
 
 import openpeerpower.components.zha.core.device as zha_core_device
 from openpeerpower.const import STATE_OFF, STATE_UNAVAILABLE
-import openpeerpowerr.helpers.device_registry as ha_dev_reg
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.helpers.device_registry as ha_dev_reg
+import openpeerpower.util.dt as dt_util
 
 from .common import async_enable_traffic, make_zcl_header
 
@@ -118,7 +118,7 @@ async def test_check_available_success(
     device_with_basic_channel.last_seen = None
     assert zha_device.available is True
     _send_time_changed.opp, zha_core_device.CONSIDER_UNAVAILABLE_MAINS + 2)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert zha_device.available is False
     assert basic_ch.read_attributes.await_count == 0
 
@@ -134,21 +134,21 @@ async def test_check_available_success(
 
     # successfully ping zigpy device, but zha_device is not yet available
     _send_time_changed.opp, 91)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 1
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is False
 
     # There was traffic from the device: pings, but not yet available
     _send_time_changed.opp, 91)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is False
 
     # There was traffic from the device: don't try to ping, marked as available
     _send_time_changed.opp, 91)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is True
@@ -177,21 +177,21 @@ async def test_check_available_unsuccessful(
 
     # unsuccessfuly ping zigpy device, but zha_device is still available
     _send_time_changed.opp, 91)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 1
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is True
 
     # still no traffic, but zha_device is still available
     _send_time_changed.opp, 91)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is True
 
     # not even trying to update, device is unavailble
     _send_time_changed.opp, 91)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is False
@@ -218,7 +218,7 @@ async def test_check_available_no_basic_channel(
 
     assert "does not have a mandatory basic cluster" not in caplog.text
     _send_time_changed.opp, 91)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert zha_device.available is False
     assert "does not have a mandatory basic cluster" in caplog.text
 
@@ -235,7 +235,7 @@ async def test_ota_sw_version.opp, ota_zha_device):
     hdr = make_zcl_header(1, global_command=False)
     sw_version = 0x2345
     cluster.handle_message(hdr, [1, 2, 3, sw_version, None])
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     entry = dev_registry.async_get(ota_zha_device.device_id)
     assert int(entry.sw_version, base=16) == sw_version
 
@@ -293,7 +293,7 @@ async def test_device_restore_availability(
     )
     entity_id = "switch.fakemanufacturer_fakemodel_e769900a_on_off"
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # ensure the switch entity was created
     assert.opp.states.get(entity_id).state is not None
     assert zha_device.available is is_available

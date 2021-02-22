@@ -15,7 +15,7 @@ from .common import (
 
 async def test_low_battery_sensor.opp, multisensor_6, integration):
     """Test boolean binary sensor of type low battery."""
-    state = opp.states.get(LOW_BATTERY_BINARY_SENSOR)
+    state =.opp.states.get(LOW_BATTERY_BINARY_SENSOR)
 
     assert state
     assert state.state == STATE_OFF
@@ -28,7 +28,7 @@ async def test_enabled_legacy_sensor.opp, ecolink_door_sensor, integration):
     # this node has Notification CC not (fully) implemented
     # so legacy binary sensor should be enabled
 
-    state = opp.states.get(ENABLED_LEGACY_BINARY_SENSOR)
+    state =.opp.states.get(ENABLED_LEGACY_BINARY_SENSOR)
     assert state
     assert state.state == STATE_OFF
     assert state.attributes.get("device_class") is None
@@ -53,7 +53,7 @@ async def test_enabled_legacy_sensor.opp, ecolink_door_sensor, integration):
     )
     node.receive_event(event)
 
-    state = opp.states.get(ENABLED_LEGACY_BINARY_SENSOR)
+    state =.opp.states.get(ENABLED_LEGACY_BINARY_SENSOR)
     assert state.state == STATE_ON
 
 
@@ -61,9 +61,9 @@ async def test_disabled_legacy_sensor.opp, multisensor_6, integration):
     """Test disabled legacy boolean binary sensor."""
     # this node has Notification CC implemented so legacy binary sensor should be disabled
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
     entity_id = DISABLED_LEGACY_BINARY_SENSOR
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state is None
     entry = registry.async_get(entity_id)
     assert entry
@@ -80,7 +80,7 @@ async def test_disabled_legacy_sensor.opp, multisensor_6, integration):
 
 async def test_notification_sensor.opp, multisensor_6, integration):
     """Test binary sensor created from Notification CC."""
-    state = opp.states.get(NOTIFICATION_MOTION_BINARY_SENSOR)
+    state =.opp.states.get(NOTIFICATION_MOTION_BINARY_SENSOR)
 
     assert state
     assert state.state == STATE_ON
@@ -91,7 +91,7 @@ async def test_property_sensor_door_status.opp, lock_august_pro, integration):
     """Test property binary sensor with sensor mapping (doorStatus)."""
     node = lock_august_pro
 
-    state = opp.states.get(PROPERTY_DOOR_STATUS_BINARY_SENSOR)
+    state =.opp.states.get(PROPERTY_DOOR_STATUS_BINARY_SENSOR)
     assert state is not None
     assert state.state == STATE_OFF
 
@@ -114,7 +114,7 @@ async def test_property_sensor_door_status.opp, lock_august_pro, integration):
         },
     )
     node.receive_event(event)
-    state = opp.states.get(PROPERTY_DOOR_STATUS_BINARY_SENSOR)
+    state =.opp.states.get(PROPERTY_DOOR_STATUS_BINARY_SENSOR)
     assert state.state == STATE_ON
 
     # close door
@@ -136,5 +136,5 @@ async def test_property_sensor_door_status.opp, lock_august_pro, integration):
         },
     )
     node.receive_event(event)
-    state = opp.states.get(PROPERTY_DOOR_STATUS_BINARY_SENSOR)
+    state =.opp.states.get(PROPERTY_DOOR_STATUS_BINARY_SENSOR)
     assert state.state == STATE_OFF

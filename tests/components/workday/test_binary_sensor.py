@@ -6,9 +6,9 @@ import pytest
 import voluptuous as vol
 
 import openpeerpower.components.workday.binary_sensor as binary_sensor
-from openpeerpowerr.setup import setup_component
+from openpeerpower.setup import setup_component
 
-from tests.common import assert_setup_component, get_test_home_assistant
+from tests.common import assert_setup_component, get_test_open_peer_power
 
 FUNCTION_PATH = "openpeerpower.components.workday.binary_sensor.get_date"
 
@@ -18,7 +18,7 @@ class TestWorkdaySetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         # Set valid default config for test
         self.config_province = {

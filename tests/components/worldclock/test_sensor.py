@@ -1,8 +1,8 @@
 """The test for the World clock sensor platform."""
 import pytest
 
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 
 @pytest.fixture
@@ -20,9 +20,9 @@ async def test_time.opp, time_zone):
         "sensor",
         config,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.worldclock_sensor")
+    state =.opp.states.get("sensor.worldclock_sensor")
     assert state is not None
 
     assert state.state == dt_util.now(time_zone=time_zone).strftime("%H:%M")
@@ -44,9 +44,9 @@ async def test_time_format.opp, time_zone):
         "sensor",
         config,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.worldclock_sensor")
+    state =.opp.states.get("sensor.worldclock_sensor")
     assert state is not None
 
     assert state.state == dt_util.now(time_zone=time_zone).strftime(time_format)

@@ -6,7 +6,7 @@ from aiohttp import WSMsgType
 import pytest
 
 from openpeerpower.components.websocket_api import const, http
-from openpeerpowerr.util.dt import utcnow
+from openpeerpower.util.dt import utcnow
 
 from tests.common import async_fire_time_changed
 
@@ -35,19 +35,19 @@ async def test_pending_msg_overflow.opp, mock_low_queue, websocket_client):
 
 async def test_pending_msg_peak.opp, mock_low_peak,.opp_ws_client, caplog):
     """Test pending msg overflow command."""
-    orig_op.dler = http.WebSocketHandler
+    orig_handler = http.WebSocketHandler
     instance = None
 
-    def instantiate_op.dler(*args):
+    def instantiate_handler(*args):
         nonlocal instance
-        instance = orig_op.dler(*args)
+        instance = orig_handler(*args)
         return instance
 
     with patch(
         "openpeerpower.components.websocket_api.http.WebSocketHandler",
-        instantiate_op.dler,
+        instantiate_handler,
     ):
-        websocket_client = await opp._ws_client()
+        websocket_client = await.opp_ws_client()
 
     # Kill writer task and fill queue past peak
     for _ in range(5):

@@ -13,7 +13,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
 
@@ -38,31 +38,31 @@ async def test_valid_hostname.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.wake_on_lan")
+        state =.opp.states.get("switch.wake_on_lan")
         assert STATE_ON == state.state
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.wake_on_lan")
+        state =.opp.states.get("switch.wake_on_lan")
         assert STATE_ON == state.state
 
 
@@ -79,22 +79,22 @@ async def test_valid_hostname_windows.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0), patch.object(
         platform, "system", return_value="Windows"
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
             blocking=True,
         )
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_ON == state.state
 
 
@@ -116,14 +116,14 @@ async def test_broadcast_config_ip_and_port.opp, mock_send_magic_packet):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
@@ -152,14 +152,14 @@ async def test_broadcast_config_ip.opp, mock_send_magic_packet):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
@@ -180,14 +180,14 @@ async def test_broadcast_config_port.opp, mock_send_magic_packet):
         switch.DOMAIN,
         {"switch": {"platform": "wake_on_lan", "mac": mac, "broadcast_port": port}},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
@@ -212,35 +212,35 @@ async def test_off_script.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     calls = async_mock_service.opp, "shell_command", "turn_off_target")
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=0):
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.wake_on_lan")
+        state =.opp.states.get("switch.wake_on_lan")
         assert STATE_ON == state.state
         assert len(calls) == 0
 
     with patch.object(subprocess, "call", return_value=2):
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.wake_on_lan")
+        state =.opp.states.get("switch.wake_on_lan")
         assert STATE_OFF == state.state
         assert len(calls) == 1
 
@@ -259,19 +259,19 @@ async def test_invalid_hostname_windows.opp):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("switch.wake_on_lan")
+    state =.opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state
 
     with patch.object(subprocess, "call", return_value=2):
 
-        await opp..services.async_call(
+        await.opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.wake_on_lan"},
             blocking=True,
         )
 
-        state = opp.states.get("switch.wake_on_lan")
+        state =.opp.states.get("switch.wake_on_lan")
         assert STATE_OFF == state.state

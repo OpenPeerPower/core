@@ -12,7 +12,7 @@ import zigpy.zcl.foundation as zcl_f
 import zigpy.zdo.types
 
 import openpeerpower.components.zha.core.const as zha_const
-from openpeerpowerr.util import slugify
+from openpeerpower.util import slugify
 
 
 class FakeEndpoint:
@@ -167,7 +167,7 @@ async def send_attributes_report.opp, cluster: int, attributes: dict):
     hdr = make_zcl_header(zcl_f.Command.Report_Attributes)
     hdr.frame_control.disable_default_response = True
     cluster.handle_message(hdr, [attrs])
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def find_entity_id(domain, zha_device,.opp):
@@ -179,8 +179,8 @@ async def find_entity_id(domain, zha_device,.opp):
     ieeetail = "".join([f"{o:02x}" for o in zha_device.ieee[:4]])
     head = f"{domain}.{slugify(f'{zha_device.name} {ieeetail}')}"
 
-    enitiy_ids = opp.states.async_entity_ids(domain)
-    await opp..async_block_till_done()
+    enitiy_ids =.opp.states.async_entity_ids(domain)
+    await.opp.async_block_till_done()
 
     for entity_id in enitiy_ids:
         if entity_id.startswith(head):
@@ -192,7 +192,7 @@ def async_find_group_entity_id.opp, domain, group):
     """Find the group entity id under test."""
     entity_id = f"{domain}.{group.name.lower().replace(' ','_')}_zha_group_0x{group.group_id:04x}"
 
-    entity_ids = opp.states.async_entity_ids(domain)
+    entity_ids =.opp.states.async_entity_ids(domain)
 
     if entity_id in entity_ids:
         return entity_id
@@ -203,7 +203,7 @@ async def async_enable_traffic.opp, zha_devices, enabled=True):
     """Allow traffic to flow through the gateway and the zha device."""
     for zha_device in zha_devices:
         zha_device.update_available(enabled)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 def make_zcl_header(
@@ -231,7 +231,7 @@ async def async_test_rejoin.opp, zigpy_device, clusters, report_counts, ep_id=1)
 
     zha_gateway = get_zha_gateway.opp)
     await zha_gateway.async_device_initialized(zigpy_device)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     for cluster, reports in zip(clusters, report_counts):
         assert cluster.bind.call_count == 1
         assert cluster.bind.await_count == 1

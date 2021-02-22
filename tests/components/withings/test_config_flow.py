@@ -2,7 +2,7 @@
 from aiohttp.test_utils import TestClient
 
 from openpeerpower.components.withings import const
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import (
     CONF_CLIENT_ID,
     CONF_CLIENT_SECRET,
@@ -10,10 +10,10 @@ from openpeerpower.const import (
     CONF_UNIT_SYSTEM,
     CONF_UNIT_SYSTEM_METRIC,
 )
-from openpeerpowerr.core import DOMAIN as HA_DOMAIN, OpenPeerPower
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.helpers.config_entry_oauth2_flow import AUTH_CALLBACK_PATH
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import DOMAIN as HA_DOMAIN, OpenPeerPower
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers.config_entry_oauth2_flow import AUTH_CALLBACK_PATH
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -23,9 +23,9 @@ async def test_config_non_unique_profile.opp: OpenPeerPower) -> None:
     config_entry = MockConfigEntry(
         domain=const.DOMAIN, data={const.PROFILE: "person0"}, unique_id="0"
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "profile"}, data={const.PROFILE: "person0"}
     )
 
@@ -48,16 +48,16 @@ async def test_config_reauth_profile(
             const.CONF_USE_WEBHOOK: False,
         },
     }
-    await async_process_op.core_config.opp,.opp_config.get(HA_DOMAIN))
+    await async_process_ha_core_config.opp,.opp_config.get(HA_DOMAIN))
     assert await async_setup_component.opp, const.DOMAIN,.opp_config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     config_entry = MockConfigEntry(
         domain=const.DOMAIN, data={const.PROFILE: "person0"}, unique_id="0"
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "reauth", "profile": "person0"}
     )
     assert result
@@ -65,7 +65,7 @@ async def test_config_reauth_profile(
     assert result["step_id"] == "reauth"
     assert result["description_placeholders"] == {const.PROFILE: "person0"}
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {},
     )
@@ -96,11 +96,11 @@ async def test_config_reauth_profile(
         },
     )
 
-    result = await opp..config_entries.flow.async_configure(result["flow_id"])
+    result = await.opp.config_entries.flow.async_configure(result["flow_id"])
     assert result
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
 
-    entries = opp.config_entries.async_entries(const.DOMAIN)
+    entries =.opp.config_entries.async_entries(const.DOMAIN)
     assert entries
     assert entries[0].data["token"]["refresh_token"] == "mock-refresh-token"

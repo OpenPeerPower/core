@@ -7,7 +7,7 @@ from openpeerpower.const import (
     POWER_WATT,
     TEMP_CELSIUS,
 )
-from openpeerpowerr.helpers.entity_registry import (
+from openpeerpower.helpers.entity_registry import (
     DISABLED_INTEGRATION,
     async_get_registry,
 )
@@ -22,7 +22,7 @@ from .common import (
 
 async def test_numeric_sensor.opp, multisensor_6, integration):
     """Test the numeric sensor."""
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state
     assert state.state == "9.0"
@@ -32,14 +32,14 @@ async def test_numeric_sensor.opp, multisensor_6, integration):
 
 async def test_energy_sensors.opp, hank_binary_switch, integration):
     """Test power and energy sensors."""
-    state = opp.states.get(POWER_SENSOR)
+    state =.opp.states.get(POWER_SENSOR)
 
     assert state
     assert state.state == "0.0"
     assert state.attributes["unit_of_measurement"] == POWER_WATT
     assert state.attributes["device_class"] == DEVICE_CLASS_POWER
 
-    state = opp.states.get(ENERGY_SENSOR)
+    state =.opp.states.get(ENERGY_SENSOR)
 
     assert state
     assert state.state == "0.16"
@@ -64,9 +64,9 @@ async def test_disabled_notification_sensor.opp, multisensor_6, integration):
     assert updated_entry.disabled is False
 
     # reload integration and check if entity is correctly there
-    await opp..config_entries.async_reload(integration.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_reload(integration.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(NOTIFICATION_MOTION_SENSOR)
+    state =.opp.states.get(NOTIFICATION_MOTION_SENSOR)
     assert state.state == "Motion detection"
     assert state.attributes["value"] == 8

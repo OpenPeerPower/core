@@ -56,7 +56,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 PLATFORM = "xiaomi_miio"
 
@@ -198,7 +198,7 @@ async def test_xiaomi_exceptions.opp, caplog, mock_mirobo_is_on):
     entity_id = await setup_component.opp, entity_name)
 
     def is_available():
-        state = opp.states.get(entity_id)
+        state =.opp.states.get(entity_id)
         return state.state != STATE_UNAVAILABLE
 
     # The initial setup has to be done successfully
@@ -208,7 +208,7 @@ async def test_xiaomi_exceptions.opp, caplog, mock_mirobo_is_on):
 
     # Second update causes an exception, which should be logged
     mock_mirobo_is_on.status.side_effect = DeviceException("dummy exception")
-    await opp..helpers.entity_component.async_update_entity(entity_id)
+    await.opp.helpers.entity_component.async_update_entity(entity_id)
     assert "WARNING" in caplog.text
     assert "Got exception while fetching the state" in caplog.text
     assert not is_available()
@@ -218,7 +218,7 @@ async def test_xiaomi_exceptions.opp, caplog, mock_mirobo_is_on):
     caplog.clear()
     mock_mirobo_is_on.status.reset_mock()
 
-    await opp..helpers.entity_component.async_update_entity(entity_id)
+    await.opp.helpers.entity_component.async_update_entity(entity_id)
     assert "Got exception while fetching the state" not in caplog.text
     assert not is_available()
     assert mock_mirobo_is_on.status.call_count == 1
@@ -232,7 +232,7 @@ async def test_xiaomi_vacuum_services.opp, caplog, mock_mirobo_is_got_error):
     assert "Initializing with host 192.168.1.100 (token 12345...)" in caplog.text
 
     # Check state attributes
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
 
     assert state.state == STATE_ERROR
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 14204
@@ -263,65 +263,65 @@ async def test_xiaomi_vacuum_services.opp, caplog, mock_mirobo_is_got_error):
     ]
 
     # Call services
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_START, {"entity_id": entity_id}, blocking=True
     )
-    mock_mirobo_is_got_error.assert_op._calls(
+    mock_mirobo_is_got_error.assert_has_calls(
         [mock.call.resume_or_start()], any_order=True
     )
-    mock_mirobo_is_got_error.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_got_error.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_STOP, {"entity_id": entity_id}, blocking=True
     )
-    mock_mirobo_is_got_error.assert_op._calls([mock.call.stop()], any_order=True)
-    mock_mirobo_is_got_error.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls([mock.call.stop()], any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_got_error.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_RETURN_TO_BASE, {"entity_id": entity_id}, blocking=True
     )
-    mock_mirobo_is_got_error.assert_op._calls([mock.call.home()], any_order=True)
-    mock_mirobo_is_got_error.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls([mock.call.home()], any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_got_error.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_LOCATE, {"entity_id": entity_id}, blocking=True
     )
-    mock_mirobo_is_got_error.assert_op._calls([mock.call.find()], any_order=True)
-    mock_mirobo_is_got_error.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls([mock.call.find()], any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_got_error.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_CLEAN_SPOT, {"entity_id": entity_id}, blocking=True
     )
-    mock_mirobo_is_got_error.assert_op._calls([mock.call.spot()], any_order=True)
-    mock_mirobo_is_got_error.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls([mock.call.spot()], any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_got_error.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SEND_COMMAND,
         {"entity_id": entity_id, "command": "raw"},
         blocking=True,
     )
-    mock_mirobo_is_got_error.assert_op._calls(
+    mock_mirobo_is_got_error.assert_has_calls(
         [mock.call.raw_command("raw", None)], any_order=True
     )
-    mock_mirobo_is_got_error.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_got_error.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SEND_COMMAND,
         {"entity_id": entity_id, "command": "raw", "params": {"k1": 2}},
         blocking=True,
     )
-    mock_mirobo_is_got_error.assert_op._calls(
+    mock_mirobo_is_got_error.assert_has_calls(
         [mock.call.raw_command("raw", {"k1": 2})], any_order=True
     )
-    mock_mirobo_is_got_error.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_got_error.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_got_error.reset_mock()
 
 
@@ -333,7 +333,7 @@ async def test_xiaomi_specific_services.opp, caplog, mock_mirobo_is_on):
     assert "Initializing with host 192.168.1.100 (token 12345" in caplog.text
 
     # Check state attributes
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.state == STATE_CLEANING
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 14204
     assert state.attributes.get(ATTR_DO_NOT_DISTURB) == STATE_OFF
@@ -361,64 +361,64 @@ async def test_xiaomi_specific_services.opp, caplog, mock_mirobo_is_on):
     ]
 
     # Xiaomi vacuum specific services:
-    await opp..services.async_call(
+    await.opp.services.async_call(
         XIAOMI_DOMAIN,
         SERVICE_START_REMOTE_CONTROL,
         {ATTR_ENTITY_ID: entity_id},
         blocking=True,
     )
 
-    mock_mirobo_is_on.assert_op._calls([mock.call.manual_start()], any_order=True)
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls([mock.call.manual_start()], any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_on.reset_mock()
 
     control = {"duration": 1000, "rotation": -40, "velocity": -0.1}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         XIAOMI_DOMAIN,
         SERVICE_MOVE_REMOTE_CONTROL,
         {**control, ATTR_ENTITY_ID: entity_id},
         blocking=True,
     )
-    mock_mirobo_is_on.manual_control.assert_op._calls(
+    mock_mirobo_is_on.manual_control.assert_has_calls(
         [mock.call(**control)], any_order=True
     )
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_on.reset_mock()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         XIAOMI_DOMAIN,
         SERVICE_STOP_REMOTE_CONTROL,
         {ATTR_ENTITY_ID: entity_id},
         blocking=True,
     )
-    mock_mirobo_is_on.assert_op._calls([mock.call.manual_stop()], any_order=True)
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls([mock.call.manual_stop()], any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_on.reset_mock()
 
     control_once = {"duration": 2000, "rotation": 120, "velocity": 0.1}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         XIAOMI_DOMAIN,
         SERVICE_MOVE_REMOTE_CONTROL_STEP,
         {**control_once, ATTR_ENTITY_ID: entity_id},
         blocking=True,
     )
-    mock_mirobo_is_on.manual_control_once.assert_op._calls(
+    mock_mirobo_is_on.manual_control_once.assert_has_calls(
         [mock.call(**control_once)], any_order=True
     )
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_on.reset_mock()
 
     control = {"zone": [[123, 123, 123, 123]], "repeats": 2}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         XIAOMI_DOMAIN,
         SERVICE_CLEAN_ZONE,
         {**control, ATTR_ENTITY_ID: entity_id},
         blocking=True,
     )
-    mock_mirobo_is_on.zoned_clean.assert_op._calls(
+    mock_mirobo_is_on.zoned_clean.assert_has_calls(
         [mock.call([[123, 123, 123, 123, 2]])], any_order=True
     )
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_is_on.reset_mock()
 
 
@@ -429,41 +429,41 @@ async def test_xiaomi_vacuum_fanspeeds.opp, caplog, mock_mirobo_fanspeeds):
 
     assert "Initializing with host 192.168.1.100 (token 12345" in caplog.text
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert state.attributes.get(ATTR_FAN_SPEED) == "Silent"
     fanspeeds = state.attributes.get(ATTR_FAN_SPEED_LIST)
     for speed in ["Silent", "Standard", "Medium", "Turbo"]:
         assert speed in fanspeeds
 
     # Set speed service:
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SET_FAN_SPEED,
         {"entity_id": entity_id, "fan_speed": 60},
         blocking=True,
     )
-    mock_mirobo_fanspeeds.assert_op._calls(
+    mock_mirobo_fanspeeds.assert_has_calls(
         [mock.call.set_fan_speed(60)], any_order=True
     )
-    mock_mirobo_fanspeeds.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_fanspeeds.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_fanspeeds.reset_mock()
 
     fan_speed_dict = mock_mirobo_fanspeeds.fan_speed_presets()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SET_FAN_SPEED,
         {"entity_id": entity_id, "fan_speed": "Medium"},
         blocking=True,
     )
-    mock_mirobo_fanspeeds.assert_op._calls(
+    mock_mirobo_fanspeeds.assert_has_calls(
         [mock.call.set_fan_speed(fan_speed_dict["Medium"])], any_order=True
     )
-    mock_mirobo_fanspeeds.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_fanspeeds.assert_has_calls(STATUS_CALLS, any_order=True)
     mock_mirobo_fanspeeds.reset_mock()
 
     assert "ERROR" not in caplog.text
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SET_FAN_SPEED,
         {"entity_id": entity_id, "fan_speed": "invent"},
@@ -478,11 +478,11 @@ async def test_xiaomi_vacuum_goto_service.opp, caplog, mock_mirobo_is_on):
     entity_id = await setup_component.opp, entity_name)
 
     data = {"entity_id": entity_id, "x_coord": 25500, "y_coord": 25500}
-    await opp..services.async_call(XIAOMI_DOMAIN, SERVICE_GOTO, data, blocking=True)
-    mock_mirobo_is_on.goto.assert_op._calls(
+    await.opp.services.async_call(XIAOMI_DOMAIN, SERVICE_GOTO, data, blocking=True)
+    mock_mirobo_is_on.goto.assert_has_calls(
         [mock.call(x_coord=data["x_coord"], y_coord=data["y_coord"])], any_order=True
     )
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
 
 
 async def test_xiaomi_vacuum_clean_segment_service.opp, caplog, mock_mirobo_is_on):
@@ -491,13 +491,13 @@ async def test_xiaomi_vacuum_clean_segment_service.opp, caplog, mock_mirobo_is_o
     entity_id = await setup_component.opp, entity_name)
 
     data = {"entity_id": entity_id, "segments": ["1", "2"]}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         XIAOMI_DOMAIN, SERVICE_CLEAN_SEGMENT, data, blocking=True
     )
-    mock_mirobo_is_on.segment_clean.assert_op._calls(
+    mock_mirobo_is_on.segment_clean.assert_has_calls(
         [mock.call(segments=[int(i) for i in data["segments"]])], any_order=True
     )
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
 
 
 async def test_xiaomi_vacuum_clean_segment_service_single_segment(
@@ -508,13 +508,13 @@ async def test_xiaomi_vacuum_clean_segment_service_single_segment(
     entity_id = await setup_component.opp, entity_name)
 
     data = {"entity_id": entity_id, "segments": 1}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         XIAOMI_DOMAIN, SERVICE_CLEAN_SEGMENT, data, blocking=True
     )
-    mock_mirobo_is_on.segment_clean.assert_op._calls(
+    mock_mirobo_is_on.segment_clean.assert_has_calls(
         [mock.call(segments=[data["segments"]])], any_order=True
     )
-    mock_mirobo_is_on.assert_op._calls(STATUS_CALLS, any_order=True)
+    mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
 
 
 async def setup_component.opp, entity_name):
@@ -533,5 +533,5 @@ async def setup_component.opp, entity_name):
             }
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     return entity_id

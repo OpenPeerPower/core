@@ -14,7 +14,7 @@ from openpeerpower.components.wilight.config_flow import (
     CONF_SERIAL_NUMBER,
 )
 from openpeerpower.const import CONF_HOST
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 
@@ -72,9 +72,9 @@ async def setup_integration(
         },
     )
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     return entry

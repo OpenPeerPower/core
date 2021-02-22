@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 from zwave_js_server.model.node import Node
 
-from openpeerpower.components.oppio.handler import OppioAPIError
+from openpeerpower.components.oppio.handler import HassioAPIError
 from openpeerpower.components.zwave_js.const import DOMAIN
 from openpeerpower.components.zwave_js.entity import get_device_id
 from openpeerpower.config_entries import (
@@ -15,7 +15,7 @@ from openpeerpower.config_entries import (
     ENTRY_STATE_SETUP_RETRY,
 )
 from openpeerpower.const import STATE_UNAVAILABLE
-from openpeerpowerr.helpers import device_registry, entity_registry
+from openpeerpower.helpers import device_registry, entity_registry
 
 from .common import AIR_TEMPERATURE_SENSOR
 
@@ -52,15 +52,15 @@ async def test_entry_setup_unload.opp, client, integration):
     assert client.connect.call_count == 1
     assert entry.state == ENTRY_STATE_LOADED
 
-    await opp..config_entries.async_unload(entry.entry_id)
+    await.opp.config_entries.async_unload(entry.entry_id)
 
     assert client.disconnect.call_count == 1
     assert entry.state == ENTRY_STATE_NOT_LOADED
 
 
-async def test_home_assistant_stop.opp, client, integration):
-    """Test we clean up on Open Peer Power stop."""
-    await opp..async_stop()
+async def test_open_peer_power_stop.opp, client, integration):
+    """Test we clean up on open peer power stop."""
+    await.opp.async_stop()
 
     assert client.disconnect.call_count == 1
 
@@ -68,10 +68,10 @@ async def test_home_assistant_stop.opp, client, integration):
 async def test_initialized_timeout.opp, client, connect_timeout):
     """Test we handle a timeout during client initialization."""
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -84,7 +84,7 @@ async def test_on_node_added_ready(
     event = {"node": node}
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity and device not yet added
     assert not device_registry.async_get_device(
@@ -92,9 +92,9 @@ async def test_on_node_added_ready(
     )
 
     client.driver.controller.emit("node added", event)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity and device added
     assert state.state != STATE_UNAVAILABLE
@@ -113,7 +113,7 @@ async def test_on_node_added_not_ready(
     event = {"node": node}
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity and device not yet added
     assert not device_registry.async_get_device(
@@ -121,9 +121,9 @@ async def test_on_node_added_not_ready(
     )
 
     client.driver.controller.emit("node added", event)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity not yet added but device added in registry
     assert device_registry.async_get_device(
@@ -132,9 +132,9 @@ async def test_on_node_added_not_ready(
 
     node.data["ready"] = True
     node.emit("ready", event)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity added
     assert state.state != STATE_UNAVAILABLE
@@ -147,7 +147,7 @@ async def test_existing_node_ready(
     node = multisensor_6
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity and device added
     assert state.state != STATE_UNAVAILABLE
@@ -164,12 +164,12 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
     event = {"node": node}
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert not state  # entity not yet added
     assert device_registry.async_get_device(  # device should be added
@@ -178,9 +178,9 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
 
     node.data["ready"] = True
     node.emit("ready", event)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(AIR_TEMPERATURE_SENSOR)
+    state =.opp.states.get(AIR_TEMPERATURE_SENSOR)
 
     assert state  # entity and device added
     assert state.state != STATE_UNAVAILABLE
@@ -198,11 +198,11 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
         connection_class=CONN_CLASS_LOCAL_PUSH,
         data={"integration_created_addon": False},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    await opp..config_entries.async_remove(entry.entry_id)
+    await.opp.config_entries.async_remove(entry.entry_id)
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 0
@@ -214,10 +214,10 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
         connection_class=CONN_CLASS_LOCAL_PUSH,
         data={"integration_created_addon": True},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
-    await opp..config_entries.async_remove(entry.entry_id)
+    await.opp.config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
@@ -227,11 +227,11 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     uninstall_addon.reset_mock()
 
     # test add-on stop failure
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    stop_addon.side_effect = OppioAPIError()
+    stop_addon.side_effect = HassioAPIError()
 
-    await opp..config_entries.async_remove(entry.entry_id)
+    await.opp.config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 0
@@ -243,11 +243,11 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     uninstall_addon.reset_mock()
 
     # test add-on uninstall failure
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    uninstall_addon.side_effect = OppioAPIError()
+    uninstall_addon.side_effect = HassioAPIError()
 
-    await opp..config_entries.async_remove(entry.entry_id)
+    await.opp.config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
@@ -279,8 +279,8 @@ async def test_removed_device.opp, client, multiple_devices, integration):
 
     # Remove a node and reload the entry
     old_node = nodes.pop(13)
-    await opp..config_entries.async_reload(integration.entry_id)
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_reload(integration.entry_id)
+    await.opp.async_block_till_done()
 
     # Assert that the node and all of it's entities were removed from the device and
     # entity registry

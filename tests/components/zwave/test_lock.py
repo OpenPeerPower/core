@@ -289,13 +289,13 @@ async def setup_ozw.opp, mock_openzwave):
         config_entries.CONN_CLASS_LOCAL_PUSH,
         system_options={},
     )
-    await opp..config_entries.async_forward_entry_setup(config_entry, "lock")
-    await opp..async_block_till_done()
+    await.opp.config_entries.async_forward_entry_setup(config_entry, "lock")
+    await.opp.async_block_till_done()
 
 
 async def test_lock_set_usercode_service.opp, mock_openzwave):
     """Test the zwave lock set_usercode service."""
-    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
 
     node = MockNode(node_id=12)
     value0 = MockValue(data="          ", node=node, index=0)
@@ -306,9 +306,9 @@ async def test_lock_set_usercode_service.opp, mock_openzwave):
     mock_network.nodes = {node.node_id: node}
 
     await setup_ozw.opp, mock_openzwave)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         lock.DOMAIN,
         lock.SERVICE_SET_USERCODE,
         {
@@ -317,12 +317,12 @@ async def test_lock_set_usercode_service.opp, mock_openzwave):
             lock.ATTR_CODE_SLOT: 1,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert value1.data == "1234"
 
     mock_network.nodes = {node.node_id: node}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         lock.DOMAIN,
         lock.SERVICE_SET_USERCODE,
         {
@@ -331,14 +331,14 @@ async def test_lock_set_usercode_service.opp, mock_openzwave):
             lock.ATTR_CODE_SLOT: 1,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert value1.data == "1234"
 
 
 async def test_lock_get_usercode_service.opp, mock_openzwave):
     """Test the zwave lock get_usercode service."""
-    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=12)
     value0 = MockValue(data=None, node=node, index=0)
     value1 = MockValue(data="1234", node=node, index=1)
@@ -346,16 +346,16 @@ async def test_lock_get_usercode_service.opp, mock_openzwave):
     node.get_values.return_value = {value0.value_id: value0, value1.value_id: value1}
 
     await setup_ozw.opp, mock_openzwave)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     with patch.object(lock, "_LOGGER") as mock_logger:
         mock_network.nodes = {node.node_id: node}
-        await opp..services.async_call(
+        await.opp.services.async_call(
             lock.DOMAIN,
             lock.SERVICE_GET_USERCODE,
             {const.ATTR_NODE_ID: node.node_id, lock.ATTR_CODE_SLOT: 1},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         # This service only seems to write to the log
         assert mock_logger.info.called
         assert len(mock_logger.info.mock_calls) == 1
@@ -364,7 +364,7 @@ async def test_lock_get_usercode_service.opp, mock_openzwave):
 
 async def test_lock_clear_usercode_service.opp, mock_openzwave):
     """Test the zwave lock clear_usercode service."""
-    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=12)
     value0 = MockValue(data=None, node=node, index=0)
     value1 = MockValue(data="123", node=node, index=1)
@@ -374,13 +374,13 @@ async def test_lock_clear_usercode_service.opp, mock_openzwave):
     mock_network.nodes = {node.node_id: node}
 
     await setup_ozw.opp, mock_openzwave)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         lock.DOMAIN,
         lock.SERVICE_CLEAR_USERCODE,
         {const.ATTR_NODE_ID: node.node_id, lock.ATTR_CODE_SLOT: 1},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert value1.data == "\0\0\0"

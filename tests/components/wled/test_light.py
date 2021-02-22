@@ -35,8 +35,8 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-from openpeerpowerr.core import OpenPeerPower
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.core import OpenPeerPower
+import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed, load_fixture
 from tests.components.wled import init_integration
@@ -49,10 +49,10 @@ async def test_rgb_light_state(
     """Test the creation and values of the WLED lights."""
     await init_integration.opp, aioclient_mock)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # First segment of the strip
-    state = opp.states.get("light.wled_rgb_light_segment_0")
+    state =.opp.states.get("light.wled_rgb_light_segment_0")
     assert state
     assert state.attributes.get(ATTR_BRIGHTNESS) == 127
     assert state.attributes.get(ATTR_EFFECT) == "Solid"
@@ -71,7 +71,7 @@ async def test_rgb_light_state(
     assert entry.unique_id == "aabbccddeeff_0"
 
     # Second segment of the strip
-    state = opp.states.get("light.wled_rgb_light_segment_1")
+    state =.opp.states.get("light.wled_rgb_light_segment_1")
     assert state
     assert state.attributes.get(ATTR_BRIGHTNESS) == 127
     assert state.attributes.get(ATTR_EFFECT) == "Blink"
@@ -90,7 +90,7 @@ async def test_rgb_light_state(
     assert entry.unique_id == "aabbccddeeff_1"
 
     # Test master control of the lightstrip
-    state = opp.states.get("light.wled_rgb_light_master")
+    state =.opp.states.get("light.wled_rgb_light_master")
     assert state
     assert state.attributes.get(ATTR_BRIGHTNESS) == 127
     assert state.state == STATE_ON
@@ -107,13 +107,13 @@ async def test_segment_change_state(
     await init_integration.opp, aioclient_mock)
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=False,
             segment_id=0,
@@ -121,7 +121,7 @@ async def test_segment_change_state(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -133,7 +133,7 @@ async def test_segment_change_state(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             brightness=42,
             color_primary=(255, 0, 0),
@@ -144,13 +144,13 @@ async def test_segment_change_state(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_COLOR_TEMP: 400},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             color_primary=(255, 159, 70),
             on=True,
@@ -165,20 +165,20 @@ async def test_master_change_state(
     await init_integration.opp, aioclient_mock)
 
     with patch("wled.WLED.master") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_master", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=False,
             transition=50,
         )
 
     with patch("wled.WLED.master") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -188,7 +188,7 @@ async def test_master_change_state(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             brightness=42,
             on=True,
@@ -196,20 +196,20 @@ async def test_master_change_state(
         )
 
     with patch("wled.WLED.master") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_master", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=False,
             transition=50,
         )
 
     with patch("wled.WLED.master") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -219,7 +219,7 @@ async def test_master_change_state(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             brightness=42,
             on=True,
@@ -227,7 +227,7 @@ async def test_master_change_state(
         )
 
 
-async def test_dynamically_op.dle_segments(
+async def test_dynamically_handle_segments(
    .opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test if a new/deleted segment is dynamically added/removed."""
@@ -246,14 +246,14 @@ async def test_dynamically_op.dle_segments(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert.opp.states.get("light.wled_rgb_light_segment_0")
         assert not.opp.states.get("light.wled_rgb_light_segment_1")
         assert not.opp.states.get("light.wled_rgb_light_master")
 
     # Test adding if segment shows up again, including the master entity
     async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get("light.wled_rgb_light_master")
     assert.opp.states.get("light.wled_rgb_light_segment_0")
@@ -275,11 +275,11 @@ async def test_single_segment_behavior(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert not.opp.states.get("light.wled_rgb_light_master")
 
-        state = opp.states.get("light.wled_rgb_light_segment_0")
+        state =.opp.states.get("light.wled_rgb_light_segment_0")
         assert state
         assert state.state == STATE_ON
 
@@ -291,9 +291,9 @@ async def test_single_segment_behavior(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("light.wled_rgb_light_segment_0")
+        state =.opp.states.get("light.wled_rgb_light_segment_0")
         assert state
         assert state.attributes.get(ATTR_BRIGHTNESS) == 100
 
@@ -304,20 +304,20 @@ async def test_single_segment_behavior(
         return_value=device,
     ):
         async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
-        await opp..async_block_till_done()
-        state = opp.states.get("light.wled_rgb_light_segment_0")
+        await.opp.async_block_till_done()
+        state =.opp.states.get("light.wled_rgb_light_segment_0")
         assert state
         assert state.state == STATE_OFF
 
     # Test master is turned off when turning off a single segment
     with patch("wled.WLED.master") as master_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_TRANSITION: 5},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         master_mock.assert_called_once_with(
             on=False,
             transition=50,
@@ -328,7 +328,7 @@ async def test_single_segment_behavior(
     with patch("wled.WLED.master") as master_mock, patch(
         "wled.WLED.segment"
     ) as segment_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -338,7 +338,7 @@ async def test_single_segment_behavior(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         master_mock.assert_called_once_with(on=True, transition=50, brightness=42)
         segment_mock.assert_called_once_with(on=True, segment_id=0, brightness=255)
 
@@ -351,15 +351,15 @@ async def test_light_error(
     await init_integration.opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0"},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("light.wled_rgb_light_segment_0")
+        state =.opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
         assert "Invalid response from API" in caplog.text
 
@@ -373,15 +373,15 @@ async def test_light_connection_error(
     with patch("openpeerpower.components.wled.WLED.update"), patch(
         "openpeerpower.components.wled.WLED.segment", side_effect=WLEDConnectionError
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_OFF,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0"},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("light.wled_rgb_light_segment_0")
+        state =.opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_UNAVAILABLE
 
 
@@ -391,19 +391,19 @@ async def test_rgbw_light(
     """Test RGBW support for WLED."""
     await init_integration.opp, aioclient_mock, rgbw=True)
 
-    state = opp.states.get("light.wled_rgbw_light")
+    state =.opp.states.get("light.wled_rgbw_light")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_HS_COLOR) == (0.0, 100.0)
     assert state.attributes.get(ATTR_WHITE_VALUE) == 139
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.wled_rgbw_light", ATTR_COLOR_TEMP: 400},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             on=True,
             segment_id=0,
@@ -411,13 +411,13 @@ async def test_rgbw_light(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "light.wled_rgbw_light", ATTR_WHITE_VALUE: 100},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             color_primary=(255, 0, 0, 100),
             on=True,
@@ -425,7 +425,7 @@ async def test_rgbw_light(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -435,7 +435,7 @@ async def test_rgbw_light(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             color_primary=(0, 0, 0, 100),
             on=True,
@@ -450,7 +450,7 @@ async def test_effect_service(
     await init_integration.opp, aioclient_mock)
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_EFFECT,
             {
@@ -463,7 +463,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             intensity=200,
@@ -474,20 +474,20 @@ async def test_effect_service(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_EFFECT,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_EFFECT: 9},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             segment_id=0,
             effect=9,
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_EFFECT,
             {
@@ -498,7 +498,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             intensity=200,
             reverse=True,
@@ -507,7 +507,7 @@ async def test_effect_service(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_EFFECT,
             {
@@ -519,7 +519,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             palette="Tiamat",
@@ -529,7 +529,7 @@ async def test_effect_service(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_EFFECT,
             {
@@ -540,7 +540,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             intensity=200,
@@ -549,7 +549,7 @@ async def test_effect_service(
         )
 
     with patch("wled.WLED.segment") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_EFFECT,
             {
@@ -560,7 +560,7 @@ async def test_effect_service(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             effect="Rainbow",
             intensity=200,
@@ -577,15 +577,15 @@ async def test_effect_service_error(
     await init_integration.opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_EFFECT,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_EFFECT: 9},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("light.wled_rgb_light_segment_0")
+        state =.opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
         assert "Invalid response from API" in caplog.text
 
@@ -597,7 +597,7 @@ async def test_preset_service(
     await init_integration.opp, aioclient_mock)
 
     with patch("wled.WLED.preset") as light_mock:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_PRESET,
             {
@@ -606,7 +606,7 @@ async def test_preset_service(
             },
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         light_mock.assert_called_once_with(
             preset=1,
         )
@@ -620,14 +620,14 @@ async def test_preset_service_error(
     await init_integration.opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_PRESET,
             {ATTR_ENTITY_ID: "light.wled_rgb_light_segment_0", ATTR_PRESET: 1},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-        state = opp.states.get("light.wled_rgb_light_segment_0")
+        state =.opp.states.get("light.wled_rgb_light_segment_0")
         assert state.state == STATE_ON
         assert "Invalid response from API" in caplog.text

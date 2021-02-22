@@ -5,7 +5,7 @@ import zeroconf
 
 from openpeerpower.components.zeroconf import async_get_instance
 from openpeerpower.components.zeroconf.usage import install_multiple_zeroconf_catcher
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 DOMAIN = "zeroconf"
 
@@ -38,7 +38,7 @@ async def test_multiple_zeroconf_instances_gives_shared.opp, mock_zeroconf, capl
         line="self.light.is_on",
     )
     with patch(
-        "openpeerpowerr.helpers.frame.extract_stack",
+        "openpeerpower.helpers.frame.extract_stack",
         return_value=[
             Mock(
                 filename="/home/dev/openpeerpower/core.py",

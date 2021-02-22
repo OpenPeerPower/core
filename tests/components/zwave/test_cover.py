@@ -110,7 +110,7 @@ def test_roller_value_changed.opp, mock_openzwave):
 
 def test_roller_commands.opp, mock_openzwave):
     """Test position changed."""
-    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
     value = MockValue(
         data=50, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL
@@ -146,7 +146,7 @@ def test_roller_commands.opp, mock_openzwave):
 
 def test_roller_invert_percent.opp, mock_openzwave):
     """Test position changed."""
-    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
     value = MockValue(
         data=50, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL
@@ -174,7 +174,7 @@ def test_roller_invert_percent.opp, mock_openzwave):
 
 def test_roller_reverse_open_close.opp, mock_openzwave):
     """Test position changed."""
-    mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
+    mock_network =.opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
     value = MockValue(
         data=50, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL

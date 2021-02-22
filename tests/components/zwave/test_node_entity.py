@@ -11,7 +11,7 @@ async def test_maybe_schedule_update.opp, mock_openzwave):
     """Test maybe schedule update."""
     base_entity = node_entity.ZWaveBaseEntity()
     base_entity.entity_id = "zwave.bla"
-    base_entity.opp = opp
+    base_entity.opp =.opp
 
     with patch.object.opp.loop, "call_later") as mock_call_later:
         base_entity._schedule_update()
@@ -55,16 +55,16 @@ async def test_node_event_activated.opp, mock_openzwave):
     # Test event before entity added to.opp
     value = 234
    .opp.async_add_job(mock_receivers[0], node, value)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 0
 
     # Add entity to.opp
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "zwave.mock_node"
 
     value = 234
    .opp.async_add_job(mock_receivers[0], node, value)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].data[ATTR_ENTITY_ID] == "zwave.mock_node"
@@ -97,16 +97,16 @@ async def test_scene_activated.opp, mock_openzwave):
     # Test event before entity added to.opp
     scene_id = 123
    .opp.async_add_job(mock_receivers[0], node, scene_id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 0
 
     # Add entity to.opp
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "zwave.mock_node"
 
     scene_id = 123
    .opp.async_add_job(mock_receivers[0], node, scene_id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].data[ATTR_ENTITY_ID] == "zwave.mock_node"
@@ -143,11 +143,11 @@ async def test_central_scene_activated.opp, mock_openzwave):
         command_class=const.COMMAND_CLASS_CENTRAL_SCENE, index=scene_id, data=scene_data
     )
    .opp.async_add_job(mock_receivers[0], node, value)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(events) == 0
 
     # Add entity to.opp
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "zwave.mock_node"
 
     scene_id = 1
@@ -156,7 +156,7 @@ async def test_central_scene_activated.opp, mock_openzwave):
         command_class=const.COMMAND_CLASS_CENTRAL_SCENE, index=scene_id, data=scene_data
     )
    .opp.async_add_job(mock_receivers[0], node, value)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(events) == 1
     assert events[0].data[ATTR_ENTITY_ID] == "zwave.mock_node"
@@ -198,7 +198,7 @@ async def test_application_version.opp, mock_openzwave):
     )
 
     # Add entity to.opp
-    entity.opp = opp
+    entity.opp =.opp
     entity.entity_id = "zwave.mock_node"
 
     # Fire off an added value
@@ -210,7 +210,7 @@ async def test_application_version.opp, mock_openzwave):
    .opp.async_add_job(
         mock_receivers[mock_zwave.MockNetwork.SIGNAL_VALUE_ADDED], node, value
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         entity.device_state_attributes[node_entity.ATTR_APPLICATION_VERSION] == "5.10"
@@ -225,7 +225,7 @@ async def test_application_version.opp, mock_openzwave):
    .opp.async_add_job(
         mock_receivers[mock_zwave.MockNetwork.SIGNAL_VALUE_CHANGED], node, value
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         entity.device_state_attributes[node_entity.ATTR_APPLICATION_VERSION] == "4.14"
@@ -682,7 +682,7 @@ async def test_state_ready.opp, mock_openzwave):
     node.query_stage = "Complete"
     node.is_ready = True
     entity.node_changed()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert entity.state == "ready"
 
     node.is_failed = True

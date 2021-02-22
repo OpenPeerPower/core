@@ -15,7 +15,7 @@ async def test_async_response_request_context.opp, websocket_client):
     @websocket_api.async_response
     async def executor_get_request.opp, connection, msg):
         handle_request(
-            await opp..async_add_executor_job(http.current_request.get), connection, msg
+            await.opp.async_add_executor_job(http.current_request.get), connection, msg
         )
 
     @websocket_api.websocket_command({"type": "test-get-request-async"})

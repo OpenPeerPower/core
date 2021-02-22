@@ -476,7 +476,7 @@ async def test_poll_control_cluster_command.opp, poll_control_device):
         cluster.handle_message(
             hdr, [mock.sentinel.args, mock.sentinel.args2, mock.sentinel.args3]
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert checkin_mock.call_count == 1
     assert checkin_mock.await_count == 1

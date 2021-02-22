@@ -12,7 +12,7 @@ from openpeerpower.components.zha.core.const import (
     DOMAIN,
 )
 from openpeerpower.const import MAJOR_VERSION, MINOR_VERSION
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -34,7 +34,7 @@ def config_entry_v1.opp):
 @patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
 async def test_migration_from_v1_no_baudrate.opp, config_entry_v1, config):
     """Test migration of config entry from v1."""
-    config_entry_v1.add_to_opp.opp)
+    config_entry_v1.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, config)
 
     assert config_entry_v1.data[CONF_RADIO_TYPE] == DATA_RADIO_TYPE
@@ -48,7 +48,7 @@ async def test_migration_from_v1_no_baudrate.opp, config_entry_v1, config):
 @patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
 async def test_migration_from_v1_with_baudrate.opp, config_entry_v1):
     """Test migration of config entry from v1 with baudrate in config."""
-    config_entry_v1.add_to_opp.opp)
+    config_entry_v1.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_BAUDRATE: 115200}})
 
     assert config_entry_v1.data[CONF_RADIO_TYPE] == DATA_RADIO_TYPE
@@ -63,7 +63,7 @@ async def test_migration_from_v1_with_baudrate.opp, config_entry_v1):
 @patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
 async def test_migration_from_v1_wrong_baudrate.opp, config_entry_v1):
     """Test migration of config entry from v1 with wrong baudrate."""
-    config_entry_v1.add_to_opp.opp)
+    config_entry_v1.add_to.opp.opp)
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_BAUDRATE: 115222}})
 
     assert config_entry_v1.data[CONF_RADIO_TYPE] == DATA_RADIO_TYPE

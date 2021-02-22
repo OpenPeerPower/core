@@ -26,8 +26,8 @@ from openpeerpower.components.withings.common import (
     get_platform_attributes,
 )
 from openpeerpower.components.withings.const import Measurement
-from openpeerpowerr.core import OpenPeerPower, State
-from openpeerpowerr.helpers.entity_registry import EntityRegistry
+from openpeerpower.core import OpenPeerPower, State
+from openpeerpower.helpers.entity_registry import EntityRegistry
 
 from .common import ComponentFactory, new_profile_config
 
@@ -305,7 +305,7 @@ async def test_sensor_default_enabled_entities(
 ) -> None:
     """Test entities enabled by default."""
     entity_registry: EntityRegistry = (
-        await opp..helpers.entity_registry.async_get_registry()
+        await.opp.helpers.entity_registry.async_get_registry()
     )
 
     await component_factory.configure_component(profile_configs=(PERSON0,))
@@ -332,7 +332,7 @@ async def test_sensor_default_enabled_entities(
     for person, measurement, expected in EXPECTED_DATA:
         attribute = WITHINGS_MEASUREMENTS_MAP[measurement]
         entity_id = await async_get_entity_id.opp, attribute, person.user_id)
-        state_obj = opp.states.get(entity_id)
+        state_obj =.opp.states.get(entity_id)
 
         if attribute.enabled_by_default:
             async_assert_state_equals(entity_id, state_obj, expected, attribute)
@@ -348,7 +348,7 @@ async def test_all_entities(
 ) -> None:
     """Test all entities."""
     entity_registry: EntityRegistry = (
-        await opp..helpers.entity_registry.async_get_registry()
+        await.opp.helpers.entity_registry.async_get_registry()
     )
 
     with patch(
@@ -380,7 +380,7 @@ async def test_all_entities(
         for person, measurement, expected in EXPECTED_DATA:
             attribute = WITHINGS_MEASUREMENTS_MAP[measurement]
             entity_id = await async_get_entity_id.opp, attribute, person.user_id)
-            state_obj = opp.states.get(entity_id)
+            state_obj =.opp.states.get(entity_id)
 
             async_assert_state_equals(entity_id, state_obj, expected, attribute)
 

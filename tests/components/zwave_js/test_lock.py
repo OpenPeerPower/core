@@ -20,13 +20,13 @@ SCHLAGE_BE469_LOCK_ENTITY = "lock.touchscreen_deadbolt"
 async def test_door_lock.opp, client, lock_schlage_be469, integration):
     """Test a lock entity with door lock command class."""
     node = lock_schlage_be469
-    state = opp.states.get(SCHLAGE_BE469_LOCK_ENTITY)
+    state =.opp.states.get(SCHLAGE_BE469_LOCK_ENTITY)
 
     assert state
     assert state.state == STATE_UNLOCKED
 
     # Test locking
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN,
         SERVICE_LOCK,
         {ATTR_ENTITY_ID: SCHLAGE_BE469_LOCK_ENTITY},
@@ -91,7 +91,7 @@ async def test_door_lock.opp, client, lock_schlage_be469, integration):
     client.async_send_command.reset_mock()
 
     # Test unlocking
-    await opp..services.async_call(
+    await.opp.services.async_call(
         LOCK_DOMAIN,
         SERVICE_UNLOCK,
         {ATTR_ENTITY_ID: SCHLAGE_BE469_LOCK_ENTITY},
@@ -132,7 +132,7 @@ async def test_door_lock.opp, client, lock_schlage_be469, integration):
     client.async_send_command.reset_mock()
 
     # Test set usercode service
-    await opp..services.async_call(
+    await.opp.services.async_call(
         ZWAVE_JS_DOMAIN,
         SERVICE_SET_LOCK_USERCODE,
         {
@@ -170,7 +170,7 @@ async def test_door_lock.opp, client, lock_schlage_be469, integration):
     client.async_send_command.reset_mock()
 
     # Test clear usercode
-    await opp..services.async_call(
+    await.opp.services.async_call(
         ZWAVE_JS_DOMAIN,
         SERVICE_CLEAR_LOCK_USERCODE,
         {ATTR_ENTITY_ID: SCHLAGE_BE469_LOCK_ENTITY, ATTR_CODE_SLOT: 1},

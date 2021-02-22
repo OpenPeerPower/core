@@ -10,12 +10,12 @@ from openpeerpower.components.wilight.config_flow import (
 )
 from openpeerpower.config_entries import SOURCE_SSDP
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_SOURCE
-from openpeerpowerr.data_entry_flow import (
+from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 from tests.components.wilight import (
@@ -56,7 +56,7 @@ async def test_show_ssdp_form.opp: OpenPeerPowerType) -> None:
     """Test that the ssdp confirmation form is served."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -72,7 +72,7 @@ async def test_ssdp_not_wilight_abort_1.opp: OpenPeerPowerType) -> None:
     """Test that the ssdp aborts not_wilight."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_WRONG_MANUFACTORER.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -84,7 +84,7 @@ async def test_ssdp_not_wilight_abort_2.opp: OpenPeerPowerType) -> None:
     """Test that the ssdp aborts not_wilight."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_MISSING_MANUFACTORER.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -98,7 +98,7 @@ async def test_ssdp_not_wilight_abort_3(
     """Test that the ssdp aborts not_wilight."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -112,7 +112,7 @@ async def test_ssdp_not_supported_abort(
     """Test that the ssdp aborts not_supported."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -132,10 +132,10 @@ async def test_ssdp_device_exists_abort.opp: OpenPeerPowerType) -> None:
         },
     )
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={CONF_SOURCE: SOURCE_SSDP},
         data=discovery_info,
@@ -149,7 +149,7 @@ async def test_full_ssdp_flow_implementation.opp: OpenPeerPowerType) -> None:
     """Test the full SSDP flow from start to finish."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_SSDP}, data=discovery_info
     )
 
@@ -160,7 +160,7 @@ async def test_full_ssdp_flow_implementation.opp: OpenPeerPowerType) -> None:
         "components": "light",
     }
 
-    result = await opp..config_entries.flow.async_configure(
+    result = await.opp.config_entries.flow.async_configure(
         result["flow_id"], user_input={}
     )
 

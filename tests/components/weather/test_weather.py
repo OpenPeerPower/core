@@ -15,8 +15,8 @@ from openpeerpower.components.weather import (
     ATTR_WEATHER_WIND_BEARING,
     ATTR_WEATHER_WIND_SPEED,
 )
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.unit_system import METRIC_SYSTEM
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.unit_system import METRIC_SYSTEM
 
 
 async def test_attributes.opp):
@@ -25,9 +25,9 @@ async def test_attributes.opp):
        .opp, weather.DOMAIN, {"weather": {"platform": "demo"}}
     )
    .opp.config.units = METRIC_SYSTEM
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.demo_weather_south")
+    state =.opp.states.get("weather.demo_weather_south")
     assert state is not None
 
     assert state.state == "sunny"
@@ -61,9 +61,9 @@ async def test_temperature_convert.opp):
        .opp, weather.DOMAIN, {"weather": {"platform": "demo"}}
     )
    .opp.config.units = METRIC_SYSTEM
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.demo_weather_north")
+    state =.opp.states.get("weather.demo_weather_north")
     assert state is not None
 
     assert state.state == "rainy"

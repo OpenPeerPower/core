@@ -17,7 +17,7 @@ from withings_api.common import (
 
 from openpeerpower import data_entry_flow
 import openpeerpower.components.api as api
-from openpeerpower.components.openpeerpowerr import DOMAIN as HA_DOMAIN
+from openpeerpower.components.openpeerpower import DOMAIN as HA_DOMAIN
 import openpeerpower.components.webhook as webhook
 from openpeerpower.components.withings import async_unload_entry
 from openpeerpower.components.withings.common import (
@@ -26,7 +26,7 @@ from openpeerpower.components.withings.common import (
     get_all_data_managers,
 )
 import openpeerpower.components.withings.const as const
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.config_entries import SOURCE_USER, ConfigEntry
 from openpeerpower.const import (
     CONF_CLIENT_ID,
@@ -35,10 +35,10 @@ from openpeerpower.const import (
     CONF_UNIT_SYSTEM,
     CONF_UNIT_SYSTEM_METRIC,
 )
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.helpers import config_entry_oauth2_flow
-from openpeerpowerr.helpers.config_entry_oauth2_flow import AUTH_CALLBACK_PATH
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers.config_entry_oauth2_flow import AUTH_CALLBACK_PATH
+from openpeerpower.setup import async_setup_component
 
 from tests.test_util.aiohttp import AiohttpClientMocker
 
@@ -112,7 +112,7 @@ class ComponentFactory:
         aioclient_mock: AiohttpClientMocker,
     ) -> None:
         """Initialize the object."""
-        self._opp = opp
+        self..opp =.opp
         self._api_class_mock = api_class_mock
         self._aiohttp_client = aiohttp_client
         self._aioclient_mock = aioclient_mock
@@ -132,7 +132,7 @@ class ComponentFactory:
         self._profile_configs = profile_configs
 
        .opp_config = {
-            "openpeerpowerr": {
+            "openpeerpower": {
                 CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC,
                 CONF_EXTERNAL_URL: "http://127.0.0.1:8080/",
             },
@@ -144,12 +144,12 @@ class ComponentFactory:
             },
         }
 
-        await async_process_op.core_config(self._opp,.opp_config.get("openpeerpowerr"))
-        assert await async_setup_component(self._opp, HA_DOMAIN, {})
-        assert await async_setup_component(self._opp, webhook.DOMAIN,.opp_config)
+        await async_process_ha_core_config(self..opp,.opp_config.get("openpeerpower"))
+        assert await async_setup_component(self..opp, HA_DOMAIN, {})
+        assert await async_setup_component(self..opp, webhook.DOMAIN,.opp_config)
 
-        assert await async_setup_component(self._opp, const.DOMAIN,.opp_config)
-        await self._opp.async_block_till_done()
+        assert await async_setup_component(self..opp, const.DOMAIN,.opp_config)
+        await self..opp.async_block_till_done()
 
     @staticmethod
     def _setup_api_method(api_method, value) -> None:
@@ -191,13 +191,13 @@ class ComponentFactory:
         self._api_class_mock.return_value = api_mock
 
         # Get the withings config flow.
-        result = await self._opp.config_entries.flow.async_init(
+        result = await self..opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": SOURCE_USER}
         )
         assert result
         # pylint: disable=protected-access
         state = config_entry_oauth2_flow._encode_jwt(
-            self._opp,
+            self..opp,
             {
                 "flow_id": result["flow_id"],
                 "redirect_uri": "http://127.0.0.1:8080/auth/external/callback",
@@ -213,7 +213,7 @@ class ComponentFactory:
         )
 
         # Simulate user being redirected from withings site.
-        client: TestClient = await self._aiohttp_client(self._opp.http.app)
+        client: TestClient = await self._aiohttp_client(self..opp.http.app)
         resp = await client.get(f"{AUTH_CALLBACK_PATH}?code=abcd&state={state}")
         assert resp.status == 200
         assert resp.headers["content-type"] == "text/html; charset=utf-8"
@@ -231,13 +231,13 @@ class ComponentFactory:
         )
 
         # Present user with a list of profiles to choose from.
-        result = await self._opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await self..opp.config_entries.flow.async_configure(result["flow_id"])
         assert result.get("type") == "form"
         assert result.get("step_id") == "profile"
         assert "profile" in result.get("data_schema").schema
 
         # Provide the user profile.
-        result = await self._opp.config_entries.flow.async_configure(
+        result = await self..opp.config_entries.flow.async_configure(
             result["flow_id"], {const.PROFILE: profile_config.profile}
         )
 
@@ -250,10 +250,10 @@ class ComponentFactory:
         assert config_data.get("token")
 
         # Wait for remaining tasks to complete.
-        await self._opp.async_block_till_done()
+        await self..opp.async_block_till_done()
 
         # Mock the webhook.
-        data_manager = get_data_manager_by_user_id(self._opp, user_id)
+        data_manager = get_data_manager_by_user_id(self..opp, user_id)
         self._aioclient_mock.clear_requests()
         self._aioclient_mock.request(
             "HEAD",
@@ -264,8 +264,8 @@ class ComponentFactory:
 
     async def call_webhook(self, user_id: int, appli: NotifyAppli) -> WebhookResponse:
         """Call the webhook to notify of data changes."""
-        client: TestClient = await self._aiohttp_client(self._opp.http.app)
-        data_manager = get_data_manager_by_user_id(self._opp, user_id)
+        client: TestClient = await self._aiohttp_client(self..opp.http.app)
+        data_manager = get_data_manager_by_user_id(self..opp, user_id)
 
         resp = await client.post(
             urlparse(data_manager.webhook_config.url).path,
@@ -273,7 +273,7 @@ class ComponentFactory:
         )
 
         # Wait for remaining tasks to complete.
-        await self._opp.async_block_till_done()
+        await self..opp.async_block_till_done()
 
         data = await resp.json()
         resp.close()
@@ -282,14 +282,14 @@ class ComponentFactory:
 
     async def unload(self, profile: ProfileConfig) -> None:
         """Unload the component for a specific user."""
-        config_entries = get_config_entries_for_user_id(self._opp, profile.user_id)
+        config_entries = get_config_entries_for_user_id(self..opp, profile.user_id)
 
         for config_entry in config_entries:
-            await async_unload_entry(self._opp, config_entry)
+            await async_unload_entry(self..opp, config_entry)
 
-        await self._opp.async_block_till_done()
+        await self..opp.async_block_till_done()
 
-        assert not get_data_manager_by_user_id(self._opp, profile.user_id)
+        assert not get_data_manager_by_user_id(self..opp, profile.user_id)
 
 
 def get_config_entries_for_user_id(

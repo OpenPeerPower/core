@@ -2,12 +2,12 @@
 
 import pytest
 
-from openpeerpower.components.openpeerpowerr import (
+from openpeerpower.components.openpeerpower import (
     DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import entity_test_helpers
 
@@ -45,13 +45,13 @@ async def test_light_registry_state_callback(
     # On state.
     pywemo_device.get_state.return_value = 1
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_ON
 
     # Off state.
     pywemo_device.get_state.return_value = 0
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
 
 
@@ -61,7 +61,7 @@ async def test_light_update_entity.opp, pywemo_registry, pywemo_device, wemo_ent
 
     # On state.
     pywemo_device.get_state.return_value = 1
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -71,7 +71,7 @@ async def test_light_update_entity.opp, pywemo_registry, pywemo_device, wemo_ent
 
     # Off state.
     pywemo_device.get_state.return_value = 0
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},

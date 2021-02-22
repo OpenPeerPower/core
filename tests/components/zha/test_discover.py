@@ -26,7 +26,7 @@ import openpeerpower.components.zha.light
 import openpeerpower.components.zha.lock
 import openpeerpower.components.zha.sensor
 import openpeerpower.components.zha.switch
-import openpeerpowerr.helpers.entity_registry
+import openpeerpower.helpers.entity_registry
 
 from .common import get_zha_gateway
 from .zha_devices_list import DEVICES
@@ -67,7 +67,7 @@ async def test_devices(
     zha_device_joined_restored,
 ):
     """Test device discovery."""
-    entity_registry = await openpeerpowerr.helpers.entity_registry.async_get_registry(
+    entity_registry = await openpeerpower.helpers.entity_registry.async_get_registry(
        .opp_disable_services
     )
 
@@ -89,12 +89,12 @@ async def test_devices(
     try:
         zha_channels.ChannelPool.async_new_entity = lambda *a, **kw: _dispatch(*a, **kw)
         zha_dev = await zha_device_joined_restored(zigpy_device)
-        await opp._disable_services.async_block_till_done()
+        await.opp_disable_services.async_block_till_done()
     finally:
         zha_channels.ChannelPool.async_new_entity = orig_new_entity
 
-    entity_ids = opp_disable_services.states.async_entity_ids()
-    await opp._disable_services.async_block_till_done()
+    entity_ids =.opp_disable_services.states.async_entity_ids()
+    await.opp_disable_services.async_block_till_done()
     zha_entity_ids = {
         ent for ent in entity_ids if ent.split(".")[0] in zha_const.COMPONENTS
     }
@@ -400,7 +400,7 @@ async def test_device_override(
     assert.opp_disable_services.states.get(entity_id) is None
     zha_gateway = get_zha_gateway.opp_disable_services)
     await zha_gateway.async_device_initialized(zigpy_device)
-    await opp._disable_services.async_block_till_done()
+    await.opp_disable_services.async_block_till_done()
     assert.opp_disable_services.states.get(entity_id) is not None
 
 
@@ -411,5 +411,5 @@ async def test_group_probe_cleanup_called(
     await setup_zha()
     disc.GROUP_PROBE.cleanup = mock.Mock(wraps=disc.GROUP_PROBE.cleanup)
     await config_entry.async_unload.opp_disable_services)
-    await opp._disable_services.async_block_till_done()
+    await.opp_disable_services.async_block_till_done()
     disc.GROUP_PROBE.cleanup.assert_called()

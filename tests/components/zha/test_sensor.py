@@ -24,8 +24,8 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.helpers import restore_state
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers import restore_state
+from openpeerpower.util import dt as dt_util
 
 from .common import (
     async_enable_traffic,
@@ -178,7 +178,7 @@ async def test_sensor(
     entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
 
     await async_enable_traffic.opp, [zha_device], enabled=False)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # ensure the sensor entity was created
     assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
@@ -201,23 +201,23 @@ def assert_state.opp, entity_id, state, unit_of_measurement):
     This is used to ensure that the logic in each sensor class handled the
     attribute report it received correctly.
     """
-   .opp_state = opp.states.get(entity_id)
+   .opp_state =.opp.states.get(entity_id)
     assert.opp_state.state == state
     assert.opp_state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == unit_of_measurement
 
 
 @pytest.fixture
 def.opp_ms.opp):
-    """Opp instance with measurement system."""
+    """Hass instance with measurement system."""
 
-    async def _opp_ms(meas_sys):
-        await config_util.async_process_op.core_config(
+    async def .opp_ms(meas_sys):
+        await config_util.async_process_ha_core_config(
            .opp, {CONF_UNIT_SYSTEM: meas_sys}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         return.opp
 
-    return _opp_ms
+    return .opp_ms
 
 
 @pytest.fixture
@@ -277,7 +277,7 @@ async def test_temp_uom(
     if restore:
         core_rs(entity_id, uom, state=(expected - 2))
 
-    opp = await opp._ms(
+   .opp = await.opp_ms(
         CONF_UNIT_SYSTEM_METRIC if uom == TEMP_CELSIUS else CONF_UNIT_SYSTEM_IMPERIAL
     )
 
@@ -309,8 +309,8 @@ async def test_temp_uom(
         assert.opp.states.get(entity_id).state == STATE_UNKNOWN
 
     await send_attribute_report.opp, cluster, 0, raw_temp)
-    await opp..async_block_till_done()
-    state = opp.states.get(entity_id)
+    await.opp.async_block_till_done()
+    state =.opp.states.get(entity_id)
     assert state is not None
     assert round(float(state.state)) == expected
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == uom

@@ -38,7 +38,7 @@ def get_mock_info(
     gateway_info = Mock()
     gateway_info.model = model
     gateway_info.mac_address = mac_address
-    gateway_info.hardware_version = op.dware_version
+    gateway_info.hardware_version = hardware_version
     gateway_info.firmware_version = firmware_version
 
     return gateway_info
@@ -46,7 +46,7 @@ def get_mock_info(
 
 async def test_config_flow_step_gateway_connect_error.opp):
     """Test config flow, gateway connection error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -58,7 +58,7 @@ async def test_config_flow_step_gateway_connect_error.opp):
         "openpeerpower.components.xiaomi_miio.device.Device.info",
         side_effect=DeviceException({}),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST, CONF_TOKEN: TEST_TOKEN},
         )
@@ -70,7 +70,7 @@ async def test_config_flow_step_gateway_connect_error.opp):
 
 async def test_config_flow_gateway_success.opp):
     """Test a successful config flow."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -86,7 +86,7 @@ async def test_config_flow_gateway_success.opp):
     ), patch(
         "openpeerpower.components.xiaomi_miio.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST, CONF_TOKEN: TEST_TOKEN},
         )
@@ -104,7 +104,7 @@ async def test_config_flow_gateway_success.opp):
 
 async def test_zeroconf_gateway_success.opp):
     """Test a successful zeroconf discovery of a gateway."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -126,7 +126,7 @@ async def test_zeroconf_gateway_success.opp):
     ), patch(
         "openpeerpower.components.xiaomi_miio.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_TOKEN: TEST_TOKEN},
         )
@@ -144,7 +144,7 @@ async def test_zeroconf_gateway_success.opp):
 
 async def test_zeroconf_unknown_device.opp):
     """Test a failed zeroconf discovery because of a unknown device."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -160,7 +160,7 @@ async def test_zeroconf_unknown_device.opp):
 
 async def test_zeroconf_no_data.opp):
     """Test a failed zeroconf discovery because of no data."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data={}
     )
 
@@ -170,7 +170,7 @@ async def test_zeroconf_no_data.opp):
 
 async def test_zeroconf_missing_data.opp):
     """Test a failed zeroconf discovery because of missing data."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={zeroconf.ATTR_HOST: TEST_HOST, ZEROCONF_NAME: TEST_ZEROCONF_NAME},
@@ -182,7 +182,7 @@ async def test_zeroconf_missing_data.opp):
 
 async def test_config_flow_step_device_connect_error.opp):
     """Test config flow, device connection error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -194,7 +194,7 @@ async def test_config_flow_step_device_connect_error.opp):
         "openpeerpower.components.xiaomi_miio.device.Device.info",
         side_effect=DeviceException({}),
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST, CONF_TOKEN: TEST_TOKEN},
         )
@@ -206,7 +206,7 @@ async def test_config_flow_step_device_connect_error.opp):
 
 async def test_config_flow_step_unknown_device.opp):
     """Test config flow, unknown device error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -220,7 +220,7 @@ async def test_config_flow_step_unknown_device.opp):
         "openpeerpower.components.xiaomi_miio.device.Device.info",
         return_value=mock_info,
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST, CONF_TOKEN: TEST_TOKEN},
         )
@@ -240,7 +240,7 @@ async def test_import_flow_success.opp):
     ), patch(
         "openpeerpower.components.xiaomi_miio.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             const.DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_NAME: TEST_NAME, CONF_HOST: TEST_HOST, CONF_TOKEN: TEST_TOKEN},
@@ -259,7 +259,7 @@ async def test_import_flow_success.opp):
 
 async def config_flow_device_success.opp, model_to_test):
     """Test a successful config flow for a device (base class)."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -275,7 +275,7 @@ async def config_flow_device_success.opp, model_to_test):
     ), patch(
         "openpeerpower.components.xiaomi_miio.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_HOST: TEST_HOST, CONF_TOKEN: TEST_TOKEN},
         )
@@ -293,7 +293,7 @@ async def config_flow_device_success.opp, model_to_test):
 
 async def zeroconf_device_success.opp, zeroconf_name_to_test, model_to_test):
     """Test a successful zeroconf discovery of a device  (base class)."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
@@ -315,7 +315,7 @@ async def zeroconf_device_success.opp, zeroconf_name_to_test, model_to_test):
     ), patch(
         "openpeerpower.components.xiaomi_miio.async_setup_entry", return_value=True
     ):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             {CONF_TOKEN: TEST_TOKEN},
         )

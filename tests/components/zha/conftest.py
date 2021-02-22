@@ -11,7 +11,7 @@ import zigpy.types
 from openpeerpower.components.zha import DOMAIN
 import openpeerpower.components.zha.core.const as zha_const
 import openpeerpower.components.zha.core.device as zha_core_device
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .common import FakeDevice, FakeEndpoint, get_zha_gateway
 
@@ -49,7 +49,7 @@ async def config_entry_fixture.opp):
             zha_const.CONF_RADIO_TYPE: "ezsp",
         },
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     return entry
 
 
@@ -70,7 +70,7 @@ def setup_zha.opp, config_entry, zigpy_app_controller):
                .opp, zha_const.DOMAIN, {zha_const.DOMAIN: {**zha_config, **config}}
             )
             assert status is True
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
     return _setup
 
@@ -136,7 +136,7 @@ def zha_device_joined.opp, setup_zha):
         await setup_zha()
         zha_gateway = get_zha_gateway.opp)
         await zha_gateway.async_device_initialized(zigpy_dev)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         return zha_gateway.get_device(zigpy_dev.ieee)
 
     return _zha_device
@@ -165,7 +165,7 @@ def zha_device_restored.opp, zigpy_app_controller, setup_zha,.opp_storage):
             }
 
         await setup_zha()
-        zha_gateway = opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway =.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
         return zha_gateway.get_device(zigpy_dev.ieee)
 
     return _zha_device

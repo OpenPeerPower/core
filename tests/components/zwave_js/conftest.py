@@ -9,7 +9,7 @@ from zwave_js_server.model.driver import Driver
 from zwave_js_server.model.node import Node
 from zwave_js_server.version import VersionInfo
 
-from openpeerpowerr.helpers.device_registry import (
+from openpeerpower.helpers.device_registry import (
     async_get_registry as async_get_device_registry,
 )
 
@@ -162,6 +162,12 @@ def in_wall_smart_fan_control_state_fixture():
 def motorized_barrier_cover_state_fixture():
     """Load the motorized barrier cover node state fixture data."""
     return json.loads(load_fixture("zwave_js/cover_zw062_state.json"))
+
+
+@pytest.fixture(name="iblinds_v2_state", scope="session")
+def iblinds_v2_state_fixture():
+    """Load the iBlinds v2 node state fixture data."""
+    return json.loads(load_fixture("zwave_js/cover_iblinds_v2_state.json"))
 
 
 @pytest.fixture(name="client")
@@ -318,9 +324,9 @@ def nortek_thermostat_removed_event_fixture(client):
 async def integration_fixture.opp, client):
     """Set up the zwave_js integration."""
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
-    entry.add_to_opp.opp)
-    await opp..config_entries.async_setup(entry.entry_id)
-    await opp..async_block_till_done()
+    entry.add_to.opp.opp)
+    await.opp.config_entries.async_setup(entry.entry_id)
+    await.opp.async_block_till_done()
 
     return entry
 
@@ -357,5 +363,13 @@ def multiple_devices_fixture(
 def motorized_barrier_cover_fixture(client, gdc_zw062_state):
     """Mock a motorized barrier node."""
     node = Node(client, gdc_zw062_state)
+    client.driver.controller.nodes[node.node_id] = node
+    return node
+
+
+@pytest.fixture(name="iblinds_v2")
+def iblinds_cover_fixture(client, iblinds_v2_state):
+    """Mock an iBlinds v2.0 window cover node."""
+    node = Node(client, iblinds_v2_state)
     client.driver.controller.nodes[node.node_id] = node
     return node

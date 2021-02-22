@@ -10,7 +10,7 @@ from openpeerpower.components.zha.core.registries import (
     SMARTTHINGS_ARRIVAL_SENSOR_DEVICE_TYPE,
 )
 from openpeerpower.const import STATE_HOME, STATE_NOT_HOME, STATE_UNAVAILABLE
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from .common import (
     async_enable_traffic,
@@ -57,7 +57,7 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
     zigpy_device_dt.last_seen = time.time() - 120
     next_update = dt_util.utcnow() + timedelta(seconds=30)
     async_fire_time_changed.opp, next_update)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
@@ -73,11 +73,11 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
     zigpy_device_dt.last_seen = time.time() + 10
     next_update = dt_util.utcnow() + timedelta(seconds=30)
     async_fire_time_changed.opp, next_update)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert.opp.states.get(entity_id).state == STATE_HOME
 
-    entity = opp.data[DOMAIN].get_entity(entity_id)
+    entity =.opp.data[DOMAIN].get_entity(entity_id)
 
     assert entity.is_connected is True
     assert entity.source_type == SOURCE_TYPE_ROUTER

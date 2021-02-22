@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from .common import ComponentFactory
 

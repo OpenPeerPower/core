@@ -38,7 +38,7 @@ from openpeerpower.components.zha.core.const import (
     GROUP_IDS,
     GROUP_NAME,
 )
-from openpeerpowerr.core import Context
+from openpeerpower.core import Context
 
 from .conftest import FIXTURE_GRP_ID, FIXTURE_GRP_NAME
 
@@ -94,7 +94,7 @@ async def zha_client.opp,.opp_ws_client, device_switch, device_groupable):
 
     # load the ZHA API
     async_load_api.opp)
-    return await opp._ws_client.opp)
+    return await.opp_ws_client.opp)
 
 
 async def test_device_clusters.opp, zha_client):
@@ -362,7 +362,7 @@ async def test_remove_group(zha_client):
 async def app_controller.opp, setup_zha):
     """Fixture for zigpy Application Controller."""
     await setup_zha()
-    controller = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].application_controller
+    controller =.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].application_controller
     p1 = patch.object(controller, "permit")
     p2 = patch.object(controller, "permit_with_key", new=AsyncMock())
     with p1, p2:
@@ -386,12 +386,12 @@ async def app_controller.opp, setup_zha):
         ),
     ),
 )
-async def test_permit_op.2(
+async def test_permit_ha12(
    .opp, app_controller,.opp_admin_user, params, duration, node
 ):
     """Test permit service."""
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 1
@@ -426,7 +426,7 @@ async def test_permit_with_install_code(
 ):
     """Test permit service with install code."""
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 0
@@ -478,7 +478,7 @@ async def test_permit_with_install_code_fail(
     """Test permit service with install code."""
 
     with pytest.raises(vol.Invalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
         )
     assert app_controller.permit.await_count == 0
@@ -515,7 +515,7 @@ async def test_permit_with_qr_code(
 ):
     """Test permit service with install code from qr code."""
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 0
@@ -581,7 +581,7 @@ async def test_ws_permit_with_install_code_fail(app_controller, zha_client, para
         ),
     ),
 )
-async def test_ws_permit_op.2(app_controller, zha_client, params, duration, node):
+async def test_ws_permit_ha12(app_controller, zha_client, params, duration, node):
     """Test permit ws service."""
 
     await zha_client.send_json(

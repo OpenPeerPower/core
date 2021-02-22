@@ -4,14 +4,14 @@ from unittest.mock import create_autospec, patch
 import pytest
 import pywemo
 
-from openpeerpower.components.openpeerpowerr import (
+from openpeerpower.components.openpeerpower import (
     DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.wemo.light import MIN_TIME_BETWEEN_SCANS
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from . import entity_test_helpers
 
@@ -46,7 +46,7 @@ def _bypass_throttling():
         utcnow += MIN_TIME_BETWEEN_SCANS
         return utcnow
 
-    return patch("openpeerpowerr.util.utcnow", side_effect=increment_and_return_time)
+    return patch("openpeerpower.util.utcnow", side_effect=increment_and_return_time)
 
 
 async def test_async_update_locked_multiple_updates(
@@ -96,7 +96,7 @@ async def test_light_update_entity(
 
     # On state.
     pywemo_bridge_light.state = {"onoff": 1}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
@@ -106,7 +106,7 @@ async def test_light_update_entity(
 
     # Off state.
     pywemo_bridge_light.state = {"onoff": 0}
-    await opp..services.async_call(
+    await.opp.services.async_call(
         HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},

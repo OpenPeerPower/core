@@ -5,6 +5,7 @@ from zwave_js_server.event import Event
 from openpeerpower.components.climate.const import (
     ATTR_CURRENT_HUMIDITY,
     ATTR_CURRENT_TEMPERATURE,
+    ATTR_FAN_MODE,
     ATTR_HVAC_ACTION,
     ATTR_HVAC_MODE,
     ATTR_HVAC_MODES,
@@ -19,10 +20,12 @@ from openpeerpower.components.climate.const import (
     HVAC_MODE_HEAT_COOL,
     HVAC_MODE_OFF,
     PRESET_NONE,
+    SERVICE_SET_FAN_MODE,
     SERVICE_SET_HVAC_MODE,
     SERVICE_SET_PRESET_MODE,
     SERVICE_SET_TEMPERATURE,
 )
+from openpeerpower.components.zwave_js.climate import ATTR_FAN_STATE
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_TEMPERATURE
 
 CLIMATE_RADIO_THERMOSTAT_ENTITY = "climate.z_wave_thermostat"
@@ -35,7 +38,7 @@ async def test_thermostat_v2(
 ):
     """Test a thermostat v2 command class entity."""
     node = climate_radio_thermostat_ct100_plus
-    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
 
     assert state
     assert state.state == HVAC_MODE_HEAT
@@ -50,9 +53,11 @@ async def test_thermostat_v2(
     assert state.attributes[ATTR_TEMPERATURE] == 22.2
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
+    assert state.attributes[ATTR_FAN_MODE] == "Auto low"
+    assert state.attributes[ATTR_FAN_STATE] == "Idle / off"
 
     # Test setting preset mode
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_PRESET_MODE,
         {
@@ -88,7 +93,7 @@ async def test_thermostat_v2(
     client.async_send_command.reset_mock()
 
     # Test setting hvac mode
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_HVAC_MODE,
         {
@@ -124,7 +129,7 @@ async def test_thermostat_v2(
     client.async_send_command.reset_mock()
 
     # Test setting temperature
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -201,7 +206,7 @@ async def test_thermostat_v2(
     )
     node.receive_event(event)
 
-    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
     assert state.state == HVAC_MODE_COOL
     assert state.attributes[ATTR_TEMPERATURE] == 22.8
 
@@ -225,7 +230,7 @@ async def test_thermostat_v2(
     )
     node.receive_event(event)
 
-    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
     assert state.state == HVAC_MODE_HEAT_COOL
     assert state.attributes[ATTR_TARGET_TEMP_HIGH] == 22.8
     assert state.attributes[ATTR_TARGET_TEMP_LOW] == 22.2
@@ -233,7 +238,7 @@ async def test_thermostat_v2(
     client.async_send_command.reset_mock()
 
     # Test setting temperature with heat_cool
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -293,7 +298,7 @@ async def test_thermostat_v2(
 
     with pytest.raises(ValueError):
         # Test setting unknown preset mode
-        await opp..services.async_call(
+        await.opp.services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {
@@ -307,7 +312,7 @@ async def test_thermostat_v2(
 
     # Test setting invalid hvac mode
     with pytest.raises(ValueError):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_HVAC_MODE,
             {
@@ -319,7 +324,7 @@ async def test_thermostat_v2(
 
     # Test setting invalid preset mode
     with pytest.raises(ValueError):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             CLIMATE_DOMAIN,
             SERVICE_SET_PRESET_MODE,
             {
@@ -329,12 +334,63 @@ async def test_thermostat_v2(
             blocking=True,
         )
 
+    client.async_send_command.reset_mock()
+
+    # Test setting fan mode
+    await.opp.services.async_call(
+        CLIMATE_DOMAIN,
+        SERVICE_SET_FAN_MODE,
+        {
+            ATTR_ENTITY_ID: CLIMATE_RADIO_THERMOSTAT_ENTITY,
+            ATTR_FAN_MODE: "Low",
+        },
+        blocking=True,
+    )
+
+    assert len(client.async_send_command.call_args_list) == 1
+    args = client.async_send_command.call_args[0][0]
+    assert args["command"] == "node.set_value"
+    assert args["nodeId"] == 13
+    assert args["valueId"] == {
+        "endpoint": 1,
+        "commandClass": 68,
+        "commandClassName": "Thermostat Fan Mode",
+        "property": "mode",
+        "propertyName": "mode",
+        "ccVersion": 0,
+        "metadata": {
+            "type": "number",
+            "readable": True,
+            "writeable": True,
+            "min": 0,
+            "max": 255,
+            "states": {"0": "Auto low", "1": "Low"},
+            "label": "Thermostat fan mode",
+        },
+        "value": 0,
+    }
+    assert args["value"] == 1
+
+    client.async_send_command.reset_mock()
+
+    # Test setting invalid fan mode
+    with pytest.raises(ValueError):
+        await.opp.services.async_call(
+            CLIMATE_DOMAIN,
+            SERVICE_SET_FAN_MODE,
+            {
+                ATTR_ENTITY_ID: CLIMATE_RADIO_THERMOSTAT_ENTITY,
+                ATTR_FAN_MODE: "fake value",
+            },
+            blocking=True,
+        )
+
 
 async def test_thermostat_different_endpoints(
    .opp, client, climate_radio_thermostat_ct100_plus_different_endpoints, integration
 ):
     """Test an entity with values on a different endpoint from the primary value."""
-    state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
+    state =.opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)
 
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 22.5
 
@@ -342,7 +398,7 @@ async def test_thermostat_different_endpoints(
 async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integration):
     """Test a setpoint thermostat command class entity."""
     node = climate_danfoss_lc_13
-    state = opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
+    state =.opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
 
     assert state
     assert state.state == HVAC_MODE_HEAT
@@ -353,7 +409,7 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
     client.async_send_command.reset_mock()
 
     # Test setting temperature
-    await opp..services.async_call(
+    await.opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
         {
@@ -400,7 +456,6 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
                 "commandClass": 67,
                 "endpoint": 0,
                 "property": "setpoint",
-                "propertyKey": 1,
                 "propertyKeyName": "Heating",
                 "propertyName": "setpoint",
                 "newValue": 23,
@@ -410,7 +465,7 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
     )
     node.receive_event(event)
 
-    state = opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
+    state =.opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
     assert state.state == HVAC_MODE_HEAT
     assert state.attributes[ATTR_TEMPERATURE] == 23
 
@@ -419,7 +474,7 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
 
 async def test_thermostat_heatit.opp, client, climate_heatit_z_trm3, integration):
     """Test a thermostat v2 command class entity."""
-    state = opp.states.get(CLIMATE_FLOOR_THERMOSTAT_ENTITY)
+    state =.opp.states.get(CLIMATE_FLOOR_THERMOSTAT_ENTITY)
 
     assert state
     assert state.state == HVAC_MODE_HEAT
