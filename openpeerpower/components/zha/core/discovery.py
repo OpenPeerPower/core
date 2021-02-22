@@ -158,7 +158,7 @@ class ProbeEndpoint:
             channel = channel_class(cluster, ep_channels)
             self.probe_single_cluster(component, channel, ep_channels)
 
-    def initialize(self,.opp: OpenPeerPowerType) -> None:
+    def initialize(self, opp: OpenPeerPowerType) -> None:
         """Update device overrides config."""
         zha_config =.opp.data[zha_const.DATA_ZHA].get(zha_const.DATA_ZHA_CONFIG, {})
         overrides = zha_config.get(zha_const.CONF_DEVICE_CONFIG)
@@ -174,7 +174,7 @@ class GroupProbe:
         self. opp =None
         self._unsubs = []
 
-    def initialize(self,.opp: OpenPeerPowerType) -> None:
+    def initialize(self, opp: OpenPeerPowerType) -> None:
         """Initialize the group probe."""
         self.opp = opp
         self._unsubs.append(

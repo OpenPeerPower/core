@@ -10,7 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 class ConnectMotionGateway:
     """Class to async connect to a Motion Gateway."""
 
-    def __init__(self,.opp, multicast):
+    def __init__(self, opp, multicast):
         """Initialize the entity."""
         self.opp = opp
         self._multicast = multicast

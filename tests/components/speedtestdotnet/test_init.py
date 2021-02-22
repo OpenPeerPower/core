@@ -10,7 +10,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_setup_with_config.opp):
+async def test_setup_with_config(opp):
     """Test that we import the config and setup the integration."""
     config = {
         speedtestdotnet.DOMAIN: {

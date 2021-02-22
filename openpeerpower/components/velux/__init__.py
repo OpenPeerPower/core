@@ -44,7 +44,7 @@ async def async_setup_opp, config):
 class VeluxModule:
     """Abstraction for velux component."""
 
-    def __init__(self,.opp, domain_config):
+    def __init__(self, opp, domain_config):
         """Initialize for velux component."""
         self.pyvlx = None
         self.opp = opp

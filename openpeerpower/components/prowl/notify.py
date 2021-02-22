@@ -30,7 +30,7 @@ async def async_get_service.opp, config, discovery_info=None):
 class ProwlNotificationService(BaseNotificationService):
     """Implement the notification service for Prowl."""
 
-    def __init__(self,.opp, api_key):
+    def __init__(self, opp, api_key):
         """Initialize the service."""
         self.opp = opp
         self._api_key = api_key

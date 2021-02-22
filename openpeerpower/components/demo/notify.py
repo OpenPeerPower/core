@@ -12,7 +12,7 @@ def get_service.opp, config, discovery_info=None):
 class DemoNotificationService(BaseNotificationService):
     """Implement demo notification service."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the service."""
         self.opp =.opp
 

@@ -62,7 +62,7 @@ async def async_unload_entry.opp, config_entry) -> bool:
 class AwairDataUpdateCoordinator(DataUpdateCoordinator):
     """Define a wrapper class to update Awair data."""
 
-    def __init__(self,.opp, config_entry, session) -> None:
+    def __init__(self, opp, config_entry, session) -> None:
         """Set up the AwairDataUpdateCoordinator class."""
         access_token = config_entry.data[CONF_ACCESS_TOKEN]
         self._awair = Awair(access_token=access_token, session=session)

@@ -54,7 +54,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     destination = config.get(CONF_DESTINATION)
 
     session = async_get_clientsession.opp)
-    opendata = OpendataTransport(start, destination,.opp.loop, session)
+    opendata = OpendataTransport(start, destination, opp.loop, session)
 
     try:
         await opendata.async_get_data()

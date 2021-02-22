@@ -43,7 +43,7 @@ def auth_invalid_message(message):
 class AuthPhase:
     """Connection that requires client to authenticate first."""
 
-    def __init__(self, logger,.opp, send_message, request):
+    def __init__(self, logger, opp, send_message, request):
         """Initialize the authentiated connection."""
         self.opp = opp
         self._send_message = send_message

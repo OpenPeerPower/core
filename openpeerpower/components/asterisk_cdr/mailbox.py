@@ -21,7 +21,7 @@ async def async_get_handler.opp, config, discovery_info=None):
 class AsteriskCDR(Mailbox):
     """Asterisk VM Call Data Record mailbox."""
 
-    def __init__(self,.opp, name):
+    def __init__(self, opp, name):
         """Initialize Asterisk CDR."""
         super().__init__.opp, name)
         self.cdr = []

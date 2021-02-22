@@ -124,7 +124,7 @@ async def test_setup_missing_subscriber_id.opp, caplog):
     assert entries[0].state == ENTRY_STATE_NOT_LOADED
 
 
-async def test_empty_config.opp, caplog):
+async def test_empty_config(opp, caplog):
     """Test successful setup."""
     with caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
         result = await async_setup_component.opp, DOMAIN, {})

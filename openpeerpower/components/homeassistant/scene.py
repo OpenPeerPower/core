@@ -150,7 +150,7 @@ def entities_in_scene.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up Open Peer Power scene entries."""
-    _process_scenes_config.opp, async_add_entities, config)
+    _process_scenes_config(opp, async_add_entities, config)
 
     # This platform can be loaded multiple times. Only first time register the service.
     if.opp.services.has_service(SCENE_DOMAIN, SERVICE_RELOAD):
@@ -169,7 +169,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
         integration = await async_get_integration.opp, SCENE_DOMAIN)
 
-        conf = await conf_util.async_process_component_config.opp, conf, integration)
+        conf = await conf_util.async_process_component_config(opp, conf, integration)
 
         if not (conf and platform):
             return
@@ -181,7 +181,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             if p_type != HA_DOMAIN:
                 continue
 
-            _process_scenes_config.opp, async_add_entities, p_config)
+            _process_scenes_config(opp, async_add_entities, p_config)
 
        .opp.bus.async_fire(EVENT_SCENE_RELOADED, context=call.context)
 
@@ -251,7 +251,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-def _process_scenes_config.opp, async_add_entities, config):
+def _process_scenes_config(opp, async_add_entities, config):
     """Process multiple scenes and add them."""
     scene_config = config[STATES]
 
@@ -276,7 +276,7 @@ def _process_scenes_config.opp, async_add_entities, config):
 class OpenPeerPowerScene(Scene):
     """A scene is a group of entities and the states we want them to be."""
 
-    def __init__(self,.opp, scene_config, from_service=False):
+    def __init__(self, opp, scene_config, from_service=False):
         """Initialize the scene."""
         self.opp =.opp
         self.scene_config = scene_config

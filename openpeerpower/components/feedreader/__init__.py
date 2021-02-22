@@ -48,7 +48,7 @@ def setup_opp, config):
     data_file = opp.config.path(f"{DOMAIN}.pickle")
     storage = StoredData(data_file)
     feeds = [
-        FeedManager(url, scan_interval, max_entries,.opp, storage) for url in urls
+        FeedManager(url, scan_interval, max_entries, opp, storage) for url in urls
     ]
     return len(feeds) > 0
 
@@ -56,7 +56,7 @@ def setup_opp, config):
 class FeedManager:
     """Abstraction over Feedparser module."""
 
-    def __init__(self, url, scan_interval, max_entries,.opp, storage):
+    def __init__(self, url, scan_interval, max_entries, opp, storage):
         """Initialize the FeedManager object, poll as per scan interval."""
         self._url = url
         self._scan_interval = scan_interval
@@ -77,7 +77,7 @@ class FeedManager:
         """Send no entries log at debug level."""
         _LOGGER.debug("No new entries to be published in feed %s", self._url)
 
-    def _init_regular_updates(self,.opp):
+    def _init_regular_updates(self, opp):
         """Schedule regular updates at the top of the clock."""
         track_time_interval.opp, lambda now: self._update(), self._scan_interval)
 

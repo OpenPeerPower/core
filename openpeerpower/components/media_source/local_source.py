@@ -29,7 +29,7 @@ class LocalSource(MediaSource):
 
     name: str = "Local Media"
 
-    def __init__(self,.opp: OpenPeerPower):
+    def __init__(self, opp: OpenPeerPower):
         """Initialize local source."""
         super().__init__(DOMAIN)
         self.opp =.opp
@@ -182,7 +182,7 @@ class LocalMediaView(OpenPeerPowerView):
     url = "/media/{source_dir_id}/{location:.*}"
     name = "media"
 
-    def __init__(self,.opp: OpenPeerPower, source: LocalSource):
+    def __init__(self, opp: OpenPeerPower, source: LocalSource):
         """Initialize the media view."""
         self.opp =.opp
         self.source = source

@@ -180,7 +180,7 @@ def _mocked_ismartgate_closed_door_response():
 
 
 @patch("openpeerpower.components.gogogate2.common.GogoGate2Api")
-async def test_import_fail(gogogate2api_mock,.opp: OpenPeerPower) -> None:
+async def test_import_fail(gogogate2api_mock, opp: OpenPeerPower) -> None:
     """Test the failure to import."""
     api = MagicMock(spec=GogoGate2Api)
     api.async_info.side_effect = ApiError(22, "Error")
@@ -200,9 +200,9 @@ async def test_import_fail(gogogate2api_mock,.opp: OpenPeerPower) -> None:
         ],
     }
 
-    await async_process_ha_core_config.opp,.opp_config[HA_DOMAIN])
+    await async_process_ha_core_config(opp, opp_config[HA_DOMAIN])
     assert await async_setup_component.opp, HA_DOMAIN, {})
-    assert await async_setup_component.opp, COVER_DOMAIN,.opp_config)
+    assert await async_setup_component.opp, COVER_DOMAIN, opp_config)
     await.opp.async_block_till_done()
 
     entity_ids =.opp.states.async_entity_ids(COVER_DOMAIN)
@@ -212,7 +212,7 @@ async def test_import_fail(gogogate2api_mock,.opp: OpenPeerPower) -> None:
 @patch("openpeerpower.components.gogogate2.common.GogoGate2Api")
 @patch("openpeerpower.components.gogogate2.common.ISmartGateApi")
 async def test_import(
-    ismartgateapi_mock, gogogate2api_mock,.opp: OpenPeerPower
+    ismartgateapi_mock, gogogate2api_mock, opp: OpenPeerPower
 ) -> None:
     """Test importing of file based config."""
     api0 = MagicMock(spec=GogoGate2Api)
@@ -245,9 +245,9 @@ async def test_import(
         ],
     }
 
-    await async_process_ha_core_config.opp,.opp_config[HA_DOMAIN])
+    await async_process_ha_core_config(opp, opp_config[HA_DOMAIN])
     assert await async_setup_component.opp, HA_DOMAIN, {})
-    assert await async_setup_component.opp, COVER_DOMAIN,.opp_config)
+    assert await async_setup_component.opp, COVER_DOMAIN, opp_config)
     await.opp.async_block_till_done()
 
     entity_ids =.opp.states.async_entity_ids(COVER_DOMAIN)
@@ -259,7 +259,7 @@ async def test_import(
 
 
 @patch("openpeerpower.components.gogogate2.common.GogoGate2Api")
-async def test_open_close_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
+async def test_open_close_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
     """Test open and close and data update."""
 
     def info_response(door_status: DoorStatus) -> GogoGate2InfoResponse:
@@ -372,7 +372,7 @@ async def test_open_close_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
 
 
 @patch("openpeerpower.components.gogogate2.common.ISmartGateApi")
-async def test_availability(ismartgateapi_mock,.opp: OpenPeerPower) -> None:
+async def test_availability(ismartgateapi_mock, opp: OpenPeerPower) -> None:
     """Test availability."""
     closed_door_response = _mocked_ismartgate_closed_door_response()
 
@@ -419,7 +419,7 @@ async def test_availability(ismartgateapi_mock,.opp: OpenPeerPower) -> None:
 
 
 @patch("openpeerpower.components.gogogate2.common.ISmartGateApi")
-async def test_device_info_ismartgate(ismartgateapi_mock,.opp: OpenPeerPower) -> None:
+async def test_device_info_ismartgate(ismartgateapi_mock, opp: OpenPeerPower) -> None:
     """Test device info."""
     device_registry = mock_device_registry.opp)
 
@@ -454,7 +454,7 @@ async def test_device_info_ismartgate(ismartgateapi_mock,.opp: OpenPeerPower) ->
 
 
 @patch("openpeerpower.components.gogogate2.common.GogoGate2Api")
-async def test_device_info_gogogate2(gogogate2api_mock,.opp: OpenPeerPower) -> None:
+async def test_device_info_gogogate2(gogogate2api_mock, opp: OpenPeerPower) -> None:
     """Test device info."""
     device_registry = mock_device_registry.opp)
 

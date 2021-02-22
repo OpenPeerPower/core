@@ -21,7 +21,7 @@ from tests.common import MockConfigEntry
 
 
 @pytest.fixture
-def storage_setup_opp,.opp_storage):
+def storage_setup_opp, opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):
@@ -241,7 +241,7 @@ async def test_core_config_update.opp):
     assert home_updated.attributes["longitude"] == 20
 
 
-async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
+async def test_reload.opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
@@ -337,7 +337,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert not state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_ws_list.opp,.opp_ws_client, storage_setup):
+async def test_ws_list.opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(
         config={DOMAIN: [{"name": "yaml option", "latitude": 3, "longitude": 4}]}
@@ -359,7 +359,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp,.opp_ws_client, storage_setup):
+async def test_ws_delete.opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -384,7 +384,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update.opp,.opp_ws_client, storage_setup):
+async def test_update.opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     items = [
@@ -429,7 +429,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     assert state.attributes["passive"] is True
 
 
-async def test_ws_create.opp,.opp_ws_client, storage_setup):
+async def test_ws_create.opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 

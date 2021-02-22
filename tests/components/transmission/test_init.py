@@ -46,13 +46,13 @@ def mock_api_unknown_error():
         yield
 
 
-async def test_setup_with_no_config.opp):
+async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a Transmission client."""
     assert await async_setup_component.opp, transmission.DOMAIN, {}) is True
     assert transmission.DOMAIN not in.opp.data
 
 
-async def test_setup_with_config.opp, api):
+async def test_setup_with_config(opp, api):
     """Test that we import the config and setup the client."""
     config = {
         transmission.DOMAIN: {

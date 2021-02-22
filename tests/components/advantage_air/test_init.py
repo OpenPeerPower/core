@@ -21,7 +21,7 @@ async def test_async_setup_entry.opp, aioclient_mock):
         text=TEST_SYSTEM_DATA,
     )
 
-    entry = await add_mock_config.opp)
+    entry = await add_mock_config(opp)
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await.opp.config_entries.async_unload(entry.entry_id)
@@ -37,5 +37,5 @@ async def test_async_setup_entry_failure.opp, aioclient_mock):
         exc=SyntaxError,
     )
 
-    entry = await add_mock_config.opp)
+    entry = await add_mock_config(opp)
     assert entry.state == ENTRY_STATE_SETUP_RETRY

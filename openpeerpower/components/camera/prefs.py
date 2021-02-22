@@ -29,7 +29,7 @@ class CameraEntityPreferences:
 class CameraPreferences:
     """Handle camera preferences."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize camera prefs."""
         self.opp = opp
         self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)

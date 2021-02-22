@@ -49,7 +49,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class FFmpegNoise(FFmpegBinarySensor):
     """A binary sensor which use FFmpeg for noise detection."""
 
-    def __init__(self,.opp, manager, config):
+    def __init__(self, opp, manager, config):
         """Initialize FFmpeg noise binary sensor."""
 
         super().__init__(config)

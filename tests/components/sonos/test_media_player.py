@@ -30,7 +30,7 @@ async def test_async_setup_entry_discover.opp, config_entry, discover):
     assert entity.unique_id == "RINCON_test"
 
 
-async def test_services.opp, config_entry, config,.opp_read_only_user):
+async def test_services.opp, config_entry, config, opp_read_only_user):
     """Test join/unjoin requires control access."""
     await setup_platform.opp, config_entry, config)
 

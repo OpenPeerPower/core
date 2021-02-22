@@ -42,7 +42,7 @@ def switchbox_fixture():
     return (feature, "switch.switchbox_0_relay")
 
 
-async def test_switchbox_init(switchbox,.opp, config):
+async def test_switchbox_init(switchbox, opp, config):
     """Test switch default state."""
 
     feature_mock, entity_id = switchbox
@@ -68,7 +68,7 @@ async def test_switchbox_init(switchbox,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_switchbox_update_when_off(switchbox,.opp, config):
+async def test_switchbox_update_when_off(switchbox, opp, config):
     """Test switch updating when off."""
 
     feature_mock, entity_id = switchbox
@@ -83,7 +83,7 @@ async def test_switchbox_update_when_off(switchbox,.opp, config):
     assert state.state == STATE_OFF
 
 
-async def test_switchbox_update_when_on(switchbox,.opp, config):
+async def test_switchbox_update_when_on(switchbox, opp, config):
     """Test switch updating when on."""
 
     feature_mock, entity_id = switchbox
@@ -98,7 +98,7 @@ async def test_switchbox_update_when_on(switchbox,.opp, config):
     assert state.state == STATE_ON
 
 
-async def test_switchbox_on(switchbox,.opp, config):
+async def test_switchbox_on(switchbox, opp, config):
     """Test turning switch on."""
 
     feature_mock, entity_id = switchbox
@@ -126,7 +126,7 @@ async def test_switchbox_on(switchbox,.opp, config):
     assert state.state == STATE_ON
 
 
-async def test_switchbox_off(switchbox,.opp, config):
+async def test_switchbox_off(switchbox, opp, config):
     """Test turning switch off."""
 
     feature_mock, entity_id = switchbox
@@ -187,7 +187,7 @@ def switchbox_d_fixture():
     return (features, ["switch.switchboxd_0_relay", "switch.switchboxd_1_relay"])
 
 
-async def test_switchbox_d_init(switchbox_d,.opp, config):
+async def test_switchbox_d_init(switchbox_d, opp, config):
     """Test switch default state."""
 
     feature_mocks, entity_ids = switchbox_d
@@ -231,7 +231,7 @@ async def test_switchbox_d_init(switchbox_d,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_switchbox_d_update_when_off(switchbox_d,.opp, config):
+async def test_switchbox_d_update_when_off(switchbox_d, opp, config):
     """Test switch updating when off."""
 
     feature_mocks, entity_ids = switchbox_d
@@ -248,7 +248,7 @@ async def test_switchbox_d_update_when_off(switchbox_d,.opp, config):
     assert.opp.states.get(entity_ids[1]).state == STATE_OFF
 
 
-async def test_switchbox_d_update_when_second_off(switchbox_d,.opp, config):
+async def test_switchbox_d_update_when_second_off(switchbox_d, opp, config):
     """Test switch updating when off."""
 
     feature_mocks, entity_ids = switchbox_d
@@ -265,7 +265,7 @@ async def test_switchbox_d_update_when_second_off(switchbox_d,.opp, config):
     assert.opp.states.get(entity_ids[1]).state == STATE_OFF
 
 
-async def test_switchbox_d_turn_first_on(switchbox_d,.opp, config):
+async def test_switchbox_d_turn_first_on(switchbox_d, opp, config):
     """Test turning switch on."""
 
     feature_mocks, entity_ids = switchbox_d
@@ -294,7 +294,7 @@ async def test_switchbox_d_turn_first_on(switchbox_d,.opp, config):
     assert.opp.states.get(entity_ids[1]).state == STATE_OFF
 
 
-async def test_switchbox_d_second_on(switchbox_d,.opp, config):
+async def test_switchbox_d_second_on(switchbox_d, opp, config):
     """Test turning switch on."""
 
     feature_mocks, entity_ids = switchbox_d
@@ -323,7 +323,7 @@ async def test_switchbox_d_second_on(switchbox_d,.opp, config):
     assert.opp.states.get(entity_ids[1]).state == STATE_ON
 
 
-async def test_switchbox_d_first_off(switchbox_d,.opp, config):
+async def test_switchbox_d_first_off(switchbox_d, opp, config):
     """Test turning switch on."""
 
     feature_mocks, entity_ids = switchbox_d
@@ -352,7 +352,7 @@ async def test_switchbox_d_first_off(switchbox_d,.opp, config):
     assert.opp.states.get(entity_ids[1]).state == STATE_ON
 
 
-async def test_switchbox_d_second_off(switchbox_d,.opp, config):
+async def test_switchbox_d_second_off(switchbox_d, opp, config):
     """Test turning switch on."""
 
     feature_mocks, entity_ids = switchbox_d
@@ -384,7 +384,7 @@ ALL_SWITCH_FIXTURES = ["switchbox", "switchbox_d"]
 
 
 @pytest.mark.parametrize("feature", ALL_SWITCH_FIXTURES, indirect=["feature"])
-async def test_update_failure(feature,.opp, config, caplog):
+async def test_update_failure(feature, opp, config, caplog):
     """Test that update failures are logged."""
 
     caplog.set_level(logging.ERROR)

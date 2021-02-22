@@ -33,7 +33,7 @@ async def test_setup_component.opp, google_setup):
 async def test_get_calendar_info.opp, test_calendar):
     """Test getting the calendar info."""
     calendar_info = await.opp.async_add_executor_job(
-        google.get_calendar_info,.opp, test_calendar
+        google.get_calendar_info, opp, test_calendar
     )
     assert calendar_info == {
         "cal_id": "qwertyuiopasdfghjklzxcvbnm@import.calendar.google.com",

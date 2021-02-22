@@ -171,7 +171,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class InfluxSensor(Entity):
     """Implementation of a Influxdb sensor."""
 
-    def __init__(self,.opp, influx, query):
+    def __init__(self, opp, influx, query):
         """Initialize the sensor."""
         self._name = query.get(CONF_NAME)
         self._unit_of_measurement = query.get(CONF_UNIT_OF_MEASUREMENT)

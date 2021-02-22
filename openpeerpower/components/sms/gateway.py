@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 class Gateway:
     """SMS gateway to interact with a GSM modem."""
 
-    def __init__(self, worker,.opp):
+    def __init__(self, worker, opp):
         """Initialize the sms gateway."""
         self._worker = worker
         self.opp = opp
@@ -156,13 +156,13 @@ class Gateway:
         return await self._worker.terminate_async()
 
 
-async def create_sms_gateway(config,.opp):
+async def create_sms_gateway(config, opp):
     """Create the sms gateway."""
     try:
         worker = GammuAsyncWorker()
         worker.configure(config)
         await worker.init_async()
-        gateway = Gateway(worker,.opp)
+        gateway = Gateway(worker, opp)
         await gateway.init_async()
         return gateway
     except gammu.GSMError as exc:  # pylint: disable=no-member

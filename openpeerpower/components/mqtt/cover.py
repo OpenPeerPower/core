@@ -206,7 +206,7 @@ async def async_setup_platform(
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up MQTT cover dynamically through MQTT discovery."""
     setup = functools.partial(
-        _async_setup_entity,.opp, async_add_entities, config_entry=config_entry
+        _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper.opp, cover.DOMAIN, setup, PLATFORM_SCHEMA)
 
@@ -221,7 +221,7 @@ async def _async_setup_entity(
 class MqttCover(MqttEntity, CoverEntity):
     """Representation of a cover that can be controlled using MQTT."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Initialize the cover."""
         self._position = None
         self._state = None
@@ -230,7 +230,7 @@ class MqttCover(MqttEntity, CoverEntity):
         self._tilt_value = None
         self._tilt_optimistic = None
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

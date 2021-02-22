@@ -13,14 +13,14 @@ ORIG_TIME_ZONE = dt_util.DEFAULT_TIME_ZONE
 
 
 @pytest.fixture
-async def client.opp,.opp_ws_client):
+async def client.opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     with patch.object(config, "SECTIONS", ["core"]):
         assert await async_setup_component.opp, "config", {})
     return await.opp_ws_client.opp)
 
 
-async def test_validate_config_ok.opp,.opp_client):
+async def test_validate_config_ok.opp, opp_client):
     """Test checking config."""
     with patch.object(config, "SECTIONS", ["core"]):
         await async_setup_component.opp, "config", {})
@@ -94,7 +94,7 @@ async def test_websocket_core_update.opp, client):
     assert mock_set_tz.mock_calls[0][1][0].zone == "America/New_York"
 
 
-async def test_websocket_core_update_not_admin.opp,.opp_ws_client,.opp_admin_user):
+async def test_websocket_core_update_not_admin.opp, opp_ws_client, opp_admin_user):
     """Test core config fails for non admin."""
    .opp_admin_user.groups = []
     with patch.object(config, "SECTIONS", ["core"]):
@@ -123,7 +123,7 @@ async def test_websocket_bad_core_update.opp, client):
     assert msg["error"]["code"] == "invalid_format"
 
 
-async def test_detect_config.opp, client):
+async def test_detect_config(opp, client):
     """Test detect config."""
     with patch(
         "openpeerpower.util.location.async_detect_location_info",

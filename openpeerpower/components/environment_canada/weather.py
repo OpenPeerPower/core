@@ -77,8 +77,8 @@ def setup_platform.opp, config, add_devices, discovery_info=None):
     if config.get(CONF_STATION):
         ec_data = ECData(station_id=config[CONF_STATION])
     else:
-        lat = config.get(CONF_LATITUDE,.opp.config.latitude)
-        lon = config.get(CONF_LONGITUDE,.opp.config.longitude)
+        lat = config.get(CONF_LATITUDE, opp.config.latitude)
+        lon = config.get(CONF_LONGITUDE, opp.config.longitude)
         ec_data = ECData(coordinates=(lat, lon))
 
     add_devices([ECWeather(ec_data, config)])

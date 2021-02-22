@@ -62,7 +62,7 @@ def setup_opp, config):
 class GraphiteFeeder(threading.Thread):
     """Feed data to Graphite."""
 
-    def __init__(self,.opp, host, port, prefix):
+    def __init__(self, opp, host, port, prefix):
         """Initialize the feeder."""
         super().__init__(daemon=True)
         self.opp = opp

@@ -65,7 +65,7 @@ class AccessoryAidStorage:
     persist over reboots.
     """
 
-    def __init__(self,.opp: OpenPeerPower, entry: ConfigEntry):
+    def __init__(self, opp: OpenPeerPower, entry: ConfigEntry):
         """Create a new entity map store."""
         self.opp =.opp
         self.allocations = {}

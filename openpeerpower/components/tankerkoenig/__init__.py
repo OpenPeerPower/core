@@ -72,8 +72,8 @@ async def async_setup_opp, config):
 
     tankerkoenig = TankerkoenigData.opp, conf)
 
-    latitude = conf.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = conf.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = conf.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = conf.get(CONF_LONGITUDE, opp.config.longitude)
     radius = conf[CONF_RADIUS]
     additional_stations = conf[CONF_STATIONS]
 
@@ -102,7 +102,7 @@ async def async_setup_opp, config):
 class TankerkoenigData:
     """Get the latest data from the API."""
 
-    def __init__(self,.opp, conf):
+    def __init__(self, opp, conf):
         """Initialize the data object."""
         self._api_key = conf[CONF_API_KEY]
         self.stations = {}

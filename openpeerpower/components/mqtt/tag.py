@@ -45,7 +45,7 @@ PLATFORM_SCHEMA = mqtt.MQTT_BASE_PLATFORM_SCHEMA.extend(
 
 async def async_setup_entry.opp, config_entry):
     """Set up MQTT tag scan dynamically through MQTT discovery."""
-    setup = functools.partial(async_setup_tag,.opp, config_entry=config_entry)
+    setup = functools.partial(async_setup_tag, opp, config_entry=config_entry)
     await async_setup_entry_helper.opp, "tag", setup, PLATFORM_SCHEMA)
 
 
@@ -97,7 +97,7 @@ def async_has_tags.opp, device_id):
 class MQTTTagScanner:
     """MQTT Tag scanner."""
 
-    def __init__(self,.opp, config, device_id, discovery_data, config_entry):
+    def __init__(self, opp, config, device_id, discovery_data, config_entry):
         """Initialize."""
         self._config = config
         self._config_entry = config_entry

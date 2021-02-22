@@ -33,7 +33,7 @@ from .conftest import (
 )
 
 
-async def test_setup_with_no_config.opp):
+async def test_setup_with_no_config(opp):
     """Test DOMAIN is empty if there is no config."""
     assert await async_setup_component.opp, DOMAIN, {})
     await.opp.async_block_till_done()

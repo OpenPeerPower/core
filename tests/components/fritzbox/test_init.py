@@ -34,7 +34,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     ]
 
 
-async def test_setup_duplicate_config.opp: OpenPeerPowerType, fritz: Mock, caplog):
+async def test_setup_duplicate_config(opp: OpenPeerPowerType, fritz: Mock, caplog):
     """Test duplicate config of integration."""
     DUPLICATE = {
         FB_DOMAIN: {

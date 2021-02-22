@@ -49,7 +49,7 @@ SERVICE_SCHEMA_COMPLETE_TASK = vol.Schema({vol.Required(CONF_ID): cv.string})
 
 def setup_opp, config):
     """Set up the Remember the milk component."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     stored_rtm_config = RememberTheMilkConfiguration.opp)
     for rtm_config in config[DOMAIN]:
@@ -155,7 +155,7 @@ class RememberTheMilkConfiguration:
     This class stores the authentication token it get from the backend.
     """
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Create new instance of configuration."""
         self._config_file_path = opp.config.path(CONFIG_FILE_NAME)
         if not os.path.isfile(self._config_file_path):
@@ -204,7 +204,7 @@ class RememberTheMilkConfiguration:
         if CONF_ID_MAP not in self._config[profile_name]:
             self._config[profile_name][CONF_ID_MAP] = {}
 
-    def get_rtm_id(self, profile_name,.opp_id):
+    def get_rtm_id(self, profile_name, opp_id):
         """Get the RTM ids for a Open Peer Power task ID.
 
         The id of a RTM tasks consists of the tuple:
@@ -216,7 +216,7 @@ class RememberTheMilkConfiguration:
             return None
         return ids[CONF_LIST_ID], ids[CONF_TIMESERIES_ID], ids[CONF_TASK_ID]
 
-    def set_rtm_id(self, profile_name,.opp_id, list_id, time_series_id, rtm_task_id):
+    def set_rtm_id(self, profile_name, opp_id, list_id, time_series_id, rtm_task_id):
         """Add/Update the RTM task ID for a Open Peer Power task IS."""
         self._initialize_profile(profile_name)
         id_tuple = {
@@ -227,7 +227,7 @@ class RememberTheMilkConfiguration:
         self._config[profile_name][CONF_ID_MAP].opp_id] = id_tuple
         self.save_config()
 
-    def delete_rtm_id(self, profile_name,.opp_id):
+    def delete_rtm_id(self, profile_name, opp_id):
         """Delete a key mapping."""
         self._initialize_profile(profile_name)
         if.opp_id in self._config[profile_name][CONF_ID_MAP]:
@@ -280,7 +280,7 @@ class RememberTheMilk(Entity):
            .opp_id = call.data.get(CONF_ID)
             rtm_id = None
             if.opp_id is not None:
-                rtm_id = self._rtm_config.get_rtm_id(self._name,.opp_id)
+                rtm_id = self._rtm_config.get_rtm_id(self._name, opp_id)
             result = self._rtm_api.rtm.timelines.create()
             timeline = result.timeline.value
 
@@ -324,7 +324,7 @@ class RememberTheMilk(Entity):
     def complete_task(self, call):
         """Complete a task that was previously created by this component."""
        .opp_id = call.data.get(CONF_ID)
-        rtm_id = self._rtm_config.get_rtm_id(self._name,.opp_id)
+        rtm_id = self._rtm_config.get_rtm_id(self._name, opp_id)
         if rtm_id is None:
             _LOGGER.error(
                 "Could not find task with ID %s in account %s. "
@@ -342,9 +342,9 @@ class RememberTheMilk(Entity):
                 task_id=rtm_id[2],
                 timeline=timeline,
             )
-            self._rtm_config.delete_rtm_id(self._name,.opp_id)
+            self._rtm_config.delete_rtm_id(self._name, opp_id)
             _LOGGER.debug(
-                "Completed task with id %s in account %s",.opp_id, self._name
+                "Completed task with id %s in account %s", opp_id, self._name
             )
         except RtmRequestFailedException as rtm_exception:
             _LOGGER.error(

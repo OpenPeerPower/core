@@ -15,7 +15,7 @@ from tests.common import MockConfigEntry, mock_restore_cache
 from tests.components.rfxtrx.conftest import create_rfx_test_cfg
 
 
-async def test_default_config.opp, rfxtrx):
+async def test_default_config(opp, rfxtrx):
     """Test with 0 sensor."""
     entry_data = create_rfx_test_cfg(devices={})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)

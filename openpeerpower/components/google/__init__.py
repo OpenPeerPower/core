@@ -130,7 +130,7 @@ ADD_EVENT_SERVICE_SCHEMA = vol.Schema(
 )
 
 
-def do_authentication.opp,.opp_config, config):
+def do_authentication.opp, opp_config, config):
     """Notify user of actions and authenticate.
 
     Notify user of user_code and verification_url then poll
@@ -181,7 +181,7 @@ def do_authentication.opp,.opp_config, config):
 
         storage = Storage.opp.config.path(TOKEN_FILE))
         storage.put(credentials)
-        do_setup_opp,.opp_config, config)
+        do_setup_opp, opp_config, config)
         listener()
        .opp.components.persistent_notification.create(
             (
@@ -230,7 +230,7 @@ def check_correct_scopes(token_file):
     return True
 
 
-def setup_services.opp,.opp_config, track_new_found_calendars, calendar_service):
+def setup_services.opp, opp_config, track_new_found_calendars, calendar_service):
     """Set up the service listeners."""
 
     def _found_calendar(call):
@@ -242,7 +242,7 @@ def setup_services.opp,.opp_config, track_new_found_calendars, calendar_service)
        .opp.data[DATA_INDEX].update({calendar[CONF_CAL_ID]: calendar})
 
         update_config(
-           .opp.config.path(YAML_DEVICES),.opp.data[DATA_INDEX][calendar[CONF_CAL_ID]]
+           .opp.config.path(YAML_DEVICES), opp.data[DATA_INDEX][calendar[CONF_CAL_ID]]
         )
 
         discovery.load_platform(
@@ -318,19 +318,19 @@ def setup_services.opp,.opp_config, track_new_found_calendars, calendar_service)
     return True
 
 
-def do_setup_opp,.opp_config, config):
+def do_setup_opp, opp_config, config):
     """Run the setup after we have everything configured."""
     # Load calendars the user has configured
-   .opp.data[DATA_INDEX] = load_config.opp.config.path(YAML_DEVICES))
+   .opp.data[DATA_INDEX] = load_config(opp.config.path(YAML_DEVICES))
 
     calendar_service = GoogleCalendarService.opp.config.path(TOKEN_FILE))
     track_new_found_calendars = convert(
         config.get(CONF_TRACK_NEW), bool, DEFAULT_CONF_TRACK_NEW
     )
-    setup_services.opp,.opp_config, track_new_found_calendars, calendar_service)
+    setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
 
     for calendar in.opp.data[DATA_INDEX].values():
-        discovery.load_platform.opp, "calendar", DOMAIN, calendar,.opp_config)
+        discovery.load_platform.opp, "calendar", DOMAIN, calendar, opp_config)
 
     # Look for any new calendars
    .opp.services.call(DOMAIN, SERVICE_SCAN_CALENDARS, None)
@@ -364,7 +364,7 @@ def get_calendar_info.opp, calendar):
                     CONF_TRACK: calendar["track"],
                     CONF_NAME: calendar["summary"],
                     CONF_DEVICE_ID: generate_entity_id(
-                        "{}", calendar["summary"],.opp.opp
+                        "{}", calendar["summary"], opp.opp
                     ),
                 }
             ],

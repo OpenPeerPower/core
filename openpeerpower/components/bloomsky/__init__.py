@@ -36,7 +36,7 @@ def setup_opp, config):
     api_key = config[DOMAIN][CONF_API_KEY]
 
     try:
-        bloomsky = BloomSky(api_key,.opp.config.units.is_metric)
+        bloomsky = BloomSky(api_key, opp.config.units.is_metric)
     except RuntimeError:
         return False
 

@@ -160,7 +160,7 @@ class AppleTVManager:
     in case of problems.
     """
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize power manager."""
         self.config_entry = config_entry
         self.opp =.opp

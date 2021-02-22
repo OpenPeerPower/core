@@ -56,7 +56,7 @@ SWITCHES_SCHEMA = vol.Schema(
 class PilightBaseDevice(RestoreEntity):
     """Base class for pilight switches and lights."""
 
-    def __init__(self,.opp, name, config):
+    def __init__(self, opp, name, config):
         """Initialize a device."""
         self.opp = opp
         self._name = config.get(CONF_NAME, name)

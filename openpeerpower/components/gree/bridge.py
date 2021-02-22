@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 class DeviceDataUpdateCoordinator(DataUpdateCoordinator):
     """Manages polling for state changes from the device."""
 
-    def __init__(self,.opp: OpenPeerPower, device: Device):
+    def __init__(self, opp: OpenPeerPower, device: Device):
         """Initialize the data update coordinator."""
         DataUpdateCoordinator.__init__(
             self,

@@ -320,7 +320,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Remove a config entry."""
     return await.opp.async_add_executor_job(
-        remove_state_files_for_entry_id,.opp, entry.entry_id
+        remove_state_files_for_entry_id, opp, entry.entry_id
     )
 
 
@@ -392,7 +392,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
 
     async def _handle_homekit_reload(service):
         """Handle start HomeKit service call."""
-        config = await async_integration_yaml_config.opp, DOMAIN)
+        config = await async_integration_yaml_config(opp, DOMAIN)
 
         if not config or DOMAIN not in config:
             return

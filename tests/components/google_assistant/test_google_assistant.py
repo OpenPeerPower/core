@@ -36,7 +36,7 @@ def auth_header.opp_access_token):
 
 
 @pytest.fixture
-def assistant_client(loop,.opp, aiohttp_client):
+def assistant_client(loop, opp, aiohttp_client):
     """Create web client for the Google Assistant API."""
     loop.run_until_complete(
         setup.async_setup_component(
@@ -60,7 +60,7 @@ def assistant_client(loop,.opp, aiohttp_client):
 
 
 @pytest.fixture
-def.opp_fixture(loop,.opp):
+def.opp_fixture(loop, opp):
     """Set up a Open Peer Power instance for these tests."""
     # We need to do this to get access to openpeerpower/turn_(on,off)
     loop.run_until_complete(setup.async_setup_component.opp, core.DOMAIN, {}))

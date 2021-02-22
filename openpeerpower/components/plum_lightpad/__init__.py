@@ -56,7 +56,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     password = entry.data.get(CONF_PASSWORD)
 
     try:
-        plum = await load_plum(username, password,.opp)
+        plum = await load_plum(username, password, opp)
     except ContentTypeError as ex:
         _LOGGER.error("Unable to authenticate to Plum cloud: %s", ex)
         return False

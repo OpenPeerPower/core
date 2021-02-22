@@ -99,7 +99,7 @@ def async_active_zone(
     """
     # Sort entity IDs so that we are deterministic if equal distance to 2 zones
     zones = (
-        cast(State,.opp.states.get(entity_id))
+        cast(State, opp.states.get(entity_id))
         for entity_id in sorted.opp.states.async_entity_ids(DOMAIN))
     )
 
@@ -178,7 +178,7 @@ class ZoneStorageCollection(collection.StorageCollection):
 
 async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     """Set up configured zones as well as Open Peer Power zone if necessary."""
-    component = entity_component.EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = entity_component.EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()
 
     yaml_collection = collection.IDLessCollection(
@@ -256,7 +256,7 @@ async def async_setup_entry(
    .opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up zone as config entry."""
-    storage_collection = cast(ZoneStorageCollection,.opp.data[DOMAIN])
+    storage_collection = cast(ZoneStorageCollection, opp.data[DOMAIN])
 
     data = dict(config_entry.data)
     data.setdefault(CONF_PASSIVE, DEFAULT_PASSIVE)

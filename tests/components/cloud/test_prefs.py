@@ -39,7 +39,7 @@ async def test_set_username_migration.opp):
     assert not prefs.google_enabled
 
 
-async def test_load_invalid_cloud_user.opp,.opp_storage):
+async def test_load_invalid_cloud_user.opp, opp_storage):
     """Test loading cloud user with invalid storage."""
    .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": "non-existing"}}
 
@@ -58,7 +58,7 @@ async def test_load_invalid_cloud_user.opp,.opp_storage):
     assert cloud_user.groups[0].id == GROUP_ID_ADMIN
 
 
-async def test_setup_remove_cloud_user.opp,.opp_storage):
+async def test_setup_remove_cloud_user.opp, opp_storage):
     """Test creating and removing cloud user."""
    .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": None}}
 

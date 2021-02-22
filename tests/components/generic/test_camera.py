@@ -17,7 +17,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @respx.mock
-async def test_fetching_url.opp,.opp_client):
+async def test_fetching_url.opp, opp_client):
     """Test that it fetches the given url."""
     respx.get("http://example.com").respond(text="hello world")
 
@@ -49,7 +49,7 @@ async def test_fetching_url.opp,.opp_client):
     assert respx.calls.call_count == 2
 
 
-async def test_fetching_without_verify_ssl(aioclient_mock,.opp,.opp_client):
+async def test_fetching_without_verify_ssl(aioclient_mock, opp, opp_client):
     """Test that it fetches the given url when ssl verify is off."""
     aioclient_mock.get("https://example.com", text="hello world")
 
@@ -76,7 +76,7 @@ async def test_fetching_without_verify_ssl(aioclient_mock,.opp,.opp_client):
     assert resp.status == 200
 
 
-async def test_fetching_url_with_verify_ssl(aioclient_mock,.opp,.opp_client):
+async def test_fetching_url_with_verify_ssl(aioclient_mock, opp, opp_client):
     """Test that it fetches the given url when ssl verify is explicitly on."""
     aioclient_mock.get("https://example.com", text="hello world")
 
@@ -104,7 +104,7 @@ async def test_fetching_url_with_verify_ssl(aioclient_mock,.opp,.opp_client):
 
 
 @respx.mock
-async def test_limit_refetch.opp,.opp_client):
+async def test_limit_refetch.opp, opp_client):
     """Test that it fetches the given url."""
     respx.get("http://example.com/5a").respond(text="hello world")
     respx.get("http://example.com/10a").respond(text="hello world")
@@ -168,7 +168,7 @@ async def test_limit_refetch.opp,.opp_client):
     assert body == "hello planet"
 
 
-async def test_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
+async def test_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
     """Test that the stream source is rendered."""
     assert await async_setup_component(
        .opp,
@@ -208,7 +208,7 @@ async def test_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
         assert msg["result"]["url"][-13:] == "playlist.m3u8"
 
 
-async def test_stream_source_error(aioclient_mock,.opp,.opp_client,.opp_ws_client):
+async def test_stream_source_error(aioclient_mock, opp, opp_client, opp_ws_client):
     """Test that the stream source has an error."""
     assert await async_setup_component(
        .opp,
@@ -250,7 +250,7 @@ async def test_stream_source_error(aioclient_mock,.opp,.opp_client,.opp_ws_clien
         }
 
 
-async def test_setup_alternative_options.opp,.opp_ws_client):
+async def test_setup_alternative_options.opp, opp_ws_client):
     """Test that the stream source is setup with different config options."""
     assert await async_setup_component(
        .opp,
@@ -272,7 +272,7 @@ async def test_setup_alternative_options.opp,.opp_ws_client):
     assert.opp.data["camera"].get_entity("camera.config_test")
 
 
-async def test_no_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
+async def test_no_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
     """Test a stream request without stream source option set."""
     assert await async_setup_component(
        .opp,
@@ -312,7 +312,7 @@ async def test_no_stream_source(aioclient_mock,.opp,.opp_client,.opp_ws_client):
 
 
 @respx.mock
-async def test_camera_content_type.opp,.opp_client):
+async def test_camera_content_type.opp, opp_client):
     """Test generic camera with custom content_type."""
     svg_image = "<some image>"
     urlsvg = "https://upload.wikimedia.org/wikipedia/commons/0/02/SVG_logo.svg"
@@ -351,7 +351,7 @@ async def test_camera_content_type.opp,.opp_client):
 
 
 @respx.mock
-async def test_reloading.opp,.opp_client):
+async def test_reloading.opp, opp_client):
     """Test we can cleanly reload."""
     respx.get("http://example.com").respond(text="hello world")
 

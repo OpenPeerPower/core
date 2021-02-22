@@ -61,7 +61,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     session = async_get_clientsession.opp, verify_ssl)
     tautulli = TautulliData(
-        Tautulli(host, port, api_key,.opp.loop, session, use_ssl, path)
+        Tautulli(host, port, api_key, opp.loop, session, use_ssl, path)
     )
 
     if not await tautulli.test_connection():

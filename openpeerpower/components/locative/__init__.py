@@ -56,7 +56,7 @@ WEBHOOK_SCHEMA = vol.All(
 )
 
 
-async def async_setup_opp,.opp_config):
+async def async_setup_opp, opp_config):
     """Set up the Locative component."""
    .opp.data[DOMAIN] = {"devices": set(), "unsub_device_tracker": {}}
     return True

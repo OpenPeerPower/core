@@ -43,7 +43,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         return
 
     # Create solarlog data service which will retrieve and update the data.
-    data = await.opp.async_add_executor_job(SolarlogData,.opp, api, host)
+    data = await.opp.async_add_executor_job(SolarlogData, opp, api, host)
 
     # Create a new sensor for each sensor type.
     entities = []
@@ -114,7 +114,7 @@ class SolarlogSensor(Entity):
 class SolarlogData:
     """Get and update the latest data."""
 
-    def __init__(self,.opp, api, host):
+    def __init__(self, opp, api, host):
         """Initialize the data object."""
         self.api = api
         self.opp =.opp

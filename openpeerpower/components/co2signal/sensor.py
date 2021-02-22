@@ -40,8 +40,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the CO2signal sensor."""
     token = config[CONF_TOKEN]
-    lat = config.get(CONF_LATITUDE,.opp.config.latitude)
-    lon = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    lat = config.get(CONF_LATITUDE, opp.config.latitude)
+    lon = config.get(CONF_LONGITUDE, opp.config.longitude)
     country_code = config.get(CONF_COUNTRY_CODE)
 
     _LOGGER.debug("Setting up the sensor using the %s", country_code)

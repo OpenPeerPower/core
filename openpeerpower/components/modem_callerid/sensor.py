@@ -47,7 +47,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class ModemCalleridSensor(Entity):
     """Implementation of USB modem caller ID sensor."""
 
-    def __init__(self,.opp, name, port, modem):
+    def __init__(self, opp, name, port, modem):
         """Initialize the sensor."""
         self._attributes = {"cid_time": 0, "cid_number": "", "cid_name": ""}
         self._name = name

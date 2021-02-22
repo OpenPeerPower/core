@@ -100,7 +100,7 @@ class EnvisalinkAlarm(EnvisalinkDevice, AlarmControlPanelEntity):
     """Representation of an Envisalink-based alarm panel."""
 
     def __init__(
-        self,.opp, partition_number, alarm_name, code, panic_type, info, controller
+        self, opp, partition_number, alarm_name, code, panic_type, info, controller
     ):
         """Initialize the alarm panel."""
         self._partition_number = partition_number

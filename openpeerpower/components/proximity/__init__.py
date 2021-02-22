@@ -71,7 +71,7 @@ def setup_proximity_component.opp, name, config):
     tolerance = config.get(CONF_TOLERANCE)
     proximity_zone = name
     unit_of_measurement = config.get(
-        CONF_UNIT_OF_MEASUREMENT,.opp.config.units.length_unit
+        CONF_UNIT_OF_MEASUREMENT, opp.config.units.length_unit
     )
     zone_id = f"zone.{config.get(CONF_ZONE)}"
 

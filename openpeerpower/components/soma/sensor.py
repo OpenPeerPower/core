@@ -22,7 +22,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     devices =.opp.data[DOMAIN][DEVICES]
 
     async_add_entities(
-        [SomaSensor(sensor,.opp.data[DOMAIN][API]) for sensor in devices], True
+        [SomaSensor(sensor, opp.data[DOMAIN][API]) for sensor in devices], True
     )
 
 

@@ -19,7 +19,7 @@ from .const import (
 class DiscoveryService(pizone.Listener):
     """Discovery data and interfacing with pizone library."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialise discovery service."""
         super().__init__()
         self.opp =.opp

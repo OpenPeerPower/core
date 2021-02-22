@@ -71,7 +71,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class RussoundRNETDevice(MediaPlayerEntity):
     """Representation of a Russound RNET device."""
 
-    def __init__(self,.opp, russ, sources, zone_id, extra):
+    def __init__(self, opp, russ, sources, zone_id, extra):
         """Initialise the Russound RNET device."""
         self._name = extra["name"]
         self._russ = russ

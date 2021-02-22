@@ -12,7 +12,7 @@ from openpeerpower.const import CONF_DOMAIN
 TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend({}, extra=vol.ALLOW_EXTRA)
 
 
-async def async_validate_trigger_config.opp, config):
+async def async_validate_trigger_config(opp, config):
     """Validate config."""
     platform = await async_get_device_automation_platform(
        .opp, config[CONF_DOMAIN], "trigger"

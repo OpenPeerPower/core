@@ -275,7 +275,7 @@ async def async_setup_platform(
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up MQTT climate device dynamically through MQTT discovery."""
     setup = functools.partial(
-        _async_setup_entity,.opp, async_add_entities, config_entry=config_entry
+        _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper.opp, climate.DOMAIN, setup, PLATFORM_SCHEMA)
 
@@ -290,7 +290,7 @@ async def _async_setup_entity(
 class MqttClimate(MqttEntity, ClimateEntity):
     """Representation of an MQTT climate device."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Initialize the climate device."""
         self._action = None
         self._aux = False
@@ -307,7 +307,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
         self._value_templates = None
         self._command_templates = None
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

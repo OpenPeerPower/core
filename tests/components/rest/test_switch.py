@@ -33,7 +33,7 @@ AUTH = None
 PARAMS = None
 
 
-async def test_setup_missing_config.opp):
+async def test_setup_missing_config(opp):
     """Test setup with configuration missing required entries."""
     assert not await rest.async_setup_platform.opp, {CONF_PLATFORM: DOMAIN}, None)
 
@@ -156,8 +156,8 @@ async def test_setup_with_state_resource.opp, aioclient_mock):
 
 
 def _setup_test_switch.opp):
-    body_on = Template("on",.opp)
-    body_off = Template("off",.opp)
+    body_on = Template("on", opp)
+    body_off = Template("off", opp)
     switch = rest.RestSwitch(
         NAME,
         RESOURCE,

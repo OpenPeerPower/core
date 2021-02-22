@@ -136,7 +136,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class TadoConnector:
     """An object to store the Tado data."""
 
-    def __init__(self,.opp, username, password, fallback):
+    def __init__(self, opp, username, password, fallback):
         """Initialize Tado Connector."""
         self.opp =.opp
         self._username = username

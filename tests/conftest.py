@@ -131,7 +131,7 @@ def load_registries():
 
 
 @pytest.fixture
-def.opp(loop, load_registries,.opp_storage, request):
+def.opp(loop, load_registries, opp_storage, request):
     """Fixture to provide a test instance of Open Peer Power."""
 
     def exc_handle(loop, context):
@@ -239,9 +239,9 @@ async def.opp_admin_credential.opp, local_auth):
 
 
 @pytest.fixture
-async def.opp_access_token.opp,.opp_admin_user,.opp_admin_credential):
+async def.opp_access_token.opp, opp_admin_user, opp_admin_credential):
     """Return an access token to access Open Peer Power."""
-    await opp.auth.async_link_user.opp_admin_user,.opp_admin_credential)
+    await opp.auth.async_link_user.opp_admin_user, opp_admin_credential)
 
     refresh_token = await opp.auth.async_create_refresh_token(
        .opp_admin_user, CLIENT_ID, credential.opp_admin_credential
@@ -274,7 +274,7 @@ def.opp_read_only_user.opp, local_auth):
 
 
 @pytest.fixture
-def.opp_read_only_access_token.opp,.opp_read_only_user, local_auth):
+def.opp_read_only_access_token.opp, opp_read_only_user, local_auth):
     """Return a Open Peer Power read only user."""
     credential = Credentials(
         id="mock-readonly-credential-id",
@@ -309,7 +309,7 @@ def legacy_auth.opp):
 def local_auth.opp):
     """Load local auth provider."""
     prv = openpeerpower.OppAuthProvider(
-       .opp,.opp.auth._store, {"type": "openpeerpower"}
+       .opp, opp.auth._store, {"type": "openpeerpower"}
     )
    .opp.loop.run_until_complete(prv.async_initialize())
    .opp.auth._providers[(prv.type, prv.id)] = prv
@@ -317,7 +317,7 @@ def local_auth.opp):
 
 
 @pytest.fixture
-def.opp_client.opp, aiohttp_client,.opp_access_token):
+def.opp_client.opp, aiohttp_client, opp_access_token):
     """Return an authenticated HTTP client."""
 
     async def auth_client():
@@ -354,7 +354,7 @@ def current_request_with_host(current_request):
 
 
 @pytest.fixture
-def.opp_ws_client(aiohttp_client,.opp_access_token,.opp):
+def.opp_ws_client(aiohttp_client, opp_access_token, opp):
     """Websocket client fixture connected to websocket server."""
 
     async def create_client.opp.opp, access_token.opp_access_token):

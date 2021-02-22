@@ -47,8 +47,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Crime Reports platform."""
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     name = config[CONF_NAME]
     radius = config[CONF_RADIUS]
     api_key = config[CONF_API_KEY]

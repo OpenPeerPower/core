@@ -119,7 +119,7 @@ def patch_sync_helper():
 
 async def test_alexa_update_expose_trigger_sync.opp, cloud_prefs):
     """Test Alexa config responds to updating exposed entities."""
-    alexa_config.AlexaConfig.opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None)
+    alexa_config.Alexaconfig(opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None)
 
     with patch_sync_helper() as (to_update, to_remove):
         await cloud_prefs.async_update_alexa_entity_config(
@@ -153,7 +153,7 @@ async def test_alexa_update_expose_trigger_sync.opp, cloud_prefs):
 async def test_alexa_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
     """Test Alexa config responds to entity registry."""
     alexa_config.AlexaConfig(
-       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs,.opp.data["cloud"]
+       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
 
     with patch_sync_helper() as (to_update, to_remove):
@@ -204,7 +204,7 @@ async def test_alexa_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
 
 async def test_alexa_update_report_state.opp, cloud_prefs):
     """Test Alexa config responds to reporting state."""
-    alexa_config.AlexaConfig.opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None)
+    alexa_config.Alexaconfig(opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, None)
 
     with patch(
         "openpeerpower.components.cloud.alexa_config.AlexaConfig.async_sync_entities",
@@ -224,7 +224,7 @@ def test_enabled_requires_valid_sub.opp, mock_expired_cloud_login, cloud_prefs):
     assert.opp.data["cloud"].subscription_expired
 
     config = alexa_config.AlexaConfig(
-       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs,.opp.data["cloud"]
+       .opp, ALEXA_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
 
     assert not config.enabled

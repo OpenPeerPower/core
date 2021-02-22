@@ -75,7 +75,7 @@ async def async_setup_entry(
 class CanaryCamera(CoordinatorEntity, Camera):
     """An implementation of a Canary security camera."""
 
-    def __init__(self,.opp, coordinator, location_id, device, timeout, ffmpeg_args):
+    def __init__(self, opp, coordinator, location_id, device, timeout, ffmpeg_args):
         """Initialize a Canary security camera."""
         super().__init__(coordinator)
         Camera.__init__(self)

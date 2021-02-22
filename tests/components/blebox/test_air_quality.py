@@ -31,7 +31,7 @@ def airsensor_fixture():
     return (feature, "air_quality.airsensor_0_air")
 
 
-async def test_init(airsensor,.opp, config):
+async def test_init(airsensor, opp, config):
     """Test airSensor default state."""
 
     _, entity_id = airsensor
@@ -59,7 +59,7 @@ async def test_init(airsensor,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_update(airsensor,.opp, config):
+async def test_update(airsensor, opp, config):
     """Test air quality sensor state after update."""
 
     feature_mock, entity_id = airsensor
@@ -81,7 +81,7 @@ async def test_update(airsensor,.opp, config):
     assert state.state == "222"
 
 
-async def test_update_failure(airsensor,.opp, config, caplog):
+async def test_update_failure(airsensor, opp, config, caplog):
     """Test that update failures are logged."""
 
     caplog.set_level(logging.ERROR)

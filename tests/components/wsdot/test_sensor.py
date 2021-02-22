@@ -24,7 +24,7 @@ config = {
 }
 
 
-async def test_setup_with_config.opp):
+async def test_setup_with_config(opp):
     """Test the platform setup with configuration."""
     assert await async_setup_component.opp, "sensor", {"wsdot": config})
 

@@ -191,7 +191,7 @@ def setup_opp, config):
 class PrinterAPI:
     """Handle the printer API."""
 
-    def __init__(self,.opp, client, printers, sensors, conf_name, config):
+    def __init__(self, opp, client, printers, sensors, conf_name, config):
         """Set up instance."""
         self.opp = opp
         self._client = client

@@ -72,7 +72,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 class WatcherBase:
     """Base class for dhcp and device tracker watching."""
 
-    def __init__(self,.opp, address_data, integration_matchers):
+    def __init__(self, opp, address_data, integration_matchers):
         """Initialize class."""
         super().__init__()
 
@@ -138,7 +138,7 @@ class WatcherBase:
 class DeviceTrackerWatcher(WatcherBase):
     """Class to watch dhcp data from routers."""
 
-    def __init__(self,.opp, address_data, integration_matchers):
+    def __init__(self, opp, address_data, integration_matchers):
         """Initialize class."""
         super().__init__.opp, address_data, integration_matchers)
         self._unsub = None
@@ -190,7 +190,7 @@ class DeviceTrackerWatcher(WatcherBase):
 class DHCPWatcher(WatcherBase):
     """Class to watch dhcp requests."""
 
-    def __init__(self,.opp, address_data, integration_matchers):
+    def __init__(self, opp, address_data, integration_matchers):
         """Initialize class."""
         super().__init__.opp, address_data, integration_matchers)
         self._sniffer = None

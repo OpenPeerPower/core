@@ -116,7 +116,7 @@ async def test_bad_gateway_when_cannot_find_supervisor.oppio_client):
     assert resp.status == 502
 
 
-async def test_forwarding_user_info.oppio_client,.opp_admin_user, aioclient_mock):
+async def test_forwarding_user_info.oppio_client, opp_admin_user, aioclient_mock):
     """Test that we forward user info correctly."""
     aioclient_mock.get("http://127.0.0.1/hello")
 

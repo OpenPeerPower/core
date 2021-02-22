@@ -97,7 +97,7 @@ class TestHelpersEntity:
         """Test generating an entity id given.opp object."""
         fmt = "test.{}"
         assert (
-            entity.generate_entity_id(fmt, "overwrite hidden true",.opp=self.opp)
+            entity.generate_entity_id(fmt, "overwrite hidden true", opp=self.opp)
             == "test.overwrite_hidden_true_2"
         )
 

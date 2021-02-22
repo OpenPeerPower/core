@@ -57,7 +57,7 @@ async def async_setup_opp, config):
 class SpeedtestData:
     """Get the latest data from fast.com."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the data object."""
         self.data = None
         self.opp = opp

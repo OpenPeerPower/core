@@ -107,7 +107,7 @@ async def async_get_engine.opp, config, discovery_info=None):
 class GoogleProvider(Provider):
     """The Google speech API provider."""
 
-    def __init__(self,.opp, lang):
+    def __init__(self, opp, lang):
         """Init Google TTS service."""
         self.opp =.opp
         self._lang = lang

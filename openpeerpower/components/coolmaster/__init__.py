@@ -56,7 +56,7 @@ async def async_unload_entry.opp, entry):
 class CoolmasterDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Coolmaster data."""
 
-    def __init__(self,.opp, coolmaster):
+    def __init__(self, opp, coolmaster):
         """Initialize global Coolmaster data updater."""
         self._coolmaster = coolmaster
 

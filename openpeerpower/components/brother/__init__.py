@@ -76,7 +76,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class BrotherDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Brother data from the printer."""
 
-    def __init__(self,.opp, host, kind, snmp_engine):
+    def __init__(self, opp, host, kind, snmp_engine):
         """Initialize."""
         self.brother = Brother(host, kind=kind, snmp_engine=snmp_engine)
 

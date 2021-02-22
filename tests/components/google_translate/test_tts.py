@@ -76,7 +76,7 @@ async def test_service_say.opp, mock_gtts, calls):
     }
 
 
-async def test_service_say_german_config.opp, mock_gtts, calls):
+async def test_service_say_german_config(opp, mock_gtts, calls):
     """Test service call say with german code in the config."""
 
     await async_setup_component(

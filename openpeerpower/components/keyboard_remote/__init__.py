@@ -71,7 +71,7 @@ async def async_setup_opp, config):
 class KeyboardRemote:
     """Manage device connection/disconnection using inotify to asynchronously monitor."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Create handlers and setup dictionaries to keep track of them."""
         self.opp =.opp
         self.handlers_by_name = {}
@@ -211,7 +211,7 @@ class KeyboardRemote:
     class DeviceHandler:
         """Manage input events using evdev with asyncio."""
 
-        def __init__(self,.opp, dev_block):
+        def __init__(self, opp, dev_block):
             """Fill configuration data."""
 
             self.opp =.opp

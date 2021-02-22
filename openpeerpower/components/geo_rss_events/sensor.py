@@ -59,8 +59,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the GeoRSS component."""
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     url = config.get(CONF_URL)
     radius_in_km = config.get(CONF_RADIUS)
     name = config.get(CONF_NAME)

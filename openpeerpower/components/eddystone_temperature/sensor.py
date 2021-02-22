@@ -132,7 +132,7 @@ class EddystoneTemp(Entity):
 class Monitor:
     """Continuously scan for BLE advertisements."""
 
-    def __init__(self,.opp, devices, bt_device_id):
+    def __init__(self, opp, devices, bt_device_id):
         """Construct interface object."""
         self.opp =.opp
 

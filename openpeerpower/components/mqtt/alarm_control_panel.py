@@ -111,7 +111,7 @@ async def async_setup_platform(
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up MQTT alarm control panel dynamically through MQTT discovery."""
     setup = functools.partial(
-        _async_setup_entity,.opp, async_add_entities, config_entry=config_entry
+        _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper.opp, alarm.DOMAIN, setup, PLATFORM_SCHEMA)
 
@@ -126,11 +126,11 @@ async def _async_setup_entity(
 class MqttAlarm(MqttEntity, alarm.AlarmControlPanelEntity):
     """Representation of a MQTT alarm status."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Init the MQTT Alarm Control Panel."""
         self._state = None
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

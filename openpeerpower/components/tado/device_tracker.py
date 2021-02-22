@@ -45,7 +45,7 @@ Device = namedtuple("Device", ["mac", "name"])
 class TadoDeviceScanner(DeviceScanner):
     """This class gets geofenced devices from Tado."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize the scanner."""
         self.opp =.opp
         self.last_results = []
@@ -68,7 +68,7 @@ class TadoDeviceScanner(DeviceScanner):
         self.websession = None
 
         self.success_init = asyncio.run_coroutine_threadsafe(
-            self._async_update_info(),.opp.loop
+            self._async_update_info(), opp.loop
         ).result()
 
         _LOGGER.info("Scanner initialized")

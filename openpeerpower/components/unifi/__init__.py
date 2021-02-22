@@ -86,7 +86,7 @@ class UnifiWirelessClients:
     This is needed since wireless devices going offline might get marked as wired by UniFi.
     """
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Set up client storage."""
         self.opp =.opp
         self.data = {}

@@ -111,7 +111,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     try:
         account = await.opp.async_add_executor_job(
-            setup_account, entry,.opp, entry.data[CONF_USERNAME]
+            setup_account, entry, opp, entry.data[CONF_USERNAME]
         )
     except OSError as ex:
         raise ConfigEntryNotReady from ex
@@ -197,7 +197,7 @@ async def update_listener.opp, config_entry):
     await.opp.config_entries.async_reload(config_entry.entry_id)
 
 
-def setup_account(entry: ConfigEntry,.opp, name: str) -> BMWConnectedDriveAccount:
+def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccount:
     """Set up a new BMWConnectedDriveAccount based on the config."""
     username = entry.data[CONF_USERNAME]
     password = entry.data[CONF_PASSWORD]
@@ -208,7 +208,7 @@ def setup_account(entry: ConfigEntry,.opp, name: str) -> BMWConnectedDriveAccoun
     _LOGGER.debug("Adding new account %s", name)
 
     pos = (
-        .opp.config.latitude,.opp.config.longitude) if use_location else (None, None)
+        .opp.config.latitude, opp.config.longitude) if use_location else (None, None)
     )
     cd_account = BMWConnectedDriveAccount(
         username, password, region, name, read_only, *pos

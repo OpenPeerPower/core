@@ -138,7 +138,7 @@ class DeviceRegistry:
     deleted_devices: Dict[str, DeletedDeviceEntry]
     _devices_index: Dict[str, Dict[str, Dict[Tuple[str, str], str]]]
 
-    def __init__(self,.opp: OpenPeerPowerType) -> None:
+    def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize the device registry."""
         self.opp =.opp
         self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
@@ -654,7 +654,7 @@ class DeviceRegistry:
 @callback
 def async_get.opp: OpenPeerPowerType) -> DeviceRegistry:
     """Get device registry."""
-    return cast(DeviceRegistry,.opp.data[DATA_REGISTRY])
+    return cast(DeviceRegistry, opp.data[DATA_REGISTRY])
 
 
 async def async_load.opp: OpenPeerPowerType) -> None:

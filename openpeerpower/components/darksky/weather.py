@@ -86,8 +86,8 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=3)
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Dark Sky weather."""
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     name = config.get(CONF_NAME)
     mode = config.get(CONF_MODE)
 

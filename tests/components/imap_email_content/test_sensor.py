@@ -221,7 +221,7 @@ async def test_template.opp):
         FakeEMailReader(deque([test_message])),
         "test_emails_sensor",
         ["sender@test.com"],
-        Template("{{ subject }} from {{ from }} with message {{ body }}",.opp),
+        Template("{{ subject }} from {{ from }} with message {{ body }}", opp),
     )
 
     sensor.entity_id = "sensor.emailtest"

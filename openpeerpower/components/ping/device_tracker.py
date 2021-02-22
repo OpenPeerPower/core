@@ -37,7 +37,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 class HostSubProcess:
     """Host object with ping detection."""
 
-    def __init__(self, ip_address, dev_id,.opp, config):
+    def __init__(self, ip_address, dev_id, opp, config):
         """Initialize the Host pinger."""
         self.opp =.opp
         self.ip_address = ip_address
@@ -78,7 +78,7 @@ class HostSubProcess:
 class HostICMPLib:
     """Host object with ping detection."""
 
-    def __init__(self, ip_address, dev_id,.opp, config):
+    def __init__(self, ip_address, dev_id, opp, config):
         """Initialize the Host pinger."""
         self.opp =.opp
         self.ip_address = ip_address
@@ -121,7 +121,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         host_cls = HostSubProcess
 
     hosts = [
-        host_cls(ip, dev_id,.opp, config)
+        host_cls(ip, dev_id, opp, config)
         for (dev_id, ip) in config[const.CONF_HOSTS].items()
     ]
     interval = config.get(

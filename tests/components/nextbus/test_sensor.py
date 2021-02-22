@@ -86,12 +86,12 @@ def mock_nextbus_lists(mock_nextbus):
     }
 
 
-async def test_valid_config.opp, mock_nextbus, mock_nextbus_lists):
+async def test_valid_config(opp, mock_nextbus, mock_nextbus_lists):
     """Test that sensor is set up properly with valid config."""
     await assert_setup_sensor.opp, CONFIG_BASIC)
 
 
-async def test_invalid_config.opp, mock_nextbus, mock_nextbus_lists):
+async def test_invalid_config(opp, mock_nextbus, mock_nextbus_lists):
     """Checks that component is not setup when missing information."""
     await assert_setup_sensor.opp, CONFIG_INVALID_MISSING, count=0)
 

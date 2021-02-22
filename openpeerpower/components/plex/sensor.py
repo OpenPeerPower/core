@@ -28,7 +28,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 class PlexSensor(Entity):
     """Representation of a Plex now playing sensor."""
 
-    def __init__(self,.opp, plex_server):
+    def __init__(self, opp, plex_server):
         """Initialize the sensor."""
         self._state = None
         self._server = plex_server

@@ -36,7 +36,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     port = entry.data[CONF_PORT]
     timeout = DEFAULT_SETUP_TIMEOUT
 
-    api_host = ApiHost(host, port, timeout, websession,.opp.loop)
+    api_host = ApiHost(host, port, timeout, websession, opp.loop)
 
     try:
         product = await Products.async_from_host(api_host)

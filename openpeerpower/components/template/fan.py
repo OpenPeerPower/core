@@ -198,7 +198,7 @@ class TemplateFan(TemplateEntity, FanEntity):
         super().__init__(availability_template=availability_template)
         self.opp =.opp
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, device_id,.opp.opp
+            ENTITY_ID_FORMAT, device_id, opp.opp
         )
         self._name = friendly_name
 

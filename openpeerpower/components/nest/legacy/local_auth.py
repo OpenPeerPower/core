@@ -19,7 +19,7 @@ def initialize.opp, client_id, client_secret):
         DOMAIN,
         "configuration.yaml",
         partial(generate_auth_url, client_id),
-        partial(resolve_auth_code,.opp, client_id, client_secret),
+        partial(resolve_auth_code, opp, client_id, client_secret),
     )
 
 

@@ -107,7 +107,7 @@ def test_config_schema_use_webhook() -> None:
     )
 
 
-async def test_async_setup_no_config.opp: OpenPeerPower) -> None:
+async def test_async_setup_no_config(opp: OpenPeerPower) -> None:
     """Test method."""
    .opp.async_create_task = MagicMock()
 
@@ -217,10 +217,10 @@ async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
         "openpeerpower.components.withings.common.ConfigEntryWithingsApi",
         spec=ConfigEntryWithingsApi,
     ):
-        await async_process_ha_core_config.opp,.opp_config.get(HA_DOMAIN))
+        await async_process_ha_core_config(opp, opp_config.get(HA_DOMAIN))
         assert await async_setup_component.opp, HA_DOMAIN, {})
-        assert await async_setup_component.opp, webhook.DOMAIN,.opp_config)
-        assert await async_setup_component.opp, const.DOMAIN,.opp_config)
+        assert await async_setup_component.opp, webhook.DOMAIN, opp_config)
+        assert await async_setup_component.opp, const.DOMAIN, opp_config)
         await.opp.async_block_till_done()
 
         assert config_entry.unique_id == "1234"

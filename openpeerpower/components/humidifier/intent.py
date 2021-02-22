@@ -41,7 +41,7 @@ class HumidityHandler(intent.IntentHandler):
         opp =intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state =.opp.helpers.intent.async_match_state(
-            slots["name"]["value"],.opp.states.async_all(DOMAIN)
+            slots["name"]["value"], opp.states.async_all(DOMAIN)
         )
 
         service_data = {ATTR_ENTITY_ID: state.entity_id}

@@ -47,7 +47,7 @@ def setup_opp, config):
 class AquaLogicProcessor(threading.Thread):
     """AquaLogic event processor thread."""
 
-    def __init__(self,.opp, host, port):
+    def __init__(self, opp, host, port):
         """Initialize the data object."""
         super().__init__(daemon=True)
         self.opp = opp

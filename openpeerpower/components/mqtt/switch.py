@@ -78,7 +78,7 @@ async def async_setup_platform(
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up MQTT switch dynamically through MQTT discovery."""
     setup = functools.partial(
-        _async_setup_entity,.opp, async_add_entities, config_entry=config_entry
+        _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper.opp, switch.DOMAIN, setup, PLATFORM_SCHEMA)
 
@@ -93,7 +93,7 @@ async def _async_setup_entity(
 class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
     """Representation of a switch that can be toggled using MQTT."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Initialize the MQTT switch."""
         self._state = False
 
@@ -101,7 +101,7 @@ class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
         self._state_off = None
         self._optimistic = None
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

@@ -102,7 +102,7 @@ class HomeConnectDevice:
     # see https://developer.home-connect.com/docs/settings/power_state
     power_off_state = BSH_POWER_OFF
 
-    def __init__(self,.opp, appliance):
+    def __init__(self, opp, appliance):
         """Initialize the device class."""
         self.opp =.opp
         self.appliance = appliance

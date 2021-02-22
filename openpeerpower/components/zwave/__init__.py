@@ -1073,7 +1073,7 @@ class ZWaveDeviceEntityValues:
     """Manages entity access to the underlying zwave value objects."""
 
     def __init__(
-        self,.opp, schema, primary_value, zwave_config, device_config, registry
+        self, opp, schema, primary_value, zwave_config, device_config, registry
     ):
         """Initialize the values object with the passed entity schema."""
         self.opp = opp
@@ -1193,7 +1193,7 @@ class ZWaveDeviceEntityValues:
         platform = import_module(f".{component}", __name__)
 
         device = platform.get_device(
-            node=self._node, values=self, node_config=node_config,.opp=self.opp
+            node=self._node, values=self, node_config=node_config, opp=self.opp
         )
         if device is None:
             # No entity will be created for this value

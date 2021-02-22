@@ -369,7 +369,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
 async def test_reload.opp):
     """Verify we can reload history_stats sensors."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
    .opp.state = ha.CoreState.not_running

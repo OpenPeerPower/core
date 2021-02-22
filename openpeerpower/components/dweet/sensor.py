@@ -59,7 +59,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class DweetSensor(Entity):
     """Representation of a Dweet sensor."""
 
-    def __init__(self,.opp, dweet, name, value_template, unit_of_measurement):
+    def __init__(self, opp, dweet, name, value_template, unit_of_measurement):
         """Initialize the sensor."""
         self.opp =.opp
         self.dweet = dweet

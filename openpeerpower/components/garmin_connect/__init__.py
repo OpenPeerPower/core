@@ -84,7 +84,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class GarminConnectData:
     """Define an object to hold sensor data."""
 
-    def __init__(self,.opp, client):
+    def __init__(self, opp, client):
         """Initialize."""
         self.opp =.opp
         self.client = client

@@ -22,7 +22,7 @@ def mock_pushbullet():
         yield
 
 
-async def test_pushbullet_config.opp, mock_pushbullet):
+async def test_pushbullet_config(opp, mock_pushbullet):
     """Test setup."""
     config = {
         notify.DOMAIN: {

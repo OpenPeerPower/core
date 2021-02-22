@@ -28,7 +28,7 @@ SCAN_INTERVAL = timedelta(seconds=60)
 async def async_setup_opp, config):
     """Set up the Geolocation component."""
     component =.opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
     await component.async_setup(config)
     return True

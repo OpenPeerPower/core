@@ -94,7 +94,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class SmartMeterTexasData:
     """Manages coordinatation of API data updates."""
 
-    def __init__(self,.opp: OpenPeerPower, entry: ConfigEntry, account: Account):
+    def __init__(self, opp: OpenPeerPower, entry: ConfigEntry, account: Account):
         """Initialize the data coordintator."""
         self._entry = entry
         self.account = account

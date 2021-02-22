@@ -123,7 +123,7 @@ class PingBinarySensor(BinarySensorEntity):
 class PingData:
     """The base class for handling the data retrieval."""
 
-    def __init__(self,.opp, host, count) -> None:
+    def __init__(self, opp, host, count) -> None:
         """Initialize the data object."""
         self.opp =.opp
         self._ip_address = host
@@ -163,7 +163,7 @@ class PingDataICMPLib(PingData):
 class PingDataSubProcess(PingData):
     """The Class for handling the data retrieval using the ping binary."""
 
-    def __init__(self,.opp, host, count) -> None:
+    def __init__(self, opp, host, count) -> None:
         """Initialize the data object."""
         super().__init__.opp, host, count)
         if sys.platform == "win32":

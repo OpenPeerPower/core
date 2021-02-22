@@ -38,7 +38,7 @@ async def test_google_entity_sync_serialize_with_local_sdk.opp):
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
     )
-    entity = helpers.GoogleEntity.opp, config,.opp.states.get("light.ceiling_lights"))
+    entity = helpers.GoogleEntity.opp, config, opp.states.get("light.ceiling_lights"))
 
     serialized = await entity.sync_serialize(None)
     assert "otherDeviceIds" not in serialized
@@ -68,7 +68,7 @@ async def test_google_entity_sync_serialize_with_local_sdk.opp):
             assert "customData" not in serialized
 
 
-async def test_config_local_sdk.opp,.opp_client):
+async def test_config_local_sdk.opp, opp_client):
     """Test the local SDK."""
     command_events = async_capture_events.opp, EVENT_COMMAND_RECEIVED)
     turn_on_calls = async_mock_service.opp, "light", "turn_on")
@@ -130,7 +130,7 @@ async def test_config_local_sdk.opp,.opp_client):
     assert await resp.read() == b""
 
 
-async def test_config_local_sdk_if_disabled.opp,.opp_client):
+async def test_config_local_sdk_if_disabled.opp, opp_client):
     """Test the local SDK."""
     assert await async_setup_component.opp, "webhook", {})
 
@@ -163,7 +163,7 @@ async def test_config_local_sdk_if_disabled.opp,.opp_client):
     assert await resp.read() == b""
 
 
-async def test_agent_user_id_storage.opp,.opp_storage):
+async def test_agent_user_id_storage.opp, opp_storage):
     """Test a disconnect message."""
 
    .opp_storage["google_assistant"] = {

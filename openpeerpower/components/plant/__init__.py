@@ -114,7 +114,7 @@ ENABLE_LOAD_HISTORY = False
 
 async def async_setup_opp, config):
     """Set up the Plant component."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     entities = []
     for plant_name, plant_config in config[DOMAIN].items():

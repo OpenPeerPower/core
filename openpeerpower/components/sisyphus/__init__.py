@@ -76,7 +76,7 @@ async def async_setup_opp, config):
 class TableHolder:
     """Holds table objects and makes them available to platforms."""
 
-    def __init__(self,.opp, session, host, name):
+    def __init__(self, opp, session, host, name):
         """Initialize the table holder."""
         self.opp = opp
         self._session = session

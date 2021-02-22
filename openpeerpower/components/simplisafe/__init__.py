@@ -348,7 +348,7 @@ async def async_reload_entry.opp, config_entry):
 class SimpliSafeWebsocket:
     """Define a SimpliSafe websocket "manager" object."""
 
-    def __init__(self,.opp, websocket):
+    def __init__(self, opp, websocket):
         """Initialize."""
         self.opp = opp
         self._websocket = websocket
@@ -408,7 +408,7 @@ class SimpliSafeWebsocket:
 class SimpliSafe:
     """Define a SimpliSafe data object."""
 
-    def __init__(self,.opp, api, config_entry):
+    def __init__(self, opp, api, config_entry):
         """Initialize."""
         self._api = api
         self._emergency_refresh_token_used = False

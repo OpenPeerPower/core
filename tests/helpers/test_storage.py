@@ -58,7 +58,7 @@ async def test_loading_non_existing.opp, store):
     assert data is None
 
 
-async def test_loading_parallel.opp, store,.opp_storage, caplog):
+async def test_loading_parallel.opp, store, opp_storage, caplog):
     """Test we can save and load data."""
    .opp_storage[store.key] = {"version": MOCK_VERSION, "data": MOCK_DATA}
 
@@ -69,7 +69,7 @@ async def test_loading_parallel.opp, store,.opp_storage, caplog):
     assert caplog.text.count(f"Loading data for {store.key}")
 
 
-async def test_saving_with_delay.opp, store,.opp_storage):
+async def test_saving_with_delay.opp, store, opp_storage):
     """Test saving data after a delay."""
     store.async_delay_save(lambda: MOCK_DATA, 1)
     assert store.key not in.opp_storage
@@ -83,7 +83,7 @@ async def test_saving_with_delay.opp, store,.opp_storage):
     }
 
 
-async def test_saving_on_final_write.opp,.opp_storage):
+async def test_saving_on_final_write.opp, opp_storage):
     """Test delayed saves trigger when we quit Open Peer Power."""
     store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
     store.async_delay_save(lambda: MOCK_DATA, 5)
@@ -106,7 +106,7 @@ async def test_saving_on_final_write.opp,.opp_storage):
     }
 
 
-async def test_not_delayed_saving_while_stopping.opp,.opp_storage):
+async def test_not_delayed_saving_while_stopping.opp, opp_storage):
     """Test delayed saves don't write after the stop event has fired."""
     store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
@@ -119,7 +119,7 @@ async def test_not_delayed_saving_while_stopping.opp,.opp_storage):
     assert store.key not in.opp_storage
 
 
-async def test_not_delayed_saving_after_stopping.opp,.opp_storage):
+async def test_not_delayed_saving_after_stopping.opp, opp_storage):
     """Test delayed saves don't write after stop if issued before stopping Open Peer Power."""
     store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
     store.async_delay_save(lambda: MOCK_DATA, 10)
@@ -135,7 +135,7 @@ async def test_not_delayed_saving_after_stopping.opp,.opp_storage):
     assert store.key not in.opp_storage
 
 
-async def test_not_saving_while_stopping.opp,.opp_storage):
+async def test_not_saving_while_stopping.opp, opp_storage):
     """Test saves don't write when stopping Open Peer Power."""
     store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
    .opp.state = CoreState.stopping
@@ -143,7 +143,7 @@ async def test_not_saving_while_stopping.opp,.opp_storage):
     assert store.key not in.opp_storage
 
 
-async def test_loading_while_delay.opp, store,.opp_storage):
+async def test_loading_while_delay.opp, store, opp_storage):
     """Test we load new data even if not written yet."""
     await store.async_save({"delay": "no"})
     assert.opp_storage[store.key] == {
@@ -163,7 +163,7 @@ async def test_loading_while_delay.opp, store,.opp_storage):
     assert data == {"delay": "yes"}
 
 
-async def test_writing_while_writing_delay.opp, store,.opp_storage):
+async def test_writing_while_writing_delay.opp, store, opp_storage):
     """Test a write while a write with delay is active."""
     store.async_delay_save(lambda: {"delay": "yes"}, 1)
     assert store.key not in.opp_storage
@@ -186,7 +186,7 @@ async def test_writing_while_writing_delay.opp, store,.opp_storage):
     assert data == {"delay": "no"}
 
 
-async def test_multiple_delay_save_calls.opp, store,.opp_storage):
+async def test_multiple_delay_save_calls.opp, store, opp_storage):
     """Test a write while a write with changing delays."""
     store.async_delay_save(lambda: {"delay": "yes"}, 1)
     store.async_delay_save(lambda: {"delay": "yes"}, 2)
@@ -212,7 +212,7 @@ async def test_multiple_delay_save_calls.opp, store,.opp_storage):
     assert data == {"delay": "no"}
 
 
-async def test_multiple_save_calls.opp, store,.opp_storage):
+async def test_multiple_save_calls.opp, store, opp_storage):
     """Test multiple write tasks."""
 
     assert store.key not in.opp_storage
@@ -229,7 +229,7 @@ async def test_multiple_save_calls.opp, store,.opp_storage):
     assert data == {"savecount": 5}
 
 
-async def test_migrator_no_existing_config.opp, store,.opp_storage):
+async def test_migrator_no_existing_config(opp, store, opp_storage):
     """Test migrator with no existing config."""
     with patch("os.path.isfile", return_value=False), patch.object(
         store, "async_load", return_value={"cur": "config"}
@@ -240,7 +240,7 @@ async def test_migrator_no_existing_config.opp, store,.opp_storage):
     assert store.key not in.opp_storage
 
 
-async def test_migrator_existing_config.opp, store,.opp_storage):
+async def test_migrator_existing_config(opp, store, opp_storage):
     """Test migrating existing config."""
     with patch("os.path.isfile", return_value=True), patch("os.remove") as mock_remove:
         data = await storage.async_migrator(
@@ -256,7 +256,7 @@ async def test_migrator_existing_config.opp, store,.opp_storage):
     }
 
 
-async def test_migrator_transforming_config.opp, store,.opp_storage):
+async def test_migrator_transforming_config(opp, store, opp_storage):
     """Test migrating config to new format."""
 
     async def old_conf_migrate_func(old_config):

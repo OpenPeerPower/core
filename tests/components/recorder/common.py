@@ -19,7 +19,7 @@ def wait_recording_done.opp):
 
 async def async_wait_recording_done.opp):
     """Block till recording is done."""
-    await.opp.loop.run_in_executor(None, wait_recording_done,.opp)
+    await.opp.loop.run_in_executor(None, wait_recording_done, opp)
 
 
 def trigger_db_commit.opp):

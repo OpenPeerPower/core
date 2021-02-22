@@ -205,7 +205,7 @@ async def _setup_opp, config_ext, queries, expected_sensors):
     ],
     indirect=["mock_client"],
 )
-async def test_minimal_config.opp, mock_client, config_ext, queries, set_query_mock):
+async def test_minimal_config(opp, mock_client, config_ext, queries, set_query_mock):
     """Test the minimal config and defaults."""
     set_query_mock(mock_client)
     await _setup_opp, config_ext, queries, ["sensor.test"])
@@ -273,7 +273,7 @@ async def test_minimal_config.opp, mock_client, config_ext, queries, set_query_m
     ],
     indirect=["mock_client"],
 )
-async def test_full_config.opp, mock_client, config_ext, queries, set_query_mock):
+async def test_full_config(opp, mock_client, config_ext, queries, set_query_mock):
     """Test the full config."""
     set_query_mock(mock_client)
     await _setup_opp, config_ext, queries, ["sensor.test"])

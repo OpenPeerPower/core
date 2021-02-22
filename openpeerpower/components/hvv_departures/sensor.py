@@ -46,7 +46,7 @@ async def async_setup_entry.opp, config_entry, async_add_devices):
 class HVVDepartureSensor(Entity):
     """HVVDepartureSensor class."""
 
-    def __init__(self,.opp, config_entry, session, hub):
+    def __init__(self, opp, config_entry, session, hub):
         """Initialize."""
         self.config_entry = config_entry
         self.station_name = self.config_entry.data[CONF_STATION]["name"]

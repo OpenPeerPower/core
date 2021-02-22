@@ -34,7 +34,7 @@ def get_service.opp, config, discovery_info=None):
 class FileNotificationService(BaseNotificationService):
     """Implement the notification service for the File service."""
 
-    def __init__(self,.opp, filename, add_timestamp):
+    def __init__(self, opp, filename, add_timestamp):
         """Initialize the service."""
         self.filepath = os.path.join.opp.config.config_dir, filename)
         self.add_timestamp = add_timestamp

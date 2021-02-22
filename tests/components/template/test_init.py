@@ -101,7 +101,7 @@ async def test_reloadable_can_remove.opp):
     assert len.opp.states.async_all()) == 1
 
 
-async def test_reloadable_stops_on_invalid_config.opp):
+async def test_reloadable_stops_on_invalid_config(opp):
     """Test we stop the reload if configuration.yaml is completely broken."""
    .opp.states.async_set("sensor.test_sensor", "mytest")
 
@@ -146,7 +146,7 @@ async def test_reloadable_stops_on_invalid_config.opp):
     assert len.opp.states.async_all()) == 2
 
 
-async def test_reloadable_handles_partial_valid_config.opp):
+async def test_reloadable_handles_partial_valid_config(opp):
     """Test we can still setup valid sensors when configuration.yaml has a broken entry."""
    .opp.states.async_set("sensor.test_sensor", "mytest")
 

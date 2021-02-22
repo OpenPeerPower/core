@@ -66,7 +66,7 @@ class MEQueryException(Exception):
 class MediaExtractor:
     """Class which encapsulates all extraction logic."""
 
-    def __init__(self,.opp, component_config, call_data):
+    def __init__(self, opp, component_config, call_data):
         """Initialize media extractor."""
         self.opp =.opp
         self.config = component_config

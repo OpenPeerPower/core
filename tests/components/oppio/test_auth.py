@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch
 from openpeerpower.auth.providers.openpeerpower import InvalidAuth
 
 
-async def test_auth_success.opp,.oppio_client_supervisor):
+async def test_auth_success.opp, oppio_client_supervisor):
     """Test no auth needed for ."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -21,7 +21,7 @@ async def test_auth_success.opp,.oppio_client_supervisor):
         mock_login.assert_called_with("test", "123456")
 
 
-async def test_auth_fails_no_supervisor.opp,.oppio_client):
+async def test_auth_fails_no_supervisor.opp, oppio_client):
     """Test if only supervisor can access."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -37,7 +37,7 @@ async def test_auth_fails_no_supervisor.opp,.oppio_client):
         assert not mock_login.called
 
 
-async def test_auth_fails_no_auth.opp,.oppio_noauth_client):
+async def test_auth_fails_no_auth.opp, oppio_noauth_client):
     """Test if only supervisor can access."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -53,7 +53,7 @@ async def test_auth_fails_no_auth.opp,.oppio_noauth_client):
         assert not mock_login.called
 
 
-async def test_login_error.opp,.oppio_client_supervisor):
+async def test_login_error.opp, oppio_client_supervisor):
     """Test no auth needed for error."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -70,7 +70,7 @@ async def test_login_error.opp,.oppio_client_supervisor):
         mock_login.assert_called_with("test", "123456")
 
 
-async def test_login_no_data.opp,.oppio_client_supervisor):
+async def test_login_no_data.opp, oppio_client_supervisor):
     """Test auth with no data -> error."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -84,7 +84,7 @@ async def test_login_no_data.opp,.oppio_client_supervisor):
         assert not mock_login.called
 
 
-async def test_login_no_username.opp,.oppio_client_supervisor):
+async def test_login_no_username.opp, oppio_client_supervisor):
     """Test auth with no username in data -> error."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -100,7 +100,7 @@ async def test_login_no_username.opp,.oppio_client_supervisor):
         assert not mock_login.called
 
 
-async def test_login_success_extra.opp,.oppio_client_supervisor):
+async def test_login_success_extra.opp, oppio_client_supervisor):
     """Test auth with extra data."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -121,7 +121,7 @@ async def test_login_success_extra.opp,.oppio_client_supervisor):
         mock_login.assert_called_with("test", "123456")
 
 
-async def test_password_success.opp,.oppio_client_supervisor):
+async def test_password_success.opp, oppio_client_supervisor):
     """Test no auth needed for ."""
     with patch(
         "openpeerpower.auth.providers.openpeerpower."
@@ -137,7 +137,7 @@ async def test_password_success.opp,.oppio_client_supervisor):
         mock_change.assert_called_with("test", "123456")
 
 
-async def test_password_fails_no_supervisor.opp,.oppio_client):
+async def test_password_fails_no_supervisor.opp, oppio_client):
     """Test if only supervisor can access."""
     resp = await.oppio_client.post(
         "/api.oppio_auth/password_reset",
@@ -148,7 +148,7 @@ async def test_password_fails_no_supervisor.opp,.oppio_client):
     assert resp.status == 401
 
 
-async def test_password_fails_no_auth.opp,.oppio_noauth_client):
+async def test_password_fails_no_auth.opp, oppio_noauth_client):
     """Test if only supervisor can access."""
     resp = await.oppio_noauth_client.post(
         "/api.oppio_auth/password_reset",
@@ -159,7 +159,7 @@ async def test_password_fails_no_auth.opp,.oppio_noauth_client):
     assert resp.status == 401
 
 
-async def test_password_no_user.opp,.oppio_client_supervisor):
+async def test_password_no_user.opp, oppio_client_supervisor):
     """Test changing password for invalid user."""
     resp = await.oppio_client_supervisor.post(
         "/api.oppio_auth/password_reset",

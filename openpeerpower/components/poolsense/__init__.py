@@ -99,7 +99,7 @@ class PoolSenseEntity(CoordinatorEntity):
 class PoolSenseDataUpdateCoordinator(DataUpdateCoordinator):
     """Define an object to hold PoolSense data."""
 
-    def __init__(self,.opp, entry):
+    def __init__(self, opp, entry):
         """Initialize."""
         self.poolsense = PoolSense(
             aiohttp_client.async_get_clientsession.opp),

@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 class ConnectXiaomiGateway:
     """Class to async connect to a Xiaomi Gateway."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the entity."""
         self.opp = opp
         self._gateway_device = None

@@ -49,7 +49,7 @@ async def test_methods.opp, entities):
     assert switch.is_on.opp, switch_3.entity_id)
 
 
-async def test_switch_context.opp, entities,.opp_admin_user):
+async def test_switch_context.opp, entities, opp_admin_user):
     """Test that switch context works."""
     assert await async_setup_component.opp, "switch", {"switch": {"platform": "test"}})
 

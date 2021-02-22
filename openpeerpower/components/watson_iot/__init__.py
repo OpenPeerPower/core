@@ -155,7 +155,7 @@ def setup_opp, config):
 class WatsonIOTThread(threading.Thread):
     """A threaded event handler class."""
 
-    def __init__(self,.opp, gateway, event_to_json):
+    def __init__(self, opp, gateway, event_to_json):
         """Initialize the listener."""
         threading.Thread.__init__(self, name="WatsonIOT")
         self.queue = queue.Queue()

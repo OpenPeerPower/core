@@ -48,7 +48,7 @@ def async_restart.opp, entity_id=None):
 class MockFFmpegDev(ffmpeg.FFmpegBase):
     """FFmpeg device mock."""
 
-    def __init__(self,.opp, initial_state=True, entity_id="test.ffmpeg_device"):
+    def __init__(self, opp, initial_state=True, entity_id="test.ffmpeg_device"):
         """Initialize mock."""
         super().__init__(initial_state)
 

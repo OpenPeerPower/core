@@ -185,7 +185,7 @@ async def async_setup_opp, config) -> bool:
 class SurePetcareAPI:
     """Define a generic Sure Petcare object."""
 
-    def __init__(self,.opp, surepy: SurePetcare, ids: List[Dict[str, Any]]) -> None:
+    def __init__(self, opp, surepy: SurePetcare, ids: List[Dict[str, Any]]) -> None:
         """Initialize the Sure Petcare object."""
         self.opp =.opp
         self.surepy = surepy

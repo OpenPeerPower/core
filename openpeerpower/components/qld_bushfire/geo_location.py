@@ -64,8 +64,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Queensland Bushfire Alert Feed platform."""
     scan_interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     coordinates = (
-        config.get(CONF_LATITUDE,.opp.config.latitude),
-        config.get(CONF_LONGITUDE,.opp.config.longitude),
+        config.get(CONF_LATITUDE, opp.config.latitude),
+        config.get(CONF_LONGITUDE, opp.config.longitude),
     )
     radius_in_km = config[CONF_RADIUS]
     categories = config[CONF_CATEGORIES]
@@ -85,7 +85,7 @@ class QldBushfireFeedEntityManager:
     """Feed Entity Manager for Qld Bushfire Alert GeoRSS feed."""
 
     def __init__(
-        self,.opp, add_entities, scan_interval, coordinates, radius_in_km, categories
+        self, opp, add_entities, scan_interval, coordinates, radius_in_km, categories
     ):
         """Initialize the Feed Entity Manager."""
         self.opp = opp

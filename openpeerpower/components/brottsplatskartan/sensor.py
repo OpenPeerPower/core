@@ -63,8 +63,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Brottsplatskartan platform."""
 
     area = config.get(CONF_AREA)
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     name = config[CONF_NAME]
 
     # Every Open Peer Power instance should have their own unique

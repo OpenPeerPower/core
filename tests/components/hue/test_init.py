@@ -19,7 +19,7 @@ def mock_bridge_setup():
         yield mock_bridge.return_value
 
 
-async def test_setup_with_no_config.opp):
+async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a bridge."""
     assert await async_setup_component.opp, hue.DOMAIN, {}) is True
 

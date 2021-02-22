@@ -63,7 +63,7 @@ async def async_setup_opp, config):
                 )
             elif hasattr(platform, "get_handler"):
                 mailbox = await.opp.async_add_executor_job(
-                    platform.get_handler,.opp, p_config, discovery_info
+                    platform.get_handler, opp, p_config, discovery_info
                 )
             else:
                 raise OpenPeerPowerError("Invalid mailbox platform.")
@@ -79,7 +79,7 @@ async def async_setup_opp, config):
         mailboxes.append(mailbox)
         mailbox_entity = MailboxEntity(mailbox)
         component = EntityComponent(
-            logging.getLogger(__name__), DOMAIN,.opp, SCAN_INTERVAL
+            logging.getLogger(__name__), DOMAIN, opp, SCAN_INTERVAL
         )
         await component.async_add_entities([mailbox_entity])
 
@@ -137,7 +137,7 @@ class MailboxEntity(Entity):
 class Mailbox:
     """Represent a mailbox device."""
 
-    def __init__(self,.opp, name):
+    def __init__(self, opp, name):
         """Initialize mailbox object."""
         self.opp =.opp
         self.name = name

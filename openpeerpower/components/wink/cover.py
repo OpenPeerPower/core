@@ -12,15 +12,15 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for shade in pywink.get_shades():
         _id = shade.object_id() + shade.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkCoverEntity(shade,.opp)])
+            add_entities([WinkCoverEntity(shade, opp)])
     for shade in pywink.get_shade_groups():
         _id = shade.object_id() + shade.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkCoverEntity(shade,.opp)])
+            add_entities([WinkCoverEntity(shade, opp)])
     for door in pywink.get_garage_doors():
         _id = door.object_id() + door.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkCoverEntity(door,.opp)])
+            add_entities([WinkCoverEntity(door, opp)])
 
 
 class WinkCoverEntity(WinkDevice, CoverEntity):

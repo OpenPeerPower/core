@@ -6,7 +6,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
-def mock_client.opp,.opp_client):
+def mock_client.opp, opp_client):
     """Create http client for webhooks."""
    .opp.loop.run_until_complete(async_setup_component.opp, "webhook", {}))
     return.opp.loop.run_until_complete.opp_client())
@@ -141,10 +141,10 @@ async def test_webhook_head.opp, mock_client):
     assert hooks[0][2].method == "HEAD"
 
 
-async def test_listing_webhook.opp,.opp_ws_client,.opp_access_token):
+async def test_listing_webhook.opp, opp_ws_client, opp_access_token):
     """Test unregistering a webhook."""
     assert await async_setup_component.opp, "webhook", {})
-    client = await.opp_ws_client.opp,.opp_access_token)
+    client = await.opp_ws_client.opp, opp_access_token)
 
    .opp.components.webhook.async_register("test", "Test hook", "my-id", None)
 

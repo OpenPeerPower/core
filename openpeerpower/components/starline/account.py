@@ -23,7 +23,7 @@ from .const import (
 class StarlineAccount:
     """StarLine Account class."""
 
-    def __init__(self,.opp: OpenPeerPower, config_entry: ConfigEntry):
+    def __init__(self, opp: OpenPeerPower, config_entry: ConfigEntry):
         """Initialize StarLine account."""
         self.opp: OpenPeerPower =.opp
         self._config_entry: ConfigEntry = config_entry

@@ -17,7 +17,7 @@ from . import (
 from tests.common import async_fire_time_changed
 
 
-async def test_jewish_calendar_min_config.opp):
+async def test_jewish_calendar_min_config(opp):
     """Test minimum jewish calendar configuration."""
     assert await async_setup_component(
        .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {}}

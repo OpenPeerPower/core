@@ -29,7 +29,7 @@ class CloudGoogleConfig(AbstractConfig):
     """HA Cloud Configuration for Google Assistant."""
 
     def __init__(
-        self,.opp, config, cloud_user: str, prefs: CloudPreferences, cloud: Cloud
+        self, opp, config, cloud_user: str, prefs: CloudPreferences, cloud: Cloud
     ):
         """Initialize the Google config."""
         super().__init__.opp)

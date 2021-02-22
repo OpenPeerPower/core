@@ -30,7 +30,7 @@ SCAN_INTERVAL = timedelta(seconds=60)
 async def async_setup_opp, config):
     """Track states and offer events for calendars."""
     component =.opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
 
    .opp.http.register_view(CalendarListView(component))
@@ -172,7 +172,7 @@ class CalendarEventDevice(Entity):
 
         return STATE_OFF
 
-    async def async_get_events(self,.opp, start_date, end_date):
+    async def async_get_events(self, opp, start_date, end_date):
         """Return calendar events within a datetime range."""
         raise NotImplementedError()
 

@@ -45,7 +45,7 @@ COORDINATOR_AWARE_PLATFORMS = [SENSOR_DOMAIN, BINARY_SENSOR_DOMAIN]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the rest platforms."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     _async_setup_shared_data.opp)
 
     async def reload_service_handler(service):
@@ -55,13 +55,13 @@ async def async_setup_opp: OpenPeerPower, config: dict):
             return
         await async_reload_integration_platforms.opp, DOMAIN, PLATFORMS)
         _async_setup_shared_data.opp)
-        await _async_process_config.opp, conf)
+        await _async_process_config(opp, conf)
 
    .opp.services.async_register(
         DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
-    return await _async_process_config.opp, config)
+    return await _async_process_config(opp, config)
 
 
 @callback
@@ -70,7 +70,7 @@ def _async_setup_shared_data.opp: OpenPeerPower):
    .opp.data[DOMAIN] = {platform: {} for platform in COORDINATOR_AWARE_PLATFORMS}
 
 
-async def _async_process_config.opp, config) -> bool:
+async def _async_process_config(opp, config) -> bool:
     """Process rest configuration."""
     if DOMAIN not in config:
         return True
@@ -80,7 +80,7 @@ async def _async_process_config.opp, config) -> bool:
     for rest_idx, conf in enumerate(config[DOMAIN]):
         scan_interval = conf.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
         resource_template = conf.get(CONF_RESOURCE_TEMPLATE)
-        rest = create_rest_data_from_config.opp, conf)
+        rest = create_rest_data_from_config(opp, conf)
         coordinator = _wrap_rest_in_coordinator(
            .opp, rest, resource_template, scan_interval
         )
@@ -144,7 +144,7 @@ def _wrap_rest_in_coordinator.opp, rest, resource_template, update_interval):
     )
 
 
-def create_rest_data_from_config.opp, config):
+def create_rest_data_from_config(opp, config):
     """Create RestData from config."""
     resource = config.get(CONF_RESOURCE)
     resource_template = config.get(CONF_RESOURCE_TEMPLATE)

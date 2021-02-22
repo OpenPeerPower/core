@@ -6,7 +6,7 @@ from openpeerpower.setup import async_setup_component
 DTE_ENERGY_BRIDGE_CONFIG = {"platform": "dte_energy_bridge", "ip": "192.168.1.1"}
 
 
-async def test_setup_with_config.opp):
+async def test_setup_with_config(opp):
     """Test the platform setup with configuration."""
     assert await async_setup_component(
        .opp, "sensor", {"dte_energy_bridge": DTE_ENERGY_BRIDGE_CONFIG}

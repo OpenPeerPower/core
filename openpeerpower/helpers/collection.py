@@ -424,13 +424,13 @@ class StorageCollectionWebsocket:
         )
 
     def ws_list_item(
-        self,.opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
+        self, opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
     ) -> None:
         """List items."""
         connection.send_result(msg["id"], self.storage_collection.async_items())
 
     async def ws_create_item(
-        self,.opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
+        self, opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
     ) -> None:
         """Create a item."""
         try:
@@ -451,7 +451,7 @@ class StorageCollectionWebsocket:
             )
 
     async def ws_update_item(
-        self,.opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
+        self, opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
     ) -> None:
         """Update a item."""
         data = dict(msg)
@@ -480,7 +480,7 @@ class StorageCollectionWebsocket:
             )
 
     async def ws_delete_item(
-        self,.opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
+        self, opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
     ) -> None:
         """Delete a item."""
         try:

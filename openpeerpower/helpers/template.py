@@ -287,7 +287,7 @@ class Template:
         "_limited",
     )
 
-    def __init__(self, template,.opp=None):
+    def __init__(self, template, opp=None):
         """Instantiate a template."""
         if not isinstance(template, str):
             raise TypeError("Expected template to be a string")
@@ -573,7 +573,7 @@ class Template:
 class AllStates:
     """Class to expose all HA states as attributes."""
 
-    def __init__(self,.opp: OpenPeerPowerType) -> None:
+    def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize all states."""
         self.opp = opp
 
@@ -627,7 +627,7 @@ class AllStates:
 class DomainStates:
     """Class to expose a specific HA domain as attributes."""
 
-    def __init__(self,.opp: OpenPeerPowerType, domain: str) -> None:
+    def __init__(self, opp: OpenPeerPowerType, domain: str) -> None:
         """Initialize the domain states."""
         self.opp = opp
         self._domain = domain
@@ -673,7 +673,7 @@ class TemplateState(State):
     # Inheritance is done so functions that check against State keep working
     # pylint: disable=super-init-not-called
     def __init__(
-        self,.opp: OpenPeerPowerType, state: State, collect: bool = True
+        self, opp: OpenPeerPowerType, state: State, collect: bool = True
     ) -> None:
         """Initialize template state."""
         self.opp = opp
@@ -794,7 +794,7 @@ def _get_state_if_valid(
 
 
 def _get_state.opp: OpenPeerPowerType, entity_id: str) -> Optional[TemplateState]:
-    return _get_template_state_from_state.opp, entity_id,.opp.states.get(entity_id))
+    return _get_template_state_from_state.opp, entity_id, opp.states.get(entity_id))
 
 
 def _get_template_state_from_state(
@@ -1320,7 +1320,7 @@ def urlencode(value):
 class TemplateEnvironment(ImmutableSandboxedEnvironment):
     """The Open Peer Power template environment."""
 
-    def __init__(self,.opp, limited=False):
+    def __init__(self, opp, limited=False):
         """Initialise template environment."""
         super().__init__()
         self.opp =.opp

@@ -28,7 +28,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class LiteJetLight(LightEntity):
     """Representation of a single LiteJet light."""
 
-    def __init__(self,.opp, lj, i, name):
+    def __init__(self, opp, lj, i, name):
         """Initialize a LiteJet light."""
         self.opp = opp
         self._lj = lj

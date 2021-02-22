@@ -55,7 +55,7 @@ class OppIODiscovery(OpenPeerPowerView):
     name = "api:opp._push:discovery"
     url = "/api/opp._push/discovery/{uuid}"
 
-    def __init__(self,.opp.OpenPeerPowerView, opp.):
+    def __init__(self, opp.OpenPeerPowerView, opp.):
         """Initialize WebView."""
         self opp. opp
         self opp. = opp.

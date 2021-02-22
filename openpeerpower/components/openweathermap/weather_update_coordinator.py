@@ -51,7 +51,7 @@ WEATHER_UPDATE_INTERVAL = timedelta(minutes=10)
 class WeatherUpdateCoordinator(DataUpdateCoordinator):
     """Weather data update coordinator."""
 
-    def __init__(self, owm, latitude, longitude, forecast_mode,.opp):
+    def __init__(self, owm, latitude, longitude, forecast_mode, opp):
         """Initialize coordinator."""
         self._owm_client = owm
         self._latitude = latitude

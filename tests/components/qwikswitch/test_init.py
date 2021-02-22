@@ -383,7 +383,7 @@ async def test_unknown_device.opp, aioclient_mock, qs_devices, caplog):
     listen_mock.stop()
 
 
-async def test_no_discover_info.opp,.opp_storage, aioclient_mock, caplog):
+async def test_no_discover_info.opp, opp_storage, aioclient_mock, caplog):
     """Test that discovery with no discovery_info does not result in errors."""
     config = {
         "qwikswitch": {},

@@ -92,7 +92,7 @@ class Device:
 class MikrotikData:
     """Handle all communication with the Mikrotik API."""
 
-    def __init__(self,.opp, config_entry, api):
+    def __init__(self, opp, config_entry, api):
         """Initialize the Mikrotik Client."""
         self.opp =.opp
         self.config_entry = config_entry
@@ -286,7 +286,7 @@ class MikrotikData:
 class MikrotikHub:
     """Mikrotik Hub Object."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the Mikrotik Client."""
         self.opp =.opp
         self.config_entry = config_entry

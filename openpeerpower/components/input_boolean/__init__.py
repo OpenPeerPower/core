@@ -85,7 +85,7 @@ def is_on.opp, entity_id):
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up an input boolean."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()
 
     yaml_collection = collection.YamlCollection(

@@ -89,7 +89,7 @@ class MediaSourceItem:
         return self.opp.data[DOMAIN][self.domain]
 
     @classmethod
-    def from_uri(cls,.opp: OpenPeerPower, uri: str) -> MediaSourceItem:
+    def from_uri(cls, opp: OpenPeerPower, uri: str) -> MediaSourceItem:
         """Create an item from a uri."""
         match = URI_SCHEME_REGEX.match(uri)
 

@@ -82,13 +82,13 @@ def async_request_config(
 
 
 @bind.opp
-def request_config.opp, *args, **kwargs):
+def request_config(opp, *args, **kwargs):
     """Create a new request for configuration.
 
     Will return an ID to be used for sequent calls.
     """
     return run_callback_threadsafe(
-       .opp.loop, ft.partial(async_request_config,.opp, *args, **kwargs)
+       .opp.loop, ft.partial(async_request_config, opp, *args, **kwargs)
     ).result()
 
 
@@ -107,7 +107,7 @@ def async_notify_errors.opp, request_id, error):
 def notify_errors.opp, request_id, error):
     """Add errors to a config request."""
     return run_callback_threadsafe(
-       .opp.loop, async_notify_errors,.opp, request_id, error
+       .opp.loop, async_notify_errors, opp, request_id, error
     ).result()
 
 
@@ -126,7 +126,7 @@ def async_request_done.opp, request_id):
 def request_done.opp, request_id):
     """Mark a configuration request as done."""
     return run_callback_threadsafe(
-       .opp.loop, async_request_done,.opp, request_id
+       .opp.loop, async_request_done, opp, request_id
     ).result()
 
 
@@ -138,7 +138,7 @@ async def async_setup_opp, config):
 class Configurator:
     """The class to keep track of current configuration requests."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the configurator."""
         self.opp =.opp
         self._cur_id = 0
@@ -152,7 +152,7 @@ class Configurator:
         self, name, callback, description, submit_caption, fields, entity_picture
     ):
         """Set up a request for configuration."""
-        entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name,.opp=self.opp)
+        entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name, opp=self.opp)
 
         if fields is None:
             fields = []

@@ -124,7 +124,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
     # We just need the devices so set consider_home and home range
     # to 0
     for device in asyncio.run_coroutine_threadsafe(
-        async_load_config(yaml_path,.opp, 0),.opp.loop
+        async_load_config(yaml_path, opp, 0), opp.loop
     ).result():
         # check if device is a valid bluetooth device
         if device.mac and device.mac[:4].upper() == BLE_PREFIX:

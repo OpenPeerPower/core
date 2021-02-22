@@ -163,7 +163,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
 class GeniusBroker:
     """Container for geniushub client and data."""
 
-    def __init__(self,.opp, client, hub_uid) -> None:
+    def __init__(self, opp, client, hub_uid) -> None:
         """Initialize the geniushub client."""
         self.opp =.opp
         self.client = client

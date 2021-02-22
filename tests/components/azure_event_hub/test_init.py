@@ -68,13 +68,13 @@ def mock_call_later_fixture():
         yield mock_call_later
 
 
-async def test_minimal_config.opp):
+async def test_minimal_config(opp):
     """Test the minimal config and defaults of component."""
     config = {azure_event_hub.DOMAIN: MIN_CONFIG}
     assert await async_setup_component.opp, azure_event_hub.DOMAIN, config)
 
 
-async def test_full_config.opp):
+async def test_full_config(opp):
     """Test the full config of component."""
     config = {
         azure_event_hub.DOMAIN: {

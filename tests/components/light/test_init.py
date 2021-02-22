@@ -657,7 +657,7 @@ async def test_default_profiles_light(
     }
 
 
-async def test_light_context.opp,.opp_admin_user):
+async def test_light_context.opp, opp_admin_user):
     """Test that light context works."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -681,7 +681,7 @@ async def test_light_context.opp,.opp_admin_user):
     assert state2.context.user_id ==.opp_admin_user.id
 
 
-async def test_light_turn_on_auth.opp,.opp_admin_user):
+async def test_light_turn_on_auth.opp, opp_admin_user):
     """Test that light context works."""
     platform = getattr.opp.components, "test.light")
     platform.init()

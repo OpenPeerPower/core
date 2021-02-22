@@ -60,7 +60,7 @@ async def test_number.opp, zha_device_joined_restored, zigpy_analog_output_devic
     assert "engineering_units" in cluster.read_attributes.call_args[0][0]
     assert "application_type" in cluster.read_attributes.call_args[0][0]
 
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     await async_enable_traffic.opp, [zha_device], enabled=False)

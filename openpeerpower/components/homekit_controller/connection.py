@@ -63,7 +63,7 @@ def get_accessory_name(accessory_info):
 class HKDevice:
     """HomeKit device."""
 
-    def __init__(self,.opp, config_entry, pairing_data):
+    def __init__(self, opp, config_entry, pairing_data):
         """Initialise a generic HomeKit device."""
 
         self.opp =.opp

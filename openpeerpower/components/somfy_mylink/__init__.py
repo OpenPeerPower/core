@@ -111,7 +111,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if "result" not in mylink_status:
         raise ConfigEntryNotReady("The Somfy MyLink device returned an empty result")
 
-    _async_migrate_entity_config.opp, entry, mylink_status)
+    _async_migrate_entity_config(opp, entry, mylink_status)
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 

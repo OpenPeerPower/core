@@ -18,7 +18,7 @@ class FloDeviceDataUpdateCoordinator(DataUpdateCoordinator):
     """Flo device object."""
 
     def __init__(
-        self,.opp: OpenPeerPowerType, api_client: API, location_id: str, device_id: str
+        self, opp: OpenPeerPowerType, api_client: API, location_id: str, device_id: str
     ):
         """Initialize the device."""
         self.opp: OpenPeerPowerType =.opp

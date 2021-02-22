@@ -68,7 +68,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class GpsdSensor(Entity):
     """Representation of a GPS receiver available via GPSD."""
 
-    def __init__(self,.opp, name, host, port):
+    def __init__(self, opp, name, host, port):
         """Initialize the GPSD sensor."""
         self.opp =.opp
         self._name = name

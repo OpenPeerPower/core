@@ -15,7 +15,7 @@ from tests.common import MockConfigEntry
 from tests.components.rfxtrx.conftest import create_rfx_test_cfg
 
 
-async def test_valid_config.opp):
+async def test_valid_config(opp):
     """Test configuration."""
     assert await async_setup_component(
        .opp,
@@ -44,7 +44,7 @@ async def test_valid_config2.opp):
     )
 
 
-async def test_invalid_config.opp):
+async def test_invalid_config(opp):
     """Test configuration."""
     assert not await async_setup_component.opp, "rfxtrx", {"rfxtrx": {}})
 

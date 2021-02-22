@@ -22,7 +22,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     for fan in pywink.get_fans():
         if fan.object_id() + fan.name() not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkFanDevice(fan,.opp)])
+            add_entities([WinkFanDevice(fan, opp)])
 
 
 class WinkFanDevice(WinkDevice, FanEntity):

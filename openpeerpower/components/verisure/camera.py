@@ -29,7 +29,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class VerisureSmartcam(Camera):
     """Representation of a Verisure camera."""
 
-    def __init__(self,.opp, device_label, directory_path):
+    def __init__(self, opp, device_label, directory_path):
         """Initialize Verisure File Camera component."""
         super().__init__()
 

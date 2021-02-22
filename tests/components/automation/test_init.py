@@ -468,7 +468,7 @@ async def test_services.opp, calls):
     assert automation.is_on.opp, entity_id)
 
 
-async def test_reload_config_service.opp, calls,.opp_admin_user,.opp_read_only_user):
+async def test_reload_config_service.opp, calls, opp_admin_user, opp_read_only_user):
     """Test the reload config service."""
     assert await async_setup_component(
        .opp,
@@ -549,7 +549,7 @@ async def test_reload_config_service.opp, calls,.opp_admin_user,.opp_read_only_u
     assert calls[1].data.get("event") == "test_event2"
 
 
-async def test_reload_config_when_invalid_config.opp, calls):
+async def test_reload_config_when_invalid_config(opp, calls):
     """Test the reload config service handling invalid config."""
     with assert_setup_component(1, automation.DOMAIN):
         assert await async_setup_component(

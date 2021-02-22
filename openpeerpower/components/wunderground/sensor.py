@@ -1088,8 +1088,8 @@ async def async_setup_platform(
    .opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up the WUnderground sensor."""
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     pws_id = config.get(CONF_PWS_ID)
 
     rest = WUndergroundData(
@@ -1120,7 +1120,7 @@ async def async_setup_platform(
 class WUndergroundSensor(Entity):
     """Implementing the WUnderground sensor."""
 
-    def __init__(self,.opp: OpenPeerPowerType, rest, condition, unique_id_base: str):
+    def __init__(self, opp: OpenPeerPowerType, rest, condition, unique_id_base: str):
         """Initialize the sensor."""
         self.rest = rest
         self._condition = condition
@@ -1235,7 +1235,7 @@ class WUndergroundSensor(Entity):
 class WUndergroundData:
     """Get data from WUnderground."""
 
-    def __init__(self,.opp, api_key, pws_id, lang, latitude, longitude):
+    def __init__(self, opp, api_key, pws_id, lang, latitude, longitude):
         """Initialize the data object."""
         self.opp = opp
         self._api_key = api_key

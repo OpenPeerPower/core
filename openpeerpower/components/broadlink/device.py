@@ -30,7 +30,7 @@ def get_domains(device_type):
 class BroadlinkDevice:
     """Manages a Broadlink device."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize the device."""
         self.opp =.opp
         self.config = config

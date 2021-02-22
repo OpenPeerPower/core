@@ -55,8 +55,8 @@ SERVICE_WRITE_SCHEMA = vol.Schema(
 )
 
 
-def _figure_out_source(record, call_stack,.opp):
-    paths = [OPENPEERPOWER_PATH[0],.opp.config.config_dir]
+def _figure_out_source(record, call_stack, opp):
+    paths = [OPENPEERPOWER_PATH[0], opp.config.config_dir]
 
     # If a stack trace exists, extract file names from the entire call stack.
     # The other case is when a regular "log" is made (without an attached
@@ -171,7 +171,7 @@ class LogErrorQueueHandler(logging.handlers.QueueHandler):
 class LogErrorHandler(logging.Handler):
     """Log handler for error messages."""
 
-    def __init__(self,.opp, maxlen, fire_event):
+    def __init__(self, opp, maxlen, fire_event):
         """Initialize a new LogErrorHandler."""
         super().__init__()
         self.opp =.opp

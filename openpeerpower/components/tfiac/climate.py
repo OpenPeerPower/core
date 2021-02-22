@@ -76,7 +76,7 @@ async def async_setup_platform.opp, config, async_add_devices, discovery_info=No
 class TfiacClimate(ClimateEntity):
     """TFIAC class."""
 
-    def __init__(self,.opp, client):
+    def __init__(self, opp, client):
         """Init class."""
         self._client = client
         self._available = True

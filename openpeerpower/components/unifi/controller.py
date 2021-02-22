@@ -90,7 +90,7 @@ DEVICE_CONNECTED = (
 class UniFiController:
     """Manages a single UniFi Controller."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the system."""
         self.opp =.opp
         self.config_entry = config_entry

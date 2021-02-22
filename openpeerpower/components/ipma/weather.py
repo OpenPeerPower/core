@@ -87,8 +87,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """
     _LOGGER.warning("Loading IPMA via platform config is deprecated")
 
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
 
     if None in (latitude, longitude):
         _LOGGER.error("Latitude or longitude not set in Open Peer Power config")

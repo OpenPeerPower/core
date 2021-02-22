@@ -53,7 +53,7 @@ class TcpSensor(Entity):
 
     required = ()
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Set all the config values if they exist and get initial state."""
         value_template = config.get(CONF_VALUE_TEMPLATE)
 

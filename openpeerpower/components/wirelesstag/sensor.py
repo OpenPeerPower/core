@@ -38,7 +38,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         for sensor_type in config.get(CONF_MONITORED_CONDITIONS):
             if sensor_type in tag.allowed_sensor_types:
                 sensors.append(
-                    WirelessTagSensor(platform, tag, sensor_type,.opp.config)
+                    WirelessTagSensor(platform, tag, sensor_type, opp.config)
                 )
 
     add_entities(sensors, True)

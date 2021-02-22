@@ -246,7 +246,7 @@ async def async_setup_opp, config):
     conf = config.get(DOMAIN)
 
     ios_config = await.opp.async_add_executor_job(
-        load_json,.opp.config.path(CONFIGURATION_FILE)
+        load_json, opp.config.path(CONFIGURATION_FILE)
     )
 
     if ios_config == {}:
@@ -354,7 +354,7 @@ class iOSIdentifyDeviceView(OpenPeerPowerView):
         async_dispatcher_send.opp, f"{DOMAIN}.{device_id}", data)
 
         try:
-            save_json(self._config_path,.opp.data[DOMAIN])
+            save_json(self._config_path, opp.data[DOMAIN])
         except OpenPeerPowerError:
             return self.json_message("Error saving device.", HTTP_INTERNAL_SERVER_ERROR)
 

@@ -30,7 +30,7 @@ from .convert_config import convert_config
 class DynaliteBridge:
     """Manages a single Dynalite bridge."""
 
-    def __init__(self,.opp: OpenPeerPower, config: Dict[str, Any]) -> None:
+    def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the system based on host parameter."""
         self.opp =.opp
         self.area = {}

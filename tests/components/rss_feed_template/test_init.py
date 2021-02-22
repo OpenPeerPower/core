@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
-def mock_http_client(loop,.opp,.opp_client):
+def mock_http_client(loop, opp, opp_client):
     """Set up test fixture."""
     config = {
         "rss_feed_template": {
@@ -33,7 +33,7 @@ async def test_get_nonexistant_feed(mock_http_client):
     assert resp.status == HTTP_NOT_FOUND
 
 
-async def test_get_rss_feed(mock_http_client,.opp):
+async def test_get_rss_feed(mock_http_client, opp):
     """Test if we can retrieve the correct rss feed."""
    .opp.states.async_set("test.test1", "a_state_1")
    .opp.states.async_set("test.test2", "a_state_2")

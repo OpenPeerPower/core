@@ -51,7 +51,7 @@ def setup_platform.opp, config, add_entities, disc_info=None):
         if not data[CONF_TRACK]:
             continue
         entity_id = generate_entity_id(
-            ENTITY_ID_FORMAT, data[CONF_DEVICE_ID],.opp.opp
+            ENTITY_ID_FORMAT, data[CONF_DEVICE_ID], opp.opp
         )
         entity = GoogleCalendarEventDevice(
             calendar_service, disc_info[CONF_CAL_ID], data, entity_id
@@ -94,7 +94,7 @@ class GoogleCalendarEventDevice(CalendarEventDevice):
         """Return the name of the entity."""
         return self._name
 
-    async def async_get_events(self,.opp, start_date, end_date):
+    async def async_get_events(self, opp, start_date, end_date):
         """Get all events in a specific time frame."""
         return await self.data.async_get_events.opp, start_date, end_date)
 
@@ -139,7 +139,7 @@ class GoogleCalendarData:
 
         return service, params
 
-    async def async_get_events(self,.opp, start_date, end_date):
+    async def async_get_events(self, opp, start_date, end_date):
         """Get all events in a specific time frame."""
         service, params = await.opp.async_add_executor_job(self._prepare_query)
         if service is None:

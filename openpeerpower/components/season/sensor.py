@@ -56,7 +56,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Display the current season."""
-    if None in .opp.config.latitude,.opp.config.longitude):
+    if None in .opp.config.latitude, opp.config.longitude):
         _LOGGER.error("Latitude or longitude not set in Open Peer Power config")
         return False
 
@@ -112,7 +112,7 @@ def get_season(date, hemisphere, season_tracking_type):
 class Season(Entity):
     """Representation of the current season."""
 
-    def __init__(self,.opp, hemisphere, season_tracking_type, name):
+    def __init__(self, opp, hemisphere, season_tracking_type, name):
         """Initialize the season."""
         self.opp =.opp
         self._name = name

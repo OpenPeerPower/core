@@ -54,12 +54,12 @@ async def assert_setup_sensor.opp, config, count=1):
         await.opp.async_block_till_done()
 
 
-async def test_setup_platform_valid_config.opp, mock_requester):
+async def test_setup_platform_valid_config(opp, mock_requester):
     """Test that sensor is set up properly with valid config."""
     await assert_setup_sensor.opp, TEST_CONFIG)
 
 
-async def test_setup_platform_invalid_config.opp, mock_requester):
+async def test_setup_platform_invalid_config(opp, mock_requester):
     """Check an invalid configuration."""
     await assert_setup_sensor(
        .opp, {"sensor": {"platform": "yandex_transport", "stopid": 1234}}, count=0

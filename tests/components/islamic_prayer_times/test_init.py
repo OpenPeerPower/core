@@ -20,7 +20,7 @@ from . import (
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def test_setup_with_config.opp, legacy_patchable_time):
+async def test_setup_with_config(opp, legacy_patchable_time):
     """Test that we import the config and setup the client."""
     config = {
         islamic_prayer_times.DOMAIN: {islamic_prayer_times.CONF_CALC_METHOD: "isna"}

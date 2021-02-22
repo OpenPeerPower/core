@@ -129,7 +129,7 @@ class EmonCmsSensor(Entity):
     """Implementation of an Emoncms sensor."""
 
     def __init__(
-        self,.opp, data, name, value_template, unit_of_measurement, sensorid, elem
+        self, opp, data, name, value_template, unit_of_measurement, sensorid, elem
     ):
         """Initialize the sensor."""
         if name is None:
@@ -226,7 +226,7 @@ class EmonCmsSensor(Entity):
 class EmonCmsData:
     """The class for handling the data retrieval."""
 
-    def __init__(self,.opp, url, apikey, interval):
+    def __init__(self, opp, url, apikey, interval):
         """Initialize the data object."""
         self._apikey = apikey
         self._url = f"{url}/feed/list.json"

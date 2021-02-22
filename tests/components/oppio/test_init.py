@@ -136,7 +136,7 @@ async def test_setup_api_push_api_data_server_host.opp, aioclient_mock):
     assert not aioclient_mock.mock_calls[1][2]["watchdog"]
 
 
-async def test_setup_api_push_api_data_default.opp, aioclient_mock,.opp_storage):
+async def test_setup_api_push_api_data_default.opp, aioclient_mock, opp_storage):
     """Test setup with API push default data."""
     with patch.dict(os.environ, MOCK_ENVIRON):
         result = await async_setup_component.opp, .oppio", {"http": {}, .oppio": {}})
@@ -160,7 +160,7 @@ async def test_setup_api_push_api_data_default.opp, aioclient_mock,.opp_storage)
         assert False, "refresh token not found"
 
 
-async def test_setup_adds_admin_group_to_user.opp, aioclient_mock,.opp_storage):
+async def test_setup_adds_admin_group_to_user.opp, aioclient_mock, opp_storage):
     """Test setup with API push default data."""
     # Create user without admin
     user = await.opp.auth.async_create_system_user("Hass.io")
@@ -180,7 +180,7 @@ async def test_setup_adds_admin_group_to_user.opp, aioclient_mock,.opp_storage):
     assert user.is_admin
 
 
-async def test_setup_api_existing.oppio_user.opp, aioclient_mock,.opp_storage):
+async def test_setup_api_existing.oppio_user.opp, aioclient_mock, opp_storage):
     """Test setup with API push default data."""
     user = await.opp.auth.async_create_system_user("Hass.io test")
     token = await.opp.auth.async_create_refresh_token(user)
@@ -244,7 +244,7 @@ async def test_warn_when_cannot_connect.opp, caplog):
     assert "Not connected with Hass.io / system too busy!" in caplog.text
 
 
-async def test_service_register.oppio_env,.opp):
+async def test_service_register.oppio_env, opp):
     """Check if service will be setup."""
     assert await async_setup_component.opp, .oppio", {})
     assert.opp.services.has_service(.oppio", "addon_start")
@@ -260,7 +260,7 @@ async def test_service_register.oppio_env,.opp):
     assert.opp.services.has_service(.oppio", "restore_partial")
 
 
-async def test_service_calls.oppio_env,.opp, aioclient_mock):
+async def test_service_calls.oppio_env, opp, aioclient_mock):
     """Call service and check the API calls behind that."""
     assert await async_setup_component.opp, .oppio", {})
 
@@ -334,7 +334,7 @@ async def test_service_calls.oppio_env,.opp, aioclient_mock):
     }
 
 
-async def test_service_calls_core.oppio_env,.opp, aioclient_mock):
+async def test_service_calls_core.oppio_env, opp, aioclient_mock):
     """Call core service and check the API calls behind that."""
     assert await async_setup_component.opp, .oppio", {})
 
@@ -362,7 +362,7 @@ async def test_service_calls_core.oppio_env,.opp, aioclient_mock):
 
 
 async def test_websocket_supervisor_event(
-   .oppio_env,.opp: OpenPeerPower,.opp_ws_client
+   .oppio_env, opp: OpenPeerPower, opp_ws_client
 ):
     """Test Supervisor websocket event."""
     assert await async_setup_component.opp, .oppio", {})
@@ -381,7 +381,7 @@ async def test_websocket_supervisor_event(
 
 
 async def test_websocket_supervisor_api(
-   .oppio_env,.opp: OpenPeerPower,.opp_ws_client, aioclient_mock
+   .oppio_env, opp: OpenPeerPower, opp_ws_client, aioclient_mock
 ):
     """Test Supervisor websocket api."""
     assert await async_setup_component.opp, .oppio", {})

@@ -142,7 +142,7 @@ def zwave_integration_fixture.opp, zwave_migration_data):
         yield zwave_config_entry
 
 
-async def test_migrate_zwave.opp, migration_data,.opp_ws_client, zwave_integration):
+async def test_migrate_zwave.opp, migration_data, opp_ws_client, zwave_integration):
     """Test the zwave to ozw migration websocket api."""
     await setup_ozw.opp, fixture=migration_data)
     client = await.opp_ws_client.opp)
@@ -226,7 +226,7 @@ async def test_migrate_zwave.opp, migration_data,.opp_ws_client, zwave_integrati
 
 
 async def test_migrate_zwave_dry_run(
-   .opp, migration_data,.opp_ws_client, zwave_integration
+   .opp, migration_data, opp_ws_client, zwave_integration
 ):
     """Test the zwave to ozw migration websocket api dry run."""
     await setup_ozw.opp, fixture=migration_data)
@@ -279,7 +279,7 @@ async def test_migrate_zwave_dry_run(
         assert await.opp.config_entries.async_setup(zwave_config_entry.entry_id)
 
 
-async def test_migrate_zwave_not_setup_opp, migration_data,.opp_ws_client):
+async def test_migrate_zwave_not_setup_opp, migration_data, opp_ws_client):
     """Test the zwave to ozw migration websocket without zwave setup."""
     await setup_ozw.opp, fixture=migration_data)
     client = await.opp_ws_client.opp)

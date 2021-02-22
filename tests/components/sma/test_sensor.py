@@ -13,7 +13,7 @@ BASE_CFG = {
 }
 
 
-async def test_sma_config.opp):
+async def test_sma_config(opp):
     """Test new config."""
     sensors = ["current_consumption"]
 

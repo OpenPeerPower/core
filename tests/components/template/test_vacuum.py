@@ -30,7 +30,7 @@ def calls.opp):
 
 
 # Configuration tests #
-async def test_missing_optional_config.opp, calls):
+async def test_missing_optional_config(opp, calls):
     """Test: missing optional template is ok."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
@@ -53,7 +53,7 @@ async def test_missing_optional_config.opp, calls):
     _verify.opp, STATE_UNKNOWN, None)
 
 
-async def test_missing_start_config.opp, calls):
+async def test_missing_start_config(opp, calls):
     """Test: missing 'start' will fail."""
     with assert_setup_component(0, "vacuum"):
         assert await setup.async_setup_component(
@@ -74,7 +74,7 @@ async def test_missing_start_config.opp, calls):
     assert.opp.states.async_all() == []
 
 
-async def test_invalid_config.opp, calls):
+async def test_invalid_config(opp, calls):
     """Test: invalid config structure will fail."""
     with assert_setup_component(0, "vacuum"):
         assert await setup.async_setup_component(

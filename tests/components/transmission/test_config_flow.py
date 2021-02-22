@@ -93,7 +93,7 @@ def init_config_flow.opp):
     return flow
 
 
-async def test_flow_user_config.opp, api):
+async def test_flow_user_config(opp, api):
     """Test user config."""
     result = await.opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}

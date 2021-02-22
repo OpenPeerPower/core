@@ -106,7 +106,7 @@ class HistoryStatsSensor(Entity):
     """Representation of a HistoryStats sensor."""
 
     def __init__(
-        self,.opp, entity_id, entity_states, start, end, duration, sensor_type, name
+        self, opp, entity_id, entity_states, start, end, duration, sensor_type, name
     ):
         """Initialize the HistoryStats sensor."""
         self._entity_id = entity_id

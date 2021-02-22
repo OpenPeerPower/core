@@ -163,7 +163,7 @@ async def async_setup_entity_basic(
 class MqttLight(MqttEntity, LightEntity, RestoreEntity):
     """Representation of a MQTT light."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Initialize MQTT light."""
         self._state = False
         self._brightness = None
@@ -185,7 +185,7 @@ class MqttLight(MqttEntity, LightEntity, RestoreEntity):
         self._optimistic_white_value = False
         self._optimistic_xy = False
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

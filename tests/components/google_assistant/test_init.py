@@ -6,7 +6,7 @@ from openpeerpower.setup import async_setup_component
 from .test_http import DUMMY_CONFIG
 
 
-async def test_request_sync_service(aioclient_mock,.opp):
+async def test_request_sync_service(aioclient_mock, opp):
     """Test that it posts to the request_sync url."""
     aioclient_mock.post(
         ga.const.HOMEGRAPH_TOKEN_URL,

@@ -101,8 +101,8 @@ async def async_setup_opp, config):
     name = config[DOMAIN][CONF_NAME]
     language = config[DOMAIN][CONF_LANGUAGE]
 
-    latitude = config[DOMAIN].get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config[DOMAIN].get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config[DOMAIN].get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config[DOMAIN].get(CONF_LONGITUDE, opp.config.longitude)
     diaspora = config[DOMAIN][CONF_DIASPORA]
 
     candle_lighting_offset = config[DOMAIN][CONF_CANDLE_LIGHT_MINUTES]

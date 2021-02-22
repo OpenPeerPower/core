@@ -45,18 +45,18 @@ def setup_opp, config):
         if not.opp.config.is_allowed_path(path):
             _LOGGER.error("folder %s is not valid or allowed", path)
             return False
-        Watcher(path, patterns,.opp)
+        Watcher(path, patterns, opp)
 
     return True
 
 
-def create_event_handler(patterns,.opp):
+def create_event_handler(patterns, opp):
     """Return the Watchdog EventHandler object."""
 
     class EventHandler(PatternMatchingEventHandler):
         """Class for handling Watcher events."""
 
-        def __init__(self, patterns,.opp):
+        def __init__(self, patterns, opp):
             """Initialise the EventHandler."""
             super().__init__(patterns)
             self.opp =.opp
@@ -92,17 +92,17 @@ def create_event_handler(patterns,.opp):
             """File deleted."""
             self.process(event)
 
-    return EventHandler(patterns,.opp)
+    return EventHandler(patterns, opp)
 
 
 class Watcher:
     """Class for starting Watchdog."""
 
-    def __init__(self, path, patterns,.opp):
+    def __init__(self, path, patterns, opp):
         """Initialise the watchdog observer."""
         self._observer = Observer()
         self._observer.schedule(
-            create_event_handler(patterns,.opp), path, recursive=True
+            create_event_handler(patterns, opp), path, recursive=True
         )
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.startup)
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.shutdown)

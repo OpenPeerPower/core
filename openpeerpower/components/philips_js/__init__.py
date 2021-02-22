@@ -90,7 +90,7 @@ class PluggableAction:
         return _remove
 
     async def async_run(
-        self,.opp: OpenPeerPowerType, context: Optional[Context] = None
+        self, opp: OpenPeerPowerType, context: Optional[Context] = None
     ):
         """Run all turn on triggers."""
         for job, variables in self._actions.values():
@@ -100,7 +100,7 @@ class PluggableAction:
 class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
     """Coordinator to update data."""
 
-    def __init__(self,.opp, api: PhilipsTV) -> None:
+    def __init__(self, opp, api: PhilipsTV) -> None:
         """Set up the coordinator."""
         self.api = api
 

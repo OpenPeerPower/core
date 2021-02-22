@@ -110,7 +110,7 @@ class TtnDataSensor(Entity):
 class TtnDataStorage:
     """Get the latest data from The Things Network Data Storage."""
 
-    def __init__(self,.opp, app_id, device_id, access_key, values):
+    def __init__(self, opp, app_id, device_id, access_key, values):
         """Initialize the data object."""
         self.data = None
         self.opp = opp

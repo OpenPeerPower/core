@@ -60,7 +60,7 @@ CONFIG_SCHEMA = vol.Schema(
 class WirelessTagPlatform:
     """Principal object to manage all registered in HA tags."""
 
-    def __init__(self,.opp, api):
+    def __init__(self, opp, api):
         """Designated initializer for wirelesstags platform."""
         self.opp =.opp
         self.api = api
@@ -207,9 +207,9 @@ def setup_opp, config):
 
     # listen to custom events
    .opp.bus.listen(
-        "wirelesstag_update_tags",.opp.data[DOMAIN].handle_update_tags_event
+        "wirelesstag_update_tags", opp.data[DOMAIN].handle_update_tags_event
     )
-   .opp.bus.listen("wirelesstag_binary_event",.opp.data[DOMAIN].handle_binary_event)
+   .opp.bus.listen("wirelesstag_binary_event", opp.data[DOMAIN].handle_binary_event)
 
     return True
 

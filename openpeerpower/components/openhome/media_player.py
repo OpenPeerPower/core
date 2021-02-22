@@ -65,7 +65,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class OpenhomeDevice(MediaPlayerEntity):
     """Representation of an Openhome device."""
 
-    def __init__(self,.opp, device):
+    def __init__(self, opp, device):
         """Initialise the Openhome device."""
         self.opp =.opp
         self._device = device

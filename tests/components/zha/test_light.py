@@ -178,7 +178,7 @@ async def test_light_refresh.opp, zigpy_device_mock, zha_device_joined_restored)
     zigpy_device = zigpy_device_mock(LIGHT_ON_OFF)
     zha_device = await zha_device_joined_restored(zigpy_device)
     on_off_cluster = zigpy_device.endpoints[1].on_off
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     # allow traffic to flow through the gateway and device
     await async_enable_traffic.opp, [zha_device])
@@ -236,7 +236,7 @@ async def test_light(
     # create zigpy devices
     zigpy_device = zigpy_device_mock(device)
     zha_device = await zha_device_joined_restored(zigpy_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     assert entity_id is not None
 
@@ -494,9 +494,9 @@ async def test_zha_group_light_entity(
         assert member.group == zha_group
         assert member.endpoint is not None
 
-    device_1_entity_id = await find_entity_id(DOMAIN, device_light_1,.opp)
-    device_2_entity_id = await find_entity_id(DOMAIN, device_light_2,.opp)
-    device_3_entity_id = await find_entity_id(DOMAIN, device_light_3,.opp)
+    device_1_entity_id = await find_entity_id(DOMAIN, device_light_1, opp)
+    device_2_entity_id = await find_entity_id(DOMAIN, device_light_2, opp)
+    device_3_entity_id = await find_entity_id(DOMAIN, device_light_3, opp)
 
     assert (
         device_1_entity_id != device_2_entity_id

@@ -333,7 +333,7 @@ class AbstractOAuth2FlowHandler(config_entries.ConfigFlow, metaclass=ABCMeta):
 
     @classmethod
     def async_register_implementation(
-        cls,.opp: OpenPeerPower, local_impl: LocalOAuth2Implementation
+        cls, opp: OpenPeerPower, local_impl: LocalOAuth2Implementation
     ) -> None:
         """Register a local implementation."""
         async_register_implementation.opp, cls.DOMAIN, local_impl)
@@ -520,7 +520,7 @@ def _encode_jwt.opp: OpenPeerPower, data: dict) -> str:
 @callback
 def _decode_jwt.opp: OpenPeerPower, encoded: str) -> Optional[dict]:
     """JWT encode data."""
-    secret = cast(str,.opp.data.get(DATA_JWT_SECRET))
+    secret = cast(str, opp.data.get(DATA_JWT_SECRET))
 
     try:
         return jwt.decode(encoded, secret, algorithms=["HS256"])

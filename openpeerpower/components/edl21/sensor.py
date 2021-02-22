@@ -112,7 +112,7 @@ class EDL21:
         "129-129:199.130.5*255",  # Iskraemeco: Public Key
     }
 
-    def __init__(self,.opp, config, async_add_entities) -> None:
+    def __init__(self, opp, config, async_add_entities) -> None:
         """Initialize an EDL21 object."""
         self._registered_obis = set()
         self.opp = opp

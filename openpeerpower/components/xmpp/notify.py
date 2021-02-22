@@ -81,7 +81,7 @@ async def async_get_service.opp, config, discovery_info=None):
 class XmppNotificationService(BaseNotificationService):
     """Implement the notification service for Jabber (XMPP)."""
 
-    def __init__(self, sender, resource, password, recipient, tls, verify, room,.opp):
+    def __init__(self, sender, resource, password, recipient, tls, verify, room, opp):
         """Initialize the service."""
         self.opp = opp
         self._sender = sender
@@ -229,14 +229,14 @@ async def async_send_message(
             """
             if data.get(ATTR_URL_TEMPLATE):
                 _LOGGER.debug("Got url template: %s", data[ATTR_URL_TEMPLATE])
-                templ = template_helper.Template(data[ATTR_URL_TEMPLATE],.opp)
+                templ = template_helper.Template(data[ATTR_URL_TEMPLATE], opp)
                 get_url = template_helper.render_complex(templ, None)
                 url = await self.upload_file_from_url(get_url, timeout=timeout)
             elif data.get(ATTR_URL):
                 url = await self.upload_file_from_url(data[ATTR_URL], timeout=timeout)
             elif data.get(ATTR_PATH_TEMPLATE):
                 _LOGGER.debug("Got path template: %s", data[ATTR_PATH_TEMPLATE])
-                templ = template_helper.Template(data[ATTR_PATH_TEMPLATE],.opp)
+                templ = template_helper.Template(data[ATTR_PATH_TEMPLATE], opp)
                 get_path = template_helper.render_complex(templ, None)
                 url = await self.upload_file_from_path(get_path, timeout=timeout)
             elif data.get(ATTR_PATH):

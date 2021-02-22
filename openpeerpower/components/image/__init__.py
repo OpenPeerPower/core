@@ -60,7 +60,7 @@ class ImageStorageCollection(collection.StorageCollection):
     CREATE_SCHEMA = vol.Schema(CREATE_FIELDS)
     UPDATE_SCHEMA = vol.Schema(UPDATE_FIELDS)
 
-    def __init__(self,.opp: OpenPeerPower, image_dir: pathlib.Path) -> None:
+    def __init__(self, opp: OpenPeerPower, image_dir: pathlib.Path) -> None:
         """Initialize media storage collection."""
         super().__init__(
             Store.opp, STORAGE_VERSION, STORAGE_KEY),

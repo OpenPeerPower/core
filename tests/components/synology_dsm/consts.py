@@ -7,7 +7,7 @@ SERIAL_2 = "mySerial2"
 PORT = 1234
 USE_SSL = True
 VERIFY_SSL = False
-USERNAME = "Home_Assistant"
+USERNAME = "OpenPeerPower
 PASSWORD = "password"
 DEVICE_TOKEN = "Dév!cè_T0k€ñ"
 

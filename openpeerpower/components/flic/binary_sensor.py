@@ -126,7 +126,7 @@ def setup_button.opp, config, add_entities, client, address):
 class FlicButton(BinarySensorEntity):
     """Representation of a flic button."""
 
-    def __init__(self,.opp, client, address, timeout, ignored_click_types):
+    def __init__(self, opp, client, address, timeout, ignored_click_types):
         """Initialize the flic button."""
 
         self.opp = opp

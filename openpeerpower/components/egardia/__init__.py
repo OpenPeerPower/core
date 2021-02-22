@@ -127,7 +127,7 @@ def setup_opp, config):
             return False
 
     discovery.load_platform(
-       .opp, "alarm_control_panel", DOMAIN, discovered=conf,.opp_config=config
+       .opp, "alarm_control_panel", DOMAIN, discovered=conf, opp_config=config
     )
 
     # Get the sensors from the device and add those

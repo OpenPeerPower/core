@@ -42,7 +42,7 @@ def get_service.opp, config, discovery_info=None):
 class TelegramNotificationService(BaseNotificationService):
     """Implement the notification service for Telegram."""
 
-    def __init__(self,.opp, chat_id):
+    def __init__(self, opp, chat_id):
         """Initialize the service."""
         self._chat_id = chat_id
         self.opp =.opp

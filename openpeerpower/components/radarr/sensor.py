@@ -98,7 +98,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class RadarrSensor(Entity):
     """Implementation of the Radarr sensor."""
 
-    def __init__(self,.opp, conf, sensor_type):
+    def __init__(self, opp, conf, sensor_type):
         """Create Radarr entity."""
 
         self.conf = conf

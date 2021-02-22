@@ -38,8 +38,8 @@ async def async_setup_entry.opp, config_entry):
     websession = aiohttp_client.async_get_clientsession.opp)
     client = Client(websession)
 
-    latitude = config_entry.data.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config_entry.data.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config_entry.data.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config_entry.data.get(CONF_LONGITUDE, opp.config.longitude)
 
     async def async_update(api_category):
         """Get updated date from the API based on category."""

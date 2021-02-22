@@ -528,7 +528,7 @@ async def test_callback_view.opp, aiohttp_client):
         assert resp.status == 200
 
 
-async def test_manual_config.opp, mock_plex_calls):
+async def test_manual_config(opp, mock_plex_calls):
     """Test creating via manual configuration."""
     await async_process_ha_core_config(
        .opp,

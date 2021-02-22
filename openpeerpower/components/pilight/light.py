@@ -39,7 +39,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class PilightLight(PilightBaseDevice, LightEntity):
     """Representation of a Pilight switch."""
 
-    def __init__(self,.opp, name, config):
+    def __init__(self, opp, name, config):
         """Initialize a switch."""
         super().__init__.opp, name, config)
         self._dimlevel_min = config.get(CONF_DIMLEVEL_MIN)

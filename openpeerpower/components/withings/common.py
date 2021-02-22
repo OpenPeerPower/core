@@ -520,7 +520,7 @@ class WebhookAvailability(IntEnum):
 class WebhookUpdateCoordinator:
     """Coordinates webhook data updates across listeners."""
 
-    def __init__(self,.opp: OpenPeerPower, user_id: int) -> None:
+    def __init__(self, opp: OpenPeerPower, user_id: int) -> None:
         """Initialize the object."""
         self.opp = opp
         self._user_id = user_id

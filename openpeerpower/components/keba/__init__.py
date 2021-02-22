@@ -105,7 +105,7 @@ async def async_setup_opp, config):
 class KebaHandler(KebaKeContact):
     """Representation of a KEBA charging station connection."""
 
-    def __init__(self,.opp, host, rfid, refresh_interval):
+    def __init__(self, opp, host, rfid, refresh_interval):
         """Initialize charging station connection."""
         super().__init__(host, self.opp_callback)
 

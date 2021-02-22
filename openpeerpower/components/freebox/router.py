@@ -34,7 +34,7 @@ SCAN_INTERVAL = timedelta(seconds=30)
 class FreeboxRouter:
     """Representation of a Freebox router."""
 
-    def __init__(self,.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+    def __init__(self, opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         """Initialize a Freebox router."""
         self.opp =.opp
         self._entry = entry

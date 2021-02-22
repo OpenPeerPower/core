@@ -79,7 +79,7 @@ def recorder_save_worker(file_out: str, segments: List[Segment], container_forma
 class RecorderOutput(StreamOutput):
     """Represents HLS Output formats."""
 
-    def __init__(self,.opp: OpenPeerPower, idle_timer: IdleTimer) -> None:
+    def __init__(self, opp: OpenPeerPower, idle_timer: IdleTimer) -> None:
         """Initialize recorder output."""
         super().__init__.opp, idle_timer)
         self.video_path = None

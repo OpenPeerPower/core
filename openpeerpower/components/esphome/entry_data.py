@@ -72,7 +72,7 @@ class RuntimeEntryData:
 
     @callback
     def async_update_entity(
-        self,.opp: OpenPeerPowerType, component_key: str, key: int
+        self, opp: OpenPeerPowerType, component_key: str, key: int
     ) -> None:
         """Schedule the update of an entity."""
         signal = f"esphome_{self.entry_id}_update_{component_key}_{key}"
@@ -80,14 +80,14 @@ class RuntimeEntryData:
 
     @callback
     def async_remove_entity(
-        self,.opp: OpenPeerPowerType, component_key: str, key: int
+        self, opp: OpenPeerPowerType, component_key: str, key: int
     ) -> None:
         """Schedule the removal of an entity."""
         signal = f"esphome_{self.entry_id}_remove_{component_key}_{key}"
         async_dispatcher_send.opp, signal)
 
     async def _ensure_platforms_loaded(
-        self,.opp: OpenPeerPowerType, entry: ConfigEntry, platforms: Set[str]
+        self, opp: OpenPeerPowerType, entry: ConfigEntry, platforms: Set[str]
     ):
         async with self.platform_load_lock:
             needed = platforms - self.loaded_platforms
@@ -101,7 +101,7 @@ class RuntimeEntryData:
             self.loaded_platforms |= needed
 
     async def async_update_static_infos(
-        self,.opp: OpenPeerPowerType, entry: ConfigEntry, infos: List[EntityInfo]
+        self, opp: OpenPeerPowerType, entry: ConfigEntry, infos: List[EntityInfo]
     ) -> None:
         """Distribute an update of static infos to all platforms."""
         # First, load all platforms
@@ -118,13 +118,13 @@ class RuntimeEntryData:
         async_dispatcher_send.opp, signal, infos)
 
     @callback
-    def async_update_state(self,.opp: OpenPeerPowerType, state: EntityState) -> None:
+    def async_update_state(self, opp: OpenPeerPowerType, state: EntityState) -> None:
         """Distribute an update of state information to all platforms."""
         signal = f"esphome_{self.entry_id}_on_state"
         async_dispatcher_send.opp, signal, state)
 
     @callback
-    def async_update_device_state(self,.opp: OpenPeerPowerType) -> None:
+    def async_update_device_state(self, opp: OpenPeerPowerType) -> None:
         """Distribute an update of a core device state like availability."""
         signal = f"esphome_{self.entry_id}_on_device_update"
         async_dispatcher_send.opp, signal)

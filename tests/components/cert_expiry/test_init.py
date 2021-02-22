@@ -20,7 +20,7 @@ from .helpers import future_timestamp, static_datetime
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def test_setup_with_config.opp):
+async def test_setup_with_config(opp):
     """Test setup component with config."""
     config = {
         SENSOR_DOMAIN: [
@@ -68,7 +68,7 @@ async def test_update_unique_id.opp):
 
 
 @patch("openpeerpower.util.dt.utcnow", return_value=static_datetime())
-async def test_unload_config_entry(mock_now,.opp):
+async def test_unload_config_entry(mock_now, opp):
     """Test unloading a config entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,

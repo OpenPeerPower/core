@@ -63,7 +63,7 @@ async def test_config_not_valid_service_names.opp):
     "openpeerpower.components.shell_command.asyncio.subprocess"
     ".create_subprocess_shell"
 )
-async def test_template_render_no_template(mock_call,.opp):
+async def test_template_render_no_template(mock_call, opp):
     """Ensure shell_commands without templates get rendered properly."""
     mock_call.return_value = mock_process_creator(error=False)
 
@@ -86,7 +86,7 @@ async def test_template_render_no_template(mock_call,.opp):
     "openpeerpower.components.shell_command.asyncio.subprocess"
     ".create_subprocess_exec"
 )
-async def test_template_render(mock_call,.opp):
+async def test_template_render(mock_call, opp):
     """Ensure shell_commands with templates get rendered properly."""
    .opp.states.async_set("sensor.test_state", "Works")
     mock_call.return_value = mock_process_creator(error=False)
@@ -114,7 +114,7 @@ async def test_template_render(mock_call,.opp):
     ".create_subprocess_shell"
 )
 @patch("openpeerpower.components.shell_command._LOGGER.error")
-async def test_subprocess_error(mock_error, mock_call,.opp):
+async def test_subprocess_error(mock_error, mock_call, opp):
     """Test subprocess that returns an error."""
     mock_call.return_value = mock_process_creator(error=True)
     with tempfile.TemporaryDirectory() as tempdirname:
@@ -133,7 +133,7 @@ async def test_subprocess_error(mock_error, mock_call,.opp):
 
 
 @patch("openpeerpower.components.shell_command._LOGGER.debug")
-async def test_stdout_captured(mock_output,.opp):
+async def test_stdout_captured(mock_output, opp):
     """Test subprocess that has stdout."""
     test_phrase = "I have output"
     assert await async_setup_component(
@@ -150,7 +150,7 @@ async def test_stdout_captured(mock_output,.opp):
 
 
 @patch("openpeerpower.components.shell_command._LOGGER.debug")
-async def test_stderr_captured(mock_output,.opp):
+async def test_stderr_captured(mock_output, opp):
     """Test subprocess that has stderr."""
     test_phrase = "I have error"
     assert await async_setup_component(

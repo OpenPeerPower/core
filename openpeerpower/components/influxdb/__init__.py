@@ -497,7 +497,7 @@ def setup_opp, config):
 class InfluxThread(threading.Thread):
     """A threaded event handler class."""
 
-    def __init__(self,.opp, influx, event_to_json, max_tries):
+    def __init__(self, opp, influx, event_to_json, max_tries):
         """Initialize the listener."""
         threading.Thread.__init__(self, name=DOMAIN)
         self.queue = queue.Queue()

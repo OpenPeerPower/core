@@ -58,7 +58,7 @@ async def test_shutdown_before_startup_finishes.opp):
     assert run_info.end is not None
 
 
-def test_saving_state.opp,.opp_recorder):
+def test_saving_state.opp, opp_recorder):
     """Test saving and restoring a state."""
    .opp =.opp_recorder()
 
@@ -79,7 +79,7 @@ def test_saving_state.opp,.opp_recorder):
     assert state == _state_empty_context.opp, entity_id)
 
 
-def test_saving_state_with_exception.opp,.opp_recorder, caplog):
+def test_saving_state_with_exception.opp, opp_recorder, caplog):
     """Test saving and restoring a state."""
    .opp =.opp_recorder()
 
@@ -117,7 +117,7 @@ def test_saving_state_with_exception.opp,.opp_recorder, caplog):
     assert "Error saving events" not in caplog.text
 
 
-def test_saving_event.opp,.opp_recorder):
+def test_saving_event.opp, opp_recorder):
     """Test saving and restoring an event."""
    .opp =.opp_recorder()
 
@@ -317,7 +317,7 @@ def test_saving_state_include_domain_glob_exclude_entity.opp_recorder):
     assert _state_empty_context.opp, "test.ok").state == "state2"
 
 
-def test_saving_state_and_removing_entity.opp,.opp_recorder):
+def test_saving_state_and_removing_entity.opp, opp_recorder):
     """Test saving the state of a removed entity."""
    .opp =.opp_recorder()
     entity_id = "lock.mine"

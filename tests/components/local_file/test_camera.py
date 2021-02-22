@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import mock_registry
 
 
-async def test_loading_file.opp,.opp_client):
+async def test_loading_file.opp, opp_client):
     """Test that it loads image from disk."""
     mock_registry.opp)
 
@@ -65,7 +65,7 @@ async def test_file_not_readable.opp, caplog):
     assert "mock.file" in caplog.text
 
 
-async def test_camera_content_type.opp,.opp_client):
+async def test_camera_content_type.opp, opp_client):
     """Test local_file camera content_type."""
     cam_config_jpg = {
         "name": "test_jpg",

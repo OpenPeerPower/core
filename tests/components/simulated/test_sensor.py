@@ -20,7 +20,7 @@ from openpeerpower.const import CONF_FRIENDLY_NAME
 from openpeerpower.setup import async_setup_component
 
 
-async def test_simulated_sensor_default_config.opp):
+async def test_simulated_sensor_default_config(opp):
     """Test default config."""
     config = {"sensor": {"platform": "simulated"}}
     assert await async_setup_component.opp, "sensor", config)

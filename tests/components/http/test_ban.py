@@ -79,7 +79,7 @@ async def test_access_from_banned_ip.opp, aiohttp_client):
     ),
 )
 async def test_access_from_supervisor_ip(
-    remote_addr, bans, status,.opp, aiohttp_client,.oppio_env
+    remote_addr, bans, status, opp, aiohttp_client, oppio_env
 ):
     """Test accessing to server from supervisor IP."""
     app = web.Application()
@@ -116,7 +116,7 @@ async def test_access_from_supervisor_ip(
         assert len(app[KEY_BANNED_IPS]) == bans
 
 
-async def test_ban_middleware_not_loaded_by_config.opp):
+async def test_ban_middleware_not_loaded_by_config(opp):
     """Test accessing to server from banned IP when feature is off."""
     with patch("openpeerpower.components.http.setup_bans") as mock_setup:
         await async_setup_component(

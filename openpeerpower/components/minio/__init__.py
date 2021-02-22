@@ -172,7 +172,7 @@ def get_minio_endpoint(host: str, port: int) -> str:
 class QueueListener(threading.Thread):
     """Forward events from queue into Open Peer Power event bus."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Create queue."""
         super().__init__()
         self.opp = opp

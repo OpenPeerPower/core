@@ -280,7 +280,7 @@ async def async_setup_opp, config):
     if os.path.isdir(local):
        .opp.http.register_static_path("/local", local, not is_dev)
 
-   .opp.http.app.router.register_resource(IndexView(repo_path,.opp))
+   .opp.http.app.router.register_resource(IndexView(repo_path, opp))
 
     async_register_built_in_panel.opp, "profile")
 
@@ -420,7 +420,7 @@ async def _async_setup_themes.opp, themes):
 class IndexView(web_urldispatcher.AbstractResource):
     """Serve the frontend."""
 
-    def __init__(self, repo_path,.opp):
+    def __init__(self, repo_path, opp):
         """Initialize the frontend view."""
         super().__init__(name="frontend:index")
         self.repo_path = repo_path

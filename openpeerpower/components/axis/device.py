@@ -49,7 +49,7 @@ from .errors import AuthenticationRequired, CannotConnect
 class AxisNetworkDevice:
     """Manages a Axis device."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the device."""
         self.opp =.opp
         self.config_entry = config_entry
@@ -182,7 +182,7 @@ class AxisNetworkDevice:
             sw_version=self.fw_version,
         )
 
-    async def use_mqtt(self,.opp: OpenPeerPower, component: str) -> None:
+    async def use_mqtt(self, opp: OpenPeerPower, component: str) -> None:
         """Set up to use MQTT."""
         try:
             status = await self.api.vapix.mqtt.get_client_status()

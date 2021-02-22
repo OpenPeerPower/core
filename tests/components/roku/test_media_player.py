@@ -501,7 +501,7 @@ async def test_tv_services(
         tune_mock.assert_called_once_with("55")
 
 
-async def test_media_browse.opp, aioclient_mock,.opp_ws_client):
+async def test_media_browse.opp, aioclient_mock, opp_ws_client):
     """Test browsing media."""
     await setup_integration(
        .opp,
@@ -627,7 +627,7 @@ async def test_media_browse.opp, aioclient_mock,.opp_ws_client):
     assert not msg["success"]
 
 
-async def test_media_browse_internal.opp, aioclient_mock,.opp_ws_client):
+async def test_media_browse_internal.opp, aioclient_mock, opp_ws_client):
     """Test browsing media with internal url."""
     await async_process_ha_core_config(
        .opp,

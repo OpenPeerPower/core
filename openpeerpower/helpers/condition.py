@@ -101,7 +101,7 @@ async def async_and_from_config(
     if config_validation:
         config = cv.AND_CONDITION_SCHEMA(config)
     checks = [
-        await async_from_config.opp, entry, False) for entry in config["conditions"]
+        await async_from_config(opp, entry, False) for entry in config["conditions"]
     ]
 
     def if_and_condition(
@@ -134,7 +134,7 @@ async def async_or_from_config(
     if config_validation:
         config = cv.OR_CONDITION_SCHEMA(config)
     checks = [
-        await async_from_config.opp, entry, False) for entry in config["conditions"]
+        await async_from_config(opp, entry, False) for entry in config["conditions"]
     ]
 
     def if_or_condition(
@@ -167,7 +167,7 @@ async def async_not_from_config(
     if config_validation:
         config = cv.NOT_CONDITION_SCHEMA(config)
     checks = [
-        await async_from_config.opp, entry, False) for entry in config["conditions"]
+        await async_from_config(opp, entry, False) for entry in config["conditions"]
     ]
 
     def if_not_condition(
@@ -484,7 +484,7 @@ def template(
 ) -> bool:
     """Test if template condition matches."""
     return run_callback_threadsafe(
-       .opp.loop, async_template,.opp, value_template, variables
+       .opp.loop, async_template, opp, value_template, variables
     ).result()
 
 
@@ -705,7 +705,7 @@ async def async_validate_condition_config(
     if condition in ("and", "not", "or"):
         conditions = []
         for sub_cond in config["conditions"]:
-            sub_cond = await async_validate_condition_config.opp, sub_cond)
+            sub_cond = await async_validate_condition_config(opp, sub_cond)
             conditions.append(sub_cond)
         config["conditions"] = conditions
 

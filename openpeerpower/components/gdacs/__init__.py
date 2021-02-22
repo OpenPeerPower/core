@@ -59,8 +59,8 @@ async def async_setup_opp, config):
         return True
 
     conf = config[DOMAIN]
-    latitude = conf.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = conf.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = conf.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = conf.get(CONF_LONGITUDE, opp.config.longitude)
     scan_interval = conf[CONF_SCAN_INTERVAL]
     categories = conf[CONF_CATEGORIES]
 
@@ -113,7 +113,7 @@ async def async_unload_entry.opp, config_entry):
 class GdacsFeedEntityManager:
     """Feed Entity Manager for GDACS feed."""
 
-    def __init__(self,.opp, config_entry, radius_in_km):
+    def __init__(self, opp, config_entry, radius_in_km):
         """Initialize the Feed Entity Manager."""
         self.opp = opp
         self._config_entry = config_entry

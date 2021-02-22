@@ -128,7 +128,7 @@ async def test_wrong_version.opp):
         await smart_home.async_handle_message.opp, DEFAULT_CONFIG, msg)
 
 
-async def discovery_test(device,.opp, expected_endpoints=1):
+async def discovery_test(device, opp, expected_endpoints=1):
     """Test alexa discovery request."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
@@ -179,7 +179,7 @@ def assert_endpoint_capabilities(endpoint, *interfaces):
 async def test_switch.opp, events):
     """Test switch discovery."""
     device = ("switch.test", "on", {"friendly_name": "Test switch"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "switch#test"
     assert appliance["displayCategories"][0] == "SWITCH"
@@ -189,7 +189,7 @@ async def test_switch.opp, events):
     )
 
     await assert_power_controller_works(
-        "switch#test", "switch.turn_on", "switch.turn_off",.opp
+        "switch#test", "switch.turn_on", "switch.turn_off", opp
     )
 
     properties = await reported_properties.opp, "switch#test")
@@ -203,7 +203,7 @@ async def test_outlet.opp, events):
         "on",
         {"friendly_name": "Test switch", "device_class": "outlet"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "switch#test"
     assert appliance["displayCategories"][0] == "SMARTPLUG"
@@ -216,7 +216,7 @@ async def test_outlet.opp, events):
 async def test_light.opp):
     """Test light discovery."""
     device = ("light.test_1", "on", {"friendly_name": "Test light 1"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "light#test_1"
     assert appliance["displayCategories"][0] == "LIGHT"
@@ -226,7 +226,7 @@ async def test_light.opp):
     )
 
     await assert_power_controller_works(
-        "light#test_1", "light.turn_on", "light.turn_off",.opp
+        "light#test_1", "light.turn_on", "light.turn_off", opp
     )
 
 
@@ -237,7 +237,7 @@ async def test_dimmable_light.opp):
         "on",
         {"brightness": 128, "friendly_name": "Test light 2", "supported_features": 1},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "light#test_2"
     assert appliance["displayCategories"][0] == "LIGHT"
@@ -278,7 +278,7 @@ async def test_color_light.opp):
             "color_temp": "333",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "light#test_3"
     assert appliance["displayCategories"][0] == "LIGHT"
@@ -301,7 +301,7 @@ async def test_color_light.opp):
 async def test_script.opp):
     """Test script discovery."""
     device = ("script.test", "off", {"friendly_name": "Test script"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "script#test"
     assert appliance["displayCategories"][0] == "ACTIVITY_TRIGGER"
@@ -314,14 +314,14 @@ async def test_script.opp):
     assert scene_capability["supportsDeactivation"]
 
     await assert_scene_controller_works(
-        "script#test", "script.turn_on", "script.turn_off",.opp
+        "script#test", "script.turn_on", "script.turn_off", opp
     )
 
 
 async def test_input_boolean.opp):
     """Test input boolean discovery."""
     device = ("input_boolean.test", "off", {"friendly_name": "Test input boolean"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "input_boolean#test"
     assert appliance["displayCategories"][0] == "OTHER"
@@ -331,14 +331,14 @@ async def test_input_boolean.opp):
     )
 
     await assert_power_controller_works(
-        "input_boolean#test", "input_boolean.turn_on", "input_boolean.turn_off",.opp
+        "input_boolean#test", "input_boolean.turn_on", "input_boolean.turn_off", opp
     )
 
 
 async def test_scene.opp):
     """Test scene discovery."""
     device = ("scene.test", "off", {"friendly_name": "Test scene"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "scene#test"
     assert appliance["displayCategories"][0] == "SCENE_TRIGGER"
@@ -350,13 +350,13 @@ async def test_scene.opp):
     scene_capability = get_capability(capabilities, "Alexa.SceneController")
     assert not scene_capability["supportsDeactivation"]
 
-    await assert_scene_controller_works("scene#test", "scene.turn_on", None,.opp)
+    await assert_scene_controller_works("scene#test", "scene.turn_on", None, opp)
 
 
 async def test_fan.opp):
     """Test fan discovery."""
     device = ("fan.test_1", "off", {"friendly_name": "Test fan 1"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "fan#test_1"
     assert appliance["displayCategories"][0] == "FAN"
@@ -386,7 +386,7 @@ async def test_variable_fan.opp):
             "percentage": 100,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "fan#test_2"
     assert appliance["displayCategories"][0] == "FAN"
@@ -510,7 +510,7 @@ async def test_oscillating_fan.opp):
         "off",
         {"friendly_name": "Test fan 3", "supported_features": 2},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "fan#test_3"
     assert appliance["displayCategories"][0] == "FAN"
@@ -572,7 +572,7 @@ async def test_direction_fan.opp):
             "direction": "forward",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "fan#test_4"
     assert appliance["displayCategories"][0] == "FAN"
@@ -679,7 +679,7 @@ async def test_fan_range.opp):
             "speed": "medium",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "fan#test_5"
     assert appliance["displayCategories"][0] == "FAN"
@@ -817,7 +817,7 @@ async def test_fan_range_off.opp):
             "speed": "high",
         },
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     call, _ = await assert_request_calls_service(
         "Alexa.RangeController",
@@ -845,7 +845,7 @@ async def test_fan_range_off.opp):
 async def test_lock.opp):
     """Test lock discovery."""
     device = ("lock.test", "off", {"friendly_name": "Test lock"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "lock#test"
     assert appliance["displayCategories"][0] == "SMARTLOCK"
@@ -855,7 +855,7 @@ async def test_lock.opp):
     )
 
     _, msg = await assert_request_calls_service(
-        "Alexa.LockController", "Lock", "lock#test", "lock.lock",.opp
+        "Alexa.LockController", "Lock", "lock#test", "lock.lock", opp
     )
 
     properties = msg["context"]["properties"][0]
@@ -864,7 +864,7 @@ async def test_lock.opp):
     assert properties["value"] == "LOCKED"
 
     _, msg = await assert_request_calls_service(
-        "Alexa.LockController", "Unlock", "lock#test", "lock.unlock",.opp
+        "Alexa.LockController", "Unlock", "lock#test", "lock.unlock", opp
     )
 
     properties = msg["context"]["properties"][0]
@@ -895,7 +895,7 @@ async def test_media_player.opp):
             "source_list": ["hdmi", "tv"],
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test"
     assert appliance["displayCategories"][0] == "TV"
@@ -921,7 +921,7 @@ async def test_media_player.opp):
         assert operation in supported_operations
 
     await assert_power_controller_works(
-        "media_player#test", "media_player.turn_on", "media_player.turn_off",.opp
+        "media_player#test", "media_player.turn_on", "media_player.turn_off", opp
     )
 
     await assert_request_calls_service(
@@ -1042,7 +1042,7 @@ async def test_media_player_power.opp):
             "volume_level": 0.75,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test"
     assert appliance["displayCategories"][0] == "TV"
@@ -1102,7 +1102,7 @@ async def test_media_player_inputs.opp):
             ],
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test"
     assert appliance["displayCategories"][0] == "TV"
@@ -1204,7 +1204,7 @@ async def test_media_player_no_supported_inputs.opp):
             ],
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test_no_inputs"
     assert appliance["displayCategories"][0] == "TV"
@@ -1228,7 +1228,7 @@ async def test_media_player_speaker.opp):
             "device_class": "speaker",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test_speaker"
     assert appliance["displayCategories"][0] == "SPEAKER"
@@ -1300,7 +1300,7 @@ async def test_media_player_step_speaker.opp):
             "device_class": "speaker",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test_step_speaker"
     assert appliance["displayCategories"][0] == "SPEAKER"
@@ -1366,7 +1366,7 @@ async def test_media_player_seek.opp):
             "media_duration": 600,  # 10min
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test_seek"
     assert appliance["displayCategories"][0] == "TV"
@@ -1448,7 +1448,7 @@ async def test_media_player_seek_error.opp):
         "playing",
         {"friendly_name": "Test media player seek", "supported_features": SUPPORT_SEEK},
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     # Test for media_position error.
     with pytest.raises(AssertionError):
@@ -1472,7 +1472,7 @@ async def test_media_player_seek_error.opp):
 async def test_alert.opp):
     """Test alert discovery."""
     device = ("alert.test", "off", {"friendly_name": "Test alert"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "alert#test"
     assert appliance["displayCategories"][0] == "OTHER"
@@ -1482,14 +1482,14 @@ async def test_alert.opp):
     )
 
     await assert_power_controller_works(
-        "alert#test", "alert.turn_on", "alert.turn_off",.opp
+        "alert#test", "alert.turn_on", "alert.turn_off", opp
     )
 
 
 async def test_automation.opp):
     """Test automation discovery."""
     device = ("automation.test", "off", {"friendly_name": "Test automation"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "automation#test"
     assert appliance["displayCategories"][0] == "ACTIVITY_TRIGGER"
@@ -1499,14 +1499,14 @@ async def test_automation.opp):
     )
 
     await assert_power_controller_works(
-        "automation#test", "automation.turn_on", "automation.turn_off",.opp
+        "automation#test", "automation.turn_on", "automation.turn_off", opp
     )
 
 
 async def test_group.opp):
     """Test group discovery."""
     device = ("group.test", "off", {"friendly_name": "Test group"})
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "group#test"
     assert appliance["displayCategories"][0] == "OTHER"
@@ -1516,7 +1516,7 @@ async def test_group.opp):
     )
 
     await assert_power_controller_works(
-        "group#test", "openpeerpower.turn_on", "openpeerpower.turn_off",.opp
+        "group#test", "openpeerpower.turn_on", "openpeerpower.turn_off", opp
     )
 
 
@@ -1532,7 +1532,7 @@ async def test_cover_position_range.opp):
             "position": 30,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "cover#test_range"
     assert appliance["displayCategories"][0] == "INTERIOR_BLIND"
@@ -1694,7 +1694,7 @@ async def assert_percentage_changes(
     for result_volume, adjustment in adjustments:
         payload = {parameter: adjustment} if parameter else {}
         call, _ = await assert_request_calls_service(
-            namespace, name, endpoint, service,.opp, payload=payload
+            namespace, name, endpoint, service, opp, payload=payload
         )
         assert call.data[changed_parameter] == result_volume
 
@@ -1713,7 +1713,7 @@ async def assert_range_changes(
         }
 
         call, _ = await assert_request_calls_service(
-            namespace, name, endpoint, service,.opp, payload=payload, instance=instance
+            namespace, name, endpoint, service, opp, payload=payload, instance=instance
         )
         assert call.data[changed_parameter] == result_range
 
@@ -1725,7 +1725,7 @@ async def test_temp_sensor.opp):
         "42",
         {"friendly_name": "Test Temp Sensor", "unit_of_measurement": TEMP_FAHRENHEIT},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "sensor#test_temp"
     assert appliance["displayCategories"][0] == "TEMPERATURE_SENSOR"
@@ -1754,7 +1754,7 @@ async def test_contact_sensor.opp):
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "binary_sensor#test_contact"
     assert appliance["displayCategories"][0] == "CONTACT_SENSOR"
@@ -1783,7 +1783,7 @@ async def test_forced_contact_sensor.opp):
         "on",
         {"friendly_name": "Test Contact Sensor With DisplayCategory"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "binary_sensor#test_contact_forced"
     assert appliance["displayCategories"][0] == "CONTACT_SENSOR"
@@ -1812,7 +1812,7 @@ async def test_motion_sensor.opp):
         "on",
         {"friendly_name": "Test Motion Sensor", "device_class": "motion"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "binary_sensor#test_motion"
     assert appliance["displayCategories"][0] == "MOTION_SENSOR"
@@ -1839,7 +1839,7 @@ async def test_forced_motion_sensor.opp):
         "on",
         {"friendly_name": "Test Motion Sensor With DisplayCategory"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "binary_sensor#test_motion_forced"
     assert appliance["displayCategories"][0] == "MOTION_SENSOR"
@@ -1868,7 +1868,7 @@ async def test_doorbell_sensor.opp):
         "off",
         {"friendly_name": "Test Doorbell Sensor", "device_class": "occupancy"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "binary_sensor#test_doorbell"
     assert appliance["displayCategories"][0] == "DOORBELL"
@@ -1890,7 +1890,7 @@ async def test_unknown_sensor.opp):
         "0.1",
         {"friendly_name": "Test Space Sickness Sensor", "unit_of_measurement": "garn"},
     )
-    await discovery_test(device,.opp, expected_endpoints=0)
+    await discovery_test(device, opp, expected_endpoints=0)
 
 
 async def test_thermostat.opp):
@@ -1913,7 +1913,7 @@ async def test_thermostat.opp):
             "max_temp": 90,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "climate#test_thermostat"
     assert appliance["displayCategories"][0] == "THERMOSTAT"
@@ -2166,7 +2166,7 @@ async def test_exclude_filters.opp):
 
    .opp.states.async_set("cover.deny", "off", {"friendly_name": "Blocked cover"})
 
-    alexa_config = MockConfig.opp)
+    alexa_config = Mockconfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
         include_domains=[],
         include_entities=[],
@@ -2197,7 +2197,7 @@ async def test_include_filters.opp):
 
    .opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
 
-    alexa_config = MockConfig.opp)
+    alexa_config = Mockconfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
         include_domains=["automation", "group"],
         include_entities=["script.deny"],
@@ -2222,7 +2222,7 @@ async def test_never_exposed_entities.opp):
 
    .opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
 
-    alexa_config = MockConfig.opp)
+    alexa_config = Mockconfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
         include_domains=["group"],
         include_entities=[],
@@ -2292,14 +2292,14 @@ async def test_api_accept_grant.opp):
     assert msg["header"]["name"] == "AcceptGrant.Response"
 
 
-async def test_entity_config.opp):
+async def test_entity_config(opp):
     """Test that we can configure things via entity config."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
    .opp.states.async_set("light.test_1", "on", {"friendly_name": "Test light 1"})
    .opp.states.async_set("scene.test_1", "scening", {"friendly_name": "Test 1"})
 
-    alexa_config = MockConfig.opp)
+    alexa_config = Mockconfig(opp)
     alexa_config.entity_config = {
         "light.test_1": {
             "name": "Config *name*",
@@ -2402,7 +2402,7 @@ async def test_endpoint_good_health.opp):
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
     properties = await reported_properties.opp, "binary_sensor#test_contact")
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
 
@@ -2414,7 +2414,7 @@ async def test_endpoint_bad_health.opp):
         "unavailable",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
     properties = await reported_properties.opp, "binary_sensor#test_contact")
     properties.assert_equal(
         "Alexa.EndpointHealth", "connectivity", {"value": "UNREACHABLE"}
@@ -2434,7 +2434,7 @@ async def test_alarm_control_panel_disarmed.opp):
             "supported_features": 31,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "alarm_control_panel#test_1"
     assert appliance["displayCategories"][0] == "SECURITY_PANEL"
@@ -2506,7 +2506,7 @@ async def test_alarm_control_panel_armed.opp):
             "supported_features": 3,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "alarm_control_panel#test_2"
     assert appliance["displayCategories"][0] == "SECURITY_PANEL"
@@ -2552,13 +2552,13 @@ async def test_alarm_control_panel_code_arm_required.opp):
             "supported_features": 3,
         },
     )
-    await discovery_test(device,.opp, expected_endpoints=0)
+    await discovery_test(device, opp, expected_endpoints=0)
 
 
 async def test_range_unsupported_domain.opp):
     """Test rangeController with unsupported domain."""
     device = ("switch.test", "on", {"friendly_name": "Test switch"})
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     context = Context()
     request = get_new_request("Alexa.RangeController", "SetRangeValue", "switch#test")
@@ -2577,7 +2577,7 @@ async def test_range_unsupported_domain.opp):
 async def test_mode_unsupported_domain.opp):
     """Test modeController with unsupported domain."""
     device = ("switch.test", "on", {"friendly_name": "Test switch"})
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     context = Context()
     request = get_new_request("Alexa.ModeController", "SetMode", "switch#test")
@@ -2604,7 +2604,7 @@ async def test_cover_garage_door.opp):
             "device_class": "garage",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "cover#test_garage_door"
     assert appliance["displayCategories"][0] == "GARAGE_DOOR"
@@ -2626,7 +2626,7 @@ async def test_cover_gate.opp):
             "device_class": DEVICE_CLASS_GATE,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "cover#test_gate"
     assert appliance["displayCategories"][0] == "GARAGE_DOOR"
@@ -2648,7 +2648,7 @@ async def test_cover_position_mode.opp):
             "supported_features": 3,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "cover#test_mode"
     assert appliance["displayCategories"][0] == "INTERIOR_BLIND"
@@ -2790,7 +2790,7 @@ async def test_image_processing.opp):
             "total_faces": 0,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "image_processing#test_face"
     assert appliance["displayCategories"][0] == "CAMERA"
@@ -2808,7 +2808,7 @@ async def test_motion_sensor_event_detection.opp):
         "off",
         {"friendly_name": "Test motion camera event", "device_class": "motion"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "binary_sensor#test_motion_camera_event"
     assert appliance["displayCategories"][0] == "CAMERA"
@@ -2839,7 +2839,7 @@ async def test_presence_sensor.opp):
         "off",
         {"friendly_name": "Test presence sensor", "device_class": "presence"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "binary_sensor#test_presence_sensor"
     assert appliance["displayCategories"][0] == "CAMERA"
@@ -2871,7 +2871,7 @@ async def test_cover_tilt_position_range.opp):
             "tilt_position": 30,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "cover#test_tilt_range"
     assert appliance["displayCategories"][0] == "INTERIOR_BLIND"
@@ -2990,7 +2990,7 @@ async def test_cover_semantics_position_and_tilt.opp):
             "tilt_position": 30,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "cover#test_semantics"
     assert appliance["displayCategories"][0] == "INTERIOR_BLIND"
@@ -3071,7 +3071,7 @@ async def test_input_number.opp):
             "friendly_name": "Test Slider",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "input_number#test_slider"
     assert appliance["displayCategories"][0] == "OTHER"
@@ -3156,7 +3156,7 @@ async def test_input_number_float.opp):
             "friendly_name": "Test Slider Float",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "input_number#test_slider_float"
     assert appliance["displayCategories"][0] == "OTHER"
@@ -3245,7 +3245,7 @@ async def test_media_player_eq_modes.opp):
             "sound_mode_list": ["movie", "music", "night", "sport", "tv", "rocknroll"],
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "media_player#test"
     assert appliance["friendlyName"] == "Test media player"
@@ -3292,7 +3292,7 @@ async def test_media_player_sound_mode_list_unsupported.opp):
             "sound_mode_list": ["unsupported", "non-existing"],
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
     assert appliance["endpointId"] == "media_player#test"
     assert appliance["friendlyName"] == "Test media player"
 
@@ -3314,7 +3314,7 @@ async def test_media_player_eq_bands_not_supported.opp):
             "sound_mode_list": ["movie", "music", "night", "sport", "tv", "rocknroll"],
         },
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     context = Context()
 
@@ -3369,7 +3369,7 @@ async def test_timer_hold.opp):
         "active",
         {"friendly_name": "Laundry", "duration": "00:01:00", "remaining": "00:50:00"},
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "timer#laundry"
     assert appliance["displayCategories"][0] == "OTHER"
@@ -3385,7 +3385,7 @@ async def test_timer_hold.opp):
     assert configuration["allowRemoteResume"] is True
 
     await assert_request_calls_service(
-        "Alexa.TimeHoldController", "Hold", "timer#laundry", "timer.pause",.opp
+        "Alexa.TimeHoldController", "Hold", "timer#laundry", "timer.pause", opp
     )
 
 
@@ -3396,13 +3396,13 @@ async def test_timer_resume.opp):
         "paused",
         {"friendly_name": "Laundry", "duration": "00:01:00", "remaining": "00:50:00"},
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     properties = await reported_properties.opp, "timer#laundry")
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
-        "Alexa.TimeHoldController", "Resume", "timer#laundry", "timer.start",.opp
+        "Alexa.TimeHoldController", "Resume", "timer#laundry", "timer.start", opp
     )
 
 
@@ -3413,13 +3413,13 @@ async def test_timer_start.opp):
         "idle",
         {"friendly_name": "Laundry", "duration": "00:01:00", "remaining": "00:50:00"},
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     properties = await reported_properties.opp, "timer#laundry")
     properties.assert_equal("Alexa.PowerController", "powerState", "OFF")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "timer#laundry", "timer.start",.opp
+        "Alexa.PowerController", "TurnOn", "timer#laundry", "timer.start", opp
     )
 
 
@@ -3430,13 +3430,13 @@ async def test_timer_cancel.opp):
         "active",
         {"friendly_name": "Laundry", "duration": "00:01:00", "remaining": "00:50:00"},
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     properties = await reported_properties.opp, "timer#laundry")
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOff", "timer#laundry", "timer.cancel",.opp
+        "Alexa.PowerController", "TurnOff", "timer#laundry", "timer.cancel", opp
     )
 
 
@@ -3455,7 +3455,7 @@ async def test_vacuum_discovery.opp):
             | vacuum.SUPPORT_PAUSE,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "vacuum#test_1"
     assert appliance["displayCategories"][0] == "VACUUM_CLEANER"
@@ -3473,11 +3473,11 @@ async def test_vacuum_discovery.opp):
     properties.assert_equal("Alexa.PowerController", "powerState", "OFF")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_1", "vacuum.turn_on",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_1", "vacuum.turn_on", opp
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOff", "vacuum#test_1", "vacuum.turn_off",.opp
+        "Alexa.PowerController", "TurnOff", "vacuum#test_1", "vacuum.turn_off", opp
     )
 
 
@@ -3498,7 +3498,7 @@ async def test_vacuum_fan_speed.opp):
             "fan_speed": "medium",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert appliance["endpointId"] == "vacuum#test_2"
     assert appliance["displayCategories"][0] == "VACUUM_CLEANER"
@@ -3627,7 +3627,7 @@ async def test_vacuum_pause.opp):
             "fan_speed": "medium",
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     capabilities = assert_endpoint_capabilities(
         appliance,
@@ -3644,7 +3644,7 @@ async def test_vacuum_pause.opp):
     assert configuration["allowRemoteResume"] is True
 
     await assert_request_calls_service(
-        "Alexa.TimeHoldController", "Hold", "vacuum#test_3", "vacuum.start_pause",.opp
+        "Alexa.TimeHoldController", "Hold", "vacuum#test_3", "vacuum.start_pause", opp
     )
 
 
@@ -3665,7 +3665,7 @@ async def test_vacuum_resume.opp):
             "fan_speed": "medium",
         },
     )
-    await discovery_test(device,.opp)
+    await discovery_test(device, opp)
 
     await assert_request_calls_service(
         "Alexa.TimeHoldController",
@@ -3688,7 +3688,7 @@ async def test_vacuum_discovery_no_turn_on.opp):
             | vacuum.SUPPORT_RETURN_HOME,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert_endpoint_capabilities(
         appliance, "Alexa.PowerController", "Alexa.EndpointHealth", "Alexa"
@@ -3698,11 +3698,11 @@ async def test_vacuum_discovery_no_turn_on.opp):
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_5", "vacuum.start",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_5", "vacuum.start", opp
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOff", "vacuum#test_5", "vacuum.turn_off",.opp
+        "Alexa.PowerController", "TurnOff", "vacuum#test_5", "vacuum.turn_off", opp
     )
 
 
@@ -3718,14 +3718,14 @@ async def test_vacuum_discovery_no_turn_off.opp):
             | vacuum.SUPPORT_RETURN_HOME,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert_endpoint_capabilities(
         appliance, "Alexa.PowerController", "Alexa.EndpointHealth", "Alexa"
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_6", "vacuum.turn_on",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_6", "vacuum.turn_on", opp
     )
 
     await assert_request_calls_service(
@@ -3747,14 +3747,14 @@ async def test_vacuum_discovery_no_turn_on_or_off.opp):
             "supported_features": vacuum.SUPPORT_START | vacuum.SUPPORT_RETURN_HOME,
         },
     )
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
 
     assert_endpoint_capabilities(
         appliance, "Alexa.PowerController", "Alexa.EndpointHealth", "Alexa"
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_7", "vacuum.start",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_7", "vacuum.start", opp
     )
 
     await assert_request_calls_service(
@@ -3780,7 +3780,7 @@ async def test_camera_discovery.opp, mock_stream):
         "async_remote_ui_url",
         return_value="https://example.nabu.casa",
     ):
-        appliance = await discovery_test(device,.opp)
+        appliance = await discovery_test(device, opp)
 
     capabilities = assert_endpoint_capabilities(
         appliance, "Alexa.CameraStreamController", "Alexa.EndpointHealth", "Alexa"
@@ -3811,7 +3811,7 @@ async def test_camera_discovery_without_stream.opp):
         "async_remote_ui_url",
         return_value="https://example.nabu.casa",
     ):
-        appliance = await discovery_test(device,.opp)
+        appliance = await discovery_test(device, opp)
         # assert Alexa.CameraStreamController is not yielded.
         assert_endpoint_capabilities(appliance, "Alexa.EndpointHealth", "Alexa")
 
@@ -3833,9 +3833,9 @@ async def test_camera.opp_urls.opp, mock_stream, url, result):
         "idle",
         {"friendly_name": "Test camera", "supported_features": 3},
     )
-    await async_process_ha_core_config.opp, {"external_url": url})
+    await async_process_ha_core_config(opp, {"external_url": url})
 
-    appliance = await discovery_test(device,.opp)
+    appliance = await discovery_test(device, opp)
     assert len(appliance["capabilities"]) == result
 
 

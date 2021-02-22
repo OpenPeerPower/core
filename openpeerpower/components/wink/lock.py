@@ -71,7 +71,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for lock in pywink.get_locks():
         _id = lock.object_id() + lock.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkLockDevice(lock,.opp)])
+            add_entities([WinkLockDevice(lock, opp)])
 
     def service_handle(service):
         """Handle for services."""

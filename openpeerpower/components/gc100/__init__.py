@@ -48,7 +48,7 @@ def setup_opp, base_config):
 class GC100Device:
     """The GC100 component."""
 
-    def __init__(self,.opp, gc_device):
+    def __init__(self, opp, gc_device):
         """Init a gc100 device."""
         self.opp =.opp
         self.gc_device = gc_device

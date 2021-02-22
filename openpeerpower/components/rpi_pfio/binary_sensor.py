@@ -46,7 +46,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class RPiPFIOBinarySensor(BinarySensorEntity):
     """Represent a binary sensor that a PiFace Digital Input."""
 
-    def __init__(self,.opp, port, name, settle_time, invert_logic):
+    def __init__(self, opp, port, name, settle_time, invert_logic):
         """Initialize the RPi binary sensor."""
         self._port = port
         self._name = name or DEVICE_DEFAULT_NAME

@@ -110,7 +110,7 @@ def get_webhook_url.opp: OpenPeerPowerType) -> str:
     cloudhook_url =.opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if.opp.components.cloud.async_active_subscription() and cloudhook_url is not None:
         return cloudhook_url
-    return webhook.async_generate_url.opp,.opp.data[DOMAIN][CONF_WEBHOOK_ID])
+    return webhook.async_generate_url.opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
 
 
 def _get_app_template.opp: OpenPeerPowerType):
@@ -246,8 +246,8 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
     # occur. Use.opp' implementation instead of the built-in one.
     dispatcher = Dispatcher(
         signal_prefix=SIGNAL_SMARTAPP_PREFIX,
-        connect=functools.partial(async_dispatcher_connect,.opp),
-        send=functools.partial(async_dispatcher_send,.opp),
+        connect=functools.partial(async_dispatcher_connect, opp),
+        send=functools.partial(async_dispatcher_send, opp),
     )
     # Path is used in digital signature validation
     path = (
@@ -256,9 +256,9 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
         else webhook.async_generate_path(config[CONF_WEBHOOK_ID])
     )
     manager = SmartAppManager(path, dispatcher=dispatcher)
-    manager.connect_install(functools.partial(smartapp_install,.opp))
-    manager.connect_update(functools.partial(smartapp_update,.opp))
-    manager.connect_uninstall(functools.partial(smartapp_uninstall,.opp))
+    manager.connect_install(functools.partial(smartapp_install, opp))
+    manager.connect_update(functools.partial(smartapp_update, opp))
+    manager.connect_uninstall(functools.partial(smartapp_uninstall, opp))
 
    .opp.data[DOMAIN] = {
         DATA_MANAGER: manager,
@@ -297,7 +297,7 @@ async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
         )
         _LOGGER.debug("Cloudhook '%s' was removed", cloudhook_url)
     # Remove the webhook
-    webhook.async_unregister.opp,.opp.data[DOMAIN][CONF_WEBHOOK_ID])
+    webhook.async_unregister.opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
     # Disconnect all brokers
     for broker in.opp.data[DOMAIN][DATA_BROKERS].values():
         broker.disconnect()

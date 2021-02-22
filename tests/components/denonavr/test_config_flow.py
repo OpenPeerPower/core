@@ -552,7 +552,7 @@ async def test_options_flow.opp):
     }
 
 
-async def test_config_flow_manual_host_no_serial_double_config.opp):
+async def test_config_flow_manual_host_no_serial_double_config(opp):
     """
     Failed flow manually initialized by the user twice.
 

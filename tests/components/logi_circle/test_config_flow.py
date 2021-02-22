@@ -19,7 +19,7 @@ from tests.common import mock_coro
 class MockRequest:
     """Mock request passed to OpenPeerPowerView."""
 
-    def __init__(self,.opp, query):
+    def __init__(self, opp, query):
         """Init request object."""
         self.app = {.opp":.opp}
         self.query = query

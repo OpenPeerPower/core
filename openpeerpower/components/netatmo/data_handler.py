@@ -51,7 +51,7 @@ SCAN_INTERVAL = 60
 class NetatmoDataHandler:
     """Manages the Netatmo data handling."""
 
-    def __init__(self,.opp: OpenPeerPower, entry: ConfigEntry):
+    def __init__(self, opp: OpenPeerPower, entry: ConfigEntry):
         """Initialize self."""
         self.opp =.opp
         self._auth =.opp.data[DOMAIN][entry.entry_id][AUTH]

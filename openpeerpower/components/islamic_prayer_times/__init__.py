@@ -71,7 +71,7 @@ async def async_unload_entry.opp, config_entry):
 class IslamicPrayerClient:
     """Islamic Prayer Client Object."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the Islamic Prayer client."""
         self.opp =.opp
         self.config_entry = config_entry

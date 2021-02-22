@@ -7,7 +7,7 @@ from openpeerpower.components import config
 from openpeerpower.util.yaml import dump
 
 
-async def test_update_scene.opp,.opp_client):
+async def test_update_scene.opp, opp_client):
     """Test updating a scene."""
     with patch.object(config, "SECTIONS", ["scene"]):
         await async_setup_component.opp, "config", {})
@@ -59,7 +59,7 @@ async def test_update_scene.opp,.opp_client):
     )
 
 
-async def test_bad_formatted_scene.opp,.opp_client):
+async def test_bad_formatted_scene.opp, opp_client):
     """Test that we handle scene without ID."""
     with patch.object(config, "SECTIONS", ["scene"]):
         await async_setup_component.opp, "config", {})
@@ -112,7 +112,7 @@ async def test_bad_formatted_scene.opp,.opp_client):
     }
 
 
-async def test_delete_scene.opp,.opp_client):
+async def test_delete_scene.opp, opp_client):
     """Test deleting a scene."""
     ent_reg = await.opp.helpers.entity_registry.async_get_registry()
 

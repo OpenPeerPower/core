@@ -17,7 +17,7 @@ ACTIVITY_CATCH_UP_FETCH_LIMIT = 2500
 class ActivityStream(AugustSubscriberMixin):
     """August activity stream handler."""
 
-    def __init__(self,.opp, api, august_gateway, house_ids):
+    def __init__(self, opp, api, august_gateway, house_ids):
         """Init August activity stream object."""
         super().__init__.opp, ACTIVITY_UPDATE_INTERVAL)
         self.opp = opp

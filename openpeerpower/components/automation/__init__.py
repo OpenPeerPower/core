@@ -162,12 +162,12 @@ def devices_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 async def async_setup_opp, config):
     """Set up the automation."""
-   .opp.data[DOMAIN] = component = EntityComponent(LOGGER, DOMAIN,.opp)
+   .opp.data[DOMAIN] = component = EntityComponent(LOGGER, DOMAIN, opp)
 
     # To register the automation blueprints
     async_get_blueprints.opp)
 
-    if not await _async_process_config.opp, config, component):
+    if not await _async_process_config(opp, config, component):
         await async_get_blueprints.opp).async_populate()
 
     async def trigger_service_handler(entity, service_call):
@@ -200,7 +200,7 @@ async def async_setup_opp, config):
         if conf is None:
             return
         async_get_blueprints.opp).async_reset_cache()
-        await _async_process_config.opp, conf, component)
+        await _async_process_config(opp, conf, component)
        .opp.bus.async_fire(EVENT_AUTOMATION_RELOADED, context=service_call.context)
 
     async_register_admin_service(
@@ -608,7 +608,7 @@ async def _async_process_if.opp, config, p_config):
     checks = []
     for if_config in if_configs:
         try:
-            checks.append(await condition.async_from_config.opp, if_config, False))
+            checks.append(await condition.async_from_config(opp, if_config, False))
         except OpenPeerPowerError as ex:
             LOGGER.warning("Invalid condition: %s", ex)
             return None

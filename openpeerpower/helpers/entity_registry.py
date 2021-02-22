@@ -119,7 +119,7 @@ class RegistryEntry:
         return self.disabled_by is not None
 
     @callback
-    def write_unavailable_state(self,.opp: OpenPeerPowerType) -> None:
+    def write_unavailable_state(self, opp: OpenPeerPowerType) -> None:
         """Write the unavailable state to the state machine."""
         attrs: Dict[str, Any] = {ATTR_RESTORED: True}
 
@@ -149,7 +149,7 @@ class RegistryEntry:
 class EntityRegistry:
     """Class to hold a registry of entities."""
 
-    def __init__(self,.opp: OpenPeerPowerType):
+    def __init__(self, opp: OpenPeerPowerType):
         """Initialize the registry."""
         self.opp =.opp
         self.entities: Dict[str, RegistryEntry]
@@ -618,7 +618,7 @@ class EntityRegistry:
 @callback
 def async_get.opp: OpenPeerPowerType) -> EntityRegistry:
     """Get entity registry."""
-    return cast(EntityRegistry,.opp.data[DATA_REGISTRY])
+    return cast(EntityRegistry, opp.data[DATA_REGISTRY])
 
 
 async def async_load.opp: OpenPeerPowerType) -> None:

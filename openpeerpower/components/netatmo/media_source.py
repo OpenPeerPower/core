@@ -40,7 +40,7 @@ class NetatmoSource(MediaSource):
 
     name: str = MANUFACTURER
 
-    def __init__(self,.opp: OpenPeerPower):
+    def __init__(self, opp: OpenPeerPower):
         """Initialize Netatmo source."""
         super().__init__(DOMAIN)
         self.opp =.opp

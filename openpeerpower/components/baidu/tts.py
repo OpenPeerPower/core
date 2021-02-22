@@ -59,7 +59,7 @@ def get_engine.opp, config, discovery_info=None):
 class BaiduTTSProvider(Provider):
     """Baidu TTS speech api provider."""
 
-    def __init__(self,.opp, conf):
+    def __init__(self, opp, conf):
         """Init Baidu TTS service."""
         self.opp =.opp
         self._lang = conf[CONF_LANG]

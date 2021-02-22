@@ -26,7 +26,7 @@ TIMEOUT = 120
 class RoonHub:
     """Interact with roon during config flow."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialise the RoonHub."""
         self.opp = opp
 

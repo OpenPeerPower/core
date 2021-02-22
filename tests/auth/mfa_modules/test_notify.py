@@ -15,7 +15,7 @@ MOCK_CODE_2 = "654321"
 
 async def test_validating_mfa.opp):
     """Test validating mfa code."""
-    notify_auth_module = await auth_mfa_module_from_config.opp, {"type": "notify"})
+    notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {"notify_service": "dummy"})
 
     with patch("pyotp.HOTP.verify", return_value=True):
@@ -24,7 +24,7 @@ async def test_validating_mfa.opp):
 
 async def test_validating_mfa_invalid_code.opp):
     """Test validating an invalid mfa code."""
-    notify_auth_module = await auth_mfa_module_from_config.opp, {"type": "notify"})
+    notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {"notify_service": "dummy"})
 
     with patch("pyotp.HOTP.verify", return_value=False):
@@ -36,7 +36,7 @@ async def test_validating_mfa_invalid_code.opp):
 
 async def test_validating_mfa_invalid_user.opp):
     """Test validating an mfa code with invalid user."""
-    notify_auth_module = await auth_mfa_module_from_config.opp, {"type": "notify"})
+    notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {"notify_service": "dummy"})
 
     assert (
@@ -47,7 +47,7 @@ async def test_validating_mfa_invalid_user.opp):
 
 async def test_validating_mfa_counter.opp):
     """Test counter will move only after generate code."""
-    notify_auth_module = await auth_mfa_module_from_config.opp, {"type": "notify"})
+    notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user(
         "test-user", {"counter": 0, "notify_service": "dummy"}
     )
@@ -83,7 +83,7 @@ async def test_validating_mfa_counter.opp):
 
 async def test_setup_depose_user.opp):
     """Test set up and despose user."""
-    notify_auth_module = await auth_mfa_module_from_config.opp, {"type": "notify"})
+    notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {})
     assert len(notify_auth_module._user_settings) == 1
     await notify_auth_module.async_setup_user("test-user", {})
@@ -236,7 +236,7 @@ async def test_setup_user_notify_service.opp):
     """Test allow select notify service during mfa setup."""
     notify_calls = async_mock_service.opp, "notify", "test1", NOTIFY_SERVICE_SCHEMA)
     async_mock_service.opp, "notify", "test2", NOTIFY_SERVICE_SCHEMA)
-    notify_auth_module = await auth_mfa_module_from_config.opp, {"type": "notify"})
+    notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
 
     services = notify_auth_module.aync_get_available_notify_services()
     assert services == ["test1", "test2"]
@@ -286,7 +286,7 @@ async def test_setup_user_notify_service.opp):
         assert step["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_include_exclude_config.opp):
+async def test_include_exclude_config(opp):
     """Test allow include exclude config."""
     async_mock_service.opp, "notify", "include1", NOTIFY_SERVICE_SCHEMA)
     async_mock_service.opp, "notify", "include2", NOTIFY_SERVICE_SCHEMA)
@@ -392,7 +392,7 @@ async def test_race_condition_in_data_loading.opp):
         counter += 1
         await asyncio.sleep(0)
 
-    notify_auth_module = await auth_mfa_module_from_config.opp, {"type": "notify"})
+    notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):
         task1 = notify_auth_module.async_validate("user", {"code": "value"})
         task2 = notify_auth_module.async_validate("user", {"code": "value"})

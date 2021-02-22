@@ -121,8 +121,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if area:
         stations = lookup_stations_in_area(area)
     elif not area and not stations:
-        latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-        longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+        latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+        longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
         location_client = create_location_client(latitude, longitude)
         stations = location_client.station_names
 

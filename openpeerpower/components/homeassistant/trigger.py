@@ -8,7 +8,7 @@ def _get_trigger_platform(config):
     return importlib.import_module(f"..triggers.{config[CONF_PLATFORM]}", __name__)
 
 
-async def async_validate_trigger_config.opp, config):
+async def async_validate_trigger_config(opp, config):
     """Validate config."""
     platform = _get_trigger_platform(config)
     if hasattr(platform, "async_validate_trigger_config"):

@@ -32,7 +32,7 @@ _LOGGER = logging.getLogger(__name__)
 OPTIONS = "options"
 
 
-async def async_get_device_config.opp, config_entry):
+async def async_get_device_config(opp, config_entry):
     """Initiate the connection and services."""
     # Make a copy of addresses due to edge case where the list of devices could change during status update
     # Cannot be done concurrently due to issues with the underlying protocol.
@@ -163,6 +163,6 @@ async def async_setup_entry.opp, entry):
         sw_version=f"{devices.modem.firmware:02x} Engine Version: {devices.modem.engine_version}",
     )
 
-    asyncio.create_task(async_get_device_config.opp, entry))
+    asyncio.create_task(async_get_device_config(opp, entry))
 
     return True

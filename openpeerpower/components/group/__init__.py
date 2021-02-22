@@ -214,13 +214,13 @@ async def async_setup_opp, config):
     component =.opp.data.get(DOMAIN)
 
     if component is None:
-        component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN,.opp)
+        component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp)
 
    .opp.data[REG_KEY] = GroupIntegrationRegistry()
 
     await async_process_integration_platforms.opp, DOMAIN, _process_group_platform)
 
-    await _async_process_config.opp, config, component)
+    await _async_process_config(opp, config, component)
 
     async def reload_service_handler(service):
         """Remove all user-defined groups and load new ones from config."""
@@ -229,7 +229,7 @@ async def async_setup_opp, config):
         conf = await component.async_prepare_reload()
         if conf is None:
             return
-        await _async_process_config.opp, conf, component)
+        await _async_process_config(opp, conf, component)
 
         await component.async_add_entities(auto)
 
@@ -346,10 +346,10 @@ async def async_setup_opp, config):
 async def _process_group_platform.opp, domain, platform):
     """Process a group platform."""
     current_domain.set(domain)
-    platform.async_describe_on_off_states.opp,.opp.data[REG_KEY])
+    platform.async_describe_on_off_states.opp, opp.data[REG_KEY])
 
 
-async def _async_process_config.opp, config, component):
+async def _async_process_config(opp, config, component):
     """Process group configuration."""
    .opp.data.setdefault(GROUP_ORDER, 0)
 
@@ -504,14 +504,14 @@ class Group(Entity):
         )
 
         group.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, object_id or name,.opp.opp
+            ENTITY_ID_FORMAT, object_id or name, opp.opp
         )
 
         # If called before the platform async_setup is called (test cases)
         component =.opp.data.get(DOMAIN)
 
         if component is None:
-            component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN,.opp)
+            component =.opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp)
 
         await component.async_add_entities([group])
 

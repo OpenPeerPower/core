@@ -163,7 +163,7 @@ async def handle_webhook.opp, webhook_id, request):
 class MinutPointClient:
     """Get the latest data and update the states."""
 
-    def __init__(self,.opp: OpenPeerPowerType, config_entry: ConfigEntry, session):
+    def __init__(self, opp: OpenPeerPowerType, config_entry: ConfigEntry, session):
         """Initialize the Minut data object."""
         self._known_devices = set()
         self._known_homes = set()

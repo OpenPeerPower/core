@@ -31,7 +31,7 @@ class FilterTest:
     should_pass: bool
 
 
-async def prometheus_client.opp,.opp_client):
+async def prometheus_client.opp, opp_client):
     """Initialize an.opp_client with Prometheus component."""
     await async_setup_component.opp, prometheus.DOMAIN, {prometheus.DOMAIN: {}})
 
@@ -91,9 +91,9 @@ async def prometheus_client.opp,.opp_client):
     return await.opp_client()
 
 
-async def test_view.opp,.opp_client):
+async def test_view.opp, opp_client):
     """Test prometheus metrics view."""
-    client = await prometheus_client.opp,.opp_client)
+    client = await prometheus_client.opp, opp_client)
     resp = await client.get(prometheus.API_ENDPOINT)
 
     assert resp.status == 200
@@ -218,7 +218,7 @@ def mock_bus.opp):
 
 
 @pytest.mark.usefixtures("mock_bus")
-async def test_minimal_config.opp, mock_client):
+async def test_minimal_config(opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {prometheus.DOMAIN: {}}
     assert await async_setup_component.opp, prometheus.DOMAIN, config)
@@ -228,7 +228,7 @@ async def test_minimal_config.opp, mock_client):
 
 
 @pytest.mark.usefixtures("mock_bus")
-async def test_full_config.opp, mock_client):
+async def test_full_config(opp, mock_client):
     """Test the full config of component."""
     config = {
         prometheus.DOMAIN: {

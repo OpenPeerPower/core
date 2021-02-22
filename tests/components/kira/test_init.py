@@ -50,7 +50,7 @@ def work_dir():
     shutil.rmtree(work_dir, ignore_errors=True)
 
 
-async def test_kira_empty_config.opp):
+async def test_kira_empty_config(opp):
     """Kira component should load a default sensor."""
     await async_setup_component.opp, kira.DOMAIN, {kira.DOMAIN: {}})
     assert len.opp.data[kira.DOMAIN]["sensor"]) == 1

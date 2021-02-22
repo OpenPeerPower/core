@@ -69,7 +69,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
 class SolarEdgeSensorFactory:
     """Factory which creates sensors based on the sensor_key."""
 
-    def __init__(self,.opp, platform_name, site_id, api):
+    def __init__(self, opp, platform_name, site_id, api):
         """Initialize the factory."""
         self.platform_name = platform_name
 
@@ -273,7 +273,7 @@ class SolarEdgeStorageLevelSensor(SolarEdgeSensor):
 class SolarEdgeDataService:
     """Get and update the latest data."""
 
-    def __init__(self,.opp, api, site_id):
+    def __init__(self, opp, api, site_id):
         """Initialize the data object."""
         self.api = api
         self.site_id = site_id
@@ -342,7 +342,7 @@ class SolarEdgeOverviewDataService(SolarEdgeDataService):
 class SolarEdgeDetailsDataService(SolarEdgeDataService):
     """Get and update the latest details data."""
 
-    def __init__(self,.opp, api, site_id):
+    def __init__(self, opp, api, site_id):
         """Initialize the details data service."""
         super().__init__.opp, api, site_id)
 
@@ -414,7 +414,7 @@ class SolarEdgeInventoryDataService(SolarEdgeDataService):
 class SolarEdgeEnergyDetailsService(SolarEdgeDataService):
     """Get and update the latest power flow data."""
 
-    def __init__(self,.opp, api, site_id):
+    def __init__(self, opp, api, site_id):
         """Initialize the power flow data service."""
         super().__init__.opp, api, site_id)
 
@@ -475,7 +475,7 @@ class SolarEdgeEnergyDetailsService(SolarEdgeDataService):
 class SolarEdgePowerFlowDataService(SolarEdgeDataService):
     """Get and update the latest power flow data."""
 
-    def __init__(self,.opp, api, site_id):
+    def __init__(self, opp, api, site_id):
         """Initialize the power flow data service."""
         super().__init__.opp, api, site_id)
 

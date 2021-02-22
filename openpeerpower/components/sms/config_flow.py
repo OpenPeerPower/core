@@ -15,14 +15,14 @@ _LOGGER = logging.getLogger(__name__)
 DATA_SCHEMA = vol.Schema({vol.Required(CONF_DEVICE): str})
 
 
-async def get_imei_from_config.opp: core.OpenPeerPower, data):
+async def get_imei_from_config(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
     device = data[CONF_DEVICE]
     config = {"Device": device, "Connection": "at"}
-    gateway = await create_sms_gateway(config,.opp)
+    gateway = await create_sms_gateway(config, opp)
     if not gateway:
         raise CannotConnect
     try:

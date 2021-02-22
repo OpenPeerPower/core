@@ -72,7 +72,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def _create_processor_from_config.opp, camera_entity, config):
+def _create_processor_from_config(opp, camera_entity, config):
     """Create an OpenCV processor from configuration."""
     classifier_config = config.get(CONF_CLASSIFIER)
     name = f"{config[CONF_NAME]} {split_entity_id(camera_entity)[1].replace('_', ' ')}"
@@ -123,7 +123,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class OpenCVImageProcessor(ImageProcessingEntity):
     """Representation of an OpenCV image processor."""
 
-    def __init__(self,.opp, camera_entity, name, classifiers):
+    def __init__(self, opp, camera_entity, name, classifiers):
         """Initialize the OpenCV entity."""
         self.opp =.opp
         self._camera_entity = camera_entity

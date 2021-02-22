@@ -25,7 +25,7 @@ def.oppio_env():
 
 
 @pytest.fixture
-def.oppio_stubs.oppio_env,.opp,.opp_client, aioclient_mock):
+def.oppio_stubs.oppio_env, opp, opp_client, aioclient_mock):
     """Create mock.oppio http client."""
     with patch(
         "openpeerpower.components.oppio.HassIO.update.opp_api",
@@ -44,19 +44,19 @@ def.oppio_stubs.oppio_env,.opp,.opp_client, aioclient_mock):
 
 
 @pytest.fixture
-def.oppio_client.oppio_stubs,.opp,.opp_client):
+def.oppio_client.oppio_stubs, opp, opp_client):
     """Return a Hass.io HTTP client."""
     return.opp.loop.run_until_complete.opp_client())
 
 
 @pytest.fixture
-def.oppio_noauth_client.oppio_stubs,.opp, aiohttp_client):
+def.oppio_noauth_client.oppio_stubs, opp, aiohttp_client):
     """Return a Hass.io HTTP client without auth."""
     return.opp.loop.run_until_complete(aiohttp_client.opp.http.app))
 
 
 @pytest.fixture
-async def.oppio_client_supervisor.opp, aiohttp_client,.oppio_stubs):
+async def.oppio_client_supervisor.opp, aiohttp_client, oppio_stubs):
     """Return an authenticated HTTP client."""
     access_token =.opp.auth.async_create_access_token.oppio_stubs)
     return await aiohttp_client(

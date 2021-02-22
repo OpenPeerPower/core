@@ -101,7 +101,7 @@ async def async_setup_opp, config):
 class Stream:
     """Represents a single stream."""
 
-    def __init__(self,.opp, source, options=None):
+    def __init__(self, opp, source, options=None):
         """Initialize a stream."""
         self.opp =.opp
         self.source = source

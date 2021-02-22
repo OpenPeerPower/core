@@ -83,7 +83,7 @@ def platform_setup():
 
 
 @pytest.fixture()
-def sensor_with.opp_data(default_sensor,.opp):
+def sensor_with.opp_data(default_sensor, opp):
     """Create a sensor with async_dispatcher_connected mocked."""
    .opp.data = {}
     default_sensor.opp =.opp
@@ -98,14 +98,14 @@ def mock_dispatch():
         yield _mock
 
 
-def test_setup_with_no_data(platform_setup,.opp):
+def test_setup_with_no_data(platform_setup, opp):
     """Test setup_platform with no data."""
     arlo.setup_platform.opp, None, platform_setup.add_entities)
     assert platform_setup.sensors is None
     assert not platform_setup.update
 
 
-def test_setup_with_valid_data(platform_setup,.opp):
+def test_setup_with_valid_data(platform_setup, opp):
     """Test setup_platform with valid data."""
     config = {
         "monitored_conditions": [

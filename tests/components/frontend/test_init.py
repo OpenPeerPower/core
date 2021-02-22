@@ -68,13 +68,13 @@ async def mock_http_client.opp, aiohttp_client, frontend):
 
 
 @pytest.fixture
-async def themes_ws_client.opp,.opp_ws_client, frontend_themes):
+async def themes_ws_client.opp, opp_ws_client, frontend_themes):
     """Start the Open Peer Power HTTP component."""
     return await.opp_ws_client.opp)
 
 
 @pytest.fixture
-async def ws_client.opp,.opp_ws_client, frontend):
+async def ws_client.opp, opp_ws_client, frontend):
     """Start the Open Peer Power HTTP component."""
     return await.opp_ws_client.opp)
 
@@ -164,7 +164,7 @@ async def test_themes_api.opp, themes_ws_client):
     }
 
 
-async def test_themes_persist.opp,.opp_storage,.opp_ws_client, ignore_frontend_deps):
+async def test_themes_persist.opp, opp_storage, opp_ws_client, ignore_frontend_deps):
     """Test that theme settings are restores after restart."""
    .opp_storage[THEMES_STORAGE_KEY] = {
         "key": THEMES_STORAGE_KEY,
@@ -185,7 +185,7 @@ async def test_themes_persist.opp,.opp_storage,.opp_ws_client, ignore_frontend_d
     assert msg["result"]["default_dark_theme"] == "dark"
 
 
-async def test_themes_save_storage.opp,.opp_storage, frontend_themes):
+async def test_themes_save_storage.opp, opp_storage, frontend_themes):
     """Test that theme settings are restores after restart."""
 
     await.opp.services.async_call(
@@ -330,7 +330,7 @@ async def test_missing_themes.opp, ws_client):
     assert msg["result"]["themes"] == {}
 
 
-async def test_get_panels.opp,.opp_ws_client, mock_http_client):
+async def test_get_panels.opp, opp_ws_client, mock_http_client):
     """Test get_panels command."""
     events = async_capture_events.opp, EVENT_PANELS_UPDATED)
 
@@ -368,7 +368,7 @@ async def test_get_panels.opp,.opp_ws_client, mock_http_client):
     assert len(events) == 2
 
 
-async def test_get_panels_non_admin.opp, ws_client,.opp_admin_user):
+async def test_get_panels_non_admin.opp, ws_client, opp_admin_user):
     """Test get_panels command."""
    .opp_admin_user.groups = []
 

@@ -72,7 +72,7 @@ async def test_remove_targets.opp: OpenPeerPower):
 class NotificationService(notify.BaseNotificationService):
     """A test class for notification services."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the service."""
         self.opp =.opp
         self.target_list = {"a": 1, "b": 2}

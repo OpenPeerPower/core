@@ -37,7 +37,7 @@ async def async_setup_entry.opp, entry):
     host = entry.data[CONF_HOST]
 
     session = async_get_clientsession.opp)
-    api = Yeti(host,.opp.loop, session)
+    api = Yeti(host, opp.loop, session)
     try:
         await api.get_state()
     except exceptions.ConnectError as ex:

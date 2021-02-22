@@ -16,7 +16,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     devices =.opp.data[DOMAIN][DEVICES]
 
     async_add_entities(
-        [SomaCover(cover,.opp.data[DOMAIN][API]) for cover in devices], True
+        [SomaCover(cover, opp.data[DOMAIN][API]) for cover in devices], True
     )
 
 

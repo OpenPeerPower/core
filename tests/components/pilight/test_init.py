@@ -62,7 +62,7 @@ class PilightDaemonSim:
 
 
 @patch("openpeerpower.components.pilight._LOGGER.error")
-async def test_connection_failed_error(mock_error,.opp):
+async def test_connection_failed_error(mock_error, opp):
     """Try to connect at 127.0.0.1:5001 with socket error."""
     with assert_setup_component(4):
         with patch("pilight.pilight.Client", side_effect=socket.error) as mock_client:
@@ -76,7 +76,7 @@ async def test_connection_failed_error(mock_error,.opp):
 
 
 @patch("openpeerpower.components.pilight._LOGGER.error")
-async def test_connection_timeout_error(mock_error,.opp):
+async def test_connection_timeout_error(mock_error, opp):
     """Try to connect at 127.0.0.1:5001 with socket timeout."""
     with assert_setup_component(4):
         with patch("pilight.pilight.Client", side_effect=socket.timeout) as mock_client:
@@ -111,7 +111,7 @@ async def test_send_code_no_protocol.opp):
 @patch("openpeerpower.components.pilight._LOGGER.error")
 @patch("openpeerpower.components.pilight._LOGGER", _LOGGER)
 @patch("pilight.pilight.Client", PilightDaemonSim)
-async def test_send_code(mock_pilight_error,.opp):
+async def test_send_code(mock_pilight_error, opp):
     """Try to send proper data."""
     with assert_setup_component(4):
         assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
@@ -132,7 +132,7 @@ async def test_send_code(mock_pilight_error,.opp):
 
 @patch("pilight.pilight.Client", PilightDaemonSim)
 @patch("openpeerpower.components.pilight._LOGGER.error")
-async def test_send_code_fail(mock_pilight_error,.opp):
+async def test_send_code_fail(mock_pilight_error, opp):
     """Check IOError exception error message."""
     with assert_setup_component(4):
         with patch("pilight.pilight.Client.send_code", side_effect=IOError):
@@ -156,7 +156,7 @@ async def test_send_code_fail(mock_pilight_error,.opp):
 @patch("openpeerpower.components.pilight._LOGGER.error")
 @patch("openpeerpower.components.pilight._LOGGER", _LOGGER)
 @patch("pilight.pilight.Client", PilightDaemonSim)
-async def test_send_code_delay(mock_pilight_error,.opp):
+async def test_send_code_delay(mock_pilight_error, opp):
     """Try to send proper data with delay afterwards."""
     with assert_setup_component(4):
         assert await async_setup_component(
@@ -198,7 +198,7 @@ async def test_send_code_delay(mock_pilight_error,.opp):
 @patch("openpeerpower.components.pilight._LOGGER.error")
 @patch("openpeerpower.components.pilight._LOGGER", _LOGGER)
 @patch("pilight.pilight.Client", PilightDaemonSim)
-async def test_start_stop(mock_pilight_error,.opp):
+async def test_start_stop(mock_pilight_error, opp):
     """Check correct startup and stop of pilight daemon."""
     with assert_setup_component(4):
         assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
@@ -221,7 +221,7 @@ async def test_start_stop(mock_pilight_error,.opp):
 
 @patch("pilight.pilight.Client", PilightDaemonSim)
 @patch("openpeerpower.core._LOGGER.debug")
-async def test_receive_code(mock_debug,.opp):
+async def test_receive_code(mock_debug, opp):
     """Check if code receiving via pilight daemon works."""
     with assert_setup_component(4):
         assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
@@ -247,7 +247,7 @@ async def test_receive_code(mock_debug,.opp):
 
 @patch("pilight.pilight.Client", PilightDaemonSim)
 @patch("openpeerpower.core._LOGGER.debug")
-async def test_whitelist_exact_match(mock_debug,.opp):
+async def test_whitelist_exact_match(mock_debug, opp):
     """Check whitelist filter with matched data."""
     with assert_setup_component(4):
         whitelist = {
@@ -280,7 +280,7 @@ async def test_whitelist_exact_match(mock_debug,.opp):
 
 @patch("pilight.pilight.Client", PilightDaemonSim)
 @patch("openpeerpower.core._LOGGER.debug")
-async def test_whitelist_partial_match(mock_debug,.opp):
+async def test_whitelist_partial_match(mock_debug, opp):
     """Check whitelist filter with partially matched data, should work."""
     with assert_setup_component(4):
         whitelist = {
@@ -311,7 +311,7 @@ async def test_whitelist_partial_match(mock_debug,.opp):
 
 @patch("pilight.pilight.Client", PilightDaemonSim)
 @patch("openpeerpower.core._LOGGER.debug")
-async def test_whitelist_or_match(mock_debug,.opp):
+async def test_whitelist_or_match(mock_debug, opp):
     """Check whitelist filter with several subsection, should work."""
     with assert_setup_component(4):
         whitelist = {
@@ -345,7 +345,7 @@ async def test_whitelist_or_match(mock_debug,.opp):
 
 @patch("pilight.pilight.Client", PilightDaemonSim)
 @patch("openpeerpower.core._LOGGER.debug")
-async def test_whitelist_no_match(mock_debug,.opp):
+async def test_whitelist_no_match(mock_debug, opp):
     """Check whitelist filter with unmatched data, should not work."""
     with assert_setup_component(4):
         whitelist = {

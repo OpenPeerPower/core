@@ -25,7 +25,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed, load_fixture
 class Helper:
     """Helper methods for interacting with HomeKit fakes."""
 
-    def __init__(self,.opp, entity_id, pairing, accessory, config_entry):
+    def __init__(self, opp, entity_id, pairing, accessory, config_entry):
         """Create a helper for a given accessory/entity."""
         self.opp =.opp
         self.entity_id = entity_id

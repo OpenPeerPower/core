@@ -82,7 +82,7 @@ class NestFlowHandler(
         self._reauth = False
 
     @classmethod
-    def register_sdm_api(cls,.opp):
+    def register_sdm_api(cls, opp):
         """Configure the flow handler to use the SDM API."""
         if DOMAIN not in.opp.data:
            .opp.data[DOMAIN] = {}

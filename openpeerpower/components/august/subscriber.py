@@ -8,7 +8,7 @@ from openpeerpower.helpers.event import async_track_time_interval
 class AugustSubscriberMixin:
     """Base implementation for a subscriber."""
 
-    def __init__(self,.opp, update_interval):
+    def __init__(self, opp, update_interval):
         """Initialize an subscriber."""
         super().__init__()
         self.opp = opp

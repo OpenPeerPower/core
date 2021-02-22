@@ -12,7 +12,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for scene_data in.opp.data[LUTRON_DEVICES]["scene"]:
         (area_name, keypad_name, device, led) = scene_data
         dev = LutronScene(
-            area_name, keypad_name, device, led,.opp.data[LUTRON_CONTROLLER]
+            area_name, keypad_name, device, led, opp.data[LUTRON_CONTROLLER]
         )
         devs.append(dev)
 

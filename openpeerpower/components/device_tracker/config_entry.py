@@ -21,7 +21,7 @@ async def async_setup_entry.opp, entry):
     component: Optional[EntityComponent] =.opp.data.get(DOMAIN)
 
     if component is None:
-        component =.opp.data[DOMAIN] = EntityComponent(LOGGER, DOMAIN,.opp)
+        component =.opp.data[DOMAIN] = EntityComponent(LOGGER, DOMAIN, opp)
 
     return await component.async_setup_entry(entry)
 

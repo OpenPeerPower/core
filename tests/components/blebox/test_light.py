@@ -49,7 +49,7 @@ def dimmer_fixture():
     return (feature, "light.dimmerbox_brightness")
 
 
-async def test_dimmer_init(dimmer,.opp, config):
+async def test_dimmer_init(dimmer, opp, config):
     """Test cover default state."""
 
     _, entity_id = dimmer
@@ -75,7 +75,7 @@ async def test_dimmer_init(dimmer,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_dimmer_update(dimmer,.opp, config):
+async def test_dimmer_update(dimmer, opp, config):
     """Test light updating."""
 
     feature_mock, entity_id = dimmer
@@ -91,7 +91,7 @@ async def test_dimmer_update(dimmer,.opp, config):
     assert state.state == STATE_ON
 
 
-async def test_dimmer_on(dimmer,.opp, config):
+async def test_dimmer_on(dimmer, opp, config):
     """Test light on."""
 
     feature_mock, entity_id = dimmer
@@ -126,7 +126,7 @@ async def test_dimmer_on(dimmer,.opp, config):
     assert state.attributes[ATTR_BRIGHTNESS] == 254
 
 
-async def test_dimmer_on_with_brightness(dimmer,.opp, config):
+async def test_dimmer_on_with_brightness(dimmer, opp, config):
     """Test light on with a brightness value."""
 
     feature_mock, entity_id = dimmer
@@ -167,7 +167,7 @@ async def test_dimmer_on_with_brightness(dimmer,.opp, config):
     assert state.state == STATE_ON
 
 
-async def test_dimmer_off(dimmer,.opp, config):
+async def test_dimmer_off(dimmer, opp, config):
     """Test light off."""
 
     feature_mock, entity_id = dimmer
@@ -220,7 +220,7 @@ def wlightboxs_fixture():
     return (feature, "light.wlightboxs_color")
 
 
-async def test_wlightbox_s_init(wlightbox_s,.opp, config):
+async def test_wlightbox_s_init(wlightbox_s, opp, config):
     """Test cover default state."""
 
     _, entity_id = wlightbox_s
@@ -246,7 +246,7 @@ async def test_wlightbox_s_init(wlightbox_s,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_wlightbox_s_update(wlightbox_s,.opp, config):
+async def test_wlightbox_s_update(wlightbox_s, opp, config):
     """Test light updating."""
 
     feature_mock, entity_id = wlightbox_s
@@ -264,7 +264,7 @@ async def test_wlightbox_s_update(wlightbox_s,.opp, config):
     assert state.attributes[ATTR_BRIGHTNESS] == 0xAB
 
 
-async def test_wlightbox_s_on(wlightbox_s,.opp, config):
+async def test_wlightbox_s_on(wlightbox_s, opp, config):
     """Test light on."""
 
     feature_mock, entity_id = wlightbox_s
@@ -320,7 +320,7 @@ def wlightbox_fixture():
     return (feature, "light.wlightbox_color")
 
 
-async def test_wlightbox_init(wlightbox,.opp, config):
+async def test_wlightbox_init(wlightbox, opp, config):
     """Test cover default state."""
 
     _, entity_id = wlightbox
@@ -349,7 +349,7 @@ async def test_wlightbox_init(wlightbox,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_wlightbox_update(wlightbox,.opp, config):
+async def test_wlightbox_update(wlightbox, opp, config):
     """Test light updating."""
 
     feature_mock, entity_id = wlightbox
@@ -368,7 +368,7 @@ async def test_wlightbox_update(wlightbox,.opp, config):
     assert state.state == STATE_ON
 
 
-async def test_wlightbox_on_via_just_whiteness(wlightbox,.opp, config):
+async def test_wlightbox_on_via_just_whiteness(wlightbox, opp, config):
     """Test light on."""
 
     feature_mock, entity_id = wlightbox
@@ -414,7 +414,7 @@ async def test_wlightbox_on_via_just_whiteness(wlightbox,.opp, config):
     assert state.attributes[ATTR_HS_COLOR] == color.color_RGB_to_hs(0xF1, 0xE2, 0xD3)
 
 
-async def test_wlightbox_on_via_reset_whiteness(wlightbox,.opp, config):
+async def test_wlightbox_on_via_reset_whiteness(wlightbox, opp, config):
     """Test light on."""
 
     feature_mock, entity_id = wlightbox
@@ -459,7 +459,7 @@ async def test_wlightbox_on_via_reset_whiteness(wlightbox,.opp, config):
     assert state.attributes[ATTR_HS_COLOR] == color.color_RGB_to_hs(0xF1, 0xE2, 0xD3)
 
 
-async def test_wlightbox_on_via_just_hsl_color(wlightbox,.opp, config):
+async def test_wlightbox_on_via_just_hsl_color(wlightbox, opp, config):
     """Test light on."""
 
     feature_mock, entity_id = wlightbox
@@ -506,7 +506,7 @@ async def test_wlightbox_on_via_just_hsl_color(wlightbox,.opp, config):
     assert state.state == STATE_ON
 
 
-async def test_wlightbox_on_to_last_color(wlightbox,.opp, config):
+async def test_wlightbox_on_to_last_color(wlightbox, opp, config):
     """Test light on."""
 
     feature_mock, entity_id = wlightbox
@@ -543,7 +543,7 @@ async def test_wlightbox_on_to_last_color(wlightbox,.opp, config):
     assert state.state == STATE_ON
 
 
-async def test_wlightbox_off(wlightbox,.opp, config):
+async def test_wlightbox_off(wlightbox, opp, config):
     """Test light off."""
 
     feature_mock, entity_id = wlightbox
@@ -579,7 +579,7 @@ async def test_wlightbox_off(wlightbox,.opp, config):
 
 
 @pytest.mark.parametrize("feature", ALL_LIGHT_FIXTURES, indirect=["feature"])
-async def test_update_failure(feature,.opp, config, caplog):
+async def test_update_failure(feature, opp, config, caplog):
     """Test that update failures are logged."""
 
     caplog.set_level(logging.ERROR)
@@ -592,7 +592,7 @@ async def test_update_failure(feature,.opp, config, caplog):
 
 
 @pytest.mark.parametrize("feature", ALL_LIGHT_FIXTURES, indirect=["feature"])
-async def test_turn_on_failure(feature,.opp, config, caplog):
+async def test_turn_on_failure(feature, opp, config, caplog):
     """Test that turn_on failures are logged."""
 
     caplog.set_level(logging.ERROR)

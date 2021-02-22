@@ -17,7 +17,7 @@ class MetOfficeData:
     async_add_executor_job.
     """
 
-    def __init__(self,.opp, api_key, latitude, longitude):
+    def __init__(self, opp, api_key, latitude, longitude):
         """Initialize the data object."""
         self.opp = opp
         self._datapoint = datapoint.connection(api_key=api_key)

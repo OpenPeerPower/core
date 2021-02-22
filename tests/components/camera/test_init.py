@@ -134,7 +134,7 @@ async def test_snapshot_service.opp, mock_camera):
         assert mock_write.mock_calls[0][1][0] == b"Test"
 
 
-async def test_websocket_camera_thumbnail.opp,.opp_ws_client, mock_camera):
+async def test_websocket_camera_thumbnail.opp, opp_ws_client, mock_camera):
     """Test camera_thumbnail websocket command."""
     await async_setup_component.opp, "camera", {})
 
@@ -153,7 +153,7 @@ async def test_websocket_camera_thumbnail.opp,.opp_ws_client, mock_camera):
 
 
 async def test_websocket_stream_no_source(
-   .opp,.opp_ws_client, mock_camera, mock_stream
+   .opp, opp_ws_client, mock_camera, mock_stream
 ):
     """Test camera/stream websocket command with camera with no source."""
     await async_setup_component.opp, "camera", {})
@@ -171,7 +171,7 @@ async def test_websocket_stream_no_source(
     assert not msg["success"]
 
 
-async def test_websocket_camera_stream.opp,.opp_ws_client, mock_camera, mock_stream):
+async def test_websocket_camera_stream.opp, opp_ws_client, mock_camera, mock_stream):
     """Test camera/stream websocket command."""
     await async_setup_component.opp, "camera", {})
 
@@ -197,7 +197,7 @@ async def test_websocket_camera_stream.opp,.opp_ws_client, mock_camera, mock_str
         assert msg["result"]["url"][-13:] == "playlist.m3u8"
 
 
-async def test_websocket_get_prefs.opp,.opp_ws_client, mock_camera):
+async def test_websocket_get_prefs.opp, opp_ws_client, mock_camera):
     """Test get camera preferences websocket command."""
     await async_setup_component.opp, "camera", {})
 
@@ -213,7 +213,7 @@ async def test_websocket_get_prefs.opp,.opp_ws_client, mock_camera):
 
 
 async def test_websocket_update_prefs(
-   .opp,.opp_ws_client, mock_camera, setup_camera_prefs
+   .opp, opp_ws_client, mock_camera, setup_camera_prefs
 ):
     """Test updating preference."""
     await async_setup_component.opp, "camera", {})

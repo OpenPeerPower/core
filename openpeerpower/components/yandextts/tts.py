@@ -87,7 +87,7 @@ async def async_get_engine.opp, config, discovery_info=None):
 class YandexSpeechKitProvider(Provider):
     """VoiceRSS speech api provider."""
 
-    def __init__(self,.opp, conf):
+    def __init__(self, opp, conf):
         """Init VoiceRSS TTS service."""
         self.opp =.opp
         self._codec = conf.get(CONF_CODEC)

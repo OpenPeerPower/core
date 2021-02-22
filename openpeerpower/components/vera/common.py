@@ -49,7 +49,7 @@ def set_controller_data(
 class SubscriptionRegistry(pv.AbstractSubscriptionRegistry):
     """Manages polling for data from vera."""
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the object."""
         super().__init__()
         self.opp = opp

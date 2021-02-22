@@ -240,7 +240,7 @@ def setup_opp, config):
         }
 
     # Create server thread
-    bound_system_callback = partial(_system_callback_handler,.opp, config)
+    bound_system_callback = partial(_system_callback_handler, opp, config)
    .opp.data[DATA_HOMEMATIC] = homematic = HMConnection(
         local=config[DOMAIN].get(CONF_LOCAL_IP),
         localport=config[DOMAIN].get(CONF_LOCAL_PORT, DEFAULT_LOCAL_PORT),
@@ -253,7 +253,7 @@ def setup_opp, config):
     homematic.start()
 
     # Stops server when Open Peer Power is shutting down
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP,.opp.data[DATA_HOMEMATIC].stop)
+   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, opp.data[DATA_HOMEMATIC].stop)
 
     # Init homematic hubs
     entity_hubs = []
@@ -435,7 +435,7 @@ def _system_callback_handler.opp, config, src, *args):
 
         # Register EVENTS
         # Search all devices with an EVENTNODE that includes data
-        bound_event_callback = partial(_hm_event_handler,.opp, interface)
+        bound_event_callback = partial(_hm_event_handler, opp, interface)
         for dev in addresses:
             hmdevice =.opp.data[DATA_HOMEMATIC].devices[interface].get(dev)
 

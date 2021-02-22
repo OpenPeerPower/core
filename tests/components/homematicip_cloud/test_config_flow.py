@@ -140,7 +140,7 @@ async def test_init_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_import_config.opp, simple_mock_home):
+async def test_import_config(opp, simple_mock_home):
     """Test importing a host with an existing config file."""
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipAuth.async_checkbutton",
@@ -164,7 +164,7 @@ async def test_import_config.opp, simple_mock_home):
     assert result["result"].unique_id == "ABC123"
 
 
-async def test_import_existing_config.opp):
+async def test_import_existing_config(opp):
     """Test abort of an existing accesspoint from config."""
     MockConfigEntry(domain=HMIPC_DOMAIN, unique_id="ABC123").add_to.opp.opp)
     with patch(

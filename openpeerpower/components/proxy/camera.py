@@ -185,7 +185,7 @@ class ImageOpts:
 class ProxyCamera(Camera):
     """The representation of a Proxy camera."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize a proxy camera component."""
         super().__init__()
         self.opp =.opp

@@ -135,7 +135,7 @@ async def async_unload_entry.opp, config_entry):
 class TelldusLiveClient:
     """Get the latest data and update the states."""
 
-    def __init__(self,.opp, config_entry, session, interval):
+    def __init__(self, opp, config_entry, session, interval):
         """Initialize the Tellus data object."""
         self._known_devices = set()
         self._device_infos = {}

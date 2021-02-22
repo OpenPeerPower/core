@@ -13,7 +13,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_empty_config.opp):
+async def test_empty_config(opp):
     """Test with an empty config."""
     assert await async_setup_component.opp, dynalite.DOMAIN, {}) is True
     assert len.opp.config_entries.flow.async_progress()) == 0

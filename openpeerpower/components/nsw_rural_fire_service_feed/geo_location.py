@@ -70,8 +70,8 @@ async def async_setup_platform(
     """Set up the NSW Rural Fire Service Feed platform."""
     scan_interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     coordinates = (
-        config.get(CONF_LATITUDE,.opp.config.latitude),
-        config.get(CONF_LONGITUDE,.opp.config.longitude),
+        config.get(CONF_LATITUDE, opp.config.latitude),
+        config.get(CONF_LONGITUDE, opp.config.longitude),
     )
     radius_in_km = config[CONF_RADIUS]
     categories = config.get(CONF_CATEGORIES)

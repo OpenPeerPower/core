@@ -31,7 +31,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class FFmpegCamera(Camera):
     """An implementation of an FFmpeg camera."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize a FFmpeg camera."""
         super().__init__()
 

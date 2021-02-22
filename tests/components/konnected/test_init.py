@@ -219,7 +219,7 @@ async def test_config_schema.opp):
     }
 
 
-async def test_setup_with_no_config.opp):
+async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a Konnected panel."""
     assert await async_setup_component.opp, konnected.DOMAIN, {})
 

@@ -404,7 +404,7 @@ class HTML5PushCallbackView(OpenPeerPowerView):
 class HTML5NotificationService(BaseNotificationService):
     """Implement the notification service for HTML5."""
 
-    def __init__(self,.opp, gcm_key, vapid_prv, vapid_email, registrations, json_path):
+    def __init__(self, opp, gcm_key, vapid_prv, vapid_email, registrations, json_path):
         """Initialize the service."""
         self._gcm_key = gcm_key
         self._vapid_prv = vapid_prv

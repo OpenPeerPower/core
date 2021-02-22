@@ -142,7 +142,7 @@ async def async_device_setup(
 class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
     """Wrapper for a Shelly device with Open Peer Power specific functions."""
 
-    def __init__(self,.opp, entry, device: aioshelly.Device):
+    def __init__(self, opp, entry, device: aioshelly.Device):
         """Initialize the Shelly device wrapper."""
         self.device_id = None
         sleep_period = entry.data["sleep_period"]
@@ -270,7 +270,7 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
 class ShellyDeviceRestWrapper(update_coordinator.DataUpdateCoordinator):
     """Rest Wrapper for a Shelly device with Open Peer Power specific functions."""
 
-    def __init__(self,.opp, device: aioshelly.Device):
+    def __init__(self, opp, device: aioshelly.Device):
         """Initialize the Shelly device wrapper."""
         if (
             device.settings["device"]["type"]

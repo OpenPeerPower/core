@@ -77,7 +77,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class ThresholdSensor(BinarySensorEntity):
     """Representation of a Threshold sensor."""
 
-    def __init__(self,.opp, entity_id, name, lower, upper, hysteresis, device_class):
+    def __init__(self, opp, entity_id, name, lower, upper, hysteresis, device_class):
         """Initialize the Threshold sensor."""
         self.opp = opp
         self._entity_id = entity_id

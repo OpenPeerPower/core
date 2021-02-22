@@ -42,7 +42,7 @@ async def _setup_notify.opp_):
 
 @patch("os.path.isfile", return_value=True)
 @patch("os.access", return_value=True)
-async def test_apns_setup_full(mock_access, mock_isfile,.opp):
+async def test_apns_setup_full(mock_access, mock_isfile, opp):
     """Test setup with all data."""
     config = {
         "notify": {
@@ -102,7 +102,7 @@ async def test_apns_setup_missing_topic.opp):
 
 
 @patch("openpeerpower.components.apns.notify._write_device")
-async def test_register_new_device(mock_write,.opp):
+async def test_register_new_device(mock_write, opp):
     """Test registering a new device with a name."""
     yaml_file = {5678: {"name": "test device 2"}}
 
@@ -132,7 +132,7 @@ async def test_register_new_device(mock_write,.opp):
 
 
 @patch("openpeerpower.components.apns.notify._write_device")
-async def test_register_device_without_name(mock_write,.opp):
+async def test_register_device_without_name(mock_write, opp):
     """Test registering a without a name."""
     yaml_file = {
         1234: {"name": "test device 1", "tracking_device_id": "tracking123"},
@@ -166,7 +166,7 @@ async def test_register_device_without_name(mock_write,.opp):
 
 
 @patch("openpeerpower.components.apns.notify._write_device")
-async def test_update_existing_device(mock_write,.opp):
+async def test_update_existing_device(mock_write, opp):
     """Test updating an existing device."""
     yaml_file = {1234: {"name": "test device 1"}, 5678: {"name": "test device 2"}}
 
@@ -203,7 +203,7 @@ async def test_update_existing_device(mock_write,.opp):
 
 
 @patch("openpeerpower.components.apns.notify._write_device")
-async def test_update_existing_device_with_tracking_id(mock_write,.opp):
+async def test_update_existing_device_with_tracking_id(mock_write, opp):
     """Test updating an existing device that has a tracking id."""
     yaml_file = {
         1234: {"name": "test device 1", "tracking_device_id": "tracking123"},
@@ -244,7 +244,7 @@ async def test_update_existing_device_with_tracking_id(mock_write,.opp):
 
 
 @patch("openpeerpower.components.apns.notify.APNsClient")
-async def test_send(mock_client,.opp):
+async def test_send(mock_client, opp):
     """Test updating an existing device."""
     send = mock_client.return_value.send_notification
 
@@ -280,7 +280,7 @@ async def test_send(mock_client,.opp):
 
 
 @patch("openpeerpower.components.apns.notify.APNsClient")
-async def test_send_when_disabled(mock_client,.opp):
+async def test_send_when_disabled(mock_client, opp):
     """Test updating an existing device."""
     send = mock_client.return_value.send_notification
 
@@ -306,7 +306,7 @@ async def test_send_when_disabled(mock_client,.opp):
 
 
 @patch("openpeerpower.components.apns.notify.APNsClient")
-async def test_send_with_state(mock_client,.opp):
+async def test_send_with_state(mock_client, opp):
     """Test updating an existing device."""
     send = mock_client.return_value.send_notification
 
@@ -348,7 +348,7 @@ async def test_send_with_state(mock_client,.opp):
 
 @patch("openpeerpower.components.apns.notify.APNsClient")
 @patch("openpeerpower.components.apns.notify._write_device")
-async def test_disable_when_unregistered(mock_write, mock_client,.opp):
+async def test_disable_when_unregistered(mock_write, mock_client, opp):
     """Test disabling a device when it is unregistered."""
     send = mock_client.return_value.send_notification
     send.side_effect = Unregistered()

@@ -17,7 +17,7 @@ async def async_validate_config_item.opp, config, full_config=None):
     config = SCRIPT_ENTRY_SCHEMA(config)
     config[CONF_SEQUENCE] = await asyncio.gather(
         *[
-            async_validate_action_config.opp, action)
+            async_validate_action_config(opp, action)
             for action in config[CONF_SEQUENCE]
         ]
     )
@@ -31,13 +31,13 @@ async def _try_async_validate_config_item.opp, object_id, config, full_config=No
         cv.slug(object_id)
         config = await async_validate_config_item.opp, config, full_config)
     except (vol.Invalid, OpenPeerPowerError) as ex:
-        async_log_exception(ex, DOMAIN, full_config or config,.opp)
+        async_log_exception(ex, DOMAIN, full_config or config, opp)
         return None
 
     return config
 
 
-async def async_validate_config.opp, config):
+async def async_validate_config(opp, config):
     """Validate config."""
     if DOMAIN in config:
         validated_config = {}

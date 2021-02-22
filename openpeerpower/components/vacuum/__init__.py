@@ -85,7 +85,7 @@ def is_on.opp, entity_id):
 async def async_setup_opp, config):
     """Set up the vacuum component."""
     component =.opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
 
     await component.async_setup(config)

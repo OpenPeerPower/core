@@ -13,7 +13,7 @@ from openpeerpower.helpers.intent import ServiceIntentHandler, async_register
 from tests.common import async_fire_mqtt_message, async_mock_intent, async_mock_service
 
 
-async def test_snips_config.opp, mqtt_mock):
+async def test_snips_config(opp, mqtt_mock):
     """Test Snips Config."""
     result = await async_setup_component(
        .opp,
@@ -29,7 +29,7 @@ async def test_snips_config.opp, mqtt_mock):
     assert result
 
 
-async def test_snips_bad_config.opp, mqtt_mock):
+async def test_snips_bad_config(opp, mqtt_mock):
     """Test Snips bad config."""
     result = await async_setup_component(
        .opp,
@@ -436,7 +436,7 @@ async def test_snips_say_action.opp):
     assert calls[0].data["intent_filter"] == ["myIntent"]
 
 
-async def test_snips_say_invalid_config.opp):
+async def test_snips_say_invalid_config(opp):
     """Test snips say with invalid config."""
     calls = async_mock_service.opp, "snips", "say", snips.SERVICE_SCHEMA_SAY)
 
@@ -495,7 +495,7 @@ async def test_snips_feedback_off.opp):
     assert calls[0].data["site_id"] == "remote"
 
 
-async def test_snips_feedback_config.opp):
+async def test_snips_feedback_config(opp):
     """Test snips say with invalid config."""
     calls = async_mock_service(
        .opp, "snips", "feedback_on", snips.SERVICE_SCHEMA_FEEDBACK

@@ -7,7 +7,7 @@ from openpeerpower.components.websocket_api.const import TYPE_RESULT
 from openpeerpower.setup import async_setup_component
 
 
-async def test_get_image.opp,.opp_ws_client, caplog):
+async def test_get_image.opp, opp_ws_client, caplog):
     """Test get image via WS command."""
     await async_setup_component(
        .opp, "media_player", {"media_player": {"platform": "demo"}}
@@ -91,7 +91,7 @@ async def test_get_image_http_remote.opp, aiohttp_client):
         assert content == b"image"
 
 
-async def test_get_async_get_browse_image.opp, aiohttp_client,.opp_ws_client):
+async def test_get_async_get_browse_image.opp, aiohttp_client, opp_ws_client):
     """Test get browse image."""
     await async_setup_component(
        .opp, "media_player", {"media_player": {"platform": "demo"}}
@@ -128,7 +128,7 @@ def test_deprecated_base_class(caplog):
     assert "MediaPlayerDevice is deprecated, modify CustomMediaPlayer" in caplog.text
 
 
-async def test_media_browse.opp,.opp_ws_client):
+async def test_media_browse.opp, opp_ws_client):
     """Test browsing media."""
     await async_setup_component(
        .opp, "media_player", {"media_player": {"platform": "demo"}}

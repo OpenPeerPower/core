@@ -152,7 +152,7 @@ async def async_setup_opp, config):
         """
         uuid = await.opp.helpers.instance_id.async_get()
         await.opp.async_add_executor_job(
-            _register.opp_zc_service,.opp, zeroconf, uuid
+            _register.opp_zc_service, opp, zeroconf, uuid
         )
 
     async def _async_zeroconf.opp_started(_event):

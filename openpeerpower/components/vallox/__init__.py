@@ -136,7 +136,7 @@ async def async_setup_opp, config):
 class ValloxStateProxy:
     """Helper class to reduce websocket API calls."""
 
-    def __init__(self,.opp, client):
+    def __init__(self, opp, client):
         """Initialize the proxy."""
         self.opp = opp
         self._client = client

@@ -48,7 +48,7 @@ class CheckConfigView(OpenPeerPowerView):
         vol.Optional("internal_url"): vol.Any(cv.url, None),
     }
 )
-async def websocket_update_config.opp, connection, msg):
+async def websocket_update_config(opp, connection, msg):
     """Handle update core config command."""
     data = dict(msg)
     data.pop("id")
@@ -64,7 +64,7 @@ async def websocket_update_config.opp, connection, msg):
 @websocket_api.require_admin
 @websocket_api.async_response
 @websocket_api.websocket_command({"type": "config/core/detect"})
-async def websocket_detect_config.opp, connection, msg):
+async def websocket_detect_config(opp, connection, msg):
     """Detect core config."""
     session =.opp.helpers.aiohttp_client.async_get_clientsession()
     location_info = await location.async_detect_location_info(session)

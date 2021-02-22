@@ -183,7 +183,7 @@ def filter_turn_off_params(params):
 async def async_setup_opp, config):
     """Expose light control via state machine and services."""
     component =.opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
     await component.async_setup(config)
 
@@ -337,7 +337,7 @@ class Profile:
 class Profiles:
     """Representation of available color profiles."""
 
-    def __init__(self,.opp: OpenPeerPowerType):
+    def __init__(self, opp: OpenPeerPowerType):
         """Initialize profiles."""
         self.opp =.opp
         self.data: Dict[str, Profile] = {}

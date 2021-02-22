@@ -50,7 +50,7 @@ async def async_setup_scanner(
 class MySensorsDeviceScanner(mysensors.device.MySensorsDevice):
     """Represent a MySensors scanner."""
 
-    def __init__(self,.opp: OpenPeerPowerType, async_see, *args):
+    def __init__(self, opp: OpenPeerPowerType, async_see, *args):
         """Set up instance."""
         super().__init__(*args)
         self.async_see = async_see

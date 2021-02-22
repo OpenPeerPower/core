@@ -26,7 +26,7 @@ class EntityMapStorage:
     very slow for these devices.
     """
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Create a new entity map store."""
         self.opp =.opp
         self.store = Store.opp, ENTITY_MAP_STORAGE_VERSION, ENTITY_MAP_STORAGE_KEY)

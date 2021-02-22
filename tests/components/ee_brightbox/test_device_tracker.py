@@ -55,7 +55,7 @@ def mock_dev_track(mock_device_tracker_conf):
 
 
 @patch("openpeerpower.components.ee_brightbox.device_tracker.EEBrightBox")
-async def test_missing_credentials(eebrightbox_mock,.opp):
+async def test_missing_credentials(eebrightbox_mock, opp):
     """Test missing credentials."""
     _configure_mock_get_devices(eebrightbox_mock)
 
@@ -73,7 +73,7 @@ async def test_missing_credentials(eebrightbox_mock,.opp):
 
 
 @patch("openpeerpower.components.ee_brightbox.device_tracker.EEBrightBox")
-async def test_invalid_credentials(eebrightbox_mock,.opp):
+async def test_invalid_credentials(eebrightbox_mock, opp):
     """Test invalid credentials."""
     _configure_mock_failed_config_check(eebrightbox_mock)
 
@@ -93,7 +93,7 @@ async def test_invalid_credentials(eebrightbox_mock,.opp):
 
 
 @patch("openpeerpower.components.ee_brightbox.device_tracker.EEBrightBox")
-async def test_get_devices(eebrightbox_mock,.opp):
+async def test_get_devices(eebrightbox_mock, opp):
     """Test valid configuration."""
     _configure_mock_get_devices(eebrightbox_mock)
 

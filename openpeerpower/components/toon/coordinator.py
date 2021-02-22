@@ -25,7 +25,7 @@ class ToonDataUpdateCoordinator(DataUpdateCoordinator[Status]):
     """Class to manage fetching Toon data from single endpoint."""
 
     def __init__(
-        self,.opp: OpenPeerPower, *, entry: ConfigEntry, session: OAuth2Session
+        self, opp: OpenPeerPower, *, entry: ConfigEntry, session: OAuth2Session
     ):
         """Initialize global Toon data updater."""
         self.session = session
@@ -95,7 +95,7 @@ class ToonDataUpdateCoordinator(DataUpdateCoordinator[Status]):
         )
 
     async def handle_webhook(
-        self,.opp: OpenPeerPower, webhook_id: str, request
+        self, opp: OpenPeerPower, webhook_id: str, request
     ) -> None:
         """Handle webhook callback."""
         try:

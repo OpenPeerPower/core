@@ -444,7 +444,7 @@ async def async_setup_opp, config):
        .opp.services.async_register(HASS_DOMAIN, service, async_handle_core_service)
 
     # Init discovery Hass.io feature
-    async_setup_discovery_view.opp,.oppio)
+    async_setup_discovery_view.opp, oppio)
 
     # Init auth Hass.io feature
     async_setup_auth_view.opp, user)
@@ -453,6 +453,6 @@ async def async_setup_opp, config):
     async_setup_ingress_view.opp, host)
 
     # Init add-on ingress panels
-    await async_setup_addon_panel.opp,.oppio)
+    await async_setup_addon_panel.opp, oppio)
 
     return True

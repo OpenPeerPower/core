@@ -13,7 +13,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_load_from_storage.opp,.opp_storage):
+async def test_load_from_storage.opp, opp_storage):
     """Test that entity map can be correctly loaded from cache."""
     hkid = "00:00:00:00:00:00"
 
@@ -26,7 +26,7 @@ async def test_load_from_storage.opp,.opp_storage):
     assert hkid in.opp.data[ENTITY_MAP].storage_data
 
 
-async def test_storage_is_removed.opp,.opp_storage):
+async def test_storage_is_removed.opp, opp_storage):
     """Test entity map storage removal is idempotent."""
     await setup_platform.opp)
 
@@ -66,7 +66,7 @@ def create_lightbulb_service(accessory):
     on_char.value = 0
 
 
-async def test_storage_is_updated_on_add.opp,.opp_storage, utcnow):
+async def test_storage_is_updated_on_add.opp, opp_storage, utcnow):
     """Test entity map storage is cleaned up on adding an accessory."""
     await setup_test_component.opp, create_lightbulb_service)
 

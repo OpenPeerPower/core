@@ -98,7 +98,7 @@ def threadsafe_coroutine_factory(func):
         """Call func threadsafe."""
         opp =args[0]
         return asyncio.run_coroutine_threadsafe(
-            func(*args, **kwargs),.opp.loop
+            func(*args, **kwargs), opp.loop
         ).result()
 
     return threadsafe
@@ -259,9 +259,9 @@ async def async_test_open_peer_power(loop, load_registries=True):
    .opp.async_add_job = async_add_job
    .opp.async_add_executor_job = async_add_executor_job
    .opp.async_create_task = async_create_task
-   .opp.async_wait_for_task_count = types.MethodType(async_wait_for_task_count,.opp)
+   .opp.async_wait_for_task_count = types.MethodType(async_wait_for_task_count, opp)
    .opp._await_count_and_log_pending = types.MethodType(
-        _await_count_and_log_pending,.opp
+        _await_count_and_log_pending, opp
     )
 
    .opp.data[loader.DATA_CUSTOM_COMPONENTS] = {}
@@ -469,7 +469,7 @@ class MockGroup(auth_models.Group):
 
         super().__init__(**kwargs)
 
-    def add_to_opp(self,.opp):
+    def add_to_opp(self, opp):
         """Test helper to add entry to.opp."""
         return self.add_to_auth_manager.opp.auth)
 
@@ -505,7 +505,7 @@ class MockUser(auth_models.User):
             kwargs["id"] = id
         super().__init__(**kwargs)
 
-    def add_to_opp(self,.opp):
+    def add_to_opp(self, opp):
         """Test helper to add entry to.opp."""
         return self.add_to_auth_manager.opp.auth)
 
@@ -523,7 +523,7 @@ class MockUser(auth_models.User):
 async def register_auth_provider.opp, config):
     """Register an auth provider."""
     provider = await auth_providers.auth_provider_from_config(
-       .opp,.opp.auth._store, config
+       .opp, opp.auth._store, config
     )
     assert provider is not None, "Invalid config specified"
     key = (provider.type, provider.id)
@@ -770,7 +770,7 @@ class MockConfigEntry(config_entries.ConfigEntry):
             kwargs["state"] = state
         super().__init__(**kwargs)
 
-    def add_to_opp(self,.opp):
+    def add_to_opp(self, opp):
         """Test helper to add entry to.opp."""
        .opp.config_entries._entries.append(self)
 
@@ -843,7 +843,7 @@ def assert_setup_component(count, domain=None):
     async def mock_psc.opp, config_input, integration):
         """Mock the prepare_setup_component to capture config."""
         domain_input = integration.domain
-        res = await async_process_component_config.opp, config_input, integration)
+        res = await async_process_component_config(opp, config_input, integration)
         config[domain_input] = None if res is None else res.get(domain_input)
         _LOGGER.debug(
             "Configuration for %s, Validated: %s, Original %s",

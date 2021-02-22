@@ -35,7 +35,7 @@ def get_service.opp, config, discovery_info=None):
 class DiscordNotificationService(BaseNotificationService):
     """Implement the notification service for Discord."""
 
-    def __init__(self,.opp, token):
+    def __init__(self, opp, token):
         """Initialize the service."""
         self.token = token
         self.opp =.opp

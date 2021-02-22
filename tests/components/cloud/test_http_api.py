@@ -69,7 +69,7 @@ def setup_api_fixture.opp, aioclient_mock):
 
 
 @pytest.fixture(name="cloud_client")
-def cloud_client_fixture.opp,.opp_client):
+def cloud_client_fixture.opp, opp_client):
     """Fixture that can fetch from the cloud client."""
     with patch(.opp_nabucasa.Cloud.write_user_info"):
         yield.opp.loop.run_until_complete.opp_client())
@@ -328,7 +328,7 @@ async def test_resend_confirm_view_unknown_error(mock_cognito, cloud_client):
 
 
 async def test_websocket_status(
-   .opp,.opp_ws_client, mock_cloud_fixture, mock_cloud_login
+   .opp, opp_ws_client, mock_cloud_fixture, mock_cloud_login
 ):
     """Test querying the status."""
    .opp.data[DOMAIN].iot.state = STATE_CONNECTED
@@ -385,7 +385,7 @@ async def test_websocket_status(
     }
 
 
-async def test_websocket_status_not_logged_in.opp,.opp_ws_client):
+async def test_websocket_status_not_logged_in.opp, opp_ws_client):
     """Test querying the status."""
     client = await.opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "cloud/status"})
@@ -394,7 +394,7 @@ async def test_websocket_status_not_logged_in.opp,.opp_ws_client):
 
 
 async def test_websocket_subscription_reconnect(
-   .opp,.opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
+   .opp, opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
 ):
     """Test querying the status and connecting because valid account."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
@@ -412,7 +412,7 @@ async def test_websocket_subscription_reconnect(
 
 
 async def test_websocket_subscription_no_reconnect_if_connected(
-   .opp,.opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
+   .opp, opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
 ):
     """Test querying the status and not reconnecting because still expired."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
@@ -431,7 +431,7 @@ async def test_websocket_subscription_no_reconnect_if_connected(
 
 
 async def test_websocket_subscription_no_reconnect_if_expired(
-   .opp,.opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
+   .opp, opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
 ):
     """Test querying the status and not reconnecting because still expired."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, json={"provider": "stripe"})
@@ -449,7 +449,7 @@ async def test_websocket_subscription_no_reconnect_if_expired(
 
 
 async def test_websocket_subscription_fail(
-   .opp,.opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
+   .opp, opp_ws_client, aioclient_mock, mock_auth, mock_cloud_login
 ):
     """Test querying the status."""
     aioclient_mock.get(SUBSCRIPTION_INFO_URL, status=HTTP_INTERNAL_SERVER_ERROR)
@@ -461,7 +461,7 @@ async def test_websocket_subscription_fail(
     assert response["error"]["code"] == "request_failed"
 
 
-async def test_websocket_subscription_not_logged_in.opp,.opp_ws_client):
+async def test_websocket_subscription_not_logged_in.opp, opp_ws_client):
     """Test querying the status."""
     client = await.opp_ws_client.opp)
     with patch(
@@ -476,7 +476,7 @@ async def test_websocket_subscription_not_logged_in.opp,.opp_ws_client):
 
 
 async def test_websocket_update_preferences(
-   .opp,.opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
+   .opp, opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
 ):
     """Test updating preference."""
     assert setup_api.google_enabled
@@ -507,7 +507,7 @@ async def test_websocket_update_preferences(
 
 
 async def test_websocket_update_preferences_require_relink(
-   .opp,.opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
+   .opp, opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
 ):
     """Test updating preference requires relink."""
     client = await.opp_ws_client.opp)
@@ -527,7 +527,7 @@ async def test_websocket_update_preferences_require_relink(
 
 
 async def test_websocket_update_preferences_no_token(
-   .opp,.opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
+   .opp, opp_ws_client, aioclient_mock, setup_api, mock_cloud_login
 ):
     """Test updating preference no token available."""
     client = await.opp_ws_client.opp)
@@ -546,7 +546,7 @@ async def test_websocket_update_preferences_no_token(
     assert response["error"]["code"] == "alexa_relink"
 
 
-async def test_enabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_enabling_webhook.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable webhooks."""
     client = await.opp_ws_client.opp)
     with patch(
@@ -562,7 +562,7 @@ async def test_enabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login)
     assert mock_enable.mock_calls[0][1][0] == "mock-webhook-id"
 
 
-async def test_disabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_disabling_webhook.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable webhooks."""
     client = await.opp_ws_client.opp)
     with patch(.opp_nabucasa.cloudhooks.Cloudhooks.async_delete") as mock_disable:
@@ -576,7 +576,7 @@ async def test_disabling_webhook.opp,.opp_ws_client, setup_api, mock_cloud_login
     assert mock_disable.mock_calls[0][1][0] == "mock-webhook-id"
 
 
-async def test_enabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_enabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable remote UI."""
     client = await.opp_ws_client.opp)
     cloud =.opp.data[DOMAIN]
@@ -590,7 +590,7 @@ async def test_enabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
     assert len(mock_connect.mock_calls) == 1
 
 
-async def test_disabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_disabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable remote UI."""
     client = await.opp_ws_client.opp)
     cloud =.opp.data[DOMAIN]
@@ -605,7 +605,7 @@ async def test_disabling_remote.opp,.opp_ws_client, setup_api, mock_cloud_login)
 
 
 async def test_enabling_remote_trusted_networks_local4(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test we cannot enable remote UI when trusted networks active."""
     # pylint: disable=protected-access
@@ -638,7 +638,7 @@ async def test_enabling_remote_trusted_networks_local4(
 
 
 async def test_enabling_remote_trusted_networks_local6(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test we cannot enable remote UI when trusted networks active."""
     # pylint: disable=protected-access
@@ -671,7 +671,7 @@ async def test_enabling_remote_trusted_networks_local6(
 
 
 async def test_enabling_remote_trusted_networks_other(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test we can enable remote UI when trusted networks active."""
     # pylint: disable=protected-access
@@ -698,7 +698,7 @@ async def test_enabling_remote_trusted_networks_other(
     assert len(mock_connect.mock_calls) == 1
 
 
-async def test_list_google_entities.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_list_google_entities.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Google entities."""
     client = await.opp_ws_client.opp)
     entity = GoogleEntity(
@@ -730,7 +730,7 @@ async def test_list_google_entities.opp,.opp_ws_client, setup_api, mock_cloud_lo
     }
 
 
-async def test_update_google_entity.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_update_google_entity.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of a Google entity."""
     client = await.opp_ws_client.opp)
     await client.send_json(
@@ -776,7 +776,7 @@ async def test_update_google_entity.opp,.opp_ws_client, setup_api, mock_cloud_lo
 
 
 async def test_enabling_remote_trusted_proxies_local4(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test we cannot enable remote UI when trusted networks active."""
    .opp.http.trusted_proxies.append(ip_network("127.0.0.1"))
@@ -800,7 +800,7 @@ async def test_enabling_remote_trusted_proxies_local4(
 
 
 async def test_enabling_remote_trusted_proxies_local6(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test we cannot enable remote UI when trusted networks active."""
    .opp.http.trusted_proxies.append(ip_network("::1"))
@@ -823,7 +823,7 @@ async def test_enabling_remote_trusted_proxies_local6(
     assert len(mock_connect.mock_calls) == 0
 
 
-async def test_list_alexa_entities.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_list_alexa_entities.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Alexa entities."""
     client = await.opp_ws_client.opp)
     entity = LightCapabilities(
@@ -845,7 +845,7 @@ async def test_list_alexa_entities.opp,.opp_ws_client, setup_api, mock_cloud_log
     }
 
 
-async def test_update_alexa_entity.opp,.opp_ws_client, setup_api, mock_cloud_login):
+async def test_update_alexa_entity.opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of an Alexa entity."""
     client = await.opp_ws_client.opp)
     await client.send_json(
@@ -878,7 +878,7 @@ async def test_update_alexa_entity.opp,.opp_ws_client, setup_api, mock_cloud_log
 
 
 async def test_sync_alexa_entities_timeout(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test that timeout syncing Alexa entities."""
     client = await.opp_ws_client.opp)
@@ -895,7 +895,7 @@ async def test_sync_alexa_entities_timeout(
 
 
 async def test_sync_alexa_entities_no_token(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test sync Alexa entities when we have no token."""
     client = await.opp_ws_client.opp)
@@ -912,7 +912,7 @@ async def test_sync_alexa_entities_no_token(
 
 
 async def test_enable_alexa_state_report_fail(
-   .opp,.opp_ws_client, setup_api, mock_cloud_login
+   .opp, opp_ws_client, setup_api, mock_cloud_login
 ):
     """Test enable Alexa entities state reporting when no token available."""
     client = await.opp_ws_client.opp)
@@ -928,7 +928,7 @@ async def test_enable_alexa_state_report_fail(
     assert response["error"]["code"] == "alexa_relink"
 
 
-async def test_thingtalk_convert.opp,.opp_ws_client, setup_api):
+async def test_thingtalk_convert.opp, opp_ws_client, setup_api):
     """Test that we can convert a query."""
     client = await.opp_ws_client.opp)
 
@@ -945,7 +945,7 @@ async def test_thingtalk_convert.opp,.opp_ws_client, setup_api):
     assert response["result"] == {"hello": "world"}
 
 
-async def test_thingtalk_convert_timeout.opp,.opp_ws_client, setup_api):
+async def test_thingtalk_convert_timeout.opp, opp_ws_client, setup_api):
     """Test that we can convert a query."""
     client = await.opp_ws_client.opp)
 
@@ -962,7 +962,7 @@ async def test_thingtalk_convert_timeout.opp,.opp_ws_client, setup_api):
     assert response["error"]["code"] == "timeout"
 
 
-async def test_thingtalk_convert_internal.opp,.opp_ws_client, setup_api):
+async def test_thingtalk_convert_internal.opp, opp_ws_client, setup_api):
     """Test that we can convert a query."""
     client = await.opp_ws_client.opp)
 
@@ -980,7 +980,7 @@ async def test_thingtalk_convert_internal.opp,.opp_ws_client, setup_api):
     assert response["error"]["message"] == "Did not understand"
 
 
-async def test_tts_info.opp,.opp_ws_client, setup_api):
+async def test_tts_info.opp, opp_ws_client, setup_api):
     """Test that we can get TTS info."""
     # Verify the format is as expected
     assert voice.MAP_VOICE[("en-US", voice.Gender.FEMALE)] == "JennyNeural"

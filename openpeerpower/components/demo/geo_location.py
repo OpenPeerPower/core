@@ -45,7 +45,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class DemoManager:
     """Device manager for demo geolocation events."""
 
-    def __init__(self,.opp, add_entities):
+    def __init__(self, opp, add_entities):
         """Initialise the demo geolocation event manager."""
         self.opp = opp
         self._add_entities = add_entities

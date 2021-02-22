@@ -242,7 +242,7 @@ async def test_state_saved_on_remove.opp):
     assert set(state.attributes["complicated"]["value"]) == {1, 2, now.isoformat()}
 
 
-async def test_restoring_invalid_entity_id.opp,.opp_storage):
+async def test_restoring_invalid_entity_id.opp, opp_storage):
     """Test restoring invalid entity IDs."""
     entity = RestoreEntity()
     entity.opp =.opp

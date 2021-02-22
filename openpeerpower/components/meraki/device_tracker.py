@@ -75,7 +75,7 @@ class MerakiView(OpenPeerPowerView):
         self._handle(request.app[.opp"], data)
 
     @callback
-    def _handle(self,.opp, data):
+    def _handle(self, opp, data):
         for i in data["data"]["observations"]:
             data["data"]["secret"] = "hidden"
 

@@ -112,7 +112,7 @@ async def async_setup_opp, config):
 class Iperf3Data:
     """Get the latest data from iperf3."""
 
-    def __init__(self,.opp, host):
+    def __init__(self, opp, host):
         """Initialize the data object."""
         self.opp = opp
         self._host = host

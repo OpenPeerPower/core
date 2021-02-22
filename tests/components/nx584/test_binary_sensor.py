@@ -48,7 +48,7 @@ def client(fake_zones):
 @pytest.mark.usefixtures("client")
 @mock.patch("openpeerpower.components.nx584.binary_sensor.NX584Watcher")
 @mock.patch("openpeerpower.components.nx584.binary_sensor.NX584ZoneSensor")
-def test_nx584_sensor_setup_defaults(mock_nx, mock_watcher,.opp, fake_zones):
+def test_nx584_sensor_setup_defaults(mock_nx, mock_watcher, opp, fake_zones):
     """Test the setup with no configuration."""
     add_entities = mock.MagicMock()
     config = {
@@ -67,7 +67,7 @@ def test_nx584_sensor_setup_defaults(mock_nx, mock_watcher,.opp, fake_zones):
 @pytest.mark.usefixtures("client")
 @mock.patch("openpeerpower.components.nx584.binary_sensor.NX584Watcher")
 @mock.patch("openpeerpower.components.nx584.binary_sensor.NX584ZoneSensor")
-def test_nx584_sensor_setup_full_config(mock_nx, mock_watcher,.opp, fake_zones):
+def test_nx584_sensor_setup_full_config(mock_nx, mock_watcher, opp, fake_zones):
     """Test the setup with full configuration."""
     config = {
         "host": "foo",
@@ -104,7 +104,7 @@ async def _test_assert_graceful_fail.opp, config):
         ({"zone_types": {"notazone": "motion"}}),
     ],
 )
-async def test_nx584_sensor_setup_bad_config.opp, config):
+async def test_nx584_sensor_setup_bad_config(opp, config):
     """Test the setup with bad configuration."""
     await _test_assert_graceful_fail.opp, config)
 

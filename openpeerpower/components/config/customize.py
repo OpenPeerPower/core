@@ -28,12 +28,12 @@ async def async_setup_opp):
 class CustomizeConfigView(EditKeyBasedConfigView):
     """Configure a list of entries."""
 
-    def _get_value(self,.opp, data, config_key):
+    def _get_value(self, opp, data, config_key):
         """Get value."""
         customize =.opp.data.get(DATA_CUSTOMIZE, {}).get(config_key) or {}
         return {"global": customize, "local": data.get(config_key, {})}
 
-    def _write_value(self,.opp, data, config_key, new_value):
+    def _write_value(self, opp, data, config_key, new_value):
         """Set value."""
         data[config_key] = new_value
 

@@ -89,8 +89,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     scan_interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     feed_type = config[CONF_FEED_TYPE]
     coordinates = (
-        config.get(CONF_LATITUDE,.opp.config.latitude),
-        config.get(CONF_LONGITUDE,.opp.config.longitude),
+        config.get(CONF_LATITUDE, opp.config.latitude),
+        config.get(CONF_LONGITUDE, opp.config.longitude),
     )
     radius_in_km = config[CONF_RADIUS]
     minimum_magnitude = config[CONF_MINIMUM_MAGNITUDE]

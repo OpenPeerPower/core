@@ -63,7 +63,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     resources = config.get(CONF_RESOURCES)
 
     session = async_get_clientsession.opp)
-    netdata = NetdataData(Netdata(host,.opp.loop, session, port=port))
+    netdata = NetdataData(Netdata(host, opp.loop, session, port=port))
     await netdata.async_update()
 
     if netdata.api.metrics is None:

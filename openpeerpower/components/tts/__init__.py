@@ -143,7 +143,7 @@ async def async_setup_opp, config):
                 )
             else:
                 provider = await.opp.async_add_executor_job(
-                    platform.get_engine,.opp, p_config, discovery_info
+                    platform.get_engine, opp, p_config, discovery_info
                 )
 
             if provider is None:
@@ -234,7 +234,7 @@ def _hash_options(options: Dict) -> str:
 class SpeechManager:
     """Representation of a speech store."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize a speech store."""
         self.opp =.opp
         self.providers = {}

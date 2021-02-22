@@ -50,7 +50,7 @@ class ResourceStorageCollection(collection.StorageCollection):
     CREATE_SCHEMA = vol.Schema(RESOURCE_CREATE_FIELDS)
     UPDATE_SCHEMA = vol.Schema(RESOURCE_UPDATE_FIELDS)
 
-    def __init__(self,.opp: OpenPeerPower, ll_config: LovelaceConfig):
+    def __init__(self, opp: OpenPeerPower, ll_config: LovelaceConfig):
         """Initialize the storage collection."""
         super().__init__(
             storage.Store.opp, RESOURCES_STORAGE_VERSION, RESOURCE_STORAGE_KEY),

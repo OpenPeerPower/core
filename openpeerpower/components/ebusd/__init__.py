@@ -74,7 +74,7 @@ def setup_opp, config):
         }
         load_platform.opp, "sensor", DOMAIN, sensor_config, config)
 
-       .opp.services.register(DOMAIN, SERVICE_EBUSD_WRITE,.opp.data[DOMAIN].write)
+       .opp.services.register(DOMAIN, SERVICE_EBUSD_WRITE, opp.data[DOMAIN].write)
 
         _LOGGER.debug("Ebusd integration setup completed")
         return True

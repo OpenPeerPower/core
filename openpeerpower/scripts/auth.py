@@ -52,7 +52,7 @@ async def run_command(args):
     """Run the command."""
     opp =OpenPeerPower()
    .opp.config.config_dir = os.path.join(os.getcwd(), args.config)
-   .opp.auth = await auth_manager_from_config.opp, [{"type": "openpeerpower"}], [])
+   .opp.auth = await auth_manager_from_config(opp, [{"type": "openpeerpower"}], [])
     provider =.opp.auth.auth_providers[0]
     await provider.async_initialize()
     await args.func.opp, provider, args)

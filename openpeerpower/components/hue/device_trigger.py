@@ -102,7 +102,7 @@ def _get_hue_event_from_device_id.opp, device_id):
     return None
 
 
-async def async_validate_trigger_config.opp, config):
+async def async_validate_trigger_config(opp, config):
     """Validate config."""
     config = TRIGGER_SCHEMA(config)
 

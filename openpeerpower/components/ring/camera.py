@@ -34,7 +34,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if not camera.has_subscription:
             continue
 
-        cams.append(RingCam(config_entry.entry_id,.opp.data[DATA_FFMPEG], camera))
+        cams.append(RingCam(config_entry.entry_id, opp.data[DATA_FFMPEG], camera))
 
     async_add_entities(cams)
 

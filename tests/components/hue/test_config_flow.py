@@ -487,7 +487,7 @@ async def test_bridge_ssdp_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_import_with_no_config.opp):
+async def test_import_with_no_config(opp):
     """Test importing a host without an existing config file."""
     result = await.opp.config_entries.flow.async_init(
         const.DOMAIN,

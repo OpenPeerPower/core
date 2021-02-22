@@ -261,7 +261,7 @@ class TokenView(OpenPeerPowerView):
             {"error": "unsupported_grant_type"}, status_code=HTTP_BAD_REQUEST
         )
 
-    async def _async_handle_revoke_token(self,.opp, data):
+    async def _async_handle_revoke_token(self, opp, data):
         """Handle revoke token request."""
         # OAuth 2.0 Token Revocation [RFC7009]
         # 2.2 The authorization server responds with HTTP status code 200
@@ -280,7 +280,7 @@ class TokenView(OpenPeerPowerView):
         await.opp.auth.async_remove_refresh_token(refresh_token)
         return web.Response(status=HTTP_OK)
 
-    async def _async_handle_auth_code(self,.opp, data, remote_addr):
+    async def _async_handle_auth_code(self, opp, data, remote_addr):
         """Handle authorization code request."""
         client_id = data.get("client_id")
         if client_id is None or not indieauth.verify_client_id(client_id):
@@ -337,7 +337,7 @@ class TokenView(OpenPeerPowerView):
             }
         )
 
-    async def _async_handle_refresh_token(self,.opp, data, remote_addr):
+    async def _async_handle_refresh_token(self, opp, data, remote_addr):
         """Handle authorization code request."""
         client_id = data.get("client_id")
         if client_id is not None and not indieauth.verify_client_id(client_id):

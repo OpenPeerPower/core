@@ -70,7 +70,7 @@ async def async_setup_platform(
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up MQTT sensors dynamically through MQTT discovery."""
     setup = functools.partial(
-        _async_setup_entity,.opp, async_add_entities, config_entry=config_entry
+        _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper.opp, sensor.DOMAIN, setup, PLATFORM_SCHEMA)
 
@@ -85,7 +85,7 @@ async def _async_setup_entity(
 class MqttSensor(MqttEntity, Entity):
     """Representation of a sensor that can be updated using MQTT."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Initialize the sensor."""
         self._state = None
         self._expiration_trigger = None
@@ -96,7 +96,7 @@ class MqttSensor(MqttEntity, Entity):
         else:
             self._expired = None
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

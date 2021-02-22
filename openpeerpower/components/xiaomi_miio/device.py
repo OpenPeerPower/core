@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 class ConnectXiaomiDevice:
     """Class to async connect to a Xiaomi Device."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the entity."""
         self.opp = opp
         self._device = None

@@ -12,14 +12,14 @@ from openpeerpower.setup import async_setup_component
         {"router": {"url": "not-a-url"}},
     ),
 )
-async def test_wrong_config.opp, config_to_try):
+async def test_wrong_config(opp, config_to_try):
     """Test setup with wrong configuration."""
     assert not await async_setup_component(
        .opp, "panel_iframe", {"panel_iframe": config_to_try}
     )
 
 
-async def test_correct_config.opp):
+async def test_correct_config(opp):
     """Test correct config."""
     assert await async_setup_component(
        .opp,

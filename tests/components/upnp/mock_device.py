@@ -23,7 +23,7 @@ class MockDevice(Device):
         self._udn = udn
 
     @classmethod
-    async def async_create_device(cls,.opp, ssdp_location) -> "MockDevice":
+    async def async_create_device(cls, opp, ssdp_location) -> "MockDevice":
         """Return self."""
         return cls("UDN")
 

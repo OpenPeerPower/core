@@ -105,7 +105,7 @@ async def async_setup_opp, config):
         list(outputs.items()) + list(switchable_outputs.items())
     )
 
-    controller = AsyncSatel(host, port,.opp.loop, zones, monitored_outputs, partitions)
+    controller = AsyncSatel(host, port, opp.loop, zones, monitored_outputs, partitions)
 
    .opp.data[DATA_SATEL] = controller
 

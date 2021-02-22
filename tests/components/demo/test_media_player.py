@@ -400,7 +400,7 @@ async def test_seek.opp, mock_media_seek):
     assert mock_media_seek.called
 
 
-async def test_media_image_proxy.opp,.opp_client):
+async def test_media_image_proxy.opp, opp_client):
     """Test the media server image proxy server ."""
     assert await async_setup_component(
        .opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}

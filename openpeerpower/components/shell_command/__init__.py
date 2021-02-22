@@ -40,7 +40,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
             cache[cmd] = prog, args, args_compiled
         else:
             prog, args = cmd.split(" ", 1)
-            args_compiled = template.Template(args,.opp)
+            args_compiled = template.Template(args, opp)
             cache[cmd] = prog, args, args_compiled
 
         if args_compiled:

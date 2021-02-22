@@ -7,7 +7,7 @@ from openpeerpower.components import config
 from openpeerpower.config import DATA_CUSTOMIZE
 
 
-async def test_get_entity.opp,.opp_client):
+async def test_get_entity.opp, opp_client):
     """Test getting entity."""
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
@@ -28,7 +28,7 @@ async def test_get_entity.opp,.opp_client):
     assert result == {"local": {"free": "beer"}, "global": {"cold": "beer"}}
 
 
-async def test_update_entity.opp,.opp_client):
+async def test_update_entity.opp, opp_client):
     """Test updating entity."""
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
@@ -83,7 +83,7 @@ async def test_update_entity.opp,.opp_client):
     assert written[0] == orig_data
 
 
-async def test_update_entity_invalid_key.opp,.opp_client):
+async def test_update_entity_invalid_key.opp, opp_client):
     """Test updating entity."""
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})
@@ -97,7 +97,7 @@ async def test_update_entity_invalid_key.opp,.opp_client):
     assert resp.status == 400
 
 
-async def test_update_entity_invalid_json.opp,.opp_client):
+async def test_update_entity_invalid_json.opp, opp_client):
     """Test updating entity."""
     with patch.object(config, "SECTIONS", ["customize"]):
         await async_setup_component.opp, "config", {})

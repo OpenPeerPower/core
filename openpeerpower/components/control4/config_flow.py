@@ -36,7 +36,7 @@ DATA_SCHEMA = vol.Schema(
 class Control4Validator:
     """Validates that config details can be used to authenticate and communicate with Control4."""
 
-    def __init__(self, host, username, password,.opp):
+    def __init__(self, host, username, password, opp):
         """Initialize."""
         self.host = host
         self.username = username

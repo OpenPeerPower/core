@@ -20,7 +20,7 @@ DEVICE_COUPLERS = {
 class OneWireHub:
     """Hub to communicate with SysBus or OWServer."""
 
-    def __init__(self,.opp: OpenPeerPowerType):
+    def __init__(self, opp: OpenPeerPowerType):
         """Initialize."""
         self.opp =.opp
         self.type: str = None

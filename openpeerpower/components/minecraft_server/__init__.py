@@ -85,7 +85,7 @@ class MinecraftServer:
     _MAX_RETRIES_STATUS = 3
 
     def __init__(
-        self,.opp: OpenPeerPowerType, unique_id: str, config_data: ConfigType
+        self, opp: OpenPeerPowerType, unique_id: str, config_data: ConfigType
     ) -> None:
         """Initialize server instance."""
         self.opp = opp

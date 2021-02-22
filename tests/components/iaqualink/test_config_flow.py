@@ -28,7 +28,7 @@ async def test_already_configured.opp, step):
 
 
 @pytest.mark.parametrize("step", ["import", "user"])
-async def test_without_config.opp, step):
+async def test_without_config(opp, step):
     """Test with no configuration."""
     flow = config_flow.AqualinkFlowHandler()
     flow.opp =.opp
@@ -62,7 +62,7 @@ async def test_with_invalid_credentials.opp, step):
 
 
 @pytest.mark.parametrize("step", ["import", "user"])
-async def test_with_existing_config.opp, step):
+async def test_with_existing_config(opp, step):
     """Test with existing configuration."""
     flow = config_flow.AqualinkFlowHandler()
     flow.opp =.opp

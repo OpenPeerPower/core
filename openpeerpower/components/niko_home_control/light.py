@@ -90,7 +90,7 @@ class NikoHomeControlLight(LightEntity):
 class NikoHomeControlData:
     """The class for handling data retrieval."""
 
-    def __init__(self,.opp, nhc):
+    def __init__(self, opp, nhc):
         """Set up Niko Home Control Data object."""
         self._nhc = nhc
         self.opp =.opp

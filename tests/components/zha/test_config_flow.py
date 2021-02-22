@@ -33,7 +33,7 @@ def com_port():
     "openpeerpower.components.zha.config_flow.detect_radios",
     return_value={CONF_RADIO_TYPE: "test_radio"},
 )
-async def test_user_flow(detect_mock,.opp):
+async def test_user_flow(detect_mock, opp):
     """Test user flow -- radio detected."""
 
     port = com_port()
@@ -56,7 +56,7 @@ async def test_user_flow(detect_mock,.opp):
     "openpeerpower.components.zha.config_flow.detect_radios",
     return_value=None,
 )
-async def test_user_flow_not_detected(detect_mock,.opp):
+async def test_user_flow_not_detected(detect_mock, opp):
     """Test user flow, radio not detected."""
 
     port = com_port()
@@ -139,7 +139,7 @@ async def test_user_flow_existing_config_entry.opp):
     "zigpy_zigate.zigbee.application.ControllerApplication.probe", return_value=False
 )
 @patch("zigpy_xbee.zigbee.application.ControllerApplication.probe", return_value=False)
-async def test_probe_radios(xbee_probe, zigate_probe, deconz_probe, cc_probe,.opp):
+async def test_probe_radios(xbee_probe, zigate_probe, deconz_probe, cc_probe, opp):
     """Test detect radios."""
     app_ctrl_cls = MagicMock()
     app_ctrl_cls.SCHEMA_DEVICE = zigpy.config.SCHEMA_DEVICE
@@ -167,7 +167,7 @@ async def test_probe_radios(xbee_probe, zigate_probe, deconz_probe, cc_probe,.op
 
 
 @patch("bellows.zigbee.application.ControllerApplication.probe", return_value=False)
-async def test_user_port_config_fail(probe_mock,.opp):
+async def test_user_port_config_fail(probe_mock, opp):
     """Test port config flow."""
 
     result = await.opp.config_entries.flow.async_init(
@@ -188,7 +188,7 @@ async def test_user_port_config_fail(probe_mock,.opp):
 
 @patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
 @patch("bellows.zigbee.application.ControllerApplication.probe", return_value=True)
-async def test_user_port_config(probe_mock,.opp):
+async def test_user_port_config(probe_mock, opp):
     """Test port config."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 

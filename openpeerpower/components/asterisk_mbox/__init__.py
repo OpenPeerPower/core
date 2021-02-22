@@ -55,7 +55,7 @@ def setup_opp, config):
 class AsteriskData:
     """Store Asterisk mailbox data."""
 
-    def __init__(self,.opp, host, port, password, config):
+    def __init__(self, opp, host, port, password, config):
         """Init the Asterisk data object."""
 
         self.opp =.opp

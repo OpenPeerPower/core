@@ -38,7 +38,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Open Hardware Monitor platform."""
-    data = OpenHardwareMonitorData(config,.opp)
+    data = OpenHardwareMonitorData(config, opp)
     if data.data is None:
         raise PlatformNotReady
     add_entities(data.devices, True)
@@ -116,7 +116,7 @@ class OpenHardwareMonitorDevice(Entity):
 class OpenHardwareMonitorData:
     """Class used to pull data from OHM and create sensors."""
 
-    def __init__(self, config,.opp):
+    def __init__(self, config, opp):
         """Initialize the Open Hardware Monitor data-handler."""
         self.data = None
         self._config = config

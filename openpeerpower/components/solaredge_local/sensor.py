@@ -285,7 +285,7 @@ class SolarEdgeSensor(Entity):
 class SolarEdgeData:
     """Get and update the latest data."""
 
-    def __init__(self,.opp, api):
+    def __init__(self, opp, api):
         """Initialize the data object."""
         self.opp =.opp
         self.api = api

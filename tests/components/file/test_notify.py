@@ -12,7 +12,7 @@ import openpeerpower.util.dt as dt_util
 from tests.common import assert_setup_component
 
 
-async def test_bad_config.opp):
+async def test_bad_config(opp):
     """Test set up the platform with bad/missing config."""
     config = {notify.DOMAIN: {"name": "test", "platform": "file"}}
     with assert_setup_component(0) as handle_config:

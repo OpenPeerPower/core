@@ -128,7 +128,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
 class NeatoHub:
     """A My Neato hub wrapper class."""
 
-    def __init__(self,.opp: OpenPeerPowerType, neato: Account):
+    def __init__(self, opp: OpenPeerPowerType, neato: Account):
         """Initialize the Neato hub."""
         self.opp: OpenPeerPowerType =.opp
         self.my_neato: Account = neato

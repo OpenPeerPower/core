@@ -19,7 +19,7 @@ TEST_SYSTEM_URL = (
 TEST_SET_URL = f"http://{USER_INPUT[CONF_IP_ADDRESS]}:{USER_INPUT[CONF_PORT]}/setAircon"
 
 
-async def add_mock_config.opp):
+async def add_mock_config(opp):
     """Create a fake Advantage Air Config Entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,

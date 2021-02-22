@@ -36,7 +36,7 @@ TEST_VAL_MAX = 22
 
 
 @pytest.fixture
-def storage_setup_opp,.opp_storage):
+def storage_setup_opp, opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):
@@ -83,7 +83,7 @@ def set_value.opp, entity_id, value):
     )
 
 
-async def test_config.opp):
+async def test_config(opp):
     """Test config."""
     invalid_configs = [
         None,
@@ -217,7 +217,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
     assert str(state.state) == "unknown"
 
 
-async def test_input_text_context.opp,.opp_admin_user):
+async def test_input_text_context.opp, opp_admin_user):
     """Test that input_text context works."""
     assert await async_setup_component(
        .opp, "input_text", {"input_text": {"t1": {"initial": "bla"}}}
@@ -254,7 +254,7 @@ async def test_config_none.opp):
     assert state.attributes[ATTR_MIN] == CONF_MIN_VALUE
 
 
-async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
+async def test_reload.opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
 
@@ -355,7 +355,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert state.attributes[ATTR_MIN] == 3
 
 
-async def test_ws_list.opp,.opp_ws_client, storage_setup):
+async def test_ws_list.opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(
         config={
@@ -387,7 +387,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp,.opp_ws_client, storage_setup):
+async def test_ws_delete.opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -412,7 +412,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update.opp,.opp_ws_client, storage_setup):
+async def test_update.opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     assert await storage_setup()
@@ -451,7 +451,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     assert state.attributes[ATTR_MAX] == TEST_VAL_MAX
 
 
-async def test_ws_create.opp,.opp_ws_client, storage_setup):
+async def test_ws_create.opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 
@@ -485,7 +485,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     assert state.attributes[ATTR_MIN] == 0
 
 
-async def test_setup_no_config.opp,.opp_admin_user):
+async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
     assert await async_setup_component.opp, DOMAIN, {})

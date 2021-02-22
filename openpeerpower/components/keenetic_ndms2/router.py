@@ -35,7 +35,7 @@ _LOGGER = logging.getLogger(__name__)
 class KeeneticRouter:
     """Keenetic client Object."""
 
-    def __init__(self,.opp: OpenPeerPower, config_entry: ConfigEntry):
+    def __init__(self, opp: OpenPeerPower, config_entry: ConfigEntry):
         """Initialize the Client."""
         self.opp =.opp
         self.config_entry = config_entry

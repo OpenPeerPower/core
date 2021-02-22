@@ -52,7 +52,7 @@ async def async_unload_entry.opp, config_entry):
 class GiosDataUpdateCoordinator(DataUpdateCoordinator):
     """Define an object to hold GIOS data."""
 
-    def __init__(self,.opp, session, station_id):
+    def __init__(self, opp, session, station_id):
         """Class to manage fetching GIOS data API."""
         self.gios = Gios(station_id, session)
 

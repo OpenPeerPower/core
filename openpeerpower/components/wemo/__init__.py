@@ -145,7 +145,7 @@ class WemoDispatcher:
 
     @callback
     def async_add_unique_device(
-        self,.opp: OpenPeerPower, device: pywemo.WeMoDevice
+        self, opp: OpenPeerPower, device: pywemo.WeMoDevice
     ) -> None:
         """Add a WeMo device to.opp if it has not already been added."""
         if device.serialnumber in self._added_serial_numbers:
@@ -186,7 +186,7 @@ class WemoDiscovery:
     ADDITIONAL_SECONDS_BETWEEN_SCANS = 10
     MAX_SECONDS_BETWEEN_SCANS = 300
 
-    def __init__(self,.opp: OpenPeerPower, wemo_dispatcher: WemoDispatcher) -> None:
+    def __init__(self, opp: OpenPeerPower, wemo_dispatcher: WemoDispatcher) -> None:
         """Initialize the WemoDiscovery."""
         self.opp = opp
         self._wemo_dispatcher = wemo_dispatcher

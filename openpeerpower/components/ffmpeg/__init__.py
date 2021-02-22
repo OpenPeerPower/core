@@ -107,7 +107,7 @@ async def async_get_image(
 class FFmpegManager:
     """Helper for ha-ffmpeg."""
 
-    def __init__(self,.opp, ffmpeg_bin):
+    def __init__(self, opp, ffmpeg_bin):
         """Initialize helper."""
         self.opp =.opp
         self._cache = {}

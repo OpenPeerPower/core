@@ -57,10 +57,10 @@ async def async_setup_entry.opp, config_entry):
         openuv = OpenUV(
             Client(
                 config_entry.data[CONF_API_KEY],
-                config_entry.data.get(CONF_LATITUDE,.opp.config.latitude),
-                config_entry.data.get(CONF_LONGITUDE,.opp.config.longitude),
+                config_entry.data.get(CONF_LATITUDE, opp.config.latitude),
+                config_entry.data.get(CONF_LONGITUDE, opp.config.longitude),
                 websession,
-                altitude=config_entry.data.get(CONF_ELEVATION,.opp.config.elevation),
+                altitude=config_entry.data.get(CONF_ELEVATION, opp.config.elevation),
             )
         )
         await openuv.async_update()

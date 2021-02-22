@@ -62,7 +62,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class ImageProcessingSsocr(ImageProcessingEntity):
     """Representation of the seven segments OCR image processing entity."""
 
-    def __init__(self,.opp, camera_entity, config, name):
+    def __init__(self, opp, camera_entity, config, name):
         """Initialize seven segments processing."""
         self.opp =.opp
         self._camera_entity = camera_entity

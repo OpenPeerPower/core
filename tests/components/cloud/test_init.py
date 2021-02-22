@@ -13,7 +13,7 @@ from openpeerpower.exceptions import Unauthorized
 from openpeerpower.setup import async_setup_component
 
 
-async def test_constructor_loads_info_from_config.opp):
+async def test_constructor_loads_info_from_config(opp):
     """Test non-dev mode loads info from SERVERS constant."""
     with patch(.opp_nabucasa.Cloud.start"):
         result = await async_setup_component(
@@ -55,7 +55,7 @@ async def test_constructor_loads_info_from_config.opp):
     )
 
 
-async def test_remote_services.opp, mock_cloud_fixture,.opp_read_only_user):
+async def test_remote_services.opp, mock_cloud_fixture, opp_read_only_user):
     """Setup cloud component and test services."""
     cloud =.opp.data[DOMAIN]
 
@@ -105,7 +105,7 @@ async def test_startup_shutdown_events.opp, mock_cloud_fixture):
     assert mock_stop.called
 
 
-async def test_setup_existing_cloud_user.opp,.opp_storage):
+async def test_setup_existing_cloud_user.opp, opp_storage):
     """Test setup with API push default data."""
     user = await.opp.auth.async_create_system_user("Cloud test")
    .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": user.id}}

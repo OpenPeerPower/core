@@ -213,7 +213,7 @@ class RestSwitch(SwitchEntity):
         except aiohttp.ClientError as err:
             _LOGGER.exception("Error while fetching data: %s", err)
 
-    async def get_device_state(self,.opp):
+    async def get_device_state(self, opp):
         """Get the latest data from REST API and update the state."""
         websession = async_get_clientsession.opp, self._verify_ssl)
 

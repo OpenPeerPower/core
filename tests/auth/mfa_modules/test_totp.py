@@ -13,7 +13,7 @@ MOCK_CODE = "123456"
 
 async def test_validating_mfa.opp):
     """Test validating mfa code."""
-    totp_auth_module = await auth_mfa_module_from_config.opp, {"type": "totp"})
+    totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     await totp_auth_module.async_setup_user("test-user", {})
 
     with patch("pyotp.TOTP.verify", return_value=True):
@@ -22,7 +22,7 @@ async def test_validating_mfa.opp):
 
 async def test_validating_mfa_invalid_code.opp):
     """Test validating an invalid mfa code."""
-    totp_auth_module = await auth_mfa_module_from_config.opp, {"type": "totp"})
+    totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     await totp_auth_module.async_setup_user("test-user", {})
 
     with patch("pyotp.TOTP.verify", return_value=False):
@@ -34,7 +34,7 @@ async def test_validating_mfa_invalid_code.opp):
 
 async def test_validating_mfa_invalid_user.opp):
     """Test validating an mfa code with invalid user."""
-    totp_auth_module = await auth_mfa_module_from_config.opp, {"type": "totp"})
+    totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     await totp_auth_module.async_setup_user("test-user", {})
 
     assert (
@@ -45,7 +45,7 @@ async def test_validating_mfa_invalid_user.opp):
 
 async def test_setup_depose_user.opp):
     """Test despose user."""
-    totp_auth_module = await auth_mfa_module_from_config.opp, {"type": "totp"})
+    totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     result = await totp_auth_module.async_setup_user("test-user", {})
     assert len(totp_auth_module._users) == 1
     result2 = await totp_auth_module.async_setup_user("test-user", {})
@@ -140,7 +140,7 @@ async def test_race_condition_in_data_loading.opp):
         counter += 1
         await asyncio.sleep(0)
 
-    totp_auth_module = await auth_mfa_module_from_config.opp, {"type": "totp"})
+    totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):
         task1 = totp_auth_module.async_validate("user", {"code": "value"})
         task2 = totp_auth_module.async_validate("user", {"code": "value"})

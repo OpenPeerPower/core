@@ -43,7 +43,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class EnvisalinkBinarySensor(EnvisalinkDevice, BinarySensorEntity):
     """Representation of an Envisalink binary sensor."""
 
-    def __init__(self,.opp, zone_number, zone_name, zone_type, info, controller):
+    def __init__(self, opp, zone_number, zone_name, zone_type, info, controller):
         """Initialize the binary_sensor."""
         self._zone_type = zone_type
         self._zone_number = zone_number

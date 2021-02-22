@@ -48,7 +48,7 @@ async def auth_manager_from_config(
     if provider_configs:
         providers = await asyncio.gather(
             *(
-                auth_provider_from_config.opp, store, config)
+                auth_provider_from_config(opp, store, config)
                 for config in provider_configs
             )
         )
@@ -62,7 +62,7 @@ async def auth_manager_from_config(
 
     if module_configs:
         modules = await asyncio.gather(
-            *(auth_mfa_module_from_config.opp, config) for config in module_configs)
+            *(auth_mfa_module_from_config(opp, config) for config in module_configs)
         )
     else:
         modules = []

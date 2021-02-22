@@ -28,7 +28,7 @@ PLAY_COMMAND = "Play"
 STOP_COMMAND = "Stop"
 
 
-async def test_async_send_command(mock_hc,.opp, mock_write_config):
+async def test_async_send_command(mock_hc, opp, mock_write_config):
     """Ensure calls to send remote commands properly propagate to devices."""
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
@@ -161,7 +161,7 @@ async def test_async_send_command(mock_hc,.opp, mock_write_config):
     send_commands_mock.reset_mock()
 
 
-async def test_async_send_command_custom_delay(mock_hc,.opp, mock_write_config):
+async def test_async_send_command_custom_delay(mock_hc, opp, mock_write_config):
     """Ensure calls to send remote commands properly propagate to devices with custom delays."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -202,7 +202,7 @@ async def test_async_send_command_custom_delay(mock_hc,.opp, mock_write_config):
     send_commands_mock.reset_mock()
 
 
-async def test_change_channel(mock_hc,.opp, mock_write_config):
+async def test_change_channel(mock_hc, opp, mock_write_config):
     """Test change channel commands."""
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
@@ -227,7 +227,7 @@ async def test_change_channel(mock_hc,.opp, mock_write_config):
     change_channel_mock.assert_awaited_once_with(100)
 
 
-async def test_sync(mock_hc, mock_write_config,.opp):
+async def test_sync(mock_hc, mock_write_config, opp):
     """Test the sync command."""
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}

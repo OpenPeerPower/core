@@ -653,7 +653,7 @@ async def test_setup_with_apps_additional_apps_config(
         assert not service_call2.called
 
 
-def test_invalid_apps_config.opp: OpenPeerPowerType):
+def test_invalid_apps_config(opp: OpenPeerPowerType):
     """Test that schema validation fails on certain conditions."""
     with raises(vol.Invalid):
         vol.Schema(vol.All(VIZIO_SCHEMA, validate_apps))(MOCK_TV_APPS_FAILURE)

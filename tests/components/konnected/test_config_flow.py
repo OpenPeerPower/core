@@ -373,7 +373,7 @@ async def test_ssdp_host_update.opp, mock_panel):
     assert entry.data["access_token"] == "11223344556677889900"
 
 
-async def test_import_existing_config.opp, mock_panel):
+async def test_import_existing_config(opp, mock_panel):
     """Test importing a host with an existing config file."""
     mock_panel.get_status.return_value = {
         "mac": "11:22:33:44:55:66",
@@ -564,7 +564,7 @@ async def test_import_existing_config_entry.opp, mock_panel):
     }
 
 
-async def test_import_pin_config.opp, mock_panel):
+async def test_import_pin_config(opp, mock_panel):
     """Test importing a host with an existing config file that specifies pin configs."""
     mock_panel.get_status.return_value = {
         "mac": "11:22:33:44:55:66",

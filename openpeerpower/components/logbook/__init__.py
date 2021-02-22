@@ -109,7 +109,7 @@ LOG_MESSAGE_SCHEMA = vol.Schema(
 @bind.opp
 def log_entry.opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
-   .opp.add_job(async_log_entry,.opp, name, message, domain, entity_id, context)
+   .opp.add_job(async_log_entry, opp, name, message, domain, entity_id, context)
 
 
 @bind.opp
@@ -763,7 +763,7 @@ class EntityAttributeCache:
     that are expected to change state.
     """
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Init the cache."""
         self.opp = opp
         self._cache = {}

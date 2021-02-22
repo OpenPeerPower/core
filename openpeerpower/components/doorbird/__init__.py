@@ -193,7 +193,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 async def _async_register_events.opp, doorstation):
     try:
-        await.opp.async_add_executor_job(doorstation.register_events,.opp)
+        await.opp.async_add_executor_job(doorstation.register_events, opp)
     except HTTPError:
        .opp.components.persistent_notification.create(
             "Doorbird configuration failed.  Please verify that API "
@@ -263,7 +263,7 @@ class ConfiguredDoorBird:
         """Get token for device."""
         return self._token
 
-    def register_events(self,.opp):
+    def register_events(self, opp):
         """Register events on device."""
         # Get the URL of this server
        .opp_url = get_url.opp)
@@ -285,7 +285,7 @@ class ConfiguredDoorBird:
     def _get_event_name(self, event):
         return f"{self.slug}_{event}"
 
-    def _register_event(self,.opp_url, event):
+    def _register_event(self, opp_url, event):
         """Add a schedule entry in the device for a sensor."""
         url = f".opp_url}{API_URL}/{event}?token={self._token}"
 

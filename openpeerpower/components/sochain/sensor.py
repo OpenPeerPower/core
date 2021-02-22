@@ -35,7 +35,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     name = config.get(CONF_NAME)
 
     session = async_get_clientsession.opp)
-    chainso = ChainSo(network, address,.opp.loop, session)
+    chainso = ChainSo(network, address, opp.loop, session)
 
     async_add_entities([SochainSensor(name, network.upper(), chainso)], True)
 

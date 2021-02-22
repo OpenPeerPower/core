@@ -27,7 +27,7 @@ def mock_dev_track(mock_device_tracker_conf):
 
 
 @pytest.fixture(name="client")
-async def traccar_client(loop,.opp, aiohttp_client):
+async def traccar_client(loop, opp, aiohttp_client):
     """Mock client for Traccar (unauthenticated)."""
     assert await async_setup_component.opp, "persistent_notification", {})
 
@@ -40,7 +40,7 @@ async def traccar_client(loop,.opp, aiohttp_client):
 
 
 @pytest.fixture(autouse=True)
-async def setup_zones(loop,.opp):
+async def setup_zones(loop, opp):
     """Set up Zone config in HA."""
     assert await async_setup_component(
        .opp,

@@ -12,7 +12,7 @@ from .connection import ActiveConnection
 # mypy: allow-untyped-calls, allow-untyped-defs
 
 
-async def _handle_async_response(func,.opp, connection, msg):
+async def _handle_async_response(func, opp, connection, msg):
     """Create a response and handle exception."""
     try:
         await func.opp, connection, msg)
@@ -31,7 +31,7 @@ def async_response(
         """Schedule the handler."""
         # As the webserver is now started before the start
         # event we do not want to block for websocket responders
-        asyncio.create_task(_handle_async_response(func,.opp, connection, msg))
+        asyncio.create_task(_handle_async_response(func, opp, connection, msg))
 
     return schedule_handler
 

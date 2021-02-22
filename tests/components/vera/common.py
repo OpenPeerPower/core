@@ -105,7 +105,7 @@ class ComponentFactory:
         )
 
     async def _configure_component(
-        self,.opp: OpenPeerPower, controller_config: ControllerConfig
+        self, opp: OpenPeerPower, controller_config: ControllerConfig
     ) -> ControllerData:
         """Configure the component with specific mock data."""
         component_config = {
@@ -145,7 +145,7 @@ class ComponentFactory:
            .opp_config[DOMAIN] = component_config
 
         # Setup Open Peer Power.
-        assert await async_setup_component.opp, DOMAIN,.opp_config)
+        assert await async_setup_component.opp, DOMAIN, opp_config)
         await.opp.async_block_till_done()
 
         # Setup component through config flow.

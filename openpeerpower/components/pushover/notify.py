@@ -45,7 +45,7 @@ def get_service.opp, config, discovery_info=None):
 class PushoverNotificationService(BaseNotificationService):
     """Implement the notification service for Pushover."""
 
-    def __init__(self,.opp, user_key, api_token):
+    def __init__(self, opp, user_key, api_token):
         """Initialize the service."""
         self.opp = opp
         self._user_key = user_key

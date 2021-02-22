@@ -17,7 +17,7 @@ from .const import (
 from tests.common import MockConfigEntry, mock_registry
 
 
-async def test_unique_id_migration(mock_hc,.opp, mock_write_config):
+async def test_unique_id_migration(mock_hc, opp, mock_write_config):
     """Test migration of switch unique ids to stable ones."""
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}

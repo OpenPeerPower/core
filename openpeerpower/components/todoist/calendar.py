@@ -280,7 +280,7 @@ class TodoistProjectDevice(CalendarEventDevice):
             task[SUMMARY] for task in self.data.all_project_tasks
         ]
 
-    async def async_get_events(self,.opp, start_date, end_date):
+    async def async_get_events(self, opp, start_date, end_date):
         """Get all events in a specific time frame."""
         return await self.data.async_get_events.opp, start_date, end_date)
 
@@ -510,7 +510,7 @@ class TodoistProjectData:
 
         return event
 
-    async def async_get_events(self,.opp, start_date, end_date):
+    async def async_get_events(self, opp, start_date, end_date):
         """Get all tasks in a specific time frame."""
         if self._id is None:
             project_task_data = [

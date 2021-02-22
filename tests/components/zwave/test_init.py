@@ -46,7 +46,7 @@ async def zwave_setup_ready.opp, zwave_setup):
     await.opp.async_start()
 
 
-async def test_valid_device_config.opp, mock_openzwave):
+async def test_valid_device_config(opp, mock_openzwave):
     """Test valid device config."""
     device_config = {"light.kitchen": {"ignored": "true"}}
     result = await async_setup_component(
@@ -57,7 +57,7 @@ async def test_valid_device_config.opp, mock_openzwave):
     assert result
 
 
-async def test_invalid_device_config.opp, mock_openzwave):
+async def test_invalid_device_config(opp, mock_openzwave):
     """Test invalid device config."""
     device_config = {"light.kitchen": {"some_ignored": "true"}}
     result = await async_setup_component(

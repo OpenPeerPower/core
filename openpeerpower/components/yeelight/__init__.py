@@ -287,13 +287,13 @@ class YeelightScanner:
 
     @classmethod
     @callback
-    def async_get(cls,.opp: OpenPeerPower):
+    def async_get(cls, opp: OpenPeerPower):
         """Get scanner instance."""
         if cls._scanner is None:
             cls._scanner = cls.opp)
         return cls._scanner
 
-    def __init__(self,.opp: OpenPeerPower):
+    def __init__(self, opp: OpenPeerPower):
         """Initialize class."""
         self.opp = opp
         self._seen = {}
@@ -360,7 +360,7 @@ class YeelightScanner:
 class YeelightDevice:
     """Represents single Yeelight device."""
 
-    def __init__(self,.opp, host, config, bulb, capabilities):
+    def __init__(self, opp, host, config, bulb, capabilities):
         """Initialize device."""
         self.opp = opp
         self._config = config

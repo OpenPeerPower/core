@@ -63,7 +63,7 @@ def record_worker_sync.opp):
         yield sync
 
 
-async def test_record_stream.opp,.opp_client, stream_worker_sync, record_worker_sync):
+async def test_record_stream.opp, opp_client, stream_worker_sync, record_worker_sync):
     """
     Test record stream.
 
@@ -99,7 +99,7 @@ async def test_record_stream.opp,.opp_client, stream_worker_sync, record_worker_
 
 
 async def test_record_lookback(
-   .opp,.opp_client, stream_worker_sync, record_worker_sync
+   .opp, opp_client, stream_worker_sync, record_worker_sync
 ):
     """Exercise record with loopback."""
     await async_setup_component.opp, "stream", {"stream": {}})
@@ -119,7 +119,7 @@ async def test_record_lookback(
     stream.stop()
 
 
-async def test_recorder_timeout.opp,.opp_client, stream_worker_sync):
+async def test_recorder_timeout.opp, opp_client, stream_worker_sync):
     """
     Test recorder timeout.
 
@@ -154,7 +154,7 @@ async def test_recorder_timeout.opp,.opp_client, stream_worker_sync):
         await.opp.async_block_till_done()
 
 
-async def test_record_path_not_allowed.opp,.opp_client):
+async def test_record_path_not_allowed.opp, opp_client):
     """Test where the output path is not allowed by open peer power configuration."""
     await async_setup_component.opp, "stream", {"stream": {}})
 
@@ -181,7 +181,7 @@ async def test_recorder_save(tmpdir):
 
 
 async def test_record_stream_audio(
-   .opp,.opp_client, stream_worker_sync, record_worker_sync
+   .opp, opp_client, stream_worker_sync, record_worker_sync
 ):
     """
     Test treatment of different audio inputs.

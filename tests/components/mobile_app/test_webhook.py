@@ -171,7 +171,7 @@ async def test_webhook_handle_get_zones.opp, create_registrations, webhook_clien
     assert zones[0]["entity_id"] == "zone.home"
 
 
-async def test_webhook_handle_get_config.opp, create_registrations, webhook_client):
+async def test_webhook_handle_get_config(opp, create_registrations, webhook_client):
     """Test that we can get config properly."""
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),

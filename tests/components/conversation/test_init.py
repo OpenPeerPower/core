@@ -82,7 +82,7 @@ async def test_register_before_setup_opp):
     assert intent.text_input == "I would like the Grolsch beer"
 
 
-async def test_http_processing_intent.opp,.opp_client,.opp_admin_user):
+async def test_http_processing_intent.opp, opp_client, opp_admin_user):
     """Test processing intent via HTTP API."""
 
     class TestIntentHandler(intent.IntentHandler):
@@ -199,7 +199,7 @@ async def test_toggle_intent.opp, sentence):
     assert call.data == {"entity_id": "light.kitchen"}
 
 
-async def test_http_api.opp,.opp_client):
+async def test_http_api.opp, opp_client):
     """Test the HTTP conversation API."""
     assert await async_setup_component.opp, "openpeerpower", {})
     assert await async_setup_component.opp, "conversation", {})
@@ -221,7 +221,7 @@ async def test_http_api.opp,.opp_client):
     assert call.data == {"entity_id": "light.kitchen"}
 
 
-async def test_http_api_wrong_data.opp,.opp_client):
+async def test_http_api_wrong_data.opp, opp_client):
     """Test the HTTP conversation API."""
     result = await async_setup_component.opp, "openpeerpower", {})
     assert result
@@ -238,7 +238,7 @@ async def test_http_api_wrong_data.opp,.opp_client):
     assert resp.status == 400
 
 
-async def test_custom_agent.opp,.opp_client,.opp_admin_user):
+async def test_custom_agent.opp, opp_client, opp_admin_user):
     """Test a custom conversation agent."""
 
     calls = []

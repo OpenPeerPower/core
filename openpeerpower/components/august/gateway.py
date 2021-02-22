@@ -31,7 +31,7 @@ _LOGGER = logging.getLogger(__name__)
 class AugustGateway:
     """Handle the connection to August."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Init the connection."""
         self._aiohttp_session = aiohttp_client.async_get_clientsession.opp)
         self._token_refresh_lock = asyncio.Lock()

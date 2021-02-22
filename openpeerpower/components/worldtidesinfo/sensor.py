@@ -39,8 +39,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the WorldTidesInfo sensor."""
     name = config.get(CONF_NAME)
 
-    lat = config.get(CONF_LATITUDE,.opp.config.latitude)
-    lon = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    lat = config.get(CONF_LATITUDE, opp.config.latitude)
+    lon = config.get(CONF_LONGITUDE, opp.config.longitude)
     key = config.get(CONF_API_KEY)
 
     if None in (lat, lon):

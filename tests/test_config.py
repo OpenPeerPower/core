@@ -80,9 +80,9 @@ def teardown():
         os.remove(SCENES_PATH)
 
 
-async def test_create_default_config.opp):
+async def test_create_default_config(opp):
     """Test creation of default config."""
-    await config_util.async_create_default_config.opp)
+    await config_util.async_create_default_config(opp)
 
     assert os.path.isfile(YAML_PATH)
     assert os.path.isfile(SECRET_PATH)
@@ -91,7 +91,7 @@ async def test_create_default_config.opp):
     assert os.path.isfile(AUTOMATIONS_PATH)
 
 
-async def test_ensure_config_exists_creates_config.opp):
+async def test_ensure_config_exists_creates_config(opp):
     """Test that calling ensure_config_exists.
 
     If not creates a new config file.
@@ -103,7 +103,7 @@ async def test_ensure_config_exists_creates_config.opp):
     assert mock_print.called
 
 
-async def test_ensure_config_exists_uses_existing_config.opp):
+async def test_ensure_config_exists_uses_existing_config(opp):
     """Test that calling ensure_config_exists uses existing config."""
     create_file(YAML_PATH)
     await config_util.async_ensure_config_exists(opp)
@@ -167,7 +167,7 @@ async def test_create_default_config_returns_none_if_write_error.opp):
     """
    .opp.config.config_dir = os.path.join(CONFIG_DIR, "non_existing_dir/")
     with patch("builtins.print") as mock_print:
-        assert await config_util.async_create_default_config.opp) is False
+        assert await config_util.async_create_default_config(opp) is False
     assert mock_print.called
 
 
@@ -221,7 +221,7 @@ def test_customize_glob_is_ordered():
 
 
 async def _compute_state.opp, config):
-    await config_util.async_process_op_core_config.opp, config)
+    await config_util.async_process_op_core_config(opp, config)
 
     entity = Entity()
     entity.entity_id = "test.test"
@@ -250,7 +250,7 @@ async def test_entity_customization.opp):
 @patch("openpeerpower.config.shutil")
 @patch("openpeerpower.config.os")
 @patch("openpeerpower.config.is_docker_env", return_value=False)
-def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil,.opp):
+def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil, opp):
     """Test removal of library on upgrade from before 0.50."""
     ha_version = "0.49.0"
     mock_os.path.isdir = mock.Mock(return_value=True)
@@ -272,7 +272,7 @@ def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil,.opp):
 @patch("openpeerpower.config.shutil")
 @patch("openpeerpower.config.os")
 @patch("openpeerpower.config.is_docker_env", return_value=True)
-def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil,.opp):
+def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil, opp):
     """Test removal of library on upgrade from before 0.94 and in Docker."""
     ha_version = "0.93.0.dev0"
     mock_os.path.isdir = mock.Mock(return_value=True)
@@ -336,7 +336,7 @@ def test_config_upgrade_no_file.opp):
         assert opened_file.write.call_args == mock.call(__version__)
 
 
-async def test_loading_configuration_from_storage.opp,.opp_storage):
+async def test_loading_configuration_from_storage.opp, opp_storage):
     """Test loading core config onto opp object."""
    .opp_storage["core.config"] = {
         "data": {
@@ -369,7 +369,7 @@ async def test_loading_configuration_from_storage.opp,.opp_storage):
     assert.opp.config.config_source == SOURCE_STORAGE
 
 
-async def test_loading_configuration_from_storage_with_yaml_only.opp,.opp_storage):
+async def test_loading_configuration_from_storage_with_yaml_only.opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
    .opp_storage["core.config"] = {
         "data": {
@@ -399,7 +399,7 @@ async def test_loading_configuration_from_storage_with_yaml_only.opp,.opp_storag
     assert.opp.config.config_source == SOURCE_STORAGE
 
 
-async def test_updating_configuration.opp,.opp_storage):
+async def test_updating_configuration.opp, opp_storage):
     """Test updating configuration stores the new configuration."""
     core_data = {
         "data": {
@@ -427,7 +427,7 @@ async def test_updating_configuration.opp,.opp_storage):
     assert.opp.config.latitude == 50
 
 
-async def test_override_stored_configuration.opp,.opp_storage):
+async def test_override_stored_configuration.opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
    .opp_storage["core.config"] = {
         "data": {
@@ -575,14 +575,14 @@ async def test_loading_configuration_from_packages.opp):
 
 
 @patch("openpeerpower.helpers.check_config.async_check_op_config_file")
-async def test_check_op_config_file_correct(mock_check,.opp):
+async def test_check_op_config_file_correct(mock_check, opp):
     """Check that restart propagates to stop."""
     mock_check.return_value = check_config.OpenPeerPowerConfig()
     assert await config_util.async_check_op_config_file.opp) is None
 
 
 @patch("openpeerpower.helpers.check_config.async_check_op_config_file")
-async def test_check_op_config_file_wrong(mock_check,.opp):
+async def test_check_op_config_file_wrong(mock_check, opp):
     """Check that restart with a bad config doesn't propagate to stop."""
     mock_check.return_value = check_config.OpenPeerPowerConfig()
     mock_check.return_value.add_error("bad")
@@ -591,7 +591,7 @@ async def test_check_op_config_file_wrong(mock_check,.opp):
 
 
 @patch("openpeerpower.config.os.path.isfile", mock.Mock(return_value=True))
-async def test_async_opp_config_yaml_merge(merge_log_err,.opp):
+async def test_async_opp_config_yaml_merge(merge_log_err, opp):
     """Test merge during async config reload."""
     config = {
         config_util.CONF_CORE: {
@@ -620,7 +620,7 @@ def merge_log_err.opp):
         yield logerr
 
 
-async def test_merge(merge_log_err,.opp):
+async def test_merge(merge_log_err, opp):
     """Test if we can merge packages."""
     packages = {
         "pack_dict": {"input_boolean": {"ib1": None}},
@@ -634,7 +634,7 @@ async def test_merge(merge_log_err,.opp):
         "input_boolean": {"ib2": None},
         "light": {"platform": "test"},
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
 
     assert merge_log_err.call_count == 0
     assert len(config) == 5
@@ -644,7 +644,7 @@ async def test_merge(merge_log_err,.opp):
     assert isinstance(config["wake_on_lan"], OrderedDict)
 
 
-async def test_merge_try_falsy(merge_log_err,.opp):
+async def test_merge_try_falsy(merge_log_err, opp):
     """Ensure we don't add falsy items like empty OrderedDict() to list."""
     packages = {
         "pack_falsy_to_lst": {"automation": OrderedDict()},
@@ -655,7 +655,7 @@ async def test_merge_try_falsy(merge_log_err,.opp):
         "automation": {"do": "something"},
         "light": {"some": "light"},
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
 
     assert merge_log_err.call_count == 0
     assert len(config) == 3
@@ -663,7 +663,7 @@ async def test_merge_try_falsy(merge_log_err,.opp):
     assert len(config["light"]) == 1
 
 
-async def test_merge_new(merge_log_err,.opp):
+async def test_merge_new(merge_log_err, opp):
     """Test adding new components to outer scope."""
     packages = {
         "pack_1": {"light": [{"platform": "one"}]},
@@ -675,7 +675,7 @@ async def test_merge_new(merge_log_err,.opp):
         },
     }
     config = {config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages}}
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
 
     assert merge_log_err.call_count == 0
     assert "api" in config
@@ -684,7 +684,7 @@ async def test_merge_new(merge_log_err,.opp):
     assert len(config["panel_custom"]) == 1
 
 
-async def test_merge_type_mismatch(merge_log_err,.opp):
+async def test_merge_type_mismatch(merge_log_err, opp):
     """Test if we have a type mismatch for packages."""
     packages = {
         "pack_1": {"input_boolean": [{"ib1": None}]},
@@ -697,7 +697,7 @@ async def test_merge_type_mismatch(merge_log_err,.opp):
         "input_select": [{"ib2": None}],
         "light": [{"platform": "two"}],
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
 
     assert merge_log_err.call_count == 2
     assert len(config) == 4
@@ -705,11 +705,11 @@ async def test_merge_type_mismatch(merge_log_err,.opp):
     assert len(config["light"]) == 2
 
 
-async def test_merge_once_only_keys(merge_log_err,.opp):
+async def test_merge_once_only_keys(merge_log_err, opp):
     """Test if we have a merge for a comp that may occur only once. Keys."""
     packages = {"pack_2": {"api": None}}
     config = {config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages}, "api": None}
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
     assert config["api"] == OrderedDict()
 
     packages = {"pack_2": {"api": {"key_3": 3}}}
@@ -717,7 +717,7 @@ async def test_merge_once_only_keys(merge_log_err,.opp):
         config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages},
         "api": {"key_1": 1, "key_2": 2},
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
     assert config["api"] == {"key_1": 1, "key_2": 2, "key_3": 3}
 
     # Duplicate keys error
@@ -726,7 +726,7 @@ async def test_merge_once_only_keys(merge_log_err,.opp):
         config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages},
         "api": {"key": 1},
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
     assert merge_log_err.call_count == 1
 
 
@@ -741,7 +741,7 @@ async def test_merge_once_only_lists.opp):
         config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages},
         "api": {"list_1": ["item_1"]},
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
     assert config["api"] == {
         "list_1": ["item_1", "item_2", "item_3"],
         "list_2": ["item_4"],
@@ -764,7 +764,7 @@ async def test_merge_once_only_dictionaries.opp):
         config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages},
         "api": {"dict_1": {"key_1": 1, "dict_1.1": {"key_1.1": 1.1}}},
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
     assert config["api"] == {
         "dict_1": {
             "key_1": 1,
@@ -792,14 +792,14 @@ async def test_merge_id_schema.opp):
         assert typ == expected_type, f"{domain} expected {expected_type}, got {typ}"
 
 
-async def test_merge_duplicate_keys(merge_log_err,.opp):
+async def test_merge_duplicate_keys(merge_log_err, opp):
     """Test if keys in dicts are duplicates."""
     packages = {"pack_1": {"input_select": {"ib1": None}}}
     config = {
         config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages},
         "input_select": {"ib1": 1},
     }
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
 
     assert merge_log_err.call_count == 1
     assert len(config) == 2
@@ -820,12 +820,12 @@ async def test_merge_customize.opp):
             "pkg1": {"openpeerpower": {"customize": {"b.b": {"friendly_name": "BB"}}}}
         },
     }
-    await config_util.async_process_op_core_config.opp, core_config)
+    await config_util.async_process_op_core_config(opp, core_config)
 
     assert.opp.data[config_util.DATA_CUSTOMIZE].get("b.b") == {"friendly_name": "BB"}
 
 
-async def test_auth_provider_config.opp):
+async def test_auth_provider_config(opp):
     """Test loading auth provider config onto opp object."""
     core_config = {
         "latitude": 60,
@@ -842,7 +842,7 @@ async def test_auth_provider_config.opp):
     }
     if hasattr.opp, "auth"):
         del.opp.auth
-    await config_util.async_process_op_core_config.opp, core_config)
+    await config_util.async_process_op_core_config(opp, core_config)
 
     assert len.opp.auth.auth_providers) == 2
     assert.opp.auth.auth_providers[0].type == "openpeerpower"
@@ -864,7 +864,7 @@ async def test_auth_provider_config_default.opp):
     }
     if hasattr.opp, "auth"):
         del.opp.auth
-    await config_util.async_process_op_core_config.opp, core_config)
+    await config_util.async_process_op_core_config(opp, core_config)
 
     assert len.opp.auth.auth_providers) == 1
     assert.opp.auth.auth_providers[0].type == "openpeerpower"
@@ -872,7 +872,7 @@ async def test_auth_provider_config_default.opp):
     assert.opp.auth.auth_mfa_modules[0].id == "totp"
 
 
-async def test_disallowed_auth_provider_config.opp):
+async def test_disallowed_auth_provider_config(opp):
     """Test loading insecure example auth provider is disallowed."""
     core_config = {
         "latitude": 60,
@@ -895,10 +895,10 @@ async def test_disallowed_auth_provider_config.opp):
         ],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op_core_config.opp, core_config)
+        await config_util.async_process_op_core_config(opp, core_config)
 
 
-async def test_disallowed_duplicated_auth_provider_config.opp):
+async def test_disallowed_duplicated_auth_provider_config(opp):
     """Test loading insecure example auth provider is disallowed."""
     core_config = {
         "latitude": 60,
@@ -910,10 +910,10 @@ async def test_disallowed_duplicated_auth_provider_config.opp):
         CONF_AUTH_PROVIDERS: [{"type": "openpeerpower"}, {"type": "openpeerpower"}],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op_core_config.opp, core_config)
+        await config_util.async_process_op_core_config(opp, core_config)
 
 
-async def test_disallowed_auth_mfa_module_config.opp):
+async def test_disallowed_auth_mfa_module_config(opp):
     """Test loading insecure example auth mfa module is disallowed."""
     core_config = {
         "latitude": 60,
@@ -930,10 +930,10 @@ async def test_disallowed_auth_mfa_module_config.opp):
         ],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op_core_config.opp, core_config)
+        await config_util.async_process_op_core_config(opp, core_config)
 
 
-async def test_disallowed_duplicated_auth_mfa_module_config.opp):
+async def test_disallowed_duplicated_auth_mfa_module_config(opp):
     """Test loading insecure example auth mfa module is disallowed."""
     core_config = {
         "latitude": 60,
@@ -945,7 +945,7 @@ async def test_disallowed_duplicated_auth_mfa_module_config.opp):
         CONF_AUTH_MFA_MODULES: [{"type": "totp"}, {"type": "totp"}],
     }
     with pytest.raises(Invalid):
-        await config_util.async_process_op_core_config.opp, core_config)
+        await config_util.async_process_op_core_config(opp, core_config)
 
 
 async def test_merge_split_component_definition.opp):
@@ -955,7 +955,7 @@ async def test_merge_split_component_definition.opp):
         "pack_2": {"light two": {"l2": None}, "light three": {"l3": None}},
     }
     config = {config_util.CONF_CORE: {config_util.CONF_PACKAGES: packages}}
-    await config_util.merge_packages_config.opp, config, packages)
+    await config_util.merge_packages_config(opp, config, packages)
 
     assert len(config) == 4
     assert len(config["light one"]) == 1

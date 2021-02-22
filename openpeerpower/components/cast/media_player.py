@@ -177,7 +177,7 @@ async def _async_setup_platform(
         async_cast_discovered(chromecast)
 
     ChromeCastZeroconf.set_zeroconf(await zeroconf.async_get_instance.opp))
-   .opp.async_add_executor_job(setup_internal_discovery,.opp)
+   .opp.async_add_executor_job(setup_internal_discovery, opp)
 
 
 class CastDevice(MediaPlayerEntity):
@@ -819,7 +819,7 @@ class CastDevice(MediaPlayerEntity):
 class DynamicCastGroup:
     """Representation of a Cast device on the network - for dynamic cast groups."""
 
-    def __init__(self,.opp, cast_info: ChromecastInfo):
+    def __init__(self, opp, cast_info: ChromecastInfo):
         """Initialize the cast device."""
 
         self.opp =.opp

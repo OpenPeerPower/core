@@ -191,7 +191,7 @@ async def test_import.opp):
 
 
 @pytest.mark.parametrize("auto_start", [True, False])
-async def test_options_flow_exclude_mode_advanced(auto_start,.opp):
+async def test_options_flow_exclude_mode_advanced(auto_start, opp):
     """Test config flow options in exclude mode with advanced options."""
 
     config_entry = _mock_config_entry_with_options_populated()

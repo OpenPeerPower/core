@@ -15,7 +15,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import assert_setup_component
 
 
-async def test_invalid_config.opp):
+async def test_invalid_config(opp):
     """Test invalid configuration."""
     with assert_setup_component(0):
         assert not await async_setup_component(

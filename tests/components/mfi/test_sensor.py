@@ -26,7 +26,7 @@ GOOD_CONFIG = {
 }
 
 
-async def test_setup_missing_config.opp):
+async def test_setup_missing_config(opp):
     """Test setup with missing configuration."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         config = {"sensor": {"platform": "mfi"}}
@@ -108,8 +108,8 @@ async def test_setup_adds_proper_devices.opp):
         await.opp.async_block_till_done()
         for ident, port in ports.items():
             if ident != "bad":
-                mock_sensor.assert_any_call(port,.opp)
-        assert mock.call(ports["bad"],.opp) not in mock_sensor.mock_calls
+                mock_sensor.assert_any_call(port, opp)
+        assert mock.call(ports["bad"], opp) not in mock_sensor.mock_calls
 
 
 @pytest.fixture(name="port")
@@ -121,7 +121,7 @@ def port_fixture():
 @pytest.fixture(name="sensor")
 def sensor_fixture.opp, port):
     """Sensor fixture."""
-    return mfi.MfiSensor(port,.opp)
+    return mfi.MfiSensor(port, opp)
 
 
 async def test_name(port, sensor):

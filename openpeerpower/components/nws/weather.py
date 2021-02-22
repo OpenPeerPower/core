@@ -88,8 +88,8 @@ async def async_setup_entry(
 
     async_add_entities(
         [
-            NWSWeather(entry.data,.opp_data, DAYNIGHT,.opp.config.units),
-            NWSWeather(entry.data,.opp_data, HOURLY,.opp.config.units),
+            NWSWeather(entry.data, opp_data, DAYNIGHT, opp.config.units),
+            NWSWeather(entry.data, opp_data, HOURLY, opp.config.units),
         ],
         False,
     )
@@ -98,7 +98,7 @@ async def async_setup_entry(
 class NWSWeather(WeatherEntity):
     """Representation of a weather condition."""
 
-    def __init__(self, entry_data,.opp_data, mode, units):
+    def __init__(self, entry_data, opp_data, mode, units):
         """Initialise the platform with a data instance and station name."""
         self.nws =.opp_data[NWS_DATA]
         self.latitude = entry_data[CONF_LATITUDE]

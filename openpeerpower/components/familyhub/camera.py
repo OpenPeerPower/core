@@ -24,7 +24,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     name = config.get(CONF_NAME)
 
     session = async_get_clientsession.opp)
-    family_hub_cam = FamilyHubCam(address,.opp.loop, session)
+    family_hub_cam = FamilyHubCam(address, opp.loop, session)
 
     async_add_entities([FamilyHubCamera(name, family_hub_cam)], True)
 

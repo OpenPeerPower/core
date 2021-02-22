@@ -176,7 +176,7 @@ class _Trait:
         """Return if the trait might ask for 2FA."""
         return False
 
-    def __init__(self,.opp, state, config):
+    def __init__(self, opp, state, config):
         """Initialize a trait for a state."""
         self.opp =.opp
         self.state = state

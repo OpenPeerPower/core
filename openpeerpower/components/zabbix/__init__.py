@@ -164,7 +164,7 @@ class ZabbixThread(threading.Thread):
 
     MAX_TRIES = 3
 
-    def __init__(self,.opp, zabbix_sender, event_to_metrics):
+    def __init__(self, opp, zabbix_sender, event_to_metrics):
         """Initialize the listener."""
         threading.Thread.__init__(self, name="Zabbix")
         self.queue = queue.Queue()
@@ -175,7 +175,7 @@ class ZabbixThread(threading.Thread):
         self.float_keys = set()
         self.string_keys = set()
 
-    def setup(self,.opp):
+    def setup(self, opp):
         """Set up the thread and start it."""
        .opp.bus.listen(EVENT_STATE_CHANGED, self._event_listener)
        .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self._shutdown)

@@ -48,7 +48,7 @@ class LircInterface(threading.Thread):
     around until a non-empty response is obtained from lirc.
     """
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Construct a LIRC interface object."""
         threading.Thread.__init__(self)
         self.daemon = True

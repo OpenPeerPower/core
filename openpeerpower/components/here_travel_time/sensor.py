@@ -179,7 +179,7 @@ async def async_setup_platform(
     traffic_mode = config[CONF_TRAFFIC_MODE]
     route_mode = config[CONF_ROUTE_MODE]
     name = config[CONF_NAME]
-    units = config.get(CONF_UNIT_SYSTEM,.opp.config.units.name)
+    units = config.get(CONF_UNIT_SYSTEM, opp.config.units.name)
     arrival = config.get(CONF_ARRIVAL)
     departure = config.get(CONF_DEPARTURE)
 

@@ -67,7 +67,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class LifxCloudScene(Scene):
     """Representation of a LIFX Cloud scene."""
 
-    def __init__(self,.opp, headers, timeout, scene_data):
+    def __init__(self, opp, headers, timeout, scene_data):
         """Initialize the scene."""
         self.opp =.opp
         self._headers = headers

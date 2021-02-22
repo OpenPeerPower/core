@@ -234,7 +234,7 @@ def merge_hsbk(base, change):
 class LIFXManager:
     """Representation of all known LIFX entities."""
 
-    def __init__(self,.opp, platform, async_add_entities):
+    def __init__(self, opp, platform, async_add_entities):
         """Initialize the light."""
         self.entities = {}
         self.opp =.opp

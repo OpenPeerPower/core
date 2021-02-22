@@ -125,7 +125,7 @@ class HomeworksKeypadEvent:
     instead of a sensor entity in.opp.
     """
 
-    def __init__(self,.opp, addr, name):
+    def __init__(self, opp, addr, name):
         """Register callback that will be used for signals."""
         self.opp = opp
         self._addr = addr

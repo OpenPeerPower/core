@@ -43,8 +43,8 @@ def setup_platform.opp, config, add_devices, discovery_info=None):
             station_id=config[CONF_STATION], precip_type=config.get(CONF_PRECIP_TYPE)
         )
     else:
-        lat = config.get(CONF_LATITUDE,.opp.config.latitude)
-        lon = config.get(CONF_LONGITUDE,.opp.config.longitude)
+        lat = config.get(CONF_LATITUDE, opp.config.latitude)
+        lon = config.get(CONF_LONGITUDE, opp.config.longitude)
         radar_object = ECRadar(
             coordinates=(lat, lon), precip_type=config.get(CONF_PRECIP_TYPE)
         )

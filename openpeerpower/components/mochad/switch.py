@@ -39,7 +39,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class MochadSwitch(SwitchEntity):
     """Representation of a X10 switch over Mochad."""
 
-    def __init__(self,.opp, ctrl, dev):
+    def __init__(self, opp, ctrl, dev):
         """Initialize a Mochad Switch Device."""
 
         self._controller = ctrl

@@ -30,7 +30,7 @@ class MockAioSession:
         )
 
 
-async def test_empty_config.opp):
+async def test_empty_config(opp):
     """Test a default config will be create for empty config."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component.opp, "aws", {"aws": {}})

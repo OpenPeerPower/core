@@ -47,7 +47,7 @@ def setup_scanner.opp, config: ConfigType, see, discovery_info=None):
 class GoogleMapsScanner:
     """Representation of an Google Maps location sharing account."""
 
-    def __init__(self,.opp, config: ConfigType, see) -> None:
+    def __init__(self, opp, config: ConfigType, see) -> None:
         """Initialize the scanner."""
         self.see = see
         self.username = config[CONF_USERNAME]

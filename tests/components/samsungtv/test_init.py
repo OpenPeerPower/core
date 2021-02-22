@@ -80,7 +80,7 @@ async def test_setup_opp, remote):
         assert remote.call_args == call(REMOTE_CALL)
 
 
-async def test_setup_duplicate_config.opp, remote, caplog):
+async def test_setup_duplicate_config(opp, remote, caplog):
     """Test duplicate setup of platform."""
     DUPLICATE = {
         SAMSUNGTV_DOMAIN: [

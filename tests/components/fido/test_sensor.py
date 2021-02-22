@@ -40,7 +40,7 @@ class FidoClientMockError(FidoClientMock):
         raise PyFidoError("Fake Error")
 
 
-async def test_fido_sensor(loop,.opp):
+async def test_fido_sensor(loop, opp):
     """Test the Fido number sensor."""
     with patch("openpeerpower.components.fido.sensor.FidoClient", new=FidoClientMock):
         config = {

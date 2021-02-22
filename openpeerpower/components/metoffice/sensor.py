@@ -85,7 +85,7 @@ async def async_setup_entry(
 
     async_add_entities(
         [
-            MetOfficeCurrentSensor(entry.data,.opp_data, sensor_type)
+            MetOfficeCurrentSensor(entry.data, opp_data, sensor_type)
             for sensor_type in SENSOR_TYPES
         ],
         False,
@@ -95,7 +95,7 @@ async def async_setup_entry(
 class MetOfficeCurrentSensor(Entity):
     """Implementation of a Met Office current weather condition sensor."""
 
-    def __init__(self, entry_data,.opp_data, sensor_type):
+    def __init__(self, entry_data, opp_data, sensor_type):
         """Initialize the sensor."""
         self._data =.opp_data[METOFFICE_DATA]
         self._coordinator =.opp_data[METOFFICE_COORDINATOR]

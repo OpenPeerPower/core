@@ -54,7 +54,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class AtagDataUpdateCoordinator(DataUpdateCoordinator):
     """Define an object to hold Atag data."""
 
-    def __init__(self,.opp, session, entry):
+    def __init__(self, opp, session, entry):
         """Initialize."""
         self.atag = AtagOne(session=session, **entry.data)
 

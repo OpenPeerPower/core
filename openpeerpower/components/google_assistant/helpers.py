@@ -91,7 +91,7 @@ class AbstractConfig(ABC):
 
     _unsub_report_state = None
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize abstract config."""
         self.opp =.opp
         self._store = None
@@ -273,7 +273,7 @@ class AbstractConfig(ABC):
         webhook.async_unregister(self.opp, self.local_sdk_webhook_id)
         self._local_sdk_active = False
 
-    async def _handle_local_webhook(self,.opp, webhook_id, request):
+    async def _handle_local_webhook(self, opp, webhook_id, request):
         """Handle an incoming local SDK message."""
         # Circular dep
         # pylint: disable=import-outside-toplevel
@@ -303,7 +303,7 @@ class GoogleConfigStore:
     _STORAGE_VERSION = 1
     _STORAGE_KEY = DOMAIN
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize a configuration store."""
         self.opp = opp
         self._store = Store.opp, self._STORAGE_VERSION, self._STORAGE_KEY)
@@ -369,7 +369,7 @@ def get_google_type(domain, device_class):
 class GoogleEntity:
     """Adaptation of Entity expressed in Google's terms."""
 
-    def __init__(self,.opp: OpenPeerPower, config: AbstractConfig, state: State):
+    def __init__(self, opp: OpenPeerPower, config: AbstractConfig, state: State):
         """Initialize a Google entity."""
         self.opp =.opp
         self.config = config

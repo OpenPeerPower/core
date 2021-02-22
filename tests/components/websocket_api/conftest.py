@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
-async def websocket_client.opp,.opp_ws_client):
+async def websocket_client.opp, opp_ws_client):
     """Create a websocket client."""
     return await.opp_ws_client.opp)
 

@@ -54,7 +54,7 @@ async def async_unload_entry.opp, entry):
 class CertExpiryDataUpdateCoordinator(DataUpdateCoordinator[datetime]):
     """Class to manage fetching Cert Expiry data from single endpoint."""
 
-    def __init__(self,.opp, host, port):
+    def __init__(self, opp, host, port):
         """Initialize global Cert Expiry data updater."""
         self.host = host
         self.port = port

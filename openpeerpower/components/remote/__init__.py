@@ -71,7 +71,7 @@ def is_on.opp: OpenPeerPowerType, entity_id: str) -> bool:
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Track states and offer events for remotes."""
     component =.opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN,.opp, SCAN_INTERVAL
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
     await component.async_setup(config)
 
@@ -127,12 +127,12 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
-    return await cast(EntityComponent,.opp.data[DOMAIN]).async_setup_entry(entry)
+    return await cast(EntityComponent, opp.data[DOMAIN]).async_setup_entry(entry)
 
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    return await cast(EntityComponent,.opp.data[DOMAIN]).async_unload_entry(entry)
+    return await cast(EntityComponent, opp.data[DOMAIN]).async_unload_entry(entry)
 
 
 class RemoteEntity(ToggleEntity):

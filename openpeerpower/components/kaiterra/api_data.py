@@ -25,7 +25,7 @@ POLLUTANTS = {"rpm25c": "PM2.5", "rpm10c": "PM10", "rtvoc": "TVOC", "rco2": "CO2
 class KaiterraApiData:
     """Get data from Kaiterra API."""
 
-    def __init__(self,.opp, config, session):
+    def __init__(self, opp, config, session):
         """Initialize the API data object."""
 
         api_key = config[CONF_API_KEY]

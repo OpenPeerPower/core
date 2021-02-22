@@ -102,7 +102,7 @@ CONFIG_SCHEMA = vol.Schema({DOMAIN: HTTP_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
 @bind.opp
-async def async_get_last_config.opp: OpenPeerPower) -> Optional[dict]:
+async def async_get_last_config(opp: OpenPeerPower) -> Optional[dict]:
     """Return the last known working config."""
     store = storage.Store.opp, STORAGE_VERSION, STORAGE_KEY)
     return cast(Optional[dict], await store.async_load())
@@ -173,7 +173,7 @@ async def async_setup_opp, config):
 
        .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_server)
 
-        await start_http_server_and_save_config.opp, dict(conf), server)
+        await start_http_server_and_save_config(opp, dict(conf), server)
 
     async def async_wait_frontend_load(event: Event) -> None:
         """Wait for the frontend to load."""

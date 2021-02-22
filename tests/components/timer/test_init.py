@@ -49,7 +49,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def storage_setup_opp,.opp_storage):
+def storage_setup_opp, opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):
@@ -80,7 +80,7 @@ def storage_setup_opp,.opp_storage):
     return _storage
 
 
-async def test_config.opp):
+async def test_config(opp):
     """Test config."""
     invalid_configs = [None, 1, {}, {"name with space": None}]
 
@@ -92,7 +92,7 @@ async def test_config_options.opp):
     """Test configuration options."""
     count_start = len.opp.states.async_entity_ids())
 
-    _LOGGER.debug("ENTITIES @ start: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
     config = {
         DOMAIN: {
@@ -245,12 +245,12 @@ async def test_no_initial_state_and_no_restore_state.opp):
     assert state.state == STATUS_IDLE
 
 
-async def test_config_reload.opp,.opp_admin_user,.opp_read_only_user):
+async def test_config_reload.opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    _LOGGER.debug("ENTITIES @ start: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
     config = {
         DOMAIN: {
@@ -472,7 +472,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert state.state == STATUS_IDLE
 
 
-async def test_ws_list.opp,.opp_ws_client, storage_setup):
+async def test_ws_list.opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
@@ -492,7 +492,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "timer from storage"
 
 
-async def test_ws_delete.opp,.opp_ws_client, storage_setup):
+async def test_ws_delete.opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -518,7 +518,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) is None
 
 
-async def test_update.opp,.opp_ws_client, storage_setup):
+async def test_update.opp, opp_ws_client, storage_setup):
     """Test updating timer entity."""
 
     assert await storage_setup()
@@ -548,7 +548,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     assert state.attributes[ATTR_DURATION] == _format_timedelta(cv.time_period(33))
 
 
-async def test_ws_create.opp,.opp_ws_client, storage_setup):
+async def test_ws_create.opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 
@@ -579,7 +579,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) == timer_entity_id
 
 
-async def test_setup_no_config.opp,.opp_admin_user):
+async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
     assert await async_setup_component.opp, DOMAIN, {})

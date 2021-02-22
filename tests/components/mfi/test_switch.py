@@ -46,7 +46,7 @@ async def test_setup_adds_proper_devices.opp):
         for ident, port in ports.items():
             if ident != "bad":
                 mock_switch.assert_any_call(port)
-        assert mock.call(ports["bad"],.opp) not in mock_switch.mock_calls
+        assert mock.call(ports["bad"], opp) not in mock_switch.mock_calls
 
 
 @pytest.fixture(name="port")

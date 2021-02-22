@@ -46,7 +46,7 @@ async def async_validate_trigger_config(
     for conf in trigger_config:
         platform = await _async_get_trigger_platform.opp, conf)
         if hasattr(platform, "async_validate_trigger_config"):
-            conf = await platform.async_validate_trigger_config.opp, conf)
+            conf = await platform.async_validate_trigger_config(opp, conf)
         else:
             conf = platform.TRIGGER_SCHEMA(conf)
         config.append(conf)

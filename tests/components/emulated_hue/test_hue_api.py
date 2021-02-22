@@ -96,7 +96,7 @@ ENTITY_NUMBERS_BY_ID = {v: k for k, v in ENTITY_IDS_BY_NUMBER.items()}
 
 
 @pytest.fixture
-def.opp_hue(loop,.opp):
+def.opp_hue(loop, opp):
     """Set up a Open Peer Power instance for these tests."""
     # We need to do this to get access to openpeerpower/turn_(on,off)
     loop.run_until_complete(setup.async_setup_component.opp, "openpeerpower", {}))
@@ -206,7 +206,7 @@ def.opp_hue(loop,.opp):
 
 
 @pytest.fixture
-def hue_client(loop,.opp_hue, aiohttp_client):
+def hue_client(loop, opp_hue, aiohttp_client):
     """Create web client for emulated hue api."""
     web_app =.opp_hue.http.app
     config = Config(
@@ -597,7 +597,7 @@ async def test_get_light_state.opp_hue, hue_client):
     await perform_get_light_state(hue_client, "light.kitchen_lights", HTTP_UNAUTHORIZED)
 
 
-async def test_put_light_state.opp,.opp_hue, hue_client):
+async def test_put_light_state.opp, opp_hue, hue_client):
     """Test the setting of light states."""
     await perform_put_test_on_ceiling_lights.opp_hue, hue_client)
 
@@ -765,7 +765,7 @@ async def test_put_light_state.opp,.opp_hue, hue_client):
     assert call_turn_on[0].data[light.ATTR_TRANSITION] == 6
 
 
-async def test_put_light_state_script.opp,.opp_hue, hue_client):
+async def test_put_light_state_script.opp, opp_hue, hue_client):
     """Test the setting of script variables."""
     # Turn the kitchen light off first
     await.opp_hue.services.async_call(
@@ -1301,7 +1301,7 @@ async def test_unauthorized_user_blocked(hue_client):
         assert result_json[0]["error"]["description"] == "unauthorized user"
 
 
-async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
+async def test_put_then_get_cached_properly.opp, opp_hue, hue_client):
     """Test the setting of light states and an immediate readback reads the same values."""
 
     # Turn the bedroom light on first
@@ -1424,7 +1424,7 @@ async def test_put_then_get_cached_properly.opp,.opp_hue, hue_client):
         assert ceiling_json["state"][HUE_API_STATE_BRI] == 127
 
 
-async def test_put_than_get_when_service_call_fails.opp,.opp_hue, hue_client):
+async def test_put_than_get_when_service_call_fails.opp, opp_hue, hue_client):
     """Test putting and getting the light state when the service call fails."""
 
     # Turn the bedroom light off first
@@ -1474,14 +1474,14 @@ async def test_put_than_get_when_service_call_fails.opp,.opp_hue, hue_client):
     assert ceiling_json["state"][HUE_API_STATE_ON] is False
 
 
-async def test_get_invalid_entity.opp,.opp_hue, hue_client):
+async def test_get_invalid_entity.opp, opp_hue, hue_client):
     """Test the setting of light states and an immediate readback reads the same values."""
 
     # Check that we get an error with an invalid entity number.
     await perform_get_light_state_by_number(hue_client, 999, HTTP_NOT_FOUND)
 
 
-async def test_put_light_state_scene.opp,.opp_hue, hue_client):
+async def test_put_light_state_scene.opp, opp_hue, hue_client):
     """Test the setting of scene variables."""
     # Turn the kitchen lights off first
     await.opp_hue.services.async_call(
@@ -1523,7 +1523,7 @@ async def test_put_light_state_scene.opp,.opp_hue, hue_client):
     assert.opp_hue.states.get("light.kitchen_lights").state == STATE_OFF
 
 
-async def test_only_change_contrast.opp,.opp_hue, hue_client):
+async def test_only_change_contrast.opp, opp_hue, hue_client):
     """Test when only changing the contrast of a light state."""
 
     # Turn the kitchen lights off first
@@ -1552,7 +1552,7 @@ async def test_only_change_contrast.opp,.opp_hue, hue_client):
     assert ceiling_lights.attributes[light.ATTR_BRIGHTNESS] == 255
 
 
-async def test_only_change_hue_or_saturation.opp,.opp_hue, hue_client):
+async def test_only_change_hue_or_saturation.opp, opp_hue, hue_client):
     """Test setting either the hue or the saturation but not both."""
 
     # TODO: The handling of this appears wrong, as setting only one will set the other to 0.

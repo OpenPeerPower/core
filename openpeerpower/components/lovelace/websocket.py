@@ -67,7 +67,7 @@ async def websocket_lovelace_resources.opp, connection, msg):
     }
 )
 @_handle_errors
-async def websocket_lovelace_config.opp, connection, msg, config):
+async def websocket_lovelace_config(opp, connection, msg, config):
     """Send Lovelace UI config over WebSocket configuration."""
     return await config.async_load(msg["force"])
 
@@ -82,7 +82,7 @@ async def websocket_lovelace_config.opp, connection, msg, config):
     }
 )
 @_handle_errors
-async def websocket_lovelace_save_config.opp, connection, msg, config):
+async def websocket_lovelace_save_config(opp, connection, msg, config):
     """Save Lovelace UI configuration."""
     await config.async_save(msg["config"])
 
@@ -96,7 +96,7 @@ async def websocket_lovelace_save_config.opp, connection, msg, config):
     }
 )
 @_handle_errors
-async def websocket_lovelace_delete_config.opp, connection, msg, config):
+async def websocket_lovelace_delete_config(opp, connection, msg, config):
     """Delete Lovelace UI configuration."""
     await config.async_delete()
 

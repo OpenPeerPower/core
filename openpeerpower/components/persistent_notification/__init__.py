@@ -56,13 +56,13 @@ STATUS_READ = "read"
 @bind.opp
 def create.opp, message, title=None, notification_id=None):
     """Generate a notification."""
-   .opp.add_job(async_create,.opp, message, title, notification_id)
+   .opp.add_job(async_create, opp, message, title, notification_id)
 
 
 @bind.opp
 def dismiss.opp, notification_id):
     """Remove a notification."""
-   .opp.add_job(async_dismiss,.opp, notification_id)
+   .opp.add_job(async_dismiss, opp, notification_id)
 
 
 @callback
@@ -112,7 +112,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
             entity_id = ENTITY_ID_FORMAT.format(slugify(notification_id))
         else:
             entity_id = async_generate_entity_id(
-                ENTITY_ID_FORMAT, DEFAULT_OBJECT_ID,.opp.opp
+                ENTITY_ID_FORMAT, DEFAULT_OBJECT_ID, opp.opp
             )
             notification_id = entity_id.split(".")[1]
 

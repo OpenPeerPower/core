@@ -46,7 +46,7 @@ def setup_bans.opp, app, login_threshold):
     async def ban_startup(app):
         """Initialize bans when app starts up."""
         app[KEY_BANNED_IPS] = await async_load_ip_bans_config(
-           .opp,.opp.config.path(IP_BANS_FILE)
+           .opp, opp.config.path(IP_BANS_FILE)
         )
 
     app.on_startup.append(ban_startup)
@@ -140,7 +140,7 @@ async def process_wrong_login(request):
         request.app[KEY_BANNED_IPS].append(new_ban)
 
         await.opp.async_add_executor_job(
-            update_ip_bans_config,.opp.config.path(IP_BANS_FILE), new_ban
+            update_ip_bans_config, opp.config.path(IP_BANS_FILE), new_ban
         )
 
         _LOGGER.warning("Banned IP %s for too many login attempts", remote_addr)
@@ -184,7 +184,7 @@ class IpBan:
         self.banned_at = banned_at or dt_util.utcnow()
 
 
-async def async_load_ip_bans_config.opp: OpenPeerPower, path: str) -> List[IpBan]:
+async def async_load_ip_bans_config(opp: OpenPeerPower, path: str) -> List[IpBan]:
     """Load list of banned IPs from config file."""
     ip_list: List[IpBan] = []
 

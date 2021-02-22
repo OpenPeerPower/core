@@ -21,7 +21,7 @@ from tests.common import MockConfigEntry
 
 
 @patch("openpeerpower.components.gogogate2.common.GogoGate2Api")
-async def test_config_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
+async def test_config_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
     """Test config setup where the config is updated."""
 
     api = MagicMock(GogoGate2Api)
@@ -50,7 +50,7 @@ async def test_config_update(gogogate2api_mock,.opp: OpenPeerPower) -> None:
 
 
 @patch("openpeerpower.components.gogogate2.common.ISmartGateApi")
-async def test_config_no_update(ismartgateapi_mock,.opp: OpenPeerPower) -> None:
+async def test_config_no_update(ismartgateapi_mock, opp: OpenPeerPower) -> None:
     """Test config setup where the data is not updated."""
     api = MagicMock(GogoGate2Api)
     api.async_info.side_effect = Exception("Error")

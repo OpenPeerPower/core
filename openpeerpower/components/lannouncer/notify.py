@@ -40,7 +40,7 @@ def get_service.opp, config, discovery_info=None):
 class LannouncerNotificationService(BaseNotificationService):
     """Implementation of a notification service for Lannouncer."""
 
-    def __init__(self,.opp, host, port):
+    def __init__(self, opp, host, port):
         """Initialize the service."""
         self.opp = opp
         self._host = host

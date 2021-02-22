@@ -37,7 +37,7 @@ class AsyncTrackStates:
     Must be run within the event loop.
     """
 
-    def __init__(self,.opp: OpenPeerPowerType) -> None:
+    def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize a TrackStates block."""
         self.opp =.opp
         self.states: List[State] = []

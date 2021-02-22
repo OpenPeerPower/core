@@ -123,7 +123,7 @@ class SkybeaconTemp(Entity):
 class Monitor(threading.Thread):
     """Connection handling."""
 
-    def __init__(self,.opp, mac, name):
+    def __init__(self, opp, mac, name):
         """Construct interface object."""
         threading.Thread.__init__(self)
         self.daemon = False

@@ -85,7 +85,7 @@ class FFmpegBinarySensor(FFmpegBase, BinarySensorEntity):
 class FFmpegMotion(FFmpegBinarySensor):
     """A binary sensor which use FFmpeg for noise detection."""
 
-    def __init__(self,.opp, manager, config):
+    def __init__(self, opp, manager, config):
         """Initialize FFmpeg motion binary sensor."""
         super().__init__(config)
         self.ffmpeg = ffmpeg_sensor.SensorMotion(manager.binary, self._async_callback)

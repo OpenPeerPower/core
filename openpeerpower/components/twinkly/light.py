@@ -34,7 +34,7 @@ async def async_setup_entry(
 ) -> None:
     """Setups an entity from a config entry (UI config flow)."""
 
-    entity = TwinklyLight(config_entry,.opp)
+    entity = TwinklyLight(config_entry, opp)
 
     async_add_entities([entity], update_before_add=True)
 

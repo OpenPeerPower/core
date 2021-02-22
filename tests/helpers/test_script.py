@@ -575,7 +575,7 @@ async def test_wait_for_trigger_variables.opp):
         },
     ]
     sequence = cv.SCRIPT_SCHEMA(actions)
-    sequence = await script.async_validate_actions_config.opp, sequence)
+    sequence = await script.async_validate_actions_config(opp, sequence)
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, wait_alias)
 
@@ -1109,7 +1109,7 @@ async def test_condition_basic.opp, caplog):
 
 
 @patch("openpeerpower.helpers.script.condition.async_from_config")
-async def test_condition_created_once(async_from_config,.opp):
+async def test_condition_created_once(async_from_config, opp):
     """Test that the conditions do not get created multiple times."""
     sequence = cv.SCRIPT_SCHEMA(
         {
@@ -2194,7 +2194,7 @@ async def test_set_redefines_variable.opp, caplog):
     assert mock_calls[1].data["value"] == 2
 
 
-async def test_validate_action_config.opp):
+async def test_validate_action_config(opp):
     """Validate action config."""
     configs = {
         cv.SCRIPT_ACTION_CALL_SERVICE: {"service": "light.turn_on"},
@@ -2241,12 +2241,12 @@ async def test_validate_action_config.opp):
         "openpeerpower.helpers.config_validation.determine_script_action",
         return_value="non-existing",
     ), pytest.raises(ValueError):
-        await script.async_validate_action_config.opp, {})
+        await script.async_validate_action_config(opp, {})
 
     for action_type, config in configs.items():
         assert cv.determine_script_action(config) == action_type
         try:
-            await script.async_validate_action_config.opp, config)
+            await script.async_validate_action_config(opp, config)
         except vol.Invalid as err:
             assert False, f"{action_type} config invalid: {err}"
 

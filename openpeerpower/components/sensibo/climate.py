@@ -94,7 +94,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         for dev in await client.async_get_devices(_INITIAL_FETCH_FIELDS):
             if config[CONF_ID] == ALL or dev["id"] in config[CONF_ID]:
                 devices.append(
-                    SensiboClimate(client, dev,.opp.config.units.temperature_unit)
+                    SensiboClimate(client, dev, opp.config.units.temperature_unit)
                 )
     except (
         aiohttp.client_exceptions.ClientConnectorError,

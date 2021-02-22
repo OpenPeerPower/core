@@ -67,7 +67,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return False
 
     add_entities(
-        MfiSensor(port,.opp)
+        MfiSensor(port, opp)
         for device in client.get_devices()
         for port in device.ports.values()
         if port.model in SENSOR_MODELS
@@ -77,7 +77,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class MfiSensor(Entity):
     """Representation of a mFi sensor."""
 
-    def __init__(self, port,.opp):
+    def __init__(self, port, opp):
         """Initialize the sensor."""
         self._port = port
         self.opp = opp

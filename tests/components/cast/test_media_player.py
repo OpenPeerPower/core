@@ -1329,7 +1329,7 @@ async def test_disconnect_on_stop.opp: OpenPeerPowerType):
     assert chromecast.disconnect.call_count == 1
 
 
-async def test_entry_setup_no_config.opp: OpenPeerPowerType):
+async def test_entry_setup_no_config(opp: OpenPeerPowerType):
     """Test setting up entry with no config.."""
     await async_setup_component.opp, "cast", {})
     await.opp.async_block_till_done()
@@ -1343,7 +1343,7 @@ async def test_entry_setup_no_config.opp: OpenPeerPowerType):
     assert mock_setup.mock_calls[0][1][1] == {}
 
 
-async def test_entry_setup_single_config.opp: OpenPeerPowerType):
+async def test_entry_setup_single_config(opp: OpenPeerPowerType):
     """Test setting up entry and having a single config option."""
     await async_setup_component(
        .opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
@@ -1359,7 +1359,7 @@ async def test_entry_setup_single_config.opp: OpenPeerPowerType):
     assert mock_setup.mock_calls[0][1][1] == {"uuid": "bla"}
 
 
-async def test_entry_setup_list_config.opp: OpenPeerPowerType):
+async def test_entry_setup_list_config(opp: OpenPeerPowerType):
     """Test setting up entry and having multiple config options."""
     await async_setup_component(
        .opp, "cast", {"cast": {"media_player": [{"uuid": "bla"}, {"uuid": "blu"}]}}

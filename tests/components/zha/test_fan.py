@@ -144,7 +144,7 @@ async def test_fan.opp, zha_device_joined_restored, zigpy_device):
 
     zha_device = await zha_device_joined_restored(zigpy_device)
     cluster = zigpy_device.endpoints.get(1).fan
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     assert.opp.states.get(entity_id).state == STATE_OFF
@@ -435,7 +435,7 @@ async def test_fan_init(
     cluster.PLUGGED_ATTR_READS = plug_read
 
     zha_device = await zha_device_joined_restored(zigpy_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
     assert.opp.states.get(entity_id).state == expected_state
     assert.opp.states.get(entity_id).attributes[ATTR_SPEED] == expected_speed
@@ -454,7 +454,7 @@ async def test_fan_update_entity(
     cluster.PLUGGED_ATTR_READS = {"fan_mode": 0}
 
     zha_device = await zha_device_joined_restored(zigpy_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
     assert.opp.states.get(entity_id).state == STATE_OFF
     assert.opp.states.get(entity_id).attributes[ATTR_SPEED] == SPEED_OFF

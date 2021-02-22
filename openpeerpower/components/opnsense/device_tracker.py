@@ -7,7 +7,7 @@ async def async_get_scanner.opp, config, discovery_info=None):
     """Configure the OPNSense device_tracker."""
     interface_client =.opp.data[OPNSENSE_DATA]["interfaces"]
     scanner = OPNSenseDeviceScanner(
-        interface_client,.opp.data[OPNSENSE_DATA][CONF_TRACKER_INTERFACE]
+        interface_client, opp.data[OPNSENSE_DATA][CONF_TRACKER_INTERFACE]
     )
     return scanner
 

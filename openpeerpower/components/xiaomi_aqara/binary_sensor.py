@@ -33,7 +33,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     for entity in gateway.devices["binary_sensor"]:
         model = entity["model"]
         if model in ["motion", "sensor_motion", "sensor_motion.aq2"]:
-            entities.append(XiaomiMotionSensor(entity,.opp, gateway, config_entry))
+            entities.append(XiaomiMotionSensor(entity, opp, gateway, config_entry))
         elif model in ["magnet", "sensor_magnet", "sensor_magnet.aq2"]:
             entities.append(XiaomiDoorSensor(entity, gateway, config_entry))
         elif model == "sensor_wleak.aq1":
@@ -54,7 +54,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             else:
                 data_key = "button_0"
             entities.append(
-                XiaomiButton(entity, "Switch", data_key,.opp, gateway, config_entry)
+                XiaomiButton(entity, "Switch", data_key, opp, gateway, config_entry)
             )
         elif model in [
             "86sw1",
@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 data_key = "button_0"
             entities.append(
                 XiaomiButton(
-                    entity, "Wall Switch", data_key,.opp, gateway, config_entry
+                    entity, "Wall Switch", data_key, opp, gateway, config_entry
                 )
             )
         elif model in [
@@ -116,7 +116,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 )
             )
         elif model in ["cube", "sensor_cube", "sensor_cube.aqgl01"]:
-            entities.append(XiaomiCube(entity,.opp, gateway, config_entry))
+            entities.append(XiaomiCube(entity, opp, gateway, config_entry))
         elif model in ["vibration", "vibration.aq1"]:
             entities.append(
                 XiaomiVibration(entity, "Vibration", "status", gateway, config_entry)
@@ -200,7 +200,7 @@ class XiaomiNatgasSensor(XiaomiBinarySensor):
 class XiaomiMotionSensor(XiaomiBinarySensor):
     """Representation of a XiaomiMotionSensor."""
 
-    def __init__(self, device,.opp, xiaomi_hub, config_entry):
+    def __init__(self, device, opp, xiaomi_hub, config_entry):
         """Initialize the XiaomiMotionSensor."""
         self.opp = opp
         self._no_motion_since = 0
@@ -452,7 +452,7 @@ class XiaomiVibration(XiaomiBinarySensor):
 class XiaomiButton(XiaomiBinarySensor):
     """Representation of a Xiaomi Button."""
 
-    def __init__(self, device, name, data_key,.opp, xiaomi_hub, config_entry):
+    def __init__(self, device, name, data_key, opp, xiaomi_hub, config_entry):
         """Initialize the XiaomiButton."""
         self.opp = opp
         self._last_action = None
@@ -507,7 +507,7 @@ class XiaomiButton(XiaomiBinarySensor):
 class XiaomiCube(XiaomiBinarySensor):
     """Representation of a Xiaomi Cube."""
 
-    def __init__(self, device,.opp, xiaomi_hub, config_entry):
+    def __init__(self, device, opp, xiaomi_hub, config_entry):
         """Initialize the Xiaomi Cube."""
         self.opp = opp
         self._last_action = None

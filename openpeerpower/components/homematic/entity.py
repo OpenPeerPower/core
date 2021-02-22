@@ -197,7 +197,7 @@ class HMDevice(Entity):
 class HMHub(Entity):
     """The HomeMatic hub. (CCU2/HomeGear)."""
 
-    def __init__(self,.opp, homematic, name):
+    def __init__(self, opp, homematic, name):
         """Initialize HomeMatic hub."""
         self.opp =.opp
         self.entity_id = f"{DOMAIN}.{name.lower()}"

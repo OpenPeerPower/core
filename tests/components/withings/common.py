@@ -144,11 +144,11 @@ class ComponentFactory:
             },
         }
 
-        await async_process_ha_core_config(self.opp,.opp_config.get("openpeerpower"))
+        await async_process_ha_core_config(self.opp, opp_config.get("openpeerpower"))
         assert await async_setup_component(self.opp, HA_DOMAIN, {})
-        assert await async_setup_component(self.opp, webhook.DOMAIN,.opp_config)
+        assert await async_setup_component(self.opp, webhook.DOMAIN, opp_config)
 
-        assert await async_setup_component(self.opp, const.DOMAIN,.opp_config)
+        assert await async_setup_component(self.opp, const.DOMAIN, opp_config)
         await self.opp.async_block_till_done()
 
     @staticmethod

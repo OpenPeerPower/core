@@ -6,7 +6,7 @@ from openpeerpower.const import ATTR_FRIENDLY_NAME, EVENT_TIME_CHANGED
 
 async def test_request_least_info.opp):
     """Test request config with least amount of data."""
-    request_id = configurator.async_request_config.opp, "Test Request", lambda _: None)
+    request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
 
     assert 1 == len(
        .opp.services.async_services().get(configurator.DOMAIN, [])
@@ -75,7 +75,7 @@ async def test_callback_called_on_configure.opp):
 
 async def test_state_change_on_notify_errors.opp):
     """Test state change on notify errors."""
-    request_id = configurator.async_request_config.opp, "Test Request", lambda _: None)
+    request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
     error = "Oh no bad bad bad"
     configurator.async_notify_errors.opp, request_id, error)
 
@@ -92,7 +92,7 @@ async def test_notify_errors_fail_silently_on_bad_request_id.opp):
 
 async def test_request_done_works.opp):
     """Test if calling request done works."""
-    request_id = configurator.async_request_config.opp, "Test Request", lambda _: None)
+    request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
     configurator.async_request_done.opp, request_id)
     assert 1 == len.opp.states.async_all())
 

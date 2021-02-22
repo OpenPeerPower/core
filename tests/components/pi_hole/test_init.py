@@ -37,7 +37,7 @@ from . import (
 from tests.common import MockConfigEntry
 
 
-async def test_setup_minimal_config.opp):
+async def test_setup_minimal_config(opp):
     """Tests component setup with minimal config."""
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
@@ -95,7 +95,7 @@ async def test_setup_minimal_config.opp):
     assert.opp.states.get("binary_sensor.pi_hole").state == "off"
 
 
-async def test_setup_name_config.opp):
+async def test_setup_name_config(opp):
     """Tests component setup with a custom name."""
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):

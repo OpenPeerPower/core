@@ -203,7 +203,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class BluesoundPlayer(MediaPlayerEntity):
     """Representation of a Bluesound Player."""
 
-    def __init__(self,.opp, host, port=None, name=None, init_callback=None):
+    def __init__(self, opp, host, port=None, name=None, init_callback=None):
         """Initialize the media player."""
         self.host = host
         self.opp = opp

@@ -27,7 +27,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class OPiGPIOBinarySensor(BinarySensorEntity):
     """Represent a binary sensor that uses Orange Pi GPIO."""
 
-    def __init__(self,.opp, name, port, invert_logic):
+    def __init__(self, opp, name, port, invert_logic):
         """Initialize the Orange Pi binary sensor."""
         self._name = name
         self._port = port

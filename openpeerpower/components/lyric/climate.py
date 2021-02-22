@@ -84,7 +84,7 @@ async def async_setup_entry(
         for device in location.devices:
             entities.append(
                 LyricClimate(
-                    coordinator, location, device,.opp.config.units.temperature_unit
+                    coordinator, location, device, opp.config.units.temperature_unit
                 )
             )
 

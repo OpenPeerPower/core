@@ -105,7 +105,7 @@ async def async_add_user_device_tracker(
    .opp: OpenPeerPower, user_id: str, device_tracker_entity_id: str
 ):
     """Add a device tracker to a person linked to a user."""
-    coll = cast(PersonStorageCollection,.opp.data[DOMAIN][1])
+    coll = cast(PersonStorageCollection, opp.data[DOMAIN][1])
 
     for person in coll.async_items():
         if person.get(ATTR_USER_ID) != user_id:
@@ -294,7 +294,7 @@ The following persons point at invalid users:
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Set up the person component."""
-    entity_component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    entity_component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()
     yaml_collection = collection.YamlCollection(
         logging.getLogger(f"{__name__}.yaml_collection"), id_manager

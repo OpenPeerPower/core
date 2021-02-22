@@ -89,10 +89,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     async_add_entities(
         [
             MetWeather(
-                coordinator, config_entry.data,.opp.config.units.is_metric, False
+                coordinator, config_entry.data, opp.config.units.is_metric, False
             ),
             MetWeather(
-                coordinator, config_entry.data,.opp.config.units.is_metric, True
+                coordinator, config_entry.data, opp.config.units.is_metric, True
             ),
         ]
     )

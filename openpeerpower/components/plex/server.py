@@ -68,7 +68,7 @@ class PlexServer:
     """Manages a single Plex server connection."""
 
     def __init__(
-        self,.opp, server_config, known_server_id=None, options=None, entry_id=None
+        self, opp, server_config, known_server_id=None, options=None, entry_id=None
     ):
         """Initialize a Plex server instance."""
         self.opp =.opp

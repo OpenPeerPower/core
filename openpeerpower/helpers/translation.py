@@ -202,7 +202,7 @@ async def async_get_component_strings(
 class _TranslationCache:
     """Cache for flattened translations."""
 
-    def __init__(self,.opp: OpenPeerPowerType) -> None:
+    def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize the cache."""
         self.opp =.opp
         self.loaded: Dict[str, Set[str]] = {}

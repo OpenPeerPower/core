@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 class ZWaveServices:
     """Class that holds our services ( Zwave Commands) that should be published to.opp."""
 
-    def __init__(self,.opp, manager):
+    def __init__(self, opp, manager):
         """Initialize with both.opp and ozwmanager objects."""
         self.opp = opp
         self._manager = manager

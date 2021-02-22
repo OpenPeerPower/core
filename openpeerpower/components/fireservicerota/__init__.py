@@ -97,7 +97,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 class FireServiceRotaOauth:
     """Handle authentication tokens."""
 
-    def __init__(self,.opp, entry, fsr):
+    def __init__(self, opp, entry, fsr):
         """Initialize the oauth object."""
         self.opp = opp
         self._entry = entry
@@ -146,7 +146,7 @@ class FireServiceRotaOauth:
 class FireServiceRotaWebSocket:
     """Define a FireServiceRota websocket manager object."""
 
-    def __init__(self,.opp, entry):
+    def __init__(self, opp, entry):
         """Initialize the websocket object."""
         self.opp = opp
         self._entry = entry
@@ -180,7 +180,7 @@ class FireServiceRotaWebSocket:
 class FireServiceRotaClient:
     """Getting the latest data from fireservicerota."""
 
-    def __init__(self,.opp, entry):
+    def __init__(self, opp, entry):
         """Initialize the data object."""
         self.opp = opp
         self._entry = entry

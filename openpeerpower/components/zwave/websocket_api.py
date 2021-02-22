@@ -30,7 +30,7 @@ def websocket_network_status.opp, connection, msg):
 
 @websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required(TYPE): "zwave/get_config"})
-def websocket_get_config.opp, connection, msg):
+def websocket_get_config(opp, connection, msg):
     """Get Z-Wave configuration."""
     config =.opp.data[DATA_ZWAVE_CONFIG]
     connection.send_result(
@@ -46,7 +46,7 @@ def websocket_get_config.opp, connection, msg):
 
 @websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required(TYPE): "zwave/get_migration_config"})
-def websocket_get_migration_config.opp, connection, msg):
+def websocket_get_migration_config(opp, connection, msg):
     """Get Z-Wave configuration for migration."""
     config =.opp.data[DATA_ZWAVE_CONFIG]
     connection.send_result(

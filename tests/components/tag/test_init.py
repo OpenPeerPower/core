@@ -10,7 +10,7 @@ from openpeerpower.util import dt as dt_util
 
 
 @pytest.fixture
-def storage_setup_opp,.opp_storage):
+def storage_setup_opp, opp_storage):
     """Storage setup."""
 
     async def _storage(items=None):
@@ -28,7 +28,7 @@ def storage_setup_opp,.opp_storage):
     return _storage
 
 
-async def test_ws_list.opp,.opp_ws_client, storage_setup):
+async def test_ws_list.opp, opp_ws_client, storage_setup):
     """Test listing tags via WS."""
     assert await storage_setup()
 
@@ -44,7 +44,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
     assert "test tag" in result
 
 
-async def test_ws_update.opp,.opp_ws_client, storage_setup):
+async def test_ws_update.opp, opp_ws_client, storage_setup):
     """Test listing tags via WS."""
     assert await storage_setup()
     await async_scan_tag.opp, "test tag", "some_scanner")
@@ -68,7 +68,7 @@ async def test_ws_update.opp,.opp_ws_client, storage_setup):
     assert item["name"] == "New name"
 
 
-async def test_tag_scanned.opp,.opp_ws_client, storage_setup):
+async def test_tag_scanned.opp, opp_ws_client, storage_setup):
     """Test scanning tags."""
     assert await storage_setup()
 
@@ -111,7 +111,7 @@ def track_changes(coll: collection.ObservableCollection):
     return changes
 
 
-async def test_tag_id_exists(opp,.opp_ws_client, storage_setup):
+async def test_tag_id_exists(opp, opp_ws_client, storage_setup):
     """Test scanning tags."""
     assert await storage_setup()
     changes = track_changes.opp.data[DOMAIN][TAGS])

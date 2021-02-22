@@ -66,7 +66,7 @@ async def test_is_on.opp):
     assert not device_tracker.is_on.opp, entity_id)
 
 
-async def test_reading_broken_yaml_config.opp):
+async def test_reading_broken_yaml_config(opp):
     """Test when known devices contains invalid data."""
     files = {
         "empty.yaml": "",
@@ -94,7 +94,7 @@ async def test_reading_broken_yaml_config.opp):
         assert res[0].dev_id == "my_device"
 
 
-async def test_reading_yaml_config.opp, yaml_devices):
+async def test_reading_yaml_config(opp, yaml_devices):
     """Test the rendering of the YAML configuration."""
     dev_id = "test"
     device = legacy.Device(
@@ -111,7 +111,7 @@ async def test_reading_yaml_config.opp, yaml_devices):
         legacy.update_config, yaml_devices, dev_id, device
     )
     assert await async_setup_component.opp, device_tracker.DOMAIN, TEST_PLATFORM)
-    config = (await legacy.async_load_config(yaml_devices,.opp, device.consider_home))[
+    config = (await legacy.async_load_config(yaml_devices, opp, device.consider_home))[
         0
     ]
     assert device.dev_id == config.dev_id
@@ -123,7 +123,7 @@ async def test_reading_yaml_config.opp, yaml_devices):
 
 
 @patch("openpeerpower.components.device_tracker.const.LOGGER.warning")
-async def test_duplicate_mac_dev_id(mock_warning,.opp):
+async def test_duplicate_mac_dev_id(mock_warning, opp):
     """Test adding duplicate MACs or device IDs to DeviceTracker."""
     devices = [
         legacy.Device(
@@ -207,7 +207,7 @@ async def test_gravatar_and_picture.opp):
 
 @patch("openpeerpower.components.device_tracker.legacy.DeviceTracker.see")
 @patch("openpeerpower.components.demo.device_tracker.setup_scanner", autospec=True)
-async def test_discover_platform(mock_demo_setup_scanner, mock_see,.opp):
+async def test_discover_platform(mock_demo_setup_scanner, mock_see, opp):
     """Test discovery of device_tracker demo platform."""
     await discovery.async_load_platform(
        .opp, device_tracker.DOMAIN, "demo", {"test_key": "test_val"}, {"bla": {}}
@@ -297,7 +297,7 @@ async def test_entity_attributes.opp, mock_device_tracker_conf):
 
 
 @patch("openpeerpower.components.device_tracker.legacy." "DeviceTracker.async_see")
-async def test_see_service(mock_see,.opp):
+async def test_see_service(mock_see, opp):
     """Test the see service with a unicode dev_id and NO MAC."""
     with assert_setup_component(1, device_tracker.DOMAIN):
         assert await async_setup_component.opp, device_tracker.DOMAIN, TEST_PLATFORM)
@@ -415,7 +415,7 @@ async def test_see_state.opp, yaml_devices):
     common.async_see.opp, **params)
     await.opp.async_block_till_done()
 
-    config = await legacy.async_load_config(yaml_devices,.opp, timedelta(seconds=0))
+    config = await legacy.async_load_config(yaml_devices, opp, timedelta(seconds=0))
     assert len(config) == 1
 
     state =.opp.states.get("device_tracker.example_com")
@@ -505,7 +505,7 @@ async def test_see_passive_zone_state.opp, mock_device_tracker_conf):
 
 
 @patch("openpeerpower.components.device_tracker.const.LOGGER.warning")
-async def test_see_failures(mock_warning,.opp, mock_device_tracker_conf):
+async def test_see_failures(mock_warning, opp, mock_device_tracker_conf):
     """Test that the device tracker see failures."""
     devices = mock_device_tracker_conf
     tracker = legacy.DeviceTracker.opp, timedelta(seconds=60), 0, {}, [])
@@ -561,7 +561,7 @@ async def test_bad_platform.opp):
         assert await async_setup_component.opp, device_tracker.DOMAIN, config)
 
 
-async def test_adding_unknown_device_to_config(mock_device_tracker_conf,.opp):
+async def test_adding_unknown_device_to_config(mock_device_tracker_conf, opp):
     """Test the adding of unknown devices to configuration file."""
     scanner = getattr.opp.components, "test.device_tracker").SCANNER
     scanner.reset()
@@ -579,7 +579,7 @@ async def test_adding_unknown_device_to_config(mock_device_tracker_conf,.opp):
     assert device.track
 
 
-async def test_picture_and_icon_on_see_discovery(mock_device_tracker_conf,.opp):
+async def test_picture_and_icon_on_see_discovery(mock_device_tracker_conf, opp):
     """Test that picture and icon are set in initial see."""
     tracker = legacy.DeviceTracker.opp, timedelta(seconds=60), False, {}, [])
     await tracker.async_see(dev_id=11, picture="pic_url", icon="mdi:icon")
@@ -589,7 +589,7 @@ async def test_picture_and_icon_on_see_discovery(mock_device_tracker_conf,.opp):
     assert mock_device_tracker_conf[0].entity_picture == "pic_url"
 
 
-async def test_backward_compatibility_for_track_new(mock_device_tracker_conf,.opp):
+async def test_backward_compatibility_for_track_new(mock_device_tracker_conf, opp):
     """Test backward compatibility for track new."""
     tracker = legacy.DeviceTracker(
        .opp, timedelta(seconds=60), False, {device_tracker.CONF_TRACK_NEW: True}, []
@@ -600,7 +600,7 @@ async def test_backward_compatibility_for_track_new(mock_device_tracker_conf,.op
     assert mock_device_tracker_conf[0].track is False
 
 
-async def test_old_style_track_new_is_skipped(mock_device_tracker_conf,.opp):
+async def test_old_style_track_new_is_skipped(mock_device_tracker_conf, opp):
     """Test old style config is skipped."""
     tracker = legacy.DeviceTracker(
        .opp, timedelta(seconds=60), None, {device_tracker.CONF_TRACK_NEW: False}, []

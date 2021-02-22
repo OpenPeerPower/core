@@ -116,7 +116,7 @@ def async_setup_webhook.opp: OpenPeerPower, entry: ConfigEntry):
     webhook_id = entry.data[CONF_WEBHOOK_ID]
     device_name = entry.data[CONF_DEVICE_NAME]
 
-    _set_entry_data(entry,.opp)
+    _set_entry_data(entry, opp)
 
    .opp.components.webhook.async_register(
         DOMAIN, f"{DOMAIN}.{device_name}", webhook_id, handle_webhook
@@ -138,14 +138,14 @@ async def async_setup_coordinator.opp: OpenPeerPower, entry: ConfigEntry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-    _set_entry_data(entry,.opp, coordinator, auth_token)
+    _set_entry_data(entry, opp, coordinator, auth_token)
 
     for platform in PLATFORMS:
         if entry.options.get(platform, True):
             coordinator.platforms.append(platform)
 
 
-def _set_entry_data(entry,.opp, coordinator=None, device_id=None):
+def _set_entry_data(entry, opp, coordinator=None, device_id=None):
     device = {
         DEVICE_NAME: entry.data[CONF_DEVICE_NAME],
         DEVICE_TYPE: entry.data[CONF_DEVICE_TYPE],

@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Get the API user
     try:
-        await.opp.async_add_executor_job(person.setup,.opp)
+        await.opp.async_add_executor_job(person.setup, opp)
     except ConnectTimeout as error:
         _LOGGER.error("Could not reach the Rachio API: %s", error)
         raise ConfigEntryNotReady from error

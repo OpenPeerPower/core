@@ -40,7 +40,7 @@ class HlsClient:
 
 
 @pytest.fixture
-def hls_stream.opp,.opp_client):
+def hls_stream.opp, opp_client):
     """Create test fixture for creating an HLS client for a stream."""
 
     async def create_client_for_stream(stream):
@@ -121,7 +121,7 @@ async def test_hls_stream.opp, hls_stream, stream_worker_sync):
     assert fail_response.status == HTTP_NOT_FOUND
 
 
-async def test_stream_timeout.opp,.opp_client, stream_worker_sync):
+async def test_stream_timeout.opp, opp_client, stream_worker_sync):
     """Test hls stream timeout."""
     await async_setup_component.opp, "stream", {"stream": {}})
 
@@ -163,7 +163,7 @@ async def test_stream_timeout.opp,.opp_client, stream_worker_sync):
     assert fail_response.status == HTTP_NOT_FOUND
 
 
-async def test_stream_timeout_after_stop.opp,.opp_client, stream_worker_sync):
+async def test_stream_timeout_after_stop.opp, opp_client, stream_worker_sync):
     """Test hls stream timeout after the stream has been stopped already."""
     await async_setup_component.opp, "stream", {"stream": {}})
 
@@ -258,7 +258,7 @@ async def test_stream_keepalive.opp):
     stream.stop()
 
 
-async def test_hls_playlist_view_no_output.opp,.opp_client, hls_stream):
+async def test_hls_playlist_view_no_output.opp, opp_client, hls_stream):
     """Test rendering the hls playlist with no output segments."""
     await async_setup_component.opp, "stream", {"stream": {}})
 

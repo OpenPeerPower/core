@@ -148,7 +148,7 @@ class EmailReader:
 class EmailContentSensor(Entity):
     """Representation of an EMail sensor."""
 
-    def __init__(self,.opp, email_reader, name, allowed_senders, value_template):
+    def __init__(self, opp, email_reader, name, allowed_senders, value_template):
         """Initialize the sensor."""
         self.opp =.opp
         self._email_reader = email_reader

@@ -8,7 +8,7 @@ from openpeerpower.components import config
 VIEW_NAME = "api:config:group:config"
 
 
-async def test_get_device_config.opp,.opp_client):
+async def test_get_device_config(opp, opp_client):
     """Test getting device config."""
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
@@ -28,7 +28,7 @@ async def test_get_device_config.opp,.opp_client):
     assert result == {"free": "beer"}
 
 
-async def test_update_device_config.opp,.opp_client):
+async def test_update_device_config(opp, opp_client):
     """Test updating device config."""
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
@@ -74,7 +74,7 @@ async def test_update_device_config.opp,.opp_client):
     mock_call.assert_called_once_with("group", "reload")
 
 
-async def test_update_device_config_invalid_key.opp,.opp_client):
+async def test_update_device_config_invalid_key.opp, opp_client):
     """Test updating device config."""
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
@@ -88,7 +88,7 @@ async def test_update_device_config_invalid_key.opp,.opp_client):
     assert resp.status == 400
 
 
-async def test_update_device_config_invalid_data.opp,.opp_client):
+async def test_update_device_config_invalid_data.opp, opp_client):
     """Test updating device config."""
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})
@@ -102,7 +102,7 @@ async def test_update_device_config_invalid_data.opp,.opp_client):
     assert resp.status == 400
 
 
-async def test_update_device_config_invalid_json.opp,.opp_client):
+async def test_update_device_config_invalid_json.opp, opp_client):
     """Test updating device config."""
     with patch.object(config, "SECTIONS", ["group"]):
         await async_setup_component.opp, "config", {})

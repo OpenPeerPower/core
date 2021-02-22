@@ -269,7 +269,7 @@ async def async_setup_opp, config):
                 )
             elif hasattr(platform, "get_service"):
                 notify_service = await.opp.async_add_executor_job(
-                    platform.get_service,.opp, p_config, discovery_info
+                    platform.get_service, opp, p_config, discovery_info
                 )
             else:
                 raise OpenPeerPowerError("Invalid notify platform.")

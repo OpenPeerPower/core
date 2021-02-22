@@ -124,7 +124,7 @@ def call_from_config(
 ) -> None:
     """Call a service based on a config hash."""
     asyncio.run_coroutine_threadsafe(
-        async_call_from_config.opp, config, blocking, variables, validate_config),
+        async_call_from_config(opp, config, blocking, variables, validate_config),
        .opp.loop,
     ).result()
 
@@ -225,7 +225,7 @@ def extract_entity_ids(
     Will convert group entity ids to the entity ids it represents.
     """
     return asyncio.run_coroutine_threadsafe(
-        async_extract_entity_ids.opp, service_call, expand_group),.opp.loop
+        async_extract_entity_ids.opp, service_call, expand_group), opp.loop
     ).result()
 
 
@@ -425,7 +425,7 @@ async def async_get_all_descriptions(
         )
 
         contents = await.opp.async_add_executor_job(
-            _load_services_files,.opp, integrations
+            _load_services_files, opp, integrations
         )
 
         for domain, content in zip(missing, contents):

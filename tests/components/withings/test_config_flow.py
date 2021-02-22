@@ -48,8 +48,8 @@ async def test_config_reauth_profile(
             const.CONF_USE_WEBHOOK: False,
         },
     }
-    await async_process_ha_core_config.opp,.opp_config.get(HA_DOMAIN))
-    assert await async_setup_component.opp, const.DOMAIN,.opp_config)
+    await async_process_ha_core_config(opp, opp_config.get(HA_DOMAIN))
+    assert await async_setup_component.opp, const.DOMAIN, opp_config)
     await.opp.async_block_till_done()
 
     config_entry = MockConfigEntry(

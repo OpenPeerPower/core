@@ -22,7 +22,7 @@ from .test_device import MAC, setup_axis_integration
 from tests.common import MockConfigEntry
 
 
-async def test_setup_no_config.opp):
+async def test_setup_no_config(opp):
     """Test setup without configuration."""
     assert await async_setup_component.opp, AXIS_DOMAIN, {})
     assert AXIS_DOMAIN not in.opp.data

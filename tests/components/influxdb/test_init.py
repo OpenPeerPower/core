@@ -272,7 +272,7 @@ async def test_setup_config_ssl(
     ],
     indirect=["mock_client"],
 )
-async def test_setup_minimal_config.opp, mock_client, config_ext, get_write_api):
+async def test_setup_minimal_config(opp, mock_client, config_ext, get_write_api):
     """Test the setup with minimal configuration and defaults."""
     config = {"influxdb": {}}
     config["influxdb"].update(config_ext)
@@ -317,7 +317,7 @@ async def test_setup_minimal_config.opp, mock_client, config_ext, get_write_api)
     ],
     indirect=["mock_client"],
 )
-async def test_invalid_config.opp, mock_client, config_ext, get_write_api):
+async def test_invalid_config(opp, mock_client, config_ext, get_write_api):
     """Test the setup with invalid config or config options specified for wrong version."""
     config = {"influxdb": {}}
     config["influxdb"].update(config_ext)

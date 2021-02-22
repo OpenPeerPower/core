@@ -70,8 +70,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Open Sky platform."""
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     add_entities(
         [
             OpenSkySensor(
@@ -90,7 +90,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class OpenSkySensor(Entity):
     """Open Sky Network Sensor."""
 
-    def __init__(self,.opp, name, latitude, longitude, radius, altitude):
+    def __init__(self, opp, name, latitude, longitude, radius, altitude):
         """Initialize the sensor."""
         self._session = requests.Session()
         self._latitude = latitude

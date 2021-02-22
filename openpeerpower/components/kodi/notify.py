@@ -75,7 +75,7 @@ async def async_get_service.opp, config, discovery_info=None):
 class KodiNotificationService(BaseNotificationService):
     """Implement the notification service for Kodi."""
 
-    def __init__(self,.opp, url, auth=None):
+    def __init__(self, opp, url, auth=None):
         """Initialize the service."""
         self._url = url
 

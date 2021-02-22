@@ -52,8 +52,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         timeandpriceest = LyftEstimate(
             session,
-            config.get(CONF_START_LATITUDE,.opp.config.latitude),
-            config.get(CONF_START_LONGITUDE,.opp.config.longitude),
+            config.get(CONF_START_LATITUDE, opp.config.latitude),
+            config.get(CONF_START_LONGITUDE, opp.config.longitude),
             config.get(CONF_END_LATITUDE),
             config.get(CONF_END_LONGITUDE),
         )

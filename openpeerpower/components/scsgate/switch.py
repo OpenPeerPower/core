@@ -33,7 +33,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         add_entities_callback=add_entities,
     )
 
-    _setup_scenario_switches(logger=logger, config=config, scsgate=scsgate,.opp.opp)
+    _setup_scenario_switches(logger=logger, config=config, scsgate=scsgate, opp.opp)
 
 
 def _setup_traditional_switches(logger, config, scsgate, add_entities_callback):
@@ -60,7 +60,7 @@ def _setup_traditional_switches(logger, config, scsgate, add_entities_callback):
     scsgate.add_devices_to_register(switches)
 
 
-def _setup_scenario_switches(logger, config, scsgate,.opp):
+def _setup_scenario_switches(logger, config, scsgate, opp):
     """Add only SCSGate scenario switches."""
     scenario = config.get(CONF_SCENARIO)
 
@@ -75,7 +75,7 @@ def _setup_scenario_switches(logger, config, scsgate,.opp):
             logger.info("Adding %s scsgate.scenario_switch", name)
 
             switch = SCSGateScenarioSwitch(
-                name=name, scs_id=scs_id, logger=logger,.opp.opp
+                name=name, scs_id=scs_id, logger=logger, opp.opp
             )
             scsgate.add_device(switch)
 
@@ -157,7 +157,7 @@ class SCSGateScenarioSwitch:
     events.
     """
 
-    def __init__(self, scs_id, name, logger,.opp):
+    def __init__(self, scs_id, name, logger, opp):
         """Initialize the scenario."""
         self._name = name
         self._scs_id = scs_id

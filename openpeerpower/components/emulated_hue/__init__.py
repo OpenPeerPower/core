@@ -103,7 +103,7 @@ ATTR_EMULATED_HUE_NAME = "emulated_hue_name"
 
 async def async_setup_opp, yaml_config):
     """Activate the emulated_hue component."""
-    config = Config.opp, yaml_config.get(DOMAIN, {}))
+    config = config(opp, yaml_config.get(DOMAIN, {}))
 
     app = web.Application()
     app[.opp"] =.opp
@@ -183,7 +183,7 @@ async def async_setup_opp, yaml_config):
 class Config:
     """Hold configuration variables for the emulated hue bridge."""
 
-    def __init__(self,.opp, conf):
+    def __init__(self, opp, conf):
         """Initialize the instance."""
         self.opp =.opp
         self.type = conf.get(CONF_TYPE)

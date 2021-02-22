@@ -422,7 +422,7 @@ def initialize_bot(p_config):
 class TelegramNotificationService:
     """Implement the notification services for the Telegram Bot domain."""
 
-    def __init__(self,.opp, bot, allowed_chat_ids, parser):
+    def __init__(self, opp, bot, allowed_chat_ids, parser):
         """Initialize the service."""
 
         self.allowed_chat_ids = allowed_chat_ids
@@ -827,7 +827,7 @@ class TelegramNotificationService:
 class BaseTelegramBotEntity:
     """The base class for the telegram bot."""
 
-    def __init__(self,.opp, allowed_chat_ids):
+    def __init__(self, opp, allowed_chat_ids):
         """Initialize the bot base class."""
         self.allowed_chat_ids = allowed_chat_ids
         self.opp =.opp

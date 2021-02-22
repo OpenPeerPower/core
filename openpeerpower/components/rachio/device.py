@@ -56,7 +56,7 @@ class RachioPerson:
         self._id = None
         self._controllers = []
 
-    def setup(self,.opp):
+    def setup(self, opp):
         """Rachio device setup."""
         all_devices = []
         can_pause = False
@@ -151,7 +151,7 @@ class RachioPerson:
 class RachioIro:
     """Represent a Rachio Iro."""
 
-    def __init__(self,.opp, rachio, data, webhooks):
+    def __init__(self, opp, rachio, data, webhooks):
         """Initialize a Rachio device."""
         self.opp =.opp
         self.rachio = rachio

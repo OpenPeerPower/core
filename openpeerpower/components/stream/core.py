@@ -46,7 +46,7 @@ class IdleTimer:
     """
 
     def __init__(
-        self,.opp: OpenPeerPower, timeout: int, idle_callback: Callable[[], None]
+        self, opp: OpenPeerPower, timeout: int, idle_callback: Callable[[], None]
     ):
         """Initialize IdleTimer."""
         self.opp = opp
@@ -83,7 +83,7 @@ class IdleTimer:
 class StreamOutput:
     """Represents a stream output."""
 
-    def __init__(self,.opp: OpenPeerPower, idle_timer: IdleTimer) -> None:
+    def __init__(self, opp: OpenPeerPower, idle_timer: IdleTimer) -> None:
         """Initialize a stream output."""
         self.opp = opp
         self._idle_timer = idle_timer

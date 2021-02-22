@@ -400,7 +400,7 @@ async def async_unload_entry.opp, entry):
 class OpenThermGatewayDevice:
     """OpenTherm Gateway device class."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the OpenTherm Gateway."""
         self.opp =.opp
         self.device_path = config_entry.data[CONF_DEVICE]

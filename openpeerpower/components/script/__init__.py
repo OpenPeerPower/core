@@ -152,9 +152,9 @@ def devices_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 async def async_setup_opp, config):
     """Load the scripts from the configuration."""
-   .opp.data[DOMAIN] = component = EntityComponent(_LOGGER, DOMAIN,.opp)
+   .opp.data[DOMAIN] = component = EntityComponent(_LOGGER, DOMAIN, opp)
 
-    await _async_process_config.opp, config, component)
+    await _async_process_config(opp, config, component)
 
     async def reload_service(service):
         """Call a service to reload scripts."""
@@ -162,7 +162,7 @@ async def async_setup_opp, config):
         if conf is None:
             return
 
-        await _async_process_config.opp, conf, component)
+        await _async_process_config(opp, conf, component)
 
     async def turn_on_service(service):
         """Call a service to turn script on."""
@@ -208,7 +208,7 @@ async def async_setup_opp, config):
     return True
 
 
-async def _async_process_config.opp, config, component):
+async def _async_process_config(opp, config, component):
     """Process script configuration."""
 
     async def service_handler(service):
@@ -252,7 +252,7 @@ class ScriptEntity(ToggleEntity):
 
     icon = None
 
-    def __init__(self,.opp, object_id, cfg):
+    def __init__(self, opp, object_id, cfg):
         """Initialize the script."""
         self.object_id = object_id
         self.icon = cfg.get(CONF_ICON)

@@ -732,7 +732,7 @@ async def test_discovery_notification_not_created.opp):
     assert state is None
 
 
-async def test_loading_default_config.opp):
+async def test_loading_default_config(opp):
     """Test loading the default config."""
     manager = config_entries.ConfigEntries.opp, {})
 

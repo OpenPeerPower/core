@@ -11,7 +11,7 @@ from .test_controller import CONTROLLER_DATA, ENTRY_CONFIG, setup_unifi_integrat
 from tests.common import MockConfigEntry, mock_coro
 
 
-async def test_setup_with_no_config.opp):
+async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a controller."""
     assert await async_setup_component.opp, UNIFI_DOMAIN, {}) is True
     assert UNIFI_DOMAIN not in.opp.data

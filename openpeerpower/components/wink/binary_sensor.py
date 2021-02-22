@@ -42,49 +42,49 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _id = sensor.object_id() + sensor.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
             if sensor.capability() in SENSOR_TYPES:
-                add_entities([WinkBinarySensorEntity(sensor,.opp)])
+                add_entities([WinkBinarySensorEntity(sensor, opp)])
 
     for key in pywink.get_keys():
         _id = key.object_id() + key.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkBinarySensorEntity(key,.opp)])
+            add_entities([WinkBinarySensorEntity(key, opp)])
 
     for sensor in pywink.get_smoke_and_co_detectors():
         _id = sensor.object_id() + sensor.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkSmokeDetector(sensor,.opp)])
+            add_entities([WinkSmokeDetector(sensor, opp)])
 
     for hub in pywink.get_hubs():
         _id = hub.object_id() + hub.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkHub(hub,.opp)])
+            add_entities([WinkHub(hub, opp)])
 
     for remote in pywink.get_remotes():
         _id = remote.object_id() + remote.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkRemote(remote,.opp)])
+            add_entities([WinkRemote(remote, opp)])
 
     for button in pywink.get_buttons():
         _id = button.object_id() + button.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkButton(button,.opp)])
+            add_entities([WinkButton(button, opp)])
 
     for gang in pywink.get_gangs():
         _id = gang.object_id() + gang.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkGang(gang,.opp)])
+            add_entities([WinkGang(gang, opp)])
 
     for door_bell_sensor in pywink.get_door_bells():
         _id = door_bell_sensor.object_id() + door_bell_sensor.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkBinarySensorEntity(door_bell_sensor,.opp)])
+            add_entities([WinkBinarySensorEntity(door_bell_sensor, opp)])
 
     for camera_sensor in pywink.get_cameras():
         _id = camera_sensor.object_id() + camera_sensor.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
             try:
                 if camera_sensor.capability() in SENSOR_TYPES:
-                    add_entities([WinkBinarySensorEntity(camera_sensor,.opp)])
+                    add_entities([WinkBinarySensorEntity(camera_sensor, opp)])
             except AttributeError:
                 _LOGGER.info("Device isn't a sensor, skipping")
 
@@ -92,9 +92,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class WinkBinarySensorEntity(WinkDevice, BinarySensorEntity):
     """Representation of a Wink binary sensor."""
 
-    def __init__(self, wink,.opp):
+    def __init__(self, wink, opp):
         """Initialize the Wink binary sensor."""
-        super().__init__(wink,.opp)
+        super().__init__(wink, opp)
         if hasattr(self.wink, "unit"):
             self._unit_of_measurement = self.wink.unit()
         else:

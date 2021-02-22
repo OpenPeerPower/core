@@ -80,7 +80,7 @@ async def test_async_unresolve_media.opp):
         await media_source.async_resolve_media.opp, "")
 
 
-async def test_websocket_browse_media.opp,.opp_ws_client):
+async def test_websocket_browse_media.opp, opp_ws_client):
     """Test browse media websocket."""
     assert await async_setup_component.opp, const.DOMAIN, {})
     await.opp.async_block_till_done()
@@ -133,7 +133,7 @@ async def test_websocket_browse_media.opp,.opp_ws_client):
     assert msg["error"]["message"] == "test"
 
 
-async def test_websocket_resolve_media.opp,.opp_ws_client):
+async def test_websocket_resolve_media.opp, opp_ws_client):
     """Test browse media websocket."""
     assert await async_setup_component.opp, const.DOMAIN, {})
     await.opp.async_block_till_done()

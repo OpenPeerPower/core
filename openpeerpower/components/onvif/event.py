@@ -26,7 +26,7 @@ SUBSCRIPTION_ERRORS = (
 class EventManager:
     """ONVIF Event Manager."""
 
-    def __init__(self,.opp: OpenPeerPower, device: ONVIFCamera, unique_id: str):
+    def __init__(self, opp: OpenPeerPower, device: ONVIFCamera, unique_id: str):
         """Initialize event manager."""
         self.opp: OpenPeerPower =.opp
         self.device: ONVIFCamera = device

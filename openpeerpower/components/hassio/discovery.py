@@ -23,9 +23,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_discovery_view.opp: OpenPeerPowerView,.oppio):
+def async_setup_discovery_view.opp: OpenPeerPowerView, oppio):
     """Discovery setup."""
-   .oppio_discovery = HassIODiscovery.opp,.oppio)
+   .oppio_discovery = HassIODiscovery.opp, oppio)
    .opp.http.register_view.oppio_discovery)
 
     # Handle exists discovery messages
@@ -55,7 +55,7 @@ class HassIODiscovery(OpenPeerPowerView):
     name = "api.oppio_push:discovery"
     url = "/api.oppio_push/discovery/{uuid}"
 
-    def __init__(self,.opp: OpenPeerPowerView,.oppio):
+    def __init__(self, opp: OpenPeerPowerView, oppio):
         """Initialize WebView."""
         self.opp =.opp
         self.oppio =.oppio

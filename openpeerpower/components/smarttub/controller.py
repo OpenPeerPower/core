@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 class SmartTubController:
     """Interface between Open Peer Power and the SmartTub API."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize an interface to SmartTub."""
         self.opp = opp
         self._account = None

@@ -57,7 +57,7 @@ PLATFORM_SCHEMA_DISCOVERY = (
 async def async_setup_entry_from_discovery.opp, config_entry, async_add_entities):
     """Set up MQTT device tracker dynamically through MQTT discovery."""
     setup = functools.partial(
-        _async_setup_entity,.opp, async_add_entities, config_entry=config_entry
+        _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper(
        .opp, device_tracker.DOMAIN, setup, PLATFORM_SCHEMA_DISCOVERY
@@ -74,11 +74,11 @@ async def _async_setup_entity(
 class MqttDeviceTracker(MqttEntity, TrackerEntity):
     """Representation of a device tracker using MQTT."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Initialize the tracker."""
         self._location_name = None
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

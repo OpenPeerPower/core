@@ -331,7 +331,7 @@ async def test_get_services.opp, websocket_client):
     assert msg["result"] ==.opp.services.async_services()
 
 
-async def test_get_config.opp, websocket_client):
+async def test_get_config(opp, websocket_client):
     """Test get_config command."""
     await websocket_client.send_json({"id": 5, "type": "get_config"})
 
@@ -367,7 +367,7 @@ async def test_ping(websocket_client):
     assert msg["type"] == "pong"
 
 
-async def test_call_service_context_with_user.opp, aiohttp_client,.opp_access_token):
+async def test_call_service_context_with_user.opp, aiohttp_client, opp_access_token):
     """Test that the user is set in the service call context."""
     assert await async_setup_component.opp, "websocket_api", {})
 
@@ -406,7 +406,7 @@ async def test_call_service_context_with_user.opp, aiohttp_client,.opp_access_to
         assert call.context.user_id == refresh_token.user.id
 
 
-async def test_subscribe_requires_admin(websocket_client,.opp_admin_user):
+async def test_subscribe_requires_admin(websocket_client, opp_admin_user):
     """Test subscribing events without being admin."""
    .opp_admin_user.groups = []
     await websocket_client.send_json(
@@ -418,7 +418,7 @@ async def test_subscribe_requires_admin(websocket_client,.opp_admin_user):
     assert msg["error"]["code"] == const.ERR_UNAUTHORIZED
 
 
-async def test_states_filters_visible.opp,.opp_admin_user, websocket_client):
+async def test_states_filters_visible.opp, opp_admin_user, websocket_client):
     """Test we only get entities that we're allowed to see."""
    .opp_admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
    .opp.states.async_set("test.entity", "hello")
@@ -446,7 +446,7 @@ async def test_get_states_not_allows_nan.opp, websocket_client):
 
 
 async def test_subscribe_unsubscribe_events_whitelist(
-   .opp, websocket_client,.opp_admin_user
+   .opp, websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe events on whitelist."""
    .opp_admin_user.groups = []
@@ -483,7 +483,7 @@ async def test_subscribe_unsubscribe_events_whitelist(
 
 
 async def test_subscribe_unsubscribe_events_state_changed(
-   .opp, websocket_client,.opp_admin_user
+   .opp, websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe state_changed events."""
    .opp_admin_user.groups = []
@@ -788,7 +788,7 @@ async def test_manifest_get.opp, websocket_client):
     assert msg["error"]["code"] == "not_found"
 
 
-async def test_entity_source_admin.opp, websocket_client,.opp_admin_user):
+async def test_entity_source_admin.opp, websocket_client, opp_admin_user):
     """Check that we fetch sources correctly."""
     platform = MockEntityPlatform.opp)
 

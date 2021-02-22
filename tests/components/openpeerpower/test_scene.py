@@ -292,7 +292,7 @@ async def test_entities_in_scene.opp.
         assert ha_scene.entities_in_scene.opp.scene_id) == entities
 
 
-async def test_config.opp.
+async def test_config(opp.
     """Test passing config in YAML."""
     assert await async_setup_component(
        .opp,

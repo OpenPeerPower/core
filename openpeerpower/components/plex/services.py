@@ -27,7 +27,7 @@ async def async_setup_services.opp):
     """Set up services for the Plex component."""
 
     async def async_refresh_library_service(service_call):
-        await.opp.async_add_executor_job(refresh_library,.opp, service_call)
+        await.opp.async_add_executor_job(refresh_library, opp, service_call)
 
     async def async_scan_clients_service(_):
         _LOGGER.debug("Scanning for new Plex clients")

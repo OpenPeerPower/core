@@ -119,7 +119,7 @@ async def async_unload_entry.opp, config_entry):
 class SpeedTestDataCoordinator(DataUpdateCoordinator):
     """Get the latest data from speedtest.net."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the data object."""
         self.opp =.opp
         self.config_entry = config_entry

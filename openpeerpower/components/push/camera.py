@@ -90,7 +90,7 @@ async def handle_webhook.opp, webhook_id, request):
 class PushCamera(Camera):
     """The representation of a Push camera."""
 
-    def __init__(self,.opp, name, buffer_size, timeout, image_field, webhook_id):
+    def __init__(self, opp, name, buffer_size, timeout, image_field, webhook_id):
         """Initialize push camera component."""
         super().__init__()
         self._name = name

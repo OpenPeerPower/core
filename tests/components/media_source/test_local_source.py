@@ -63,7 +63,7 @@ async def test_async_browse_media.opp):
     assert media
 
 
-async def test_media_view.opp,.opp_client):
+async def test_media_view.opp, opp_client):
     """Test media view."""
     local_media = opp.config.path("media")
     await async_process_ha_core_config(

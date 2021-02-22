@@ -139,7 +139,7 @@ CONFIG_DEFAULTS = {
 class Camera(HomeAccessory, PyhapCamera):
     """Generate a Camera accessory."""
 
-    def __init__(self,.opp, driver, name, entity_id, aid, config):
+    def __init__(self, opp, driver, name, entity_id, aid, config):
         """Initialize a Camera accessory object."""
         self._ffmpeg =.opp.data[DATA_FFMPEG]
         for config_key in CONFIG_DEFAULTS:

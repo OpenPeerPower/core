@@ -32,7 +32,7 @@ class MySensorsNotificationDevice(mysensors.device.MySensorsDevice):
 class MySensorsNotificationService(BaseNotificationService):
     """Implement a MySensors notification service."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the service."""
         self.devices = mysensors.get_mysensors_devices.opp, DOMAIN)
 

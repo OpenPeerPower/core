@@ -17,7 +17,7 @@ _LOGGER = logging.getLogger(__name__)
 class CanaryDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Canary data."""
 
-    def __init__(self,.opp: OpenPeerPowerType, *, api: Api):
+    def __init__(self, opp: OpenPeerPowerType, *, api: Api):
         """Initialize global Canary data updater."""
         self.canary = api
         update_interval = timedelta(seconds=30)

@@ -75,7 +75,7 @@ async def test_binary_sensor(
     """Test ZHA binary_sensor platform."""
     zigpy_device = zigpy_device_mock(device)
     zha_device = await zha_device_joined_restored(zigpy_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     assert.opp.states.get(entity_id).state == STATE_OFF

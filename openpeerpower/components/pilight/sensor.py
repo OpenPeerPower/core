@@ -42,7 +42,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class PilightSensor(Entity):
     """Representation of a sensor that can be updated using Pilight."""
 
-    def __init__(self,.opp, name, variable, payload, unit_of_measurement):
+    def __init__(self, opp, name, variable, payload, unit_of_measurement):
         """Initialize the sensor."""
         self._state = None
         self.opp = opp

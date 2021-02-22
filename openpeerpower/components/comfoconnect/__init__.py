@@ -88,7 +88,7 @@ def setup_opp, config):
 class ComfoConnectBridge:
     """Representation of a ComfoConnect bridge."""
 
-    def __init__(self,.opp, bridge, name, token, friendly_name, pin):
+    def __init__(self, opp, bridge, name, token, friendly_name, pin):
         """Initialize the ComfoConnect bridge."""
         self.data = {}
         self.name = name

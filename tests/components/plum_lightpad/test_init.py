@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_async_setup_no_domain_config.opp: OpenPeerPower):
+async def test_async_setup_no_domain_config(opp: OpenPeerPower):
     """Test setup without configuration is noop."""
     result = await async_setup_component.opp, DOMAIN, {})
 
@@ -19,7 +19,7 @@ async def test_async_setup_no_domain_config.opp: OpenPeerPower):
     assert DOMAIN not in.opp.data
 
 
-async def test_async_setup_imports_from_config.opp: OpenPeerPower):
+async def test_async_setup_imports_from_config(opp: OpenPeerPower):
     """Test that specifying config will setup an entry."""
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData"

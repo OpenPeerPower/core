@@ -105,15 +105,15 @@ class BaseEditConfigView(OpenPeerPowerView):
         """Empty config if file not found."""
         raise NotImplementedError
 
-    def _get_value(self,.opp, data, config_key):
+    def _get_value(self, opp, data, config_key):
         """Get value."""
         raise NotImplementedError
 
-    def _write_value(self,.opp, data, config_key, new_value):
+    def _write_value(self, opp, data, config_key, new_value):
         """Set value."""
         raise NotImplementedError
 
-    def _delete_value(self,.opp, data, config_key):
+    def _delete_value(self, opp, data, config_key):
         """Delete value."""
         raise NotImplementedError
 
@@ -121,7 +121,7 @@ class BaseEditConfigView(OpenPeerPowerView):
         """Fetch device specific config."""
         opp =request.app[.opp"]
         async with self.mutation_lock:
-            current = await self.read_config.opp)
+            current = await self.read_config(opp)
             value = self._get_value.opp, current, config_key)
 
         if value is None:
@@ -156,7 +156,7 @@ class BaseEditConfigView(OpenPeerPowerView):
         path = opp.config.path(self.path)
 
         async with self.mutation_lock:
-            current = await self.read_config.opp)
+            current = await self.read_config(opp)
             self._write_value.opp, current, config_key, data)
 
             await.opp.async_add_executor_job(_write, path, current)
@@ -172,7 +172,7 @@ class BaseEditConfigView(OpenPeerPowerView):
         """Remove an entry."""
         opp =request.app[.opp"]
         async with self.mutation_lock:
-            current = await self.read_config.opp)
+            current = await self.read_config(opp)
             value = self._get_value.opp, current, config_key)
             path = opp.config.path(self.path)
 
@@ -187,9 +187,9 @@ class BaseEditConfigView(OpenPeerPowerView):
 
         return self.json({"result": "ok"})
 
-    async def read_config(self,.opp):
+    async def read_config(self, opp):
         """Read the config."""
-        current = await.opp.async_add_executor_job(_read,.opp.config.path(self.path))
+        current = await.opp.async_add_executor_job(_read, opp.config.path(self.path))
         if not current:
             current = self._empty_config()
         return current
@@ -202,15 +202,15 @@ class EditKeyBasedConfigView(BaseEditConfigView):
         """Return an empty config."""
         return {}
 
-    def _get_value(self,.opp, data, config_key):
+    def _get_value(self, opp, data, config_key):
         """Get value."""
         return data.get(config_key)
 
-    def _write_value(self,.opp, data, config_key, new_value):
+    def _write_value(self, opp, data, config_key, new_value):
         """Set value."""
         data.setdefault(config_key, {}).update(new_value)
 
-    def _delete_value(self,.opp, data, config_key):
+    def _delete_value(self, opp, data, config_key):
         """Delete value."""
         return data.pop(config_key)
 
@@ -222,11 +222,11 @@ class EditIdBasedConfigView(BaseEditConfigView):
         """Return an empty config."""
         return []
 
-    def _get_value(self,.opp, data, config_key):
+    def _get_value(self, opp, data, config_key):
         """Get value."""
         return next((val for val in data if val.get(CONF_ID) == config_key), None)
 
-    def _write_value(self,.opp, data, config_key, new_value):
+    def _write_value(self, opp, data, config_key, new_value):
         """Set value."""
         value = self._get_value.opp, data, config_key)
 
@@ -236,7 +236,7 @@ class EditIdBasedConfigView(BaseEditConfigView):
 
         value.update(new_value)
 
-    def _delete_value(self,.opp, data, config_key):
+    def _delete_value(self, opp, data, config_key):
         """Delete value."""
         index = next(
             idx for idx, val in enumerate(data) if val.get(CONF_ID) == config_key

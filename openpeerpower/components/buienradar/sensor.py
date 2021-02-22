@@ -210,8 +210,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Create the buienradar sensor."""
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     timeframe = config[CONF_TIMEFRAME]
 
     if None in (latitude, longitude):

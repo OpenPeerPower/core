@@ -20,7 +20,7 @@ from openpeerpower.const import (
 from openpeerpower.setup import async_setup_component
 
 
-async def test_setup_missing_basic_config.opp):
+async def test_setup_missing_basic_config(opp):
     """Test setup with configuration missing required entries."""
     assert await async_setup_component(
        .opp, binary_sensor.DOMAIN, {"binary_sensor": {"platform": "rest"}}
@@ -29,7 +29,7 @@ async def test_setup_missing_basic_config.opp):
     assert len.opp.states.async_all()) == 0
 
 
-async def test_setup_missing_config.opp):
+async def test_setup_missing_config(opp):
     """Test setup with configuration missing required entries."""
     assert await async_setup_component(
        .opp,

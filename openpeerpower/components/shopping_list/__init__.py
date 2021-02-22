@@ -136,7 +136,7 @@ async def async_setup_entry.opp, config_entry):
 class ShoppingData:
     """Class to hold shopping list data."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the shopping list."""
         self.opp =.opp
         self.items = []
@@ -268,7 +268,7 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
 def websocket_handle_items.opp, connection, msg):
     """Handle get shopping_list items."""
     connection.send_message(
-        websocket_api.result_message(msg["id"],.opp.data[DOMAIN].items)
+        websocket_api.result_message(msg["id"], opp.data[DOMAIN].items)
     )
 
 

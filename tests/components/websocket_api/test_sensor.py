@@ -7,7 +7,7 @@ from openpeerpower.components.websocket_api.http import URL
 from .test_auth import test_auth_active_with_token
 
 
-async def test_websocket_api.opp, aiohttp_client,.opp_access_token, legacy_auth):
+async def test_websocket_api.opp, aiohttp_client, opp_access_token, legacy_auth):
     """Test API streams."""
     await async_setup_component(
        .opp, "sensor", {"sensor": {"platform": "websocket_api"}}
@@ -26,7 +26,7 @@ async def test_websocket_api.opp, aiohttp_client,.opp_access_token, legacy_auth)
     state =.opp.states.get("sensor.connected_clients")
     assert state.state == "0"
 
-    await test_auth_active_with_token.opp, ws,.opp_access_token)
+    await test_auth_active_with_token.opp, ws, opp_access_token)
 
     state =.opp.states.get("sensor.connected_clients")
     assert state.state == "1"

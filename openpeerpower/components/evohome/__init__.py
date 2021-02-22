@@ -383,7 +383,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
 class EvoBroker:
     """Container for evohome client and data."""
 
-    def __init__(self,.opp, client, client_v1, store, params) -> None:
+    def __init__(self, opp, client, client_v1, store, params) -> None:
         """Initialize the evohome client and its data structure."""
         self.opp =.opp
         self.client = client

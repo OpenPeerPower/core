@@ -258,10 +258,10 @@ async def async_ensure_config_exists(opp: OpenPeerPower) -> bool:
     print(
         "Unable to find configuration. Creating default one in", opp.config.config_dir
     )
-    return await async_create_default_config.opp)
+    return await async_create_default_config(opp)
 
 
-async def async_create_default_config.opp: OpenPeerPower) -> bool:
+async def async_create_default_config(opp: OpenPeerPower) -> bool:
     """Create a default configuration file in given configuration directory.
 
     Return if creation was successful.
@@ -323,7 +323,7 @@ async def async.opp_config_yaml.opp: OpenPeerPower) -> Dict:
         None, load_yaml_config_file, opp.config.path(YAML_CONFIG_FILE)
     )
     core_config = config.get(CONF_CORE, {})
-    await merge_packages_config.opp, config, core_config.get(CONF_PACKAGES, {}))
+    await merge_packages_config(opp, config, core_config.get(CONF_PACKAGES, {}))
     return config
 
 
@@ -463,7 +463,7 @@ def _format_config_error(
     return message, is_friendly
 
 
-async def async_process_ha_core_config.opp: OpenPeerPower, config: Dict) -> None:
+async def async_process_ha_core_config(opp: OpenPeerPower, config: Dict) -> None:
     """Process the [openpeerpower] section from the configuration.
 
     This method is a coroutine.
@@ -483,7 +483,7 @@ async def async_process_ha_core_config.opp: OpenPeerPower, config: Dict) -> None
         )
 
         setattr(
-           .opp, "auth", await auth.auth_manager_from_config.opp, auth_conf, mfa_conf)
+           .opp, "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
         )
 
     await.opp.config.async_load()

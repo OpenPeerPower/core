@@ -28,7 +28,7 @@ def mock_test_component.opp):
 
 
 @pytest.fixture
-def client.opp,.opp_client):
+def client.opp, opp_client):
     """Fixture that can interact with the config manager API."""
    .opp.loop.run_until_complete(async_setup_component.opp, "http", {}))
    .opp.loop.run_until_complete(config_entries.async_setup_opp))
@@ -144,7 +144,7 @@ async def test_reload_invalid_entry.opp, client):
     assert resp.status == 404
 
 
-async def test_remove_entry_unauth.opp, client,.opp_admin_user):
+async def test_remove_entry_unauth.opp, client, opp_admin_user):
     """Test removing an entry via the API."""
    .opp_admin_user.groups = []
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
@@ -154,7 +154,7 @@ async def test_remove_entry_unauth.opp, client,.opp_admin_user):
     assert len.opp.config_entries.async_entries()) == 1
 
 
-async def test_reload_entry_unauth.opp, client,.opp_admin_user):
+async def test_reload_entry_unauth.opp, client, opp_admin_user):
     """Test reloading an entry via the API."""
    .opp_admin_user.groups = []
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
@@ -166,7 +166,7 @@ async def test_reload_entry_unauth.opp, client,.opp_admin_user):
     assert len.opp.config_entries.async_entries()) == 1
 
 
-async def test_reload_entry_in_failed_state.opp, client,.opp_admin_user):
+async def test_reload_entry_in_failed_state.opp, client, opp_admin_user):
     """Test reloading an entry via the API that has already failed to unload."""
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_FAILED_UNLOAD)
     entry.add_to.opp.opp)
@@ -238,7 +238,7 @@ async def test_initialize_flow.opp, client):
     }
 
 
-async def test_initialize_flow_unauth.opp, client,.opp_admin_user):
+async def test_initialize_flow_unauth.opp, client, opp_admin_user):
     """Test we can initialize a flow."""
    .opp_admin_user.groups = []
 
@@ -385,7 +385,7 @@ async def test_two_step_flow.opp, client):
         }
 
 
-async def test_continue_flow_unauth.opp, client,.opp_admin_user):
+async def test_continue_flow_unauth.opp, client, opp_admin_user):
     """Test we can't finish a two step flow."""
     mock_integration(
        .opp, MockModule("test", async_setup_entry=AsyncMock(return_value=True))
@@ -430,7 +430,7 @@ async def test_continue_flow_unauth.opp, client,.opp_admin_user):
     assert resp.status == 401
 
 
-async def test_get_progress_index.opp,.opp_ws_client):
+async def test_get_progress_index.opp, opp_ws_client):
     """Test querying for the flows that are in progress."""
     assert await async_setup_component.opp, "config", {})
     mock_entity_platform.opp, "config_flow.test", None)
@@ -464,7 +464,7 @@ async def test_get_progress_index.opp,.opp_ws_client):
     ]
 
 
-async def test_get_progress_index_unauth.opp,.opp_ws_client,.opp_admin_user):
+async def test_get_progress_index_unauth.opp, opp_ws_client, opp_admin_user):
     """Test we can't get flows that are in progress."""
     assert await async_setup_component.opp, "config", {})
    .opp_admin_user.groups = []
@@ -511,7 +511,7 @@ async def test_get_progress_flow.opp, client):
     assert data == data2
 
 
-async def test_get_progress_flow_unauth.opp, client,.opp_admin_user):
+async def test_get_progress_flow_unauth.opp, client, opp_admin_user):
     """Test we can can't query the API for result of flow."""
     mock_entity_platform.opp, "config_flow.test", None)
 
@@ -654,7 +654,7 @@ async def test_two_step_options_flow.opp, client):
         }
 
 
-async def test_list_system_options.opp,.opp_ws_client):
+async def test_list_system_options.opp, opp_ws_client):
     """Test that we can list an entries system options."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)
@@ -675,7 +675,7 @@ async def test_list_system_options.opp,.opp_ws_client):
     assert response["result"] == {"disable_new_entities": False}
 
 
-async def test_update_system_options.opp,.opp_ws_client):
+async def test_update_system_options.opp, opp_ws_client):
     """Test that we can update system options."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)
@@ -698,7 +698,7 @@ async def test_update_system_options.opp,.opp_ws_client):
     assert entry.system_options.disable_new_entities
 
 
-async def test_update_system_options_nonexisting.opp,.opp_ws_client):
+async def test_update_system_options_nonexisting.opp, opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)
@@ -717,7 +717,7 @@ async def test_update_system_options_nonexisting.opp,.opp_ws_client):
     assert response["error"]["code"] == "not_found"
 
 
-async def test_update_entry.opp,.opp_ws_client):
+async def test_update_entry.opp, opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)
@@ -740,7 +740,7 @@ async def test_update_entry.opp,.opp_ws_client):
     assert entry.title == "Updated Title"
 
 
-async def test_update_entry_nonexisting.opp,.opp_ws_client):
+async def test_update_entry_nonexisting.opp, opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)
@@ -759,7 +759,7 @@ async def test_update_entry_nonexisting.opp,.opp_ws_client):
     assert response["error"]["code"] == "not_found"
 
 
-async def test_disable_entry.opp,.opp_ws_client):
+async def test_disable_entry.opp, opp_ws_client):
     """Test that we can disable entry."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)
@@ -817,7 +817,7 @@ async def test_disable_entry.opp,.opp_ws_client):
     assert entry.state == "failed_unload"
 
 
-async def test_disable_entry_nonexisting.opp,.opp_ws_client):
+async def test_disable_entry_nonexisting.opp, opp_ws_client):
     """Test that we can disable entry."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)
@@ -836,7 +836,7 @@ async def test_disable_entry_nonexisting.opp,.opp_ws_client):
     assert response["error"]["code"] == "not_found"
 
 
-async def test_ignore_flow.opp,.opp_ws_client):
+async def test_ignore_flow.opp, opp_ws_client):
     """Test we can ignore a flow."""
     assert await async_setup_component.opp, "config", {})
     mock_integration(
@@ -879,7 +879,7 @@ async def test_ignore_flow.opp,.opp_ws_client):
     assert entry.title == "Test Integration"
 
 
-async def test_ignore_flow_nonexisting.opp,.opp_ws_client):
+async def test_ignore_flow_nonexisting.opp, opp_ws_client):
     """Test we can ignore a flow."""
     assert await async_setup_component.opp, "config", {})
     ws_client = await.opp_ws_client.opp)

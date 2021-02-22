@@ -63,7 +63,7 @@ PLATFORMS = ["cover", "scene", "sensor"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPower,.opp_config: dict):
+async def async_setup_opp: OpenPeerPower, opp_config: dict):
     """Set up the Hunter Douglas PowerView component."""
    .opp.data.setdefault(DOMAIN, {})
     return True

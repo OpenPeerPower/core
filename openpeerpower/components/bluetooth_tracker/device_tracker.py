@@ -88,7 +88,7 @@ async def get_tracking_devices.opp: OpenPeerPowerType) -> Tuple[Set[str], Set[st
     """
     yaml_path: str = opp.config.path(YAML_DEVICES)
 
-    devices = await async_load_config(yaml_path,.opp, 0)
+    devices = await async_load_config(yaml_path, opp, 0)
     bluetooth_devices = [device for device in devices if is_bluetooth_device(device)]
 
     devices_to_track: Set[str] = {

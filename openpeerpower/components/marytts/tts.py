@@ -45,7 +45,7 @@ def get_engine.opp, config, discovery_info=None):
 class MaryTTSProvider(Provider):
     """MaryTTS speech api provider."""
 
-    def __init__(self,.opp, conf):
+    def __init__(self, opp, conf):
         """Init MaryTTS TTS service."""
         self.opp =.opp
         self._mary = MaryTTS(

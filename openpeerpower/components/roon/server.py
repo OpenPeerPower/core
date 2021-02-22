@@ -17,7 +17,7 @@ FULL_SYNC_INTERVAL = 30
 class RoonServer:
     """Manages a single Roon Server."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the system."""
         self.config_entry = config_entry
         self.opp =.opp

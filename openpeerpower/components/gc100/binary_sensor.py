@@ -21,7 +21,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for port in ports:
         for port_addr, port_name in port.items():
             binary_sensors.append(
-                GC100BinarySensor(port_name, port_addr,.opp.data[DATA_GC100])
+                GC100BinarySensor(port_name, port_addr, opp.data[DATA_GC100])
             )
     add_entities(binary_sensors, True)
 

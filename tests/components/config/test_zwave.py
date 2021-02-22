@@ -15,7 +15,7 @@ VIEW_NAME = "api:config:zwave:device_config"
 
 
 @pytest.fixture
-def client(loop,.opp,.opp_client):
+def client(loop, opp, opp_client):
     """Client to communicate with Z-Wave config views."""
     with patch.object(config, "SECTIONS", ["zwave"]):
         loop.run_until_complete(async_setup_component.opp, "config", {}))
@@ -188,7 +188,7 @@ async def test_get_groups_nonode.opp, client):
     assert result == {"message": "Node not found"}
 
 
-async def test_get_config.opp, client):
+async def test_get_config(opp, client):
     """Test getting config on node."""
     network =.opp.data[DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=2)
@@ -329,7 +329,7 @@ async def test_save_config_no_network.opp, client):
     assert result == {"message": "No Z-Wave network data found"}
 
 
-async def test_save_config.opp, client):
+async def test_save_config(opp, client):
     """Test saving configuration."""
     network =.opp.data[DATA_NETWORK] = MagicMock()
 

@@ -66,7 +66,7 @@ def setup_opp, config):
     """Set up is called when Open Peer Power is loading our component."""
     dominos = Dominos.opp, config)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
    .opp.data[DOMAIN] = {}
     entities = []
     conf = config[DOMAIN]
@@ -90,7 +90,7 @@ def setup_opp, config):
 class Dominos:
     """Main Dominos service."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Set up main service."""
         conf = config[DOMAIN]
 

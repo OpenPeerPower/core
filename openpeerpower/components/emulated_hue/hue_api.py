@@ -302,7 +302,7 @@ class HueOneLightStateView(OpenPeerPowerView):
         entity =.opp.states.get.opp_entity_id)
 
         if entity is None:
-            _LOGGER.error("Entity not found: %s",.opp_entity_id)
+            _LOGGER.error("Entity not found: %s", opp_entity_id)
             return self.json_message("Entity not found", HTTP_NOT_FOUND)
 
         if not self.config.is_entity_exposed(entity):

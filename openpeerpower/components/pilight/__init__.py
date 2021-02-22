@@ -133,14 +133,14 @@ class CallRateDelayThrottle:
     it should not block the mainloop.
     """
 
-    def __init__(self,.opp, delay_seconds: float) -> None:
+    def __init__(self, opp, delay_seconds: float) -> None:
         """Initialize the delay handler."""
         self._delay = timedelta(seconds=max(0.0, delay_seconds))
         self._queue = []
         self._active = False
         self._lock = threading.Lock()
         self._next_ts = dt_util.utcnow()
-        self._schedule = functools.partial(track_point_in_utc_time,.opp)
+        self._schedule = functools.partial(track_point_in_utc_time, opp)
 
     def limited(self, method):
         """Decorate to delay calls on a certain method."""

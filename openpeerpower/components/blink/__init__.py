@@ -70,7 +70,7 @@ async def async_migrate_entry.opp, entry):
     data = {**entry.data}
     if entry.version == 1:
         data.pop("login_response", None)
-        await.opp.async_add_executor_job(_reauth_flow_wrapper,.opp, data)
+        await.opp.async_add_executor_job(_reauth_flow_wrapper, opp, data)
         return False
     return True
 
@@ -80,7 +80,7 @@ async def async_setup_entry.opp, entry):
     _async_import_options_from_data_if_missing.opp, entry)
 
    .opp.data[DOMAIN][entry.entry_id] = await.opp.async_add_executor_job(
-        _blink_startup_wrapper,.opp, entry
+        _blink_startup_wrapper, opp, entry
     )
 
     if not.opp.data[DOMAIN][entry.entry_id].available:

@@ -70,7 +70,7 @@ SENSOR_OUTPUT = {
 
 
 @pytest.fixture
-def mock_client.opp,.opp_client):
+def mock_client.opp, opp_client):
     """Start the Open Peer Power HTTP component."""
     with patch("openpeerpower.components.spaceapi", return_value=mock_coro(True)):
        .opp.loop.run_until_complete(async_setup_component.opp, "spaceapi", CONFIG))

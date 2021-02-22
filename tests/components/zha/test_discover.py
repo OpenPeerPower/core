@@ -254,7 +254,7 @@ def test_discover_probe_single_cluster():
 
 
 @pytest.mark.parametrize("device_info", DEVICES)
-async def test_discover_endpoint(device_info, channels_mock,.opp):
+async def test_discover_endpoint(device_info, channels_mock, opp):
     """Test device discovery."""
 
     with mock.patch(

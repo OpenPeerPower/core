@@ -37,7 +37,7 @@ class HangoutsBot:
     """The Hangouts Bot."""
 
     def __init__(
-        self,.opp, refresh_token, intents, default_convs, error_suppressed_convs
+        self, opp, refresh_token, intents, default_convs, error_suppressed_convs
     ):
         """Set up the client."""
         self.opp =.opp

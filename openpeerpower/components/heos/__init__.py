@@ -137,7 +137,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 class ControllerManager:
     """Class that manages events of the controller."""
 
-    def __init__(self,.opp, controller):
+    def __init__(self, opp, controller):
         """Init the controller manager."""
         self.opp = opp
         self._device_registry = None
@@ -292,7 +292,7 @@ class SourceManager:
             None,
         )
 
-    def connect_update(self,.opp, controller):
+    def connect_update(self, opp, controller):
         """
         Connect listener for when sources change and signal player update.
 

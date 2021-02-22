@@ -22,7 +22,7 @@ def mock_dev_track(mock_device_tracker_conf):
 
 
 @pytest.fixture
-async def locative_client(loop,.opp,.opp_client):
+async def locative_client(loop, opp, opp_client):
     """Locative mock client."""
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
     await.opp.async_block_till_done()

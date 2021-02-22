@@ -175,7 +175,7 @@ async def test_sensor(
         zigpy_device.node_desc.mac_capability_flags |= 0b_0000_0100
     cluster.PLUGGED_ATTR_READS = read_plug
     zha_device = await zha_device_joined_restored(zigpy_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     await async_enable_traffic.opp, [zha_device], enabled=False)
     await.opp.async_block_till_done()
@@ -295,7 +295,7 @@ async def test_temp_uom(
     )
     cluster = zigpy_device.endpoints[1].temperature
     zha_device = await zha_device_restored(zigpy_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     if not restore:
         await async_enable_traffic.opp, [zha_device], enabled=False)
@@ -335,7 +335,7 @@ async def test_electrical_measurement_init(
     )
     cluster = zigpy_device.endpoints[1].in_clusters[cluster_id]
     zha_device = await zha_device_joined(zigpy_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     # allow traffic to flow through the gateway and devices
     await async_enable_traffic.opp, [zha_device])

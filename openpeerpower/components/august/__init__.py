@@ -224,7 +224,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class AugustData(AugustSubscriberMixin):
     """August data object."""
 
-    def __init__(self,.opp, august_gateway):
+    def __init__(self, opp, august_gateway):
         """Init August data object."""
         super().__init__.opp, MIN_TIME_BETWEEN_DETAIL_UPDATES)
         self.opp = opp

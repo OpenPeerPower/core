@@ -271,7 +271,7 @@ async def test_search.opp):
         assert searcher.async_search(search_type, search_id) == {}
 
 
-async def test_ws_api.opp,.opp_ws_client):
+async def test_ws_api.opp, opp_ws_client):
     """Test WS API."""
     assert await async_setup_component.opp, "search", {})
 

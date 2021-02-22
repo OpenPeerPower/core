@@ -756,7 +756,7 @@ MOCK_DEVICE_SENSORS = {
 @pytest.mark.parametrize("device_id", MOCK_DEVICE_SENSORS.keys())
 @pytest.mark.parametrize("platform", SUPPORTED_PLATFORMS)
 @patch("openpeerpower.components.onewire.onewirehub.protocol.proxy")
-async def test_owserver_setup_valid_device(owproxy,.opp, device_id, platform):
+async def test_owserver_setup_valid_device(owproxy, opp, device_id, platform):
     """Test for 1-Wire device.
 
     As they would be on a clean setup: all binary-sensors and switches disabled.

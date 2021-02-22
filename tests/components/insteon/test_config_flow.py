@@ -196,7 +196,7 @@ async def test_failed_connection_hub.opp: OpenPeerPowerType):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def _import_config.opp, config):
+async def _import_config(opp, config):
     """Run the import step."""
     with patch(PATCH_CONNECTION, new=mock_successful_connection,), patch(
         PATCH_ASYNC_SETUP, return_value=True
@@ -210,7 +210,7 @@ async def test_import_plm.opp: OpenPeerPowerType):
     """Test importing a minimum PLM config from yaml."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
-    result = await _import_config.opp, MOCK_IMPORT_CONFIG_PLM)
+    result = await _import_config(opp, MOCK_IMPORT_CONFIG_PLM)
 
     assert result["type"] == "create_entry"
     assert.opp.config_entries.async_entries(DOMAIN)
@@ -310,7 +310,7 @@ async def _options_form.opp, flow_id, user_input):
         return result, mock_setup_entry
 
 
-async def test_options_change_hub_config.opp: OpenPeerPowerType):
+async def test_options_change_hub_config(opp: OpenPeerPowerType):
     """Test changing Hub v2 config."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

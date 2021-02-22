@@ -96,7 +96,7 @@ async def test_setup_owserver_with_port.opp):
 
 @pytest.mark.parametrize("device_id", ["1F.111111111111"])
 @patch("openpeerpower.components.onewire.onewirehub.protocol.proxy")
-async def test_sensors_on_owserver_coupler(owproxy,.opp, device_id):
+async def test_sensors_on_owserver_coupler(owproxy, opp, device_id):
     """Test for 1-Wire sensors connected to DS2409 coupler."""
     await async_setup_component.opp, "persistent_notification", {})
     entity_registry = mock_registry.opp)

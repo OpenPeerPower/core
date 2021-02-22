@@ -23,7 +23,7 @@ from tests.common import (
 )
 
 
-async def test_valid_config.opp):
+async def test_valid_config(opp):
     """Test configuration."""
     assert await async_setup_component(
        .opp,

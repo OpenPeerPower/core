@@ -35,14 +35,14 @@ def now():
     return utcnow()
 
 
-async def test_setup_platform_valid_config.opp, mock_socket):
+async def test_setup_platform_valid_config(opp, mock_socket):
     """Check a valid configuration."""
     with assert_setup_component(1, "binary_sensor"):
         assert await async_setup_component.opp, "binary_sensor", TEST_CONFIG)
         await.opp.async_block_till_done()
 
 
-async def test_setup_platform_invalid_config.opp, mock_socket):
+async def test_setup_platform_invalid_config(opp, mock_socket):
     """Check the invalid configuration."""
     with assert_setup_component(0):
         assert await async_setup_component(

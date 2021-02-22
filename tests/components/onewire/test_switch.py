@@ -63,7 +63,7 @@ MOCK_DEVICE_SENSORS = {
 
 @pytest.mark.parametrize("device_id", ["12.111111111111"])
 @patch("openpeerpower.components.onewire.onewirehub.protocol.proxy")
-async def test_owserver_switch(owproxy,.opp, device_id):
+async def test_owserver_switch(owproxy, opp, device_id):
     """Test for 1-Wire switch.
 
     This test forces all entities to be enabled.

@@ -24,7 +24,7 @@ class HarmonyCallback(NamedTuple):
 class HarmonySubscriberMixin:
     """Base implementation for a subscriber."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize an subscriber."""
         super().__init__()
         self.opp = opp

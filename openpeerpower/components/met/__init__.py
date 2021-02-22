@@ -66,11 +66,11 @@ async def async_unload_entry.opp, config_entry):
 class MetDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Met data."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize global Met data updater."""
         self._unsub_track_home = None
         self.weather = MetWeatherData(
-           .opp, config_entry.data,.opp.config.units.is_metric
+           .opp, config_entry.data, opp.config.units.is_metric
         )
         self.weather.init_data()
 
@@ -109,7 +109,7 @@ class MetDataUpdateCoordinator(DataUpdateCoordinator):
 class MetWeatherData:
     """Keep data for Met.no weather entities."""
 
-    def __init__(self,.opp, config, is_metric):
+    def __init__(self, opp, config, is_metric):
         """Initialise the weather entity data."""
         self.opp =.opp
         self._config = config

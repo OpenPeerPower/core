@@ -42,7 +42,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     device = entry.data[CONF_DEVICE]
     config = {"Device": device, "Connection": "at"}
-    gateway = await create_sms_gateway(config,.opp)
+    gateway = await create_sms_gateway(config, opp)
     if not gateway:
         return False
    .opp.data[DOMAIN][SMS_GATEWAY] = gateway

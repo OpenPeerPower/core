@@ -105,7 +105,7 @@ async def async_unload_entry(
 class VizioAppsDataUpdateCoordinator(DataUpdateCoordinator):
     """Define an object to hold Vizio app config data."""
 
-    def __init__(self,.opp: OpenPeerPowerType) -> None:
+    def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize."""
         super().__init__(
            .opp,

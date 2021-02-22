@@ -31,7 +31,7 @@ OZW_READY_STATES_VALUES = {st.value for st in OZW_READY_STATES}
 class ZWaveDeviceEntityValues:
     """Manages entity access to the underlying Z-Wave value objects."""
 
-    def __init__(self,.opp, options, schema, primary_value):
+    def __init__(self, opp, options, schema, primary_value):
         """Initialize the values object with the passed entity schema."""
         self.opp = opp
         self._entity_created = False

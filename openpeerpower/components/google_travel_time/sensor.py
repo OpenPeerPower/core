@@ -183,7 +183,7 @@ def setup_platform.opp, config, add_entities_callback, discovery_info=None):
 class GoogleTravelTimeSensor(Entity):
     """Representation of a Google travel time sensor."""
 
-    def __init__(self,.opp, name, api_key, origin, destination, options):
+    def __init__(self, opp, name, api_key, origin, destination, options):
         """Initialize the sensor."""
         self.opp = opp
         self._name = name

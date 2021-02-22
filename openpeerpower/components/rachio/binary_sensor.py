@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up the Rachio binary sensors."""
-    entities = await.opp.async_add_executor_job(_create_entities,.opp, config_entry)
+    entities = await.opp.async_add_executor_job(_create_entities, opp, config_entry)
     async_add_entities(entities)
     _LOGGER.info("%d Rachio binary sensor(s) added", len(entities))
 

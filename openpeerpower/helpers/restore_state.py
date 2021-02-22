@@ -64,7 +64,7 @@ class RestoreStateData:
     """Helper class for managing the helper saved data."""
 
     @classmethod
-    async def async_get_instance(cls,.opp: OpenPeerPower) -> RestoreStateData:
+    async def async_get_instance(cls, opp: OpenPeerPower) -> RestoreStateData:
         """Get the singleton instance of this data helper."""
 
         @singleton(DATA_RESTORE_STATE_TASK)
@@ -100,7 +100,7 @@ class RestoreStateData:
 
         return cast(RestoreStateData, await load_instance.opp))
 
-    def __init__(self,.opp: OpenPeerPower) -> None:
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the restore state data class."""
         self.opp: OpenPeerPower =.opp
         self.store: Store = Store(

@@ -37,7 +37,7 @@ def validate_config(config):
 class MockMediaPlayer(media_player.MediaPlayerEntity):
     """Mock media player for testing."""
 
-    def __init__(self,.opp, name):
+    def __init__(self, opp, name):
         """Initialize the media player."""
         self.opp =.opp
         self._name = name

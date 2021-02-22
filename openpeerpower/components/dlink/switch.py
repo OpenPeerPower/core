@@ -59,7 +59,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class SmartPlugSwitch(SwitchEntity):
     """Representation of a D-Link Smart Plug switch."""
 
-    def __init__(self,.opp, data, name):
+    def __init__(self, opp, data, name):
         """Initialize the switch."""
         self.units = opp.config.units
         self.data = data

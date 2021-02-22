@@ -13,7 +13,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 @patch("openpeerpower.components.wled.WLED.update", side_effect=WLEDConnectionError)
 async def test_config_entry_not_ready(
-    mock_update: MagicMock,.opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    mock_update: MagicMock, opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the WLED configuration entry not ready."""
     entry = await init_integration.opp, aioclient_mock)

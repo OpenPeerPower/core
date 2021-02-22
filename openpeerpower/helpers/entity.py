@@ -54,7 +54,7 @@ def generate_entity_id(
    .opp: Optional[OpenPeerPower] = None,
 ) -> str:
     """Generate a unique entity ID based on given entity IDs or used IDs."""
-    return async_generate_entity_id(entity_id_format, name, current_ids,.opp)
+    return async_generate_entity_id(entity_id_format, name, current_ids, opp)
 
 
 @callback

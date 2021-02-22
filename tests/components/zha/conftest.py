@@ -143,7 +143,7 @@ def zha_device_joined.opp, setup_zha):
 
 
 @pytest.fixture
-def zha_device_restored.opp, zigpy_app_controller, setup_zha,.opp_storage):
+def zha_device_restored.opp, zigpy_app_controller, setup_zha, opp_storage):
     """Return a restored ZHA device."""
 
     async def _zha_device(zigpy_dev, last_seen=None):

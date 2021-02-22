@@ -24,7 +24,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class LiteJetSwitch(SwitchEntity):
     """Representation of a single LiteJet switch."""
 
-    def __init__(self,.opp, lj, i, name):
+    def __init__(self, opp, lj, i, name):
         """Initialize a LiteJet switch."""
         self.opp = opp
         self._lj = lj

@@ -101,7 +101,7 @@ def zigpy_keen_vent(zigpy_device_mock):
 @patch(
     "openpeerpower.components.zha.core.channels.closures.WindowCovering.async_initialize"
 )
-async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
+async def test_cover(m1, opp, zha_device_joined_restored, zigpy_cover_device):
     """Test zha cover platform."""
 
     # load up cover domain
@@ -111,7 +111,7 @@ async def test_cover(m1,.opp, zha_device_joined_restored, zigpy_cover_device):
     assert cluster.read_attributes.call_count == 2
     assert "current_position_lift_percentage" in cluster.read_attributes.call_args[0][0]
 
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     await async_enable_traffic.opp, [zha_device], enabled=False)
@@ -199,7 +199,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
 
     cluster_on_off = zigpy_shade_device.endpoints.get(1).on_off
     cluster_level = zigpy_shade_device.endpoints.get(1).level
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     await async_enable_traffic.opp, [zha_device], enabled=False)
@@ -335,7 +335,7 @@ async def test_restore_state.opp, zha_device_restored, zigpy_shade_device):
    .opp.state = CoreState.starting
 
     zha_device = await zha_device_restored(zigpy_shade_device)
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     # test that the cover was created and that it is unavailable
@@ -351,7 +351,7 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
 
     cluster_on_off = zigpy_keen_vent.endpoints.get(1).on_off
     cluster_level = zigpy_keen_vent.endpoints.get(1).level
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     await async_enable_traffic.opp, [zha_device], enabled=False)

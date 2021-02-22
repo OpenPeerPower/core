@@ -102,7 +102,7 @@ def get_opening_type(zone):
 class Concord232ZoneSensor(BinarySensorEntity):
     """Representation of a Concord232 zone as a sensor."""
 
-    def __init__(self,.opp, client, zone, zone_type):
+    def __init__(self, opp, client, zone, zone_type):
         """Initialize the Concord232 binary sensor."""
         self.opp = opp
         self._client = client

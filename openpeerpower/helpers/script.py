@@ -142,7 +142,7 @@ async def async_validate_actions_config(
 ) -> List[ConfigType]:
     """Validate a list of actions."""
     return await asyncio.gather(
-        *[async_validate_action_config.opp, action) for action in actions]
+        *[async_validate_action_config(opp, action) for action in actions]
     )
 
 
@@ -748,7 +748,7 @@ async def _async_stop_scripts_after_shutdown.opp, point_in_time):
 async def _async_stop_scripts_at_shutdown.opp, event):
     """Stop running Script objects started before shutdown."""
     async_call_later(
-       .opp, _SHUTDOWN_MAX_WAIT, partial(_async_stop_scripts_after_shutdown,.opp)
+       .opp, _SHUTDOWN_MAX_WAIT, partial(_async_stop_scripts_after_shutdown, opp)
     )
 
     running_scripts = [
@@ -810,7 +810,7 @@ class Script:
         if not all_scripts:
             all_scripts =.opp.data[DATA_SCRIPTS] = []
            .opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_STOP, partial(_async_stop_scripts_at_shutdown,.opp)
+                EVENT_OPENPEERPOWER_STOP, partial(_async_stop_scripts_at_shutdown, opp)
             )
         self._top_level = top_level
         if top_level:

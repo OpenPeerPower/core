@@ -65,7 +65,7 @@ async def test_update_access_token.opp):
     """Test the function to update access token when expired."""
     jwt = "dummyjwt"
 
-    config = GoogleConfig.opp, DUMMY_CONFIG)
+    config = Googleconfig(opp, DUMMY_CONFIG)
     await config.async_initialize()
 
     base_time = datetime(2019, 10, 14, tzinfo=timezone.utc)
@@ -96,9 +96,9 @@ async def test_update_access_token.opp):
         mock_get_token.assert_called_once()
 
 
-async def test_call_homegraph_api.opp, aioclient_mock,.opp_storage):
+async def test_call_homegraph_api.opp, aioclient_mock, opp_storage):
     """Test the function to call the homegraph api."""
-    config = GoogleConfig.opp, DUMMY_CONFIG)
+    config = Googleconfig(opp, DUMMY_CONFIG)
     await config.async_initialize()
 
     with patch(
@@ -119,9 +119,9 @@ async def test_call_homegraph_api.opp, aioclient_mock,.opp_storage):
         assert call[3] == MOCK_HEADER
 
 
-async def test_call_homegraph_api_retry.opp, aioclient_mock,.opp_storage):
+async def test_call_homegraph_api_retry.opp, aioclient_mock, opp_storage):
     """Test the that the calls get retried with new token on 401."""
-    config = GoogleConfig.opp, DUMMY_CONFIG)
+    config = Googleconfig(opp, DUMMY_CONFIG)
     await config.async_initialize()
 
     with patch(
@@ -144,10 +144,10 @@ async def test_call_homegraph_api_retry.opp, aioclient_mock,.opp_storage):
         assert call[3] == MOCK_HEADER
 
 
-async def test_report_state.opp, aioclient_mock,.opp_storage):
+async def test_report_state.opp, aioclient_mock, opp_storage):
     """Test the report state function."""
     agent_user_id = "user"
-    config = GoogleConfig.opp, DUMMY_CONFIG)
+    config = Googleconfig(opp, DUMMY_CONFIG)
     await config.async_initialize()
 
     await config.async_connect_agent_user(agent_user_id)

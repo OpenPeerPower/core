@@ -14,7 +14,7 @@ from openpeerpower.const import (
 class ExtendedMediaPlayer(mp.MediaPlayerEntity):
     """Media player test class."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the test media player."""
         self.opp =.opp
         self._volume = 0
@@ -90,7 +90,7 @@ class ExtendedMediaPlayer(mp.MediaPlayerEntity):
 class SimpleMediaPlayer(mp.MediaPlayerEntity):
     """Media player test class."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the test media player."""
         self.opp =.opp
         self._volume = 0

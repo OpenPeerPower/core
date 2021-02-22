@@ -201,9 +201,9 @@ async def handle_get_services.opp, connection, msg):
 
 @callback
 @decorators.websocket_command({vol.Required("type"): "get_config"})
-def handle_get_config.opp, connection, msg):
+def handle_get_config(opp, connection, msg):
     """Handle get config command."""
-    connection.send_message(messages.result_message(msg["id"],.opp.config.as_dict()))
+    connection.send_message(messages.result_message(msg["id"], opp.config.as_dict()))
 
 
 @decorators.websocket_command({vol.Required("type"): "manifest/list"})
@@ -256,7 +256,7 @@ def handle_ping.opp, connection, msg):
 async def handle_render_template.opp, connection, msg):
     """Handle render_template command."""
     template_str = msg["template"]
-    template = Template(template_str,.opp)
+    template = Template(template_str, opp)
     variables = msg.get("variables")
     timeout = msg.get("timeout")
     info = None
@@ -368,7 +368,7 @@ async def handle_subscribe_trigger.opp, connection, msg):
     # pylint: disable=import-outside-toplevel
     from openpeerpower.helpers import trigger
 
-    trigger_config = await trigger.async_validate_trigger_config.opp, msg["trigger"])
+    trigger_config = await trigger.async_validate_trigger_config(opp, msg["trigger"])
 
     @callback
     def forward_triggers(variables, context=None):
@@ -412,7 +412,7 @@ async def handle_test_condition.opp, connection, msg):
     # pylint: disable=import-outside-toplevel
     from openpeerpower.helpers import condition
 
-    check_condition = await condition.async_from_config.opp, msg["condition"])
+    check_condition = await condition.async_from_config(opp, msg["condition"])
     connection.send_result(
         msg["id"], {"result": check_condition.opp, msg.get("variables"))}
     )

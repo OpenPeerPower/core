@@ -39,8 +39,8 @@ SCAN_INTERVAL = timedelta(minutes=5)
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the air_quality norway sensor."""
     forecast = config.get(CONF_FORECAST)
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     name = config.get(CONF_NAME)
 
     if None in (latitude, longitude):

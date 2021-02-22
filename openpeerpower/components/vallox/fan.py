@@ -42,7 +42,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     client.set_settable_address(METRIC_KEY_MODE, int)
 
     device = ValloxFan(
-       .opp.data[DOMAIN]["name"], client,.opp.data[DOMAIN]["state_proxy"]
+       .opp.data[DOMAIN]["name"], client, opp.data[DOMAIN]["state_proxy"]
     )
 
     async_add_entities([device], update_before_add=False)

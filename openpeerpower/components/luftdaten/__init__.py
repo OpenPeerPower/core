@@ -142,7 +142,7 @@ async def async_setup_entry.opp, config_entry):
 
     try:
         luftdaten = LuftDatenData(
-            Luftdaten(config_entry.data[CONF_SENSOR_ID],.opp.loop, session),
+            Luftdaten(config_entry.data[CONF_SENSOR_ID], opp.loop, session),
             config_entry.data.get(CONF_SENSORS, {}).get(
                 CONF_MONITORED_CONDITIONS, list(SENSORS)
             ),

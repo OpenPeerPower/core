@@ -115,7 +115,7 @@ STORAGE_VERSION = 1
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up an input slider."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()
 
     yaml_collection = collection.YamlCollection(

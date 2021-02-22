@@ -50,7 +50,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class TimeDateSensor(Entity):
     """Implementation of a Time and Date sensor."""
 
-    def __init__(self,.opp, option_type):
+    def __init__(self, opp, option_type):
         """Initialize the sensor."""
         self._name = OPTION_TYPES[option_type]
         self.type = option_type

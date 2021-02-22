@@ -19,7 +19,7 @@ def dispatcher_connect(
 ) -> Callable[[], None]:
     """Connect a callable function to a signal."""
     async_unsub = run_callback_threadsafe(
-       .opp.loop, async_dispatcher_connect,.opp, signal, target
+       .opp.loop, async_dispatcher_connect, opp, signal, target
     ).result()
 
     def remove_dispatcher() -> None:
@@ -71,7 +71,7 @@ def async_dispatcher_connect(
 @bind.opp
 def dispatcher_send.opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
     """Send signal and data."""
-   .opp.loop.call_soon_threadsafe(async_dispatcher_send,.opp, signal, *args)
+   .opp.loop.call_soon_threadsafe(async_dispatcher_send, opp, signal, *args)
 
 
 @callback

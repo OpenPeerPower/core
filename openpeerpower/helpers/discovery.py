@@ -30,7 +30,7 @@ def listen(
 
     Service can be a string or a list/tuple.
     """
-    run_callback_threadsafe.opp.loop, async_listen,.opp, service, callback).result()
+    run_callback_threadsafe.opp.loop, async_listen, opp, service, callback).result()
 
 
 @core.callback
@@ -49,7 +49,7 @@ def async_listen(
     else:
         service = tuple(service)
 
-    job = core.HassJob(callback)
+    job = core.OppJob(callback)
 
     async def discovery_event_listener(event: core.Event) -> None:
         """Listen for discovery events."""
@@ -74,7 +74,7 @@ def discover(
     """Fire discovery event. Can ensure a component is loaded."""
    .opp.add_job(
         async_discover(  # type: ignore
-           .opp, service, discovered, component,.opp_config
+           .opp, service, discovered, component, opp_config
         )
     )
 
@@ -89,7 +89,7 @@ async def async_discover(
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
     if component is not None and component not in.opp.config.components:
-        await setup.async_setup_component.opp, component,.opp_config)
+        await setup.async_setup_component.opp, component, opp_config)
 
     data: Dict[str, Any] = {ATTR_SERVICE: service}
 
@@ -105,7 +105,7 @@ def listen_platform(
 ) -> None:
     """Register a platform loader listener."""
     run_callback_threadsafe(
-       .opp.loop, async_listen_platform,.opp, component, callback
+       .opp.loop, async_listen_platform, opp, component, callback
     ).result()
 
 
@@ -120,7 +120,7 @@ def async_listen_platform(
     This method must be run in the event loop.
     """
     service = EVENT_LOAD_PLATFORM.format(component)
-    job = core.HassJob(callback)
+    job = core.OppJob(callback)
 
     async def discovery_platform_listener(event: core.Event) -> None:
         """Listen for platform discovery events."""
@@ -159,7 +159,7 @@ def load_platform(
     """
    .opp.add_job(
         async_load_platform(  # type: ignore
-           .opp, component, platform, discovered,.opp_config
+           .opp, component, platform, discovered, opp_config
         )
     )
 
@@ -192,7 +192,7 @@ async def async_load_platform(
     setup_success = True
 
     if component not in.opp.config.components:
-        setup_success = await setup.async_setup_component.opp, component,.opp_config)
+        setup_success = await setup.async_setup_component.opp, component, opp_config)
 
     # No need to fire event if we could not set up component
     if not setup_success:

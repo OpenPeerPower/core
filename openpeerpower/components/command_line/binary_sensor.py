@@ -72,7 +72,7 @@ class CommandBinarySensor(BinarySensorEntity):
     """Representation of a command line binary sensor."""
 
     def __init__(
-        self,.opp, data, name, device_class, payload_on, payload_off, value_template
+        self, opp, data, name, device_class, payload_on, payload_off, value_template
     ):
         """Initialize the Command line binary sensor."""
         self.opp = opp

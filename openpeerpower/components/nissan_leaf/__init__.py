@@ -197,7 +197,7 @@ def setup_opp, config):
 class LeafDataStore:
     """Nissan Leaf Data Store."""
 
-    def __init__(self,.opp, leaf, car_config):
+    def __init__(self, opp, leaf, car_config):
         """Initialise the data store."""
         self.opp =.opp
         self.leaf = leaf

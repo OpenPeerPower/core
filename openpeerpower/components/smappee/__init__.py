@@ -120,7 +120,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class SmappeeBase:
     """An object to hold the PySmappee instance."""
 
-    def __init__(self,.opp, smappee):
+    def __init__(self, opp, smappee):
         """Initialize the Smappee API wrapper class."""
         self.opp =.opp
         self.smappee = smappee

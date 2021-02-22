@@ -62,7 +62,7 @@ REGISTER_URL = "/api/notify.html5"
 PUBLISH_URL = "/api/notify.html5/callback"
 
 
-async def mock_client.opp,.opp_client, registrations=None):
+async def mock_client.opp, opp_client, registrations=None):
     """Create a test client for HTML5 views."""
     if registrations is None:
         registrations = {}
@@ -287,9 +287,9 @@ def test_create_vapid_withoutvapid():
     assert resp is None
 
 
-async def test_registering_new_device_view.opp,.opp_client):
+async def test_registering_new_device_view.opp, opp_client):
     """Test that the HTML view works."""
-    client = await mock_client.opp,.opp_client)
+    client = await mock_client.opp, opp_client)
 
     with patch("openpeerpower.components.html5.notify.save_json") as mock_save:
         resp = await client.post(REGISTER_URL, data=json.dumps(SUBSCRIPTION_1))
@@ -299,9 +299,9 @@ async def test_registering_new_device_view.opp,.opp_client):
     assert mock_save.mock_calls[0][1][1] == {"unnamed device": SUBSCRIPTION_1}
 
 
-async def test_registering_new_device_view_with_name.opp,.opp_client):
+async def test_registering_new_device_view_with_name.opp, opp_client):
     """Test that the HTML view works with name attribute."""
-    client = await mock_client.opp,.opp_client)
+    client = await mock_client.opp, opp_client)
 
     SUB_WITH_NAME = SUBSCRIPTION_1.copy()
     SUB_WITH_NAME["name"] = "test device"
@@ -314,9 +314,9 @@ async def test_registering_new_device_view_with_name.opp,.opp_client):
     assert mock_save.mock_calls[0][1][1] == {"test device": SUBSCRIPTION_1}
 
 
-async def test_registering_new_device_expiration_view.opp,.opp_client):
+async def test_registering_new_device_expiration_view.opp, opp_client):
     """Test that the HTML view works."""
-    client = await mock_client.opp,.opp_client)
+    client = await mock_client.opp, opp_client)
 
     with patch("openpeerpower.components.html5.notify.save_json") as mock_save:
         resp = await client.post(REGISTER_URL, data=json.dumps(SUBSCRIPTION_4))
@@ -325,10 +325,10 @@ async def test_registering_new_device_expiration_view.opp,.opp_client):
     assert mock_save.mock_calls[0][1][1] == {"unnamed device": SUBSCRIPTION_4}
 
 
-async def test_registering_new_device_fails_view.opp,.opp_client):
+async def test_registering_new_device_fails_view.opp, opp_client):
     """Test subs. are not altered when registering a new device fails."""
     registrations = {}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     with patch(
         "openpeerpower.components.html5.notify.save_json",
@@ -340,10 +340,10 @@ async def test_registering_new_device_fails_view.opp,.opp_client):
     assert registrations == {}
 
 
-async def test_registering_existing_device_view.opp,.opp_client):
+async def test_registering_existing_device_view.opp, opp_client):
     """Test subscription is updated when registering existing device."""
     registrations = {}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     with patch("openpeerpower.components.html5.notify.save_json") as mock_save:
         await client.post(REGISTER_URL, data=json.dumps(SUBSCRIPTION_1))
@@ -354,10 +354,10 @@ async def test_registering_existing_device_view.opp,.opp_client):
     assert registrations == {"unnamed device": SUBSCRIPTION_4}
 
 
-async def test_registering_existing_device_view_with_name.opp,.opp_client):
+async def test_registering_existing_device_view_with_name.opp, opp_client):
     """Test subscription is updated when reg'ing existing device with name."""
     registrations = {}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     SUB_WITH_NAME = SUBSCRIPTION_1.copy()
     SUB_WITH_NAME["name"] = "test device"
@@ -371,10 +371,10 @@ async def test_registering_existing_device_view_with_name.opp,.opp_client):
     assert registrations == {"test device": SUBSCRIPTION_4}
 
 
-async def test_registering_existing_device_fails_view.opp,.opp_client):
+async def test_registering_existing_device_fails_view.opp, opp_client):
     """Test sub. is not updated when registering existing device fails."""
     registrations = {}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     with patch("openpeerpower.components.html5.notify.save_json") as mock_save:
         await client.post(REGISTER_URL, data=json.dumps(SUBSCRIPTION_1))
@@ -385,9 +385,9 @@ async def test_registering_existing_device_fails_view.opp,.opp_client):
     assert registrations == {"unnamed device": SUBSCRIPTION_1}
 
 
-async def test_registering_new_device_validation.opp,.opp_client):
+async def test_registering_new_device_validation.opp, opp_client):
     """Test various errors when registering a new device."""
-    client = await mock_client.opp,.opp_client)
+    client = await mock_client.opp, opp_client)
 
     resp = await client.post(
         REGISTER_URL,
@@ -406,10 +406,10 @@ async def test_registering_new_device_validation.opp,.opp_client):
     assert resp.status == 400
 
 
-async def test_unregistering_device_view.opp,.opp_client):
+async def test_unregistering_device_view.opp, opp_client):
     """Test that the HTML unregister view works."""
     registrations = {"some device": SUBSCRIPTION_1, "other device": SUBSCRIPTION_2}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     with patch("openpeerpower.components.html5.notify.save_json") as mock_save:
         resp = await client.delete(
@@ -422,10 +422,10 @@ async def test_unregistering_device_view.opp,.opp_client):
     assert registrations == {"other device": SUBSCRIPTION_2}
 
 
-async def test_unregister_device_view_handle_unknown_subscription.opp,.opp_client):
+async def test_unregister_device_view_handle_unknown_subscription.opp, opp_client):
     """Test that the HTML unregister view handles unknown subscriptions."""
     registrations = {}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     with patch("openpeerpower.components.html5.notify.save_json") as mock_save:
         resp = await client.delete(
@@ -438,10 +438,10 @@ async def test_unregister_device_view_handle_unknown_subscription.opp,.opp_clien
     assert len(mock_save.mock_calls) == 0
 
 
-async def test_unregistering_device_view_handles_save_error.opp,.opp_client):
+async def test_unregistering_device_view_handles_save_error.opp, opp_client):
     """Test that the HTML unregister view handles save errors."""
     registrations = {"some device": SUBSCRIPTION_1, "other device": SUBSCRIPTION_2}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     with patch(
         "openpeerpower.components.html5.notify.save_json",
@@ -459,9 +459,9 @@ async def test_unregistering_device_view_handles_save_error.opp,.opp_client):
     }
 
 
-async def test_callback_view_no_jwt.opp,.opp_client):
+async def test_callback_view_no_jwt.opp, opp_client):
     """Test that the notification callback view works without JWT."""
-    client = await mock_client.opp,.opp_client)
+    client = await mock_client.opp, opp_client)
     resp = await client.post(
         PUBLISH_URL,
         data=json.dumps(
@@ -472,10 +472,10 @@ async def test_callback_view_no_jwt.opp,.opp_client):
     assert resp.status == 401
 
 
-async def test_callback_view_with_jwt.opp,.opp_client):
+async def test_callback_view_with_jwt.opp, opp_client):
     """Test that the notification callback view works with JWT."""
     registrations = {"device": SUBSCRIPTION_1}
-    client = await mock_client.opp,.opp_client, registrations)
+    client = await mock_client.opp, opp_client, registrations)
 
     with patch("openpeerpower.components.html5.notify.WebPusher") as mock_wp:
         await.opp.services.async_call(
@@ -509,10 +509,10 @@ async def test_callback_view_with_jwt.opp,.opp_client):
     assert body == {"event": "push", "status": "ok"}
 
 
-async def test_send_fcm_without_targets.opp,.opp_client):
+async def test_send_fcm_without_targets.opp, opp_client):
     """Test that the notification is send with FCM without targets."""
     registrations = {"device": SUBSCRIPTION_5}
-    await mock_client.opp,.opp_client, registrations)
+    await mock_client.opp, opp_client, registrations)
     with patch("openpeerpower.components.html5.notify.WebPusher") as mock_wp:
         await.opp.services.async_call(
             "notify",

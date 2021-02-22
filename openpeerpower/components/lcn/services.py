@@ -53,7 +53,7 @@ class LcnServiceCall:
 
     schema = vol.Schema({vol.Required(CONF_ADDRESS): is_address})
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize service call."""
         self.opp =.opp
         self.connections =.opp.data[DATA_LCN][CONF_CONNECTIONS]

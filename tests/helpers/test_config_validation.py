@@ -403,7 +403,7 @@ def test_string.opp):
         ("(1, 2)", (1, 2)),
         ('{"hello": True}', {"hello": True}),
     ):
-        tpl = template.Template(text,.opp)
+        tpl = template.Template(text, opp)
         result = tpl.async_render()
         assert isinstance(result, template.ResultWrapper)
         assert result == native

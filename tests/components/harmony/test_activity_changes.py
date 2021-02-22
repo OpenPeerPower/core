@@ -20,7 +20,7 @@ from .const import ENTITY_PLAY_MUSIC, ENTITY_REMOTE, ENTITY_WATCH_TV, HUB_NAME
 from tests.common import MockConfigEntry
 
 
-async def test_switch_toggles(mock_hc,.opp, mock_write_config):
+async def test_switch_toggles(mock_hc, opp, mock_write_config):
     """Ensure calls to the switch modify the harmony state."""
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
@@ -54,7 +54,7 @@ async def test_switch_toggles(mock_hc,.opp, mock_write_config):
     assert.opp.states.is_state(ENTITY_PLAY_MUSIC, STATE_OFF)
 
 
-async def test_remote_toggles(mock_hc,.opp, mock_write_config):
+async def test_remote_toggles(mock_hc, opp, mock_write_config):
     """Ensure calls to the remote also updates the switches."""
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}

@@ -53,7 +53,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class YiCamera(Camera):
     """Define an implementation of a Yi Camera."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize."""
         super().__init__()
         self._extra_arguments = config.get(CONF_FFMPEG_ARGUMENTS)

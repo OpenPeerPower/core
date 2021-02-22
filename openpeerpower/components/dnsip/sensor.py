@@ -58,7 +58,7 @@ async def async_setup_platform.opp, config, async_add_devices, discovery_info=No
 class WanIpSensor(Entity):
     """Implementation of a DNS IP sensor."""
 
-    def __init__(self,.opp, name, hostname, resolver, ipv6):
+    def __init__(self, opp, name, hostname, resolver, ipv6):
         """Initialize the DNS IP sensor."""
 
         self.opp =.opp

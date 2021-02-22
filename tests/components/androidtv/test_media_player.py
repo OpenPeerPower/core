@@ -1056,7 +1056,7 @@ async def test_androidtv_volume_set.opp):
         patch_set_volume_level.assert_called_with(0.5)
 
 
-async def test_get_image.opp,.opp_ws_client):
+async def test_get_image.opp, opp_ws_client):
     """Test taking a screen capture.
 
     This is based on `test_get_image` in tests/components/media_player/test_init.py.

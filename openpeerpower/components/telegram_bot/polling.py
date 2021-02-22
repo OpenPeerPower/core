@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_platform.opp, config):
     """Set up the Telegram polling platform."""
     bot = initialize_bot(config)
-    pol = TelegramPoll(bot,.opp, config[CONF_ALLOWED_CHAT_IDS])
+    pol = TelegramPoll(bot, opp, config[CONF_ALLOWED_CHAT_IDS])
 
     def _start_bot(_event):
         """Start the bot."""
@@ -75,10 +75,10 @@ def message_handler(handler):
 class TelegramPoll(BaseTelegramBotEntity):
     """Asyncio telegram incoming message handler."""
 
-    def __init__(self, bot,.opp, allowed_chat_ids):
+    def __init__(self, bot, opp, allowed_chat_ids):
         """Initialize the polling instance."""
 
-        BaseTelegramBotEntity.__init__(self,.opp, allowed_chat_ids)
+        BaseTelegramBotEntity.__init__(self, opp, allowed_chat_ids)
 
         self.updater = Updater(bot=bot, workers=4)
         self.dispatcher = self.updater.dispatcher

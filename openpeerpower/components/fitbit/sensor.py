@@ -398,7 +398,7 @@ class FitbitAuthCallbackView(OpenPeerPowerView):
             }
         save_json.opp.config.path(FITBIT_CONFIG_FILE), config_contents)
 
-       .opp.async_add_job(setup_platform,.opp, self.config, self.add_entities)
+       .opp.async_add_job(setup_platform, opp, self.config, self.add_entities)
 
         return html_response
 

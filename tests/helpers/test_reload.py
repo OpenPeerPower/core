@@ -44,7 +44,7 @@ async def test_reload_platform.opp):
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
     mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_setup({DOMAIN: {"platform": PLATFORM, "sensors": None}})
     await.opp.async_block_till_done()
@@ -88,7 +88,7 @@ async def test_setup_reload_service.opp):
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
     mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_setup({DOMAIN: {"platform": PLATFORM, "sensors": None}})
     await.opp.async_block_till_done()
@@ -131,7 +131,7 @@ async def test_setup_reload_service_when_async_process_component_config_fails.op
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
     mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_setup({DOMAIN: {"platform": PLATFORM, "sensors": None}})
     await.opp.async_block_till_done()
@@ -185,7 +185,7 @@ async def test_setup_reload_service_with_platform_that_provides_async_reset_plat
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
     mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_setup({DOMAIN: {"platform": PLATFORM, "name": "xyz"}})
     await.opp.async_block_till_done()
@@ -214,7 +214,7 @@ async def test_setup_reload_service_with_platform_that_provides_async_reset_plat
     assert len(async_reset_platform_called) == 1
 
 
-async def test_async_integration_yaml_config.opp):
+async def test_async_integration_yaml_config(opp):
     """Test loading yaml config for an integration."""
     mock_integration.opp, MockModule(DOMAIN))
 
@@ -224,12 +224,12 @@ async def test_async_integration_yaml_config.opp):
         f"helpers/{DOMAIN}_configuration.yaml",
     )
     with patch.object(config, "YAML_CONFIG_FILE", yaml_path):
-        processed_config = await async_integration_yaml_config.opp, DOMAIN)
+        processed_config = await async_integration_yaml_config(opp, DOMAIN)
 
     assert processed_config == {DOMAIN: [{"name": "one"}, {"name": "two"}]}
 
 
-async def test_async_integration_missing_yaml_config.opp):
+async def test_async_integration_missing_yaml_config(opp):
     """Test loading missing yaml config for an integration."""
     mock_integration.opp, MockModule(DOMAIN))
 
@@ -241,7 +241,7 @@ async def test_async_integration_missing_yaml_config.opp):
     with pytest.raises(FileNotFoundError), patch.object(
         config, "YAML_CONFIG_FILE", yaml_path
     ):
-        await async_integration_yaml_config.opp, DOMAIN)
+        await async_integration_yaml_config(opp, DOMAIN)
 
 
 def _get_fixtures_base_path():

@@ -101,7 +101,7 @@ class BleBoxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
 
         websession = async_get_clientsession.opp)
-        api_host = ApiHost(*addr, DEFAULT_SETUP_TIMEOUT, websession,.opp.loop, _LOGGER)
+        api_host = ApiHost(*addr, DEFAULT_SETUP_TIMEOUT, websession, opp.loop, _LOGGER)
 
         try:
             product = await Products.async_from_host(api_host)

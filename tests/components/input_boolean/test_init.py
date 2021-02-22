@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def storage_setup_opp,.opp_storage):
+def storage_setup_opp, opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):
@@ -48,7 +48,7 @@ def storage_setup_opp,.opp_storage):
     return _storage
 
 
-async def test_config.opp):
+async def test_config(opp):
     """Test config."""
     invalid_configs = [None, 1, {}, {"name with space": None}]
 
@@ -86,7 +86,7 @@ async def test_config_options.opp):
     """Test configuration options."""
     count_start = len.opp.states.async_entity_ids())
 
-    _LOGGER.debug("ENTITIES @ start: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
     assert await async_setup_component(
        .opp,
@@ -99,7 +99,7 @@ async def test_config_options.opp):
         },
     )
 
-    _LOGGER.debug("ENTITIES: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES: %s", opp.states.async_entity_ids())
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -166,7 +166,7 @@ async def test_initial_state_overrules_restore_state.opp):
     assert state.state == "on"
 
 
-async def test_input_boolean_context.opp,.opp_admin_user):
+async def test_input_boolean_context.opp, opp_admin_user):
     """Test that input_boolean context works."""
     assert await async_setup_component(
        .opp, "input_boolean", {"input_boolean": {"ac": {CONF_INITIAL: True}}}
@@ -189,12 +189,12 @@ async def test_input_boolean_context.opp,.opp_admin_user):
     assert state2.context.user_id ==.opp_admin_user.id
 
 
-async def test_reload.opp,.opp_admin_user):
+async def test_reload.opp, opp_admin_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    _LOGGER.debug("ENTITIES @ start: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
     assert await async_setup_component(
        .opp,
@@ -207,7 +207,7 @@ async def test_reload.opp,.opp_admin_user):
         },
     )
 
-    _LOGGER.debug("ENTITIES: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES: %s", opp.states.async_entity_ids())
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
@@ -287,7 +287,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert not state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_ws_list.opp,.opp_ws_client, storage_setup):
+async def test_ws_list.opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
@@ -307,7 +307,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp,.opp_ws_client, storage_setup):
+async def test_ws_delete.opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -332,7 +332,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_setup_no_config.opp,.opp_admin_user):
+async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
     assert await async_setup_component.opp, DOMAIN, {})

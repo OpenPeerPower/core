@@ -48,7 +48,7 @@ async def test_open_peer_power_core_config_validation.opp):
     """Test if we pass in wrong information for HA conf."""
     # Extensive HA conf validation testing is done
     result = await bootstrap.async_from_config_dict(
-        {"openpeerpower": {"latitude": "some string"}},.opp
+        {"openpeerpower": {"latitude": "some string"}}, opp
     )
     assert result is None
 
@@ -74,7 +74,7 @@ async def test_load_oppio.opp):
 @pytest.mark.parametrize("load_registries", [False])
 async def test_empty_setup_opp):
     """Test an empty set up loads the core."""
-    await bootstrap.async_from_config_dict({},.opp)
+    await bootstrap.async_from_config_dict({}, opp)
     for domain in bootstrap.CORE_INTEGRATIONS:
         assert domain in.opp.config.components, domain
 
@@ -85,7 +85,7 @@ async def test_core_failure_loads_safe_mode.opp, caplog):
         "openpeerpower.components.openpeerpower.async_setup",
         return_value=mock_coro(False),
     ):
-        await bootstrap.async_from_config_dict({"group": {}},.opp)
+        await bootstrap.async_from_config_dict({"group": {}}, opp)
 
     assert "core failed to initialize" in caplog.text
     # We aborted early, group not set up
@@ -93,7 +93,7 @@ async def test_core_failure_loads_safe_mode.opp, caplog):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_setting_up_config.opp):
+async def test_setting_up_config(opp):
     """Test we set up domains in config."""
     await bootstrap._async_set_up_integrations(
        .opp, {"group hello": {}, "openpeerpower": {}}

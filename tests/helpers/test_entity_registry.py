@@ -218,7 +218,7 @@ def test_is_registered(registry):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_loading_extra_values.opp,.opp_storage):
+async def test_loading_extra_values.opp, opp_storage):
     """Test we load extra data from the registry."""
    .opp_storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,
@@ -382,7 +382,7 @@ async def test_migration.opp):
     assert entry.config_entry_id == "test-config-id"
 
 
-async def test_loading_invalid_entity_id.opp,.opp_storage):
+async def test_loading_invalid_entity_id.opp, opp_storage):
     """Test we autofix invalid entity IDs."""
    .opp_storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,

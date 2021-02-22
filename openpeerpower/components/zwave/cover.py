@@ -59,7 +59,7 @@ def get_device.opp, values, node_config, **kwargs):
 class ZwaveRollershutter(ZWaveDeviceEntity, CoverEntity):
     """Representation of an Z-Wave cover."""
 
-    def __init__(self,.opp, values, invert_buttons, invert_percent):
+    def __init__(self, opp, values, invert_buttons, invert_percent):
         """Initialize the Z-Wave rollershutter."""
         ZWaveDeviceEntity.__init__(self, values, DOMAIN)
         self._network =.opp.data[DATA_NETWORK]

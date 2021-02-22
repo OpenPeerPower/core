@@ -57,8 +57,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             station_id=config[CONF_STATION], language=config.get(CONF_LANGUAGE)
         )
     else:
-        lat = config.get(CONF_LATITUDE,.opp.config.latitude)
-        lon = config.get(CONF_LONGITUDE,.opp.config.longitude)
+        lat = config.get(CONF_LATITUDE, opp.config.latitude)
+        lon = config.get(CONF_LONGITUDE, opp.config.longitude)
         ec_data = ECData(coordinates=(lat, lon), language=config.get(CONF_LANGUAGE))
 
     sensor_list = list(ec_data.conditions) + list(ec_data.alerts)

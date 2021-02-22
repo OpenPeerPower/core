@@ -76,7 +76,7 @@ async def test_not_log_password.opp, aiohttp_client, caplog, legacy_auth):
     assert "some-pass" not in logs
 
 
-async def test_proxy_config.opp):
+async def test_proxy_config(opp):
     """Test use_x_forwarded_for must config together with trusted_proxies."""
     assert (
         await async_setup_component(
@@ -181,7 +181,7 @@ async def test_cors_defaults.opp):
     ]
 
 
-async def test_storing_config.opp, aiohttp_client, aiohttp_unused_port):
+async def test_storing_config(opp, aiohttp_client, aiohttp_unused_port):
     """Test that we store last working config."""
     config = {
         http.CONF_SERVER_PORT: aiohttp_unused_port(),

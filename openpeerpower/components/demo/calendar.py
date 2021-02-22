@@ -22,7 +22,7 @@ class DemoGoogleCalendarData:
 
     event = None
 
-    async def async_get_events(self,.opp, start_date, end_date):
+    async def async_get_events(self, opp, start_date, end_date):
         """Get all events in a specific time frame."""
         event = copy.copy(self.event)
         event["title"] = event["summary"]
@@ -68,7 +68,7 @@ class DemoGoogleCalendarDataCurrent(DemoGoogleCalendarData):
 class DemoGoogleCalendar(CalendarEventDevice):
     """Representation of a Demo Calendar element."""
 
-    def __init__(self,.opp, calendar_data, name):
+    def __init__(self, opp, calendar_data, name):
         """Initialize demo calendar."""
         self.data = calendar_data
         self._name = name
@@ -83,6 +83,6 @@ class DemoGoogleCalendar(CalendarEventDevice):
         """Return the name of the entity."""
         return self._name
 
-    async def async_get_events(self,.opp, start_date, end_date):
+    async def async_get_events(self, opp, start_date, end_date):
         """Return calendar events within a datetime range."""
         return await self.data.async_get_events.opp, start_date, end_date)

@@ -118,7 +118,7 @@ def _bool_attr_from_int(val):
 class Life360Scanner:
     """Life360 device scanner."""
 
-    def __init__(self,.opp, config, see, apis):
+    def __init__(self, opp, config, see, apis):
         """Initialize Life360Scanner."""
         self.opp = opp
         self._see = see

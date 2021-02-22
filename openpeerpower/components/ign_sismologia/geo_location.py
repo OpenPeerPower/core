@@ -55,8 +55,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the IGN Sismologia Feed platform."""
     scan_interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     coordinates = (
-        config.get(CONF_LATITUDE,.opp.config.latitude),
-        config.get(CONF_LONGITUDE,.opp.config.longitude),
+        config.get(CONF_LATITUDE, opp.config.latitude),
+        config.get(CONF_LONGITUDE, opp.config.longitude),
     )
     radius_in_km = config[CONF_RADIUS]
     minimum_magnitude = config[CONF_MINIMUM_MAGNITUDE]

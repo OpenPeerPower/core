@@ -29,7 +29,7 @@ async def async_setup_entry.opp, config_entry):
             return
         await device_trigger.async_device_removed.opp, event.data["device_id"])
 
-    setup = functools.partial(_async_setup_automation,.opp, config_entry=config_entry)
+    setup = functools.partial(_async_setup_automation, opp, config_entry=config_entry)
     await async_setup_entry_helper.opp, "device_automation", setup, PLATFORM_SCHEMA)
    .opp.bus.async_listen(EVENT_DEVICE_REGISTRY_UPDATED, async_device_removed)
 

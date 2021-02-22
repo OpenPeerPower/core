@@ -150,8 +150,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if PLATFORM not in.opp.data:
        .opp.data[PLATFORM] = {MONITORED_NETWORKS: {}}
 
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
     network_id = config.get(CONF_NETWORK)
     stations_list = set(config.get(CONF_STATIONS_LIST, []))
     radius = config.get(CONF_RADIUS, 0)
@@ -188,7 +188,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 uid = "_".join([network.network_id, name, station_id])
             else:
                 uid = "_".join([network.network_id, station_id])
-            entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid,.opp.opp)
+            entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid, opp.opp)
             devices.append(CityBikesStation(network, station_id, entity_id))
 
     async_add_entities(devices, True)
@@ -197,7 +197,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class CityBikesNetworks:
     """Represent all CityBikes networks."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the networks instance."""
         self.opp =.opp
         self.networks = None
@@ -234,7 +234,7 @@ class CityBikesNetworks:
 class CityBikesNetwork:
     """Thin wrapper around a CityBikes network object."""
 
-    def __init__(self,.opp, network_id):
+    def __init__(self, opp, network_id):
         """Initialize the network object."""
         self.opp =.opp
         self.network_id = network_id

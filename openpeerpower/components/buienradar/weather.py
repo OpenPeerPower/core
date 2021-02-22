@@ -82,8 +82,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the buienradar platform."""
-    latitude = config.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
 
     if None in (latitude, longitude):
         _LOGGER.error("Latitude or longitude not set in Open Peer Power config")

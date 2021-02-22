@@ -38,7 +38,7 @@ _LOGGER = logging.getLogger(__name__)
 class LovelaceConfig(ABC):
     """Base class for Lovelace config."""
 
-    def __init__(self,.opp, url_path, config):
+    def __init__(self, opp, url_path, config):
         """Initialize Lovelace config."""
         self.opp =.opp
         if config:
@@ -81,7 +81,7 @@ class LovelaceConfig(ABC):
 class LovelaceStorage(LovelaceConfig):
     """Class to handle Storage based Lovelace config."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize Lovelace config based on storage helper."""
         if config is None:
             url_path = None
@@ -154,7 +154,7 @@ class LovelaceStorage(LovelaceConfig):
 class LovelaceYAML(LovelaceConfig):
     """Class to handle YAML-based Lovelace config."""
 
-    def __init__(self,.opp, url_path, config):
+    def __init__(self, opp, url_path, config):
         """Initialize the YAML config."""
         super().__init__.opp, url_path, config)
 
@@ -223,7 +223,7 @@ class DashboardsCollection(collection.StorageCollection):
     CREATE_SCHEMA = vol.Schema(STORAGE_DASHBOARD_CREATE_FIELDS)
     UPDATE_SCHEMA = vol.Schema(STORAGE_DASHBOARD_UPDATE_FIELDS)
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the dashboards collection."""
         super().__init__(
             storage.Store.opp, DASHBOARDS_STORAGE_VERSION, DASHBOARDS_STORAGE_KEY),

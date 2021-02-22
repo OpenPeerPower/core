@@ -758,7 +758,7 @@ class ForkedDaapdMaster(MediaPlayerEntity):
 class ForkedDaapdUpdater:
     """Manage updates for the forked-daapd device."""
 
-    def __init__(self,.opp, api, entry_id):
+    def __init__(self, opp, api, entry_id):
         """Initialize."""
         self.opp =.opp
         self._api = api

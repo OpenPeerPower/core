@@ -562,7 +562,7 @@ def setup_opp, config):
        .opp.data[DOMAIN]["entities"][wink_component] = []
         discovery.load_platform.opp, wink_component, DOMAIN, {}, config)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     sirens = []
     has_dome_or_wink_siren = False
@@ -572,7 +572,7 @@ def setup_opp, config):
             has_dome_or_wink_siren = True
         _id = siren.object_id() + siren.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            sirens.append(WinkSirenDevice(siren,.opp))
+            sirens.append(WinkSirenDevice(siren, opp))
 
     if sirens:
 
@@ -650,7 +650,7 @@ def setup_opp, config):
 
     for nimbus in nimbi:
         for dial in dials[nimbus.object_id()]:
-            all_dials.append(WinkNimbusDialDevice(nimbus, dial,.opp))
+            all_dials.append(WinkNimbusDialDevice(nimbus, dial, opp))
 
     if nimbi:
        .opp.services.register(
@@ -710,7 +710,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
             }
             save_json.opp.config.path(WINK_CONFIG_FILE), config_contents)
 
-           .opp.async_add_job(setup,.opp, self.config)
+           .opp.async_add_job(setup, opp, self.config)
 
             return Response(
                 text=html_response.format(response_message), content_type="text/html"
@@ -724,7 +724,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
 class WinkDevice(Entity):
     """Representation a base Wink device."""
 
-    def __init__(self, wink,.opp):
+    def __init__(self, wink, opp):
         """Initialize the Wink device."""
         self.opp =.opp
         self.wink = wink
@@ -893,9 +893,9 @@ class WinkSirenDevice(WinkDevice):
 class WinkNimbusDialDevice(WinkDevice):
     """Representation of the Quirky Nimbus device."""
 
-    def __init__(self, nimbus, dial,.opp):
+    def __init__(self, nimbus, dial, opp):
         """Initialize the Nimbus dial."""
-        super().__init__(dial,.opp)
+        super().__init__(dial, opp)
         self.parent = nimbus
 
     async def async_added_to.opp(self):

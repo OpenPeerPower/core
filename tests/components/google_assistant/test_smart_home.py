@@ -154,7 +154,7 @@ async def test_sync_message.opp):
 
 # pylint: disable=redefined-outer-name
 @pytest.mark.parametrize("area_on_device", [True, False])
-async def test_sync_in_area(area_on_device,.opp, registries):
+async def test_sync_in_area(area_on_device, opp, registries):
     """Test a sync message where room hint comes from area."""
     area = registries.area.async_create("Living Room")
 
@@ -837,7 +837,7 @@ async def test_device_class_binary_sensor.opp, device_class, google_type):
 )
 async def test_device_class_cover.opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
-    sensor = DemoCover(None,.opp, "Demo Sensor", device_class=device_class)
+    sensor = DemoCover(None, opp, "Demo Sensor", device_class=device_class)
     sensor.opp =.opp
     sensor.entity_id = "cover.demo_sensor"
     await sensor.async_update_ha_state()
@@ -921,7 +921,7 @@ async def test_device_media_player.opp, device_class, google_type):
 
 async def test_query_disconnect.opp):
     """Test a disconnect message."""
-    config = MockConfig.opp.opp)
+    config = Mockconfig(opp.opp)
     config.async_enable_report_state()
     assert config._unsub_report_state is not None
     with patch.object(config, "async_disconnect_agent_user") as mock_disconnect:

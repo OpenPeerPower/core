@@ -245,7 +245,7 @@ async def update_listener.opp, config_entry):
 class TeslaDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Tesla data."""
 
-    def __init__(self,.opp, *, config_entry, controller):
+    def __init__(self, opp, *, config_entry, controller):
         """Initialize global Tesla data updater."""
         self.controller = controller
         self.config_entry = config_entry

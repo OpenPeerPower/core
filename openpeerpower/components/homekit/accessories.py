@@ -459,7 +459,7 @@ class HomeAccessory(Accessory):
 class HomeBridge(Bridge):
     """Adapter class for Bridge."""
 
-    def __init__(self,.opp, driver, name):
+    def __init__(self, opp, driver, name):
         """Initialize a Bridge object."""
         super().__init__(driver, name)
         self.set_info_service(
@@ -489,7 +489,7 @@ class HomeBridge(Bridge):
 class HomeDriver(AccessoryDriver):
     """Adapter class for AccessoryDriver."""
 
-    def __init__(self,.opp, entry_id, bridge_name, **kwargs):
+    def __init__(self, opp, entry_id, bridge_name, **kwargs):
         """Initialize a AccessoryDriver object."""
         super().__init__(**kwargs)
         self.opp =.opp

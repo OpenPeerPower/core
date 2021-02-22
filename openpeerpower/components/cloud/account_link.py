@@ -94,7 +94,7 @@ async def _get_services.opp):
 class CloudOAuth2Implementation(config_entry_oauth2_flow.AbstractOAuth2Implementation):
     """Cloud implementation of the OAuth2 flow."""
 
-    def __init__(self,.opp: OpenPeerPower, service: str):
+    def __init__(self, opp: OpenPeerPower, service: str):
         """Initialize cloud OAuth2 implementation."""
         self.opp =.opp
         self.service = service

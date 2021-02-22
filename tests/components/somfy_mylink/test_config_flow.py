@@ -132,7 +132,7 @@ async def test_form_import.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_import_with_entity_config.opp):
+async def test_form_import_with_entity_config(opp):
     """Test we can import entity config."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 

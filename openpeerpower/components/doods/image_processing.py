@@ -116,7 +116,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class Doods(ImageProcessingEntity):
     """Doods image processing service client."""
 
-    def __init__(self,.opp, camera_entity, name, doods, detector, config):
+    def __init__(self, opp, camera_entity, name, doods, detector, config):
         """Initialize the DOODS entity."""
         self.opp =.opp
         self._camera_entity = camera_entity

@@ -224,7 +224,7 @@ async def test_storage_collection.opp):
 
 async def test_attach_entity_component_collection.opp):
     """Test attaching collection to entity component."""
-    ent_comp = entity_component.EntityComponent(_LOGGER, "test",.opp)
+    ent_comp = entity_component.EntityComponent(_LOGGER, "test", opp)
     coll = collection.ObservableCollection(_LOGGER)
     collection.sync_entity_lifecycle.opp, "test", "test", ent_comp, coll, MockEntity)
 
@@ -261,7 +261,7 @@ async def test_attach_entity_component_collection.opp):
     assert.opp.states.get("test.mock_1") is None
 
 
-async def test_storage_collection_websocket.opp,.opp_ws_client):
+async def test_storage_collection_websocket.opp, opp_ws_client):
     """Test exposing a storage collection via websockets."""
     store = storage.Store.opp, 1, "test-data")
     coll = MockStorageCollection(store, _LOGGER)

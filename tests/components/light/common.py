@@ -113,7 +113,7 @@ async def async_turn_on(
 @bind.opp
 def turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):
     """Turn all or specified light off."""
-   .opp.add_job(async_turn_off,.opp, entity_id, transition)
+   .opp.add_job(async_turn_off, opp, entity_id, transition)
 
 
 async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):

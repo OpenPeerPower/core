@@ -8,7 +8,7 @@ from openpeerpower.const import STATE_ALARM_ARMED_AWAY, STATE_ALARM_DISARMED
 from tests.common import mock_coro
 
 
-async def test_valid_device_config.opp, monkeypatch):
+async def test_valid_device_config(opp, monkeypatch):
     """Test valid device config."""
     config = {"spc": {"api_url": "http://localhost/", "ws_url": "ws://localhost/"}}
 
@@ -19,7 +19,7 @@ async def test_valid_device_config.opp, monkeypatch):
         assert await async_setup_component.opp, "spc", config) is True
 
 
-async def test_invalid_device_config.opp, monkeypatch):
+async def test_invalid_device_config(opp, monkeypatch):
     """Test valid device config."""
     config = {"spc": {"api_url": "http://localhost/"}}
 

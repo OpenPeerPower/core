@@ -169,7 +169,7 @@ async def get_api.opp, entry):
 class TransmissionClient:
     """Transmission Client Object."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the Transmission RPC API."""
         self.opp =.opp
         self.config_entry = config_entry
@@ -341,7 +341,7 @@ class TransmissionClient:
 class TransmissionData:
     """Get the latest data and update the states."""
 
-    def __init__(self,.opp, config, api: transmissionrpc.Client):
+    def __init__(self, opp, config, api: transmissionrpc.Client):
         """Initialize the Transmission RPC API."""
         self.opp =.opp
         self.config = config

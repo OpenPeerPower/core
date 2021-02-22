@@ -297,7 +297,7 @@ async def webhook_render_template.opp, config_entry, data):
     resp = {}
     for key, item in data.items():
         try:
-            tpl = template.Template(item[ATTR_TEMPLATE],.opp)
+            tpl = template.Template(item[ATTR_TEMPLATE], opp)
             resp[key] = tpl.async_render(item.get(ATTR_TEMPLATE_VARIABLES))
         except template.TemplateError as ex:
             resp[key] = {"error": str(ex)}
@@ -532,7 +532,7 @@ async def webhook_get_zones.opp, config_entry, data):
 
 
 @WEBHOOK_COMMANDS.register("get_config")
-async def webhook_get_config.opp, config_entry, data):
+async def webhook_get_config(opp, config_entry, data):
     """Handle a get config webhook."""
    .opp_config = opp.config.as_dict()
 

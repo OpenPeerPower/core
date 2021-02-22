@@ -47,7 +47,7 @@ def get_service.opp, config, discovery_info=None):
 class HomematicNotificationService(BaseNotificationService):
     """Implement the notification service for Homematic."""
 
-    def __init__(self,.opp, data):
+    def __init__(self, opp, data):
         """Initialize the service."""
         self.opp =.opp
         self.data = data

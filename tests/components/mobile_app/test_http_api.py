@@ -13,7 +13,7 @@ from .const import REGISTER, REGISTER_CLEARTEXT, RENDER_TEMPLATE
 from tests.common import mock_coro
 
 
-async def test_registration.opp,.opp_client,.opp_admin_user):
+async def test_registration.opp, opp_client, opp_admin_user):
     """Test that registrations happen."""
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
 
@@ -56,7 +56,7 @@ async def test_registration.opp,.opp_client,.opp_admin_user):
     )
 
 
-async def test_registration_encryption.opp,.opp_client):
+async def test_registration_encryption.opp, opp_client):
     """Test that registrations happen."""
     try:
         from nacl.encoding import Base64Encoder

@@ -5,7 +5,7 @@ import logging
 import time
 
 from aiohttp import ClientConnectionError, ClientResponseError
-from.opp_splunk import SplunkPayloadError,.opp_splunk
+from.opp_splunk import SplunkPayloadError, opp_splunk
 import voluptuous as vol
 
 from openpeerpower.const import (

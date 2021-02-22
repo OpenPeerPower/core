@@ -5,7 +5,7 @@ from unittest.mock import patch
 from openpeerpower.auth import auth_store
 
 
-async def test_loading_no_group_data_format.opp,.opp_storage):
+async def test_loading_no_group_data_format.opp, opp_storage):
     """Test we correctly load old data without any groups."""
    .opp_storage[auth_store.STORAGE_KEY] = {
         "version": 1,
@@ -98,7 +98,7 @@ async def test_loading_no_group_data_format.opp,.opp_storage):
     assert system_token.version is None
 
 
-async def test_loading_all_access_group_data_format.opp,.opp_storage):
+async def test_loading_all_access_group_data_format.opp, opp_storage):
     """Test we correctly load old data with single group."""
    .opp_storage[auth_store.STORAGE_KEY] = {
         "version": 1,
@@ -194,7 +194,7 @@ async def test_loading_all_access_group_data_format.opp,.opp_storage):
     assert system_token.version is None
 
 
-async def test_loading_empty_data.opp,.opp_storage):
+async def test_loading_empty_data.opp, opp_storage):
     """Test we correctly load with no existing data."""
     store = auth_store.AuthStore.opp)
     groups = await store.async_get_groups()
@@ -216,7 +216,7 @@ async def test_loading_empty_data.opp,.opp_storage):
     assert len(users) == 0
 
 
-async def test_system_groups_store_id_and_name.opp,.opp_storage):
+async def test_system_groups_store_id_and_name.opp, opp_storage):
     """Test that for system groups we store the ID and name.
 
     Name is stored so that we remain backwards compat with < 0.82.

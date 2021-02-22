@@ -6,7 +6,7 @@ from openpeerpower.const import EVENT_OPENPEERPOWER_START
 from openpeerpower.setup import async_setup_component
 
 
-async def test.oppio_discovery_startup.opp, aioclient_mock,.oppio_client):
+async def test.oppio_discovery_startup.opp, aioclient_mock, oppio_client):
     """Test startup and discovery after event."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery",
@@ -58,7 +58,7 @@ async def test.oppio_discovery_startup.opp, aioclient_mock,.oppio_client):
         )
 
 
-async def test.oppio_discovery_startup_done.opp, aioclient_mock,.oppio_client):
+async def test.oppio_discovery_startup_done.opp, aioclient_mock, oppio_client):
     """Test startup and discovery with.opp discovery."""
     aioclient_mock.post(
         "http://127.0.0.1/supervisor/options",
@@ -119,7 +119,7 @@ async def test.oppio_discovery_startup_done.opp, aioclient_mock,.oppio_client):
         )
 
 
-async def test.oppio_discovery_webhook.opp, aioclient_mock,.oppio_client):
+async def test.oppio_discovery_webhook.opp, aioclient_mock, oppio_client):
     """Test discovery webhook."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery/testuuid",

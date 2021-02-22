@@ -87,7 +87,7 @@ def telnetmock():
         yield
 
 
-async def test_hddtemp_min_config.opp, telnetmock):
+async def test_hddtemp_min_config(opp, telnetmock):
     """Test minimal hddtemp configuration."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
     await.opp.async_block_till_done()
@@ -108,7 +108,7 @@ async def test_hddtemp_min_config.opp, telnetmock):
     )
 
 
-async def test_hddtemp_rename_config.opp, telnetmock):
+async def test_hddtemp_rename_config(opp, telnetmock):
     """Test hddtemp configuration with different name."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_NAME)
     await.opp.async_block_till_done()

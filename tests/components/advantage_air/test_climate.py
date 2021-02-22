@@ -43,7 +43,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
         TEST_SET_URL,
         text=TEST_SET_RESPONSE,
     )
-    await add_mock_config.opp)
+    await add_mock_config(opp)
 
     registry = await.opp.helpers.entity_registry.async_get_registry()
 
@@ -181,7 +181,7 @@ async def test_climate_async_failed_update.opp, aioclient_mock):
         TEST_SET_URL,
         exc=SyntaxError,
     )
-    await add_mock_config.opp)
+    await add_mock_config(opp)
 
     assert len(aioclient_mock.mock_calls) == 1
 

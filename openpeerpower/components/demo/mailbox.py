@@ -19,7 +19,7 @@ async def async_get_handler.opp, config, discovery_info=None):
 class DemoMailbox(Mailbox):
     """Demo Mailbox."""
 
-    def __init__(self,.opp, name):
+    def __init__(self, opp, name):
         """Initialize Demo mailbox."""
         super().__init__.opp, name)
         self._messages = {}

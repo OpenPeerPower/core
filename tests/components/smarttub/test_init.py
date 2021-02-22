@@ -12,7 +12,7 @@ from openpeerpower.config_entries import (
 from openpeerpower.setup import async_setup_component
 
 
-async def test_setup_with_no_config(setup_component,.opp, smarttub_api):
+async def test_setup_with_no_config(setup_component, opp, smarttub_api):
     """Test that we do not discover anything."""
 
     # No flows started
@@ -21,7 +21,7 @@ async def test_setup_with_no_config(setup_component,.opp, smarttub_api):
     smarttub_api.login.assert_not_called()
 
 
-async def test_setup_entry_not_ready(setup_component,.opp, config_entry, smarttub_api):
+async def test_setup_entry_not_ready(setup_component, opp, config_entry, smarttub_api):
     """Test setup when the entry is not ready."""
     smarttub_api.login.side_effect = asyncio.TimeoutError
 
@@ -30,7 +30,7 @@ async def test_setup_entry_not_ready(setup_component,.opp, config_entry, smarttu
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_setup_auth_failed(setup_component,.opp, config_entry, smarttub_api):
+async def test_setup_auth_failed(setup_component, opp, config_entry, smarttub_api):
     """Test setup when the credentials are invalid."""
     smarttub_api.login.side_effect = LoginFailed
 

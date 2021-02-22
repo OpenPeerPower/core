@@ -38,7 +38,7 @@ def _same_lists(a, b):
     return True
 
 
-async def test_websocket_get_actions.opp,.opp_ws_client, device_reg, entity_reg):
+async def test_websocket_get_actions.opp, opp_ws_client, device_reg, entity_reg):
     """Test we get the expected conditions from a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
@@ -82,7 +82,7 @@ async def test_websocket_get_actions.opp,.opp_ws_client, device_reg, entity_reg)
     assert _same_lists(actions, expected_actions)
 
 
-async def test_websocket_get_conditions.opp,.opp_ws_client, device_reg, entity_reg):
+async def test_websocket_get_conditions.opp, opp_ws_client, device_reg, entity_reg):
     """Test we get the expected conditions from a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
@@ -126,7 +126,7 @@ async def test_websocket_get_conditions.opp,.opp_ws_client, device_reg, entity_r
     assert _same_lists(conditions, expected_conditions)
 
 
-async def test_websocket_get_triggers.opp,.opp_ws_client, device_reg, entity_reg):
+async def test_websocket_get_triggers.opp, opp_ws_client, device_reg, entity_reg):
     """Test we get the expected triggers from a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
@@ -171,7 +171,7 @@ async def test_websocket_get_triggers.opp,.opp_ws_client, device_reg, entity_reg
 
 
 async def test_websocket_get_action_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get the expected action capabilities for an alarm through websocket."""
     await async_setup_component.opp, "device_automation", {})
@@ -228,7 +228,7 @@ async def test_websocket_get_action_capabilities(
 
 
 async def test_websocket_get_bad_action_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get no action capabilities for a non existing domain."""
     await async_setup_component.opp, "device_automation", {})
@@ -251,7 +251,7 @@ async def test_websocket_get_bad_action_capabilities(
 
 
 async def test_websocket_get_no_action_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get no action capabilities for a domain with no device action capabilities."""
     await async_setup_component.opp, "device_automation", {})
@@ -274,7 +274,7 @@ async def test_websocket_get_no_action_capabilities(
 
 
 async def test_websocket_get_condition_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get the expected condition capabilities for a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
@@ -326,7 +326,7 @@ async def test_websocket_get_condition_capabilities(
 
 
 async def test_websocket_get_bad_condition_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get no condition capabilities for a non existing domain."""
     await async_setup_component.opp, "device_automation", {})
@@ -349,7 +349,7 @@ async def test_websocket_get_bad_condition_capabilities(
 
 
 async def test_websocket_get_no_condition_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get no condition capabilities for a domain with no device condition capabilities."""
     await async_setup_component.opp, "device_automation", {})
@@ -372,7 +372,7 @@ async def test_websocket_get_no_condition_capabilities(
 
 
 async def test_websocket_get_trigger_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get the expected trigger capabilities for a light through websocket."""
     await async_setup_component.opp, "device_automation", {})
@@ -424,7 +424,7 @@ async def test_websocket_get_trigger_capabilities(
 
 
 async def test_websocket_get_bad_trigger_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get no trigger capabilities for a non existing domain."""
     await async_setup_component.opp, "device_automation", {})
@@ -447,7 +447,7 @@ async def test_websocket_get_bad_trigger_capabilities(
 
 
 async def test_websocket_get_no_trigger_capabilities(
-   .opp,.opp_ws_client, device_reg, entity_reg
+   .opp, opp_ws_client, device_reg, entity_reg
 ):
     """Test we get no trigger capabilities for a domain with no device trigger capabilities."""
     await async_setup_component.opp, "device_automation", {})
@@ -764,7 +764,7 @@ async def test_automation_with_bad_trigger.opp, caplog):
     assert "required key not provided" in caplog.text
 
 
-async def test_websocket_device_not_found.opp,.opp_ws_client):
+async def test_websocket_device_not_found.opp, opp_ws_client):
     """Test calling command with unknown device."""
     await async_setup_component.opp, "device_automation", {})
     client = await.opp_ws_client.opp)

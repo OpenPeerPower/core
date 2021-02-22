@@ -69,7 +69,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 class VilfoRouterData:
     """Define an object to hold sensor data."""
 
-    def __init__(self,.opp, host, access_token):
+    def __init__(self, opp, host, access_token):
         """Initialize."""
         self._vilfo = VilfoClient(host, access_token)
         self.opp =.opp

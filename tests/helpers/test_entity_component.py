@@ -40,7 +40,7 @@ async def test_setup_loads_platforms.opp):
     mock_integration.opp, MockModule("mod2", dependencies=["test_component"]))
     mock_entity_platform.opp, "test_domain.mod2", MockPlatform(platform_setup))
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     assert not component_setup.called
     assert not platform_setup.called
@@ -60,7 +60,7 @@ async def test_setup_recovers_when_setup_raises.opp):
     mock_entity_platform.opp, "test_domain.mod1", MockPlatform(platform1_setup))
     mock_entity_platform.opp, "test_domain.mod2", MockPlatform(platform2_setup))
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     assert not platform1_setup.called
     assert not platform2_setup.called
@@ -84,9 +84,9 @@ async def test_setup_recovers_when_setup_raises.opp):
     "openpeerpower.helpers.entity_component.EntityComponent.async_setup_platform",
 )
 @patch("openpeerpower.setup.async_setup_component", return_value=True)
-async def test_setup_does_discovery(mock_setup_component, mock_setup,.opp):
+async def test_setup_does_discovery(mock_setup_component, mock_setup, opp):
     """Test setup for discovery."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     component.setup({})
 
@@ -101,7 +101,7 @@ async def test_setup_does_discovery(mock_setup_component, mock_setup,.opp):
 
 
 @patch("openpeerpower.helpers.entity_platform.async_track_time_interval")
-async def test_set_scan_interval_via_config(mock_track,.opp):
+async def test_set_scan_interval_via_config(mock_track, opp):
     """Test the setting of the scan interval via configuration."""
 
     def platform_setup_opp, config, add_entities, discovery_info=None):
@@ -110,7 +110,7 @@ async def test_set_scan_interval_via_config(mock_track,.opp):
 
     mock_entity_platform.opp, "test_domain.platform", MockPlatform(platform_setup))
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     component.setup(
         {DOMAIN: {"platform": "platform", "scan_interval": timedelta(seconds=30)}}
@@ -121,7 +121,7 @@ async def test_set_scan_interval_via_config(mock_track,.opp):
     assert timedelta(seconds=30) == mock_track.call_args[0][2]
 
 
-async def test_set_entity_namespace_via_config.opp):
+async def test_set_entity_namespace_via_config(opp):
     """Test setting an entity namespace."""
 
     def platform_setup_opp, config, add_entities, discovery_info=None):
@@ -132,7 +132,7 @@ async def test_set_entity_namespace_via_config.opp):
 
     mock_entity_platform.opp, "test_domain.platform", platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     component.setup({DOMAIN: {"platform": "platform", "entity_namespace": "yummy"}})
 
@@ -146,7 +146,7 @@ async def test_set_entity_namespace_via_config.opp):
 
 async def test_extract_from_service_available_device.opp):
     """Test the extraction of entity from service and device is available."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities(
         [
             MockEntity(name="test_1"),
@@ -179,7 +179,7 @@ async def test_platform_not_ready.opp, legacy_patchable_time):
     mock_integration.opp, MockModule("mod1"))
     mock_entity_platform.opp, "test_domain.mod1", MockPlatform(platform1_setup))
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_setup({DOMAIN: {"platform": "mod1"}})
     await.opp.async_block_till_done()
@@ -214,7 +214,7 @@ async def test_platform_not_ready.opp, legacy_patchable_time):
 
 async def test_extract_from_service_fails_if_no_entity_id.opp):
     """Test the extraction of everything from service."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities(
         [MockEntity(name="test_1"), MockEntity(name="test_2")]
     )
@@ -239,7 +239,7 @@ async def test_extract_from_service_fails_if_no_entity_id.opp):
 
 async def test_extract_from_service_filter_out_non_existing_entities.opp):
     """Test the extraction of non existing entities from service."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities(
         [MockEntity(name="test_1"), MockEntity(name="test_2")]
     )
@@ -257,7 +257,7 @@ async def test_extract_from_service_filter_out_non_existing_entities.opp):
 
 async def test_extract_from_service_no_group_expand.opp):
     """Test not expanding a group."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities([MockEntity(entity_id="group.test_group")])
 
     call = ha.ServiceCall("test", "service", {"entity_id": ["group.test_group"]})
@@ -279,7 +279,7 @@ async def test_setup_dependencies_platform.opp):
     mock_integration.opp, MockModule("test_component2"))
     mock_entity_platform.opp, "test_domain.test_component", MockPlatform())
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_setup({DOMAIN: {"platform": "test_component"}})
     await.opp.async_block_till_done()
@@ -299,7 +299,7 @@ async def test_setup_entry.opp):
         ),
     )
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entry = MockConfigEntry(domain="entry_domain")
 
     assert await component.async_setup_entry(entry)
@@ -313,7 +313,7 @@ async def test_setup_entry.opp):
 
 async def test_setup_entry_platform_not_exist.opp):
     """Test setup entry fails if platform does not exist."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entry = MockConfigEntry(domain="non_existing")
 
     assert (await component.async_setup_entry(entry)) is False
@@ -328,7 +328,7 @@ async def test_setup_entry_fails_duplicate.opp):
         MockPlatform(async_setup_entry=mock_setup_entry),
     )
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entry = MockConfigEntry(domain="entry_domain")
 
     assert await component.async_setup_entry(entry)
@@ -346,7 +346,7 @@ async def test_unload_entry_resets_platform.opp):
         MockPlatform(async_setup_entry=mock_setup_entry),
     )
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entry = MockConfigEntry(domain="entry_domain")
 
     assert await component.async_setup_entry(entry)
@@ -363,7 +363,7 @@ async def test_unload_entry_resets_platform.opp):
 
 async def test_unload_entry_fails_if_never_loaded.opp):
     """."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entry = MockConfigEntry(domain="entry_domain")
 
     with pytest.raises(ValueError):
@@ -372,7 +372,7 @@ async def test_unload_entry_fails_if_never_loaded.opp):
 
 async def test_update_entity.opp):
     """Test that we can update an entity with the helper."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entity = MockEntity()
     entity.async_write_ha_state = Mock()
     entity.async_update_ha_state = AsyncMock(return_value=None)
@@ -399,7 +399,7 @@ async def test_set_service_race.opp):
    .opp.loop.set_exception_handler(async_loop_exception_handler)
 
     await async_setup_component.opp, "group", {})
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     for _ in range(2):
        .opp.async_create_task(component.async_add_entities([MockEntity()]))
@@ -410,7 +410,7 @@ async def test_set_service_race.opp):
 
 async def test_extract_all_omit_entity_id.opp, caplog):
     """Test extract all with None and *."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities(
         [MockEntity(name="test_1"), MockEntity(name="test_2")]
     )
@@ -424,7 +424,7 @@ async def test_extract_all_omit_entity_id.opp, caplog):
 
 async def test_extract_all_use_match_all.opp, caplog):
     """Test extract all with None and *."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities(
         [MockEntity(name="test_1"), MockEntity(name="test_2")]
     )
@@ -450,7 +450,7 @@ async def test_register_entity_service.opp):
 
     entity.async_called_by_service = appender
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities([entity])
 
     component.async_register_entity_service(

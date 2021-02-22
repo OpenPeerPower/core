@@ -22,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 class HomematicipAuth:
     """Manages HomematicIP client registration."""
 
-    def __init__(self,.opp, config) -> None:
+    def __init__(self, opp, config) -> None:
         """Initialize HomematicIP Cloud client registration."""
         self.opp =.opp
         self.config = config
@@ -54,7 +54,7 @@ class HomematicipAuth:
         except HmipConnectionError:
             return False
 
-    async def get_auth(self,.opp: OpenPeerPowerType, hapid, pin):
+    async def get_auth(self, opp: OpenPeerPowerType, hapid, pin):
         """Create a HomematicIP access point object."""
         auth = AsyncAuth.opp.loop, async_get_clientsession.opp))
         try:
@@ -70,7 +70,7 @@ class HomematicipAuth:
 class HomematicipHAP:
     """Manages HomematicIP HTTP and WebSocket connection."""
 
-    def __init__(self,.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> None:
+    def __init__(self, opp: OpenPeerPowerType, config_entry: ConfigEntry) -> None:
         """Initialize HomematicIP Cloud connection."""
         self.opp =.opp
         self.config_entry = config_entry
@@ -234,7 +234,7 @@ class HomematicipHAP:
         )
 
     async def get_hap(
-        self,.opp: OpenPeerPowerType, hapid: str, authtoken: str, name: str
+        self, opp: OpenPeerPowerType, hapid: str, authtoken: str, name: str
     ) -> AsyncHome:
         """Create a HomematicIP access point object."""
         home = AsyncHome.opp.loop, async_get_clientsession.opp))

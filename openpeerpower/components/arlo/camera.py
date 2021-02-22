@@ -51,7 +51,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class ArloCam(Camera):
     """An implementation of a Netgear Arlo IP camera."""
 
-    def __init__(self,.opp, camera, device_info):
+    def __init__(self, opp, camera, device_info):
         """Initialize an Arlo camera."""
         super().__init__()
         self._camera = camera

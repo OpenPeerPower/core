@@ -87,7 +87,7 @@ async def test_auth_middleware_loaded_by_default.opp):
 
 
 async def test_cant_access_with_password_in_header(
-    app, aiohttp_client, legacy_auth,.opp
+    app, aiohttp_client, legacy_auth, opp
 ):
     """Test access with password in header."""
     setup_auth.opp, app)
@@ -101,7 +101,7 @@ async def test_cant_access_with_password_in_header(
 
 
 async def test_cant_access_with_password_in_query(
-    app, aiohttp_client, legacy_auth,.opp
+    app, aiohttp_client, legacy_auth, opp
 ):
     """Test access with password in URL."""
     setup_auth.opp, app)
@@ -117,7 +117,7 @@ async def test_cant_access_with_password_in_query(
     assert resp.status == 401
 
 
-async def test_basic_auth_does_not_work(app, aiohttp_client,.opp, legacy_auth):
+async def test_basic_auth_does_not_work(app, aiohttp_client, opp, legacy_auth):
     """Test access with basic authentication."""
     setup_auth.opp, app)
     client = await aiohttp_client(app)
@@ -136,7 +136,7 @@ async def test_basic_auth_does_not_work(app, aiohttp_client,.opp, legacy_auth):
 
 
 async def test_cannot_access_with_trusted_ip(
-   .opp, app2, trusted_networks_auth, aiohttp_client,.opp_owner_user
+   .opp, app2, trusted_networks_auth, aiohttp_client, opp_owner_user
 ):
     """Test access with an untrusted ip address."""
     setup_auth.opp, app2)
@@ -156,7 +156,7 @@ async def test_cannot_access_with_trusted_ip(
 
 
 async def test_auth_active_access_with_access_token_in_header(
-   .opp, app, aiohttp_client,.opp_access_token
+   .opp, app, aiohttp_client, opp_access_token
 ):
     """Test access with access token in header."""
     token =.opp_access_token
@@ -189,7 +189,7 @@ async def test_auth_active_access_with_access_token_in_header(
 
 
 async def test_auth_active_access_with_trusted_ip(
-   .opp, app2, trusted_networks_auth, aiohttp_client,.opp_owner_user
+   .opp, app2, trusted_networks_auth, aiohttp_client, opp_owner_user
 ):
     """Test access with an untrusted ip address."""
     setup_auth.opp, app2)
@@ -209,7 +209,7 @@ async def test_auth_active_access_with_trusted_ip(
 
 
 async def test_auth_legacy_support_api_password_cannot_access(
-    app, aiohttp_client, legacy_auth,.opp
+    app, aiohttp_client, legacy_auth, opp
 ):
     """Test access using api_password if auth.support_legacy."""
     setup_auth.opp, app)
@@ -225,7 +225,7 @@ async def test_auth_legacy_support_api_password_cannot_access(
     assert req.status == 401
 
 
-async def test_auth_access_signed_path.opp, app, aiohttp_client,.opp_access_token):
+async def test_auth_access_signed_path.opp, app, aiohttp_client, opp_access_token):
     """Test access with signed url."""
     app.router.add_post("/", mock_handler)
     app.router.add_get("/another_path", mock_handler)

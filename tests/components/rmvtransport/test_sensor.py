@@ -156,7 +156,7 @@ def get_no_departures_mock():
     }
 
 
-async def test_rmvtransport_min_config.opp):
+async def test_rmvtransport_min_config(opp):
     """Test minimal rmvtransport configuration."""
     with patch(
         "RMVtransport.RMVtransport.get_departures",
@@ -177,7 +177,7 @@ async def test_rmvtransport_min_config.opp):
     assert state.attributes["friendly_name"] == "Frankfurt (Main) Hauptbahnhof"
 
 
-async def test_rmvtransport_name_config.opp):
+async def test_rmvtransport_name_config(opp):
     """Test custom name configuration."""
     with patch(
         "RMVtransport.RMVtransport.get_departures",
@@ -190,7 +190,7 @@ async def test_rmvtransport_name_config.opp):
     assert state.attributes["friendly_name"] == "My Station"
 
 
-async def test_rmvtransport_misc_config.opp):
+async def test_rmvtransport_misc_config(opp):
     """Test misc configuration."""
     with patch(
         "RMVtransport.RMVtransport.get_departures",
@@ -204,7 +204,7 @@ async def test_rmvtransport_misc_config.opp):
     assert state.attributes["line"] == 21
 
 
-async def test_rmvtransport_dest_config.opp):
+async def test_rmvtransport_dest_config(opp):
     """Test destination configuration."""
     with patch(
         "RMVtransport.RMVtransport.get_departures",

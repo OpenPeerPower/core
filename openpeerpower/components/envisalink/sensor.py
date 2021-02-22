@@ -40,7 +40,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class EnvisalinkSensor(EnvisalinkDevice, Entity):
     """Representation of an Envisalink keypad."""
 
-    def __init__(self,.opp, partition_name, partition_number, info, controller):
+    def __init__(self, opp, partition_name, partition_number, info, controller):
         """Initialize the sensor."""
         self._icon = "mdi:alarm"
         self._partition_number = partition_number

@@ -18,7 +18,7 @@ from openpeerpower.setup import async_setup_component
 from .conftest import TEST_ENTITY_ID, setup_integration
 
 
-async def test_setup_with_no_config.opp):
+async def test_setup_with_no_config(opp):
     """Test that no config is successful."""
     assert await async_setup_component.opp, DOMAIN, {}) is True
     await.opp.async_block_till_done()

@@ -52,7 +52,7 @@ def async_register.opp, intent_type, utterances):
 class DefaultAgent(AbstractConversationAgent):
     """Default agent for conversation agent."""
 
-    def __init__(self,.opp: core.OpenPeerPower):
+    def __init__(self, opp: core.OpenPeerPower):
         """Initialize the default agent."""
         self.opp =.opp
 

@@ -33,7 +33,7 @@ async def test_pending_msg_overflow.opp, mock_low_queue, websocket_client):
     assert msg.type == WSMsgType.close
 
 
-async def test_pending_msg_peak.opp, mock_low_peak,.opp_ws_client, caplog):
+async def test_pending_msg_peak.opp, mock_low_peak, opp_ws_client, caplog):
     """Test pending msg overflow command."""
     orig_handler = http.WebSocketHandler
     instance = None

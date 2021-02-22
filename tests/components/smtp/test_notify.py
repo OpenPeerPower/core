@@ -136,7 +136,7 @@ EMAIL_DATA = [
         "Tests when image type cannot be detected or is of wrong type.",
     ],
 )
-def test_send_message(message_data, data, content_type,.opp, message):
+def test_send_message(message_data, data, content_type, opp, message):
     """Verify if we can send messages of all types correctly."""
     sample_email = "<mock@mock>"
     with patch("email.utils.make_msgid", return_value=sample_email):

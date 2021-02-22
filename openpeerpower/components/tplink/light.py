@@ -62,7 +62,7 @@ SLEEP_TIME = 2
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_entities):
     """Set up lights."""
     entities = await.opp.async_add_executor_job(
-        add_available_devices,.opp, CONF_LIGHT, TPLinkSmartBulb
+        add_available_devices, opp, CONF_LIGHT, TPLinkSmartBulb
     )
 
     if entities:

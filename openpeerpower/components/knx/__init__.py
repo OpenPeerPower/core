@@ -199,7 +199,7 @@ async def async_setup_opp, config):
     for platform in SupportedPlatforms:
         if platform.value in config[DOMAIN]:
             for device_config in config[DOMAIN][platform.value]:
-                create_knx_device(platform,.opp.data[DOMAIN].xknx, device_config)
+                create_knx_device(platform, opp.data[DOMAIN].xknx, device_config)
 
     # We need to wait until all entities are loaded into the device list since they could also be created from other platforms
     for platform in SupportedPlatforms:
@@ -240,7 +240,7 @@ async def async_setup_opp, config):
 
         # First check for config file. If for some reason it is no longer there
         # or knx is no longer mentioned, stop the reload.
-        config = await async_integration_yaml_config.opp, DOMAIN)
+        config = await async_integration_yaml_config(opp, DOMAIN)
 
         if not config or DOMAIN not in config:
             return
@@ -263,7 +263,7 @@ async def async_setup_opp, config):
 class KNXModule:
     """Representation of KNX Object."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize of KNX module."""
         self.opp =.opp
         self.config = config
@@ -475,7 +475,7 @@ class KNXExposeTime:
 class KNXExposeSensor:
     """Object to Expose Open Peer Power entity to KNX bus."""
 
-    def __init__(self,.opp, xknx, expose_type, entity_id, attribute, default, address):
+    def __init__(self, opp, xknx, expose_type, entity_id, attribute, default, address):
         """Initialize of Expose class."""
         self.opp =.opp
         self.xknx = xknx

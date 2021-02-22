@@ -54,11 +54,11 @@ class ZWaveLogView(OpenPeerPowerView):
             return Response(text="Invalid datetime", status=HTTP_BAD_REQUEST)
 
         opp =request.app[.opp"]
-        response = await.opp.async_add_executor_job(self._get_log,.opp, lines)
+        response = await.opp.async_add_executor_job(self._get_log, opp, lines)
 
         return Response(text="\n".join(response))
 
-    def _get_log(self,.opp, lines):
+    def _get_log(self, opp, lines):
         """Retrieve the logfile content."""
         logfilepath = opp.config.path(OZW_LOG_FILENAME)
         with open(logfilepath) as logfile:

@@ -210,7 +210,7 @@ def _rename_keys(**keys):
 async def async_setup_opp, config):
     """Track states and offer events for media_players."""
     component =.opp.data[DOMAIN] = EntityComponent(
-        logging.getLogger(__name__), DOMAIN,.opp, SCAN_INTERVAL
+        logging.getLogger(__name__), DOMAIN, opp, SCAN_INTERVAL
     )
 
    .opp.components.websocket_api.async_register_command(websocket_handle_thumbnail)

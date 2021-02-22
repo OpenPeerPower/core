@@ -22,7 +22,7 @@ async def test_binary_sensor_async_setup_entry.opp, aioclient_mock):
         TEST_SET_URL,
         text=TEST_SET_RESPONSE,
     )
-    await add_mock_config.opp)
+    await add_mock_config(opp)
 
     registry = await.opp.helpers.entity_registry.async_get_registry()
 

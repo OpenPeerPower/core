@@ -73,7 +73,7 @@ async def _get_homegraph_token.opp, jwt_signed):
 class GoogleConfig(AbstractConfig):
     """Config for manual setup of Google."""
 
-    def __init__(self,.opp, config):
+    def __init__(self, opp, config):
         """Initialize the config."""
         super().__init__.opp)
         self._config = config

@@ -15,7 +15,7 @@ from . import const, messages
 class ActiveConnection:
     """Handle an active websocket client connection."""
 
-    def __init__(self, logger,.opp, send_message, user, refresh_token):
+    def __init__(self, logger, opp, send_message, user, refresh_token):
         """Initialize an active connection."""
         self.logger = logger
         self.opp =.opp

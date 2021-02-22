@@ -82,7 +82,7 @@ async def async_setup_platform(
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up MQTT lock dynamically through MQTT discovery."""
     setup = functools.partial(
-        _async_setup_entity,.opp, async_add_entities, config_entry=config_entry
+        _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper.opp, lock.DOMAIN, setup, PLATFORM_SCHEMA)
 
@@ -97,12 +97,12 @@ async def _async_setup_entity(
 class MqttLock(MqttEntity, LockEntity):
     """Representation of a lock that can be toggled using MQTT."""
 
-    def __init__(self,.opp, config, config_entry, discovery_data):
+    def __init__(self, opp, config, config_entry, discovery_data):
         """Initialize the lock."""
         self._state = False
         self._optimistic = False
 
-        MqttEntity.__init__(self,.opp, config, config_entry, discovery_data)
+        MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
     @staticmethod
     def config_schema():

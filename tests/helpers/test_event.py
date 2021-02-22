@@ -771,9 +771,9 @@ async def test_track_template.opp):
     wildcard_runs = []
     wildercard_runs = []
 
-    template_condition = Template("{{states.switch.test.state == 'on'}}",.opp)
+    template_condition = Template("{{states.switch.test.state == 'on'}}", opp)
     template_condition_var = Template(
-        "{{states.switch.test.state == 'on' and test == 5}}",.opp
+        "{{states.switch.test.state == 'on' and test == 5}}", opp
     )
 
    .opp.states.async_set("switch.test", "off")
@@ -831,7 +831,7 @@ async def test_track_template.opp):
     assert len(wildcard_runs) == 2
     assert len(wildercard_runs) == 2
 
-    template_iterate = Template("{{ (states.switch | length) > 0 }}",.opp)
+    template_iterate = Template("{{ (states.switch | length) > 0 }}", opp)
     iterate_calls = []
 
     @ha.callback
@@ -852,7 +852,7 @@ async def test_track_template.opp):
 
 async def test_track_template_error.opp, caplog):
     """Test tracking template with error."""
-    template_error = Template("{{ (states.switch | lunch) > 0 }}",.opp)
+    template_error = Template("{{ (states.switch | lunch) > 0 }}", opp)
     error_calls = []
 
     @ha.callback
@@ -885,7 +885,7 @@ async def test_track_template_error_can_recover.opp, caplog):
     """Test tracking template with error."""
    .opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
     template_error = Template(
-        "{{ states.sensor.data_system.attributes['opmode'] == '0' }}",.opp
+        "{{ states.sensor.data_system.attributes['opmode'] == '0' }}", opp
     )
     error_calls = []
 
@@ -910,7 +910,7 @@ async def test_track_template_error_can_recover.opp, caplog):
 
 async def test_track_template_time_change.opp, caplog):
     """Test tracking template with time change."""
-    template_error = Template("{{ utcnow().minute % 2 == 0 }}",.opp)
+    template_error = Template("{{ utcnow().minute % 2 == 0 }}", opp)
     calls = []
 
     @ha.callback
@@ -941,9 +941,9 @@ async def test_track_template_result.opp):
     wildcard_runs = []
     wildercard_runs = []
 
-    template_condition = Template("{{states.sensor.test.state}}",.opp)
+    template_condition = Template("{{states.sensor.test.state}}", opp)
     template_condition_var = Template(
-        "{{(states.sensor.test.state|int) + test }}",.opp
+        "{{(states.sensor.test.state|int) + test }}", opp
     )
 
     def specific_run_callback(event, updates):
@@ -1036,7 +1036,7 @@ async def test_track_template_result_complex.opp):
 {% endif %}
 
 """
-    template_complex = Template(template_complex_str,.opp)
+    template_complex = Template(template_complex_str, opp)
 
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
@@ -1189,7 +1189,7 @@ async def test_track_template_result_with_wildcard.opp):
 {% endfor %}
 
 """
-    template_complex = Template(template_complex_str,.opp)
+    template_complex = Template(template_complex_str, opp)
 
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
@@ -1241,7 +1241,7 @@ async def test_track_template_result_with_group.opp):
 {{ states.group.power_sensors.attributes.entity_id | expand | map(attribute='state')|map('float')|sum  }}
 
 """
-    template_complex = Template(template_complex_str,.opp)
+    template_complex = Template(template_complex_str, opp)
 
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
@@ -1298,7 +1298,7 @@ async def test_track_template_result_and_conditional.opp):
    .opp.states.async_set("light.b", "off")
     template_str = '{% if states.light.a.state == "on" and states.light.b.state == "on" %}on{% else %}off{% endif %}'
 
-    template = Template(template_str,.opp)
+    template = Template(template_str, opp)
 
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
@@ -1432,9 +1432,9 @@ async def test_track_template_result_iterator.opp):
 
 async def test_track_template_result_errors.opp, caplog):
     """Test tracking template with errors in the template."""
-    template_syntax_error = Template("{{states.switch",.opp)
+    template_syntax_error = Template("{{states.switch", opp)
 
-    template_not_exist = Template("{{states.switch.not_exist.state }}",.opp)
+    template_not_exist = Template("{{states.switch.not_exist.state }}", opp)
 
     syntax_error_runs = []
     not_exist_runs = []
@@ -1515,7 +1515,7 @@ async def test_track_template_result_errors.opp, caplog):
 
 async def test_static_string.opp):
     """Test a static string."""
-    template_refresh = Template("{{ 'static' }}",.opp)
+    template_refresh = Template("{{ 'static' }}", opp)
 
     refresh_runs = []
 
@@ -1535,7 +1535,7 @@ async def test_static_string.opp):
 
 async def test_track_template_rate_limit.opp):
     """Test template rate limit."""
-    template_refresh = Template("{{ states | count }}",.opp)
+    template_refresh = Template("{{ states | count }}", opp)
 
     refresh_runs = []
 
@@ -1588,7 +1588,7 @@ async def test_track_template_rate_limit.opp):
 
 async def test_track_template_rate_limit_suppress_listener.opp):
     """Test template rate limit will suppress the listener during the rate limit."""
-    template_refresh = Template("{{ states | count }}",.opp)
+    template_refresh = Template("{{ states | count }}", opp)
 
     refresh_runs = []
 
@@ -1683,7 +1683,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
 
 async def test_track_template_rate_limit_five.opp):
     """Test template rate limit of 5 seconds."""
-    template_refresh = Template("{{ states | count }}",.opp)
+    template_refresh = Template("{{ states | count }}", opp)
 
     refresh_runs = []
 
@@ -1717,7 +1717,7 @@ async def test_track_template_rate_limit_five.opp):
 async def test_track_template_has_default_rate_limit.opp):
     """Test template has a rate limit by default."""
    .opp.states.async_set("sensor.zero", "any")
-    template_refresh = Template("{{ states | list | count }}",.opp)
+    template_refresh = Template("{{ states | list | count }}", opp)
 
     refresh_runs = []
 
@@ -1793,7 +1793,7 @@ async def test_specifically_referenced_entity_is_not_rate_limited.opp):
     """Test template rate limit of 5 seconds."""
    .opp.states.async_set("sensor.one", "none")
 
-    template_refresh = Template('{{ states | count }}_{{ states("sensor.one") }}',.opp)
+    template_refresh = Template('{{ states | count }}_{{ states("sensor.one") }}', opp)
 
     refresh_runs = []
 
@@ -1830,8 +1830,8 @@ async def test_specifically_referenced_entity_is_not_rate_limited.opp):
 
 async def test_track_two_templates_with_different_rate_limits.opp):
     """Test two templates with different rate limits."""
-    template_one = Template("{{ (states | count) + 0 }}",.opp)
-    template_five = Template("{{ states | count }}",.opp)
+    template_one = Template("{{ (states | count) + 0 }}", opp)
+    template_five = Template("{{ states | count }}", opp)
 
     refresh_runs = {
         template_one: [],
@@ -1895,7 +1895,7 @@ async def test_track_two_templates_with_different_rate_limits.opp):
 
 async def test_string.opp):
     """Test a string."""
-    template_refresh = Template("no_template",.opp)
+    template_refresh = Template("no_template", opp)
 
     refresh_runs = []
 
@@ -1915,7 +1915,7 @@ async def test_string.opp):
 
 async def test_track_template_result_refresh_cancel.opp):
     """Test cancelling and refreshing result."""
-    template_refresh = Template("{{states.switch.test.state == 'on' and now() }}",.opp)
+    template_refresh = Template("{{states.switch.test.state == 'on' and now() }}", opp)
 
     refresh_runs = []
 
@@ -1948,7 +1948,7 @@ async def test_track_template_result_refresh_cancel.opp):
 
     assert len(refresh_runs) == 2
 
-    template_refresh = Template("{{ value }}",.opp)
+    template_refresh = Template("{{ value }}", opp)
     refresh_runs = []
 
     info = async_track_template_result(
@@ -2118,7 +2118,7 @@ async def test_track_template_with_time.opp):
 
    .opp.states.async_set("switch.test", "on")
     specific_runs = []
-    template_complex = Template("{{ states.switch.test.state and now() }}",.opp)
+    template_complex = Template("{{ states.switch.test.state and now() }}", opp)
 
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
@@ -2148,7 +2148,7 @@ async def test_track_template_with_time_default.opp):
     """Test tracking template with time."""
 
     specific_runs = []
-    template_complex = Template("{{ now() }}",.opp)
+    template_complex = Template("{{ now() }}", opp)
 
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
@@ -2501,7 +2501,7 @@ async def test_track_sunrise_update_location.opp, legacy_patchable_time):
     mod = -1
     while True:
         next_rising = astral.sunrise_utc(
-            utc_today + timedelta(days=mod),.opp.config.latitude,.opp.config.longitude
+            utc_today + timedelta(days=mod), opp.config.latitude, opp.config.longitude
         )
         if next_rising > utc_now:
             break
@@ -2532,7 +2532,7 @@ async def test_track_sunrise_update_location.opp, legacy_patchable_time):
     mod = -1
     while True:
         next_rising = astral.sunrise_utc(
-            utc_today + timedelta(days=mod),.opp.config.latitude,.opp.config.longitude
+            utc_today + timedelta(days=mod), opp.config.latitude, opp.config.longitude
         )
         if next_rising > utc_now:
             break

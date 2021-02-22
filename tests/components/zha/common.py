@@ -170,7 +170,7 @@ async def send_attributes_report.opp, cluster: int, attributes: dict):
     await.opp.async_block_till_done()
 
 
-async def find_entity_id(domain, zha_device,.opp):
+async def find_entity_id(domain, zha_device, opp):
     """Find the entity id under the testing.
 
     This is used to get the entity id in order to get the state from the state

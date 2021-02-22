@@ -11,7 +11,7 @@ class HelpIntent(intent.IntentHandler):
     intent_type = INTENT_HELP
     slot_schema = {"conv_id": cv.string}
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Set up the intent."""
         self.opp =.opp
 

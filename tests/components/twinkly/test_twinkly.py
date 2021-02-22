@@ -36,7 +36,7 @@ async def test_missing_client.opp: OpenPeerPower):
                 CONF_ENTRY_MODEL: TEST_MODEL,
             }
         )
-        TwinklyLight(config_entry,.opp)
+        TwinklyLight(config_entry, opp)
     except ValueError:
         return
 

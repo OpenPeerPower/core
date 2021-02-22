@@ -67,7 +67,7 @@ class CommandSensor(Entity):
     """Representation of a sensor that is using shell commands."""
 
     def __init__(
-        self,.opp, data, name, unit_of_measurement, value_template, json_attributes
+        self, opp, data, name, unit_of_measurement, value_template, json_attributes
     ):
         """Initialize the sensor."""
         self.opp = opp
@@ -135,7 +135,7 @@ class CommandSensor(Entity):
 class CommandSensorData:
     """The class for handling the data retrieval."""
 
-    def __init__(self,.opp, command, command_timeout):
+    def __init__(self, opp, command, command_timeout):
         """Initialize the data object."""
         self.value = None
         self.opp =.opp

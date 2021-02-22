@@ -108,7 +108,7 @@ class DevicePairingStatus(Enum):
 class ZHAGateway:
     """Gateway that handles events that happen on the ZHA Zigbee network."""
 
-    def __init__(self,.opp, config, config_entry):
+    def __init__(self, opp, config, config_entry):
         """Initialize the gateway."""
         self.opp = opp
         self._config = config
@@ -718,7 +718,7 @@ def async_set_logger_levels(levels):
 class LogRelayHandler(logging.Handler):
     """Log handler for error messages."""
 
-    def __init__(self,.opp, gateway):
+    def __init__(self, opp, gateway):
         """Initialize a new LogErrorHandler."""
         super().__init__()
         self.opp =.opp

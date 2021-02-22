@@ -346,8 +346,8 @@ async def test_sensor_restore.opp, hk_driver, events):
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await.opp.async_block_till_done()
 
-    acc = get_accessory.opp, hk_driver,.opp.states.get("sensor.temperature"), 2, {})
+    acc = get_accessory.opp, hk_driver, opp.states.get("sensor.temperature"), 2, {})
     assert acc.category == 10
 
-    acc = get_accessory.opp, hk_driver,.opp.states.get("sensor.humidity"), 2, {})
+    acc = get_accessory.opp, hk_driver, opp.states.get("sensor.humidity"), 2, {})
     assert acc.category == 10

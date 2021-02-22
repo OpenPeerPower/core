@@ -33,7 +33,7 @@ class ZhaDeviceEntry:
 class ZhaStorage:
     """Class to hold a registry of zha devices."""
 
-    def __init__(self,.opp: OpenPeerPowerType) -> None:
+    def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize the zha device storage."""
         self.opp: OpenPeerPowerType =.opp
         self.devices: MutableMapping[str, ZhaDeviceEntry] = {}

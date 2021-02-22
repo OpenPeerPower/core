@@ -46,7 +46,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class RealTimeDataEndpoint:
     """Representation of a Sensor."""
 
-    def __init__(self,.opp, api):
+    def __init__(self, opp, api):
         """Initialize the sensor."""
         self.opp =.opp
         self.api = api

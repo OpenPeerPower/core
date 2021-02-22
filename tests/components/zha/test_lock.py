@@ -40,7 +40,7 @@ async def test_lock.opp, lock):
     """Test zha lock platform."""
 
     zha_device, cluster = lock
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     assert.opp.states.get(entity_id).state == STATE_UNLOCKED

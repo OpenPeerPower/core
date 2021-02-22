@@ -70,7 +70,7 @@ WEBHOOK_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp,.opp_config):
+async def async_setup_opp, opp_config):
     """Set up the Geofency component."""
     config =.opp_config.get(DOMAIN, {})
     mobile_beacons = config.get(CONF_MOBILE_BEACONS, [])
@@ -89,7 +89,7 @@ async def handle_webhook.opp, webhook_id, request):
     except vol.MultipleInvalid as error:
         return web.Response(text=error.error_message, status=HTTP_UNPROCESSABLE_ENTITY)
 
-    if _is_mobile_beacon(data,.opp.data[DOMAIN]["beacons"]):
+    if _is_mobile_beacon(data, opp.data[DOMAIN]["beacons"]):
         return _set_location.opp, data, None)
     if data["entry"] == LOCATION_ENTRY:
         location_name = data["name"]

@@ -129,7 +129,7 @@ async def async_setup_services.opp: OpenPeerPowerType) -> None:
         elif service_name == SERVICE_DEACTIVATE_VACATION:
             await _async_deactivate_vacation.opp, service)
         elif service_name == SERVICE_DUMP_HAP_CONFIG:
-            await _async_dump_hap_config.opp, service)
+            await _async_dump_hap_config(opp, service)
         elif service_name == SERVICE_RESET_ENERGY_COUNTER:
             await _async_reset_energy_counter.opp, service)
         elif service_name == SERVICE_SET_ACTIVE_CLIMATE_PROFILE:

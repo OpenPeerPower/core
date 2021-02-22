@@ -162,7 +162,7 @@ async def async_get_engine.opp, config, discovery_info=None):
 class VoiceRSSProvider(Provider):
     """The VoiceRSS speech API provider."""
 
-    def __init__(self,.opp, conf):
+    def __init__(self, opp, conf):
         """Init VoiceRSS TTS service."""
         self.opp =.opp
         self._extension = conf[CONF_CODEC]

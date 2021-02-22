@@ -52,7 +52,7 @@ class DSMRConnection:
             dsmr_object = self._telegram[obis_ref.EQUIPMENT_IDENTIFIER_GAS]
             return getattr(dsmr_object, "value", None)
 
-    async def validate_connect(self,.opp: core.OpenPeerPower) -> bool:
+    async def validate_connect(self, opp: core.OpenPeerPower) -> bool:
         """Test if we can validate connection with the device."""
 
         def update_telegram(telegram):

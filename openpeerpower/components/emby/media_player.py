@@ -76,7 +76,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     _LOGGER.debug("Setting up Emby server at: %s:%s", host, port)
 
-    emby = EmbyServer(host, key, port, ssl,.opp.loop)
+    emby = EmbyServer(host, key, port, ssl, opp.loop)
 
     active_emby_devices = {}
     inactive_emby_devices = {}

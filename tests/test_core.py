@@ -189,7 +189,7 @@ async def test_shutdown_calls_block_till_done_after_shutdown_run_callback_thread
     ):
         await opp.async_stop()
 
-    assert stop_calls[-2] == ("shutdown_run_callback_threadsafe",.opp.loop)
+    assert stop_calls[-2] == ("shutdown_run_callback_threadsafe", opp.loop)
     assert stop_calls[-1] == "async_block_till_done"
 
 
@@ -855,8 +855,8 @@ async def test_serviceregistry_callback_service_raise_exception.opp):
 def test_config_defaults():
     """Test config defaults."""
     opp = Mock()
-    config = op.Config.opp)
-    assert config.opp is.opp
+    config = op.config(opp)
+    assert config(opp is.opp
     assert config.latitude == 0
     assert config.longitude == 0
     assert config.elevation == 0
@@ -895,7 +895,7 @@ def test_config_as_dict():
     config = op.Config(None)
     config.config_dir = "/test/ha-config"
     config opp =MagicMock()
-    type(config.opp.state).value = PropertyMock(return_value="RUNNING")
+    type(config(opp.state).value = PropertyMock(return_value="RUNNING")
     expected = {
         "latitude": 0,
         "longitude": 0,
@@ -1323,9 +1323,9 @@ def test_valid_entity_id():
         assert op.valid_entity_id(valid), valid
 
 
-async def test_additional_data_in_core_config.opp,.opp_storage):
+async def test_additional_data_in_core_config(opp, opp_storage):
     """Test that we can handle additional data in core configuration."""
-    config = op.Config.opp)
+    config = op.config(opp)
    .opp_storage[op.CORE_STORAGE_KEY] = {
         "version": 1,
         "data": {"location_name": "Test Name", "additional_valid_key": "value"},

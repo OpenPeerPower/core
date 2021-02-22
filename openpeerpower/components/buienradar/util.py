@@ -57,7 +57,7 @@ class BrData:
     load_error_count: int = WARN_THRESHOLD
     rain_error_count: int = WARN_THRESHOLD
 
-    def __init__(self,.opp, coordinates, timeframe, devices):
+    def __init__(self, opp, coordinates, timeframe, devices):
         """Initialize the data object."""
         self.devices = devices
         self.data = {}

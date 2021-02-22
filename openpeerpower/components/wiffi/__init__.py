@@ -100,7 +100,7 @@ def generate_unique_id(device, metric):
 class WiffiIntegrationApi:
     """API object for wiffi handling. Stored in.opp.data."""
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the instance."""
         self.opp = opp
         self._server = None

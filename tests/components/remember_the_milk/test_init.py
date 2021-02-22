@@ -16,7 +16,7 @@ def test_create_new.opp):
     assert config.get_token(PROFILE) == TOKEN
 
 
-def test_load_config.opp):
+def test_load_config(opp):
     """Test loading an existing token from the file."""
     with patch("builtins.open", mock_open(read_data=JSON_STRING)), patch(
         "os.path.isfile", Mock(return_value=True)
@@ -45,11 +45,11 @@ def test_id_map.opp):
     ), patch.object(rtm.RememberTheMilkConfiguration, "save_config"):
         config = rtm.RememberTheMilkConfiguration.opp)
 
-        assert config.get_rtm_id(PROFILE,.opp_id) is None
-        config.set_rtm_id(PROFILE,.opp_id, list_id, timeseries_id, rtm_id)
-        assert (list_id, timeseries_id, rtm_id) == config.get_rtm_id(PROFILE,.opp_id)
-        config.delete_rtm_id(PROFILE,.opp_id)
-        assert config.get_rtm_id(PROFILE,.opp_id) is None
+        assert config.get_rtm_id(PROFILE, opp_id) is None
+        config.set_rtm_id(PROFILE, opp_id, list_id, timeseries_id, rtm_id)
+        assert (list_id, timeseries_id, rtm_id) == config.get_rtm_id(PROFILE, opp_id)
+        config.delete_rtm_id(PROFILE, opp_id)
+        assert config.get_rtm_id(PROFILE, opp_id) is None
 
 
 def test_load_key_map.opp):

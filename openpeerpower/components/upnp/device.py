@@ -42,7 +42,7 @@ class Device:
         self._igd_device: IgdDevice = igd_device
 
     @classmethod
-    async def async_discover(cls,.opp: OpenPeerPowerType) -> List[Mapping]:
+    async def async_discover(cls, opp: OpenPeerPowerType) -> List[Mapping]:
         """Discover UPnP/IGD devices."""
         _LOGGER.debug("Discovering UPnP/IGD devices")
         local_ip = None
@@ -65,7 +65,7 @@ class Device:
 
     @classmethod
     async def async_supplement_discovery(
-        cls,.opp: OpenPeerPowerType, discovery: Mapping
+        cls, opp: OpenPeerPowerType, discovery: Mapping
     ) -> Mapping:
         """Get additional data from device and supplement discovery."""
         location = discovery[DISCOVERY_LOCATION]
@@ -78,7 +78,7 @@ class Device:
 
     @classmethod
     async def async_create_device(
-        cls,.opp: OpenPeerPowerType, ssdp_location: str
+        cls, opp: OpenPeerPowerType, ssdp_location: str
     ) -> Device:
         """Create UPnP/IGD device."""
         # build async_upnp_client requester

@@ -116,11 +116,11 @@ class LaCrosseSensor(Entity):
     _low_battery = None
     _new_battery = None
 
-    def __init__(self,.opp, lacrosse, device_id, name, expire_after, config):
+    def __init__(self, opp, lacrosse, device_id, name, expire_after, config):
         """Initialize the sensor."""
         self.opp =.opp
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, device_id,.opp.opp
+            ENTITY_ID_FORMAT, device_id, opp.opp
         )
         self._config = config
         self._name = name

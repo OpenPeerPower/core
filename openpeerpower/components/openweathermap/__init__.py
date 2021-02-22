@@ -42,8 +42,8 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Set up OpenWeatherMap as config entry."""
     name = config_entry.data[CONF_NAME]
     api_key = config_entry.data[CONF_API_KEY]
-    latitude = config_entry.data.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = config_entry.data.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = config_entry.data.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = config_entry.data.get(CONF_LONGITUDE, opp.config.longitude)
     forecast_mode = _get_config_value(config_entry, CONF_MODE)
     language = _get_config_value(config_entry, CONF_LANGUAGE)
 
@@ -51,7 +51,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
     owm = OWM(api_key, config_dict).weather_manager()
     weather_coordinator = WeatherUpdateCoordinator(
-        owm, latitude, longitude, forecast_mode,.opp
+        owm, latitude, longitude, forecast_mode, opp
     )
 
     await weather_coordinator.async_refresh()

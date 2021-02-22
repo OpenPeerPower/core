@@ -88,7 +88,7 @@ class Sun(Entity):
 
     entity_id = ENTITY_ID
 
-    def __init__(self,.opp):
+    def __init__(self, opp):
         """Initialize the sun."""
         self.opp =.opp
         self.location = None

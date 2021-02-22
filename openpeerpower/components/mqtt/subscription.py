@@ -23,7 +23,7 @@ class EntitySubscription:
     qos: int = attr.ib(default=0)
     encoding: str = attr.ib(default="utf-8")
 
-    async def resubscribe_if_necessary(self,.opp, other):
+    async def resubscribe_if_necessary(self, opp, other):
         """Re-subscribe to the new topic if necessary."""
         if not self._should_resubscribe(other):
             self.unsubscribe_callback = other.unsubscribe_callback

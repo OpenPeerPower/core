@@ -69,7 +69,7 @@ def mock_bus_and_json.opp, monkeypatch):
     )
 
 
-async def test_minimal_config.opp, mock_client):
+async def test_minimal_config(opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {
         google_pubsub.DOMAIN: {
@@ -89,7 +89,7 @@ async def test_minimal_config.opp, mock_client):
     )
 
 
-async def test_full_config.opp, mock_client):
+async def test_full_config(opp, mock_client):
     """Test the full config of the component."""
     config = {
         google_pubsub.DOMAIN: {

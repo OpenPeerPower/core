@@ -26,7 +26,7 @@ def setup_scanner.opp, config: dict, see, discovery_info=None):
 class TrackRDeviceScanner:
     """A class representing a TrackR device."""
 
-    def __init__(self,.opp, config: dict, see) -> None:
+    def __init__(self, opp, config: dict, see) -> None:
         """Initialize the TrackR device scanner."""
 
         self.opp =.opp

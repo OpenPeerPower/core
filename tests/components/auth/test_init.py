@@ -120,13 +120,13 @@ def test_auth_code_store_expiration():
         assert retrieve(client_id, RESULT_TYPE_USER, code) == user
 
 
-async def test_ws_current_user.opp,.opp_ws_client,.opp_access_token):
+async def test_ws_current_user.opp, opp_ws_client, opp_access_token):
     """Test the current user command with Open Peer Power creds."""
     assert await async_setup_component.opp, "auth", {})
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
     user = refresh_token.user
-    client = await.opp_ws_client.opp,.opp_access_token)
+    client = await.opp_ws_client.opp, opp_access_token)
 
     await client.send_json({"id": 5, "type": auth.WS_TYPE_CURRENT_USER})
 
@@ -242,7 +242,7 @@ async def test_refresh_token_different_client_id.opp, aiohttp_client):
 
 
 async def test_refresh_token_provider_rejected(
-   .opp, aiohttp_client,.opp_admin_user,.opp_admin_credential
+   .opp, aiohttp_client, opp_admin_user, opp_admin_credential
 ):
     """Test that we verify client ID."""
     client = await async_setup_auth.opp, aiohttp_client)
@@ -311,11 +311,11 @@ async def test_revoking_refresh_token.opp, aiohttp_client):
     assert resp.status == 400
 
 
-async def test_ws_long_lived_access_token.opp,.opp_ws_client,.opp_access_token):
+async def test_ws_long_lived_access_token.opp, opp_ws_client, opp_access_token):
     """Test generate long-lived access token."""
     assert await async_setup_component.opp, "auth", {"http": {}})
 
-    ws_client = await.opp_ws_client.opp,.opp_access_token)
+    ws_client = await.opp_ws_client.opp, opp_access_token)
 
     # verify create long-lived access token
     await ws_client.send_json(
@@ -339,11 +339,11 @@ async def test_ws_long_lived_access_token.opp,.opp_ws_client,.opp_access_token):
     assert refresh_token.client_icon is None
 
 
-async def test_ws_refresh_tokens.opp,.opp_ws_client,.opp_access_token):
+async def test_ws_refresh_tokens.opp, opp_ws_client, opp_access_token):
     """Test fetching refresh token metadata."""
     assert await async_setup_component.opp, "auth", {"http": {}})
 
-    ws_client = await.opp_ws_client.opp,.opp_access_token)
+    ws_client = await.opp_ws_client.opp, opp_access_token)
 
     await ws_client.send_json({"id": 5, "type": auth.WS_TYPE_REFRESH_TOKENS})
 
@@ -363,13 +363,13 @@ async def test_ws_refresh_tokens.opp,.opp_ws_client,.opp_access_token):
     assert token["last_used_ip"] == refresh_token.last_used_ip
 
 
-async def test_ws_delete_refresh_token.opp,.opp_ws_client,.opp_access_token):
+async def test_ws_delete_refresh_token.opp, opp_ws_client, opp_access_token):
     """Test deleting a refresh token."""
     assert await async_setup_component.opp, "auth", {"http": {}})
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
-    ws_client = await.opp_ws_client.opp,.opp_access_token)
+    ws_client = await.opp_ws_client.opp, opp_access_token)
 
     # verify create long-lived access token
     await ws_client.send_json(
@@ -386,10 +386,10 @@ async def test_ws_delete_refresh_token.opp,.opp_ws_client,.opp_access_token):
     assert refresh_token is None
 
 
-async def test_ws_sign_path.opp,.opp_ws_client,.opp_access_token):
+async def test_ws_sign_path.opp, opp_ws_client, opp_access_token):
     """Test signing a path."""
     assert await async_setup_component.opp, "auth", {"http": {}})
-    ws_client = await.opp_ws_client.opp,.opp_access_token)
+    ws_client = await.opp_ws_client.opp, opp_access_token)
 
     refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 

@@ -36,7 +36,7 @@ def _get_mock_doorbirdapi_side_effects(ready=None, info=None):
 async def test_user_form.opp):
     """Test we get the user form."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -79,7 +79,7 @@ async def test_user_form.opp):
 async def test_form_import.opp):
     """Test we get the form with import source."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -132,7 +132,7 @@ async def test_form_import.opp):
 async def test_form_import_with_zeroconf_already_discovered.opp):
     """Test we get the form with import source."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -200,7 +200,7 @@ async def test_form_import_with_zeroconf_already_discovered.opp):
 async def test_form_zeroconf_wrong_oui.opp):
     """Test we abort when we get the wrong OUI via zeroconf."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -221,7 +221,7 @@ async def test_form_zeroconf_wrong_oui.opp):
 async def test_form_zeroconf_link_local_ignored.opp):
     """Test we abort when we get a link local address via zeroconf."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -242,7 +242,7 @@ async def test_form_zeroconf_link_local_ignored.opp):
 async def test_form_zeroconf_correct_oui.opp):
     """Test we can setup from zeroconf with the correct OUI source."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -291,7 +291,7 @@ async def test_form_zeroconf_correct_oui.opp):
 async def test_form_user_cannot_connect.opp):
     """Test we handle cannot connect error."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     result = await.opp.config_entries.flow.async_init(
@@ -315,7 +315,7 @@ async def test_form_user_cannot_connect.opp):
 async def test_form_user_invalid_auth.opp):
     """Test we handle cannot invalid auth error."""
     await.opp.async_add_executor_job(
-        init_recorder_component,.opp
+        init_recorder_component, opp
     )  # force in memory db
 
     result = await.opp.config_entries.flow.async_init(

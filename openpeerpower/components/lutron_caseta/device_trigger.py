@@ -207,7 +207,7 @@ TRIGGER_SCHEMA = vol.Any(
 )
 
 
-async def async_validate_trigger_config.opp: OpenPeerPower, config: ConfigType):
+async def async_validate_trigger_config(opp: OpenPeerPower, config: ConfigType):
     """Validate config."""
     # if device is available verify parameters against device capabilities
     device = get_button_device_by_dr_id.opp, config[CONF_DEVICE_ID])

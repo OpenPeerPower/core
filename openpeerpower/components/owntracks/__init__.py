@@ -143,7 +143,7 @@ async def async_connect_mqtt.opp, component):
             return
 
         message["topic"] = msg.topic
-       .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN,.opp, context, message)
+       .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN, opp, context, message)
 
     await.opp.components.mqtt.async_subscribe(
         context.mqtt_topic, async_handle_mqtt_message, 1
@@ -184,7 +184,7 @@ async def handle_webhook.opp, webhook_id, request):
             # Keep it as a 200 response so the incorrect packet is discarded
             return json_response([])
 
-   .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN,.opp, context, message)
+   .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN, opp, context, message)
 
     response = []
 
@@ -287,7 +287,7 @@ class OwnTracksContext:
         self._pending_msg.append(data)
 
     @callback
-    def async_see_beacons(self,.opp, dev_id, kwargs_param):
+    def async_see_beacons(self, opp, dev_id, kwargs_param):
         """Set active beacons to the current location."""
         kwargs = kwargs_param.copy()
 

@@ -16,7 +16,7 @@ def radar_map_url(dim: int = 512, country_code: str = "NL") -> str:
     return f"https://api.buienradar.nl/image/1.0/RadarMap{country_code}?w={dim}&h={dim}"
 
 
-async def test_fetching_url_and_caching(aioclient_mock,.opp,.opp_client):
+async def test_fetching_url_and_caching(aioclient_mock, opp, opp_client):
     """Test that it fetches the given url."""
     aioclient_mock.get(radar_map_url(), text="hello world")
 
@@ -41,7 +41,7 @@ async def test_fetching_url_and_caching(aioclient_mock,.opp,.opp_client):
     assert aioclient_mock.call_count == 1
 
 
-async def test_expire_delta(aioclient_mock,.opp,.opp_client):
+async def test_expire_delta(aioclient_mock, opp, opp_client):
     """Test that the cache expires after delta."""
     aioclient_mock.get(radar_map_url(), text="hello world")
 
@@ -73,7 +73,7 @@ async def test_expire_delta(aioclient_mock,.opp,.opp_client):
     assert aioclient_mock.call_count == 2
 
 
-async def test_only_one_fetch_at_a_time(aioclient_mock,.opp,.opp_client):
+async def test_only_one_fetch_at_a_time(aioclient_mock, opp, opp_client):
     """Test that it fetches with only one request at the same time."""
     aioclient_mock.get(radar_map_url(), text="hello world")
 
@@ -95,7 +95,7 @@ async def test_only_one_fetch_at_a_time(aioclient_mock,.opp,.opp_client):
     assert aioclient_mock.call_count == 1
 
 
-async def test_dimension(aioclient_mock,.opp,.opp_client):
+async def test_dimension(aioclient_mock, opp, opp_client):
     """Test that it actually adheres to the dimension."""
     aioclient_mock.get(radar_map_url(700), text="hello world")
 
@@ -113,7 +113,7 @@ async def test_dimension(aioclient_mock,.opp,.opp_client):
     assert aioclient_mock.call_count == 1
 
 
-async def test_belgium_country(aioclient_mock,.opp,.opp_client):
+async def test_belgium_country(aioclient_mock, opp, opp_client):
     """Test that it actually adheres to another country like Belgium."""
     aioclient_mock.get(radar_map_url(country_code="BE"), text="hello world")
 
@@ -137,7 +137,7 @@ async def test_belgium_country(aioclient_mock,.opp,.opp_client):
     assert aioclient_mock.call_count == 1
 
 
-async def test_failure_response_not_cached(aioclient_mock,.opp,.opp_client):
+async def test_failure_response_not_cached(aioclient_mock, opp, opp_client):
     """Test that it does not cache a failure response."""
     aioclient_mock.get(radar_map_url(), text="hello world", status=401)
 
@@ -154,7 +154,7 @@ async def test_failure_response_not_cached(aioclient_mock,.opp,.opp_client):
     assert aioclient_mock.call_count == 2
 
 
-async def test_last_modified_updates(aioclient_mock,.opp,.opp_client):
+async def test_last_modified_updates(aioclient_mock, opp, opp_client):
     """Test that it does respect HTTP not modified."""
     # Build Last-Modified header value
     now = dt_util.utcnow()
@@ -202,7 +202,7 @@ async def test_last_modified_updates(aioclient_mock,.opp,.opp_client):
     assert (await resp_1.read()) == (await resp_2.read())
 
 
-async def test_retries_after_error(aioclient_mock,.opp,.opp_client):
+async def test_retries_after_error(aioclient_mock, opp, opp_client):
     """Test that it does retry after an error instead of caching."""
     await async_setup_component(
        .opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}

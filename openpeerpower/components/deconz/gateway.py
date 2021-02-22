@@ -41,7 +41,7 @@ def get_gateway_from_config_entry.opp, config_entry):
 class DeconzGateway:
     """Manages a single deCONZ gateway."""
 
-    def __init__(self,.opp, config_entry) -> None:
+    def __init__(self, opp, config_entry) -> None:
         """Initialize the system."""
         self.opp =.opp
         self.config_entry = config_entry

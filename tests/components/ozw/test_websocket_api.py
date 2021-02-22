@@ -43,7 +43,7 @@ from openpeerpower.components.websocket_api.const import (
 from .common import MQTTMessage, setup_ozw
 
 
-async def test_websocket_api.opp, generic_data,.opp_ws_client):
+async def test_websocket_api.opp, generic_data, opp_ws_client):
     """Test the ozw websocket api."""
     await setup_ozw.opp, fixture=generic_data)
     client = await.opp_ws_client.opp)
@@ -281,7 +281,7 @@ async def test_websocket_api.opp, generic_data,.opp_ws_client):
     assert result["code"] == ERR_NOT_FOUND
 
 
-async def test_ws_locks.opp, lock_data,.opp_ws_client):
+async def test_ws_locks.opp, lock_data, opp_ws_client):
     """Test lock websocket apis."""
     await setup_ozw.opp, fixture=lock_data)
     client = await.opp_ws_client.opp)
@@ -320,7 +320,7 @@ async def test_ws_locks.opp, lock_data,.opp_ws_client):
     assert msg["success"]
 
 
-async def test_refresh_node.opp, generic_data, sent_messages,.opp_ws_client):
+async def test_refresh_node.opp, generic_data, sent_messages, opp_ws_client):
     """Test the ozw refresh node api."""
     receive_message = await setup_ozw.opp, fixture=generic_data)
     client = await.opp_ws_client.opp)
@@ -369,7 +369,7 @@ async def test_refresh_node.opp, generic_data, sent_messages,.opp_ws_client):
     assert result["node_query_stage"] == "versions"
 
 
-async def test_refresh_node_unsubscribe.opp, generic_data,.opp_ws_client):
+async def test_refresh_node_unsubscribe.opp, generic_data, opp_ws_client):
     """Test unsubscribing the ozw refresh node api."""
     await setup_ozw.opp, fixture=generic_data)
     client = await.opp_ws_client.opp)

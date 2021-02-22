@@ -184,7 +184,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             return
 
         # auth only processed during startup
-        await conf_util.async_process_ha_core_config.opp, conf.get(ha.DOMAIN) or {})
+        await conf_util.async_process_ha_core_config(opp, conf.get(ha.DOMAIN) or {})
 
    .opp.helpers.service.async_register_admin_service(
         ha.DOMAIN, SERVICE_RELOAD_CORE_CONFIG, async_handle_reload_config

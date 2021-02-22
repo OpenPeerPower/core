@@ -33,7 +33,7 @@ class MyStromView(OpenPeerPowerView):
         res = await self._handle(request.app[.opp"], request.query)
         return res
 
-    async def _handle(self,.opp, data):
+    async def _handle(self, opp, data):
         """Handle requests to the myStrom endpoint."""
         button_action = next(
             (parameter for parameter in data if parameter in self.supported_actions),

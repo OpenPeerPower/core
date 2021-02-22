@@ -112,7 +112,7 @@ async def async_setup_opp, config):
 
     timezone = str.opp.config.time_zone)
 
-    eight = EightSleep(user, password, timezone, partner, None,.opp.loop)
+    eight = EightSleep(user, password, timezone, partner, None, opp.loop)
 
    .opp.data[DATA_EIGHT] = eight
 

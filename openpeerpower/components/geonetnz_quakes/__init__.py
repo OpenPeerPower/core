@@ -65,8 +65,8 @@ async def async_setup_opp, config):
         return True
 
     conf = config[DOMAIN]
-    latitude = conf.get(CONF_LATITUDE,.opp.config.latitude)
-    longitude = conf.get(CONF_LONGITUDE,.opp.config.longitude)
+    latitude = conf.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = conf.get(CONF_LONGITUDE, opp.config.longitude)
     mmi = conf[CONF_MMI]
     scan_interval = conf[CONF_SCAN_INTERVAL]
 
@@ -120,7 +120,7 @@ async def async_unload_entry.opp, config_entry):
 class GeonetnzQuakesFeedEntityManager:
     """Feed Entity Manager for GeoNet NZ Quakes feed."""
 
-    def __init__(self,.opp, config_entry, radius_in_km):
+    def __init__(self, opp, config_entry, radius_in_km):
         """Initialize the Feed Entity Manager."""
         self.opp = opp
         self._config_entry = config_entry

@@ -64,7 +64,7 @@ class _BaseOnboardingView(OpenPeerPowerView):
         """Return if this step is done."""
         return self.step in self._data["done"]
 
-    async def _async_mark_done(self,.opp):
+    async def _async_mark_done(self, opp):
         """Mark step as done."""
         self._data["done"].append(self.step)
         await self._store.async_save(self._data)

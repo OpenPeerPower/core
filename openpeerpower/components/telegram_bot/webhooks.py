@@ -89,9 +89,9 @@ class BotPushReceiver(OpenPeerPowerView, BaseTelegramBotEntity):
     url = TELEGRAM_HANDLER_URL
     name = "telegram_webhooks"
 
-    def __init__(self,.opp, allowed_chat_ids, trusted_networks):
+    def __init__(self, opp, allowed_chat_ids, trusted_networks):
         """Initialize the class."""
-        BaseTelegramBotEntity.__init__(self,.opp, allowed_chat_ids)
+        BaseTelegramBotEntity.__init__(self, opp, allowed_chat_ids)
         self.trusted_networks = trusted_networks
 
     async def post(self, request):

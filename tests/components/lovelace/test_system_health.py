@@ -15,7 +15,7 @@ async def test_system_health_info_autogen.opp):
     assert info == {"dashboards": 1, "mode": "auto-gen", "resources": 0}
 
 
-async def test_system_health_info_storage.opp,.opp_storage):
+async def test_system_health_info_storage.opp, opp_storage):
     """Test system health info endpoint."""
     assert await async_setup_component.opp, "system_health", {})
    .opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT] = {

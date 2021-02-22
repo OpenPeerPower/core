@@ -16,7 +16,7 @@ from openpeerpower.loader import bind.opp
 @bind.opp
 def turn_on.opp, entity_id=ENTITY_MATCH_ALL):
     """Turn all or specified switch on."""
-   .opp.add_job(async_turn_on,.opp, entity_id)
+   .opp.add_job(async_turn_on, opp, entity_id)
 
 
 async def async_turn_on.opp, entity_id=ENTITY_MATCH_ALL):
@@ -28,7 +28,7 @@ async def async_turn_on.opp, entity_id=ENTITY_MATCH_ALL):
 @bind.opp
 def turn_off.opp, entity_id=ENTITY_MATCH_ALL):
     """Turn all or specified switch off."""
-   .opp.add_job(async_turn_off,.opp, entity_id)
+   .opp.add_job(async_turn_off, opp, entity_id)
 
 
 async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL):

@@ -50,7 +50,7 @@ async def async_setup_opp):
 class EditAutomationConfigView(EditIdBasedConfigView):
     """Edit automation config."""
 
-    def _write_value(self,.opp, data, config_key, new_value):
+    def _write_value(self, opp, data, config_key, new_value):
         """Set value."""
         index = None
         for index, cur_value in enumerate(data):

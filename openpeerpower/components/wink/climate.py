@@ -73,11 +73,11 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for climate in pywink.get_thermostats():
         _id = climate.object_id() + climate.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkThermostat(climate,.opp)])
+            add_entities([WinkThermostat(climate, opp)])
     for climate in pywink.get_air_conditioners():
         _id = climate.object_id() + climate.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkAC(climate,.opp)])
+            add_entities([WinkAC(climate, opp)])
 
 
 class WinkThermostat(WinkDevice, ClimateEntity):

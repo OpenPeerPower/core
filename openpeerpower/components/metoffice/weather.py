@@ -37,7 +37,7 @@ async def async_setup_entry(
 class MetOfficeWeather(WeatherEntity):
     """Implementation of a Met Office weather condition."""
 
-    def __init__(self, entry_data,.opp_data):
+    def __init__(self, entry_data, opp_data):
         """Initialise the platform with a data instance."""
         self._data =.opp_data[METOFFICE_DATA]
         self._coordinator =.opp_data[METOFFICE_COORDINATOR]

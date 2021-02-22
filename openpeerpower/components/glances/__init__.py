@@ -89,7 +89,7 @@ async def async_unload_entry.opp, config_entry):
 class GlancesData:
     """Get the latest data from Glances api."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the Glances data."""
         self.opp =.opp
         self.config_entry = config_entry

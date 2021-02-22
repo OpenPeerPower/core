@@ -63,7 +63,7 @@ async def webhook_client.opp, authed_api_client, aiohttp_client):
 
 
 @pytest.fixture
-async def authed_api_client.opp,.opp_client):
+async def authed_api_client.opp, opp_client):
     """Provide an authenticated client for mobile_app to use."""
     await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
     await.opp.async_block_till_done()

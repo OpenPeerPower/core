@@ -24,7 +24,7 @@ async def async_get_handler.opp, config, discovery_info=None):
 class AsteriskMailbox(Mailbox):
     """Asterisk VM Sensor."""
 
-    def __init__(self,.opp, name):
+    def __init__(self, opp, name):
         """Initialize Asterisk mailbox."""
         super().__init__.opp, name)
         async_dispatcher_connect(

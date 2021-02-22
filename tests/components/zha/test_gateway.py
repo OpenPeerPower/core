@@ -213,7 +213,7 @@ async def test_updating_device_store.opp, zigpy_dev_basic, zha_dev_basic):
     assert entry.last_seen == last_seen
 
 
-async def test_cleaning_up_storage.opp, zigpy_dev_basic, zha_dev_basic,.opp_storage):
+async def test_cleaning_up_storage.opp, zigpy_dev_basic, zha_dev_basic, opp_storage):
     """Test cleaning up zha storage and remove stale devices."""
     zha_gateway = get_zha_gateway.opp)
     assert zha_gateway is not None

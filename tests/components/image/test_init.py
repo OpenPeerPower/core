@@ -10,7 +10,7 @@ from openpeerpower.setup import async_setup_component
 from openpeerpower.util import dt as util_dt
 
 
-async def test_upload_image.opp,.opp_client,.opp_ws_client):
+async def test_upload_image.opp, opp_client, opp_ws_client):
     """Test we can upload an image."""
     now = util_dt.utcnow()
     test_image = pathlib.Path(__file__).parent / "logo.png"

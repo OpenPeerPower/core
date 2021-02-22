@@ -41,7 +41,7 @@ class AreaEntry:
 class AreaRegistry:
     """Class to hold a registry of areas."""
 
-    def __init__(self,.opp: OpenPeerPowerType) -> None:
+    def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize the area registry."""
         self.opp =.opp
         self.areas: MutableMapping[str, AreaEntry] = {}
@@ -189,7 +189,7 @@ class AreaRegistry:
 @callback
 def async_get.opp: OpenPeerPowerType) -> AreaRegistry:
     """Get area registry."""
-    return cast(AreaRegistry,.opp.data[DATA_REGISTRY])
+    return cast(AreaRegistry, opp.data[DATA_REGISTRY])
 
 
 async def async_load.opp: OpenPeerPowerType) -> None:

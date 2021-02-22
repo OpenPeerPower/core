@@ -96,7 +96,7 @@ async def validate_configs.opp, entity_configs):
         if CONF_POWER in entity_config:
             power_val = entity_config[CONF_POWER]
             if isinstance(power_val, str) and is_template_string(power_val):
-                entity_config[CONF_POWER] = Template(power_val,.opp)
+                entity_config[CONF_POWER] = Template(power_val, opp)
             elif isinstance(power_val, Template):
                 entity_config[CONF_POWER].opp =.opp
         elif CONF_POWER_ENTITY in entity_config:

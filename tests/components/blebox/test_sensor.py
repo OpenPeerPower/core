@@ -35,7 +35,7 @@ def tempsensor_fixture():
     return (feature, "sensor.tempsensor_0_temperature")
 
 
-async def test_init(tempsensor,.opp, config):
+async def test_init(tempsensor, opp, config):
     """Test sensor default state."""
 
     _, entity_id = tempsensor
@@ -59,7 +59,7 @@ async def test_init(tempsensor,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_update(tempsensor,.opp, config):
+async def test_update(tempsensor, opp, config):
     """Test sensor update."""
 
     feature_mock, entity_id = tempsensor
@@ -75,7 +75,7 @@ async def test_update(tempsensor,.opp, config):
     assert state.state == "25.18"
 
 
-async def test_update_failure(tempsensor,.opp, config, caplog):
+async def test_update_failure(tempsensor, opp, config, caplog):
     """Test that update failures are logged."""
 
     caplog.set_level(logging.ERROR)

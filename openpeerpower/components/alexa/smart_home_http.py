@@ -85,7 +85,7 @@ async def async_setup_opp, config):
     Even if that's disabled, the functionality in this module may still be used
     by the cloud component which will call async_handle_message directly.
     """
-    smart_home_config = AlexaConfig.opp, config)
+    smart_home_config = Alexaconfig(opp, config)
    .opp.http.register_view(SmartHomeView(smart_home_config))
 
     if smart_home_config.should_report_state:

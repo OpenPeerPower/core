@@ -111,7 +111,7 @@ async def async_configure_sabnzbd(
     base_url = BASE_URL_FORMAT.format(uri_scheme, host, port)
     if api_key is None:
         conf = await.opp.async_add_executor_job(
-            load_json,.opp.config.path(CONFIG_FILE)
+            load_json, opp.config.path(CONFIG_FILE)
         )
         api_key = conf.get(base_url, {}).get(CONF_API_KEY, "")
 

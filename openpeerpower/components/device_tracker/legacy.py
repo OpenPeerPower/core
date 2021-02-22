@@ -150,7 +150,7 @@ async def async_setup_integration.opp: OpenPeerPowerType, config: ConfigType) ->
     """Set up the legacy integration."""
     tracker = await get_tracker.opp, config)
 
-    legacy_platforms = await async_extract_config.opp, config)
+    legacy_platforms = await async_extract_config(opp, config)
 
     setup_tasks = [
         asyncio.create_task(legacy_platform.async_setup_legacy.opp, tracker))
@@ -217,7 +217,7 @@ class DeviceTrackerPlatform:
 
         return None
 
-    async def async_setup_legacy(self,.opp, tracker, discovery_info=None):
+    async def async_setup_legacy(self, opp, tracker, discovery_info=None):
         """Set up a legacy platform."""
         LOGGER.info("Setting up %s.%s", DOMAIN, self.type)
         try:
@@ -229,7 +229,7 @@ class DeviceTrackerPlatform:
                 )
             elif hasattr(self.platform, "get_scanner"):
                 scanner = await.opp.async_add_executor_job(
-                    self.platform.get_scanner,.opp, {DOMAIN: self.config}
+                    self.platform.get_scanner, opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "async_setup_scanner"):
                 setup = await self.platform.async_setup_scanner(
@@ -260,7 +260,7 @@ class DeviceTrackerPlatform:
             LOGGER.exception("Error setting up platform %s", self.type)
 
 
-async def async_extract_config.opp, config):
+async def async_extract_config(opp, config):
     """Extract device tracker config and split between legacy and modern."""
     legacy = []
 
@@ -377,7 +377,7 @@ async def get_tracker.opp, config):
     if track_new is None:
         track_new = defaults.get(CONF_TRACK_NEW, DEFAULT_TRACK_NEW)
 
-    devices = await async_load_config(yaml_path,.opp, consider_home)
+    devices = await async_load_config(yaml_path, opp, consider_home)
     tracker = DeviceTracker.opp, consider_home, track_new, defaults, devices)
     return tracker
 
@@ -812,7 +812,7 @@ class DeviceScanner:
 
 
 async def async_load_config(
-    path: str,.opp: OpenPeerPowerType, consider_home: timedelta
+    path: str, opp: OpenPeerPowerType, consider_home: timedelta
 ):
     """Load devices from YAML configuration file.
 
@@ -850,7 +850,7 @@ async def async_load_config(
             device = dev_schema(device)
             device["dev_id"] = cv.slugify(dev_id)
         except vol.Invalid as exp:
-            async_log_exception(exp, dev_id, devices,.opp)
+            async_log_exception(exp, dev_id, devices, opp)
         else:
             result.append(Device.opp, **device))
     return result

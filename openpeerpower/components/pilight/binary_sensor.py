@@ -72,7 +72,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class PilightBinarySensor(BinarySensorEntity):
     """Representation of a binary sensor that can be updated using Pilight."""
 
-    def __init__(self,.opp, name, variable, payload, on_value, off_value):
+    def __init__(self, opp, name, variable, payload, on_value, off_value):
         """Initialize the sensor."""
         self._state = False
         self.opp = opp
@@ -122,7 +122,7 @@ class PilightTriggerSensor(BinarySensorEntity):
     """Representation of a binary sensor that can be updated using Pilight."""
 
     def __init__(
-        self,.opp, name, variable, payload, on_value, off_value, rst_dly_sec=30
+        self, opp, name, variable, payload, on_value, off_value, rst_dly_sec=30
     ):
         """Initialize the sensor."""
         self._state = False

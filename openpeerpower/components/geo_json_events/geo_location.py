@@ -46,8 +46,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     url = config[CONF_URL]
     scan_interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     coordinates = (
-        config.get(CONF_LATITUDE,.opp.config.latitude),
-        config.get(CONF_LONGITUDE,.opp.config.longitude),
+        config.get(CONF_LATITUDE, opp.config.latitude),
+        config.get(CONF_LONGITUDE, opp.config.longitude),
     )
     radius_in_km = config[CONF_RADIUS]
     # Initialize the entity manager.
@@ -66,7 +66,7 @@ class GeoJsonFeedEntityManager:
     """Feed Entity Manager for GeoJSON feeds."""
 
     def __init__(
-        self,.opp, add_entities, scan_interval, coordinates, url, radius_in_km
+        self, opp, add_entities, scan_interval, coordinates, url, radius_in_km
     ):
         """Initialize the GeoJSON Feed Manager."""
 

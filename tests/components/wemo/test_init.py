@@ -14,7 +14,7 @@ from .conftest import MOCK_HOST, MOCK_NAME, MOCK_PORT, MOCK_SERIAL_NUMBER
 from tests.common import async_fire_time_changed
 
 
-async def test_config_no_config.opp):
+async def test_config_no_config(opp):
     """Component setup succeeds when there are no config entry for the domain."""
     assert await async_setup_component.opp, DOMAIN, {})
 

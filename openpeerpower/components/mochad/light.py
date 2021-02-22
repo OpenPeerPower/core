@@ -47,7 +47,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class MochadLight(LightEntity):
     """Representation of a X10 dimmer over Mochad."""
 
-    def __init__(self,.opp, ctrl, dev):
+    def __init__(self, opp, ctrl, dev):
         """Initialize a Mochad Light Device."""
 
         self._controller = ctrl

@@ -21,7 +21,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     ports = config.get(CONF_PORTS)
     for port in ports:
         for port_addr, port_name in port.items():
-            switches.append(GC100Switch(port_name, port_addr,.opp.data[DATA_GC100]))
+            switches.append(GC100Switch(port_name, port_addr, opp.data[DATA_GC100]))
     add_entities(switches, True)
 
 

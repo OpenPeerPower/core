@@ -19,24 +19,24 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _id = sensor.object_id() + sensor.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
             if sensor.capability() in SENSOR_TYPES:
-                add_entities([WinkSensorDevice(sensor,.opp)])
+                add_entities([WinkSensorDevice(sensor, opp)])
 
     for eggtray in pywink.get_eggtrays():
         _id = eggtray.object_id() + eggtray.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkSensorDevice(eggtray,.opp)])
+            add_entities([WinkSensorDevice(eggtray, opp)])
 
     for tank in pywink.get_propane_tanks():
         _id = tank.object_id() + tank.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkSensorDevice(tank,.opp)])
+            add_entities([WinkSensorDevice(tank, opp)])
 
     for piggy_bank in pywink.get_piggy_banks():
         _id = piggy_bank.object_id() + piggy_bank.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
             try:
                 if piggy_bank.capability() in SENSOR_TYPES:
-                    add_entities([WinkSensorDevice(piggy_bank,.opp)])
+                    add_entities([WinkSensorDevice(piggy_bank, opp)])
             except AttributeError:
                 _LOGGER.info("Device is not a sensor")
 
@@ -44,9 +44,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class WinkSensorDevice(WinkDevice):
     """Representation of a Wink sensor."""
 
-    def __init__(self, wink,.opp):
+    def __init__(self, wink, opp):
         """Initialize the Wink device."""
-        super().__init__(wink,.opp)
+        super().__init__(wink, opp)
         self.capability = self.wink.capability()
         if self.wink.unit() == DEGREE:
             self._unit_of_measurement = TEMP_CELSIUS

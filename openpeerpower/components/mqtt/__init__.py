@@ -245,7 +245,7 @@ def _build_publish_data(topic: Any, qos: int, retain: bool) -> ServiceDataType:
 @bind.opp
 def publish.opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> None:
     """Publish message to an MQTT topic."""
-   .opp.add_job(async_publish,.opp, topic, payload, qos, retain)
+   .opp.add_job(async_publish, opp, topic, payload, qos, retain)
 
 
 @callback
@@ -264,7 +264,7 @@ def publish_template(
    .opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic."""
-   .opp.add_job(async_publish_template,.opp, topic, payload_template, qos, retain)
+   .opp.add_job(async_publish_template, opp, topic, payload_template, qos, retain)
 
 
 @bind.opp
@@ -359,7 +359,7 @@ def subscribe(
 ) -> Callable[[], None]:
     """Subscribe to an MQTT topic."""
     async_remove = asyncio.run_coroutine_threadsafe(
-        async_subscribe.opp, topic, msg_callback, qos, encoding),.opp.loop
+        async_subscribe.opp, topic, msg_callback, qos, encoding), opp.loop
     ).result()
 
     def remove():
@@ -465,7 +465,7 @@ async def async_setup_entry.opp, entry):
         retain: bool = call.data[ATTR_RETAIN]
         if payload_template is not None:
             try:
-                payload = template.Template(payload_template,.opp).async_render(
+                payload = template.Template(payload_template, opp).async_render(
                     parse_result=False
                 )
             except template.jinja2.TemplateError as exc:

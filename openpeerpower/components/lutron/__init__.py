@@ -135,7 +135,7 @@ class LutronButton:
     represented as an entity; it simply fires events.
     """
 
-    def __init__(self,.opp, area_name, keypad, button):
+    def __init__(self, opp, area_name, keypad, button):
         """Register callback for activity on the button."""
         name = f"{keypad.name}: {button.name}"
         self.opp = opp

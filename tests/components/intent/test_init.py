@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_mock_service
 
 
-async def test_http_handle_intent.opp,.opp_client,.opp_admin_user):
+async def test_http_handle_intent.opp, opp_client, opp_admin_user):
     """Test handle intent via HTTP API."""
 
     class TestIntentHandler(intent.IntentHandler):

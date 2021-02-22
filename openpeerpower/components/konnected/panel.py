@@ -60,7 +60,7 @@ KONN_API_VERSIONS = {
 class AlarmPanel:
     """A representation of a Konnected alarm panel."""
 
-    def __init__(self,.opp, config_entry):
+    def __init__(self, opp, config_entry):
         """Initialize the Konnected device."""
         self.opp =.opp
         self.config_entry = config_entry

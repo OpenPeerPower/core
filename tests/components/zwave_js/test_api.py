@@ -9,7 +9,7 @@ from openpeerpower.components.zwave_js.const import DOMAIN
 from openpeerpower.helpers.device_registry import async_get_registry
 
 
-async def test_websocket_api.opp, integration, multisensor_6,.opp_ws_client):
+async def test_websocket_api.opp, integration, multisensor_6, opp_ws_client):
     """Test the network and node status websocket commands."""
     entry = integration
     ws_client = await.opp_ws_client.opp)
@@ -43,7 +43,7 @@ async def test_websocket_api.opp, integration, multisensor_6,.opp_ws_client):
 
 
 async def test_add_node(
-   .opp, integration, client,.opp_ws_client, nortek_thermostat_added_event
+   .opp, integration, client, opp_ws_client, nortek_thermostat_added_event
 ):
     """Test the add_node websocket command."""
     entry = integration
@@ -76,7 +76,7 @@ async def test_add_node(
     assert msg["event"]["event"] == "node added"
 
 
-async def test_cancel_inclusion_exclusion.opp, integration, client,.opp_ws_client):
+async def test_cancel_inclusion_exclusion.opp, integration, client, opp_ws_client):
     """Test cancelling the inclusion and exclusion process."""
     entry = integration
     ws_client = await.opp_ws_client.opp)
@@ -156,7 +156,7 @@ async def test_remove_node(
     assert device is None
 
 
-async def test_dump_view(integration,.opp_client):
+async def test_dump_view(integration, opp_client):
     """Test the HTTP dump view."""
     client = await.opp_client()
     with patch(
@@ -168,7 +168,7 @@ async def test_dump_view(integration,.opp_client):
     assert json.loads(await resp.text()) == [{"hello": "world"}, {"second": "msg"}]
 
 
-async def test_dump_view_invalid_entry_id(integration,.opp_client):
+async def test_dump_view_invalid_entry_id(integration, opp_client):
     """Test an invalid config entry id parameter."""
     client = await.opp_client()
     resp = await client.get("/api/zwave_js/dump/INVALID")

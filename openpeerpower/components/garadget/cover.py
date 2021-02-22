@@ -77,7 +77,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class GaradgetCover(CoverEntity):
     """Representation of a Garadget cover."""
 
-    def __init__(self,.opp, args):
+    def __init__(self, opp, args):
         """Initialize the cover."""
         self.particle_url = "https://api.particle.io"
         self.opp =.opp

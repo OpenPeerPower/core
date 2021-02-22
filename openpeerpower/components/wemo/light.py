@@ -44,7 +44,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             async_add_entities([WemoDimmer(device)])
         else:
             await.opp.async_add_executor_job(
-                setup_bridge,.opp, device, async_add_entities
+                setup_bridge, opp, device, async_add_entities
             )
 
     async_dispatcher_connect.opp, f"{WEMO_DOMAIN}.light", _discovered_wemo)

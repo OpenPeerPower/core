@@ -9,7 +9,7 @@ _LOGGER = logging.getLogger(__name__)
 class ConnectDenonAVR:
     """Class to async connect to a DenonAVR receiver."""
 
-    def __init__(self,.opp, host, timeout, show_all_inputs, zone2, zone3):
+    def __init__(self, opp, host, timeout, show_all_inputs, zone2, zone3):
         """Initialize the class."""
         self.opp = opp
         self._receiver = None

@@ -59,7 +59,7 @@ def setup_opp, config):
 class IdteckReader:
     """Representation of an IDTECK proximity card reader."""
 
-    def __init__(self,.opp, host, port, name):
+    def __init__(self, opp, host, port, name):
         """Initialize the reader."""
         self.opp =.opp
         self._host = host

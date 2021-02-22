@@ -48,7 +48,7 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
             if isinstance(obj_or_evt, asyncio.Event):
                 evt = obj_or_evt
                 await evt.wait()
-                return cast(T,.opp.data.get(data_key))
+                return cast(T, opp.data.get(data_key))
 
             return cast(T, obj_or_evt)
 

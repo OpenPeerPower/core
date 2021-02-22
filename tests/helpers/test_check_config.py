@@ -37,7 +37,7 @@ def log_ha_config(conf):
         _LOGGER.debug("error[%s] = %s", cnt, err)
 
 
-async def test_bad_core_config.opp):
+async def test_bad_core_config(opp):
     """Test a bad core config setup."""
     files = {YAML_CONFIG_FILE: BAD_CORE_CONFIG}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):

@@ -16,7 +16,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import assert_setup_component
 
 
-async def test_setup_missing_config.opp):
+async def test_setup_missing_config(opp):
     """Test setup with configuration missing required entries."""
     with assert_setup_component(0):
         assert await async_setup_component(
@@ -25,7 +25,7 @@ async def test_setup_missing_config.opp):
 
 
 @patch("pmsensor.co2sensor.read_mh_z19", side_effect=OSError("test error"))
-async def test_setup_failed_connect(mock_co2,.opp):
+async def test_setup_failed_connect(mock_co2, opp):
     """Test setup when connection error occurs."""
     assert not mhz19.setup_platform(
        .opp,

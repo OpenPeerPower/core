@@ -35,7 +35,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def storage_setup_opp,.opp_storage):
+def storage_setup_opp, opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):
@@ -70,7 +70,7 @@ def storage_setup_opp,.opp_storage):
     return _storage
 
 
-async def test_config.opp):
+async def test_config(opp):
     """Test config."""
     invalid_configs = [None, 1, {}, {"name with space": None}]
 
@@ -82,7 +82,7 @@ async def test_config_options.opp):
     """Test configuration options."""
     count_start = len.opp.states.async_entity_ids())
 
-    _LOGGER.debug("ENTITIES @ start: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
     config = {
         DOMAIN: {
@@ -101,7 +101,7 @@ async def test_config_options.opp):
     assert await async_setup_component.opp, "counter", config)
     await.opp.async_block_till_done()
 
-    _LOGGER.debug("ENTITIES: %s",.opp.states.async_entity_ids())
+    _LOGGER.debug("ENTITIES: %s", opp.states.async_entity_ids())
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
     await.opp.async_block_till_done()
@@ -162,7 +162,7 @@ async def test_methods.opp):
     assert 0 == int(state.state)
 
 
-async def test_methods_with_config.opp):
+async def test_methods_with_config(opp):
     """Test increment, decrement, and reset methods with configuration."""
     config = {
         DOMAIN: {"test": {CONF_NAME: "Hello World", CONF_INITIAL: 10, CONF_STEP: 5}}
@@ -270,7 +270,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
     assert int(state.state) == 0
 
 
-async def test_counter_context.opp,.opp_admin_user):
+async def test_counter_context.opp, opp_admin_user):
     """Test that counter context works."""
     assert await async_setup_component.opp, "counter", {"counter": {"test": {}}})
 
@@ -291,7 +291,7 @@ async def test_counter_context.opp,.opp_admin_user):
     assert state2.context.user_id ==.opp_admin_user.id
 
 
-async def test_counter_min.opp,.opp_admin_user):
+async def test_counter_min.opp, opp_admin_user):
     """Test that min works."""
     assert await async_setup_component(
        .opp, "counter", {"counter": {"test": {"minimum": "0", "initial": "0"}}}
@@ -326,7 +326,7 @@ async def test_counter_min.opp,.opp_admin_user):
     assert state2.state == "1"
 
 
-async def test_counter_max.opp,.opp_admin_user):
+async def test_counter_max.opp, opp_admin_user):
     """Test that max works."""
     assert await async_setup_component(
        .opp, "counter", {"counter": {"test": {"maximum": "0", "initial": "0"}}}
@@ -361,7 +361,7 @@ async def test_counter_max.opp,.opp_admin_user):
     assert state2.state == "-1"
 
 
-async def test_configure.opp,.opp_admin_user):
+async def test_configure.opp, opp_admin_user):
     """Test that setting values through configure works."""
     assert await async_setup_component(
        .opp, "counter", {"counter": {"test": {"maximum": "10", "initial": "10"}}}
@@ -531,7 +531,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert state.attributes[ATTR_EDITABLE] is False
 
 
-async def test_ws_list.opp,.opp_ws_client, storage_setup):
+async def test_ws_list.opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(
         config={
@@ -563,7 +563,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp,.opp_ws_client, storage_setup):
+async def test_ws_delete.opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -588,7 +588,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update_min_max.opp,.opp_ws_client, storage_setup):
+async def test_update_min_max.opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     items = [
@@ -674,7 +674,7 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     assert state.attributes[ATTR_STEP] == 6
 
 
-async def test_create.opp,.opp_ws_client, storage_setup):
+async def test_create.opp, opp_ws_client, storage_setup):
     """Test creating counter using WS."""
 
     items = []

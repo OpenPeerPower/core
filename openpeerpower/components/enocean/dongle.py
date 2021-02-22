@@ -21,7 +21,7 @@ class EnOceanDongle:
     creating devices if needed, and dispatching messages to platforms.
     """
 
-    def __init__(self,.opp, serial_path):
+    def __init__(self, opp, serial_path):
         """Initialize the EnOcean dongle."""
 
         self._communicator = SerialCommunicator(

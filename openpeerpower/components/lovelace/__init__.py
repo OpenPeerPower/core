@@ -84,7 +84,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
 
         integration = await async_get_integration.opp, DOMAIN)
 
-        config = await async_process_component_config.opp, conf, integration)
+        config = await async_process_component_config(opp, conf, integration)
 
         resource_collection = await create_yaml_resource_col(
            .opp, config[DOMAIN].get(CONF_RESOURCES)

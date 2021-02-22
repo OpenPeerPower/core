@@ -37,7 +37,7 @@ def get_config_entry.opp):
 class OAuthFixture:
     """Simulate the oauth flow used by the config flow."""
 
-    def __init__(self,.opp, aiohttp_client, aioclient_mock):
+    def __init__(self, opp, aiohttp_client, aioclient_mock):
         """Initialize OAuthFixture."""
         self.opp =.opp
         self.aiohttp_client = aiohttp_client

@@ -52,7 +52,7 @@ def mock_client_stop():
         yield stop
 
 
-async def test_minimal_config.opp, mock_client):
+async def test_minimal_config(opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {apache_kafka.DOMAIN: MIN_CONFIG}
     assert await async_setup_component.opp, apache_kafka.DOMAIN, config)
@@ -60,7 +60,7 @@ async def test_minimal_config.opp, mock_client):
     assert mock_client.start.called_once
 
 
-async def test_full_config.opp, mock_client):
+async def test_full_config(opp, mock_client):
     """Test the full config of component."""
     config = {
         apache_kafka.DOMAIN: {

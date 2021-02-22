@@ -39,7 +39,7 @@ from .models import PTZ, Capabilities, DeviceInfo, Profile, Resolution, Video
 class ONVIFDevice:
     """Manages an ONVIF device."""
 
-    def __init__(self,.opp: OpenPeerPower, config_entry: ConfigEntry = None):
+    def __init__(self, opp: OpenPeerPower, config_entry: ConfigEntry = None):
         """Initialize the device."""
         self.opp: OpenPeerPower =.opp
         self.config_entry: ConfigEntry = config_entry

@@ -54,7 +54,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
     try:
-        await get_async_monoprice(data[CONF_PORT],.opp.loop)
+        await get_async_monoprice(data[CONF_PORT], opp.loop)
     except SerialException as err:
         _LOGGER.error("Error connecting to Monoprice controller")
         raise CannotConnect from err

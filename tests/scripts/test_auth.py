@@ -34,7 +34,7 @@ async def test_list_user.opp, provider, capsys):
     )
 
 
-async def test_add_user.opp, provider, capsys,.opp_storage):
+async def test_add_user.opp, provider, capsys, opp_storage):
     """Test we can add a user."""
     data = provider.data
     await script_auth.add_user(
@@ -74,7 +74,7 @@ async def test_validate_login.opp, provider, capsys):
     assert captured.out == "Auth invalid\n"
 
 
-async def test_change_password.opp, provider, capsys,.opp_storage):
+async def test_change_password.opp, provider, capsys, opp_storage):
     """Test we can change a password."""
     data = provider.data
     data.add_auth("test-user", "test-pass")
@@ -91,7 +91,7 @@ async def test_change_password.opp, provider, capsys,.opp_storage):
         data.validate_login("test-user", "test-pass")
 
 
-async def test_change_password_invalid_user.opp, provider, capsys,.opp_storage):
+async def test_change_password_invalid_user.opp, provider, capsys, opp_storage):
     """Test changing password of non-existing user."""
     data = provider.data
     data.add_auth("test-user", "test-pass")

@@ -17,7 +17,7 @@ from .const import ENTITY_PLAY_MUSIC, ENTITY_REMOTE, ENTITY_WATCH_TV, HUB_NAME
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def test_connection_state_changes(mock_hc,.opp, mock_write_config):
+async def test_connection_state_changes(mock_hc, opp, mock_write_config):
     """Ensure connection changes are reflected in the switch states."""
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}

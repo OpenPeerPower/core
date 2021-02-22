@@ -56,7 +56,7 @@ async def async_setup_opp, config):
 class Scanner:
     """Class to manage SSDP scanning."""
 
-    def __init__(self,.opp, integration_matchers):
+    def __init__(self, opp, integration_matchers):
         """Initialize class."""
         self.opp =.opp
         self.seen = set()

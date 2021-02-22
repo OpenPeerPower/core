@@ -203,7 +203,7 @@ async def async_setup_opp, config):
 class MicrosoftFaceGroupEntity(Entity):
     """Person-Group state/data Entity."""
 
-    def __init__(self,.opp, api, g_id, name):
+    def __init__(self, opp, api, g_id, name):
         """Initialize person/group entity."""
         self.opp =.opp
         self._api = api
@@ -243,7 +243,7 @@ class MicrosoftFaceGroupEntity(Entity):
 class MicrosoftFace:
     """Microsoft Face api for Open Peer Power."""
 
-    def __init__(self,.opp, server_loc, api_key, timeout, entities):
+    def __init__(self, opp, server_loc, api_key, timeout, entities):
         """Initialize Microsoft Face api."""
         self.opp =.opp
         self.websession = async_get_clientsession.opp)

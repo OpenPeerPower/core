@@ -257,7 +257,7 @@ async def async_setup_legacy_entry.opp, entry):
 class NestLegacyDevice:
     """Structure Nest functions for.opp for legacy API."""
 
-    def __init__(self,.opp, conf, nest):
+    def __init__(self, opp, conf, nest):
         """Init Nest Devices."""
         self.opp =.opp
         self.nest = nest

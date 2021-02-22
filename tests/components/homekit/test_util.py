@@ -227,7 +227,7 @@ async def test_show_setup_msg.opp, hk_driver):
     )
 
     await.opp.async_add_executor_job(
-        show_setup_message,.opp, entry.entry_id, "bridge_name", pincode, "X-HM://0"
+        show_setup_message, opp, entry.entry_id, "bridge_name", pincode, "X-HM://0"
     )
     await.opp.async_block_till_done()
     assert.opp.data[DOMAIN][entry.entry_id][HOMEKIT_PAIRING_QR_SECRET]
@@ -244,7 +244,7 @@ async def test_dismiss_setup_msg.opp):
        .opp, PERSISTENT_NOTIFICATION_DOMAIN, "dismiss"
     )
 
-    await.opp.async_add_executor_job(dismiss_setup_message,.opp, "entry_id")
+    await.opp.async_add_executor_job(dismiss_setup_message, opp, "entry_id")
     await.opp.async_block_till_done()
 
     assert call_dismiss_notification

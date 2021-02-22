@@ -31,7 +31,7 @@ async def test_a1_sensor_setup_opp):
     assert len(sensors) == 5
 
     sensors_and_states = {
-        (sensor.original_name,.opp.states.get(sensor.entity_id).state)
+        (sensor.original_name, opp.states.get(sensor.entity_id).state)
         for sensor in sensors
     }
     assert sensors_and_states == {
@@ -78,7 +78,7 @@ async def test_a1_sensor_update.opp):
     assert mock_api.check_sensors_raw.call_count == 2
 
     sensors_and_states = {
-        (sensor.original_name,.opp.states.get(sensor.entity_id).state)
+        (sensor.original_name, opp.states.get(sensor.entity_id).state)
         for sensor in sensors
     }
     assert sensors_and_states == {
@@ -108,7 +108,7 @@ async def test_rm_pro_sensor_setup_opp):
     assert len(sensors) == 1
 
     sensors_and_states = {
-        (sensor.original_name,.opp.states.get(sensor.entity_id).state)
+        (sensor.original_name, opp.states.get(sensor.entity_id).state)
         for sensor in sensors
     }
     assert sensors_and_states == {(f"{device.name} Temperature", "18.2")}
@@ -137,7 +137,7 @@ async def test_rm_pro_sensor_update.opp):
     assert mock_api.check_sensors.call_count == 2
 
     sensors_and_states = {
-        (sensor.original_name,.opp.states.get(sensor.entity_id).state)
+        (sensor.original_name, opp.states.get(sensor.entity_id).state)
         for sensor in sensors
     }
     assert sensors_and_states == {(f"{device.name} Temperature", "25.8")}
@@ -179,7 +179,7 @@ async def test_rm4_pro_hts2_sensor_setup_opp):
     assert len(sensors) == 2
 
     sensors_and_states = {
-        (sensor.original_name,.opp.states.get(sensor.entity_id).state)
+        (sensor.original_name, opp.states.get(sensor.entity_id).state)
         for sensor in sensors
     }
     assert sensors_and_states == {
@@ -211,7 +211,7 @@ async def test_rm4_pro_hts2_sensor_update.opp):
     assert mock_api.check_sensors.call_count == 2
 
     sensors_and_states = {
-        (sensor.original_name,.opp.states.get(sensor.entity_id).state)
+        (sensor.original_name, opp.states.get(sensor.entity_id).state)
         for sensor in sensors
     }
     assert sensors_and_states == {

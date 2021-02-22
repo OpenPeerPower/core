@@ -92,7 +92,7 @@ async def test_ecobee3_setup_opp):
     assert sensor_device.via_device_id == climate_device.id
 
 
-async def test_ecobee3_setup_from_cache.opp,.opp_storage):
+async def test_ecobee3_setup_from_cache.opp, opp_storage):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
     accessories = await setup_accessories_from_file.opp, "ecobee3.json")
 

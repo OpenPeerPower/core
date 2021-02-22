@@ -12,7 +12,7 @@ RESOURCE_EXAMPLES = [
 ]
 
 
-async def test_yaml_resources.opp,.opp_ws_client):
+async def test_yaml_resources.opp, opp_ws_client):
     """Test defining resources in configuration.yaml."""
     assert await async_setup_component(
        .opp, "lovelace", {"lovelace": {"mode": "yaml", "resources": RESOURCE_EXAMPLES}}
@@ -27,7 +27,7 @@ async def test_yaml_resources.opp,.opp_ws_client):
     assert response["result"] == RESOURCE_EXAMPLES
 
 
-async def test_yaml_resources_backwards.opp,.opp_ws_client):
+async def test_yaml_resources_backwards.opp, opp_ws_client):
     """Test defining resources in YAML ll config (legacy)."""
     with patch(
         "openpeerpower.components.lovelace.dashboard.load_yaml",
@@ -46,7 +46,7 @@ async def test_yaml_resources_backwards.opp,.opp_ws_client):
     assert response["result"] == RESOURCE_EXAMPLES
 
 
-async def test_storage_resources.opp,.opp_ws_client,.opp_storage):
+async def test_storage_resources.opp, opp_ws_client, opp_storage):
     """Test defining resources in storage config."""
     resource_config = [{**item, "id": uuid.uuid4().hex} for item in RESOURCE_EXAMPLES]
    .opp_storage[resources.RESOURCE_STORAGE_KEY] = {
@@ -65,7 +65,7 @@ async def test_storage_resources.opp,.opp_ws_client,.opp_storage):
     assert response["result"] == resource_config
 
 
-async def test_storage_resources_import.opp,.opp_ws_client,.opp_storage):
+async def test_storage_resources_import.opp, opp_ws_client, opp_storage):
     """Test importing resources from storage config."""
     assert await async_setup_component.opp, "lovelace", {})
    .opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT] = {
@@ -151,7 +151,7 @@ async def test_storage_resources_import.opp,.opp_ws_client,.opp_storage):
     assert first_item["id"] not in (item["id"] for item in response["result"])
 
 
-async def test_storage_resources_import_invalid.opp,.opp_ws_client,.opp_storage):
+async def test_storage_resources_import_invalid.opp, opp_ws_client, opp_storage):
     """Test importing resources from storage config."""
     assert await async_setup_component.opp, "lovelace", {})
    .opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT] = {

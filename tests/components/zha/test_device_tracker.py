@@ -46,7 +46,7 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
 
     zha_device = await zha_device_joined_restored(zigpy_device_dt)
     cluster = zigpy_device_dt.endpoints.get(1).power
-    entity_id = await find_entity_id(DOMAIN, zha_device,.opp)
+    entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
     assert.opp.states.get(entity_id).state == STATE_HOME

@@ -107,7 +107,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 class SignalUpdateCallback:
     """An EventCallback invoked when new events arrive from subscriber."""
 
-    def __init__(self,.opp: OpenPeerPower):
+    def __init__(self, opp: OpenPeerPower):
         """Initialize EventCallback."""
         self.opp = opp
 

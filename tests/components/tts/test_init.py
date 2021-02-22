@@ -452,7 +452,7 @@ async def test_setup_component_and_test_service_clear_cache.opp, empty_cache_dir
 
 
 async def test_setup_component_and_test_service_with_receive_voice(
-   .opp, demo_provider,.opp_client
+   .opp, demo_provider, opp_client
 ):
     """Set up the demo platform and call service and receive voice."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -490,7 +490,7 @@ async def test_setup_component_and_test_service_with_receive_voice(
 
 
 async def test_setup_component_and_test_service_with_receive_voice_german(
-   .opp, demo_provider,.opp_client
+   .opp, demo_provider, opp_client
 ):
     """Set up the demo platform and call service and receive voice."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -526,7 +526,7 @@ async def test_setup_component_and_test_service_with_receive_voice_german(
     assert await req.read() == demo_data
 
 
-async def test_setup_component_and_web_view_wrong_file.opp,.opp_client):
+async def test_setup_component_and_web_view_wrong_file.opp, opp_client):
     """Set up the demo platform and receive wrong file from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
@@ -541,7 +541,7 @@ async def test_setup_component_and_web_view_wrong_file.opp,.opp_client):
     assert req.status == HTTP_NOT_FOUND
 
 
-async def test_setup_component_and_web_view_wrong_filename.opp,.opp_client):
+async def test_setup_component_and_web_view_wrong_filename.opp, opp_client):
     """Set up the demo platform and receive wrong filename from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
@@ -660,7 +660,7 @@ async def test_setup_component_test_with_error_on_get_tts.opp):
 
 
 async def test_setup_component_load_cache_retrieve_without_mem_cache(
-   .opp, demo_provider, empty_cache_dir,.opp_client
+   .opp, demo_provider, empty_cache_dir, opp_client
 ):
     """Set up component and load cache and get without mem cache."""
     _, demo_data = demo_provider.get_tts_audio("bla", "en")
@@ -685,7 +685,7 @@ async def test_setup_component_load_cache_retrieve_without_mem_cache(
     assert await req.read() == demo_data
 
 
-async def test_setup_component_and_web_get_url.opp,.opp_client):
+async def test_setup_component_and_web_get_url.opp, opp_client):
     """Set up the demo platform and receive file from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
@@ -705,7 +705,7 @@ async def test_setup_component_and_web_get_url.opp,.opp_client):
     }
 
 
-async def test_setup_component_and_web_get_url_bad_config.opp,.opp_client):
+async def test_setup_component_and_web_get_url_bad_config(opp, opp_client):
     """Set up the demo platform and receive wrong file from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 

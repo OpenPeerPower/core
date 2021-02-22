@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(name="camera_client")
-def camera_client_fixture.opp,.opp_client):
+def camera_client_fixture.opp, opp_client):
     """Fixture to fetch camera streams."""
     assert.opp.loop.run_until_complete(
         async_setup_component(

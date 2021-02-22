@@ -629,7 +629,7 @@ async def test_call_with_omit_entity_id.opp, mock_handle_entity_call, mock_entit
     assert len(mock_handle_entity_call.mock_calls) == 0
 
 
-async def test_register_admin_service.opp,.opp_read_only_user,.opp_admin_user):
+async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
     """Test the register admin service."""
     calls = []
 
@@ -738,7 +738,7 @@ async def test_domain_control_unknown.opp, mock_entities):
         assert len(calls) == 0
 
 
-async def test_domain_control_unauthorized.opp,.opp_read_only_user):
+async def test_domain_control_unauthorized.opp, opp_read_only_user):
     """Test domain verification in a service call with an unauthorized user."""
     mock_registry(
        .opp,
@@ -777,7 +777,7 @@ async def test_domain_control_unauthorized.opp,.opp_read_only_user):
     assert len(calls) == 0
 
 
-async def test_domain_control_admin.opp,.opp_admin_user):
+async def test_domain_control_admin.opp, opp_admin_user):
     """Test domain verification in a service call with an admin user."""
     mock_registry(
        .opp,

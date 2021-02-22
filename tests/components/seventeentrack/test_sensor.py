@@ -144,21 +144,21 @@ async def _goto_future.opp, future=None):
         await.opp.async_block_till_done()
 
 
-async def test_full_valid_config.opp):
+async def test_full_valid_config(opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_FULL)
     await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
-async def test_valid_config.opp):
+async def test_valid_config(opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
     await.opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
-async def test_invalid_config.opp):
+async def test_invalid_config(opp):
     """Ensure nothing is created when config is wrong."""
     assert await async_setup_component.opp, "sensor", INVALID_CONFIG)
 

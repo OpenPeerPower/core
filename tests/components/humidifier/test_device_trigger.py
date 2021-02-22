@@ -236,7 +236,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
 
-async def test_invalid_config.opp, calls):
+async def test_invalid_config(opp, calls):
     """Test for turn_on and turn_off triggers firing."""
    .opp.states.async_set(
         "humidifier.entity",

@@ -17,7 +17,7 @@ TRIGGER_SCHEMA = vol.Schema(
 )
 
 
-async def _handle_webhook(job,.opp, webhook_id, request):
+async def _handle_webhook(job, opp, webhook_id, request):
     """Handle incoming webhook."""
     result = {"platform": "webhook", "webhook_id": webhook_id}
 

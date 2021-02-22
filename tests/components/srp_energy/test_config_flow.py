@@ -94,7 +94,7 @@ async def test_form_unknown_exception.opp):
         assert result["errors"]["base"] == "unknown"
 
 
-async def test_config.opp):
+async def test_config(opp):
     """Test handling of configuration imported."""
     with patch("openpeerpower.components.srp_energy.config_flow.SrpEnergyClient"):
         result = await.opp.config_entries.flow.async_init(

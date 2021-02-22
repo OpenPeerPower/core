@@ -24,11 +24,11 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for light in pywink.get_light_bulbs():
         _id = light.object_id() + light.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkLight(light,.opp)])
+            add_entities([WinkLight(light, opp)])
     for light in pywink.get_light_groups():
         _id = light.object_id() + light.name()
         if _id not in.opp.data[DOMAIN]["unique_ids"]:
-            add_entities([WinkLight(light,.opp)])
+            add_entities([WinkLight(light, opp)])
 
 
 class WinkLight(WinkDevice, LightEntity):

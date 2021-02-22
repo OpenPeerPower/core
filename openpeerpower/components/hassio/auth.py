@@ -35,7 +35,7 @@ def async_setup_auth_view.opp: OpenPeerPowerType, user: User):
 class HassIOBaseAuth(OpenPeerPowerView):
     """Hass.io view to handle auth requests."""
 
-    def __init__(self,.opp: OpenPeerPowerType, user: User):
+    def __init__(self, opp: OpenPeerPowerType, user: User):
         """Initialize WebView."""
         self.opp =.opp
         self.user = user

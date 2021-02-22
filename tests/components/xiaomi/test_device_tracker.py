@@ -146,7 +146,7 @@ def mocked_requests(*args, **kwargs):
     "openpeerpower.components.xiaomi.device_tracker.XiaomiDeviceScanner",
     return_value=MagicMock(),
 )
-async def test_config(xiaomi_mock,.opp):
+async def test_config(xiaomi_mock, opp):
     """Testing minimal configuration."""
     config = {
         DOMAIN: xiaomi.PLATFORM_SCHEMA(
@@ -171,7 +171,7 @@ async def test_config(xiaomi_mock,.opp):
     "openpeerpower.components.xiaomi.device_tracker.XiaomiDeviceScanner",
     return_value=MagicMock(),
 )
-async def test_config_full(xiaomi_mock,.opp):
+async def test_config_full(xiaomi_mock, opp):
     """Testing full configuration."""
     config = {
         DOMAIN: xiaomi.PLATFORM_SCHEMA(
@@ -195,7 +195,7 @@ async def test_config_full(xiaomi_mock,.opp):
 
 @patch("requests.get", side_effect=mocked_requests)
 @patch("requests.post", side_effect=mocked_requests)
-async def test_invalid_credential(mock_get, mock_post,.opp):
+async def test_invalid_credential(mock_get, mock_post, opp):
     """Testing invalid credential handling."""
     config = {
         DOMAIN: xiaomi.PLATFORM_SCHEMA(
@@ -212,7 +212,7 @@ async def test_invalid_credential(mock_get, mock_post,.opp):
 
 @patch("requests.get", side_effect=mocked_requests)
 @patch("requests.post", side_effect=mocked_requests)
-async def test_valid_credential(mock_get, mock_post,.opp):
+async def test_valid_credential(mock_get, mock_post, opp):
     """Testing valid refresh."""
     config = {
         DOMAIN: xiaomi.PLATFORM_SCHEMA(
@@ -233,7 +233,7 @@ async def test_valid_credential(mock_get, mock_post,.opp):
 
 @patch("requests.get", side_effect=mocked_requests)
 @patch("requests.post", side_effect=mocked_requests)
-async def test_token_timed_out(mock_get, mock_post,.opp):
+async def test_token_timed_out(mock_get, mock_post, opp):
     """Testing refresh with a timed out token.
 
     New token is requested and list is downloaded a second time.

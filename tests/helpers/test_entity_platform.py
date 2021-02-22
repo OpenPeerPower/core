@@ -34,7 +34,7 @@ PLATFORM = "test_platform"
 
 async def test_polling_only_updates_entities_it_should_poll.opp):
     """Test the polling of only updated entities."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp, timedelta(seconds=20))
+    component = EntityComponent(_LOGGER, DOMAIN, opp, timedelta(seconds=20))
 
     no_poll_ent = MockEntity(should_poll=False)
     no_poll_ent.async_update = Mock()
@@ -55,7 +55,7 @@ async def test_polling_only_updates_entities_it_should_poll.opp):
 
 async def test_polling_updates_entities_with_exception.opp):
     """Test the updated entities that not break with an exception."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp, timedelta(seconds=20))
+    component = EntityComponent(_LOGGER, DOMAIN, opp, timedelta(seconds=20))
 
     update_ok = []
     update_err = []
@@ -92,7 +92,7 @@ async def test_polling_updates_entities_with_exception.opp):
 
 async def test_update_state_adds_entities.opp):
     """Test if updating poll entities cause an entity to be added works."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     ent1 = MockEntity()
     ent2 = MockEntity(should_poll=True)
@@ -109,7 +109,7 @@ async def test_update_state_adds_entities.opp):
 
 async def test_update_state_adds_entities_with_update_before_add_true.opp):
     """Test if call update before add to state machine."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     ent = MockEntity()
     ent.update = Mock(spec_set=True)
@@ -123,7 +123,7 @@ async def test_update_state_adds_entities_with_update_before_add_true.opp):
 
 async def test_update_state_adds_entities_with_update_before_add_false.opp):
     """Test if not call update before add to state machine."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     ent = MockEntity()
     ent.update = Mock(spec_set=True)
@@ -136,7 +136,7 @@ async def test_update_state_adds_entities_with_update_before_add_false.opp):
 
 
 @patch("openpeerpower.helpers.entity_platform.async_track_time_interval")
-async def test_set_scan_interval_via_platform(mock_track,.opp):
+async def test_set_scan_interval_via_platform(mock_track, opp):
     """Test the setting of the scan interval via platform."""
 
     def platform_setup_opp, config, add_entities, discovery_info=None):
@@ -148,7 +148,7 @@ async def test_set_scan_interval_via_platform(mock_track,.opp):
 
     mock_entity_platform.opp, "test_domain.platform", platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     component.setup({DOMAIN: {"platform": "platform"}})
 
@@ -163,12 +163,12 @@ async def test_adding_entities_with_generator_and_thread_callback.opp):
     We should make sure we resolve the generator to a list before passing
     it into an async context.
     """
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     def create_entity(number):
         """Create entity helper."""
         entity = MockEntity(unique_id=f"unique{number}")
-        entity.entity_id = async_generate_entity_id(DOMAIN + ".{}", "Number",.opp.opp)
+        entity.entity_id = async_generate_entity_id(DOMAIN + ".{}", "Number", opp.opp)
         return entity
 
     await component.async_add_entities(create_entity(i) for i in range(2))
@@ -180,7 +180,7 @@ async def test_platform_warn_slow_setup_opp):
 
     mock_entity_platform.opp, "test_domain.platform", platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     with patch.object.opp.loop, "call_later") as mock_call:
         await component.async_setup({DOMAIN: {"platform": "platform"}})
@@ -207,7 +207,7 @@ async def test_platform_error_slow_setup_opp, caplog):
             await asyncio.sleep(1)
 
         platform = MockPlatform(async_setup_platform=setup_platform)
-        component = EntityComponent(_LOGGER, DOMAIN,.opp)
+        component = EntityComponent(_LOGGER, DOMAIN, opp)
         mock_entity_platform.opp, "test_domain.test_platform", platform)
         await component.async_setup({DOMAIN: {"platform": "test_platform"}})
         await.opp.async_block_till_done()
@@ -218,7 +218,7 @@ async def test_platform_error_slow_setup_opp, caplog):
 
 async def test_updated_state_used_for_entity_id.opp):
     """Test that first update results used for entity ID generation."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     class MockEntityNameFetcher(MockEntity):
         """Mock entity that fetches a friendly name."""
@@ -240,7 +240,7 @@ async def test_parallel_updates_async_platform.opp):
 
     mock_entity_platform.opp, "test_domain.platform", platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
@@ -267,7 +267,7 @@ async def test_parallel_updates_async_platform_with_constant.opp):
 
     mock_entity_platform.opp, "test_domain.platform", platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
@@ -293,7 +293,7 @@ async def test_parallel_updates_sync_platform.opp):
 
     mock_entity_platform.opp, "test_domain.platform", platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
@@ -320,7 +320,7 @@ async def test_parallel_updates_sync_platform_with_constant.opp):
 
     mock_entity_platform.opp, "test_domain.platform", platform)
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     component._platforms = {}
 
     await component.async_setup({DOMAIN: {"platform": "platform"}})
@@ -343,7 +343,7 @@ async def test_parallel_updates_sync_platform_with_constant.opp):
 async def test_raise_error_on_update.opp):
     """Test the add entity if they raise an error on update."""
     updates = []
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entity1 = MockEntity(name="test_1")
     entity2 = MockEntity(name="test_2")
 
@@ -367,7 +367,7 @@ async def test_raise_error_on_update.opp):
 
 async def test_async_remove_with_platform.opp):
     """Remove an entity from a platform."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     entity1 = MockEntity(name="test_1")
     await component.async_add_entities([entity1])
     assert len.opp.states.async_entity_ids()) == 1
@@ -378,7 +378,7 @@ async def test_async_remove_with_platform.opp):
 async def test_not_adding_duplicate_entities_with_unique_id.opp, caplog):
     """Test for not adding duplicate entities."""
     caplog.set_level(logging.ERROR)
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_add_entities(
         [MockEntity(name="test1", unique_id="not_very_unique")]
@@ -407,7 +407,7 @@ async def test_not_adding_duplicate_entities_with_unique_id.opp, caplog):
 
 async def test_using_prescribed_entity_id.opp):
     """Test for using predefined entity ID."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities(
         [MockEntity(name="bla", entity_id="hello.world")]
     )
@@ -416,7 +416,7 @@ async def test_using_prescribed_entity_id.opp):
 
 async def test_using_prescribed_entity_id_with_unique_id.opp):
     """Test for amending predefined entity ID because currently exists."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_add_entities([MockEntity(entity_id="test_domain.world")])
     await component.async_add_entities(
@@ -428,7 +428,7 @@ async def test_using_prescribed_entity_id_with_unique_id.opp):
 
 async def test_using_prescribed_entity_id_which_is_registered.opp):
     """Test not allowing predefined entity ID that already registered."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     registry = mock_registry.opp)
     # Register test_domain.world
     registry.async_get_or_create(DOMAIN, "test", "1234", suggested_object_id="world")
@@ -441,7 +441,7 @@ async def test_using_prescribed_entity_id_which_is_registered.opp):
 
 async def test_name_which_conflict_with_registered.opp):
     """Test not generating conflicting entity ID based on name."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     registry = mock_registry.opp)
 
     # Register test_domain.world
@@ -454,7 +454,7 @@ async def test_name_which_conflict_with_registered.opp):
 
 async def test_entity_with_name_and_entity_id_getting_registered.opp):
     """Ensure that entity ID is used for registration."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities(
         [MockEntity(unique_id="1234", name="bla", entity_id="test_domain.world")]
     )
@@ -463,7 +463,7 @@ async def test_entity_with_name_and_entity_id_getting_registered.opp):
 
 async def test_overriding_name_from_registry.opp):
     """Test that we can override a name via the Entity Registry."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
     mock_registry(
        .opp,
         {
@@ -612,7 +612,7 @@ async def test_reset_cancels_retry_setup_opp):
 
 async def test_not_fails_with_adding_empty_entities_.opp):
     """Test for not fails on empty entities list."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_add_entities([])
 
@@ -809,7 +809,7 @@ async def test_device_info_not_overrides.opp):
 
 async def test_entity_disabled_by_integration.opp):
     """Test entity disabled by integration."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp, timedelta(seconds=20))
+    component = EntityComponent(_LOGGER, DOMAIN, opp, timedelta(seconds=20))
 
     entity_default = MockEntity(unique_id="default")
     entity_disabled = MockEntity(
@@ -833,7 +833,7 @@ async def test_entity_disabled_by_integration.opp):
 
 async def test_entity_info_added_to_entity_registry.opp):
     """Test entity info is written to entity registry."""
-    component = EntityComponent(_LOGGER, DOMAIN,.opp, timedelta(seconds=20))
+    component = EntityComponent(_LOGGER, DOMAIN, opp, timedelta(seconds=20))
 
     entity_default = MockEntity(
         unique_id="default",
@@ -864,7 +864,7 @@ async def test_override_restored_entities.opp):
 
    .opp.states.async_set("test_domain.world", "unavailable", {"restored": True})
 
-    component = EntityComponent(_LOGGER, DOMAIN,.opp)
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await component.async_add_entities(
         [MockEntity(unique_id="1234", state="on", entity_id="test_domain.world")], True

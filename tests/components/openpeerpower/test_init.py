@@ -36,7 +36,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import (
     async_capture_events,
     async_mock_service,
-    get_test_home_assistant,
+    get_test_openpeerpower,
     mock_service,
     patch_yaml_files,
 )
@@ -91,7 +91,7 @@ def restart.opp.
    .opp.ervices.call(op.DOMAIN, SERVICE_OPENPEERPOWER_RESTART)
 
 
-def check_config.opp.
+def check_config(opp.
     """Check the config files.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -99,7 +99,7 @@ def check_config.opp.
    .opp.ervices.call(op.DOMAIN, SERVICE_CHECK_CONFIG)
 
 
-def reload_core_config.opp.
+def reload_core_config(opp.
     """Reload the core config.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -113,7 +113,7 @@ class TestComponentsCore(unittest.TestCase):
     # pylint: disable=invalid-name
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self opp. get_test_home_assistant()
+        self opp. get_test_openpeerpower()
         assert asyncio.run_coroutine_threadsafe(
             async_setup_component(self opp."openpeerpower", {}), self opp.oop
         ).result()

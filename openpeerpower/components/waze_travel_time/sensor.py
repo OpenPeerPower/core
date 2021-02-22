@@ -96,7 +96,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     avoid_toll_roads = config.get(CONF_AVOID_TOLL_ROADS)
     avoid_subscription_roads = config.get(CONF_AVOID_SUBSCRIPTION_ROADS)
     avoid_ferries = config.get(CONF_AVOID_FERRIES)
-    units = config.get(CONF_UNITS,.opp.config.units.name)
+    units = config.get(CONF_UNITS, opp.config.units.name)
 
     data = WazeTravelTimeData(
         None,

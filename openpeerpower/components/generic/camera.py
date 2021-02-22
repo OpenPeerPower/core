@@ -73,7 +73,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class GenericCamera(Camera):
     """A generic implementation of an IP camera."""
 
-    def __init__(self,.opp, device_info):
+    def __init__(self, opp, device_info):
         """Initialize a generic camera."""
         super().__init__()
         self.opp =.opp

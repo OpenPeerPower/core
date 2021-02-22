@@ -61,7 +61,7 @@ def setup_platform.opp, config, add_entities_callback, discovery_info=None):
 class KankunSwitch(SwitchEntity):
     """Representation of a Kankun Wifi switch."""
 
-    def __init__(self,.opp, name, host, port, path, user, passwd):
+    def __init__(self, opp, name, host, port, path, user, passwd):
         """Initialize the device."""
         self.opp = opp
         self._name = name

@@ -53,7 +53,7 @@ def saunabox_fixture():
     return (feature, "climate.saunabox_thermostat")
 
 
-async def test_init(saunabox,.opp, config):
+async def test_init(saunabox, opp, config):
     """Test default state."""
 
     _, entity_id = saunabox
@@ -89,7 +89,7 @@ async def test_init(saunabox,.opp, config):
     assert device.sw_version == "1.23"
 
 
-async def test_update(saunabox,.opp, config):
+async def test_update(saunabox, opp, config):
     """Test updating."""
 
     feature_mock, entity_id = saunabox
@@ -109,7 +109,7 @@ async def test_update(saunabox,.opp, config):
     assert state.state == HVAC_MODE_OFF
 
 
-async def test_on_when_below_desired(saunabox,.opp, config):
+async def test_on_when_below_desired(saunabox, opp, config):
     """Test when temperature is below desired."""
 
     feature_mock, entity_id = saunabox
@@ -143,7 +143,7 @@ async def test_on_when_below_desired(saunabox,.opp, config):
     assert state.state == HVAC_MODE_HEAT
 
 
-async def test_on_when_above_desired(saunabox,.opp, config):
+async def test_on_when_above_desired(saunabox, opp, config):
     """Test when temperature is below desired."""
 
     feature_mock, entity_id = saunabox
@@ -178,7 +178,7 @@ async def test_on_when_above_desired(saunabox,.opp, config):
     assert state.state == HVAC_MODE_HEAT
 
 
-async def test_off(saunabox,.opp, config):
+async def test_off(saunabox, opp, config):
     """Test turning off."""
 
     feature_mock, entity_id = saunabox
@@ -213,7 +213,7 @@ async def test_off(saunabox,.opp, config):
     assert state.state == HVAC_MODE_OFF
 
 
-async def test_set_thermo(saunabox,.opp, config):
+async def test_set_thermo(saunabox, opp, config):
     """Test setting thermostat."""
 
     feature_mock, entity_id = saunabox
@@ -247,7 +247,7 @@ async def test_set_thermo(saunabox,.opp, config):
     assert state.state == HVAC_MODE_HEAT
 
 
-async def test_update_failure(saunabox,.opp, config, caplog):
+async def test_update_failure(saunabox, opp, config, caplog):
     """Test that update failures are logged."""
 
     caplog.set_level(logging.ERROR)

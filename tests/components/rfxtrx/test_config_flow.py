@@ -42,7 +42,7 @@ def com_port():
     "openpeerpower.components.rfxtrx.rfxtrxmod.PyNetworkTransport.connect",
     return_value=None,
 )
-async def test_setup_network(connect_mock,.opp):
+async def test_setup_network(connect_mock, opp):
     """Test we can setup network."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -86,7 +86,7 @@ async def test_setup_network(connect_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PySerialTransport.close",
     return_value=None,
 )
-async def test_setup_serial(com_mock, connect_mock,.opp):
+async def test_setup_serial(com_mock, connect_mock, opp):
     """Test we can setup serial."""
     port = com_port()
 
@@ -132,7 +132,7 @@ async def test_setup_serial(com_mock, connect_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PySerialTransport.close",
     return_value=None,
 )
-async def test_setup_serial_manual(com_mock, connect_mock,.opp):
+async def test_setup_serial_manual(com_mock, connect_mock, opp):
     """Test we can setup serial with manual entry."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -179,7 +179,7 @@ async def test_setup_serial_manual(com_mock, connect_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PyNetworkTransport.connect",
     side_effect=OSError,
 )
-async def test_setup_network_fail(connect_mock,.opp):
+async def test_setup_network_fail(connect_mock, opp):
     """Test we can setup network."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -212,7 +212,7 @@ async def test_setup_network_fail(connect_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PySerialTransport.connect",
     side_effect=serial.serialutil.SerialException,
 )
-async def test_setup_serial_fail(com_mock, connect_mock,.opp):
+async def test_setup_serial_fail(com_mock, connect_mock, opp):
     """Test setup serial failed connection."""
     port = com_port()
 
@@ -247,7 +247,7 @@ async def test_setup_serial_fail(com_mock, connect_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PySerialTransport.connect",
     serial_connect_fail,
 )
-async def test_setup_serial_manual_fail(com_mock,.opp):
+async def test_setup_serial_manual_fail(com_mock, opp):
     """Test setup serial failed connection."""
     result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -291,7 +291,7 @@ async def test_setup_serial_manual_fail(com_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PySerialTransport.close",
     return_value=None,
 )
-async def test_import_serial(connect_mock,.opp):
+async def test_import_serial(connect_mock, opp):
     """Test we can import."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
@@ -316,7 +316,7 @@ async def test_import_serial(connect_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PyNetworkTransport.connect",
     return_value=None,
 )
-async def test_import_network(connect_mock,.opp):
+async def test_import_network(connect_mock, opp):
     """Test we can import."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 
@@ -341,7 +341,7 @@ async def test_import_network(connect_mock,.opp):
     "openpeerpower.components.rfxtrx.rfxtrxmod.PyNetworkTransport.connect",
     side_effect=OSError,
 )
-async def test_import_network_connection_fail(connect_mock,.opp):
+async def test_import_network_connection_fail(connect_mock, opp):
     """Test we can import."""
     await setup.async_setup_component.opp, "persistent_notification", {})
 

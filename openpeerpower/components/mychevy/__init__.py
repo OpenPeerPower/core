@@ -77,7 +77,7 @@ def setup_opp, base_config):
     password = config.get(CONF_PASSWORD)
     country = config.get(CONF_COUNTRY)
    .opp.data[DOMAIN] = MyChevyHub(
-        mc.MyChevy(email, password, country),.opp, base_config
+        mc.MyChevy(email, password, country), opp, base_config
     )
    .opp.data[DOMAIN].start()
 
@@ -98,7 +98,7 @@ class MyChevyHub(threading.Thread):
     starts.
     """
 
-    def __init__(self, client,.opp,.opp_config):
+    def __init__(self, client, opp, opp_config):
         """Initialize MyChevy Hub."""
         super().__init__()
         self._client = client

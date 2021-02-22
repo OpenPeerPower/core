@@ -67,7 +67,7 @@ async def async_validate_config_item.opp, config, full_config=None):
     if CONF_CONDITION in config:
         config[CONF_CONDITION] = await asyncio.gather(
             *[
-                async_validate_condition_config.opp, cond)
+                async_validate_condition_config(opp, cond)
                 for cond in config[CONF_CONDITION]
             ]
         )
@@ -89,13 +89,13 @@ async def _try_async_validate_config_item.opp, config, full_config=None):
         IntegrationNotFound,
         InvalidDeviceAutomationConfig,
     ) as ex:
-        async_log_exception(ex, DOMAIN, full_config or config,.opp)
+        async_log_exception(ex, DOMAIN, full_config or config, opp)
         return None
 
     return config
 
 
-async def async_validate_config.opp, config):
+async def async_validate_config(opp, config):
     """Validate config."""
     automations = list(
         filter(

@@ -15,7 +15,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return
     devs = []
     for (area_name, device) in.opp.data[LUTRON_DEVICES]["binary_sensor"]:
-        dev = LutronOccupancySensor(area_name, device,.opp.data[LUTRON_CONTROLLER])
+        dev = LutronOccupancySensor(area_name, device, opp.data[LUTRON_CONTROLLER])
         devs.append(dev)
 
     add_entities(devs)

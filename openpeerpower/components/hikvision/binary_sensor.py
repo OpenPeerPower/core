@@ -137,7 +137,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class HikvisionData:
     """Hikvision device event stream object."""
 
-    def __init__(self,.opp, url, port, name, username, password):
+    def __init__(self, opp, url, port, name, username, password):
         """Initialize the data object."""
         self._url = url
         self._port = port
@@ -190,7 +190,7 @@ class HikvisionData:
 class HikvisionBinarySensor(BinarySensorEntity):
     """Representation of a Hikvision binary sensor."""
 
-    def __init__(self,.opp, sensor, channel, cam, delay):
+    def __init__(self, opp, sensor, channel, cam, delay):
         """Initialize the binary_sensor."""
         self.opp = opp
         self._cam = cam

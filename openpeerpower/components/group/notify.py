@@ -51,7 +51,7 @@ async def async_get_service.opp, config, discovery_info=None):
 class GroupNotifyPlatform(BaseNotificationService):
     """Implement the notification service for the group notify platform."""
 
-    def __init__(self,.opp, entities):
+    def __init__(self, opp, entities):
         """Initialize the service."""
         self.opp =.opp
         self.entities = entities

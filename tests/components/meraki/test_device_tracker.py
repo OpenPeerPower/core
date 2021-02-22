@@ -14,7 +14,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
-def meraki_client(loop,.opp,.opp_client):
+def meraki_client(loop, opp, opp_client):
     """Meraki mock client."""
     assert loop.run_until_complete(
         async_setup_component(
@@ -78,7 +78,7 @@ async def test_invalid_or_missing_data(mock_device_tracker_conf, meraki_client):
     assert req.status == 200
 
 
-async def test_data_will_be_saved(mock_device_tracker_conf,.opp, meraki_client):
+async def test_data_will_be_saved(mock_device_tracker_conf, opp, meraki_client):
     """Test with valid data."""
     data = {
         "version": "2.0",
