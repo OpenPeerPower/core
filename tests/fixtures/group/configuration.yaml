@@ -2,8 +2,8 @@ light:
   - platform: group
     name: Master Hall Lights G
     entities:
-      - light.master_op.l_lights
-      - light.master_op.l_lights_2
+      - light.master_hall_lights
+      - light.master_hall_lights_2
   - platform: group
     name: Outside Patio Lights G
     entities:
