@@ -36,7 +36,7 @@ class ConnectMotionGateway:
         )
         try:
             # update device info and get the connected sub devices
-            await self..opp.async_add_executor_job(self.update_gateway)
+            await self.opp.async_add_executor_job(self.update_gateway)
         except socket.timeout:
             _LOGGER.error(
                 "Timeout trying to connect to Motion Gateway with host %s", host

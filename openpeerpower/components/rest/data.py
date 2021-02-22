@@ -47,7 +47,7 @@ class RestData:
         """Get the latest data from REST service with provided method."""
         if not self._async_client:
             self._async_client = get_async_client(
-                self..opp, verify_ssl=self._verify_ssl
+                self.opp, verify_ssl=self._verify_ssl
             )
 
         _LOGGER.debug("Updating from %s", self._resource)

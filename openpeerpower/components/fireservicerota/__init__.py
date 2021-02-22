@@ -111,14 +111,14 @@ class FireServiceRotaOauth:
         _LOGGER.debug("Refreshing authentication tokens after expiration")
 
         try:
-            token_info = await self..opp.async_add_executor_job(
+            token_info = await self.opp.async_add_executor_job(
                 self._fsr.refresh_tokens
             )
 
         except (InvalidAuthError, InvalidTokenError):
             _LOGGER.error("Error refreshing tokens, triggered reauth workflow")
-            self..opp.async_create_task(
-                self..opp.config_entries.flow.async_init(
+            self.opp.async_create_task(
+                self.opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": SOURCE_REAUTH},
                     data={
@@ -130,7 +130,7 @@ class FireServiceRotaOauth:
             return False
 
         _LOGGER.debug("Saving new tokens in config entry")
-        self..opp.config_entries.async_update_entry(
+        self.opp.config_entries.async_update_entry(
             self._entry,
             data={
                 "auth_implementation": DOMAIN,
@@ -164,7 +164,7 @@ class FireServiceRotaWebSocket:
         """Received new incident, update data."""
         _LOGGER.debug("Received new incident via websocket: %s", data)
         self.incident_data = data
-        dispatcher_send(self..opp, f"{DOMAIN}_{self._entry.entry_id}_update")
+        dispatcher_send(self.opp, f"{DOMAIN}_{self._entry.entry_id}_update")
 
     def start_listener(self) -> None:
         """Start the websocket listener."""
@@ -198,16 +198,16 @@ class FireServiceRotaClient:
         self.fsr = FireServiceRota(base_url=self._url, token_info=self._tokens)
 
         self.oauth = FireServiceRotaOauth(
-            self..opp,
+            self.opp,
             self._entry,
             self.fsr,
         )
 
-        self.websocket = FireServiceRotaWebSocket(self..opp, self._entry)
+        self.websocket = FireServiceRotaWebSocket(self.opp, self._entry)
 
     async def setup(self) -> None:
         """Set up the data client."""
-        await self..opp.async_add_executor_job(self.websocket.start_listener)
+        await self.opp.async_add_executor_job(self.websocket.start_listener)
 
     async def update_call(self, func, *args):
         """Perform update call and return data."""
@@ -215,21 +215,21 @@ class FireServiceRotaClient:
             return
 
         try:
-            return await self..opp.async_add_executor_job(func, *args)
+            return await self.opp.async_add_executor_job(func, *args)
         except (ExpiredTokenError, InvalidTokenError):
-            await self..opp.async_add_executor_job(self.websocket.stop_listener)
+            await self.opp.async_add_executor_job(self.websocket.stop_listener)
             self.token_refresh_failure = True
 
             if await self.oauth.async_refresh_tokens():
                 self.token_refresh_failure = False
-                await self..opp.async_add_executor_job(self.websocket.start_listener)
+                await self.opp.async_add_executor_job(self.websocket.start_listener)
 
-                return await self..opp.async_add_executor_job(func, *args)
+                return await self.opp.async_add_executor_job(func, *args)
 
     async def async_update(self) -> object:
         """Get the latest availability data."""
         data = await self.update_call(
-            self.fsr.get_availability, str(self..opp.config.time_zone)
+            self.fsr.get_availability, str(self.opp.config.time_zone)
         )
 
         if not data:

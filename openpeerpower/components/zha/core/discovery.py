@@ -191,7 +191,7 @@ class GroupProbe:
 
     def _reprobe_group(self, group_id: int) -> None:
         """Reprobe a group for entities after its members change."""
-        zha_gateway = self..opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway = self.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
         zha_group = zha_gateway.groups.get(group_id)
         if zha_group is None:
             return
@@ -209,17 +209,17 @@ class GroupProbe:
             )
             return
 
-        entity_domains = GroupProbe.determine_entity_domains(self..opp, group)
+        entity_domains = GroupProbe.determine_entity_domains(self.opp, group)
 
         if not entity_domains:
             return
 
-        zha_gateway = self..opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway = self.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
         for domain in entity_domains:
             entity_class = zha_regs.ZHA_ENTITIES.get_group_entity(domain)
             if entity_class is None:
                 continue
-            self..opp.data[zha_const.DATA_ZHA][domain].append(
+            self.opp.data[zha_const.DATA_ZHA][domain].append(
                 (
                     entity_class,
                     (
@@ -230,7 +230,7 @@ class GroupProbe:
                     ),
                 )
             )
-        async_dispatcher_send(self..opp, zha_const.SIGNAL_ADD_ENTITIES)
+        async_dispatcher_send(self.opp, zha_const.SIGNAL_ADD_ENTITIES)
 
     @staticmethod
     def determine_entity_domains(

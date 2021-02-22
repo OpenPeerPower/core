@@ -132,7 +132,7 @@ class OpenSkySensor(Entity):
                 ATTR_LONGITUDE: longitude,
                 ATTR_LATITUDE: latitude,
             }
-            self..opp.bus.fire(event, data)
+            self.opp.bus.fire(event, data)
 
     def update(self):
         """Update device state."""

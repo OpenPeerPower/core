@@ -172,7 +172,7 @@ class MinutPointClient:
         self._is_available = True
         self._client = session
 
-        async_track_time_interval(self..opp, self.update, SCAN_INTERVAL)
+        async_track_time_interval(self.opp, self.update, SCAN_INTERVAL)
 
     async def update(self, *args):
         """Periodically poll the cloud for current state."""
@@ -183,21 +183,21 @@ class MinutPointClient:
         if not await self._client.update() and self._is_available:
             self._is_available = False
             _LOGGER.warning("Device is unavailable")
-            async_dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY)
+            async_dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY)
             return
 
         async def new_device(device_id, component):
             """Load new device."""
             config_entries_key = f"{component}.{DOMAIN}"
-            async with self..opp.data[DATA_CONFIG_ENTRY_LOCK]:
-                if config_entries_key not in self..opp.data[CONFIG_ENTRY_IS_SETUP]:
-                    await self..opp.config_entries.async_forward_entry_setup(
+            async with self.opp.data[DATA_CONFIG_ENTRY_LOCK]:
+                if config_entries_key not in self.opp.data[CONFIG_ENTRY_IS_SETUP]:
+                    await self.opp.config_entries.async_forward_entry_setup(
                         self._config_entry, component
                     )
-                    self..opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
+                    self.opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
 
             async_dispatcher_send(
-                self..opp, POINT_DISCOVERY_NEW.format(component, DOMAIN), device_id
+                self.opp, POINT_DISCOVERY_NEW.format(component, DOMAIN), device_id
             )
 
         self._is_available = True
@@ -210,7 +210,7 @@ class MinutPointClient:
                 for component in ("sensor", "binary_sensor"):
                     await new_device(device.device_id, component)
                 self._known_devices.add(device.device_id)
-        async_dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY)
+        async_dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY)
 
     def device(self, device_id):
         """Return device representation."""

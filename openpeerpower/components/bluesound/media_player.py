@@ -265,7 +265,7 @@ class BluesoundPlayer(MediaPlayerEntity):
             master_host = master.get("#text")
             master_device = [
                 device
-                for device in self..opp.data[DATA_BLUESOUND]
+                for device in self.opp.data[DATA_BLUESOUND]
                 if device.host == master_host
             ]
 
@@ -303,7 +303,7 @@ class BluesoundPlayer(MediaPlayerEntity):
 
     def start_polling(self):
         """Start the polling task."""
-        self._polling_task = self..opp.async_create_task(self._start_poll_command())
+        self._polling_task = self.opp.async_create_task(self._start_poll_command())
 
     def stop_polling(self):
         """Stop the polling task."""
@@ -320,7 +320,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         except (asyncio.TimeoutError, ClientError):
             _LOGGER.info("Node %s is offline, retrying later", self.host)
             self._retry_remove = async_track_time_interval(
-                self..opp, self.async_init, NODE_RETRY_INITIATION
+                self.opp, self.async_init, NODE_RETRY_INITIATION
             )
         except Exception:
             _LOGGER.exception("Unexpected when initiating error in %s", self.host)
@@ -351,7 +351,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         response = None
 
         try:
-            websession = async_get_clientsession(self..opp)
+            websession = async_get_clientsession(self.opp)
             with async_timeout.timeout(10):
                 response = await websession.get(url)
 
@@ -448,7 +448,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         """Trigger sync status update on all devices."""
         _LOGGER.debug("Trigger sync status on all devices")
 
-        for player in self..opp.data[DATA_BLUESOUND]:
+        for player in self.opp.data[DATA_BLUESOUND]:
             await player.force_update_sync_status()
 
     @Throttle(SYNC_STATUS_INTERVAL)
@@ -870,7 +870,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         device_group = self._group_name.split("+")
 
         sorted_entities = sorted(
-            self..opp.data[DATA_BLUESOUND],
+            self.opp.data[DATA_BLUESOUND],
             key=lambda entity: entity.is_master,
             reverse=True,
         )

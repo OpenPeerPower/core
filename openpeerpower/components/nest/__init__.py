@@ -120,7 +120,7 @@ class SignalUpdateCallback:
         if not events:
             return
         _LOGGER.debug("Event Update %s", events.keys())
-        device_registry = await self..opp.helpers.device_registry.async_get_registry()
+        device_registry = await self.opp.helpers.device_registry.async_get_registry()
         device_entry = device_registry.async_get_device({(DOMAIN, device_id)})
         if not device_entry:
             return
@@ -133,7 +133,7 @@ class SignalUpdateCallback:
                 "type": event_type,
                 "timestamp": event_message.timestamp,
             }
-            self..opp.bus.async_fire(NEST_EVENT, message)
+            self.opp.bus.async_fire(NEST_EVENT, message)
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):

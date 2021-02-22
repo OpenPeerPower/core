@@ -360,12 +360,12 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
         if state == STATE_ALARM_TRIGGERED:
             pending_time = self._pending_time(state)
             track_point_in_time(
-                self..opp, self.async_scheduled_update, self._state_ts + pending_time
+                self.opp, self.async_scheduled_update, self._state_ts + pending_time
             )
 
             trigger_time = self._trigger_time_by_state[self._previous_state]
             track_point_in_time(
-                self..opp,
+                self.opp,
                 self.async_scheduled_update,
                 self._state_ts + pending_time + trigger_time,
             )
@@ -373,7 +373,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
             arming_time = self._arming_time(state)
             if arming_time:
                 track_point_in_time(
-                    self..opp,
+                    self.opp,
                     self.async_scheduled_update,
                     self._state_ts + arming_time,
                 )

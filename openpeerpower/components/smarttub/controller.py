@@ -59,7 +59,7 @@ class SmartTubController:
         self.spas = await self._account.get_spas()
 
         self.coordinator = DataUpdateCoordinator(
-            self..opp,
+            self.opp,
             _LOGGER,
             name=DOMAIN,
             update_method=self.async_update_data,
@@ -90,7 +90,7 @@ class SmartTubController:
 
     async def async_register_devices(self, entry):
         """Register devices with the device registry for all spas."""
-        device_registry = await dr.async_get_registry(self..opp)
+        device_registry = await dr.async_get_registry(self.opp)
         for spa in self.spas:
             device = device_registry.async_get_or_create(
                 config_entry_id=entry.entry_id,
@@ -107,7 +107,7 @@ class SmartTubController:
         Returns None if the credentials are invalid.
         """
 
-        api = SmartTub(async_get_clientsession(self..opp))
+        api = SmartTub(async_get_clientsession(self.opp))
 
         await api.login(email, password)
         return await api.get_account()

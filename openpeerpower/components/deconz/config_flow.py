@@ -233,7 +233,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
 
-        self..oppio_discovery = discovery_info
+        self.oppio_discovery = discovery_info
 
         return await self.async_step.oppio_confirm()
 
@@ -241,16 +241,16 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Confirm a Hass.io discovery."""
         if user_input is not None:
             self.deconz_config = {
-                CONF_HOST: self..oppio_discovery[CONF_HOST],
-                CONF_PORT: self..oppio_discovery[CONF_PORT],
-                CONF_API_KEY: self..oppio_discovery[CONF_API_KEY],
+                CONF_HOST: self.oppio_discovery[CONF_HOST],
+                CONF_PORT: self.oppio_discovery[CONF_PORT],
+                CONF_API_KEY: self.oppio_discovery[CONF_API_KEY],
             }
 
             return await self._create_entry()
 
         return self.async_show_form(
             step_id=.oppio_confirm",
-            description_placeholders={"addon": self..oppio_discovery["addon"]},
+            description_placeholders={"addon": self.oppio_discovery["addon"]},
         )
 
 

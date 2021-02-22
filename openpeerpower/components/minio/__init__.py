@@ -194,7 +194,7 @@ class QueueListener(threading.Thread):
                 event[ATTR_BUCKET],
                 event[ATTR_KEY],
             )
-            self..opp.bus.fire(DOMAIN, {"file_name": file_name, **event})
+            self.opp.bus.fire(DOMAIN, {"file_name": file_name, **event})
 
     @property
     def queue(self):

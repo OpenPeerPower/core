@@ -362,7 +362,7 @@ class SynoApi:
             timeout=self._entry.options.get(CONF_TIMEOUT),
             device_token=self._entry.data.get("device_token"),
         )
-        await self..opp.async_add_executor_job(self.dsm.login)
+        await self.opp.async_add_executor_job(self.dsm.login)
 
         # check if surveillance station is used
         self._with_surveillance_station = bool(
@@ -375,11 +375,11 @@ class SynoApi:
 
         self._async_setup_api_requests()
 
-        await self..opp.async_add_executor_job(self._fetch_device_configuration)
+        await self.opp.async_add_executor_job(self._fetch_device_configuration)
         await self.async_update()
 
         self._unsub_dispatcher = async_track_time_interval(
-            self..opp,
+            self.opp,
             self.async_update,
             timedelta(
                 minutes=self._entry.options.get(
@@ -507,14 +507,14 @@ class SynoApi:
         if not self.system:
             _LOGGER.debug("SynoAPI.async_reboot() - System API not ready: %s", self)
             return
-        await self..opp.async_add_executor_job(self.system.reboot)
+        await self.opp.async_add_executor_job(self.system.reboot)
 
     async def async_shutdown(self):
         """Shutdown NAS."""
         if not self.system:
             _LOGGER.debug("SynoAPI.async_shutdown() - System API not ready: %s", self)
             return
-        await self..opp.async_add_executor_job(self.system.shutdown)
+        await self.opp.async_add_executor_job(self.system.shutdown)
 
     async def async_unload(self):
         """Stop interacting with the NAS and prepare for removal from.opp."""
@@ -525,7 +525,7 @@ class SynoApi:
         _LOGGER.debug("SynoAPI.async_update()")
         self._async_setup_api_requests()
         try:
-            await self..opp.async_add_executor_job(
+            await self.opp.async_add_executor_job(
                 self.dsm.update, self._with_information
             )
         except (SynologyDSMLoginFailedException, SynologyDSMRequestException) as err:
@@ -533,9 +533,9 @@ class SynoApi:
                 "async_update - connection error during update, fallback by reloading the entry"
             )
             _LOGGER.debug("SynoAPI.async_update() - exception: %s", err)
-            await self..opp.config_entries.async_reload(self._entry.entry_id)
+            await self.opp.config_entries.async_reload(self._entry.entry_id)
             return
-        async_dispatcher_send(self..opp, self.signal_sensor_update)
+        async_dispatcher_send(self.opp, self.signal_sensor_update)
 
 
 class SynologyDSMBaseEntity(Entity):

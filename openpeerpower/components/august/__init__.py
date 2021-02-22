@@ -264,7 +264,7 @@ class AugustData(AugustSubscriberMixin):
         self._remove_inoperative_doorbells()
 
         self.activity_stream = ActivityStream(
-            self..opp, self._api, self._august_gateway, self._house_ids
+            self.opp, self._api, self._august_gateway, self._house_ids
         )
         await self.activity_stream.async_setup()
 

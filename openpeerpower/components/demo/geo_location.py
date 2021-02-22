@@ -55,8 +55,8 @@ class DemoManager:
 
     def _generate_random_event(self):
         """Generate a random event in vicinity of this HA instance."""
-        home_latitude = self..opp.config.latitude
-        home_longitude = self..opp.config.longitude
+        home_latitude = self.opp.config.latitude
+        home_longitude = self.opp.config.longitude
 
         # Approx. 111km per degree (north-south).
         radius_in_degrees = random.random() * MAX_RADIUS_IN_KM / AVG_KM_PER_DEGREE
@@ -77,7 +77,7 @@ class DemoManager:
     def _init_regular_updates(self):
         """Schedule regular updates based on configured time interval."""
         track_time_interval(
-            self..opp, lambda now: self._update(), DEFAULT_UPDATE_INTERVAL
+            self.opp, lambda now: self._update(), DEFAULT_UPDATE_INTERVAL
         )
 
     def _update(self, count=1):
@@ -89,7 +89,7 @@ class DemoManager:
                 if device:
                     _LOGGER.debug("Removing %s", device)
                     self._managed_devices.remove(device)
-                    self..opp.add_job(device.async_remove())
+                    self.opp.add_job(device.async_remove())
         # Generate new devices from events.
         new_devices = []
         for _ in range(1, count + 1):

@@ -47,7 +47,7 @@ class CloudClient(Interface):
     @property
     def base_path(self) -> Path:
         """Return path to base dir."""
-        return Path(self..opp.config.config_dir)
+        return Path(self.opp.config.config_dir)
 
     @property
     def prefs(self) -> CloudPreferences:
@@ -57,7 +57,7 @@ class CloudClient(Interface):
     @property
     def loop(self) -> asyncio.BaseEventLoop:
         """Return client loop."""
-        return self..opp.loop
+        return self.opp.loop
 
     @property
     def websession(self) -> aiohttp.ClientSession:
@@ -67,7 +67,7 @@ class CloudClient(Interface):
     @property
     def aiohttp_runner(self) -> aiohttp.web.AppRunner:
         """Return client webinterface aiohttp application."""
-        return self..opp.http.runner
+        return self.opp.http.runner
 
     @property
     def cloudhooks(self) -> Dict[str, Dict[str, str]]:
@@ -87,7 +87,7 @@ class CloudClient(Interface):
             cloud_user = await self._prefs.get_cloud_user()
 
             self._alexa_config = alexa_config.AlexaConfig(
-                self..opp, self.alexa_user_config, cloud_user, self._prefs, self.cloud
+                self.opp, self.alexa_user_config, cloud_user, self._prefs, self.cloud
             )
 
         return self._alexa_config
@@ -100,7 +100,7 @@ class CloudClient(Interface):
             cloud_user = await self._prefs.get_cloud_user()
 
             self._google_config = google_config.CloudGoogleConfig(
-                self..opp, self.google_user_config, cloud_user, self._prefs, self.cloud
+                self.opp, self.google_user_config, cloud_user, self._prefs, self.cloud
             )
             await self._google_config.async_initialize()
 
@@ -116,12 +116,12 @@ class CloudClient(Interface):
             try:
                 await aconf.async_enable_proactive_mode()
             except aiohttp.ClientError as err:  # If no internet available yet
-                if self..opp.is_running:
+                if self.opp.is_running:
                     logging.getLogger(__package__).warning(
                         "Unable to activate Alexa Report State: %s. Retrying in 30 seconds",
                         err,
                     )
-                async_call_later(self..opp, 30, enable_alexa)
+                async_call_later(self.opp, 30, enable_alexa)
             except alexa_errors.NoTokenAvailable:
                 pass
 
@@ -154,7 +154,7 @@ class CloudClient(Interface):
     @callback
     def user_message(self, identifier: str, title: str, message: str) -> None:
         """Create a message for user to UI."""
-        self..opp.components.persistent_notification.async_create(
+        self.opp.components.persistent_notification.async_create(
             message, title, identifier
         )
 
@@ -162,14 +162,14 @@ class CloudClient(Interface):
     def dispatcher_message(self, identifier: str, data: Any = None) -> None:
         """Match cloud notification to dispatcher."""
         if identifier.startswith("remote_"):
-            async_dispatcher_send(self..opp, DISPATCHER_REMOTE_UPDATE, data)
+            async_dispatcher_send(self.opp, DISPATCHER_REMOTE_UPDATE, data)
 
     async def async_alexa_message(self, payload: Dict[Any, Any]) -> Dict[Any, Any]:
         """Process cloud alexa message to client."""
         cloud_user = await self._prefs.get_cloud_user()
         aconfig = await self.get_alexa_config()
         return await alexa_sh.async_handle_message(
-            self..opp,
+            self.opp,
             aconfig,
             payload,
             context=Context(user_id=cloud_user),
@@ -184,7 +184,7 @@ class CloudClient(Interface):
         gconf = await self.get_google_config()
 
         return await ga.async_handle_message(
-            self..opp, gconf, gconf.cloud_user, payload, gc.SOURCE_CLOUD
+            self.opp, gconf, gconf.cloud_user, payload, gc.SOURCE_CLOUD
         )
 
     async def async_webhook_message(self, payload: Dict[Any, Any]) -> Dict[Any, Any]:
@@ -208,7 +208,7 @@ class CloudClient(Interface):
             mock_source=DOMAIN,
         )
 
-        response = await self..opp.components.webhook.async_handle_webhook(
+        response = await self.opp.components.webhook.async_handle_webhook(
             found["webhook_id"], request
         )
 

@@ -67,7 +67,7 @@ class SubscriptionRegistry(pv.AbstractSubscriptionRegistry):
             self._cancel_poll = None
 
     def _schedule_poll(self, delay: float) -> None:
-        self._cancel_poll = call_later(self..opp, delay, self._run_poll_server)
+        self._cancel_poll = call_later(self.opp, delay, self._run_poll_server)
 
     def _run_poll_server(self, now) -> None:
         delay = 1

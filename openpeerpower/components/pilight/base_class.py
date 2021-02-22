@@ -145,9 +145,9 @@ class PilightBaseDevice(RestoreEntity):
                 if dimlevel is not None:
                     code.update({"dimlevel": dimlevel})
 
-                self..opp.services.call(DOMAIN, SERVICE_NAME, code, blocking=True)
+                self.opp.services.call(DOMAIN, SERVICE_NAME, code, blocking=True)
             else:
-                self..opp.services.call(
+                self.opp.services.call(
                     DOMAIN, SERVICE_NAME, self._code_off, blocking=True
                 )
 

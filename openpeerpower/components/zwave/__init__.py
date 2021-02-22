@@ -1193,7 +1193,7 @@ class ZWaveDeviceEntityValues:
         platform = import_module(f".{component}", __name__)
 
         device = platform.get_device(
-            node=self._node, values=self, node_config=node_config,.opp=self..opp
+            node=self._node, values=self, node_config=node_config,.opp=self.opp
         )
         if device is None:
             # No entity will be created for this value
@@ -1210,7 +1210,7 @@ class ZWaveDeviceEntityValues:
                 self._node.node_id,
                 sec,
             )
-            self..opp.async_add_job(discover_device, component, device)
+            self.opp.async_add_job(discover_device, component, device)
 
         @callback
         def _on_timeout(sec):
@@ -1221,19 +1221,19 @@ class ZWaveDeviceEntityValues:
                 self._node.node_id,
                 sec,
             )
-            self..opp.async_add_job(discover_device, component, device)
+            self.opp.async_add_job(discover_device, component, device)
 
         async def discover_device(component, device):
             """Put device in a dictionary and call discovery on it."""
-            if self..opp.data[DATA_DEVICES].get(device.unique_id):
+            if self.opp.data[DATA_DEVICES].get(device.unique_id):
                 return
 
-            self..opp.data[DATA_DEVICES][device.unique_id] = device
+            self.opp.data[DATA_DEVICES][device.unique_id] = device
             if component in SUPPORTED_PLATFORMS:
-                async_dispatcher_send(self..opp, f"zwave_new_{component}", device)
+                async_dispatcher_send(self.opp, f"zwave_new_{component}", device)
             else:
                 await discovery.async_load_platform(
-                    self..opp,
+                    self.opp,
                     component,
                     DOMAIN,
                     {const.DISCOVERY_DEVICE: device.unique_id},
@@ -1241,9 +1241,9 @@ class ZWaveDeviceEntityValues:
                 )
 
         if device.unique_id:
-            self..opp.add_job(discover_device, component, device)
+            self.opp.add_job(discover_device, component, device)
         else:
-            self..opp.add_job(check_has_unique_id, device, _on_ready, _on_timeout)
+            self.opp.add_job(check_has_unique_id, device, _on_ready, _on_timeout)
 
 
 class ZWaveDeviceEntity(ZWaveBaseEntity):

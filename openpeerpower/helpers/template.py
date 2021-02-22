@@ -580,7 +580,7 @@ class AllStates:
     def __getattr__(self, name):
         """Return the domain state."""
         if "." in name:
-            return _get_state_if_valid(self..opp, name)
+            return _get_state_if_valid(self.opp, name)
 
         if name in _RESERVED_NAMES:
             return None
@@ -588,35 +588,35 @@ class AllStates:
         if not valid_entity_id(f"{name}.entity"):
             raise TemplateError(f"Invalid domain name '{name}'")
 
-        return DomainStates(self..opp, name)
+        return DomainStates(self.opp, name)
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
     __getitem__ = __getattr__
 
     def _collect_all(self) -> None:
-        render_info = self..opp.data.get(_RENDER_INFO)
+        render_info = self.opp.data.get(_RENDER_INFO)
         if render_info is not None:
             render_info.all_states = True
 
     def _collect_all_lifecycle(self) -> None:
-        render_info = self..opp.data.get(_RENDER_INFO)
+        render_info = self.opp.data.get(_RENDER_INFO)
         if render_info is not None:
             render_info.all_states_lifecycle = True
 
     def __iter__(self):
         """Return all states."""
         self._collect_all()
-        return _state_generator(self..opp, None)
+        return _state_generator(self.opp, None)
 
     def __len__(self) -> int:
         """Return number of states."""
         self._collect_all_lifecycle()
-        return self..opp.states.async_entity_ids_count()
+        return self.opp.states.async_entity_ids_count()
 
     def __call__(self, entity_id):
         """Return the states."""
-        state = _get_state(self..opp, entity_id)
+        state = _get_state(self.opp, entity_id)
         return STATE_UNKNOWN if state is None else state.state
 
     def __repr__(self) -> str:
@@ -634,31 +634,31 @@ class DomainStates:
 
     def __getattr__(self, name):
         """Return the states."""
-        return _get_state_if_valid(self..opp, f"{self._domain}.{name}")
+        return _get_state_if_valid(self.opp, f"{self._domain}.{name}")
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
     __getitem__ = __getattr__
 
     def _collect_domain(self) -> None:
-        entity_collect = self..opp.data.get(_RENDER_INFO)
+        entity_collect = self.opp.data.get(_RENDER_INFO)
         if entity_collect is not None:
             entity_collect.domains.add(self._domain)
 
     def _collect_domain_lifecycle(self) -> None:
-        entity_collect = self..opp.data.get(_RENDER_INFO)
+        entity_collect = self.opp.data.get(_RENDER_INFO)
         if entity_collect is not None:
             entity_collect.domains_lifecycle.add(self._domain)
 
     def __iter__(self):
         """Return the iteration over all the states."""
         self._collect_domain()
-        return _state_generator(self..opp, self._domain)
+        return _state_generator(self.opp, self._domain)
 
     def __len__(self) -> int:
         """Return number of states."""
         self._collect_domain_lifecycle()
-        return self..opp.states.async_entity_ids_count(self._domain)
+        return self.opp.states.async_entity_ids_count(self._domain)
 
     def __repr__(self) -> str:
         """Representation of Domain States."""
@@ -681,8 +681,8 @@ class TemplateState(State):
         self._collect = collect
 
     def _collect_state(self) -> None:
-        if self._collect and _RENDER_INFO in self..opp.data:
-            self..opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
+        if self._collect and _RENDER_INFO in self.opp.data:
+            self.opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
@@ -690,8 +690,8 @@ class TemplateState(State):
         """Return a property as an attribute for jinja."""
         if item in _COLLECTABLE_STATE_ATTRIBUTES:
             # _collect_state inlined here for performance
-            if self._collect and _RENDER_INFO in self..opp.data:
-                self..opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
+            if self._collect and _RENDER_INFO in self.opp.data:
+                self.opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
             return getattr(self._state, item)
         if item == "entity_id":
             return self._state.entity_id

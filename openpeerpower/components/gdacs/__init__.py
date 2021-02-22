@@ -143,8 +143,8 @@ class GdacsFeedEntityManager:
         """Schedule initial and regular updates based on configured time interval."""
 
         for domain in PLATFORMS:
-            self..opp.async_create_task(
-                self..opp.config_entries.async_forward_entry_setup(
+            self.opp.async_create_task(
+                self.opp.config_entries.async_forward_entry_setup(
                     self._config_entry, domain
                 )
             )
@@ -155,7 +155,7 @@ class GdacsFeedEntityManager:
 
         # Trigger updates at regular intervals.
         self._track_time_remove_callback = async_track_time_interval(
-            self..opp, update, self._scan_interval
+            self.opp, update, self._scan_interval
         )
 
         _LOGGER.debug("Feed entity manager initialized")
@@ -190,7 +190,7 @@ class GdacsFeedEntityManager:
     async def _generate_entity(self, external_id):
         """Generate new entity."""
         async_dispatcher_send(
-            self..opp,
+            self.opp,
             self.async_event_new_entity(),
             self,
             self._config_entry.unique_id,
@@ -199,14 +199,14 @@ class GdacsFeedEntityManager:
 
     async def _update_entity(self, external_id):
         """Update entity."""
-        async_dispatcher_send(self..opp, f"gdacs_update_{external_id}")
+        async_dispatcher_send(self.opp, f"gdacs_update_{external_id}")
 
     async def _remove_entity(self, external_id):
         """Remove entity."""
-        async_dispatcher_send(self..opp, f"gdacs_delete_{external_id}")
+        async_dispatcher_send(self.opp, f"gdacs_delete_{external_id}")
 
     async def _status_update(self, status_info):
         """Propagate status update."""
         _LOGGER.debug("Status update received: %s", status_info)
         self._status_info = status_info
-        async_dispatcher_send(self..opp, f"gdacs_status_{self._config_entry_id}")
+        async_dispatcher_send(self.opp, f"gdacs_status_{self._config_entry_id}")

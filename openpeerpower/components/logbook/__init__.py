@@ -776,7 +776,7 @@ class EntityAttributeCache:
         else:
             self._cache[entity_id] = {}
 
-        current_state = self..opp.states.get(entity_id)
+        current_state = self.opp.states.get(entity_id)
         if current_state:
             # Try the current state as its faster than decoding the
             # attributes

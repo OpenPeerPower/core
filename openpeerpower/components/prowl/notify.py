@@ -50,7 +50,7 @@ class ProwlNotificationService(BaseNotificationService):
         }
 
         _LOGGER.debug("Attempting call Prowl service at %s", url)
-        session = async_get_clientsession(self..opp)
+        session = async_get_clientsession(self.opp)
 
         try:
             with async_timeout.timeout(10):

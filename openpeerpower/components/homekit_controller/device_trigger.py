@@ -79,7 +79,7 @@ class TriggerSource:
         def event_handler(char):
             if config[CONF_SUBTYPE] != HK_TO_HA_INPUT_EVENT_VALUES[char["value"]]:
                 return
-            self..opp.async_create_task(action({"trigger": config}))
+            self.opp.async_create_task(action({"trigger": config}))
 
         trigger = self._triggers[config[CONF_TYPE], config[CONF_SUBTYPE]]
         iid = trigger["characteristic"]

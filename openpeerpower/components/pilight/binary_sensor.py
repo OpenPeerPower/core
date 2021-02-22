@@ -178,5 +178,5 @@ class PilightTriggerSensor(BinarySensorEntity):
                 self._delay_after = dt_util.utcnow() + datetime.timedelta(
                     seconds=self._reset_delay_sec
                 )
-                track_point_in_time(self..opp, self._reset_state, self._delay_after)
+                track_point_in_time(self.opp, self._reset_state, self._delay_after)
             self.schedule_update_ha_state()

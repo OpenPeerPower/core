@@ -178,7 +178,7 @@ class ValloxStateProxy:
             _LOGGER.error("Error during state cache update: %s", err)
             self._valid = False
 
-        async_dispatcher_send(self..opp, SIGNAL_VALLOX_STATE_UPDATE)
+        async_dispatcher_send(self.opp, SIGNAL_VALLOX_STATE_UPDATE)
 
 
 class ValloxServiceHandler:

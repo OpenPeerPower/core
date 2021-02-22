@@ -280,7 +280,7 @@ class HikvisionBinarySensor(BinarySensorEntity):
                 self._timer = None
 
             self._timer = track_point_in_utc_time(
-                self..opp, _delay_update, utcnow() + timedelta(seconds=self._delay)
+                self.opp, _delay_update, utcnow() + timedelta(seconds=self._delay)
             )
 
         elif self._delay > 0 and self.is_on:

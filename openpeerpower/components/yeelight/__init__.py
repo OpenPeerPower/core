@@ -304,7 +304,7 @@ class YeelightScanner:
         _LOGGER.debug("Yeelight scanning")
         # Run 3 times as packets can get lost
         for _ in range(3):
-            devices = await self..opp.async_add_executor_job(discover_bulbs)
+            devices = await self.opp.async_add_executor_job(discover_bulbs)
             for device in devices:
                 unique_id = device["capabilities"]["id"]
                 if unique_id in self._seen:
@@ -313,20 +313,20 @@ class YeelightScanner:
                 self._seen[unique_id] = host
                 _LOGGER.debug("Yeelight discovered at %s", host)
                 if unique_id in self._callbacks:
-                    self..opp.async_create_task(self._callbacks[unique_id](host))
+                    self.opp.async_create_task(self._callbacks[unique_id](host))
                     self._callbacks.pop(unique_id)
                     if len(self._callbacks) == 0:
                         self._async_stop_scan()
 
         await asyncio.sleep(SCAN_INTERVAL.seconds)
-        self._scan_task = self..opp.loop.create_task(self._async_scan())
+        self._scan_task = self.opp.loop.create_task(self._async_scan())
 
     @callback
     def _async_start_scan(self):
         """Start scanning for Yeelight devices."""
         _LOGGER.debug("Start scanning")
         # Use loop directly to avoid open peer power track this task
-        self._scan_task = self..opp.loop.create_task(self._async_scan())
+        self._scan_task = self.opp.loop.create_task(self._async_scan())
 
     @callback
     def _async_stop_scan(self):
@@ -341,7 +341,7 @@ class YeelightScanner:
         """Register callback function."""
         host = self._seen.get(unique_id)
         if host is not None:
-            self..opp.async_create_task(callback_func(host))
+            self.opp.async_create_task(callback_func(host))
         else:
             self._callbacks[unique_id] = callback_func
             if len(self._callbacks) == 1:
@@ -523,22 +523,22 @@ class YeelightDevice:
     def _initialize_device(self):
         self._get_capabilities()
         self._initialized = True
-        dispatcher_send(self..opp, DEVICE_INITIALIZED.format(self._host))
+        dispatcher_send(self.opp, DEVICE_INITIALIZED.format(self._host))
 
     def update(self):
         """Update device properties and send data updated signal."""
         self._update_properties()
-        dispatcher_send(self..opp, DATA_UPDATED.format(self._host))
+        dispatcher_send(self.opp, DATA_UPDATED.format(self._host))
 
     async def async_setup(self):
         """Set up the device."""
 
         async def _async_update(_):
-            await self..opp.async_add_executor_job(self.update)
+            await self.opp.async_add_executor_job(self.update)
 
         await _async_update(None)
         self._remove_time_tracker = async_track_time_interval(
-            self..opp, _async_update, self..opp.data[DOMAIN][DATA_SCAN_INTERVAL]
+            self.opp, _async_update, self.opp.data[DOMAIN][DATA_SCAN_INTERVAL]
         )
 
     @callback

@@ -68,7 +68,7 @@ class Gateway:
             _LOGGER.debug("Append event data:%s", event_data)
             data.append(event_data)
 
-        self..opp.add_job(self._notify_incoming_sms, data)
+        self.opp.add_job(self._notify_incoming_sms, data)
 
     # pylint: disable=no-self-use
     def get_and_delete_all_sms(self, state_machine, force=False):
@@ -137,7 +137,7 @@ class Gateway:
                 "date": message["date"],
                 "text": message["message"],
             }
-            self..opp.bus.async_fire(f"{DOMAIN}.incoming_sms", event_data)
+            self.opp.bus.async_fire(f"{DOMAIN}.incoming_sms", event_data)
 
     async def send_sms_async(self, message):
         """Send sms message via the worker."""

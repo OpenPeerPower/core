@@ -377,7 +377,7 @@ class AmbientStation:
         except WebsocketError as err:
             LOGGER.error("Error with the websocket connection: %s", err)
             self._ws_reconnect_delay = min(2 * self._ws_reconnect_delay, 480)
-            async_call_later(self..opp, self._ws_reconnect_delay, connect)
+            async_call_later(self.opp, self._ws_reconnect_delay, connect)
 
     async def ws_connect(self):
         """Register handlers and connect to the websocket."""
@@ -393,7 +393,7 @@ class AmbientStation:
                 LOGGER.debug("New data received: %s", data)
                 self.stations[mac_address][ATTR_LAST_DATA] = data
                 async_dispatcher_send(
-                    self..opp, f"ambient_station_data_update_{mac_address}"
+                    self.opp, f"ambient_station_data_update_{mac_address}"
                 )
 
         def on_disconnect():
@@ -432,8 +432,8 @@ class AmbientStation:
             # already been done):
             if not self._entry_setup_complete:
                 for component in ("binary_sensor", "sensor"):
-                    self..opp.async_create_task(
-                        self..opp.config_entries.async_forward_entry_setup(
+                    self.opp.async_create_task(
+                        self.opp.config_entries.async_forward_entry_setup(
                             self._config_entry, component
                         )
                     )

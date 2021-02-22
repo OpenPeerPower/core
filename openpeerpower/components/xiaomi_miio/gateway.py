@@ -36,11 +36,11 @@ class ConnectXiaomiGateway:
         try:
             self._gateway_device = gateway.Gateway(host, token)
             # get the gateway info
-            self._gateway_info = await self..opp.async_add_executor_job(
+            self._gateway_info = await self.opp.async_add_executor_job(
                 self._gateway_device.info
             )
             # get the connected sub devices
-            await self..opp.async_add_executor_job(
+            await self.opp.async_add_executor_job(
                 self._gateway_device.discover_devices
             )
         except DeviceException:

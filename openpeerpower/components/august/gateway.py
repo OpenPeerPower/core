@@ -79,7 +79,7 @@ class AugustGateway:
             self._config[CONF_USERNAME],
             self._config[CONF_PASSWORD],
             install_id=self._config.get(CONF_INSTALL_ID),
-            access_token_cache_file=self..opp.config.path(
+            access_token_cache_file=self.opp.config.path(
                 self._access_token_cache_file
             ),
         )
@@ -119,7 +119,7 @@ class AugustGateway:
 
     async def async_reset_authentication(self):
         """Remove the cache file."""
-        await self..opp.async_add_executor_job(self._reset_authentication)
+        await self.opp.async_add_executor_job(self._reset_authentication)
 
     def _reset_authentication(self):
         """Remove the cache file."""

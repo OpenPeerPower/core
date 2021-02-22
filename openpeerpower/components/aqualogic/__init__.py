@@ -68,7 +68,7 @@ class AquaLogicProcessor(threading.Thread):
 
     def data_changed(self, panel):
         """Aqualogic data changed callback."""
-        self..opp.helpers.dispatcher.dispatcher_send(UPDATE_TOPIC)
+        self.opp.helpers.dispatcher.dispatcher_send(UPDATE_TOPIC)
 
     def run(self):
         """Event thread."""

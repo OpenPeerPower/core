@@ -192,7 +192,7 @@ class SlackNotificationService(BaseNotificationService):
         title: Optional[str],
     ) -> None:
         """Upload a local file (with message) to Slack."""
-        if not self..opp.config.is_allowed_path(path):
+        if not self.opp.config.is_allowed_path(path):
             _LOGGER.error("Path does not exist or is not allowed: %s", path)
             return
 
@@ -226,12 +226,12 @@ class SlackNotificationService(BaseNotificationService):
         as the former would require us to download the entire remote file into memory
         first before uploading it to Slack.
         """
-        if not self..opp.config.is_allowed_external_url(url):
+        if not self.opp.config.is_allowed_external_url(url):
             _LOGGER.error("URL is not allowed: %s", url)
             return
 
         filename = _async_get_filename_from_url(url)
-        session = aiohttp_client.async_get_clientsession(self..opp)
+        session = aiohttp_client.async_get_clientsession(self.opp)
 
         kwargs: AuthDictT = {}
         if username and password is not None:
@@ -321,7 +321,7 @@ class SlackNotificationService(BaseNotificationService):
         if ATTR_FILE not in data:
             if ATTR_BLOCKS_TEMPLATE in data:
                 blocks = _async_templatize_blocks(
-                    self..opp, data[ATTR_BLOCKS_TEMPLATE]
+                    self.opp, data[ATTR_BLOCKS_TEMPLATE]
                 )
             elif ATTR_BLOCKS in data:
                 blocks = data[ATTR_BLOCKS]

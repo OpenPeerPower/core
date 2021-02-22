@@ -148,7 +148,7 @@ class UsgsEarthquakesFeedEntityManager:
     def _init_regular_updates(self):
         """Schedule regular updates at the specified interval."""
         track_time_interval(
-            self..opp, lambda now: self._feed_manager.update(), self._scan_interval
+            self.opp, lambda now: self._feed_manager.update(), self._scan_interval
         )
 
     def get_entry(self, external_id):
@@ -163,11 +163,11 @@ class UsgsEarthquakesFeedEntityManager:
 
     def _update_entity(self, external_id):
         """Update entity."""
-        dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY.format(external_id))
+        dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY.format(external_id))
 
     def _remove_entity(self, external_id):
         """Remove entity."""
-        dispatcher_send(self..opp, SIGNAL_DELETE_ENTITY.format(external_id))
+        dispatcher_send(self.opp, SIGNAL_DELETE_ENTITY.format(external_id))
 
 
 class UsgsEarthquakesEvent(GeolocationEvent):

@@ -34,7 +34,7 @@ class MetOfficeData:
 
     async def async_update_site(self):
         """Async wrapper for getting the DataPoint site."""
-        return await self..opp.async_add_executor_job(self._update_site)
+        return await self.opp.async_add_executor_job(self._update_site)
 
     def _update_site(self):
         """Return the nearest DataPoint Site to the held latitude/longitude."""
@@ -60,7 +60,7 @@ class MetOfficeData:
 
     async def async_update(self):
         """Async wrapper for update method."""
-        return await self..opp.async_add_executor_job(self._update)
+        return await self.opp.async_add_executor_job(self._update)
 
     def _update(self):
         """Get the latest data from DataPoint."""

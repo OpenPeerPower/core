@@ -103,7 +103,7 @@ class TableHolder:
             return self._table
 
         if not self._table_task:
-            self._table_task = self..opp.async_create_task(self._connect_table())
+            self._table_task = self.opp.async_create_task(self._connect_table())
 
         return await self._table_task
 

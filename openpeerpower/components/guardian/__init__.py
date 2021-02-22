@@ -157,10 +157,10 @@ class PairedSensorManager:
 
         self._paired_uids.add(uid)
 
-        coordinator = self..opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
+        coordinator = self.opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
             API_SENSOR_PAIRED_SENSOR_STATUS
         ][uid] = GuardianDataUpdateCoordinator(
-            self..opp,
+            self.opp,
             client=self._client,
             api_name=f"{API_SENSOR_PAIRED_SENSOR_STATUS}_{uid}",
             api_coro=lambda: self._client.sensor.paired_sensor_status(uid),
@@ -170,7 +170,7 @@ class PairedSensorManager:
         await coordinator.async_request_refresh()
 
         async_dispatcher_send(
-            self..opp,
+            self.opp,
             SIGNAL_PAIRED_SENSOR_COORDINATOR_ADDED.format(self._entry.data[CONF_UID]),
             uid,
         )
@@ -179,7 +179,7 @@ class PairedSensorManager:
         """Process a list of new UIDs."""
         try:
             uids = set(
-                self..opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
+                self.opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
                     API_SENSOR_PAIR_DUMP
                 ].data["paired_uids"]
             )
@@ -206,13 +206,13 @@ class PairedSensorManager:
 
         # Clear out objects related to this paired sensor:
         self._paired_uids.remove(uid)
-        self..opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
+        self.opp.data[DOMAIN][DATA_COORDINATOR][self._entry.entry_id][
             API_SENSOR_PAIRED_SENSOR_STATUS
         ].pop(uid)
 
         # Remove the paired sensor device from the device registry (which will
         # clean up entities and the entity registry):
-        dev_reg = await self..opp.helpers.device_registry.async_get_registry()
+        dev_reg = await self.opp.helpers.device_registry.async_get_registry()
         device = dev_reg.async_get_or_create(
             config_entry_id=self._entry.entry_id, identifiers={(DOMAIN, uid)}
         )

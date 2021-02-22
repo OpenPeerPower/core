@@ -385,18 +385,18 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
         pending_time = self._pending_time(state)
         if state == STATE_ALARM_TRIGGERED:
             track_point_in_time(
-                self..opp, self.async_update_ha_state, self._state_ts + pending_time
+                self.opp, self.async_update_ha_state, self._state_ts + pending_time
             )
 
             trigger_time = self._trigger_time_by_state[self._previous_state]
             track_point_in_time(
-                self..opp,
+                self.opp,
                 self.async_update_ha_state,
                 self._state_ts + pending_time + trigger_time,
             )
         elif state in SUPPORTED_PENDING_STATES and pending_time:
             track_point_in_time(
-                self..opp, self.async_update_ha_state, self._state_ts + pending_time
+                self.opp, self.async_update_ha_state, self._state_ts + pending_time
             )
 
     def _validate_code(self, code, state):

@@ -185,7 +185,7 @@ class SCSGateScenarioSwitch:
             self._logger.warn("Scenario switch: received unknown message %s", message)
             return
 
-        self..opp.bus.fire(
+        self.opp.bus.fire(
             "scenario_switch_triggered",
             {ATTR_ENTITY_ID: int(self._scs_id), ATTR_SCENARIO_ID: int(scenario_id, 16)},
         )

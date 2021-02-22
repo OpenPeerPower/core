@@ -72,6 +72,6 @@ class HarmonySubscriberMixin:
             current_callback = getattr(subscription, callback_func_name)
             if current_callback:
                 if argument:
-                    self..opp.async_run_job(current_callback, argument)
+                    self.opp.async_run_job(current_callback, argument)
                 else:
-                    self..opp.async_run_job(current_callback)
+                    self.opp.async_run_job(current_callback)

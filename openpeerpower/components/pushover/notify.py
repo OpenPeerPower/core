@@ -72,7 +72,7 @@ class PushoverNotificationService(BaseNotificationService):
         # Check for attachment
         if image is not None:
             # Only allow attachments from whitelisted paths, check valid path
-            if self..opp.config.is_allowed_path(data[ATTR_ATTACHMENT]):
+            if self.opp.config.is_allowed_path(data[ATTR_ATTACHMENT]):
                 # try to open it as a normal file.
                 try:
                     file_handle = open(data[ATTR_ATTACHMENT], "rb")

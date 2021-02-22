@@ -123,7 +123,7 @@ class EDL21:
 
     async def connect(self):
         """Connect to an EDL21 reader."""
-        await self._proto.connect(self..opp.loop)
+        await self._proto.connect(self.opp.loop)
 
     def event(self, message_body) -> None:
         """Handle events from pysml."""
@@ -147,7 +147,7 @@ class EDL21:
 
             if (electricity_id, obis) in self._registered_obis:
                 async_dispatcher_send(
-                    self..opp, SIGNAL_EDL21_TELEGRAM, electricity_id, telegram
+                    self.opp, SIGNAL_EDL21_TELEGRAM, electricity_id, telegram
                 )
             else:
                 name = self._OBIS_NAMES.get(obis)
@@ -167,11 +167,11 @@ class EDL21:
                     self._OBIS_BLACKLIST.add(obis)
 
         if new_entities:
-            self..opp.loop.create_task(self.add_entities(new_entities))
+            self.opp.loop.create_task(self.add_entities(new_entities))
 
     async def add_entities(self, new_entities) -> None:
         """Migrate old unique IDs, then add entities to.opp."""
-        registry = await async_get_registry(self..opp)
+        registry = await async_get_registry(self.opp)
 
         for entity in new_entities:
             old_entity_id = registry.async_get_entity_id(

@@ -132,8 +132,8 @@ class GeonetnzVolcanoFeedEntityManager:
     async def async_init(self):
         """Schedule initial and regular updates based on configured time interval."""
 
-        self..opp.async_create_task(
-            self..opp.config_entries.async_forward_entry_setup(
+        self.opp.async_create_task(
+            self.opp.config_entries.async_forward_entry_setup(
                 self._config_entry, "sensor"
             )
         )
@@ -144,7 +144,7 @@ class GeonetnzVolcanoFeedEntityManager:
 
         # Trigger updates at regular intervals.
         self._track_time_remove_callback = async_track_time_interval(
-            self..opp, update, self._scan_interval
+            self.opp, update, self._scan_interval
         )
 
         _LOGGER.debug("Feed entity manager initialized")
@@ -183,7 +183,7 @@ class GeonetnzVolcanoFeedEntityManager:
     async def _generate_entity(self, external_id):
         """Generate new entity."""
         async_dispatcher_send(
-            self..opp,
+            self.opp,
             self.async_event_new_entity(),
             self,
             external_id,
@@ -192,7 +192,7 @@ class GeonetnzVolcanoFeedEntityManager:
 
     async def _update_entity(self, external_id):
         """Update entity."""
-        async_dispatcher_send(self..opp, f"geonetnz_volcano_update_{external_id}")
+        async_dispatcher_send(self.opp, f"geonetnz_volcano_update_{external_id}")
 
     async def _remove_entity(self, external_id):
         """Ignore removing entity."""

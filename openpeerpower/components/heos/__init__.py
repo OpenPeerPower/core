@@ -148,8 +148,8 @@ class ControllerManager:
     async def connect_listeners(self):
         """Subscribe to events of interest."""
         self._device_registry, self._entity_registry = await asyncio.gather(
-            self..opp.helpers.device_registry.async_get_registry(),
-            self..opp.helpers.entity_registry.async_get_registry(),
+            self.opp.helpers.device_registry.async_get_registry(),
+            self.opp.helpers.entity_registry.async_get_registry(),
         )
         # Handle controller events
         self._signals.append(
@@ -177,7 +177,7 @@ class ControllerManager:
         if event == heos_const.EVENT_PLAYERS_CHANGED:
             self.update_ids(data[heos_const.DATA_MAPPED_IDS])
         # Update players
-        self..opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
+        self.opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
 
     async def _heos_event(self, event):
         """Handle connection event."""
@@ -189,7 +189,7 @@ class ControllerManager:
             except HeosError as ex:
                 _LOGGER.error("Unable to refresh players: %s", ex)
         # Update players
-        self..opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
+        self.opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
 
     def update_ids(self, mapped_ids: Dict[int, int]):
         """Update the IDs in the device and entity registry."""

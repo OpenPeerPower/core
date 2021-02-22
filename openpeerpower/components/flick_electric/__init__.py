@@ -86,7 +86,7 @@ class HassFlickAuth(AbstractFlickAuth):
         # Reduce expiry by an hour to avoid API being called after expiry
         expiry = dt.now().timestamp() + int(token[CONF_TOKEN_EXPIRES_IN] - 3600)
 
-        self..opp.config_entries.async_update_entry(
+        self.opp.config_entries.async_update_entry(
             self._entry,
             data={
                 **self._entry.data,

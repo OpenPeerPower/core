@@ -132,7 +132,7 @@ class HomeworksKeypadEvent:
         self._name = name
         self._id = slugify(self._name)
         signal = f"homeworks_entity_{self._addr}"
-        async_dispatcher_connect(self..opp, signal, self._update_callback)
+        async_dispatcher_connect(self.opp, signal, self._update_callback)
 
     @callback
     def _update_callback(self, msg_type, values):
@@ -145,4 +145,4 @@ class HomeworksKeypadEvent:
         else:
             return
         data = {CONF_ID: self._id, CONF_NAME: self._name, "button": values[1]}
-        self..opp.bus.async_fire(event, data)
+        self.opp.bus.async_fire(event, data)

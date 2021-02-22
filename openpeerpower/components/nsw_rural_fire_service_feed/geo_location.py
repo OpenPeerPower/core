@@ -130,7 +130,7 @@ class NswRuralFireServiceFeedEntityManager:
 
         # Trigger updates at regular intervals.
         self._track_time_remove_callback = async_track_time_interval(
-            self..opp, update, self._scan_interval
+            self.opp, update, self._scan_interval
         )
 
         _LOGGER.debug("Feed entity manager initialized")
@@ -158,11 +158,11 @@ class NswRuralFireServiceFeedEntityManager:
 
     async def _update_entity(self, external_id):
         """Update entity."""
-        async_dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY.format(external_id))
+        async_dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY.format(external_id))
 
     async def _remove_entity(self, external_id):
         """Remove entity."""
-        async_dispatcher_send(self..opp, SIGNAL_DELETE_ENTITY.format(external_id))
+        async_dispatcher_send(self.opp, SIGNAL_DELETE_ENTITY.format(external_id))
 
 
 class NswRuralFireServiceLocationEvent(GeolocationEvent):

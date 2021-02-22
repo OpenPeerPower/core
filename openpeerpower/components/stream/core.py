@@ -59,14 +59,14 @@ class IdleTimer:
         """Start the idle timer if not already started."""
         self.idle = False
         if self._unsub is None:
-            self._unsub = async_call_later(self..opp, self._timeout, self.fire)
+            self._unsub = async_call_later(self.opp, self._timeout, self.fire)
 
     def awake(self):
         """Keep the idle time alive by resetting the timeout."""
         self.idle = False
         # Reset idle timeout
         self.clear()
-        self._unsub = async_call_later(self..opp, self._timeout, self.fire)
+        self._unsub = async_call_later(self.opp, self._timeout, self.fire)
 
     def clear(self):
         """Clear and disable the timer if it has not already fired."""
@@ -162,7 +162,7 @@ class StreamOutput:
 
     def put(self, segment: Segment) -> None:
         """Store output."""
-        self..opp.loop.call_soon_threadsafe(self._async_put, segment)
+        self.opp.loop.call_soon_threadsafe(self._async_put, segment)
 
     @callback
     def _async_put(self, segment: Segment) -> None:

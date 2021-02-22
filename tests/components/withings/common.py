@@ -144,12 +144,12 @@ class ComponentFactory:
             },
         }
 
-        await async_process_ha_core_config(self..opp,.opp_config.get("openpeerpower"))
-        assert await async_setup_component(self..opp, HA_DOMAIN, {})
-        assert await async_setup_component(self..opp, webhook.DOMAIN,.opp_config)
+        await async_process_ha_core_config(self.opp,.opp_config.get("openpeerpower"))
+        assert await async_setup_component(self.opp, HA_DOMAIN, {})
+        assert await async_setup_component(self.opp, webhook.DOMAIN,.opp_config)
 
-        assert await async_setup_component(self..opp, const.DOMAIN,.opp_config)
-        await self..opp.async_block_till_done()
+        assert await async_setup_component(self.opp, const.DOMAIN,.opp_config)
+        await self.opp.async_block_till_done()
 
     @staticmethod
     def _setup_api_method(api_method, value) -> None:
@@ -191,13 +191,13 @@ class ComponentFactory:
         self._api_class_mock.return_value = api_mock
 
         # Get the withings config flow.
-        result = await self..opp.config_entries.flow.async_init(
+        result = await self.opp.config_entries.flow.async_init(
             const.DOMAIN, context={"source": SOURCE_USER}
         )
         assert result
         # pylint: disable=protected-access
         state = config_entry_oauth2_flow._encode_jwt(
-            self..opp,
+            self.opp,
             {
                 "flow_id": result["flow_id"],
                 "redirect_uri": "http://127.0.0.1:8080/auth/external/callback",
@@ -213,7 +213,7 @@ class ComponentFactory:
         )
 
         # Simulate user being redirected from withings site.
-        client: TestClient = await self._aiohttp_client(self..opp.http.app)
+        client: TestClient = await self._aiohttp_client(self.opp.http.app)
         resp = await client.get(f"{AUTH_CALLBACK_PATH}?code=abcd&state={state}")
         assert resp.status == 200
         assert resp.headers["content-type"] == "text/html; charset=utf-8"
@@ -231,13 +231,13 @@ class ComponentFactory:
         )
 
         # Present user with a list of profiles to choose from.
-        result = await self..opp.config_entries.flow.async_configure(result["flow_id"])
+        result = await self.opp.config_entries.flow.async_configure(result["flow_id"])
         assert result.get("type") == "form"
         assert result.get("step_id") == "profile"
         assert "profile" in result.get("data_schema").schema
 
         # Provide the user profile.
-        result = await self..opp.config_entries.flow.async_configure(
+        result = await self.opp.config_entries.flow.async_configure(
             result["flow_id"], {const.PROFILE: profile_config.profile}
         )
 
@@ -250,10 +250,10 @@ class ComponentFactory:
         assert config_data.get("token")
 
         # Wait for remaining tasks to complete.
-        await self..opp.async_block_till_done()
+        await self.opp.async_block_till_done()
 
         # Mock the webhook.
-        data_manager = get_data_manager_by_user_id(self..opp, user_id)
+        data_manager = get_data_manager_by_user_id(self.opp, user_id)
         self._aioclient_mock.clear_requests()
         self._aioclient_mock.request(
             "HEAD",
@@ -264,8 +264,8 @@ class ComponentFactory:
 
     async def call_webhook(self, user_id: int, appli: NotifyAppli) -> WebhookResponse:
         """Call the webhook to notify of data changes."""
-        client: TestClient = await self._aiohttp_client(self..opp.http.app)
-        data_manager = get_data_manager_by_user_id(self..opp, user_id)
+        client: TestClient = await self._aiohttp_client(self.opp.http.app)
+        data_manager = get_data_manager_by_user_id(self.opp, user_id)
 
         resp = await client.post(
             urlparse(data_manager.webhook_config.url).path,
@@ -273,7 +273,7 @@ class ComponentFactory:
         )
 
         # Wait for remaining tasks to complete.
-        await self..opp.async_block_till_done()
+        await self.opp.async_block_till_done()
 
         data = await resp.json()
         resp.close()
@@ -282,14 +282,14 @@ class ComponentFactory:
 
     async def unload(self, profile: ProfileConfig) -> None:
         """Unload the component for a specific user."""
-        config_entries = get_config_entries_for_user_id(self..opp, profile.user_id)
+        config_entries = get_config_entries_for_user_id(self.opp, profile.user_id)
 
         for config_entry in config_entries:
-            await async_unload_entry(self..opp, config_entry)
+            await async_unload_entry(self.opp, config_entry)
 
-        await self..opp.async_block_till_done()
+        await self.opp.async_block_till_done()
 
-        assert not get_data_manager_by_user_id(self..opp, profile.user_id)
+        assert not get_data_manager_by_user_id(self.opp, profile.user_id)
 
 
 def get_config_entries_for_user_id(

@@ -202,7 +202,7 @@ class CastDevice(MediaPlayerEntity):
         self.mz_mgr = None
         self._available = False
         self._status_listener: Optional[CastStatusListener] = None
-        self..opp_cast_controller: Optional[OpenPeerPowerController] = None
+        self.opp_cast_controller: Optional[OpenPeerPowerController] = None
 
         self._add_remove_handler = None
         self._cast_view_remove_handler = None
@@ -304,7 +304,7 @@ class CastDevice(MediaPlayerEntity):
         self.mz_media_status = {}
         self.mz_media_status_received = {}
         self.mz_mgr = None
-        self..opp_cast_controller = None
+        self.opp_cast_controller = None
         if self._status_listener is not None:
             self._status_listener.invalidate()
             self._status_listener = None
@@ -809,11 +809,11 @@ class CastDevice(MediaPlayerEntity):
         if entity_id != self.entity_id:
             return
 
-        if self..opp_cast_controller is None:
-            self..opp_cast_controller = controller
+        if self.opp_cast_controller is None:
+            self.opp_cast_controller = controller
             self._chromecast.register_handler(controller)
 
-        self..opp_cast_controller.show_lovelace_view(view_path, url_path)
+        self.opp_cast_controller.show_lovelace_view(view_path, url_path)
 
 
 class DynamicCastGroup:

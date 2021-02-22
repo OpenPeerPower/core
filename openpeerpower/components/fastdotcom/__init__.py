@@ -67,4 +67,4 @@ class SpeedtestData:
 
         _LOGGER.debug("Executing fast.com speedtest")
         self.data = {"download": fast_com()}
-        dispatcher_send(self..opp, DATA_UPDATED)
+        dispatcher_send(self.opp, DATA_UPDATED)

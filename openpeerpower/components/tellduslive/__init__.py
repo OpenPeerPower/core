@@ -147,7 +147,7 @@ class TelldusLiveClient:
 
     async def async_get_hubs(self):
         """Return hubs registered for the user."""
-        clients = await self..opp.async_add_executor_job(self._client.get_clients)
+        clients = await self.opp.async_add_executor_job(self._client.get_clients)
         return clients or []
 
     def device_info(self, device_id):
@@ -176,14 +176,14 @@ class TelldusLiveClient:
         device = self._client.device(device_id)
         component = self.identify_device(device)
         self._device_infos.update(
-            {device_id: await self..opp.async_add_executor_job(device.info)}
+            {device_id: await self.opp.async_add_executor_job(device.info)}
         )
-        async with self..opp.data[DATA_CONFIG_ENTRY_LOCK]:
-            if component not in self..opp.data[CONFIG_ENTRY_IS_SETUP]:
-                await self..opp.config_entries.async_forward_entry_setup(
+        async with self.opp.data[DATA_CONFIG_ENTRY_LOCK]:
+            if component not in self.opp.data[CONFIG_ENTRY_IS_SETUP]:
+                await self.opp.config_entries.async_forward_entry_setup(
                     self._config_entry, component
                 )
-                self..opp.data[CONFIG_ENTRY_IS_SETUP].add(component)
+                self.opp.data[CONFIG_ENTRY_IS_SETUP].add(component)
         device_ids = []
         if device.is_sensor:
             for item in device.items:
@@ -192,13 +192,13 @@ class TelldusLiveClient:
             device_ids.append(device_id)
         for _id in device_ids:
             async_dispatcher_send(
-                self..opp, TELLDUS_DISCOVERY_NEW.format(component, DOMAIN), _id
+                self.opp, TELLDUS_DISCOVERY_NEW.format(component, DOMAIN), _id
             )
 
     async def update(self, *args):
         """Periodically poll the servers for current state."""
         try:
-            if not await self..opp.async_add_executor_job(self._client.update):
+            if not await self.opp.async_add_executor_job(self._client.update):
                 _LOGGER.warning("Failed request")
                 return
             dev_ids = {dev.device_id for dev in self._client.devices}
@@ -207,10 +207,10 @@ class TelldusLiveClient:
             for d_id in new_devices:
                 await self._discover(d_id)
             self._known_devices |= new_devices
-            async_dispatcher_send(self..opp, SIGNAL_UPDATE_ENTITY)
+            async_dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY)
         finally:
-            self..opp.data[INTERVAL_TRACKER] = async_call_later(
-                self..opp, self._interval, self.update
+            self.opp.data[INTERVAL_TRACKER] = async_call_later(
+                self.opp, self._interval, self.update
             )
 
     def device(self, device_id):

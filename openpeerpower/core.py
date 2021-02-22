@@ -676,7 +676,7 @@ class EventBus:
     @property
     def listeners(self) -> Dict[str, int]:
         """Return dictionary with events and the number of listeners."""
-        return run_callback_threadsafe(self..opp.loop, self.async_listeners).result()
+        return run_callback_threadsafe(self.opp.loop, self.async_listeners).result()
 
     def fire(
         self,
@@ -686,7 +686,7 @@ class EventBus:
         context: Optional[Context] = None,
     ) -> None:
         """Fire an event."""
-        self..opp.loop.call_soon_threadsafe(
+        self.opp.loop.call_soon_threadsafe(
             self.async_fire, event_type, event_data, origin, context
         )
 
@@ -726,7 +726,7 @@ class EventBus:
                 except Exception:  # pylint: disable=broad-except
                     _LOGGER.exception("Error in event filter")
                     continue
-            self..opp.async_add.opp_job(job, event)
+            self.opp.async_add.opp_job(job, event)
 
     def listen(self, event_type: str, listener: Callable) -> CALLBACK_TYPE:
         """Listen for all events or events of a specific type.
@@ -735,12 +735,12 @@ class EventBus:
         as event_type.
         """
         async_remove_listener = run_callback_threadsafe(
-            self..opp.loop, self.async_listen, event_type, listener
+            self.opp.loop, self.async_listen, event_type, listener
         ).result()
 
         def remove_listener() -> None:
             """Remove the listener."""
-            run_callback_threadsafe(self..opp.loop, async_remove_listener).result()
+            run_callback_threadsafe(self.opp.loop, async_remove_listener).result()
 
         return remove_listener
 
@@ -789,12 +789,12 @@ class EventBus:
         Returns function to unsubscribe the listener.
         """
         async_remove_listener = run_callback_threadsafe(
-            self..opp.loop, self.async_listen_once, event_type, listener
+            self.opp.loop, self.async_listen_once, event_type, listener
         ).result()
 
         def remove_listener() -> None:
             """Remove the listener."""
-            run_callback_threadsafe(self..opp.loop, async_remove_listener).result()
+            run_callback_threadsafe(self.opp.loop, async_remove_listener).result()
 
         return remove_listener
 
@@ -825,7 +825,7 @@ class EventBus:
             setattr(_onetime_listener, "run", True)
             assert filterable_job is not None
             self._async_remove_listener(event_type, filterable_job)
-            self..opp.async_run_job(listener, event)
+            self.opp.async_run_job(listener, event)
 
         filterable_job = (HassJob(_onetime_listener), None)
 
@@ -1287,7 +1287,7 @@ class ServiceRegistry:
     @property
     def services(self) -> Dict[str, Dict[str, Service]]:
         """Return dictionary with per domain a list of available services."""
-        return run_callback_threadsafe(self..opp.loop, self.async_services).result()
+        return run_callback_threadsafe(self.opp.loop, self.async_services).result()
 
     @callback
     def async_services(self) -> Dict[str, Dict[str, Service]]:
@@ -1317,7 +1317,7 @@ class ServiceRegistry:
         Schema is called to coerce and validate the service data.
         """
         run_callback_threadsafe(
-            self..opp.loop, self.async_register, domain, service, service_func, schema
+            self.opp.loop, self.async_register, domain, service, service_func, schema
         ).result()
 
     @callback
@@ -1344,14 +1344,14 @@ class ServiceRegistry:
         else:
             self._services[domain] = {service: service_obj}
 
-        self..opp.bus.async_fire(
+        self.opp.bus.async_fire(
             EVENT_SERVICE_REGISTERED, {ATTR_DOMAIN: domain, ATTR_SERVICE: service}
         )
 
     def remove(self, domain: str, service: str) -> None:
         """Remove a registered service from service handler."""
         run_callback_threadsafe(
-            self..opp.loop, self.async_remove, domain, service
+            self.opp.loop, self.async_remove, domain, service
         ).result()
 
     @callback
@@ -1372,7 +1372,7 @@ class ServiceRegistry:
         if not self._services[domain]:
             self._services.pop(domain)
 
-        self..opp.bus.async_fire(
+        self.opp.bus.async_fire(
             EVENT_SERVICE_REMOVED, {ATTR_DOMAIN: domain, ATTR_SERVICE: service}
         )
 
@@ -1395,7 +1395,7 @@ class ServiceRegistry:
             self.async_call(
                 domain, service, service_data, blocking, context, limit, target
             ),
-            self..opp.loop,
+            self.opp.loop,
         ).result()
 
     async def async_call(
@@ -1453,7 +1453,7 @@ class ServiceRegistry:
 
         service_call = ServiceCall(domain, service, processed_data, context)
 
-        self..opp.bus.async_fire(
+        self.opp.bus.async_fire(
             EVENT_CALL_SERVICE,
             {
                 ATTR_DOMAIN: domain.lower(),
@@ -1468,7 +1468,7 @@ class ServiceRegistry:
             self._run_service_in_background(coro, service_call)
             return None
 
-        task = self..opp.async_create_task(coro)
+        task = self.opp.async_create_task(coro)
         try:
             await asyncio.wait({task}, timeout=limit)
         except asyncio.CancelledError:
@@ -1513,7 +1513,7 @@ class ServiceRegistry:
             except Exception:  # pylint: disable=broad-except
                 _LOGGER.exception("Error executing service: %s", service_call)
 
-        self..opp.async_create_task(catch_exceptions())
+        self.opp.async_create_task(catch_exceptions())
 
     async def _execute_service(
         self, handler: Service, service_call: ServiceCall
@@ -1524,7 +1524,7 @@ class ServiceRegistry:
         elif handler.job.job_type == HassJobType.Callback:
             handler.job.target(service_call)
         else:
-            await self..opp.async_add_executor_job(handler.job.target, service_call)
+            await self.opp.async_add_executor_job(handler.job.target, service_call)
 
 
 class Config:

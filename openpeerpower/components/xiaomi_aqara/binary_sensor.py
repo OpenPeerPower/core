@@ -273,11 +273,11 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
                 if self._unsub_set_no_motion:
                     self._unsub_set_no_motion()
                 self._unsub_set_no_motion = async_call_later(
-                    self..opp, 120, self._async_set_no_motion
+                    self.opp, 120, self._async_set_no_motion
                 )
 
             if self.entity_id is not None:
-                self..opp.bus.fire(
+                self.opp.bus.fire(
                     "xiaomi_aqara.motion", {"entity_id": self.entity_id}
                 )
 
@@ -495,7 +495,7 @@ class XiaomiButton(XiaomiBinarySensor):
             _LOGGER.warning("Unsupported click_type detected: %s", value)
             return False
 
-        self..opp.bus.fire(
+        self.opp.bus.fire(
             "xiaomi_aqara.click",
             {"entity_id": self.entity_id, "click_type": click_type},
         )
@@ -528,7 +528,7 @@ class XiaomiCube(XiaomiBinarySensor):
     def parse_data(self, data, raw_data):
         """Parse data sent by gateway."""
         if self._data_key in data:
-            self..opp.bus.fire(
+            self.opp.bus.fire(
                 "xiaomi_aqara.cube_action",
                 {"entity_id": self.entity_id, "action_type": data[self._data_key]},
             )
@@ -540,7 +540,7 @@ class XiaomiCube(XiaomiBinarySensor):
                 if isinstance(data["rotate"], int)
                 else data["rotate"].replace(",", ".")
             )
-            self..opp.bus.fire(
+            self.opp.bus.fire(
                 "xiaomi_aqara.cube_action",
                 {
                     "entity_id": self.entity_id,
@@ -556,7 +556,7 @@ class XiaomiCube(XiaomiBinarySensor):
                 if isinstance(data["rotate_degree"], int)
                 else data["rotate_degree"].replace(",", ".")
             )
-            self..opp.bus.fire(
+            self.opp.bus.fire(
                 "xiaomi_aqara.cube_action",
                 {
                     "entity_id": self.entity_id,

@@ -464,7 +464,7 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
         """Initialize the config entry flow manager."""
         super().__init__.opp)
         self.config_entries = config_entries
-        self..opp_config =.opp_config
+        self.opp_config =.opp_config
 
     async def async_finish_flow(
         self, flow: data_entry_flow.FlowHandler, result: Dict[str, Any]
@@ -551,7 +551,7 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
             raise data_entry_flow.UnknownHandler from err
 
         # Make sure requirements and dependencies of component are resolved
-        await async_process_deps_reqs(self.opp, self..opp_config, integration)
+        await async_process_deps_reqs(self.opp, self.opp_config, integration)
 
         try:
             integration.get_platform("config_flow")
@@ -614,7 +614,7 @@ class ConfigEntries:
         self.opp =.opp
         self.flow = ConfigEntriesFlowManager.opp, self,.opp_config)
         self.options = OptionsFlowManager.opp)
-        self..opp_config =.opp_config
+        self.opp_config =.opp_config
         self._entries: List[ConfigEntry] = []
         self._store =.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         EntityRegistryDisabledHandler.opp).async_setup()
@@ -747,7 +747,7 @@ class ConfigEntries:
         else:
             # Setting up the component will set up all its config entries
             result = await async_setup_component(
-                self.opp, entry.domain, self..opp_config
+                self.opp, entry.domain, self.opp_config
             )
 
             if not result:
@@ -876,7 +876,7 @@ class ConfigEntries:
         """
         # Setup Component if not set up yet
         if domain not in self.opp.config.components:
-            result = await async_setup_component(self.opp, domain, self..opp_config)
+            result = await async_setup_component(self.opp, domain, self.opp_config)
 
             if not result:
                 return False

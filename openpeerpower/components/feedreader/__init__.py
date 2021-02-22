@@ -153,7 +153,7 @@ class FeedManager:
             self._has_published_parsed = False
             _LOGGER.debug("No published_parsed info available for entry %s", entry)
         entry.update({"feed_url": self._url})
-        self..opp.bus.fire(self._event_type, entry)
+        self.opp.bus.fire(self._event_type, entry)
 
     def _publish_new_entries(self):
         """Publish new entries to the event bus."""

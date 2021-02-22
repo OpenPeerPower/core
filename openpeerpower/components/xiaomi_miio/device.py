@@ -36,7 +36,7 @@ class ConnectXiaomiDevice:
         try:
             self._device = Device(host, token)
             # get the device info
-            self._device_info = await self..opp.async_add_executor_job(
+            self._device_info = await self.opp.async_add_executor_job(
                 self._device.info
             )
         except DeviceException:

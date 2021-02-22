@@ -168,4 +168,4 @@ class LutronButton:
 
         if action:
             data = {ATTR_ID: self._id, ATTR_ACTION: action, ATTR_FULL_ID: self._full_id}
-            self..opp.bus.fire(self._event, data)
+            self.opp.bus.fire(self._event, data)

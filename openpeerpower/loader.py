@@ -664,7 +664,7 @@ class ModuleWrapper:
         value = getattr(self._module, attr)
 
         if hasattr(value, "__bind.opp"):
-            value = ft.partial(value, self..opp)
+            value = ft.partial(value, self.opp)
 
         setattr(self, attr, value)
         return value
@@ -680,18 +680,18 @@ class Components:
     def __getattr__(self, comp_name: str) -> ModuleWrapper:
         """Fetch a component."""
         # Test integration cache
-        integration = self..opp.data.get(DATA_INTEGRATIONS, {}).get(comp_name)
+        integration = self.opp.data.get(DATA_INTEGRATIONS, {}).get(comp_name)
 
         if isinstance(integration, Integration):
             component: Optional[ModuleType] = integration.get_component()
         else:
             # Fallback to importing old-school
-            component = _load_file(self..opp, comp_name, _lookup_path(self..opp))
+            component = _load_file(self.opp, comp_name, _lookup_path(self.opp))
 
         if component is None:
             raise ImportError(f"Unable to load {comp_name}")
 
-        wrapped = ModuleWrapper(self..opp, component)
+        wrapped = ModuleWrapper(self.opp, component)
         setattr(self, comp_name, wrapped)
         return wrapped
 
@@ -706,7 +706,7 @@ class Helpers:
     def __getattr__(self, helper_name: str) -> ModuleWrapper:
         """Fetch a helper."""
         helper = importlib.import_module(f"openpeerpower.helpers.{helper_name}")
-        wrapped = ModuleWrapper(self..opp, helper)
+        wrapped = ModuleWrapper(self.opp, helper)
         setattr(self, helper_name, wrapped)
         return wrapped
 

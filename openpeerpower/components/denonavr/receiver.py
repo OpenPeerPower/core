@@ -30,7 +30,7 @@ class ConnectDenonAVR:
 
     async def async_connect_receiver(self):
         """Connect to the DenonAVR receiver."""
-        if not await self..opp.async_add_executor_job(self.init_receiver_class):
+        if not await self.opp.async_add_executor_job(self.init_receiver_class):
             return False
 
         if (

@@ -186,7 +186,7 @@ class TankerkoenigData:
         # The API seems to only return at most 10 results, so split the list in chunks of 10
         # and merge it together.
         for index in range(ceil(len(station_ids) / 10)):
-            data = await self..opp.async_add_executor_job(
+            data = await self.opp.async_add_executor_job(
                 pytankerkoenig.getPriceList,
                 self._api_key,
                 station_ids[index * 10 : (index + 1) * 10],

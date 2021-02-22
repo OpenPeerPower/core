@@ -106,7 +106,7 @@ class XmppNotificationService(BaseNotificationService):
             self._tls,
             self._verify,
             self._room,
-            self..opp,
+            self.opp,
             text,
             timeout,
             data,

@@ -147,9 +147,9 @@ class AmcrestChecker(Http):
 
     def _start_recovery(self):
         self._wrap_event_flag.clear()
-        dispatcher_send(self..opp, service_signal(SERVICE_UPDATE, self._wrap_name))
+        dispatcher_send(self.opp, service_signal(SERVICE_UPDATE, self._wrap_name))
         self._unsub_recheck = track_time_interval(
-            self..opp, self._wrap_test_online, RECHECK_INTERVAL
+            self.opp, self._wrap_test_online, RECHECK_INTERVAL
         )
 
     def command(self, *args, **kwargs):
@@ -185,7 +185,7 @@ class AmcrestChecker(Http):
             self._unsub_recheck = None
             _LOGGER.error("%s camera back online", self._wrap_name)
             self._wrap_event_flag.set()
-            dispatcher_send(self..opp, service_signal(SERVICE_UPDATE, self._wrap_name))
+            dispatcher_send(self.opp, service_signal(SERVICE_UPDATE, self._wrap_name))
         return ret
 
     def _wrap_test_online(self, now):

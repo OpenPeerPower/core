@@ -46,7 +46,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
         """Show the Hass.io confirmation form to the user."""
         return self.async_show_form(
             step_id=.oppio_confirm",
-            description_placeholders={"addon": self..oppio_discovery["addon"]},
+            description_placeholders={"addon": self.oppio_discovery["addon"]},
             data_schema=vol.Schema({}),
             errors=errors or {},
         )
@@ -99,7 +99,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
         entries = self._async_current_entries()
 
         if not entries:
-            self..oppio_discovery = discovery_info
+            self.oppio_discovery = discovery_info
             return await self.async_step.oppio_confirm()
 
         cur_entry = entries[0]
@@ -139,8 +139,8 @@ class AdGuardHomeFlowHandler(ConfigFlow):
         session = async_get_clientsession(self.opp, False)
 
         adguard = AdGuardHome(
-            self..oppio_discovery[CONF_HOST],
-            port=self..oppio_discovery[CONF_PORT],
+            self.oppio_discovery[CONF_HOST],
+            port=self.oppio_discovery[CONF_PORT],
             tls=False,
             session=session,
         )
@@ -152,10 +152,10 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             return await self._show.oppio_form(errors)
 
         return self.async_create_entry(
-            title=self..oppio_discovery["addon"],
+            title=self.oppio_discovery["addon"],
             data={
-                CONF_HOST: self..oppio_discovery[CONF_HOST],
-                CONF_PORT: self..oppio_discovery[CONF_PORT],
+                CONF_HOST: self.oppio_discovery[CONF_HOST],
+                CONF_PORT: self.oppio_discovery[CONF_PORT],
                 CONF_PASSWORD: None,
                 CONF_SSL: False,
                 CONF_USERNAME: None,

@@ -167,7 +167,7 @@ class Remote:
                 params["app_id"] = self._app_id
                 params["encryption_key"] = self._encryption_key
 
-            self._control = await self..opp.async_add_executor_job(
+            self._control = await self.opp.async_add_executor_job(
                 partial(RemoteControl, self._host, self._port, **params)
             )
 
@@ -246,7 +246,7 @@ class Remote:
     async def _handle_errors(self, func, *args):
         """Handle errors from func, set available and reconnect if needed."""
         try:
-            result = await self..opp.async_add_executor_job(func, *args)
+            result = await self.opp.async_add_executor_job(func, *args)
             self.state = STATE_ON
             self.available = True
             return result

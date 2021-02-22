@@ -24,7 +24,7 @@ class AugustSubscriberMixin:
         """
         if not self._subscriptions:
             self._unsub_interval = async_track_time_interval(
-                self..opp, self._async_refresh, self._update_interval
+                self.opp, self._async_refresh, self._update_interval
             )
         self._subscriptions.setdefault(device_id, []).append(update_callback)
 

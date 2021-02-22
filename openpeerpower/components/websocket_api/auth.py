@@ -66,7 +66,7 @@ class AuthPhase:
 
         if "access_token" in msg:
             self._logger.debug("Received access_token")
-            refresh_token = await self..opp.auth.async_validate_access_token(
+            refresh_token = await self.opp.auth.async_validate_access_token(
                 msg["access_token"]
             )
             if refresh_token is not None:
@@ -84,5 +84,5 @@ class AuthPhase:
         await process_success_login(self._request)
         self._send_message(auth_ok_message())
         return ActiveConnection(
-            self._logger, self..opp, self._send_message, user, refresh_token
+            self._logger, self.opp, self._send_message, user, refresh_token
         )

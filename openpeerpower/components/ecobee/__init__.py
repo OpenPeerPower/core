@@ -93,7 +93,7 @@ class EcobeeData:
     async def update(self):
         """Get the latest data from ecobee.com."""
         try:
-            await self..opp.async_add_executor_job(self.ecobee.update)
+            await self.opp.async_add_executor_job(self.ecobee.update)
             _LOGGER.debug("Updating ecobee")
         except ExpiredTokenError:
             _LOGGER.debug("Refreshing expired ecobee tokens")
@@ -102,8 +102,8 @@ class EcobeeData:
     async def refresh(self) -> bool:
         """Refresh ecobee tokens and update config entry."""
         _LOGGER.debug("Refreshing ecobee tokens and updating config entry")
-        if await self..opp.async_add_executor_job(self.ecobee.refresh_tokens):
-            self..opp.config_entries.async_update_entry(
+        if await self.opp.async_add_executor_job(self.ecobee.refresh_tokens):
+            self.opp.config_entries.async_update_entry(
                 self._entry,
                 data={
                     CONF_API_KEY: self.ecobee.config[ECOBEE_API_KEY],

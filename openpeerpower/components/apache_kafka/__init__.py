@@ -127,7 +127,7 @@ class KafkaManager:
 
     async def start(self):
         """Start the Kafka manager."""
-        self..opp.bus.async_listen(EVENT_STATE_CHANGED, self.write)
+        self.opp.bus.async_listen(EVENT_STATE_CHANGED, self.write)
         await self._producer.start()
 
     async def shutdown(self, _):

@@ -90,7 +90,7 @@ class GeoJsonFeedEntityManager:
     def _init_regular_updates(self):
         """Schedule regular updates at the specified interval."""
         track_time_interval(
-            self..opp, lambda now: self._feed_manager.update(), self._scan_interval
+            self.opp, lambda now: self._feed_manager.update(), self._scan_interval
         )
 
     def get_entry(self, external_id):
@@ -105,11 +105,11 @@ class GeoJsonFeedEntityManager:
 
     def _update_entity(self, external_id):
         """Update entity."""
-        dispatcher_send(self..opp, f"geo_json_events_update_{external_id}")
+        dispatcher_send(self.opp, f"geo_json_events_update_{external_id}")
 
     def _remove_entity(self, external_id):
         """Remove entity."""
-        dispatcher_send(self..opp, f"geo_json_events_delete_{external_id}")
+        dispatcher_send(self.opp, f"geo_json_events_delete_{external_id}")
 
 
 class GeoJsonLocationEvent(GeolocationEvent):

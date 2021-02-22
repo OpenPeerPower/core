@@ -319,7 +319,7 @@ class DeviceBroker:
                 self._entry.data[CONF_CLIENT_ID],
                 self._entry.data[CONF_CLIENT_SECRET],
             )
-            self..opp.config_entries.async_update_entry(
+            self.opp.config_entries.async_update_entry(
                 self._entry,
                 data={
                     **self._entry.data,
@@ -332,7 +332,7 @@ class DeviceBroker:
             )
 
         self._regenerate_token_remove = async_track_time_interval(
-            self..opp, regenerate_refresh_token, TOKEN_REFRESH_INTERVAL
+            self.opp, regenerate_refresh_token, TOKEN_REFRESH_INTERVAL
         )
 
         # Connect handler to incoming device events
@@ -390,7 +390,7 @@ class DeviceBroker:
                     "name": device.label,
                     "data": evt.data,
                 }
-                self..opp.bus.async_fire(EVENT_BUTTON, data)
+                self.opp.bus.async_fire(EVENT_BUTTON, data)
                 _LOGGER.debug("Fired button event: %s", data)
             else:
                 data = {
@@ -406,7 +406,7 @@ class DeviceBroker:
 
             updated_devices.add(device.device_id)
 
-        async_dispatcher_send(self..opp, SIGNAL_SMARTTHINGS_UPDATE, updated_devices)
+        async_dispatcher_send(self.opp, SIGNAL_SMARTTHINGS_UPDATE, updated_devices)
 
 
 class SmartThingsEntity(Entity):

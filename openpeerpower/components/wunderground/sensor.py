@@ -1245,7 +1245,7 @@ class WUndergroundData:
         self._longitude = longitude
         self._features = set()
         self.data = None
-        self._session = async_get_clientsession(self..opp)
+        self._session = async_get_clientsession(self.opp)
 
     def request_feature(self, feature):
         """Register feature to be fetched from WU API."""

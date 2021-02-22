@@ -58,7 +58,7 @@ class KaiterraApiData:
         except (ClientResponseError, asyncio.TimeoutError):
             _LOGGER.debug("Couldn't fetch data from Kaiterra API")
             self.data = {}
-            async_dispatcher_send(self..opp, DISPATCHER_KAITERRA)
+            async_dispatcher_send(self.opp, DISPATCHER_KAITERRA)
             return
 
         _LOGGER.debug("New data retrieved: %s", data)
@@ -102,4 +102,4 @@ class KaiterraApiData:
         except IndexError as err:
             _LOGGER.error("Parsing error %s", err)
 
-        async_dispatcher_send(self..opp, DISPATCHER_KAITERRA)
+        async_dispatcher_send(self.opp, DISPATCHER_KAITERRA)

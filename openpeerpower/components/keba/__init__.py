@@ -122,7 +122,7 @@ class KebaHandler(KebaKeContact):
 
     def start_periodic_request(self):
         """Start periodic data polling."""
-        self._polling_task = self..opp.loop.create_task(self._periodic_request())
+        self._polling_task = self.opp.loop.create_task(self._periodic_request())
 
     async def _periodic_request(self):
         """Send  periodic update requests."""
@@ -140,7 +140,7 @@ class KebaHandler(KebaKeContact):
             await asyncio.sleep(self._refresh_interval)
 
         _LOGGER.debug("Periodic data request rescheduled")
-        self._polling_task = self..opp.loop.create_task(self._periodic_request())
+        self._polling_task = self.opp.loop.create_task(self._periodic_request())
 
     async def setup(self, loop=None):
         """Initialize KebaHandler object."""
@@ -171,7 +171,7 @@ class KebaHandler(KebaKeContact):
         _LOGGER.debug("Fast polling enabled")
         self._fast_polling_count = 0
         self._polling_task.cancel()
-        self._polling_task = self..opp.loop.create_task(self._periodic_request())
+        self._polling_task = self.opp.loop.create_task(self._periodic_request())
 
     def add_update_listener(self, listener):
         """Add a listener for update notifications."""

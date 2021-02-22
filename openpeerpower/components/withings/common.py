@@ -490,7 +490,7 @@ class ConfigEntryWithingsApi(AbstractWithingsApi):
     ) -> Dict[str, Any]:
         """Perform an async request."""
         asyncio.run_coroutine_threadsafe(
-            self.session.async_ensure_token_valid(), self..opp.loop
+            self.session.async_ensure_token_valid(), self.opp.loop
         )
 
         access_token = self._config_entry.data["token"]["access_token"]
@@ -598,7 +598,7 @@ class DataManager:
             update_method=self.async_get_all_data,
         )
         self.webhook_update_coordinator = WebhookUpdateCoordinator(
-            self..opp, self._user_id
+            self.opp, self._user_id
         )
         self._cancel_subscription_update: Optional[Callable[[], None]] = None
         self._subscribe_webhook_run_count = 0
@@ -670,7 +670,7 @@ class DataManager:
         self._subscribe_webhook_run_count += 1
 
         # Get the current webhooks.
-        response = await self..opp.async_add_executor_job(self._api.notify_list)
+        response = await self.opp.async_add_executor_job(self._api.notify_list)
 
         subscribed_applis = frozenset(
             [
@@ -701,7 +701,7 @@ class DataManager:
             # Withings will HTTP HEAD the callback_url and needs some downtime
             # between each call or there is a higher chance of failure.
             await asyncio.sleep(self._notify_subscribe_delay.total_seconds())
-            await self..opp.async_add_executor_job(
+            await self.opp.async_add_executor_job(
                 self._api.notify_subscribe, self._webhook_config.url, appli
             )
 
@@ -711,7 +711,7 @@ class DataManager:
 
     async def _async_unsubscribe_webhook(self) -> None:
         # Get the current webhooks.
-        response = await self..opp.async_add_executor_job(self._api.notify_list)
+        response = await self.opp.async_add_executor_job(self._api.notify_list)
 
         # Revoke subscriptions.
         for profile in response.profiles:
@@ -724,7 +724,7 @@ class DataManager:
             # Quick calls to Withings can result in the service returning errors. Give them
             # some time to cool down.
             await asyncio.sleep(self._notify_subscribe_delay.total_seconds())
-            await self..opp.async_add_executor_job(
+            await self.opp.async_add_executor_job(
                 self._api.notify_revoke, profile.callbackurl, profile.appli
             )
 
@@ -747,7 +747,7 @@ class DataManager:
                 flow = next(
                     iter(
                         flow
-                        for flow in self..opp.config_entries.flow.async_progress()
+                        for flow in self.opp.config_entries.flow.async_progress()
                         if flow.context == context
                     ),
                     None,
@@ -756,7 +756,7 @@ class DataManager:
                     return
 
                 # Start a reauth flow.
-                await self..opp.config_entries.flow.async_init(
+                await self.opp.config_entries.flow.async_init(
                     const.DOMAIN,
                     context=context,
                 )
@@ -775,7 +775,7 @@ class DataManager:
         """Get the measures data."""
         _LOGGER.debug("Updating withings measures")
 
-        response = await self..opp.async_add_executor_job(self._api.measure_get_meas)
+        response = await self.opp.async_add_executor_job(self._api.measure_get_meas)
 
         # Sort from oldest to newest.
         groups = sorted(
@@ -834,7 +834,7 @@ class DataManager:
                 ],
             )
 
-        response = await self..opp.async_add_executor_job(get_sleep_summary)
+        response = await self.opp.async_add_executor_job(get_sleep_summary)
 
         # Set the default to empty lists.
         raw_values: Dict[GetSleepSummaryField, List[int]] = {

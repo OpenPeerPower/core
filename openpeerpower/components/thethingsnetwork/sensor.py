@@ -125,7 +125,7 @@ class TtnDataStorage:
     async def async_update(self):
         """Get the current state from The Things Network Data Storage."""
         try:
-            session = async_get_clientsession(self..opp)
+            session = async_get_clientsession(self.opp
             with async_timeout.timeout(DEFAULT_TIMEOUT):
                 response = await session.get(self._url, headers=self._headers)
 
