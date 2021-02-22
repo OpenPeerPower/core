@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the AEMET OpenData component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -32,14 +32,14 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
     await weather_coordinator.async_refresh()
 
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data[DOMAIN][config_entry.entry_id] = {
         ENTRY_NAME: name,
         ENTRY_WEATHER_COORDINATOR: weather_coordinator,
     }
 
     for component in COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -50,12 +50,12 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in COMPONENTS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok

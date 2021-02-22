@@ -36,7 +36,7 @@ CONDITION_SCHEMA = vol.Any(TOGGLE_CONDITION, MODE_CONDITION)
 
 
 async def async_get_conditions(
-    opp: OpenPeerPower, device_id: str
+    opp. OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions for Humidifier devices."""
     registry = await entity_registry.async_get_registry.opp)

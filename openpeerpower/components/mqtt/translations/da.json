@@ -17,7 +17,7 @@
                 },
                 "description": "Indtast venligst forbindelsesindstillinger for din MQTT-broker."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Aktiv\u00e9r opdagelse"
                 },

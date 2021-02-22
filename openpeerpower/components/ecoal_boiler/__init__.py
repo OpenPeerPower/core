@@ -97,7 +97,7 @@ def setup_opp, opp_config):
         )
         return False
     _LOGGER.debug("Detected controller version: %r @%s", ecoal_contr.version, host)
-   .opp.data[DATA_ECOAL_BOILER] = ecoal_contr
+    opp.data[DATA_ECOAL_BOILER] = ecoal_contr
     # Setup switches
     switches = conf[CONF_SWITCHES][CONF_MONITORED_CONDITIONS]
     load_platform.opp, "switch", DOMAIN, switches, opp_config)

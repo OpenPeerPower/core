@@ -38,7 +38,7 @@ def setup_opp, config):
     name = config[DOMAIN][CONF_NAME]
     modbus_client = opp.data[MODBUS_DOMAIN][config[DOMAIN][CONF_HUB]]
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         "name": name,
         "ste_data": StiebelEltronData(name, modbus_client),
     }

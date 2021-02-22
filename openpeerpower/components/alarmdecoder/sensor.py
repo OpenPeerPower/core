@@ -7,7 +7,7 @@ from .const import SIGNAL_PANEL_MESSAGE
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ):
     """Set up for AlarmDecoder sensor."""
 

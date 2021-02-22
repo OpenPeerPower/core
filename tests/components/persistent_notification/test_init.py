@@ -154,7 +154,7 @@ async def test_ws_get_notifications.opp, opp_ws_client):
     assert len(notifications) == 0
 
     # Create
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         "test", notification_id="Beer 2"
     )
     await client.send_json({"id": 6, "type": "persistent_notification/get"})
@@ -182,7 +182,7 @@ async def test_ws_get_notifications.opp, opp_ws_client):
     assert notifications[0]["status"] == pn.STATUS_READ
 
     # Dismiss
-   .opp.components.persistent_notification.async_dismiss("Beer 2")
+    opp.components.persistent_notification.async_dismiss("Beer 2")
     await client.send_json({"id": 8, "type": "persistent_notification/get"})
     msg = await client.receive_json()
     notifications = msg["result"]

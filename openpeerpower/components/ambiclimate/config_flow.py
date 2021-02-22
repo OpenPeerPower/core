@@ -30,9 +30,9 @@ def register_flow_implementation.opp, client_id, client_secret):
     client_id: Client id.
     client_secret: Client secret.
     """
-   .opp.data.setdefault(DATA_AMBICLIMATE_IMPL, {})
+    opp.data.setdefault(DATA_AMBICLIMATE_IMPL, {})
 
-   .opp.data[DATA_AMBICLIMATE_IMPL] = {
+    opp.data[DATA_AMBICLIMATE_IMPL] = {
         CONF_CLIENT_ID: client_id,
         CONF_CLIENT_SECRET: client_secret,
     }
@@ -149,9 +149,9 @@ class AmbiclimateAuthCallbackView(OpenPeerPowerView):
         code = request.query.get("code")
         if code is None:
             return "No code"
-        opp =request.app[.opp"]
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.=request.app[.opp"]
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": "code"}, data=code
             )
         )

@@ -43,7 +43,7 @@ def setup_opp, config):
     _LOGGER.info("Creating new Dyson component")
 
     if DYSON_DEVICES not in.opp.data:
-       .opp.data[DYSON_DEVICES] = []
+        opp.data[DYSON_DEVICES] = []
 
     dyson_account = DysonAccount(
         config[DOMAIN].get(CONF_USERNAME),
@@ -73,7 +73,7 @@ def setup_opp, config):
                     connected = dyson_device.connect(device["device_ip"])
                     if connected:
                         _LOGGER.info("Connected to device %s", dyson_device)
-                       .opp.data[DYSON_DEVICES].append(dyson_device)
+                        opp.data[DYSON_DEVICES].append(dyson_device)
                     else:
                         _LOGGER.warning("Unable to connect to device %s", dyson_device)
                 except OSError as ose:
@@ -98,7 +98,7 @@ def setup_opp, config):
             connected = device.auto_connect(timeout, retry)
             if connected:
                 _LOGGER.info("Connected to device %s", device)
-               .opp.data[DYSON_DEVICES].append(device)
+                opp.data[DYSON_DEVICES].append(device)
             else:
                 _LOGGER.warning("Unable to connect to device %s", device)
 

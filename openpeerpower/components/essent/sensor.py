@@ -39,7 +39,7 @@ def setup_platform.opp, config, add_devices, discovery_info=None):
             )
 
     if not meters:
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             "Couldn't find any meter readings. "
             "Please ensure Verbruiks Manager is enabled in Mijn Essent "
             "and at least one reading has been logged to Meterstanden.",

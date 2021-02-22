@@ -186,7 +186,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
     if conf is None:
         conf = {}
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     # User has configured bridges
     if CONF_BRIDGES not in conf:
@@ -198,8 +198,8 @@ async def async_setup_opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
         host = bridge_conf[CONF_HOST]
         LOGGER.debug("Starting config entry flow host=%s conf=%s", host, bridge_conf)
 
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": config_entries.SOURCE_IMPORT},
                 data=bridge_conf,
@@ -223,7 +223,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
                 data[ATTR_AREA], data.get(ATTR_CHANNEL)
             )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_REQUEST_AREA_PRESET,
         dynalite_service,
@@ -236,7 +236,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
         ),
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_REQUEST_CHANNEL_LEVEL,
         dynalite_service,
@@ -265,15 +265,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     LOGGER.debug("Setting up entry %s", entry.data)
     bridge = DynaliteBridge.opp, entry.data)
     # need to do it before the listener
-   .opp.data[DOMAIN][entry.entry_id] = bridge
+    opp.data[DOMAIN][entry.entry_id] = bridge
     entry.add_update_listener(async_entry_changed)
     if not await bridge.async_setup():
         LOGGER.error("Could not set up bridge for entry %s", entry.data)
-       .opp.data[DOMAIN][entry.entry_id] = None
+        opp.data[DOMAIN][entry.entry_id] = None
         raise ConfigEntryNotReady
     for platform in ENTITY_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
     return True
 
@@ -281,9 +281,9 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     LOGGER.debug("Unloading entry %s", entry.data)
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN].pop(entry.entry_id)
     tasks = [
-       .opp.config_entries.async_forward_entry_unload(entry, platform)
+        opp.config_entries.async_forward_entry_unload(entry, platform)
         for platform in ENTITY_PLATFORMS
     ]
     results = await asyncio.gather(*tasks)

@@ -12,7 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @bind.opp
 async def async_process_integration_platforms(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     platform_name: str,
     # Any = platform.
     process_platform: Callable[[OpenPeerPower, str, Any], Awaitable[None]],
@@ -48,7 +48,7 @@ async def async_process_integration_platforms(
         """Handle a new component loaded."""
         await _process(event.data[ATTR_COMPONENT])
 
-   .opp.bus.async_listen(EVENT_COMPONENT_LOADED, async_component_loaded)
+    opp.bus.async_listen(EVENT_COMPONENT_LOADED, async_component_loaded)
 
     tasks = [_process(comp) for comp in.opp.config.components]
 

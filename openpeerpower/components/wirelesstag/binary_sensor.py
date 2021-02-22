@@ -81,7 +81,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                 sensors.append(WirelessTagBinarySensor(platform, tag, sensor_type))
 
     add_entities(sensors, True)
-   .opp.add_job(platform.install_push_notifications, sensors)
+    opp.add_job(platform.install_push_notifications, sensors)
 
 
 class WirelessTagBinarySensor(WirelessTagBaseSensor, BinarySensorEntity):

@@ -76,7 +76,7 @@ async def test_power_plugs.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(POWER_PLUGS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -138,7 +138,7 @@ async def test_sirens.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(SIRENS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 

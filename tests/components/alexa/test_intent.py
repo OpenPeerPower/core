@@ -30,11 +30,11 @@ def alexa_client(loop, opp, opp_client):
     def mock_service(call):
         calls.append(call)
 
-   .opp.services.async_register("test", "alexa", mock_service)
+    opp.services.async_register("test", "alexa", mock_service)
 
     assert loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             alexa.DOMAIN,
             {
                 # Key is here to verify we allow other keys in config too
@@ -45,7 +45,7 @@ def alexa_client(loop, opp, opp_client):
     )
     assert loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             "intent_script",
             {
                 "intent_script": {
@@ -371,8 +371,8 @@ async def test_intent_request_without_slots.opp, alexa_client):
 
     assert text == "Anne Therese is at unknown and Paulus is at unknown"
 
-   .opp.states.async_set("device_tracker.paulus", "home")
-   .opp.states.async_set("device_tracker.anne_therese", "home")
+    opp.states.async_set("device_tracker.paulus", "home")
+    opp.states.async_set("device_tracker.anne_therese", "home")
 
     req = await _intent_req(alexa_client, data)
     assert req.status == 200

@@ -48,20 +48,20 @@ def setup_opp: core.OpenPeerPower, config: dict):
 
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
-       .opp.services.register(DOMAIN, service, service_handler, schema=schema)
+        opp.services.register(DOMAIN, service, service_handler, schema=schema)
 
     return True
 
 
 async def async_setup_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the denonavr components from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     # Connect to receiver
     connect_denonavr = ConnectDenonAVR(
-        opp,
+        opp.
         entry.data[CONF_HOST],
         DEFAULT_TIMEOUT,
         entry.options.get(CONF_SHOW_ALL_SOURCES, DEFAULT_SHOW_SOURCES),
@@ -74,27 +74,27 @@ async def async_setup_entry(
 
     undo_listener = entry.add_update_listener(update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         CONF_RECEIVER: receiver,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "media_player")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "media_player")
     )
 
     return True
 
 
 async def async_unload_entry(
-   .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     unload_ok = await opp.config_entries.async_forward_entry_unload(
         config_entry, "media_player"
     )
 
-   .opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     # Remove zone2 and zone3 entities if needed
     entity_registry = await er.async_get_registry.opp)
@@ -110,13 +110,13 @@ async def async_unload_entry(
             _LOGGER.debug("Removing zone3 from DenonAvr")
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 
 
 async def update_listener(
-   .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Handle options update."""
     await opp.config_entries.async_reload(config_entry.entry_id)

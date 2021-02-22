@@ -111,7 +111,7 @@ class ZHAGroup(LogMixin):
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         zha_gateway: ZhaGatewayType,
         zigpy_group: ZigpyGroupType,
     ):

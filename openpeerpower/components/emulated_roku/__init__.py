@@ -53,8 +53,8 @@ async def async_setup_opp, config):
 
     for entry in conf[CONF_SERVERS]:
         if entry[CONF_NAME] not in existing_servers:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=entry
                 )
             )
@@ -67,7 +67,7 @@ async def async_setup_entry.opp, config_entry):
     config = config_entry.data
 
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
 
     name = config[CONF_NAME]
     listen_port = config[CONF_LISTEN_PORT]
@@ -77,7 +77,7 @@ async def async_setup_entry.opp, config_entry):
     upnp_bind_multicast = config.get(CONF_UPNP_BIND_MULTICAST)
 
     server = EmulatedRoku(
-        opp,
+        opp.
         name,
         host_ip,
         listen_port,
@@ -86,7 +86,7 @@ async def async_setup_entry.opp, config_entry):
         upnp_bind_multicast,
     )
 
-   .opp.data[DOMAIN][name] = server
+    opp.data[DOMAIN][name] = server
 
     return await server.setup()
 

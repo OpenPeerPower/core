@@ -65,7 +65,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,
@@ -86,7 +86,7 @@ async def async_attach_trigger(
     }
     zone_config = zone.TRIGGER_SCHEMA(zone_config)
     return await zone.async_attach_trigger(
-        opp, zone_config, action, automation_info, platform_type="device"
+        opp. zone_config, action, automation_info, platform_type="device"
     )
 
 

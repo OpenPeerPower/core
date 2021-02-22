@@ -34,8 +34,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     if DOMAIN not in config:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=config[DOMAIN],
@@ -47,7 +47,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up upon config entry in user interface."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     conf = entry.data
     username = conf[CONF_USERNAME]
@@ -61,11 +61,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         _LOGGER.error("TotalConnect authentication failed")
         return False
 
-   .opp.data[DOMAIN][entry.entry_id] = client
+    opp.data[DOMAIN][entry.entry_id] = client
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -76,12 +76,12 @@ async def async_unload_entry.opp, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

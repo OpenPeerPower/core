@@ -32,9 +32,9 @@ INTERVAL = timedelta(minutes=60)
 
 async def async_setup_opp, config):
     """Set up the EcoNet component."""
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][API_CLIENT] = {}
-   .opp.data[DOMAIN][EQUIPMENT] = {}
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][API_CLIENT] = {}
+    opp.data[DOMAIN][EQUIPMENT] = {}
     return True
 
 
@@ -57,12 +57,12 @@ async def async_setup_entry.opp, config_entry):
         equipment = await api.get_equipment_by_type([EquipmentType.WATER_HEATER])
     except (ClientError, GenericHTTPError, InvalidResponseFormat) as err:
         raise ConfigEntryNotReady from err
-   .opp.data[DOMAIN][API_CLIENT][config_entry.entry_id] = api
-   .opp.data[DOMAIN][EQUIPMENT][config_entry.entry_id] = equipment
+    opp.data[DOMAIN][API_CLIENT][config_entry.entry_id] = api
+    opp.data[DOMAIN][EQUIPMENT][config_entry.entry_id] = equipment
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     api.subscribe()
@@ -92,14 +92,14 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, entry):
     """Unload a EcoNet config entry."""
     tasks = [
-       .opp.config_entries.async_forward_entry_unload(entry, component)
+        opp.config_entries.async_forward_entry_unload(entry, component)
         for component in PLATFORMS
     ]
 
     await asyncio.gather(*tasks)
 
-   .opp.data[DOMAIN][API_CLIENT].pop(entry.entry_id)
-   .opp.data[DOMAIN][EQUIPMENT].pop(entry.entry_id)
+    opp.data[DOMAIN][API_CLIENT].pop(entry.entry_id)
+    opp.data[DOMAIN][EQUIPMENT].pop(entry.entry_id)
 
     return True
 

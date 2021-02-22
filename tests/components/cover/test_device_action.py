@@ -228,7 +228,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
     assert len(actions) == 3  # open, close, stop
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         assert capabilities == {"extra_fields": []}
 
@@ -268,7 +268,7 @@ async def test_get_action_capabilities_set_pos.opp, device_reg, entity_reg):
     assert len(actions) == 1  # set_position
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         if action["type"] == "set_position":
             assert capabilities == expected_capabilities
@@ -311,7 +311,7 @@ async def test_get_action_capabilities_set_tilt_pos.opp, device_reg, entity_reg)
     assert len(actions) == 4  # open, close, stop, set_tilt_position
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         if action["type"] == "set_tilt_position":
             assert capabilities == expected_capabilities
@@ -326,7 +326,7 @@ async def test_action.opp):
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -366,19 +366,19 @@ async def test_action.opp):
     close_calls = async_mock_service.opp, "cover", "close_cover")
     stop_calls = async_mock_service.opp, "cover", "stop_cover")
 
-   .opp.bus.async_fire("test_event_open")
+    opp.bus.async_fire("test_event_open")
     await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 0
     assert len(stop_calls) == 0
 
-   .opp.bus.async_fire("test_event_close")
+    opp.bus.async_fire("test_event_close")
     await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
     assert len(stop_calls) == 0
 
-   .opp.bus.async_fire("test_event_stop")
+    opp.bus.async_fire("test_event_stop")
     await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
@@ -392,7 +392,7 @@ async def test_action_tilt.opp):
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -422,17 +422,17 @@ async def test_action_tilt.opp):
     open_calls = async_mock_service.opp, "cover", "open_cover_tilt")
     close_calls = async_mock_service.opp, "cover", "close_cover_tilt")
 
-   .opp.bus.async_fire("test_event_open")
+    opp.bus.async_fire("test_event_open")
     await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 0
 
-   .opp.bus.async_fire("test_event_close")
+    opp.bus.async_fire("test_event_close")
     await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
 
-   .opp.bus.async_fire("test_event_stop")
+    opp.bus.async_fire("test_event_stop")
     await opp.async_block_till_done()
     assert len(open_calls) == 1
     assert len(close_calls) == 1
@@ -445,7 +445,7 @@ async def test_action_set_position.opp):
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -483,13 +483,13 @@ async def test_action_set_position.opp):
     cover_pos_calls = async_mock_service.opp, "cover", "set_cover_position")
     tilt_pos_calls = async_mock_service.opp, "cover", "set_cover_tilt_position")
 
-   .opp.bus.async_fire("test_event_set_pos")
+    opp.bus.async_fire("test_event_set_pos")
     await opp.async_block_till_done()
     assert len(cover_pos_calls) == 1
     assert cover_pos_calls[0].data["position"] == 25
     assert len(tilt_pos_calls) == 0
 
-   .opp.bus.async_fire("test_event_set_tilt_pos")
+    opp.bus.async_fire("test_event_set_tilt_pos")
     await opp.async_block_till_done()
     assert len(cover_pos_calls) == 1
     assert len(tilt_pos_calls) == 1

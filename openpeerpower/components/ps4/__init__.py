@@ -51,10 +51,10 @@ class PS4Data:
 
 async def async_setup_opp, config):
     """Set up the PS4 Component."""
-   .opp.data[PS4_DATA] = PS4Data()
+    opp.data[PS4_DATA] = PS4Data()
 
     transport, protocol = await async_create_ddp_endpoint()
-   .opp.data[PS4_DATA].protocol = protocol
+    opp.data[PS4_DATA].protocol = protocol
     _LOGGER.debug("PS4 DDP endpoint created: %s, %s", transport, protocol)
     service_handle.opp)
     return True
@@ -62,8 +62,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up PS4 from a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "media_player")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "media_player")
     )
     return True
 
@@ -90,7 +90,7 @@ async def async_migrate_entry.opp, entry):
     # Migrate Version 1 -> Version 2: New region codes.
     if version == 1:
         loc = await location.async_detect_location_info(
-           .opp.helpers.aiohttp_client.async_get_clientsession()
+            opp.helpers.aiohttp_client.async_get_clientsession()
         )
         if loc:
             country = loc.country_name
@@ -143,7 +143,7 @@ async def async_migrate_entry.opp, entry):
             Please remove the PS4 Integration and re-configure
             [here](/config/integrations)."""
 
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         title="PlayStation 4 Integration Configuration Requires Update",
         message=msg,
         notification_id="config_entry_migration",
@@ -219,6 +219,6 @@ def service_handle.opp: OpenPeerPowerType):
             if device.entity_id in entity_ids:
                 await device.async_send_command(command)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_COMMAND, async_service_command, schema=PS4_COMMAND_SCHEMA
     )

@@ -37,7 +37,7 @@ class VerisureSmartcam(Camera):
         self._directory_path = directory_path
         self._image = None
         self._image_id = None
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.delete_image)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.delete_image)
 
     def camera_image(self):
         """Return image response."""

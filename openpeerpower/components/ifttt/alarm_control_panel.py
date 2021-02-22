@@ -75,7 +75,7 @@ PUSH_ALARM_STATE_SERVICE_SCHEMA = vol.Schema(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up a control panel managed through IFTTT."""
     if DATA_IFTTT_ALARM not in.opp.data:
-       .opp.data[DATA_IFTTT_ALARM] = []
+        opp.data[DATA_IFTTT_ALARM] = []
 
     name = config.get(CONF_NAME)
     code = config.get(CONF_CODE)
@@ -96,7 +96,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         event_disarm,
         optimistic,
     )
-   .opp.data[DATA_IFTTT_ALARM].append(alarmpanel)
+    opp.data[DATA_IFTTT_ALARM].append(alarmpanel)
     add_entities([alarmpanel])
 
     async def push_state_update(service):
@@ -111,7 +111,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             device.push_alarm_state(state)
             device.async_schedule_update_op_state()
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_PUSH_ALARM_STATE,
         push_state_update,

@@ -27,12 +27,12 @@ from .helpers import migrate_old_unique_ids
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[list], None],
 ) -> bool:
     """Set up the ISY994 cover platform."""
-   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     devices = []
     for node in.opp_isy_data[ISY994_NODES][COVER]:
         devices.append(ISYCoverEntity(node))

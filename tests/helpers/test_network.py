@@ -28,7 +28,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: http://example.local:8123
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -55,7 +55,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
         with pytest.raises(NoURLAvailableError):
             _get_internal_url(
-                opp, require_current_request=True, require_standard_port=True
+                opp. require_current_request=True, require_standard_port=True
             )
 
         with pytest.raises(NoURLAvailableError):
@@ -69,7 +69,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: https://example.local:8123
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "https://example.local:8123"},
     )
 
@@ -83,7 +83,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: http://example.local:80/
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local:80/"},
     )
 
@@ -97,7 +97,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: https://example.local:443
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "https://example.local:443"},
     )
 
@@ -111,7 +111,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: https://192.168.0.1
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "https://192.168.0.1"},
     )
 
@@ -125,7 +125,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: http://192.168.0.1:8123
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://192.168.0.1:8123"},
     )
 
@@ -154,7 +154,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
         with pytest.raises(NoURLAvailableError):
             _get_internal_url(
-                opp, require_current_request=True, require_standard_port=True
+                opp. require_current_request=True, require_standard_port=True
             )
 
         with pytest.raises(NoURLAvailableError):
@@ -165,7 +165,7 @@ async def test_get_url_internal_fallback.opp: OpenPeerPower):
     """Test getting an instance URL when the user has not set an internal URL."""
     assert.opp.config.internal_url is None
 
-   .opp.config.api = Mock(use_ssl=False, port=8123, local_ip="192.168.123.123")
+    opp.config.api = Mock(use_ssl=False, port=8123, local_ip="192.168.123.123")
     assert _get_internal_url.opp) == "http://192.168.123.123:8123"
 
     with pytest.raises(NoURLAvailableError):
@@ -177,7 +177,7 @@ async def test_get_url_internal_fallback.opp: OpenPeerPower):
     with pytest.raises(NoURLAvailableError):
         _get_internal_url.opp, require_ssl=True)
 
-   .opp.config.api = Mock(use_ssl=False, port=80, local_ip="192.168.123.123")
+    opp.config.api = Mock(use_ssl=False, port=80, local_ip="192.168.123.123")
     assert _get_internal_url.opp) == "http://192.168.123.123"
     assert (
         _get_internal_url.opp, require_standard_port=True) == "http://192.168.123.123"
@@ -189,7 +189,7 @@ async def test_get_url_internal_fallback.opp: OpenPeerPower):
     with pytest.raises(NoURLAvailableError):
         _get_internal_url.opp, require_ssl=True)
 
-   .opp.config.api = Mock(use_ssl=True, port=443)
+    opp.config.api = Mock(use_ssl=True, port=443)
     with pytest.raises(NoURLAvailableError):
         _get_internal_url.opp)
 
@@ -203,7 +203,7 @@ async def test_get_url_internal_fallback.opp: OpenPeerPower):
         _get_internal_url.opp, require_ssl=True)
 
     # Do no accept any local loopback address as fallback
-   .opp.config.api = Mock(use_ssl=False, port=80, local_ip="127.0.0.1")
+    opp.config.api = Mock(use_ssl=False, port=80, local_ip="127.0.0.1")
     with pytest.raises(NoURLAvailableError):
         _get_internal_url.opp)
 
@@ -226,7 +226,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: http://example.com:8123
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "http://example.com:8123"},
     )
 
@@ -255,7 +255,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
         with pytest.raises(NoURLAvailableError):
             _get_external_url(
-                opp, require_current_request=True, require_standard_port=True
+                opp. require_current_request=True, require_standard_port=True
             )
 
         with pytest.raises(NoURLAvailableError):
@@ -269,7 +269,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: http://example.com:80/
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "http://example.com:80/"},
     )
 
@@ -285,7 +285,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external url: https://example.com:443/
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://example.com:443/"},
     )
     assert.opp.config.external_url == "https://example.com:443/"
@@ -298,7 +298,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: https://example.com:80
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://example.com:80"},
     )
     assert.opp.config.external_url == "https://example.com:80"
@@ -313,7 +313,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: https://192.168.0.1
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://192.168.0.1"},
     )
     assert.opp.config.external_url == "https://192.168.0.1"
@@ -346,10 +346,10 @@ async def test_get_url_external.opp: OpenPeerPower):
 async def test_get_cloud_url.opp: OpenPeerPower):
     """Test getting an instance URL when the user has set an external URL."""
     assert.opp.config.external_url is None
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
 
     with patch.object(
-       .opp.components.cloud,
+        opp.components.cloud,
         "async_remote_ui_url",
         return_value="https://example.nabu.casa",
     ):
@@ -374,7 +374,7 @@ async def test_get_cloud_url.opp: OpenPeerPower):
             _get_cloud_url.opp, require_current_request=True)
 
     with patch.object(
-       .opp.components.cloud,
+        opp.components.cloud,
         "async_remote_ui_url",
         side_effect=cloud.CloudNotAvailable,
     ):
@@ -388,7 +388,7 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
 
     # Test with external URL: http://1.1.1.1:8123
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "http://1.1.1.1:8123"},
     )
 
@@ -396,9 +396,9 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
     assert _get_external_url.opp, prefer_cloud=True) == "http://1.1.1.1:8123"
 
     # Add Cloud to the previous test
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
     with patch.object(
-       .opp.components.cloud,
+        opp.components.cloud,
         "async_remote_ui_url",
         return_value="https://example.nabu.casa",
     ):
@@ -414,7 +414,7 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
 
     # Test with external URL: https://example.com
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://example.com"},
     )
 
@@ -422,9 +422,9 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
     assert _get_external_url.opp, prefer_cloud=True) == "https://example.com"
 
     # Add Cloud to the previous test
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
     with patch.object(
-       .opp.components.cloud,
+        opp.components.cloud,
         "async_remote_ui_url",
         return_value="https://example.nabu.casa",
     ):
@@ -450,7 +450,7 @@ async def test_get_url.opp: OpenPeerPower):
     with pytest.raises(NoURLAvailableError):
         get_url.opp)
 
-   .opp.config.api = Mock(use_ssl=False, port=8123, local_ip="192.168.123.123")
+    opp.config.api = Mock(use_ssl=False, port=8123, local_ip="192.168.123.123")
     assert get_url.opp) == "http://192.168.123.123:8123"
     assert get_url.opp, prefer_external=True) == "http://192.168.123.123:8123"
 
@@ -458,9 +458,9 @@ async def test_get_url.opp: OpenPeerPower):
         get_url.opp, allow_internal=False)
 
     # Test only external
-   .opp.config.api = None
+    opp.config.api = None
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://example.com"},
     )
     assert.opp.config.external_url == "https://example.com"
@@ -469,7 +469,7 @@ async def test_get_url.opp: OpenPeerPower):
 
     # Test preference or allowance
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local", "external_url": "https://example.com"},
     )
     assert.opp.config.external_url == "https://example.com"
@@ -535,10 +535,10 @@ async def test_get_request_host.opp: OpenPeerPower):
 
 
 async def test_get_current_request_url_with_known_host(
-    opp: OpenPeerPower, current_request
+    opp. OpenPeerPower, current_request
 ):
     """Test getting current request URL with known hosts addresses."""
-   .opp.config.api = Mock(use_ssl=False, port=8123, local_ip="127.0.0.1")
+    opp.config.api = Mock(use_ssl=False, port=8123, local_ip="127.0.0.1")
     assert.opp.config.internal_url is None
 
     with pytest.raises(NoURLAvailableError):
@@ -563,9 +563,9 @@ async def test_get_current_request_url_with_known_host(
             get_url.opp, require_current_request=True, allow_ip=False)
 
     # Ensure hostname from Supervisor is accepted transparently
-    mock_component.opp, .oppio")
-   .opp.components.oppio.is.oppio = Mock(return_value=True)
-   .opp.components.oppio.get_host_info = Mock(
+    mock_component.opp,  opp.o")
+    opp.components.oppio.is.oppio = Mock(return_value=True)
+    opp.components.oppio.get_host_info = Mock(
         return_value={"hostname": "openpeerpower"}
     )
 
@@ -596,7 +596,7 @@ async def test_is_internal_request.opp: OpenPeerPower):
     """Test if accessing an instance on its internal URL."""
     # Test with internal URL: http://example.local:8123
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -616,7 +616,7 @@ async def test_is_internal_request.opp: OpenPeerPower):
 
     # Test with internal URL: http://192.168.0.1:8123
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://192.168.0.1:8123"},
     )
 

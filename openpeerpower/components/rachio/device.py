@@ -119,14 +119,14 @@ class RachioPerson:
                     iro.resume_watering()
 
         if can_pause:
-           .opp.services.register(
+            opp.services.register(
                 DOMAIN,
                 SERVICE_PAUSE_WATERING,
                 pause_water,
                 schema=PAUSE_SERVICE_SCHEMA,
             )
 
-           .opp.services.register(
+            opp.services.register(
                 DOMAIN,
                 SERVICE_RESUME_WATERING,
                 resume_water,

@@ -28,12 +28,12 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     for zone_num in configured_zones:
         device_config_data = ZONE_SCHEMA(configured_zones[zone_num])
         device = EnvisalinkBinarySensor(
-            opp,
+            opp.
             zone_num,
             device_config_data[CONF_ZONENAME],
             device_config_data[CONF_ZONETYPE],
-           .opp.data[DATA_EVL].alarm_state["zone"][zone_num],
-           .opp.data[DATA_EVL],
+            opp.data[DATA_EVL].alarm_state["zone"][zone_num],
+            opp.data[DATA_EVL],
         )
         devices.append(device)
 

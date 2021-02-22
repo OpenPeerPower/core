@@ -35,7 +35,7 @@ ALL_IMAGES = [
     "odroid-n2",
     "odroid-xu",
 ]
-ALL_SOURCES = ["local", "pypi", .oppio", "docker", "haio"]
+ALL_SOURCES = ["local", "pypi",  opp.o", "docker", "haio"]
 
 CONF_BETA = "beta"
 CONF_IMAGE = "image"

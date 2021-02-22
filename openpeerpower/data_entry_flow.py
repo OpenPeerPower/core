@@ -55,7 +55,7 @@ class FlowManager(abc.ABC):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
     ) -> None:
         """Initialize the flow manager."""
         self.opp = opp
@@ -268,7 +268,7 @@ class FlowHandler:
     cur_step: Optional[Dict[str, str]] = None
     # Ignore types, pylint workaround: https://github.com/PyCQA/pylint/issues/3167
     flow_id: str = None  # type: ignore
-    opp: OpenPeerPower = None  # type: ignore
+    opp. OpenPeerPower = None  # type: ignore
     handler: str = None  # type: ignore
     # Pylint workaround: https://github.com/PyCQA/pylint/issues/3167
     # Ensure the attribute has a subscriptable, but immutable, default value.

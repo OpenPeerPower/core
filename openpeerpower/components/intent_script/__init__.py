@@ -52,7 +52,7 @@ async def async_setup_opp, config):
     for intent_type, conf in intents.items():
         if CONF_ACTION in conf:
             conf[CONF_ACTION] = script.Script(
-                opp, conf[CONF_ACTION], f"Intent Script {intent_type}", DOMAIN
+                opp. conf[CONF_ACTION], f"Intent Script {intent_type}", DOMAIN
             )
         intent.async_register.opp, ScriptIntentHandler(intent_type, conf))
 

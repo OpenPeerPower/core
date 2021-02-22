@@ -96,7 +96,7 @@ async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             raise UpdateFailed("Smile update failed") from err
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=f"Smile {api.smile_name}",
         update_method=async_update_data,
@@ -112,11 +112,11 @@ async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     if entry.unique_id is None:
         if api.smile_version[0] != "1.8.0":
-           .opp.config_entries.async_update_entry(entry, unique_id=api.smile_hostname)
+            opp.config_entries.async_update_entry(entry, unique_id=api.smile_hostname)
 
     undo_listener = entry.add_update_listener(_update_listener)
 
-   .opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         "api": api,
         COORDINATOR: coordinator,
         PW_TYPE: GATEWAY,
@@ -140,8 +140,8 @@ async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         platforms = SENSOR_PLATFORMS
 
     for component in platforms:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -160,16 +160,16 @@ async def async_unload_entry_gw.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS_GATEWAY
             ]
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

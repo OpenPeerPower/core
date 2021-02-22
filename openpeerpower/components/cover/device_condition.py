@@ -203,7 +203,7 @@ def async_condition_from_config(
         value_template.opp = opp
 
         return condition.async_numeric_state(
-            opp, config[ATTR_ENTITY_ID], max_pos, min_pos, value_template
+            opp. config[ATTR_ENTITY_ID], max_pos, min_pos, value_template
         )
 
     return template_if

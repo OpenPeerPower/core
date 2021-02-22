@@ -26,7 +26,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_switch_state(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the WLED switches."""
     await init_integration.opp, aioclient_mock)
@@ -67,7 +67,7 @@ async def test_switch_state(
 
 
 async def test_switch_change_state(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the change of state of the WLED switches."""
     await init_integration.opp, aioclient_mock)
@@ -137,7 +137,7 @@ async def test_switch_change_state(
 
 
 async def test_switch_error(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test error handling of the WLED switches."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)
@@ -158,7 +158,7 @@ async def test_switch_error(
 
 
 async def test_switch_connection_error(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test error handling of the WLED switches."""
     await init_integration.opp, aioclient_mock)

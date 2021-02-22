@@ -70,13 +70,13 @@ def setup_opp, config):
 
     _LOGGER.debug("Establishing connection to XS1 gateway and retrieving data...")
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     actuators = xs1.get_all_actuators(enabled=True)
     sensors = xs1.get_all_sensors(enabled=True)
 
-   .opp.data[DOMAIN][ACTUATORS] = actuators
-   .opp.data[DOMAIN][SENSORS] = sensors
+    opp.data[DOMAIN][ACTUATORS] = actuators
+    opp.data[DOMAIN][SENSORS] = sensors
 
     _LOGGER.debug("Loading components for XS1 platform...")
     # Load components for supported devices

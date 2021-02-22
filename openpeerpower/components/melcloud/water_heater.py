@@ -22,7 +22,7 @@ from .const import ATTR_STATUS
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ):
     """Set up MelCloud device climate based on config_entry."""
     mel_devices = opp.data[DOMAIN][entry.entry_id]

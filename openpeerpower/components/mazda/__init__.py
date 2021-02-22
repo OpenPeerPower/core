@@ -34,7 +34,7 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Mazda Connected Services component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -50,8 +50,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     try:
         await mazda_client.validate_credentials()
     except MazdaAuthenticationException:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_REAUTH},
                 data=entry.data,
@@ -88,8 +88,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
             return vehicles
         except MazdaAuthenticationException as ex:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": SOURCE_REAUTH},
                     data=entry.data,
@@ -103,14 +103,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             raise UpdateFailed(ex) from ex
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=DOMAIN,
         update_method=async_update_data,
         update_interval=timedelta(seconds=60),
     )
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_CLIENT: mazda_client,
         DATA_COORDINATOR: coordinator,
     }
@@ -122,8 +122,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Setup components
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -134,13 +134,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

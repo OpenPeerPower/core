@@ -71,14 +71,14 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     categories = config[CONF_CATEGORIES]
     # Initialize the entity manager.
     feed = QldBushfireFeedEntityManager(
-        opp, add_entities, scan_interval, coordinates, radius_in_km, categories
+        opp. add_entities, scan_interval, coordinates, radius_in_km, categories
     )
 
     def start_feed_manager(event):
         """Start feed manager."""
         feed.startup()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_feed_manager)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_feed_manager)
 
 
 class QldBushfireFeedEntityManager:

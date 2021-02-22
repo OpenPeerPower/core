@@ -64,7 +64,7 @@ async def test_create_entry_when_host_valid.opp, controller):
 
 async def test_create_entry_when_friendly_name_valid.opp, controller):
     """Test result type is create entry when friendly name is valid."""
-   .opp.data[DATA_DISCOVERED_HOSTS] = {"Office (127.0.0.1)": "127.0.0.1"}
+    opp.data[DATA_DISCOVERED_HOSTS] = {"Office (127.0.0.1)": "127.0.0.1"}
     data = {CONF_HOST: "Office (127.0.0.1)"}
     with patch("openpeerpower.components.heos.async_setup_entry", return_value=True):
         result = await opp.config_entries.flow.async_init(
@@ -109,7 +109,7 @@ async def test_discovery_shows_create_form.opp, controller, discovery_data):
 
 
 async def test_discovery_flow_aborts_already_setup(
-    opp, controller, discovery_data, config_entry
+    opp. controller, discovery_data, config_entry
 ):
     """Test discovery flow aborts when entry already setup."""
     config_entry.add_to.opp.opp)

@@ -8,7 +8,7 @@ async def test_immediate_works.opp):
     """Test immediate works."""
     calls = []
     debouncer = debounce.Debouncer(
-        opp,
+        opp.
         None,
         cooldown=0.01,
         immediate=True,
@@ -61,7 +61,7 @@ async def test_not_immediate_works.opp):
     """Test immediate works."""
     calls = []
     debouncer = debounce.Debouncer(
-        opp,
+        opp.
         None,
         cooldown=0.01,
         immediate=False,
@@ -115,7 +115,7 @@ async def test_immediate_works_with_function_swapped.opp):
     two_function = AsyncMock(side_effect=lambda: calls.append(2))
 
     debouncer = debounce.Debouncer(
-        opp,
+        opp.
         None,
         cooldown=0.01,
         immediate=True,

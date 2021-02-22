@@ -69,7 +69,7 @@ def _discover.opp, config, component_name, found_tellcore_devices):
     signal_repetitions = config[DOMAIN].get(CONF_SIGNAL_REPETITIONS)
 
     discovery.load_platform(
-        opp,
+        opp.
         component_name,
         DOMAIN,
         {
@@ -98,7 +98,7 @@ def setup_opp, config):
             """Event handler to stop the client."""
             net_client.stop()
 
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_tellcore_net)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_tellcore_net)
 
     try:
         tellcore_lib = TelldusCore(
@@ -112,11 +112,11 @@ def setup_opp, config):
     tellcore_devices = tellcore_lib.devices()
 
     # Register devices
-   .opp.data[DATA_TELLSTICK] = {device.id: device for device in tellcore_devices}
+    opp.data[DATA_TELLSTICK] = {device.id: device for device in tellcore_devices}
 
     # Discover the lights
     _discover(
-        opp,
+        opp.
         config,
         "light",
         [device.id for device in tellcore_devices if device.methods(TELLSTICK_DIM)],
@@ -124,7 +124,7 @@ def setup_opp, config):
 
     # Discover the cover
     _discover(
-        opp,
+        opp.
         config,
         "cover",
         [device.id for device in tellcore_devices if device.methods(TELLSTICK_UP)],
@@ -132,7 +132,7 @@ def setup_opp, config):
 
     # Discover the switches
     _discover(
-        opp,
+        opp.
         config,
         "switch",
         [
@@ -145,7 +145,7 @@ def setup_opp, config):
     @callback
     def async_handle_callback(tellcore_id, tellcore_command, tellcore_data, cid):
         """Handle the actual callback from Tellcore."""
-       .opp.helpers.dispatcher.async_dispatcher_send(
+        opp.helpers.dispatcher.async_dispatcher_send(
             SIGNAL_TELLCORE_CALLBACK, tellcore_id, tellcore_command, tellcore_data
         )
 
@@ -157,7 +157,7 @@ def setup_opp, config):
         if callback_id is not None:
             tellcore_lib.unregister_callback(callback_id)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, clean_up_callback)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, clean_up_callback)
 
     return True
 

@@ -80,8 +80,8 @@ def setup_opp, config):
         """
         dispatcher_send.opp, SIGNAL_XBEE_FRAME_RECEIVED, frame)
 
-   .opp.data[DOMAIN] = zigbee_device
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, close_serial_port)
+    opp.data[DOMAIN] = zigbee_device
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, close_serial_port)
     zigbee_device.add_frame_rx_handler(_frame_received)
 
     return True

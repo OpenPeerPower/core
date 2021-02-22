@@ -172,8 +172,8 @@ def test_is_up.opp):
 
 def test_norway_in_june.opp):
     """Test location in Norway where the sun doesn't set in summer."""
-   .opp.config.latitude = 69.6
-   .opp.config.longitude = 18.8
+    opp.config.latitude = 69.6
+    opp.config.longitude = 18.8
 
     june = datetime(2016, 6, 1, tzinfo=dt_util.UTC)
 

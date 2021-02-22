@@ -62,8 +62,8 @@ def setup_opp, config):
 
         api_data_list.append(api_data)
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][DATA] = api_data_list
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][DATA] = api_data_list
 
     # Load components for supported devices
     for component in N26_COMPONENTS:

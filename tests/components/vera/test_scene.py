@@ -9,7 +9,7 @@ from .common import ComponentFactory, new_simple_controller_config
 
 
 async def test_scene(
-    opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp. OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_scene = MagicMock(spec=pv.VeraScene)  # type: pv.VeraScene
@@ -19,7 +19,7 @@ async def test_scene(
     entity_id = "scene.dev1_1"
 
     await vera_component_factory.configure_component(
-       .opp.opp,
+        opp.opp,
         controller_config=new_simple_controller_config(scenes=(vera_scene,)),
     )
 

@@ -26,7 +26,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_scanner.opp, config, async_see, discovery_info=None):
     """Set up an endpoint for the Meraki tracker."""
-   .opp.http.register_view(MerakiView(config, async_see))
+    opp.http.register_view(MerakiView(config, async_see))
 
     return True
 
@@ -109,7 +109,7 @@ class MerakiView(OpenPeerPowerView):
                 attrs["seenTime"] = i["seenTime"]
             if i.get("ssid", False):
                 attrs["ssid"] = i["ssid"]
-           .opp.async_create_task(
+            opp.async_create_task(
                 self.async_see(
                     gps=gps_location,
                     mac=mac,

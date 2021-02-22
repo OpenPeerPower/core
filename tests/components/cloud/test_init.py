@@ -17,7 +17,7 @@ async def test_constructor_loads_info_from_config(opp):
     """Test non-dev mode loads info from SERVERS constant."""
     with patch(.opp_nabucasa.Cloud.start"):
         result = await async_setup_component(
-            opp,
+            opp.
             "cloud",
             {
                 "http": {},
@@ -87,7 +87,7 @@ async def test_remote_services.opp, mock_cloud_fixture, opp_read_only_user):
     assert mock_connect.called is False
 
     with patch(
-        .opp_nabucasa.remote.RemoteUI.disconnect"
+         opp.nabucasa.remote.RemoteUI.disconnect"
     ) as mock_disconnect, pytest.raises(Unauthorized):
         await opp.services.async_call(
             DOMAIN, "remote_disconnect", blocking=True, context=non_admin_context
@@ -99,7 +99,7 @@ async def test_remote_services.opp, mock_cloud_fixture, opp_read_only_user):
 async def test_startup_shutdown_events.opp, mock_cloud_fixture):
     """Test if the cloud will start on startup event."""
     with patch(.opp_nabucasa.Cloud.stop") as mock_stop:
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
         await opp.async_block_till_done()
 
     assert mock_stop.called
@@ -108,10 +108,10 @@ async def test_startup_shutdown_events.opp, mock_cloud_fixture):
 async def test_setup_existing_cloud_user.opp, opp_storage):
     """Test setup with API push default data."""
     user = await opp.auth.async_create_system_user("Cloud test")
-   .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": user.id}}
+    opp.storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": user.id}}
     with patch(.opp_nabucasa.Cloud.start"):
         result = await async_setup_component(
-            opp,
+            opp.
             "cloud",
             {
                 "http": {},

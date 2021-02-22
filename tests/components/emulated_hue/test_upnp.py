@@ -35,7 +35,7 @@ class MockTransport:
 class TestEmulatedHue(unittest.TestCase):
     """Test the emulated Hue component."""
 
-    opp =None
+    opp.=None
 
     @classmethod
     def setUpClass(cls):
@@ -43,7 +43,7 @@ class TestEmulatedHue(unittest.TestCase):
         cls.opp = opp =get_test_open_peer_power()
 
         setup.setup_component(
-            opp,
+            opp.
             emulated_hue.DOMAIN,
             {emulated_hue.DOMAIN: {emulated_hue.CONF_LISTEN_PORT: BRIDGE_SERVER_PORT}},
         )

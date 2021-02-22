@@ -13,7 +13,7 @@ async def test_add_item.opp, sl_setup):
     """Test adding an item intent."""
 
     response = await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
 
     assert response.speech["plain"]["speech"] == "I've added beer to your shopping list"
@@ -23,13 +23,13 @@ async def test_recent_items_intent.opp, sl_setup):
     """Test recent items."""
 
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "soda"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "soda"}}
     )
 
     response = await intent.async_handle.opp, "test", "HassShoppingListLastItems")
@@ -44,10 +44,10 @@ async def test_deprecated_api_get_all.opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
     client = await opp_client()
@@ -66,10 +66,10 @@ async def test_ws_get_items.opp, opp_ws_client, sl_setup):
     """Test get shopping_list items websocket command."""
 
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
     client = await opp_ws_client.opp)
@@ -93,10 +93,10 @@ async def test_deprecated_api_update.opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
     beer_id = opp.data["shopping_list"].items[0]["id"]
@@ -127,10 +127,10 @@ async def test_deprecated_api_update.opp, opp_client, sl_setup):
 async def test_ws_update_item.opp, opp_ws_client, sl_setup):
     """Test update shopping_list item websocket command."""
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
     beer_id = opp.data["shopping_list"].items[0]["id"]
@@ -170,7 +170,7 @@ async def test_api_update_fails.opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
 
     client = await opp_client()
@@ -187,7 +187,7 @@ async def test_api_update_fails.opp, opp_client, sl_setup):
 async def test_ws_update_item_fail.opp, opp_ws_client, sl_setup):
     """Test failure of update shopping_list item websocket command."""
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     client = await opp_ws_client.opp)
     await client.send_json(
@@ -211,10 +211,10 @@ async def test_deprecated_api_clear_completed.opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
 
     beer_id = opp.data["shopping_list"].items[0]["id"]
@@ -240,10 +240,10 @@ async def test_deprecated_api_clear_completed.opp, opp_client, sl_setup):
 async def test_ws_clear_items.opp, opp_ws_client, sl_setup):
     """Test clearing shopping_list items websocket command."""
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
     beer_id = opp.data["shopping_list"].items[0]["id"]
     wine_id = opp.data["shopping_list"].items[1]["id"]
@@ -320,13 +320,13 @@ async def test_ws_add_item_fail.opp, opp_ws_client, sl_setup):
 async def test_ws_reorder_items.opp, opp_ws_client, sl_setup):
     """Test reordering shopping_list items websocket command."""
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
     )
 
     beer_id = opp.data["shopping_list"].items[0]["id"]
@@ -399,13 +399,13 @@ async def test_ws_reorder_items.opp, opp_ws_client, sl_setup):
 async def test_ws_reorder_items_failure.opp, opp_ws_client, sl_setup):
     """Test reordering shopping_list items websocket command."""
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
     )
     await intent.async_handle(
-        opp, "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
+        opp. "test", "HassShoppingListAddItem", {"item": {"value": "apple"}}
     )
 
     beer_id = opp.data["shopping_list"].items[0]["id"]

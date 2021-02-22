@@ -98,7 +98,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     controller = IntesisHome(
         ih_user,
         ih_pass,
-       .opp.loop,
+        opp.loop,
         websession=async_get_clientsession.opp),
         device_type=device_type,
     )

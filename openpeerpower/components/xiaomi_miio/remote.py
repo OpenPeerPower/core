@@ -87,7 +87,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         raise PlatformNotReady from ex
 
     if DATA_KEY not in.opp.data:
-       .opp.data[DATA_KEY] = {}
+        opp.data[DATA_KEY] = {}
 
     friendly_name = config.get(CONF_NAME, f"xiaomi_miio_{host.replace('.', '_')}")
     slot = config.get(CONF_SLOT)
@@ -97,7 +97,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         friendly_name, device, unique_id, slot, timeout, config.get(CONF_COMMANDS)
     )
 
-   .opp.data[DATA_KEY][host] = xiaomi_miio_remote
+    opp.data[DATA_KEY][host] = xiaomi_miio_remote
 
     async_add_entities([xiaomi_miio_remote])
 
@@ -128,7 +128,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             if "code" in message and message["code"]:
                 log_msg = "Received command is: {}".format(message["code"])
                 _LOGGER.info(log_msg)
-               .opp.components.persistent_notification.async_create(
+                opp.components.persistent_notification.async_create(
                     log_msg, title="Xiaomi Miio Remote"
                 )
                 return
@@ -139,7 +139,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             await asyncio.sleep(1)
 
         _LOGGER.error("Timeout. No infrared command captured")
-       .opp.components.persistent_notification.async_create(
+        opp.components.persistent_notification.async_create(
             "Timeout. No infrared command captured", title="Xiaomi Miio Remote"
         )
 

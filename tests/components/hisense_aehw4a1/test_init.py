@@ -46,7 +46,7 @@ async def test_configuring_hisense_w4a1_create_entry.opp):
             return_value=True,
         ) as mock_setup:
             await async_setup_component(
-                opp,
+                opp.
                 hisense_aehw4a1.DOMAIN,
                 {"hisense_aehw4a1": {"ip_address": ["1.2.3.4"]}},
             )
@@ -66,7 +66,7 @@ async def test_configuring_hisense_w4a1_not_creates_entry_for_device_not_found.o
             return_value=True,
         ) as mock_setup:
             await async_setup_component(
-                opp,
+                opp.
                 hisense_aehw4a1.DOMAIN,
                 {"hisense_aehw4a1": {"ip_address": ["1.2.3.4"]}},
             )

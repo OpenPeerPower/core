@@ -202,7 +202,7 @@ class ConfigEntry:
 
     async def async_setup(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         *,
         integration: Optional[loader.Integration] = None,
         tries: int = 0,

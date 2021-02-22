@@ -34,8 +34,8 @@ async def remove_devices(bridge, api_ids, current):
 
 def create_config_flow.opp, host):
     """Start a config flow."""
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"host": host},

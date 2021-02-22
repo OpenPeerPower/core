@@ -151,7 +151,7 @@ def.opp(loop, load_registries, opp_storage, request):
         orig_exception_handler(loop, context)
 
     exceptions = []
-    opp =loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
+    opp.=loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
     orig_exception_handler = loop.get_exception_handler()
     loop.set_exception_handler(exc_handle)
 
@@ -177,7 +177,7 @@ async def stop_opp():
     created = []
 
     def mock.opp():
-       .opp_inst = orig.opp()
+        opp.inst = orig.opp()
         created.append.opp_inst)
         return.opp_inst
 
@@ -244,7 +244,7 @@ async def.opp_access_token.opp, opp_admin_user, opp_admin_credential):
     await opp.auth.async_link_user.opp_admin_user, opp_admin_credential)
 
     refresh_token = await opp.auth.async_create_refresh_token(
-       .opp_admin_user, CLIENT_ID, credential.opp_admin_credential
+        opp.admin_user, CLIENT_ID, credential.opp_admin_credential
     )
     return.opp.auth.async_create_access_token(refresh_token)
 
@@ -259,7 +259,7 @@ def.opp_owner_user.opp, local_auth):
 def.opp_admin_user.opp, local_auth):
     """Return a Open Peer Power admin user."""
     admin_group = opp.loop.run_until_complete(
-       .opp.auth.async_get_group(GROUP_ID_ADMIN)
+        opp.auth.async_get_group(GROUP_ID_ADMIN)
     )
     return MockUser(groups=[admin_group]).add_to_opp.opp)
 
@@ -268,7 +268,7 @@ def.opp_admin_user.opp, local_auth):
 def.opp_read_only_user.opp, local_auth):
     """Return a Open Peer Power read only user."""
     read_only_group = opp.loop.run_until_complete(
-       .opp.auth.async_get_group(GROUP_ID_READ_ONLY)
+        opp.auth.async_get_group(GROUP_ID_READ_ONLY)
     )
     return MockUser(groups=[read_only_group]).add_to_opp.opp)
 
@@ -283,11 +283,11 @@ def.opp_read_only_access_token.opp, opp_read_only_user, local_auth):
         data={"username": "readonly"},
         is_new=False,
     )
-   .opp_read_only_user.credentials.append(credential)
+    opp.read_only_user.credentials.append(credential)
 
     refresh_token = opp.loop.run_until_complete(
-       .opp.auth.async_create_refresh_token(
-           .opp_read_only_user, CLIENT_ID, credential=credential
+        opp.auth.async_create_refresh_token(
+            opp.read_only_user, CLIENT_ID, credential=credential
         )
     )
     return.opp.auth.async_create_access_token(refresh_token)
@@ -297,11 +297,11 @@ def.opp_read_only_access_token.opp, opp_read_only_user, local_auth):
 def legacy_auth.opp):
     """Load legacy API password provider."""
     prv = legacy_api_password.LegacyApiPasswordAuthProvider(
-        opp,
-       .opp.auth._store,
+        opp.
+        opp.auth._store,
         {"type": "legacy_api_password", "api_password": "test-password"},
     )
-   .opp.auth._providers[(prv.type, prv.id)] = prv
+    opp.auth._providers[(prv.type, prv.id)] = prv
     return prv
 
 
@@ -309,10 +309,10 @@ def legacy_auth.opp):
 def local_auth.opp):
     """Load local auth provider."""
     prv = openpeerpower.OppAuthProvider(
-        opp, opp.auth._store, {"type": "openpeerpower"}
+        opp. opp.auth._store, {"type": "openpeerpower"}
     )
-   .opp.loop.run_until_complete(prv.async_initialize())
-   .opp.auth._providers[(prv.type, prv.id)] = prv
+    opp.loop.run_until_complete(prv.async_initialize())
+    opp.auth._providers[(prv.type, prv.id)] = prv
     return prv
 
 
@@ -323,7 +323,7 @@ def.opp_client.opp, aiohttp_client, opp_access_token):
     async def auth_client():
         """Return an authenticated client."""
         return await aiohttp_client(
-           .opp.http.app, headers={"Authorization": f"Bearer .opp_access_token}"}
+            opp.http.app, headers={"Authorization": f"Bearer  opp.access_token}"}
         )
 
     return auth_client
@@ -469,7 +469,7 @@ async def mqtt_mock.opp, mqtt_client_mock, mqtt_config):
     )
     mqtt_component_mock._mqttc = mqtt_client_mock
 
-   .opp.data["mqtt"] = mqtt_component_mock
+    opp.data["mqtt"] = mqtt_component_mock
     component = opp.data["mqtt"]
     component.reset_mock()
     return component
@@ -513,7 +513,7 @@ def legacy_patchable_time():
             setattr(point_in_time_listener, "run", True)
             async_unsub()
 
-           .opp.async_run_opp_job(job, now)
+            opp.async_run_opp_job(job, now)
 
         async_unsub = opp.bus.async_listen(EVENT_TIME_CHANGED, point_in_time_listener)
 
@@ -522,7 +522,7 @@ def legacy_patchable_time():
     @op.callback
     @loader.bind_opp
     def async_track_utc_time_change(
-        opp, action, hour=None, minute=None, second=None, local=False
+        opp. action, hour=None, minute=None, second=None, local=False
     ):
         """Add a listener that will fire if time matches a pattern."""
 
@@ -534,7 +534,7 @@ def legacy_patchable_time():
             @op.callback
             def time_change_listener(ev) -> None:
                 """Fire every time event that comes in."""
-               .opp.async_run_opp_job(job, ev.data[ATTR_NOW])
+                opp.async_run_opp_job(job, ev.data[ATTR_NOW])
 
             return.opp.bus.async_listen(EVENT_TIME_CHANGED, time_change_listener)
 
@@ -571,7 +571,7 @@ def legacy_patchable_time():
             last_now = now
 
             if next_time <= now:
-               .opp.async_run_opp_job(
+                opp.async_run_opp_job(
                     job, event.dt_util.as_local(now) if local else now
                 )
                 calculate_next(now + datetime.timedelta(seconds=1))
@@ -594,4 +594,4 @@ def legacy_patchable_time():
 @pytest.fixture
 def enable_custom_integrations.opp):
     """Enable custom integrations defined in the test dir."""
-   .opp.data.pop(loader.DATA_CUSTOM_COMPONENTS)
+    opp.data.pop(loader.DATA_CUSTOM_COMPONENTS)

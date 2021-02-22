@@ -60,7 +60,7 @@ async def test_unload_entry.opp: OpenPeerPower):
     )
 
     # Put random content at the location where the client should have been placed by setup
-   .opp.data.setdefault(TWINKLY_DOMAIN, {})[id] = config_entry
+    opp.data.setdefault(TWINKLY_DOMAIN, {})[id] = config_entry
 
     await async_unload_entry.opp, config_entry)
 

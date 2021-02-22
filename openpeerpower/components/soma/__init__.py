@@ -32,8 +32,8 @@ async def async_setup_opp, config):
     if DOMAIN not in config:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             data=config[DOMAIN],
             context={"source": config_entries.SOURCE_IMPORT},
@@ -45,14 +45,14 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Soma from a config entry."""
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][API] = SomaApi(entry.data[HOST], entry.data[PORT])
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][API] = SomaApi(entry.data[HOST], entry.data[PORT])
     devices = await opp.async_add_executor_job.opp.data[DOMAIN][API].list_devices)
-   .opp.data[DOMAIN][DEVICES] = devices["shades"]
+    opp.data[DOMAIN][DEVICES] = devices["shades"]
 
     for component in SOMA_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -63,7 +63,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in SOMA_COMPONENTS
             ]
         )

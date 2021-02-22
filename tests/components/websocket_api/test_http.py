@@ -57,7 +57,7 @@ async def test_pending_msg_peak.opp, mock_low_peak, opp_ws_client, caplog):
     instance._send_message({})
 
     async_fire_time_changed(
-        opp, utcnow() + timedelta(seconds=const.PENDING_MSG_PEAK_TIME + 1)
+        opp. utcnow() + timedelta(seconds=const.PENDING_MSG_PEAK_TIME + 1)
     )
 
     msg = await websocket_client.receive()
@@ -69,7 +69,7 @@ async def test_pending_msg_peak.opp, mock_low_peak, opp_ws_client, caplog):
 async def test_non_json_message.opp, websocket_client, caplog):
     """Test trying to serialze non JSON objects."""
     bad_data = object()
-   .opp.states.async_set("test_domain.entity", "testing", {"bad": bad_data})
+    opp.states.async_set("test_domain.entity", "testing", {"bad": bad_data})
     await websocket_client.send_json({"id": 5, "type": "get_states"})
 
     msg = await websocket_client.receive_json()

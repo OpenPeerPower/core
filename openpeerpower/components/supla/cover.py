@@ -36,8 +36,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             entities.append(
                 SuplaCover(
                     device,
-                   .opp.data[DOMAIN][SUPLA_SERVERS][server_name],
-                   .opp.data[DOMAIN][SUPLA_COORDINATORS][server_name],
+                    opp.data[DOMAIN][SUPLA_SERVERS][server_name],
+                    opp.data[DOMAIN][SUPLA_COORDINATORS][server_name],
                 )
             )
 
@@ -45,8 +45,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             entities.append(
                 SuplaGateDoor(
                     device,
-                   .opp.data[DOMAIN][SUPLA_SERVERS][server_name],
-                   .opp.data[DOMAIN][SUPLA_COORDINATORS][server_name],
+                    opp.data[DOMAIN][SUPLA_SERVERS][server_name],
+                    opp.data[DOMAIN][SUPLA_COORDINATORS][server_name],
                 )
             )
 

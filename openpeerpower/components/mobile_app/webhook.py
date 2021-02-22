@@ -144,7 +144,7 @@ def validate_schema(schema):
 
 
 async def handle_webhook(
-    opp: OpenPeerPowerType, webhook_id: str, request: Request
+    opp. OpenPeerPowerType, webhook_id: str, request: Request
 ) -> Response:
     """Handle webhook callback."""
     if webhook_id in.opp.data[DOMAIN][DATA_DELETED_IDS]:
@@ -246,7 +246,7 @@ async def webhook_call_service.opp, config_entry, data):
 async def webhook_fire_event.opp, config_entry, data):
     """Handle a fire event webhook."""
     event_type = data[ATTR_EVENT_TYPE]
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         event_type,
         data[ATTR_EVENT_DATA],
         EventOrigin.remote,
@@ -320,7 +320,7 @@ async def webhook_render_template.opp, config_entry, data):
 )
 async def webhook_update_location.opp, config_entry, data):
     """Handle an update location webhook."""
-   .opp.helpers.dispatcher.async_dispatcher_send(
+    opp.helpers.dispatcher.async_dispatcher_send(
         SIGNAL_LOCATION_UPDATE.format(config_entry.entry_id), data
     )
     return empty_okay_response()
@@ -352,7 +352,7 @@ async def webhook_update_registration.opp, config_entry, data):
         sw_version=new_registration[ATTR_OS_VERSION],
     )
 
-   .opp.config_entries.async_update_entry(config_entry, data=new_registration)
+    opp.config_entries.async_update_entry(config_entry, data=new_registration)
 
     await opp_notify.async_reload.opp, DOMAIN)
 
@@ -385,7 +385,7 @@ async def webhook_enable_encryption.opp, config_entry, data):
 
     data = {**config_entry.data, ATTR_SUPPORTS_ENCRYPTION: True, CONF_SECRET: secret}
 
-   .opp.config_entries.async_update_entry(config_entry, data=data)
+    opp.config_entries.async_update_entry(config_entry, data=data)
 
     return json_response({"secret": secret})
 
@@ -525,7 +525,7 @@ async def webhook_update_sensor_states.opp, config_entry, data):
 async def webhook_get_zones.opp, config_entry, data):
     """Handle a get zones webhook."""
     zones = [
-       .opp.states.get(entity_id)
+        opp.states.get(entity_id)
         for entity_id in sorted.opp.states.async_entity_ids(ZONE_DOMAIN))
     ]
     return webhook_response(zones, registration=config_entry.data)
@@ -534,7 +534,7 @@ async def webhook_get_zones.opp, config_entry, data):
 @WEBHOOK_COMMANDS.register("get_config")
 async def webhook_get_config(opp, config_entry, data):
     """Handle a get config webhook."""
-   .opp_config = opp.config.as_dict()
+    opp.config = opp.config.as_dict()
 
     resp = {
         "latitude":.opp_config["latitude"],
@@ -564,7 +564,7 @@ async def webhook_get_config(opp, config_entry, data):
 async def webhook_scan_tag.opp, config_entry, data):
     """Handle a fire event webhook."""
     await tag.async_scan_tag(
-        opp,
+        opp.
         data["tag_id"],
         config_entry.data[ATTR_DEVICE_ID],
         registration_context(config_entry.data),

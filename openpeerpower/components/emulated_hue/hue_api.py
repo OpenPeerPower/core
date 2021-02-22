@@ -289,8 +289,8 @@ class HueOneLightStateView(OpenPeerPowerView):
         if not is_local(ip_address(request.remote)):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
-        opp =request.app[.opp"]
-       .opp_entity_id = self.config.number_to_entity_id(entity_id)
+        opp.=request.app[.opp"]
+        opp.entity_id = self.config.number_to_entity_id(entity_id)
 
         if opp_entity_id is None:
             _LOGGER.error(
@@ -331,7 +331,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
         config = self.config
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         entity_id = config.number_to_entity_id(entity_number)
 
         if entity_id is None:
@@ -551,8 +551,8 @@ class HueOneLightChangeView(OpenPeerPowerView):
 
         # Separate call to turn on needed
         if turn_on_needed:
-           .opp.async_create_task(
-               .opp.services.async_call(
+            opp.async_create_task(
+                opp.services.async_call(
                     core.DOMAIN,
                     SERVICE_TURN_ON,
                     {ATTR_ENTITY_ID: entity_id},
@@ -563,14 +563,14 @@ class HueOneLightChangeView(OpenPeerPowerView):
         if service is not None:
             state_will_change = parsed[STATE_ON] != (entity.state != STATE_OFF)
 
-           .opp.async_create_task(
-               .opp.services.async_call(domain, service, data, blocking=True)
+            opp.async_create_task(
+                opp.services.async_call(domain, service, data, blocking=True)
             )
 
             if state_will_change:
                 # Wait for the state to change.
                 await wait_for_state_change_or_timeout(
-                    opp, entity_id, STATE_CACHED_TIMEOUT
+                    opp. entity_id, STATE_CACHED_TIMEOUT
                 )
 
         # Create success responses for all received keys
@@ -841,7 +841,7 @@ def create_config_model(config, request):
 
 def create_list_of_entities(config, request):
     """Create a list of all entities."""
-    opp =request.app[.opp"]
+    opp.=request.app[.opp"]
     json_response = {}
 
     for entity in config.filter_exposed_entities.opp.states.async_all()):

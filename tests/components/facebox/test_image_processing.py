@@ -184,7 +184,7 @@ async def test_process_image.opp, mock_healthybox, mock_image):
         """Mock event."""
         face_events.append(event)
 
-   .opp.bus.async_listen("image_processing.detect_face", mock_face_event)
+    opp.bus.async_listen("image_processing.detect_face", mock_face_event)
 
     with requests_mock.Mocker() as mock_req:
         url = f"http://{MOCK_IP}:{MOCK_PORT}/facebox/check"
@@ -246,7 +246,7 @@ async def test_process_image_errors.opp, mock_healthybox, mock_image, caplog):
 
 
 async def test_teach_service(
-    opp, mock_healthybox, mock_image, mock_isfile, mock_open_file, caplog
+    opp. mock_healthybox, mock_image, mock_isfile, mock_open_file, caplog
 ):
     """Test teaching of facebox."""
     await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
@@ -254,7 +254,7 @@ async def test_teach_service(
     assert.opp.states.get(VALID_ENTITY_ID)
 
     # Patch out 'is_allowed_path' as the mock files aren't allowed
-   .opp.config.is_allowed_path = Mock(return_value=True)
+    opp.config.is_allowed_path = Mock(return_value=True)
 
     # Test successful teach.
     with requests_mock.Mocker() as mock_req:

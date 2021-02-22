@@ -32,9 +32,9 @@ async def test_flow_with_home_location.opp):
     Test the flow when a default location is configured.
     Then it should return a form with default values.
     """
-   .opp.config.latitude = 1
-   .opp.config.longitude = 2
-   .opp.config.elevation = 3
+    opp.config.latitude = 1
+    opp.config.longitude = 2
+    opp.config.elevation = 3
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}

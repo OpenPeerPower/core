@@ -69,13 +69,13 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
         return True
 
     # Make the config available to the oauth2 config flow.
-   .opp.data[DOMAIN] = {const.CONFIG: conf}
+    opp.data[DOMAIN] = {const.CONFIG: conf}
 
     # Setup the oauth2 config flow.
     config_flow.WithingsFlowHandler.async_register_implementation(
-        opp,
+        opp.
         WithingsLocalOAuth2Implementation(
-            opp,
+            opp.
             const.DOMAIN,
             conf[CONF_CLIENT_ID],
             conf[CONF_CLIENT_SECRET],
@@ -115,7 +115,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         }
 
     if config_updates:
-       .opp.config_entries.async_update_entry(entry, **config_updates)
+        opp.config_entries.async_update_entry(entry, **config_updates)
 
     data_manager = await async_get_data_manager.opp, entry)
 
@@ -125,7 +125,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady()
 
     webhook.async_register(
-        opp,
+        opp.
         const.DOMAIN,
         "Withings notify",
         data_manager.webhook_config.id,
@@ -138,18 +138,18 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
         @callback
         def async_call_later_callback(now) -> None:
-           .opp.async_create_task(
+            opp.async_create_task(
                 data_manager.subscription_update_coordinator.async_refresh()
             )
 
         # Start subscription check in the background, outside this component's setup.
         async_call_later.opp, 1, async_call_later_callback)
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, BINARY_SENSOR_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, BINARY_SENSOR_DOMAIN)
     )
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, SENSOR_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, SENSOR_DOMAIN)
     )
 
     return True
@@ -164,8 +164,8 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     await asyncio.gather(
         data_manager.async_unsubscribe_webhook(),
-       .opp.config_entries.async_forward_entry_unload(entry, BINARY_SENSOR_DOMAIN),
-       .opp.config_entries.async_forward_entry_unload(entry, SENSOR_DOMAIN),
+        opp.config_entries.async_forward_entry_unload(entry, BINARY_SENSOR_DOMAIN),
+        opp.config_entries.async_forward_entry_unload(entry, SENSOR_DOMAIN),
     )
 
     async_remove_data_manager.opp, entry)
@@ -174,7 +174,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 
 async def async_webhook_handler(
-    opp: OpenPeerPower, webhook_id: str, request: Request
+    opp. OpenPeerPower, webhook_id: str, request: Request
 ) -> Optional[Response]:
     """Handle webhooks calls."""
     # Handle http head calls to the path.
@@ -210,6 +210,6 @@ async def async_webhook_handler(
         return json_message_response("User not found", message_code=1)
 
     # Run this in the background and return immediately.
-   .opp.async_create_task(data_manager.async_webhook_data_updated(appli))
+    opp.async_create_task(data_manager.async_webhook_data_updated(appli))
 
     return json_message_response("Success", message_code=0)

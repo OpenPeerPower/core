@@ -34,7 +34,7 @@ TRIGGER_SCHEMA = vol.Schema(
 
 
 async def async_attach_trigger(
-    opp, config, action, automation_info, *, platform_type: str = "zone"
+    opp. config, action, automation_info, *, platform_type: str = "zone"
 ) -> CALLBACK_TYPE:
     """Listen for state changes based on configuration."""
     entity_id = config.get(CONF_ENTITY_ID)
@@ -69,7 +69,7 @@ async def async_attach_trigger(
             and not to_match
         ):
             description = f"{entity} {_EVENT_DESCRIPTION[event]} {zone_state.attributes[ATTR_FRIENDLY_NAME]}"
-           .opp.async_run.opp_job(
+            opp.async_run.opp_job(
                 job,
                 {
                     "trigger": {

@@ -81,7 +81,7 @@ class UpCloudDataUpdateCoordinator(
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         *,
         cloud_manager: upcloud_api.CloudManager,
         update_interval: timedelta,
@@ -89,7 +89,7 @@ class UpCloudDataUpdateCoordinator(
     ) -> None:
         """Initialize coordinator."""
         super().__init__(
-            opp, _LOGGER, name=f"{username}@UpCloud", update_interval=update_interval
+            opp. _LOGGER, name=f"{username}@UpCloud", update_interval=update_interval
         )
         self.cloud_manager = cloud_manager
         self.unsub_handlers: List[CALLBACK_TYPE] = []
@@ -129,8 +129,8 @@ async def async_setup_opp: OpenPeerPowerType, config) -> bool:
         "Loading upcloud via top level config is deprecated and no longer "
         "necessary as of 0.117. Please remove it from your YAML configuration."
     )
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={
@@ -141,8 +141,8 @@ async def async_setup_opp: OpenPeerPowerType, config) -> bool:
     )
 
     if domain_config[CONF_SCAN_INTERVAL]:
-       .opp.data[DATA_UPCLOUD] = UpCloudHassData()
-       .opp.data[DATA_UPCLOUD].scan_interval_migrations[
+        opp.data[DATA_UPCLOUD] = UpCloudHassData()
+        opp.data[DATA_UPCLOUD].scan_interval_migrations[
             domain_config[CONF_USERNAME]
         ] = domain_config[CONF_SCAN_INTERVAL]
 
@@ -155,11 +155,11 @@ def _config_entry_update_signal_name(config_entry: ConfigEntry) -> str:
 
 
 async def _async_signal_options_update(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Signal config entry options update."""
     async_dispatcher_send(
-        opp, _config_entry_update_signal_name(config_entry), config_entry
+        opp. _config_entry_update_signal_name(config_entry), config_entry
     )
 
 
@@ -190,7 +190,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         or config_entry.options[CONF_SCAN_INTERVAL] == DEFAULT_SCAN_INTERVAL.seconds
     ):
         update_interval = migrated_scan_interval
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry,
             options={CONF_SCAN_INTERVAL: update_interval.seconds},
         )
@@ -200,7 +200,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         update_interval = DEFAULT_SCAN_INTERVAL
 
     coordinator = UpCloudDataUpdateCoordinator(
-        opp,
+        opp.
         update_interval=update_interval,
         cloud_manager=manager,
         username=config_entry.data[CONF_USERNAME],
@@ -217,7 +217,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     )
     coordinator.unsub_handlers.append(
         async_dispatcher_connect(
-            opp,
+            opp.
             _config_entry_update_signal_name(config_entry),
             coordinator.async_update_config,
         )
@@ -227,8 +227,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Forward entry setup
     for domain in CONFIG_ENTRY_DOMAINS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, domain)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, domain)
         )
 
     return True

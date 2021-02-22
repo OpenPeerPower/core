@@ -31,7 +31,7 @@ PLATFORM_SCHEMA = vol.All(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp. OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT light through configuration.yaml."""
     await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
@@ -47,7 +47,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 async def _async_setup_entity(
-    opp, async_add_entities, config, config_entry=None, discovery_data=None
+    opp. async_add_entities, config, config_entry=None, discovery_data=None
 ):
     """Set up a MQTT Light."""
     setup_entity = {
@@ -56,5 +56,5 @@ async def _async_setup_entity(
         "template": async_setup_entity_template,
     }
     await setup_entity[config[CONF_SCHEMA]](
-        opp, config, async_add_entities, config_entry, discovery_data
+        opp. config, async_add_entities, config_entry, discovery_data
     )

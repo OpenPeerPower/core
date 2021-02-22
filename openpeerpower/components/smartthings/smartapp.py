@@ -225,7 +225,7 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
 
     # Register webhook
     webhook.async_register(
-        opp, DOMAIN, "SmartApp", config[CONF_WEBHOOK_ID], smartapp_webhook
+        opp. DOMAIN, "SmartApp", config[CONF_WEBHOOK_ID], smartapp_webhook
     )
 
     # Create webhook if eligible
@@ -260,7 +260,7 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
     manager.connect_update(functools.partial(smartapp_update, opp))
     manager.connect_uninstall(functools.partial(smartapp_uninstall, opp))
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         DATA_MANAGER: manager,
         CONF_INSTANCE_ID: config[CONF_INSTANCE_ID],
         DATA_BROKERS: {},
@@ -284,7 +284,7 @@ async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
     cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if cloudhook_url and.opp.components.cloud.async_is_logged_in():
         await opp.components.cloud.async_delete_cloudhook(
-           .opp.data[DOMAIN][CONF_WEBHOOK_ID]
+            opp.data[DOMAIN][CONF_WEBHOOK_ID]
         )
         # Remove cloudhook from storage
         store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
@@ -302,13 +302,13 @@ async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
     for broker in.opp.data[DOMAIN][DATA_BROKERS].values():
         broker.disconnect()
     # Remove all handlers from manager
-   .opp.data[DOMAIN][DATA_MANAGER].dispatcher.disconnect_all()
+    opp.data[DOMAIN][DATA_MANAGER].dispatcher.disconnect_all()
     # Remove the component data
-   .opp.data.pop(DOMAIN)
+    opp.data.pop(DOMAIN)
 
 
 async def smartapp_sync_subscriptions(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     auth_token: str,
     location_id: str,
     installed_app_id: str,
@@ -397,7 +397,7 @@ async def smartapp_sync_subscriptions(
 
 
 async def _continue_flow(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     app_id: str,
     location_id: str,
     installed_app_id: str,
@@ -432,7 +432,7 @@ async def _continue_flow(
 async def smartapp_install.opp: OpenPeerPowerType, req, resp, app):
     """Handle a SmartApp installation and continue the config flow."""
     await _continue_flow(
-        opp, app.app_id, req.location_id, req.installed_app_id, req.refresh_token
+        opp. app.app_id, req.location_id, req.installed_app_id, req.refresh_token
     )
     _LOGGER.debug(
         "Installed SmartApp '%s' under parent app '%s'",
@@ -452,7 +452,7 @@ async def smartapp_update.opp: OpenPeerPowerType, req, resp, app):
         None,
     )
     if entry:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_REFRESH_TOKEN: req.refresh_token}
         )
         _LOGGER.debug(
@@ -463,7 +463,7 @@ async def smartapp_update.opp: OpenPeerPowerType, req, resp, app):
         )
 
     await _continue_flow(
-        opp, app.app_id, req.location_id, req.installed_app_id, req.refresh_token
+        opp. app.app_id, req.location_id, req.installed_app_id, req.refresh_token
     )
     _LOGGER.debug(
         "Updated SmartApp '%s' under parent app '%s'", req.installed_app_id, app.app_id

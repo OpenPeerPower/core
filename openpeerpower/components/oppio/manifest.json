@@ -1,5 +1,5 @@
 {
-  "domain": "opp.",
+  "domain":  opp.",
   "name": "Open Peer Power Supervisor",
   "documentation": "https://www.openpeerpower.io/opp.",
   "dependencies": ["http"],

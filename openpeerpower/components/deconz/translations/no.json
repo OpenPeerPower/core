@@ -13,7 +13,7 @@
         },
         "flow_title": "",
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Vil du konfigurere Open Peer Power til \u00e5 koble seg til deCONZ-gateway levert av Hass.io-tillegg {addon} ?",
                 "title": "deCONZ Zigbee gateway via Hass.io-tillegg"
             },

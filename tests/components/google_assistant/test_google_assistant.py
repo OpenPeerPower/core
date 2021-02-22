@@ -32,7 +32,7 @@ ACCESS_TOKEN = "superdoublesecret"
 @pytest.fixture
 def auth_header.opp_access_token):
     """Generate an HTTP header with bearer token authorization."""
-    return {AUTHORIZATION: f"Bearer .opp_access_token}"}
+    return {AUTHORIZATION: f"Bearer  opp.access_token}"}
 
 
 @pytest.fixture
@@ -40,7 +40,7 @@ def assistant_client(loop, opp, aiohttp_client):
     """Create web client for the Google Assistant API."""
     loop.run_until_complete(
         setup.async_setup_component(
-            opp,
+            opp.
             "google_assistant",
             {
                 "google_assistant": {
@@ -67,23 +67,23 @@ def.opp_fixture(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp, light.DOMAIN, {"light": [{"platform": "demo"}]}
+            opp. light.DOMAIN, {"light": [{"platform": "demo"}]}
         )
     )
     loop.run_until_complete(
         setup.async_setup_component(
-            opp, switch.DOMAIN, {"switch": [{"platform": "demo"}]}
+            opp. switch.DOMAIN, {"switch": [{"platform": "demo"}]}
         )
     )
     loop.run_until_complete(
         setup.async_setup_component(
-            opp, cover.DOMAIN, {"cover": [{"platform": "demo"}]}
+            opp. cover.DOMAIN, {"cover": [{"platform": "demo"}]}
         )
     )
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp, media_player.DOMAIN, {"media_player": [{"platform": "demo"}]}
+            opp. media_player.DOMAIN, {"media_player": [{"platform": "demo"}]}
         )
     )
 
@@ -93,13 +93,13 @@ def.opp_fixture(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
+            opp. climate.DOMAIN, {"climate": [{"platform": "demo"}]}
         )
     )
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
+            opp. humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
         )
     )
 
@@ -109,7 +109,7 @@ def.opp_fixture(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp,
+            opp.
             alarm_control_panel.DOMAIN,
             {"alarm_control_panel": [{"platform": "demo"}]},
         )
@@ -246,11 +246,11 @@ async def test_query_climate_request.opp_fixture, assistant_client, auth_header)
 async def test_query_climate_request_f.opp_fixture, assistant_client, auth_header):
     """Test a query request."""
     # Mock demo devices as fahrenheit to see if we convert to celsius
-   .opp_fixture.config.units.temperature_unit = const.TEMP_FAHRENHEIT
+    opp.fixture.config.units.temperature_unit = const.TEMP_FAHRENHEIT
     for entity_id in ("climate.hvac", "climate.heatpump", "climate.ecobee"):
         state = opp_fixture.states.get(entity_id)
         attr = dict(state.attributes)
-       .opp_fixture.states.async_set(entity_id, state.state, attr)
+        opp.fixture.states.async_set(entity_id, state.state, attr)
 
     reqid = "5711642932632160984"
     data = {
@@ -300,7 +300,7 @@ async def test_query_climate_request_f.opp_fixture, assistant_client, auth_heade
         "thermostatHumidityAmbient": 54,
         "currentFanSpeedSetting": "On High",
     }
-   .opp_fixture.config.units.temperature_unit = const.TEMP_CELSIUS
+    opp.fixture.config.units.temperature_unit = const.TEMP_CELSIUS
 
 
 async def test_query_humidifier_request.opp_fixture, assistant_client, auth_header):

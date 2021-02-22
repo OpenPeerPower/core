@@ -18,11 +18,11 @@ async def test_cloud_system_health.opp, aioclient_mock):
         "https://cognito-idp.us-east-1.amazonaws.com/AAAA/.well-known/jwks.json",
         exc=ClientError,
     )
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
     assert await async_setup_component.opp, "system_health", {})
     now = utcnow()
 
-   .opp.data["cloud"] = Mock(
+    opp.data["cloud"] = Mock(
         region="us-east-1",
         user_pool_id="AAAA",
         relayer="wss://cloud.bla.com/websocket_api",

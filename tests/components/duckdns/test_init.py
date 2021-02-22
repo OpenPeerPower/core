@@ -36,9 +36,9 @@ def setup_duckdns.opp, aioclient_mock):
         duckdns.UPDATE_URL, params={"domains": DOMAIN, "token": TOKEN}, text="OK"
     )
 
-   .opp.loop.run_until_complete(
+    opp.loop.run_until_complete(
         async_setup_component(
-            opp, duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
+            opp. duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
         )
     )
 
@@ -50,7 +50,7 @@ async def test_setup_opp, aioclient_mock):
     )
 
     result = await async_setup_component(
-        opp, duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
+        opp. duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
     )
 
     await opp.async_block_till_done()
@@ -70,7 +70,7 @@ async def test_setup_backoff.opp, aioclient_mock):
     )
 
     result = await async_setup_component(
-        opp, duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
+        opp. duckdns.DOMAIN, {"duckdns": {"domain": DOMAIN, "access_token": TOKEN}}
     )
     assert result
     await opp.async_block_till_done()

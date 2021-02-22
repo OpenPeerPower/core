@@ -279,7 +279,7 @@ def test_lock_alarm_level(mock_openzwave):
 
 async def setup_ozw.opp, mock_openzwave):
     """Set up the mock ZWave config entry."""
-   .opp.config.components.add("zwave")
+    opp.config.components.add("zwave")
     config_entry = config_entries.ConfigEntry(
         1,
         "zwave",

@@ -287,7 +287,7 @@ async def test_options_flow_power.opp, mock_smile) -> None:
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
 
-   .opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="power")}}
+    opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="power")}}
     entry.add_to.opp.opp)
 
     with patch(
@@ -319,7 +319,7 @@ async def test_options_flow_thermo.opp, mock_smile) -> None:
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
 
-   .opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="thermostat")}}
+    opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="thermostat")}}
     entry.add_to.opp.opp)
 
     with patch(

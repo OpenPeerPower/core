@@ -17,7 +17,7 @@ PLATFORMS = ["cover", "fan", "light"]
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the WiLight with Config Flow component."""
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     return True
 
@@ -30,12 +30,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not await parent.async_setup():
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][entry.entry_id] = parent
+    opp.data[DOMAIN][entry.entry_id] = parent
 
     # Set up all platforms for this device/entry.
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -47,7 +47,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # Unload entities for this entry/device.
     await asyncio.gather(
         *(
-           .opp.config_entries.async_forward_entry_unload(entry, component)
+            opp.config_entries.async_forward_entry_unload(entry, component)
             for component in PLATFORMS
         )
     )

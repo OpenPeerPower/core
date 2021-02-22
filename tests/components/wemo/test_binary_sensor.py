@@ -39,7 +39,7 @@ test_async_update_with_timeout_and_recovery = (
 
 
 async def test_binary_sensor_registry_state_callback(
-    opp, pywemo_registry, pywemo_device, wemo_entity
+    opp. pywemo_registry, pywemo_device, wemo_entity
 ):
     """Verify that the binary_sensor receives state updates from the registry."""
     # On state.
@@ -56,7 +56,7 @@ async def test_binary_sensor_registry_state_callback(
 
 
 async def test_binary_sensor_update_entity(
-    opp, pywemo_registry, pywemo_device, wemo_entity
+    opp. pywemo_registry, pywemo_device, wemo_entity
 ):
     """Verify that the binary_sensor performs state updates."""
     await async_setup_component.opp, HA_DOMAIN, {})

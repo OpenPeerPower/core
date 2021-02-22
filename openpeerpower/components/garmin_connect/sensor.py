@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up Garmin Connect sensor based on a config entry."""
     garmin_data = opp.data[DOMAIN][entry.entry_id]

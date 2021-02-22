@@ -112,7 +112,7 @@ def _add_player.opp, async_add_entities, host, port=None, name=None):
     @callback
     def _init_player(event=None):
         """Start polling."""
-       .opp.async_create_task(player.async_init())
+        opp.async_create_task(player.async_init())
 
     @callback
     def _start_polling(event=None):
@@ -133,27 +133,27 @@ def _add_player.opp, async_add_entities, host, port=None, name=None):
         if opp.is_running:
             _start_polling()
         else:
-           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _start_polling)
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _start_polling)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_polling)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_polling)
 
     player = BluesoundPlayer.opp, host, port, name, _add_player_cb)
-   .opp.data[DATA_BLUESOUND].append(player)
+    opp.data[DATA_BLUESOUND].append(player)
 
     if opp.is_running:
         _init_player()
     else:
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _init_player)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _init_player)
 
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Bluesound platforms."""
     if DATA_BLUESOUND not in.opp.data:
-       .opp.data[DATA_BLUESOUND] = []
+        opp.data[DATA_BLUESOUND] = []
 
     if discovery_info:
         _add_player(
-            opp,
+            opp.
             async_add_entities,
             discovery_info.get(CONF_HOST),
             discovery_info.get(CONF_PORT),
@@ -164,7 +164,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if hosts:
         for host in hosts:
             _add_player(
-                opp,
+                opp.
                 async_add_entities,
                 host.get(CONF_HOST),
                 host.get(CONF_PORT),
@@ -195,7 +195,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, service, async_service_handler, schema=schema
         )
 

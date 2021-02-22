@@ -66,7 +66,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     sensor_def = pysaj.Sensors(wifi)
 
     # Use all sensors by default
-   .opp_sensors = []
+    opp.sensors = []
 
     kwargs = {}
     if wifi:
@@ -92,7 +92,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     for sensor in sensor_def:
         if sensor.enabled:
-           .opp_sensors.append(
+            opp.sensors.append(
                 SAJsensor(saj.serialnumber, sensor, inverter_name=config.get(CONF_NAME))
             )
 
@@ -129,8 +129,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         """Properly cancel the scheduled update."""
         remove_interval_update()  # pylint: disable=not-callable
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_update_interval)
-   .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, stop_update_interval)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_update_interval)
+    opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, stop_update_interval)
 
 
 @callback
@@ -150,7 +150,7 @@ def async_track_time_interval_backoff.opp, action) -> CALLBACK_TYPE:
         finally:
             remove = async_call_later.opp, interval, interval_listener)
 
-   .opp.async_create_task(interval_listener())
+    opp.async_create_task(interval_listener())
 
     def remove_listener():
         """Remove interval listener."""

@@ -117,15 +117,15 @@ async def async_setup_opp, config):
         cache_dir = conf.get(CONF_CACHE_DIR, DEFAULT_CACHE_DIR)
         time_memory = conf.get(CONF_TIME_MEMORY, DEFAULT_TIME_MEMORY)
         base_url = conf.get(CONF_BASE_URL)
-       .opp.data[BASE_URL_KEY] = base_url
+        opp.data[BASE_URL_KEY] = base_url
 
         await tts.async_init_cache(use_cache, cache_dir, time_memory, base_url)
     except (OpenPeerPowerError, KeyError):
         _LOGGER.exception("Error on cache init")
         return False
 
-   .opp.http.register_view(TextToSpeechView(tts))
-   .opp.http.register_view(TextToSpeechUrlView(tts))
+    opp.http.register_view(TextToSpeechView(tts))
+    opp.http.register_view(TextToSpeechUrlView(tts))
 
     async def async_setup_platform(p_type, p_config=None, discovery_info=None):
         """Set up a TTS platform."""
@@ -139,7 +139,7 @@ async def async_setup_opp, config):
         try:
             if hasattr(platform, "async_get_engine"):
                 provider = await platform.async_get_engine(
-                    opp, p_config, discovery_info
+                    opp. p_config, discovery_info
                 )
             else:
                 provider = await opp.async_add_executor_job(
@@ -189,7 +189,7 @@ async def async_setup_opp, config):
             )
 
         service_name = p_config.get(CONF_SERVICE_NAME, f"{p_type}_{SERVICE_SAY}")
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, service_name, async_say_handle, schema=SCHEMA_SERVICE_SAY
         )
 
@@ -211,7 +211,7 @@ async def async_setup_opp, config):
         """Handle clear cache service call."""
         await tts.async_clear_cache()
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_CLEAR_CACHE,
         async_clear_cache_handle,
@@ -490,7 +490,7 @@ class SpeechManager:
 class Provider:
     """Represent a single TTS provider."""
 
-   .opp: Optional[OpenPeerPowerType] = None
+    opp. Optional[OpenPeerPowerType] = None
     name: Optional[str] = None
 
     @property

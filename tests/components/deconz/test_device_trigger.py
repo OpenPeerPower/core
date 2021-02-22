@@ -49,7 +49,7 @@ async def test_get_triggers.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
     device_id = gateway.events[0].device_id
@@ -115,7 +115,7 @@ async def test_helper_successful.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
     device_id = gateway.events[0].device_id

@@ -23,23 +23,23 @@ from tests.common import (
 @pytest.fixture
 def.opp_recorder():
     """Open Peer Power fixture with in-memory recorder."""
-    opp =get_test_open_peer_power()
+    opp.=get_test_open_peer_power()
 
     def setup_recorder(config=None):
         """Set up with params."""
         init_recorder_component.opp, config)
-       .opp.start()
-       .opp.block_till_done()
-       .opp.data[DATA_INSTANCE].block_till_done()
+        opp.start()
+        opp.block_till_done()
+        opp.data[DATA_INSTANCE].block_till_done()
         return.opp
 
     yield setup_recorder
-   .opp.stop()
+    opp.stop()
 
 
 def test_recorder_bad_commit.opp_recorder):
     """Bad _commit should retry 3 times."""
-   .opp = opp_recorder()
+    opp.= opp_recorder()
 
     def work(session):
         """Bad work."""
@@ -57,7 +57,7 @@ def test_recorder_bad_execute.opp_recorder):
     """Bad execute, retry 3 times."""
     from sqlalchemy.exc import SQLAlchemyError
 
-   .opp_recorder()
+    opp.recorder()
 
     def to_native(validate_entity_id=True):
         """Raise exception."""
@@ -75,7 +75,7 @@ def test_recorder_bad_execute.opp_recorder):
 
 
 def test_validate_or_move_away_sqlite_database_with_integrity_check(
-    opp, tmpdir, caplog
+    opp. tmpdir, caplog
 ):
     """Ensure a malformed sqlite database is moved away.
 
@@ -111,7 +111,7 @@ def test_validate_or_move_away_sqlite_database_with_integrity_check(
 
 
 def test_validate_or_move_away_sqlite_database_without_integrity_check(
-    opp, tmpdir, caplog
+    opp. tmpdir, caplog
 ):
     """Ensure a malformed sqlite database is moved away.
 
@@ -159,7 +159,7 @@ async def test_last_run_was_recently_clean.opp):
         is False
     )
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
 
     assert (
@@ -181,7 +181,7 @@ async def test_last_run_was_recently_clean.opp):
 
 def test_basic_sanity_check.opp_recorder):
     """Test the basic sanity checks with a missing table."""
-   .opp = opp_recorder()
+    opp.= opp_recorder()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
@@ -195,7 +195,7 @@ def test_basic_sanity_check.opp_recorder):
 
 def test_combined_checks.opp_recorder, caplog):
     """Run Checks on the open database."""
-   .opp = opp_recorder()
+    opp.= opp_recorder()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 

@@ -34,7 +34,7 @@ class AlexaConfig(alexa_config.AbstractConfig):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         config: dict,
         cloud_user: str,
         prefs: CloudPreferences,
@@ -54,7 +54,7 @@ class AlexaConfig(alexa_config.AbstractConfig):
         self._endpoint = None
 
         prefs.async_listen_updates(self._async_prefs_updated)
-       .opp.bus.async_listen(
+        opp.bus.async_listen(
             entity_registry.EVENT_ENTITY_REGISTRY_UPDATED,
             self._handle_entity_registry_updated,
         )

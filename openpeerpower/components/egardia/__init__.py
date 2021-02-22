@@ -112,7 +112,7 @@ def setup_opp, config):
                     raise OSError(
                         "Binding error occurred while starting EgardiaServer."
                     )
-               .opp.data[EGARDIA_SERVER] = server
+                opp.data[EGARDIA_SERVER] = server
                 server.start()
 
             def handle_stop_event(event):
@@ -120,20 +120,20 @@ def setup_opp, config):
                 server.stop()
 
             # listen to Open Peer Power stop event
-           .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, handle_stop_event)
+            opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, handle_stop_event)
 
         except OSError:
             _LOGGER.error("Binding error occurred while starting EgardiaServer")
             return False
 
     discovery.load_platform(
-        opp, "alarm_control_panel", DOMAIN, discovered=conf, opp_config=config
+        opp. "alarm_control_panel", DOMAIN, discovered=conf, opp_config=config
     )
 
     # Get the sensors from the device and add those
     sensors = device.getsensors()
     discovery.load_platform(
-        opp, "binary_sensor", DOMAIN, {ATTR_DISCOVER_DEVICES: sensors}, config
+        opp. "binary_sensor", DOMAIN, {ATTR_DISCOVER_DEVICES: sensors}, config
     )
 
     return True

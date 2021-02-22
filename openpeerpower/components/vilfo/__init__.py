@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Set up the Vilfo Router component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -40,11 +40,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not vilfo_router.available:
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][entry.entry_id] = vilfo_router
+    opp.data[DOMAIN][entry.entry_id] = vilfo_router
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -55,13 +55,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

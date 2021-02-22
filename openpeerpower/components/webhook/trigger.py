@@ -28,14 +28,14 @@ async def _handle_webhook(job, opp, webhook_id, request):
 
     result["query"] = request.query
     result["description"] = "webhook"
-   .opp.async_run.opp_job(job, {"trigger": result})
+    opp.async_run.opp_job(job, {"trigger": result})
 
 
 async def async_attach_trigger.opp, config, action, automation_info):
     """Trigger based on incoming webhooks."""
     webhook_id = config.get(CONF_WEBHOOK_ID)
     job = OppJob(action)
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         automation_info["domain"],
         automation_info["name"],
         webhook_id,
@@ -45,6 +45,6 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def unregister():
         """Unregister webhook."""
-       .opp.components.webhook.async_unregister(webhook_id)
+        opp.components.webhook.async_unregister(webhook_id)
 
     return unregister

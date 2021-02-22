@@ -82,7 +82,7 @@ def calls.opp):
 def events.opp):
     """Yield caught shelly_click events."""
     ha_events = []
-   .opp.bus.async_listen(EVENT_SHELLY_CLICK, ha_callback(ha_events.append))
+    opp.bus.async_listen(EVENT_SHELLY_CLICK, ha_callback(ha_events.append))
     yield ha_events
 
 
@@ -106,8 +106,8 @@ async def coap_wrapper.opp):
         initialized=True,
     )
 
-   .opp.data[DOMAIN] = {DATA_CONFIG_ENTRY: {}}
-   .opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id] = {}
+    opp.data[DOMAIN] = {DATA_CONFIG_ENTRY: {}}
+    opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id] = {}
     wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][
         COAP
     ] = ShellyDeviceWrapper.opp, config_entry, device)

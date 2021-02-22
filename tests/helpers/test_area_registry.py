@@ -22,7 +22,7 @@ def update_events.opp):
     def async_capture(event):
         events.append(event.data)
 
-   .opp.bus.async_listen(area_registry.EVENT_AREA_REGISTRY_UPDATED, async_capture)
+    opp.bus.async_listen(area_registry.EVENT_AREA_REGISTRY_UPDATED, async_capture)
 
     return events
 
@@ -195,7 +195,7 @@ async def test_load_area.opp, registry):
 @pytest.mark.parametrize("load_registries", [False])
 async def test_loading_area_from_storage.opp, opp_storage):
     """Test loading stored areas on start."""
-   .opp_storage[area_registry.STORAGE_KEY] = {
+    opp.storage[area_registry.STORAGE_KEY] = {
         "version": area_registry.STORAGE_VERSION,
         "data": {"areas": [{"id": "12345A", "name": "mock"}]},
     }

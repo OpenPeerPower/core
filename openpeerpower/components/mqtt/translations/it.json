@@ -17,7 +17,7 @@
                 },
                 "description": "Inserisci le informazioni di connessione del tuo broker MQTT."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Attiva l'individuazione"
                 },

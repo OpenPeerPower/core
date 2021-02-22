@@ -30,7 +30,7 @@ async def test_caching_data.opp):
     await data.store.async_save([state.as_dict() for state in stored_states])
 
     # Emulate a fresh load
-   .opp.data[DATA_RESTORE_STATE_TASK] = None
+    opp.data[DATA_RESTORE_STATE_TASK] = None
 
     entity = RestoreEntity()
     entity.opp = opp
@@ -52,7 +52,7 @@ async def test_caching_data.opp):
 
 async def test.opp_starting.opp):
     """Test that we cache data."""
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     now = dt_util.utcnow()
     stored_states = [
@@ -66,7 +66,7 @@ async def test.opp_starting.opp):
     await data.store.async_save([state.as_dict() for state in stored_states])
 
     # Emulate a fresh load
-   .opp.data[DATA_RESTORE_STATE_TASK] = None
+    opp.data[DATA_RESTORE_STATE_TASK] = None
 
     entity = RestoreEntity()
     entity.opp = opp
@@ -91,7 +91,7 @@ async def test.opp_starting.opp):
     with patch(
         "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data:
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
     # Assert that this session states were written
@@ -224,7 +224,7 @@ async def test_state_saved_on_remove.opp):
     await entity.async_internal_added_to.opp()
 
     now = dt_util.utcnow()
-   .opp.states.async_set(
+    opp.states.async_set(
         "input_boolean.b0", "on", {"complicated": {"value": {1, 2, now}}}
     )
 
@@ -248,7 +248,7 @@ async def test_restoring_invalid_entity_id.opp, opp_storage):
     entity.opp = opp
     entity.entity_id = "test.invalid__entity_id"
     now = dt_util.utcnow().isoformat()
-   .opp_storage[STORAGE_KEY] = {
+    opp.storage[STORAGE_KEY] = {
         "version": 1,
         "key": STORAGE_KEY,
         "data": [

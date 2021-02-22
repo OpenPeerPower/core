@@ -71,7 +71,7 @@ async def async_setup_opp, config):
         """Update the NO-IP entry."""
         await _update_no_ip.opp, session, domain, auth_str, timeout)
 
-   .opp.helpers.event.async_track_time_interval(update_domain_interval, INTERVAL)
+    opp.helpers.event.async_track_time_interval(update_domain_interval, INTERVAL)
 
     return True
 

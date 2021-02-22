@@ -12,7 +12,7 @@ from openpeerpower.setup import async_setup_component
 async def test_setup_config_full.opp):
     """Test setup with all data."""
     config = {"logentries": {"token": "secret"}}
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
     assert await async_setup_component.opp, logentries.DOMAIN, config)
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
@@ -21,7 +21,7 @@ async def test_setup_config_full.opp):
 async def test_setup_config_defaults.opp):
     """Test setup with defaults."""
     config = {"logentries": {"token": "token"}}
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
     assert await async_setup_component.opp, logentries.DOMAIN, config)
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
@@ -47,7 +47,7 @@ async def test_event_listener.opp, mock_dump, mock_requests):
     mock_post = mock_requests.post
     mock_requests.exceptions.RequestException = Exception
     config = {"logentries": {"token": "token"}}
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
     assert await async_setup_component.opp, logentries.DOMAIN, config)
     handler_method = opp.bus.listen.call_args_list[0][0][1]
 

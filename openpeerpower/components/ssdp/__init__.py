@@ -48,7 +48,7 @@ async def async_setup_opp, config):
         await scanner.async_scan(None)
         async_track_time_interval.opp, scanner.async_scan, SCAN_INTERVAL)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, initialize)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, initialize)
 
     return True
 

@@ -39,7 +39,7 @@ async def test_outlet_set_state.opp, hk_driver, events):
     """Test if Outlet accessory and HA are updated accordingly."""
     entity_id = "switch.outlet_test"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = Outlet.opp, hk_driver, "Outlet", entity_id, 2, None)
     await acc.run()
@@ -51,11 +51,11 @@ async def test_outlet_set_state.opp, hk_driver, events):
     assert acc.char_on.value is False
     assert acc.char_outlet_in_use.value is True
 
-   .opp.states.async_set(entity_id, STATE_ON)
+    opp.states.async_set(entity_id, STATE_ON)
     await opp.async_block_till_done()
     assert acc.char_on.value is True
 
-   .opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert acc.char_on.value is False
 
@@ -92,7 +92,7 @@ async def test_switch_set_state.opp, hk_driver, entity_id, attrs, events):
     """Test if accessory and HA are updated accordingly."""
     domain = split_entity_id(entity_id)[0]
 
-   .opp.states.async_set(entity_id, None, attrs)
+    opp.states.async_set(entity_id, None, attrs)
     await opp.async_block_till_done()
     acc = Switch.opp, hk_driver, "Switch", entity_id, 2, None)
     await acc.run()
@@ -104,11 +104,11 @@ async def test_switch_set_state.opp, hk_driver, entity_id, attrs, events):
     assert acc.activate_only is False
     assert acc.char_on.value is False
 
-   .opp.states.async_set(entity_id, STATE_ON, attrs)
+    opp.states.async_set(entity_id, STATE_ON, attrs)
     await opp.async_block_till_done()
     assert acc.char_on.value is True
 
-   .opp.states.async_set(entity_id, STATE_OFF, attrs)
+    opp.states.async_set(entity_id, STATE_OFF, attrs)
     await opp.async_block_till_done()
     assert acc.char_on.value is False
 
@@ -135,7 +135,7 @@ async def test_valve_set_state.opp, hk_driver, events):
     """Test if Valve accessory and HA are updated accordingly."""
     entity_id = "switch.valve_test"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
 
     acc = Valve.opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_FAUCET})
@@ -167,12 +167,12 @@ async def test_valve_set_state.opp, hk_driver, events):
     assert acc.char_in_use.value == 0
     assert acc.char_valve_type.value == 0  # Generic Valve
 
-   .opp.states.async_set(entity_id, STATE_ON)
+    opp.states.async_set(entity_id, STATE_ON)
     await opp.async_block_till_done()
     assert acc.char_active.value == 1
     assert acc.char_in_use.value == 1
 
-   .opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert acc.char_active.value == 0
     assert acc.char_in_use.value == 0
@@ -199,12 +199,12 @@ async def test_valve_set_state.opp, hk_driver, events):
 
 
 async def test_vacuum_set_state_with_returnhome_and_start_support(
-    opp, hk_driver, events
+    opp. hk_driver, events
 ):
     """Test if Vacuum accessory and HA are updated accordingly."""
     entity_id = "vacuum.roomba"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, None, {ATTR_SUPPORTED_FEATURES: SUPPORT_RETURN_HOME | SUPPORT_START}
     )
     await opp.async_block_till_done()
@@ -217,7 +217,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
 
     assert acc.char_on.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_CLEANING,
         {ATTR_SUPPORTED_FEATURES: SUPPORT_RETURN_HOME | SUPPORT_START},
@@ -225,7 +225,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
     await opp.async_block_till_done()
     assert acc.char_on.value == 1
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_DOCKED,
         {ATTR_SUPPORTED_FEATURES: SUPPORT_RETURN_HOME | SUPPORT_START},
@@ -236,7 +236,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
     # Set from HomeKit
     call_start = async_mock_service.opp, VACUUM_DOMAIN, SERVICE_START)
     call_return_to_base = async_mock_service(
-        opp, VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE
+        opp. VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE
     )
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, 1)
@@ -257,12 +257,12 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
 
 
 async def test_vacuum_set_state_without_returnhome_and_start_support(
-    opp, hk_driver, events
+    opp. hk_driver, events
 ):
     """Test if Vacuum accessory and HA are updated accordingly."""
     entity_id = "vacuum.roomba"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
 
     acc = Vacuum.opp, hk_driver, "Vacuum", entity_id, 2, None)
@@ -273,11 +273,11 @@ async def test_vacuum_set_state_without_returnhome_and_start_support(
 
     assert acc.char_on.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ON)
+    opp.states.async_set(entity_id, STATE_ON)
     await opp.async_block_till_done()
     assert acc.char_on.value == 1
 
-   .opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert acc.char_on.value == 0
 
@@ -307,7 +307,7 @@ async def test_reset_switch.opp, hk_driver, events):
     domain = "scene"
     entity_id = "scene.test"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = Switch.opp, hk_driver, "Switch", entity_id, 2, None)
     await acc.run()
@@ -344,7 +344,7 @@ async def test_reset_switch_reload.opp, hk_driver, events):
     """Test reset switch after script reload."""
     entity_id = "script.test"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = Switch.opp, hk_driver, "Switch", entity_id, 2, None)
     await acc.run()
@@ -352,6 +352,6 @@ async def test_reset_switch_reload.opp, hk_driver, events):
 
     assert acc.activate_only is False
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     assert acc.char_on.value is False

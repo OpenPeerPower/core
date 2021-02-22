@@ -111,7 +111,7 @@ async def _async_create_entities.opp, config):
 
         lights.append(
             LightTemplate(
-                opp,
+                opp.
                 device,
                 friendly_name,
                 state_template,
@@ -146,7 +146,7 @@ class LightTemplate(TemplateEntity, LightEntity):
 
     def __init__(
         self,
-        opp,
+        opp.
         device_id,
         friendly_name,
         state_template,
@@ -186,7 +186,7 @@ class LightTemplate(TemplateEntity, LightEntity):
         self._temperature_script = None
         if temperature_action is not None:
             self._temperature_script = Script(
-                opp, temperature_action, friendly_name, domain
+                opp. temperature_action, friendly_name, domain
             )
         self._temperature_template = temperature_template
         self._color_script = None
@@ -196,7 +196,7 @@ class LightTemplate(TemplateEntity, LightEntity):
         self._white_value_script = None
         if white_value_action is not None:
             self._white_value_script = Script(
-                opp, white_value_action, friendly_name, domain
+                opp. white_value_action, friendly_name, domain
             )
         self._white_value_template = white_value_template
 

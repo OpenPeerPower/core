@@ -24,7 +24,7 @@ async def test_show_user_form.opp: OpenPeerPower) -> None:
 
 
 async def test_user_device_exists_abort(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort flow if Agent device already configured."""
     await init_integration.opp, aioclient_mock)
@@ -55,7 +55,7 @@ async def test_connection_error(opp: OpenPeerPower, aioclient_mock) -> None:
 
 
 async def test_full_user_flow_implementation(
-    opp: OpenPeerPower, aioclient_mock
+    opp. OpenPeerPower, aioclient_mock
 ) -> None:
     """Test the full manual user flow from start to finish."""
     aioclient_mock.get(

@@ -119,15 +119,15 @@ async def test_get_channel(version, channel) -> None:
 
 async def test_process_before_send.opp: OpenPeerPower):
     """Test regular use of the Sentry process before sending function."""
-   .opp.config.components.add("puppies")
-   .opp.config.components.add("a_integration")
+    opp.config.components.add("puppies")
+    opp.config.components.add("a_integration")
 
     # These should not show up in the result.
-   .opp.config.components.add("puppies.light")
-   .opp.config.components.add("auth")
+    opp.config.components.add("puppies.light")
+    opp.config.components.add("auth")
 
     result = process_before_send(
-        opp,
+        opp.
         options={},
         channel="test",
         huuid="12345",
@@ -168,7 +168,7 @@ async def test_event_with_platform_context.opp: OpenPeerPower):
         new=current_platform_mock,
     ):
         result = process_before_send(
-            opp,
+            opp.
             options={},
             channel="test",
             huuid="12345",
@@ -191,7 +191,7 @@ async def test_event_with_platform_context.opp: OpenPeerPower):
         new=current_platform_mock,
     ):
         result = process_before_send(
-            opp,
+            opp.
             options={CONF_EVENT_CUSTOM_COMPONENTS: True},
             channel="test",
             huuid="12345",
@@ -239,7 +239,7 @@ async def test_logger_event_extraction.opp: OpenPeerPower, logger, tags):
     """Test extraction of information from Sentry logger events."""
 
     result = process_before_send(
-        opp,
+        opp.
         options={
             CONF_EVENT_CUSTOM_COMPONENTS: True,
             CONF_EVENT_THIRD_PARTY_PACKAGES: True,
@@ -281,7 +281,7 @@ async def test_logger_event_extraction.opp: OpenPeerPower, logger, tags):
 async def test_filter_log_events.opp: OpenPeerPower, logger, options, event):
     """Test filtering of events based on configuration options."""
     result = process_before_send(
-        opp,
+        opp.
         options=options,
         channel="test",
         huuid="12345",
@@ -315,7 +315,7 @@ async def test_filter_handled_events.opp: OpenPeerPower, handled, options, event
     event_mock.tags = {"handled": handled}
 
     result = process_before_send(
-        opp,
+        opp.
         options=options,
         channel="test",
         huuid="12345",

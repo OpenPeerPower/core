@@ -50,7 +50,7 @@ async def test_valid_device_config(opp, mock_openzwave):
     """Test valid device config."""
     device_config = {"light.kitchen": {"ignored": "true"}}
     result = await async_setup_component(
-        opp, "zwave", {"zwave": {"device_config": device_config}}
+        opp. "zwave", {"zwave": {"device_config": device_config}}
     )
     await opp.async_block_till_done()
 
@@ -61,7 +61,7 @@ async def test_invalid_device_config(opp, mock_openzwave):
     """Test invalid device config."""
     device_config = {"light.kitchen": {"some_ignored": "true"}}
     result = await async_setup_component(
-        opp, "zwave", {"zwave": {"device_config": device_config}}
+        opp. "zwave", {"zwave": {"device_config": device_config}}
     )
     await opp.async_block_till_done()
 
@@ -83,7 +83,7 @@ def test_config_access_error():
 async def test_network_options.opp, mock_openzwave):
     """Test network options."""
     result = await async_setup_component(
-        opp,
+        opp.
         "zwave",
         {"zwave": {"usb_path": "mock_usb_path", "config_path": "mock_config_path"}},
     )
@@ -166,8 +166,8 @@ async def test_auto_heal_disabled.opp, mock_openzwave):
 async def test_setup_platform.opp, mock_openzwave):
     """Test invalid device config."""
     mock_device = MagicMock()
-   .opp.data[DATA_NETWORK] = MagicMock()
-   .opp.data[zwave.DATA_DEVICES] = {456: mock_device}
+    opp.data[DATA_NETWORK] = MagicMock()
+    opp.data[zwave.DATA_DEVICES] = {456: mock_device}
     async_add_entities = MagicMock()
 
     result = await zwave.async_setup_platform.opp, None, async_add_entities, None)
@@ -175,13 +175,13 @@ async def test_setup_platform.opp, mock_openzwave):
     assert not async_add_entities.called
 
     result = await zwave.async_setup_platform(
-        opp, None, async_add_entities, {const.DISCOVERY_DEVICE: 123}
+        opp. None, async_add_entities, {const.DISCOVERY_DEVICE: 123}
     )
     assert not result
     assert not async_add_entities.called
 
     result = await zwave.async_setup_platform(
-        opp, None, async_add_entities, {const.DISCOVERY_DEVICE: 456}
+        opp. None, async_add_entities, {const.DISCOVERY_DEVICE: 456}
     )
     assert result
     assert async_add_entities.called
@@ -206,7 +206,7 @@ async def test_zwave_ready_wait.opp, mock_openzwave, zwave_setup):
     with patch("openpeerpower.components.zwave.dt_util.utcnow", new=utcnow):
         with patch("asyncio.sleep", new=sleep):
             with patch.object(zwave, "_LOGGER") as mock_logger:
-               .opp.data[DATA_NETWORK].state = MockNetwork.STATE_STARTED
+                opp.data[DATA_NETWORK].state = MockNetwork.STATE_STARTED
 
                 await opp.async_start()
 
@@ -368,7 +368,7 @@ async def test_node_ignored.opp, mock_openzwave):
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
         await async_setup_component(
-            opp,
+            opp.
             "zwave",
             {"zwave": {"device_config": {"zwave.mock_node": {"ignored": True}}}},
         )
@@ -625,11 +625,11 @@ async def test_value_discovery_existing_entity.opp, mock_openzwave):
         await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
+        opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
         == 22.0
     )
     assert (
-       .opp.states.get("climate.mock_node_mock_value").attributes[
+        opp.states.get("climate.mock_node_mock_value").attributes[
             "current_temperature"
         ]
         is None
@@ -650,11 +650,11 @@ async def test_value_discovery_existing_entity.opp, mock_openzwave):
         await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
+        opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
         == 22.0
     )
     assert (
-       .opp.states.get("climate.mock_node_mock_value").attributes[
+        opp.states.get("climate.mock_node_mock_value").attributes[
             "current_temperature"
         ]
         == 23.5
@@ -692,7 +692,7 @@ async def test_value_discovery_legacy_thermostat.opp, mock_openzwave):
     await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
+        opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
         == 22.0
     )
 
@@ -749,7 +749,7 @@ async def test_power_schemes.opp, mock_openzwave):
         await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("switch.mock_node_mock_value").attributes["power_consumption"]
+        opp.states.get("switch.mock_node_mock_value").attributes["power_consumption"]
         == 23.5
     )
 
@@ -773,7 +773,7 @@ async def test_network_ready.opp, mock_openzwave):
     def listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(const.EVENT_NETWORK_COMPLETE, listener)
+    opp.bus.async_listen(const.EVENT_NETWORK_COMPLETE, listener)
 
     await opp.async_add_executor_job(mock_receivers[0])
     await opp.async_block_till_done()
@@ -800,7 +800,7 @@ async def test_network_complete.opp, mock_openzwave):
     def listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(const.EVENT_NETWORK_READY, listener)
+    opp.bus.async_listen(const.EVENT_NETWORK_READY, listener)
 
     await opp.async_add_executor_job(mock_receivers[0])
     await opp.async_block_till_done()
@@ -827,7 +827,7 @@ async def test_network_complete_some_dead.opp, mock_openzwave):
     def listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(const.EVENT_NETWORK_COMPLETE_SOME_DEAD, listener)
+    opp.bus.async_listen(const.EVENT_NETWORK_COMPLETE_SOME_DEAD, listener)
 
     await opp.async_add_executor_job(mock_receivers[0])
     await opp.async_block_till_done()
@@ -836,7 +836,7 @@ async def test_network_complete_some_dead.opp, mock_openzwave):
 
 
 async def test_entity_discovery(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test the creation of a new entity."""
     (node, value_class, mock_schema) = mock_values
@@ -851,7 +851,7 @@ async def test_entity_discovery(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -915,7 +915,7 @@ async def test_entity_discovery(
 
 
 async def test_entity_existing_values(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test the loading of already discovered values."""
     (node, value_class, mock_schema) = mock_values
@@ -937,7 +937,7 @@ async def test_entity_existing_values(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -969,7 +969,7 @@ async def test_entity_existing_values(
 
 
 async def test_node_schema_mismatch(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test node schema mismatch."""
     (node, value_class, mock_schema) = mock_values
@@ -991,7 +991,7 @@ async def test_node_schema_mismatch(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1005,7 +1005,7 @@ async def test_node_schema_mismatch(
 
 
 async def test_entity_workaround_component(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test component workaround."""
     (node, value_class, mock_schema) = mock_values
@@ -1038,7 +1038,7 @@ async def test_entity_workaround_component(
     ):
 
         values = zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1055,7 +1055,7 @@ async def test_entity_workaround_component(
 
 
 async def test_entity_workaround_ignore(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test ignore workaround."""
     (node, value_class, mock_schema) = mock_values
@@ -1083,7 +1083,7 @@ async def test_entity_workaround_ignore(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1097,7 +1097,7 @@ async def test_entity_workaround_ignore(
 
 
 async def test_entity_config_ignore(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test ignore config."""
     (node, value_class, mock_schema) = mock_values
@@ -1118,7 +1118,7 @@ async def test_entity_config_ignore(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1132,7 +1132,7 @@ async def test_entity_config_ignore(
 
 
 async def test_entity_config_ignore_with_registry(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test ignore config.
 
@@ -1163,7 +1163,7 @@ async def test_entity_config_ignore_with_registry(
         zwave, "import_module", mock_import_module
     ):
         zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1176,7 +1176,7 @@ async def test_entity_config_ignore_with_registry(
 
 
 async def test_entity_platform_ignore(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test platform ignore device."""
     (node, value_class, mock_schema) = mock_values
@@ -1201,7 +1201,7 @@ async def test_entity_platform_ignore(
         zwave, "import_module", import_module
     ):
         zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1214,7 +1214,7 @@ async def test_entity_platform_ignore(
 
 
 async def test_config_polling_intensity(
-    opp, mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
+    opp. mock_discovery, mock_import_module, mock_values, mock_openzwave, zwave_setup
 ):
     """Test polling intensity."""
     (node, value_class, mock_schema) = mock_values
@@ -1235,7 +1235,7 @@ async def test_config_polling_intensity(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-           .opp.opp,
+            opp.opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1419,7 +1419,7 @@ async def test_set_poll_intensity_enable.opp, mock_openzwave, zwave_setup_ready)
 
 
 async def test_set_poll_intensity_enable_failed(
-    opp, mock_openzwave, zwave_setup_ready
+    opp. mock_openzwave, zwave_setup_ready
 ):
     """Test zwave set_poll_intensity service, failed set."""
     zwave_network = opp.data[DATA_NETWORK]
@@ -1474,7 +1474,7 @@ async def test_set_poll_intensity_disable.opp, mock_openzwave, zwave_setup_ready
 
 
 async def test_set_poll_intensity_disable_failed(
-    opp, mock_openzwave, zwave_setup_ready
+    opp. mock_openzwave, zwave_setup_ready
 ):
     """Test zwave set_poll_intensity service, failed disable."""
     zwave_network = opp.data[DATA_NETWORK]
@@ -1928,7 +1928,7 @@ async def test_set_node_value.opp, mock_openzwave, zwave_setup_ready):
 
 
 async def test_set_node_value_with_long_id_and_text_value(
-    opp, mock_openzwave, zwave_setup_ready
+    opp. mock_openzwave, zwave_setup_ready
 ):
     """Test zwave set_node_value service."""
     zwave_network = opp.data[DATA_NETWORK]

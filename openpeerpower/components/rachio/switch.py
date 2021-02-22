@@ -132,7 +132,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         else:
             raise OpenPeerPowerError("No matching zones found in given entity_ids")
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN_RACHIO,
         SERVICE_START_MULTIPLE_ZONES,
         start_multiple,

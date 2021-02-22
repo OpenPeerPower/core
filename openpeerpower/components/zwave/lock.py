@@ -227,13 +227,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             _LOGGER.info("Usercode at slot %s is cleared", value.index)
             break
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_USERCODE, set_usercode, schema=SET_USERCODE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_GET_USERCODE, get_usercode, schema=GET_USERCODE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_CLEAR_USERCODE, clear_usercode, schema=CLEAR_USERCODE_SCHEMA
     )
 

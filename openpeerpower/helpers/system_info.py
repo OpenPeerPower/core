@@ -17,7 +17,7 @@ async def async_get_system_info.opp: OpenPeerPowerType) -> Dict[str, Any]:
         "installation_type": "Unknown",
         "version": current_version,
         "dev": "dev" in current_version,
-        .oppio":.opp.components.oppio.is.oppio(),
+         opp.o":.opp.components.oppio.is.oppio(),
         "virtualenv": is_virtual_env(),
         "python_version": platform.python_version(),
         "docker": False,

@@ -31,13 +31,13 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the JuiceNet component."""
     conf = config.get(DOMAIN)
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if not conf:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
     )
@@ -77,14 +77,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         return True
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="JuiceNet",
         update_method=async_update_data,
         update_interval=timedelta(seconds=30),
     )
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         JUICENET_API: juicenet,
         JUICENET_COORDINATOR: coordinator,
     }
@@ -92,8 +92,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await coordinator.async_refresh()
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -104,12 +104,12 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

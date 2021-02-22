@@ -71,7 +71,7 @@ SENSOR_TYPES = {
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config, async_add_entities, discovery_info=None
+    opp. OpenPeerPowerType, config, async_add_entities, discovery_info=None
 ) -> None:
     """Old way of setting up UPnP/IGD sensors."""
     _LOGGER.debug(
@@ -80,7 +80,7 @@ async def async_setup_platform(
 
 
 async def async_setup_entry(
-    opp, config_entry: ConfigEntry, async_add_entities
+    opp. config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the UPnP/IGD sensors."""
     udn = config_entry.data[CONFIG_ENTRY_UDN]
@@ -93,14 +93,14 @@ async def async_setup_entry(
     _LOGGER.debug("update_interval: %s", update_interval)
     _LOGGER.debug("Adding sensors")
     coordinator = DataUpdateCoordinator[Mapping[str, Any]](
-        opp,
+        opp.
         _LOGGER,
         name=device.name,
         update_method=device.async_get_traffic_data,
         update_interval=update_interval,
     )
     await coordinator.async_refresh()
-   .opp.data[DOMAIN][DOMAIN_COORDINATORS][udn] = coordinator
+    opp.data[DOMAIN][DOMAIN_COORDINATORS][udn] = coordinator
 
     sensors = [
         RawUpnpSensor(coordinator, device, SENSOR_TYPES[BYTES_RECEIVED]),

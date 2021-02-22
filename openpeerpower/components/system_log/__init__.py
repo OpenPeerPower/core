@@ -208,7 +208,7 @@ async def async_setup_opp, config):
 
     handler = LogErrorHandler.opp, conf[CONF_MAX_ENTRIES], conf[CONF_FIRE_EVENT])
 
-   .opp.data[DOMAIN] = handler
+    opp.data[DOMAIN] = handler
 
     listener = logging.handlers.QueueListener(
         simple_queue, handler, respect_handler_level=True
@@ -223,9 +223,9 @@ async def async_setup_opp, config):
         listener.stop()
         del.opp.data[DOMAIN]
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_handler)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_handler)
 
-   .opp.http.register_view(AllErrorsView(handler))
+    opp.http.register_view(AllErrorsView(handler))
 
     async def async_service_handler(service):
         """Handle logger services."""
@@ -244,12 +244,12 @@ async def async_setup_opp, config):
         # This is needed as older logger instances will remain
         logging.getLogger().removeHandler(handler)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_shutdown_handler)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_shutdown_handler)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_CLEAR, async_service_handler, schema=SERVICE_CLEAR_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_WRITE, async_service_handler, schema=SERVICE_WRITE_SCHEMA
     )
 

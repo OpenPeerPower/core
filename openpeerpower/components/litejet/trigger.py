@@ -39,7 +39,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def call_action():
         """Call action with right context."""
-       .opp.async_run.opp_job(
+        opp.async_run.opp_job(
             job,
             {
                 "trigger": {
@@ -68,10 +68,10 @@ async def async_attach_trigger.opp, config, action, automation_info):
         nonlocal held_less_than, held_more_than
         pressed_time = dt_util.utcnow()
         if held_more_than is None and held_less_than is None:
-           .opp.add_job(call_action)
+            opp.add_job(call_action)
         if held_more_than is not None and held_less_than is None:
             cancel_pressed_more_than = track_point_in_utc_time(
-                opp, pressed_more_than_satisfied, dt_util.utcnow() + held_more_than
+                opp. pressed_more_than_satisfied, dt_util.utcnow() + held_more_than
             )
 
     def released():
@@ -89,10 +89,10 @@ async def async_attach_trigger.opp, config, action, automation_info):
             and held_time < held_less_than
             and (held_more_than is None or held_time > held_more_than)
         ):
-           .opp.add_job(call_action)
+            opp.add_job(call_action)
 
-   .opp.data["litejet_system"].on_switch_pressed(number, pressed)
-   .opp.data["litejet_system"].on_switch_released(number, released)
+    opp.data["litejet_system"].on_switch_pressed(number, pressed)
+    opp.data["litejet_system"].on_switch_released(number, released)
 
     @callback
     def async_remove():

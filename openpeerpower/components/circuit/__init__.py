@@ -26,7 +26,7 @@ async def async_setup_opp, config):
     webhooks = config[DOMAIN][CONF_WEBHOOK]
 
     for webhook_conf in webhooks:
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform.opp, "notify", DOMAIN, webhook_conf, config)
         )
 

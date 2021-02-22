@@ -96,24 +96,24 @@ async def async_setup_opp, config):
         update_interval=scan_interval.total_seconds(),
         infer_arming_state=infer_arming_state,
     )
-   .opp.data[DATA_NESS] = client
+    opp.data[DATA_NESS] = client
 
     async def _close(event):
         await client.close()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform.opp, "binary_sensor", DOMAIN, {CONF_ZONES: zones}, config)
     )
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform.opp, "alarm_control_panel", DOMAIN, {}, config)
     )
 
     def on_zone_change(zone_id: int, state: bool):
         """Receives and propagates zone state updates."""
         async_dispatcher_send(
-            opp, SIGNAL_ZONE_CHANGED, ZoneChangedData(zone_id=zone_id, state=state)
+            opp. SIGNAL_ZONE_CHANGED, ZoneChangedData(zone_id=zone_id, state=state)
         )
 
     def on_state_change(arming_state: ArmingState):
@@ -124,8 +124,8 @@ async def async_setup_opp, config):
     client.on_state_change(on_state_change)
 
     # Force update for current arming status and current zone states
-   .opp.loop.create_task(client.keepalive())
-   .opp.loop.create_task(client.update())
+    opp.loop.create_task(client.keepalive())
+    opp.loop.create_task(client.update())
 
     async def handle_panic(call):
         await client.panic(call.data[ATTR_CODE])
@@ -133,10 +133,10 @@ async def async_setup_opp, config):
     async def handle_aux(call):
         await client.aux(call.data[ATTR_OUTPUT_ID], call.data[ATTR_STATE])
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_PANIC, handle_panic, schema=SERVICE_SCHEMA_PANIC
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_AUX, handle_aux, schema=SERVICE_SCHEMA_AUX
     )
 

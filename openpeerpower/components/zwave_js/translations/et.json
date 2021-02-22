@@ -20,7 +20,7 @@
             "install_addon": "Palun oota kuni Z-Wave JS lisandmoodul on paigaldatud. See v\u00f5ib v\u00f5tta mitu minutit."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "title": "Seadista Z-Wave JS-i sidumine Z-Wave JS-i lisandmooduliga"
             },
             "install_addon": {

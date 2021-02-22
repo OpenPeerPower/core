@@ -49,7 +49,7 @@ async def test_new_users_available.opp, entry, setup_plex_server):
 
 
 async def test_new_ignored_users_available(
-    opp,
+    opp.
     caplog,
     entry,
     mock_websocket,
@@ -138,7 +138,7 @@ async def test_gdm_client_failure.opp, mock_websocket, setup_plex_server):
 
 
 async def test_mark_sessions_idle(
-    opp, mock_plex_server, mock_websocket, requests_mock, empty_payload
+    opp. mock_plex_server, mock_websocket, requests_mock, empty_payload
 ):
     """Test marking media_players as idle when sessions end."""
     await wait_for_debouncer.opp)

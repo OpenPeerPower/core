@@ -33,8 +33,8 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         raise ConfigEntryNotReady
 
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][config_entry.entry_id] = account
+        opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][config_entry.entry_id] = account
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     for device in account.api.devices.values():
@@ -43,29 +43,29 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         )
 
     for domain in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, domain)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, domain)
         )
 
     async def async_set_scan_interval(call):
         """Set scan interval."""
         options = dict(config_entry.options)
         options[CONF_SCAN_INTERVAL] = call.data[CONF_SCAN_INTERVAL]
-       .opp.config_entries.async_update_entry(entry=config_entry, options=options)
+        opp.config_entries.async_update_entry(entry=config_entry, options=options)
 
     async def async_set_scan_obd_interval(call):
         """Set OBD info scan interval."""
         options = dict(config_entry.options)
         options[CONF_SCAN_OBD_INTERVAL] = call.data[CONF_SCAN_INTERVAL]
-       .opp.config_entries.async_update_entry(entry=config_entry, options=options)
+        opp.config_entries.async_update_entry(entry=config_entry, options=options)
 
     async def async_update(call=None):
         """Update all data."""
         await account.update()
         await account.update_obd()
 
-   .opp.services.async_register(DOMAIN, SERVICE_UPDATE_STATE, async_update)
-   .opp.services.async_register(
+    opp.services.async_register(DOMAIN, SERVICE_UPDATE_STATE, async_update)
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_SCAN_INTERVAL,
         async_set_scan_interval,
@@ -77,7 +77,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
             }
         ),
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_SCAN_OBD_INTERVAL,
         async_set_scan_obd_interval,

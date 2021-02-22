@@ -38,14 +38,14 @@ async def ignore_frontend_deps.opp):
     frontend = await async_get_integration.opp, "frontend")
     for dep in frontend.dependencies:
         if dep not in ("http", "websocket_api"):
-           .opp.config.components.add(dep)
+            opp.config.components.add(dep)
 
 
 @pytest.fixture
 async def frontend.opp, ignore_frontend_deps):
     """Frontend setup with themes."""
     assert await async_setup_component(
-        opp,
+        opp.
         "frontend",
         {},
     )
@@ -55,7 +55,7 @@ async def frontend.opp, ignore_frontend_deps):
 async def frontend_themes.opp):
     """Frontend setup with themes."""
     assert await async_setup_component(
-        opp,
+        opp.
         "frontend",
         CONFIG_THEMES,
     )
@@ -83,7 +83,7 @@ async def ws_client.opp, opp_ws_client, frontend):
 async def mock_http_client_with_urls.opp, aiohttp_client, ignore_frontend_deps):
     """Start the Open Peer Power HTTP component."""
     assert await async_setup_component(
-        opp,
+        opp.
         "frontend",
         {
             DOMAIN: {
@@ -154,7 +154,7 @@ async def test_themes_api.opp, themes_ws_client):
     }
 
     # safe mode
-   .opp.config.safe_mode = True
+    opp.config.safe_mode = True
     await themes_ws_client.send_json({"id": 6, "type": "frontend/get_themes"})
     msg = await themes_ws_client.receive_json()
 
@@ -166,7 +166,7 @@ async def test_themes_api.opp, themes_ws_client):
 
 async def test_themes_persist.opp, opp_storage, opp_ws_client, ignore_frontend_deps):
     """Test that theme settings are restores after restart."""
-   .opp_storage[THEMES_STORAGE_KEY] = {
+    opp.storage[THEMES_STORAGE_KEY] = {
         "key": THEMES_STORAGE_KEY,
         "version": 1,
         "data": {
@@ -337,7 +337,7 @@ async def test_get_panels.opp, opp_ws_client, mock_http_client):
     resp = await mock_http_client.get("/map")
     assert resp.status == HTTP_NOT_FOUND
 
-   .opp.components.frontend.async_register_built_in_panel(
+    opp.components.frontend.async_register_built_in_panel(
         "map", "Map", "mdi:tooltip-account", require_admin=True
     )
 
@@ -360,7 +360,7 @@ async def test_get_panels.opp, opp_ws_client, mock_http_client):
     assert msg["result"]["map"]["title"] == "Map"
     assert msg["result"]["map"]["require_admin"] is True
 
-   .opp.components.frontend.async_remove_panel("map")
+    opp.components.frontend.async_remove_panel("map")
 
     resp = await mock_http_client.get("/map")
     assert resp.status == HTTP_NOT_FOUND
@@ -370,12 +370,12 @@ async def test_get_panels.opp, opp_ws_client, mock_http_client):
 
 async def test_get_panels_non_admin.opp, ws_client, opp_admin_user):
     """Test get_panels command."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
 
-   .opp.components.frontend.async_register_built_in_panel(
+    opp.components.frontend.async_register_built_in_panel(
         "map", "Map", "mdi:tooltip-account", require_admin=True
     )
-   .opp.components.frontend.async_register_built_in_panel(
+    opp.components.frontend.async_register_built_in_panel(
         "history", "History", "mdi:history"
     )
 

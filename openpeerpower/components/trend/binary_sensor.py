@@ -82,7 +82,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         sensors.append(
             SensorTrend(
-                opp,
+                opp.
                 device_id,
                 friendly_name,
                 entity_id,
@@ -105,7 +105,7 @@ class SensorTrend(BinarySensorEntity):
 
     def __init__(
         self,
-        opp,
+        opp.
         device_id,
         friendly_name,
         entity_id,

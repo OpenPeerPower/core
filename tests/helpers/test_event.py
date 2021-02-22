@@ -59,7 +59,7 @@ async def test_track_point_in_time.opp):
     runs = []
 
     async_track_point_in_utc_time(
-        opp, callback(lambda x: runs.append(x)), birthday_paulus
+        opp. callback(lambda x: runs.append(x)), birthday_paulus
     )
 
     async_fire_time_changed.opp, before_birthday)
@@ -76,7 +76,7 @@ async def test_track_point_in_time.opp):
     assert len(runs) == 1
 
     async_track_point_in_utc_time(
-        opp, callback(lambda x: runs.append(x)), birthday_paulus
+        opp. callback(lambda x: runs.append(x)), birthday_paulus
     )
 
     async_fire_time_changed.opp, after_birthday)
@@ -84,7 +84,7 @@ async def test_track_point_in_time.opp):
     assert len(runs) == 2
 
     unsub = async_track_point_in_time(
-        opp, callback(lambda x: runs.append(x)), birthday_paulus
+        opp. callback(lambda x: runs.append(x)), birthday_paulus
     )
     unsub()
 
@@ -104,13 +104,13 @@ async def test_track_point_in_time_drift_rearm.opp):
     )
 
     async_track_point_in_utc_time(
-        opp,
+        opp.
         callback(lambda x: specific_runs.append(x)),
         time_that_will_not_match_right_away,
     )
 
     async_fire_time_changed(
-        opp,
+        opp.
         datetime(now.year + 1, 5, 24, 21, 59, 00, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -118,7 +118,7 @@ async def test_track_point_in_time_drift_rearm.opp):
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp,
+        opp.
         datetime(now.year + 1, 5, 24, 21, 59, 55, tzinfo=dt_util.UTC),
     )
     await opp.async_block_till_done()
@@ -149,18 +149,18 @@ async def test_track_state_change_from_to_state_match.opp):
         no_to_from_specified_runs.append(1)
 
     async_track_state_change(
-        opp, "light.Bowl", from_and_to_state_callback, "on", "off"
+        opp. "light.Bowl", from_and_to_state_callback, "on", "off"
     )
     async_track_state_change.opp, "light.Bowl", only_from_state_callback, "on", None)
     async_track_state_change(
-        opp, "light.Bowl", only_to_state_callback, None, ["off", "standby"]
+        opp. "light.Bowl", only_to_state_callback, None, ["off", "standby"]
     )
     async_track_state_change(
-        opp, "light.Bowl", match_all_callback, MATCH_ALL, MATCH_ALL
+        opp. "light.Bowl", match_all_callback, MATCH_ALL, MATCH_ALL
     )
     async_track_state_change.opp, "light.Bowl", no_to_from_specified_callback)
 
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(from_and_to_state_runs) == 0
     assert len(only_from_runs) == 0
@@ -168,7 +168,7 @@ async def test_track_state_change_from_to_state_match.opp):
     assert len(match_all_runs) == 1
     assert len(no_to_from_specified_runs) == 1
 
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(from_and_to_state_runs) == 1
     assert len(only_from_runs) == 1
@@ -176,7 +176,7 @@ async def test_track_state_change_from_to_state_match.opp):
     assert len(match_all_runs) == 2
     assert len(no_to_from_specified_runs) == 2
 
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(from_and_to_state_runs) == 1
     assert len(only_from_runs) == 1
@@ -184,7 +184,7 @@ async def test_track_state_change_from_to_state_match.opp):
     assert len(match_all_runs) == 3
     assert len(no_to_from_specified_runs) == 3
 
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(from_and_to_state_runs) == 1
     assert len(only_from_runs) == 1
@@ -192,7 +192,7 @@ async def test_track_state_change_from_to_state_match.opp):
     assert len(match_all_runs) == 3
     assert len(no_to_from_specified_runs) == 3
 
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(from_and_to_state_runs) == 2
     assert len(only_from_runs) == 2
@@ -200,7 +200,7 @@ async def test_track_state_change_from_to_state_match.opp):
     assert len(match_all_runs) == 4
     assert len(no_to_from_specified_runs) == 4
 
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(from_and_to_state_runs) == 2
     assert len(only_from_runs) == 2
@@ -235,7 +235,7 @@ async def test_track_state_change.opp):
     async_track_state_change.opp, MATCH_ALL, wildercard_run_callback)
 
     # Adding state to state machine
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
     assert len(wildcard_runs) == 1
@@ -244,34 +244,34 @@ async def test_track_state_change.opp):
     assert wildcard_runs[-1][1] is not None
 
     # Set same state should not trigger a state change/listener
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
     assert len(wildcard_runs) == 1
     assert len(wildercard_runs) == 1
 
     # State change off -> on
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 2
     assert len(wildercard_runs) == 2
 
     # State change off -> off
-   .opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
+    opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 3
     assert len(wildercard_runs) == 3
 
     # State change off -> on
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 4
     assert len(wildercard_runs) == 4
 
-   .opp.states.async_remove("light.bowl")
+    opp.states.async_remove("light.bowl")
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 5
@@ -282,7 +282,7 @@ async def test_track_state_change.opp):
     assert wildercard_runs[-1][1] is None
 
     # Set state for different entity id
-   .opp.states.async_set("switch.kitchen", "on")
+    opp.states.async_set("switch.kitchen", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 5
@@ -313,7 +313,7 @@ async def test_async_track_state_change_filtered.opp):
         raise ValueError
 
     track_single = async_track_state_change_filtered(
-        opp, TrackStates(False, {"light.bowl"}, None), single_run_callback
+        opp. TrackStates(False, {"light.bowl"}, None), single_run_callback
     )
     assert track_single.listeners == {
         "all": False,
@@ -322,7 +322,7 @@ async def test_async_track_state_change_filtered.opp):
     }
 
     track_multi = async_track_state_change_filtered(
-        opp, TrackStates(False, {"light.bowl"}, {"switch"}), multiple_run_callback
+        opp. TrackStates(False, {"light.bowl"}, {"switch"}), multiple_run_callback
     )
     assert track_multi.listeners == {
         "all": False,
@@ -331,7 +331,7 @@ async def test_async_track_state_change_filtered.opp):
     }
 
     track_throws = async_track_state_change_filtered(
-        opp, TrackStates(False, {"light.bowl"}, {"switch"}), callback_that_throws
+        opp. TrackStates(False, {"light.bowl"}, {"switch"}), callback_that_throws
     )
     assert track_throws.listeners == {
         "all": False,
@@ -340,7 +340,7 @@ async def test_async_track_state_change_filtered.opp):
     }
 
     # Adding state to state machine
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert single_entity_id_tracker[-1][0] is None
@@ -350,30 +350,30 @@ async def test_async_track_state_change_filtered.opp):
     assert multiple_entity_id_tracker[-1][1] is not None
 
     # Set same state should not trigger a state change/listener
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 1
 
     # State change off -> on
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 2
     assert len(multiple_entity_id_tracker) == 2
 
     # State change off -> off
-   .opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
+    opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 3
     assert len(multiple_entity_id_tracker) == 3
 
     # State change off -> on
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 4
     assert len(multiple_entity_id_tracker) == 4
 
-   .opp.states.async_remove("light.bowl")
+    opp.states.async_remove("light.bowl")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 5
     assert single_entity_id_tracker[-1][0] is not None
@@ -383,14 +383,14 @@ async def test_async_track_state_change_filtered.opp):
     assert multiple_entity_id_tracker[-1][1] is None
 
     # Set state for different entity id
-   .opp.states.async_set("switch.kitchen", "on")
+    opp.states.async_set("switch.kitchen", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 5
     assert len(multiple_entity_id_tracker) == 6
 
     track_single.async_remove()
     # Ensure unsubing the listener works
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 5
     assert len(multiple_entity_id_tracker) == 7
@@ -406,18 +406,18 @@ async def test_async_track_state_change_filtered.opp):
         "domains": None,
         "entities": {"light.bowl"},
     }
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(multiple_entity_id_tracker) == 8
-   .opp.states.async_set("switch.kitchen", "off")
+    opp.states.async_set("switch.kitchen", "off")
     await opp.async_block_till_done()
     assert len(multiple_entity_id_tracker) == 8
 
     track_multi.async_update_listeners(TrackStates(True, None, None))
-   .opp.states.async_set("switch.kitchen", "off")
+    opp.states.async_set("switch.kitchen", "off")
     await opp.async_block_till_done()
     assert len(multiple_entity_id_tracker) == 8
-   .opp.states.async_set("switch.any", "off")
+    opp.states.async_set("switch.any", "off")
     await opp.async_block_till_done()
     assert len(multiple_entity_id_tracker) == 9
 
@@ -449,17 +449,17 @@ async def test_async_track_state_change_event.opp):
         raise ValueError
 
     unsub_single = async_track_state_change_event(
-        opp, ["light.Bowl"], single_run_callback
+        opp. ["light.Bowl"], single_run_callback
     )
     unsub_multi = async_track_state_change_event(
-        opp, ["light.Bowl", "switch.kitchen"], multiple_run_callback
+        opp. ["light.Bowl", "switch.kitchen"], multiple_run_callback
     )
     unsub_throws = async_track_state_change_event(
-        opp, ["light.Bowl", "switch.kitchen"], callback_that_throws
+        opp. ["light.Bowl", "switch.kitchen"], callback_that_throws
     )
 
     # Adding state to state machine
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert single_entity_id_tracker[-1][0] is None
@@ -469,30 +469,30 @@ async def test_async_track_state_change_event.opp):
     assert multiple_entity_id_tracker[-1][1] is not None
 
     # Set same state should not trigger a state change/listener
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 1
 
     # State change off -> on
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 2
     assert len(multiple_entity_id_tracker) == 2
 
     # State change off -> off
-   .opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
+    opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 3
     assert len(multiple_entity_id_tracker) == 3
 
     # State change off -> on
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 4
     assert len(multiple_entity_id_tracker) == 4
 
-   .opp.states.async_remove("light.bowl")
+    opp.states.async_remove("light.bowl")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 5
     assert single_entity_id_tracker[-1][0] is not None
@@ -502,14 +502,14 @@ async def test_async_track_state_change_event.opp):
     assert multiple_entity_id_tracker[-1][1] is None
 
     # Set state for different entity id
-   .opp.states.async_set("switch.kitchen", "on")
+    opp.states.async_set("switch.kitchen", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 5
     assert len(multiple_entity_id_tracker) == 6
 
     unsub_single()
     # Ensure unsubing the listener works
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 5
     assert len(multiple_entity_id_tracker) == 7
@@ -521,10 +521,10 @@ async def test_async_track_state_change_event.opp):
 async def test_async_track_state_change_event_with_empty_list.opp):
     """Test async_track_state_change_event passing an empty list of entities."""
     unsub_single = async_track_state_change_event(
-        opp, [], ha.callback(lambda event: None)
+        opp. [], ha.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_change_event(
-        opp, [], ha.callback(lambda event: None)
+        opp. [], ha.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -556,14 +556,14 @@ async def test_async_track_state_added_domain.opp):
 
     unsub_single = async_track_state_added_domain.opp, "light", single_run_callback)
     unsub_multi = async_track_state_added_domain(
-        opp, ["light", "switch"], multiple_run_callback
+        opp. ["light", "switch"], multiple_run_callback
     )
     unsub_throws = async_track_state_added_domain(
-        opp, ["light", "switch"], callback_that_throws
+        opp. ["light", "switch"], callback_that_throws
     )
 
     # Adding state to state machine
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert single_entity_id_tracker[-1][0] is None
@@ -573,38 +573,38 @@ async def test_async_track_state_added_domain.opp):
     assert multiple_entity_id_tracker[-1][1] is not None
 
     # Set same state should not trigger a state change/listener
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 1
 
     # State change off -> on - nothing added so no trigger
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 1
 
     # State change off -> off - nothing added so no trigger
-   .opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
+    opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 1
 
     # Removing state does not trigger
-   .opp.states.async_remove("light.bowl")
+    opp.states.async_remove("light.bowl")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 1
 
     # Set state for different entity id
-   .opp.states.async_set("switch.kitchen", "on")
+    opp.states.async_set("switch.kitchen", "on")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 2
 
     unsub_single()
     # Ensure unsubing the listener works
-   .opp.states.async_set("light.new", "off")
+    opp.states.async_set("light.new", "off")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(multiple_entity_id_tracker) == 3
@@ -616,10 +616,10 @@ async def test_async_track_state_added_domain.opp):
 async def test_async_track_state_added_domain_with_empty_list.opp):
     """Test async_track_state_added_domain passing an empty list of domains."""
     unsub_single = async_track_state_added_domain(
-        opp, [], ha.callback(lambda event: None)
+        opp. [], ha.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_added_domain(
-        opp, [], ha.callback(lambda event: None)
+        opp. [], ha.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -629,10 +629,10 @@ async def test_async_track_state_added_domain_with_empty_list.opp):
 async def test_async_track_state_removed_domain_with_empty_list.opp):
     """Test async_track_state_removed_domain passing an empty list of domains."""
     unsub_single = async_track_state_removed_domain(
-        opp, [], ha.callback(lambda event: None)
+        opp. [], ha.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_removed_domain(
-        opp, [], ha.callback(lambda event: None)
+        opp. [], ha.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -664,15 +664,15 @@ async def test_async_track_state_removed_domain.opp):
 
     unsub_single = async_track_state_removed_domain.opp, "light", single_run_callback)
     unsub_multi = async_track_state_removed_domain(
-        opp, ["light", "switch"], multiple_run_callback
+        opp. ["light", "switch"], multiple_run_callback
     )
     unsub_throws = async_track_state_removed_domain(
-        opp, ["light", "switch"], callback_that_throws
+        opp. ["light", "switch"], callback_that_throws
     )
 
     # Adding state to state machine
-   .opp.states.async_set("light.Bowl", "on")
-   .opp.states.async_remove("light.Bowl")
+    opp.states.async_set("light.Bowl", "on")
+    opp.states.async_remove("light.Bowl")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert single_entity_id_tracker[-1][1] is None
@@ -682,37 +682,37 @@ async def test_async_track_state_removed_domain.opp):
     assert multiple_entity_id_tracker[-1][0] is not None
 
     # Added and than removed (light)
-   .opp.states.async_set("light.Bowl", "on")
-   .opp.states.async_remove("light.Bowl")
+    opp.states.async_set("light.Bowl", "on")
+    opp.states.async_remove("light.Bowl")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 2
     assert len(multiple_entity_id_tracker) == 2
 
     # Added and than removed (light)
-   .opp.states.async_set("light.Bowl", "off")
-   .opp.states.async_remove("light.Bowl")
+    opp.states.async_set("light.Bowl", "off")
+    opp.states.async_remove("light.Bowl")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 3
     assert len(multiple_entity_id_tracker) == 3
 
     # Added and than removed (light)
-   .opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
-   .opp.states.async_remove("light.Bowl")
+    opp.states.async_set("light.Bowl", "off", {"some_attr": 1})
+    opp.states.async_remove("light.Bowl")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 4
     assert len(multiple_entity_id_tracker) == 4
 
     # Added and than removed (switch)
-   .opp.states.async_set("switch.kitchen", "on")
-   .opp.states.async_remove("switch.kitchen")
+    opp.states.async_set("switch.kitchen", "on")
+    opp.states.async_remove("switch.kitchen")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 4
     assert len(multiple_entity_id_tracker) == 5
 
     unsub_single()
     # Ensure unsubing the listener works
-   .opp.states.async_set("light.new", "off")
-   .opp.states.async_remove("light.new")
+    opp.states.async_set("light.new", "off")
+    opp.states.async_remove("light.new")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 4
     assert len(multiple_entity_id_tracker) == 6
@@ -742,24 +742,24 @@ async def test_async_track_state_removed_domain_match_all.opp):
 
     unsub_single = async_track_state_removed_domain.opp, "light", single_run_callback)
     unsub_match_all = async_track_state_removed_domain(
-        opp, MATCH_ALL, match_all_run_callback
+        opp. MATCH_ALL, match_all_run_callback
     )
-   .opp.states.async_set("light.new", "off")
-   .opp.states.async_remove("light.new")
+    opp.states.async_set("light.new", "off")
+    opp.states.async_remove("light.new")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(match_all_entity_id_tracker) == 1
 
-   .opp.states.async_set("switch.new", "off")
-   .opp.states.async_remove("switch.new")
+    opp.states.async_set("switch.new", "off")
+    opp.states.async_remove("switch.new")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(match_all_entity_id_tracker) == 2
 
     unsub_match_all()
     unsub_single()
-   .opp.states.async_set("switch.new", "off")
-   .opp.states.async_remove("switch.new")
+    opp.states.async_set("switch.new", "off")
+    opp.states.async_remove("switch.new")
     await opp.async_block_till_done()
     assert len(single_entity_id_tracker) == 1
     assert len(match_all_entity_id_tracker) == 2
@@ -776,7 +776,7 @@ async def test_track_template.opp):
         "{{states.switch.test.state == 'on' and test == 5}}", opp
     )
 
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
 
     def specific_run_callback(entity_id, old_state, new_state):
         specific_runs.append(1)
@@ -793,38 +793,38 @@ async def test_track_template.opp):
         wildercard_runs.append((old_state, new_state))
 
     async_track_template(
-        opp, template_condition_var, wildercard_run_callback, {"test": 5}
+        opp. template_condition_var, wildercard_run_callback, {"test": 5}
     )
 
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 1
     assert len(wildercard_runs) == 1
 
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 1
     assert len(wildercard_runs) == 1
 
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 1
     assert len(wildercard_runs) == 1
 
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 1
     assert len(wildercard_runs) == 1
 
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 2
@@ -841,7 +841,7 @@ async def test_track_template.opp):
     async_track_template.opp, template_iterate, iterate_callback)
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.new", "on")
+    opp.states.async_set("switch.new", "on")
     await opp.async_block_till_done()
 
     assert len(iterate_calls) == 1
@@ -862,7 +862,7 @@ async def test_track_template_error(opp, caplog):
     async_track_template.opp, template_error, error_callback)
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.new", "on")
+    opp.states.async_set("switch.new", "on")
     await opp.async_block_till_done()
 
     assert not error_calls
@@ -874,7 +874,7 @@ async def test_track_template_error(opp, caplog):
     with patch.object(Template, "async_render") as render:
         render.return_value = "ok"
 
-       .opp.states.async_set("switch.not_exist", "off")
+        opp.states.async_set("switch.not_exist", "off")
         await opp.async_block_till_done()
 
     assert "no filter named 'lunch'" not in caplog.text
@@ -883,7 +883,7 @@ async def test_track_template_error(opp, caplog):
 
 async def test_track_template_error_can_recover.opp, caplog):
     """Test tracking template with error."""
-   .opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
+    opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
     template_error = Template(
         "{{ states.sensor.data_system.attributes['opmode'] == '0' }}", opp
     )
@@ -897,11 +897,11 @@ async def test_track_template_error_can_recover.opp, caplog):
     await opp.async_block_till_done()
     assert not error_calls
 
-   .opp.states.async_remove("switch.data_system")
+    opp.states.async_remove("switch.data_system")
 
     assert "UndefinedError" in caplog.text
 
-   .opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
+    opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
 
     caplog.clear()
 
@@ -951,7 +951,7 @@ async def test_track_template_result.opp):
         specific_runs.append(int(track_result.result))
 
     async_track_template_result(
-        opp, [TrackTemplate(template_condition, None)], specific_run_callback
+        opp. [TrackTemplate(template_condition, None)], specific_run_callback
     )
 
     @ha.callback
@@ -962,7 +962,7 @@ async def test_track_template_result.opp):
         )
 
     async_track_template_result(
-        opp, [TrackTemplate(template_condition, None)], wildcard_run_callback
+        opp. [TrackTemplate(template_condition, None)], wildcard_run_callback
     )
 
     async def wildercard_run_callback(event, updates):
@@ -972,48 +972,48 @@ async def test_track_template_result.opp):
         )
 
     async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_condition_var, {"test": 5})],
         wildercard_run_callback,
     )
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sensor.test", 5)
+    opp.states.async_set("sensor.test", 5)
     await opp.async_block_till_done()
 
     assert specific_runs == [5]
     assert wildcard_runs == [(0, 5)]
     assert wildercard_runs == [(0, 10)]
 
-   .opp.states.async_set("sensor.test", 30)
+    opp.states.async_set("sensor.test", 30)
     await opp.async_block_till_done()
 
     assert specific_runs == [5, 30]
     assert wildcard_runs == [(0, 5), (5, 30)]
     assert wildercard_runs == [(0, 10), (10, 35)]
 
-   .opp.states.async_set("sensor.test", 30)
+    opp.states.async_set("sensor.test", 30)
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 2
     assert len(wildcard_runs) == 2
     assert len(wildercard_runs) == 2
 
-   .opp.states.async_set("sensor.test", 5)
+    opp.states.async_set("sensor.test", 5)
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 3
     assert len(wildcard_runs) == 3
     assert len(wildercard_runs) == 3
 
-   .opp.states.async_set("sensor.test", 5)
+    opp.states.async_set("sensor.test", 5)
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 3
     assert len(wildcard_runs) == 3
     assert len(wildercard_runs) == 3
 
-   .opp.states.async_set("sensor.test", 20)
+    opp.states.async_set("sensor.test", 20)
     await opp.async_block_till_done()
 
     assert len(specific_runs) == 4
@@ -1041,11 +1041,11 @@ async def test_track_template_result_complex.opp):
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
 
-   .opp.states.async_set("light.one", "on")
-   .opp.states.async_set("lock.one", "locked")
+    opp.states.async_set("light.one", "on")
+    opp.states.async_set("lock.one", "locked")
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_complex, None, timedelta(seconds=0))],
         specific_run_callback,
     )
@@ -1058,7 +1058,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.domain", "light")
+    opp.states.async_set("sensor.domain", "light")
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert specific_runs[0] == ["light.one"]
@@ -1070,7 +1070,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.domain", "lock")
+    opp.states.async_set("sensor.domain", "lock")
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
     assert specific_runs[1] == ["lock.one"]
@@ -1081,7 +1081,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.domain", "all")
+    opp.states.async_set("sensor.domain", "all")
     await opp.async_block_till_done()
     assert len(specific_runs) == 3
     assert "light.one" in specific_runs[2]
@@ -1094,7 +1094,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.domain", "light")
+    opp.states.async_set("sensor.domain", "light")
     await opp.async_block_till_done()
     assert len(specific_runs) == 4
     assert specific_runs[3] == ["light.one"]
@@ -1105,7 +1105,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("light.two", "on")
+    opp.states.async_set("light.two", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 5
     assert "light.one" in specific_runs[4]
@@ -1118,7 +1118,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("light.three", "on")
+    opp.states.async_set("light.three", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 6
     assert "light.one" in specific_runs[5]
@@ -1132,7 +1132,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.domain", "lock")
+    opp.states.async_set("sensor.domain", "lock")
     await opp.async_block_till_done()
     assert len(specific_runs) == 7
     assert specific_runs[6] == ["lock.one"]
@@ -1143,7 +1143,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.domain", "single_binary_sensor")
+    opp.states.async_set("sensor.domain", "single_binary_sensor")
     await opp.async_block_till_done()
     assert len(specific_runs) == 8
     assert specific_runs[7] == "unknown"
@@ -1154,7 +1154,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("binary_sensor.single", "binary_sensor_on")
+    opp.states.async_set("binary_sensor.single", "binary_sensor_on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 9
     assert specific_runs[8] == "binary_sensor_on"
@@ -1165,7 +1165,7 @@ async def test_track_template_result_complex.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.domain", "lock")
+    opp.states.async_set("sensor.domain", "lock")
     await opp.async_block_till_done()
     assert len(specific_runs) == 10
     assert specific_runs[9] == ["lock.one"]
@@ -1194,16 +1194,16 @@ async def test_track_template_result_with_wildcard.opp):
     def specific_run_callback(event, updates):
         specific_runs.append(updates.pop().result)
 
-   .opp.states.async_set("cover.office_drapes", "closed")
-   .opp.states.async_set("cover.office_window", "closed")
-   .opp.states.async_set("cover.office_skylight", "open")
+    opp.states.async_set("cover.office_drapes", "closed")
+    opp.states.async_set("cover.office_window", "closed")
+    opp.states.async_set("cover.office_skylight", "open")
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp. [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
-   .opp.states.async_set("cover.office_window", "open")
+    opp.states.async_set("cover.office_window", "open")
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert info.listeners == {
@@ -1220,13 +1220,13 @@ async def test_track_template_result_with_wildcard.opp):
 
 async def test_track_template_result_with_group.opp):
     """Test tracking template with a group."""
-   .opp.states.async_set("sensor.power_1", 0)
-   .opp.states.async_set("sensor.power_2", 200.2)
-   .opp.states.async_set("sensor.power_3", 400.4)
-   .opp.states.async_set("sensor.power_4", 800.8)
+    opp.states.async_set("sensor.power_1", 0)
+    opp.states.async_set("sensor.power_2", 200.2)
+    opp.states.async_set("sensor.power_3", 400.4)
+    opp.states.async_set("sensor.power_4", 800.8)
 
     assert await async_setup_component(
-        opp,
+        opp.
         "group",
         {"group": {"power_sensors": "sensor.power_1,sensor.power_2,sensor.power_3"}},
     )
@@ -1247,7 +1247,7 @@ async def test_track_template_result_with_group.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp. [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
@@ -1263,13 +1263,13 @@ async def test_track_template_result_with_group.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.power_1", 100.1)
+    opp.states.async_set("sensor.power_1", 100.1)
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     assert specific_runs[0] == 100.1 + 200.2 + 400.4
 
-   .opp.states.async_set("sensor.power_3", 0)
+    opp.states.async_set("sensor.power_3", 0)
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
@@ -1294,8 +1294,8 @@ async def test_track_template_result_with_group.opp):
 async def test_track_template_result_and_conditional.opp):
     """Test tracking template with an and conditional."""
     specific_runs = []
-   .opp.states.async_set("light.a", "off")
-   .opp.states.async_set("light.b", "off")
+    opp.states.async_set("light.a", "off")
+    opp.states.async_set("light.b", "off")
     template_str = '{% if states.light.a.state == "on" and states.light.b.state == "on" %}on{% else %}off{% endif %}'
 
     template = Template(template_str, opp)
@@ -1304,7 +1304,7 @@ async def test_track_template_result_and_conditional.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template, None)], specific_run_callback
+        opp. [TrackTemplate(template, None)], specific_run_callback
     )
     await opp.async_block_till_done()
     assert info.listeners == {
@@ -1314,11 +1314,11 @@ async def test_track_template_result_and_conditional.opp):
         "time": False,
     }
 
-   .opp.states.async_set("light.b", "on")
+    opp.states.async_set("light.b", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
-   .opp.states.async_set("light.a", "on")
+    opp.states.async_set("light.a", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert specific_runs[0] == "on"
@@ -1329,7 +1329,7 @@ async def test_track_template_result_and_conditional.opp):
         "time": False,
     }
 
-   .opp.states.async_set("light.b", "off")
+    opp.states.async_set("light.b", "off")
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
     assert specific_runs[1] == "off"
@@ -1340,15 +1340,15 @@ async def test_track_template_result_and_conditional.opp):
         "time": False,
     }
 
-   .opp.states.async_set("light.a", "off")
+    opp.states.async_set("light.a", "off")
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
-   .opp.states.async_set("light.b", "on")
+    opp.states.async_set("light.b", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
-   .opp.states.async_set("light.a", "on")
+    opp.states.async_set("light.a", "on")
     await opp.async_block_till_done()
     assert len(specific_runs) == 3
     assert specific_runs[2] == "on"
@@ -1363,7 +1363,7 @@ async def test_track_template_result_iterator.opp):
         iterator_runs.append(updates.pop().result)
 
     async_track_template_result(
-        opp,
+        opp.
         [
             TrackTemplate(
                 Template(
@@ -1374,7 +1374,7 @@ async def test_track_template_result_iterator.opp):
                 {% endif %}
             {% endfor %}
             """,
-                    opp,
+                    opp.
                 ),
                 None,
                 timedelta(seconds=0),
@@ -1384,7 +1384,7 @@ async def test_track_template_result_iterator.opp):
     )
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sensor.test", 5)
+    opp.states.async_set("sensor.test", 5)
     await opp.async_block_till_done()
 
     assert iterator_runs == [""]
@@ -1396,13 +1396,13 @@ async def test_track_template_result_iterator.opp):
         filter_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [
             TrackTemplate(
                 Template(
                     """{{ states.sensor|selectattr("state","equalto","on")
                 |join(",", attribute="entity_id") }}""",
-                    opp,
+                    opp.
                 ),
                 None,
                 timedelta(seconds=0),
@@ -1418,13 +1418,13 @@ async def test_track_template_result_iterator.opp):
         "time": False,
     }
 
-   .opp.states.async_set("sensor.test", 6)
+    opp.states.async_set("sensor.test", 6)
     await opp.async_block_till_done()
 
     assert filter_runs == [""]
     assert iterator_runs == [""]
 
-   .opp.states.async_set("sensor.new", "on")
+    opp.states.async_set("sensor.new", "on")
     await opp.async_block_till_done()
     assert iterator_runs == ["", "sensor.new,"]
     assert filter_runs == ["", "sensor.new"]
@@ -1452,7 +1452,7 @@ async def test_track_template_result_errors.opp, caplog):
         )
 
     async_track_template_result(
-        opp, [TrackTemplate(template_syntax_error, None)], syntax_error_listener
+        opp. [TrackTemplate(template_syntax_error, None)], syntax_error_listener
     )
     await opp.async_block_till_done()
 
@@ -1472,7 +1472,7 @@ async def test_track_template_result_errors.opp, caplog):
         )
 
     async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_not_exist, None)],
         not_exist_runs_error_listener,
     )
@@ -1481,7 +1481,7 @@ async def test_track_template_result_errors.opp, caplog):
     assert len(syntax_error_runs) == 0
     assert len(not_exist_runs) == 0
 
-   .opp.states.async_set("switch.not_exist", "off")
+    opp.states.async_set("switch.not_exist", "off")
     await opp.async_block_till_done()
 
     assert len(not_exist_runs) == 1
@@ -1490,7 +1490,7 @@ async def test_track_template_result_errors.opp, caplog):
     assert not_exist_runs[0][2] is None
     assert not_exist_runs[0][3] == "off"
 
-   .opp.states.async_set("switch.not_exist", "on")
+    opp.states.async_set("switch.not_exist", "on")
     await opp.async_block_till_done()
 
     assert len(syntax_error_runs) == 1
@@ -1503,7 +1503,7 @@ async def test_track_template_result_errors.opp, caplog):
     with patch.object(Template, "async_render") as render:
         render.side_effect = TemplateError(jinja2.TemplateError())
 
-       .opp.states.async_set("switch.not_exist", "off")
+        opp.states.async_set("switch.not_exist", "off")
         await opp.async_block_till_done()
 
         assert len(not_exist_runs) == 3
@@ -1524,7 +1524,7 @@ async def test_static_string.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template_refresh, None)], refresh_listener
+        opp. [TrackTemplate(template_refresh, None)], refresh_listener
     )
     await opp.async_block_till_done()
     info.async_refresh()
@@ -1544,7 +1544,7 @@ async def test_track_template_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_refresh, None, timedelta(seconds=0.1))],
         refresh_listener,
     )
@@ -1553,12 +1553,12 @@ async def test_track_template_rate_limit.opp):
     await opp.async_block_till_done()
 
     assert refresh_runs == [0]
-   .opp.states.async_set("sensor.one", "any")
+    opp.states.async_set("sensor.one", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0]
     info.async_refresh()
     assert refresh_runs == [0, 1]
-   .opp.states.async_set("sensor.two", "any")
+    opp.states.async_set("sensor.two", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1]
     next_time = dt_util.utcnow() + timedelta(seconds=0.125)
@@ -1568,10 +1568,10 @@ async def test_track_template_rate_limit.opp):
         async_fire_time_changed.opp, next_time)
         await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2]
-   .opp.states.async_set("sensor.three", "any")
+    opp.states.async_set("sensor.three", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2]
-   .opp.states.async_set("sensor.four", "any")
+    opp.states.async_set("sensor.four", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2]
     next_time = dt_util.utcnow() + timedelta(seconds=0.125 * 2)
@@ -1581,7 +1581,7 @@ async def test_track_template_rate_limit.opp):
         async_fire_time_changed.opp, next_time)
         await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2, 4]
-   .opp.states.async_set("sensor.five", "any")
+    opp.states.async_set("sensor.five", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2, 4]
 
@@ -1597,7 +1597,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_refresh, None, timedelta(seconds=0.1))],
         refresh_listener,
     )
@@ -1613,12 +1613,12 @@ async def test_track_template_rate_limit_suppress_listener.opp):
     await opp.async_block_till_done()
 
     assert refresh_runs == [0]
-   .opp.states.async_set("sensor.one", "any")
+    opp.states.async_set("sensor.one", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0]
     info.async_refresh()
     assert refresh_runs == [0, 1]
-   .opp.states.async_set("sensor.two", "any")
+    opp.states.async_set("sensor.two", "any")
     await opp.async_block_till_done()
     # Should be suppressed during the rate limit
     assert info.listeners == {
@@ -1642,10 +1642,10 @@ async def test_track_template_rate_limit_suppress_listener.opp):
         "time": False,
     }
     assert refresh_runs == [0, 1, 2]
-   .opp.states.async_set("sensor.three", "any")
+    opp.states.async_set("sensor.three", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2]
-   .opp.states.async_set("sensor.four", "any")
+    opp.states.async_set("sensor.four", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2]
     # Rate limit hit and the all listener is shut off
@@ -1669,7 +1669,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
         "time": False,
     }
     assert refresh_runs == [0, 1, 2, 4]
-   .opp.states.async_set("sensor.five", "any")
+    opp.states.async_set("sensor.five", "any")
     await opp.async_block_till_done()
     # Rate limit hit and the all listener is shut off
     assert info.listeners == {
@@ -1692,7 +1692,7 @@ async def test_track_template_rate_limit_five.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_refresh, None, timedelta(seconds=5))],
         refresh_listener,
     )
@@ -1701,22 +1701,22 @@ async def test_track_template_rate_limit_five.opp):
     await opp.async_block_till_done()
 
     assert refresh_runs == [0]
-   .opp.states.async_set("sensor.one", "any")
+    opp.states.async_set("sensor.one", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0]
     info.async_refresh()
     assert refresh_runs == [0, 1]
-   .opp.states.async_set("sensor.two", "any")
+    opp.states.async_set("sensor.two", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1]
-   .opp.states.async_set("sensor.three", "any")
+    opp.states.async_set("sensor.three", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [0, 1]
 
 
 async def test_track_template_has_default_rate_limit.opp):
     """Test template has a rate limit by default."""
-   .opp.states.async_set("sensor.zero", "any")
+    opp.states.async_set("sensor.zero", "any")
     template_refresh = Template("{{ states | list | count }}", opp)
 
     refresh_runs = []
@@ -1726,7 +1726,7 @@ async def test_track_template_has_default_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_refresh, None)],
         refresh_listener,
     )
@@ -1735,25 +1735,25 @@ async def test_track_template_has_default_rate_limit.opp):
     await opp.async_block_till_done()
 
     assert refresh_runs == [1]
-   .opp.states.async_set("sensor.one", "any")
+    opp.states.async_set("sensor.one", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [1]
     info.async_refresh()
     assert refresh_runs == [1, 2]
-   .opp.states.async_set("sensor.two", "any")
+    opp.states.async_set("sensor.two", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [1, 2]
-   .opp.states.async_set("sensor.three", "any")
+    opp.states.async_set("sensor.three", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [1, 2]
 
 
 async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
     """Test template watching for unavailable states has a rate limit by default."""
-   .opp.states.async_set("sensor.zero", "unknown")
+    opp.states.async_set("sensor.zero", "unknown")
     template_refresh = Template(
         "{{ states | selectattr('state', 'in', ['unavailable', 'unknown', 'none']) | list | count }}",
-        opp,
+        opp.
     )
 
     refresh_runs = []
@@ -1763,7 +1763,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_refresh, None)],
         refresh_listener,
     )
@@ -1772,15 +1772,15 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
     await opp.async_block_till_done()
 
     assert refresh_runs == [1]
-   .opp.states.async_set("sensor.one", "unknown")
+    opp.states.async_set("sensor.one", "unknown")
     await opp.async_block_till_done()
     assert refresh_runs == [1]
     info.async_refresh()
     assert refresh_runs == [1, 2]
-   .opp.states.async_set("sensor.two", "any")
+    opp.states.async_set("sensor.two", "any")
     await opp.async_block_till_done()
     assert refresh_runs == [1, 2]
-   .opp.states.async_set("sensor.three", "unknown")
+    opp.states.async_set("sensor.three", "unknown")
     await opp.async_block_till_done()
     assert refresh_runs == [1, 2]
     info.async_refresh()
@@ -1791,7 +1791,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
 
 async def test_specifically_referenced_entity_is_not_rate_limited.opp):
     """Test template rate limit of 5 seconds."""
-   .opp.states.async_set("sensor.one", "none")
+    opp.states.async_set("sensor.one", "none")
 
     template_refresh = Template('{{ states | count }}_{{ states("sensor.one") }}', opp)
 
@@ -1802,7 +1802,7 @@ async def test_specifically_referenced_entity_is_not_rate_limited.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_refresh, None, timedelta(seconds=5))],
         refresh_listener,
     )
@@ -1811,18 +1811,18 @@ async def test_specifically_referenced_entity_is_not_rate_limited.opp):
     await opp.async_block_till_done()
 
     assert refresh_runs == ["1_none"]
-   .opp.states.async_set("sensor.one", "any")
+    opp.states.async_set("sensor.one", "any")
     await opp.async_block_till_done()
     assert refresh_runs == ["1_none", "1_any"]
     info.async_refresh()
     assert refresh_runs == ["1_none", "1_any"]
-   .opp.states.async_set("sensor.two", "any")
+    opp.states.async_set("sensor.two", "any")
     await opp.async_block_till_done()
     assert refresh_runs == ["1_none", "1_any"]
-   .opp.states.async_set("sensor.three", "any")
+    opp.states.async_set("sensor.three", "any")
     await opp.async_block_till_done()
     assert refresh_runs == ["1_none", "1_any"]
-   .opp.states.async_set("sensor.one", "none")
+    opp.states.async_set("sensor.one", "none")
     await opp.async_block_till_done()
     assert refresh_runs == ["1_none", "1_any", "3_none"]
     info.async_remove()
@@ -1844,7 +1844,7 @@ async def test_track_two_templates_with_different_rate_limits.opp):
             refresh_runs[update.template].append(update.result)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [
             TrackTemplate(template_one, None, timedelta(seconds=0.1)),
             TrackTemplate(template_five, None, timedelta(seconds=5)),
@@ -1858,14 +1858,14 @@ async def test_track_two_templates_with_different_rate_limits.opp):
 
     assert refresh_runs[template_one] == [0]
     assert refresh_runs[template_five] == [0]
-   .opp.states.async_set("sensor.one", "any")
+    opp.states.async_set("sensor.one", "any")
     await opp.async_block_till_done()
     assert refresh_runs[template_one] == [0]
     assert refresh_runs[template_five] == [0]
     info.async_refresh()
     assert refresh_runs[template_one] == [0, 1]
     assert refresh_runs[template_five] == [0, 1]
-   .opp.states.async_set("sensor.two", "any")
+    opp.states.async_set("sensor.two", "any")
     await opp.async_block_till_done()
     assert refresh_runs[template_one] == [0, 1]
     assert refresh_runs[template_five] == [0, 1]
@@ -1878,15 +1878,15 @@ async def test_track_two_templates_with_different_rate_limits.opp):
     await opp.async_block_till_done()
     assert refresh_runs[template_one] == [0, 1, 2]
     assert refresh_runs[template_five] == [0, 1]
-   .opp.states.async_set("sensor.three", "any")
+    opp.states.async_set("sensor.three", "any")
     await opp.async_block_till_done()
     assert refresh_runs[template_one] == [0, 1, 2]
     assert refresh_runs[template_five] == [0, 1]
-   .opp.states.async_set("sensor.four", "any")
+    opp.states.async_set("sensor.four", "any")
     await opp.async_block_till_done()
     assert refresh_runs[template_one] == [0, 1, 2]
     assert refresh_runs[template_five] == [0, 1]
-   .opp.states.async_set("sensor.five", "any")
+    opp.states.async_set("sensor.five", "any")
     await opp.async_block_till_done()
     assert refresh_runs[template_one] == [0, 1, 2]
     assert refresh_runs[template_five] == [0, 1]
@@ -1904,7 +1904,7 @@ async def test_string.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template_refresh, None)], refresh_listener
+        opp. [TrackTemplate(template_refresh, None)], refresh_listener
     )
     await opp.async_block_till_done()
     info.async_refresh()
@@ -1924,11 +1924,11 @@ async def test_track_template_result_refresh_cancel.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template_refresh, None)], refresh_listener
+        opp. [TrackTemplate(template_refresh, None)], refresh_listener
     )
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
     await opp.async_block_till_done()
 
     assert refresh_runs == [False]
@@ -1936,14 +1936,14 @@ async def test_track_template_result_refresh_cancel.opp):
     assert len(refresh_runs) == 1
 
     info.async_refresh()
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     await opp.async_block_till_done()
 
     assert len(refresh_runs) == 2
     assert refresh_runs[0] != refresh_runs[1]
 
     info.async_remove()
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
     await opp.async_block_till_done()
 
     assert len(refresh_runs) == 2
@@ -1952,7 +1952,7 @@ async def test_track_template_result_refresh_cancel.opp):
     refresh_runs = []
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(template_refresh, {"value": "duck"})],
         refresh_listener,
     )
@@ -1984,7 +1984,7 @@ async def test_async_track_template_result_multiple_templates.opp):
         refresh_runs.append(updates)
 
     async_track_template_result(
-        opp,
+        opp.
         [
             TrackTemplate(template_1, None),
             TrackTemplate(template_2, None),
@@ -1994,7 +1994,7 @@ async def test_async_track_template_result_multiple_templates.opp):
         refresh_listener,
     )
 
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2006,7 +2006,7 @@ async def test_async_track_template_result_multiple_templates.opp):
     ]
 
     refresh_runs = []
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2018,7 +2018,7 @@ async def test_async_track_template_result_multiple_templates.opp):
     ]
 
     refresh_runs = []
-   .opp.states.async_set("binary_sensor.test", "off")
+    opp.states.async_set("binary_sensor.test", "off")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2041,7 +2041,7 @@ async def test_async_track_template_result_multiple_templates_mixing_domain.opp)
         refresh_runs.append(updates)
 
     async_track_template_result(
-        opp,
+        opp.
         [
             TrackTemplate(template_1, None),
             TrackTemplate(template_2, None),
@@ -2051,7 +2051,7 @@ async def test_async_track_template_result_multiple_templates_mixing_domain.opp)
         refresh_listener,
     )
 
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2064,7 +2064,7 @@ async def test_async_track_template_result_multiple_templates_mixing_domain.opp)
     ]
 
     refresh_runs = []
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2076,13 +2076,13 @@ async def test_async_track_template_result_multiple_templates_mixing_domain.opp)
     ]
 
     refresh_runs = []
-   .opp.states.async_set("binary_sensor.test", "off")
+    opp.states.async_set("binary_sensor.test", "off")
     await opp.async_block_till_done()
 
     assert refresh_runs == []
 
     refresh_runs = []
-   .opp.states.async_set("switch.new", "off")
+    opp.states.async_set("switch.new", "off")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2099,7 +2099,7 @@ async def test_async_track_template_result_raise_on_template_error(opp):
 
     with pytest.raises(TemplateError):
         async_track_template_result(
-            opp,
+            opp.
             [
                 TrackTemplate(
                     Template(
@@ -2116,7 +2116,7 @@ async def test_async_track_template_result_raise_on_template_error(opp):
 async def test_track_template_with_time.opp):
     """Test tracking template with time."""
 
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     specific_runs = []
     template_complex = Template("{{ states.switch.test.state and now() }}", opp)
 
@@ -2124,7 +2124,7 @@ async def test_track_template_with_time.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp. [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
@@ -2154,7 +2154,7 @@ async def test_track_template_with_time_default.opp):
         specific_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp, [TrackTemplate(template_complex, None)], specific_run_callback
+        opp. [TrackTemplate(template_complex, None)], specific_run_callback
     )
     await opp.async_block_till_done()
 
@@ -2186,7 +2186,7 @@ async def test_track_template_with_time_that_leaves_scope.opp):
     test_time = datetime(now.year + 1, 5, 24, 11, 59, 1, 500000, tzinfo=dt_util.UTC)
 
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
-       .opp.states.async_set("binary_sensor.washing_machine", "on")
+        opp.states.async_set("binary_sensor.washing_machine", "on")
         specific_runs = []
         template_complex = Template(
             """
@@ -2196,14 +2196,14 @@ async def test_track_template_with_time_that_leaves_scope.opp):
                 {{ states.binary_sensor.washing_machine.last_updated }}
             {% endif %}
         """,
-            opp,
+            opp.
         )
 
         def specific_run_callback(event, updates):
             specific_runs.append(updates.pop().result)
 
         info = async_track_template_result(
-            opp, [TrackTemplate(template_complex, None)], specific_run_callback
+            opp. [TrackTemplate(template_complex, None)], specific_run_callback
         )
         await opp.async_block_till_done()
 
@@ -2214,7 +2214,7 @@ async def test_track_template_with_time_that_leaves_scope.opp):
             "time": True,
         }
 
-       .opp.states.async_set("binary_sensor.washing_machine", "off")
+        opp.states.async_set("binary_sensor.washing_machine", "off")
         await opp.async_block_till_done()
 
         assert info.listeners == {
@@ -2224,7 +2224,7 @@ async def test_track_template_with_time_that_leaves_scope.opp):
             "time": False,
         }
 
-       .opp.states.async_set("binary_sensor.washing_machine", "on")
+        opp.states.async_set("binary_sensor.washing_machine", "on")
         await opp.async_block_till_done()
 
         assert info.listeners == {
@@ -2275,7 +2275,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners.o
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         info = async_track_template_result(
-            opp,
+            opp.
             [
                 TrackTemplate(template_1, None),
                 TrackTemplate(template_2, None),
@@ -2289,7 +2289,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners.o
         "entities": {"switch.test"},
         "time": True,
     }
-   .opp.states.async_set("switch.test", "on")
+    opp.states.async_set("switch.test", "on")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2299,7 +2299,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners.o
     ]
 
     refresh_runs = []
-   .opp.states.async_set("switch.test", "off")
+    opp.states.async_set("switch.test", "off")
     await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2331,7 +2331,7 @@ async def test_track_same_state_simple_no_trigger.opp):
         callback_runs.append(1)
 
     async_track_same_state(
-        opp,
+        opp.
         period,
         callback_run_callback,
         callback(lambda _, _2, to_s: to_s.state == "on"),
@@ -2339,12 +2339,12 @@ async def test_track_same_state_simple_no_trigger.opp):
     )
 
     # Adding state to state machine
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     assert len(callback_runs) == 0
 
     # Change state on state machine
-   .opp.states.async_set("light.Bowl", "off")
+    opp.states.async_set("light.Bowl", "off")
     await opp.async_block_till_done()
     assert len(callback_runs) == 0
 
@@ -2371,7 +2371,7 @@ async def test_track_same_state_simple_trigger_check_funct.opp):
         return True
 
     async_track_same_state(
-        opp,
+        opp.
         period,
         callback_run_callback,
         entity_ids="light.Bowl",
@@ -2379,7 +2379,7 @@ async def test_track_same_state_simple_trigger_check_funct.opp):
     )
 
     # Adding state to state machine
-   .opp.states.async_set("light.Bowl", "on")
+    opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
     await opp.async_block_till_done()
     assert len(callback_runs) == 0
@@ -2399,7 +2399,7 @@ async def test_track_time_interval.opp):
 
     utc_now = dt_util.utcnow()
     unsub = async_track_time_interval(
-        opp, callback(lambda x: specific_runs.append(x)), timedelta(seconds=10)
+        opp. callback(lambda x: specific_runs.append(x)), timedelta(seconds=10)
     )
 
     async_fire_time_changed.opp, utc_now + timedelta(seconds=5))
@@ -2427,10 +2427,10 @@ async def test_track_sunrise.opp, legacy_patchable_time):
     longitude = 117.22743
 
     # Setup sun component
-   .opp.config.latitude = latitude
-   .opp.config.longitude = longitude
+    opp.config.latitude = latitude
+    opp.config.longitude = longitude
     assert await async_setup_component(
-        opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+        opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
     # Get next sunrise/sunset
@@ -2456,7 +2456,7 @@ async def test_track_sunrise.opp, legacy_patchable_time):
     offset = timedelta(minutes=30)
     with patch("openpeerpower.util.dt.utcnow", return_value=utc_now):
         unsub2 = async_track_sunrise(
-            opp, callback(lambda: offset_runs.append(1)), offset
+            opp. callback(lambda: offset_runs.append(1)), offset
         )
 
     # run tests
@@ -2487,10 +2487,10 @@ async def test_track_sunrise.opp, legacy_patchable_time):
 async def test_track_sunrise_update_location.opp, legacy_patchable_time):
     """Test track the sunrise."""
     # Setup sun component
-   .opp.config.latitude = 32.87336
-   .opp.config.longitude = 117.22743
+    opp.config.latitude = 32.87336
+    opp.config.longitude = 117.22743
     assert await async_setup_component(
-        opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+        opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
     # Get next sunrise
@@ -2550,10 +2550,10 @@ async def test_track_sunset.opp, legacy_patchable_time):
     longitude = 117.22743
 
     # Setup sun component
-   .opp.config.latitude = latitude
-   .opp.config.longitude = longitude
+    opp.config.latitude = latitude
+    opp.config.longitude = longitude
     assert await async_setup_component(
-        opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+        opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
     # Get next sunrise/sunset
@@ -2579,7 +2579,7 @@ async def test_track_sunset.opp, legacy_patchable_time):
     offset = timedelta(minutes=30)
     with patch("openpeerpower.util.dt.utcnow", return_value=utc_now):
         unsub2 = async_track_sunset(
-            opp, callback(lambda: offset_runs.append(1)), offset
+            opp. callback(lambda: offset_runs.append(1)), offset
         )
 
     # Run tests
@@ -2622,28 +2622,28 @@ async def test_async_track_time_change.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-            opp, callback(lambda x: wildcard_runs.append(x))
+            opp. callback(lambda x: wildcard_runs.append(x))
         )
         unsub_utc = async_track_utc_time_change(
-            opp, callback(lambda x: specific_runs.append(x)), second=[0, 30]
+            opp. callback(lambda x: specific_runs.append(x)), second=[0, 30]
         )
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 0, 15, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 0, 15, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
     assert len(wildcard_runs) == 2
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2653,7 +2653,7 @@ async def test_async_track_time_change.opp):
     unsub_utc()
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 0, 30, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2674,23 +2674,23 @@ async def test_periodic_task_minute.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-            opp, callback(lambda x: specific_runs.append(x)), minute="/5", second=0
+            opp. callback(lambda x: specific_runs.append(x)), minute="/5", second=0
         )
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 3, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 3, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2698,7 +2698,7 @@ async def test_periodic_task_minute.opp):
     unsub()
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 12, 5, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2718,7 +2718,7 @@ async def test_periodic_task_hour.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-            opp,
+            opp.
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2726,31 +2726,31 @@ async def test_periodic_task_hour.opp):
         )
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 25, 1, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 25, 1, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 3
@@ -2758,7 +2758,7 @@ async def test_periodic_task_hour.opp):
     unsub()
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 25, 2, 0, 0, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 3
@@ -2772,11 +2772,11 @@ async def test_periodic_task_wrong_input.opp):
 
     with pytest.raises(ValueError):
         async_track_utc_time_change(
-            opp, callback(lambda x: specific_runs.append(x)), hour="/two"
+            opp. callback(lambda x: specific_runs.append(x)), hour="/two"
         )
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 2, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 2, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
@@ -2796,7 +2796,7 @@ async def test_periodic_task_clock_rollback.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-            opp,
+            opp.
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2804,19 +2804,19 @@ async def test_periodic_task_clock_rollback.opp):
         )
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 23, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp,
+        opp.
         datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -2824,7 +2824,7 @@ async def test_periodic_task_clock_rollback.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp,
+        opp.
         datetime(now.year + 1, 5, 24, 0, 0, 0, 999999, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -2832,7 +2832,7 @@ async def test_periodic_task_clock_rollback.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2840,7 +2840,7 @@ async def test_periodic_task_clock_rollback.opp):
     unsub()
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 25, 2, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2860,7 +2860,7 @@ async def test_periodic_task_duplicate_time.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-            opp,
+            opp.
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2868,19 +2868,19 @@ async def test_periodic_task_duplicate_time.opp):
         )
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp, datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
+        opp. datetime(now.year + 1, 5, 25, 0, 0, 0, 999999, tzinfo=dt_util.UTC)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -2903,7 +2903,7 @@ async def test_periodic_task_entering_dst.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-            opp,
+            opp.
             callback(lambda x: specific_runs.append(x)),
             hour=2,
             minute=30,
@@ -2911,25 +2911,25 @@ async def test_periodic_task_entering_dst.opp):
         )
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 25, 1, 50, 0, 999999))
+        opp. timezone.localize(datetime(now.year + 1, 3, 25, 1, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 25, 3, 50, 0, 999999))
+        opp. timezone.localize(datetime(now.year + 1, 3, 25, 3, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 26, 1, 50, 0, 999999))
+        opp. timezone.localize(datetime(now.year + 1, 3, 26, 1, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 26, 2, 50, 0, 999999))
+        opp. timezone.localize(datetime(now.year + 1, 3, 26, 2, 50, 0, 999999))
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
@@ -2953,7 +2953,7 @@ async def test_periodic_task_leaving_dst.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-            opp,
+            opp.
             callback(lambda x: specific_runs.append(x)),
             hour=2,
             minute=30,
@@ -2961,7 +2961,7 @@ async def test_periodic_task_leaving_dst.opp):
         )
 
     async_fire_time_changed(
-        opp,
+        opp.
         timezone.localize(
             datetime(now.year + 1, 10, 28, 2, 5, 0, 999999), is_dst=False
         ),
@@ -2970,7 +2970,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp,
+        opp.
         timezone.localize(
             datetime(now.year + 1, 10, 28, 2, 55, 0, 999999), is_dst=False
         ),
@@ -2979,7 +2979,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp,
+        opp.
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 45, 0, 999999), is_dst=True
         ),
@@ -2988,7 +2988,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-        opp,
+        opp.
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
         ),
@@ -2997,7 +2997,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-        opp,
+        opp.
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
         ),
@@ -3073,18 +3073,18 @@ async def test_track_state_change_event_chain_multple_entity.opp):
 
         chained_tracker_unsub.append(
             async_track_state_change_event(
-                opp, ["light.bowl", "light.top"], chained_single_run_callback
+                opp. ["light.bowl", "light.top"], chained_single_run_callback
             )
         )
 
     tracker_unsub.append(
         async_track_state_change_event(
-            opp, ["light.bowl", "light.top"], single_run_callback
+            opp. ["light.bowl", "light.top"], single_run_callback
         )
     )
 
-   .opp.states.async_set("light.bowl", "on")
-   .opp.states.async_set("light.top", "on")
+    opp.states.async_set("light.bowl", "on")
+    opp.states.async_set("light.top", "on")
     await opp.async_block_till_done()
 
     assert len(tracker_called) == 2
@@ -3092,7 +3092,7 @@ async def test_track_state_change_event_chain_multple_entity.opp):
     assert len(tracker_unsub) == 1
     assert len(chained_tracker_unsub) == 2
 
-   .opp.states.async_set("light.bowl", "off")
+    opp.states.async_set("light.bowl", "off")
     await opp.async_block_till_done()
 
     assert len(tracker_called) == 3
@@ -3125,7 +3125,7 @@ async def test_track_state_change_event_chain_single_entity.opp):
 
         chained_tracker_unsub.append(
             async_track_state_change_event(
-                opp, "light.bowl", chained_single_run_callback
+                opp. "light.bowl", chained_single_run_callback
             )
         )
 
@@ -3133,7 +3133,7 @@ async def test_track_state_change_event_chain_single_entity.opp):
         async_track_state_change_event.opp, "light.bowl", single_run_callback)
     )
 
-   .opp.states.async_set("light.bowl", "on")
+    opp.states.async_set("light.bowl", "on")
     await opp.async_block_till_done()
 
     assert len(tracker_called) == 1
@@ -3141,7 +3141,7 @@ async def test_track_state_change_event_chain_single_entity.opp):
     assert len(tracker_unsub) == 1
     assert len(chained_tracker_unsub) == 1
 
-   .opp.states.async_set("light.bowl", "off")
+    opp.states.async_set("light.bowl", "off")
     await opp.async_block_till_done()
 
     assert len(tracker_called) == 2
@@ -3170,7 +3170,7 @@ async def test_track_point_in_utc_time_cancel.opp):
         unsub1 = opp.helpers.event.track_point_in_utc_time(
             run_callback, utc_now + timedelta(seconds=0.1)
         )
-       .opp.helpers.event.track_point_in_utc_time(
+        opp.helpers.event.track_point_in_utc_time(
             run_callback, utc_now + timedelta(seconds=0.1)
         )
 
@@ -3202,7 +3202,7 @@ async def test_async_track_point_in_time_cancel.opp):
     unsub1 = opp.helpers.event.async_track_point_in_time(
         run_callback, hst_now + timedelta(seconds=0.1)
     )
-   .opp.helpers.event.async_track_point_in_time(
+    opp.helpers.event.async_track_point_in_time(
         run_callback, hst_now + timedelta(seconds=0.1)
     )
 
@@ -3221,7 +3221,7 @@ async def test_async_track_entity_registry_updated_event.opp):
     new_entity_id = "switch.dog_feeder"
     untracked_entity_id = "switch.kitty_feeder"
 
-   .opp.states.async_set(entity_id, "on")
+    opp.states.async_set(entity_id, "on")
     await opp.async_block_till_done()
     event_data = []
 
@@ -3235,16 +3235,16 @@ async def test_async_track_entity_registry_updated_event.opp):
     unsub2 = opp.helpers.event.async_track_entity_registry_updated_event(
         new_entity_id, run_callback
     )
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ENTITY_REGISTRY_UPDATED, {"action": "create", "entity_id": entity_id}
     )
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ENTITY_REGISTRY_UPDATED,
         {"action": "create", "entity_id": untracked_entity_id},
     )
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ENTITY_REGISTRY_UPDATED,
         {
             "action": "update",
@@ -3255,17 +3255,17 @@ async def test_async_track_entity_registry_updated_event.opp):
     )
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ENTITY_REGISTRY_UPDATED, {"action": "remove", "entity_id": new_entity_id}
     )
     await opp.async_block_till_done()
 
     unsub1()
     unsub2()
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ENTITY_REGISTRY_UPDATED, {"action": "create", "entity_id": entity_id}
     )
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ENTITY_REGISTRY_UPDATED, {"action": "create", "entity_id": new_entity_id}
     )
     await opp.async_block_till_done()
@@ -3281,13 +3281,13 @@ async def test_async_track_entity_registry_updated_event.opp):
 
 
 async def test_async_track_entity_registry_updated_event_with_a_callback_that_throws(
-    opp,
+    opp.
 ):
     """Test tracking entity registry updates for an entity_id when one callback throws."""
 
     entity_id = "switch.puppy_feeder"
 
-   .opp.states.async_set(entity_id, "on")
+    opp.states.async_set(entity_id, "on")
     await opp.async_block_till_done()
     event_data = []
 
@@ -3305,7 +3305,7 @@ async def test_async_track_entity_registry_updated_event_with_a_callback_that_th
     unsub2 = opp.helpers.event.async_track_entity_registry_updated_event(
         entity_id, run_callback
     )
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ENTITY_REGISTRY_UPDATED, {"action": "create", "entity_id": entity_id}
     )
     await opp.async_block_till_done()

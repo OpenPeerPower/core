@@ -32,10 +32,10 @@ async def async_setup_opp: core.OpenPeerPower, config: dict):
 
 
 async def async_setup_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the Xiaomi Miio components from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     if entry.data[CONF_FLOW_TYPE] == CONF_GATEWAY:
         if not await async_setup_gateway_entry.opp, entry):
             return False
@@ -47,7 +47,7 @@ async def async_setup_entry(
 
 
 async def async_setup_gateway_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the Xiaomi Gateway component from a config entry."""
     host = entry.data[CONF_HOST]
@@ -57,7 +57,7 @@ async def async_setup_gateway_entry(
 
     # For backwards compat
     if entry.unique_id.endswith("-gateway"):
-       .opp.config_entries.async_update_entry(entry, unique_id=entry.data["mac"])
+        opp.config_entries.async_update_entry(entry, unique_id=entry.data["mac"])
 
     # Connect to gateway
     gateway = ConnectXiaomiGateway.opp)
@@ -88,7 +88,7 @@ async def async_setup_gateway_entry(
 
     # Create update coordinator
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         # Name of the data. For logging purposes.
         name=name,
@@ -97,21 +97,21 @@ async def async_setup_gateway_entry(
         update_interval=timedelta(seconds=10),
     )
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         CONF_GATEWAY: gateway.gateway_device,
         KEY_COORDINATOR: coordinator,
     }
 
     for component in GATEWAY_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
 
 
 async def async_setup_device_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the Xiaomi Miio device component from a config entry."""
     model = entry.data[CONF_MODEL]
@@ -123,8 +123,8 @@ async def async_setup_device_entry(
         return False
 
     for component in platforms:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True

@@ -56,7 +56,7 @@ async def async_start_discovery_service.opp: OpenPeerPowerType):
 
     # discovery local services
     disco = DiscoveryService.opp)
-   .opp.data[DATA_DISCOVERY_SERVICE] = disco
+    opp.data[DATA_DISCOVERY_SERVICE] = disco
 
     # Start the pizone discovery service, disco is the listener
     session = aiohttp_client.async_get_clientsession.opp)
@@ -68,7 +68,7 @@ async def async_start_discovery_service.opp: OpenPeerPowerType):
     async def shutdown_event(event):
         await async_stop_discovery_service.opp)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown_event)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown_event)
 
     return disco
 

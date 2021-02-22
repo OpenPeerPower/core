@@ -16,7 +16,7 @@ async def test_get_actions.opp, push_registration):
     ]
 
     capabilitites = await device_automation._async_get_device_automation_capabilities(
-        opp, "action", {"domain": DOMAIN, "device_id": device_id, "type": "notify"}
+        opp. "action", {"domain": DOMAIN, "device_id": device_id, "type": "notify"}
     )
     assert "extra_fields" in capabilitites
 
@@ -26,7 +26,7 @@ async def test_action.opp, push_registration):
     webhook_id = push_registration["webhook_id"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -57,7 +57,7 @@ async def test_action.opp, push_registration):
     with patch(
         "openpeerpower.components.mobile_app.notify.MobileAppNotificationService.async_send_message"
     ) as mock_send_message:
-       .opp.bus.async_fire("test_notify")
+        opp.bus.async_fire("test_notify")
         await opp.async_block_till_done()
         assert len(mock_send_message.mock_calls) == 1
 

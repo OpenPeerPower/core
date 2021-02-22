@@ -85,7 +85,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         await aftership.add_package_tracking(tracking_number, title, slug)
         async_dispatcher_send.opp, UPDATE_TOPIC)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_ADD_TRACKING,
         handle_add_tracking,
@@ -100,7 +100,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         await aftership.remove_package_tracking(slug, tracking_number)
         async_dispatcher_send.opp, UPDATE_TOPIC)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_REMOVE_TRACKING,
         handle_remove_tracking,

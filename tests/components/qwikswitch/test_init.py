@@ -266,7 +266,7 @@ async def test_button.opp, aioclient_mock, qs_devices):
     await opp.async_block_till_done()
 
     button_pressed = Mock()
-   .opp.bus.async_listen_once("qwikswitch.button.@a00002", button_pressed)
+    opp.bus.async_listen_once("qwikswitch.button.@a00002", button_pressed)
     listen_mock.queue_response(
         json={"id": "@a00002", "cmd": "TOGGLE"},
     )
@@ -316,7 +316,7 @@ async def test_single_invalid_sensor.opp, aioclient_mock, qs_devices):
 
 
 async def test_non_binary_sensor_with_binary_args(
-    opp, aioclient_mock, qs_devices, caplog
+    opp. aioclient_mock, qs_devices, caplog
 ):
     """Test that the system logs a warning when a non-binary device has binary specific args."""
 

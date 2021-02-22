@@ -76,7 +76,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             data[ATTR_ENTITY_ID] = list(ent_ids)
 
             tasks.append(
-               .opp.services.async_call(
+                opp.services.async_call(
                     domain,
                     service.service,
                     data,
@@ -97,20 +97,20 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
 
     service_schema = vol.Schema({ATTR_ENTITY_ID: cv.entity_ids}, extra=vol.ALLOW_EXTRA)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         ha.DOMAIN, SERVICE_TURN_OFF, async_handle_turn_service, schema=service_schema
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         ha.DOMAIN, SERVICE_TURN_ON, async_handle_turn_service, schema=service_schema
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         ha.DOMAIN, SERVICE_TOGGLE, async_handle_turn_service, schema=service_schema
     )
 
     async def async_handle_core_service(call):
         """Service handler for handling core services."""
         if call.service == SERVICE_OPENPEERPOWER_STOP:
-           .opp.async_create_task.opp.async_stop())
+            opp.async_create_task.opp.async_stop())
             return
 
         try:
@@ -120,7 +120,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
 
         if errors:
             _LOGGER.error(errors)
-           .opp.components.persistent_notification.async_create(
+            opp.components.persistent_notification.async_create(
                 "Config error. See [the logs](/config/logs) for details.",
                 "Config validating",
                 f"{ha.DOMAIN}.check_config",
@@ -128,7 +128,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             return
 
         if call.service == SERVICE_OPENPEERPOWER_RESTART:
-           .opp.async_create_task.opp.async_stop(RESTART_EXIT_CODE))
+            opp.async_create_task.opp.async_stop(RESTART_EXIT_CODE))
 
     async def async_handle_update_service(call):
         """Service handler for updating an entity."""
@@ -152,23 +152,23 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
                     )
 
         tasks = [
-           .opp.helpers.entity_component.async_update_entity(entity)
+            opp.helpers.entity_component.async_update_entity(entity)
             for entity in call.data[ATTR_ENTITY_ID]
         ]
 
         if tasks:
             await asyncio.wait(tasks)
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         ha.DOMAIN, SERVICE_OPENPEERPOWER_STOP, async_handle_core_service
     )
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         ha.DOMAIN, SERVICE_OPENPEERPOWER_RESTART, async_handle_core_service
     )
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         ha.DOMAIN, SERVICE_CHECK_CONFIG, async_handle_core_service
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         ha.DOMAIN,
         SERVICE_UPDATE_ENTITY,
         async_handle_update_service,
@@ -186,7 +186,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
         # auth only processed during startup
         await conf_util.async_process_op_core_config(opp, conf.get(ha.DOMAIN) or {})
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         ha.DOMAIN, SERVICE_RELOAD_CORE_CONFIG, async_handle_reload_config
     )
 
@@ -196,7 +196,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             latitude=call.data[ATTR_LATITUDE], longitude=call.data[ATTR_LONGITUDE]
         )
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         ha.DOMAIN,
         SERVICE_SET_LOCATION,
         async_set_location,

@@ -97,10 +97,10 @@ async def async_setup_opp, config):
         topic = FEEDBACK_ON_TOPIC if state else FEEDBACK_OFF_TOPIC
         for site_id in site_ids:
             payload = json.dumps({"siteId": site_id})
-           .opp.components.mqtt.async_publish(
+            opp.components.mqtt.async_publish(
                 FEEDBACK_ON_TOPIC, "", qos=0, retain=False
             )
-           .opp.components.mqtt.async_publish(
+            opp.components.mqtt.async_publish(
                 topic, payload, qos=int(state), retain=state
             )
 
@@ -145,7 +145,7 @@ async def async_setup_opp, config):
 
         try:
             intent_response = await intent.async_handle(
-                opp, DOMAIN, intent_type, slots, request["input"]
+                opp. DOMAIN, intent_type, slots, request["input"]
             )
             notification = {"sessionId": request.get("sessionId", "default")}
 
@@ -154,7 +154,7 @@ async def async_setup_opp, config):
 
             _LOGGER.debug("send_response %s", json.dumps(notification))
             mqtt.async_publish(
-                opp, "hermes/dialogueManager/endSession", json.dumps(notification)
+                opp. "hermes/dialogueManager/endSession", json.dumps(notification)
             )
         except intent.UnknownIntent:
             _LOGGER.warning(
@@ -173,7 +173,7 @@ async def async_setup_opp, config):
             "init": {"type": "notification", "text": call.data.get(ATTR_TEXT)},
         }
         mqtt.async_publish(
-            opp, "hermes/dialogueManager/startSession", json.dumps(notification)
+            opp. "hermes/dialogueManager/startSession", json.dumps(notification)
         )
         return
 
@@ -190,7 +190,7 @@ async def async_setup_opp, config):
             },
         }
         mqtt.async_publish(
-            opp, "hermes/dialogueManager/startSession", json.dumps(notification)
+            opp. "hermes/dialogueManager/startSession", json.dumps(notification)
         )
         return
 
@@ -202,16 +202,16 @@ async def async_setup_opp, config):
         """Turn feedback sounds off."""
         async_set_feedback(call.data.get(ATTR_SITE_ID), False)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SAY, snips_say, schema=SERVICE_SCHEMA_SAY
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SAY_ACTION, snips_say_action, schema=SERVICE_SCHEMA_SAY_ACTION
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_FEEDBACK_ON, feedback_on, schema=SERVICE_SCHEMA_FEEDBACK
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_FEEDBACK_OFF, feedback_off, schema=SERVICE_SCHEMA_FEEDBACK
     )
 

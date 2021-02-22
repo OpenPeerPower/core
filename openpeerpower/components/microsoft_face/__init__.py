@@ -70,7 +70,7 @@ async def async_setup_opp, config):
     """Set up Microsoft Face."""
     entities = {}
     face = MicrosoftFace(
-        opp,
+        opp.
         config[DOMAIN].get(CONF_AZURE_REGION),
         config[DOMAIN].get(CONF_API_KEY),
         config[DOMAIN].get(CONF_TIMEOUT),
@@ -84,7 +84,7 @@ async def async_setup_opp, config):
         _LOGGER.error("Can't load data from face api: %s", err)
         return False
 
-   .opp.data[DATA_MICROSOFT_FACE] = face
+    opp.data[DATA_MICROSOFT_FACE] = face
 
     async def async_create_group(service):
         """Create a new person group."""
@@ -100,7 +100,7 @@ async def async_setup_opp, config):
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't create group '%s' with error: %s", g_id, err)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_CREATE_GROUP, async_create_group, schema=SCHEMA_GROUP_SERVICE
     )
 
@@ -113,11 +113,11 @@ async def async_setup_opp, config):
             face.store.pop(g_id)
 
             entity = entities.pop(g_id)
-           .opp.states.async_remove(entity.entity_id, service.context)
+            opp.states.async_remove(entity.entity_id, service.context)
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't delete group '%s' with error: %s", g_id, err)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_DELETE_GROUP, async_delete_group, schema=SCHEMA_GROUP_SERVICE
     )
 
@@ -130,7 +130,7 @@ async def async_setup_opp, config):
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't train group '%s' with error: %s", g_id, err)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_TRAIN_GROUP, async_train_group, schema=SCHEMA_TRAIN_SERVICE
     )
 
@@ -149,7 +149,7 @@ async def async_setup_opp, config):
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't create person '%s' with error: %s", name, err)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_CREATE_PERSON, async_create_person, schema=SCHEMA_PERSON_SERVICE
     )
 
@@ -167,7 +167,7 @@ async def async_setup_opp, config):
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't delete person '%s' with error: %s", p_id, err)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_DELETE_PERSON, async_delete_person, schema=SCHEMA_PERSON_SERVICE
     )
 
@@ -193,7 +193,7 @@ async def async_setup_opp, config):
                 "Can't add an image of a person '%s' with error: %s", p_id, err
             )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_FACE_PERSON, async_face_person, schema=SCHEMA_FACE_SERVICE
     )
 

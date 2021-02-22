@@ -49,17 +49,17 @@ PLATFORMS = ["climate", "sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Honeywell Lyric component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     if DOMAIN not in config:
         return True
 
-   .opp.data[DOMAIN][CONF_CLIENT_ID] = config[DOMAIN][CONF_CLIENT_ID]
+    opp.data[DOMAIN][CONF_CLIENT_ID] = config[DOMAIN][CONF_CLIENT_ID]
 
     OAuth2FlowHandler.async_register_implementation(
-        opp,
+        opp.
         LyricLocalOAuth2Implementation(
-            opp,
+            opp.
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -75,7 +75,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Honeywell Lyric from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
     )
 
@@ -97,7 +97,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             raise UpdateFailed(exception) from exception
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         # Name of the data. For logging purposes.
         name="lyric_coordinator",
@@ -106,7 +106,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         update_interval=timedelta(seconds=120),
     )
 
-   .opp.data[DOMAIN][entry.entry_id] = coordinator
+    opp.data[DOMAIN][entry.entry_id] = coordinator
 
     # Fetch initial data so we have data when entities subscribe
     await coordinator.async_refresh()
@@ -114,8 +114,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -126,13 +126,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

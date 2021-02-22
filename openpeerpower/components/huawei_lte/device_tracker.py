@@ -29,7 +29,7 @@ _DEVICE_SCAN = f"{DEVICE_TRACKER_DOMAIN}/device_scan"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config_entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
@@ -70,7 +70,7 @@ async def async_setup_entry(
 
     # Register to handle router data updates
     disconnect_dispatcher = async_dispatcher_connect(
-        opp, UPDATE_SIGNAL, _async_maybe_add_new_entities
+        opp. UPDATE_SIGNAL, _async_maybe_add_new_entities
     )
     router.unload_handlers.append(disconnect_dispatcher)
 
@@ -80,7 +80,7 @@ async def async_setup_entry(
 
 @callback
 def async_add_new_entities(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     router_url: str,
     async_add_entities: Callable[[List[Entity], bool], None],
     tracked: Set[str],

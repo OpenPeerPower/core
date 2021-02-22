@@ -94,6 +94,6 @@ async def test_unload_config_entry.opp, device_factory):
     await opp.config_entries.async_forward_entry_unload(config_entry, "binary_sensor")
     # Assert
     assert (
-       .opp.states.get("binary_sensor.motion_sensor_1_motion").state
+        opp.states.get("binary_sensor.motion_sensor_1_motion").state
         == STATE_UNAVAILABLE
     )

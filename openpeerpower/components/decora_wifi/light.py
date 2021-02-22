@@ -45,7 +45,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         if success is None:
             msg = "Failed to log into myLeviton Services. Check credentials."
             _LOGGER.error(msg)
-           .opp.components.persistent_notification.create(
+            opp.components.persistent_notification.create(
                 msg, title=NOTIFICATION_TITLE, notification_id=NOTIFICATION_ID
             )
             return False
@@ -77,7 +77,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         except ValueError:
             _LOGGER.error("Failed to log out of myLeviton Service")
 
-   .opp.bus.listen(EVENT_OPENPEERPOWER_STOP, logout)
+    opp.bus.listen(EVENT_OPENPEERPOWER_STOP, logout)
 
 
 class DecoraWifiLight(LightEntity):

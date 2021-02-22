@@ -61,13 +61,13 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     for part_num in configured_partitions:
         device_config_data = PARTITION_SCHEMA(configured_partitions[part_num])
         device = EnvisalinkAlarm(
-            opp,
+            opp.
             part_num,
             device_config_data[CONF_PARTITIONNAME],
             code,
             panic_type,
-           .opp.data[DATA_EVL].alarm_state["partition"][part_num],
-           .opp.data[DATA_EVL],
+            opp.data[DATA_EVL].alarm_state["partition"][part_num],
+            opp.data[DATA_EVL],
         )
         devices.append(device)
 
@@ -86,7 +86,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         for device in target_devices:
             device.async_alarm_keypress(keypress)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_ALARM_KEYPRESS,
         alarm_keypress_handler,

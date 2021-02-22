@@ -21,13 +21,13 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Configure Gammu state machine."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     sms_config = config.get(DOMAIN, {})
     if not sms_config:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=sms_config,
@@ -45,10 +45,10 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     gateway = await create_sms_gateway(config, opp)
     if not gateway:
         return False
-   .opp.data[DOMAIN][SMS_GATEWAY] = gateway
+    opp.data[DOMAIN][SMS_GATEWAY] = gateway
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -59,7 +59,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )

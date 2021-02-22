@@ -48,13 +48,13 @@ class MfaFlowManager(data_entry_flow.FlowManager):
 
 async def async_setup_opp):
     """Init mfa setup flow manager."""
-   .opp.data[DATA_SETUP_FLOW_MGR] = MfaFlowManager.opp)
+    opp.data[DATA_SETUP_FLOW_MGR] = MfaFlowManager.opp)
 
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_SETUP_MFA, websocket_setup_mfa, SCHEMA_WS_SETUP_MFA
     )
 
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_DEPOSE_MFA, websocket_depose_mfa, SCHEMA_WS_DEPOSE_MFA
     )
 
@@ -62,7 +62,7 @@ async def async_setup_opp):
 @callback
 @websocket_api.ws_require_user(allow_system_user=False)
 def websocket_setup_mfa(
-    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Return a setup flow for mfa auth module."""
 
@@ -96,13 +96,13 @@ def websocket_setup_mfa(
             websocket_api.result_message(msg["id"], _prepare_result_json(result))
         )
 
-   .opp.async_create_task(async_setup_flow(msg))
+    opp.async_create_task(async_setup_flow(msg))
 
 
 @callback
 @websocket_api.ws_require_user(allow_system_user=False)
 def websocket_depose_mfa(
-    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Remove user from mfa module."""
 
@@ -125,7 +125,7 @@ def websocket_depose_mfa(
 
         connection.send_message(websocket_api.result_message(msg["id"], "done"))
 
-   .opp.async_create_task(async_depose(msg))
+    opp.async_create_task(async_depose(msg))
 
 
 def _prepare_result_json(result):

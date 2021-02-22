@@ -11,7 +11,7 @@ async def test_valve_switches.opp, config_entry, aioclient_mock_fixture):
     """Test Flo by Moen valve switches."""
     config_entry.add_to.opp.opp)
     assert await async_setup_component(
-        opp, FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
+        opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
     await opp.async_block_till_done()
 

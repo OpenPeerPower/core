@@ -67,21 +67,21 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         if LOG_INTERVAL_SUB in domain_data:
             domain_data[LOG_INTERVAL_SUB]()
 
-       .opp.components.persistent_notification.async_create(
+        opp.components.persistent_notification.async_create(
             "Object growth logging has started. See [the logs](/config/logs) to track the growth of new objects.",
             title="Object growth logging started",
             notification_id="profile_object_logging",
         )
         await opp.async_add_executor_job(_log_objects)
         domain_data[LOG_INTERVAL_SUB] = async_track_time_interval(
-            opp, _log_objects, call.data[CONF_SCAN_INTERVAL]
+            opp. _log_objects, call.data[CONF_SCAN_INTERVAL]
         )
 
     async def _async_stop_log_objects(call: ServiceCall):
         if LOG_INTERVAL_SUB not in domain_data:
             return
 
-       .opp.components.persistent_notification.async_dismiss("profile_object_logging")
+        opp.components.persistent_notification.async_dismiss("profile_object_logging")
         domain_data.pop(LOG_INTERVAL_SUB)()
 
     def _dump_log_objects(call: ServiceCall):
@@ -93,14 +93,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             objgraph.by_type(obj_type),
         )
 
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Objects with type {obj_type} have been dumped to the log. See [the logs](/config/logs) to review the repr of the objects.",
             title="Object dump completed",
             notification_id="profile_object_dump",
         )
 
     async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_START,
         _async_run_profile,
@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_MEMORY,
         _async_run_memory_profile,
@@ -120,7 +120,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_START_LOG_OBJECTS,
         _async_start_log_objects,
@@ -134,7 +134,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_STOP_LOG_OBJECTS,
         _async_stop_log_objects,
@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_DUMP_LOG_OBJECTS,
         _dump_log_objects,
@@ -155,16 +155,16 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     for service in SERVICES:
-       .opp.services.async_remove(domain=DOMAIN, service=service)
+        opp.services.async_remove(domain=DOMAIN, service=service)
     if LOG_INTERVAL_SUB in.opp.data[DOMAIN]:
-       .opp.data[DOMAIN][LOG_INTERVAL_SUB]()
-   .opp.data.pop(DOMAIN)
+        opp.data[DOMAIN][LOG_INTERVAL_SUB]()
+    opp.data.pop(DOMAIN)
     return True
 
 
 async def _async_generate_profile.opp: OpenPeerPower, call: ServiceCall):
     start_time = int(time.time() * 1000000)
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         "The profile has started. This notification will be updated when it is complete.",
         title="Profile Started",
         notification_id=f"profiler_{start_time}",
@@ -179,7 +179,7 @@ async def _async_generate_profile.opp: OpenPeerPower, call: ServiceCall):
     await opp.async_add_executor_job(
         _write_profile, profiler, cprofile_path, callgrind_path
     )
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         f"Wrote cProfile data to {cprofile_path} and callgrind data to {callgrind_path}",
         title="Profile Complete",
         notification_id=f"profiler_{start_time}",
@@ -188,7 +188,7 @@ async def _async_generate_profile.opp: OpenPeerPower, call: ServiceCall):
 
 async def _async_generate_memory_profile.opp: OpenPeerPower, call: ServiceCall):
     start_time = int(time.time() * 1000000)
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         "The memory profile has started. This notification will be updated when it is complete.",
         title="Profile Started",
         notification_id=f"memory_profiler_{start_time}",
@@ -200,7 +200,7 @@ async def _async_generate_memory_profile.opp: OpenPeerPower, call: ServiceCall):
 
     heap_path = opp.config.path(f"heap_profile.{start_time}.hpy")
     await opp.async_add_executor_job(_write_memory_profile, heap, heap_path)
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         f"Wrote heapy memory profile to {heap_path}",
         title="Profile Complete",
         notification_id=f"memory_profiler_{start_time}",

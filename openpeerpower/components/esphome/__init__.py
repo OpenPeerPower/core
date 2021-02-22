@@ -61,7 +61,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up the esphome component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     host = entry.data[CONF_HOST]
     port = entry.data[CONF_PORT]
@@ -71,7 +71,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     zeroconf_instance = await zeroconf.async_get_instance.opp)
 
     cli = APIClient(
-       .opp.loop,
+        opp.loop,
         host,
         port,
         password,
@@ -81,7 +81,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     # Store client in per-config-entry.opp.data
     store = Store(
-        opp, STORAGE_VERSION, f"esphome.{entry.entry_id}", encoder=JSONEncoder
+        opp. STORAGE_VERSION, f"esphome.{entry.entry_id}", encoder=JSONEncoder
     )
     entry_data = opp.data[DOMAIN][entry.entry_id] = RuntimeEntryData(
         client=cli, entry_id=entry.entry_id, store=store
@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     # the callback twice when shutting down Open Peer Power.
     # "Unable to remove unknown listener <function EventBus.async_listen_once.<locals>.onetime_listener>"
     entry_data.cleanup_callbacks.append(
-       .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, on_stop)
+        opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, on_stop)
     )
 
     @callback
@@ -134,15 +134,15 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             # Call native tag scan
             if service_name == "tag_scanned":
                 tag_id = service_data["tag_id"]
-               .opp.async_create_task(
-                   .opp.components.tag.async_scan_tag(tag_id, device_id)
+                opp.async_create_task(
+                    opp.components.tag.async_scan_tag(tag_id, device_id)
                 )
                 return
 
-           .opp.bus.async_fire(service.service, service_data)
+            opp.bus.async_fire(service.service, service_data)
         else:
-           .opp.async_create_task(
-               .opp.services.async_call(
+            opp.async_create_task(
+                opp.services.async_call(
                     domain, service_name, service_data, blocking=True
                 )
             )
@@ -165,14 +165,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     def async_on_state_subscription(entity_id: str) -> None:
         """Subscribe and forward states for requested entities."""
         unsub = async_track_state_change_event(
-            opp, [entity_id], send_open_peer_power_state_event
+            opp. [entity_id], send_open_peer_power_state_event
         )
         entry_data.disconnect_callbacks.append(unsub)
         new_state = opp.states.get(entity_id)
         if new_state is None:
             return
         # Send initial state
-       .opp.async_create_task(_send_open_peer_power_state(entity_id, new_state))
+        opp.async_create_task(_send_open_peer_power_state(entity_id, new_state))
 
     async def on_login() -> None:
         """Subscribe to states and list entities on successful API login."""
@@ -181,7 +181,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             entry_data.device_info = await cli.device_info()
             entry_data.available = True
             device_id = await _async_setup_device_registry(
-                opp, entry, entry_data.device_info
+                opp. entry, entry_data.device_info
             )
             entry_data.async_update_device_state.opp)
 
@@ -192,7 +192,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             await cli.subscribe_service_calls(async_on_service_call)
             await cli.subscribe_open_peer_power_states(async_on_state_subscription)
 
-           .opp.async_create_task(entry_data.async_save_to_store())
+            opp.async_create_task(entry_data.async_save_to_store())
         except APIConnectionError as err:
             _LOGGER.warning("Error getting initial data for %s: %s", host, err)
             # Re-connection logic will trigger after this
@@ -208,14 +208,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
         # Create connection attempt outside of HA's tracked task in order
         # not to delay startup.
-       .opp.loop.create_task(try_connect(is_disconnect=False))
+        opp.loop.create_task(try_connect(is_disconnect=False))
 
-   .opp.async_create_task(complete_setup())
+    opp.async_create_task(complete_setup())
     return True
 
 
 async def _setup_auto_reconnect_logic(
-    opp: OpenPeerPowerType, cli: APIClient, entry: ConfigEntry, host: str, on_login
+    opp. OpenPeerPowerType, cli: APIClient, entry: ConfigEntry, host: str, on_login
 ):
     """Set up the re-connect logic for the API client."""
 
@@ -278,13 +278,13 @@ async def _setup_auto_reconnect_logic(
             )
         else:
             _LOGGER.info("Successfully connected to %s", host)
-           .opp.async_create_task(on_login())
+            opp.async_create_task(on_login())
 
     return try_connect
 
 
 async def _async_setup_device_registry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, device_info: DeviceInfo
+    opp. OpenPeerPowerType, entry: ConfigEntry, device_info: DeviceInfo
 ):
     """Set up device registry feature for a particular config entry."""
     sw_version = device_info.esphome_version
@@ -303,7 +303,7 @@ async def _async_setup_device_registry(
 
 
 async def _register_service(
-    opp: OpenPeerPowerType, entry_data: RuntimeEntryData, service: UserService
+    opp. OpenPeerPowerType, entry_data: RuntimeEntryData, service: UserService
 ):
     service_name = f"{entry_data.device_info.name}_{service.name}"
     schema = {}
@@ -322,13 +322,13 @@ async def _register_service(
     async def execute_service(call):
         await entry_data.client.execute_service(service, call.data)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, service_name, execute_service, vol.Schema(schema)
     )
 
 
 async def _setup_services(
-    opp: OpenPeerPowerType, entry_data: RuntimeEntryData, services: List[UserService]
+    opp. OpenPeerPowerType, entry_data: RuntimeEntryData, services: List[UserService]
 ):
     old_services = entry_data.services.copy()
     to_unregister = []
@@ -352,14 +352,14 @@ async def _setup_services(
 
     for service in to_unregister:
         service_name = f"{entry_data.device_info.name}_{service.name}"
-       .opp.services.async_remove(DOMAIN, service_name)
+        opp.services.async_remove(DOMAIN, service_name)
 
     for service in to_register:
         await _register_service.opp, entry_data, service)
 
 
 async def _cleanup_instance(
-    opp: OpenPeerPowerType, entry: ConfigEntry
+    opp. OpenPeerPowerType, entry: ConfigEntry
 ) -> RuntimeEntryData:
     """Cleanup the esphome client if it exists."""
     data: RuntimeEntryData = opp.data[DOMAIN].pop(entry.entry_id)
@@ -385,7 +385,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 async def platform_async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities,
     *,

@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Gree Climate component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -45,12 +45,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     coordinators = [DeviceDataUpdateCoordinator.opp, d) for d in devices]
     await asyncio.gather(*[x.async_refresh() for x in coordinators])
 
-   .opp.data[DOMAIN][COORDINATOR] = coordinators
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
+    opp.data[DOMAIN][COORDINATOR] = coordinators
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
     )
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, SWITCH_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, SWITCH_DOMAIN)
     )
 
     return True
@@ -59,14 +59,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     results = asyncio.gather(
-       .opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN),
-       .opp.config_entries.async_forward_entry_unload(entry, SWITCH_DOMAIN),
+        opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN),
+        opp.config_entries.async_forward_entry_unload(entry, SWITCH_DOMAIN),
     )
 
     unload_ok = all(await results)
     if unload_ok:
-       .opp.data[DOMAIN].pop("devices", None)
-       .opp.data[DOMAIN].pop(CLIMATE_DOMAIN, None)
-       .opp.data[DOMAIN].pop(SWITCH_DOMAIN, None)
+        opp.data[DOMAIN].pop("devices", None)
+        opp.data[DOMAIN].pop(CLIMATE_DOMAIN, None)
+        opp.data[DOMAIN].pop(SWITCH_DOMAIN, None)
 
     return unload_ok

@@ -116,8 +116,8 @@ def setup_opp, config):
         )
         return False
 
-   .opp.data[DATA_ADS] = ads
-   .opp.bus.listen(EVENT_OPENPEERPOWER_STOP, ads.shutdown)
+    opp.data[DATA_ADS] = ads
+    opp.bus.listen(EVENT_OPENPEERPOWER_STOP, ads.shutdown)
 
     def handle_write_data_by_name(call):
         """Write a value to the connected ADS device."""
@@ -130,7 +130,7 @@ def setup_opp, config):
         except pyads.ADSError as err:
             _LOGGER.error(err)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_WRITE_DATA_BY_NAME,
         handle_write_data_by_name,

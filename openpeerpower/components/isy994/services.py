@@ -276,7 +276,7 @@ def async_setup_services.opp: OpenPeerPowerType):
                 ]
             )
 
-           .opp_isy_data = opp.data[DOMAIN][config_entry_id]
+            opp.isy_data = opp.data[DOMAIN][config_entry_id]
             uuid = opp_isy_data[ISY994_ISY].configuration["uuid"]
 
             for platform in SUPPORTED_PLATFORMS:
@@ -314,43 +314,43 @@ def async_setup_services.opp: OpenPeerPowerType):
     async def async_reload_config_entries(service) -> None:
         """Trigger a reload of all ISY994 config entries."""
         for config_entry_id in.opp.data[DOMAIN]:
-           .opp.async_create_task.opp.config_entries.async_reload(config_entry_id))
+            opp.async_create_task.opp.config_entries.async_reload(config_entry_id))
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SYSTEM_QUERY,
         service_func=async_system_query_service_handler,
         schema=SERVICE_SYSTEM_QUERY_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_RUN_NETWORK_RESOURCE,
         service_func=async_run_network_resource_service_handler,
         schema=SERVICE_RUN_NETWORK_RESOURCE_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SEND_PROGRAM_COMMAND,
         service_func=async_send_program_command_service_handler,
         schema=SERVICE_SEND_PROGRAM_COMMAND_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SET_VARIABLE,
         service_func=async_set_variable_service_handler,
         schema=SERVICE_SET_VARIABLE_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_CLEANUP,
         service_func=async_cleanup_registry_entries,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN, service=SERVICE_RELOAD, service_func=async_reload_config_entries
     )
 
@@ -359,7 +359,7 @@ def async_setup_services.opp: OpenPeerPowerType):
             async_get_platforms.opp, DOMAIN), SERVICE_SEND_RAW_NODE_COMMAND, call
         )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SEND_RAW_NODE_COMMAND,
         schema=cv.make_entity_service_schema(SERVICE_SEND_RAW_NODE_COMMAND_SCHEMA),
@@ -371,7 +371,7 @@ def async_setup_services.opp: OpenPeerPowerType):
             async_get_platforms.opp, DOMAIN), SERVICE_SEND_NODE_COMMAND, call
         )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=DOMAIN,
         service=SERVICE_SEND_NODE_COMMAND,
         schema=cv.make_entity_service_schema(SERVICE_SEND_NODE_COMMAND_SCHEMA),
@@ -393,14 +393,14 @@ def async_unload_services.opp: OpenPeerPowerType):
         return
 
     _LOGGER.info("Unloading ISY994 Services")
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_SYSTEM_QUERY)
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_RUN_NETWORK_RESOURCE)
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_SEND_PROGRAM_COMMAND)
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_SET_VARIABLE)
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_CLEANUP)
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_RELOAD)
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_SEND_RAW_NODE_COMMAND)
-   .opp.services.async_remove(domain=DOMAIN, service=SERVICE_SEND_NODE_COMMAND)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_SYSTEM_QUERY)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_RUN_NETWORK_RESOURCE)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_SEND_PROGRAM_COMMAND)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_SET_VARIABLE)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_CLEANUP)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_RELOAD)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_SEND_RAW_NODE_COMMAND)
+    opp.services.async_remove(domain=DOMAIN, service=SERVICE_SEND_NODE_COMMAND)
 
 
 @callback

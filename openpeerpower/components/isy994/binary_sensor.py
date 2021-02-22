@@ -58,7 +58,7 @@ DEVICE_PARENT_REQUIRED = [
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[list], None],
 ) -> bool:
@@ -67,7 +67,7 @@ async def async_setup_entry(
     devices_by_address = {}
     child_nodes = []
 
-   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in.opp_isy_data[ISY994_NODES][BINARY_SENSOR]:
         device_class, device_type = _detect_device_type_and_class(node)
         if node.protocol == PROTO_INSTEON:

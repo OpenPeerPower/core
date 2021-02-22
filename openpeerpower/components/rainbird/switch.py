@@ -57,7 +57,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             if device.entity_id == entity_id:
                 device.turn_on(duration=duration)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_START_IRRIGATION,
         start_irrigation,

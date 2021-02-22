@@ -515,7 +515,7 @@ jobs:
           . venv/bin/activate
           pre-commit run --hook-stage manual yamllint --all-files --show-diff-on-failure
 
- .oppfest:
+  opp.est:
     name: Check.oppfest
     runs-on: ubuntu-latest
     needs: prepare-tests

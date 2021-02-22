@@ -74,7 +74,7 @@ def run_callback_threadsafe(
         #
         # 1. Set the _SHUTDOWN_RUN_CALLBACK_THREADSAFE attr on this function
         #    by calling `shutdown_run_callback_threadsafe`
-        # 2. Call .opp.async_block_till_done` at least once after shutdown
+        # 2. Call  opp.async_block_till_done` at least once after shutdown
         #    to ensure all callbacks have run
         # 3. Raise an exception here to ensure `future.result()` can never be
         #    called and hit the deadlock since once `shutdown_run_callback_threadsafe`

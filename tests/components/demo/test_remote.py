@@ -20,7 +20,7 @@ SERVICE_SEND_COMMAND = "send_command"
 async def setup_component.opp):
     """Initialize components."""
     assert await async_setup_component(
-        opp, remote.DOMAIN, {"remote": {"platform": "demo"}}
+        opp. remote.DOMAIN, {"remote": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 

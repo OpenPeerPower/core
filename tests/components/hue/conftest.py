@@ -25,7 +25,7 @@ def no_request_delay():
 def create_mock_bridge.opp):
     """Create a mock Hue bridge."""
     bridge = Mock(
-       .opp.opp,
+        opp.opp,
         available=True,
         authorized=True,
         allow_unreachable=False,
@@ -110,7 +110,7 @@ async def setup_bridge_for_sensors.opp, mock_bridge, hostname=None):
     """Load the Hue platform with the provided bridge for sensor-related platforms."""
     if hostname is None:
         hostname = "mock-host"
-   .opp.config.components.add(hue.DOMAIN)
+    opp.config.components.add(hue.DOMAIN)
     config_entry = config_entries.ConfigEntry(
         1,
         hue.DOMAIN,
@@ -121,11 +121,11 @@ async def setup_bridge_for_sensors.opp, mock_bridge, hostname=None):
         system_options={},
     )
     mock_bridge.config_entry = config_entry
-   .opp.data[hue.DOMAIN] = {config_entry.entry_id: mock_bridge}
+    opp.data[hue.DOMAIN] = {config_entry.entry_id: mock_bridge}
     await opp.config_entries.async_forward_entry_setup(config_entry, "binary_sensor")
     await opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
     # simulate a full setup by manually adding the bridge config entry
-   .opp.config_entries._entries.append(config_entry)
+    opp.config_entries._entries.append(config_entry)
 
     # and make sure it completes before going further
     await opp.async_block_till_done()

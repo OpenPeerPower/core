@@ -24,7 +24,7 @@ async def test_send_message_with_data.opp):
         return service2
 
     assert await async_setup_component(
-        opp,
+        opp.
         "group",
         {},
     )
@@ -32,7 +32,7 @@ async def test_send_message_with_data.opp):
 
     with patch.object(demo, "get_service", mock_get_service):
         await async_setup_component(
-            opp,
+            opp.
             notify.DOMAIN,
             {
                 "notify": [
@@ -44,7 +44,7 @@ async def test_send_message_with_data.opp):
         await opp.async_block_till_done()
 
     service = await group.async_get_service(
-        opp,
+        opp.
         {
             "services": [
                 {"service": "demo1"},
@@ -83,14 +83,14 @@ async def test_reload_notify.opp):
     """Verify we can reload the notify service."""
 
     assert await async_setup_component(
-        opp,
+        opp.
         "group",
         {},
     )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         notify.DOMAIN,
         {
             notify.DOMAIN: [

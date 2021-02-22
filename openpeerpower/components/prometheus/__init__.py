@@ -79,7 +79,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 def setup_opp, config):
     """Activate Prometheus component."""
-   .opp.http.register_view(PrometheusView(prometheus_client))
+    opp.http.register_view(PrometheusView(prometheus_client))
 
     conf = config[DOMAIN]
     entity_filter = conf[CONF_FILTER]
@@ -103,7 +103,7 @@ def setup_opp, config):
         default_metric,
     )
 
-   .opp.bus.listen(EVENT_STATE_CHANGED, metrics.handle_event)
+    opp.bus.listen(EVENT_STATE_CHANGED, metrics.handle_event)
     return True
 
 

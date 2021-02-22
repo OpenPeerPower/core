@@ -37,17 +37,17 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_opp, config):
     """Set up the IQVIA component."""
-   .opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
+    opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
     return True
 
 
 async def async_setup_entry.opp, entry):
     """Set up IQVIA as config entry."""
-   .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
+    opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
 
     if not entry.unique_id:
         # If the config entry doesn't already have a unique ID, set one:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, **{"unique_id": entry.data[CONF_ZIP_CODE]}
         )
 
@@ -74,7 +74,7 @@ async def async_setup_entry.opp, entry):
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             sensor_type
         ] = DataUpdateCoordinator(
-            opp,
+            opp.
             LOGGER,
             name=f"{entry.data[CONF_ZIP_CODE]} {sensor_type}",
             update_interval=DEFAULT_SCAN_INTERVAL,
@@ -85,8 +85,8 @@ async def async_setup_entry.opp, entry):
     await asyncio.gather(*init_data_update_tasks)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -97,14 +97,14 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
 
     return unload_ok
 

@@ -114,7 +114,7 @@ async def async_setup_opp, config):
 
     eight = EightSleep(user, password, timezone, partner, None, opp.loop)
 
-   .opp.data[DATA_EIGHT] = eight
+    opp.data[DATA_EIGHT] = eight
 
     # Authenticate, build sensors
     success = await eight.start()
@@ -128,7 +128,7 @@ async def async_setup_opp, config):
         async_dispatcher_send.opp, SIGNAL_UPDATE_HEAT)
 
         async_track_point_in_utc_time(
-            opp, async_update_heat_data, utcnow() + HEAT_SCAN_INTERVAL
+            opp. async_update_heat_data, utcnow() + HEAT_SCAN_INTERVAL
         )
 
     async def async_update_user_data(now):
@@ -137,7 +137,7 @@ async def async_setup_opp, config):
         async_dispatcher_send.opp, SIGNAL_UPDATE_USER)
 
         async_track_point_in_utc_time(
-            opp, async_update_user_data, utcnow() + USER_SCAN_INTERVAL
+            opp. async_update_user_data, utcnow() + USER_SCAN_INTERVAL
         )
 
     await async_update_heat_data(None)
@@ -157,15 +157,15 @@ async def async_setup_opp, config):
         # No users, cannot continue
         return False
 
-   .opp.async_create_task(
+    opp.async_create_task(
         discovery.async_load_platform(
-            opp, "sensor", DOMAIN, {CONF_SENSORS: sensors}, config
+            opp. "sensor", DOMAIN, {CONF_SENSORS: sensors}, config
         )
     )
 
-   .opp.async_create_task(
+    opp.async_create_task(
         discovery.async_load_platform(
-            opp, "binary_sensor", DOMAIN, {CONF_BINARY_SENSORS: binary_sensors}, config
+            opp. "binary_sensor", DOMAIN, {CONF_BINARY_SENSORS: binary_sensors}, config
         )
     )
 
@@ -186,7 +186,7 @@ async def async_setup_opp, config):
         async_dispatcher_send.opp, SIGNAL_UPDATE_HEAT)
 
     # Register services
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_HEAT_SET, async_service_handler, schema=SERVICE_EIGHT_SCHEMA
     )
 
@@ -194,7 +194,7 @@ async def async_setup_opp, config):
         """Handle stopping eight api session."""
         await eight.stop()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_eight)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_eight)
 
     return True
 

@@ -24,8 +24,8 @@ def async_setup_ingress_view.opp: OpenPeerPowerType, host: str):
     """Auth setup."""
     websession = opp.helpers.aiohttp_client.async_get_clientsession()
 
-   .oppio_ingress = HassIOIngress(host, websession)
-   .opp.http.register_view.oppio_ingress)
+    opp.o_ingress = HassIOIngress(host, websession)
+    opp.http.register_view.oppio_ingress)
 
 
 class HassIOIngress(OpenPeerPowerView):

@@ -28,21 +28,21 @@ async def test_reproduce_group.opp):
         fun.return_value = Future()
         fun.return_value.set_result(None)
 
-       .opp.states.async_set(
+        opp.states.async_set(
             "group.test",
             "off",
             {"entity_id": ["light.test1", "light.test2", "switch.test1"]},
         )
-       .opp.states.async_set("light.test1", "off")
-       .opp.states.async_set("light.test2", "off")
-       .opp.states.async_set("switch.test1", "off")
+        opp.states.async_set("light.test1", "off")
+        opp.states.async_set("light.test2", "off")
+        opp.states.async_set("switch.test1", "off")
 
         state = State("group.test", "on")
 
         await async_reproduce_states.opp, [state], context=context)
 
         fun.assert_called_once_with(
-            opp,
+            opp.
             [
                 clone_state(state, "light.test1"),
                 clone_state(state, "light.test2"),

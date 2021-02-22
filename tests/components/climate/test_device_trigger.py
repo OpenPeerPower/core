@@ -47,7 +47,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
     entity_id = f"{DOMAIN}.test_5678"
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         const.HVAC_MODE_COOL,
         {
@@ -85,7 +85,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 
 async def test_if_fires_on_state_change.opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "climate.entity",
         const.HVAC_MODE_COOL,
         {
@@ -96,7 +96,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -147,7 +147,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the HVAC mode is changing
-   .opp.states.async_set(
+    opp.states.async_set(
         "climate.entity",
         const.HVAC_MODE_AUTO,
         {
@@ -161,7 +161,7 @@ async def test_if_fires_on_state_change.opp, calls):
     assert calls[0].data["some"] == "hvac_mode_changed"
 
     # Fake that the temperature is changing
-   .opp.states.async_set(
+    opp.states.async_set(
         "climate.entity",
         const.HVAC_MODE_AUTO,
         {
@@ -175,7 +175,7 @@ async def test_if_fires_on_state_change.opp, calls):
     assert calls[1].data["some"] == "current_temperature_changed"
 
     # Fake that the humidity is changing
-   .opp.states.async_set(
+    opp.states.async_set(
         "climate.entity",
         const.HVAC_MODE_AUTO,
         {
@@ -192,7 +192,7 @@ async def test_if_fires_on_state_change.opp, calls):
 async def test_get_trigger_capabilities_hvac_mode.opp):
     """Test we get the expected capabilities from a climate trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp,
+        opp.
         {
             "platform": "device",
             "domain": "climate",
@@ -214,7 +214,7 @@ async def test_get_trigger_capabilities_hvac_mode.opp):
 async def test_get_trigger_capabilities_temp_humid.opp, type):
     """Test we get the expected capabilities from a climate trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp,
+        opp.
         {
             "platform": "device",
             "domain": "climate",

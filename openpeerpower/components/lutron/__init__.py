@@ -38,9 +38,9 @@ CONFIG_SCHEMA = vol.Schema(
 
 def setup_opp, base_config):
     """Set up the Lutron component."""
-   .opp.data[LUTRON_BUTTONS] = []
-   .opp.data[LUTRON_CONTROLLER] = None
-   .opp.data[LUTRON_DEVICES] = {
+    opp.data[LUTRON_BUTTONS] = []
+    opp.data[LUTRON_CONTROLLER] = None
+    opp.data[LUTRON_DEVICES] = {
         "light": [],
         "cover": [],
         "switch": [],
@@ -49,23 +49,23 @@ def setup_opp, base_config):
     }
 
     config = base_config.get(DOMAIN)
-   .opp.data[LUTRON_CONTROLLER] = Lutron(
+    opp.data[LUTRON_CONTROLLER] = Lutron(
         config[CONF_HOST], config[CONF_USERNAME], config[CONF_PASSWORD]
     )
 
-   .opp.data[LUTRON_CONTROLLER].load_xml_db()
-   .opp.data[LUTRON_CONTROLLER].connect()
+    opp.data[LUTRON_CONTROLLER].load_xml_db()
+    opp.data[LUTRON_CONTROLLER].connect()
     _LOGGER.info("Connected to main repeater at %s", config[CONF_HOST])
 
     # Sort our devices into types
     for area in.opp.data[LUTRON_CONTROLLER].areas:
         for output in area.outputs:
             if output.type == "SYSTEM_SHADE":
-               .opp.data[LUTRON_DEVICES]["cover"].append((area.name, output))
+                opp.data[LUTRON_DEVICES]["cover"].append((area.name, output))
             elif output.is_dimmable:
-               .opp.data[LUTRON_DEVICES]["light"].append((area.name, output))
+                opp.data[LUTRON_DEVICES]["light"].append((area.name, output))
             else:
-               .opp.data[LUTRON_DEVICES]["switch"].append((area.name, output))
+                opp.data[LUTRON_DEVICES]["switch"].append((area.name, output))
         for keypad in area.keypads:
             for button in keypad.buttons:
                 # If the button has a function assigned to it, add it as a scene
@@ -80,15 +80,15 @@ def setup_opp, base_config):
                         (led for led in keypad.leds if led.number == button.number),
                         None,
                     )
-                   .opp.data[LUTRON_DEVICES]["scene"].append(
+                    opp.data[LUTRON_DEVICES]["scene"].append(
                         (area.name, keypad.name, button, led)
                     )
 
-               .opp.data[LUTRON_BUTTONS].append(
+                opp.data[LUTRON_BUTTONS].append(
                     LutronButton.opp, area.name, keypad, button)
                 )
         if area.occupancy_group is not None:
-           .opp.data[LUTRON_DEVICES]["binary_sensor"].append(
+            opp.data[LUTRON_DEVICES]["binary_sensor"].append(
                 (area.name, area.occupancy_group)
             )
 

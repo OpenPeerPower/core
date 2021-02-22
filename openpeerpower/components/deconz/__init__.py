@@ -32,7 +32,7 @@ async def async_setup_entry.opp, config_entry):
     Start websocket for push notification of state changes from deCONZ.
     """
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
 
     await async_update_group_unique_id.opp, config_entry)
 
@@ -44,13 +44,13 @@ async def async_setup_entry.opp, config_entry):
     if not await gateway.async_setup():
         return False
 
-   .opp.data[DOMAIN][config_entry.unique_id] = gateway
+    opp.data[DOMAIN][config_entry.unique_id] = gateway
 
     await gateway.async_update_device_registry()
 
     await async_setup_services.opp)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, gateway.shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, gateway.shutdown)
 
     return True
 
@@ -79,7 +79,7 @@ async def async_update_master_gateway.opp, config_entry):
     master = not get_master_gateway.opp)
     options = {**config_entry.options, CONF_MASTER_GATEWAY: master}
 
-   .opp.config_entries.async_update_entry(config_entry, options=options)
+    opp.config_entries.async_update_entry(config_entry, options=options)
 
 
 async def async_update_group_unique_id.opp, config_entry) -> None:
@@ -106,4 +106,4 @@ async def async_update_group_unique_id.opp, config_entry) -> None:
         CONF_HOST: config_entry.data[CONF_HOST],
         CONF_PORT: config_entry.data[CONF_PORT],
     }
-   .opp.config_entries.async_update_entry(config_entry, data=data)
+    opp.config_entries.async_update_entry(config_entry, data=data)

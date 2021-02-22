@@ -24,7 +24,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry, async_add_enti
     update_friends = partial(async_update_friends, coordinator, {}, async_add_entities)
 
     unsub = coordinator.async_add_listener(update_friends)
-   .opp.data[DOMAIN][config_entry.entry_id]["sensor_unsub"] = unsub
+    opp.data[DOMAIN][config_entry.entry_id]["sensor_unsub"] = unsub
     update_friends()
 
 

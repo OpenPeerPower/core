@@ -1085,7 +1085,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp. OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up the WUnderground sensor."""
     latitude = config.get(CONF_LATITUDE, opp.config.latitude)
@@ -1093,7 +1093,7 @@ async def async_setup_platform(
     pws_id = config.get(CONF_PWS_ID)
 
     rest = WUndergroundData(
-        opp,
+        opp.
         config.get(CONF_API_KEY),
         pws_id,
         config.get(CONF_LANG),

@@ -32,7 +32,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([MinutPointAlarmControl(client, home_id)], True)
 
     async_dispatcher_connect(
-        opp, POINT_DISCOVERY_NEW.format(DOMAIN, POINT_DOMAIN), async_discover_home
+        opp. POINT_DISCOVERY_NEW.format(DOMAIN, POINT_DOMAIN), async_discover_home
     )
 
 

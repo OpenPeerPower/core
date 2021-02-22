@@ -25,11 +25,11 @@ _LOGGER = logging.getLogger(__name__)
 @callback
 def async_setup_auth_view.opp: OpenPeerPowerType, user: User):
     """Auth setup."""
-   .oppio_auth = HassIOAuth.opp, user)
-   .oppio_password_reset = HassIOPasswordReset.opp, user)
+    opp.o_auth = HassIOAuth.opp, user)
+    opp.o_password_reset = HassIOPasswordReset.opp, user)
 
-   .opp.http.register_view.oppio_auth)
-   .opp.http.register_view.oppio_password_reset)
+    opp.http.register_view.oppio_auth)
+    opp.http.register_view.oppio_password_reset)
 
 
 class HassIOBaseAuth(OpenPeerPowerView):
@@ -43,9 +43,9 @@ class HassIOBaseAuth(OpenPeerPowerView):
     def _check_access(self, request: web.Request):
         """Check if this call is from Supervisor."""
         # Check caller IP
-       .oppio_ip = os.environ["HASSIO"].split(":")[0]
+        opp.o_ip = os.environ["HASSIO"].split(":")[0]
         if ip_address(request.transport.get_extra_info("peername")[0]) != ip_address(
-           .oppio_ip
+            opp.o_ip
         ):
             _LOGGER.error("Invalid auth request from %s", request.remote)
             raise HTTPUnauthorized()

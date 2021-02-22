@@ -170,7 +170,7 @@ def _async_get_entries_by_name(current_entries):
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the HomeKit from yaml."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     _async_register_events_and_services.opp)
 
@@ -185,8 +185,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
             continue
 
         conf[CONF_ENTRY_INDEX] = index
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=conf,
@@ -220,7 +220,7 @@ def _async_update_config_entry_if_from_yaml.opp, entries_by_name, conf):
             options[key] = data[key]
             del data[key]
 
-       .opp.config_entries.async_update_entry(entry, data=data, options=options)
+        opp.config_entries.async_update_entry(entry, data=data, options=options)
         return True
 
     return False
@@ -249,7 +249,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     entity_filter = FILTER_SCHEMA(options.get(CONF_FILTER, {}))
 
     homekit = HomeKit(
-        opp,
+        opp.
         name,
         port,
         ip_address,
@@ -273,7 +273,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         AID_STORAGE: aid_storage,
         HOMEKIT: homekit,
         UNDO_UPDATE_LISTENER: undo_listener,
@@ -282,7 +282,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if opp.state == CoreState.running:
         await homekit.async_start()
     elif auto_start:
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, homekit.async_start)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, homekit.async_start)
 
     return True
 
@@ -298,7 +298,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     dismiss_setup_message.opp, entry.entry_id)
 
-   .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     homekit = opp.data[DOMAIN][entry.entry_id][HOMEKIT]
 
@@ -312,7 +312,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
             _LOGGER.info("Waiting for the HomeKit server to shutdown")
             await asyncio.sleep(1)
 
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN].pop(entry.entry_id)
 
     return True
 
@@ -336,13 +336,13 @@ def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: Config
             modified = True
 
     if modified:
-       .opp.config_entries.async_update_entry(entry, data=data, options=options)
+        opp.config_entries.async_update_entry(entry, data=data, options=options)
 
 
 @callback
 def _async_register_events_and_services.opp: OpenPeerPower):
     """Register events and services for HomeKit."""
-   .opp.http.register_view(HomeKitPairingQRView)
+    opp.http.register_view(HomeKitPairingQRView)
 
     def handle_homekit_reset_accessory(service):
         """Handle start HomeKit service call."""
@@ -360,7 +360,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
             entity_ids = service.data.get("entity_id")
             homekit.reset_accessories(entity_ids)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_HOMEKIT_RESET_ACCESSORY,
         handle_homekit_reset_accessory,
@@ -386,7 +386,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
             tasks.append(homekit.async_start())
         await asyncio.gather(*tasks)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_HOMEKIT_START, async_handle_homekit_service_start
     )
 
@@ -404,13 +404,13 @@ def _async_register_events_and_services.opp: OpenPeerPower):
             _async_update_config_entry_if_from_yaml.opp, entries_by_name, conf)
 
         reload_tasks = [
-           .opp.config_entries.async_reload(entry.entry_id)
+            opp.config_entries.async_reload(entry.entry_id)
             for entry in current_entries
         ]
 
         await asyncio.gather(*reload_tasks)
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_RELOAD,
         _handle_homekit_reload,
@@ -422,7 +422,7 @@ class HomeKit:
 
     def __init__(
         self,
-        opp,
+        opp.
         name,
         port,
         ip_address,

@@ -50,7 +50,7 @@ def turn_on.opp.entity_id=None, **service_data):
     if entity_id is not None:
         service_data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.ervices.call(op.DOMAIN, SERVICE_TURN_ON, service_data)
+    opp.ervices.call(op.DOMAIN, SERVICE_TURN_ON, service_data)
 
 
 def turn_off.opp.entity_id=None, **service_data):
@@ -61,7 +61,7 @@ def turn_off.opp.entity_id=None, **service_data):
     if entity_id is not None:
         service_data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.ervices.call(op.DOMAIN, SERVICE_TURN_OFF, service_data)
+    opp.ervices.call(op.DOMAIN, SERVICE_TURN_OFF, service_data)
 
 
 def toggle.opp.entity_id=None, **service_data):
@@ -72,7 +72,7 @@ def toggle.opp.entity_id=None, **service_data):
     if entity_id is not None:
         service_data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.ervices.call(op.DOMAIN, SERVICE_TOGGLE, service_data)
+    opp.ervices.call(op.DOMAIN, SERVICE_TOGGLE, service_data)
 
 
 def stop.opp.
@@ -80,7 +80,7 @@ def stop.opp.
 
     This is a legacy helper method. Do not use it for new tests.
     """
-   .opp.ervices.call(op.DOMAIN, SERVICE_OPENPEERPOWER_STOP)
+    opp.ervices.call(op.DOMAIN, SERVICE_OPENPEERPOWER_STOP)
 
 
 def restart.opp.
@@ -88,7 +88,7 @@ def restart.opp.
 
     This is a legacy helper method. Do not use it for new tests.
     """
-   .opp.ervices.call(op.DOMAIN, SERVICE_OPENPEERPOWER_RESTART)
+    opp.ervices.call(op.DOMAIN, SERVICE_OPENPEERPOWER_RESTART)
 
 
 def check_config(opp.
@@ -96,7 +96,7 @@ def check_config(opp.
 
     This is a legacy helper method. Do not use it for new tests.
     """
-   .opp.ervices.call(op.DOMAIN, SERVICE_CHECK_CONFIG)
+    opp.ervices.call(op.DOMAIN, SERVICE_CHECK_CONFIG)
 
 
 def reload_core_config(opp.
@@ -104,7 +104,7 @@ def reload_core_config(opp.
 
     This is a legacy helper method. Do not use it for new tests.
     """
-   .opp.ervices.call(op.DOMAIN, SERVICE_RELOAD_CORE_CONFIG)
+    opp.ervices.call(op.DOMAIN, SERVICE_RELOAD_CORE_CONFIG)
 
 
 class TestComponentsCore(unittest.TestCase):
@@ -252,8 +252,8 @@ async def test_turn_on_skips_domains_without_service.opp.caplog):
     """Test if turn_on is blocking domain with no service."""
     await async_setup_component.opp."openpeerpower", {})
     async_mock_service.opp."light", SERVICE_TURN_ON)
-   .opp.tates.async_set("light.Bowl", STATE_ON)
-   .opp.tates.async_set("light.Ceiling", STATE_OFF)
+    opp.tates.async_set("light.Bowl", STATE_ON)
+    opp.tates.async_set("light.Ceiling", STATE_OFF)
 
     # We can't test if our service call results in services being called
     # because by mocking out the call service method, we mock out all

@@ -41,7 +41,7 @@ test_async_update_with_timeout_and_recovery = (
 
 
 async def test_fan_registry_state_callback(
-    opp, pywemo_registry, pywemo_device, wemo_entity
+    opp. pywemo_registry, pywemo_device, wemo_entity
 ):
     """Verify that the fan receives state updates from the registry."""
     # On state.
@@ -105,7 +105,7 @@ async def test_fan_reset_filter_service.opp, pywemo_device, wemo_entity):
     ],
 )
 async def test_fan_set_humidity_service(
-    opp, pywemo_device, wemo_entity, test_input, expected
+    opp. pywemo_device, wemo_entity, test_input, expected
 ):
     """Verify that SERVICE_SET_HUMIDITY is registered and works."""
     assert await opp.services.async_call(

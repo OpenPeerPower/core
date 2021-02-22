@@ -45,7 +45,7 @@ async def test_auth_required_forward_request.oppio_noauth_client, build_type):
     ],
 )
 async def test_forward_request_no_auth_for_panel(
-   .oppio_client, build_type, aioclient_mock
+    opp.o_client, build_type, aioclient_mock
 ):
     """Test no auth needed for ."""
     aioclient_mock.get(f"http://127.0.0.1/{build_type}", text="response")
@@ -177,6 +177,6 @@ def test_need_auth.opp):
     assert _need_auth.opp, "snapshots/new/upload")
     assert _need_auth.opp, "supervisor/logs")
 
-   .opp.data["onboarding"] = False
+    opp.data["onboarding"] = False
     assert not _need_auth.opp, "snapshots/new/upload")
     assert not _need_auth.opp, "supervisor/logs")

@@ -26,7 +26,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Wolf SmartSet Service component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             raise UpdateFailed("Invalid authentication during update.") from exception
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="wolflink",
         update_method=async_update_data,
@@ -78,13 +78,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     await coordinator.async_refresh()
 
-   .opp.data[DOMAIN][entry.entry_id] = {}
-   .opp.data[DOMAIN][entry.entry_id][PARAMETERS] = parameters
-   .opp.data[DOMAIN][entry.entry_id][COORDINATOR] = coordinator
-   .opp.data[DOMAIN][entry.entry_id][DEVICE_ID] = device_id
+    opp.data[DOMAIN][entry.entry_id] = {}
+    opp.data[DOMAIN][entry.entry_id][PARAMETERS] = parameters
+    opp.data[DOMAIN][entry.entry_id][COORDINATOR] = coordinator
+    opp.data[DOMAIN][entry.entry_id][DEVICE_ID] = device_id
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
     return True
@@ -94,7 +94,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = await opp.config_entries.async_forward_entry_unload(entry, "sensor")
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

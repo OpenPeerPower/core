@@ -59,7 +59,7 @@ def init(empty=False):
 
 
 async def async_setup_platform(
-    opp, config, async_add_entities_callback, discovery_info=None
+    opp. config, async_add_entities_callback, discovery_info=None
 ):
     """Return mock entities."""
     async_add_entities_callback(ENTITIES)

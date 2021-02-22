@@ -37,8 +37,8 @@ def.oppio_stubs.oppio_env, opp, opp_client, aioclient_mock):
         "openpeerpower.components.oppio.HassIO.get_info",
         side_effect=HassioAPIError(),
     ):
-       .opp.state = CoreState.starting
-       .opp.loop.run_until_complete(async_setup_component.opp, .oppio", {}))
+        opp.state = CoreState.starting
+        opp.loop.run_until_complete(async_setup_component.opp,  opp.o", {}))
 
     return.opp_api.call_args[0][1]
 
@@ -60,7 +60,7 @@ async def.oppio_client_supervisor.opp, aiohttp_client, oppio_stubs):
     """Return an authenticated HTTP client."""
     access_token = opp.auth.async_create_access_token.oppio_stubs)
     return await aiohttp_client(
-       .opp.http.app,
+        opp.http.app,
         headers={"Authorization": f"Bearer {access_token}"},
     )
 

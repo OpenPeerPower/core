@@ -29,7 +29,7 @@ class CloudClient(Interface):
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         prefs: CloudPreferences,
         websession: aiohttp.ClientSession,
         alexa_user_config: Dict[str, Any],

@@ -69,7 +69,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         ):
             sensors.append(KWBSensor(easyfire, sensor, client_name))
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: easyfire.stop_thread())
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: easyfire.stop_thread())
 
     add_entities(sensors)
 

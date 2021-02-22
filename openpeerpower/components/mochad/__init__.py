@@ -52,10 +52,10 @@ def setup_opp, config):
 
     def start_mochad(event):
         """Start the Mochad service."""
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_mochad)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_mochad)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_mochad)
-   .opp.data[DOMAIN] = mochad_controller
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_mochad)
+    opp.data[DOMAIN] = mochad_controller
 
     return True
 

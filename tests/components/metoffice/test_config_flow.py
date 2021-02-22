@@ -18,8 +18,8 @@ from tests.common import MockConfigEntry, load_fixture
 
 async def test_form.opp, requests_mock):
     """Test we get the form."""
-   .opp.config.latitude = TEST_LATITUDE_WAVERTREE
-   .opp.config.longitude = TEST_LONGITUDE_WAVERTREE
+    opp.config.latitude = TEST_LATITUDE_WAVERTREE
+    opp.config.longitude = TEST_LONGITUDE_WAVERTREE
 
     # all metoffice test data encapsulated in here
     mock_json = json.loads(load_fixture("metoffice.json"))
@@ -58,8 +58,8 @@ async def test_form.opp, requests_mock):
 
 async def test_form_already_configured.opp, requests_mock):
     """Test we handle duplicate entries."""
-   .opp.config.latitude = TEST_LATITUDE_WAVERTREE
-   .opp.config.longitude = TEST_LONGITUDE_WAVERTREE
+    opp.config.latitude = TEST_LATITUDE_WAVERTREE
+    opp.config.longitude = TEST_LONGITUDE_WAVERTREE
 
     # all metoffice test data encapsulated in here
     mock_json = json.loads(load_fixture("metoffice.json"))
@@ -90,8 +90,8 @@ async def test_form_already_configured.opp, requests_mock):
 
 async def test_form_cannot_connect.opp, requests_mock):
     """Test we handle cannot connect error."""
-   .opp.config.latitude = TEST_LATITUDE_WAVERTREE
-   .opp.config.longitude = TEST_LONGITUDE_WAVERTREE
+    opp.config.latitude = TEST_LATITUDE_WAVERTREE
+    opp.config.longitude = TEST_LONGITUDE_WAVERTREE
 
     requests_mock.get("/public/data/val/wxfcs/all/json/sitelist/", text="")
 

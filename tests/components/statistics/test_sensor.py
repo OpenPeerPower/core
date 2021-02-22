@@ -457,9 +457,9 @@ async def test_reload.opp):
         init_recorder_component, opp
     )  # force in memory db
 
-   .opp.states.async_set("sensor.test_monitored", 12345)
+    opp.states.async_set("sensor.test_monitored", 12345)
     await async_setup_component(
-        opp,
+        opp.
         "sensor",
         {
             "sensor": {

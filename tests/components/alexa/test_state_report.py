@@ -11,7 +11,7 @@ async def test_report_state.opp, aioclient_mock):
     """Test proactive state reports."""
     aioclient_mock.post(TEST_URL, text="", status=202)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
@@ -19,7 +19,7 @@ async def test_report_state.opp, aioclient_mock):
 
     await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "off",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
@@ -45,7 +45,7 @@ async def test_report_state_instance.opp, aioclient_mock):
     """Test proactive state reports with instance."""
     aioclient_mock.post(TEST_URL, text="", status=202)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "fan.test_fan",
         "off",
         {
@@ -59,7 +59,7 @@ async def test_report_state_instance.opp, aioclient_mock):
 
     await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "fan.test_fan",
         "on",
         {
@@ -95,14 +95,14 @@ async def test_send_add_or_update_message.opp, aioclient_mock):
     """Test sending an AddOrUpdateReport message."""
     aioclient_mock.post(TEST_URL, text="")
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
 
     await state_report.async_send_add_or_update_message(
-        opp, DEFAULT_CONFIG, ["binary_sensor.test_contact", "zwave.bla"]
+        opp. DEFAULT_CONFIG, ["binary_sensor.test_contact", "zwave.bla"]
     )
 
     assert len(aioclient_mock.mock_calls) == 1
@@ -122,14 +122,14 @@ async def test_send_delete_message.opp, aioclient_mock):
     """Test sending an AddOrUpdateReport message."""
     aioclient_mock.post(TEST_URL, json={"data": "is irrelevant"})
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
 
     await state_report.async_send_delete_message(
-        opp, DEFAULT_CONFIG, ["binary_sensor.test_contact", "zwave.bla"]
+        opp. DEFAULT_CONFIG, ["binary_sensor.test_contact", "zwave.bla"]
     )
 
     assert len(aioclient_mock.mock_calls) == 1
@@ -149,7 +149,7 @@ async def test_doorbell_event.opp, aioclient_mock):
     """Test doorbell press reports."""
     aioclient_mock.post(TEST_URL, text="", status=202)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_doorbell",
         "off",
         {"friendly_name": "Test Doorbell Sensor", "device_class": "occupancy"},
@@ -157,7 +157,7 @@ async def test_doorbell_event.opp, aioclient_mock):
 
     await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_doorbell",
         "on",
         {"friendly_name": "Test Doorbell Sensor", "device_class": "occupancy"},
@@ -182,7 +182,7 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
 
     # First state should report
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
@@ -193,7 +193,7 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     aioclient_mock.clear_requests()
 
     # Second one shouldn't
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
@@ -201,7 +201,7 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     assert len(aioclient_mock.mock_calls) == 0
 
     #.opp not running should not report
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "off",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
@@ -212,7 +212,7 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     assert len(aioclient_mock.mock_calls) == 0
 
     # unsupported entity should not report
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "on",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
@@ -225,7 +225,7 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     assert len(aioclient_mock.mock_calls) == 0
 
     # Not exposed by config should not report
-   .opp.states.async_set(
+    opp.states.async_set(
         "binary_sensor.test_contact",
         "off",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
@@ -236,7 +236,7 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
     assert len(aioclient_mock.mock_calls) == 0
 
     # Removing an entity
-   .opp.states.async_remove("binary_sensor.test_contact")
+    opp.states.async_remove("binary_sensor.test_contact")
     await opp.async_block_till_done()
     await opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 0
@@ -247,13 +247,13 @@ async def test_proactive_mode_filter_states.opp, aioclient_mock):
         "openpeerpower.components.alexa.entities.AlexaEntity.serialize_properties",
         return_value=[{"same": "info"}],
     ):
-       .opp.states.async_set(
+        opp.states.async_set(
             "binary_sensor.same_serialize",
             "off",
             {"friendly_name": "Test Contact Sensor", "device_class": "door"},
         )
         await opp.async_block_till_done()
-       .opp.states.async_set(
+        opp.states.async_set(
             "binary_sensor.same_serialize",
             "off",
             {"friendly_name": "Test Contact Sensor", "device_class": "door"},

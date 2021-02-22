@@ -39,7 +39,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set("number.test_5678", 0.5, {"min_value": 0.0, "max_value": 1.0})
+    opp.states.async_set("number.test_5678", 0.5, {"min_value": 0.0, "max_value": 1.0})
     expected_actions = [
         {
             "domain": DOMAIN,
@@ -75,10 +75,10 @@ async def test_get_action_no_state.opp, device_reg, entity_reg):
 
 async def test_action.opp):
     """Test for actions."""
-   .opp.states.async_set("number.entity", 0.5, {"min_value": 0.0, "max_value": 1.0})
+    opp.states.async_set("number.entity", 0.5, {"min_value": 0.0, "max_value": 1.0})
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -103,7 +103,7 @@ async def test_action.opp):
 
     assert len(calls) == 0
 
-   .opp.bus.async_fire("test_event_set_value")
+    opp.bus.async_fire("test_event_set_value")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -112,7 +112,7 @@ async def test_action.opp):
 async def test_capabilities.opp):
     """Test getting capabilities."""
     capabilities = await device_action.async_get_action_capabilities(
-        opp,
+        opp.
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",

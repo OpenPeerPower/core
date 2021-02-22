@@ -17,7 +17,7 @@
                 },
                 "description": "Prosimo vnesite informacije o povezavi va\u0161ega MQTT posrednika."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Omogo\u010di odkrivanje"
                 },

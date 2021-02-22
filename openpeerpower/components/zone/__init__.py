@@ -91,7 +91,7 @@ STORAGE_VERSION = 1
 
 @bind.opp
 def async_active_zone(
-    opp: OpenPeerPower, latitude: float, longitude: float, radius: int = 0
+    opp. OpenPeerPower, latitude: float, longitude: float, radius: int = 0
 ) -> Optional[State]:
     """Find the active zone for given latitude, longitude.
 
@@ -185,7 +185,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         logging.getLogger(f"{__name__}.yaml_collection"), id_manager
     )
     collection.sync_entity_lifecycle(
-        opp, DOMAIN, DOMAIN, component, yaml_collection, Zone.from_yaml
+        opp. DOMAIN, DOMAIN, component, yaml_collection, Zone.from_yaml
     )
 
     storage_collection = ZoneStorageCollection(
@@ -194,7 +194,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         id_manager,
     )
     collection.sync_entity_lifecycle(
-        opp, DOMAIN, DOMAIN, component, storage_collection, Zone
+        opp. DOMAIN, DOMAIN, component, storage_collection, Zone
     )
 
     if config[DOMAIN]:
@@ -214,7 +214,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         await yaml_collection.async_load(conf[DOMAIN])
 
     service.async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_RELOAD,
         reload_service_handler,
@@ -232,9 +232,9 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         """Handle core config updated."""
         await home_zone.async_update_config(_home_conf.opp))
 
-   .opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, core_config_updated)
+    opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, core_config_updated)
 
-   .opp.data[DOMAIN] = storage_collection
+    opp.data[DOMAIN] = storage_collection
 
     return True
 
@@ -253,7 +253,7 @@ def _home_conf.opp: OpenPeerPower) -> Dict:
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up zone as config entry."""
     storage_collection = cast(ZoneStorageCollection, opp.data[DOMAIN])
@@ -264,13 +264,13 @@ async def async_setup_entry(
 
     await storage_collection.async_create_item(data)
 
-   .opp.async_create_task.opp.config_entries.async_remove(config_entry.entry_id))
+    opp.async_create_task.opp.config_entries.async_remove(config_entry.entry_id))
 
     return True
 
 
 async def async_unload_entry(
-    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Will be called once we remove it."""
     return True

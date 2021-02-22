@@ -99,7 +99,7 @@ async def _async_get_instance.opp, **zcargs):
         """Stop Zeroconf."""
         zeroconf.ha_close()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_zeroconf)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_zeroconf)
 
     return zeroconf
 
@@ -160,8 +160,8 @@ async def async_setup_opp, config):
 
         await _async_start_zeroconf_browser.opp, zeroconf)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf.opp_start)
-   .opp.bus.async_listen_once(
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf.opp_start)
+    opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STARTED, _async_zeroconf.opp_started
     )
 
@@ -316,8 +316,8 @@ async def _async_start_zeroconf_browser.opp, zeroconf):
                 ):
                     continue
 
-           .opp.add_job(
-               .opp.config_entries.flow.async_init(
+            opp.add_job(
+                opp.config_entries.flow.async_init(
                     entry["domain"], context={"source": DOMAIN}, data=info
                 )
             )
@@ -350,8 +350,8 @@ def handle_homekit.opp, homekit_models, info) -> bool:
         ):
             continue
 
-       .opp.add_job(
-           .opp.config_entries.flow.async_init(
+        opp.add_job(
+            opp.config_entries.flow.async_init(
                 homekit_models[test_model], context={"source": "homekit"}, data=info
             )
         )

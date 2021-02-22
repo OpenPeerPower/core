@@ -74,7 +74,7 @@ async def async_setup_opp, config):
 
     # Only listen for local events if you are going to publish them.
     if pub_topic:
-       .opp.bus.async_listen(MATCH_ALL, _event_publisher)
+        opp.bus.async_listen(MATCH_ALL, _event_publisher)
 
     # Process events from a remote server that are received on a queue.
     @callback
@@ -95,7 +95,7 @@ async def async_setup_opp, config):
                 if state:
                     event_data[key] = state
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             event_type, event_data=event_data, origin=EventOrigin.remote
         )
 

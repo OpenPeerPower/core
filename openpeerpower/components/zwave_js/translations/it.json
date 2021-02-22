@@ -20,7 +20,7 @@
             "install_addon": "Attendi il termine dell'installazione del componente aggiuntivo Z-Wave JS. Questa operazione pu\u00f2 richiedere diversi minuti."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "title": "Configura l'integrazione di Z-Wave JS con il componente aggiuntivo Z-Wave JS"
             },
             "install_addon": {

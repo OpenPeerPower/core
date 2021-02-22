@@ -67,7 +67,7 @@ class EntityComponent:
         self,
         logger: logging.Logger,
         domain: str,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         scan_interval: timedelta = DEFAULT_SCAN_INTERVAL,
     ):
         """Initialize an entity component."""
@@ -84,7 +84,7 @@ class EntityComponent:
         self.async_add_entities = self._platforms[domain].async_add_entities
         self.add_entities = self._platforms[domain].add_entities
 
-       .opp.data.setdefault(DATA_INSTANCES, {})[domain] = self
+        opp.data.setdefault(DATA_INSTANCES, {})[domain] = self
 
     @property
     def entities(self) -> Iterable[entity.Entity]:
@@ -312,7 +312,7 @@ class EntityComponent:
             scan_interval = self.scan_interval
 
         return EntityPlatform(
-           .opp=self.opp,
+            opp.self.opp,
             logger=self.logger,
             domain=self.domain,
             platform_name=platform_type,

@@ -183,15 +183,15 @@ class UnknownMediaType(BrowseError):
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Spotify based on a config entry."""
     spotify = SpotifyMediaPlayer(
-       .opp.data[DOMAIN][entry.entry_id][DATA_SPOTIFY_SESSION],
-       .opp.data[DOMAIN][entry.entry_id][DATA_SPOTIFY_CLIENT],
-       .opp.data[DOMAIN][entry.entry_id][DATA_SPOTIFY_ME],
+        opp.data[DOMAIN][entry.entry_id][DATA_SPOTIFY_SESSION],
+        opp.data[DOMAIN][entry.entry_id][DATA_SPOTIFY_CLIENT],
+        opp.data[DOMAIN][entry.entry_id][DATA_SPOTIFY_ME],
         entry.data[CONF_ID],
         entry.data[CONF_NAME],
     )

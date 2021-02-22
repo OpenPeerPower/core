@@ -11,8 +11,8 @@ PLATFORMS = ["light"]
 
 async def async_setup_opp, config):
     """Set up the Zerproc platform."""
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_IMPORT})
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_IMPORT})
     )
 
     return True
@@ -21,8 +21,8 @@ async def async_setup_opp, config):
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Zerproc from a config entry."""
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -33,7 +33,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )

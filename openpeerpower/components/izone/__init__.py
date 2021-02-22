@@ -29,11 +29,11 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     if not conf:
         return True
 
-   .opp.data[DATA_CONFIG] = conf
+    opp.data[DATA_CONFIG] = conf
 
     # Explicitly added in the config file, create a config entry.
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             IZONE, context={"source": config_entries.SOURCE_IMPORT}
         )
     )
@@ -45,8 +45,8 @@ async def async_setup_entry.opp, entry):
     """Set up from a config entry."""
     await async_start_discovery_service.opp)
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "climate")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "climate")
     )
     return True
 

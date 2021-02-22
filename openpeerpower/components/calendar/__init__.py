@@ -33,11 +33,11 @@ async def async_setup_opp, config):
         _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
 
-   .opp.http.register_view(CalendarListView(component))
-   .opp.http.register_view(CalendarEventView(component))
+    opp.http.register_view(CalendarListView(component))
+    opp.http.register_view(CalendarEventView(component))
 
-   .opp.components.frontend.async_register_built_in_panel(
-        "calendar", "calendar", .opp:calendar"
+    opp.components.frontend.async_register_built_in_panel(
+        "calendar", "calendar",  opp.calendar"
     )
 
     await component.async_setup(config)
@@ -217,7 +217,7 @@ class CalendarListView(http.OpenPeerPowerView):
 
     async def get(self, request: web.Request) -> web.Response:
         """Retrieve calendar list."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         calendar_list: List[Dict[str, str]] = []
 
         for entity in self.component.entities:

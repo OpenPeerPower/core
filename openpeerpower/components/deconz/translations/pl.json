@@ -13,7 +13,7 @@
         },
         "flow_title": "Bramka deCONZ Zigbee ({host})",
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Czy chcesz skonfigurowa\u0107 Open Peer Powera, aby po\u0142\u0105czy\u0142 si\u0119 z bramk\u0105 deCONZ dostarczon\u0105 przez dodatek Hass.io {addon}?",
                 "title": "Bramka deCONZ Zigbee przez dodatek Hass.io"
             },

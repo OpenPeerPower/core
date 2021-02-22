@@ -16,7 +16,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_flow(
-    opp, legacy_patchable_time, pvpc_aioclient_mock: AiohttpClientMocker
+    opp. legacy_patchable_time, pvpc_aioclient_mock: AiohttpClientMocker
 ):
     """
     Test config flow for pvpc_hourly_pricing.
@@ -26,7 +26,7 @@ async def test_config_flow(
     - Check abort when trying to config another with same tariff
     - Check removal and add again to check state restoration
     """
-   .opp.config.time_zone = timezone("Europe/Madrid")
+    opp.config.time_zone = timezone("Europe/Madrid")
     mock_data = {"return_time": datetime(2019, 10, 26, 14, 0, tzinfo=date_util.UTC)}
 
     def mock_now():

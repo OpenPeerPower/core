@@ -182,12 +182,12 @@ def get_service.opp, config, discovery_info=None):
     def websocket_appkey.opp, connection, msg):
         connection.send_message(websocket_api.result_message(msg["id"], vapid_pub_key))
 
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_APPKEY, websocket_appkey, SCHEMA_WS_APPKEY
     )
 
-   .opp.http.register_view(HTML5PushRegistrationView(registrations, json_path))
-   .opp.http.register_view(HTML5PushCallbackView(registrations))
+    opp.http.register_view(HTML5PushRegistrationView(registrations, json_path))
+    opp.http.register_view(HTML5PushCallbackView(registrations))
 
     gcm_api_key = config.get(ATTR_GCM_API_KEY)
     gcm_sender_id = config.get(ATTR_GCM_SENDER_ID)
@@ -196,7 +196,7 @@ def get_service.opp, config, discovery_info=None):
         add_manifest_json_key(ATTR_GCM_SENDER_ID, config.get(ATTR_GCM_SENDER_ID))
 
     return HTML5NotificationService(
-        opp, gcm_api_key, vapid_prv_key, vapid_email, registrations, json_path
+        opp. gcm_api_key, vapid_prv_key, vapid_email, registrations, json_path
     )
 
 
@@ -240,7 +240,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         self.registrations[name] = data
 
         try:
-            opp =request.app[.opp"]
+            opp.=request.app[.opp"]
 
             await opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations
@@ -288,7 +288,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         reg = self.registrations.pop(found)
 
         try:
-            opp =request.app[.opp"]
+            opp.=request.app[.opp"]
 
             await opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations
@@ -425,7 +425,7 @@ class HTML5NotificationService(BaseNotificationService):
 
             await self.async_dismiss(**kwargs)
 
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN,
             SERVICE_DISMISS,
             async_dismiss_message,

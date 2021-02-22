@@ -87,13 +87,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities(zone_entities, False)
 
     remove_add_zones_listener = async_dispatcher_connect(
-        opp, SIGNAL_ADD_ZONES.format(config_entry.entry_id), async_add_zones
+        opp. SIGNAL_ADD_ZONES.format(config_entry.entry_id), async_add_zones
     )
     remove_entry_listener = config_entry.add_update_listener(update_listener)
 
     if not.opp.data.get(DOMAIN):
-       .opp.data[DOMAIN] = {config_entry.entry_id: {}}
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+        opp.data[DOMAIN] = {config_entry.entry_id: {}}
+    opp.data[DOMAIN][config_entry.entry_id] = {
         HASS_DATA_REMOVE_LISTENERS_KEY: [
             remove_add_zones_listener,
             remove_entry_listener,
@@ -101,10 +101,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     }
     async_add_entities([forked_daapd_master], False)
     forked_daapd_updater = ForkedDaapdUpdater(
-        opp, forked_daapd_api, config_entry.entry_id
+        opp. forked_daapd_api, config_entry.entry_id
     )
     await forked_daapd_updater.async_init()
-   .opp.data[DOMAIN][config_entry.entry_id][
+    opp.data[DOMAIN][config_entry.entry_id][
         HASS_DATA_UPDATER_KEY
     ] = forked_daapd_updater
 
@@ -112,7 +112,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 async def update_listener.opp, entry):
     """Handle options update."""
     async_dispatcher_send(
-        opp, SIGNAL_CONFIG_OPTIONS_UPDATE.format(entry.entry_id), entry.options
+        opp. SIGNAL_CONFIG_OPTIONS_UPDATE.format(entry.entry_id), entry.options
     )
 
 

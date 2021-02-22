@@ -28,16 +28,16 @@ FAN_SPEED_HIGH = "high"
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Vacuum states."""
-   .opp.states.async_set("vacuum.entity_off", STATE_OFF, {})
-   .opp.states.async_set("vacuum.entity_on", STATE_ON, {})
-   .opp.states.async_set(
+    opp.states.async_set("vacuum.entity_off", STATE_OFF, {})
+    opp.states.async_set("vacuum.entity_on", STATE_ON, {})
+    opp.states.async_set(
         "vacuum.entity_on_fan", STATE_ON, {ATTR_FAN_SPEED: FAN_SPEED_LOW}
     )
-   .opp.states.async_set("vacuum.entity_cleaning", STATE_CLEANING, {})
-   .opp.states.async_set("vacuum.entity_docked", STATE_DOCKED, {})
-   .opp.states.async_set("vacuum.entity_idle", STATE_IDLE, {})
-   .opp.states.async_set("vacuum.entity_returning", STATE_RETURNING, {})
-   .opp.states.async_set("vacuum.entity_paused", STATE_PAUSED, {})
+    opp.states.async_set("vacuum.entity_cleaning", STATE_CLEANING, {})
+    opp.states.async_set("vacuum.entity_docked", STATE_DOCKED, {})
+    opp.states.async_set("vacuum.entity_idle", STATE_IDLE, {})
+    opp.states.async_set("vacuum.entity_returning", STATE_RETURNING, {})
+    opp.states.async_set("vacuum.entity_paused", STATE_PAUSED, {})
 
     turn_on_calls = async_mock_service.opp, "vacuum", SERVICE_TURN_ON)
     turn_off_calls = async_mock_service.opp, "vacuum", SERVICE_TURN_OFF)

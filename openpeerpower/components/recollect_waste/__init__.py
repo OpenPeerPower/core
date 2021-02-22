@@ -24,7 +24,7 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the RainMachine component."""
-   .opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_LISTENER: {}}
+    opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_LISTENER: {}}
     return True
 
 
@@ -47,7 +47,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             ) from err
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         LOGGER,
         name=f"Place {entry.data[CONF_PLACE_ID]}, Service {entry.data[CONF_SERVICE_ID]}",
         update_interval=DEFAULT_UPDATE_INTERVAL,
@@ -59,14 +59,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = coordinator
+    opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = coordinator
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-   .opp.data[DOMAIN][DATA_LISTENER][entry.entry_id] = entry.add_update_listener(
+    opp.data[DOMAIN][DATA_LISTENER][entry.entry_id] = entry.add_update_listener(
         async_reload_entry
     )
 
@@ -83,13 +83,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
         cancel_listener = opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id)
         cancel_listener()
 

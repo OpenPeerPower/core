@@ -112,7 +112,7 @@ async def test_webhook_handle_fire_event.opp, create_registrations, webhook_clie
         """Help store events."""
         events.append(event)
 
-   .opp.bus.async_listen("test_event", store_event)
+    opp.bus.async_listen("test_event", store_event)
 
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]), json=FIRE_EVENT
@@ -153,7 +153,7 @@ async def test_webhook_update_registration(webhook_client, authed_api_client):
 async def test_webhook_handle_get_zones.opp, create_registrations, webhook_client):
     """Test that we can get zones properly."""
     await async_setup_component(
-        opp,
+        opp.
         ZONE_DOMAIN,
         {ZONE_DOMAIN: {}},
     )
@@ -186,7 +186,7 @@ async def test_webhook_handle_get_config(opp, create_registrations, webhook_clie
     if "allowlist_external_dirs" in json:
         json["allowlist_external_dirs"] = set(json["allowlist_external_dirs"])
 
-   .opp_config = opp.config.as_dict()
+    opp.config = opp.config.as_dict()
 
     expected_dict = {
         "latitude":.opp_config["latitude"],
@@ -323,7 +323,7 @@ async def test_webhook_enable_encryption.opp, webhook_client, create_registratio
 
 
 async def test_webhook_camera_stream_non_existent(
-    opp, create_registrations, webhook_client
+    opp. create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for a non-existent camera."""
     webhook_id = create_registrations[1]["webhook_id"]
@@ -342,10 +342,10 @@ async def test_webhook_camera_stream_non_existent(
 
 
 async def test_webhook_camera_stream_non_hls(
-    opp, create_registrations, webhook_client
+    opp. create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for a non-HLS/stream-supporting camera."""
-   .opp.states.async_set("camera.non_stream_camera", "idle", {"supported_features": 0})
+    opp.states.async_set("camera.non_stream_camera", "idle", {"supported_features": 0})
 
     webhook_id = create_registrations[1]["webhook_id"]
 
@@ -367,10 +367,10 @@ async def test_webhook_camera_stream_non_hls(
 
 
 async def test_webhook_camera_stream_stream_available(
-    opp, create_registrations, webhook_client
+    opp. create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for an HLS/stream-supporting camera."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "camera.stream_camera", "idle", {"supported_features": CAMERA_SUPPORT_STREAM}
     )
 
@@ -395,10 +395,10 @@ async def test_webhook_camera_stream_stream_available(
 
 
 async def test_webhook_camera_stream_stream_available_but_errors(
-    opp, create_registrations, webhook_client
+    opp. create_registrations, webhook_client
 ):
     """Test fetching camera stream URLs for an HLS/stream-supporting camera but that streaming errors."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "camera.stream_camera", "idle", {"supported_features": CAMERA_SUPPORT_STREAM}
     )
 
@@ -431,7 +431,7 @@ async def test_webhook_handle_scan_tag.opp, create_registrations, webhook_client
         """Helepr to store events."""
         events.append(event)
 
-   .opp.bus.async_listen("tag_scanned", store_event)
+    opp.bus.async_listen("tag_scanned", store_event)
 
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),

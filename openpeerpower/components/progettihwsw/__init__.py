@@ -15,7 +15,7 @@ PLATFORMS = ["switch", "binary_sensor"]
 
 async def async_setup_opp, config):
     """Set up the ProgettiHWSW Automation component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     return True
 
@@ -23,7 +23,7 @@ async def async_setup_opp, config):
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ProgettiHWSW Automation from a config entry."""
 
-   .opp.data[DOMAIN][entry.entry_id] = ProgettiHWSWAPI(
+    opp.data[DOMAIN][entry.entry_id] = ProgettiHWSWAPI(
         f'{entry.data["host"]}:{entry.data["port"]}'
     )
 
@@ -31,8 +31,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await opp.data[DOMAIN][entry.entry_id].check_board()
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -43,13 +43,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

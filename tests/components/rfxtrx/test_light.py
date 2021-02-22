@@ -96,7 +96,7 @@ async def test_state_restore.opp, rfxtrx, state, brightness):
     entity_id = "light.ac_213c7f2_16"
 
     mock_restore_cache(
-        opp, [State(entity_id, state, attributes={ATTR_BRIGHTNESS: brightness})]
+        opp. [State(entity_id, state, attributes={ATTR_BRIGHTNESS: brightness})]
     )
 
     entry_data = create_rfx_test_cfg(

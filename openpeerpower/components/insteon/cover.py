@@ -26,7 +26,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     def async_add_insteon_cover_entities(discovery_info=None):
         """Add the Insteon entities for the platform."""
         async_add_insteon_entities(
-            opp, COVER_DOMAIN, InsteonCoverEntity, async_add_entities, discovery_info
+            opp. COVER_DOMAIN, InsteonCoverEntity, async_add_entities, discovery_info
         )
 
     signal = f"{SIGNAL_ADD_ENTITIES}_{COVER_DOMAIN}"

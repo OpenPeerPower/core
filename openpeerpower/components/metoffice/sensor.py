@@ -78,10 +78,10 @@ SENSOR_TYPES = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the Met Office weather sensor platform."""
-   .opp_data = opp.data[DOMAIN][entry.entry_id]
+    opp.data = opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [

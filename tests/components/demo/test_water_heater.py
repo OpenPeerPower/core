@@ -15,9 +15,9 @@ ENTITY_WATER_HEATER_CELSIUS = "water_heater.demo_water_heater_celsius"
 @pytest.fixture(autouse=True)
 async def setup_comp.opp):
     """Set up demo component."""
-   .opp.config.units = IMPERIAL_SYSTEM
+    opp.config.units = IMPERIAL_SYSTEM
     assert await async_setup_component(
-        opp, water_heater.DOMAIN, {"water_heater": {"platform": "demo"}}
+        opp. water_heater.DOMAIN, {"water_heater": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 

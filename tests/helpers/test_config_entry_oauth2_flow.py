@@ -28,7 +28,7 @@ async def local_impl.opp):
     """Local implementation."""
     assert await setup.async_setup_component.opp, "http", {})
     return config_entry_oauth2_flow.LocalOAuth2Implementation(
-        opp, TEST_DOMAIN, CLIENT_ID, CLIENT_SECRET, AUTHORIZE_URL, TOKEN_URL
+        opp. TEST_DOMAIN, CLIENT_ID, CLIENT_SECRET, AUTHORIZE_URL, TOKEN_URL
     )
 
 
@@ -146,7 +146,7 @@ async def test_abort_if_no_url_available.opp, flow_handler, local_impl):
 
 
 async def test_abort_if_oauth_error(
-    opp,
+    opp.
     flow_handler,
     local_impl,
     aiohttp_client,
@@ -156,7 +156,7 @@ async def test_abort_if_oauth_error(
     """Check bad oauth token."""
     flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
-        opp, TEST_DOMAIN, MockOAuth2Implementation()
+        opp. TEST_DOMAIN, MockOAuth2Implementation()
     )
 
     result = await opp.config_entries.flow.async_init(
@@ -172,7 +172,7 @@ async def test_abort_if_oauth_error(
     )
 
     state = config_entry_oauth2_flow._encode_jwt(
-        opp,
+        opp.
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -211,7 +211,7 @@ async def test_step_discovery.opp, flow_handler, local_impl):
     """Check flow triggers from discovery."""
     flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
-        opp, TEST_DOMAIN, MockOAuth2Implementation()
+        opp. TEST_DOMAIN, MockOAuth2Implementation()
     )
 
     result = await opp.config_entries.flow.async_init(
@@ -226,7 +226,7 @@ async def test_abort_discovered_multiple.opp, flow_handler, local_impl):
     """Test if aborts when discovered multiple times."""
     flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
-        opp, TEST_DOMAIN, MockOAuth2Implementation()
+        opp. TEST_DOMAIN, MockOAuth2Implementation()
     )
 
     result = await opp.config_entries.flow.async_init(
@@ -248,7 +248,7 @@ async def test_abort_discovered_existing_entries.opp, flow_handler, local_impl):
     """Test if abort discovery when entries exists."""
     flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
-        opp, TEST_DOMAIN, MockOAuth2Implementation()
+        opp. TEST_DOMAIN, MockOAuth2Implementation()
     )
 
     entry = MockConfigEntry(
@@ -266,7 +266,7 @@ async def test_abort_discovered_existing_entries.opp, flow_handler, local_impl):
 
 
 async def test_full_flow(
-    opp,
+    opp.
     flow_handler,
     local_impl,
     aiohttp_client,
@@ -276,7 +276,7 @@ async def test_full_flow(
     """Check full flow."""
     flow_handler.async_register_implementation.opp, local_impl)
     config_entry_oauth2_flow.async_register_implementation(
-        opp, TEST_DOMAIN, MockOAuth2Implementation()
+        opp. TEST_DOMAIN, MockOAuth2Implementation()
     )
 
     result = await opp.config_entries.flow.async_init(
@@ -292,7 +292,7 @@ async def test_full_flow(
     )
 
     state = config_entry_oauth2_flow._encode_jwt(
-        opp,
+        opp.
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -337,7 +337,7 @@ async def test_full_flow(
 
     assert (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
         is local_impl
     )
@@ -420,7 +420,7 @@ async def test_oauth_session.opp, flow_handler, local_impl, aioclient_mock):
 
 
 async def test_oauth_session_with_clock_slightly_out_of_sync(
-    opp, flow_handler, local_impl, aioclient_mock
+    opp. flow_handler, local_impl, aioclient_mock
 ):
     """Test the OAuth2 session helper when the remote clock is slightly out of sync."""
     flow_handler.async_register_implementation.opp, local_impl)
@@ -466,7 +466,7 @@ async def test_oauth_session_with_clock_slightly_out_of_sync(
 
 
 async def test_oauth_session_no_token_refresh_needed(
-    opp, flow_handler, local_impl, aioclient_mock
+    opp. flow_handler, local_impl, aioclient_mock
 ):
     """Test the OAuth2 session helper when no refresh is needed."""
     flow_handler.async_register_implementation.opp, local_impl)
@@ -517,11 +517,11 @@ async def test_implementation_provider.opp, local_impl):
     mock_domain_with_impl = "some_domain"
 
     config_entry_oauth2_flow.async_register_implementation(
-        opp, mock_domain_with_impl, local_impl
+        opp. mock_domain_with_impl, local_impl
     )
 
     assert await config_entry_oauth2_flow.async_get_implementations(
-        opp, mock_domain_with_impl
+        opp. mock_domain_with_impl
     ) == {TEST_DOMAIN: local_impl}
 
     provider_source = {}
@@ -531,26 +531,26 @@ async def test_implementation_provider.opp, local_impl):
         return provider_source.get(domain)
 
     config_entry_oauth2_flow.async_add_implementation_provider(
-        opp, "cloud", async_provide_implementation
+        opp. "cloud", async_provide_implementation
     )
 
     assert await config_entry_oauth2_flow.async_get_implementations(
-        opp, mock_domain_with_impl
+        opp. mock_domain_with_impl
     ) == {TEST_DOMAIN: local_impl}
 
     provider_source[
         mock_domain_with_impl
     ] = config_entry_oauth2_flow.LocalOAuth2Implementation(
-        opp, "cloud", CLIENT_ID, CLIENT_SECRET, AUTHORIZE_URL, TOKEN_URL
+        opp. "cloud", CLIENT_ID, CLIENT_SECRET, AUTHORIZE_URL, TOKEN_URL
     )
 
     assert await config_entry_oauth2_flow.async_get_implementations(
-        opp, mock_domain_with_impl
+        opp. mock_domain_with_impl
     ) == {TEST_DOMAIN: local_impl, "cloud": provider_source[mock_domain_with_impl]}
 
 
 async def test_oauth_session_refresh_failure(
-    opp, flow_handler, local_impl, aioclient_mock
+    opp. flow_handler, local_impl, aioclient_mock
 ):
     """Test the OAuth2 session helper when no refresh is needed."""
     flow_handler.async_register_implementation.opp, local_impl)

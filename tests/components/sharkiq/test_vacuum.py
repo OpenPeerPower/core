@@ -151,7 +151,7 @@ async def test_simple_properties.opp: OpenPeerPower):
     ],
 )
 async def test_initial_attributes(
-    opp: OpenPeerPower, attribute: str, target_value: Any
+    opp. OpenPeerPower, attribute: str, target_value: Any
 ):
     """Test initial config attributes."""
     state = opp.states.get(VAC_ENTITY_ID)
@@ -196,7 +196,7 @@ async def test_fan_speed.opp: OpenPeerPower, fan_speed: str) -> None:
     ],
 )
 async def test_device_properties(
-    opp: OpenPeerPower, device_property: str, target_value: str
+    opp. OpenPeerPower, device_property: str, target_value: str
 ):
     """Test device properties."""
     registry = await opp.helpers.device_registry.async_get_registry()
@@ -223,7 +223,7 @@ async def test_locate.opp):
 )
 @patch("sharkiqpy.ayla_api.AylaApi", MockAyla)
 async def test_coordinator_updates(
-    opp: OpenPeerPower, side_effect: Optional[Exception], success: bool
+    opp. OpenPeerPower, side_effect: Optional[Exception], success: bool
 ) -> None:
     """Test the update coordinator update functions."""
     coordinator = opp.data[DOMAIN][ENTRY_ID]

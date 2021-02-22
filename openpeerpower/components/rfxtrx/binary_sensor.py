@@ -73,7 +73,7 @@ def supported(event):
 
 
 async def async_setup_entry(
-    opp,
+    opp.
     config_entry,
     async_add_entities,
 ):

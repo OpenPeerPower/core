@@ -87,16 +87,16 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         config = await async_process_component_config(opp, conf, integration)
 
         resource_collection = await create_yaml_resource_col(
-            opp, config[DOMAIN].get(CONF_RESOURCES)
+            opp. config[DOMAIN].get(CONF_RESOURCES)
         )
-       .opp.data[DOMAIN]["resources"] = resource_collection
+        opp.data[DOMAIN]["resources"] = resource_collection
 
     if mode == MODE_YAML:
         default_config = dashboard.LovelaceYAML.opp, None, None)
         resource_collection = await create_yaml_resource_col.opp, yaml_resources)
 
         async_register_admin_service(
-            opp,
+            opp.
             DOMAIN,
             SERVICE_RELOAD_RESOURCES,
             reload_resources_service_handler,
@@ -121,24 +121,24 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
             RESOURCE_UPDATE_FIELDS,
         ).async_setup_opp, create_list=False)
 
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         websocket.websocket_lovelace_config
     )
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         websocket.websocket_lovelace_save_config
     )
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         websocket.websocket_lovelace_delete_config
     )
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         websocket.websocket_lovelace_resources
     )
 
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         websocket.websocket_lovelace_dashboards
     )
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         # We store a dictionary mapping url_path: config. None is the default.
         "dashboards": {None: default_config},
         "resources": resource_collection,
@@ -169,13 +169,13 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
                 )
                 return
 
-           .opp.data[DOMAIN]["dashboards"][url_path] = dashboard.LovelaceStorage(
-                opp, item
+            opp.data[DOMAIN]["dashboards"][url_path] = dashboard.LovelaceStorage(
+                opp. item
             )
 
             update = False
         else:
-           .opp.data[DOMAIN]["dashboards"][url_path].config = item
+            opp.data[DOMAIN]["dashboards"][url_path].config = item
             update = True
 
         try:
@@ -187,7 +187,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     for url_path, dashboard_conf in.opp.data[DOMAIN]["yaml_dashboards"].items():
         # For now always mode=yaml
         config = dashboard.LovelaceYAML.opp, url_path, dashboard_conf)
-       .opp.data[DOMAIN]["dashboards"][url_path] = config
+        opp.data[DOMAIN]["dashboards"][url_path] = config
 
         try:
             _register_panel.opp, url_path, MODE_YAML, dashboard_conf, False)

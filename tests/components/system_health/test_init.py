@@ -67,7 +67,7 @@ async def test_info_endpoint_register_callback.opp, opp_ws_client):
     async def mock_info.opp):
         return {"storage": "YAML"}
 
-   .opp.components.system_health.async_register_info("lovelace", mock_info)
+    opp.components.system_health.async_register_info("lovelace", mock_info)
     assert await async_setup_component.opp, "system_health", {})
     data = await gather_system_health_info.opp, opp_ws_client)
 
@@ -85,7 +85,7 @@ async def test_info_endpoint_register_callback_timeout.opp, opp_ws_client):
     async def mock_info.opp):
         raise asyncio.TimeoutError
 
-   .opp.components.system_health.async_register_info("lovelace", mock_info)
+    opp.components.system_health.async_register_info("lovelace", mock_info)
     assert await async_setup_component.opp, "system_health", {})
     data = await gather_system_health_info.opp, opp_ws_client)
 
@@ -100,7 +100,7 @@ async def test_info_endpoint_register_callback_exc.opp, opp_ws_client):
     async def mock_info.opp):
         raise Exception("TEST ERROR")
 
-   .opp.components.system_health.async_register_info("lovelace", mock_info)
+    opp.components.system_health.async_register_info("lovelace", mock_info)
     assert await async_setup_component.opp, "system_health", {})
     data = await gather_system_health_info.opp, opp_ws_client)
 
@@ -113,9 +113,9 @@ async def test_platform_loading.opp, opp_ws_client, aioclient_mock):
     """Test registering via platform."""
     aioclient_mock.get("http://example.com/status", text="")
     aioclient_mock.get("http://example.com/status_fail", exc=ClientError)
-   .opp.config.components.add("fake_integration")
+    opp.config.components.add("fake_integration")
     mock_platform(
-        opp,
+        opp.
         "fake_integration.system_health",
         Mock(
             async_register=lambda.opp, register: register.async_register_info(
@@ -123,10 +123,10 @@ async def test_platform_loading.opp, opp_ws_client, aioclient_mock):
                     return_value={
                         "hello": "info",
                         "server_reachable": system_health.async_check_can_reach_url(
-                            opp, "http://example.com/status"
+                            opp. "http://example.com/status"
                         ),
                         "server_fail_reachable": system_health.async_check_can_reach_url(
-                            opp,
+                            opp.
                             "http://example.com/status_fail",
                             more_info="http://more-info-url.com",
                         ),

@@ -30,7 +30,7 @@ async def test_set_config_entry_unique_id.opp, entry, mock_plex_server):
     assert entry.state == ENTRY_STATE_LOADED
 
     assert (
-       .opp.config_entries.async_entries(const.DOMAIN)[0].unique_id
+        opp.config_entries.async_entries(const.DOMAIN)[0].unique_id
         == mock_plex_server.machine_identifier
     )
 
@@ -109,7 +109,7 @@ async def test_setup_with_photo_session.opp, entry, setup_plex_server):
 
 
 async def test_setup_when_certificate_changed(
-    opp,
+    opp.
     requests_mock,
     empty_payload,
     plex_server_accounts,
@@ -190,7 +190,7 @@ async def test_tokenless_server(entry, setup_plex_server):
 
 
 async def test_bad_token_with_tokenless_server(
-    opp, entry, mock_websocket, setup_plex_server, requests_mock
+    opp. entry, mock_websocket, setup_plex_server, requests_mock
 ):
     """Test setup with a bad token and a server with token auth disabled."""
     requests_mock.get("https://plex.tv/users/account", status_code=401)

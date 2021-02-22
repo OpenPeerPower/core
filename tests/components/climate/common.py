@@ -50,7 +50,7 @@ def set_preset_mode.opp, preset_mode, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.services.call(DOMAIN, SERVICE_SET_PRESET_MODE, data)
+    opp.services.call(DOMAIN, SERVICE_SET_PRESET_MODE, data)
 
 
 async def async_set_aux_heat.opp, aux_heat, entity_id=ENTITY_MATCH_ALL):
@@ -71,11 +71,11 @@ def set_aux_heat.opp, aux_heat, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.services.call(DOMAIN, SERVICE_SET_AUX_HEAT, data)
+    opp.services.call(DOMAIN, SERVICE_SET_AUX_HEAT, data)
 
 
 async def async_set_temperature(
-    opp,
+    opp.
     temperature=None,
     entity_id=ENTITY_MATCH_ALL,
     target_temp_high=None,
@@ -102,7 +102,7 @@ async def async_set_temperature(
 
 @bind.opp
 def set_temperature(
-    opp,
+    opp.
     temperature=None,
     entity_id=ENTITY_MATCH_ALL,
     target_temp_high=None,
@@ -122,7 +122,7 @@ def set_temperature(
         if value is not None
     }
     _LOGGER.debug("set_temperature start data=%s", kwargs)
-   .opp.services.call(DOMAIN, SERVICE_SET_TEMPERATURE, kwargs)
+    opp.services.call(DOMAIN, SERVICE_SET_TEMPERATURE, kwargs)
 
 
 async def async_set_humidity.opp, humidity, entity_id=ENTITY_MATCH_ALL):
@@ -143,7 +143,7 @@ def set_humidity.opp, humidity, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.services.call(DOMAIN, SERVICE_SET_HUMIDITY, data)
+    opp.services.call(DOMAIN, SERVICE_SET_HUMIDITY, data)
 
 
 async def async_set_fan_mode.opp, fan, entity_id=ENTITY_MATCH_ALL):
@@ -164,7 +164,7 @@ def set_fan_mode.opp, fan, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.services.call(DOMAIN, SERVICE_SET_FAN_MODE, data)
+    opp.services.call(DOMAIN, SERVICE_SET_FAN_MODE, data)
 
 
 async def async_set_hvac_mode.opp, hvac_mode, entity_id=ENTITY_MATCH_ALL):
@@ -185,7 +185,7 @@ def set_operation_mode.opp, hvac_mode, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.services.call(DOMAIN, SERVICE_SET_HVAC_MODE, data)
+    opp.services.call(DOMAIN, SERVICE_SET_HVAC_MODE, data)
 
 
 async def async_set_swing_mode.opp, swing_mode, entity_id=ENTITY_MATCH_ALL):
@@ -206,7 +206,7 @@ def set_swing_mode.opp, swing_mode, entity_id=ENTITY_MATCH_ALL):
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.services.call(DOMAIN, SERVICE_SET_SWING_MODE, data)
+    opp.services.call(DOMAIN, SERVICE_SET_SWING_MODE, data)
 
 
 async def async_turn_on.opp, entity_id=ENTITY_MATCH_ALL):

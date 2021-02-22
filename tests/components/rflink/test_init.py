@@ -19,7 +19,7 @@ from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_STOP_COVER, SERVICE_TURN
 
 
 async def mock_rflink(
-    opp, config, domain, monkeypatch, failures=None, failcommand=False
+    opp. config, domain, monkeypatch, failures=None, failcommand=False
 ):
     """Create mock RFLink asyncio protocol, test component setup."""
     transport, protocol = (Mock(), Mock())
@@ -107,8 +107,8 @@ async def test_send_no_wait.opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink.opp, config, domain, monkeypatch)
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             domain, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "switch.test"}
         )
     )
@@ -133,8 +133,8 @@ async def test_cover_send_no_wait.opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink.opp, config, domain, monkeypatch)
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             domain, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}
         )
     )
@@ -151,8 +151,8 @@ async def test_send_command.opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink.opp, config, domain, monkeypatch)
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             domain,
             SERVICE_SEND_COMMAND,
             {"device_id": "newkaku_0000c6c2_1", "command": "on"},
@@ -206,7 +206,7 @@ async def test_reconnecting_after_disconnect.opp, monkeypatch):
 
     # setup mocking rflink module
     _, mock_create, _, disconnect_callback = await mock_rflink(
-        opp, config, domain, monkeypatch
+        opp. config, domain, monkeypatch
     )
 
     assert disconnect_callback, "disconnect callback not passed to rflink"
@@ -233,7 +233,7 @@ async def test_reconnecting_after_failure.opp, monkeypatch):
 
     # setup mocking rflink module
     _, mock_create, _, disconnect_callback = await mock_rflink(
-        opp, config, domain, monkeypatch, failures=failures
+        opp. config, domain, monkeypatch, failures=failures
     )
 
     # rflink initiated disconnect
@@ -265,7 +265,7 @@ async def test_error_when_not_connected.opp, monkeypatch):
 
     # setup mocking rflink module
     _, _, _, disconnect_callback = await mock_rflink(
-        opp, config, domain, monkeypatch, failures=failures
+        opp. config, domain, monkeypatch, failures=failures
     )
 
     # rflink initiated disconnect
@@ -284,7 +284,7 @@ async def test_async_send_command_error(opp, monkeypatch):
 
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink(
-        opp, config, domain, monkeypatch, failcommand=True
+        opp. config, domain, monkeypatch, failcommand=True
     )
 
     success = await opp.services.async_call(

@@ -31,7 +31,7 @@ def async_register_api.opp: OpenPeerPower) -> None:
     websocket_api.async_register_command.opp, websocket_stop_inclusion)
     websocket_api.async_register_command.opp, websocket_remove_node)
     websocket_api.async_register_command.opp, websocket_stop_exclusion)
-   .opp.http.register_view(DumpView)  # type: ignore
+    opp.http.register_view(DumpView)  # type: ignore
 
 
 @websocket_api.require_admin
@@ -40,7 +40,7 @@ def async_register_api.opp: OpenPeerPower) -> None:
 )
 @callback
 def websocket_network_status(
-    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp. OpenPeerPower, connection: ActiveConnection, msg: dict
 ) -> None:
     """Get the status of the Z-Wave JS network."""
     entry_id = msg[ENTRY_ID]
@@ -72,7 +72,7 @@ def websocket_network_status(
 )
 @callback
 def websocket_node_status(
-    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp. OpenPeerPower, connection: ActiveConnection, msg: dict
 ) -> None:
     """Get the status of a Z-Wave JS node."""
     entry_id = msg[ENTRY_ID]
@@ -102,7 +102,7 @@ def websocket_node_status(
     }
 )
 async def websocket_add_node(
-    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp. OpenPeerPower, connection: ActiveConnection, msg: dict
 ) -> None:
     """Add a node to the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
@@ -152,7 +152,7 @@ async def websocket_add_node(
         controller.on("inclusion stopped", forward_event),
         controller.on("node added", node_added),
         async_dispatcher_connect(
-            opp, EVENT_DEVICE_ADDED_TO_REGISTRY, device_registered
+            opp. EVENT_DEVICE_ADDED_TO_REGISTRY, device_registered
         ),
     ]
 
@@ -172,7 +172,7 @@ async def websocket_add_node(
     }
 )
 async def websocket_stop_inclusion(
-    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp. OpenPeerPower, connection: ActiveConnection, msg: dict
 ) -> None:
     """Cancel adding a node to the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
@@ -194,7 +194,7 @@ async def websocket_stop_inclusion(
     }
 )
 async def websocket_stop_exclusion(
-    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp. OpenPeerPower, connection: ActiveConnection, msg: dict
 ) -> None:
     """Cancel removing a node from the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
@@ -216,7 +216,7 @@ async def websocket_stop_exclusion(
     }
 )
 async def websocket_remove_node(
-    opp: OpenPeerPower, connection: ActiveConnection, msg: dict
+    opp. OpenPeerPower, connection: ActiveConnection, msg: dict
 ) -> None:
     """Remove a node from the Z-Wave network."""
     entry_id = msg[ENTRY_ID]
@@ -271,7 +271,7 @@ class DumpView(OpenPeerPowerView):
 
     async def get(self, request: web.Request, config_entry_id: str) -> web.Response:
         """Dump the state of Z-Wave."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         if config_entry_id not in.opp.data[DOMAIN]:
             raise web_exceptions.HTTPBadRequest

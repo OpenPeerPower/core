@@ -56,22 +56,22 @@ async def discover_entities.opp: OpenPeerPower) -> List[Entity]:
     for light in connected_lights:
         # Double-check the light hasn't been added in the meantime
         if light.address not in.opp.data[DOMAIN]["addresses"]:
-           .opp.data[DOMAIN]["addresses"].add(light.address)
+            opp.data[DOMAIN]["addresses"].add(light.address)
             entities.append(ZerprocLight(light))
 
     return entities
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config_entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Zerproc light devices."""
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
     if "addresses" not in.opp.data[DOMAIN]:
-       .opp.data[DOMAIN]["addresses"] = set()
+        opp.data[DOMAIN]["addresses"] = set()
 
     warned = False
 
@@ -88,7 +88,7 @@ async def async_setup_entry(
                 warned = True
 
     # Initial discovery
-   .opp.async_create_task(discover())
+    opp.async_create_task(discover())
 
     # Perform recurring discovery of new devices
     async_track_time_interval.opp, discover, DISCOVERY_INTERVAL)

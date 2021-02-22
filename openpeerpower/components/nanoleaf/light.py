@@ -57,7 +57,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Nanoleaf light."""
 
     if DATA_NANOLEAF not in.opp.data:
-       .opp.data[DATA_NANOLEAF] = {}
+        opp.data[DATA_NANOLEAF] = {}
 
     token = ""
     if discovery_info is not None:
@@ -99,7 +99,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.error("Could not connect to Nanoleaf Light: %s on %s", name, host)
         return
 
-   .opp.data[DATA_NANOLEAF][host] = nanoleaf_light
+    opp.data[DATA_NANOLEAF][host] = nanoleaf_light
     add_entities([NanoleafLight(nanoleaf_light, name)], True)
 
 

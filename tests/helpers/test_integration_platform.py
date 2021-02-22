@@ -10,7 +10,7 @@ async def test_process_integration_platforms.opp):
     """Test processing integrations."""
     loaded_platform = Mock()
     mock_platform.opp, "loaded.platform_to_check", loaded_platform)
-   .opp.config.components.add("loaded")
+    opp.config.components.add("loaded")
 
     event_platform = Mock()
     mock_platform.opp, "event.platform_to_check", event_platform)
@@ -29,7 +29,7 @@ async def test_process_integration_platforms.opp):
     assert processed[0][0] == "loaded"
     assert processed[0][1] == loaded_platform
 
-   .opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: "event"})
+    opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: "event"})
     await opp.async_block_till_done()
 
     assert len(processed) == 2

@@ -23,12 +23,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
     uuid = config_entry.data[CONF_ENTRY_ID]
     host = config_entry.data[CONF_ENTRY_HOST]
 
-   .opp.data.setdefault(DOMAIN, {})[uuid] = twinkly_client.TwinklyClient(
+    opp.data.setdefault(DOMAIN, {})[uuid] = twinkly_client.TwinklyClient(
         host, async_get_clientsession.opp)
     )
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "light")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "light")
     )
     return True
 
@@ -39,6 +39,6 @@ async def async_unload_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
     # For now light entries don't have unload method, so we don't have to async_forward_entry_unload
     # However we still have to cleanup the shared client!
     uuid = config_entry.data[CONF_ENTRY_ID]
-   .opp.data[DOMAIN].pop(uuid)
+    opp.data[DOMAIN].pop(uuid)
 
     return True

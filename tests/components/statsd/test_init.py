@@ -31,7 +31,7 @@ def test_invalid_config():
 async def test_statsd_setup_full.opp):
     """Test setup with all data."""
     config = {"statsd": {"host": "host", "port": 123, "rate": 1, "prefix": "foo"}}
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
     with patch("statsd.StatsClient") as mock_init:
         assert await async_setup_component.opp, statsd.DOMAIN, config)
 
@@ -49,7 +49,7 @@ async def test_statsd_setup_defaults.opp):
     config["statsd"][statsd.CONF_PORT] = statsd.DEFAULT_PORT
     config["statsd"][statsd.CONF_PREFIX] = statsd.DEFAULT_PREFIX
 
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
     with patch("statsd.StatsClient") as mock_init:
         assert await async_setup_component.opp, statsd.DOMAIN, config)
 
@@ -64,7 +64,7 @@ async def test_event_listener_defaults.opp, mock_client):
 
     config["statsd"][statsd.CONF_RATE] = statsd.DEFAULT_RATE
 
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
     await async_setup_component.opp, statsd.DOMAIN, config)
     assert.opp.bus.listen.called
     handler_method = opp.bus.listen.call_args_list[0][0][1]
@@ -99,7 +99,7 @@ async def test_event_listener_attr_details.opp, mock_client):
 
     config["statsd"][statsd.CONF_RATE] = statsd.DEFAULT_RATE
 
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
     await async_setup_component.opp, statsd.DOMAIN, config)
     assert.opp.bus.listen.called
     handler_method = opp.bus.listen.call_args_list[0][0][1]

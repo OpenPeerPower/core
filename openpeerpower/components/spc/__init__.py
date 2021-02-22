@@ -54,19 +54,19 @@ async def async_setup_opp, config):
         async_callback=async_upate_callback,
     )
 
-   .opp.data[DATA_API] = spc
+    opp.data[DATA_API] = spc
 
     if not await spc.async_load_parameters():
         _LOGGER.error("Failed to load area/zone information from SPC")
         return False
 
     # add sensor devices for each zone (typically motion/fire/door sensors)
-   .opp.async_create_task(
+    opp.async_create_task(
         discovery.async_load_platform.opp, "binary_sensor", DOMAIN, {}, config)
     )
 
     # create a separate alarm panel for each area
-   .opp.async_create_task(
+    opp.async_create_task(
         discovery.async_load_platform.opp, "alarm_control_panel", DOMAIN, {}, config)
     )
 

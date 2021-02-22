@@ -73,15 +73,15 @@ CLIENT_REDIRECT_URI = "https://example.com/app/callback"
 def threadsafe_callback_factory(func):
     """Create threadsafe functions out of callbacks.
 
-    Callback needs to have .opp` as first argument.
+    Callback needs to have  opp. as first argument.
     """
 
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-        opp =args[0]
+        opp.=args[0]
         return run_callback_threadsafe(
-           .opp.loop, ft.partial(func, *args, **kwargs)
+            opp.loop, ft.partial(func, *args, **kwargs)
         ).result()
 
     return threadsafe
@@ -90,13 +90,13 @@ def threadsafe_callback_factory(func):
 def threadsafe_coroutine_factory(func):
     """Create threadsafe functions out of coroutine.
 
-    Callback needs to have .opp` as first argument.
+    Callback needs to have  opp. as first argument.
     """
 
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-        opp =args[0]
+        opp.=args[0]
         return asyncio.run_coroutine_threadsafe(
             func(*args, **kwargs), opp.loop
         ).result()
@@ -113,7 +113,7 @@ def get_test_open_peer_power():
     """Return a Open Peer Power object pointing at test config directory."""
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    opp =loop.run_until_complete(async_test_open_peer_power(loop))
+    opp.=loop.run_until_complete(async_test_open_peer_power(loop))
 
     loop_stop_event = threading.Event()
 
@@ -125,7 +125,7 @@ def get_test_open_peer_power():
         loop_stop_event.set()
 
     orig_stop = opp.stop
-   .opp._stopped = Mock(set=loop.stop)
+    opp._stopped = Mock(set=loop.stop)
 
     def start_opp(*mocks):
         """Start.opp."""
@@ -137,8 +137,8 @@ def get_test_open_peer_power():
         loop_stop_event.wait()
         loop.close()
 
-   .opp.start = start_opp
-   .opp.stop = stop_opp
+    opp.start = start_opp
+    opp.stop = stop_opp
 
     threading.Thread(name="LoopThread", target=run_loop, daemon=False).start()
 
@@ -148,9 +148,9 @@ def get_test_open_peer_power():
 # pylint: disable=protected-access
 async def async_test_open_peer_power(loop, load_registries=True):
     """Return a Open Peer Power object pointing at test config dir."""
-    opp = op.OpenPeerPower()
+    opp.= op.OpenPeerPower()
     store = auth_store.AuthStore.opp)
-   .opp.auth = auth.AuthManager.opp, store, {}, {})
+    opp.auth = auth.AuthManager.opp, store, {}, {})
     ensure_auth_manager_loaded.opp.auth)
     INSTANCES.append.opp)
 
@@ -256,29 +256,29 @@ async def async_test_open_peer_power(loop, load_registries=True):
 
         return []
 
-   .opp.async_add_job = async_add_job
-   .opp.async_add_executor_job = async_add_executor_job
-   .opp.async_create_task = async_create_task
-   .opp.async_wait_for_task_count = types.MethodType(async_wait_for_task_count, opp)
-   .opp._await_count_and_log_pending = types.MethodType(
+    opp.async_add_job = async_add_job
+    opp.async_add_executor_job = async_add_executor_job
+    opp.async_create_task = async_create_task
+    opp.async_wait_for_task_count = types.MethodType(async_wait_for_task_count, opp)
+    opp._await_count_and_log_pending = types.MethodType(
         _await_count_and_log_pending, opp
     )
 
-   .opp.data[loader.DATA_CUSTOM_COMPONENTS] = {}
+    opp.data[loader.DATA_CUSTOM_COMPONENTS] = {}
 
-   .opp.config.location_name = "test home"
-   .opp.config.config_dir = get_test_config_dir()
-   .opp.config.latitude = 32.87336
-   .opp.config.longitude = -117.22743
-   .opp.config.elevation = 0
-   .opp.config.time_zone = date_util.get_time_zone("US/Pacific")
-   .opp.config.units = METRIC_SYSTEM
-   .opp.config.media_dirs = {"local": get_test_config_dir("media")}
-   .opp.config.skip_pip = True
+    opp.config.location_name = "test home"
+    opp.config.config_dir = get_test_config_dir()
+    opp.config.latitude = 32.87336
+    opp.config.longitude = -117.22743
+    opp.config.elevation = 0
+    opp.config.time_zone = date_util.get_time_zone("US/Pacific")
+    opp.config.units = METRIC_SYSTEM
+    opp.config.media_dirs = {"local": get_test_config_dir("media")}
+    opp.config.skip_pip = True
 
-   .opp.config_entries = config_entries.ConfigEntries.opp, {})
-   .opp.config_entries._entries = []
-   .opp.config_entries._store._async_ensure_stop_listener = lambda: None
+    opp.config_entries = config_entries.ConfigEntries.opp, {})
+    opp.config_entries._entries = []
+    opp.config_entries._store._async_ensure_stop_listener = lambda: None
 
     # Load the registries
     if load_registries:
@@ -289,7 +289,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
         )
         await opp.async_block_till_done()
 
-   .opp.state = op.CoreState.running
+    opp.state = op.CoreState.running
 
     # Mock async_start
     orig_start = opp.async_start
@@ -298,18 +298,18 @@ async def async_test_open_peer_power(loop, load_registries=True):
         """Start the mocking."""
         # We only mock time during tests and we want to track tasks
         with patch("openpeerpower.core._async_create_timer"), patch.object(
-            opp, "async_stop_track_tasks"
+            opp. "async_stop_track_tasks"
         ):
             await orig_start()
 
-   .opp.async_start = mock_async_start
+    opp.async_start = mock_async_start
 
     @op.callback
     def clear_instance(event):
         """Clear global instance."""
         INSTANCES.remove.opp)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, clear_instance)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, clear_instance)
 
     return.opp
 
@@ -323,7 +323,7 @@ def async_mock_service.opp, domain, service, schema=None):
         """Mock service call."""
         calls.append(call)
 
-   .opp.services.async_register(domain, service, mock_service_log, schema=schema)
+    opp.services.async_register(domain, service, mock_service_log, schema=schema)
 
     return calls
 
@@ -355,7 +355,7 @@ def async_fire_mqtt_message.opp, topic, payload, qos=0, retain=False):
     if isinstance(payload, str):
         payload = payload.encode("utf-8")
     msg = Message(topic, payload, qos, retain)
-   .opp.data["mqtt"]._mqtt_handle_message(msg)
+    opp.data["mqtt"]._mqtt_handle_message(msg)
 
 
 fire_mqtt_message = threadsafe_callback_factory(async_fire_mqtt_message)
@@ -364,7 +364,7 @@ fire_mqtt_message = threadsafe_callback_factory(async_fire_mqtt_message)
 @op.callback
 def async_fire_time_changed.opp, datetime_, fire_all=False):
     """Fire a time changes event."""
-   .opp.bus.async_fire(EVENT_TIME_CHANGED, {"now": date_util.as_utc(datetime_)})
+    opp.bus.async_fire(EVENT_TIME_CHANGED, {"now": date_util.as_utc(datetime_)})
 
     for task in list.opp.loop._scheduled):
         if not isinstance(task, asyncio.TimerHandle):
@@ -389,7 +389,7 @@ fire_time_changed = threadsafe_callback_factory(async_fire_time_changed)
 
 def fire_service_discovered.opp, service, info):
     """Fire the MQTT message."""
-   .opp.bus.fire(
+    opp.bus.fire(
         EVENT_PLATFORM_DISCOVERED, {ATTR_SERVICE: service, ATTR_DISCOVERED: info}
     )
 
@@ -397,7 +397,7 @@ def fire_service_discovered.opp, service, info):
 @op.callback
 def async_fire_service_discovered.opp, service, info):
     """Fire the MQTT message."""
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_PLATFORM_DISCOVERED, {ATTR_SERVICE: service, ATTR_DISCOVERED: info}
     )
 
@@ -416,7 +416,7 @@ def mock_state_change_event.opp, new_state, old_state=None):
     if old_state:
         event_data["old_state"] = old_state
 
-   .opp.bus.fire(EVENT_STATE_CHANGED, event_data, context=new_state.context)
+    opp.bus.fire(EVENT_STATE_CHANGED, event_data, context=new_state.context)
 
 
 @op.callback
@@ -425,7 +425,7 @@ def mock_component.opp, component):
     if component in.opp.config.components:
         AssertionError(f"Integration {component} is already setup")
 
-   .opp.config.components.add(component)
+    opp.config.components.add(component)
 
 
 def mock_registry.opp, mock_entries=None):
@@ -434,7 +434,7 @@ def mock_registry.opp, mock_entries=None):
     registry.entities = mock_entries or OrderedDict()
     registry._rebuild_index()
 
-   .opp.data[entity_registry.DATA_REGISTRY] = registry
+    opp.data[entity_registry.DATA_REGISTRY] = registry
     return registry
 
 
@@ -443,7 +443,7 @@ def mock_area_registry.opp, mock_entries=None):
     registry = area_registry.AreaRegistry.opp)
     registry.areas = mock_entries or OrderedDict()
 
-   .opp.data[area_registry.DATA_REGISTRY] = registry
+    opp.data[area_registry.DATA_REGISTRY] = registry
     return registry
 
 
@@ -454,7 +454,7 @@ def mock_device_registry.opp, mock_entries=None, mock_deleted_entries=None):
     registry.deleted_devices = mock_deleted_entries or OrderedDict()
     registry._rebuild_index()
 
-   .opp.data[device_registry.DATA_REGISTRY] = registry
+    opp.data[device_registry.DATA_REGISTRY] = registry
     return registry
 
 
@@ -523,7 +523,7 @@ class MockUser(auth_models.User):
 async def register_auth_provider.opp, config):
     """Register an auth provider."""
     provider = await auth_providers.auth_provider_from_config(
-        opp, opp.auth._store, config
+        opp. opp.auth._store, config
     )
     assert provider is not None, "Invalid config specified"
     key = (provider.type, provider.id)
@@ -656,7 +656,7 @@ class MockEntityPlatform(entity_platform.EntityPlatform):
 
     def __init__(
         self,
-        opp,
+        opp.
         logger=None,
         domain="test_domain",
         platform_name="test_platform",
@@ -673,7 +673,7 @@ class MockEntityPlatform(entity_platform.EntityPlatform):
             platform.PARALLEL_UPDATES = 0
 
         super().__init__(
-           .opp.opp,
+            opp.opp,
             logger=logger,
             domain=domain,
             platform_name=platform_name,
@@ -772,7 +772,7 @@ class MockConfigEntry(config_entries.ConfigEntry):
 
     def add_to_opp(self, opp):
         """Test helper to add entry to.opp."""
-       .opp.config_entries._entries.append(self)
+        opp.config_entries._entries.append(self)
 
     def add_to_manager(self, manager):
         """Test helper to add entry to entry manager."""
@@ -888,7 +888,7 @@ async def async_init_recorder_component.opp, add_config=None):
 
     with patch("openpeerpower.components.recorder.migration.migrate_schema"):
         assert await async_setup_component(
-            opp, recorder.DOMAIN, {recorder.DOMAIN: config}
+            opp. recorder.DOMAIN, {recorder.DOMAIN: config}
         )
         assert recorder.DOMAIN in.opp.config.components
     _LOGGER.info("In-memory recorder successfully started")
@@ -913,7 +913,7 @@ def mock_restore_cache.opp, states):
     _LOGGER.debug("Restore cache: %s", data.last_states)
     assert len(data.last_states) == len(states), f"Duplicate entity_id? {states}"
 
-   .opp.data[key] = data
+    opp.data[key] = data
 
 
 class MockEntity(entity.Entity):
@@ -1065,7 +1065,7 @@ async def get_system_health_info.opp, domain):
 def mock_integration.opp, module):
     """Mock an integration."""
     integration = loader.Integration(
-        opp, f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
+        opp. f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
     )
 
     def mock_import_platform(platform_name):
@@ -1077,8 +1077,8 @@ def mock_integration.opp, module):
     integration._import_platform = mock_import_platform
 
     _LOGGER.info("Adding mock integration: %s", module.DOMAIN)
-   .opp.data.setdefault(loader.DATA_INTEGRATIONS, {})[module.DOMAIN] = integration
-   .opp.data.setdefault(loader.DATA_COMPONENTS, {})[module.DOMAIN] = module
+    opp.data.setdefault(loader.DATA_INTEGRATIONS, {})[module.DOMAIN] = integration
+    opp.data.setdefault(loader.DATA_COMPONENTS, {})[module.DOMAIN] = module
 
     return integration
 
@@ -1117,7 +1117,7 @@ def async_capture_events.opp, event_name):
     def capture_events(event):
         events.append(event)
 
-   .opp.bus.async_listen(event_name, capture_events)
+    opp.bus.async_listen(event_name, capture_events)
 
     return events
 
@@ -1132,7 +1132,7 @@ def async_mock_signal.opp, signal):
         """Mock service call."""
         calls.append(args)
 
-   .opp.helpers.dispatcher.async_dispatcher_connect(signal, mock_signal_handler)
+    opp.helpers.dispatcher.async_dispatcher_connect(signal, mock_signal_handler)
 
     return calls
 

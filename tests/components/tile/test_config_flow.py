@@ -19,7 +19,7 @@ async def test_duplicate_error(opp):
     }
 
     MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to.opp(
-       .opp
+        opp
     )
 
     result = await opp.config_entries.flow.async_init(

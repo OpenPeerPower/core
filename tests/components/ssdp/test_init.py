@@ -27,7 +27,7 @@ async def test_scan_match_st.opp, caplog):
         "openpeerpower.components.ssdp.async_search",
         side_effect=_inject_entry,
     ), patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         await scanner.async_scan(None)
 
@@ -70,7 +70,7 @@ async def test_scan_match_upnp_devicedesc.opp, aioclient_mock, key):
         "openpeerpower.components.ssdp.async_search",
         side_effect=_inject_entry,
     ), patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         await scanner.async_scan(None)
 
@@ -92,7 +92,7 @@ async def test_scan_not_all_present.opp, aioclient_mock):
     """,
     )
     scanner = ssdp.Scanner(
-        opp,
+        opp.
         {
             "mock-domain": [
                 {
@@ -112,7 +112,7 @@ async def test_scan_not_all_present.opp, aioclient_mock):
         "openpeerpower.components.ssdp.async_search",
         side_effect=_inject_entry,
     ), patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         await scanner.async_scan(None)
 
@@ -133,7 +133,7 @@ async def test_scan_not_all_match.opp, aioclient_mock):
     """,
     )
     scanner = ssdp.Scanner(
-        opp,
+        opp.
         {
             "mock-domain": [
                 {
@@ -153,7 +153,7 @@ async def test_scan_not_all_match.opp, aioclient_mock):
         "openpeerpower.components.ssdp.async_search",
         side_effect=_inject_entry,
     ), patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         await scanner.async_scan(None)
 
@@ -214,7 +214,7 @@ async def test_invalid_characters.opp, aioclient_mock):
     """,
     )
     scanner = ssdp.Scanner(
-        opp,
+        opp.
         {
             "mock-domain": [
                 {
@@ -233,7 +233,7 @@ async def test_invalid_characters.opp, aioclient_mock):
         "openpeerpower.components.ssdp.async_search",
         side_effect=_inject_entry,
     ), patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         await scanner.async_scan(None)
 

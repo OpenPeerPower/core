@@ -80,7 +80,7 @@ SERVICE_SCHEMA = vol.Schema({vol.Optional(ATTR_HOST, default=None): cv.string})
 
 async def async_setup_opp, config):
     """Set up the iperf3 component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     conf = config[DOMAIN]
     for host in conf[CONF_HOSTS]:
@@ -93,16 +93,16 @@ async def async_setup_opp, config):
         """Service call to manually update the data."""
         called_host = call.data[ATTR_HOST]
         if called_host in.opp.data[DOMAIN]:
-           .opp.data[DOMAIN][called_host].update()
+            opp.data[DOMAIN][called_host].update()
         else:
             for iperf3_host in.opp.data[DOMAIN].values():
                 iperf3_host.update()
 
-   .opp.services.async_register(DOMAIN, "speedtest", update, schema=SERVICE_SCHEMA)
+    opp.services.async_register(DOMAIN, "speedtest", update, schema=SERVICE_SCHEMA)
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform(
-            opp, SENSOR_DOMAIN, DOMAIN, conf[CONF_MONITORED_CONDITIONS], config
+            opp. SENSOR_DOMAIN, DOMAIN, conf[CONF_MONITORED_CONDITIONS], config
         )
     )
 

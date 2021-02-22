@@ -26,7 +26,7 @@ from .models import (
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up a Toon binary sensor based on a config entry."""
     coordinator = opp.data[DOMAIN][entry.entry_id]

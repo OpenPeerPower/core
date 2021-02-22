@@ -66,13 +66,13 @@ STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, DOMAIN)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up the Zigbee Home Automation sensor from config entry."""
     entities_to_create = opp.data[DATA_ZHA][DOMAIN]
 
     unsub = async_dispatcher_connect(
-        opp,
+        opp.
         SIGNAL_ADD_ENTITIES,
         functools.partial(
             discovery.async_add_entities,
@@ -81,7 +81,7 @@ async def async_setup_entry(
             update_before_add=False,
         ),
     )
-   .opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
+    opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
 
 
 class Sensor(ZhaEntity):

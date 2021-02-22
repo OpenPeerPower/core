@@ -33,7 +33,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.warning("Unable to open serial port: %s", exc)
         return
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, pca.close)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, pca.close)
 
     pca.start_scan()
 

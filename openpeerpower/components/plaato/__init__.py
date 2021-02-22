@@ -87,7 +87,7 @@ WEBHOOK_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Plaato component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -103,8 +103,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     for platform in PLATFORMS:
         if entry.options.get(platform, True):
-           .opp.async_create_task(
-               .opp.config_entries.async_forward_entry_setup(entry, platform)
+            opp.async_create_task(
+                opp.config_entries.async_forward_entry_setup(entry, platform)
             )
 
     return True
@@ -118,7 +118,7 @@ def async_setup_webhook.opp: OpenPeerPower, entry: ConfigEntry):
 
     _set_entry_data(entry, opp)
 
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, f"{DOMAIN}.{device_name}", webhook_id, handle_webhook
     )
 
@@ -152,7 +152,7 @@ def _set_entry_data(entry, opp, coordinator=None, device_id=None):
         DEVICE_ID: device_id,
     }
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: coordinator,
         DEVICE: device,
         SENSOR_DATA: None,
@@ -163,7 +163,7 @@ def _set_entry_data(entry, opp, coordinator=None, device_id=None):
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     use_webhook = entry.data[CONF_USE_WEBHOOK]
-   .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if use_webhook:
         return await async_unload_webhook.opp, entry)
@@ -174,7 +174,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_webhook.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload webhook based entry."""
     if entry.data[CONF_WEBHOOK_ID] is not None:
-       .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+        opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     return await async_unload_platforms.opp, entry, PLATFORMS)
 
 
@@ -189,13 +189,13 @@ async def async_unload_platforms.opp: OpenPeerPower, entry: ConfigEntry, platfor
     unloaded = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in platforms
             ]
         )
     )
     if unloaded:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unloaded
 
@@ -231,7 +231,7 @@ class PlaatoCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp,
+        opp.
         auth_token,
         device_type: PlaatoDeviceType,
         update_interval: timedelta,
@@ -243,7 +243,7 @@ class PlaatoCoordinator(DataUpdateCoordinator):
         self.platforms = []
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=update_interval,

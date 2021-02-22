@@ -23,7 +23,7 @@ LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Philips TV component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -35,11 +35,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     coordinator = PhilipsTVDataUpdateCoordinator.opp, tvapi)
 
     await coordinator.async_refresh()
-   .opp.data[DOMAIN][entry.entry_id] = coordinator
+    opp.data[DOMAIN][entry.entry_id] = coordinator
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -50,13 +50,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -94,7 +94,7 @@ class PluggableAction:
     ):
         """Run all turn on triggers."""
         for job, variables in self._actions.values():
-           .opp.async_run.opp_job(job, variables, context)
+            opp.async_run.opp_job(job, variables, context)
 
 
 class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
@@ -111,12 +111,12 @@ class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
         self.turn_on = PluggableAction(_update_listeners)
 
         super().__init__(
-            opp,
+            opp.
             LOGGER,
             name=DOMAIN,
             update_interval=timedelta(seconds=30),
             request_refresh_debouncer=Debouncer(
-                opp, LOGGER, cooldown=2.0, immediate=False
+                opp. LOGGER, cooldown=2.0, immediate=False
             ),
         )
 

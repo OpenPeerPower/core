@@ -465,7 +465,7 @@ async def test_overriding_name_from_registry.opp):
     """Test that we can override a name via the Entity Registry."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     mock_registry(
-        opp,
+        opp.
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -497,7 +497,7 @@ async def test_registry_respect_entity_namespace.opp):
 async def test_registry_respect_entity_disabled.opp):
     """Test that the registry respects entity disabled."""
     mock_registry(
-        opp,
+        opp.
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -518,7 +518,7 @@ async def test_registry_respect_entity_disabled.opp):
 async def test_entity_registry_updates_name.opp):
     """Test that updates on the entity registry update platform entities."""
     registry = mock_registry(
-        opp,
+        opp.
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -557,7 +557,7 @@ async def test_setup_entry.opp):
     platform = MockPlatform(async_setup_entry=async_setup_entry)
     config_entry = MockConfigEntry(entry_id="super-mock-id")
     entity_platform = MockEntityPlatform(
-        opp, platform_name=config_entry.domain, platform=platform
+        opp. platform_name=config_entry.domain, platform=platform
     )
 
     assert await entity_platform.async_setup_entry(config_entry)
@@ -575,7 +575,7 @@ async def test_setup_entry_platform_not_ready.opp, caplog):
     platform = MockPlatform(async_setup_entry=async_setup_entry)
     config_entry = MockConfigEntry()
     ent_platform = MockEntityPlatform(
-        opp, platform_name=config_entry.domain, platform=platform
+        opp. platform_name=config_entry.domain, platform=platform
     )
 
     with patch.object(entity_platform, "async_call_later") as mock_call_later:
@@ -594,7 +594,7 @@ async def test_reset_cancels_retry_setup_opp):
     platform = MockPlatform(async_setup_entry=async_setup_entry)
     config_entry = MockConfigEntry()
     ent_platform = MockEntityPlatform(
-        opp, platform_name=config_entry.domain, platform=platform
+        opp. platform_name=config_entry.domain, platform=platform
     )
 
     with patch.object(entity_platform, "async_call_later") as mock_call_later:
@@ -622,7 +622,7 @@ async def test_not_fails_with_adding_empty_entities_.opp):
 async def test_entity_registry_updates_entity_id.opp):
     """Test that updates on the entity registry update platform entities."""
     registry = mock_registry(
-        opp,
+        opp.
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -654,7 +654,7 @@ async def test_entity_registry_updates_entity_id.opp):
 async def test_entity_registry_updates_invalid_entity_id.opp):
     """Test that we can't update to an invalid entity id."""
     registry = mock_registry(
-        opp,
+        opp.
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -740,7 +740,7 @@ async def test_device_info_called.opp):
     platform = MockPlatform(async_setup_entry=async_setup_entry)
     config_entry = MockConfigEntry(entry_id="super-mock-id")
     entity_platform = MockEntityPlatform(
-        opp, platform_name=config_entry.domain, platform=platform
+        opp. platform_name=config_entry.domain, platform=platform
     )
 
     assert await entity_platform.async_setup_entry(config_entry)
@@ -794,7 +794,7 @@ async def test_device_info_not_overrides.opp):
     platform = MockPlatform(async_setup_entry=async_setup_entry)
     config_entry = MockConfigEntry(entry_id="super-mock-id")
     entity_platform = MockEntityPlatform(
-        opp, platform_name=config_entry.domain, platform=platform
+        opp. platform_name=config_entry.domain, platform=platform
     )
 
     assert await entity_platform.async_setup_entry(config_entry)
@@ -862,7 +862,7 @@ async def test_override_restored_entities.opp):
         "test_domain", "test_domain", "1234", suggested_object_id="world"
     )
 
-   .opp.states.async_set("test_domain.world", "unavailable", {"restored": True})
+    opp.states.async_set("test_domain.world", "unavailable", {"restored": True})
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
@@ -877,7 +877,7 @@ async def test_override_restored_entities.opp):
 async def test_platform_with_no_setup_opp, caplog):
     """Test setting up a platform that does not support setup."""
     entity_platform = MockEntityPlatform(
-        opp, domain="mock-integration", platform_name="mock-platform", platform=None
+        opp. domain="mock-integration", platform_name="mock-platform", platform=None
     )
 
     await entity_platform.async_setup(None)
@@ -891,19 +891,19 @@ async def test_platform_with_no_setup_opp, caplog):
 async def test_platforms_sharing_services.opp):
     """Test platforms share services."""
     entity_platform1 = MockEntityPlatform(
-        opp, domain="mock_integration", platform_name="mock_platform", platform=None
+        opp. domain="mock_integration", platform_name="mock_platform", platform=None
     )
     entity1 = MockEntity(entity_id="mock_integration.entity_1")
     await entity_platform1.async_add_entities([entity1])
 
     entity_platform2 = MockEntityPlatform(
-        opp, domain="mock_integration", platform_name="mock_platform", platform=None
+        opp. domain="mock_integration", platform_name="mock_platform", platform=None
     )
     entity2 = MockEntity(entity_id="mock_integration.entity_2")
     await entity_platform2.async_add_entities([entity2])
 
     entity_platform3 = MockEntityPlatform(
-        opp,
+        opp.
         domain="different_integration",
         platform_name="mock_platform",
         platform=None,
@@ -961,7 +961,7 @@ async def test_setup_entry_with_entities_that_block_forever.opp, caplog):
     platform = MockPlatform(async_setup_entry=async_setup_entry)
     config_entry = MockConfigEntry(entry_id="super-mock-id")
     mock_entity_platform = MockEntityPlatform(
-        opp, platform_name=config_entry.domain, platform=platform
+        opp. platform_name=config_entry.domain, platform=platform
     )
 
     with patch.object(entity_platform, "SLOW_ADD_ENTITY_MAX_WAIT", 0.01), patch.object(
@@ -982,12 +982,12 @@ async def test_setup_entry_with_entities_that_block_forever.opp, caplog):
 async def test_two_platforms_add_same_entity.opp):
     """Test two platforms in the same domain adding an entity with the same name."""
     entity_platform1 = MockEntityPlatform(
-        opp, domain="mock_integration", platform_name="mock_platform", platform=None
+        opp. domain="mock_integration", platform_name="mock_platform", platform=None
     )
     entity1 = SlowEntity(name="entity_1")
 
     entity_platform2 = MockEntityPlatform(
-        opp, domain="mock_integration", platform_name="mock_platform", platform=None
+        opp. domain="mock_integration", platform_name="mock_platform", platform=None
     )
     entity2 = SlowEntity(name="entity_1")
 

@@ -259,7 +259,7 @@ async def test_external_step.opp, manager):
             return self.async_create_entry(title=self.data["title"], data=self.data)
 
     events = async_capture_events(
-        opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
+        opp. data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
     )
 
     result = await manager.async_init("test")
@@ -267,7 +267,7 @@ async def test_external_step.opp, manager):
     assert len(manager.async_progress()) == 1
 
     # Mimic external step
-    # Called by integrations: .opp.config_entries.flow.async_configure(…)`
+    # Called by integrations:  opp.config_entries.flow.async_configure(…)`
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP_DONE
 
@@ -314,7 +314,7 @@ async def test_show_progress.opp, manager):
             return self.async_create_entry(title=self.data["title"], data=self.data)
 
     events = async_capture_events(
-        opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
+        opp. data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
     )
 
     result = await manager.async_init("test")
@@ -323,7 +323,7 @@ async def test_show_progress.opp, manager):
     assert len(manager.async_progress()) == 1
 
     # Mimic task one done and moving to task two
-    # Called by integrations: .opp.config_entries.flow.async_configure(…)`
+    # Called by integrations:  opp.config_entries.flow.async_configure(…)`
     result = await manager.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS
     assert result["progress_action"] == "task_two"
@@ -337,7 +337,7 @@ async def test_show_progress.opp, manager):
     }
 
     # Mimic task two done and continuing step
-    # Called by integrations: .opp.config_entries.flow.async_configure(…)`
+    # Called by integrations:  opp.config_entries.flow.async_configure(…)`
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS_DONE
 

@@ -58,7 +58,7 @@ def _close_enough(actual_rgb, testing_rgb):
 async def setup_light.opp):
     """Configure our light component to work against for testing."""
     assert await async_setup_component(
-        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
+        opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -88,7 +88,7 @@ async def test_missing_url_and_path.opp):
     """Test that nothing happens when url and path are missing."""
     # Load our color_extractor component
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {},
     )
@@ -119,7 +119,7 @@ async def test_missing_url_and_path.opp):
 async def _async_load_color_extractor_url.opp, service_data):
     # Load our color_extractor component
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {},
     )
@@ -154,7 +154,7 @@ async def test_url_success.opp, aioclient_mock):
     )
 
     # Allow access to this URL using the proper mechanism
-   .opp.config.allowlist_external_urls.add("http://example.com/images/")
+    opp.config.allowlist_external_urls.add("http://example.com/images/")
 
     await _async_load_color_extractor_url.opp, service_data)
 
@@ -194,7 +194,7 @@ async def test_url_exception.opp, aioclient_mock):
     }
 
     # Don't let the URL not being allowed sway our exception test
-   .opp.config.allowlist_external_urls.add("http://example.com/images/")
+    opp.config.allowlist_external_urls.add("http://example.com/images/")
 
     # Mock the HTTP Response with an HTTPError
     aioclient_mock.get(url=service_data[ATTR_URL], exc=aiohttp.ClientError)
@@ -215,7 +215,7 @@ async def test_url_error(opp, aioclient_mock):
     }
 
     # Don't let the URL not being allowed sway our exception test
-   .opp.config.allowlist_external_urls.add("http://example.com/images/")
+    opp.config.allowlist_external_urls.add("http://example.com/images/")
 
     # Mock the HTTP Response with a 400 Bad Request error
     aioclient_mock.get(url=service_data[ATTR_URL], status=400)
@@ -258,7 +258,7 @@ async def test_file.opp):
     }
 
     # Add our /opt/ path to the allowed list of paths
-   .opp.config.allowlist_external_dirs.add("/opt/")
+    opp.config.allowlist_external_dirs.add("/opt/")
 
     await async_setup_component.opp, DOMAIN, {})
     await opp.async_block_till_done()

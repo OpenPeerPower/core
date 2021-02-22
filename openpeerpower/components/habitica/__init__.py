@@ -86,8 +86,8 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
         if conf.get(CONF_URL) is None:
             conf[CONF_URL] = DEFAULT_URL
 
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=conf
             )
         )
@@ -121,7 +121,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
             return
         kwargs = call.data.get(ATTR_ARGS, {})
         data = await api(**kwargs)
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_API_CALL_SUCCESS, {"name": name, "path": path, "data": data}
         )
 
@@ -137,19 +137,19 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     user = await api.user.get()
     if name is None:
         name = user["profile"]["name"]
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry,
             data={**config_entry.data, CONF_NAME: name},
         )
     data[config_entry.entry_id] = api
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     if not.opp.services.has_service(DOMAIN, SERVICE_API_CALL):
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, SERVICE_API_CALL, handle_api_call, schema=SERVICE_API_CALL_SCHEMA
         )
 
@@ -161,14 +161,14 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     if len.opp.config_entries.async_entries(DOMAIN)) == 1:
-       .opp.services.async_remove(DOMAIN, SERVICE_API_CALL)
+        opp.services.async_remove(DOMAIN, SERVICE_API_CALL)
     return unload_ok

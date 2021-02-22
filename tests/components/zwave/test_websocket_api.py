@@ -17,7 +17,7 @@ async def test_zwave_ws_api.opp, mock_openzwave, opp_ws_client):
     """Test Z-Wave websocket API."""
 
     await async_setup_component(
-        opp,
+        opp.
         "zwave",
         {
             "zwave": {
@@ -47,7 +47,7 @@ async def test_zwave_ozw_migration_api.opp, mock_openzwave, opp_ws_client):
     """Test Z-Wave to OpenZWave websocket migration API."""
 
     await async_setup_component(
-        opp,
+        opp.
         "zwave",
         {
             "zwave": {

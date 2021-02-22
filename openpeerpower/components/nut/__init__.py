@@ -39,7 +39,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Network UPS Tools (NUT) component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     return True
 
@@ -66,7 +66,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 raise UpdateFailed("Error fetching UPS state")
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="NUT resource status",
         update_method=async_update_data,
@@ -90,7 +90,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if unique_id is None:
         unique_id = entry.entry_id
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: coordinator,
         PYNUT_DATA: data,
         PYNUT_UNIQUE_ID: unique_id,
@@ -102,8 +102,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -178,16 +178,16 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

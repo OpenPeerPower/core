@@ -52,7 +52,7 @@ _LOGGER = logging.getLogger(__package__)
 
 async def async_setup_opp, config):
     """Set up the Plex component."""
-   .opp.data.setdefault(
+    opp.data.setdefault(
         PLEX_DOMAIN,
         {SERVERS: {}, DISPATCHERS: {}, WEBSOCKETS: {}, PLATFORMS_COMPLETED: {}},
     )
@@ -61,8 +61,8 @@ async def async_setup_opp, config):
 
     gdm = opp.data[PLEX_DOMAIN][GDM_SCANNER] = GDM()
 
-   .opp.data[PLEX_DOMAIN][GDM_DEBOUNCER] = Debouncer(
-        opp,
+    opp.data[PLEX_DOMAIN][GDM_DEBOUNCER] = Debouncer(
+        opp.
         _LOGGER,
         cooldown=10,
         immediate=True,
@@ -77,17 +77,17 @@ async def async_setup_entry.opp, entry):
     server_config = entry.data[PLEX_SERVER_CONFIG]
 
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, unique_id=entry.data[CONF_SERVER_IDENTIFIER]
         )
 
     if MP_DOMAIN not in entry.options:
         options = dict(entry.options)
         options.setdefault(MP_DOMAIN, {})
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
     plex_server = PlexServer(
-        opp,
+        opp.
         server_config,
         entry.data[CONF_SERVER_IDENTIFIER],
         entry.options,
@@ -101,7 +101,7 @@ async def async_setup_entry.opp, entry):
             CONF_URL: plex_server.url_in_use,
             CONF_SERVER: plex_server.friendly_name,
         }
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, PLEX_SERVER_CONFIG: new_server_data}
         )
     except requests.exceptions.ConnectionError as error:
@@ -113,8 +113,8 @@ async def async_setup_entry.opp, entry):
             )
         raise ConfigEntryNotReady from error
     except plexapi.exceptions.Unauthorized:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 PLEX_DOMAIN,
                 context={CONF_SOURCE: SOURCE_REAUTH},
                 data=entry.data,
@@ -140,8 +140,8 @@ async def async_setup_entry.opp, entry):
         "Connected to: %s (%s)", plex_server.friendly_name, plex_server.url_in_use
     )
     server_id = plex_server.machine_identifier
-   .opp.data[PLEX_DOMAIN][SERVERS][server_id] = plex_server
-   .opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id] = set()
+    opp.data[PLEX_DOMAIN][SERVERS][server_id] = plex_server
+    opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id] = set()
 
     entry.add_update_listener(async_options_updated)
 
@@ -150,12 +150,12 @@ async def async_setup_entry.opp, entry):
         await plex_server.async_update_platforms()
 
     unsub = async_dispatcher_connect(
-        opp,
+        opp.
         PLEX_UPDATE_PLATFORMS_SIGNAL.format(server_id),
         async_update_plex,
     )
-   .opp.data[PLEX_DOMAIN][DISPATCHERS].setdefault(server_id, [])
-   .opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
+    opp.data[PLEX_DOMAIN][DISPATCHERS].setdefault(server_id, [])
+    opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
 
     @callback
     def plex_websocket_callback(signal, data, error):
@@ -164,7 +164,7 @@ async def async_setup_entry.opp, entry):
 
             if data == STATE_CONNECTED:
                 _LOGGER.debug("Websocket to %s successful", entry.data[CONF_SERVER])
-               .opp.async_create_task(async_update_plex())
+                opp.async_create_task(async_update_plex())
             elif data == STATE_DISCONNECTED:
                 _LOGGER.debug(
                     "Websocket to %s disconnected, retrying", entry.data[CONF_SERVER]
@@ -176,10 +176,10 @@ async def async_setup_entry.opp, entry):
                     entry.data[CONF_SERVER],
                     error,
                 )
-               .opp.async_create_task.opp.config_entries.async_reload(entry.entry_id))
+                opp.async_create_task.opp.config_entries.async_reload(entry.entry_id))
 
         elif signal == SIGNAL_DATA:
-           .opp.async_create_task(plex_server.async_update_session(data))
+            opp.async_create_task(plex_server.async_update_session(data))
 
     session = async_get_clientsession.opp)
     verify_ssl = server_config.get(CONF_VERIFY_SSL)
@@ -189,12 +189,12 @@ async def async_setup_entry.opp, entry):
         session=session,
         verify_ssl=verify_ssl,
     )
-   .opp.data[PLEX_DOMAIN][WEBSOCKETS][server_id] = websocket
+    opp.data[PLEX_DOMAIN][WEBSOCKETS][server_id] = websocket
 
     def start_websocket_session(platform, _):
-       .opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id].add(platform)
+        opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id].add(platform)
         if opp.data[PLEX_DOMAIN][PLATFORMS_COMPLETED][server_id] == PLATFORMS:
-           .opp.loop.create_task(websocket.listen())
+            opp.loop.create_task(websocket.listen())
 
     def close_websocket_session(_):
         websocket.close()
@@ -202,11 +202,11 @@ async def async_setup_entry.opp, entry):
     unsub = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, close_websocket_session
     )
-   .opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
+    opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
 
     for platform in PLATFORMS:
         task = opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
         task.add_done_callback(partial(start_websocket_session, platform))
 
@@ -233,12 +233,12 @@ async def async_unload_entry.opp, entry):
         unsub()
 
     tasks = [
-       .opp.config_entries.async_forward_entry_unload(entry, platform)
+        opp.config_entries.async_forward_entry_unload(entry, platform)
         for platform in PLATFORMS
     ]
     await asyncio.gather(*tasks)
 
-   .opp.data[PLEX_DOMAIN][SERVERS].pop(server_id)
+    opp.data[PLEX_DOMAIN][SERVERS].pop(server_id)
 
     return True
 
@@ -249,4 +249,4 @@ async def async_options_updated.opp, entry):
 
     # Guard incomplete setup during reauth flows
     if server_id in.opp.data[PLEX_DOMAIN][SERVERS]:
-       .opp.data[PLEX_DOMAIN][SERVERS][server_id].options = entry.options
+        opp.data[PLEX_DOMAIN][SERVERS][server_id].options = entry.options

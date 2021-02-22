@@ -132,7 +132,7 @@ def setup_mock_device(mock_device):
 
 
 async def setup_onvif_integration(
-    opp,
+    opp.
     config=None,
     options=None,
     unique_id=MAC,
@@ -283,7 +283,7 @@ async def test_flow_discovery_ignore_existing_and_abort.opp):
     """Test that config flow discovery ignores setup devices."""
     await setup_onvif_integration.opp)
     await setup_onvif_integration(
-        opp,
+        opp.
         config={
             config_flow.CONF_NAME: DISCOVERY[1]["EPR"],
             config_flow.CONF_HOST: DISCOVERY[1][config_flow.CONF_HOST],

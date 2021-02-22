@@ -67,7 +67,7 @@ async def async_setup_opp, config):
     async def check_new_version() -> Updater:
         """Check if a new version is available and report if one is."""
         newest, release_notes = await get_newest_version(
-            opp, huuid, include_components
+            opp. huuid, include_components
         )
 
         _LOGGER.debug("Fetched version %s: %s", newest, release_notes)
@@ -104,7 +104,7 @@ async def async_setup_opp, config):
         return Updater(update_available, newest, release_notes)
 
     coordinator = opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator[Updater](
-        opp,
+        opp.
         _LOGGER,
         name="Open Peer Power update",
         update_method=check_new_version,
@@ -114,7 +114,7 @@ async def async_setup_opp, config):
     # This can take up to 15s which can delay startup
     asyncio.create_task(coordinator.async_refresh())
 
-   .opp.async_create_task(
+    opp.async_create_task(
         discovery.async_load_platform.opp, "binary_sensor", DOMAIN, {}, config)
     )
 

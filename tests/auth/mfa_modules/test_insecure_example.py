@@ -9,7 +9,7 @@ from tests.common import MockUser
 async def test_validate.opp):
     """Test validating pin."""
     auth_module = await auth_mfa_module_from_config(
-        opp,
+        opp.
         {
             "type": "insecure_example",
             "data": [{"user_id": "test-user", "pin": "123456"}],
@@ -29,7 +29,7 @@ async def test_validate.opp):
 async def test_setup_user.opp):
     """Test setup user."""
     auth_module = await auth_mfa_module_from_config(
-        opp, {"type": "insecure_example", "data": []}
+        opp. {"type": "insecure_example", "data": []}
     )
 
     await auth_module.async_setup_user("test-user", {"pin": "123456"})
@@ -42,7 +42,7 @@ async def test_setup_user.opp):
 async def test_depose_user.opp):
     """Test despose user."""
     auth_module = await auth_mfa_module_from_config(
-        opp,
+        opp.
         {
             "type": "insecure_example",
             "data": [{"user_id": "test-user", "pin": "123456"}],
@@ -57,7 +57,7 @@ async def test_depose_user.opp):
 async def test_is_user_setup_opp):
     """Test is user setup."""
     auth_module = await auth_mfa_module_from_config(
-        opp,
+        opp.
         {
             "type": "insecure_example",
             "data": [{"user_id": "test-user", "pin": "123456"}],
@@ -69,8 +69,8 @@ async def test_is_user_setup_opp):
 
 async def test_login.opp):
     """Test login flow with auth module."""
-   .opp.auth = await auth.auth_manager_from_config(
-        opp,
+    opp.auth = await auth.auth_manager_from_config(
+        opp.
         [
             {
                 "type": "insecure_example",
@@ -137,7 +137,7 @@ async def test_login.opp):
 async def test_setup_flow.opp):
     """Test validating pin."""
     auth_module = await auth_mfa_module_from_config(
-        opp,
+        opp.
         {
             "type": "insecure_example",
             "data": [{"user_id": "test-user", "pin": "123456"}],

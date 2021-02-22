@@ -101,7 +101,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         if device:
             await device.set_comfort_feedback(service.data[ATTR_VALUE])
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_COMFORT_FEEDBACK,
         send_comfort_feedback,
@@ -115,7 +115,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         if device:
             await device.set_comfort_mode()
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_COMFORT_MODE, set_comfort_mode, schema=SET_COMFORT_MODE_SCHEMA
     )
 
@@ -126,7 +126,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         if device:
             await device.set_temperature_mode(service.data[ATTR_VALUE])
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_TEMPERATURE_MODE,
         set_temperature_mode,

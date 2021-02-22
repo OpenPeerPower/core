@@ -168,4 +168,4 @@ async def async_migrate.opp, migration_map):
         **ozw_config_entry.data,
         MIGRATED: True,
     }
-   .opp.config_entries.async_update_entry(ozw_config_entry, data=updates)
+    opp.config_entries.async_update_entry(ozw_config_entry, data=updates)

@@ -37,7 +37,7 @@ async def test_temperature.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.temperature"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = TemperatureSensor.opp, hk_driver, "Temperature", entity_id, 2, None)
     await acc.run()
@@ -50,17 +50,17 @@ async def test_temperature.opp, hk_driver):
     for key, value in PROP_CELSIUS.items():
         assert acc.char_temp.properties[key] == value
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, STATE_UNKNOWN, {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
     assert acc.char_temp.value == 0.0
 
-   .opp.states.async_set(entity_id, "20", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS})
+    opp.states.async_set(entity_id, "20", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS})
     await opp.async_block_till_done()
     assert acc.char_temp.value == 20
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, "75.2", {ATTR_UNIT_OF_MEASUREMENT: TEMP_FAHRENHEIT}
     )
     await opp.async_block_till_done()
@@ -71,7 +71,7 @@ async def test_humidity.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.humidity"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = HumiditySensor.opp, hk_driver, "Humidity", entity_id, 2, None)
     await acc.run()
@@ -82,11 +82,11 @@ async def test_humidity.opp, hk_driver):
 
     assert acc.char_humidity.value == 0
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN)
+    opp.states.async_set(entity_id, STATE_UNKNOWN)
     await opp.async_block_till_done()
     assert acc.char_humidity.value == 0
 
-   .opp.states.async_set(entity_id, "20")
+    opp.states.async_set(entity_id, "20")
     await opp.async_block_till_done()
     assert acc.char_humidity.value == 20
 
@@ -95,7 +95,7 @@ async def test_air_quality.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.air_quality"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = AirQualitySensor.opp, hk_driver, "Air Quality", entity_id, 2, None)
     await acc.run()
@@ -107,17 +107,17 @@ async def test_air_quality.opp, hk_driver):
     assert acc.char_density.value == 0
     assert acc.char_quality.value == 0
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN)
+    opp.states.async_set(entity_id, STATE_UNKNOWN)
     await opp.async_block_till_done()
     assert acc.char_density.value == 0
     assert acc.char_quality.value == 0
 
-   .opp.states.async_set(entity_id, "34")
+    opp.states.async_set(entity_id, "34")
     await opp.async_block_till_done()
     assert acc.char_density.value == 34
     assert acc.char_quality.value == 1
 
-   .opp.states.async_set(entity_id, "200")
+    opp.states.async_set(entity_id, "200")
     await opp.async_block_till_done()
     assert acc.char_density.value == 200
     assert acc.char_quality.value == 5
@@ -127,7 +127,7 @@ async def test_co.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.co"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = CarbonMonoxideSensor.opp, hk_driver, "CO", entity_id, 2, None)
     await acc.run()
@@ -140,7 +140,7 @@ async def test_co.opp, hk_driver):
     assert acc.char_peak.value == 0
     assert acc.char_detected.value == 0
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN)
+    opp.states.async_set(entity_id, STATE_UNKNOWN)
     await opp.async_block_till_done()
     assert acc.char_level.value == 0
     assert acc.char_peak.value == 0
@@ -148,7 +148,7 @@ async def test_co.opp, hk_driver):
 
     value = 32
     assert value > THRESHOLD_CO
-   .opp.states.async_set(entity_id, str(value))
+    opp.states.async_set(entity_id, str(value))
     await opp.async_block_till_done()
     assert acc.char_level.value == 32
     assert acc.char_peak.value == 32
@@ -156,7 +156,7 @@ async def test_co.opp, hk_driver):
 
     value = 10
     assert value < THRESHOLD_CO
-   .opp.states.async_set(entity_id, str(value))
+    opp.states.async_set(entity_id, str(value))
     await opp.async_block_till_done()
     assert acc.char_level.value == 10
     assert acc.char_peak.value == 32
@@ -167,7 +167,7 @@ async def test_co2.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.co2"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = CarbonDioxideSensor.opp, hk_driver, "CO2", entity_id, 2, None)
     await acc.run()
@@ -180,7 +180,7 @@ async def test_co2.opp, hk_driver):
     assert acc.char_peak.value == 0
     assert acc.char_detected.value == 0
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN)
+    opp.states.async_set(entity_id, STATE_UNKNOWN)
     await opp.async_block_till_done()
     assert acc.char_level.value == 0
     assert acc.char_peak.value == 0
@@ -188,7 +188,7 @@ async def test_co2.opp, hk_driver):
 
     value = 1100
     assert value > THRESHOLD_CO2
-   .opp.states.async_set(entity_id, str(value))
+    opp.states.async_set(entity_id, str(value))
     await opp.async_block_till_done()
     assert acc.char_level.value == 1100
     assert acc.char_peak.value == 1100
@@ -196,7 +196,7 @@ async def test_co2.opp, hk_driver):
 
     value = 800
     assert value < THRESHOLD_CO2
-   .opp.states.async_set(entity_id, str(value))
+    opp.states.async_set(entity_id, str(value))
     await opp.async_block_till_done()
     assert acc.char_level.value == 800
     assert acc.char_peak.value == 1100
@@ -207,7 +207,7 @@ async def test_light.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.light"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = LightSensor.opp, hk_driver, "Light", entity_id, 2, None)
     await acc.run()
@@ -218,11 +218,11 @@ async def test_light.opp, hk_driver):
 
     assert acc.char_light.value == 0.0001
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN)
+    opp.states.async_set(entity_id, STATE_UNKNOWN)
     await opp.async_block_till_done()
     assert acc.char_light.value == 0.0001
 
-   .opp.states.async_set(entity_id, "300")
+    opp.states.async_set(entity_id, "300")
     await opp.async_block_till_done()
     assert acc.char_light.value == 300
 
@@ -231,7 +231,7 @@ async def test_binary.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "binary_sensor.opening"
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_DEVICE_CLASS: "opening"})
+    opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_DEVICE_CLASS: "opening"})
     await opp.async_block_till_done()
 
     acc = BinarySensor.opp, hk_driver, "Window Opening", entity_id, 2, None)
@@ -243,23 +243,23 @@ async def test_binary.opp, hk_driver):
 
     assert acc.char_detected.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_DEVICE_CLASS: "opening"})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_DEVICE_CLASS: "opening"})
     await opp.async_block_till_done()
     assert acc.char_detected.value == 1
 
-   .opp.states.async_set(entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: "opening"})
+    opp.states.async_set(entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: "opening"})
     await opp.async_block_till_done()
     assert acc.char_detected.value == 0
 
-   .opp.states.async_set(entity_id, STATE_HOME, {ATTR_DEVICE_CLASS: "opening"})
+    opp.states.async_set(entity_id, STATE_HOME, {ATTR_DEVICE_CLASS: "opening"})
     await opp.async_block_till_done()
     assert acc.char_detected.value == 1
 
-   .opp.states.async_set(entity_id, STATE_NOT_HOME, {ATTR_DEVICE_CLASS: "opening"})
+    opp.states.async_set(entity_id, STATE_NOT_HOME, {ATTR_DEVICE_CLASS: "opening"})
     await opp.async_block_till_done()
     assert acc.char_detected.value == 0
 
-   .opp.states.async_remove(entity_id)
+    opp.states.async_remove(entity_id)
     await opp.async_block_till_done()
     assert acc.char_detected.value == 0
 
@@ -268,7 +268,7 @@ async def test_motion_uses_bool.opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "binary_sensor.motion"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, STATE_UNKNOWN, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
     )
     await opp.async_block_till_done()
@@ -282,29 +282,29 @@ async def test_motion_uses_bool.opp, hk_driver):
 
     assert acc.char_detected.value is False
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION})
     await opp.async_block_till_done()
     assert acc.char_detected.value is True
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
     )
     await opp.async_block_till_done()
     assert acc.char_detected.value is False
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, STATE_HOME, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
     )
     await opp.async_block_till_done()
     assert acc.char_detected.value is True
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, STATE_NOT_HOME, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
     )
     await opp.async_block_till_done()
     assert acc.char_detected.value is False
 
-   .opp.states.async_remove(entity_id)
+    opp.states.async_remove(entity_id)
     await opp.async_block_till_done()
     assert acc.char_detected.value is False
 
@@ -314,7 +314,7 @@ async def test_binary_device_classes.opp, hk_driver):
     entity_id = "binary_sensor.demo"
 
     for device_class, (service, char, _) in BINARY_SENSOR_SERVICE_MAP.items():
-       .opp.states.async_set(entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: device_class})
+        opp.states.async_set(entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: device_class})
         await opp.async_block_till_done()
 
         acc = BinarySensor.opp, hk_driver, "Binary Sensor", entity_id, 2, None)
@@ -324,7 +324,7 @@ async def test_binary_device_classes.opp, hk_driver):
 
 async def test_sensor_restore.opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     registry = await entity_registry.async_get_registry.opp)
 
@@ -343,7 +343,7 @@ async def test_sensor_restore.opp, hk_driver, events):
         device_class="humidity",
         unit_of_measurement=PERCENTAGE,
     )
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
     acc = get_accessory.opp, hk_driver, opp.states.get("sensor.temperature"), 2, {})

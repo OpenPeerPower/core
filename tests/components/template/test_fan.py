@@ -49,7 +49,7 @@ async def test_missing_optional_config(opp, calls):
     """Test: missing optional template is ok."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -76,7 +76,7 @@ async def test_missing_value_template_config(opp, calls):
     """Test: missing 'value_template' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -102,7 +102,7 @@ async def test_missing_turn_on_config(opp, calls):
     """Test: missing 'turn_on' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -128,7 +128,7 @@ async def test_missing_turn_off_config(opp, calls):
     """Test: missing 'turn_off' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -154,7 +154,7 @@ async def test_invalid_config(opp, calls):
     """Test: missing 'turn_off' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "platform": "template",
@@ -190,7 +190,7 @@ async def test_templates_with_entities.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -222,38 +222,38 @@ async def test_templates_with_entities.opp, calls):
 
     _verify.opp, STATE_OFF, None, 0, None, None, None)
 
-   .opp.states.async_set(_STATE_INPUT_BOOLEAN, True)
-   .opp.states.async_set(_SPEED_INPUT_SELECT, SPEED_MEDIUM)
-   .opp.states.async_set(_OSC_INPUT, "True")
-   .opp.states.async_set(_DIRECTION_INPUT_SELECT, DIRECTION_FORWARD)
+    opp.states.async_set(_STATE_INPUT_BOOLEAN, True)
+    opp.states.async_set(_SPEED_INPUT_SELECT, SPEED_MEDIUM)
+    opp.states.async_set(_OSC_INPUT, "True")
+    opp.states.async_set(_DIRECTION_INPUT_SELECT, DIRECTION_FORWARD)
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
-   .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 33)
+    opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 33)
     await opp.async_block_till_done()
     _verify.opp, STATE_ON, SPEED_LOW, 33, True, DIRECTION_FORWARD, None)
 
-   .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 66)
+    opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 66)
     await opp.async_block_till_done()
     _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
-   .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 100)
+    opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 100)
     await opp.async_block_till_done()
     _verify.opp, STATE_ON, SPEED_HIGH, 100, True, DIRECTION_FORWARD, None)
 
-   .opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, "dog")
+    opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, "dog")
     await opp.async_block_till_done()
     _verify.opp, STATE_ON, None, 0, True, DIRECTION_FORWARD, None)
 
 
 async def test_templates_with_entities_and_invalid_percentage.opp, calls):
     """Test templates with values from other entities."""
-   .opp.states.async_set("sensor.percentage", "0")
+    opp.states.async_set("sensor.percentage", "0")
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -276,27 +276,27 @@ async def test_templates_with_entities_and_invalid_percentage.opp, calls):
 
     _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
-   .opp.states.async_set("sensor.percentage", "33")
+    opp.states.async_set("sensor.percentage", "33")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 
-   .opp.states.async_set("sensor.percentage", "invalid")
+    opp.states.async_set("sensor.percentage", "invalid")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, 0, None, None, None)
 
-   .opp.states.async_set("sensor.percentage", "5000")
+    opp.states.async_set("sensor.percentage", "5000")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, 0, None, None, None)
 
-   .opp.states.async_set("sensor.percentage", "100")
+    opp.states.async_set("sensor.percentage", "100")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
-   .opp.states.async_set("sensor.percentage", "0")
+    opp.states.async_set("sensor.percentage", "0")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
@@ -304,11 +304,11 @@ async def test_templates_with_entities_and_invalid_percentage.opp, calls):
 
 async def test_templates_with_entities_and_preset_modes.opp, calls):
     """Test templates with values from other entities."""
-   .opp.states.async_set("sensor.preset_mode", "0")
+    opp.states.async_set("sensor.preset_mode", "0")
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -332,22 +332,22 @@ async def test_templates_with_entities_and_preset_modes.opp, calls):
 
     _verify.opp, STATE_ON, None, None, None, None, None)
 
-   .opp.states.async_set("sensor.preset_mode", "invalid")
+    opp.states.async_set("sensor.preset_mode", "invalid")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, None, None, None, None, None)
 
-   .opp.states.async_set("sensor.preset_mode", "auto")
+    opp.states.async_set("sensor.preset_mode", "auto")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, "auto", None, None, None, "auto")
 
-   .opp.states.async_set("sensor.preset_mode", "smart")
+    opp.states.async_set("sensor.preset_mode", "smart")
     await opp.async_block_till_done()
 
     _verify.opp, STATE_ON, "smart", None, None, None, "smart")
 
-   .opp.states.async_set("sensor.preset_mode", "invalid")
+    opp.states.async_set("sensor.preset_mode", "invalid")
     await opp.async_block_till_done()
     _verify.opp, STATE_ON, None, None, None, None, None)
 
@@ -357,7 +357,7 @@ async def test_template_with_unavailable_entities.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -384,7 +384,7 @@ async def test_template_with_unavailable_parameters.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -415,7 +415,7 @@ async def test_availability_template_with_entities.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -440,14 +440,14 @@ async def test_availability_template_with_entities.opp, calls):
     await opp.async_block_till_done()
 
     # When template returns true..
-   .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_ON)
+    opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_ON)
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
     assert.opp.states.get(_TEST_FAN).state != STATE_UNAVAILABLE
 
     # When Availability template returns false
-   .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
+    opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
@@ -458,7 +458,7 @@ async def test_templates_with_valid_values.opp, calls):
     """Test templates with valid values."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -488,7 +488,7 @@ async def test_templates_invalid_values.opp, calls):
     """Test templates with invalid values."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -519,7 +519,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {
                 "fan": {
@@ -751,7 +751,7 @@ async def test_custom_speed_list.opp, calls):
 async def test_preset_modes.opp, calls):
     """Test preset_modes."""
     await _register_components(
-        opp, ["off", "low", "medium", "high", "auto", "smart"], ["auto", "smart"]
+        opp. ["off", "low", "medium", "high", "auto", "smart"], ["auto", "smart"]
     )
 
     # Turn on fan
@@ -903,7 +903,7 @@ async def test_set_invalid_direction.opp, calls):
 
 
 def _verify(
-    opp,
+    opp.
     expected_state,
     expected_speed,
     expected_percentage,
@@ -926,12 +926,12 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
     """Register basic components for testing."""
     with assert_setup_component(1, "input_boolean"):
         assert await setup.async_setup_component(
-            opp, "input_boolean", {"input_boolean": {"state": None}}
+            opp. "input_boolean", {"input_boolean": {"state": None}}
         )
 
     with assert_setup_component(1, "input_number"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "input_number",
             {
                 "input_number": {
@@ -948,7 +948,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
 
     with assert_setup_component(4, "input_select"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "input_select",
             {
                 "input_select": {
@@ -1048,7 +1048,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
             test_fan_config["preset_modes"] = preset_modes
 
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "fan",
             {"fan": {"platform": "template", "fans": {"test_fan": test_fan_config}}},
         )
@@ -1061,7 +1061,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
 async def test_unique_id.opp):
     """Test unique_id option only creates one fan per id."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "fan",
         {
             "fan": {

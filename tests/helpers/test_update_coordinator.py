@@ -29,7 +29,7 @@ def get_crd.opp, update_interval):
         return calls
 
     crd = update_coordinator.DataUpdateCoordinator[int](
-        opp,
+        opp.
         _LOGGER,
         name="test",
         update_method=refresh,
@@ -302,8 +302,8 @@ async def test_stop_refresh_on_op_stop.opp, crd):
     assert crd.data == 1
 
     # Fire Open Peer Power stop event
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-   .opp.state = CoreState.stopping
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.state = CoreState.stopping
     await opp.async_block_till_done()
 
     # Make sure no update with subscriber after stop event

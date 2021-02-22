@@ -99,7 +99,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         value_template,
     )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, sensor.stop_serial_read)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, sensor.stop_serial_read)
     async_add_entities([sensor], True)
 
 

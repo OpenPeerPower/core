@@ -18,7 +18,7 @@ from openpeerpower.components.emulated_roku.binding import (
 async def test_events_fired_properly.opp):
     """Test that events are fired correctly."""
     binding = EmulatedRoku(
-        opp, "Test Emulated Roku", "1.2.3.4", 8060, None, None, None
+        opp. "Test Emulated Roku", "1.2.3.4", 8060, None, None, None
     )
 
     events = []
@@ -45,7 +45,7 @@ async def test_events_fired_properly.opp):
     with patch(
         "openpeerpower.components.emulated_roku.binding.EmulatedRokuServer", instantiate
     ):
-       .opp.bus.async_listen(EVENT_ROKU_COMMAND, listener)
+        opp.bus.async_listen(EVENT_ROKU_COMMAND, listener)
 
         assert await binding.setup() is True
 

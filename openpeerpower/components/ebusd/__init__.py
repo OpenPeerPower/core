@@ -65,7 +65,7 @@ def setup_opp, config):
     try:
 
         ebusdpy.init(server_address)
-       .opp.data[DOMAIN] = EbusdData(server_address, circuit)
+        opp.data[DOMAIN] = EbusdData(server_address, circuit)
 
         sensor_config = {
             CONF_MONITORED_CONDITIONS: monitored_conditions,
@@ -74,7 +74,7 @@ def setup_opp, config):
         }
         load_platform.opp, "sensor", DOMAIN, sensor_config, config)
 
-       .opp.services.register(DOMAIN, SERVICE_EBUSD_WRITE, opp.data[DOMAIN].write)
+        opp.services.register(DOMAIN, SERVICE_EBUSD_WRITE, opp.data[DOMAIN].write)
 
         _LOGGER.debug("Ebusd integration setup completed")
         return True

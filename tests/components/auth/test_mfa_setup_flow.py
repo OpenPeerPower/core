@@ -9,8 +9,8 @@ from tests.common import CLIENT_ID, MockUser, ensure_auth_manager_loaded
 
 async def test_ws_setup_depose_mfa.opp, opp_ws_client):
     """Test set up mfa module for current user."""
-   .opp.auth = await auth_manager_from_config(
-        opp,
+    opp.auth = await auth_manager_from_config(
+        opp.
         provider_configs=[
             {
                 "type": "insecure_example",

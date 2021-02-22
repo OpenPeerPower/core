@@ -102,13 +102,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     entities_to_create = opp.data[DATA_ZHA][light.DOMAIN]
 
     unsub = async_dispatcher_connect(
-        opp,
+        opp.
         SIGNAL_ADD_ENTITIES,
         functools.partial(
             discovery.async_add_entities, async_add_entities, entities_to_create
         ),
     )
-   .opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
+    opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
 
 
 class BaseLight(LogMixin, light.LightEntity):

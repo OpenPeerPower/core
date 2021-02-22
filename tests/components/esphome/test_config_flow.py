@@ -264,7 +264,7 @@ async def test_discovery_already_configured_name.opp, mock_client):
 
     mock_entry_data = MagicMock()
     mock_entry_data.device_info.name = "test8266"
-   .opp.data[DOMAIN] = {entry.entry_id: mock_entry_data}
+    opp.data[DOMAIN] = {entry.entry_id: mock_entry_data}
 
     service_info = {
         "host": "192.168.43.184",

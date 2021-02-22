@@ -31,7 +31,7 @@ from openpeerpower.loader import bind.opp
 
 @bind.opp
 def turn_on(
-    opp,
+    opp.
     entity_id=ENTITY_MATCH_ALL,
     transition=None,
     brightness=None,
@@ -48,9 +48,9 @@ def turn_on(
     color_name=None,
 ):
     """Turn all or specified light on."""
-   .opp.add_job(
+    opp.add_job(
         async_turn_on,
-        opp,
+        opp.
         entity_id,
         transition,
         brightness,
@@ -69,7 +69,7 @@ def turn_on(
 
 
 async def async_turn_on(
-    opp,
+    opp.
     entity_id=ENTITY_MATCH_ALL,
     transition=None,
     brightness=None,
@@ -113,7 +113,7 @@ async def async_turn_on(
 @bind.opp
 def turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):
     """Turn all or specified light off."""
-   .opp.add_job(async_turn_off, opp, entity_id, transition)
+    opp.add_job(async_turn_off, opp, entity_id, transition)
 
 
 async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):
@@ -129,7 +129,7 @@ async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):
 
 @bind.opp
 def toggle(
-    opp,
+    opp.
     entity_id=ENTITY_MATCH_ALL,
     transition=None,
     brightness=None,
@@ -146,9 +146,9 @@ def toggle(
     color_name=None,
 ):
     """Toggle all or specified light."""
-   .opp.add_job(
+    opp.add_job(
         async_toggle,
-        opp,
+        opp.
         entity_id,
         transition,
         brightness,
@@ -167,7 +167,7 @@ def toggle(
 
 
 async def async_toggle(
-    opp,
+    opp.
     entity_id=ENTITY_MATCH_ALL,
     transition=None,
     brightness=None,

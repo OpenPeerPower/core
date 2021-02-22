@@ -146,13 +146,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 async def _async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities
+    opp. OpenPeerPowerType, config: ConfigType, async_add_entities
 ):
     """Set up the cast platform."""
     # Import CEC IGNORE attributes
     pychromecast.IGNORE_CEC += config.get(CONF_IGNORE_CEC, [])
-   .opp.data.setdefault(ADDED_CAST_DEVICES_KEY, set())
-   .opp.data.setdefault(KNOWN_CHROMECAST_INFO_KEY, {})
+    opp.data.setdefault(ADDED_CAST_DEVICES_KEY, set())
+    opp.data.setdefault(KNOWN_CHROMECAST_INFO_KEY, {})
 
     info = None
     if CONF_UUID in config:
@@ -177,7 +177,7 @@ async def _async_setup_platform(
         async_cast_discovered(chromecast)
 
     ChromeCastZeroconf.set_zeroconf(await zeroconf.async_get_instance.opp))
-   .opp.async_add_executor_job(setup_internal_discovery, opp)
+    opp.async_add_executor_job(setup_internal_discovery, opp)
 
 
 class CastDevice(MediaPlayerEntity):
@@ -510,7 +510,7 @@ class CastDevice(MediaPlayerEntity):
                 )
 
             # prepend external URL
-           .opp_url = get_url(self.opp, prefer_external=True)
+            opp.url = get_url(self.opp, prefer_external=True)
             media_id = f".opp_url}{media_id}"
 
         await self.opp.async_add_executor_job(

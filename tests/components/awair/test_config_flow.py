@@ -57,7 +57,7 @@ async def test_duplicate_error(opp):
         return_value=True,
     ):
         MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to.opp(
-           .opp
+            opp
         )
 
         result = await opp.config_entries.flow.async_init(
@@ -127,7 +127,7 @@ async def test_import_aborts_if_configured.opp):
         return_value=True,
     ):
         MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to.opp(
-           .opp
+            opp
         )
 
         result = await opp.config_entries.flow.async_init(
@@ -150,7 +150,7 @@ async def test_reauth.opp):
     ):
         mock_config = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
         mock_config.add_to.opp.opp)
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             mock_config, data={**CONFIG, CONF_ACCESS_TOKEN: "blah"}
         )
 

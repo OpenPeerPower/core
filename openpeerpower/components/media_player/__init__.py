@@ -213,9 +213,9 @@ async def async_setup_opp, config):
         logging.getLogger(__name__), DOMAIN, opp, SCAN_INTERVAL
     )
 
-   .opp.components.websocket_api.async_register_command(websocket_handle_thumbnail)
-   .opp.components.websocket_api.async_register_command(websocket_browse_media)
-   .opp.http.register_view(MediaPlayerImageView(component))
+    opp.components.websocket_api.async_register_command(websocket_handle_thumbnail)
+    opp.components.websocket_api.async_register_command(websocket_browse_media)
+    opp.http.register_view(MediaPlayerImageView(component))
 
     await component.async_setup(config)
 

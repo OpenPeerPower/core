@@ -67,7 +67,7 @@ def idfn(val):
 @pytest.mark.parametrize("type,day,expected", NORTHERN_PARAMETERS, ids=idfn)
 async def test_season_northern_hemisphere.opp, type, day, expected):
     """Test that season should be summer."""
-   .opp.config.latitude = HEMISPHERE_NORTHERN["openpeerpower"]["latitude"]
+    opp.config.latitude = HEMISPHERE_NORTHERN["openpeerpower"]["latitude"]
 
     config = {
         **HEMISPHERE_NORTHERN,
@@ -86,7 +86,7 @@ async def test_season_northern_hemisphere.opp, type, day, expected):
 @pytest.mark.parametrize("type,day,expected", SOUTHERN_PARAMETERS, ids=idfn)
 async def test_season_southern_hemisphere.opp, type, day, expected):
     """Test that season should be summer."""
-   .opp.config.latitude = HEMISPHERE_SOUTHERN["openpeerpower"]["latitude"]
+    opp.config.latitude = HEMISPHERE_SOUTHERN["openpeerpower"]["latitude"]
 
     config = {
         **HEMISPHERE_SOUTHERN,
@@ -104,7 +104,7 @@ async def test_season_southern_hemisphere.opp, type, day, expected):
 
 async def test_season_equator.opp):
     """Test that season should be unknown for equator."""
-   .opp.config.latitude = HEMISPHERE_EQUATOR["openpeerpower"]["latitude"]
+    opp.config.latitude = HEMISPHERE_EQUATOR["openpeerpower"]["latitude"]
     day = datetime(2017, 9, 3, 0, 0)
 
     with patch("openpeerpower.components.season.sensor.utcnow", return_value=day):
@@ -118,7 +118,7 @@ async def test_season_equator.opp):
 
 async def test_setup_hemisphere_empty.opp):
     """Test platform setup of missing latlong."""
-   .opp.config.latitude = None
+    opp.config.latitude = None
     assert await async_setup_component.opp, "sensor", HEMISPHERE_EMPTY)
     await opp.async_block_till_done()
     assert.opp.config.as_dict()["latitude"] is None

@@ -93,7 +93,7 @@ async def async_setup_opp, config):
 
         entities.append(
             Alert(
-                opp,
+                opp.
                 object_id,
                 name,
                 watched_entity_id,
@@ -130,16 +130,16 @@ async def async_setup_opp, config):
                     await alert.async_turn_off()
 
     # Setup service calls
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_TURN_OFF,
         async_handle_alert_service,
         schema=ALERT_SERVICE_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_TURN_ON, async_handle_alert_service, schema=ALERT_SERVICE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_TOGGLE, async_handle_alert_service, schema=ALERT_SERVICE_SCHEMA
     )
 
@@ -154,7 +154,7 @@ class Alert(ToggleEntity):
 
     def __init__(
         self,
-        opp,
+        opp.
         entity_id,
         name,
         watched_entity_id,
@@ -200,7 +200,7 @@ class Alert(ToggleEntity):
         self.entity_id = f"{DOMAIN}.{entity_id}"
 
         event.async_track_state_change_event(
-            opp, [watched_entity_id], self.watched_entity_change
+            opp. [watched_entity_id], self.watched_entity_change
         )
 
     @property

@@ -23,7 +23,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up the Agent component."""
-   .opp.data.setdefault(AGENT_DOMAIN, {})
+    opp.data.setdefault(AGENT_DOMAIN, {})
 
     server_origin = config_entry.data[SERVER_URL]
 
@@ -39,7 +39,7 @@ async def async_setup_entry.opp, config_entry):
 
     await agent_client.get_devices()
 
-   .opp.data[AGENT_DOMAIN][config_entry.entry_id] = {CONNECTION: agent_client}
+    opp.data[AGENT_DOMAIN][config_entry.entry_id] = {CONNECTION: agent_client}
 
     device_registry = await dr.async_get_registry.opp)
 
@@ -53,8 +53,8 @@ async def async_setup_entry.opp, config_entry):
     )
 
     for forward in FORWARDS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, forward)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, forward)
         )
 
     return True
@@ -65,7 +65,7 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, forward)
+                opp.config_entries.async_forward_entry_unload(config_entry, forward)
                 for forward in FORWARDS
             ]
         )
@@ -74,6 +74,6 @@ async def async_unload_entry.opp, config_entry):
     await opp.data[AGENT_DOMAIN][config_entry.entry_id][CONNECTION].close()
 
     if unload_ok:
-       .opp.data[AGENT_DOMAIN].pop(config_entry.entry_id)
+        opp.data[AGENT_DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok

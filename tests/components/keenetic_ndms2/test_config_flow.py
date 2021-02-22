@@ -108,8 +108,8 @@ async def test_options.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
     # fake router
-   .opp.data.setdefault(keenetic.DOMAIN, {})
-   .opp.data[keenetic.DOMAIN][entry.entry_id] = {
+    opp.data.setdefault(keenetic.DOMAIN, {})
+    opp.data[keenetic.DOMAIN][entry.entry_id] = {
         keenetic.ROUTER: Mock(
             client=Mock(
                 get_interfaces=Mock(

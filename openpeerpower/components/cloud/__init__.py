@@ -190,7 +190,7 @@ async def async_setup_opp, config):
         """Shutdown event."""
         await cloud.stop()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
 
     async def _service_handler(service):
         """Handle service for cloud."""
@@ -201,10 +201,10 @@ async def async_setup_opp, config):
             await cloud.remote.disconnect()
             await prefs.async_update(remote_enabled=False)
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN, SERVICE_REMOTE_CONNECT, _service_handler
     )
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN, SERVICE_REMOTE_DISCONNECT, _service_handler
     )
 

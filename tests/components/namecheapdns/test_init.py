@@ -23,9 +23,9 @@ def setup_namecheapdns.opp, aioclient_mock):
         text="<interface-response><ErrCount>0</ErrCount></interface-response>",
     )
 
-   .opp.loop.run_until_complete(
+    opp.loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             namecheapdns.DOMAIN,
             {"namecheapdns": {"host": HOST, "domain": DOMAIN, "password": PASSWORD}},
         )
@@ -41,7 +41,7 @@ async def test_setup_opp, aioclient_mock):
     )
 
     result = await async_setup_component(
-        opp,
+        opp.
         namecheapdns.DOMAIN,
         {"namecheapdns": {"host": HOST, "domain": DOMAIN, "password": PASSWORD}},
     )
@@ -62,7 +62,7 @@ async def test_setup_fails_if_update_fails.opp, aioclient_mock):
     )
 
     result = await async_setup_component(
-        opp,
+        opp.
         namecheapdns.DOMAIN,
         {"namecheapdns": {"host": HOST, "domain": DOMAIN, "password": PASSWORD}},
     )

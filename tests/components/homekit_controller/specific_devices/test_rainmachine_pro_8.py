@@ -23,7 +23,7 @@ async def test_rainmachine_pro_8_setup_opp):
     assert entry.unique_id == "homekit-00aa0000aa0a-512"
 
     helper = Helper(
-        opp, "switch.rainmachine_00ce4a", pairing, accessories[0], config_entry
+        opp. "switch.rainmachine_00ce4a", pairing, accessories[0], config_entry
     )
     state = await helper.poll_and_get_state()
 

@@ -22,9 +22,9 @@ async def async_setup_opp, config):
 
     def prepare_gpio(event):
         """Stuff to do when Open Peer Power starts."""
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gpio)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gpio)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, prepare_gpio)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, prepare_gpio)
     return True
 
 

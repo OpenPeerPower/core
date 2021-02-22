@@ -10,11 +10,11 @@ from tests.common import fire_time_changed
 
 def wait_recording_done.opp):
     """Block till recording is done."""
-   .opp.block_till_done()
+    opp.block_till_done()
     trigger_db_commit.opp)
-   .opp.block_till_done()
-   .opp.data[recorder.DATA_INSTANCE].block_till_done()
-   .opp.block_till_done()
+    opp.block_till_done()
+    opp.data[recorder.DATA_INSTANCE].block_till_done()
+    opp.block_till_done()
 
 
 async def async_wait_recording_done.opp):

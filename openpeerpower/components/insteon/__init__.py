@@ -76,11 +76,11 @@ async def async_setup_opp, config):
     conf = config[DOMAIN]
     data, options = convert_yaml_to_config_flow(conf)
     if options:
-       .opp.data[DOMAIN] = {}
-       .opp.data[DOMAIN][OPTIONS] = options
+        opp.data[DOMAIN] = {}
+        opp.data[DOMAIN][OPTIONS] = options
     # Create a config entry with the connection data
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=data
         )
     )
@@ -97,7 +97,7 @@ async def async_setup_entry.opp, entry):
             _LOGGER.error("Could not connect to Insteon modem")
             raise ConfigEntryNotReady from exception
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_insteon_connection)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_insteon_connection)
 
     await devices.async_load(
         workdir.opp.config.config_dir, id_devices=0, load_modem_aldb=0
@@ -111,7 +111,7 @@ async def async_setup_entry.opp, entry):
         and.opp.data.get(DOMAIN)
         and.opp.data[DOMAIN].get(OPTIONS)
     ):
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry=entry,
             options.opp.data[DOMAIN][OPTIONS],
         )
@@ -139,8 +139,8 @@ async def async_setup_entry.opp, entry):
         device = devices.add_x10_device(housecode, unitcode, x10_type, steps)
 
     for component in INSTEON_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     for address in devices:

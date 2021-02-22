@@ -47,7 +47,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.test_5678", "attributes", {"supported_features": 15}
     )
     expected_actions = [
@@ -95,7 +95,7 @@ async def test_get_actions_arm_night_only.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.test_5678", "attributes", {"supported_features": 4}
     )
     expected_actions = [
@@ -149,7 +149,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         assert capabilities == expected_capabilities[action["type"]]
 
@@ -193,7 +193,7 @@ async def test_get_action_capabilities_arm_code.opp, device_reg, entity_reg):
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         assert capabilities == expected_capabilities[action["type"]]
 
@@ -204,7 +204,7 @@ async def test_action.opp):
     platform.init()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -273,40 +273,40 @@ async def test_action.opp):
     await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("alarm_control_panel.alarm_no_arm_code").state == STATE_UNKNOWN
+        opp.states.get("alarm_control_panel.alarm_no_arm_code").state == STATE_UNKNOWN
     )
 
-   .opp.bus.async_fire("test_event_arm_away")
+    opp.bus.async_fire("test_event_arm_away")
     await opp.async_block_till_done()
     assert (
-       .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
+        opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_ARMED_AWAY
     )
 
-   .opp.bus.async_fire("test_event_arm_home")
+    opp.bus.async_fire("test_event_arm_home")
     await opp.async_block_till_done()
     assert (
-       .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
+        opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_ARMED_HOME
     )
 
-   .opp.bus.async_fire("test_event_arm_night")
+    opp.bus.async_fire("test_event_arm_night")
     await opp.async_block_till_done()
     assert (
-       .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
+        opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_ARMED_NIGHT
     )
 
-   .opp.bus.async_fire("test_event_disarm")
+    opp.bus.async_fire("test_event_disarm")
     await opp.async_block_till_done()
     assert (
-       .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
+        opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_DISARMED
     )
 
-   .opp.bus.async_fire("test_event_trigger")
+    opp.bus.async_fire("test_event_trigger")
     await opp.async_block_till_done()
     assert (
-       .opp.states.get("alarm_control_panel.alarm_no_arm_code").state
+        opp.states.get("alarm_control_panel.alarm_no_arm_code").state
         == STATE_ALARM_TRIGGERED
     )

@@ -35,7 +35,7 @@ async def test_future_discovery_message.opp, mqtt_mock, caplog):
         await setup_tasmota_helper.opp)
 
         async_fire_mqtt_message(
-            opp, f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
+            opp. f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
         )
         await opp.async_block_till_done()
         assert mock_tasmota_get_device_config.called
@@ -52,7 +52,7 @@ async def test_valid_discovery_message.opp, mqtt_mock, caplog):
         await setup_tasmota_helper.opp)
 
         async_fire_mqtt_message(
-            opp, f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
+            opp. f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
         )
         await opp.async_block_till_done()
         assert mock_tasmota_get_device_config.called
@@ -93,7 +93,7 @@ async def test_invalid_mac.opp, mqtt_mock, caplog):
         await setup_tasmota_helper.opp)
 
         async_fire_mqtt_message(
-            opp, f"{DEFAULT_PREFIX}/00000049A3BA/config", json.dumps(config)
+            opp. f"{DEFAULT_PREFIX}/00000049A3BA/config", json.dumps(config)
         )
         await opp.async_block_till_done()
         assert "MAC mismatch" in caplog.text
@@ -101,7 +101,7 @@ async def test_invalid_mac.opp, mqtt_mock, caplog):
 
 
 async def test_correct_config_discovery(
-    opp, mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
+    opp. mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
 ):
     """Test receiving valid discovery message."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -109,7 +109,7 @@ async def test_correct_config_discovery(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -129,14 +129,14 @@ async def test_correct_config_discovery(
 
 
 async def test_device_discover(
-    opp, mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
+    opp. mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
 ):
     """Test setting up a device."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -152,14 +152,14 @@ async def test_device_discover(
 
 
 async def test_device_discover_deprecated(
-    opp, mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
+    opp. mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
 ):
     """Test setting up a device with deprecated discovery message."""
     config = copy.deepcopy(DEFAULT_CONFIG_9_0_0_3)
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -175,7 +175,7 @@ async def test_device_discover_deprecated(
 
 
 async def test_device_update(
-    opp, mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
+    opp. mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
 ):
     """Test updating a device."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -185,7 +185,7 @@ async def test_device_update(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -201,7 +201,7 @@ async def test_device_update(
     config["sw"] = "v6.6.6"
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -216,14 +216,14 @@ async def test_device_update(
 
 
 async def test_device_remove(
-    opp, mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
+    opp. mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
 ):
     """Test removing a discovered device."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -234,7 +234,7 @@ async def test_device_remove(
     assert device_entry is not None
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         "",
     )
@@ -270,14 +270,14 @@ async def test_device_remove_stale.opp, mqtt_mock, caplog, device_reg, setup_tas
 
 
 async def test_device_rediscover(
-    opp, mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
+    opp. mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
 ):
     """Test removing a device."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -288,7 +288,7 @@ async def test_device_rediscover(
     assert device_entry1 is not None
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         "",
     )
@@ -299,7 +299,7 @@ async def test_device_rediscover(
     assert device_entry is None
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -318,12 +318,12 @@ async def test_entity_duplicate_discovery.opp, mqtt_mock, caplog, setup_tasmota)
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -348,7 +348,7 @@ async def test_entity_duplicate_removal.opp, mqtt_mock, caplog, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )

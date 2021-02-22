@@ -60,8 +60,8 @@ async def async_setup_opp, config):
     if identifier in configured_instances.opp):
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={
@@ -78,8 +78,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up the GeoNet NZ Volcano component as config entry."""
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN].setdefault(FEED, {})
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN].setdefault(FEED, {})
 
     radius = config_entry.data[CONF_RADIUS]
     unit_system = config_entry.data[CONF_UNIT_SYSTEM]
@@ -87,7 +87,7 @@ async def async_setup_entry.opp, config_entry):
         radius = METRIC_SYSTEM.length(radius, LENGTH_MILES)
     # Create feed entity manager for all platforms.
     manager = GeonetnzVolcanoFeedEntityManager.opp, config_entry, radius, unit_system)
-   .opp.data[DOMAIN][FEED][config_entry.entry_id] = manager
+    opp.data[DOMAIN][FEED][config_entry.entry_id] = manager
     _LOGGER.debug("Feed entity manager added for %s", config_entry.entry_id)
     await manager.async_init()
     return True
@@ -98,7 +98,7 @@ async def async_unload_entry.opp, config_entry):
     manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
     await asyncio.wait(
-        .opp.config_entries.async_forward_entry_unload(config_entry, "sensor")]
+         opp.config_entries.async_forward_entry_unload(config_entry, "sensor")]
     )
     return True
 

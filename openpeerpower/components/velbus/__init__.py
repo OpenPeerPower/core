@@ -35,8 +35,8 @@ async def async_setup_opp, config):
 
     if port:
         data = {CONF_PORT: port, CONF_NAME: "Velbus import"}
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=data
         )
     )
@@ -46,7 +46,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Establish connection with velbus."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     def callback():
         modules = controller.get_modules()
@@ -60,10 +60,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
                         discovery_info[category].append(
                             (module.get_module_address(), channel)
                         )
-       .opp.data[DOMAIN][entry.entry_id] = discovery_info
+        opp.data[DOMAIN][entry.entry_id] = discovery_info
 
         for category in COMPONENT_TYPES:
-           .opp.add_job.opp.config_entries.async_forward_entry_setup(entry, category))
+            opp.add_job.opp.config_entries.async_forward_entry_setup(entry, category))
 
     try:
         controller = velbus.Controller(entry.data[CONF_PORT])
@@ -78,7 +78,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         except velbus.util.VelbusException as err:
             _LOGGER.error("An error occurred: %s", err)
 
-   .opp.services.async_register(DOMAIN, "sync_clock", syn_clock, schema=vol.Schema({}))
+    opp.services.async_register(DOMAIN, "sync_clock", syn_clock, schema=vol.Schema({}))
 
     def set_memo_text(service):
         """Handle Memo Text service call."""
@@ -92,7 +92,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         except velbus.util.VelbusException as err:
             _LOGGER.error("An error occurred while setting memo text: %s", err)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_MEMO_TEXT,
         set_memo_text,
@@ -113,14 +113,14 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Remove the velbus connection."""
     await asyncio.wait(
         [
-           .opp.config_entries.async_forward_entry_unload(entry, component)
+            opp.config_entries.async_forward_entry_unload(entry, component)
             for component in COMPONENT_TYPES
         ]
     )
-   .opp.data[DOMAIN][entry.entry_id]["cntrl"].stop()
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN][entry.entry_id]["cntrl"].stop()
+    opp.data[DOMAIN].pop(entry.entry_id)
     if not.opp.data[DOMAIN]:
-       .opp.data.pop(DOMAIN)
+        opp.data.pop(DOMAIN)
     return True
 
 

@@ -49,7 +49,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Set up the logger component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     logging.setLoggerClass(_get_logger_class.opp.data[DOMAIN]))
 
     @callback
@@ -60,7 +60,7 @@ async def async_setup_opp, config):
     @callback
     def set_log_levels(logpoints):
         """Set the specified log levels."""
-       .opp.data[DOMAIN].update(logpoints)
+        opp.data[DOMAIN].update(logpoints)
         for key, value in logpoints.items():
             _set_log_level(logging.getLogger(key), value)
 
@@ -78,14 +78,14 @@ async def async_setup_opp, config):
         else:
             set_log_levels(service.data)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_DEFAULT_LEVEL,
         async_service_handler,
         schema=SERVICE_SET_DEFAULT_LEVEL_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_LEVEL,
         async_service_handler,

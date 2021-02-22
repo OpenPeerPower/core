@@ -4,7 +4,7 @@ DOMAIN = "map"
 
 async def async_setup_opp, config):
     """Register the built-in map panel."""
-   .opp.components.frontend.async_register_built_in_panel(
-        "map", "map", .opp:tooltip-account"
+    opp.components.frontend.async_register_built_in_panel(
+        "map", "map",  opp.tooltip-account"
     )
     return True

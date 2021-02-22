@@ -34,27 +34,27 @@ def generate_media_source_id(domain: str, identifier: str) -> str:
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the media_source component."""
-   .opp.data[DOMAIN] = {}
-   .opp.components.websocket_api.async_register_command(websocket_browse_media)
-   .opp.components.websocket_api.async_register_command(websocket_resolve_media)
-   .opp.components.frontend.async_register_built_in_panel(
-        "media-browser", "media_browser", .opp:play-box-multiple"
+    opp.data[DOMAIN] = {}
+    opp.components.websocket_api.async_register_command(websocket_browse_media)
+    opp.components.websocket_api.async_register_command(websocket_resolve_media)
+    opp.components.frontend.async_register_built_in_panel(
+        "media-browser", "media_browser",  opp.play-box-multiple"
     )
     local_source.async_setup_opp)
     await async_process_integration_platforms(
-        opp, DOMAIN, _process_media_source_platform
+        opp. DOMAIN, _process_media_source_platform
     )
     return True
 
 
 async def _process_media_source_platform.opp, domain, platform):
     """Process a media source platform."""
-   .opp.data[DOMAIN][domain] = await platform.async_get_media_source.opp)
+    opp.data[DOMAIN][domain] = await platform.async_get_media_source.opp)
 
 
 @callback
 def _get_media_item(
-    opp: OpenPeerPower, media_content_id: Optional[str]
+    opp. OpenPeerPower, media_content_id: Optional[str]
 ) -> models.MediaSourceItem:
     """Return media item."""
     if media_content_id:
@@ -67,7 +67,7 @@ def _get_media_item(
 
 @bind.opp
 async def async_browse_media(
-    opp: OpenPeerPower, media_content_id: str
+    opp. OpenPeerPower, media_content_id: str
 ) -> models.BrowseMediaSource:
     """Return media player browse media results."""
     return await _get_media_item.opp, media_content_id).async_browse()
@@ -75,7 +75,7 @@ async def async_browse_media(
 
 @bind.opp
 async def async_resolve_media(
-    opp: OpenPeerPower, media_content_id: str
+    opp. OpenPeerPower, media_content_id: str
 ) -> models.PlayMedia:
     """Get info to play media."""
     return await _get_media_item.opp, media_content_id).async_resolve()
@@ -118,7 +118,7 @@ async def websocket_resolve_media.opp, connection, msg):
     else:
         if url[0] == "/":
             url = async_sign_path(
-                opp,
+                opp.
                 connection.refresh_token_id,
                 url,
                 timedelta(seconds=msg["expires"]),

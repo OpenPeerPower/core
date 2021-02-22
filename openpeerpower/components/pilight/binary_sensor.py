@@ -44,7 +44,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         add_entities(
             [
                 PilightTriggerSensor(
-                   .opp.opp,
+                    opp.opp,
                     name=config.get(CONF_NAME),
                     variable=config.get(CONF_VARIABLE),
                     payload=config.get(CONF_PAYLOAD),
@@ -58,7 +58,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         add_entities(
             [
                 PilightBinarySensor(
-                   .opp.opp,
+                    opp.opp,
                     name=config.get(CONF_NAME),
                     variable=config.get(CONF_VARIABLE),
                     payload=config.get(CONF_PAYLOAD),
@@ -82,7 +82,7 @@ class PilightBinarySensor(BinarySensorEntity):
         self._on_value = on_value
         self._off_value = off_value
 
-       .opp.bus.listen(pilight.EVENT, self._handle_code)
+        opp.bus.listen(pilight.EVENT, self._handle_code)
 
     @property
     def name(self):
@@ -136,7 +136,7 @@ class PilightTriggerSensor(BinarySensorEntity):
         self._delay_after = None
         self.opp = opp
 
-       .opp.bus.listen(pilight.EVENT, self._handle_code)
+        opp.bus.listen(pilight.EVENT, self._handle_code)
 
     @property
     def name(self):

@@ -38,7 +38,7 @@ def turn_on.opp, entity_id, variables=None, context=None):
     """
     _, object_id = split_entity_id(entity_id)
 
-   .opp.services.call(DOMAIN, object_id, variables, context=context)
+    opp.services.call(DOMAIN, object_id, variables, context=context)
 
 
 @bind.opp
@@ -47,7 +47,7 @@ def turn_off.opp, entity_id):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-   .opp.services.call(DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: entity_id})
+    opp.services.call(DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: entity_id})
 
 
 @bind.opp
@@ -56,7 +56,7 @@ def toggle.opp, entity_id):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-   .opp.services.call(DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: entity_id})
+    opp.services.call(DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: entity_id})
 
 
 @bind.opp
@@ -65,7 +65,7 @@ def reload.opp):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-   .opp.services.call(DOMAIN, SERVICE_RELOAD)
+    opp.services.call(DOMAIN, SERVICE_RELOAD)
 
 
 class TestScriptComponent(unittest.TestCase):
@@ -134,7 +134,7 @@ async def test_turn_on_off_toggle.opp, toggle):
     event = "test_event"
     event_mock = Mock()
 
-   .opp.bus.async_listen(event, event_mock)
+    opp.bus.async_listen(event, event_mock)
 
     was_on = False
 
@@ -150,7 +150,7 @@ async def test_turn_on_off_toggle.opp, toggle):
     else:
         turn_off_step = {"service": "script.turn_off", "entity_id": ENTITY_ID}
     assert await async_setup_component(
-        opp,
+        opp.
         "script",
         {
             "script": {
@@ -187,7 +187,7 @@ invalid_configs = [
 async def test_setup_with_invalid_configs.opp, value):
     """Test setup with invalid configs."""
     assert await async_setup_component(
-        opp, "script", {"script": value}
+        opp. "script", {"script": value}
     ), f"Script loaded with wrong config {value}"
 
     assert 0 == len.opp.states.async_entity_ids("script"))
@@ -203,11 +203,11 @@ async def test_reload_service.opp, running):
     def event_handler(event):
         event_flag.set()
 
-   .opp.bus.async_listen_once(event, event_handler)
-   .opp.states.async_set("test.script", "off")
+    opp.bus.async_listen_once(event, event_handler)
+    opp.states.async_set("test.script", "off")
 
     assert await async_setup_component(
-        opp,
+        opp.
         "script",
         {
             "script": {
@@ -255,7 +255,7 @@ async def test_service_descriptions.opp):
     """Test that service descriptions are loaded and reloaded correctly."""
     # Test 1: has "description" but no "fields"
     assert await async_setup_component(
-        opp,
+        opp.
         "script",
         {
             "script": {
@@ -312,11 +312,11 @@ async def test_shared_context.opp):
     event_mock = Mock()
     run_mock = Mock()
 
-   .opp.bus.async_listen(event, event_mock)
-   .opp.bus.async_listen(EVENT_SCRIPT_STARTED, run_mock)
+    opp.bus.async_listen(event, event_mock)
+    opp.bus.async_listen(EVENT_SCRIPT_STARTED, run_mock)
 
     assert await async_setup_component(
-        opp, "script", {"script": {"test": {"sequence": [{"event": event}]}}}
+        opp. "script", {"script": {"test": {"sequence": [{"event": event}]}}}
     )
 
     await opp.services.async_call(
@@ -346,7 +346,7 @@ async def test_shared_context.opp):
 async def test_logging_script_error(opp, caplog):
     """Test logging script error."""
     assert await async_setup_component(
-        opp,
+        opp.
         "script",
         {"script": {"hello": {"sequence": [{"service": "non.existing"}]}}},
     )
@@ -405,7 +405,7 @@ async def test_async_get_descriptions_script.opp):
 async def test_extraction_functions.opp):
     """Test extraction functions."""
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -478,7 +478,7 @@ async def test_extraction_functions.opp):
 async def test_config_basic.opp):
     """Test passing info in config."""
     assert await async_setup_component(
-        opp,
+        opp.
         "script",
         {
             "script": {
@@ -498,14 +498,14 @@ async def test_config_basic.opp):
 
 async def test_logbook_humanify_script_started_event.opp):
     """Test humanifying script started event."""
-   .opp.config.components.add("recorder")
+    opp.config.components.add("recorder")
     await async_setup_component.opp, DOMAIN, {})
     await async_setup_component.opp, "logbook", {})
     entity_attr_cache = logbook.EntityAttributeCache.opp)
 
     event1, event2 = list(
         logbook.humanify(
-            opp,
+            opp.
             [
                 MockLazyEventPartialState(
                     EVENT_SCRIPT_STARTED,
@@ -543,7 +543,7 @@ async def test_concurrent_script.opp, concurrently):
     else:
         call_script_2 = {"service": "script.script2"}
     assert await async_setup_component(
-        opp,
+        opp.
         "script",
         {
             "script": {
@@ -579,9 +579,9 @@ async def test_concurrent_script.opp, concurrently):
         service_values.append(service.data.get("value"))
         service_called.set()
 
-   .opp.services.async_register("test", "script", async_service_handler)
-   .opp.states.async_set("input_boolean.test1", "off")
-   .opp.states.async_set("input_boolean.test2", "off")
+    opp.services.async_register("test", "script", async_service_handler)
+    opp.states.async_set("input_boolean.test1", "off")
+    opp.states.async_set("input_boolean.test2", "off")
 
     await opp.services.async_call("script", "script1")
     await asyncio.wait_for(service_called.wait(), 1)
@@ -592,13 +592,13 @@ async def test_concurrent_script.opp, concurrently):
     assert script.is_on.opp, "script.script2")
 
     if not concurrently:
-       .opp.states.async_set("input_boolean.test2", "on")
+        opp.states.async_set("input_boolean.test2", "on")
         await asyncio.wait_for(service_called.wait(), 1)
         service_called.clear()
 
         assert "script2b" == service_values[-1]
 
-   .opp.states.async_set("input_boolean.test1", "on")
+    opp.states.async_set("input_boolean.test1", "on")
     await asyncio.wait_for(service_called.wait(), 1)
     service_called.clear()
 
@@ -606,7 +606,7 @@ async def test_concurrent_script.opp, concurrently):
     assert concurrently == script.is_on.opp, "script.script2")
 
     if concurrently:
-       .opp.states.async_set("input_boolean.test2", "on")
+        opp.states.async_set("input_boolean.test2", "on")
         await asyncio.wait_for(service_called.wait(), 1)
         service_called.clear()
 
@@ -621,7 +621,7 @@ async def test_concurrent_script.opp, concurrently):
 async def test_script_variables.opp, caplog):
     """Test defining scripts."""
     assert await async_setup_component(
-        opp,
+        opp.
         "script",
         {
             "script": {

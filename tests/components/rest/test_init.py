@@ -28,7 +28,7 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
 
     respx.get("http://localhost").mock(side_effect=asyncio.TimeoutError())
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [
@@ -142,7 +142,7 @@ async def test_setup_minimum_resource_template.opp):
         },
     )
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [
@@ -193,7 +193,7 @@ async def test_reload.opp):
     respx.get("http://localhost") % 200
 
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [
@@ -245,7 +245,7 @@ async def test_reload_and_remove_all.opp):
     respx.get("http://localhost") % 200
 
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [
@@ -295,7 +295,7 @@ async def test_reload_fails_to_read_configuration.opp):
     respx.get("http://localhost") % 200
 
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [

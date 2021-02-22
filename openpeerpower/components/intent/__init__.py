@@ -12,23 +12,23 @@ from .const import DOMAIN
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Intent component."""
-   .opp.http.register_view(IntentHandleView())
+    opp.http.register_view(IntentHandleView())
 
     await integration_platform.async_process_integration_platforms(
-        opp, DOMAIN, _async_process_intent
+        opp. DOMAIN, _async_process_intent
     )
 
-   .opp.helpers.intent.async_register(
+    opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
             intent.INTENT_TURN_ON, HA_DOMAIN, SERVICE_TURN_ON, "Turned {} on"
         )
     )
-   .opp.helpers.intent.async_register(
+    opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
             intent.INTENT_TURN_OFF, HA_DOMAIN, SERVICE_TURN_OFF, "Turned {} off"
         )
     )
-   .opp.helpers.intent.async_register(
+    opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
             intent.INTENT_TOGGLE, HA_DOMAIN, SERVICE_TOGGLE, "Toggled {}"
         )
@@ -58,7 +58,7 @@ class IntentHandleView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Handle intent with name/data."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         try:
             intent_name = data["name"]
@@ -66,7 +66,7 @@ class IntentHandleView(http.OpenPeerPowerView):
                 key: {"value": value} for key, value in data.get("data", {}).items()
             }
             intent_result = await intent.async_handle(
-                opp, DOMAIN, intent_name, slots, "", self.context(request)
+                opp. DOMAIN, intent_name, slots, "", self.context(request)
             )
         except intent.IntentHandleError as err:
             intent_result = intent.IntentResponse()

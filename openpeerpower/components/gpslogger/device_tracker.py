@@ -32,11 +32,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
         if device in.opp.data[GPL_DOMAIN]["devices"]:
             return
 
-       .opp.data[GPL_DOMAIN]["devices"].add(device)
+        opp.data[GPL_DOMAIN]["devices"].add(device)
 
         async_add_entities([GPSLoggerEntity(device, gps, battery, accuracy, attrs)])
 
-   .opp.data[GPL_DOMAIN]["unsub_device_tracker"][
+    opp.data[GPL_DOMAIN]["unsub_device_tracker"][
         entry.entry_id
     ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
 
@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
 
     entities = []
     for dev_id in dev_ids:
-       .opp.data[GPL_DOMAIN]["devices"].add(dev_id)
+        opp.data[GPL_DOMAIN]["devices"].add(dev_id)
         entity = GPSLoggerEntity(dev_id, None, None, None, None)
         entities.append(entity)
 

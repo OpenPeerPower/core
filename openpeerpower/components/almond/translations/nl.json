@@ -7,7 +7,7 @@
             "single_instance_allowed": "Al geconfigureerd. Slechts \u00e9\u00e9n configuratie mogelijk."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Wilt u Open Peer Power configureren om verbinding te maken met Almond die wordt aangeboden door de.opp.io add-on {addon} ?",
                 "title": "Almond via Hass.io add-on"
             },

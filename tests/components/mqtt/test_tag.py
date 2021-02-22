@@ -78,7 +78,7 @@ async def test_discover_bad_tag.opp, device_reg, entity_reg, mqtt_mock, tag_mock
 
 
 async def test_if_fires_on_mqtt_message_with_device(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning, with device."""
     config = copy.deepcopy(DEFAULT_CONFIG_DEVICE)
@@ -94,7 +94,7 @@ async def test_if_fires_on_mqtt_message_with_device(
 
 
 async def test_if_fires_on_mqtt_message_without_device(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning, without device."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -109,7 +109,7 @@ async def test_if_fires_on_mqtt_message_without_device(
 
 
 async def test_if_fires_on_mqtt_message_with_template(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning, with device."""
     config = copy.deepcopy(DEFAULT_CONFIG_JSON)
@@ -138,7 +138,7 @@ async def test_strip_tag_id.opp, device_reg, mqtt_mock, tag_mock):
 
 
 async def test_if_fires_on_mqtt_message_after_update_with_device(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning after update."""
     config1 = copy.deepcopy(DEFAULT_CONFIG_DEVICE)
@@ -182,7 +182,7 @@ async def test_if_fires_on_mqtt_message_after_update_with_device(
 
 
 async def test_if_fires_on_mqtt_message_after_update_without_device(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning after update."""
     config1 = copy.deepcopy(DEFAULT_CONFIG)
@@ -225,7 +225,7 @@ async def test_if_fires_on_mqtt_message_after_update_without_device(
 
 
 async def test_if_fires_on_mqtt_message_after_update_with_template(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning after update."""
     config1 = copy.deepcopy(DEFAULT_CONFIG_JSON)
@@ -284,7 +284,7 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock):
 
 
 async def test_not_fires_on_mqtt_message_after_remove_by_mqtt_with_device(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning after removal."""
     config = copy.deepcopy(DEFAULT_CONFIG_DEVICE)
@@ -317,7 +317,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt_with_device(
 
 
 async def test_not_fires_on_mqtt_message_after_remove_by_mqtt_without_device(
-    opp, device_reg, mqtt_mock, tag_mock
+    opp. device_reg, mqtt_mock, tag_mock
 ):
     """Test tag scanning not firing after removal."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -349,7 +349,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt_without_device(
 
 
 async def test_not_fires_on_mqtt_message_after_remove_from_registry(
-    opp,
+    opp.
     device_reg,
     mqtt_mock,
     tag_mock,
@@ -519,7 +519,7 @@ async def test_cleanup_device.opp, device_reg, entity_reg, mqtt_mock):
 
 
 async def test_cleanup_device_several_tags(
-    opp, device_reg, entity_reg, mqtt_mock, tag_mock
+    opp. device_reg, entity_reg, mqtt_mock, tag_mock
 ):
     """Test removal from device registry when the last tag is removed."""
     config1 = {
@@ -563,7 +563,7 @@ async def test_cleanup_device_several_tags(
 
 
 async def test_cleanup_device_with_entity_and_trigger_1(
-    opp, device_reg, entity_reg, mqtt_mock
+    opp. device_reg, entity_reg, mqtt_mock
 ):
     """Test removal from device registry for device with tag, entity and trigger.
 

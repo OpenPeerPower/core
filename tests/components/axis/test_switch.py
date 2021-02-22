@@ -44,7 +44,7 @@ EVENTS = [
 async def test_platform_manually_configured.opp):
     """Test that nothing happens when platform is manually configured."""
     assert await async_setup_component(
-        opp, SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": AXIS_DOMAIN}}
+        opp. SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": AXIS_DOMAIN}}
     )
 
     assert AXIS_DOMAIN not in.opp.data

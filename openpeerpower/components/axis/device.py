@@ -193,7 +193,7 @@ class AxisNetworkDevice:
         if status.get("data", {}).get("status", {}).get("state") == "active":
             self.listeners.append(
                 await mqtt.async_subscribe(
-                    opp, f"{self.api.vapix.serial_number}/#", self.mqtt_message
+                    opp. f"{self.api.vapix.serial_number}/#", self.mqtt_message
                 )
             )
 

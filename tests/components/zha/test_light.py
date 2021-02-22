@@ -229,7 +229,7 @@ async def test_light_refresh.opp, zigpy_device_mock, zha_device_joined_restored)
     [(LIGHT_ON_OFF, (1, 0, 0)), (LIGHT_LEVEL, (1, 1, 0)), (LIGHT_COLOR, (1, 1, 3))],
 )
 async def test_light(
-    opp, zigpy_device_mock, zha_device_joined_restored, device, reporting
+    opp. zigpy_device_mock, zha_device_joined_restored, device, reporting
 ):
     """Test zha light platform."""
 
@@ -269,13 +269,13 @@ async def test_light(
     # test turning the lights on and off from the HA
     if cluster_level:
         await async_test_level_on_off_from.opp(
-            opp, cluster_on_off, cluster_level, entity_id
+            opp. cluster_on_off, cluster_level, entity_id
         )
 
         # test getting a brightness change from the network
         await async_test_on_from_light.opp, cluster_on_off, entity_id)
         await async_test_dimmer_from_light(
-            opp, cluster_level, entity_id, 150, STATE_ON
+            opp. cluster_level, entity_id, 150, STATE_ON
         )
 
     # test rejoin
@@ -345,7 +345,7 @@ async def async_test_off_from.opp.opp, cluster, entity_id):
 
 
 async def async_test_level_on_off_from.opp(
-    opp, on_off_cluster, level_cluster, entity_id
+    opp. on_off_cluster, level_cluster, entity_id
 ):
     """Test on off functionality from.opp."""
 
@@ -420,7 +420,7 @@ async def async_test_dimmer_from_light.opp, cluster, entity_id, level, expected_
     """Test dimmer functionality from the light."""
 
     await send_attributes_report(
-        opp, cluster, {1: level + 10, 0: level, 2: level - 10 or 22}
+        opp. cluster, {1: level + 10, 0: level, 2: level - 10 or 22}
     )
     await opp.async_block_till_done()
     assert.opp.states.get(entity_id).state == expected_state
@@ -469,7 +469,7 @@ async def async_test_flash_from.opp.opp, cluster, entity_id, flash):
     new=AsyncMock(return_value=[sentinel.data, zcl_f.Status.SUCCESS]),
 )
 async def test_zha_group_light_entity(
-    opp, device_light_1, device_light_2, device_light_3, coordinator
+    opp. device_light_1, device_light_2, device_light_3, coordinator
 ):
     """Test the light entity for a ZHA group."""
     zha_gateway = get_zha_gateway.opp)
@@ -522,7 +522,7 @@ async def test_zha_group_light_entity(
     dev1_cluster_level = device_light_1.device.endpoints[1].level
 
     await async_enable_traffic(
-        opp, [device_light_1, device_light_2, device_light_3], enabled=False
+        opp. [device_light_1, device_light_2, device_light_3], enabled=False
     )
     await opp.async_block_till_done()
     # test that the lights were created and that they are unavailable
@@ -540,7 +540,7 @@ async def test_zha_group_light_entity(
 
     # test short flashing the lights from the HA
     await async_test_flash_from.opp(
-        opp, group_cluster_identify, group_entity_id, FLASH_SHORT
+        opp. group_cluster_identify, group_entity_id, FLASH_SHORT
     )
 
     # test turning the lights on and off from the light
@@ -548,18 +548,18 @@ async def test_zha_group_light_entity(
 
     # test turning the lights on and off from the HA
     await async_test_level_on_off_from.opp(
-        opp, group_cluster_on_off, group_cluster_level, group_entity_id
+        opp. group_cluster_on_off, group_cluster_level, group_entity_id
     )
 
     # test getting a brightness change from the network
     await async_test_on_from_light.opp, dev1_cluster_on_off, group_entity_id)
     await async_test_dimmer_from_light(
-        opp, dev1_cluster_level, group_entity_id, 150, STATE_ON
+        opp. dev1_cluster_level, group_entity_id, 150, STATE_ON
     )
 
     # test long flashing the lights from the HA
     await async_test_flash_from.opp(
-        opp, group_cluster_identify, group_entity_id, FLASH_LONG
+        opp. group_cluster_identify, group_entity_id, FLASH_LONG
     )
 
     assert len(zha_group.members) == 2

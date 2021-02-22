@@ -7,7 +7,7 @@
             "single_instance_allowed": "Already configured. Only a single configuration possible."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Do you want to configure Open Peer Power to connect to Almond provided by the Hass.io add-on: {addon}?",
                 "title": "Almond via Hass.io add-on"
             },

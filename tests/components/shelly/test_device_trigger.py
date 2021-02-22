@@ -46,7 +46,7 @@ async def test_get_triggers.opp, coap_wrapper):
     ]
 
     triggers = await async_get_device_automations(
-        opp, "trigger", coap_wrapper.device_id
+        opp. "trigger", coap_wrapper.device_id
     )
 
     assert_lists_same(triggers, expected_triggers)
@@ -72,7 +72,7 @@ async def test_if_fires_on_click_event.opp, calls, coap_wrapper):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -98,7 +98,7 @@ async def test_if_fires_on_click_event.opp, calls, coap_wrapper):
         ATTR_CLICK_TYPE: "single",
         ATTR_CHANNEL: 1,
     }
-   .opp.bus.async_fire(EVENT_SHELLY_CLICK, message)
+    opp.bus.async_fire(EVENT_SHELLY_CLICK, message)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -111,7 +111,7 @@ async def test_validate_trigger_config_no_device.opp, calls, coap_wrapper):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -132,7 +132,7 @@ async def test_validate_trigger_config_no_device.opp, calls, coap_wrapper):
         },
     )
     message = {CONF_DEVICE_ID: "no_device", ATTR_CLICK_TYPE: "single", ATTR_CHANNEL: 1}
-   .opp.bus.async_fire(EVENT_SHELLY_CLICK, message)
+    opp.bus.async_fire(EVENT_SHELLY_CLICK, message)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -145,7 +145,7 @@ async def test_validate_trigger_invalid_triggers.opp, coap_wrapper):
     notification_calls = async_mock_service.opp, "persistent_notification", "create")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [

@@ -65,8 +65,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Import the platform into a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=config
         )
     )
@@ -95,7 +95,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         port=port,
     )
 
-   .opp.bus.async_listen_once(
+    opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, sensor.async_will_remove_from.opp()
     )
 

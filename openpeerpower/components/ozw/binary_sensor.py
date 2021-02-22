@@ -258,9 +258,9 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Add Z-Wave Binary Sensor(s)."""
         async_add_entities(VALUE_TYPE_SENSORS[values.primary.type](values))
 
-   .opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
+    opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect(
-            opp, f"{DOMAIN}_new_{BINARY_SENSOR_DOMAIN}", async_add_binary_sensor
+            opp. f"{DOMAIN}_new_{BINARY_SENSOR_DOMAIN}", async_add_binary_sensor
         )
     )
 

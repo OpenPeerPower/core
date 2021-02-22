@@ -165,7 +165,7 @@ async def test_create_default_config_returns_none_if_write_error(opp):
 
     Non existing folder returns None.
     """
-   .opp.config.config_dir = os.path.join(CONFIG_DIR, "non_existing_dir/")
+    opp.config.config_dir = os.path.join(CONFIG_DIR, "non_existing_dir/")
     with patch("builtins.print") as mock_print:
         assert await config_util.async_create_default_config(opp) is False
     assert mock_print.called
@@ -259,9 +259,9 @@ def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil, opp):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
         opened_file.readline.return_value = op_version
-       .opp.config.path = mock.Mock()
+        opp.config.path = mock.Mock()
         config_util.process_op_config_upgrade.opp)
-       .opp_path = opp.config.path.return_value
+        opp.path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
         assert mock_os.path.isdir.call_args == mock.call.opp_path)
@@ -281,9 +281,9 @@ def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil, opp):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
         opened_file.readline.return_value = op_version
-       .opp.config.path = mock.Mock()
+        opp.config.path = mock.Mock()
         config_util.process_op_config_upgrade.opp)
-       .opp_path = opp.config.path.return_value
+        opp.path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
         assert mock_os.path.isdir.call_args == mock.call.opp_path)
@@ -338,7 +338,7 @@ def test_config_upgrade_no_file.opp):
 
 async def test_loading_configuration_from_storage.opp, opp_storage):
     """Test loading core config onto opp object."""
-   .opp_storage["core.config"] = {
+    opp.storage["core.config"] = {
         "data": {
             "elevation": 10,
             "latitude": 55,
@@ -353,7 +353,7 @@ async def test_loading_configuration_from_storage.opp, opp_storage):
         "version": 1,
     }
     await config_util.async_process_op_core_config(
-        opp, {"allowlist_external_dirs": "/etc"}
+        opp. {"allowlist_external_dirs": "/etc"}
     )
 
     assert.opp.config.latitude == 55
@@ -371,7 +371,7 @@ async def test_loading_configuration_from_storage.opp, opp_storage):
 
 async def test_loading_configuration_from_storage_with_yaml_only.opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
-   .opp_storage["core.config"] = {
+    opp.storage["core.config"] = {
         "data": {
             "elevation": 10,
             "latitude": 55,
@@ -384,7 +384,7 @@ async def test_loading_configuration_from_storage_with_yaml_only.opp, opp_storag
         "version": 1,
     }
     await config_util.async_process_op_core_config(
-        opp, {"media_dirs": {"mymedia": "/usr"}, "allowlist_external_dirs": "/etc"}
+        opp. {"media_dirs": {"mymedia": "/usr"}, "allowlist_external_dirs": "/etc"}
     )
 
     assert.opp.config.latitude == 55
@@ -415,9 +415,9 @@ async def test_updating_configuration.opp, opp_storage):
         "key": "core.config",
         "version": 1,
     }
-   .opp_storage["core.config"] = dict(core_data)
+    opp.storage["core.config"] = dict(core_data)
     await config_util.async_process_op_core_config(
-        opp, {"allowlist_external_dirs": "/etc"}
+        opp. {"allowlist_external_dirs": "/etc"}
     )
     await opp.config.async_update(latitude=50)
 
@@ -429,7 +429,7 @@ async def test_updating_configuration.opp, opp_storage):
 
 async def test_override_stored_configuration.opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
-   .opp_storage["core.config"] = {
+    opp.storage["core.config"] = {
         "data": {
             "elevation": 10,
             "latitude": 55,
@@ -442,7 +442,7 @@ async def test_override_stored_configuration.opp, opp_storage):
         "version": 1,
     }
     await config_util.async_process_op_core_config(
-        opp, {"latitude": 60, "allowlist_external_dirs": "/etc"}
+        opp. {"latitude": 60, "allowlist_external_dirs": "/etc"}
     )
 
     assert.opp.config.latitude == 60
@@ -459,7 +459,7 @@ async def test_override_stored_configuration.opp, opp_storage):
 async def test_loading_configuration.opp):
     """Test loading core config onto opp object."""
     await config_util.async_process_op_core_config(
-        opp,
+        opp.
         {
             "latitude": 60,
             "longitude": 50,
@@ -494,7 +494,7 @@ async def test_loading_configuration.opp):
 async def test_loading_configuration_temperature_unit.opp):
     """Test backward compatibility when loading core config."""
     await config_util.async_process_op_core_config(
-        opp,
+        opp.
         {
             "latitude": 60,
             "longitude": 50,
@@ -522,7 +522,7 @@ async def test_loading_configuration_default_media_dirs_docker.opp):
     """Test loading core config onto opp object."""
     with patch("openpeerpower.config.is_docker_env", return_value=True):
         await config_util.async_process_op_core_config(
-            opp,
+            opp.
             {
                 "name": "Huis",
             },
@@ -537,7 +537,7 @@ async def test_loading_configuration_default_media_dirs_docker.opp):
 async def test_loading_configuration_from_packages.opp):
     """Test loading packages config onto opp object config."""
     await config_util.async_process_op_core_config(
-        opp,
+        opp.
         {
             "latitude": 39,
             "longitude": -1,
@@ -561,7 +561,7 @@ async def test_loading_configuration_from_packages.opp):
     # Empty packages not allowed
     with pytest.raises(MultipleInvalid):
         await config_util.async_process_op_core_config(
-            opp,
+            opp.
             {
                 "latitude": 39,
                 "longitude": -1,
@@ -968,7 +968,7 @@ async def test_component_config_exceptions.opp, caplog):
     # Config validator
     assert (
         await config_util.async_process_component_config(
-            opp,
+            opp.
             {},
             integration=Mock(
                 domain="test_domain",
@@ -990,7 +990,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp,
+            opp.
             {},
             integration=Mock(
                 domain="test_domain",
@@ -1011,7 +1011,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp,
+            opp.
             {"test_domain": {"platform": "test_platform"}},
             integration=Mock(
                 domain="test_domain",
@@ -1046,7 +1046,7 @@ async def test_component_config_exceptions.opp, caplog):
     ):
         assert (
             await config_util.async_process_component_config(
-                opp,
+                opp.
                 {"test_domain": {"platform": "test_platform"}},
                 integration=Mock(
                     domain="test_domain",
@@ -1068,7 +1068,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp,
+            opp.
             {"test_domain": {}},
             integration=Mock(
                 pkg_path="openpeerpower.components.test_domain",
@@ -1092,7 +1092,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp,
+            opp.
             {"test_domain": {}},
             integration=Mock(
                 pkg_path="openpeerpower.components.test_domain",

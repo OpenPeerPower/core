@@ -29,14 +29,14 @@ async def test_remote_connection_sensor.opp):
     with patch("openpeerpower.components.cloud.binary_sensor.WAIT_UNTIL_CHANGE", 0):
         cloud.remote.is_connected = False
         cloud.remote.certificate = object()
-       .opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
+        opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
         await opp.async_block_till_done()
 
         state = opp.states.get("binary_sensor.remote_ui")
         assert state.state == "off"
 
         cloud.remote.is_connected = True
-       .opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
+        opp.helpers.dispatcher.async_dispatcher_send(DISPATCHER_REMOTE_UPDATE, {})
         await opp.async_block_till_done()
 
         state = opp.states.get("binary_sensor.remote_ui")

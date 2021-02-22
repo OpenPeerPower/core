@@ -177,7 +177,7 @@ async def test_car.opp, requests_mock_car_disabled_response):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -239,7 +239,7 @@ async def test_traffic_mode_enabled.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -266,7 +266,7 @@ async def test_imperial.opp, requests_mock_car_disabled_response):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -298,7 +298,7 @@ async def test_route_mode_shortest.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -330,7 +330,7 @@ async def test_route_mode_fastest.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -354,7 +354,7 @@ async def test_truck.opp, requests_mock_truck_response):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -386,7 +386,7 @@ async def test_public_transport.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -437,7 +437,7 @@ async def test_public_transport_time_table.opp, requests_mock_credentials_check)
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -488,7 +488,7 @@ async def test_pedestrian.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -540,7 +540,7 @@ async def test_bicycle.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -604,7 +604,7 @@ async def test_location_zone.opp, requests_mock_truck_response, legacy_patchable
         assert await async_setup_component.opp, DOMAIN, config)
         await opp.async_block_till_done()
 
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -619,16 +619,16 @@ async def test_location_zone.opp, requests_mock_truck_response, legacy_patchable
 
 
 async def test_location_sensor(
-    opp, requests_mock_truck_response, legacy_patchable_time
+    opp. requests_mock_truck_response, legacy_patchable_time
 ):
     """Test that origin/destination supplied by a sensor works."""
     utcnow = dt_util.utcnow()
     # Patching 'utcnow' to gain more control over the timed update.
     with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
-       .opp.states.async_set(
+        opp.states.async_set(
             "sensor.origin", ",".join([TRUCK_ORIGIN_LATITUDE, TRUCK_ORIGIN_LONGITUDE])
         )
-       .opp.states.async_set(
+        opp.states.async_set(
             "sensor.destination",
             ",".join([TRUCK_DESTINATION_LATITUDE, TRUCK_DESTINATION_LONGITUDE]),
         )
@@ -646,7 +646,7 @@ async def test_location_sensor(
         assert await async_setup_component.opp, DOMAIN, config)
         await opp.async_block_till_done()
 
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -661,13 +661,13 @@ async def test_location_sensor(
 
 
 async def test_location_person(
-    opp, requests_mock_truck_response, legacy_patchable_time
+    opp. requests_mock_truck_response, legacy_patchable_time
 ):
     """Test that origin/destination supplied by a person works."""
     utcnow = dt_util.utcnow()
     # Patching 'utcnow' to gain more control over the timed update.
     with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
-       .opp.states.async_set(
+        opp.states.async_set(
             "person.origin",
             "unknown",
             {
@@ -675,7 +675,7 @@ async def test_location_person(
                 "longitude": float(TRUCK_ORIGIN_LONGITUDE),
             },
         )
-       .opp.states.async_set(
+        opp.states.async_set(
             "person.destination",
             "unknown",
             {
@@ -697,7 +697,7 @@ async def test_location_person(
         assert await async_setup_component.opp, DOMAIN, config)
         await opp.async_block_till_done()
 
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -712,13 +712,13 @@ async def test_location_person(
 
 
 async def test_location_device_tracker(
-    opp, requests_mock_truck_response, legacy_patchable_time
+    opp. requests_mock_truck_response, legacy_patchable_time
 ):
     """Test that origin/destination supplied by a device_tracker works."""
     utcnow = dt_util.utcnow()
     # Patching 'utcnow' to gain more control over the timed update.
     with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.origin",
             "unknown",
             {
@@ -726,7 +726,7 @@ async def test_location_device_tracker(
                 "longitude": float(TRUCK_ORIGIN_LONGITUDE),
             },
         )
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.destination",
             "unknown",
             {
@@ -748,7 +748,7 @@ async def test_location_device_tracker(
         assert await async_setup_component.opp, DOMAIN, config)
         await opp.async_block_till_done()
 
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -763,7 +763,7 @@ async def test_location_device_tracker(
 
 
 async def test_location_device_tracker_added_after_update(
-    opp, requests_mock_truck_response, legacy_patchable_time, caplog
+    opp. requests_mock_truck_response, legacy_patchable_time, caplog
 ):
     """Test that device_tracker added after first update works."""
     caplog.set_level(logging.ERROR)
@@ -783,7 +783,7 @@ async def test_location_device_tracker_added_after_update(
         assert await async_setup_component.opp, DOMAIN, config)
         await opp.async_block_till_done()
 
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -792,7 +792,7 @@ async def test_location_device_tracker_added_after_update(
         caplog.clear()
 
         # Device tracker appear after first update
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.origin",
             "unknown",
             {
@@ -800,7 +800,7 @@ async def test_location_device_tracker_added_after_update(
                 "longitude": float(TRUCK_ORIGIN_LONGITUDE),
             },
         )
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.destination",
             "unknown",
             {
@@ -819,7 +819,7 @@ async def test_location_device_tracker_added_after_update(
 
 
 async def test_location_device_tracker_in_zone(
-    opp, requests_mock_truck_response, caplog
+    opp. requests_mock_truck_response, caplog
 ):
     """Test that device_tracker in zone uses device_tracker state works."""
     caplog.set_level(logging.DEBUG)
@@ -835,7 +835,7 @@ async def test_location_device_tracker_in_zone(
         ]
     }
     assert await async_setup_component.opp, "zone", zone_config)
-   .opp.states.async_set(
+    opp.states.async_set(
         "device_tracker.origin", "origin", {"latitude": None, "longitude": None}
     )
     config = {
@@ -852,7 +852,7 @@ async def test_location_device_tracker_in_zone(
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -886,7 +886,7 @@ async def test_route_not_found.opp, requests_mock_credentials_check, caplog):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     assert len(caplog.records) == 1
@@ -992,7 +992,7 @@ async def test_attribution.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -1005,7 +1005,7 @@ async def test_attribution.opp, requests_mock_credentials_check):
 async def test_pattern_entity_state.opp, requests_mock_truck_response, caplog):
     """Test that pattern matching the state of an entity works."""
     caplog.set_level(logging.ERROR)
-   .opp.states.async_set("sensor.origin", "invalid")
+    opp.states.async_set("sensor.origin", "invalid")
 
     config = {
         DOMAIN: {
@@ -1021,7 +1021,7 @@ async def test_pattern_entity_state.opp, requests_mock_truck_response, caplog):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     assert len(caplog.records) == 1
@@ -1030,7 +1030,7 @@ async def test_pattern_entity_state.opp, requests_mock_truck_response, caplog):
 
 async def test_pattern_entity_state_with_space.opp, requests_mock_truck_response):
     """Test that pattern matching the state including a space of an entity works."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "sensor.origin", ", ".join([TRUCK_ORIGIN_LATITUDE, TRUCK_ORIGIN_LONGITUDE])
     )
 
@@ -1075,11 +1075,11 @@ async def test_delayed_update.opp, requests_mock_truck_response, caplog):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
     assert await async_setup_component.opp, "sensor", sensor_config)
-   .opp.states.async_set(
+    opp.states.async_set(
         "sensor.origin", ",".join([TRUCK_ORIGIN_LATITUDE, TRUCK_ORIGIN_LONGITUDE])
     )
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     assert "Unable to find entity" not in caplog.text
@@ -1116,7 +1116,7 @@ async def test_arrival.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")
@@ -1154,7 +1154,7 @@ async def test_departure.opp, requests_mock_credentials_check):
     assert await async_setup_component.opp, DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     sensor = opp.states.get("sensor.test")

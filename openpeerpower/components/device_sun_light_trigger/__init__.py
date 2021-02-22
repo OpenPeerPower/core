@@ -69,19 +69,19 @@ async def async_setup_opp, config):
     async def activate_on_start(_):
         """Activate automation."""
         await activate_automation(
-            opp, device_group, light_group, light_profile, disable_turn_off
+            opp. device_group, light_group, light_profile, disable_turn_off
         )
 
     if opp.is_running:
         await activate_on_start(None)
     else:
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, activate_on_start)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, activate_on_start)
 
     return True
 
 
 async def activate_automation(
-    opp, device_group, light_group, light_profile, disable_turn_off
+    opp. device_group, light_group, light_profile, disable_turn_off
 ):
     """Activate the automation."""
     logger = logging.getLogger(__name__)
@@ -171,13 +171,13 @@ async def activate_automation(
 
         for index, light_id in enumerate(light_ids):
             async_track_point_in_utc_time(
-                opp,
+                opp.
                 async_turn_on_factory(light_id),
                 start_point + index * LIGHT_TRANSITION_TIME,
             )
 
     async_track_point_in_utc_time(
-        opp, schedule_light_turn_on, get_astral_event_next.opp, SUN_EVENT_SUNRISE)
+        opp. schedule_light_turn_on, get_astral_event_next.opp, SUN_EVENT_SUNRISE)
     )
 
     # If the sun is already above horizon schedule the time-based pre-sun set
@@ -198,8 +198,8 @@ async def activate_automation(
         # Do we need lights?
         if light_needed:
             logger.info("Home coming event for %s. Turning lights on", entity)
-           .opp.async_create_task(
-               .opp.services.async_call(
+            opp.async_create_task(
+                opp.services.async_call(
                     DOMAIN_LIGHT,
                     SERVICE_TURN_ON,
                     {ATTR_ENTITY_ID: light_ids, ATTR_PROFILE: light_profile},
@@ -211,15 +211,15 @@ async def activate_automation(
         # Check this by seeing if current time is later then the point
         # in time when we would start putting the lights on.
         elif start_point and start_point < now < get_astral_event_next(
-            opp, SUN_EVENT_SUNSET
+            opp. SUN_EVENT_SUNSET
         ):
 
             # Check for every light if it would be on if someone was home
             # when the fading in started and turn it on if so
             for index, light_id in enumerate(light_ids):
                 if now > start_point + index * LIGHT_TRANSITION_TIME:
-                   .opp.async_create_task(
-                       .opp.services.async_call(
+                    opp.async_create_task(
+                        opp.services.async_call(
                             DOMAIN_LIGHT, SERVICE_TURN_ON, {ATTR_ENTITY_ID: light_id}
                         )
                     )
@@ -230,7 +230,7 @@ async def activate_automation(
                     break
 
     async_track_state_change(
-        opp,
+        opp.
         device_entity_ids,
         check_light_on_dev_state_change,
         STATE_NOT_HOME,
@@ -252,14 +252,14 @@ async def activate_automation(
             return
 
         logger.info("Everyone has left but there are lights on. Turning them off")
-       .opp.async_create_task(
-           .opp.services.async_call(
+        opp.async_create_task(
+            opp.services.async_call(
                 DOMAIN_LIGHT, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: light_ids}
             )
         )
 
     async_track_state_change(
-        opp,
+        opp.
         device_entity_ids,
         turn_off_lights_when_all_leave,
         STATE_HOME,

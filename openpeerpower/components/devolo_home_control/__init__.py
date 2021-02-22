@@ -22,7 +22,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up the devolo account from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     mydevolo = _mydevolo(entry.data)
 
@@ -38,13 +38,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     if GATEWAY_SERIAL_PATTERN.match(entry.unique_id):
         uuid = await opp.async_add_executor_job(mydevolo.uuid)
-       .opp.config_entries.async_update_entry(entry, unique_id=uuid)
+        opp.config_entries.async_update_entry(entry, unique_id=uuid)
 
     try:
         zeroconf_instance = await zeroconf.async_get_instance.opp)
-       .opp.data[DOMAIN][entry.entry_id] = {"gateways": [], "listener": None}
+        opp.data[DOMAIN][entry.entry_id] = {"gateways": [], "listener": None}
         for gateway_id in gateway_ids:
-           .opp.data[DOMAIN][entry.entry_id]["gateways"].append(
+            opp.data[DOMAIN][entry.entry_id]["gateways"].append(
                 await opp.async_add_executor_job(
                     partial(
                         HomeControl,
@@ -58,8 +58,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from err
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     def shutdown(event):
@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             )
 
     # Listen when EVENT_OPENPEERPOWER_STOP is fired
-   .opp.data[DOMAIN][entry.entry_id]["listener"] = opp.bus.async_listen_once(
+    opp.data[DOMAIN][entry.entry_id]["listener"] = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, shutdown
     )
 
@@ -81,19 +81,19 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     unload = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
     )
     await asyncio.gather(
         *[
-           .opp.async_add_executor_job(gateway.websocket_disconnect)
+            opp.async_add_executor_job(gateway.websocket_disconnect)
             for gateway in.opp.data[DOMAIN][entry.entry_id]["gateways"]
         ]
     )
-   .opp.data[DOMAIN][entry.entry_id]["listener"]()
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN][entry.entry_id]["listener"]()
+    opp.data[DOMAIN].pop(entry.entry_id)
     return unload
 
 

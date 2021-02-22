@@ -15,6 +15,6 @@ CONFIG_SCHEMA = vol.Schema(
 def setup_opp, config):
     """Set up the notify_events component."""
 
-   .opp.data[DOMAIN] = config[DOMAIN]
+    opp.data[DOMAIN] = config[DOMAIN]
     discovery.load_platform.opp, "notify", DOMAIN, {}, config)
     return True

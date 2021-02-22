@@ -155,7 +155,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         async_add_entities([device])
 
     if config[CONF_AUTOMATIC_ADD]:
-       .opp.data[DATA_DEVICE_REGISTER][EVENT_KEY_COMMAND] = add_new_device
+        opp.data[DATA_DEVICE_REGISTER][EVENT_KEY_COMMAND] = add_new_device
 
 
 class RflinkLight(SwitchableRflinkDevice, LightEntity):

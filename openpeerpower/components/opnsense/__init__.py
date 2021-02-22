@@ -68,7 +68,7 @@ def setup_opp, config):
                 )
                 return False
 
-   .opp.data[OPNSENSE_DATA] = {
+    opp.data[OPNSENSE_DATA] = {
         "interfaces": interfaces_client,
         CONF_TRACKER_INTERFACE: tracker_interfaces,
     }

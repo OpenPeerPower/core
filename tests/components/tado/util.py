@@ -10,7 +10,7 @@ from tests.common import MockConfigEntry, load_fixture
 
 
 async def async_init_integration(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     skip_setup: bool = False,
 ):
     """Set up the tado integration in Open Peer Power."""

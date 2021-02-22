@@ -39,29 +39,29 @@ async def test_setup_views_if_not_onboarded.opp):
 
 async def test_is_onboarded():
     """Test the is onboarded function."""
-    opp =Mock()
-   .opp.data = {}
+    opp.=Mock()
+    opp.data = {}
 
     assert onboarding.async_is_onboarded.opp)
 
-   .opp.data[onboarding.DOMAIN] = True
+    opp.data[onboarding.DOMAIN] = True
     assert onboarding.async_is_onboarded.opp)
 
-   .opp.data[onboarding.DOMAIN] = {"done": []}
+    opp.data[onboarding.DOMAIN] = {"done": []}
     assert not onboarding.async_is_onboarded.opp)
 
 
 async def test_is_user_onboarded():
     """Test the is onboarded function."""
-    opp =Mock()
-   .opp.data = {}
+    opp.=Mock()
+    opp.data = {}
 
     assert onboarding.async_is_user_onboarded.opp)
 
-   .opp.data[onboarding.DOMAIN] = True
+    opp.data[onboarding.DOMAIN] = True
     assert onboarding.async_is_user_onboarded.opp)
 
-   .opp.data[onboarding.DOMAIN] = {"done": []}
+    opp.data[onboarding.DOMAIN] = {"done": []}
     assert not onboarding.async_is_user_onboarded.opp)
 
 
@@ -84,6 +84,6 @@ async def test_having_owner_finishes_user_step.opp, opp_storage):
 
 async def test_migration.opp, opp_storage):
     """Test migrating onboarding to new version."""
-   .opp_storage[onboarding.STORAGE_KEY] = {"version": 1, "data": {"done": ["user"]}}
+    opp.storage[onboarding.STORAGE_KEY] = {"version": 1, "data": {"done": ["user"]}}
     assert await async_setup_component.opp, "onboarding", {})
     assert onboarding.async_is_onboarded.opp)

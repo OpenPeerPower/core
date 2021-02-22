@@ -23,29 +23,29 @@ async def test.oppio_system_health.opp, aioclient_mock):
         "http://127.0.0.1/supervisor/info", json={"result": "ok", "data": {}}
     )
 
-   .opp.config.components.add(.oppio")
+    opp.config.components.add(.oppio")
     with patch.dict(os.environ, MOCK_ENVIRON):
         assert await async_setup_component.opp, "system_health", {})
 
-   .opp.data[.oppio_info"] = {
+    opp.data[.oppio_info"] = {
         "channel": "stable",
         "supervisor": "2020.11.1",
         "docker": "19.0.3",
-        .oppos": True,
+         opp.s": True,
     }
-   .opp.data[.oppio_host_info"] = {
+    opp.data[.oppio_host_info"] = {
         "operating_system": "Open Peer Power OS 5.9",
         "disk_total": "32.0",
         "disk_used": "30.0",
     }
-   .opp.data[.oppio_os_info"] = {"board": "odroid-n2"}
-   .opp.data[.oppio_supervisor_info"] = {
+    opp.data[.oppio_os_info"] = {"board": "odroid-n2"}
+    opp.data[.oppio_supervisor_info"] = {
         "healthy": True,
         "supported": True,
         "addons": [{"name": "Awesome Addon", "version": "1.0.0"}],
     }
 
-    info = await get_system_health_info.opp, .oppio")
+    info = await get_system_health_info.opp,  opp.o")
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):
@@ -78,19 +78,19 @@ async def test.oppio_system_health_with_issues.opp, aioclient_mock):
         "http://127.0.0.1/supervisor/info", json={"result": "ok", "data": {}}
     )
 
-   .opp.config.components.add(.oppio")
+    opp.config.components.add(.oppio")
     with patch.dict(os.environ, MOCK_ENVIRON):
         assert await async_setup_component.opp, "system_health", {})
 
-   .opp.data[.oppio_info"] = {"channel": "stable"}
-   .opp.data[.oppio_host_info"] = {}
-   .opp.data[.oppio_os_info"] = {}
-   .opp.data[.oppio_supervisor_info"] = {
+    opp.data[.oppio_info"] = {"channel": "stable"}
+    opp.data[.oppio_host_info"] = {}
+    opp.data[.oppio_os_info"] = {}
+    opp.data[.oppio_supervisor_info"] = {
         "healthy": False,
         "supported": False,
     }
 
-    info = await get_system_health_info.opp, .oppio")
+    info = await get_system_health_info.opp,  opp.o")
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):

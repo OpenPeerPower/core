@@ -55,7 +55,7 @@ def mock_dummy_device_from_host_light_fan():
 
 
 async def test_loading_cover(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     dummy_device_from_host_cover,
 ) -> None:
     """Test the WiLight configuration entry loading."""
@@ -77,7 +77,7 @@ async def test_loading_cover(
 
 
 async def test_open_close_cover_state(
-    opp: OpenPeerPowerType, dummy_device_from_host_cover
+    opp. OpenPeerPowerType, dummy_device_from_host_cover
 ) -> None:
     """Test the change of state of the cover."""
     await setup_integration.opp)

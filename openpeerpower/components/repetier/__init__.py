@@ -162,7 +162,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 def setup_opp, config):
     """Set up the Repetier Server component."""
-   .opp.data[REPETIER_API] = {}
+    opp.data[REPETIER_API] = {}
 
     for repetier in config[DOMAIN]:
         _LOGGER.debug("Repetier server config %s", repetier[CONF_HOST])
@@ -183,7 +183,7 @@ def setup_opp, config):
         api.update()
         track_time_interval.opp, api.update, SCAN_INTERVAL)
 
-       .opp.data[REPETIER_API][repetier[CONF_NAME]] = api
+        opp.data[REPETIER_API][repetier[CONF_NAME]] = api
 
     return True
 

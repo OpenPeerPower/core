@@ -53,7 +53,7 @@ MOCK_ZONE_RECORDS = [
 
 
 async def init_integration(
-    opp,
+    opp.
     *,
     data: dict = ENTRY_CONFIG,
     options: dict = ENTRY_OPTIONS,

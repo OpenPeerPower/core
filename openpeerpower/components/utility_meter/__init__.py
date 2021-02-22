@@ -61,19 +61,19 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Set up an Utility Meter."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
-   .opp.data[DATA_UTILITY] = {}
+    opp.data[DATA_UTILITY] = {}
     register_services = False
 
     for meter, conf in config.get(DOMAIN).items():
         _LOGGER.debug("Setup %s.%s", DOMAIN, meter)
 
-       .opp.data[DATA_UTILITY][meter] = conf
+        opp.data[DATA_UTILITY][meter] = conf
 
         if not conf[CONF_TARIFFS]:
             # only one entity is required
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp,
+                    opp.
                     SENSOR_DOMAIN,
                     DOMAIN,
                     [{CONF_METER: meter, CONF_NAME: meter}],
@@ -85,7 +85,7 @@ async def async_setup_opp, config):
             await component.async_add_entities(
                 [TariffSelect(meter, list(conf[CONF_TARIFFS]))]
             )
-           .opp.data[DATA_UTILITY][meter][CONF_TARIFF_ENTITY] = "{}.{}".format(
+            opp.data[DATA_UTILITY][meter][CONF_TARIFF_ENTITY] = "{}.{}".format(
                 DOMAIN, meter
             )
 
@@ -99,9 +99,9 @@ async def async_setup_opp, config):
                         CONF_TARIFF: tariff,
                     }
                 )
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp, SENSOR_DOMAIN, DOMAIN, tariff_confs, config
+                    opp. SENSOR_DOMAIN, DOMAIN, tariff_confs, config
                 )
             )
             register_services = True

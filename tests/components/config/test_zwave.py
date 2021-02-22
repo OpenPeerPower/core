@@ -117,7 +117,7 @@ async def test_get_values.opp, client):
     node2 = MockNode(node_id=2)
     value2 = MockValue(value_id=234567, node=node2, label="Test Label 2")
     values2 = MockEntityValues(primary=value2)
-   .opp.data[const.DATA_ENTITY_VALUES] = [values, values2]
+    opp.data[const.DATA_ENTITY_VALUES] = [values, values2]
 
     resp = await client.get("/api/zwave/values/1")
 

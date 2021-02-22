@@ -335,7 +335,7 @@ async def test_send_target_temperature.opp, discovery, device, mock_now):
 
 
 async def test_send_target_temperature_device_timeout(
-    opp, discovery, device, mock_now
+    opp. discovery, device, mock_now
 ):
     """Test for sending target temperature command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
@@ -405,7 +405,7 @@ async def test_send_invalid_preset_mode.opp, discovery, device, mock_now):
     "preset", (PRESET_AWAY, PRESET_ECO, PRESET_SLEEP, PRESET_BOOST, PRESET_NONE)
 )
 async def test_send_preset_mode_device_timeout(
-    opp, discovery, device, mock_now, preset
+    opp. discovery, device, mock_now, preset
 ):
     """Test for sending preset mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
@@ -473,7 +473,7 @@ async def test_send_hvac_mode.opp, discovery, device, mock_now, hvac_mode):
     (HVAC_MODE_AUTO, HVAC_MODE_COOL, HVAC_MODE_DRY, HVAC_MODE_FAN_ONLY, HVAC_MODE_HEAT),
 )
 async def test_send_hvac_mode_device_timeout(
-    opp, discovery, device, mock_now, hvac_mode
+    opp. discovery, device, mock_now, hvac_mode
 ):
     """Test for sending hvac mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
@@ -557,7 +557,7 @@ async def test_send_invalid_fan_mode.opp, discovery, device, mock_now):
     (FAN_AUTO, FAN_LOW, FAN_MEDIUM_LOW, FAN_MEDIUM, FAN_MEDIUM_HIGH, FAN_HIGH),
 )
 async def test_send_fan_mode_device_timeout(
-    opp, discovery, device, mock_now, fan_mode
+    opp. discovery, device, mock_now, fan_mode
 ):
     """Test for sending fan mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
@@ -631,7 +631,7 @@ async def test_send_invalid_swing_mode.opp, discovery, device, mock_now):
     "swing_mode", (SWING_OFF, SWING_BOTH, SWING_VERTICAL, SWING_HORIZONTAL)
 )
 async def test_send_swing_mode_device_timeout(
-    opp, discovery, device, mock_now, swing_mode
+    opp. discovery, device, mock_now, swing_mode
 ):
     """Test for sending swing mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError

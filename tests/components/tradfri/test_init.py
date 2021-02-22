@@ -19,7 +19,7 @@ async def test_config_yaml_host_not_imported.opp):
         "openpeerpower.components.tradfri.load_json", return_value={}
     ), patch.object.opp.config_entries.flow, "async_init") as mock_init:
         assert await async_setup_component(
-            opp, "tradfri", {"tradfri": {"host": "mock-host"}}
+            opp. "tradfri", {"tradfri": {"host": "mock-host"}}
         )
         await opp.async_block_till_done()
 
@@ -30,7 +30,7 @@ async def test_config_yaml_host_imported.opp):
     """Test that we import a configured host."""
     with patch("openpeerpower.components.tradfri.load_json", return_value={}):
         assert await async_setup_component(
-            opp, "tradfri", {"tradfri": {"host": "mock-host"}}
+            opp. "tradfri", {"tradfri": {"host": "mock-host"}}
         )
         await opp.async_block_till_done()
 
@@ -55,7 +55,7 @@ async def test_config_json_host_not_imported.opp):
 
 
 async def test_config_json_host_imported(
-    opp, mock_gateway_info, mock_entry_setup, gateway_id
+    opp. mock_gateway_info, mock_entry_setup, gateway_id
 ):
     """Test that we import a configured host."""
     mock_gateway_info.side_effect = lambda.opp, host, identity, key: {
@@ -93,7 +93,7 @@ async def test_entry_setup_unload.opp, api_factory, gateway_id):
 
     entry.add_to.opp.opp)
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup", return_value=True
+        opp.config_entries, "async_forward_entry_setup", return_value=True
     ) as setup:
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
@@ -112,7 +112,7 @@ async def test_entry_setup_unload.opp, api_factory, gateway_id):
     assert dev_entry.model == tradfri.ATTR_TRADFRI_GATEWAY_MODEL
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_unload", return_value=True
+        opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as unload:
         assert await opp.config_entries.async_unload(entry.entry_id)
         await opp.async_block_till_done()

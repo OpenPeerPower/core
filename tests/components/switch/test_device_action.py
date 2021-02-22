@@ -81,7 +81,7 @@ async def test_action.opp, calls):
     ent1, ent2, ent3 = platform.ENTITIES
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -119,26 +119,26 @@ async def test_action.opp, calls):
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
-   .opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event1")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event1")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event2")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
-   .opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event2")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON

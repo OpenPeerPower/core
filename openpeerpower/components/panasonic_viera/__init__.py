@@ -55,8 +55,8 @@ async def async_setup_opp, config):
         return True
 
     for conf in config[DOMAIN]:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
             )
         )
@@ -97,15 +97,15 @@ async def async_setup_entry.opp, config_entry):
             )
         else:
             unique_id = device_info[ATTR_UDN]
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry,
             unique_id=unique_id,
             data={**config, ATTR_DEVICE_INFO: device_info},
         )
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -116,14 +116,14 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 
@@ -133,7 +133,7 @@ class Remote:
 
     def __init__(
         self,
-        opp,
+        opp.
         host,
         port,
         on_action=None,

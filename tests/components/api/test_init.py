@@ -18,13 +18,13 @@ from tests.common import async_mock_service
 @pytest.fixture
 def mock_api_client.opp, opp_client):
     """Start the Open Peer Power HTTP component and return admin API client."""
-   .opp.loop.run_until_complete(async_setup_component.opp, "api", {}))
+    opp.loop.run_until_complete(async_setup_component.opp, "api", {}))
     return.opp.loop.run_until_complete.opp_client())
 
 
 async def test_api_list_state_entities.opp, mock_api_client):
     """Test if the debug interface allows us to list state entities."""
-   .opp.states.async_set("test.entity", "hello")
+    opp.states.async_set("test.entity", "hello")
     resp = await mock_api_client.get(const.URL_API_STATES)
     assert resp.status == 200
     json = await resp.json()
@@ -35,7 +35,7 @@ async def test_api_list_state_entities.opp, mock_api_client):
 
 async def test_api_get_state.opp, mock_api_client):
     """Test if the debug interface allows us to get a state."""
-   .opp.states.async_set("hello.world", "nice", {"attr": 1})
+    opp.states.async_set("hello.world", "nice", {"attr": 1})
     resp = await mock_api_client.get("/api/states/hello.world")
     assert resp.status == 200
     json = await resp.json()
@@ -57,7 +57,7 @@ async def test_api_get_non_existing_state.opp, mock_api_client):
 
 async def test_api_state_change.opp, mock_api_client):
     """Test if we can change the state of an entity that exists."""
-   .opp.states.async_set("test.test", "not_to_be_set")
+    opp.states.async_set("test.test", "not_to_be_set")
 
     await mock_api_client.post(
         "/api/states/test.test", json={"state": "debug_state_change2"}
@@ -109,7 +109,7 @@ async def test_api_state_change_to_zero_value.opp, mock_api_client):
 # pylint: disable=invalid-name
 async def test_api_state_change_push.opp, mock_api_client):
     """Test if we can push a change the state of an entity."""
-   .opp.states.async_set("test.test", "not_to_be_set")
+    opp.states.async_set("test.test", "not_to_be_set")
 
     events = []
 
@@ -118,7 +118,7 @@ async def test_api_state_change_push.opp, mock_api_client):
         """Track events."""
         events.append(event)
 
-   .opp.bus.async_listen(const.EVENT_STATE_CHANGED, event_listener)
+    opp.bus.async_listen(const.EVENT_STATE_CHANGED, event_listener)
 
     await mock_api_client.post("/api/states/test.test", json={"state": "not_to_be_set"})
     await opp.async_block_till_done()
@@ -141,7 +141,7 @@ async def test_api_fire_event_with_no_data.opp, mock_api_client):
         """Record that our event got called."""
         test_value.append(1)
 
-   .opp.bus.async_listen_once("test.event_no_data", listener)
+    opp.bus.async_listen_once("test.event_no_data", listener)
 
     await mock_api_client.post("/api/events/test.event_no_data")
     await opp.async_block_till_done()
@@ -163,7 +163,7 @@ async def test_api_fire_event_with_data.opp, mock_api_client):
         if "test" in event.data:
             test_value.append(1)
 
-   .opp.bus.async_listen_once("test_event_with_data", listener)
+    opp.bus.async_listen_once("test_event_with_data", listener)
 
     await mock_api_client.post("/api/events/test_event_with_data", json={"test": 1})
 
@@ -182,7 +182,7 @@ async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
         """Record that our event got called."""
         test_value.append(1)
 
-   .opp.bus.async_listen_once("test_event_bad_data", listener)
+    opp.bus.async_listen_once("test_event_bad_data", listener)
 
     resp = await mock_api_client.post(
         "/api/events/test_event_bad_data", data=json.dumps("not an object")
@@ -261,7 +261,7 @@ async def test_api_call_service_no_data.opp, mock_api_client):
         """Record that our service got called."""
         test_value.append(1)
 
-   .opp.services.async_register("test_domain", "test_service", listener)
+    opp.services.async_register("test_domain", "test_service", listener)
 
     await mock_api_client.post("/api/services/test_domain/test_service")
     await opp.async_block_till_done()
@@ -281,7 +281,7 @@ async def test_api_call_service_with_data.opp, mock_api_client):
         if "test" in service_call.data:
             test_value.append(1)
 
-   .opp.services.async_register("test_domain", "test_service", listener)
+    opp.services.async_register("test_domain", "test_service", listener)
 
     await mock_api_client.post(
         "/api/services/test_domain/test_service", json={"test": 1}
@@ -293,7 +293,7 @@ async def test_api_call_service_with_data.opp, mock_api_client):
 
 async def test_api_template.opp, mock_api_client):
     """Test the template API."""
-   .opp.states.async_set("sensor.temperature", 10)
+    opp.states.async_set("sensor.temperature", 10)
 
     resp = await mock_api_client.post(
         const.URL_API_TEMPLATE,
@@ -307,7 +307,7 @@ async def test_api_template.opp, mock_api_client):
 
 async def test_api_template_error(opp, mock_api_client):
     """Test the template API."""
-   .opp.states.async_set("sensor.temperature", 10)
+    opp.states.async_set("sensor.temperature", 10)
 
     resp = await mock_api_client.post(
         const.URL_API_TEMPLATE, json={"template": "{{ states.sensor.temperature.state"}
@@ -324,7 +324,7 @@ async def test_stream.opp, mock_api_client):
     assert resp.status == 200
     assert listen_count + 1 == _listen_count.opp)
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
 
     data = await _stream_next_event(resp.content)
 
@@ -341,12 +341,12 @@ async def test_stream_with_restricted.opp, mock_api_client):
     assert resp.status == 200
     assert listen_count + 1 == _listen_count.opp)
 
-   .opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event1")
     data = await _stream_next_event(resp.content)
     assert data["event_type"] == "test_event1"
 
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
     data = await _stream_next_event(resp.content)
     assert data["event_type"] == "test_event3"
 
@@ -378,7 +378,7 @@ def _listen_count.opp):
 
 async def test_api_error_log.opp, aiohttp_client, opp_access_token, opp_admin_user):
     """Test if we can fetch the error log."""
-   .opp.data[DATA_LOGGING] = "/some/path"
+    opp.data[DATA_LOGGING] = "/some/path"
     await async_setup_component.opp, "api", {})
     client = await aiohttp_client.opp.http.app)
 
@@ -391,7 +391,7 @@ async def test_api_error_log.opp, aiohttp_client, opp_access_token, opp_admin_us
     ) as mock_file:
         resp = await client.get(
             const.URL_API_ERROR_LOG,
-            headers={"Authorization": f"Bearer .opp_access_token}"},
+            headers={"Authorization": f"Bearer  opp.access_token}"},
         )
 
     assert len(mock_file.mock_calls) == 1
@@ -400,10 +400,10 @@ async def test_api_error_log.opp, aiohttp_client, opp_access_token, opp_admin_us
     assert await resp.text() == "Hello"
 
     # Verify we require admin user
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     resp = await client.get(
         const.URL_API_ERROR_LOG,
-        headers={"Authorization": f"Bearer .opp_access_token}"},
+        headers={"Authorization": f"Bearer  opp.access_token}"},
     )
     assert resp.status == 401
 
@@ -417,11 +417,11 @@ async def test_api_fire_event_context.opp, mock_api_client, opp_access_token):
         """Record that our event got called."""
         test_value.append(event)
 
-   .opp.bus.async_listen("test.event", listener)
+    opp.bus.async_listen("test.event", listener)
 
     await mock_api_client.post(
         "/api/events/test.event",
-        headers={"authorization": f"Bearer .opp_access_token}"},
+        headers={"authorization": f"Bearer  opp.access_token}"},
     )
     await opp.async_block_till_done()
 
@@ -437,7 +437,7 @@ async def test_api_call_service_context.opp, mock_api_client, opp_access_token):
 
     await mock_api_client.post(
         "/api/services/test_domain/test_service",
-        headers={"authorization": f"Bearer .opp_access_token}"},
+        headers={"authorization": f"Bearer  opp.access_token}"},
     )
     await opp.async_block_till_done()
 
@@ -452,7 +452,7 @@ async def test_api_set_state_context.opp, mock_api_client, opp_access_token):
     await mock_api_client.post(
         "/api/states/light.kitchen",
         json={"state": "on"},
-        headers={"authorization": f"Bearer .opp_access_token}"},
+        headers={"authorization": f"Bearer  opp.access_token}"},
     )
 
     refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
@@ -463,16 +463,16 @@ async def test_api_set_state_context.opp, mock_api_client, opp_access_token):
 
 async def test_event_stream_requires_admin.opp, mock_api_client, opp_admin_user):
     """Test user needs to be admin to access event stream."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     resp = await mock_api_client.get("/api/stream")
     assert resp.status == 401
 
 
 async def test_states_view_filters.opp, mock_api_client, opp_admin_user):
     """Test filtering only visible states."""
-   .opp_admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
-   .opp.states.async_set("test.entity", "hello")
-   .opp.states.async_set("test.not_visible_entity", "invisible")
+    opp.admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
+    opp.states.async_set("test.entity", "hello")
+    opp.states.async_set("test.not_visible_entity", "invisible")
     resp = await mock_api_client.get(const.URL_API_STATES)
     assert resp.status == 200
     json = await resp.json()
@@ -482,44 +482,44 @@ async def test_states_view_filters.opp, mock_api_client, opp_admin_user):
 
 async def test_get_entity_state_read_perm.opp, mock_api_client, opp_admin_user):
     """Test getting a state requires read permission."""
-   .opp_admin_user.mock_policy({})
+    opp.admin_user.mock_policy({})
     resp = await mock_api_client.get("/api/states/light.test")
     assert resp.status == 401
 
 
 async def test_post_entity_state_admin.opp, mock_api_client, opp_admin_user):
     """Test updating state requires admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     resp = await mock_api_client.post("/api/states/light.test")
     assert resp.status == 401
 
 
 async def test_delete_entity_state_admin.opp, mock_api_client, opp_admin_user):
     """Test deleting entity requires admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     resp = await mock_api_client.delete("/api/states/light.test")
     assert resp.status == 401
 
 
 async def test_post_event_admin.opp, mock_api_client, opp_admin_user):
     """Test sending event requires admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     resp = await mock_api_client.post("/api/events/state_changed")
     assert resp.status == 401
 
 
 async def test_rendering_template_admin.opp, mock_api_client, opp_admin_user):
     """Test rendering a template requires admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     resp = await mock_api_client.post(const.URL_API_TEMPLATE)
     assert resp.status == 401
 
 
 async def test_rendering_template_legacy_user(
-    opp, mock_api_client, aiohttp_client, legacy_auth
+    opp. mock_api_client, aiohttp_client, legacy_auth
 ):
     """Test rendering a template with legacy API password."""
-   .opp.states.async_set("sensor.temperature", 10)
+    opp.states.async_set("sensor.temperature", 10)
     client = await aiohttp_client.opp.http.app)
     resp = await client.post(
         const.URL_API_TEMPLATE,
@@ -543,7 +543,7 @@ async def test_api_call_service_bad_data.opp, mock_api_client):
         """Record that our service got called."""
         test_value.append(1)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         "test_domain", "test_service", listener, schema=vol.Schema({"hello": str})
     )
 

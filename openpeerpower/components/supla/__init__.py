@@ -55,7 +55,7 @@ async def async_setup_opp, base_config):
 
     server_confs = base_config[DOMAIN][CONF_SERVERS]
 
-   .opp.data[DOMAIN] = {SUPLA_SERVERS: {}, SUPLA_COORDINATORS: {}}
+    opp.data[DOMAIN] = {SUPLA_SERVERS: {}, SUPLA_COORDINATORS: {}}
 
     session = async_get_clientsession.opp)
 
@@ -69,7 +69,7 @@ async def async_setup_opp, base_config):
         try:
             srv_info = await server.get_server_info()
             if srv_info.get("authenticated"):
-               .opp.data[DOMAIN][SUPLA_SERVERS][server_conf[CONF_SERVER]] = server
+                opp.data[DOMAIN][SUPLA_SERVERS][server_conf[CONF_SERVER]] = server
 
             else:
                 _LOGGER.error(
@@ -110,7 +110,7 @@ async def discover_devices.opp, opp_config):
                 return channels
 
         coordinator = DataUpdateCoordinator(
-            opp,
+            opp.
             _LOGGER,
             name=f"{DOMAIN}-{server_name}",
             update_method=_fetch_channels,
@@ -119,7 +119,7 @@ async def discover_devices.opp, opp_config):
 
         await coordinator.async_refresh()
 
-       .opp.data[DOMAIN][SUPLA_COORDINATORS][server_name] = coordinator
+        opp.data[DOMAIN][SUPLA_COORDINATORS][server_name] = coordinator
 
         for channel_id, channel in coordinator.data.items():
             channel_function = channel["function"]["name"]

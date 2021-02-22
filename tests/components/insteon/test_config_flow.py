@@ -127,7 +127,7 @@ async def test_form_select_plm.opp: OpenPeerPowerType):
     result = await _init_form.opp, PLM)
 
     result2, mock_setup, mock_setup_entry = await _device_form(
-        opp, result["flow_id"], mock_successful_connection, MOCK_USER_INPUT_PLM
+        opp. result["flow_id"], mock_successful_connection, MOCK_USER_INPUT_PLM
     )
     assert result2["type"] == "create_entry"
     assert result2["data"] == MOCK_USER_INPUT_PLM
@@ -142,7 +142,7 @@ async def test_form_select_hub_v1.opp: OpenPeerPowerType):
     result = await _init_form.opp, HUB1)
 
     result2, mock_setup, mock_setup_entry = await _device_form(
-        opp, result["flow_id"], mock_successful_connection, MOCK_USER_INPUT_HUB_V1
+        opp. result["flow_id"], mock_successful_connection, MOCK_USER_INPUT_HUB_V1
     )
     assert result2["type"] == "create_entry"
     assert result2["data"] == {
@@ -160,7 +160,7 @@ async def test_form_select_hub_v2.opp: OpenPeerPowerType):
     result = await _init_form.opp, HUB2)
 
     result2, mock_setup, mock_setup_entry = await _device_form(
-        opp, result["flow_id"], mock_successful_connection, MOCK_USER_INPUT_HUB_V2
+        opp. result["flow_id"], mock_successful_connection, MOCK_USER_INPUT_HUB_V2
     )
     assert result2["type"] == "create_entry"
     assert result2["data"] == {
@@ -178,7 +178,7 @@ async def test_failed_connection_plm.opp: OpenPeerPowerType):
     result = await _init_form.opp, PLM)
 
     result2, _, _ = await _device_form(
-        opp, result["flow_id"], mock_failed_connection, MOCK_USER_INPUT_PLM
+        opp. result["flow_id"], mock_failed_connection, MOCK_USER_INPUT_PLM
     )
     assert result2["type"] == "form"
     assert result2["errors"] == {"base": "cannot_connect"}
@@ -190,7 +190,7 @@ async def test_failed_connection_hub.opp: OpenPeerPowerType):
     result = await _init_form.opp, HUB2)
 
     result2, _, _ = await _device_form(
-        opp, result["flow_id"], mock_failed_connection, MOCK_USER_INPUT_HUB_V2
+        opp. result["flow_id"], mock_failed_connection, MOCK_USER_INPUT_HUB_V2
     )
     assert result2["type"] == "form"
     assert result2["errors"] == {"base": "cannot_connect"}
@@ -238,7 +238,7 @@ async def test_import_min_hub_v2.opp: OpenPeerPowerType):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     result = await _import_config(
-        opp, {**MOCK_IMPORT_MINIMUM_HUB_V2, CONF_PORT: 25105, CONF_HUB_VERSION: 2}
+        opp. {**MOCK_IMPORT_MINIMUM_HUB_V2, CONF_PORT: 25105, CONF_HUB_VERSION: 2}
     )
 
     assert result["type"] == "create_entry"
@@ -256,7 +256,7 @@ async def test_import_min_hub_v1.opp: OpenPeerPowerType):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     result = await _import_config(
-        opp, {**MOCK_IMPORT_MINIMUM_HUB_V1, CONF_PORT: 9761, CONF_HUB_VERSION: 1}
+        opp. {**MOCK_IMPORT_MINIMUM_HUB_V1, CONF_PORT: 9761, CONF_HUB_VERSION: 1}
     )
 
     assert result["type"] == "create_entry"
@@ -279,7 +279,7 @@ async def test_import_existing.opp: OpenPeerPowerType):
     assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
     result = await _import_config(
-        opp, {**MOCK_IMPORT_MINIMUM_HUB_V2, CONF_PORT: 25105, CONF_HUB_VERSION: 2}
+        opp. {**MOCK_IMPORT_MINIMUM_HUB_V2, CONF_PORT: 25105, CONF_HUB_VERSION: 2}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
@@ -321,7 +321,7 @@ async def test_options_change_hub_config(opp: OpenPeerPowerType):
 
     config_entry.add_to.opp.opp)
     result = await _options_init_form(
-        opp, config_entry.entry_id, STEP_CHANGE_HUB_CONFIG
+        opp. config_entry.entry_id, STEP_CHANGE_HUB_CONFIG
     )
 
     user_input = {

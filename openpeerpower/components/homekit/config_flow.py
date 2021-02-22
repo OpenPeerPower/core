@@ -449,7 +449,7 @@ def _async_get_matching_entities.opp, domains=None):
     return {
         state.entity_id: f"{state.entity_id} ({state.attributes.get(ATTR_FRIENDLY_NAME, state.entity_id)})"
         for state in sorted(
-           .opp.states.async_all(domains and set(domains)),
+            opp.states.async_all(domains and set(domains)),
             key=lambda item: item.entity_id,
         )
     }

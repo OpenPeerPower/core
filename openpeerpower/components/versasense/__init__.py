@@ -35,7 +35,7 @@ async def async_setup_opp, config):
     session = aiohttp_client.async_get_clientsession.opp)
     consumer = pyv.Consumer(config[DOMAIN]["host"], session)
 
-   .opp.data[DOMAIN] = {KEY_CONSUMER: consumer}
+    opp.data[DOMAIN] = {KEY_CONSUMER: consumer}
 
     await _configure_entities.opp, config, consumer)
 
@@ -53,10 +53,10 @@ async def _configure_entities.opp, config, consumer):
 
     for mac, device in devices.items():
         _LOGGER.info("Device connected: %s %s", device.name, mac)
-       .opp.data[DOMAIN][mac] = {}
+        opp.data[DOMAIN][mac] = {}
 
         for peripheral_id, peripheral in device.peripherals.items():
-           .opp.data[DOMAIN][mac][peripheral_id] = peripheral
+            opp.data[DOMAIN][mac][peripheral_id] = peripheral
 
             if peripheral.classification == PERIPHERAL_CLASS_SENSOR:
                 sensor_info_list = _add_entity_info_to_list(
@@ -92,6 +92,6 @@ def _add_entity_info_to_list(peripheral, device, entity_info_list):
 
 def _load_platform.opp, config, entity_type, entity_info_list):
     """Load platform with list of entity info."""
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform.opp, entity_type, DOMAIN, entity_info_list, config)
     )

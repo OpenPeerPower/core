@@ -201,11 +201,11 @@ class CharacteristicEntity(HomeKitEntity):
 async def async_setup_entry.opp, entry):
     """Set up a HomeKit connection on a config entry."""
     conn = HKDevice.opp, entry, entry.data)
-   .opp.data[KNOWN_DEVICES][conn.unique_id] = conn
+    opp.data[KNOWN_DEVICES][conn.unique_id] = conn
 
     # For backwards compat
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, unique_id=normalize_hkid(conn.unique_id)
         )
 
@@ -222,9 +222,9 @@ async def async_setup_opp, config):
     await map_storage.async_initialize()
 
     zeroconf_instance = await zeroconf.async_get_instance.opp)
-   .opp.data[CONTROLLER] = aiohomekit.Controller(zeroconf_instance=zeroconf_instance)
-   .opp.data[KNOWN_DEVICES] = {}
-   .opp.data[TRIGGERS] = {}
+    opp.data[CONTROLLER] = aiohomekit.Controller(zeroconf_instance=zeroconf_instance)
+    opp.data[KNOWN_DEVICES] = {}
+    opp.data[TRIGGERS] = {}
 
     return True
 
@@ -243,4 +243,4 @@ async def async_unload_entry.opp, entry):
 async def async_remove_entry.opp, entry):
     """Cleanup caches before removing config entry."""
     hkid = entry.data["AccessoryPairingID"]
-   .opp.data[ENTITY_MAP].async_delete_map(hkid)
+    opp.data[ENTITY_MAP].async_delete_map(hkid)

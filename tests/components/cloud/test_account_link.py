@@ -49,7 +49,7 @@ async def test_setup_provide_implementation.opp):
     ):
         assert (
             await config_entry_oauth2_flow.async_get_implementations(
-                opp, "non_existing"
+                opp. "non_existing"
             )
             == {}
         )
@@ -58,7 +58,7 @@ async def test_setup_provide_implementation.opp):
             == {}
         )
         implementations = await config_entry_oauth2_flow.async_get_implementations(
-            opp, "test"
+            opp. "test"
         )
 
     assert "cloud" in implementations
@@ -69,12 +69,12 @@ async def test_setup_provide_implementation.opp):
 
 async def test_get_services_cached.opp):
     """Test that we cache services."""
-   .opp.data["cloud"] = None
+    opp.data["cloud"] = None
 
     services = 1
 
     with patch.object(account_link, "CACHE_TIMEOUT", 0), patch(
-        .opp_nabucasa.account_link.async_fetch_available_services",
+         opp.nabucasa.account_link.async_fetch_available_services",
         side_effect=lambda _: services,
     ) as mock_fetch:
         assert await account_link._get_services.opp) == 1
@@ -85,7 +85,7 @@ async def test_get_services_cached.opp):
         assert await account_link._get_services.opp) == 1
 
         services = 3
-       .opp.data.pop(account_link.DATA_SERVICES)
+        opp.data.pop(account_link.DATA_SERVICES)
         assert await account_link._get_services.opp) == 3
 
         services = 4
@@ -98,10 +98,10 @@ async def test_get_services_cached.opp):
 
 async def test_get_services_error(opp):
     """Test that we cache services."""
-   .opp.data["cloud"] = None
+    opp.data["cloud"] = None
 
     with patch.object(account_link, "CACHE_TIMEOUT", 0), patch(
-        .opp_nabucasa.account_link.async_fetch_available_services",
+         opp.nabucasa.account_link.async_fetch_available_services",
         side_effect=asyncio.TimeoutError,
     ):
         assert await account_link._get_services.opp) == []
@@ -110,7 +110,7 @@ async def test_get_services_error(opp):
 
 async def test_implementation.opp, flow_handler):
     """Test Cloud OAuth2 implementation."""
-   .opp.data["cloud"] = None
+    opp.data["cloud"] = None
 
     impl = account_link.CloudOAuth2Implementation.opp, "test")
     assert impl.name == "Open Peer Power Cloud"
@@ -126,7 +126,7 @@ async def test_implementation.opp, flow_handler):
     )
 
     with patch(
-        .opp_nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
+         opp.nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
     ):
         result = await opp.config_entries.flow.async_init(
             TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -164,7 +164,7 @@ async def test_implementation.opp, flow_handler):
 
     assert (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
         is impl
     )

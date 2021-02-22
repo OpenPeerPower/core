@@ -61,14 +61,14 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 @callback
 def _attach_trigger(
-    opp: OpenPeerPower, config: ConfigType, action: AutomationActionType, event_type
+    opp. OpenPeerPower, config: ConfigType, action: AutomationActionType, event_type
 ):
     job = OppJob(action)
 
     @callback
     def _handle_event(event: Event):
         if event.data[ATTR_ENTITY_ID] == config[CONF_ENTITY_ID]:
-           .opp.async_run.opp_job(
+            opp.async_run.opp_job(
                 job,
                 {"trigger": {**config, "description": event_type}},
                 event.context,
@@ -78,7 +78,7 @@ def _attach_trigger(
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

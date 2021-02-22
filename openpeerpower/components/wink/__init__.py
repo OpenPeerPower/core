@@ -210,7 +210,7 @@ WINK_HUBS = []
 
 def _request_app_setup_opp, config):
     """Assist user with configuring the Wink dev application."""
-   .opp.data[DOMAIN]["configurator"] = True
+    opp.data[DOMAIN]["configurator"] = True
     configurator = opp.components.configurator
 
     def wink_configuration_callback(callback_data):
@@ -243,7 +243,7 @@ def _request_app_setup_opp, config):
                      (This can take several days).
                      """
 
-   .opp.data[DOMAIN]["configuring"][DOMAIN] = configurator.request_config(
+    opp.data[DOMAIN]["configuring"][DOMAIN] = configurator.request_config(
         DOMAIN,
         wink_configuration_callback,
         description=description,
@@ -258,11 +258,11 @@ def _request_app_setup_opp, config):
 
 def _request_oauth_completion.opp, config):
     """Request user complete Wink OAuth2 flow."""
-   .opp.data[DOMAIN]["configurator"] = True
+    opp.data[DOMAIN]["configurator"] = True
     configurator = opp.components.configurator
     if DOMAIN in.opp.data[DOMAIN]["configuring"]:
         configurator.notify_errors(
-           .opp.data[DOMAIN]["configuring"][DOMAIN],
+            opp.data[DOMAIN]["configuring"][DOMAIN],
             "Failed to register, please try again.",
         )
         return
@@ -275,7 +275,7 @@ def _request_oauth_completion.opp, config):
 
     description = f"Please authorize Wink by visiting {start_url}"
 
-   .opp.data[DOMAIN]["configuring"][DOMAIN] = configurator.request_config(
+    opp.data[DOMAIN]["configuring"][DOMAIN] = configurator.request_config(
         DOMAIN, wink_configuration_callback, description=description
     )
 
@@ -284,7 +284,7 @@ def setup_opp, config):
     """Set up the Wink component."""
 
     if opp.data.get(DOMAIN) is None:
-       .opp.data[DOMAIN] = {
+        opp.data[DOMAIN] = {
             "unique_ids": [],
             "entities": {},
             "oauth": {},
@@ -305,15 +305,15 @@ def setup_opp, config):
         email = None
         password = None
         local_control = None
-       .opp.data[DOMAIN]["configurator"] = True
+        opp.data[DOMAIN]["configurator"] = True
     if None not in [client_id, client_secret]:
         _LOGGER.info("Using legacy OAuth authentication")
         if not local_control:
             pywink.disable_local_control()
-       .opp.data[DOMAIN]["oauth"][CONF_CLIENT_ID] = client_id
-       .opp.data[DOMAIN]["oauth"][CONF_CLIENT_SECRET] = client_secret
-       .opp.data[DOMAIN]["oauth"]["email"] = email
-       .opp.data[DOMAIN]["oauth"]["password"] = password
+        opp.data[DOMAIN]["oauth"][CONF_CLIENT_ID] = client_id
+        opp.data[DOMAIN]["oauth"][CONF_CLIENT_SECRET] = client_secret
+        opp.data[DOMAIN]["oauth"]["email"] = email
+        opp.data[DOMAIN]["oauth"]["password"] = password
         pywink.legacy_set_wink_credentials(email, password, client_id, client_secret)
     else:
         _LOGGER.info("Using OAuth authentication")
@@ -333,7 +333,7 @@ def setup_opp, config):
 
         if DOMAIN in.opp.data[DOMAIN]["configuring"]:
             _configurator = opp.data[DOMAIN]["configuring"]
-           .opp.components.configurator.request_done(_configurator.pop(DOMAIN))
+            opp.components.configurator.request_done(_configurator.pop(DOMAIN))
 
         # Using oauth
         access_token = config_file.get(ATTR_ACCESS_TOKEN)
@@ -356,8 +356,8 @@ def setup_opp, config):
             wink_auth_start_url = pywink.get_authorization_url(
                 config_file.get(CONF_CLIENT_ID), redirect_uri
             )
-           .opp.http.register_redirect(WINK_AUTH_START, wink_auth_start_url)
-           .opp.http.register_view(
+            opp.http.register_redirect(WINK_AUTH_START, wink_auth_start_url)
+            opp.http.register_view(
                 WinkAuthCallbackView(config, config_file, pywink.request_token)
             )
             _request_oauth_completion.opp, config)
@@ -365,12 +365,12 @@ def setup_opp, config):
 
     pywink.set_user_agent(USER_AGENT)
     sub_details = pywink.get_subscription_details()
-   .opp.data[DOMAIN]["pubnub"] = PubNubSubscriptionHandler(
+    opp.data[DOMAIN]["pubnub"] = PubNubSubscriptionHandler(
         sub_details[0], origin=sub_details[1]
     )
 
     def _subscribe():
-       .opp.data[DOMAIN]["pubnub"].subscribe()
+        opp.data[DOMAIN]["pubnub"].subscribe()
 
     # Call subscribe after the user sets up wink via the configurator
     # All other methods will complete setup before
@@ -399,14 +399,14 @@ def setup_opp, config):
         """Start the PubNub subscription."""
         _subscribe()
 
-   .opp.bus.listen(EVENT_OPENPEERPOWER_START, start_subscription)
+    opp.bus.listen(EVENT_OPENPEERPOWER_START, start_subscription)
 
     def stop_subscription(event):
         """Stop the PubNub subscription."""
-       .opp.data[DOMAIN]["pubnub"].unsubscribe()
-       .opp.data[DOMAIN]["pubnub"] = None
+        opp.data[DOMAIN]["pubnub"].unsubscribe()
+        opp.data[DOMAIN]["pubnub"] = None
 
-   .opp.bus.listen(EVENT_OPENPEERPOWER_STOP, stop_subscription)
+    opp.bus.listen(EVENT_OPENPEERPOWER_STOP, stop_subscription)
 
     def save_credentials(event):
         """Save currently set OAuth credentials."""
@@ -415,7 +415,7 @@ def setup_opp, config):
             _config = pywink.get_current_oauth_credentials()
             save_json(config_path, _config)
 
-   .opp.bus.listen(EVENT_OPENPEERPOWER_STOP, save_credentials)
+    opp.bus.listen(EVENT_OPENPEERPOWER_STOP, save_credentials)
 
     # Save the users potentially updated oauth credentials at a regular
     # interval to prevent them from being expired after a HA reboot.
@@ -430,7 +430,7 @@ def setup_opp, config):
                 time.sleep(1)
                 entity.schedule_update_op_state(True)
 
-   .opp.services.register(DOMAIN, SERVICE_REFRESH_STATES, force_update)
+    opp.services.register(DOMAIN, SERVICE_REFRESH_STATES, force_update)
 
     def pull_new_devices(call):
         """Pull new devices added to users Wink account since startup."""
@@ -438,7 +438,7 @@ def setup_opp, config):
         for _component in WINK_COMPONENTS:
             discovery.load_platform.opp, _component, DOMAIN, {}, config)
 
-   .opp.services.register(DOMAIN, SERVICE_ADD_NEW_DEVICES, pull_new_devices)
+    opp.services.register(DOMAIN, SERVICE_ADD_NEW_DEVICES, pull_new_devices)
 
     def set_pairing_mode(call):
         """Put the hub in provided pairing mode."""
@@ -464,7 +464,7 @@ def setup_opp, config):
             name = call.data.get("name")
             found_device.wink.set_name(name)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_RENAME_DEVICE, rename_device, schema=RENAME_DEVICE_SCHEMA
     )
 
@@ -482,7 +482,7 @@ def setup_opp, config):
         if found_device is not None:
             found_device.wink.remove_device()
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_DELETE_DEVICE, delete_device, schema=DELETE_DEVICE_SCHEMA
     )
 
@@ -492,7 +492,7 @@ def setup_opp, config):
             WINK_HUBS.append(hub)
 
     if WINK_HUBS:
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SET_PAIRING_MODE,
             set_pairing_mode,
@@ -559,7 +559,7 @@ def setup_opp, config):
 
     # Load components for the devices in Wink that we support
     for wink_component in WINK_COMPONENTS:
-       .opp.data[DOMAIN]["entities"][wink_component] = []
+        opp.data[DOMAIN]["entities"][wink_component] = []
         discovery.load_platform.opp, wink_component, DOMAIN, {}, config)
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
@@ -576,14 +576,14 @@ def setup_opp, config):
 
     if sirens:
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SET_AUTO_SHUTOFF,
             siren_service_handle,
             schema=SET_AUTO_SHUTOFF_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_ENABLE_SIREN,
             siren_service_handle,
@@ -592,42 +592,42 @@ def setup_opp, config):
 
     if has_dome_or_wink_siren:
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SET_SIREN_TONE,
             siren_service_handle,
             schema=SET_SIREN_TONE_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_ENABLE_CHIME,
             siren_service_handle,
             schema=SET_CHIME_MODE_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SET_SIREN_VOLUME,
             siren_service_handle,
             schema=SET_VOLUME_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SET_CHIME_VOLUME,
             siren_service_handle,
             schema=SET_VOLUME_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SIREN_STROBE_ENABLED,
             siren_service_handle,
             schema=SET_STROBE_ENABLED_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_CHIME_STROBE_ENABLED,
             siren_service_handle,
@@ -653,14 +653,14 @@ def setup_opp, config):
             all_dials.append(WinkNimbusDialDevice(nimbus, dial, opp))
 
     if nimbi:
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SET_DIAL_CONFIG,
             nimbus_service_handle,
             schema=DIAL_CONFIG_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_SET_DIAL_STATE,
             nimbus_service_handle,
@@ -688,7 +688,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         data = request.query
 
         response_message = """Wink has been successfully authorized!
@@ -710,7 +710,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
             }
             save_json.opp.config.path(WINK_CONFIG_FILE), config_contents)
 
-           .opp.async_add_job(setup, opp, self.config)
+            opp.async_add_job(setup, opp, self.config)
 
             return Response(
                 text=html_response.format(response_message), content_type="text/html"
@@ -728,10 +728,10 @@ class WinkDevice(Entity):
         """Initialize the Wink device."""
         self.opp = opp
         self.wink = wink
-       .opp.data[DOMAIN]["pubnub"].add_subscription(
+        opp.data[DOMAIN]["pubnub"].add_subscription(
             self.wink.pubnub_channel, self._pubnub_update
         )
-       .opp.data[DOMAIN]["unique_ids"].append(self.wink.object_id() + self.wink.name())
+        opp.data[DOMAIN]["unique_ids"].append(self.wink.object_id() + self.wink.name())
 
     def _pubnub_update(self, message):
         _LOGGER.debug(message)

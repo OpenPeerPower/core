@@ -14,7 +14,7 @@ from .common import ComponentFactory, new_profile_config
 
 
 async def test_binary_sensor(
-    opp: OpenPeerPower, component_factory: ComponentFactory
+    opp. OpenPeerPower, component_factory: ComponentFactory
 ) -> None:
     """Test binary sensor."""
     in_bed_attribute = WITHINGS_MEASUREMENTS_MAP[Measurement.IN_BED]

@@ -55,64 +55,64 @@ class MockMediaPlayer(media_player.MediaPlayerEntity):
 
         self.service_calls = {
             "turn_on": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_TURN_ON
+                opp. media_player.DOMAIN, media_player.SERVICE_TURN_ON
             ),
             "turn_off": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_TURN_OFF
+                opp. media_player.DOMAIN, media_player.SERVICE_TURN_OFF
             ),
             "mute_volume": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_MUTE
+                opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_MUTE
             ),
             "set_volume_level": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
+                opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
             ),
             "media_play": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_PLAY
+                opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_PLAY
             ),
             "media_pause": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_PAUSE
+                opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_PAUSE
             ),
             "media_stop": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_STOP
+                opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_STOP
             ),
             "media_previous_track": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_PREVIOUS_TRACK
+                opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_PREVIOUS_TRACK
             ),
             "media_next_track": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_NEXT_TRACK
+                opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_NEXT_TRACK
             ),
             "media_seek": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_SEEK
+                opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_SEEK
             ),
             "play_media": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_PLAY_MEDIA
+                opp. media_player.DOMAIN, media_player.SERVICE_PLAY_MEDIA
             ),
             "volume_up": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_UP
+                opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_UP
             ),
             "volume_down": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_DOWN
+                opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_DOWN
             ),
             "media_play_pause": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_PLAY_PAUSE
+                opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_PLAY_PAUSE
             ),
             "select_sound_mode": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_SELECT_SOUND_MODE
+                opp. media_player.DOMAIN, media_player.SERVICE_SELECT_SOUND_MODE
             ),
             "select_source": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
+                opp. media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
             ),
             "toggle": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_TOGGLE
+                opp. media_player.DOMAIN, media_player.SERVICE_TOGGLE
             ),
             "clear_playlist": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_CLEAR_PLAYLIST
+                opp. media_player.DOMAIN, media_player.SERVICE_CLEAR_PLAYLIST
             ),
             "repeat_set": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_REPEAT_SET
+                opp. media_player.DOMAIN, media_player.SERVICE_REPEAT_SET
             ),
             "shuffle_set": mock_service(
-                opp, media_player.DOMAIN, media_player.SERVICE_SHUFFLE_SET
+                opp. media_player.DOMAIN, media_player.SERVICE_SHUFFLE_SET
             ),
         }
 
@@ -848,10 +848,10 @@ class TestMediaPlayer(unittest.TestCase):
 
 async def test_state_template.opp):
     """Test with a simple valid state template."""
-   .opp.states.async_set("sensor.test_sensor", STATE_ON)
+    opp.states.async_set("sensor.test_sensor", STATE_ON)
 
     await async_setup_component(
-        opp,
+        opp.
         "media_player",
         {
             "media_player": {
@@ -867,17 +867,17 @@ async def test_state_template.opp):
 
     await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_ON
-   .opp.states.async_set("sensor.test_sensor", STATE_OFF)
+    opp.states.async_set("sensor.test_sensor", STATE_OFF)
     await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_OFF
 
 
 async def test_device_class.opp):
     """Test device_class property."""
-   .opp.states.async_set("sensor.test_sensor", "on")
+    opp.states.async_set("sensor.test_sensor", "on")
 
     await async_setup_component(
-        opp,
+        opp.
         "media_player",
         {
             "media_player": {
@@ -893,10 +893,10 @@ async def test_device_class.opp):
 
 async def test_invalid_state_template.opp):
     """Test invalid state template sets state to None."""
-   .opp.states.async_set("sensor.test_sensor", "on")
+    opp.states.async_set("sensor.test_sensor", "on")
 
     await async_setup_component(
-        opp,
+        opp.
         "media_player",
         {
             "media_player": {
@@ -912,15 +912,15 @@ async def test_invalid_state_template.opp):
 
     await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
-   .opp.states.async_set("sensor.test_sensor", "off")
+    opp.states.async_set("sensor.test_sensor", "off")
     await opp.async_block_till_done()
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
 
 
 async def test_master_state_with_template.opp):
     """Test the state_template option."""
-   .opp.states.async_set("input_boolean.test", STATE_OFF)
-   .opp.states.async_set("media_player.mock1", STATE_OFF)
+    opp.states.async_set("input_boolean.test", STATE_OFF)
+    opp.states.async_set("media_player.mock1", STATE_OFF)
 
     templ = (
         '{% if states.input_boolean.test.state == "off" %}on'
@@ -928,7 +928,7 @@ async def test_master_state_with_template.opp):
     )
 
     await async_setup_component(
-        opp,
+        opp.
         "media_player",
         {
             "media_player": {
@@ -944,26 +944,26 @@ async def test_master_state_with_template.opp):
     await opp.async_start()
 
     await opp.async_block_till_done()
-   .opp.states.get("media_player.tv").state == STATE_ON
+    opp.states.get("media_player.tv").state == STATE_ON
 
     events = []
 
-   .opp.helpers.event.async_track_state_change_event(
+    opp.helpers.event.async_track_state_change_event(
         "media_player.tv", callback(lambda event: events.append(event))
     )
 
     context = Context()
-   .opp.states.async_set("input_boolean.test", STATE_ON, context=context)
+    opp.states.async_set("input_boolean.test", STATE_ON, context=context)
     await opp.async_block_till_done()
 
-   .opp.states.get("media_player.tv").state == STATE_OFF
+    opp.states.get("media_player.tv").state == STATE_OFF
     assert events[0].context == context
 
 
 async def test_reload.opp):
     """Test reloading the media player from yaml."""
-   .opp.states.async_set("input_boolean.test", STATE_OFF)
-   .opp.states.async_set("media_player.mock1", STATE_OFF)
+    opp.states.async_set("input_boolean.test", STATE_OFF)
+    opp.states.async_set("media_player.mock1", STATE_OFF)
 
     templ = (
         '{% if states.input_boolean.test.state == "off" %}on'
@@ -971,7 +971,7 @@ async def test_reload.opp):
     )
 
     await async_setup_component(
-        opp,
+        opp.
         "media_player",
         {
             "media_player": {
@@ -987,15 +987,15 @@ async def test_reload.opp):
     await opp.async_start()
 
     await opp.async_block_till_done()
-   .opp.states.get("media_player.tv").state == STATE_ON
+    opp.states.get("media_player.tv").state == STATE_ON
 
-   .opp.states.async_set("input_boolean.test", STATE_ON)
+    opp.states.async_set("input_boolean.test", STATE_ON)
     await opp.async_block_till_done()
 
-   .opp.states.get("media_player.tv").state == STATE_OFF
+    opp.states.get("media_player.tv").state == STATE_OFF
 
-   .opp.states.async_set("media_player.master_bedroom_2", STATE_OFF)
-   .opp.states.async_set(
+    opp.states.async_set("media_player.master_bedroom_2", STATE_OFF)
+    opp.states.async_set(
         "remote.alexander_master_bedroom",
         STATE_ON,
         {"activity_list": ["act1", "act2"], "current_activity": "act2"},

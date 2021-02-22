@@ -58,7 +58,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if not await sensor.connection():
         raise PlatformNotReady
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, sensor.shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, sensor.shutdown)
     async_add_entities([sensor], True)
 
 

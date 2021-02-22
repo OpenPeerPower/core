@@ -26,7 +26,7 @@ _LOGGER = logging.getLogger(__name__)
 def async_setup_discovery_view.opp.OpenPeerPowerView, opp.):
     """Discovery setup."""
     opp._discovery = OppIODiscovery.opp.opp.)
-   .opp.ttp.register_view(opp._discovery)
+    opp.ttp.register_view(opp._discovery)
 
     # Handle exists discovery messages
     async def _async_discovery_start_handler(event):
@@ -44,7 +44,7 @@ def async_setup_discovery_view.opp.OpenPeerPowerView, opp.):
         if jobs:
             await asyncio.wait(jobs)
 
-   .opp.us.async_listen_once(
+    opp.us.async_listen_once(
         EVENT_OPENPEERPOWER_START, _async_discovery_start_handler
     )
 
@@ -94,7 +94,7 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Use config flow
         await self opp.onfig_entries.flow.async_init(
-            service, context={"source": "opp."}, data=config_data
+            service, context={"source":  opp."}, data=config_data
         )
 
     async def async_process_del(self, data):
@@ -113,6 +113,6 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Use config flow
         for entry in self opp.onfig_entries.async_entries(service):
-            if entry.source != "opp.":
+            if entry.source !=  opp.":
                 continue
             await self opp.onfig_entries.async_remove(entry)

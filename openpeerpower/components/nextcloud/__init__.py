@@ -99,8 +99,8 @@ def setup_opp, config):
     except NextcloudMonitorError:
         _LOGGER.error("Nextcloud setup failed - Check configuration")
 
-   .opp.data[DOMAIN] = get_data_points(ncm.data)
-   .opp.data[DOMAIN]["instance"] = conf[CONF_URL]
+    opp.data[DOMAIN] = get_data_points(ncm.data)
+    opp.data[DOMAIN]["instance"] = conf[CONF_URL]
 
     def nextcloud_update(event_time):
         """Update data from nextcloud api."""
@@ -110,8 +110,8 @@ def setup_opp, config):
             _LOGGER.error("Nextcloud update failed")
             return False
 
-       .opp.data[DOMAIN] = get_data_points(ncm.data)
-       .opp.data[DOMAIN]["instance"] = conf[CONF_URL]
+        opp.data[DOMAIN] = get_data_points(ncm.data)
+        opp.data[DOMAIN]["instance"] = conf[CONF_URL]
 
     # Update sensors on time interval
     track_time_interval.opp, nextcloud_update, conf[CONF_SCAN_INTERVAL])

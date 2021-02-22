@@ -202,7 +202,7 @@ def setup_opp: OpenPeerPower, base_config):
 
     loop = (
         # Create own thread if more than 1 CPU
-       .opp.loop
+        opp.loop
         if multiprocessing.cpu_count() < 2
         else None
     )
@@ -318,14 +318,14 @@ def setup_opp: OpenPeerPower, base_config):
     def _new_device(device):
         """Handle new devices which are detected by HDMI network."""
         key = f"{DOMAIN}.{device.name}"
-       .opp.data[key] = device
+        opp.data[key] = device
         ent_platform = base_config[DOMAIN][CONF_TYPES].get(key, platform)
         discovery.load_platform(
-            opp,
+            opp.
             ent_platform,
             DOMAIN,
             discovered={ATTR_NEW: [key]},
-           .opp_config=base_config,
+            opp.config=base_config,
         )
 
     def _shutdown(call):
@@ -333,27 +333,27 @@ def setup_opp: OpenPeerPower, base_config):
 
     def _start_cec(event):
         """Register services and start HDMI network to watch for devices."""
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, SERVICE_SEND_COMMAND, _tx, SERVICE_SEND_COMMAND_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, SERVICE_VOLUME, _volume, schema=SERVICE_VOLUME_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             SERVICE_UPDATE_DEVICES,
             _update,
             schema=SERVICE_UPDATE_DEVICES_SCHEMA,
         )
-       .opp.services.register(DOMAIN, SERVICE_POWER_ON, _power_on)
-       .opp.services.register(DOMAIN, SERVICE_STANDBY, _standby)
-       .opp.services.register(DOMAIN, SERVICE_SELECT_DEVICE, _select_device)
+        opp.services.register(DOMAIN, SERVICE_POWER_ON, _power_on)
+        opp.services.register(DOMAIN, SERVICE_STANDBY, _standby)
+        opp.services.register(DOMAIN, SERVICE_SELECT_DEVICE, _select_device)
 
         hdmi_network.set_new_device_callback(_new_device)
         hdmi_network.start()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, _start_cec)
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, _start_cec)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
     return True
 
 

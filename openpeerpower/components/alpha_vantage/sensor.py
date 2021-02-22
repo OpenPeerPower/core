@@ -70,7 +70,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     if not symbols and not conversions:
         msg = "No symbols or currencies configured."
-       .opp.components.persistent_notification.create(msg, "Sensor alpha_vantage")
+        opp.components.persistent_notification.create(msg, "Sensor alpha_vantage")
         _LOGGER.warning(msg)
         return
 

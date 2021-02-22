@@ -41,7 +41,7 @@ VALVE_CONTROLLER_SENSORS = [SENSOR_KIND_AP_INFO, SENSOR_KIND_LEAK_DETECTED]
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Guardian switches based on a config entry."""
 
@@ -69,9 +69,9 @@ async def async_setup_entry(
         async_add_entities(entities)
 
     # Handle adding paired sensors after HASS startup:
-   .opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id].append(
+    opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id].append(
         async_dispatcher_connect(
-            opp,
+            opp.
             SIGNAL_PAIRED_SENSOR_COORDINATOR_ADDED.format(entry.data[CONF_UID]),
             add_new_paired_sensor,
         )
@@ -85,7 +85,7 @@ async def async_setup_entry(
         sensors.append(
             ValveControllerBinarySensor(
                 entry,
-               .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id],
+                opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id],
                 kind,
                 name,
                 device_class,

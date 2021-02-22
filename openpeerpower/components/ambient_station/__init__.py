@@ -261,8 +261,8 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Set up the Ambient PWS component."""
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][DATA_CLIENT] = {}
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][DATA_CLIENT] = {}
 
     if DOMAIN not in config:
         return True
@@ -270,10 +270,10 @@ async def async_setup_opp, config):
     conf = config[DOMAIN]
 
     # Store config for use during entry setup:
-   .opp.data[DOMAIN][DATA_CONFIG] = conf
+    opp.data[DOMAIN][DATA_CONFIG] = conf
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_API_KEY: conf[CONF_API_KEY], CONF_APP_KEY: conf[CONF_APP_KEY]},
@@ -286,7 +286,7 @@ async def async_setup_opp, config):
 async def async_setup_entry.opp, config_entry):
     """Set up the Ambient PWS as config entry."""
     if not config_entry.unique_id:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry, unique_id=config_entry.data[CONF_APP_KEY]
         )
 
@@ -294,7 +294,7 @@ async def async_setup_entry.opp, config_entry):
 
     try:
         ambient = AmbientStation(
-            opp,
+            opp.
             config_entry,
             Client(
                 config_entry.data[CONF_API_KEY],
@@ -302,8 +302,8 @@ async def async_setup_entry.opp, config_entry):
                 session=session,
             ),
         )
-       .opp.loop.create_task(ambient.ws_connect())
-       .opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = ambient
+        opp.loop.create_task(ambient.ws_connect())
+        opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = ambient
     except WebsocketError as err:
         LOGGER.error("Config entry failed: %s", err)
         raise ConfigEntryNotReady from err
@@ -311,7 +311,7 @@ async def async_setup_entry.opp, config_entry):
     async def _async_disconnect_websocket(*_):
         await ambient.client.websocket.disconnect()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_disconnect_websocket)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_disconnect_websocket)
 
     return True
 
@@ -319,10 +319,10 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, config_entry):
     """Unload an Ambient PWS config entry."""
     ambient = opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
-   .opp.async_create_task(ambient.ws_disconnect())
+    opp.async_create_task(ambient.ws_disconnect())
 
     tasks = [
-       .opp.config_entries.async_forward_entry_unload(config_entry, component)
+        opp.config_entries.async_forward_entry_unload(config_entry, component)
         for component in ("binary_sensor", "sensor")
     ]
 
@@ -346,7 +346,7 @@ async def async_migrate_entry.opp, config_entry):
         en_reg.async_clear_config_entry(config_entry)
 
         version = config_entry.version = 2
-       .opp.config_entries.async_update_entry(config_entry)
+        opp.config_entries.async_update_entry(config_entry)
 
     LOGGER.info("Migration to version %s successful", version)
 

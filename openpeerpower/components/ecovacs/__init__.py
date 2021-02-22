@@ -43,7 +43,7 @@ def setup_opp, config):
     """Set up the Ecovacs component."""
     _LOGGER.debug("Creating new Ecovacs component")
 
-   .opp.data[ECOVACS_DEVICES] = []
+    opp.data[ECOVACS_DEVICES] = []
 
     ecovacs_api = EcoVacsAPI(
         ECOVACS_API_DEVICEID,
@@ -71,7 +71,7 @@ def setup_opp, config):
             config[DOMAIN].get(CONF_CONTINENT).lower(),
             monitor=True,
         )
-       .opp.data[ECOVACS_DEVICES].append(vacbot)
+        opp.data[ECOVACS_DEVICES].append(vacbot)
 
     def stop(event: object) -> None:
         """Shut down open connections to Ecovacs XMPP server."""
@@ -82,7 +82,7 @@ def setup_opp, config):
             device.disconnect()
 
     # Listen for HA stop to disconnect.
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop)
 
     if opp.data[ECOVACS_DEVICES]:
         _LOGGER.debug("Starting vacuum components")

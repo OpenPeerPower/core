@@ -113,7 +113,7 @@ async def test_process_image.opp, mock_image, mock_detections):
         """Mock event."""
         person_events.append(event)
 
-   .opp.bus.async_listen(sh.EVENT_PERSON_DETECTED, capture_person_event)
+    opp.bus.async_listen(sh.EVENT_PERSON_DETECTED, capture_person_event)
 
     data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
     await opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
@@ -125,7 +125,7 @@ async def test_process_image.opp, mock_image, mock_detections):
 
 
 async def test_catch_bad_image(
-    opp, caplog, mock_image, mock_detections, mock_bad_image_data
+    opp. caplog, mock_image, mock_detections, mock_bad_image_data
 ):
     """Process an image."""
     valid_config_save_file = deepcopy(VALID_CONFIG)

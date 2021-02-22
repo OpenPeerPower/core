@@ -121,7 +121,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the sensor from config."""
     if DATA_KEY not in.opp.data:
-       .opp.data[DATA_KEY] = {}
+        opp.data[DATA_KEY] = {}
 
     host = config[CONF_HOST]
     token = config[CONF_TOKEN]
@@ -144,7 +144,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     except DeviceException as ex:
         raise PlatformNotReady from ex
 
-   .opp.data[DATA_KEY][host] = device
+    opp.data[DATA_KEY][host] = device
     async_add_entities([device], update_before_add=True)
 
 

@@ -11,7 +11,7 @@ DATA_PFIO_LISTENER = "pfio_listener"
 def setup_opp, config):
     """Set up the Raspberry PI PFIO component."""
     pifacedigital = PFIO.PiFaceDigital()
-   .opp.data[DATA_PFIO_LISTENER] = PFIO.InputEventListener(chip=pifacedigital)
+    opp.data[DATA_PFIO_LISTENER] = PFIO.InputEventListener(chip=pifacedigital)
 
     def cleanup_pfio(event):
         """Stuff to do before stopping."""
@@ -19,9 +19,9 @@ def setup_opp, config):
 
     def prepare_pfio(event):
         """Stuff to do when Open Peer Power starts."""
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_pfio)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_pfio)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, prepare_pfio)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, prepare_pfio)
     PFIO.init()
 
     return True
@@ -39,11 +39,11 @@ def read_input(port):
 
 def edge_detect.opp, port, event_callback, settle):
     """Add detection for RISING and FALLING events."""
-   .opp.data[DATA_PFIO_LISTENER].register(
+    opp.data[DATA_PFIO_LISTENER].register(
         port, PFIO.IODIR_BOTH, event_callback, settle_time=settle
     )
 
 
 def activate_listener.opp):
     """Activate the registered listener events."""
-   .opp.data[DATA_PFIO_LISTENER].activate()
+    opp.data[DATA_PFIO_LISTENER].activate()

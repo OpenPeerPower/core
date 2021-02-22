@@ -20,19 +20,19 @@ VALID_XY_COLOR = {"xy_color": (0.59, 0.274)}
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Light states."""
-   .opp.states.async_set("light.entity_off", "off", {})
-   .opp.states.async_set("light.entity_bright", "on", VALID_BRIGHTNESS)
-   .opp.states.async_set("light.entity_white", "on", VALID_WHITE_VALUE)
-   .opp.states.async_set("light.entity_flash", "on", VALID_FLASH)
-   .opp.states.async_set("light.entity_effect", "on", VALID_EFFECT)
-   .opp.states.async_set("light.entity_trans", "on", VALID_TRANSITION)
-   .opp.states.async_set("light.entity_name", "on", VALID_COLOR_NAME)
-   .opp.states.async_set("light.entity_temp", "on", VALID_COLOR_TEMP)
-   .opp.states.async_set("light.entity_hs", "on", VALID_HS_COLOR)
-   .opp.states.async_set("light.entity_kelvin", "on", VALID_KELVIN)
-   .opp.states.async_set("light.entity_profile", "on", VALID_PROFILE)
-   .opp.states.async_set("light.entity_rgb", "on", VALID_RGB_COLOR)
-   .opp.states.async_set("light.entity_xy", "on", VALID_XY_COLOR)
+    opp.states.async_set("light.entity_off", "off", {})
+    opp.states.async_set("light.entity_bright", "on", VALID_BRIGHTNESS)
+    opp.states.async_set("light.entity_white", "on", VALID_WHITE_VALUE)
+    opp.states.async_set("light.entity_flash", "on", VALID_FLASH)
+    opp.states.async_set("light.entity_effect", "on", VALID_EFFECT)
+    opp.states.async_set("light.entity_trans", "on", VALID_TRANSITION)
+    opp.states.async_set("light.entity_name", "on", VALID_COLOR_NAME)
+    opp.states.async_set("light.entity_temp", "on", VALID_COLOR_TEMP)
+    opp.states.async_set("light.entity_hs", "on", VALID_HS_COLOR)
+    opp.states.async_set("light.entity_kelvin", "on", VALID_KELVIN)
+    opp.states.async_set("light.entity_profile", "on", VALID_PROFILE)
+    opp.states.async_set("light.entity_rgb", "on", VALID_RGB_COLOR)
+    opp.states.async_set("light.entity_xy", "on", VALID_XY_COLOR)
 
     turn_on_calls = async_mock_service.opp, "light", "turn_on")
     turn_off_calls = async_mock_service.opp, "light", "turn_off")
@@ -158,7 +158,7 @@ async def test_reproducing_states.opp, caplog):
 
 async def test_deprecation_warning.opp, caplog):
     """Test deprecation warning."""
-   .opp.states.async_set("light.entity_off", "off", {})
+    opp.states.async_set("light.entity_off", "off", {})
     turn_on_calls = async_mock_service.opp, "light", "turn_on")
     await opp.helpers.state.async_reproduce_state(
         [State("light.entity_off", "on", {"brightness_pct": 80})]

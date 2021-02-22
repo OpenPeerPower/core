@@ -25,16 +25,16 @@ from tests.common import (
 
 async def test_google_entity_sync_serialize_with_local_sdk.opp):
     """Test sync serialize attributes of a GoogleEntity."""
-   .opp.states.async_set("light.ceiling_lights", "off")
-   .opp.config.api = Mock(port=1234, use_ssl=True)
+    opp.states.async_set("light.ceiling_lights", "off")
+    opp.config.api = Mock(port=1234, use_ssl=True)
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://hostname:1234"},
     )
 
-   .opp.http = Mock(server_port=1234)
+    opp.http = Mock(server_port=1234)
     config = MockConfig(
-       .opp.opp,
+        opp.opp,
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
     )
@@ -72,12 +72,12 @@ async def test_config_local_sdk.opp, opp_client):
     """Test the local SDK."""
     command_events = async_capture_events.opp, EVENT_COMMAND_RECEIVED)
     turn_on_calls = async_mock_service.opp, "light", "turn_on")
-   .opp.states.async_set("light.ceiling_lights", "off")
+    opp.states.async_set("light.ceiling_lights", "off")
 
     assert await async_setup_component.opp, "webhook", {})
 
     config = MockConfig(
-       .opp.opp,
+        opp.opp,
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
     )
@@ -135,7 +135,7 @@ async def test_config_local_sdk_if_disabled.opp, opp_client):
     assert await async_setup_component.opp, "webhook", {})
 
     config = MockConfig(
-       .opp.opp,
+        opp.opp,
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
         enabled=False,
@@ -166,7 +166,7 @@ async def test_config_local_sdk_if_disabled.opp, opp_client):
 async def test_agent_user_id_storage.opp, opp_storage):
     """Test a disconnect message."""
 
-   .opp_storage["google_assistant"] = {
+    opp.storage["google_assistant"] = {
         "version": 1,
         "key": "google_assistant",
         "data": {"agent_user_ids": {"agent_1": {}}},

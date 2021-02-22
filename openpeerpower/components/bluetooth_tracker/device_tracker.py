@@ -65,7 +65,7 @@ def discover_devices(device_id: int) -> List[Tuple[str, str]]:
 
 
 async def see_device(
-    opp: OpenPeerPowerType, async_see, mac: str, device_name: str, rssi=None
+    opp. OpenPeerPowerType, async_see, mac: str, device_name: str, rssi=None
 ) -> None:
     """Mark a device as seen."""
     attributes = {}
@@ -108,7 +108,7 @@ def lookup_name(mac: str) -> Optional[str]:
 
 
 async def async_setup_scanner(
-    opp: OpenPeerPowerType, config: dict, async_see, discovery_info=None
+    opp. OpenPeerPowerType, config: dict, async_see, discovery_info=None
 ):
     """Set up the Bluetooth Scanner."""
     device_id: int = config[CONF_DEVICE_ID]
@@ -177,9 +177,9 @@ async def async_setup_scanner(
         """Update bluetooth devices on demand."""
         await update_bluetooth()
 
-   .opp.async_create_task(update_bluetooth())
+    opp.async_create_task(update_bluetooth())
     async_track_time_interval.opp, update_bluetooth, interval)
 
-   .opp.services.async_register(DOMAIN, SERVICE_UPDATE, handle_manual_update_bluetooth)
+    opp.services.async_register(DOMAIN, SERVICE_UPDATE, handle_manual_update_bluetooth)
 
     return True

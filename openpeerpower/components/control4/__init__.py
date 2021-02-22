@@ -47,7 +47,7 @@ async def async_setup_opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     Configuration through YAML is not supported at this time.
     """
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -116,8 +116,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     entry_data[CONF_CONFIG_LISTENER] = entry.add_update_listener(update_listener)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -134,14 +134,14 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
-   .opp.data[DOMAIN][entry.entry_id][CONF_CONFIG_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][CONF_CONFIG_LISTENER]()
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
         _LOGGER.debug("Unloaded entry for %s", entry.entry_id)
 
     return unload_ok

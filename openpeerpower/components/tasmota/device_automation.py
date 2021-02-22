@@ -28,16 +28,16 @@ async def async_setup_entry.opp, config_entry):
         """Discover and add a Tasmota device automation."""
         if tasmota_automation.automation_type == AUTOMATION_TYPE_TRIGGER:
             await device_trigger.async_setup_trigger(
-                opp, tasmota_automation, config_entry, discovery_hash
+                opp. tasmota_automation, config_entry, discovery_hash
             )
 
-   .opp.data[
+    opp.data[
         DATA_REMOVE_DISCOVER_COMPONENT.format("device_automation")
     ] = async_dispatcher_connect(
-        opp,
+        opp.
         TASMOTA_DISCOVERY_ENTITY_NEW.format("device_automation"),
         async_discover,
     )
-   .opp.data[DATA_UNSUB].append(
-       .opp.bus.async_listen(EVENT_DEVICE_REGISTRY_UPDATED, async_device_removed)
+    opp.data[DATA_UNSUB].append(
+        opp.bus.async_listen(EVENT_DEVICE_REGISTRY_UPDATED, async_device_removed)
     )

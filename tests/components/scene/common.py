@@ -16,4 +16,4 @@ def activate.opp, entity_id=ENTITY_MATCH_ALL):
     if entity_id:
         data[ATTR_ENTITY_ID] = entity_id
 
-   .opp.services.call(DOMAIN, SERVICE_TURN_ON, data)
+    opp.services.call(DOMAIN, SERVICE_TURN_ON, data)

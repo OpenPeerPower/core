@@ -16,7 +16,7 @@ async def test_setting_rising.opp, legacy_patchable_time):
     utc_now = datetime(2016, 11, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
         await async_setup_component(
-            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     await opp.async_block_till_done()
@@ -107,13 +107,13 @@ async def test_state_change.opp, legacy_patchable_time):
     now = datetime(2016, 6, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=now):
         await async_setup_component(
-            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     await opp.async_block_till_done()
 
     test_time = dt_util.parse_datetime(
-       .opp.states.get(sun.ENTITY_ID).attributes[sun.STATE_ATTR_NEXT_RISING]
+        opp.states.get(sun.ENTITY_ID).attributes[sun.STATE_ATTR_NEXT_RISING]
     )
     assert test_time is not None
 
@@ -123,7 +123,7 @@ async def test_state_change.opp, legacy_patchable_time):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=patched_time
     ):
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: patched_time})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: patched_time})
         await opp.async_block_till_done()
 
     assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
@@ -137,14 +137,14 @@ async def test_state_change.opp, legacy_patchable_time):
 
 async def test_norway_in_june.opp):
     """Test location in Norway where the sun doesn't set in summer."""
-   .opp.config.latitude = 69.6
-   .opp.config.longitude = 18.8
+    opp.config.latitude = 69.6
+    opp.config.longitude = 18.8
 
     june = datetime(2016, 6, 1, tzinfo=dt_util.UTC)
 
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=june):
         assert await async_setup_component(
-            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     state = opp.states.get(sun.ENTITY_ID)
@@ -165,14 +165,14 @@ async def test_state_change_count.opp):
     """Count the number of state change events in a location."""
     # Skipped because it's a bit slow. Has been validated with
     # multiple lattitudes and dates
-   .opp.config.latitude = 10
-   .opp.config.longitude = 0
+    opp.config.latitude = 10
+    opp.config.longitude = 0
 
     now = datetime(2016, 6, 1, tzinfo=dt_util.UTC)
 
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=now):
         assert await async_setup_component(
-            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     events = []
@@ -182,12 +182,12 @@ async def test_state_change_count.opp):
         if event.data.get("entity_id") == "sun.sun":
             events.append(event)
 
-   .opp.bus.async_listen(EVENT_STATE_CHANGED, state_change_listener)
+    opp.bus.async_listen(EVENT_STATE_CHANGED, state_change_listener)
     await opp.async_block_till_done()
 
     for _ in range(24 * 60 * 60):
         now += timedelta(seconds=1)
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: now})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: now})
         await opp.async_block_till_done()
 
     assert len(events) < 721

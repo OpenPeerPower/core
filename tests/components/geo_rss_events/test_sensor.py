@@ -72,7 +72,7 @@ async def test_setup_opp, mock_feed):
         with assert_setup_component(1, sensor.DOMAIN):
             assert await async_setup_component.opp, sensor.DOMAIN, VALID_CONFIG)
             # Artificially trigger update.
-           .opp.bus.fire(EVENT_OPENPEERPOWER_START)
+            opp.bus.fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
             await opp.async_block_till_done()
 
@@ -131,10 +131,10 @@ async def test_setup_with_categories.opp, mock_feed):
 
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp, sensor.DOMAIN, VALID_CONFIG_WITH_CATEGORIES
+            opp. sensor.DOMAIN, VALID_CONFIG_WITH_CATEGORIES
         )
         # Artificially trigger update.
-       .opp.bus.fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.fire(EVENT_OPENPEERPOWER_START)
         # Collect events.
         await opp.async_block_till_done()
 

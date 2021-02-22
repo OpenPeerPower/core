@@ -53,7 +53,7 @@ def setup_opp, config):
     account_currencies = config[DOMAIN].get(CONF_ACCOUNT_CURRENCIES)
     exchange_currencies = config[DOMAIN][CONF_EXCHANGE_CURRENCIES]
 
-   .opp.data[DATA_COINBASE] = coinbase_data = CoinbaseData(api_key, api_secret)
+    opp.data[DATA_COINBASE] = coinbase_data = CoinbaseData(api_key, api_secret)
 
     if not hasattr(coinbase_data, "accounts"):
         return False
@@ -66,7 +66,7 @@ def setup_opp, config):
             continue
         native = coinbase_data.exchange_rates.currency
         load_platform(
-            opp,
+            opp.
             "sensor",
             DOMAIN,
             {"native_currency": native, "exchange_currency": currency},

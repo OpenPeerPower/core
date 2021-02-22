@@ -116,8 +116,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     _LOGGER.warning(
         "Loading Xiaomi Miio Switch via platform setup is deprecated. Please remove it from your configuration."
     )
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=config,
@@ -131,7 +131,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     if config_entry.data[CONF_FLOW_TYPE] == CONF_DEVICE:
         if DATA_KEY not in.opp.data:
-           .opp.data[DATA_KEY] = {}
+            opp.data[DATA_KEY] = {}
 
         host = config_entry.data[CONF_HOST]
         token = config_entry.data[CONF_TOKEN]
@@ -155,12 +155,12 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     name, plug, config_entry, unique_id_ch, channel_usb
                 )
                 entities.append(device)
-               .opp.data[DATA_KEY][host] = device
+                opp.data[DATA_KEY][host] = device
         elif model in ["qmi.powerstrip.v1", "zimi.powerstrip.v2"]:
             plug = PowerStrip(host, token, model=model)
             device = XiaomiPowerStripSwitch(name, plug, config_entry, unique_id)
             entities.append(device)
-           .opp.data[DATA_KEY][host] = device
+            opp.data[DATA_KEY][host] = device
         elif model in [
             "chuangmi.plug.m1",
             "chuangmi.plug.m3",
@@ -171,14 +171,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             plug = ChuangmiPlug(host, token, model=model)
             device = XiaomiPlugGenericSwitch(name, plug, config_entry, unique_id)
             entities.append(device)
-           .opp.data[DATA_KEY][host] = device
+            opp.data[DATA_KEY][host] = device
         elif model in ["lumi.acpartner.v3"]:
             plug = AirConditioningCompanionV3(host, token)
             device = XiaomiAirConditioningCompanionSwitch(
                 name, plug, config_entry, unique_id
             )
             entities.append(device)
-           .opp.data[DATA_KEY][host] = device
+            opp.data[DATA_KEY][host] = device
         else:
             _LOGGER.error(
                 "Unsupported device found! Please create an issue at "
@@ -217,7 +217,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
         for plug_service in SERVICE_TO_METHOD:
             schema = SERVICE_TO_METHOD[plug_service].get("schema", SERVICE_SCHEMA)
-           .opp.services.async_register(
+            opp.services.async_register(
                 DOMAIN, plug_service, async_service_handler, schema=schema
             )
 

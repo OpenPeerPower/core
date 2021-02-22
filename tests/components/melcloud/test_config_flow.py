@@ -101,7 +101,7 @@ async def test_form_errors.opp, mock_login, mock_get_devices, error, reason):
     ],
 )
 async def test_form_response_errors(
-    opp, mock_login, mock_get_devices, mock_request_info, error, message
+    opp. mock_login, mock_get_devices, mock_request_info, error, message
 ):
     """Test we handle response errors."""
     mock_login.side_effect = ClientResponseError(mock_request_info(), (), status=error)

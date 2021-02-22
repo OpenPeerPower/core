@@ -32,7 +32,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave Light from Config Entry."""
     client: ZwaveClient = opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
@@ -44,9 +44,9 @@ async def async_setup_entry(
         light = ZwaveLight(config_entry, client, info)
         async_add_entities([light])
 
-   .opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
+    opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect(
-            opp,
+            opp.
             f"{DOMAIN}_{config_entry.entry_id}_add_{LIGHT_DOMAIN}",
             async_add_light,
         )

@@ -64,8 +64,8 @@ async def async_setup_opp, config):
     scan_interval = conf[CONF_SCAN_INTERVAL]
     categories = conf[CONF_CATEGORIES]
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={
@@ -83,7 +83,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up the GDACS component as config entry."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     feeds = opp.data[DOMAIN].setdefault(FEED, {})
 
     radius = config_entry.data[CONF_RADIUS]
@@ -103,7 +103,7 @@ async def async_unload_entry.opp, config_entry):
     await manager.async_stop()
     await asyncio.wait(
         [
-           .opp.config_entries.async_forward_entry_unload(config_entry, domain)
+            opp.config_entries.async_forward_entry_unload(config_entry, domain)
             for domain in PLATFORMS
         ]
     )

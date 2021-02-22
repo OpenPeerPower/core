@@ -26,7 +26,7 @@ from .const import (
 
 
 async def _async_reproduce_states(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     state: State,
     *,
     context: Optional[Context] = None,
@@ -73,7 +73,7 @@ async def _async_reproduce_states(
 
 
 async def async_reproduce_states(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     states: Iterable[State],
     *,
     context: Optional[Context] = None,
@@ -83,7 +83,7 @@ async def async_reproduce_states(
     await asyncio.gather(
         *(
             _async_reproduce_states(
-                opp, state, context=context, reproduce_options=reproduce_options
+                opp. state, context=context, reproduce_options=reproduce_options
             )
             for state in states
         )

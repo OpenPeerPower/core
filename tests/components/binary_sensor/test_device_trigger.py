@@ -95,7 +95,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "trigger", trigger
+            opp. "trigger", trigger
         )
         assert capabilities == expected_capabilities
 
@@ -110,7 +110,7 @@ async def test_if_fires_on_state_change.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -169,14 +169,14 @@ async def test_if_fires_on_state_change.opp, calls):
     assert.opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, STATE_OFF)
+    opp.states.async_set(sensor1.entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "not_bat_low device - {} - on - off - None".format(
         sensor1.entity_id
     )
 
-   .opp.states.async_set(sensor1.entity_id, STATE_ON)
+    opp.states.async_set(sensor1.entity_id, STATE_ON)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "bat_low device - {} - off - on - None".format(
@@ -195,7 +195,7 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -231,7 +231,7 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
     assert.opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, STATE_OFF)
+    opp.states.async_set(sensor1.entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))

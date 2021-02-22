@@ -78,7 +78,7 @@ def setup_opp, config):
 
     try:
         bot = MatrixBot(
-            opp,
+            opp.
             os.path.join.opp.config.path(), SESSION_FILE),
             config[CONF_HOMESERVER],
             config[CONF_VERIFY_SSL],
@@ -87,12 +87,12 @@ def setup_opp, config):
             config[CONF_ROOMS],
             config[CONF_COMMANDS],
         )
-       .opp.data[DOMAIN] = bot
+        opp.data[DOMAIN] = bot
     except MatrixRequestError as exception:
         _LOGGER.error("Matrix failed to log in: %s", str(exception))
         return False
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SEND_MESSAGE,
         bot.handle_send_message,
@@ -107,7 +107,7 @@ class MatrixBot:
 
     def __init__(
         self,
-        opp,
+        opp.
         config_file,
         homeserver,
         verify_ssl,

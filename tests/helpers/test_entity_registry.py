@@ -32,7 +32,7 @@ def update_events.opp):
     def async_capture(event):
         events.append(event.data)
 
-   .opp.bus.async_listen(entity_registry.EVENT_ENTITY_REGISTRY_UPDATED, async_capture)
+    opp.bus.async_listen(entity_registry.EVENT_ENTITY_REGISTRY_UPDATED, async_capture)
 
     return events
 
@@ -134,7 +134,7 @@ def test_get_or_create_suggested_object_id_conflict_register(registry):
 
 def test_get_or_create_suggested_object_id_conflict_existing.opp, registry):
     """Test that we don't generate an entity id that currently exists."""
-   .opp.states.async_set("light.hue_1234", "on")
+    opp.states.async_set("light.hue_1234", "on")
     entry = registry.async_get_or_create("light", "hue", "1234")
     assert entry.entity_id == "light.hue_1234_2"
 
@@ -206,7 +206,7 @@ def test_generate_entity_considers_registered_entities(registry):
 
 def test_generate_entity_considers_existing_entities.opp, registry):
     """Test that we don't create entity id that currently exists."""
-   .opp.states.async_set("light.kitchen", "on")
+    opp.states.async_set("light.kitchen", "on")
     assert registry.async_generate_entity_id("light", "kitchen") == "light.kitchen_2"
 
 
@@ -220,7 +220,7 @@ def test_is_registered(registry):
 @pytest.mark.parametrize("load_registries", [False])
 async def test_loading_extra_values.opp, opp_storage):
     """Test we load extra data from the registry."""
-   .opp_storage[entity_registry.STORAGE_KEY] = {
+    opp.storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,
         "data": {
             "entities": [
@@ -245,13 +245,13 @@ async def test_loading_extra_values.opp, opp_storage):
                     "entity_id": "test.disabled.opp",
                     "platform": "super_platform",
                     "unique_id": "disabled.opp",
-                    "disabled_by": .opp",
+                    "disabled_by":  opp.,
                 },
                 {
                     "entity_id": "test.invalid__entity",
                     "platform": "super_platform",
                     "unique_id": "invalid.opp",
-                    "disabled_by": .opp",
+                    "disabled_by":  opp.,
                 },
             ]
         },
@@ -361,7 +361,7 @@ async def test_migration.opp):
             "unique_id": "test-unique",
             "platform": "test-platform",
             "name": "Test Name",
-            "disabled_by": .opp",
+            "disabled_by":  opp.,
         }
     }
     with patch("os.path.isfile", return_value=True), patch("os.remove"), patch(
@@ -384,7 +384,7 @@ async def test_migration.opp):
 
 async def test_loading_invalid_entity_id.opp, opp_storage):
     """Test we autofix invalid entity IDs."""
-   .opp_storage[entity_registry.STORAGE_KEY] = {
+    opp.storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,
         "data": {
             "entities": [
@@ -529,7 +529,7 @@ async def test_disabled_by_system_options(registry):
 
 async def test_restore_states.opp):
     """Test restoring states."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     registry = await entity_registry.async_get_registry.opp)
 
@@ -559,7 +559,7 @@ async def test_restore_states.opp):
         original_icon= opp:original-icon",
     )
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
     simple = opp.states.get("light.simple")
@@ -579,7 +579,7 @@ async def test_restore_states.opp):
         "device_class": "mock-device-class",
         "restored": True,
         "friendly_name": "Mock Original Name",
-        "icon": .opp:original-icon",
+        "icon":  opp.original-icon",
     }
 
     registry.async_remove("light.disabled")
@@ -595,7 +595,7 @@ async def test_restore_states.opp):
 
 async def test_async_get_device_class_lookup.opp):
     """Test registry device class lookup."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     ent_reg = await entity_registry.async_get_registry.opp)
 

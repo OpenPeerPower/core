@@ -16,7 +16,7 @@ from .helper import async_manipulate_test_data, get_and_check_entity_basics
 async def test_manually_configured_platform.opp):
     """Test that we do not set up an access point."""
     assert await async_setup_component(
-        opp, COVER_DOMAIN, {COVER_DOMAIN: {"platform": HMIPC_DOMAIN}}
+        opp. COVER_DOMAIN, {COVER_DOMAIN: {"platform": HMIPC_DOMAIN}}
     )
     assert not.opp.data.get(HMIPC_DOMAIN)
 
@@ -31,7 +31,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "closed"
@@ -96,7 +96,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_CLOSED
@@ -170,7 +170,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 1, channel=4)
@@ -248,7 +248,7 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_OPEN
@@ -358,7 +358,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "closed"
@@ -405,7 +405,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "closed"
@@ -450,7 +450,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     mock_hap = await default_mock_hap_factory.async_get_mock_hap(test_groups=["Rollos"])
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == "closed"
@@ -513,7 +513,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     mock_hap = await default_mock_hap_factory.async_get_mock_hap(test_groups=["Rollos"])
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
     await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1)
     ha_state = opp.states.get(entity_id)

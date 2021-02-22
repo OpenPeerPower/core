@@ -27,13 +27,13 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_opp, config):
     """Set up the Flu Near You component."""
-   .opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
+    opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
     return True
 
 
 async def async_setup_entry.opp, config_entry):
     """Set up Flu Near You as config entry."""
-   .opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id] = {}
+    opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id] = {}
 
     websession = aiohttp_client.async_get_clientsession.opp)
     client = Client(websession)
@@ -57,7 +57,7 @@ async def async_setup_entry.opp, config_entry):
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id][
             api_category
         ] = DataUpdateCoordinator(
-            opp,
+            opp.
             LOGGER,
             name=f"{api_category} ({latitude}, {longitude})",
             update_interval=DEFAULT_UPDATE_INTERVAL,
@@ -68,8 +68,8 @@ async def async_setup_entry.opp, config_entry):
     await asyncio.gather(*data_init_tasks)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -80,12 +80,12 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)
 
     return unload_ok

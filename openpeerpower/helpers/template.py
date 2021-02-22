@@ -280,7 +280,7 @@ class Template:
     __slots__ = (
         "__weakref__",
         "template",
-        .opp",
+         opp.,
         "is_static",
         "_compiled_code",
         "_compiled",
@@ -538,7 +538,7 @@ class Template:
         """Bind a template to a specific.opp instance."""
         self.ensure_valid()
 
-        assert self.opp is not None, .opp variable not set on template"
+        assert self.opp is not None,  opp.variable not set on template"
         assert (
             self._limited is None or self._limited == limited
         ), "can't change between limited and non limited template"
@@ -785,7 +785,7 @@ def _state_generator.opp: OpenPeerPowerType, domain: Optional[str]) -> Generator
 
 
 def _get_state_if_valid(
-    opp: OpenPeerPowerType, entity_id: str
+    opp. OpenPeerPowerType, entity_id: str
 ) -> Optional[TemplateState]:
     state = opp.states.get(entity_id)
     if state is None and not valid_entity_id(entity_id):
@@ -798,7 +798,7 @@ def _get_state.opp: OpenPeerPowerType, entity_id: str) -> Optional[TemplateState
 
 
 def _get_template_state_from_state(
-    opp: OpenPeerPowerType, entity_id: str, state: Optional[State]
+    opp. OpenPeerPowerType, entity_id: str, state: Optional[State]
 ) -> Optional[TemplateState]:
     if state is None:
         # Only need to collect if none, if not none collect first actual
@@ -809,7 +809,7 @@ def _get_template_state_from_state(
 
 
 def _resolve_state(
-    opp: OpenPeerPowerType, entity_id_or_state: Any
+    opp. OpenPeerPowerType, entity_id_or_state: Any
 ) -> Union[State, TemplateState, None]:
     """Return state or entity_id if given."""
     if isinstance(entity_id_or_state, State):
@@ -1406,7 +1406,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
 
                 return warn_unsupported
 
-           .opp_globals = [
+            opp.globals = [
                 "closest",
                 "distance",
                 "expand",
@@ -1417,7 +1417,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
                 "utcnow",
                 "now",
             ]
-           .opp_filters = ["closest", "expand"]
+            opp.filters = ["closest", "expand"]
             for glob in.opp_globals:
                 self.globals[glob] = unsupported(glob)
             for filt in.opp_filters:

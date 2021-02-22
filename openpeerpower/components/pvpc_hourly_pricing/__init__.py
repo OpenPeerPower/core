@@ -33,8 +33,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     ```
     """
     for conf in config.get(DOMAIN, []):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, data=conf, context={"source": config_entries.SOURCE_IMPORT}
             )
         )
@@ -44,8 +44,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up pvpc hourly pricing from a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, PLATFORM)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, PLATFORM)
     )
 
     return True

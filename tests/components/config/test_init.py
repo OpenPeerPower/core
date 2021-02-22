@@ -43,7 +43,7 @@ async def test_load_on_demand_on_load.opp, aiohttp_client):
     with patch(
         "openpeerpower.components.config.zwave.async_setup", return_value=True
     ) as stp:
-       .opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: "zwave"})
+        opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: "zwave"})
         await opp.async_block_till_done()
 
     assert stp.called

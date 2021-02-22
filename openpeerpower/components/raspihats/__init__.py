@@ -31,18 +31,18 @@ I2C_HATS_MANAGER = "I2CH_MNG"
 
 def setup_opp, config):
     """Set up the raspihats component."""
-   .opp.data[I2C_HATS_MANAGER] = I2CHatsManager()
+    opp.data[I2C_HATS_MANAGER] = I2CHatsManager()
 
     def start_i2c_hats_keep_alive(event):
         """Start I2C-HATs keep alive."""
-       .opp.data[I2C_HATS_MANAGER].start_keep_alive()
+        opp.data[I2C_HATS_MANAGER].start_keep_alive()
 
     def stop_i2c_hats_keep_alive(event):
         """Stop I2C-HATs keep alive."""
-       .opp.data[I2C_HATS_MANAGER].stop_keep_alive()
+        opp.data[I2C_HATS_MANAGER].stop_keep_alive()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_i2c_hats_keep_alive)
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_i2c_hats_keep_alive)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_i2c_hats_keep_alive)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_i2c_hats_keep_alive)
     return True
 
 

@@ -46,7 +46,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def time_automation_listener(description, now, *, entity_id=None):
         """Listen for time changes and calls action."""
-       .opp.async_run.opp_job(
+        opp.async_run.opp_job(
             job,
             {
                 "trigger": {
@@ -99,7 +99,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
                 # Only set up listener if time is now or in the future.
                 if trigger_dt >= dt_util.now():
                     remove = async_track_point_in_time(
-                        opp,
+                        opp.
                         partial(
                             time_automation_listener,
                             f"time set in {entity_id}",
@@ -110,7 +110,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
             elif has_time:
                 # Else if it has time, then track time change.
                 remove = async_track_time_change(
-                    opp,
+                    opp.
                     partial(
                         time_automation_listener,
                         f"time set in {entity_id}",
@@ -130,7 +130,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
 
             if trigger_dt is not None and trigger_dt > dt_util.utcnow():
                 remove = async_track_point_in_time(
-                    opp,
+                    opp.
                     partial(
                         time_automation_listener,
                         f"time set in {entity_id}",
@@ -154,7 +154,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
             # datetime.time
             removes.append(
                 async_track_time_change(
-                    opp,
+                    opp.
                     partial(time_automation_listener, "time"),
                     hour=at_time.hour,
                     minute=at_time.minute,

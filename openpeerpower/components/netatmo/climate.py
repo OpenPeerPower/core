@@ -129,7 +129,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
                 if home_status and room_id in home_status.rooms:
                     entities.append(NetatmoThermostat(data_handler, home_id, room_id))
 
-           .opp.data[DOMAIN][DATA_SCHEDULES][home_id] = {
+            opp.data[DOMAIN][DATA_SCHEDULES][home_id] = {
                 schedule_id: schedule_data.get("name")
                 for schedule_id, schedule_data in (
                     data_handler.data[HOMEDATA_DATA_CLASS_NAME]
@@ -138,7 +138,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
                 )
             }
 
-       .opp.data[DOMAIN][DATA_HOMES] = {
+        opp.data[DOMAIN][DATA_HOMES] = {
             home_id: home_data.get("name")
             for home_id, home_data in (
                 data_handler.data[HOMEDATA_DATA_CLASS_NAME].homes.items()

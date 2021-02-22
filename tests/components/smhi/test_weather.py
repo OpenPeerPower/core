@@ -97,7 +97,7 @@ def test_properties_no_data.opp: OpenPeerPower) -> None:
 # pylint: disable=protected-access
 def test_properties_unknown_symbol() -> None:
     """Test behaviour when unknown symbol from API."""
-    opp =Mock()
+    opp.=Mock()
     data = Mock()
     data.temperature = 5
     data.mean_precipitation = 0.5
@@ -152,7 +152,7 @@ async def test_refresh_weather_forecast_exceeds_retries.opp) -> None:
     """Test the refresh weather forecast function."""
 
     with patch.object(
-       .opp.helpers.event, "async_call_later"
+        opp.helpers.event, "async_call_later"
     ) as call_later, patch.object(
         weather_smhi.SmhiWeather,
         "get_weather_forecast",
@@ -174,7 +174,7 @@ async def test_refresh_weather_forecast_timeout.opp) -> None:
     weather.opp = opp
 
     with patch.object(
-       .opp.helpers.event, "async_call_later"
+        opp.helpers.event, "async_call_later"
     ) as call_later, patch.object(
         weather_smhi.SmhiWeather, "retry_update"
     ), patch.object(
@@ -192,12 +192,12 @@ async def test_refresh_weather_forecast_timeout.opp) -> None:
 async def test_refresh_weather_forecast_exception() -> None:
     """Test any exception."""
 
-    opp =Mock()
+    opp.=Mock()
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
     weather.opp = opp
 
     with patch.object(
-       .opp.helpers.event, "async_call_later"
+        opp.helpers.event, "async_call_later"
     ) as call_later, patch.object(
         weather,
         "get_weather_forecast",
@@ -211,7 +211,7 @@ async def test_refresh_weather_forecast_exception() -> None:
 
 async def test_retry_update():
     """Test retry function of refresh forecast."""
-    opp =Mock()
+    opp.=Mock()
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
     weather.opp = opp
 

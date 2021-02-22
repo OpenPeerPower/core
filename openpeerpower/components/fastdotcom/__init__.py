@@ -47,9 +47,9 @@ async def async_setup_opp, config):
         """Service call to manually update the data."""
         data.update()
 
-   .opp.services.async_register(DOMAIN, "speedtest", update)
+    opp.services.async_register(DOMAIN, "speedtest", update)
 
-   .opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
 
     return True
 

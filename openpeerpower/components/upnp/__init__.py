@@ -73,7 +73,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     conf_default = CONFIG_SCHEMA({DOMAIN: {}})[DOMAIN]
     conf = config.get(DOMAIN, conf_default)
     local_ip = await opp.async_add_executor_job(get_local_ip)
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         DOMAIN_CONFIG: conf,
         DOMAIN_COORDINATORS: {},
         DOMAIN_DEVICES: {},
@@ -82,8 +82,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
 
     # Only start if set up via configuration.yaml.
     if DOMAIN in config:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
             )
         )
@@ -108,7 +108,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         raise ConfigEntryNotReady
 
     # Save device.
-   .opp.data[DOMAIN][DOMAIN_DEVICES][device.udn] = device
+    opp.data[DOMAIN][DOMAIN_DEVICES][device.udn] = device
 
     # Ensure entry has a unique_id.
     if not config_entry.unique_id:
@@ -117,14 +117,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
             device.unique_id,
             config_entry,
         )
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry=config_entry,
             unique_id=device.unique_id,
         )
 
     # Ensure entry has a hostname, for older entries.
     if CONFIG_ENTRY_HOSTNAME not in config_entry.data:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry=config_entry,
             data={CONFIG_ENTRY_HOSTNAME: device.hostname, **config_entry.data},
         )
@@ -142,15 +142,15 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Create sensors.
     _LOGGER.debug("Enabling sensors")
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
     )
 
     return True
 
 
 async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload a UPnP/IGD device from a config entry."""
     _LOGGER.debug("Unloading config entry: %s", config_entry.unique_id)

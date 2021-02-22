@@ -18,7 +18,7 @@ async def test_system_health_info_autogen.opp):
 async def test_system_health_info_storage.opp, opp_storage):
     """Test system health info endpoint."""
     assert await async_setup_component.opp, "system_health", {})
-   .opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT] = {
+    opp.storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT] = {
         "key": "lovelace",
         "version": 1,
         "data": {"config": {"resources": [], "views": []}},

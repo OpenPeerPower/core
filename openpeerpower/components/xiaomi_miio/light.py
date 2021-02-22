@@ -147,7 +147,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the light from config."""
     if DATA_KEY not in.opp.data:
-       .opp.data[DATA_KEY] = {}
+        opp.data[DATA_KEY] = {}
 
     host = config[CONF_HOST]
     token = config[CONF_TOKEN]
@@ -178,7 +178,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         light = PhilipsEyecare(host, token)
         primary_device = XiaomiPhilipsEyecareLamp(name, light, model, unique_id)
         devices.append(primary_device)
-       .opp.data[DATA_KEY][host] = primary_device
+        opp.data[DATA_KEY][host] = primary_device
 
         secondary_device = XiaomiPhilipsEyecareLampAmbientLight(
             name, light, model, unique_id
@@ -190,12 +190,12 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         light = Ceil(host, token)
         device = XiaomiPhilipsCeilingLamp(name, light, model, unique_id)
         devices.append(device)
-       .opp.data[DATA_KEY][host] = device
+        opp.data[DATA_KEY][host] = device
     elif model == "philips.light.moonlight":
         light = PhilipsMoonlight(host, token)
         device = XiaomiPhilipsMoonlightLamp(name, light, model, unique_id)
         devices.append(device)
-       .opp.data[DATA_KEY][host] = device
+        opp.data[DATA_KEY][host] = device
     elif model in [
         "philips.light.bulb",
         "philips.light.candle",
@@ -205,12 +205,12 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         light = PhilipsBulb(host, token)
         device = XiaomiPhilipsBulb(name, light, model, unique_id)
         devices.append(device)
-       .opp.data[DATA_KEY][host] = device
+        opp.data[DATA_KEY][host] = device
     elif model == "philips.light.mono1":
         light = PhilipsBulb(host, token)
         device = XiaomiPhilipsGenericLight(name, light, model, unique_id)
         devices.append(device)
-       .opp.data[DATA_KEY][host] = device
+        opp.data[DATA_KEY][host] = device
     else:
         _LOGGER.error(
             "Unsupported device found! Please create an issue at "
@@ -252,7 +252,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         schema = SERVICE_TO_METHOD[xiaomi_miio_service].get(
             "schema", XIAOMI_MIIO_SERVICE_SCHEMA
         )
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, xiaomi_miio_service, async_service_handler, schema=schema
         )
 

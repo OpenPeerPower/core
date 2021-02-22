@@ -24,7 +24,7 @@ CONF_ID_TOKEN = "id_token"
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Flick Electric component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -32,10 +32,10 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Flick Electric from a config entry."""
     auth = HassFlickAuth.opp, entry)
 
-   .opp.data[DOMAIN][entry.entry_id] = FlickAPI(auth)
+    opp.data[DOMAIN][entry.entry_id] = FlickAPI(auth)
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
     return True
@@ -44,7 +44,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if await opp.config_entries.async_forward_entry_unload(entry, "sensor"):
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
         return True
 
     return False

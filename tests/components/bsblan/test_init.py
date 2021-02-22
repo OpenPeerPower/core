@@ -10,7 +10,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_entry_not_ready(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the BSBLan configuration entry not ready."""
     aioclient_mock.post(
@@ -23,7 +23,7 @@ async def test_config_entry_not_ready(
 
 
 async def test_unload_config_entry(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the BSBLan configuration entry unloading."""
     entry = await init_integration.opp, aioclient_mock)
@@ -35,7 +35,7 @@ async def test_unload_config_entry(
 
 
 async def test_config_entry_no_authentication(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the BSBLan configuration entry not ready."""
     aioclient_mock.post(

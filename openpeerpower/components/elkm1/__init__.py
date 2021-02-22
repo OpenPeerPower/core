@@ -154,7 +154,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
     """Set up the Elk M1 platform."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     _create_elk_services.opp)
 
     if DOMAIN not in.opp_config:
@@ -168,17 +168,17 @@ async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
         # is called to avoid a situation where the user has to restart
         # twice for the changes to take effect
         current_config_entry = _async_find_matching_config_entry(
-            opp, conf[CONF_PREFIX]
+            opp. conf[CONF_PREFIX]
         )
         if current_config_entry:
             # If they alter the yaml config we import the changes
             # since there currently is no practical way to do an options flow
             # with the large amount of include/exclude/enabled options that elkm1 has.
-           .opp.config_entries.async_update_entry(current_config_entry, data=conf)
+            opp.config_entries.async_update_entry(current_config_entry, data=conf)
             continue
 
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=conf,
@@ -236,7 +236,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         if keypress is None:
             return
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_ELKM1_KEYPAD_KEY_PRESSED,
             {
                 ATTR_KEYPAD_ID: element.index + 1,
@@ -254,7 +254,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     except asyncio.TimeoutError as exc:
         raise ConfigEntryNotReady from exc
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         "elk": elk,
         "prefix": conf[CONF_PREFIX],
         "auto_configure": conf[CONF_AUTO_CONFIGURE],
@@ -263,8 +263,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     }
 
     for component in SUPPORTED_DOMAINS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -289,17 +289,17 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in SUPPORTED_DOMAINS
             ]
         )
     )
 
     # disconnect cleanly
-   .opp.data[DOMAIN][entry.entry_id]["elk"].disconnect()
+    opp.data[DOMAIN][entry.entry_id]["elk"].disconnect()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -357,13 +357,13 @@ def _create_elk_services.opp):
     def _set_time_service(service):
         _getelk(service).panel.set_time(dt_util.now())
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, "speak_word", _speak_word_service, SPEAK_SERVICE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, "speak_phrase", _speak_phrase_service, SPEAK_SERVICE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, "set_time", _set_time_service, SET_TIME_SERVICE_SCHEMA
     )
 

@@ -21,7 +21,7 @@ async def mock_impl.opp):
     await setup.async_setup_component.opp, "http", {})
 
     impl = config_entry_oauth2_flow.LocalOAuth2Implementation(
-        opp,
+        opp.
         DOMAIN,
         CLIENT_ID_VALUE,
         CLIENT_SECRET_VALUE,
@@ -53,11 +53,11 @@ async def test_abort_if_existing_entry.opp):
 
 
 async def test_full_flow(
-    opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check full flow."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -72,7 +72,7 @@ async def test_full_flow(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
-        opp,
+        opp.
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

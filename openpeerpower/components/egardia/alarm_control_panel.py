@@ -44,7 +44,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return
     device = EgardiaAlarm(
         discovery_info["name"],
-       .opp.data[EGARDIA_DEVICE],
+        opp.data[EGARDIA_DEVICE],
         discovery_info[CONF_REPORT_SERVER_ENABLED],
         discovery_info.get(CONF_REPORT_SERVER_CODES),
         discovery_info[CONF_REPORT_SERVER_PORT],

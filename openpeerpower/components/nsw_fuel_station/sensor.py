@@ -66,7 +66,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             station_data.error
         )
 
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             message, title=NOTIFICATION_TITLE, notification_id=NOTIFICATION_ID
         )
         return

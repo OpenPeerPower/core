@@ -59,7 +59,7 @@ async def test_setup_opp, legacy_patchable_time):
         mock_feed_update.return_value = "OK", [mock_entry_1, mock_entry_2, mock_entry_3]
         assert await async_setup_component.opp, geonetnz_quakes.DOMAIN, CONFIG)
         # Artificially trigger update and collect events.
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         all_states = opp.states.async_all()

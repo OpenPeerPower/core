@@ -59,13 +59,13 @@ def remove_subscription.opp, message_callback, subscription):
     """Remove debug data for subscription if it exists."""
     entity_id = getattr(message_callback, "__entity_id", None)
     if entity_id and entity_id in.opp.data[DATA_MQTT_DEBUG_INFO]["entities"]:
-       .opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"][
+        opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"][
             subscription
         ]["count"] -= 1
         if not.opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"][
             subscription
         ]["count"]:
-           .opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"].pop(
+            opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"].pop(
                 subscription
             )
 
@@ -89,7 +89,7 @@ def update_entity_discovery_data.opp, discovery_payload, entity_id):
 
 def remove_entity_data.opp, entity_id):
     """Remove discovery data."""
-   .opp.data[DATA_MQTT_DEBUG_INFO]["entities"].pop(entity_id)
+    opp.data[DATA_MQTT_DEBUG_INFO]["entities"].pop(entity_id)
 
 
 def add_trigger_discovery_data.opp, discovery_hash, discovery_data, device_id):
@@ -111,7 +111,7 @@ def update_trigger_discovery_data.opp, discovery_hash, discovery_payload):
 
 def remove_trigger_discovery_data.opp, discovery_hash):
     """Remove discovery data."""
-   .opp.data[DATA_MQTT_DEBUG_INFO]["triggers"][discovery_hash]["discovery_data"] = None
+    opp.data[DATA_MQTT_DEBUG_INFO]["triggers"][discovery_hash]["discovery_data"] = None
 
 
 async def info_for_device.opp, device_id):

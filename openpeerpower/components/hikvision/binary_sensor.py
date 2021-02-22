@@ -151,8 +151,8 @@ class HikvisionData:
         if self._name is None:
             self._name = self.camdata.get_name
 
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.stop_hik)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.start_hik)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.stop_hik)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.start_hik)
 
     def stop_hik(self, event):
         """Shutdown Hikvision subscriptions and subscription thread on exit."""

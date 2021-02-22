@@ -52,7 +52,7 @@ RAW_DHCP_REQUEST = (
 async def test_dhcp_match_hostname_and_macaddress.opp):
     """Test matching based on hostname and macaddress."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp,
+        opp.
         {},
         [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
     )
@@ -60,7 +60,7 @@ async def test_dhcp_match_hostname_and_macaddress.opp):
     packet = Ether(RAW_DHCP_REQUEST)
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
         # Ensure no change is ignored
@@ -79,13 +79,13 @@ async def test_dhcp_match_hostname_and_macaddress.opp):
 async def test_dhcp_match_hostname.opp):
     """Test matching based on hostname only."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "hostname": "connect"}]
+        opp. {}, [{"domain": "mock-domain", "hostname": "connect"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -102,13 +102,13 @@ async def test_dhcp_match_hostname.opp):
 async def test_dhcp_match_macaddress.opp):
     """Test matching based on macaddress only."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "macaddress": "B8B7F1*"}]
+        opp. {}, [{"domain": "mock-domain", "macaddress": "B8B7F1*"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -125,13 +125,13 @@ async def test_dhcp_match_macaddress.opp):
 async def test_dhcp_nomatch.opp):
     """Test not matching based on macaddress only."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "macaddress": "ABC123*"}]
+        opp. {}, [{"domain": "mock-domain", "macaddress": "ABC123*"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -141,13 +141,13 @@ async def test_dhcp_nomatch.opp):
 async def test_dhcp_nomatch_hostname.opp):
     """Test not matching based on hostname only."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
+        opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -157,13 +157,13 @@ async def test_dhcp_nomatch_hostname.opp):
 async def test_dhcp_nomatch_non_dhcp_packet.opp):
     """Test matching does not throw on a non-dhcp packet."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
+        opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
     )
 
     packet = Ether(b"")
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -173,7 +173,7 @@ async def test_dhcp_nomatch_non_dhcp_packet.opp):
 async def test_dhcp_nomatch_non_dhcp_request_packet.opp):
     """Test nothing happens with the wrong message-type."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
+        opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
@@ -188,7 +188,7 @@ async def test_dhcp_nomatch_non_dhcp_request_packet.opp):
     ]
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -198,7 +198,7 @@ async def test_dhcp_nomatch_non_dhcp_request_packet.opp):
 async def test_dhcp_invalid_hostname.opp):
     """Test we ignore invalid hostnames."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
+        opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
@@ -213,7 +213,7 @@ async def test_dhcp_invalid_hostname.opp):
     ]
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -223,7 +223,7 @@ async def test_dhcp_invalid_hostname.opp):
 async def test_dhcp_missing_hostname.opp):
     """Test we ignore missing hostnames."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
+        opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
@@ -238,7 +238,7 @@ async def test_dhcp_missing_hostname.opp):
     ]
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -248,7 +248,7 @@ async def test_dhcp_missing_hostname.opp):
 async def test_dhcp_invalid_option.opp):
     """Test we ignore invalid hostname option."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp, {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
+        opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
     )
 
     packet = Ether(RAW_DHCP_REQUEST)
@@ -263,7 +263,7 @@ async def test_dhcp_invalid_option.opp):
     ]
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         dhcp_watcher.handle_dhcp_packet(packet)
 
@@ -274,7 +274,7 @@ async def test_setup_and_stop.opp):
     """Test we can setup and stop."""
 
     assert await async_setup_component(
-        opp,
+        opp.
         dhcp.DOMAIN,
         {},
     )
@@ -285,10 +285,10 @@ async def test_setup_and_stop.opp):
     ), patch(
         "openpeerpower.components.dhcp.compile_filter",
     ):
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
 
     start_call.assert_called_once()
@@ -298,7 +298,7 @@ async def test_setup_fails_as_root.opp, caplog):
     """Test we handle sniff setup failing as root."""
 
     assert await async_setup_component(
-        opp,
+        opp.
         dhcp.DOMAIN,
         {},
     )
@@ -310,10 +310,10 @@ async def test_setup_fails_as_root.opp, caplog):
         "openpeerpower.components.dhcp._verify_l2socket_creation_permission",
         side_effect=Scapy_Exception,
     ):
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
     wait_event.set()
     assert "Cannot watch for dhcp packets" in caplog.text
@@ -323,7 +323,7 @@ async def test_setup_fails_non_root.opp, caplog):
     """Test we handle sniff setup failing as non-root."""
 
     assert await async_setup_component(
-        opp,
+        opp.
         dhcp.DOMAIN,
         {},
     )
@@ -333,9 +333,9 @@ async def test_setup_fails_non_root.opp, caplog):
         "openpeerpower.components.dhcp._verify_l2socket_creation_permission",
         side_effect=Scapy_Exception,
     ):
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
         await opp.async_block_till_done()
 
     assert "Cannot watch for dhcp packets without root or CAP_NET_RAW" in caplog.text
@@ -345,7 +345,7 @@ async def test_setup_fails_with_broken_libpcap.opp, caplog):
     """Test we abort if libpcap is missing or broken."""
 
     assert await async_setup_component(
-        opp,
+        opp.
         dhcp.DOMAIN,
         {},
     )
@@ -359,9 +359,9 @@ async def test_setup_fails_with_broken_libpcap.opp, caplog):
     ) as compile_filter, patch(
         "openpeerpower.components.dhcp.AsyncSniffer",
     ) as async_sniffer:
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
         await opp.async_block_till_done()
 
     assert compile_filter.called
@@ -374,7 +374,7 @@ async def test_setup_fails_with_broken_libpcap.opp, caplog):
 
 async def test_device_tracker_hostname_and_macaddress_exists_before_start.opp):
     """Test matching based on hostname and macaddress before start."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "device_tracker.august_connect",
         STATE_HOME,
         {
@@ -386,10 +386,10 @@ async def test_device_tracker_hostname_and_macaddress_exists_before_start.opp):
     )
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp,
+            opp.
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
@@ -412,16 +412,16 @@ async def test_device_tracker_hostname_and_macaddress_after_start.opp):
     """Test matching based on hostname and macaddress after start."""
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp,
+            opp.
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
         await opp.async_block_till_done()
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.august_connect",
             STATE_HOME,
             {
@@ -449,16 +449,16 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_home.opp):
     """Test matching based on hostname and macaddress after start but not home."""
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp,
+            opp.
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
         await opp.async_block_till_done()
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.august_connect",
             STATE_NOT_HOME,
             {
@@ -479,16 +479,16 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_router.opp
     """Test matching based on hostname and macaddress after start but not router."""
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp,
+            opp.
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
         await opp.async_block_till_done()
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.august_connect",
             STATE_HOME,
             {
@@ -506,21 +506,21 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_router.opp
 
 
 async def test_device_tracker_hostname_and_macaddress_after_start_hostname_missing(
-    opp,
+    opp.
 ):
     """Test matching based on hostname and macaddress after start but missing hostname."""
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp,
+            opp.
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
         await device_tracker_watcher.async_start()
         await opp.async_block_till_done()
-       .opp.states.async_set(
+        opp.states.async_set(
             "device_tracker.august_connect",
             STATE_HOME,
             {
@@ -538,7 +538,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_hostname_missi
 
 async def test_device_tracker_ignore_self_assigned_ips_before_start.opp):
     """Test matching ignores self assigned ip address."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "device_tracker.august_connect",
         STATE_HOME,
         {
@@ -550,10 +550,10 @@ async def test_device_tracker_ignore_self_assigned_ips_before_start.opp):
     )
 
     with patch.object(
-       .opp.config_entries.flow, "async_init", return_value=mock_coro()
+        opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp,
+            opp.
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )

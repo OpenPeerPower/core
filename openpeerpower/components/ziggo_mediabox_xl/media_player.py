@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Ziggo Mediabox XL platform."""
 
-   .opp.data[DATA_KNOWN_DEVICES] = known_devices = set()
+    opp.data[DATA_KNOWN_DEVICES] = known_devices = set()
 
     # Is this a manual configuration?
     if config.get(CONF_HOST) is not None:

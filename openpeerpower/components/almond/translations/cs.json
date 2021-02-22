@@ -7,7 +7,7 @@
             "single_instance_allowed": "Ji\u017e nastaveno. Je mo\u017en\u00e1 pouze jedin\u00e1 konfigurace."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Chcete nakonfigurovat slu\u017ebu Open Peer Power pro p\u0159ipojen\u00ed k Almond pomoc\u00ed.opp.io {addon}?",
                 "title": "Almond prost\u0159ednictv\u00edm dopl\u0148ku Hass.io"
             },

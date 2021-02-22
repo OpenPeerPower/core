@@ -409,7 +409,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
 async def test_advanced_option_flow.opp, aioclient_mock):
     """Test advanced config flow options."""
     config_entry = await setup_unifi_integration(
-        opp,
+        opp.
         aioclient_mock,
         clients_response=CLIENTS,
         devices_response=DEVICES,
@@ -481,7 +481,7 @@ async def test_advanced_option_flow.opp, aioclient_mock):
 async def test_simple_option_flow.opp, aioclient_mock):
     """Test simple config flow options."""
     config_entry = await setup_unifi_integration(
-        opp,
+        opp.
         aioclient_mock,
         clients_response=CLIENTS,
         wlans_response=WLANS,

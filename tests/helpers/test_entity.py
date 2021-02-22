@@ -272,8 +272,8 @@ async def test_async_async_request_call_with_lock.opp):
         job1 = ent_1.async_request_call(ent_1.testhelper(1))
         job2 = ent_2.async_request_call(ent_2.testhelper(2))
 
-       .opp.async_create_task(job1)
-       .opp.async_create_task(job2)
+        opp.async_create_task(job1)
+        opp.async_create_task(job2)
 
         assert len(updates) == 0
         assert updates == []

@@ -42,7 +42,7 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Tado component."""
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     return True
 
@@ -79,22 +79,22 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Poll for updates in the background
     update_track = async_track_time_interval(
-        opp,
+        opp.
         lambda now: tadoconnector.update(),
         SCAN_INTERVAL,
     )
 
     update_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA: tadoconnector,
         UPDATE_TRACK: update_track,
         UPDATE_LISTENER: update_listener,
     }
 
     for component in TADO_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -105,7 +105,7 @@ def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: Config
     options = dict(entry.options)
     if CONF_FALLBACK not in options:
         options[CONF_FALLBACK] = entry.data.get(CONF_FALLBACK, True)
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
 
 async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
@@ -118,17 +118,17 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in TADO_COMPONENTS
             ]
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id][UPDATE_TRACK]()
-   .opp.data[DOMAIN][entry.entry_id][UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UPDATE_TRACK]()
+    opp.data[DOMAIN][entry.entry_id][UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

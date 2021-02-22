@@ -17,7 +17,7 @@
                 },
                 "description": "Sisesta oma MQTT vahendaja andmed."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Luba automaatne avastamine"
                 },

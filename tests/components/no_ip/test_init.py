@@ -23,9 +23,9 @@ def setup_no_ip.opp, aioclient_mock):
     """Fixture that sets up NO-IP."""
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="good 0.0.0.0")
 
-   .opp.loop.run_until_complete(
+    opp.loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             no_ip.DOMAIN,
             {
                 no_ip.DOMAIN: {
@@ -43,7 +43,7 @@ async def test_setup_opp, aioclient_mock):
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="nochg 0.0.0.0")
 
     result = await async_setup_component(
-        opp,
+        opp.
         no_ip.DOMAIN,
         {no_ip.DOMAIN: {"domain": DOMAIN, "username": USERNAME, "password": PASSWORD}},
     )
@@ -60,7 +60,7 @@ async def test_setup_fails_if_update_fails.opp, aioclient_mock):
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="nohost")
 
     result = await async_setup_component(
-        opp,
+        opp.
         no_ip.DOMAIN,
         {no_ip.DOMAIN: {"domain": DOMAIN, "username": USERNAME, "password": PASSWORD}},
     )
@@ -73,7 +73,7 @@ async def test_setup_fails_if_wrong_auth.opp, aioclient_mock):
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="badauth")
 
     result = await async_setup_component(
-        opp,
+        opp.
         no_ip.DOMAIN,
         {no_ip.DOMAIN: {"domain": DOMAIN, "username": USERNAME, "password": PASSWORD}},
     )

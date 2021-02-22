@@ -63,7 +63,7 @@ async def async_setup_opp, config):
         """Update the DuckDNS entry."""
         await _update_duckdns(session, domain, token, txt=call.data[ATTR_TXT])
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_TXT, update_domain_service, schema=SERVICE_TXT_SCHEMA
     )
 
@@ -122,7 +122,7 @@ def async_track_time_interval_backoff.opp, action, intervals) -> CALLBACK_TYPE:
             delay = intervals[failed] if failed < len(intervals) else intervals[-1]
             remove = async_call_later.opp, delay.total_seconds(), interval_listener)
 
-   .opp.async_run_job(interval_listener, dt_util.utcnow())
+    opp.async_run_job(interval_listener, dt_util.utcnow())
 
     def remove_listener():
         """Remove interval listener."""

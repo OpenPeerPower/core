@@ -106,13 +106,13 @@ def get_zeroconf_info_mock(macaddress):
 async def test_setup_opp, mock_zeroconf):
     """Test configured options for a device are loaded via config entry."""
     with patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ) as mock_service_browser:
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -138,13 +138,13 @@ async def test_setup_with_overly_long_url_and_name.opp, mock_zeroconf, caplog):
         "openpeerpower.components.zeroconf.get_url",
         return_value="https://this.url.is.way.too.long/very/deep/path/that/will/make/us/go/over/the/maximum/string/length/and/would/cause/zeroconf/to/fail/to/startup/because/the/key/and/value/can/only/be/255/bytes/and/this/string/is/a/bit/longer/than/the/maximum/length/that/we/allow/for/a/value",
     ), patch.object(
-       .opp.config,
+        opp.config,
         "location_name",
         "\u00dcBER \u00dcber German Umlaut long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string",
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
     assert "https://this.url.is.way.too.long" in caplog.text
@@ -158,9 +158,9 @@ async def test_setup_with_default_interface.opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: True}}
+            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: True}}
         )
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert mock_zeroconf.called_with(interface_choice=InterfaceChoice.Default)
@@ -173,7 +173,7 @@ async def test_setup_without_default_interface.opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: False}}
+            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: False}}
         )
 
     assert mock_zeroconf.called_with()
@@ -186,9 +186,9 @@ async def test_setup_without_ipv6.opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: False}}
+            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: False}}
         )
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert mock_zeroconf.called_with(ip_version=IPVersion.V4Only)
@@ -201,9 +201,9 @@ async def test_setup_with_ipv6.opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: True}}
+            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: True}}
         )
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert mock_zeroconf.called_with()
@@ -216,7 +216,7 @@ async def test_setup_with_ipv6_default.opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert mock_zeroconf.called_with()
@@ -229,7 +229,7 @@ async def test_service_with_invalid_name.opp, mock_zeroconf, caplog):
     ) as mock_service_browser:
         mock_zeroconf.get_service_info.side_effect = BadTypeInNameException
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -257,7 +257,7 @@ async def test_zeroconf_match.opp, mock_zeroconf):
         },
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf, "HaServiceBrowser", side_effect=http_only_service_update_mock
     ) as mock_service_browser:
@@ -265,7 +265,7 @@ async def test_zeroconf_match.opp, mock_zeroconf):
             "FFAADDCC11DD"
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -290,7 +290,7 @@ async def test_zeroconf_no_match.opp, mock_zeroconf):
         {"_http._tcp.local.": [{"domain": "shelly", "name": "shelly*"}]},
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf, "HaServiceBrowser", side_effect=http_only_service_update_mock
     ) as mock_service_browser:
@@ -298,7 +298,7 @@ async def test_zeroconf_no_match.opp, mock_zeroconf):
             "FFAADDCC11DD"
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -312,7 +312,7 @@ async def test_homekit_match_partial_space.opp, mock_zeroconf):
         {"_hap._tcp.local.": [{"domain": "homekit_controller"}]},
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf,
         "HaServiceBrowser",
@@ -324,7 +324,7 @@ async def test_homekit_match_partial_space.opp, mock_zeroconf):
             "LIFX bulb", HOMEKIT_STATUS_UNPAIRED
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -339,7 +339,7 @@ async def test_homekit_match_partial_dash.opp, mock_zeroconf):
         {"_hap._udp.local.": [{"domain": "homekit_controller"}]},
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf,
         "HaServiceBrowser",
@@ -351,7 +351,7 @@ async def test_homekit_match_partial_dash.opp, mock_zeroconf):
             "Rachio-fa46ba", HOMEKIT_STATUS_UNPAIRED
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -366,7 +366,7 @@ async def test_homekit_match_full.opp, mock_zeroconf):
         {"_hap._udp.local.": [{"domain": "homekit_controller"}]},
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf,
         "HaServiceBrowser",
@@ -378,7 +378,7 @@ async def test_homekit_match_full.opp, mock_zeroconf):
             "BSB002", HOMEKIT_STATUS_UNPAIRED
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -393,7 +393,7 @@ async def test_homekit_already_paired.opp, mock_zeroconf):
         {"_hap._tcp.local.": [{"domain": "homekit_controller"}]},
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf,
         "HaServiceBrowser",
@@ -405,7 +405,7 @@ async def test_homekit_already_paired.opp, mock_zeroconf):
             "tado", HOMEKIT_STATUS_PAIRED
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -421,7 +421,7 @@ async def test_homekit_invalid_paring_status.opp, mock_zeroconf):
         {"_hap._tcp.local.": [{"domain": "homekit_controller"}]},
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf,
         "HaServiceBrowser",
@@ -433,7 +433,7 @@ async def test_homekit_invalid_paring_status.opp, mock_zeroconf):
             "tado", b"invalid"
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -448,7 +448,7 @@ async def test_homekit_not_paired.opp, mock_zeroconf):
         {"_hap._tcp.local.": [{"domain": "homekit_controller"}]},
         clear=True,
     ), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_flow, patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ) as mock_service_browser:
@@ -456,7 +456,7 @@ async def test_homekit_not_paired.opp, mock_zeroconf):
             "this_will_not_match_any_integration", HOMEKIT_STATUS_UNPAIRED
         )
         assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_service_browser.mock_calls) == 1
@@ -492,6 +492,6 @@ async def test_get_instance.opp, mock_zeroconf):
     """Test we get an instance."""
     assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
     assert await opp.components.zeroconf.async_get_instance() is mock_zeroconf
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
     assert len(mock_zeroconf.ha_close.mock_calls) == 1

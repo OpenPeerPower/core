@@ -61,7 +61,7 @@ async def async_get_scanner.opp: OpenPeerPower, config):
     consider_home: Optional[timedelta] = scanner_config.get(CONF_CONSIDER_HOME)
 
     host: str = scanner_config[CONF_HOST]
-   .opp.data[DOMAIN][f"imported_options_{host}"] = {
+    opp.data[DOMAIN][f"imported_options_{host}"] = {
         CONF_INTERFACES: [scanner_config[CONF_LEGACY_INTERFACE]],
         CONF_SCAN_INTERVAL: int(scan_interval.total_seconds())
         if scan_interval
@@ -71,8 +71,8 @@ async def async_get_scanner.opp: OpenPeerPower, config):
         else DEFAULT_CONSIDER_HOME,
     }
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={
@@ -94,7 +94,7 @@ async def async_get_scanner.opp: OpenPeerPower, config):
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ):
     """Set up device tracker for Keenetic NDMS2 component."""
     router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]

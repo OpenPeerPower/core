@@ -144,7 +144,7 @@ class SecuritySystem(HomeAccessory):
     def set_security_state(self, value):
         """Move security state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set security state to %d", self.entity_id, value)
-       .opp_value = HOMEKIT_TO_HASS[value]
+        opp.value = HOMEKIT_TO_HASS[value]
         service = STATE_TO_SERVICE.opp_value]
 
         params = {ATTR_ENTITY_ID: self.entity_id}
@@ -155,7 +155,7 @@ class SecuritySystem(HomeAccessory):
     @callback
     def async_update_state(self, new_state):
         """Update security state after state changed."""
-       .opp_state = new_state.state
+        opp.state = new_state.state
         if opp_state in HASS_TO_HOMEKIT:
             current_security_state = HASS_TO_HOMEKIT.opp_state]
             if self.char_current_state.value != current_security_state:
@@ -163,13 +163,13 @@ class SecuritySystem(HomeAccessory):
                 _LOGGER.debug(
                     "%s: Updated current state to %s (%d)",
                     self.entity_id,
-                   .opp_state,
+                    opp.state,
                     current_security_state,
                 )
 
             # SecuritySystemTargetState does not support triggered
             if (
-               .opp_state != STATE_ALARM_TRIGGERED
+                opp.state != STATE_ALARM_TRIGGERED
                 and self.char_target_state.value != current_security_state
             ):
                 self.char_target_state.set_value(current_security_state)

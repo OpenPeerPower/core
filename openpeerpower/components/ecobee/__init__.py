@@ -35,12 +35,12 @@ async def async_setup_opp, config):
     migrating from the old ecobee component. Otherwise, the user will have to
     continue setting up the integration via the config flow.
     """
-   .opp.data[DATA_ECOBEE_CONFIG] = config.get(DOMAIN, {})
+    opp.data[DATA_ECOBEE_CONFIG] = config.get(DOMAIN, {})
 
     if not.opp.config_entries.async_entries(DOMAIN) and.opp.data[DATA_ECOBEE_CONFIG]:
         # No config entry exists and configuration.yaml config exists, trigger the import flow.
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}
             )
         )
@@ -64,11 +64,11 @@ async def async_setup_entry.opp, entry):
         _LOGGER.error("No ecobee devices found to set up")
         return False
 
-   .opp.data[DOMAIN] = data
+    opp.data[DOMAIN] = data
 
     for component in ECOBEE_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -117,12 +117,12 @@ class EcobeeData:
 
 async def async_unload_entry.opp, config_entry):
     """Unload the config entry and platforms."""
-   .opp.data.pop(DOMAIN)
+    opp.data.pop(DOMAIN)
 
     tasks = []
     for platform in ECOBEE_PLATFORMS:
         tasks.append(
-           .opp.config_entries.async_forward_entry_unload(config_entry, platform)
+            opp.config_entries.async_forward_entry_unload(config_entry, platform)
         )
 
     return all(await asyncio.gather(*tasks))

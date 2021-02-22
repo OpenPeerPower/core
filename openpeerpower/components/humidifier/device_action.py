@@ -78,7 +78,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
+    opp. OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
 ) -> None:
     """Execute a device action."""
     config = ACTION_SCHEMA(config)
@@ -93,7 +93,7 @@ async def async_call_action_from_config(
         service_data[const.ATTR_MODE] = config[const.ATTR_MODE]
     else:
         return await toggle_entity.async_call_action_from_config(
-            opp, config, variables, context, DOMAIN
+            opp. config, variables, context, DOMAIN
         )
 
     await opp.services.async_call(

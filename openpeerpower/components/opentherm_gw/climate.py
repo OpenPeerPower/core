@@ -42,7 +42,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     ents = []
     ents.append(
         OpenThermClimate(
-           .opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]],
+            opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]],
             config_entry.options,
         )
     )

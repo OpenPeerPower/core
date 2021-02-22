@@ -21,7 +21,7 @@ from openpeerpower.util.color import (
 
 _LOGGER = logging.getLogger(__name__)
 
-DEFAULT_NAME = "opple light"
+DEFAULT_NAME =  opp.e light"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {

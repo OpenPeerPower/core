@@ -47,7 +47,7 @@ def setup_opp, config):
 
     smarty = Smarty(host=host)
 
-   .opp.data[DOMAIN] = {"api": smarty, "name": name}
+    opp.data[DOMAIN] = {"api": smarty, "name": name}
 
     # Initial update
     smarty.update()

@@ -91,7 +91,7 @@ async def test_service_setup_opp):
 
 async def test_service_setup_already_registered.opp):
     """Make sure that services are only registered once."""
-   .opp.data[DECONZ_SERVICES] = True
+    opp.data[DECONZ_SERVICES] = True
     with patch(
         "openpeerpower.core.ServiceRegistry.async_register", return_value=Mock(True)
     ) as async_register:
@@ -101,7 +101,7 @@ async def test_service_setup_already_registered.opp):
 
 async def test_service_unload.opp):
     """Verify service unload works."""
-   .opp.data[DECONZ_SERVICES] = True
+    opp.data[DECONZ_SERVICES] = True
     with patch(
         "openpeerpower.core.ServiceRegistry.async_remove", return_value=Mock(True)
     ) as async_remove:
@@ -240,7 +240,7 @@ async def test_remove_orphaned_entries_service.opp, aioclient_mock):
     data["lights"] = deepcopy(LIGHT)
     data["sensors"] = deepcopy(SWITCH)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
 
     data = {CONF_BRIDGE_ID: BRIDGEID}

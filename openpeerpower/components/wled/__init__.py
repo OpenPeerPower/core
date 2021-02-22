@@ -50,19 +50,19 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = coordinator
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = coordinator
 
     # For backwards compat, set unique ID
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, unique_id=coordinator.data.info.mac_address
         )
 
     # Set up all platforms for this device/entry.
     for component in WLED_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -75,7 +75,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *(
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in WLED_COMPONENTS
             )
         )
@@ -118,7 +118,7 @@ class WLEDDataUpdateCoordinator(DataUpdateCoordinator[WLEDDevice]):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         *,
         host: str,
     ):
@@ -126,7 +126,7 @@ class WLEDDataUpdateCoordinator(DataUpdateCoordinator[WLEDDevice]):
         self.wled = WLED(host, session=async_get_clientsession.opp))
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

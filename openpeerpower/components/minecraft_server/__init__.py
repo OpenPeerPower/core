@@ -49,15 +49,15 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Set up platforms.
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
 
 
 async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload Minecraft Server config entry."""
     unique_id = config_entry.unique_id
@@ -66,14 +66,14 @@ async def async_unload_entry(
     # Unload platforms.
     await asyncio.gather(
         *[
-           .opp.config_entries.async_forward_entry_unload(config_entry, platform)
+            opp.config_entries.async_forward_entry_unload(config_entry, platform)
             for platform in PLATFORMS
         ]
     )
 
     # Clean up.
     server.stop_periodic_update()
-   .opp.data[DOMAIN].pop(unique_id)
+    opp.data[DOMAIN].pop(unique_id)
 
     return True
 

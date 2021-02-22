@@ -249,7 +249,7 @@ async def test_form_user_discovery_manual_and_auto_password_fetch.opp):
 
 
 async def test_form_user_discovery_manual_and_auto_password_fetch_but_cannot_connect(
-    opp,
+    opp.
 ):
     """Test discovery skipped and we can auto fetch the password then we fail to connect."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -445,7 +445,7 @@ async def test_form_user_discovery_fails_and_password_fetch_fails.opp):
 
 
 async def test_form_user_discovery_fails_and_password_fetch_fails_and_cannot_connect(
-    opp,
+    opp.
 ):
     """Test discovery fails and password fetch fails then we cannot connect."""
     await setup.async_setup_component.opp, "persistent_notification", {})

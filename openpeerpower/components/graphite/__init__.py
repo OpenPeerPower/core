@@ -74,9 +74,9 @@ class GraphiteFeeder(threading.Thread):
         self._quit_object = object()
         self._we_started = False
 
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.start_listen)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.shutdown)
-       .opp.bus.listen(EVENT_STATE_CHANGED, self.event_listener)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.start_listen)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.shutdown)
+        opp.bus.listen(EVENT_STATE_CHANGED, self.event_listener)
         _LOGGER.debug("Graphite feeding to %s:%i initialized", self._host, self._port)
 
     def start_listen(self, event):

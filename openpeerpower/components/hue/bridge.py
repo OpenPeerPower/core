@@ -82,7 +82,7 @@ class HueBridge:
     async def async_setup(self, tries=0):
         """Set up a phue bridge based on host parameter."""
         host = self.host
-        opp =self.opp
+        opp.=self.opp
 
         bridge = aiohue.Bridge(
             host,
@@ -112,16 +112,16 @@ class HueBridge:
         self.api = bridge
         self.sensor_manager = SensorManager(self)
 
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(self.config_entry, "light")
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(self.config_entry, "light")
         )
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(
                 self.config_entry, "binary_sensor"
             )
         )
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(self.config_entry, "sensor")
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(self.config_entry, "sensor")
         )
 
         self.parallel_updates_semaphore = asyncio.Semaphore(
@@ -268,7 +268,7 @@ async def authenticate_bridge.opp: core.OpenPeerPower, bridge: aiohue.Bridge):
             # Create username if we don't have one
             if not bridge.username:
                 device_name = unicode_slug.slugify(
-                   .opp.config.location_name, max_length=19
+                    opp.config.location_name, max_length=19
                 )
                 await bridge.create_user(f"open-peer-power#{device_name}")
 

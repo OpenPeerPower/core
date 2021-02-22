@@ -68,7 +68,7 @@ def setup_opp, config):
 
     location_name = location["name"]
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         "client": client,
         "location_id": location_id,
         "location_name": location_name,
@@ -82,7 +82,7 @@ def setup_opp, config):
         away_mode = service.data.get(ATTR_AWAY_MODE)
         client.update_location(location_id, away_mode)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SET_AWAY_MODE, set_away_mode, schema=SET_AWAY_MODE_SCHEMA
     )
 

@@ -19,14 +19,14 @@ async def test_invalid_config(opp):
     """Test invalid configuration."""
     with assert_setup_component(0):
         assert not await async_setup_component(
-            opp, datadog.DOMAIN, {datadog.DOMAIN: {"host1": "host1"}}
+            opp. datadog.DOMAIN, {datadog.DOMAIN: {"host1": "host1"}}
         )
 
 
 async def test_datadog_setup_full.opp):
     """Test setup with all data."""
     config = {datadog.DOMAIN: {"host": "host", "port": 123, "rate": 1, "prefix": "foo"}}
-   .opp.bus.listen = MagicMock()
+    opp.bus.listen = MagicMock()
 
     with patch("openpeerpower.components.datadog.initialize") as mock_init, patch(
         "openpeerpower.components.datadog.statsd"
@@ -43,13 +43,13 @@ async def test_datadog_setup_full.opp):
 
 async def test_datadog_setup_defaults.opp):
     """Test setup with defaults."""
-   .opp.bus.listen = mock.MagicMock()
+    opp.bus.listen = mock.MagicMock()
 
     with patch("openpeerpower.components.datadog.initialize") as mock_init, patch(
         "openpeerpower.components.datadog.statsd"
     ):
         assert await async_setup_component(
-            opp,
+            opp.
             datadog.DOMAIN,
             {
                 datadog.DOMAIN: {
@@ -67,13 +67,13 @@ async def test_datadog_setup_defaults.opp):
 
 async def test_logbook_entry.opp):
     """Test event listener."""
-   .opp.bus.listen = mock.MagicMock()
+    opp.bus.listen = mock.MagicMock()
 
     with patch("openpeerpower.components.datadog.initialize"), patch(
         "openpeerpower.components.datadog.statsd"
     ) as mock_statsd:
         assert await async_setup_component(
-            opp,
+            opp.
             datadog.DOMAIN,
             {datadog.DOMAIN: {"host": "host", "rate": datadog.DEFAULT_RATE}},
         )
@@ -101,13 +101,13 @@ async def test_logbook_entry.opp):
 
 async def test_state_changed.opp):
     """Test event listener."""
-   .opp.bus.listen = mock.MagicMock()
+    opp.bus.listen = mock.MagicMock()
 
     with patch("openpeerpower.components.datadog.initialize"), patch(
         "openpeerpower.components.datadog.statsd"
     ) as mock_statsd:
         assert await async_setup_component(
-            opp,
+            opp.
             datadog.DOMAIN,
             {
                 datadog.DOMAIN: {

@@ -52,8 +52,8 @@ async def async_setup_opp, config):
 
     if DOMAIN in config:
         for entry in config[DOMAIN]:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=entry
                 )
             )
@@ -68,7 +68,7 @@ async def async_setup_entry.opp, config_entry):
     if not await hub.async_setup():
         return False
 
-   .opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = hub
+    opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = hub
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -86,6 +86,6 @@ async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
     await opp.config_entries.async_forward_entry_unload(config_entry, "device_tracker")
 
-   .opp.data[DOMAIN].pop(config_entry.entry_id)
+    opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return True

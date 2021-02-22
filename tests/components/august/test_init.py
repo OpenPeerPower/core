@@ -73,7 +73,7 @@ async def test_unlock_throws_august_api_http_error(opp):
         raise AugustApiAIOHTTPError("This should bubble up as its user consumable")
 
     await _create_august_with_devices(
-        opp,
+        opp.
         [mocked_lock_detail],
         api_call_side_effects={
             "unlock_return_activities": _unlock_return_activities_side_effect
@@ -99,7 +99,7 @@ async def test_lock_throws_august_api_http_error(opp):
         raise AugustApiAIOHTTPError("This should bubble up as its user consumable")
 
     await _create_august_with_devices(
-        opp,
+        opp.
         [mocked_lock_detail],
         api_call_side_effects={
             "lock_return_activities": _lock_return_activities_side_effect
@@ -122,7 +122,7 @@ async def test_inoperative_locks_are_filtered_out.opp):
     august_operative_lock = await _mock_operative_august_lock_detail.opp)
     august_inoperative_lock = await _mock_inoperative_august_lock_detail.opp)
     await _create_august_with_devices(
-        opp, [august_operative_lock, august_inoperative_lock]
+        opp. [august_operative_lock, august_inoperative_lock]
     )
 
     lock_abc_name = opp.states.get("lock.abc_name")

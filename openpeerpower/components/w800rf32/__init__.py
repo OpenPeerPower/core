@@ -47,14 +47,14 @@ def setup_opp, config):
     def _start_w800rf32(event):
         w800_object.event_callback = handle_receive
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, _start_w800rf32)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, _start_w800rf32)
 
     def _shutdown_w800rf32(event):
         """Close connection with w800rf32."""
         w800_object.close_connection()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown_w800rf32)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown_w800rf32)
 
-   .opp.data[DATA_W800RF32] = w800_object
+    opp.data[DATA_W800RF32] = w800_object
 
     return True

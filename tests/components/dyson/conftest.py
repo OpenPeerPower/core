@@ -29,7 +29,7 @@ async def device.opp: OpenPeerPower, request) -> DysonDevice:
     ), patch(f"{BASE_PATH}.DYSON_PLATFORMS", [platform]):
         # DYSON_PLATFORMS is patched so that only the platform being tested is set up
         await async_setup_component(
-            opp,
+            opp.
             DOMAIN,
             CONFIG,
         )

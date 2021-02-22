@@ -6,7 +6,7 @@
             "dev": "Wersja deweloperska",
             "docker": "Docker",
             "docker_version": "Wersja Dockera",
-            .oppio": "Supervisor",
+             opp.o": "Supervisor",
             "host_os": "System operacyjny HA",
             "installation_type": "Typ instalacji",
             "os_name": "Rodzina systemu operacyjnego",

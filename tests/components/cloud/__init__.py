@@ -23,5 +23,5 @@ def mock_cloud_prefs.opp, prefs={}):
         const.PREF_GOOGLE_SECURE_DEVICES_PIN: None,
     }
     prefs_to_set.update(prefs)
-   .opp.data[cloud.DOMAIN].client._prefs._prefs = prefs_to_set
+    opp.data[cloud.DOMAIN].client._prefs._prefs = prefs_to_set
     return.opp.data[cloud.DOMAIN].client._prefs

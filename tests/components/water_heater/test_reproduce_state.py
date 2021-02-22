@@ -17,11 +17,11 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Water heater states."""
-   .opp.states.async_set("water_heater.entity_off", STATE_OFF, {})
-   .opp.states.async_set("water_heater.entity_on", STATE_ON, {ATTR_TEMPERATURE: 45})
-   .opp.states.async_set("water_heater.entity_away", STATE_ON, {ATTR_AWAY_MODE: True})
-   .opp.states.async_set("water_heater.entity_gas", STATE_GAS, {})
-   .opp.states.async_set(
+    opp.states.async_set("water_heater.entity_off", STATE_OFF, {})
+    opp.states.async_set("water_heater.entity_on", STATE_ON, {ATTR_TEMPERATURE: 45})
+    opp.states.async_set("water_heater.entity_away", STATE_ON, {ATTR_AWAY_MODE: True})
+    opp.states.async_set("water_heater.entity_gas", STATE_GAS, {})
+    opp.states.async_set(
         "water_heater.entity_all",
         STATE_ECO,
         {ATTR_AWAY_MODE: True, ATTR_TEMPERATURE: 45},

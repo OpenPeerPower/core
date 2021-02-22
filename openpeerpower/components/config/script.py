@@ -15,7 +15,7 @@ async def async_setup_opp):
         """post_write_hook for Config View that reloads scripts."""
         await opp.services.async_call(DOMAIN, SERVICE_RELOAD)
 
-   .opp.http.register_view(
+    opp.http.register_view(
         EditKeyBasedConfigView(
             DOMAIN,
             "config",

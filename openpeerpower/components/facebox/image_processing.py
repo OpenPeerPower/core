@@ -163,7 +163,7 @@ def valid_file_path(file_path):
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the classifier."""
     if DATA_FACEBOX not in.opp.data:
-       .opp.data[DATA_FACEBOX] = []
+        opp.data[DATA_FACEBOX] = []
 
     ip_address = config[CONF_IP_ADDRESS]
     port = config[CONF_PORT]
@@ -186,7 +186,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             camera.get(CONF_NAME),
         )
         entities.append(facebox)
-       .opp.data[DATA_FACEBOX].append(facebox)
+        opp.data[DATA_FACEBOX].append(facebox)
     add_entities(entities)
 
     def service_handle(service):
@@ -202,7 +202,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             file_path = service.data.get(FILE_PATH)
             classifier.teach(name, file_path)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_TEACH_FACE, service_handle, schema=SERVICE_TEACH_SCHEMA
     )
 

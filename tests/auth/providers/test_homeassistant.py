@@ -17,7 +17,7 @@ from openpeerpower.auth.providers import (
 def data.opp):
     """Create a loaded data class."""
     data = opp_auth.Data.opp)
-   .opp.loop.run_until_complete(data.async_load())
+    opp.loop.run_until_complete(data.async_load())
     return data
 
 
@@ -25,7 +25,7 @@ def data.opp):
 def legacy_data.opp):
     """Create a loaded legacy data class."""
     data = opp_auth.Data.opp)
-   .opp.loop.run_until_complete(data.async_load())
+    opp.loop.run_until_complete(data.async_load())
     data.is_legacy = True
     return data
 
@@ -38,10 +38,10 @@ async def test_validating_password_invalid_user(data, opp):
 
 async def test_not_allow_set_id():
     """Test we are not allowed to set an ID in config."""
-    opp =Mock()
+    opp.=Mock()
     with pytest.raises(vol.Invalid):
         await auth_provider_from_config(
-            opp, None, {"type": "openpeerpower", "id": "invalid"}
+            opp. None, {"type": "openpeerpower", "id": "invalid"}
         )
 
 
@@ -111,7 +111,7 @@ async def test_login_flow_validates(data, opp):
     await data.async_save()
 
     provider = opp_auth.HassAuthProvider(
-        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp. auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -212,7 +212,7 @@ async def test_legacy_login_flow_validates(legacy_data, opp):
     await legacy_data.async_save()
 
     provider = opp_auth.HassAuthProvider(
-        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp. auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -287,7 +287,7 @@ async def test_race_condition_in_data_loading.opp):
         await asyncio.sleep(0)
 
     provider = opp_auth.HassAuthProvider(
-        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp. auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):
         task1 = provider.async_validate_login("user", "pass")

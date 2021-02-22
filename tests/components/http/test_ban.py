@@ -98,7 +98,7 @@ async def test_access_from_supervisor_ip(
     ):
         client = await aiohttp_client(app)
 
-    assert await async_setup_component.opp, .oppio", {.oppio": {}})
+    assert await async_setup_component.opp,  opp.o", {.oppio": {}})
 
     m_open = mock_open()
 
@@ -120,7 +120,7 @@ async def test_ban_middleware_not_loaded_by_config(opp):
     """Test accessing to server from banned IP when feature is off."""
     with patch("openpeerpower.components.http.setup_bans") as mock_setup:
         await async_setup_component(
-            opp, "http", {"http": {http.CONF_IP_BAN_ENABLED: False}}
+            opp. "http", {"http": {http.CONF_IP_BAN_ENABLED: False}}
         )
 
     assert len(mock_setup.mock_calls) == 0

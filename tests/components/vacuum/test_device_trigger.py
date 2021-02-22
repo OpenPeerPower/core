@@ -66,10 +66,10 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 
 async def test_if_fires_on_state_change.opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-   .opp.states.async_set("vacuum.entity", STATE_DOCKED)
+    opp.states.async_set("vacuum.entity", STATE_DOCKED)
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -116,7 +116,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is cleaning
-   .opp.states.async_set("vacuum.entity", STATE_CLEANING)
+    opp.states.async_set("vacuum.entity", STATE_CLEANING)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert (
@@ -124,7 +124,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is docked
-   .opp.states.async_set("vacuum.entity", STATE_DOCKED)
+    opp.states.async_set("vacuum.entity", STATE_DOCKED)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert (

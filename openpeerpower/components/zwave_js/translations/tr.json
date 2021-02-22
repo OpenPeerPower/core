@@ -20,7 +20,7 @@
             "install_addon": "L\u00fctfen Z-Wave JS eklenti kurulumu bitene kadar bekleyin. Bu birka\u00e7 dakika s\u00fcrebilir."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "title": "Z-Wave JS eklentisiyle Z-Wave JS entegrasyonunu ayarlay\u0131n"
             },
             "install_addon": {

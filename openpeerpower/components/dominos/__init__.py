@@ -67,14 +67,14 @@ def setup_opp, config):
     dominos = Dominos.opp, config)
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     entities = []
     conf = config[DOMAIN]
 
-   .opp.services.register(DOMAIN, "order", dominos.handle_order)
+    opp.services.register(DOMAIN, "order", dominos.handle_order)
 
     if conf.get(ATTR_SHOW_MENU):
-       .opp.http.register_view(DominosProductListView(dominos))
+        opp.http.register_view(DominosProductListView(dominos))
 
     for order_info in conf.get(ATTR_ORDERS):
         order = DominosOrder(order_info, dominos)

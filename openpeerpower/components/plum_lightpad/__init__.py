@@ -39,8 +39,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     conf = config[DOMAIN]
 
     _LOGGER.info("Found Plum Lightpad configuration in config, importing...")
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
     )
@@ -64,17 +64,17 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         _LOGGER.error("Unable to connect to Plum cloud: %s", ex)
         raise ConfigEntryNotReady from ex
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = plum
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = plum
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     def cleanup(event):
         """Clean up resources."""
         plum.cleanup()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
     return True

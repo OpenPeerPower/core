@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the OpenWeatherMap component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -59,19 +59,19 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     if not weather_coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][config_entry.entry_id] = {
         ENTRY_NAME: name,
         ENTRY_WEATHER_COORDINATOR: weather_coordinator,
     }
 
     for component in COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     update_listener = config_entry.add_update_listener(async_update_options)
-   .opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER] = update_listener
+    opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER] = update_listener
 
     return True
 
@@ -108,7 +108,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in COMPONENTS
             ]
         )
@@ -116,7 +116,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     if unload_ok:
         update_listener = opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
         update_listener()
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 

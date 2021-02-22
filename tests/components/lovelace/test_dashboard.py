@@ -44,7 +44,7 @@ async def test_lovelace_from_storage.opp, opp_ws_client, opp_storage):
     assert response["result"] == {"yo": "hello"}
 
     # Test with safe mode
-   .opp.config.safe_mode = True
+    opp.config.safe_mode = True
     await client.send_json({"id": 8, "type": "lovelace/config"})
     response = await client.receive_json()
     assert not response["success"]
@@ -62,7 +62,7 @@ async def test_lovelace_from_storage.opp, opp_ws_client, opp_storage):
 
 
 async def test_lovelace_from_storage_save_before_load(
-    opp, opp_ws_client, opp_storage
+    opp. opp_ws_client, opp_storage
 ):
     """Test we can load lovelace config from storage."""
     assert await async_setup_component.opp, "lovelace", {})
@@ -161,7 +161,7 @@ async def test_lovelace_from_yaml.opp, opp_ws_client):
 async def test_dashboard_from_yaml.opp, opp_ws_client, url_path):
     """Test we load lovelace dashboard config from yaml."""
     assert await async_setup_component(
-        opp,
+        opp.
         "lovelace",
         {
             "lovelace": {
@@ -267,7 +267,7 @@ async def test_wrong_key_dashboard_from_yaml.opp):
     """Test we don't load lovelace dashboard without hyphen config from yaml."""
     with assert_setup_component(0):
         assert not await async_setup_component(
-            opp,
+            opp.
             "lovelace",
             {
                 "lovelace": {
@@ -429,7 +429,7 @@ async def test_storage_dashboards.opp, opp_ws_client, opp_storage):
 
 async def test_storage_dashboard_migrate.opp, opp_ws_client, opp_storage):
     """Test changing url path from storage config."""
-   .opp_storage[dashboard.DASHBOARDS_STORAGE_KEY] = {
+    opp.storage[dashboard.DASHBOARDS_STORAGE_KEY] = {
         "key": "lovelace_dashboards",
         "version": 1,
         "data": {
@@ -483,7 +483,7 @@ async def test_storage_dashboard_migrate.opp, opp_ws_client, opp_storage):
 async def test_websocket_list_dashboards.opp, opp_ws_client):
     """Test listing dashboards both storage + YAML."""
     assert await async_setup_component(
-        opp,
+        opp.
         "lovelace",
         {
             "lovelace": {

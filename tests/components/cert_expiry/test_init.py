@@ -30,7 +30,7 @@ async def test_setup_with_config(opp):
     }
     assert await async_setup_component.opp, SENSOR_DOMAIN, config) is True
     await opp.async_block_till_done()
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
     next_update = dt_util.utcnow() + timedelta(seconds=20)
     async_fire_time_changed.opp, next_update)

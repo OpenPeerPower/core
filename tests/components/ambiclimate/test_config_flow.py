@@ -14,7 +14,7 @@ from openpeerpower.util import aiohttp
 async def init_config_flow.opp):
     """Init a configuration flow."""
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://example.com"},
     )
     await async_setup_component.opp, "http", {})
@@ -115,7 +115,7 @@ async def test_already_setup_opp):
 
 async def test_view.opp):
     """Test view."""
-   .opp.config_entries.flow.async_init = AsyncMock()
+    opp.config_entries.flow.async_init = AsyncMock()
 
     request = aiohttp.MockRequest(
         b"", query_string="code=test_code", mock_source="test"

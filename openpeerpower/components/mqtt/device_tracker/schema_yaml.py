@@ -48,7 +48,7 @@ async def async_setup_scanner_from_yaml.opp, config, async_see, discovery_info=N
             if source_type:
                 see_args["source_type"] = source_type
 
-           .opp.async_create_task(async_see(**see_args))
+            opp.async_create_task(async_see(**see_args))
 
         await mqtt.async_subscribe.opp, topic, async_message_received, qos)
 

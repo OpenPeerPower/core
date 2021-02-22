@@ -42,7 +42,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
     """Set up the Sonarr component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -57,7 +57,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 CONF_WANTED_MAX_ITEMS, DEFAULT_WANTED_MAX_ITEMS
             ),
         }
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
     sonarr = Sonarr(
         host=entry.data[CONF_HOST],
@@ -79,14 +79,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_SONARR: sonarr,
         DATA_UNDO_UPDATE_LISTENER: undo_listener,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -97,23 +97,23 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
 
 def _async_start_reauth.opp: OpenPeerPowerType, entry: ConfigEntry):
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={CONF_SOURCE: SOURCE_REAUTH},
             data={"config_entry_id": entry.entry_id, **entry.data},

@@ -21,7 +21,7 @@ async def test_methods.opp, entities):
     """Test is_on, turn_on, turn_off methods."""
     switch_1, switch_2, switch_3 = entities
     assert await async_setup_component(
-        opp, switch.DOMAIN, {switch.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp. switch.DOMAIN, {switch.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
     assert switch.is_on.opp, switch_1.entity_id)

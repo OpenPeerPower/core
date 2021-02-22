@@ -20,42 +20,42 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Alarm control panel states."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.entity_armed_away", STATE_ALARM_ARMED_AWAY, {}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.entity_armed_custom_bypass",
         STATE_ALARM_ARMED_CUSTOM_BYPASS,
         {},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.entity_armed_home", STATE_ALARM_ARMED_HOME, {}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.entity_armed_night", STATE_ALARM_ARMED_NIGHT, {}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.entity_disarmed", STATE_ALARM_DISARMED, {}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.entity_triggered", STATE_ALARM_TRIGGERED, {}
     )
 
     arm_away_calls = async_mock_service(
-        opp, "alarm_control_panel", SERVICE_ALARM_ARM_AWAY
+        opp. "alarm_control_panel", SERVICE_ALARM_ARM_AWAY
     )
     arm_custom_bypass_calls = async_mock_service(
-        opp, "alarm_control_panel", SERVICE_ALARM_ARM_CUSTOM_BYPASS
+        opp. "alarm_control_panel", SERVICE_ALARM_ARM_CUSTOM_BYPASS
     )
     arm_home_calls = async_mock_service(
-        opp, "alarm_control_panel", SERVICE_ALARM_ARM_HOME
+        opp. "alarm_control_panel", SERVICE_ALARM_ARM_HOME
     )
     arm_night_calls = async_mock_service(
-        opp, "alarm_control_panel", SERVICE_ALARM_ARM_NIGHT
+        opp. "alarm_control_panel", SERVICE_ALARM_ARM_NIGHT
     )
     disarm_calls = async_mock_service.opp, "alarm_control_panel", SERVICE_ALARM_DISARM)
     trigger_calls = async_mock_service(
-        opp, "alarm_control_panel", SERVICE_ALARM_TRIGGER
+        opp. "alarm_control_panel", SERVICE_ALARM_TRIGGER
     )
 
     # These calls should do nothing as entities already in desired state

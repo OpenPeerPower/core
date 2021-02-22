@@ -55,12 +55,12 @@ async def async_setup_opp, config):
     """Set up the TP-Link component."""
     conf = config.get(DOMAIN)
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][ATTR_CONFIG] = conf
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][ATTR_CONFIG] = conf
 
     if conf is not None:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
             )
         )
@@ -96,12 +96,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
         _LOGGER.debug(
             "Got %s lights: %s", len(lights), ", ".join([d.host for d in lights])
         )
-       .opp.async_create_task(forward_setup(config_entry, "light"))
+        opp.async_create_task(forward_setup(config_entry, "light"))
     if switches:
         _LOGGER.debug(
             "Got %s switches: %s", len(switches), ", ".join([d.host for d in switches])
         )
-       .opp.async_create_task(forward_setup(config_entry, "switch"))
+        opp.async_create_task(forward_setup(config_entry, "switch"))
 
     return True
 
@@ -116,7 +116,7 @@ async def async_unload_entry.opp, entry):
         remove_switches = await forward_unload(entry, "switch")
 
     if remove_lights or remove_switches:
-       .opp.data[DOMAIN].clear()
+        opp.data[DOMAIN].clear()
         return True
 
     # We were not able to unload the platforms, either because there

@@ -188,14 +188,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up sensors for device."""
     if config_entry.data["sleep_period"]:
         await async_setup_entry_attribute_entities(
-            opp, config_entry, async_add_entities, SENSORS, ShellySleepingSensor
+            opp. config_entry, async_add_entities, SENSORS, ShellySleepingSensor
         )
     else:
         await async_setup_entry_attribute_entities(
-            opp, config_entry, async_add_entities, SENSORS, ShellySensor
+            opp. config_entry, async_add_entities, SENSORS, ShellySensor
         )
         await async_setup_entry_rest(
-            opp, config_entry, async_add_entities, REST_SENSORS, ShellyRestSensor
+            opp. config_entry, async_add_entities, REST_SENSORS, ShellyRestSensor
         )
 
 

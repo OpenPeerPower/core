@@ -171,7 +171,7 @@ LIGHT_GAMUT_TYPE = "A"
 
 async def setup_bridge.opp, mock_bridge):
     """Load the Hue light platform with the provided bridge."""
-   .opp.config.components.add(hue.DOMAIN)
+    opp.config.components.add(hue.DOMAIN)
     config_entry = config_entries.ConfigEntry(
         1,
         hue.DOMAIN,
@@ -182,7 +182,7 @@ async def setup_bridge.opp, mock_bridge):
         system_options={},
     )
     mock_bridge.config_entry = config_entry
-   .opp.data[hue.DOMAIN] = {config_entry.entry_id: mock_bridge}
+    opp.data[hue.DOMAIN] = {config_entry.entry_id: mock_bridge}
     await opp.config_entries.async_forward_entry_setup(config_entry, "light")
     # To flush out the service call to update the group
     await opp.async_block_till_done()

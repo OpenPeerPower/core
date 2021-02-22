@@ -32,7 +32,7 @@ async def test_if_fires_on_event.opp.calls):
     context = Context()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -42,7 +42,7 @@ async def test_if_fires_on_event.opp.calls):
         },
     )
 
-   .opp.us.async_fire("test_event", context=context)
+    opp.us.async_fire("test_event", context=context)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
@@ -54,7 +54,7 @@ async def test_if_fires_on_event.opp.calls):
         blocking=True,
     )
 
-   .opp.us.async_fire("test_event")
+    opp.us.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -64,7 +64,7 @@ async def test_if_fires_on_templated_event.opp.calls):
     context = Context()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -75,7 +75,7 @@ async def test_if_fires_on_templated_event.opp.calls):
         },
     )
 
-   .opp.us.async_fire("test_event", context=context)
+    opp.us.async_fire("test_event", context=context)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
@@ -87,7 +87,7 @@ async def test_if_fires_on_templated_event.opp.calls):
         blocking=True,
     )
 
-   .opp.us.async_fire("test_event")
+    opp.us.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -97,7 +97,7 @@ async def test_if_fires_on_multiple_events.opp.calls):
     context = Context()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -110,9 +110,9 @@ async def test_if_fires_on_multiple_events.opp.calls):
         },
     )
 
-   .opp.us.async_fire("test_event", context=context)
+    opp.us.async_fire("test_event", context=context)
     await opp.async_block_till_done()
-   .opp.us.async_fire("test2_event", context=context)
+    opp.us.async_fire("test2_event", context=context)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[0].context.parent_id == context.id
@@ -122,7 +122,7 @@ async def test_if_fires_on_multiple_events.opp.calls):
 async def test_if_fires_on_event_extra_data.opp.calls, context_with_user):
     """Test the firing of events still matches with event data and context."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -131,7 +131,7 @@ async def test_if_fires_on_event_extra_data.opp.calls, context_with_user):
             }
         },
     )
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event", {"extra_key": "extra_data"}, context=context_with_user
     )
     await opp.async_block_till_done()
@@ -144,7 +144,7 @@ async def test_if_fires_on_event_extra_data.opp.calls, context_with_user):
         blocking=True,
     )
 
-   .opp.us.async_fire("test_event")
+    opp.us.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -152,7 +152,7 @@ async def test_if_fires_on_event_extra_data.opp.calls, context_with_user):
 async def test_if_fires_on_event_with_data_and_context.opp.calls, context_with_user):
     """Test the firing of events with data and context."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -170,7 +170,7 @@ async def test_if_fires_on_event_with_data_and_context.opp.calls, context_with_u
         },
     )
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event",
         {"some_attr": "some_value", "another": "value", "second_attr": "second_value"},
         context=context_with_user,
@@ -178,7 +178,7 @@ async def test_if_fires_on_event_with_data_and_context.opp.calls, context_with_u
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event",
         {"some_attr": "some_value", "another": "value"},
         context=context_with_user,
@@ -186,7 +186,7 @@ async def test_if_fires_on_event_with_data_and_context.opp.calls, context_with_u
     await opp.async_block_till_done()
     assert len(calls) == 1  # No new call
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event",
         {"some_attr": "some_value", "another": "value", "second_attr": "second_value"},
     )
@@ -195,11 +195,11 @@ async def test_if_fires_on_event_with_data_and_context.opp.calls, context_with_u
 
 
 async def test_if_fires_on_event_with_templated_data_and_context(
-   .opp.calls, context_with_user
+    opp.calls, context_with_user
 ):
     """Test the firing of events with templated data and context."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -222,7 +222,7 @@ async def test_if_fires_on_event_with_templated_data_and_context(
         },
     )
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event",
         {"attr_1": "milk", "another": "value", "attr_2": "beer"},
         context=context_with_user,
@@ -230,7 +230,7 @@ async def test_if_fires_on_event_with_templated_data_and_context(
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event",
         {"attr_1": "milk", "another": "value"},
         context=context_with_user,
@@ -238,7 +238,7 @@ async def test_if_fires_on_event_with_templated_data_and_context(
     await opp.async_block_till_done()
     assert len(calls) == 1  # No new call
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event",
         {"attr_1": "milk", "another": "value", "attr_2": "beer"},
     )
@@ -247,7 +247,7 @@ async def test_if_fires_on_event_with_templated_data_and_context(
 
 
 async def test_if_fires_on_event_with_empty_data_and_context_config(
-   .opp.calls, context_with_user
+    opp.calls, context_with_user
 ):
     """Test the firing of events with empty data and context config.
 
@@ -255,7 +255,7 @@ async def test_if_fires_on_event_with_empty_data_and_context_config(
     empty dict for event_data instead of no key.
     """
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -270,7 +270,7 @@ async def test_if_fires_on_event_with_empty_data_and_context_config(
         },
     )
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event",
         {"some_attr": "some_value", "another": "value"},
         context=context_with_user,
@@ -282,7 +282,7 @@ async def test_if_fires_on_event_with_empty_data_and_context_config(
 async def test_if_fires_on_event_with_nested_data.opp.calls):
     """Test the firing of events with nested data."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -296,7 +296,7 @@ async def test_if_fires_on_event_with_nested_data.opp.calls):
         },
     )
 
-   .opp.us.async_fire(
+    opp.us.async_fire(
         "test_event", {"parent_attr": {"some_attr": "some_value", "another": "value"}}
     )
     await opp.async_block_till_done()
@@ -306,7 +306,7 @@ async def test_if_fires_on_event_with_nested_data.opp.calls):
 async def test_if_not_fires_if_event_data_not_matches.opp.calls):
     """Test firing of event if no data match."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -320,17 +320,17 @@ async def test_if_not_fires_if_event_data_not_matches.opp.calls):
         },
     )
 
-   .opp.us.async_fire("test_event", {"some_attr": "some_other_value"})
+    opp.us.async_fire("test_event", {"some_attr": "some_other_value"})
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
 async def test_if_not_fires_if_event_context_not_matches(
-   .opp.calls, context_with_user
+    opp.calls, context_with_user
 ):
     """Test firing of event if no context match."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -344,7 +344,7 @@ async def test_if_not_fires_if_event_context_not_matches(
         },
     )
 
-   .opp.us.async_fire("test_event", {}, context=context_with_user)
+    opp.us.async_fire("test_event", {}, context=context_with_user)
     await opp.async_block_till_done()
     assert len(calls) == 0
 
@@ -352,7 +352,7 @@ async def test_if_not_fires_if_event_context_not_matches(
 async def test_if_fires_on_multiple_user_ids.opp.calls, context_with_user):
     """Test the firing of event when the trigger has multiple user ids."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -367,7 +367,7 @@ async def test_if_fires_on_multiple_user_ids.opp.calls, context_with_user):
         },
     )
 
-   .opp.us.async_fire("test_event", {}, context=context_with_user)
+    opp.us.async_fire("test_event", {}, context=context_with_user)
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -375,7 +375,7 @@ async def test_if_fires_on_multiple_user_ids.opp.calls, context_with_user):
 async def test_event_data_with_list.opp.calls):
     """Test the (non)firing of event when the data schema has lists."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -390,16 +390,16 @@ async def test_event_data_with_list.opp.calls):
         },
     )
 
-   .opp.us.async_fire("test_event", {"some_attr": [1, 2]})
+    opp.us.async_fire("test_event", {"some_attr": [1, 2]})
     await opp.async_block_till_done()
     assert len(calls) == 1
 
     # don't match a single value
-   .opp.us.async_fire("test_event", {"some_attr": 1})
+    opp.us.async_fire("test_event", {"some_attr": 1})
     await opp.async_block_till_done()
     assert len(calls) == 1
 
     # don't match a containing list
-   .opp.us.async_fire("test_event", {"some_attr": [1, 2, 3]})
+    opp.us.async_fire("test_event", {"some_attr": [1, 2, 3]})
     await opp.async_block_till_done()
     assert len(calls) == 1

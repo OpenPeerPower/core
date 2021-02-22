@@ -120,7 +120,7 @@ CONFIG_SCHEMA = vol.Schema({DOMAIN: COMPONENT_SCHEMA}, extra=vol.ALLOW_EXTRA)
 async def async_setup_opp, config):
     """Set up the GreenEye Monitor component."""
     monitors = Monitors()
-   .opp.data[DATA_GREENEYE_MONITOR] = monitors
+    opp.data[DATA_GREENEYE_MONITOR] = monitors
 
     server_config = config[DOMAIN]
     server = await monitors.start_server(server_config[CONF_PORT])
@@ -129,7 +129,7 @@ async def async_setup_opp, config):
         """Close the monitoring server."""
         await server.close()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_server)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_server)
 
     all_sensors = []
     for monitor_config in server_config[CONF_MONITORS]:
@@ -189,7 +189,7 @@ async def async_setup_opp, config):
         )
         return False
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform.opp, "sensor", DOMAIN, all_sensors, config)
     )
 

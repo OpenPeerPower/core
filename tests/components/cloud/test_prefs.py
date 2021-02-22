@@ -41,7 +41,7 @@ async def test_set_username_migration.opp):
 
 async def test_load_invalid_cloud_user.opp, opp_storage):
     """Test loading cloud user with invalid storage."""
-   .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": "non-existing"}}
+    opp.storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": "non-existing"}}
 
     prefs = CloudPreferences.opp)
     await prefs.async_initialize()
@@ -51,7 +51,7 @@ async def test_load_invalid_cloud_user.opp, opp_storage):
     assert cloud_user_id != "non-existing"
 
     cloud_user = await opp.auth.async_get_user(
-       .opp_storage[STORAGE_KEY]["data"]["cloud_user"]
+        opp.storage[STORAGE_KEY]["data"]["cloud_user"]
     )
 
     assert cloud_user
@@ -60,7 +60,7 @@ async def test_load_invalid_cloud_user.opp, opp_storage):
 
 async def test_setup_remove_cloud_user.opp, opp_storage):
     """Test creating and removing cloud user."""
-   .opp_storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": None}}
+    opp.storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": None}}
 
     prefs = CloudPreferences.opp)
     await prefs.async_initialize()

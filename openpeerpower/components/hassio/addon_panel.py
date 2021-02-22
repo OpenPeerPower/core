@@ -16,8 +16,8 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_addon_panel.opp: OpenPeerPowerType, oppio):
     """Add-on Ingress Panel setup."""
-   .oppio_addon_panel = HassIOAddonPanel.opp, oppio)
-   .opp.http.register_view.oppio_addon_panel)
+    opp.o_addon_panel = HassIOAddonPanel.opp, oppio)
+    opp.http.register_view.oppio_addon_panel)
 
     # If panels are exists
     panels = await oppio_addon_panel.get_panels()

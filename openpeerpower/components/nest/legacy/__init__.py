@@ -106,8 +106,8 @@ async def async_setup_legacy.opp, config):
     filename = config.get(CONF_FILENAME, NEST_CONFIG_FILE)
     access_token_cache_file = opp.config.path(filename)
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={"nest_conf_path": access_token_cache_file},
@@ -115,7 +115,7 @@ async def async_setup_legacy.opp, config):
     )
 
     # Store config to be used during entry setup
-   .opp.data[DATA_NEST_CONFIG] = conf
+    opp.data[DATA_NEST_CONFIG] = conf
 
     return True
 
@@ -127,13 +127,13 @@ async def async_setup_legacy_entry.opp, entry):
 
     _LOGGER.debug("proceeding with setup")
     conf = opp.data.get(DATA_NEST_CONFIG, {})
-   .opp.data[DATA_NEST] = NestLegacyDevice.opp, conf, nest)
+    opp.data[DATA_NEST] = NestLegacyDevice.opp, conf, nest)
     if not await opp.async_add_executor_job.opp.data[DATA_NEST].initialize):
         return False
 
     for component in "climate", "camera", "sensor", "binary_sensor":
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     def validate_structures(target_structures):
@@ -219,15 +219,15 @@ async def async_setup_legacy_entry.opp, entry):
                         structure.name,
                     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_AWAY_MODE, set_away_mode, schema=SET_AWAY_MODE_SCHEMA
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_ETA, set_eta, schema=SET_ETA_SCHEMA
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_CANCEL_ETA, cancel_eta, schema=CANCEL_ETA_SCHEMA
     )
 
@@ -240,14 +240,14 @@ async def async_setup_legacy_entry.opp, entry):
             args= opp, nest),
         ).start()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_up)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_up)
 
     @callback
     def shut_down(event):
         """Stop Nest update event listener."""
         nest.update_event.set()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
 
     _LOGGER.debug("async_setup_nest is done")
 

@@ -48,7 +48,7 @@ def mock_client.opp, aiohttp_client):
     MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
     ).add_to.opp.opp)
-   .opp.loop.run_until_complete(async_setup_component.opp, "owntracks", {}))
+    opp.loop.run_until_complete(async_setup_component.opp, "owntracks", {}))
 
     return.opp.loop.run_until_complete(aiohttp_client.opp.http.app))
 

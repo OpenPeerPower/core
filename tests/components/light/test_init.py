@@ -27,10 +27,10 @@ orig_Profiles = light.Profiles
 async def test_methods.opp):
     """Test if methods call the services as expected."""
     # Test is_on
-   .opp.states.async_set("light.test", STATE_ON)
+    opp.states.async_set("light.test", STATE_ON)
     assert light.is_on.opp, "light.test")
 
-   .opp.states.async_set("light.test", STATE_OFF)
+    opp.states.async_set("light.test", STATE_OFF)
     assert not light.is_on.opp, "light.test")
 
     # Test turn_on
@@ -112,7 +112,7 @@ async def test_services.opp, mock_light_profiles):
 
     platform.init()
     assert await async_setup_component(
-        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp. light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -491,7 +491,7 @@ async def test_services.opp, mock_light_profiles):
     ),
 )
 async def test_light_profiles(
-    opp, mock_light_profiles, profile_name, expected_data, last_call
+    opp. mock_light_profiles, profile_name, expected_data, last_call
 ):
     """Test light profiles."""
     platform = getattr.opp.components, "test.light")
@@ -511,7 +511,7 @@ async def test_light_profiles(
         mock_light_profiles[name] = light.Profile(*(name, *data))
 
     assert await async_setup_component(
-        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp. light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -541,7 +541,7 @@ async def test_default_profiles_group.opp, mock_light_profiles):
     platform.init()
 
     assert await async_setup_component(
-        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp. light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -611,14 +611,14 @@ async def test_default_profiles_group.opp, mock_light_profiles):
     ),
 )
 async def test_default_profiles_light(
-    opp, mock_light_profiles, extra_call_params, expected_params
+    opp. mock_light_profiles, extra_call_params, expected_params
 ):
     """Test default turn-on light profile for a specific light."""
     platform = getattr.opp.components, "test.light")
     platform.init()
 
     assert await async_setup_component(
-        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp. light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
 
@@ -691,7 +691,7 @@ async def test_light_turn_on_auth.opp, opp_admin_user):
     state = opp.states.get("light.ceiling")
     assert state is not None
 
-   .opp_admin_user.mock_policy({})
+    opp.admin_user.mock_policy({})
 
     with pytest.raises(Unauthorized):
         await opp.services.async_call(

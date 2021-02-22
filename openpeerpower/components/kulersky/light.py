@@ -40,17 +40,17 @@ def check_light(light: pykulersky.Light):
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config_entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Kuler sky light devices."""
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
     if "devices" not in.opp.data[DOMAIN]:
-       .opp.data[DOMAIN]["devices"] = set()
+        opp.data[DOMAIN]["devices"] = set()
     if "discovery" not in.opp.data[DOMAIN]:
-       .opp.data[DOMAIN]["discovery"] = asyncio.Lock()
+        opp.data[DOMAIN]["discovery"] = asyncio.Lock()
 
     async def discover(*args):
         """Attempt to discover new lights."""
@@ -84,11 +84,11 @@ async def async_setup_entry(
                 except pykulersky.PykulerskyException:
                     continue
                 # The light has successfully connected
-               .opp.data[DOMAIN]["devices"].add(device["address"])
+                opp.data[DOMAIN]["devices"].add(device["address"])
                 async_add_entities([KulerskyLight(light)], update_before_add=True)
 
     # Start initial discovery
-   .opp.async_create_task(discover())
+    opp.async_create_task(discover())
 
     # Perform recurring discovery of new devices
     async_track_time_interval.opp, discover, DISCOVERY_INTERVAL)

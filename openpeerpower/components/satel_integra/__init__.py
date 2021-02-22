@@ -107,7 +107,7 @@ async def async_setup_opp, config):
 
     controller = AsyncSatel(host, port, opp.loop, zones, monitored_outputs, partitions)
 
-   .opp.data[DATA_SATEL] = controller
+    opp.data[DATA_SATEL] = controller
 
     result = await controller.connect()
 
@@ -118,17 +118,17 @@ async def async_setup_opp, config):
     def _close(*_):
         controller.close()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
 
     _LOGGER.debug("Arm home config: %s, mode: %s ", conf, conf.get(CONF_ARM_HOME_MODE))
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform.opp, "alarm_control_panel", DOMAIN, conf, config)
     )
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform(
-            opp,
+            opp.
             "binary_sensor",
             DOMAIN,
             {CONF_ZONES: zones, CONF_OUTPUTS: outputs},
@@ -136,9 +136,9 @@ async def async_setup_opp, config):
         )
     )
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform(
-            opp,
+            opp.
             "switch",
             DOMAIN,
             {
@@ -169,8 +169,8 @@ async def async_setup_opp, config):
 
     # Create a task instead of adding a tracking job, since this task will
     # run until the connection to satel_integra is closed.
-   .opp.loop.create_task(controller.keep_alive())
-   .opp.loop.create_task(
+    opp.loop.create_task(controller.keep_alive())
+    opp.loop.create_task(
         controller.monitor_status(
             alarm_status_update_callback, zones_update_callback, outputs_update_callback
         )

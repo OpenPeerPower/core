@@ -189,7 +189,7 @@ def setup_androidtv.opp, config):
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Android TV / Fire TV platform."""
-   .opp.data.setdefault(ANDROIDTV_DOMAIN, {})
+    opp.data.setdefault(ANDROIDTV_DOMAIN, {})
 
     address = f"{config[CONF_HOST]}:{config[CONF_PORT]}"
 
@@ -234,7 +234,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         await aftv.adb_close()
 
     # Close the ADB connection when HA stops
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_close)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_close)
 
     device_args = [
         aftv,
@@ -256,7 +256,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     async_add_entities([device])
     _LOGGER.debug("Setup %s at %s %s", device_name, address, adb_log)
-   .opp.data[ANDROIDTV_DOMAIN][address] = device
+    opp.data[ANDROIDTV_DOMAIN][address] = device
 
     if opp.services.has_service(ANDROIDTV_DOMAIN, SERVICE_ADB_COMMAND):
         return
@@ -285,7 +285,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                     output,
                 )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         ANDROIDTV_DOMAIN,
         SERVICE_ADB_COMMAND,
         service_adb_command,
@@ -313,7 +313,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
         await target_device.adb_pull(local_path, device_path)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         ANDROIDTV_DOMAIN,
         SERVICE_DOWNLOAD,
         service_download,
@@ -338,7 +338,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         for target_device in target_devices:
             await target_device.adb_push(local_path, device_path)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         ANDROIDTV_DOMAIN, SERVICE_UPLOAD, service_upload, schema=SERVICE_UPLOAD_SCHEMA
     )
 

@@ -45,7 +45,7 @@ async def async_get_scanner.opp, config):
         """Shutdown event."""
         await connect_box.async_close_session()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
 
     return UPCDeviceScanner(connect_box)
 

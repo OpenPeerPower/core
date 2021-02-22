@@ -147,7 +147,7 @@ async def async_setup_opp, config):
                 _LOGGER.error("Client error %s", request_url)
 
         # register services
-       .opp.services.async_register(DOMAIN, name, async_service_handler)
+        opp.services.async_register(DOMAIN, name, async_service_handler)
 
     for command, command_config in config[DOMAIN].items():
         async_register_rest_command(command, command_config)

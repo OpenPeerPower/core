@@ -117,7 +117,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities([sensor])
 
     # Wait until start event is sent to load this component.
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, lambda _: sensor.update())
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, lambda _: sensor.update())
 
 
 def _get_location_from_attributes(state):

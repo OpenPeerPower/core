@@ -321,7 +321,7 @@ async def test_send_with_state(mock_client, opp):
     ), patch("os.path.isfile", Mock(return_value=True)):
         notify_service = await opp.async_add_executor_job(
             apns.ApnsNotificationService,
-            opp,
+            opp.
             "test_app",
             "testapp.appname",
             False,

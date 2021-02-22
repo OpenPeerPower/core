@@ -8,7 +8,7 @@
             "cannot_connect": "Impossibile connettersi"
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Vuoi configurare Open Peer Power per connettersi alla AdGuard Home fornita dal componente aggiuntivo di Hass.io: {addon}?",
                 "title": "AdGuard Home tramite il componente aggiuntivo di Hass.io"
             },

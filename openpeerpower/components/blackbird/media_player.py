@@ -69,7 +69,7 @@ PLATFORM_SCHEMA = vol.All(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Monoprice Blackbird 4k 8x8 HDBaseT Matrix platform."""
     if DATA_BLACKBIRD not in.opp.data:
-       .opp.data[DATA_BLACKBIRD] = {}
+        opp.data[DATA_BLACKBIRD] = {}
 
     port = config.get(CONF_PORT)
     host = config.get(CONF_HOST)
@@ -100,7 +100,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.info("Adding zone %d - %s", zone_id, extra[CONF_NAME])
         unique_id = f"{connection}-{zone_id}"
         device = BlackbirdZone(blackbird, sources, zone_id, extra[CONF_NAME])
-       .opp.data[DATA_BLACKBIRD][unique_id] = device
+        opp.data[DATA_BLACKBIRD][unique_id] = device
         devices.append(device)
 
     add_entities(devices, True)
@@ -123,7 +123,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             if service.service == SERVICE_SETALLZONES:
                 device.set_all_zones(source)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SETALLZONES, service_handle, schema=BLACKBIRD_SETALLZONES_SCHEMA
     )
 

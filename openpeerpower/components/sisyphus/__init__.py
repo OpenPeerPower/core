@@ -48,10 +48,10 @@ async def async_setup_opp, config):
         """Add platforms for a single table with the given hostname."""
         tables[host] = TableHolder.opp, session, host, name)
 
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform.opp, "light", DOMAIN, {CONF_HOST: host}, config)
         )
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform.opp, "media_player", DOMAIN, {CONF_HOST: host}, config)
         )
 
@@ -68,7 +68,7 @@ async def async_setup_opp, config):
         if tasks:
             await asyncio.wait(tasks)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_tables)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_tables)
 
     return True
 

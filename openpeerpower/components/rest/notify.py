@@ -92,7 +92,7 @@ def get_service.opp, config, discovery_info=None):
         auth = None
 
     return RestNotificationService(
-        opp,
+        opp.
         resource,
         method,
         headers,
@@ -112,7 +112,7 @@ class RestNotificationService(BaseNotificationService):
 
     def __init__(
         self,
-        opp,
+        opp.
         resource,
         method,
         headers,

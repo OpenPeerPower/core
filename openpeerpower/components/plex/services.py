@@ -34,13 +34,13 @@ async def async_setup_services.opp):
         for server_id in.opp.data[DOMAIN][SERVERS]:
             async_dispatcher_send.opp, PLEX_UPDATE_PLATFORMS_SIGNAL.format(server_id))
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_REFRESH_LIBRARY,
         async_refresh_library_service,
         schema=REFRESH_LIBRARY_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SCAN_CLIENTS, async_scan_clients_service
     )
 

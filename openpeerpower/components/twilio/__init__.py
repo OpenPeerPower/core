@@ -35,7 +35,7 @@ async def async_setup_opp, config):
         return True
 
     conf = config[DOMAIN]
-   .opp.data[DATA_TWILIO] = Client(
+    opp.data[DATA_TWILIO] = Client(
         conf.get(CONF_ACCOUNT_SID), conf.get(CONF_AUTH_TOKEN)
     )
     return True
@@ -45,14 +45,14 @@ async def handle_webhook.opp, webhook_id, request):
     """Handle incoming webhook from Twilio for inbound messages and calls."""
     data = dict(await request.post())
     data["webhook_id"] = webhook_id
-   .opp.bus.async_fire(RECEIVED_DATA, dict(data))
+    opp.bus.async_fire(RECEIVED_DATA, dict(data))
 
     return TwiML().to_xml()
 
 
 async def async_setup_entry.opp, entry):
     """Configure based on config entry."""
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "Twilio", entry.data[CONF_WEBHOOK_ID], handle_webhook
     )
     return True
@@ -60,7 +60,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-   .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+    opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     return True
 
 

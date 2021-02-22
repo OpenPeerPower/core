@@ -372,11 +372,11 @@ async def test_reload.opp):
         init_recorder_component, opp
     )  # force in memory db
 
-   .opp.state = ha.CoreState.not_running
-   .opp.states.async_set("binary_sensor.test_id", "on")
+    opp.state = ha.CoreState.not_running
+    opp.states.async_set("binary_sensor.test_id", "on")
 
     await async_setup_component(
-        opp,
+        opp.
         "sensor",
         {
             "sensor": {

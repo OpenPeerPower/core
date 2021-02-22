@@ -178,7 +178,7 @@ class DomainBlueprints:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         domain: str,
         logger: logging.Logger,
     ) -> None:
@@ -189,7 +189,7 @@ class DomainBlueprints:
         self._blueprints = {}
         self._load_lock = asyncio.Lock()
 
-       .opp.data.setdefault(DOMAIN, {})[domain] = self
+        opp.data.setdefault(DOMAIN, {})[domain] = self
 
     @property
     def blueprint_folder(self) -> pathlib.Path:

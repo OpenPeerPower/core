@@ -23,8 +23,8 @@ def mock_legacy_time(legacy_patchable_time):
 @pytest.fixture(autouse=True)
 def setup_fixture.opp):
     """Set up things to be run when tests are started."""
-   .opp.config.latitude = 50.27583
-   .opp.config.longitude = 18.98583
+    opp.config.latitude = 50.27583
+    opp.config.longitude = 18.98583
 
 
 async def test_setup_opp):
@@ -55,7 +55,7 @@ async def test_setup_no_sensors.opp):
     """Test setup with no sensors."""
     with assert_setup_component(0):
         assert await async_setup_component(
-            opp, "binary_sensor", {"binary_sensor": {"platform": "tod"}}
+            opp. "binary_sensor", {"binary_sensor": {"platform": "tod"}}
         )
 
 
@@ -129,7 +129,7 @@ async def test_midnight_turnover_after_midnight_inside_period.opp):
         return_value=test_time + timedelta(hours=1),
     ):
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: test_time + timedelta(hours=1)}
         )
 
@@ -188,7 +188,7 @@ async def test_midnight_turnover_after_midnight_outside_period.opp):
         return_value=switchover_time,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: switchover_time})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: switchover_time})
         await opp.async_block_till_done()
         state = opp.states.get("binary_sensor.night")
         assert state.state == STATE_ON
@@ -198,7 +198,7 @@ async def test_midnight_turnover_after_midnight_outside_period.opp):
         return_value=switchover_time + timedelta(minutes=1, seconds=1),
     ):
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             ha.EVENT_TIME_CHANGED,
             {ha.ATTR_NOW: switchover_time + timedelta(minutes=1, seconds=1)},
         )
@@ -248,7 +248,7 @@ async def test_from_sunrise_to_sunset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -260,7 +260,7 @@ async def test_from_sunrise_to_sunset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -274,7 +274,7 @@ async def test_from_sunrise_to_sunset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -288,7 +288,7 @@ async def test_from_sunrise_to_sunset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -302,7 +302,7 @@ async def test_from_sunrise_to_sunset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -346,7 +346,7 @@ async def test_from_sunset_to_sunrise.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -358,7 +358,7 @@ async def test_from_sunset_to_sunrise.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -370,7 +370,7 @@ async def test_from_sunset_to_sunrise.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -382,7 +382,7 @@ async def test_from_sunset_to_sunrise.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -396,7 +396,7 @@ async def test_from_sunset_to_sunrise.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -442,7 +442,7 @@ async def test_offset.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -453,7 +453,7 @@ async def test_offset.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -464,7 +464,7 @@ async def test_offset.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -475,7 +475,7 @@ async def test_offset.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -516,7 +516,7 @@ async def test_offset_overnight.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -525,8 +525,8 @@ async def test_offset_overnight.opp):
 
 async def test_norwegian_case_winter.opp):
     """Test location in Norway where the sun doesn't set in summer."""
-   .opp.config.latitude = 69.6
-   .opp.config.longitude = 18.8
+    opp.config.latitude = 69.6
+    opp.config.longitude = 18.8
 
     test_time = opp.config.time_zone.localize(datetime(2010, 1, 1)).astimezone(
         pytz.UTC
@@ -566,7 +566,7 @@ async def test_norwegian_case_winter.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -578,7 +578,7 @@ async def test_norwegian_case_winter.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -590,7 +590,7 @@ async def test_norwegian_case_winter.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -604,7 +604,7 @@ async def test_norwegian_case_winter.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -618,7 +618,7 @@ async def test_norwegian_case_winter.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -632,7 +632,7 @@ async def test_norwegian_case_winter.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -641,8 +641,8 @@ async def test_norwegian_case_winter.opp):
 
 async def test_norwegian_case_summer.opp):
     """Test location in Norway where the sun doesn't set in summer."""
-   .opp.config.latitude = 69.6
-   .opp.config.longitude = 18.8
+    opp.config.latitude = 69.6
+    opp.config.longitude = 18.8
 
     test_time = opp.config.time_zone.localize(datetime(2010, 6, 1)).astimezone(
         pytz.UTC
@@ -683,7 +683,7 @@ async def test_norwegian_case_summer.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -695,7 +695,7 @@ async def test_norwegian_case_summer.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -707,7 +707,7 @@ async def test_norwegian_case_summer.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -721,7 +721,7 @@ async def test_norwegian_case_summer.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -735,7 +735,7 @@ async def test_norwegian_case_summer.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -749,7 +749,7 @@ async def test_norwegian_case_summer.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -800,7 +800,7 @@ async def test_sun_offset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -812,7 +812,7 @@ async def test_sun_offset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -826,7 +826,7 @@ async def test_sun_offset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -840,7 +840,7 @@ async def test_sun_offset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -854,7 +854,7 @@ async def test_sun_offset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -871,7 +871,7 @@ async def test_sun_offset.opp):
         return_value=testtime,
     ):
 
-       .opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: testtime})
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -880,7 +880,7 @@ async def test_sun_offset.opp):
 
 async def test_dst.opp):
     """Test sun event with offset."""
-   .opp.config.time_zone = pytz.timezone("CET")
+    opp.config.time_zone = pytz.timezone("CET")
     test_time = opp.config.time_zone.localize(
         datetime(2019, 3, 30, 3, 0, 0)
     ).astimezone(pytz.UTC)

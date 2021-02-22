@@ -144,7 +144,7 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 @callback
 def _async_save_refresh_token.opp, config_entry, token):
     """Save a refresh token to the config entry."""
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, data={**config_entry.data, CONF_TOKEN: token}
     )
 
@@ -154,7 +154,7 @@ async def async_get_client_id.opp):
 
     Note that SimpliSafe requires full, "dashed" versions of UUIDs.
     """
-   .opp_id = await opp.helpers.instance_id.async_get()
+    opp.id = await opp.helpers.instance_id.async_get()
     return str(UUID.opp_id))
 
 
@@ -172,13 +172,13 @@ async def async_register_base_station.opp, system, config_entry_id):
 
 async def async_setup_opp, config):
     """Set up the SimpliSafe component."""
-   .opp.data[DOMAIN] = {DATA_CLIENT: {}, DATA_LISTENER: {}}
+    opp.data[DOMAIN] = {DATA_CLIENT: {}, DATA_LISTENER: {}}
     return True
 
 
 async def async_setup_entry.opp, config_entry):
     """Set up SimpliSafe as config entry."""
-   .opp.data[DOMAIN][DATA_LISTENER][config_entry.entry_id] = []
+    opp.data[DOMAIN][DATA_LISTENER][config_entry.entry_id] = []
 
     entry_updates = {}
     if not config_entry.unique_id:
@@ -194,7 +194,7 @@ async def async_setup_entry.opp, config_entry):
             CONF_CODE: data.pop(CONF_CODE),
         }
     if entry_updates:
-       .opp.config_entries.async_update_entry(config_entry, **entry_updates)
+        opp.config_entries.async_update_entry(config_entry, **entry_updates)
 
     _verify_domain_control = verify_domain_control.opp, DOMAIN)
 
@@ -215,13 +215,13 @@ async def async_setup_entry.opp, config_entry):
     _async_save_refresh_token.opp, config_entry, api.refresh_token)
 
     simplisafe = opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = SimpliSafe(
-        opp, api, config_entry
+        opp. api, config_entry
     )
     await simplisafe.async_init()
 
     for platform in SUPPORTED_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     @callback
@@ -315,7 +315,7 @@ async def async_setup_entry.opp, config_entry):
     ]:
         async_register_admin_service.opp, DOMAIN, service, method, schema=schema)
 
-   .opp.data[DOMAIN][DATA_LISTENER][config_entry.entry_id].append(
+    opp.data[DOMAIN][DATA_LISTENER][config_entry.entry_id].append(
         config_entry.add_update_listener(async_reload_entry)
     )
 
@@ -327,13 +327,13 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in SUPPORTED_PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_CLIENT].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_CLIENT].pop(entry.entry_id)
         for remove_listener in.opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id):
             remove_listener()
 

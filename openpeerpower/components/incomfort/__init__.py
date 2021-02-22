@@ -53,7 +53,7 @@ async def async_setup_opp, opp_config):
         await heater.update()
 
     for platform in ["water_heater", "binary_sensor", "sensor", "climate"]:
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform.opp, platform, DOMAIN, {}, opp_config)
         )
 

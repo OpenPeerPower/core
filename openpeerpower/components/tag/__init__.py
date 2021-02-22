@@ -89,9 +89,9 @@ class TagStorageCollection(collection.StorageCollection):
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Tag component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     id_manager = TagIDManager()
-   .opp.data[DOMAIN][TAGS] = storage_collection = TagStorageCollection(
+    opp.data[DOMAIN][TAGS] = storage_collection = TagStorageCollection(
         Store.opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
@@ -110,7 +110,7 @@ async def async_scan_tag.opp, tag_id, device_id, context=None):
     if DOMAIN not in.opp.config.components:
         raise OpenPeerPowerError("tag component has not been set up.")
 
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_TAG_SCANNED, {TAG_ID: tag_id, DEVICE_ID: device_id}, context=context
     )
     helper = opp.data[DOMAIN][TAGS]

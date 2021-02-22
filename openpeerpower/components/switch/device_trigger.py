@@ -17,14 +17,14 @@ TRIGGER_SCHEMA = toggle_entity.TRIGGER_SCHEMA.extend(
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Listen for state changes based on configuration."""
     return await toggle_entity.async_attach_trigger(
-        opp, config, action, automation_info
+        opp. config, action, automation_info
     )
 
 

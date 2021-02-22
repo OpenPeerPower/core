@@ -31,7 +31,7 @@ def async_set_domains_to_be_loaded.opp: core.OpenPeerPower, domains: Set[str]) -
 
     This will allow us to properly handle after_dependencies.
     """
-   .opp.data[DATA_SETUP_DONE] = {domain: asyncio.Event() for domain in domains}
+    opp.data[DATA_SETUP_DONE] = {domain: asyncio.Event() for domain in domains}
 
 
 def setup_component.opp: core.OpenPeerPower, domain: str, config: ConfigType) -> bool:
@@ -42,7 +42,7 @@ def setup_component.opp: core.OpenPeerPower, domain: str, config: ConfigType) ->
 
 
 async def async_setup_component(
-   .opp: core.OpenPeerPower, domain: str, config: ConfigType
+    opp. core.OpenPeerPower, domain: str, config: ConfigType
 ) -> bool:
     """Set up a component and all its dependencies.
 
@@ -64,11 +64,11 @@ async def async_setup_component(
         return await task  # type: ignore
     finally:
         if domain in.opp.data.get(DATA_SETUP_DONE, {}):
-           .opp.data[DATA_SETUP_DONE].pop(domain).set()
+            opp.data[DATA_SETUP_DONE].pop(domain).set()
 
 
 async def _async_process_dependencies(
-   .opp: core.OpenPeerPower, config: ConfigType, integration: loader.Integration
+    opp. core.OpenPeerPower, config: ConfigType, integration: loader.Integration
 ) -> bool:
     """Ensure all dependencies are set up."""
     dependencies_tasks = {
@@ -126,7 +126,7 @@ async def _async_process_dependencies(
 
 
 async def _async_setup_component(
-   .opp: core.OpenPeerPower, domain: str, config: ConfigType
+    opp. core.OpenPeerPower, domain: str, config: ConfigType
 ) -> bool:
     """Set up a component for Open Peer Power.
 
@@ -172,7 +172,7 @@ async def _async_setup_component(
         return False
 
     processed_config = await conf_util.async_process_component_config(
-        opp, config, integration
+        opp. config, integration
     )
 
     if processed_config is None:
@@ -181,7 +181,7 @@ async def _async_setup_component(
 
     start = timer()
     _LOGGER.info("Setting up %s", domain)
-   .opp.data.setdefault(DATA_SETUP_STARTED, {})[domain] = dt_util.utcnow()
+    opp.data.setdefault(DATA_SETUP_STARTED, {})[domain] = dt_util.utcnow()
 
     if hasattr(component, "PLATFORM_SCHEMA"):
         # Entity components have their own warning
@@ -206,7 +206,7 @@ async def _async_setup_component(
             )
         else:
             log_error("No setup function defined.")
-           .opp.data[DATA_SETUP_STARTED].pop(domain)
+            opp.data[DATA_SETUP_STARTED].pop(domain)
             return False
 
         async with.opp.timeout.async_timeout(SLOW_SETUP_MAX_WAIT, domain):
@@ -218,12 +218,12 @@ async def _async_setup_component(
             domain,
             SLOW_SETUP_MAX_WAIT,
         )
-       .opp.data[DATA_SETUP_STARTED].pop(domain)
+        opp.data[DATA_SETUP_STARTED].pop(domain)
         return False
     except Exception:  # pylint: disable=broad-except
         _LOGGER.exception("Error during setup of component %s", domain)
         async_notify_setup_error(opp, domain, integration.documentation)
-       .opp.data[DATA_SETUP_STARTED].pop(domain)
+        opp.data[DATA_SETUP_STARTED].pop(domain)
         return False
     finally:
         end = timer()
@@ -233,14 +233,14 @@ async def _async_setup_component(
 
     if result is False:
         log_error("Integration failed to initialize.")
-       .opp.data[DATA_SETUP_STARTED].pop(domain)
+        opp.data[DATA_SETUP_STARTED].pop(domain)
         return False
     if result is not True:
         log_error(
             f"Integration {domain!r} did not return boolean if setup was "
             "successful. Disabling component."
         )
-       .opp.data[DATA_SETUP_STARTED].pop(domain)
+        opp.data[DATA_SETUP_STARTED].pop(domain)
         return False
 
     # Flush out async_setup calling create_task. Fragile but covered by test.
@@ -254,20 +254,20 @@ async def _async_setup_component(
         ]
     )
 
-   .opp.config.components.add(domain)
-   .opp.data[DATA_SETUP_STARTED].pop(domain)
+    opp.config.components.add(domain)
+    opp.data[DATA_SETUP_STARTED].pop(domain)
 
     # Cleanup
     if domain in.opp.data[DATA_SETUP]:
-       .opp.data[DATA_SETUP].pop(domain)
+        opp.data[DATA_SETUP].pop(domain)
 
-   .opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: domain})
+    opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: domain})
 
     return True
 
 
 async def async_prepare_setup_platform(
-   .opp: core.OpenPeerPower, opp_config: ConfigType, domain: str, platform_name: str
+    opp. core.OpenPeerPower, opp_config: ConfigType, domain: str, platform_name: str
 ) -> Optional[ModuleType]:
     """Load a platform and makes sure dependencies are setup.
 
@@ -322,7 +322,7 @@ async def async_prepare_setup_platform(
 
 
 async def async_process_deps_reqs(
-   .opp: core.OpenPeerPower, config: ConfigType, integration: loader.Integration
+    opp. core.OpenPeerPower, config: ConfigType, integration: loader.Integration
 ) -> None:
     """Process all dependencies and requirements for a module.
 
@@ -341,7 +341,7 @@ async def async_process_deps_reqs(
     if not.opp.config.skip_pip and integration.requirements:
         async with.opp.timeout.async_freeze(integration.domain):
             await requirements.async_get_integration_with_requirements(
-                opp, integration.domain
+                opp. integration.domain
             )
 
     processed.add(integration.domain)
@@ -349,7 +349,7 @@ async def async_process_deps_reqs(
 
 @core.callback
 def async_when_setup(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     component: str,
     when_setup_cb: Callable[[core.OpenPeerPower, str], Awaitable[None]],
 ) -> None:
@@ -364,7 +364,7 @@ def async_when_setup(
 
     # Running it in a new task so that it always runs after
     if component in.opp.config.components:
-       .opp.async_create_task(when_setup())
+        opp.async_create_task(when_setup())
         return
 
     unsub = None

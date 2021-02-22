@@ -96,7 +96,7 @@ async def test_core_failure_loads_safe_mode.opp, caplog):
 async def test_setting_up_config(opp):
     """Test we set up domains in config."""
     await bootstrap._async_set_up_integrations(
-        opp, {"group hello": {}, "openpeerpower": {}}
+        opp. {"group hello": {}, "openpeerpower": {}}
     )
 
     assert "group" in.opp.config.components
@@ -115,10 +115,10 @@ async def test_setup_after_deps_all_present.opp):
         return async_setup
 
     mock_integration(
-        opp, MockModule(domain="root", async_setup=gen_domain_setup("root"))
+        opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="first_dep",
             async_setup=gen_domain_setup("first_dep"),
@@ -126,7 +126,7 @@ async def test_setup_after_deps_all_present.opp):
         ),
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="second_dep",
             async_setup=gen_domain_setup("second_dep"),
@@ -138,7 +138,7 @@ async def test_setup_after_deps_all_present.opp):
         "openpeerpower.components.logger.async_setup", gen_domain_setup("logger")
     ):
         await bootstrap._async_set_up_integrations(
-            opp, {"root": {}, "first_dep": {}, "second_dep": {}, "logger": {}}
+            opp. {"root": {}, "first_dep": {}, "second_dep": {}, "logger": {}}
         )
 
     assert "root" in.opp.config.components
@@ -162,7 +162,7 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
         return async_setup
 
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="normal_integration",
             async_setup=gen_domain_setup("normal_integration"),
@@ -170,14 +170,14 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
         ),
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="an_after_dep",
             async_setup=gen_domain_setup("an_after_dep"),
         ),
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="cloud",
             async_setup=gen_domain_setup("cloud"),
@@ -186,7 +186,7 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
     )
 
     await bootstrap._async_set_up_integrations(
-        opp, {"cloud": {}, "normal_integration": {}, "an_after_dep": {}}
+        opp. {"cloud": {}, "normal_integration": {}, "an_after_dep": {}}
     )
 
     assert "normal_integration" in.opp.config.components
@@ -211,14 +211,14 @@ async def test_setup_after_deps_via_platform.opp):
         return async_setup
 
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="after_dep_of_platform_int",
             async_setup=gen_domain_setup("after_dep_of_platform_int"),
         ),
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="platform_int",
             async_setup=gen_domain_setup("platform_int"),
@@ -232,10 +232,10 @@ async def test_setup_after_deps_via_platform.opp):
         """When light component loaded, continue other loading."""
         after_dep_event.set()
 
-   .opp.bus.async_listen_once("component_loaded", continue_loading)
+    opp.bus.async_listen_once("component_loaded", continue_loading)
 
     await bootstrap._async_set_up_integrations(
-        opp, {"light": {"platform": "platform_int"}, "after_dep_of_platform_int": {}}
+        opp. {"light": {"platform": "platform_int"}, "after_dep_of_platform_int": {}}
     )
 
     assert "light" in.opp.config.components
@@ -257,10 +257,10 @@ async def test_setup_after_deps_not_trigger_load.opp):
         return async_setup
 
     mock_integration(
-        opp, MockModule(domain="root", async_setup=gen_domain_setup("root"))
+        opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="first_dep",
             async_setup=gen_domain_setup("first_dep"),
@@ -268,7 +268,7 @@ async def test_setup_after_deps_not_trigger_load.opp):
         ),
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="second_dep",
             async_setup=gen_domain_setup("second_dep"),
@@ -296,10 +296,10 @@ async def test_setup_after_deps_not_present.opp):
         return async_setup
 
     mock_integration(
-        opp, MockModule(domain="root", async_setup=gen_domain_setup("root"))
+        opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             domain="second_dep",
             async_setup=gen_domain_setup("second_dep"),
@@ -308,7 +308,7 @@ async def test_setup_after_deps_not_present.opp):
     )
 
     await bootstrap._async_set_up_integrations(
-        opp, {"root": {}, "first_dep": {}, "second_dep": {}}
+        opp. {"root": {}, "first_dep": {}, "second_dep": {}}
     )
 
     assert "root" in.opp.config.components
@@ -379,7 +379,7 @@ async def test_setup_opp(
         "openpeerpower.config.async_opp_config_yaml",
         return_value={"browser": {}, "frontend": {}},
     ), patch.object(bootstrap, "LOG_SLOW_STARTUP_INTERVAL", 5000):
-        opp = await bootstrap.async_setup_opp(
+        opp.= await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=verbose,
@@ -398,7 +398,7 @@ async def test_setup_opp(
 
     assert len(mock_enable_logging.mock_calls) == 1
     assert mock_enable_logging.mock_calls[0][1] == (
-        opp,
+        opp.
         verbose,
         log_rotate_days,
         log_file,
@@ -462,7 +462,7 @@ async def test_setup_opp_invalid_yaml(
     with patch(
         "openpeerpower.config.async_opp_config_yaml", side_effect=OpenPeerPowerError
     ):
-        opp = await bootstrap.async_setup_opp(
+        opp.= await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -518,7 +518,7 @@ async def test_setup_opp_safe_mode(
         "openpeerpower.config_entries.ConfigEntries.async_domains",
         return_value=["browser"],
     ):
-        opp = await bootstrap.async_setup_opp(
+        opp.= await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -551,7 +551,7 @@ async def test_setup_opp_invalid_core_config(
         "openpeerpower.config.async_opp_config_yaml",
         return_value={"openpeerpower": {"non-existing": 1}},
     ):
-        opp = await bootstrap.async_setup_opp(
+        opp.= await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -591,7 +591,7 @@ async def test_setup_safe_mode_if_no_frontend(
             "person": {"invalid": True},
         },
     ):
-        opp = await bootstrap.async_setup_opp(
+        opp.= await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=verbose,

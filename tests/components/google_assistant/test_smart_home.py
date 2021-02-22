@@ -62,10 +62,10 @@ async def test_sync_message.opp):
     await light.async_update_op_state()
 
     # This should not show up in the sync request
-   .opp.states.async_set("sensor.no_match", "something")
+    opp.states.async_set("sensor.no_match", "something")
 
     # Excluded via config
-   .opp.states.async_set("light.not_expose", "on")
+    opp.states.async_set("light.not_expose", "on")
 
     config = MockConfig(
         should_expose=lambda state: state.entity_id != "light.not_expose",
@@ -78,10 +78,10 @@ async def test_sync_message.opp):
     )
 
     events = []
-   .opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
+    opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         config,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -193,10 +193,10 @@ async def test_sync_in_area(area_on_device, opp, registries):
     config = MockConfig(should_expose=lambda _: True, entity_config={})
 
     events = []
-   .opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
+    opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         config,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -296,10 +296,10 @@ async def test_query_message.opp):
     await light3.async_update_op_state()
 
     events = []
-   .opp.bus.async_listen(EVENT_QUERY_RECEIVED, events.append)
+    opp.bus.async_listen(EVENT_QUERY_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {
@@ -388,13 +388,13 @@ async def test_execute.opp):
     )
 
     events = []
-   .opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
+    opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
 
     service_events = []
-   .opp.bus.async_listen(EVENT_CALL_SERVICE, service_events.append)
+    opp.bus.async_listen(EVENT_CALL_SERVICE, service_events.append)
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         None,
         {
@@ -564,18 +564,18 @@ async def test_execute.opp):
 
 async def test_raising_error_trait.opp):
     """Test raising an error while executing a trait command."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "climate.bla",
         HVAC_MODE_HEAT,
         {ATTR_MIN_TEMP: 15, ATTR_MAX_TEMP: 30, ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS},
     )
 
     events = []
-   .opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
+    opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
     await opp.async_block_till_done()
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {
@@ -661,10 +661,10 @@ async def test_unavailable_state_does_sync.opp):
     await light.async_update_op_state()
 
     events = []
-   .opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
+    opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -754,7 +754,7 @@ async def test_device_class_switch.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -799,7 +799,7 @@ async def test_device_class_binary_sensor.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -843,7 +843,7 @@ async def test_device_class_cover.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -888,7 +888,7 @@ async def test_device_media_player.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -926,7 +926,7 @@ async def test_query_disconnect.opp):
     assert config._unsub_report_state is not None
     with patch.object(config, "async_disconnect_agent_user") as mock_disconnect:
         result = await sh.async_handle_message(
-            opp,
+            opp.
             config,
             "test-agent",
             {"inputs": [{"intent": "action.devices.DISCONNECT"}], "requestId": REQ_ID},
@@ -939,10 +939,10 @@ async def test_query_disconnect.opp):
 async def test_trait_execute_adding_query_data.opp):
     """Test a trait execute influencing query data."""
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://example.com"},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "camera.office", "idle", {"supported_features": camera.SUPPORT_STREAM}
     )
 
@@ -951,7 +951,7 @@ async def test_trait_execute_adding_query_data.opp):
         return_value="/api/streams/bla",
     ):
         result = await sh.async_handle_message(
-            opp,
+            opp.
             BASIC_CONFIG,
             None,
             {
@@ -1009,7 +1009,7 @@ async def test_identify.opp):
     user_agent_id = "mock-user-id"
     proxy_device_id = user_agent_id
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         user_agent_id,
         {
@@ -1075,19 +1075,19 @@ async def test_identify.opp):
 async def test_reachable_devices.opp):
     """Test REACHABLE_DEVICES intent."""
     # Matching passed in device.
-   .opp.states.async_set("light.ceiling_lights", "on")
+    opp.states.async_set("light.ceiling_lights", "on")
 
     # Unsupported entity
-   .opp.states.async_set("not_supported.entity", "something")
+    opp.states.async_set("not_supported.entity", "something")
 
     # Excluded via config
-   .opp.states.async_set("light.not_expose", "on")
+    opp.states.async_set("light.not_expose", "on")
 
     # Not passed in as google_id
-   .opp.states.async_set("light.not_mentioned", "on")
+    opp.states.async_set("light.not_mentioned", "on")
 
     # Has 2FA
-   .opp.states.async_set("lock.has_2fa", "on")
+    opp.states.async_set("lock.has_2fa", "on")
 
     config = MockConfig(
         should_expose=lambda state: state.entity_id != "light.not_expose",
@@ -1097,7 +1097,7 @@ async def test_reachable_devices.opp):
     proxy_device_id = user_agent_id
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         config,
         user_agent_id,
         {
@@ -1169,7 +1169,7 @@ async def test_sync_message_recovery.opp, caplog):
     light.entity_id = "light.demo_light"
     await light.async_update_op_state()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.bad_light",
         "on",
         {
@@ -1179,7 +1179,7 @@ async def test_sync_message_recovery.opp, caplog):
     )
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -1219,7 +1219,7 @@ async def test_sync_message_recovery.opp, caplog):
 async def test_query_recover.opp, caplog):
     """Test that we recover if an entity raises during query."""
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.good",
         "on",
         {
@@ -1227,7 +1227,7 @@ async def test_query_recover.opp, caplog):
             "brightness": 50,
         },
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.bad",
         "on",
         {
@@ -1237,7 +1237,7 @@ async def test_query_recover.opp, caplog):
     )
 
     result = await sh.async_handle_message(
-        opp,
+        opp.
         BASIC_CONFIG,
         "test-agent",
         {
@@ -1258,7 +1258,7 @@ async def test_query_recover.opp, caplog):
     )
 
     assert (
-        f"Unexpected error serializing query for .opp.states.get('light.bad')}"
+        f"Unexpected error serializing query for  opp.states.get('light.bad')}"
         in caplog.text
     )
     assert result == {

@@ -76,7 +76,7 @@ async def test_setup_opp, legacy_patchable_time):
             assert await async_setup_component.opp, geo_location.DOMAIN, CONFIG)
             await opp.async_block_till_done()
             # Artificially trigger update.
-           .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+            opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
             await opp.async_block_till_done()
 
@@ -162,12 +162,12 @@ async def test_setup_with_custom_location.opp):
 
         with assert_setup_component(1, geo_location.DOMAIN):
             assert await async_setup_component(
-                opp, geo_location.DOMAIN, CONFIG_WITH_CUSTOM_LOCATION
+                opp. geo_location.DOMAIN, CONFIG_WITH_CUSTOM_LOCATION
             )
             await opp.async_block_till_done()
 
             # Artificially trigger update.
-           .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+            opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
             await opp.async_block_till_done()
 
@@ -206,7 +206,7 @@ async def test_setup_race_condition.opp, legacy_patchable_time):
             mock_feed.return_value.update.return_value = "OK", [mock_entry_1]
 
             # Artificially trigger update.
-           .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+            opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
             await opp.async_block_till_done()
 

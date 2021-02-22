@@ -14,11 +14,11 @@ CLIENT_SECRET = "5678"
 
 
 async def test_full_flow(
-    opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check full flow."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         "NEW_DOMAIN",
         {
             "NEW_DOMAIN": {"client_id": CLIENT_ID, "client_secret": CLIENT_SECRET},
@@ -30,7 +30,7 @@ async def test_full_flow(
         "NEW_DOMAIN", context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
-        opp,
+        opp.
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

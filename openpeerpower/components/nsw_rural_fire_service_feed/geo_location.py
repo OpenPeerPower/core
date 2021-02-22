@@ -65,7 +65,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp. OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up the NSW Rural Fire Service Feed platform."""
     scan_interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
@@ -77,7 +77,7 @@ async def async_setup_platform(
     categories = config.get(CONF_CATEGORIES)
     # Initialize the entity manager.
     manager = NswRuralFireServiceFeedEntityManager(
-        opp, async_add_entities, scan_interval, coordinates, radius_in_km, categories
+        opp. async_add_entities, scan_interval, coordinates, radius_in_km, categories
     )
 
     async def start_feed_manager(event):
@@ -88,9 +88,9 @@ async def async_setup_platform(
         """Stop feed manager."""
         await manager.async_stop()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_feed_manager)
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_feed_manager)
-   .opp.async_create_task(manager.async_update())
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_feed_manager)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_feed_manager)
+    opp.async_create_task(manager.async_update())
 
 
 class NswRuralFireServiceFeedEntityManager:
@@ -98,7 +98,7 @@ class NswRuralFireServiceFeedEntityManager:
 
     def __init__(
         self,
-        opp,
+        opp.
         async_add_entities,
         scan_interval,
         coordinates,

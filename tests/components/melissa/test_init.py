@@ -18,6 +18,6 @@ async def test_setup_opp):
 
         assert melissa.DATA_MELISSA in.opp.data
         assert isinstance(
-           .opp.data[melissa.DATA_MELISSA],
+            opp.data[melissa.DATA_MELISSA],
             type(mocked_melissa.return_value),
         )

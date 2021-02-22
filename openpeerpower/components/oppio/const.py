@@ -1,6 +1,6 @@
 """Opp.io const variables."""
 
-DOMAIN = "opp."
+DOMAIN =  opp."
 
 ATTR_ADDON = "addon"
 ATTR_ADDONS = "addons"

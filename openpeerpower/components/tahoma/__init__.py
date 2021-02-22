@@ -93,7 +93,7 @@ def setup_opp, config):
         _LOGGER.exception("Error when getting devices from the Tahoma API")
         return False
 
-   .opp.data[DOMAIN] = {"controller": api, "devices": defaultdict(list), "scenes": []}
+    opp.data[DOMAIN] = {"controller": api, "devices": defaultdict(list), "scenes": []}
 
     for device in devices:
         _device = api.get_device(device)
@@ -106,10 +106,10 @@ def setup_opp, config):
                     _device.label,
                 )
                 continue
-           .opp.data[DOMAIN]["devices"][device_type].append(_device)
+            opp.data[DOMAIN]["devices"][device_type].append(_device)
 
     for scene in scenes:
-       .opp.data[DOMAIN]["scenes"].append(scene)
+        opp.data[DOMAIN]["scenes"].append(scene)
 
     for component in TAHOMA_COMPONENTS:
         discovery.load_platform.opp, component, DOMAIN, {}, config)

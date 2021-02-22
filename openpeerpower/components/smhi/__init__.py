@@ -17,8 +17,8 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up SMHI forecast as config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "weather")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "weather")
     )
     return True
 

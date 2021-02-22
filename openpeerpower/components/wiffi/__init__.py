@@ -48,7 +48,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     api.async_setup(config_entry)
 
     # store api object
-   .opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = api
+    opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = api
 
     try:
         await api.server.start_server()
@@ -60,8 +60,8 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
         raise ConfigEntryNotReady from exc
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -80,7 +80,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )

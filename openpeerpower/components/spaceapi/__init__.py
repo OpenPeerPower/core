@@ -232,8 +232,8 @@ CONFIG_SCHEMA = vol.Schema(
 
 def setup_opp, config):
     """Register the SpaceAPI with the HTTP interface."""
-   .opp.data[DATA_SPACEAPI] = config[DOMAIN]
-   .opp.http.register_view(APISpaceApiView)
+    opp.data[DATA_SPACEAPI] = config[DOMAIN]
+    opp.http.register_view(APISpaceApiView)
 
     return True
 
@@ -263,7 +263,7 @@ class APISpaceApiView(OpenPeerPowerView):
     @ha.callback
     def get(self, request):
         """Get SpaceAPI data."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         spaceapi = dict.opp.data[DATA_SPACEAPI])
         is_sensors = spaceapi.get("sensors")
 

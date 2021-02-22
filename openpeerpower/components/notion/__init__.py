@@ -35,14 +35,14 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Notion component."""
-   .opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
+    opp.data[DOMAIN] = {DATA_COORDINATOR: {}}
     return True
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Notion as a config entry."""
     if not entry.unique_id:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, unique_id=entry.data[CONF_USERNAME]
         )
 
@@ -82,7 +82,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             for item in result:
                 if attr == "bridges" and item["id"] not in data["bridges"]:
                     # If a new bridge is discovered, register it:
-                   .opp.async_create_task(async_register_new_bridge.opp, item, entry))
+                    opp.async_create_task(async_register_new_bridge.opp, item, entry))
                 data[attr][item["id"]] = item
 
         return data
@@ -90,7 +90,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     coordinator = opp.data[DOMAIN][DATA_COORDINATOR][
         entry.entry_id
     ] = DataUpdateCoordinator(
-        opp,
+        opp.
         LOGGER,
         name=entry.data[CONF_USERNAME],
         update_interval=DEFAULT_SCAN_INTERVAL,
@@ -100,8 +100,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     await coordinator.async_refresh()
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -112,19 +112,19 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
 
     return unload_ok
 
 
 async def async_register_new_bridge(
-    opp: OpenPeerPower, bridge: dict, entry: ConfigEntry
+    opp. OpenPeerPower, bridge: dict, entry: ConfigEntry
 ):
     """Register a new bridge."""
     device_registry = await dr.async_get_registry.opp)

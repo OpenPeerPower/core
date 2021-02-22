@@ -84,9 +84,9 @@ async def async_setup_opp, config):
     """Set up TP-Link LTE component."""
     if DATA_KEY not in.opp.data:
         websession = async_create_clientsession(
-            opp, cookie_jar=aiohttp.CookieJar(unsafe=True)
+            opp. cookie_jar=aiohttp.CookieJar(unsafe=True)
         )
-       .opp.data[DATA_KEY] = LTEData(websession)
+        opp.data[DATA_KEY] = LTEData(websession)
 
     domain_config = config.get(DOMAIN, [])
 
@@ -96,9 +96,9 @@ async def async_setup_opp, config):
 
     for conf in domain_config:
         for notify_conf in conf.get(CONF_NOTIFY, []):
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp, "notify", DOMAIN, notify_conf, config
+                    opp. "notify", DOMAIN, notify_conf, config
                 )
             )
 
@@ -127,20 +127,20 @@ async def _setup_lte.opp, lte_config, delay=0):
             if not retry_task.done():
                 retry_task.cancel()
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_retry)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_retry)
 
 
 async def _login.opp, modem_data, password):
     """Log in and complete setup."""
     await modem_data.modem.login(password=password)
     modem_data.connected = True
-   .opp.data[DATA_KEY].modem_data[modem_data.host] = modem_data
+    opp.data[DATA_KEY].modem_data[modem_data.host] = modem_data
 
     async def cleanup(event):
         """Clean up resources."""
         await modem_data.modem.logout()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
 
 
 async def _retry_login.opp, modem_data, password):

@@ -49,7 +49,7 @@ async def test_empty_credential.opp):
     """Test a default config will be create for empty credential section."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component(
-            opp,
+            opp.
             "aws",
             {
                 "aws": {
@@ -82,7 +82,7 @@ async def test_profile_credential.opp):
     """Test credentials with profile name."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component(
-            opp,
+            opp.
             "aws",
             {
                 "aws": {
@@ -120,7 +120,7 @@ async def test_access_key_credential.opp):
     """Test credentials with access key."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component(
-            opp,
+            opp.
             "aws",
             {
                 "aws": {
@@ -165,7 +165,7 @@ async def test_notify_credential.opp):
     """Test notify service can use access key directly."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component(
-            opp,
+            opp.
             "aws",
             {
                 "aws": {
@@ -199,7 +199,7 @@ async def test_notify_credential_profile.opp):
     """Test notify service can use profile directly."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component(
-            opp,
+            opp.
             "aws",
             {
                 "aws": {
@@ -231,7 +231,7 @@ async def test_credential_skip_validate.opp):
     """Test credential can skip validate."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
         await async_setup_component(
-            opp,
+            opp.
             "aws",
             {
                 "aws": {

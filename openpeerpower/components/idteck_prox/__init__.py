@@ -48,7 +48,7 @@ def setup_opp, config):
         try:
             reader = IdteckReader.opp, host, port, name)
             reader.connect()
-           .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, reader.stop)
+            opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, reader.stop)
         except OSError as error:
             _LOGGER.error("Error creating %s. %s", name, error)
             return False

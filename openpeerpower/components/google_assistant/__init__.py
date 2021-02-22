@@ -94,7 +94,7 @@ async def async_setup_opp: OpenPeerPower, yaml_config: Dict[str, Any]):
     google_config = Googleconfig(opp, config)
     await google_config.async_initialize()
 
-   .opp.http.register_view(GoogleAssistantView(google_config))
+    opp.http.register_view(GoogleAssistantView(google_config))
 
     if google_config.should_report_state:
         google_config.async_enable_report_state()
@@ -113,7 +113,7 @@ async def async_setup_opp: OpenPeerPower, yaml_config: Dict[str, Any]):
 
     # Register service only if key is provided
     if CONF_SERVICE_ACCOUNT in config:
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, SERVICE_REQUEST_SYNC, request_sync_service_handler
         )
 

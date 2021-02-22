@@ -58,10 +58,10 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Initialize OwnTracks component."""
-   .opp.data[DOMAIN] = {"config": config[DOMAIN], "devices": {}, "unsub": None}
+    opp.data[DOMAIN] = {"config": config[DOMAIN], "devices": {}, "unsub": None}
     if not.opp.config_entries.async_entries(DOMAIN):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
             )
         )
@@ -81,7 +81,7 @@ async def async_setup_entry.opp, entry):
     mqtt_topic = config.get(CONF_MQTT_TOPIC)
 
     context = OwnTracksContext(
-        opp,
+        opp.
         secret,
         max_gps_accuracy,
         waypoint_import,
@@ -93,19 +93,19 @@ async def async_setup_entry.opp, entry):
 
     webhook_id = config.get(CONF_WEBHOOK_ID) or entry.data[CONF_WEBHOOK_ID]
 
-   .opp.data[DOMAIN]["context"] = context
+    opp.data[DOMAIN]["context"] = context
 
     async_when_setup_opp, "mqtt", async_connect_mqtt)
 
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "OwnTracks", webhook_id, handle_webhook
     )
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "device_tracker")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "device_tracker")
     )
 
-   .opp.data[DOMAIN]["unsub"] = opp.helpers.dispatcher.async_dispatcher_connect(
+    opp.data[DOMAIN]["unsub"] = opp.helpers.dispatcher.async_dispatcher_connect(
         DOMAIN, async_handle_message
     )
 
@@ -114,9 +114,9 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload an OwnTracks config entry."""
-   .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+    opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     await opp.config_entries.async_forward_entry_unload(entry, "device_tracker")
-   .opp.data[DOMAIN]["unsub"]()
+    opp.data[DOMAIN]["unsub"]()
 
     return True
 
@@ -143,7 +143,7 @@ async def async_connect_mqtt.opp, component):
             return
 
         message["topic"] = msg.topic
-       .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN, opp, context, message)
+        opp.helpers.dispatcher.async_dispatcher_send(DOMAIN, opp, context, message)
 
     await opp.components.mqtt.async_subscribe(
         context.mqtt_topic, async_handle_mqtt_message, 1
@@ -184,7 +184,7 @@ async def handle_webhook.opp, webhook_id, request):
             # Keep it as a 200 response so the incorrect packet is discarded
             return json_response([])
 
-   .opp.helpers.dispatcher.async_dispatcher_send(DOMAIN, opp, context, message)
+    opp.helpers.dispatcher.async_dispatcher_send(DOMAIN, opp, context, message)
 
     response = []
 
@@ -218,7 +218,7 @@ class OwnTracksContext:
 
     def __init__(
         self,
-        opp,
+        opp.
         secret,
         max_gps_accuracy,
         import_waypoints,

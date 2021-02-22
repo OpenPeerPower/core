@@ -67,14 +67,14 @@ def setup_opp, config):
                 response.reason,
             )
 
-       .opp.bus.fire(EVENT_CHECKIN, response.text)
+        opp.bus.fire(EVENT_CHECKIN, response.text)
 
     # Register our service with Open Peer Power.
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, "checkin", checkin_user, schema=CHECKIN_SERVICE_SCHEMA
     )
 
-   .opp.http.register_view(FoursquarePushReceiver(config[CONF_PUSH_SECRET]))
+    opp.http.register_view(FoursquarePushReceiver(config[CONF_PUSH_SECRET]))
 
     return True
 

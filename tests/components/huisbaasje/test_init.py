@@ -35,7 +35,7 @@ async def test_setup_entry.opp: OpenPeerPower):
         "huisbaasje.Huisbaasje.current_measurements",
         return_value=MOCK_CURRENT_MEASUREMENTS,
     ) as mock_current_measurements:
-       .opp.config.components.add(huisbaasje.DOMAIN)
+        opp.config.components.add(huisbaasje.DOMAIN)
         config_entry = ConfigEntry(
             1,
             huisbaasje.DOMAIN,
@@ -49,7 +49,7 @@ async def test_setup_entry.opp: OpenPeerPower):
             CONN_CLASS_CLOUD_POLL,
             system_options={},
         )
-       .opp.config_entries._entries.append(config_entry)
+        opp.config_entries._entries.append(config_entry)
 
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
         assert await opp.config_entries.async_setup(config_entry.entry_id)
@@ -76,7 +76,7 @@ async def test_setup_entry_error(opp: OpenPeerPower):
     with patch(
         "huisbaasje.Huisbaasje.authenticate", side_effect=HuisbaasjeException
     ) as mock_authenticate:
-       .opp.config.components.add(huisbaasje.DOMAIN)
+        opp.config.components.add(huisbaasje.DOMAIN)
         config_entry = ConfigEntry(
             1,
             huisbaasje.DOMAIN,
@@ -90,7 +90,7 @@ async def test_setup_entry_error(opp: OpenPeerPower):
             CONN_CLASS_CLOUD_POLL,
             system_options={},
         )
-       .opp.config_entries._entries.append(config_entry)
+        opp.config_entries._entries.append(config_entry)
 
         assert config_entry.state == ENTRY_STATE_NOT_LOADED
         await opp.config_entries.async_setup(config_entry.entry_id)
@@ -118,7 +118,7 @@ async def test_unload_entry.opp: OpenPeerPower):
         "huisbaasje.Huisbaasje.current_measurements",
         return_value=MOCK_CURRENT_MEASUREMENTS,
     ) as mock_current_measurements:
-       .opp.config.components.add(huisbaasje.DOMAIN)
+        opp.config.components.add(huisbaasje.DOMAIN)
         config_entry = ConfigEntry(
             1,
             huisbaasje.DOMAIN,
@@ -132,7 +132,7 @@ async def test_unload_entry.opp: OpenPeerPower):
             CONN_CLASS_CLOUD_POLL,
             system_options={},
         )
-       .opp.config_entries._entries.append(config_entry)
+        opp.config_entries._entries.append(config_entry)
 
         # Load config entry
         assert await opp.config_entries.async_setup(config_entry.entry_id)

@@ -75,7 +75,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     _LOGGER.debug("dump_devicedata: %s", device.dump_avrdata)
     _LOGGER.debug("dump_conndata: %s", avr.dump_conndata)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.avr.close)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.avr.close)
     async_add_entities([device])
 
 

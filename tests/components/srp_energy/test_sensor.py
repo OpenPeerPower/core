@@ -27,7 +27,7 @@ async def test_async_setup_entry.opp):
             "password": "mypassword",
         }
     )
-   .opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
+    opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
 
     await async_setup_entry.opp, fake_config, fake_async_add_entities)
 
@@ -46,7 +46,7 @@ async def test_async_setup_entry_timeout_error(opp):
             "password": "mypassword",
         }
     )
-   .opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
+    opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
     fake_srp_energy_client.usage.side_effect = TimeoutError()
 
     await async_setup_entry.opp, fake_config, fake_async_add_entities)
@@ -69,7 +69,7 @@ async def test_async_setup_entry_connect_error(opp):
             "password": "mypassword",
         }
     )
-   .opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
+    opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
     fake_srp_energy_client.usage.side_effect = ValueError()
 
     await async_setup_entry.opp, fake_config, fake_async_add_entities)

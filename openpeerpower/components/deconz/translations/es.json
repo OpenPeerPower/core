@@ -13,7 +13,7 @@
         },
         "flow_title": "pasarela deCONZ Zigbee ({host})",
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "\u00bfQuieres configurar Open Peer Power para que se conecte al gateway de deCONZ proporcionado por el add-on {addon} de.opp.io?",
                 "title": "Add-on deCONZ Zigbee v\u00eda Hass.io"
             },

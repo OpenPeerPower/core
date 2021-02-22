@@ -110,7 +110,7 @@ async def test_attributes.opp, setup_comp):
     assert ATTR_CURRENT_TILT_POSITION not in state.attributes
 
     # Add Entity that supports open / close / stop
-   .opp.states.async_set(DEMO_COVER, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 11})
+    opp.states.async_set(DEMO_COVER, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 11})
     await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -121,7 +121,7 @@ async def test_attributes.opp, setup_comp):
     assert ATTR_CURRENT_TILT_POSITION not in state.attributes
 
     # Add Entity that supports set_cover_position
-   .opp.states.async_set(
+    opp.states.async_set(
         DEMO_COVER_POS,
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 4, ATTR_CURRENT_POSITION: 70},
@@ -136,7 +136,7 @@ async def test_attributes.opp, setup_comp):
     assert ATTR_CURRENT_TILT_POSITION not in state.attributes
 
     # Add Entity that supports open tilt / close tilt / stop tilt
-   .opp.states.async_set(DEMO_TILT, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 112})
+    opp.states.async_set(DEMO_TILT, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 112})
     await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -147,7 +147,7 @@ async def test_attributes.opp, setup_comp):
     assert ATTR_CURRENT_TILT_POSITION not in state.attributes
 
     # Add Entity that supports set_tilt_position
-   .opp.states.async_set(
+    opp.states.async_set(
         DEMO_COVER_TILT,
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 60},
@@ -165,7 +165,7 @@ async def test_attributes.opp, setup_comp):
     # ##########################
 
     # For covers
-   .opp.states.async_set(
+    opp.states.async_set(
         DEMO_COVER, STATE_OPEN, {ATTR_SUPPORTED_FEATURES: 4, ATTR_CURRENT_POSITION: 100}
     )
     await opp.async_block_till_done()
@@ -177,8 +177,8 @@ async def test_attributes.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 60
 
-   .opp.states.async_remove(DEMO_COVER)
-   .opp.states.async_remove(DEMO_COVER_POS)
+    opp.states.async_remove(DEMO_COVER)
+    opp.states.async_remove(DEMO_COVER_POS)
     await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -189,7 +189,7 @@ async def test_attributes.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 60
 
     # For tilts
-   .opp.states.async_set(
+    opp.states.async_set(
         DEMO_TILT,
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 100},
@@ -203,8 +203,8 @@ async def test_attributes.opp, setup_comp):
     assert ATTR_CURRENT_POSITION not in state.attributes
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-   .opp.states.async_remove(DEMO_COVER_TILT)
-   .opp.states.async_set(DEMO_TILT, STATE_CLOSED)
+    opp.states.async_remove(DEMO_COVER_TILT)
+    opp.states.async_set(DEMO_TILT, STATE_CLOSED)
     await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -214,7 +214,7 @@ async def test_attributes.opp, setup_comp):
     assert ATTR_CURRENT_POSITION not in state.attributes
     assert ATTR_CURRENT_TILT_POSITION not in state.attributes
 
-   .opp.states.async_set(DEMO_TILT, STATE_CLOSED, {ATTR_ASSUMED_STATE: True})
+    opp.states.async_set(DEMO_TILT, STATE_CLOSED, {ATTR_ASSUMED_STATE: True})
     await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -224,12 +224,12 @@ async def test_attributes.opp, setup_comp):
 @pytest.mark.parametrize("config_count", [(CONFIG_TILT_ONLY, 2)])
 async def test_cover_that_only_supports_tilt_removed.opp, setup_comp):
     """Test removing a cover that support tilt."""
-   .opp.states.async_set(
+    opp.states.async_set(
         DEMO_COVER_TILT,
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 60},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         DEMO_TILT,
         STATE_OPEN,
         {ATTR_SUPPORTED_FEATURES: 128, ATTR_CURRENT_TILT_POSITION: 60},
@@ -244,8 +244,8 @@ async def test_cover_that_only_supports_tilt_removed.opp, setup_comp):
     assert ATTR_ASSUMED_STATE not in state.attributes
     assert ATTR_CURRENT_TILT_POSITION in state.attributes
 
-   .opp.states.async_remove(DEMO_COVER_TILT)
-   .opp.states.async_set(DEMO_TILT, STATE_CLOSED)
+    opp.states.async_remove(DEMO_COVER_TILT)
+    opp.states.async_set(DEMO_TILT, STATE_CLOSED)
     await opp.async_block_till_done()
 
 
@@ -406,7 +406,7 @@ async def test_open_tilts.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
     assert (
-       .opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+        opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
     )
 
 
@@ -445,7 +445,7 @@ async def test_toggle_tilts.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
     assert (
-       .opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+        opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
     )
 
     # Toggle will tilt closed
@@ -477,7 +477,7 @@ async def test_toggle_tilts.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
     assert (
-       .opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+        opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
     )
 
 
@@ -551,13 +551,13 @@ async def test_is_opening_closing.opp, setup_comp):
     assert.opp.states.get(DEMO_COVER_TILT).state == STATE_CLOSING
     assert.opp.states.get(COVER_GROUP).state == STATE_CLOSING
 
-   .opp.states.async_set(DEMO_COVER_POS, STATE_OPENING, {ATTR_SUPPORTED_FEATURES: 11})
+    opp.states.async_set(DEMO_COVER_POS, STATE_OPENING, {ATTR_SUPPORTED_FEATURES: 11})
     await opp.async_block_till_done()
 
     assert.opp.states.get(DEMO_COVER_POS).state == STATE_OPENING
     assert.opp.states.get(COVER_GROUP).state == STATE_OPENING
 
-   .opp.states.async_set(DEMO_COVER_POS, STATE_CLOSING, {ATTR_SUPPORTED_FEATURES: 11})
+    opp.states.async_set(DEMO_COVER_POS, STATE_CLOSING, {ATTR_SUPPORTED_FEATURES: 11})
     await opp.async_block_till_done()
 
     assert.opp.states.get(DEMO_COVER_POS).state == STATE_CLOSING

@@ -17,7 +17,7 @@
                 },
                 "description": "Por favor ingrese la informaci\u00f3n de conexi\u00f3n de su agente MQTT."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Habilitar descubrimiento"
                 },

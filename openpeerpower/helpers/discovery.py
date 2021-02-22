@@ -22,7 +22,7 @@ ATTR_PLATFORM = "platform"
 
 @bind.opp
 def listen(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     service: Union[str, Collection[str]],
     callback: CALLBACK_TYPE,
 ) -> None:
@@ -36,7 +36,7 @@ def listen(
 @core.callback
 @bind.opp
 def async_listen(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     service: Union[str, Collection[str]],
     callback: CALLBACK_TYPE,
 ) -> None:
@@ -60,32 +60,32 @@ def async_listen(
             if task:
                 await task
 
-   .opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_event_listener)
+    opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_event_listener)
 
 
 @bind.opp
 def discover(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     service: str,
     discovered: DiscoveryInfoType,
     component: str,
-   .opp_config: ConfigType,
+    opp.config: ConfigType,
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
-   .opp.add_job(
+    opp.add_job(
         async_discover(  # type: ignore
-            opp, service, discovered, component, opp_config
+            opp. service, discovered, component, opp_config
         )
     )
 
 
 @bind.opp
 async def async_discover(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     service: str,
     discovered: Optional[DiscoveryInfoType],
     component: Optional[str],
-   .opp_config: ConfigType,
+    opp.config: ConfigType,
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
     if component is not None and component not in.opp.config.components:
@@ -96,22 +96,22 @@ async def async_discover(
     if discovered is not None:
         data[ATTR_DISCOVERED] = discovered
 
-   .opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)
+    opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)
 
 
 @bind.opp
 def listen_platform(
-   .opp: core.OpenPeerPower, component: str, callback: CALLBACK_TYPE
+    opp. core.OpenPeerPower, component: str, callback: CALLBACK_TYPE
 ) -> None:
     """Register a platform loader listener."""
     run_callback_threadsafe(
-       .opp.loop, async_listen_platform, opp, component, callback
+        opp.loop, async_listen_platform, opp, component, callback
     ).result()
 
 
 @bind.opp
 def async_listen_platform(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     component: str,
     callback: Callable[[str, Optional[Dict[str, Any]]], Any],
 ) -> None:
@@ -136,16 +136,16 @@ def async_listen_platform(
         if task:
             await task
 
-   .opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_platform_listener)
+    opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_platform_listener)
 
 
 @bind.opp
 def load_platform(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     component: str,
     platform: str,
     discovered: DiscoveryInfoType,
-   .opp_config: ConfigType,
+    opp.config: ConfigType,
 ) -> None:
     """Load a component and platform dynamically.
 
@@ -157,20 +157,20 @@ def load_platform(
 
     Use `listen_platform` to register a callback for these events.
     """
-   .opp.add_job(
+    opp.add_job(
         async_load_platform(  # type: ignore
-            opp, component, platform, discovered, opp_config
+            opp. component, platform, discovered, opp_config
         )
     )
 
 
 @bind.opp
 async def async_load_platform(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     component: str,
     platform: str,
     discovered: DiscoveryInfoType,
-   .opp_config: ConfigType,
+    opp.config: ConfigType,
 ) -> None:
     """Load a component and platform dynamically.
 
@@ -183,7 +183,7 @@ async def async_load_platform(
     Use `listen_platform` to register a callback for these events.
 
     Warning: Do not await this inside a setup method to avoid a dead lock.
-    Use .opp.async_create_task(async_load_platform(..))` instead.
+    Use  opp.async_create_task(async_load_platform(..))` instead.
 
     This method is a coroutine.
     """
@@ -206,4 +206,4 @@ async def async_load_platform(
     if discovered is not None:
         data[ATTR_DISCOVERED] = discovered
 
-   .opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)
+    opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)

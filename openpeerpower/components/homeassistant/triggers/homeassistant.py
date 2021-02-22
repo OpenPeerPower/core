@@ -27,7 +27,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
         @callback
         def.opp_shutdown(event):
             """Execute when Open Peer Power is shutting down."""
-           .opp.async_run.opp_job(
+            opp.async_run.opp_job(
                 job,
                 {
                     "trigger": {
@@ -44,7 +44,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     # Automation are enabled while.opp is starting up, fire right away
     # Check state because a config reload shouldn't trigger it.
     if automation_info["open_peer_power_start"]:
-       .opp.async_run.opp_job(
+        opp.async_run.opp_job(
             job,
             {
                 "trigger": {

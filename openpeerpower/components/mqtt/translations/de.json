@@ -17,7 +17,7 @@
                 },
                 "description": "Bitte gib die Verbindungsinformationen deines MQTT-Brokers ein."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Suche aktivieren"
                 },
@@ -38,7 +38,7 @@
             "turn_on": "Einschalten"
         },
         "trigger_type": {
-            "button_double_press": "\"{subtype}\" doppelt angeklickt",
+            "button_double_press": "\"{subtype}\"  opp.lt angeklickt",
             "button_long_press": "\"{subtype}\" kontinuierlich gedr\u00fcckt",
             "button_long_release": "\"{subtype}\" nach langem Dr\u00fccken losgelassen",
             "button_quadruple_press": "\"{subtype}\" Vierfach geklickt",

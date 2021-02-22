@@ -25,7 +25,7 @@ def hk_driver(loop):
 def events.opp):
     """Yield caught homekit_changed events."""
     events = []
-   .opp.bus.async_listen(
+    opp.bus.async_listen(
         EVENT_HOMEKIT_CHANGED, ha_callback(lambda e: events.append(e))
     )
     yield events

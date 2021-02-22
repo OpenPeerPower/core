@@ -85,10 +85,10 @@ def setup_opp, config):
         )
         return False
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][VICARE_API] = vicare_api
-   .opp.data[DOMAIN][VICARE_NAME] = conf[CONF_NAME]
-   .opp.data[DOMAIN][VICARE_HEATING_TYPE] = heating_type
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][VICARE_API] = vicare_api
+    opp.data[DOMAIN][VICARE_NAME] = conf[CONF_NAME]
+    opp.data[DOMAIN][VICARE_HEATING_TYPE] = heating_type
 
     for platform in VICARE_PLATFORMS:
         discovery.load_platform.opp, platform, DOMAIN, {}, config)

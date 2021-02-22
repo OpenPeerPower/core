@@ -25,7 +25,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Coronavirus from a config entry."""
     if isinstance(entry.data["country"], int):
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, "country": entry.title}
         )
 
@@ -38,15 +38,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             return {"new_unique_id": f"{entry.title}-{info_type}"}
 
         await entity_registry.async_migrate_entries(
-            opp, entry.entry_id, _async_migrator
+            opp. entry.entry_id, _async_migrator
         )
 
     if not entry.unique_id:
-       .opp.config_entries.async_update_entry(entry, unique_id=entry.data["country"])
+        opp.config_entries.async_update_entry(entry, unique_id=entry.data["country"])
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -57,7 +57,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -80,8 +80,8 @@ async def get_coordinator.opp):
                 )
             }
 
-   .opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator(
-        opp,
+    opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator(
+        opp.
         logging.getLogger(__name__),
         name=DOMAIN,
         update_method=async_get_cases,

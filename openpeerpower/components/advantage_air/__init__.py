@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, config):
     """Set up Advantage Air integration."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -43,7 +43,7 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(err) from err
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="Advantage Air",
         update_method=async_get,
@@ -62,14 +62,14 @@ async def async_setup_entry.opp, entry):
     if not coordinator.data:
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         "coordinator": coordinator,
         "async_change": async_change,
     }
 
     for platform in ADVANTAGE_AIR_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -80,13 +80,13 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in ADVANTAGE_AIR_PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

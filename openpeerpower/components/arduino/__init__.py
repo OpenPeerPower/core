@@ -54,10 +54,10 @@ def setup_opp, config):
 
     def start_arduino(event):
         """Start the Arduino service."""
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_arduino)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_arduino)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_arduino)
-   .opp.data[DOMAIN] = board
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_arduino)
+    opp.data[DOMAIN] = board
 
     return True
 

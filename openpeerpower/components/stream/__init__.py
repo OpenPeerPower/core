@@ -60,7 +60,7 @@ def create_stream.opp, stream_source, options=None):
         }
 
     stream = Stream.opp, stream_source, options=options)
-   .opp.data[DOMAIN][ATTR_STREAMS].append(stream)
+    opp.data[DOMAIN][ATTR_STREAMS].append(stream)
     return stream
 
 
@@ -74,13 +74,13 @@ async def async_setup_opp, config):
     # pylint: disable=import-outside-toplevel
     from .recorder import async_setup_recorder
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][ATTR_ENDPOINTS] = {}
-   .opp.data[DOMAIN][ATTR_STREAMS] = []
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][ATTR_ENDPOINTS] = {}
+    opp.data[DOMAIN][ATTR_STREAMS] = []
 
     # Setup HLS
     hls_endpoint = async_setup_hls.opp)
-   .opp.data[DOMAIN][ATTR_ENDPOINTS]["hls"] = hls_endpoint
+    opp.data[DOMAIN][ATTR_ENDPOINTS]["hls"] = hls_endpoint
 
     # Setup Recorder
     async_setup_recorder.opp)
@@ -93,7 +93,7 @@ async def async_setup_opp, config):
             stream.stop()
         _LOGGER.info("Stopped stream workers")
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown)
 
     return True
 

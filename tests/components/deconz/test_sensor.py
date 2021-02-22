@@ -92,7 +92,7 @@ async def test_sensors.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -167,7 +167,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp,
+        opp.
         aioclient_mock,
         options={CONF_ALLOW_CLIP_SENSOR: True},
         get_state_response=data,
@@ -178,7 +178,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
 
     # Disallow clip sensors
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: False}
     )
     await opp.async_block_till_done()
@@ -188,7 +188,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
 
     # Allow clip sensors
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: True}
     )
     await opp.async_block_till_done()
@@ -222,7 +222,7 @@ async def test_add_battery_later.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = {"1": deepcopy(SENSORS["3"])}
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
     remote = gateway.api.sensors["1"]

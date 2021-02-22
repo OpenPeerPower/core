@@ -11,7 +11,7 @@ class Debouncer:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         logger: Logger,
         *,
         cooldown: float,

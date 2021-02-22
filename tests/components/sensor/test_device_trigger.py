@@ -123,7 +123,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     assert len(triggers) == 1
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "trigger", trigger
+            opp. "trigger", trigger
         )
         assert capabilities == expected_capabilities
 
@@ -159,7 +159,7 @@ async def test_get_trigger_capabilities_none.opp, device_reg, entity_reg):
     expected_capabilities = {}
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "trigger", trigger
+            opp. "trigger", trigger
         )
         assert capabilities == expected_capabilities
 
@@ -174,7 +174,7 @@ async def test_if_fires_not_on_above_below.opp, calls, caplog):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -204,7 +204,7 @@ async def test_if_fires_on_state_above.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -240,11 +240,11 @@ async def test_if_fires_on_state_above.opp, calls):
     assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, 9)
+    opp.states.async_set(sensor1.entity_id, 9)
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, 11)
+    opp.states.async_set(sensor1.entity_id, 11)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "bat_low device - {} - 9 - 11 - None".format(
@@ -262,7 +262,7 @@ async def test_if_fires_on_state_below.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -298,11 +298,11 @@ async def test_if_fires_on_state_below.opp, calls):
     assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, 11)
+    opp.states.async_set(sensor1.entity_id, 11)
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, 9)
+    opp.states.async_set(sensor1.entity_id, 9)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "bat_low device - {} - 11 - 9 - None".format(
@@ -320,7 +320,7 @@ async def test_if_fires_on_state_between.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -357,22 +357,22 @@ async def test_if_fires_on_state_between.opp, calls):
     assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, 9)
+    opp.states.async_set(sensor1.entity_id, 9)
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, 11)
+    opp.states.async_set(sensor1.entity_id, 11)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "bat_low device - {} - 9 - 11 - None".format(
         sensor1.entity_id
     )
 
-   .opp.states.async_set(sensor1.entity_id, 21)
+    opp.states.async_set(sensor1.entity_id, 21)
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.states.async_set(sensor1.entity_id, 19)
+    opp.states.async_set(sensor1.entity_id, 19)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "bat_low device - {} - 21 - 19 - None".format(
@@ -391,7 +391,7 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -428,8 +428,8 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
     assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
-   .opp.states.async_set(sensor1.entity_id, 10)
-   .opp.states.async_set(sensor1.entity_id, 11)
+    opp.states.async_set(sensor1.entity_id, 10)
+    opp.states.async_set(sensor1.entity_id, 11)
     await opp.async_block_till_done()
     assert len(calls) == 0
     async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))

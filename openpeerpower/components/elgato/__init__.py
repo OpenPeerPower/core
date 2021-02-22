@@ -32,11 +32,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     except ElgatoConnectionError as exception:
         raise ConfigEntryNotReady from exception
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = {DATA_ELGATO_CLIENT: elgato}
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = {DATA_ELGATO_CLIENT: elgato}
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, LIGHT_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, LIGHT_DOMAIN)
     )
 
     return True

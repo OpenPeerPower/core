@@ -25,14 +25,14 @@ CONF_SHOW_INACTIVE = "show_inactive"
 
 async def async_setup_opp, config):
     """Set up the Tile component."""
-   .opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_TILE: {}}
+    opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_TILE: {}}
     return True
 
 
 async def async_setup_entry.opp, entry):
     """Set up Tile as config entry."""
-   .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
-   .opp.data[DOMAIN][DATA_TILE][entry.entry_id] = {}
+    opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
+    opp.data[DOMAIN][DATA_TILE][entry.entry_id] = {}
 
     websession = aiohttp_client.async_get_clientsession.opp)
 
@@ -42,7 +42,7 @@ async def async_setup_entry.opp, entry):
             entry.data[CONF_PASSWORD],
             session=websession,
         )
-       .opp.data[DOMAIN][DATA_TILE][entry.entry_id] = await client.async_get_tiles()
+        opp.data[DOMAIN][DATA_TILE][entry.entry_id] = await client.async_get_tiles()
     except InvalidAuthError:
         LOGGER.error("Invalid credentials provided")
         return False
@@ -64,7 +64,7 @@ async def async_setup_entry.opp, entry):
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             tile_uuid
         ] = DataUpdateCoordinator(
-            opp,
+            opp.
             LOGGER,
             name=tile.name,
             update_interval=DEFAULT_UPDATE_INTERVAL,
@@ -75,8 +75,8 @@ async def async_setup_entry.opp, entry):
     await gather_with_concurrency(DEFAULT_INIT_TASK_LIMIT, *coordinator_init_tasks)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -87,12 +87,12 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
 
     return unload_ok

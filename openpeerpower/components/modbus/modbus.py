@@ -40,10 +40,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def modbus_setup(
-    opp, config, service_write_register_schema, service_write_coil_schema
+    opp. config, service_write_register_schema, service_write_coil_schema
 ):
     """Set up Modbus component."""
-   .opp.data[DOMAIN] = hub_collect = {}
+    opp.data[DOMAIN] = hub_collect = {}
 
     for conf_hub in config[DOMAIN]:
         hub_collect[conf_hub[CONF_NAME]] = ModbusHub(conf_hub)
@@ -87,16 +87,16 @@ def modbus_setup(
         hub_collect[client_name].write_coil(unit, address, state)
 
     # register function to gracefully stop modbus
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_modbus)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_modbus)
 
     # Register services for modbus
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_WRITE_REGISTER,
         write_register,
         schema=service_write_register_schema,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_WRITE_COIL, write_coil, schema=service_write_coil_schema
     )
     return True

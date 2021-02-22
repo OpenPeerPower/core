@@ -16,7 +16,7 @@ async def test_time.opp, time_zone):
     config = {"sensor": {"platform": "worldclock", "time_zone": "America/New_York"}}
 
     assert await async_setup_component(
-        opp,
+        opp.
         "sensor",
         config,
     )
@@ -40,7 +40,7 @@ async def test_time_format.opp, time_zone):
     }
 
     assert await async_setup_component(
-        opp,
+        opp.
         "sensor",
         config,
     )

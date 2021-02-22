@@ -17,7 +17,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 @pytest.fixture(autouse=True)
 def patch.opp_state.opp):
     """Mock the.opp.state to be not_running."""
-   .opp.state = core.CoreState.not_running
+    opp.state = core.CoreState.not_running
 
 
 async def test_set_up_oauth_remote_url.opp, aioclient_mock):
@@ -40,12 +40,12 @@ async def test_set_up_oauth_remote_url.opp, aioclient_mock):
 
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
     with patch("openpeerpower.components.almond.ALMOND_SETUP_DELAY", 0), patch(
         "openpeerpower.helpers.network.get_url",
         return_value="https://example.nabu.casa",
     ), patch("pyalmond.WebAlmondAPI.async_create_device") as mock_create_device:
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
         await opp.async_block_till_done()
@@ -99,7 +99,7 @@ async def test_set_up_local.opp, aioclient_mock):
 
     # Set up an internal URL, as Almond won't be set up if there is no URL available
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "https://192.168.0.1"},
     )
 

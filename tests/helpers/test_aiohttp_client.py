@@ -15,7 +15,7 @@ def camera_client_fixture.opp, opp_client):
     """Fixture to fetch camera streams."""
     assert.opp.loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             "camera",
             {
                 "camera": {
@@ -26,7 +26,7 @@ def camera_client_fixture.opp, opp_client):
             },
         )
     )
-   .opp.loop.run_until_complete.opp.async_block_till_done())
+    opp.loop.run_until_complete.opp.async_block_till_done())
 
     yield.opp.loop.run_until_complete.opp_client())
 
@@ -44,7 +44,7 @@ async def test_get_clientsession_without_ssl.opp):
     client.async_get_clientsession.opp, verify_ssl=False)
 
     assert isinstance(
-       .opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
+        opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
     )
     assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
@@ -70,7 +70,7 @@ async def test_get_clientsession_cleanup.opp):
     assert isinstance.opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
     assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
 
     assert.opp.data[client.DATA_CLIENTSESSION].closed
@@ -82,11 +82,11 @@ async def test_get_clientsession_cleanup_without_ssl.opp):
     client.async_get_clientsession.opp, verify_ssl=False)
 
     assert isinstance(
-       .opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
+        opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
     )
     assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
 
     assert.opp.data[client.DATA_CLIENTSESSION_NOTVERIFY].closed

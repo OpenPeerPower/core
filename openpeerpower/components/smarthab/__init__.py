@@ -33,14 +33,14 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config) -> bool:
     """Set up the SmartHab platform."""
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if DOMAIN not in config:
         return True
 
     if not.opp.config_entries.async_entries(DOMAIN):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=config[DOMAIN],
@@ -67,11 +67,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         raise ConfigEntryNotReady from err
 
     # Pass hub object to child platforms
-   .opp.data[DOMAIN][entry.entry_id] = {DATA_HUB: hub}
+    opp.data[DOMAIN][entry.entry_id] = {DATA_HUB: hub}
 
     for component in COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -83,13 +83,13 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     result = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in COMPONENTS
             ]
         )
     )
 
     if result:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return result

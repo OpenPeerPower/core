@@ -37,7 +37,7 @@ class CardType(enum.Enum):
 @callback
 def async_setup_opp):
     """Activate Alexa component."""
-   .opp.http.register_view(AlexaIntentsView)
+    opp.http.register_view(AlexaIntentsView)
 
 
 async def async_setup_intents.opp):
@@ -62,7 +62,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Handle Alexa."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa request: %s", message)
@@ -78,7 +78,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
             _LOGGER.warning(str(err))
             return self.json(
                 intent_error_response(
-                    opp,
+                    opp.
                     message,
                     "This intent is not yet configured within Open Peer Power.",
                 )
@@ -88,7 +88,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
             _LOGGER.error("Received invalid slot data from Alexa: %s", err)
             return self.json(
                 intent_error_response(
-                    opp, message, "Invalid slot information received for this intent."
+                    opp. message, "Invalid slot information received for this intent."
                 )
             )
 
@@ -157,7 +157,7 @@ async def async_handle_intent.opp, message):
         intent_name = alexa_intent_info["name"]
 
     intent_response = await intent.async_handle(
-        opp,
+        opp.
         DOMAIN,
         intent_name,
         {key: {"value": value} for key, value in alexa_response.variables.items()},

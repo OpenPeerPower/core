@@ -19,7 +19,7 @@ STORAGE_VERSION = 1
 
 async def async_setup_opp, config):
     """Component doesn't support configuration through configuration.yaml."""
-   .opp.data[UNIFI_WIRELESS_CLIENTS] = wireless_clients = UnifiWirelessClients.opp)
+    opp.data[UNIFI_WIRELESS_CLIENTS] = wireless_clients = UnifiWirelessClients.opp)
     await wireless_clients.async_load()
 
     return True
@@ -27,7 +27,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up the UniFi component."""
-   .opp.data.setdefault(UNIFI_DOMAIN, {})
+    opp.data.setdefault(UNIFI_DOMAIN, {})
 
     # Flat configuration was introduced with 2021.3
     await async_flatten_entry_data.opp, config_entry)
@@ -38,13 +38,13 @@ async def async_setup_entry.opp, config_entry):
 
     # Unique ID was introduced with 2021.3
     if config_entry.unique_id is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry, unique_id=controller.site_id
         )
 
-   .opp.data[UNIFI_DOMAIN][config_entry.entry_id] = controller
+    opp.data[UNIFI_DOMAIN][config_entry.entry_id] = controller
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, controller.shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, controller.shutdown)
 
     LOGGER.debug("UniFi config options %s", config_entry.options)
 
@@ -77,7 +77,7 @@ async def async_flatten_entry_data.opp, config_entry):
 
     data: dict = {**config_entry.data, **config_entry.data[CONF_CONTROLLER]}
     if config_entry.data != data:
-       .opp.config_entries.async_update_entry(config_entry, data=data)
+        opp.config_entries.async_update_entry(config_entry, data=data)
 
 
 class UnifiWirelessClients:

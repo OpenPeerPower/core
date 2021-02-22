@@ -54,7 +54,7 @@ async def test_media_player_set_state.opp, hk_driver, events):
     }
     entity_id = "media_player.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         None,
         {ATTR_SUPPORTED_FEATURES: 20873, ATTR_MEDIA_VOLUME_MUTED: False},
@@ -72,33 +72,33 @@ async def test_media_player_set_state.opp, hk_driver, events):
     assert acc.chars[FEATURE_PLAY_STOP].value is False
     assert acc.chars[FEATURE_TOGGLE_MUTE].value is False
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_MEDIA_VOLUME_MUTED: True})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_MEDIA_VOLUME_MUTED: True})
     await opp.async_block_till_done()
     assert acc.chars[FEATURE_ON_OFF].value is True
     assert acc.chars[FEATURE_TOGGLE_MUTE].value is True
 
-   .opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert acc.chars[FEATURE_ON_OFF].value is False
 
-   .opp.states.async_set(entity_id, STATE_ON)
+    opp.states.async_set(entity_id, STATE_ON)
     await opp.async_block_till_done()
     assert acc.chars[FEATURE_ON_OFF].value is True
 
-   .opp.states.async_set(entity_id, STATE_STANDBY)
+    opp.states.async_set(entity_id, STATE_STANDBY)
     await opp.async_block_till_done()
     assert acc.chars[FEATURE_ON_OFF].value is False
 
-   .opp.states.async_set(entity_id, STATE_PLAYING)
+    opp.states.async_set(entity_id, STATE_PLAYING)
     await opp.async_block_till_done()
     assert acc.chars[FEATURE_PLAY_PAUSE].value is True
     assert acc.chars[FEATURE_PLAY_STOP].value is True
 
-   .opp.states.async_set(entity_id, STATE_PAUSED)
+    opp.states.async_set(entity_id, STATE_PAUSED)
     await opp.async_block_till_done()
     assert acc.chars[FEATURE_PLAY_PAUSE].value is False
 
-   .opp.states.async_set(entity_id, STATE_IDLE)
+    opp.states.async_set(entity_id, STATE_IDLE)
     await opp.async_block_till_done()
     assert acc.chars[FEATURE_PLAY_STOP].value is False
 
@@ -191,7 +191,7 @@ async def test_media_player_television.opp, hk_driver, events, caplog):
 
     # Supports 'select_source', 'volume_step', 'turn_on', 'turn_off',
     #       'volume_mute', 'volume_set', 'pause'
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         None,
         {
@@ -214,32 +214,32 @@ async def test_media_player_television.opp, hk_driver, events, caplog):
     assert acc.char_input_source.value == 0
     assert acc.char_mute.value is False
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_MEDIA_VOLUME_MUTED: True})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_MEDIA_VOLUME_MUTED: True})
     await opp.async_block_till_done()
     assert acc.char_active.value == 1
     assert acc.char_mute.value is True
 
-   .opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert acc.char_active.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ON)
+    opp.states.async_set(entity_id, STATE_ON)
     await opp.async_block_till_done()
     assert acc.char_active.value == 1
 
-   .opp.states.async_set(entity_id, STATE_STANDBY)
+    opp.states.async_set(entity_id, STATE_STANDBY)
     await opp.async_block_till_done()
     assert acc.char_active.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 2"})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 2"})
     await opp.async_block_till_done()
     assert acc.char_input_source.value == 1
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 3"})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 3"})
     await opp.async_block_till_done()
     assert acc.char_input_source.value == 2
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 5"})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 5"})
     await opp.async_block_till_done()
     assert acc.char_input_source.value == 0
     assert caplog.records[-2].levelname == "WARNING"
@@ -277,7 +277,7 @@ async def test_media_player_television.opp, hk_driver, events, caplog):
     assert len(events) == 3
     assert events[-1].data[ATTR_VALUE] is None
 
-   .opp.states.async_set(entity_id, STATE_PLAYING)
+    opp.states.async_set(entity_id, STATE_PLAYING)
     await opp.async_block_till_done()
     await opp.async_add_executor_job(acc.char_remote_key.client_update_value, 11)
     await opp.async_block_till_done()
@@ -291,7 +291,7 @@ async def test_media_player_television.opp, hk_driver, events, caplog):
     assert len(events) == 4
     assert events[-1].data[ATTR_VALUE] is None
 
-   .opp.states.async_set(entity_id, STATE_PAUSED)
+    opp.states.async_set(entity_id, STATE_PAUSED)
     await opp.async_block_till_done()
     await opp.async_add_executor_job(acc.char_remote_key.client_update_value, 11)
     await opp.async_block_till_done()
@@ -351,7 +351,7 @@ async def test_media_player_television.opp, hk_driver, events, caplog):
     def listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(EVENT_HOMEKIT_TV_REMOTE_KEY_PRESSED, listener)
+    opp.bus.async_listen(EVENT_HOMEKIT_TV_REMOTE_KEY_PRESSED, listener)
 
     await opp.async_add_executor_job(acc.char_remote_key.client_update_value, 20)
     await opp.async_block_till_done()
@@ -368,7 +368,7 @@ async def test_media_player_television_basic.opp, hk_driver, events, caplog):
     entity_id = "media_player.television"
 
     # Supports turn_on', 'turn_off'
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         None,
         {ATTR_DEVICE_CLASS: DEVICE_CLASS_TV, ATTR_SUPPORTED_FEATURES: 384},
@@ -382,15 +382,15 @@ async def test_media_player_television_basic.opp, hk_driver, events, caplog):
     assert acc.chars_speaker == []
     assert acc.support_select_source is False
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_MEDIA_VOLUME_MUTED: True})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_MEDIA_VOLUME_MUTED: True})
     await opp.async_block_till_done()
     assert acc.char_active.value == 1
 
-   .opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert acc.char_active.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 3"})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_INPUT_SOURCE: "HDMI 3"})
     await opp.async_block_till_done()
     assert acc.char_active.value == 1
 
@@ -398,13 +398,13 @@ async def test_media_player_television_basic.opp, hk_driver, events, caplog):
 
 
 async def test_media_player_television_supports_source_select_no_sources(
-    opp, hk_driver, events, caplog
+    opp. hk_driver, events, caplog
 ):
     """Test if basic tv that supports source select but is missing a source list."""
     entity_id = "media_player.television"
 
     # Supports turn_on', 'turn_off'
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         None,
         {ATTR_DEVICE_CLASS: DEVICE_CLASS_TV, ATTR_SUPPORTED_FEATURES: 3469},
@@ -419,7 +419,7 @@ async def test_media_player_television_supports_source_select_no_sources(
 
 async def test_tv_restore.opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     registry = await entity_registry.async_get_registry.opp)
 
@@ -442,11 +442,11 @@ async def test_tv_restore.opp, hk_driver, events):
         device_class=DEVICE_CLASS_TV,
     )
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
     acc = TelevisionMediaPlayer(
-        opp, hk_driver, "MediaPlayer", "media_player.simple", 2, None
+        opp. hk_driver, "MediaPlayer", "media_player.simple", 2, None
     )
     assert acc.category == 31
     assert acc.chars_tv == [CHAR_REMOTE_KEY]
@@ -455,7 +455,7 @@ async def test_tv_restore.opp, hk_driver, events):
     assert not hasattr(acc, "char_input_source")
 
     acc = TelevisionMediaPlayer(
-        opp, hk_driver, "MediaPlayer", "media_player.all_info_set", 2, None
+        opp. hk_driver, "MediaPlayer", "media_player.all_info_set", 2, None
     )
     assert acc.category == 31
     assert acc.chars_tv == [CHAR_REMOTE_KEY]

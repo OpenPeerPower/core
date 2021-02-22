@@ -54,7 +54,7 @@ async def test_setup_opp, legacy_patchable_time):
         mock_feed_update.return_value = "OK", [mock_entry_1, mock_entry_2, mock_entry_3]
         assert await async_setup_component.opp, geonetnz_volcano.DOMAIN, CONFIG)
         # Artificially trigger update and collect events.
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
@@ -132,7 +132,7 @@ async def test_setup_opp, legacy_patchable_time):
 
 async def test_setup_imperial.opp):
     """Test the setup of the integration using imperial unit system."""
-   .opp.config.units = IMPERIAL_SYSTEM
+    opp.config.units = IMPERIAL_SYSTEM
     # Set up some mock feed entries for this test.
     mock_entry_1 = _generate_mock_feed_entry("1234", "Title 1", 1, 15.5, (38.0, -3.0))
 
@@ -146,7 +146,7 @@ async def test_setup_imperial.opp):
         mock_feed_update.return_value = "OK", [mock_entry_1]
         assert await async_setup_component.opp, geonetnz_volcano.DOMAIN, CONFIG)
         # Artificially trigger update and collect events.
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         all_states = opp.states.async_all()

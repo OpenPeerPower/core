@@ -25,7 +25,7 @@ ENTITY_CAMERA = "camera.demo_camera"
 async def demo_camera.opp):
     """Initialize a demo camera platform."""
     assert await async_setup_component(
-        opp, CAMERA_DOMAIN, {CAMERA_DOMAIN: {"platform": DOMAIN}}
+        opp. CAMERA_DOMAIN, {CAMERA_DOMAIN: {"platform": DOMAIN}}
     )
     await opp.async_block_till_done()
 

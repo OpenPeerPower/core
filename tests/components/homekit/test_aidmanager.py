@@ -45,10 +45,10 @@ async def test_aid_generation.opp, device_reg, entity_reg):
     remote_ent = entity_reg.async_get_or_create(
         "remote", "device", "unique_id", device_id=device_entry.id
     )
-   .opp.states.async_set(light_ent.entity_id, "on")
-   .opp.states.async_set(light_ent2.entity_id, "on")
-   .opp.states.async_set(remote_ent.entity_id, "on")
-   .opp.states.async_set("remote.has_no_unique_id", "on")
+    opp.states.async_set(light_ent.entity_id, "on")
+    opp.states.async_set(light_ent2.entity_id, "on")
+    opp.states.async_set(remote_ent.entity_id, "on")
+    opp.states.async_set("remote.has_no_unique_id", "on")
 
     with patch(
         "openpeerpower.components.homekit.aidmanager.AccessoryAidStorage.async_schedule_save"
@@ -119,14 +119,14 @@ async def test_no_aid_collision.opp, device_reg, entity_reg):
         ent = entity_reg.async_get_or_create(
             "light", "device", unique_id, device_id=device_entry.id
         )
-       .opp.states.async_set(ent.entity_id, "on")
+        opp.states.async_set(ent.entity_id, "on")
         aid = aid_storage.get_or_allocate_aid_for_entity_id(ent.entity_id)
         assert aid not in seen_aids
         seen_aids.add(aid)
 
 
 async def test_aid_generation_no_unique_ids_handles_collision(
-    opp, device_reg, entity_reg
+    opp. device_reg, entity_reg
 ):
     """Test colliding aids is stable."""
     config_entry = MockConfigEntry(domain="test", data={})
@@ -144,7 +144,7 @@ async def test_aid_generation_no_unique_ids_handles_collision(
 
     for light_id in range(0, 220):
         entity_id = f"light.light{light_id}"
-       .opp.states.async_set(entity_id, "on")
+        opp.states.async_set(entity_id, "on")
         expected_aid = fnv1a_32(entity_id.encode("utf-8"))
         aid = aid_storage.get_or_allocate_aid_for_entity_id(entity_id)
         if aid != expected_aid:
@@ -156,7 +156,7 @@ async def test_aid_generation_no_unique_ids_handles_collision(
     light_ent = entity_reg.async_get_or_create(
         "light", "device", "unique_id", device_id=device_entry.id
     )
-   .opp.states.async_set(light_ent.entity_id, "on")
+    opp.states.async_set(light_ent.entity_id, "on")
     aid_storage.get_or_allocate_aid_for_entity_id(light_ent.entity_id)
 
     assert not collisions

@@ -6,15 +6,15 @@
         },
         "error": {
             "cannot_connect": "Verbinding mislukt",
-            "complete_pairing_failed": "Kan het koppelen niet voltooien. Zorg ervoor dat de door u opgegeven pincode correct is en dat de tv nog steeds van stroom wordt voorzien en is verbonden met het netwerk voordat u opnieuw verzendt."
+            "complete_pairing_failed": "Kan het  opp.len niet voltooien. Zorg ervoor dat de door u opgegeven pincode correct is en dat de tv nog steeds van stroom wordt voorzien en is verbonden met het netwerk voordat u opnieuw verzendt."
         },
         "step": {
             "pair_tv": {
                 "data": {
                     "pin": "PIN"
                 },
-                "description": "Uw TV zou een code moeten weergeven. Voer die code in het formulier in en ga dan door naar de volgende stap om de koppeling te voltooien.",
-                "title": "Voltooi het koppelingsproces"
+                "description": "Uw TV zou een code moeten weergeven. Voer die code in het formulier in en ga dan door naar de volgende stap om de  opp.ling te voltooien.",
+                "title": "Voltooi het  opp.lingsproces"
             },
             "pairing_complete": {
                 "description": "Uw VIZIO SmartCast-apparaat is nu verbonden met Open Peer Power.",
@@ -31,7 +31,7 @@
                     "host": "<Host/IP>:<Port>",
                     "name": "Naam"
                 },
-                "description": "Een toegangstoken is alleen nodig voor tv's. Als u een TV configureert en nog geen toegangstoken heeft, laat dit dan leeg en doorloop het koppelingsproces.",
+                "description": "Een toegangstoken is alleen nodig voor tv's. Als u een TV configureert en nog geen toegangstoken heeft, laat dit dan leeg en doorloop het  opp.lingsproces.",
                 "title": "Vizio SmartCast Client instellen"
             }
         }

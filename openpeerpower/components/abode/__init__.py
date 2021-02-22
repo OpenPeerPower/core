@@ -96,8 +96,8 @@ async def async_setup_opp, config):
 
     conf = config[DOMAIN]
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=deepcopy(conf)
         )
     )
@@ -114,7 +114,7 @@ async def async_setup_entry.opp, config_entry):
 
     # For previous config entries where unique_id is None
     if config_entry.unique_id is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry, unique_id=config_entry.data[CONF_USERNAME]
         )
 
@@ -136,11 +136,11 @@ async def async_setup_entry.opp, config_entry):
         LOGGER.error("Unable to connect to Abode: %s", ex)
         raise ConfigEntryNotReady from ex
 
-   .opp.data[DOMAIN] = AbodeSystem(abode, polling)
+    opp.data[DOMAIN] = AbodeSystem(abode, polling)
 
     for platform in ABODE_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     await setup_opp_events.opp)
@@ -152,15 +152,15 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
-   .opp.services.async_remove(DOMAIN, SERVICE_SETTINGS)
-   .opp.services.async_remove(DOMAIN, SERVICE_CAPTURE_IMAGE)
-   .opp.services.async_remove(DOMAIN, SERVICE_TRIGGER_AUTOMATION)
+    opp.services.async_remove(DOMAIN, SERVICE_SETTINGS)
+    opp.services.async_remove(DOMAIN, SERVICE_CAPTURE_IMAGE)
+    opp.services.async_remove(DOMAIN, SERVICE_TRIGGER_AUTOMATION)
 
     tasks = []
 
     for platform in ABODE_PLATFORMS:
         tasks.append(
-           .opp.config_entries.async_forward_entry_unload(config_entry, platform)
+            opp.config_entries.async_forward_entry_unload(config_entry, platform)
         )
 
     await gather(*tasks)
@@ -168,8 +168,8 @@ async def async_unload_entry.opp, config_entry):
     await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
     await opp.async_add_executor_job.opp.data[DOMAIN].abode.logout)
 
-   .opp.data[DOMAIN].logout_listener()
-   .opp.data.pop(DOMAIN)
+    opp.data[DOMAIN].logout_listener()
+    opp.data.pop(DOMAIN)
 
     return True
 
@@ -183,7 +183,7 @@ def setup_opp_services.opp):
         value = call.data.get(ATTR_VALUE)
 
         try:
-           .opp.data[DOMAIN].abode.set_setting(setting, value)
+            opp.data[DOMAIN].abode.set_setting(setting, value)
         except AbodeException as ex:
             LOGGER.warning(ex)
 
@@ -215,15 +215,15 @@ def setup_opp_services.opp):
             signal = f"abode_trigger_automation_{entity_id}"
             dispatcher_send.opp, signal)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SETTINGS, change_setting, schema=CHANGE_SETTING_SCHEMA
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_CAPTURE_IMAGE, capture_image, schema=CAPTURE_IMAGE_SCHEMA
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_TRIGGER_AUTOMATION, trigger_automation, schema=AUTOMATION_SCHEMA
     )
 
@@ -234,15 +234,15 @@ async def setup_opp_events.opp):
     def logout(event):
         """Logout of Abode."""
         if not.opp.data[DOMAIN].polling:
-           .opp.data[DOMAIN].abode.events.stop()
+            opp.data[DOMAIN].abode.events.stop()
 
-       .opp.data[DOMAIN].abode.logout()
+        opp.data[DOMAIN].abode.logout()
         LOGGER.info("Logged out of Abode")
 
     if not.opp.data[DOMAIN].polling:
         await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
 
-   .opp.data[DOMAIN].logout_listener = opp.bus.async_listen_once(
+    opp.data[DOMAIN].logout_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, logout
     )
 
@@ -267,7 +267,7 @@ def setup_abode_events.opp):
             ATTR_TIME: event_json.get(ATTR_TIME, ""),
         }
 
-       .opp.bus.fire(event, data)
+        opp.bus.fire(event, data)
 
     events = [
         TIMELINE.ALARM_GROUP,
@@ -284,7 +284,7 @@ def setup_abode_events.opp):
     ]
 
     for event in events:
-       .opp.data[DOMAIN].abode.events.add_event_callback(
+        opp.data[DOMAIN].abode.events.add_event_callback(
             event, partial(event_callback, event)
         )
 

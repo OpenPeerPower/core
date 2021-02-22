@@ -96,7 +96,7 @@ SET_ZONE_OVERRIDE_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Create a Genius Hub system."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     kwargs = dict(config[DOMAIN])
     if CONF_HOST in kwargs:
@@ -119,7 +119,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     async_track_time_interval.opp, broker.async_update, SCAN_INTERVAL)
 
     for platform in ["climate", "water_heater", "sensor", "binary_sensor", "switch"]:
-       .opp.async_create_task(async_load_platform.opp, platform, DOMAIN, {}, config))
+        opp.async_create_task(async_load_platform.opp, platform, DOMAIN, {}, config))
 
     setup_service_functions.opp, broker)
 
@@ -152,10 +152,10 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
 
         async_dispatcher_send.opp, DOMAIN, payload)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SVC_SET_ZONE_MODE, set_zone_mode, schema=SET_ZONE_MODE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SVC_SET_ZONE_OVERRIDE, set_zone_mode, schema=SET_ZONE_OVERRIDE_SCHEMA
     )
 

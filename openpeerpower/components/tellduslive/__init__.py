@@ -68,9 +68,9 @@ async def async_setup_entry.opp, entry):
         _LOGGER.error("Authentication Error")
         return False
 
-   .opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
-   .opp.data[CONFIG_ENTRY_IS_SETUP] = set()
-   .opp.data[NEW_CLIENT_TASK] = opp.loop.create_task(
+    opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
+    opp.data[CONFIG_ENTRY_IS_SETUP] = set()
+    opp.data[NEW_CLIENT_TASK] = opp.loop.create_task(
         async_new_client.opp, session, entry)
     )
 
@@ -82,7 +82,7 @@ async def async_new_client.opp, session, entry):
     interval = entry.data[KEY_SCAN_INTERVAL]
     _LOGGER.debug("Update interval %s seconds", interval)
     client = TelldusLiveClient.opp, entry, session, interval)
-   .opp.data[DOMAIN] = client
+    opp.data[DOMAIN] = client
     dev_reg = await opp.helpers.device_registry.async_get_registry()
     for hub in await client.async_get_hubs():
         _LOGGER.debug("Connected hub %s", hub["name"])
@@ -102,8 +102,8 @@ async def async_setup_opp, config):
     if DOMAIN not in config:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={
@@ -118,12 +118,12 @@ async def async_setup_opp, config):
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
     if not.opp.data[NEW_CLIENT_TASK].done():
-       .opp.data[NEW_CLIENT_TASK].cancel()
+        opp.data[NEW_CLIENT_TASK].cancel()
     interval_tracker = opp.data.pop(INTERVAL_TRACKER)
     interval_tracker()
     await asyncio.wait(
         [
-           .opp.config_entries.async_forward_entry_unload(config_entry, component)
+            opp.config_entries.async_forward_entry_unload(config_entry, component)
             for component in.opp.data.pop(CONFIG_ENTRY_IS_SETUP)
         ]
     )

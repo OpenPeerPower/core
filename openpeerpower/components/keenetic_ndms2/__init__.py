@@ -25,7 +25,7 @@ PLATFORMS = [device_tracker.DOMAIN, binary_sensor.DOMAIN]
 
 async def async_setup_opp: OpenPeerPower, _config: Config) -> bool:
     """Set up configured entries."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -39,14 +39,14 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
     undo_listener = config_entry.add_update_listener(update_listener)
 
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data[DOMAIN][config_entry.entry_id] = {
         ROUTER: router,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -54,7 +54,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-   .opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     for component in PLATFORMS:
         await opp.config_entries.async_forward_entry_unload(config_entry, component)
@@ -63,7 +63,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
 
     await router.async_teardown()
 
-   .opp.data[DOMAIN].pop(config_entry.entry_id)
+    opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return True
 
@@ -89,4 +89,4 @@ def async_add_defaults.opp: OpenPeerPower, config_entry: ConfigEntry):
     }
 
     if options.keys() - config_entry.options.keys():
-       .opp.config_entries.async_update_entry(config_entry, options=options)
+        opp.config_entries.async_update_entry(config_entry, options=options)

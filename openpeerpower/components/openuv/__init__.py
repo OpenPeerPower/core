@@ -44,7 +44,7 @@ PLATFORMS = ["binary_sensor", "sensor"]
 
 async def async_setup_opp, config):
     """Set up the OpenUV component."""
-   .opp.data[DOMAIN] = {DATA_CLIENT: {}, DATA_LISTENER: {}}
+    opp.data[DOMAIN] = {DATA_CLIENT: {}, DATA_LISTENER: {}}
     return True
 
 
@@ -64,14 +64,14 @@ async def async_setup_entry.opp, config_entry):
             )
         )
         await openuv.async_update()
-       .opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = openuv
+        opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = openuv
     except OpenUvError as err:
         LOGGER.error("Config entry failed: %s", err)
         raise ConfigEntryNotReady from err
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     @_verify_domain_control
@@ -100,7 +100,7 @@ async def async_setup_entry.opp, config_entry):
         ("update_uv_index_data", update_uv_index_data),
         ("update_protection_data", update_protection_data),
     ]:
-       .opp.services.async_register(DOMAIN, service, method)
+        opp.services.async_register(DOMAIN, service, method)
 
     return True
 
@@ -110,13 +110,13 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
+        opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
 
     return unload_ok
 
@@ -133,7 +133,7 @@ async def async_migrate_entry.opp, config_entry):
         data.pop(CONF_BINARY_SENSORS, None)
         data.pop(CONF_SENSORS, None)
         version = config_entry.version = 2
-       .opp.config_entries.async_update_entry(config_entry, data=data)
+        opp.config_entries.async_update_entry(config_entry, data=data)
         LOGGER.debug("Migration to version %s successful", version)
 
     return True

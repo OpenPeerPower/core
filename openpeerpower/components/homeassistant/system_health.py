@@ -6,7 +6,7 @@ from openpeerpower.helpers import system_info
 
 @callback
 def async_register(
-    opp: OpenPeerPower, register: system_health.SystemHealthRegistration
+    opp. OpenPeerPower, register: system_health.SystemHealthRegistration
 ) -> None:
     """Register system health callbacks."""
     register.async_register_info(system_health_info)
@@ -20,7 +20,7 @@ async def system_health_info.opp):
         "version": f"core-{info.get('version')}",
         "installation_type": info.get("installation_type"),
         "dev": info.get("dev"),
-        .oppio": info.get(.oppio"),
+         opp.o": info.get(.oppio"),
         "docker": info.get("docker"),
         "virtualenv": info.get("virtualenv"),
         "python_version": info.get("python_version"),

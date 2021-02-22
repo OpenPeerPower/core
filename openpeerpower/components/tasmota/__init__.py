@@ -46,7 +46,7 @@ async def async_setup_opp: OpenPeerPowerType, config: dict):
 async def async_setup_entry.opp, entry):
     """Set up Tasmota from a config entry."""
     websocket_api.async_register_command.opp, websocket_remove_device)
-   .opp.data[DATA_UNSUB] = []
+    opp.data[DATA_UNSUB] = []
 
     def _publish(*args, **kwds):
         mqtt.async_publish.opp, *args, **kwds)
@@ -84,25 +84,25 @@ async def async_setup_entry.opp, entry):
         for mac in macs:
             clear_discovery_topic(mac, entry.data[CONF_DISCOVERY_PREFIX], tasmota_mqtt)
 
-   .opp.data[DATA_UNSUB].append(
-       .opp.bus.async_listen(EVENT_DEVICE_REGISTRY_UPDATED, async_device_removed)
+    opp.data[DATA_UNSUB].append(
+        opp.bus.async_listen(EVENT_DEVICE_REGISTRY_UPDATED, async_device_removed)
     )
 
     async def start_platforms():
         await device_automation.async_setup_entry.opp, entry)
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_setup(entry, component)
+                opp.config_entries.async_forward_entry_setup(entry, component)
                 for component in PLATFORMS
             ]
         )
 
         discovery_prefix = entry.data[CONF_DISCOVERY_PREFIX]
         await discovery.async_start(
-            opp, discovery_prefix, entry, tasmota_mqtt, async_discover_device
+            opp. discovery_prefix, entry, tasmota_mqtt, async_discover_device
         )
 
-   .opp.async_create_task(start_platforms())
+    opp.async_create_task(start_platforms())
     return True
 
 
@@ -113,7 +113,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -127,9 +127,9 @@ async def async_unload_entry.opp, entry):
     # cleanup subscriptions
     for unsub in.opp.data[DATA_UNSUB]:
         unsub()
-   .opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format("device_automation"))()
+    opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format("device_automation"))()
     for component in PLATFORMS:
-       .opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format(component))()
+        opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format(component))()
 
     # deattach device triggers
     device_registry = await opp.helpers.device_registry.async_get_registry()

@@ -20,7 +20,7 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Omnilogic component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     return True
 
@@ -51,7 +51,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from error
 
     coordinator = OmniLogicUpdateCoordinator(
-       .opp.opp,
+        opp.opp,
         api=api,
         name="Omnilogic",
         polling_interval=polling_interval,
@@ -61,14 +61,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: coordinator,
         OMNI_API: api,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -79,12 +79,12 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

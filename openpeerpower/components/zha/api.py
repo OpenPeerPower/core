@@ -202,7 +202,7 @@ async def websocket_permit_devices.opp, connection, msg):
         connection.send_message(websocket_api.event_message(msg["id"], data))
 
     remove_dispatcher_function = async_dispatcher_connect(
-        opp, "zha_gateway_message", forward_messages
+        opp. "zha_gateway_message", forward_messages
     )
 
     @callback
@@ -466,7 +466,7 @@ async def websocket_reconfigure_node.opp, connection, msg):
     ieee = msg[ATTR_IEEE]
     device = zha_gateway.get_device(ieee)
     _LOGGER.debug("Reconfiguring node with ieee_address: %s", ieee)
-   .opp.async_create_task(device.async_configure())
+    opp.async_create_task(device.async_configure())
 
 
 @websocket_api.require_admin
@@ -479,7 +479,7 @@ async def websocket_reconfigure_node.opp, connection, msg):
 async def websocket_update_topology.opp, connection, msg):
     """Update the ZHA network topology."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY]
-   .opp.async_create_task(zha_gateway.application_controller.topology.scan())
+    opp.async_create_task(zha_gateway.application_controller.topology.scan())
 
 
 @websocket_api.require_admin
@@ -886,7 +886,7 @@ def async_load_api.opp):
             _LOGGER.info("Permitting joins for %ss", duration)
         await application_controller.permit(time_s=duration, node=ieee)
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN, SERVICE_PERMIT, permit, schema=SERVICE_SCHEMAS[SERVICE_PERMIT]
     )
 
@@ -901,7 +901,7 @@ def async_load_api.opp):
         _LOGGER.info("Removing node %s", ieee)
         await application_controller.remove(ieee)
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN, SERVICE_REMOVE, remove, schema=SERVICE_SCHEMAS[IEEE_SERVICE]
     )
 
@@ -945,7 +945,7 @@ def async_load_api.opp):
             response,
         )
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_SET_ZIGBEE_CLUSTER_ATTRIBUTE,
         set_zigbee_cluster_attributes,
@@ -996,7 +996,7 @@ def async_load_api.opp):
             response,
         )
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_ISSUE_ZIGBEE_CLUSTER_COMMAND,
         issue_zigbee_cluster_command,
@@ -1033,7 +1033,7 @@ def async_load_api.opp):
             response,
         )
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_ISSUE_ZIGBEE_GROUP_COMMAND,
         issue_zigbee_group_command,
@@ -1083,7 +1083,7 @@ def async_load_api.opp):
             level,
         )
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_WARNING_DEVICE_SQUAWK,
         warning_device_squawk,
@@ -1129,7 +1129,7 @@ def async_load_api.opp):
             level,
         )
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_WARNING_DEVICE_WARN,
         warning_device_warn,
@@ -1162,10 +1162,10 @@ def async_load_api.opp):
 @callback
 def async_unload_api.opp):
     """Unload the ZHA API."""
-   .opp.services.async_remove(DOMAIN, SERVICE_PERMIT)
-   .opp.services.async_remove(DOMAIN, SERVICE_REMOVE)
-   .opp.services.async_remove(DOMAIN, SERVICE_SET_ZIGBEE_CLUSTER_ATTRIBUTE)
-   .opp.services.async_remove(DOMAIN, SERVICE_ISSUE_ZIGBEE_CLUSTER_COMMAND)
-   .opp.services.async_remove(DOMAIN, SERVICE_ISSUE_ZIGBEE_GROUP_COMMAND)
-   .opp.services.async_remove(DOMAIN, SERVICE_WARNING_DEVICE_SQUAWK)
-   .opp.services.async_remove(DOMAIN, SERVICE_WARNING_DEVICE_WARN)
+    opp.services.async_remove(DOMAIN, SERVICE_PERMIT)
+    opp.services.async_remove(DOMAIN, SERVICE_REMOVE)
+    opp.services.async_remove(DOMAIN, SERVICE_SET_ZIGBEE_CLUSTER_ATTRIBUTE)
+    opp.services.async_remove(DOMAIN, SERVICE_ISSUE_ZIGBEE_CLUSTER_COMMAND)
+    opp.services.async_remove(DOMAIN, SERVICE_ISSUE_ZIGBEE_GROUP_COMMAND)
+    opp.services.async_remove(DOMAIN, SERVICE_WARNING_DEVICE_SQUAWK)
+    opp.services.async_remove(DOMAIN, SERVICE_WARNING_DEVICE_WARN)

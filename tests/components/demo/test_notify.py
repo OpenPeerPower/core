@@ -21,7 +21,7 @@ CONFIG = {notify.DOMAIN: {"platform": "demo"}}
 def events.opp):
     """Fixture that catches notify events."""
     events = []
-   .opp.bus.async_listen(demo.EVENT_NOTIFY, callback(lambda e: events.append(e)))
+    opp.bus.async_listen(demo.EVENT_NOTIFY, callback(lambda e: events.append(e)))
     yield events
 
 
@@ -73,13 +73,13 @@ async def test_discover_notify.opp, mock_demo_notify):
     assert notify.DOMAIN not in.opp.config.components
     mock_demo_notify.return_value = None
     await discovery.async_load_platform(
-        opp, "notify", "demo", {"test_key": "test_val"}, {"notify": {}}
+        opp. "notify", "demo", {"test_key": "test_val"}, {"notify": {}}
     )
     await opp.async_block_till_done()
     assert notify.DOMAIN in.opp.config.components
     assert mock_demo_notify.called
     assert mock_demo_notify.mock_calls[0][1] == (
-        opp,
+        opp.
         {},
         {"test_key": "test_val"},
     )
@@ -99,7 +99,7 @@ async def test_sending_none_message.opp, events):
 async def test_sending_templated_message.opp, events):
     """Send a templated message."""
     await setup_notify.opp)
-   .opp.states.async_set("sensor.temperature", 10)
+    opp.states.async_set("sensor.temperature", 10)
     data = {
         notify.ATTR_MESSAGE: "{{states.sensor.temperature.state}}",
         notify.ATTR_TITLE: "{{ states.sensor.temperature.name }}",
@@ -141,7 +141,7 @@ async def test_calling_notify_from_script_loaded_from_yaml_without_title.opp, ev
         "data_template": {"message": "Test 123 {{ 2 + 2 }}\n"},
     }
     await async_setup_component(
-        opp, "script", {"script": {"test": {"sequence": step}}}
+        opp. "script", {"script": {"test": {"sequence": step}}}
     )
     await opp.services.async_call("script", "test")
     await opp.async_block_till_done()
@@ -163,7 +163,7 @@ async def test_calling_notify_from_script_loaded_from_yaml_with_title.opp, event
         "data_template": {"message": "Test 123 {{ 2 + 2 }}\n", "title": "Test"},
     }
     await async_setup_component(
-        opp, "script", {"script": {"test": {"sequence": step}}}
+        opp. "script", {"script": {"test": {"sequence": step}}}
     )
     await opp.services.async_call("script", "test")
     await opp.async_block_till_done()
@@ -186,7 +186,7 @@ async def test_targets_are_services.opp):
 async def test_messages_to_targets_route.opp, calls, record_calls):
     """Test message routing to specific target services."""
     await setup_notify.opp)
-   .opp.bus.async_listen_once("notify", record_calls)
+    opp.bus.async_listen_once("notify", record_calls)
 
     await opp.services.async_call(
         "notify",

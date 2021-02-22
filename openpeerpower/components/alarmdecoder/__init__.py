@@ -56,7 +56,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         if not.opp.data.get(DOMAIN):
             return
         _LOGGER.debug("Shutting down alarmdecoder")
-       .opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
+        opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
         controller.close()
 
     async def open_connection(now=None):
@@ -65,40 +65,40 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             await opp.async_add_executor_job(controller.open, baud)
         except NoDeviceError:
             _LOGGER.debug("Failed to connect. Retrying in 5 seconds")
-           .opp.helpers.event.async_track_point_in_time(
+            opp.helpers.event.async_track_point_in_time(
                 open_connection, dt_util.utcnow() + timedelta(seconds=5)
             )
             return
         _LOGGER.debug("Established a connection with the alarmdecoder")
-       .opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = True
+        opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = True
 
     def handle_closed_connection(event):
         """Restart after unexpected loss of connection."""
         if not.opp.data[DOMAIN][entry.entry_id][DATA_RESTART]:
             return
-       .opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
+        opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
         _LOGGER.warning("AlarmDecoder unexpectedly lost connection")
-       .opp.add_job(open_connection)
+        opp.add_job(open_connection)
 
     def handle_message(sender, message):
         """Handle message from AlarmDecoder."""
-       .opp.helpers.dispatcher.dispatcher_send(SIGNAL_PANEL_MESSAGE, message)
+        opp.helpers.dispatcher.dispatcher_send(SIGNAL_PANEL_MESSAGE, message)
 
     def handle_rfx_message(sender, message):
         """Handle RFX message from AlarmDecoder."""
-       .opp.helpers.dispatcher.dispatcher_send(SIGNAL_RFX_MESSAGE, message)
+        opp.helpers.dispatcher.dispatcher_send(SIGNAL_RFX_MESSAGE, message)
 
     def zone_fault_callback(sender, zone):
         """Handle zone fault from AlarmDecoder."""
-       .opp.helpers.dispatcher.dispatcher_send(SIGNAL_ZONE_FAULT, zone)
+        opp.helpers.dispatcher.dispatcher_send(SIGNAL_ZONE_FAULT, zone)
 
     def zone_restore_callback(sender, zone):
         """Handle zone restore from AlarmDecoder."""
-       .opp.helpers.dispatcher.dispatcher_send(SIGNAL_ZONE_RESTORE, zone)
+        opp.helpers.dispatcher.dispatcher_send(SIGNAL_ZONE_RESTORE, zone)
 
     def handle_rel_message(sender, message):
         """Handle relay or zone expander message from AlarmDecoder."""
-       .opp.helpers.dispatcher.dispatcher_send(SIGNAL_REL_MESSAGE, message)
+        opp.helpers.dispatcher.dispatcher_send(SIGNAL_REL_MESSAGE, message)
 
     baud = ad_connection.get(CONF_DEVICE_BAUD)
     if protocol == PROTOCOL_SOCKET:
@@ -120,8 +120,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         EVENT_OPENPEERPOWER_STOP, stop_alarmdecoder
     )
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_AD: controller,
         DATA_REMOVE_UPDATE_LISTENER: undo_listener,
         DATA_REMOVE_STOP_LISTENER: remove_stop_listener,
@@ -131,20 +131,20 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     await open_connection()
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
     return True
 
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a AlarmDecoder entry."""
-   .opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
+    opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
 
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -153,14 +153,14 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     if not unload_ok:
         return False
 
-   .opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_UPDATE_LISTENER]()
-   .opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_STOP_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_STOP_LISTENER]()
     await opp.async_add_executor_job.opp.data[DOMAIN][entry.entry_id][DATA_AD].close)
 
     if opp.data[DOMAIN][entry.entry_id]:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
         if not.opp.data[DOMAIN]:
-           .opp.data.pop(DOMAIN)
+            opp.data.pop(DOMAIN)
 
     return True
 

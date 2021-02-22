@@ -21,7 +21,7 @@ from .const import DOMAIN
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity]], None],
 ) -> None:
@@ -52,7 +52,7 @@ async def async_setup_entry(
     device_web_session = async_get_clientsession.opp, verify_ssl=False)
     asyncio.create_task(
         plum.discover(
-           .opp.loop,
+            opp.loop,
             loadListener=new_load,
             lightpadListener=new_lightpad,
             websession=device_web_session,

@@ -34,7 +34,7 @@ SUPPORT_HVAC = [HVAC_MODE_COOL, HVAC_MODE_HEAT, HVAC_MODE_HEAT_COOL, HVAC_MODE_O
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

@@ -43,16 +43,16 @@ async def async_setup_opp, config):
         return True
 
     if not.opp.config_entries.async_entries(DOMAIN):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
             )
         )
 
     # Set up demo platforms
     for component in COMPONENTS_WITH_DEMO_PLATFORM:
-       .opp.async_create_task(
-           .opp.helpers.discovery.async_load_platform(component, DOMAIN, {}, config)
+        opp.async_create_task(
+            opp.helpers.discovery.async_load_platform(component, DOMAIN, {}, config)
         )
 
     config.setdefault(ha.DOMAIN, {})
@@ -60,17 +60,17 @@ async def async_setup_opp, config):
 
     # Set up sun
     if not.opp.config.latitude:
-       .opp.config.latitude = 32.87336
+        opp.config.latitude = 32.87336
 
     if not.opp.config.longitude:
-       .opp.config.longitude = 117.22743
+        opp.config.longitude = 117.22743
 
     tasks = [bootstrap.async_setup_component.opp, "sun", config)]
 
     # Set up input select
     tasks.append(
         bootstrap.async_setup_component(
-            opp,
+            opp.
             "input_select",
             {
                 "input_select": {
@@ -91,7 +91,7 @@ async def async_setup_opp, config):
     # Set up input boolean
     tasks.append(
         bootstrap.async_setup_component(
-            opp,
+            opp.
             "input_boolean",
             {
                 "input_boolean": {
@@ -108,7 +108,7 @@ async def async_setup_opp, config):
     # Set up input number
     tasks.append(
         bootstrap.async_setup_component(
-            opp,
+            opp.
             "input_number",
             {
                 "input_number": {
@@ -130,7 +130,7 @@ async def async_setup_opp, config):
         return False
 
     # Set up example persistent notification
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         "This is an example of a persistent notification.", title="Example Notification"
     )
 
@@ -138,7 +138,7 @@ async def async_setup_opp, config):
         """Finish set up."""
         await finish_setup_opp, config)
 
-   .opp.bus.async_listen(EVENT_OPENPEERPOWER_START, demo_start_listener)
+    opp.bus.async_listen(EVENT_OPENPEERPOWER_START, demo_start_listener)
 
     return True
 
@@ -147,8 +147,8 @@ async def async_setup_entry.opp, config_entry):
     """Set the config entry up."""
     # Set up demo platforms with config entry
     for component in COMPONENTS_WITH_CONFIG_ENTRY_DEMO_PLATFORM:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
     return True
 
@@ -167,7 +167,7 @@ async def finish_setup_opp, config):
 
     # Set up scripts
     await bootstrap.async_setup_component(
-        opp,
+        opp.
         "script",
         {
             "script": {
@@ -196,7 +196,7 @@ async def finish_setup_opp, config):
 
     # Set up scenes
     await bootstrap.async_setup_component(
-        opp,
+        opp.
         "scene",
         {
             "scene": [

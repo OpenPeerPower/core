@@ -31,7 +31,7 @@ async def test_switch_set_state.opp, hk_driver, events):
     config = {ATTR_CODE: code}
     entity_id = "alarm_control_panel.test"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
     await acc.run()
@@ -43,32 +43,32 @@ async def test_switch_set_state.opp, hk_driver, events):
     assert acc.char_current_state.value == 3
     assert acc.char_target_state.value == 3
 
-   .opp.states.async_set(entity_id, STATE_ALARM_ARMED_AWAY)
+    opp.states.async_set(entity_id, STATE_ALARM_ARMED_AWAY)
     await opp.async_block_till_done()
     assert acc.char_target_state.value == 1
     assert acc.char_current_state.value == 1
 
-   .opp.states.async_set(entity_id, STATE_ALARM_ARMED_HOME)
+    opp.states.async_set(entity_id, STATE_ALARM_ARMED_HOME)
     await opp.async_block_till_done()
     assert acc.char_target_state.value == 0
     assert acc.char_current_state.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ALARM_ARMED_NIGHT)
+    opp.states.async_set(entity_id, STATE_ALARM_ARMED_NIGHT)
     await opp.async_block_till_done()
     assert acc.char_target_state.value == 2
     assert acc.char_current_state.value == 2
 
-   .opp.states.async_set(entity_id, STATE_ALARM_DISARMED)
+    opp.states.async_set(entity_id, STATE_ALARM_DISARMED)
     await opp.async_block_till_done()
     assert acc.char_target_state.value == 3
     assert acc.char_current_state.value == 3
 
-   .opp.states.async_set(entity_id, STATE_ALARM_TRIGGERED)
+    opp.states.async_set(entity_id, STATE_ALARM_TRIGGERED)
     await opp.async_block_till_done()
     assert acc.char_target_state.value == 3
     assert acc.char_current_state.value == 4
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN)
+    opp.states.async_set(entity_id, STATE_UNKNOWN)
     await opp.async_block_till_done()
     assert acc.char_target_state.value == 3
     assert acc.char_current_state.value == 4
@@ -121,7 +121,7 @@ async def test_no_alarm_code.opp, hk_driver, config, events):
     """Test accessory if security_system doesn't require an alarm_code."""
     entity_id = "alarm_control_panel.test"
 
-   .opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
 
@@ -234,7 +234,7 @@ async def test_supported_states.opp, hk_driver, events):
     for test_config in test_configs:
         attrs = {"supported_features": test_config.get("features")}
 
-       .opp.states.async_set(entity_id, None, attributes=attrs)
+        opp.states.async_set(entity_id, None, attributes=attrs)
         await opp.async_block_till_done()
 
         acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)

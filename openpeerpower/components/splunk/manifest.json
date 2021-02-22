@@ -3,7 +3,7 @@
   "name": "Splunk",
   "documentation": "https://www.open-peer-power.io/integrations/splunk",
   "requirements": [
-    .opp_splunk==0.1.1"
+     opp.splunk==0.1.1"
   ],
   "codeowners": [
     "@Bre77"

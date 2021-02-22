@@ -58,7 +58,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.info("Stopping monitor for %s", name)
         mon.terminate()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, monitor_stop)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, monitor_stop)
     mon.start()
 
 

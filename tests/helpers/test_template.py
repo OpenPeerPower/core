@@ -29,7 +29,7 @@ from tests.common import MockConfigEntry, mock_device_registry, mock_registry
 
 def _set_up_units.opp):
     """Set up the tests."""
-   .opp.config.units = UnitSystem(
+    opp.config.units = UnitSystem(
         "custom", TEMP_CELSIUS, LENGTH_METERS, VOLUME_LITERS, MASS_GRAMS, PRESSURE_PA
     )
 
@@ -106,7 +106,7 @@ def test_invalid_template.opp):
 
 def test_referring_states_by_entity_id.opp):
     """Test referring states by entity id."""
-   .opp.states.async_set("test.object", "happy")
+    opp.states.async_set("test.object", "happy")
     assert (
         template.Template("{{ states.test.object.state }}", opp).async_render()
         == "happy"
@@ -146,8 +146,8 @@ def test_iterating_all_states.opp):
     assert_result_info(info, "", all_states=True)
     assert info.rate_limit == template.ALL_STATES_RATE_LIMIT
 
-   .opp.states.async_set("test.object", "happy")
-   .opp.states.async_set("sensor.temperature", 10)
+    opp.states.async_set("test.object", "happy")
+    opp.states.async_set("sensor.temperature", 10)
 
     info = render_to_info.opp, tmpl_str)
     assert_result_info(info, "10happy", entities=[], all_states=True)
@@ -155,7 +155,7 @@ def test_iterating_all_states.opp):
 
 def test_iterating_all_states_unavailable.opp):
     """Test iterating all states unavailable."""
-   .opp.states.async_set("test.object", "on")
+    opp.states.async_set("test.object", "on")
 
     tmpl_str = "{{ states | selectattr('state', 'in', ['unavailable', 'unknown', 'none']) | list | count }}"
 
@@ -164,8 +164,8 @@ def test_iterating_all_states_unavailable.opp):
     assert info.all_states is True
     assert info.rate_limit == template.ALL_STATES_RATE_LIMIT
 
-   .opp.states.async_set("test.object", "unknown")
-   .opp.states.async_set("sensor.temperature", 10)
+    opp.states.async_set("test.object", "unknown")
+    opp.states.async_set("sensor.temperature", 10)
 
     info = render_to_info.opp, tmpl_str)
     assert_result_info(info, 1, entities=[], all_states=True)
@@ -179,9 +179,9 @@ def test_iterating_domain_states.opp):
     assert_result_info(info, "", domains=["sensor"])
     assert info.rate_limit == template.DOMAIN_STATES_RATE_LIMIT
 
-   .opp.states.async_set("test.object", "happy")
-   .opp.states.async_set("sensor.back_door", "open")
-   .opp.states.async_set("sensor.temperature", 10)
+    opp.states.async_set("test.object", "happy")
+    opp.states.async_set("sensor.back_door", "open")
+    opp.states.async_set("sensor.temperature", 10)
 
     info = render_to_info.opp, tmpl_str)
     assert_result_info(
@@ -194,7 +194,7 @@ def test_iterating_domain_states.opp):
 
 def test_float.opp):
     """Test float."""
-   .opp.states.async_set("sensor.temperature", "12")
+    opp.states.async_set("sensor.temperature", "12")
 
     assert (
         template.Template(
@@ -218,7 +218,7 @@ def test_float.opp):
 
 def test_rounding_value.opp):
     """Test rounding value."""
-   .opp.states.async_set("sensor.temperature", 12.78)
+    opp.states.async_set("sensor.temperature", 12.78)
 
     assert (
         template.Template(
@@ -530,7 +530,7 @@ def test_timestamp_local.opp):
 def test_as_local.opp):
     """Test converting time to local."""
 
-   .opp.states.async_set("test.object", "available")
+    opp.states.async_set("test.object", "available")
     last_updated = opp.states.get("test.object").last_updated
     assert template.Template(
         "{{ as_local(states.test.object.last_updated) }}", opp
@@ -638,7 +638,7 @@ def test_as_timestamp.opp):
     assert (
         template.Template('{{ as_timestamp("invalid") }}', opp).async_render() is None
     )
-   .opp.mock = None
+    opp.mock = None
     assert (
         template.Template("{{ as_timestamp(states.mock) }}", opp).async_render()
         is None
@@ -756,7 +756,7 @@ def test_render_with_possible_json_value_non_string_value.opp):
         """
 {{ strptime(value~'+0000', '%Y-%m-%d %H:%M:%S%z') }}
         """,
-        opp,
+        opp.
     )
     value = datetime(2019, 1, 18, 12, 13, 14)
     expected = str(pytz.utc.localize(value))
@@ -765,7 +765,7 @@ def test_render_with_possible_json_value_non_string_value.opp):
 
 def test_if_state_exists(opp):
     """Test if state exists works."""
-   .opp.states.async_set("test.object", "available")
+    opp.states.async_set("test.object", "available")
     tpl = template.Template(
         "{% if states.test.object %}exists{% else %}not exists{% endif %}", opp
     )
@@ -774,12 +774,12 @@ def test_if_state_exists(opp):
 
 def test_is_state.opp):
     """Test is_state method."""
-   .opp.states.async_set("test.object", "available")
+    opp.states.async_set("test.object", "available")
     tpl = template.Template(
         """
 {% if is_state("test.object", "available") %}yes{% else %}no{% endif %}
         """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == "yes"
 
@@ -787,19 +787,19 @@ def test_is_state.opp):
         """
 {{ is_state("test.noobject", "available") }}
         """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is False
 
 
 def test_is_state_attr.opp):
     """Test is_state_attr method."""
-   .opp.states.async_set("test.object", "available", {"mode": "on"})
+    opp.states.async_set("test.object", "available", {"mode": "on"})
     tpl = template.Template(
         """
 {% if is_state_attr("test.object", "mode", "on") %}yes{% else %}no{% endif %}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == "yes"
 
@@ -807,19 +807,19 @@ def test_is_state_attr.opp):
         """
 {{ is_state_attr("test.noobject", "mode", "on") }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is False
 
 
 def test_state_attr.opp):
     """Test state_attr method."""
-   .opp.states.async_set("test.object", "available", {"mode": "on"})
+    opp.states.async_set("test.object", "available", {"mode": "on"})
     tpl = template.Template(
         """
 {% if state_attr("test.object", "mode") == "on" %}yes{% else %}no{% endif %}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == "yes"
 
@@ -827,14 +827,14 @@ def test_state_attr.opp):
         """
 {{ state_attr("test.noobject", "mode") == None }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
 
 def test_states_function.opp):
     """Test using states as a function."""
-   .opp.states.async_set("test.object", "available")
+    opp.states.async_set("test.object", "available")
     tpl = template.Template('{{ states("test.object") }}', opp)
     assert tpl.async_render() == "available"
 
@@ -884,35 +884,35 @@ def test_relative_time(mock_is_safe, opp):
             "1 hour"
             == template.Template(
                 '{{relative_time(strptime("2000-01-01 09:00:00", "%Y-%m-%d %H:%M:%S"))}}',
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "2 hours"
             == template.Template(
                 '{{relative_time(strptime("2000-01-01 09:00:00 +01:00", "%Y-%m-%d %H:%M:%S %z"))}}',
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "1 hour"
             == template.Template(
                 '{{relative_time(strptime("2000-01-01 03:00:00 -06:00", "%Y-%m-%d %H:%M:%S %z"))}}',
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             str(template.strptime("2000-01-01 11:00:00 +00:00", "%Y-%m-%d %H:%M:%S %z"))
             == template.Template(
                 '{{relative_time(strptime("2000-01-01 11:00:00 +00:00", "%Y-%m-%d %H:%M:%S %z"))}}',
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "string"
             == template.Template(
                 '{{relative_time("string")}}',
-                opp,
+                opp.
             ).async_render()
         )
 
@@ -929,49 +929,49 @@ def test_timedelta(mock_is_safe, opp):
             "0:02:00"
             == template.Template(
                 "{{timedelta(seconds=120)}}",
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "1 day, 0:00:00"
             == template.Template(
                 "{{timedelta(seconds=86400)}}",
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "1 day, 4:00:00"
             == template.Template(
                 "{{timedelta(days=1, hours=4)}}",
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "1 hour"
             == template.Template(
                 "{{relative_time(now() - timedelta(seconds=3600))}}",
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "1 day"
             == template.Template(
                 "{{relative_time(now() - timedelta(seconds=86400))}}",
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "1 day"
             == template.Template(
                 "{{relative_time(now() - timedelta(seconds=86401))}}",
-                opp,
+                opp.
             ).async_render()
         )
         assert (
             "15 days"
             == template.Template(
                 "{{relative_time(now() - timedelta(weeks=2, days=1))}}",
-                opp,
+                opp.
             ).async_render()
         )
 
@@ -982,7 +982,7 @@ def test_regex_match.opp):
         r"""
 {{ '123-456-7890' | regex_match('(\\d{3})-(\\d{3})-(\\d{4})') }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
@@ -990,7 +990,7 @@ def test_regex_match.opp):
         """
 {{ 'Open Peer Power test' | regex_match('home', True) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
@@ -998,7 +998,7 @@ def test_regex_match.opp):
         """
     {{ 'Another Open Peer Power test' | regex_match('Home') }}
                     """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is False
 
@@ -1006,7 +1006,7 @@ def test_regex_match.opp):
         """
 {{ ['Open Peer Power test'] | regex_match('.*Assist') }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
@@ -1017,7 +1017,7 @@ def test_regex_search.opp):
         r"""
 {{ '123-456-7890' | regex_search('(\\d{3})-(\\d{3})-(\\d{4})') }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
@@ -1025,7 +1025,7 @@ def test_regex_search.opp):
         """
 {{ 'Open Peer Power test' | regex_search('home', True) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
@@ -1033,7 +1033,7 @@ def test_regex_search.opp):
         """
     {{ 'Another Open Peer Power test' | regex_search('Home') }}
                     """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
@@ -1041,7 +1041,7 @@ def test_regex_search.opp):
         """
 {{ ['Open Peer Power test'] | regex_search('Assist') }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() is True
 
@@ -1052,7 +1052,7 @@ def test_regex_replace.opp):
         r"""
 {{ 'Hello World' | regex_replace('(Hello\\s)',) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == "World"
 
@@ -1060,7 +1060,7 @@ def test_regex_replace.opp):
         """
 {{ ['Home hinderant test'] | regex_replace('hinder', 'Assist') }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == ["Open Peer Power test"]
 
@@ -1071,7 +1071,7 @@ def test_regex_findall_index.opp):
         """
 {{ 'Flight from JFK to LHR' | regex_findall_index('([A-Z]{3})', 0) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == "JFK"
 
@@ -1079,7 +1079,7 @@ def test_regex_findall_index.opp):
         """
 {{ 'Flight from JFK to LHR' | regex_findall_index('([A-Z]{3})', 1) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == "LHR"
 
@@ -1087,7 +1087,7 @@ def test_regex_findall_index.opp):
         """
 {{ ['JFK', 'LHR'] | regex_findall_index('([A-Z]{3})', 1) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == "LHR"
 
@@ -1098,21 +1098,21 @@ def test_bitwise_and.opp):
         """
 {{ 8 | bitwise_and(8) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == 8 & 8
     tpl = template.Template(
         """
 {{ 10 | bitwise_and(2) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == 10 & 2
     tpl = template.Template(
         """
 {{ 8 | bitwise_and(2) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == 8 & 2
 
@@ -1123,21 +1123,21 @@ def test_bitwise_or.opp):
         """
 {{ 8 | bitwise_or(8) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == 8 | 8
     tpl = template.Template(
         """
 {{ 10 | bitwise_or(2) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == 10 | 2
     tpl = template.Template(
         """
 {{ 8 | bitwise_or(2) }}
             """,
-        opp,
+        opp.
     )
     assert tpl.async_render() == 8 | 2
 
@@ -1145,7 +1145,7 @@ def test_bitwise_or.opp):
 def test_distance_function_with_1_state.opp):
     """Test distance function with 1 state."""
     _set_up_units.opp)
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object", "happy", {"latitude": 32.87336, "longitude": -117.22943}
     )
     tpl = template.Template("{{ distance(states.test.object) | round }}", opp)
@@ -1155,10 +1155,10 @@ def test_distance_function_with_1_state.opp):
 def test_distance_function_with_2_states.opp):
     """Test distance function with 2 states."""
     _set_up_units.opp)
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object", "happy", {"latitude": 32.87336, "longitude": -117.22943}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object_2",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1182,8 +1182,8 @@ def test_distance_function_with_2_coords.opp):
     assert (
         template.Template(
             '{{ distance("32.87336", "-117.22943", %s, %s) | round }}'
-            % .opp.config.latitude, opp.config.longitude),
-            opp,
+            %  opp.config.latitude, opp.config.longitude),
+            opp.
         ).async_render()
         == 187
     )
@@ -1192,27 +1192,27 @@ def test_distance_function_with_2_coords.opp):
 def test_distance_function_with_1_state_1_coord.opp):
     """Test distance function with 1 state 1 coord."""
     _set_up_units.opp)
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object_2",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
     )
     tpl = template.Template(
         '{{ distance("32.87336", "-117.22943", states.test.object_2) ' "| round }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == 187
 
     tpl2 = template.Template(
         '{{ distance(states.test.object_2, "32.87336", "-117.22943") ' "| round }}",
-        opp,
+        opp.
     )
     assert tpl2.async_render() == 187
 
 
 def test_distance_function_return_none_if_invalid_state.opp):
     """Test distance function return None if invalid state."""
-   .opp.states.async_set("test.object_2", "happy", {"latitude": 10})
+    opp.states.async_set("test.object_2", "happy", {"latitude": 10})
     tpl = template.Template("{{ distance(states.test.object_2) | round }}", opp)
     assert tpl.async_render() is None
 
@@ -1225,7 +1225,7 @@ def test_distance_function_return_none_if_invalid_coord.opp):
 
     assert template.Template('{{ distance("123") }}', opp).async_render() is None
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object_2",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1237,10 +1237,10 @@ def test_distance_function_return_none_if_invalid_coord.opp):
 def test_distance_function_with_2_entity_ids.opp):
     """Test distance function with 2 entity ids."""
     _set_up_units.opp)
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object", "happy", {"latitude": 32.87336, "longitude": -117.22943}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object_2",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1254,7 +1254,7 @@ def test_distance_function_with_2_entity_ids.opp):
 def test_distance_function_with_1_entity_1_coord.opp):
     """Test distance function with 1 entity_id and 1 coord."""
     _set_up_units.opp)
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.object",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1267,7 +1267,7 @@ def test_distance_function_with_1_entity_1_coord.opp):
 
 def test_closest_function_home_vs_domain.opp):
     """Test closest function home vs domain."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.object",
         "happy",
         {
@@ -1276,7 +1276,7 @@ def test_closest_function_home_vs_domain.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "not_test_domain.but_closer",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1299,7 +1299,7 @@ def test_closest_function_home_vs_domain.opp):
 
 def test_closest_function_home_vs_all_states.opp):
     """Test closest function home vs all states."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.object",
         "happy",
         {
@@ -1308,7 +1308,7 @@ def test_closest_function_home_vs_all_states.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain_2.and_closer",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1327,7 +1327,7 @@ def test_closest_function_home_vs_all_states.opp):
 
 async def test_closest_function_home_vs_group_entity_id.opp):
     """Test closest function home vs group entity id."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.object",
         "happy",
         {
@@ -1336,7 +1336,7 @@ async def test_closest_function_home_vs_group_entity_id.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "not_in_group.but_closer",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1355,7 +1355,7 @@ async def test_closest_function_home_vs_group_entity_id.opp):
 
 async def test_closest_function_home_vs_group_state.opp):
     """Test closest function home vs group state."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.object",
         "happy",
         {
@@ -1364,7 +1364,7 @@ async def test_closest_function_home_vs_group_state.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "not_in_group.but_closer",
         "happy",
         {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
@@ -1397,23 +1397,23 @@ async def test_expand.opp):
     assert_result_info(info, [])
     assert info.rate_limit is None
 
-   .opp.states.async_set("test.object", "happy")
+    opp.states.async_set("test.object", "happy")
 
     info = render_to_info(
-        opp, "{{ expand('test.object') | map(attribute='entity_id') | join(', ') }}"
+        opp. "{{ expand('test.object') | map(attribute='entity_id') | join(', ') }}"
     )
     assert_result_info(info, "test.object", ["test.object"])
     assert info.rate_limit is None
 
     info = render_to_info(
-        opp,
+        opp.
         "{{ expand('group.new_group') | map(attribute='entity_id') | join(', ') }}",
     )
     assert_result_info(info, "", ["group.new_group"])
     assert info.rate_limit is None
 
     info = render_to_info(
-        opp, "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
+        opp. "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
     )
     assert_result_info(info, "", [], ["group"])
     assert info.rate_limit == template.DOMAIN_STATES_RATE_LIMIT
@@ -1423,45 +1423,45 @@ async def test_expand.opp):
     await group.Group.async_create_group.opp, "new group", ["test.object"])
 
     info = render_to_info(
-        opp,
+        opp.
         "{{ expand('group.new_group') | map(attribute='entity_id') | join(', ') }}",
     )
     assert_result_info(info, "test.object", {"group.new_group", "test.object"})
     assert info.rate_limit is None
 
     info = render_to_info(
-        opp, "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
+        opp. "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
     )
     assert_result_info(info, "test.object", {"test.object"}, ["group"])
     assert info.rate_limit == template.DOMAIN_STATES_RATE_LIMIT
 
     info = render_to_info(
-        opp,
+        opp.
         "{{ expand('group.new_group', 'test.object')"
         " | map(attribute='entity_id') | join(', ') }}",
     )
     assert_result_info(info, "test.object", {"test.object", "group.new_group"})
 
     info = render_to_info(
-        opp,
+        opp.
         "{{ ['group.new_group', 'test.object'] | expand"
         " | map(attribute='entity_id') | join(', ') }}",
     )
     assert_result_info(info, "test.object", {"test.object", "group.new_group"})
     assert info.rate_limit is None
 
-   .opp.states.async_set("sensor.power_1", 0)
-   .opp.states.async_set("sensor.power_2", 200.2)
-   .opp.states.async_set("sensor.power_3", 400.4)
+    opp.states.async_set("sensor.power_1", 0)
+    opp.states.async_set("sensor.power_2", 200.2)
+    opp.states.async_set("sensor.power_3", 400.4)
 
     assert await async_setup_component.opp, "group", {})
     await opp.async_block_till_done()
     await group.Group.async_create_group(
-        opp, "power sensors", ["sensor.power_1", "sensor.power_2", "sensor.power_3"]
+        opp. "power sensors", ["sensor.power_1", "sensor.power_2", "sensor.power_3"]
     )
 
     info = render_to_info(
-        opp,
+        opp.
         "{{ states.group.power_sensors.attributes.entity_id | expand | map(attribute='state')|map('float')|sum  }}",
     )
     assert_result_info(
@@ -1508,16 +1508,16 @@ async def test_device_entities.opp):
     assert_result_info(info, ["light.hue_5678"], [])
     assert info.rate_limit is None
     info = render_to_info(
-        opp,
+        opp.
         f"{{{{ device_entities('{device_entry.id}') | expand | map(attribute='entity_id') | join(', ') }}}}",
     )
     assert_result_info(info, "", ["light.hue_5678"])
     assert info.rate_limit is None
 
     # Test device with single entity, with state
-   .opp.states.async_set("light.hue_5678", "happy")
+    opp.states.async_set("light.hue_5678", "happy")
     info = render_to_info(
-        opp,
+        opp.
         f"{{{{ device_entities('{device_entry.id}') | expand | map(attribute='entity_id') | join(', ') }}}}",
     )
     assert_result_info(info, "light.hue_5678", ["light.hue_5678"])
@@ -1531,12 +1531,12 @@ async def test_device_entities.opp):
         config_entry=config_entry,
         device_id=device_entry.id,
     )
-   .opp.states.async_set("light.hue_abcd", "camper")
+    opp.states.async_set("light.hue_abcd", "camper")
     info = render_to_info.opp, f"{{{{ device_entities('{device_entry.id}') }}}}")
     assert_result_info(info, ["light.hue_5678", "light.hue_abcd"], [])
     assert info.rate_limit is None
     info = render_to_info(
-        opp,
+        opp.
         f"{{{{ device_entities('{device_entry.id}') | expand | map(attribute='entity_id') | join(', ') }}}}",
     )
     assert_result_info(
@@ -1547,7 +1547,7 @@ async def test_device_entities.opp):
 
 def test_closest_function_to_coord.opp):
     """Test closest function to coord."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_home",
         "happy",
         {
@@ -1556,7 +1556,7 @@ def test_closest_function_to_coord.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_zone",
         "happy",
         {
@@ -1565,7 +1565,7 @@ def test_closest_function_to_coord.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "zone.far_away",
         "zoning",
         {
@@ -1576,16 +1576,16 @@ def test_closest_function_to_coord.opp):
 
     tpl = template.Template(
         '{{ closest("%s", %s, states.test_domain).entity_id }}'
-        % .opp.config.latitude + 0.3, opp.config.longitude + 0.3),
-        opp,
+        %  opp.config.latitude + 0.3, opp.config.longitude + 0.3),
+        opp.
     )
 
     assert tpl.async_render() == "test_domain.closest_zone"
 
     tpl = template.Template(
         '{{ (states.test_domain | closest("%s", %s)).entity_id }}'
-        % .opp.config.latitude + 0.3, opp.config.longitude + 0.3),
-        opp,
+        %  opp.config.latitude + 0.3, opp.config.longitude + 0.3),
+        opp.
     )
 
     assert tpl.async_render() == "test_domain.closest_zone"
@@ -1593,12 +1593,12 @@ def test_closest_function_to_coord.opp):
 
 def test_async_render_to_info_with_branching.opp):
     """Test async_render_to_info function by domain."""
-   .opp.states.async_set("light.a", "off")
-   .opp.states.async_set("light.b", "on")
-   .opp.states.async_set("light.c", "off")
+    opp.states.async_set("light.a", "off")
+    opp.states.async_set("light.b", "on")
+    opp.states.async_set("light.c", "off")
 
     info = render_to_info(
-        opp,
+        opp.
         """
 {% if states.light.a == "on" %}
   {{ states.light.b.state }}
@@ -1611,7 +1611,7 @@ def test_async_render_to_info_with_branching.opp):
     assert info.rate_limit is None
 
     info = render_to_info(
-        opp,
+        opp.
         """
             {% if states.light.a.state == "off" %}
             {% set domain = "light" %}
@@ -1625,18 +1625,18 @@ def test_async_render_to_info_with_branching.opp):
 
 def test_async_render_to_info_with_complex_branching.opp):
     """Test async_render_to_info function by domain."""
-   .opp.states.async_set("light.a", "off")
-   .opp.states.async_set("light.b", "on")
-   .opp.states.async_set("light.c", "off")
-   .opp.states.async_set("vacuum.a", "off")
-   .opp.states.async_set("device_tracker.a", "off")
-   .opp.states.async_set("device_tracker.b", "off")
-   .opp.states.async_set("lock.a", "off")
-   .opp.states.async_set("sensor.a", "off")
-   .opp.states.async_set("binary_sensor.a", "off")
+    opp.states.async_set("light.a", "off")
+    opp.states.async_set("light.b", "on")
+    opp.states.async_set("light.c", "off")
+    opp.states.async_set("vacuum.a", "off")
+    opp.states.async_set("device_tracker.a", "off")
+    opp.states.async_set("device_tracker.b", "off")
+    opp.states.async_set("lock.a", "off")
+    opp.states.async_set("sensor.a", "off")
+    opp.states.async_set("binary_sensor.a", "off")
 
     info = render_to_info(
-        opp,
+        opp.
         """
 {% set domain = "vacuum" %}
 {%      if                 states.light.a == "on" %}
@@ -1671,9 +1671,9 @@ async def test_async_render_to_info_with_wildcard_matching_entity_id.opp):
 {% endfor %}
 
 """
-   .opp.states.async_set("cover.office_drapes", "closed")
-   .opp.states.async_set("cover.office_window", "closed")
-   .opp.states.async_set("cover.office_skylight", "open")
+    opp.states.async_set("cover.office_drapes", "closed")
+    opp.states.async_set("cover.office_window", "closed")
+    opp.states.async_set("cover.office_skylight", "open")
     info = render_to_info.opp, template_complex_str)
 
     assert info.domains == {"cover"}
@@ -1693,11 +1693,11 @@ async def test_async_render_to_info_with_wildcard_matching_state.opp):
 {% endfor %}
 
 """
-   .opp.states.async_set("cover.office_drapes", "closed")
-   .opp.states.async_set("cover.office_window", "closed")
-   .opp.states.async_set("cover.office_skylight", "open")
-   .opp.states.async_set("cover.x_skylight", "open")
-   .opp.states.async_set("binary_sensor.door", "open")
+    opp.states.async_set("cover.office_drapes", "closed")
+    opp.states.async_set("cover.office_window", "closed")
+    opp.states.async_set("cover.office_skylight", "open")
+    opp.states.async_set("cover.x_skylight", "open")
+    opp.states.async_set("binary_sensor.door", "open")
     await opp.async_block_till_done()
 
     info = render_to_info.opp, template_complex_str)
@@ -1707,7 +1707,7 @@ async def test_async_render_to_info_with_wildcard_matching_state.opp):
     assert info.all_states is True
     assert info.rate_limit == template.ALL_STATES_RATE_LIMIT
 
-   .opp.states.async_set("binary_sensor.door", "closed")
+    opp.states.async_set("binary_sensor.door", "closed")
     info = render_to_info.opp, template_complex_str)
 
     assert not info.domains
@@ -1724,7 +1724,7 @@ async def test_async_render_to_info_with_wildcard_matching_state.opp):
 {% endfor %}
 
 """
-   .opp.states.async_set("cover.x_skylight", "closed")
+    opp.states.async_set("cover.x_skylight", "closed")
     info = render_to_info.opp, template_cover_str)
 
     assert info.domains == {"cover"}
@@ -1736,11 +1736,11 @@ async def test_async_render_to_info_with_wildcard_matching_state.opp):
 def test_nested_async_render_to_info_case.opp):
     """Test a deeply nested state with async_render_to_info."""
 
-   .opp.states.async_set("input_select.picker", "vacuum.a")
-   .opp.states.async_set("vacuum.a", "off")
+    opp.states.async_set("input_select.picker", "vacuum.a")
+    opp.states.async_set("vacuum.a", "off")
 
     info = render_to_info(
-        opp, "{{ states[states['input_select.picker'].state].state }}", {}
+        opp. "{{ states[states['input_select.picker'].state].state }}", {}
     )
     assert_result_info(info, "off", {"input_select.picker", "vacuum.a"})
     assert info.rate_limit is None
@@ -1778,7 +1778,7 @@ def test_result_as_boolean.opp):
 
 def test_closest_function_to_entity_id.opp):
     """Test closest function to entity id."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_home",
         "happy",
         {
@@ -1787,7 +1787,7 @@ def test_closest_function_to_entity_id.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_zone",
         "happy",
         {
@@ -1796,7 +1796,7 @@ def test_closest_function_to_entity_id.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "zone.far_away",
         "zoning",
         {
@@ -1806,7 +1806,7 @@ def test_closest_function_to_entity_id.opp):
     )
 
     info = render_to_info(
-        opp,
+        opp.
         "{{ closest(zone, states.test_domain).entity_id }}",
         {"zone": "zone.far_away"},
     )
@@ -1819,7 +1819,7 @@ def test_closest_function_to_entity_id.opp):
     )
 
     info = render_to_info(
-        opp,
+        opp.
         "{{ ([states.test_domain, 'test_domain.closest_zone'] "
         "| closest(zone)).entity_id }}",
         {"zone": "zone.far_away"},
@@ -1835,7 +1835,7 @@ def test_closest_function_to_entity_id.opp):
 
 def test_closest_function_to_state.opp):
     """Test closest function to state."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_home",
         "happy",
         {
@@ -1844,7 +1844,7 @@ def test_closest_function_to_state.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_zone",
         "happy",
         {
@@ -1853,7 +1853,7 @@ def test_closest_function_to_state.opp):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "zone.far_away",
         "zoning",
         {
@@ -1872,7 +1872,7 @@ def test_closest_function_to_state.opp):
 
 def test_closest_function_invalid_state.opp):
     """Test closest function invalid state."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_home",
         "happy",
         {
@@ -1890,7 +1890,7 @@ def test_closest_function_invalid_state.opp):
 
 def test_closest_function_state_with_invalid_location.opp):
     """Test closest function state with invalid location."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_home",
         "happy",
         {"latitude": "invalid latitude", "longitude":.opp.config.longitude + 0.1},
@@ -1906,7 +1906,7 @@ def test_closest_function_state_with_invalid_location.opp):
 
 def test_closest_function_invalid_coordinates.opp):
     """Test closest function invalid coordinates."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test_domain.closest_home",
         "happy",
         {
@@ -1939,7 +1939,7 @@ def test_closest_function_no_location_states.opp):
 def test_generate_filter_iterators.opp):
     """Test extract entities function with none entities stuff."""
     info = render_to_info(
-        opp,
+        opp.
         """
         {% for state in states %}
         {{ state.entity_id }}
@@ -1949,7 +1949,7 @@ def test_generate_filter_iterators.opp):
     assert_result_info(info, "", all_states=True)
 
     info = render_to_info(
-        opp,
+        opp.
         """
         {% for state in states.sensor %}
         {{ state.entity_id }}
@@ -1958,11 +1958,11 @@ def test_generate_filter_iterators.opp):
     )
     assert_result_info(info, "", domains=["sensor"])
 
-   .opp.states.async_set("sensor.test_sensor", "off", {"attr": "value"})
+    opp.states.async_set("sensor.test_sensor", "off", {"attr": "value"})
 
     # Don't need the entity because the state is not accessed
     info = render_to_info(
-        opp,
+        opp.
         """
         {% for state in states.sensor %}
         {{ state.entity_id }}
@@ -1973,7 +1973,7 @@ def test_generate_filter_iterators.opp):
 
     # But we do here because the state gets accessed
     info = render_to_info(
-        opp,
+        opp.
         """
         {% for state in states.sensor %}
         {{ state.entity_id }}={{ state.state }},
@@ -1983,7 +1983,7 @@ def test_generate_filter_iterators.opp):
     assert_result_info(info, "sensor.test_sensor=off,", [], ["sensor"])
 
     info = render_to_info(
-        opp,
+        opp.
         """
         {% for state in states.sensor %}
         {{ state.entity_id }}={{ state.attributes.attr }},
@@ -2005,8 +2005,8 @@ def test_generate_select.opp):
     assert_result_info(info, "", [], [])
     assert info.domains_lifecycle == {"sensor"}
 
-   .opp.states.async_set("sensor.test_sensor", "off", {"attr": "value"})
-   .opp.states.async_set("sensor.test_sensor_on", "on")
+    opp.states.async_set("sensor.test_sensor", "off", {"attr": "value"})
+    opp.states.async_set("sensor.test_sensor_on", "on")
 
     info = tmp.async_render_to_info()
     assert_result_info(
@@ -2028,8 +2028,8 @@ async def test_async_render_to_info_in_conditional.opp):
     info = tmp.async_render_to_info()
     assert_result_info(info, False, ["sensor.xyz"], [])
 
-   .opp.states.async_set("sensor.xyz", "dog")
-   .opp.states.async_set("sensor.cow", "True")
+    opp.states.async_set("sensor.xyz", "dog")
+    opp.states.async_set("sensor.cow", "True")
     await opp.async_block_till_done()
 
     template_str = """
@@ -2044,8 +2044,8 @@ async def test_async_render_to_info_in_conditional.opp):
     info = tmp.async_render_to_info()
     assert_result_info(info, True, ["sensor.xyz", "sensor.cow"], [])
 
-   .opp.states.async_set("sensor.xyz", "sheep")
-   .opp.states.async_set("sensor.pig", "oink")
+    opp.states.async_set("sensor.xyz", "sheep")
+    opp.states.async_set("sensor.pig", "oink")
 
     await opp.async_block_till_done()
 
@@ -2062,20 +2062,20 @@ def test_jinja_namespace.opp):
             "{% set ns.a_key = states.sensor.dummy.state %}"
             "{{ ns.a_key }}"
         ),
-        opp,
+        opp.
     )
 
-   .opp.states.async_set("sensor.dummy", "a value")
+    opp.states.async_set("sensor.dummy", "a value")
     assert test_template.async_render() == "a value"
 
-   .opp.states.async_set("sensor.dummy", "another value")
+    opp.states.async_set("sensor.dummy", "another value")
     assert test_template.async_render() == "another value"
 
 
 def test_state_with_unit.opp):
     """Test the state_with_unit property helper."""
-   .opp.states.async_set("sensor.test", "23", {ATTR_UNIT_OF_MEASUREMENT: "beers"})
-   .opp.states.async_set("sensor.test2", "wow")
+    opp.states.async_set("sensor.test", "23", {ATTR_UNIT_OF_MEASUREMENT: "beers"})
+    opp.states.async_set("sensor.test2", "wow")
 
     tpl = template.Template("{{ states.sensor.test.state_with_unit }}", opp)
 
@@ -2098,9 +2098,9 @@ def test_state_with_unit.opp):
 
 def test_length_of_states.opp):
     """Test fetching the length of states."""
-   .opp.states.async_set("sensor.test", "23")
-   .opp.states.async_set("sensor.test2", "wow")
-   .opp.states.async_set("climate.test2", "cooling")
+    opp.states.async_set("sensor.test", "23")
+    opp.states.async_set("sensor.test2", "wow")
+    opp.states.async_set("climate.test2", "cooling")
 
     tpl = template.Template("{{ states | length }}", opp)
     assert tpl.async_render() == 3
@@ -2120,12 +2120,12 @@ def test_urlencode.opp):
     """Test the urlencode method."""
     tpl = template.Template(
         ("{% set dict = {'foo': 'x&y', 'bar': 42} %}" "{{ dict | urlencode }}"),
-        opp,
+        opp.
     )
     assert tpl.async_render() == "foo=x%26y&bar=42"
     tpl = template.Template(
         ("{% set string = 'the quick brown fox = true' %}" "{{ string | urlencode }}"),
-        opp,
+        opp.
     )
     assert tpl.async_render() == "the%20quick%20brown%20fox%20%3D%20true"
 
@@ -2187,9 +2187,9 @@ async def test_protected_blocked.opp):
 
 async def test_demo_template.opp):
     """Test the demo template works as expected."""
-   .opp.states.async_set("sun.sun", "above", {"elevation": 50, "next_rising": "later"})
+    opp.states.async_set("sun.sun", "above", {"elevation": 50, "next_rising": "later"})
     for i in range(2):
-       .opp.states.async_set(f"sensor.sensor{i}", "on")
+        opp.states.async_set(f"sensor.sensor{i}", "on")
 
     demo_template_str = """
 {## Imitate available variables: ##}
@@ -2226,30 +2226,30 @@ For loop example getting 3 entity values:
 
 async def test_slice_states.opp):
     """Test iterating states with a slice."""
-   .opp.states.async_set("sensor.test", "23")
+    opp.states.async_set("sensor.test", "23")
 
     tpl = template.Template(
         "{% for states in states | slice(1) -%}{% set state = states | first %}{{ state.entity_id }}{%- endfor %}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == "sensor.test"
 
 
 async def test_lifecycle.opp):
     """Test that we limit template render info for lifecycle events."""
-   .opp.states.async_set("sun.sun", "above", {"elevation": 50, "next_rising": "later"})
+    opp.states.async_set("sun.sun", "above", {"elevation": 50, "next_rising": "later"})
     for i in range(2):
-       .opp.states.async_set(f"sensor.sensor{i}", "on")
-   .opp.states.async_set("sensor.removed", "off")
+        opp.states.async_set(f"sensor.sensor{i}", "on")
+    opp.states.async_set("sensor.removed", "off")
 
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sun.sun", "below", {"elevation": 60, "next_rising": "later"})
+    opp.states.async_set("sun.sun", "below", {"elevation": 60, "next_rising": "later"})
     for i in range(2):
-       .opp.states.async_set(f"sensor.sensor{i}", "off")
+        opp.states.async_set(f"sensor.sensor{i}", "off")
 
-   .opp.states.async_set("sensor.new", "off")
-   .opp.states.async_remove("sensor.removed")
+    opp.states.async_set("sensor.new", "off")
+    opp.states.async_remove("sensor.removed")
 
     await opp.async_block_till_done()
 
@@ -2274,7 +2274,7 @@ async def test_lifecycle.opp):
 async def test_template_timeout.opp):
     """Test to see if a template will timeout."""
     for i in range(2):
-       .opp.states.async_set(f"sensor.sensor{i}", "on")
+        opp.states.async_set(f"sensor.sensor{i}", "on")
 
     tmp = template.Template("{{ states | count }}", opp)
     assert await tmp.async_render_will_timeout(3) is False
@@ -2317,7 +2317,7 @@ async def test_lights.opp):
     states = []
     for i in range(10):
         states.append(f"light.sensor{i}")
-       .opp.states.async_set(f"light.sensor{i}", "on")
+        opp.states.async_set(f"light.sensor{i}", "on")
 
     tmp = template.Template(tmpl, opp)
     info = tmp.async_render_to_info()
@@ -2347,47 +2347,47 @@ async def test_template_errors.opp):
 
 async def test_state_attributes.opp):
     """Test state attributes."""
-   .opp.states.async_set("sensor.test", "23")
+    opp.states.async_set("sensor.test", "23")
 
     tpl = template.Template(
         "{{ states.sensor.test.last_changed }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == str.opp.states.get("sensor.test").last_changed)
 
     tpl = template.Template(
         "{{ states.sensor.test.object_id }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == opp.states.get("sensor.test").object_id
 
     tpl = template.Template(
         "{{ states.sensor.test.domain }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == opp.states.get("sensor.test").domain
 
     tpl = template.Template(
         "{{ states.sensor.test.context.id }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == opp.states.get("sensor.test").context.id
 
     tpl = template.Template(
         "{{ states.sensor.test.state_with_unit }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == 23
 
     tpl = template.Template(
         "{{ states.sensor.test.invalid_prop }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == ""
 
     tpl = template.Template(
         "{{ states.sensor.test.invalid_prop.xx }}",
-        opp,
+        opp.
     )
     with pytest.raises(TemplateError):
         tpl.async_render()
@@ -2397,28 +2397,28 @@ async def test_unavailable_states.opp):
     """Test watching unavailable states."""
 
     for i in range(10):
-       .opp.states.async_set(f"light.sensor{i}", "on")
+        opp.states.async_set(f"light.sensor{i}", "on")
 
-   .opp.states.async_set("light.unavailable", "unavailable")
-   .opp.states.async_set("light.unknown", "unknown")
-   .opp.states.async_set("light.none", "none")
+    opp.states.async_set("light.unavailable", "unavailable")
+    opp.states.async_set("light.unknown", "unknown")
+    opp.states.async_set("light.none", "none")
 
     tpl = template.Template(
         "{{ states | selectattr('state', 'in', ['unavailable','unknown','none']) | map(attribute='entity_id') | list | join(', ') }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == "light.none, light.unavailable, light.unknown"
 
     tpl = template.Template(
         "{{ states.light | selectattr('state', 'in', ['unavailable','unknown','none']) | map(attribute='entity_id') | list | join(', ') }}",
-        opp,
+        opp.
     )
     assert tpl.async_render() == "light.none, light.unavailable, light.unknown"
 
 
 async def test_legacy_templates.opp):
     """Test if old template behavior works when legacy templates are enabled."""
-   .opp.states.async_set("sensor.temperature", "12")
+    opp.states.async_set("sensor.temperature", "12")
 
     assert (
         template.Template("{{ states.sensor.temperature.state }}", opp).async_render()
@@ -2434,7 +2434,7 @@ async def test_legacy_templates.opp):
 
 async def test_no_result_parsing.opp):
     """Test if templates results are not parsed."""
-   .opp.states.async_set("sensor.temperature", "12")
+    opp.states.async_set("sensor.temperature", "12")
 
     assert (
         template.Template("{{ states.sensor.temperature.state }}", opp).async_render(

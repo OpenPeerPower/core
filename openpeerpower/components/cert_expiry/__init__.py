@@ -34,14 +34,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = coordinator
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = coordinator
 
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(entry, unique_id=f"{host}:{port}")
+        opp.config_entries.async_update_entry(entry, unique_id=f"{host}:{port}")
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
     return True
 
@@ -65,7 +65,7 @@ class CertExpiryDataUpdateCoordinator(DataUpdateCoordinator[datetime]):
         name = f"{self.host}{display_port}"
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=name,
             update_interval=SCAN_INTERVAL,

@@ -131,7 +131,7 @@ DISCONNECT_LTE_SCHEMA = vol.Schema({vol.Optional(ATTR_HOST): cv.string})
 class ModemData:
     """Class for modem state."""
 
-    opp =attr.ib()
+    opp.=attr.ib()
     host = attr.ib()
     modem = attr.ib()
 
@@ -175,9 +175,9 @@ async def async_setup_opp, config):
     """Set up Netgear LTE component."""
     if DATA_KEY not in.opp.data:
         websession = async_create_clientsession(
-            opp, cookie_jar=aiohttp.CookieJar(unsafe=True)
+            opp. cookie_jar=aiohttp.CookieJar(unsafe=True)
         )
-       .opp.data[DATA_KEY] = LTEData(websession)
+        opp.data[DATA_KEY] = LTEData(websession)
 
         async def service_handler(service):
             """Apply a service."""
@@ -213,7 +213,7 @@ async def async_setup_opp, config):
         }
 
         for service, schema in service_schemas.items():
-           .opp.services.async_register(
+            opp.services.async_register(
                 DOMAIN, service, service_handler, schema=schema
             )
 
@@ -232,18 +232,18 @@ async def async_setup_opp, config):
                 CONF_NAME: notify_conf.get(CONF_NAME),
                 NOTIFY_DOMAIN: notify_conf,
             }
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp, NOTIFY_DOMAIN, DOMAIN, discovery_info, config
+                    opp. NOTIFY_DOMAIN, DOMAIN, discovery_info, config
                 )
             )
 
         # Sensor
         sensor_conf = lte_conf.get(SENSOR_DOMAIN)
         discovery_info = {CONF_HOST: lte_conf[CONF_HOST], SENSOR_DOMAIN: sensor_conf}
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform(
-                opp, SENSOR_DOMAIN, DOMAIN, discovery_info, config
+                opp. SENSOR_DOMAIN, DOMAIN, discovery_info, config
             )
         )
 
@@ -253,9 +253,9 @@ async def async_setup_opp, config):
             CONF_HOST: lte_conf[CONF_HOST],
             BINARY_SENSOR_DOMAIN: binary_sensor_conf,
         }
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform(
-                opp, BINARY_SENSOR_DOMAIN, DOMAIN, discovery_info, config
+                opp. BINARY_SENSOR_DOMAIN, DOMAIN, discovery_info, config
             )
         )
 
@@ -284,7 +284,7 @@ async def _setup_lte.opp, lte_config):
             if not retry_task.done():
                 retry_task.cancel()
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_retry)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_retry)
 
 
 async def _login.opp, modem_data, password):
@@ -299,12 +299,12 @@ async def _login.opp, modem_data, password):
             ATTR_FROM: sms.sender,
             ATTR_MESSAGE: sms.message,
         }
-       .opp.bus.async_fire(EVENT_SMS, data)
+        opp.bus.async_fire(EVENT_SMS, data)
 
     await modem_data.modem.add_sms_listener(fire_sms_event)
 
     await modem_data.async_update()
-   .opp.data[DATA_KEY].modem_data[modem_data.host] = modem_data
+    opp.data[DATA_KEY].modem_data[modem_data.host] = modem_data
 
     async def _update(now):
         """Periodic update."""
@@ -318,7 +318,7 @@ async def _login.opp, modem_data, password):
         await modem_data.modem.logout()
         del.opp.data[DATA_KEY].modem_data[modem_data.host]
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
 
 
 async def _retry_login.opp, modem_data, password):

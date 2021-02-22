@@ -110,7 +110,7 @@ async def test_islamic_prayer_times_timestamp_format.opp, legacy_patchable_time)
         await opp.async_block_till_done()
 
         assert (
-           .opp.data[islamic_prayer_times.DOMAIN].prayer_times_info
+            opp.data[islamic_prayer_times.DOMAIN].prayer_times_info
             == PRAYER_TIMES_TIMESTAMPS
         )
 
@@ -140,6 +140,6 @@ async def test_update.opp, legacy_patchable_time):
         async_fire_time_changed.opp, future)
         await opp.async_block_till_done()
         assert (
-           .opp.data[islamic_prayer_times.DOMAIN].prayer_times_info
+            opp.data[islamic_prayer_times.DOMAIN].prayer_times_info
             == NEW_PRAYER_TIMES_TIMESTAMPS
         )

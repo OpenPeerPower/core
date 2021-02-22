@@ -48,7 +48,7 @@ def storage_collection.opp):
 @pytest.fixture
 def storage_setup_opp, opp_storage, opp_admin_user):
     """Storage setup."""
-   .opp_storage[DOMAIN] = {
+    opp.storage[DOMAIN] = {
         "key": DOMAIN,
         "version": 1,
         "data": {
@@ -130,7 +130,7 @@ async def test_valid_invalid_user_ids.opp, opp_admin_user):
 
 async def test_setup_tracker.opp, opp_admin_user):
     """Test set up person with one device tracker."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     user_id = opp_admin_user.id
     config = {
         DOMAIN: {
@@ -150,13 +150,13 @@ async def test_setup_tracker.opp, opp_admin_user):
     assert state.attributes.get(ATTR_SOURCE) is None
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
-   .opp.states.async_set(DEVICE_TRACKER, "home")
+    opp.states.async_set(DEVICE_TRACKER, "home")
     await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
@@ -167,7 +167,7 @@ async def test_setup_tracker.opp, opp_admin_user):
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
-   .opp.states.async_set(
+    opp.states.async_set(
         DEVICE_TRACKER,
         "not_home",
         {ATTR_LATITUDE: 10.123456, ATTR_LONGITUDE: 11.123456, ATTR_GPS_ACCURACY: 10},
@@ -186,7 +186,7 @@ async def test_setup_tracker.opp, opp_admin_user):
 
 async def test_setup_two_trackers.opp, opp_admin_user):
     """Test set up person with two device trackers."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     user_id = opp_admin_user.id
     config = {
         DOMAIN: {
@@ -206,9 +206,9 @@ async def test_setup_two_trackers.opp, opp_admin_user):
     assert state.attributes.get(ATTR_SOURCE) is None
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
-   .opp.states.async_set(
+    opp.states.async_set(
         DEVICE_TRACKER, "home", {ATTR_SOURCE_TYPE: SOURCE_TYPE_ROUTER}
     )
     await opp.async_block_till_done()
@@ -222,7 +222,7 @@ async def test_setup_two_trackers.opp, opp_admin_user):
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
-   .opp.states.async_set(
+    opp.states.async_set(
         DEVICE_TRACKER_2,
         "not_home",
         {
@@ -233,7 +233,7 @@ async def test_setup_two_trackers.opp, opp_admin_user):
         },
     )
     await opp.async_block_till_done()
-   .opp.states.async_set(
+    opp.states.async_set(
         DEVICE_TRACKER, "not_home", {ATTR_SOURCE_TYPE: SOURCE_TYPE_ROUTER}
     )
     await opp.async_block_till_done()
@@ -247,7 +247,7 @@ async def test_setup_two_trackers.opp, opp_admin_user):
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER_2
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
-   .opp.states.async_set(
+    opp.states.async_set(
         DEVICE_TRACKER_2, "zone1", {ATTR_SOURCE_TYPE: SOURCE_TYPE_GPS}
     )
     await opp.async_block_till_done()
@@ -256,11 +256,11 @@ async def test_setup_two_trackers.opp, opp_admin_user):
     assert state.state == "zone1"
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER_2
 
-   .opp.states.async_set(
+    opp.states.async_set(
         DEVICE_TRACKER, "home", {ATTR_SOURCE_TYPE: SOURCE_TYPE_ROUTER}
     )
     await opp.async_block_till_done()
-   .opp.states.async_set(
+    opp.states.async_set(
         DEVICE_TRACKER_2, "zone2", {ATTR_SOURCE_TYPE: SOURCE_TYPE_GPS}
     )
     await opp.async_block_till_done()
@@ -272,7 +272,7 @@ async def test_setup_two_trackers.opp, opp_admin_user):
 
 async def test_ignore_unavailable_states.opp, opp_admin_user):
     """Test set up person with two device trackers, one unavailable."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     user_id = opp_admin_user.id
     config = {
         DOMAIN: {
@@ -287,18 +287,18 @@ async def test_ignore_unavailable_states.opp, opp_admin_user):
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
-   .opp.states.async_set(DEVICE_TRACKER, "home")
+    opp.states.async_set(DEVICE_TRACKER, "home")
     await opp.async_block_till_done()
-   .opp.states.async_set(DEVICE_TRACKER, "unavailable")
+    opp.states.async_set(DEVICE_TRACKER, "unavailable")
     await opp.async_block_till_done()
 
     # Unknown, as only 1 device tracker has a state, but we ignore that one
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
 
-   .opp.states.async_set(DEVICE_TRACKER_2, "not_home")
+    opp.states.async_set(DEVICE_TRACKER_2, "not_home")
     await opp.async_block_till_done()
 
     # Take state of tracker 2
@@ -306,7 +306,7 @@ async def test_ignore_unavailable_states.opp, opp_admin_user):
     assert state.state == "not_home"
 
     # state 1 is newer but ignored, keep tracker 2 state
-   .opp.states.async_set(DEVICE_TRACKER, "unknown")
+    opp.states.async_set(DEVICE_TRACKER, "unknown")
     await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
@@ -325,7 +325,7 @@ async def test_restore_home_state.opp, opp_admin_user):
     }
     state = State("person.tracked_person", "home", attrs)
     mock_restore_cache.opp, (state,))
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     mock_component.opp, "recorder")
     config = {
         DOMAIN: {
@@ -368,7 +368,7 @@ async def test_create_person_during_run.opp):
     """Test that person is updated if created while.opp is running."""
     config = {DOMAIN: {}}
     assert await async_setup_component.opp, DOMAIN, config)
-   .opp.states.async_set(DEVICE_TRACKER, "home")
+    opp.states.async_set(DEVICE_TRACKER, "home")
     await opp.async_block_till_done()
 
     await opp.components.person.async_create_person(
@@ -390,9 +390,9 @@ async def test_load_person_storage.opp, opp_admin_user, storage_setup):
     assert state.attributes.get(ATTR_SOURCE) is None
     assert state.attributes.get(ATTR_USER_ID) == opp_admin_user.id
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
-   .opp.states.async_set(DEVICE_TRACKER, "home")
+    opp.states.async_set(DEVICE_TRACKER, "home")
     await opp.async_block_till_done()
 
     state = opp.states.get("person.tracked_person")
@@ -406,7 +406,7 @@ async def test_load_person_storage.opp, opp_admin_user, storage_setup):
 
 async def test_load_person_storage_two_nonlinked.opp, opp_storage):
     """Test loading two users with both not having a user linked."""
-   .opp_storage[DOMAIN] = {
+    opp.storage[DOMAIN] = {
         "key": DOMAIN,
         "version": 1,
         "data": {
@@ -473,10 +473,10 @@ async def test_ws_create.opp, opp_ws_client, storage_setup, opp_read_only_user):
 
 
 async def test_ws_create_requires_admin(
-    opp, opp_ws_client, storage_setup, opp_admin_user, opp_read_only_user
+    opp. opp_ws_client, storage_setup, opp_admin_user, opp_read_only_user
 ):
     """Test creating via WS requires admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
     client = await opp_ws_client.opp)
@@ -546,10 +546,10 @@ async def test_ws_update.opp, opp_ws_client, storage_setup):
 
 
 async def test_ws_update_require_admin(
-    opp, opp_ws_client, storage_setup, opp_admin_user
+    opp. opp_ws_client, storage_setup, opp_admin_user
 ):
     """Test updating via WS requires admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
     client = await opp_ws_client.opp)
@@ -594,10 +594,10 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
 
 
 async def test_ws_delete_require_admin(
-    opp, opp_ws_client, storage_setup, opp_admin_user
+    opp. opp_ws_client, storage_setup, opp_admin_user
 ):
     """Test deleting via WS requires admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
     client = await opp_ws_client.opp)
@@ -663,7 +663,7 @@ async def test_update_invalid_user_id.opp, storage_collection):
 
 
 async def test_update_person_when_user_removed(
-    opp, storage_setup, opp_read_only_user
+    opp. storage_setup, opp_read_only_user
 ):
     """Update person when user is removed."""
     storage_collection = opp.data[DOMAIN][1]
@@ -708,7 +708,7 @@ async def test_add_user_device_tracker.opp, storage_setup, opp_read_only_user):
     )
 
     await person.async_add_user_device_tracker(
-        opp, opp_read_only_user.id, "device_tracker.added"
+        opp. opp_read_only_user.id, "device_tracker.added"
     )
 
     assert storage_collection.data[pers["id"]]["device_trackers"] == [
@@ -720,7 +720,7 @@ async def test_add_user_device_tracker.opp, storage_setup, opp_read_only_user):
 async def test_reload.opp, opp_admin_user):
     """Test reloading the YAML config."""
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [

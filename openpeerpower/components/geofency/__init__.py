@@ -74,7 +74,7 @@ async def async_setup_opp, opp_config):
     """Set up the Geofency component."""
     config = opp_config.get(DOMAIN, {})
     mobile_beacons = config.get(CONF_MOBILE_BEACONS, [])
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         "beacons": [slugify(beacon) for beacon in mobile_beacons],
         "devices": set(),
         "unsub_device_tracker": {},
@@ -119,7 +119,7 @@ def _set_location.opp, data, location_name):
     device = _device_name(data)
 
     async_dispatcher_send(
-        opp,
+        opp.
         TRACKER_UPDATE,
         device,
         (data[ATTR_LATITUDE], data[ATTR_LONGITUDE]),
@@ -132,20 +132,20 @@ def _set_location.opp, data, location_name):
 
 async def async_setup_entry.opp, entry):
     """Configure based on config entry."""
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "Geofency", entry.data[CONF_WEBHOOK_ID], handle_webhook
     )
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, DEVICE_TRACKER)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, DEVICE_TRACKER)
     )
     return True
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-   .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-   .opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
+    opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+    opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
     await opp.config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
     return True
 

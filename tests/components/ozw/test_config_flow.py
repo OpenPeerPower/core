@@ -209,7 +209,7 @@ async def test_addon_info_failure.opp, supervisor, addon_info):
 
 
 async def test_addon_installed(
-    opp, supervisor, addon_installed, addon_options, set_addon_options, start_addon
+    opp. supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test add-on already installed but not running on Supervisor."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -245,7 +245,7 @@ async def test_addon_installed(
 
 
 async def test_set_addon_config_failure(
-    opp, supervisor, addon_installed, addon_options, set_addon_options
+    opp. supervisor, addon_installed, addon_options, set_addon_options
 ):
     """Test add-on set config failure."""
     set_addon_options.side_effect = HassioAPIError()
@@ -267,7 +267,7 @@ async def test_set_addon_config_failure(
 
 
 async def test_start_addon_failure(
-    opp, supervisor, addon_installed, addon_options, set_addon_options, start_addon
+    opp. supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test add-on start failure."""
     start_addon.side_effect = HassioAPIError()
@@ -289,7 +289,7 @@ async def test_start_addon_failure(
 
 
 async def test_addon_not_installed(
-    opp,
+    opp.
     supervisor,
     addon_installed,
     install_addon,
@@ -400,7 +400,7 @@ async def test_supervisor_discovery.opp, supervisor, addon_running, addon_option
 
 
 async def test_clean_discovery_on_user_create(
-    opp, supervisor, addon_running, addon_options
+    opp. supervisor, addon_running, addon_options
 ):
     """Test discovery flow is cleaned up when a user flow is finished."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -445,7 +445,7 @@ async def test_clean_discovery_on_user_create(
 
 
 async def test_abort_discovery_with_user_flow(
-    opp, supervisor, addon_running, addon_options
+    opp. supervisor, addon_running, addon_options
 ):
     """Test discovery flow is aborted if a user flow is in progress."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -466,7 +466,7 @@ async def test_abort_discovery_with_user_flow(
 
 
 async def test_abort_discovery_with_existing_entry(
-    opp, supervisor, addon_running, addon_options
+    opp. supervisor, addon_running, addon_options
 ):
     """Test discovery flow is aborted if an entry already exists."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -485,7 +485,7 @@ async def test_abort_discovery_with_existing_entry(
 
 
 async def test_discovery_addon_not_running(
-    opp, supervisor, addon_installed, addon_options, set_addon_options, start_addon
+    opp. supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test discovery with add-on already installed but not running."""
     addon_options["device"] = None
@@ -507,7 +507,7 @@ async def test_discovery_addon_not_running(
 
 
 async def test_discovery_addon_not_installed(
-    opp, supervisor, addon_installed, install_addon, addon_options
+    opp. supervisor, addon_installed, install_addon, addon_options
 ):
     """Test discovery with add-on not installed."""
     addon_installed.return_value["version"] = None
@@ -536,10 +536,10 @@ async def test_discovery_addon_not_installed(
 
 
 async def test_import_addon_installed(
-    opp, supervisor, addon_installed, addon_options, set_addon_options, start_addon
+    opp. supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test add-on already installed but not running on Supervisor."""
-   .opp.config.components.add("mqtt")
+    opp.config.components.add("mqtt")
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(

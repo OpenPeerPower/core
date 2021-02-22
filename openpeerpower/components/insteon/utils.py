@@ -111,7 +111,7 @@ def add_on_off_event_device.opp, device):
         if name == OFF_FAST_EVENT:
             event = EVENT_GROUP_OFF_FAST
         _LOGGER.debug("Firing event %s with %s", event, schema)
-       .opp.bus.async_fire(event, schema)
+        opp.bus.async_fire(event, schema)
 
     for group in device.events:
         if isinstance(group, int):
@@ -139,7 +139,7 @@ def register_new_device_callback.opp):
     @callback
     def async_new_insteon_device(address=None):
         """Detect device from transport to be delegated to platform."""
-       .opp.async_create_task(async_create_new_entities(address))
+        opp.async_create_task(async_create_new_entities(address))
 
     async def async_create_new_entities(address):
         _LOGGER.debug(
@@ -298,45 +298,45 @@ def async_register_services.opp):
         if device:
             dev_registry.async_remove_device(device.id)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SRV_ADD_ALL_LINK, async_srv_add_all_link, schema=ADD_ALL_LINK_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SRV_DEL_ALL_LINK, async_srv_del_all_link, schema=DEL_ALL_LINK_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SRV_LOAD_ALDB, async_srv_load_aldb, schema=LOAD_ALDB_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SRV_PRINT_ALDB, print_aldb, schema=PRINT_ALDB_SCHEMA
     )
-   .opp.services.async_register(DOMAIN, SRV_PRINT_IM_ALDB, print_im_aldb, schema=None)
-   .opp.services.async_register(
+    opp.services.async_register(DOMAIN, SRV_PRINT_IM_ALDB, print_im_aldb, schema=None)
+    opp.services.async_register(
         DOMAIN,
         SRV_X10_ALL_UNITS_OFF,
         async_srv_x10_all_units_off,
         schema=X10_HOUSECODE_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SRV_X10_ALL_LIGHTS_OFF,
         async_srv_x10_all_lights_off,
         schema=X10_HOUSECODE_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SRV_X10_ALL_LIGHTS_ON,
         async_srv_x10_all_lights_on,
         schema=X10_HOUSECODE_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SRV_SCENE_ON, async_srv_scene_on, schema=TRIGGER_SCENE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SRV_SCENE_OFF, async_srv_scene_off, schema=TRIGGER_SCENE_SCHEMA
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SRV_ADD_DEFAULT_LINKS,
         async_add_default_links,
@@ -344,10 +344,10 @@ def async_register_services.opp):
     )
     async_dispatcher_connect.opp, SIGNAL_SAVE_DEVICES, async_srv_save_devices)
     async_dispatcher_connect(
-        opp, SIGNAL_ADD_DEVICE_OVERRIDE, async_add_device_override
+        opp. SIGNAL_ADD_DEVICE_OVERRIDE, async_add_device_override
     )
     async_dispatcher_connect(
-        opp, SIGNAL_REMOVE_DEVICE_OVERRIDE, async_remove_device_override
+        opp. SIGNAL_REMOVE_DEVICE_OVERRIDE, async_remove_device_override
     )
     async_dispatcher_connect.opp, SIGNAL_ADD_X10_DEVICE, async_add_x10_device)
     async_dispatcher_connect.opp, SIGNAL_REMOVE_X10_DEVICE, async_remove_x10_device)
@@ -380,7 +380,7 @@ def print_aldb_to_log(aldb):
 
 @callback
 def async_add_insteon_entities(
-    opp, platform, entity_type, async_add_entities, discovery_info
+    opp. platform, entity_type, async_add_entities, discovery_info
 ):
     """Add Insteon devices to a platform."""
     new_entities = []

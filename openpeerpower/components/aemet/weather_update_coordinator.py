@@ -120,7 +120,7 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator):
     def __init__(self, opp, aemet, latitude, longitude):
         """Initialize coordinator."""
         super().__init__(
-            opp, _LOGGER, name=DOMAIN, update_interval=WEATHER_UPDATE_INTERVAL
+            opp. _LOGGER, name=DOMAIN, update_interval=WEATHER_UPDATE_INTERVAL
         )
 
         self._aemet = aemet

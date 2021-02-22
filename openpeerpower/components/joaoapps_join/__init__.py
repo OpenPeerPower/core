@@ -104,12 +104,12 @@ def register_device.opp, api_key, name, device_id, device_ids, device_names):
             api_key=api_key,
         )
 
-   .opp.services.register(DOMAIN, f"{name}ring", ring_service)
-   .opp.services.register(DOMAIN, f"{name}set_wallpaper", set_wallpaper_service)
-   .opp.services.register(DOMAIN, f"{name}send_sms", send_sms_service)
-   .opp.services.register(DOMAIN, f"{name}send_file", send_file_service)
-   .opp.services.register(DOMAIN, f"{name}send_url", send_url_service)
-   .opp.services.register(DOMAIN, f"{name}send_tasker", send_tasker_service)
+    opp.services.register(DOMAIN, f"{name}ring", ring_service)
+    opp.services.register(DOMAIN, f"{name}set_wallpaper", set_wallpaper_service)
+    opp.services.register(DOMAIN, f"{name}send_sms", send_sms_service)
+    opp.services.register(DOMAIN, f"{name}send_file", send_file_service)
+    opp.services.register(DOMAIN, f"{name}send_url", send_url_service)
+    opp.services.register(DOMAIN, f"{name}send_tasker", send_tasker_service)
 
 
 def setup_opp, config):

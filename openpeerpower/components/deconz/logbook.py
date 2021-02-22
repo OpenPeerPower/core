@@ -117,7 +117,7 @@ def _get_device_event_description(modelid: str, event: str) -> tuple:
 
 @callback
 def async_describe_events(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     async_describe_event: Callable[[str, str, Callable[[Event], dict]], None],
 ) -> None:
     """Describe logbook events."""
@@ -126,7 +126,7 @@ def async_describe_events(
     def async_describe_deconz_event(event: Event) -> dict:
         """Describe deCONZ logbook event."""
         deconz_event: Optional[DeconzEvent] = _get_deconz_event_from_device_id(
-            opp, event.data[ATTR_DEVICE_ID]
+            opp. event.data[ATTR_DEVICE_ID]
         )
 
         action = None

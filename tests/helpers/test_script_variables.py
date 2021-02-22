@@ -62,7 +62,7 @@ async def test_template_vars_run_args.opp):
         }
     )
     rendered = var.async_render(
-        opp,
+        opp.
         {
             "run_var_ex": 5,
             "something_2": 1,
@@ -91,7 +91,7 @@ async def test_template_vars_run_args_no_default.opp):
         }
     )
     rendered = var.async_render(
-        opp,
+        opp.
         {
             "run_var_ex": 5,
             "something_2": 1,

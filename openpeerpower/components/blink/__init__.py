@@ -47,13 +47,13 @@ def _blink_startup_wrapper.opp, entry):
 
 def _reauth_flow_wrapper.opp, data):
     """Reauth flow wrapper."""
-   .opp.add_job(
-       .opp.config_entries.flow.async_init(
+    opp.add_job(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=data
         )
     )
     persistent_notification.async_create(
-        opp,
+        opp.
         "Blink configuration migrated to a new version. Please go to the integrations page to re-configure (such as sending a new 2FA key).",
         "Blink Migration",
     )
@@ -61,7 +61,7 @@ def _reauth_flow_wrapper.opp, data):
 
 async def async_setup_opp, config):
     """Set up a Blink component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -79,7 +79,7 @@ async def async_setup_entry.opp, entry):
     """Set up Blink via config entry."""
     _async_import_options_from_data_if_missing.opp, entry)
 
-   .opp.data[DOMAIN][entry.entry_id] = await opp.async_add_executor_job(
+    opp.data[DOMAIN][entry.entry_id] = await opp.async_add_executor_job(
         _blink_startup_wrapper, opp, entry
     )
 
@@ -87,13 +87,13 @@ async def async_setup_entry.opp, entry):
         raise ConfigEntryNotReady
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     def blink_refresh(event_time=None):
         """Call blink to refresh info."""
-       .opp.data[DOMAIN][entry.entry_id].refresh(force_cache=True)
+        opp.data[DOMAIN][entry.entry_id].refresh(force_cache=True)
 
     async def async_save_video(call):
         """Call save video service handler."""
@@ -102,16 +102,16 @@ async def async_setup_entry.opp, entry):
     def send_pin(call):
         """Call blink to send new pin."""
         pin = call.data[CONF_PIN]
-       .opp.data[DOMAIN][entry.entry_id].auth.send_auth_key(
-           .opp.data[DOMAIN][entry.entry_id],
+        opp.data[DOMAIN][entry.entry_id].auth.send_auth_key(
+            opp.data[DOMAIN][entry.entry_id],
             pin,
         )
 
-   .opp.services.async_register(DOMAIN, SERVICE_REFRESH, blink_refresh)
-   .opp.services.async_register(
+    opp.services.async_register(DOMAIN, SERVICE_REFRESH, blink_refresh)
+    opp.services.async_register(
         DOMAIN, SERVICE_SAVE_VIDEO, async_save_video, schema=SERVICE_SAVE_VIDEO_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SEND_PIN, send_pin, schema=SERVICE_SEND_PIN_SCHEMA
     )
 
@@ -125,7 +125,7 @@ def _async_import_options_from_data_if_missing.opp, entry):
         options[CONF_SCAN_INTERVAL] = entry.data.get(
             CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
         )
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
 
 async def async_unload_entry.opp, entry):
@@ -133,7 +133,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -142,14 +142,14 @@ async def async_unload_entry.opp, entry):
     if not unload_ok:
         return False
 
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN].pop(entry.entry_id)
 
     if len.opp.data[DOMAIN]) != 0:
         return True
 
-   .opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
-   .opp.services.async_remove(DOMAIN, SERVICE_SAVE_VIDEO_SCHEMA)
-   .opp.services.async_remove(DOMAIN, SERVICE_SEND_PIN)
+    opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
+    opp.services.async_remove(DOMAIN, SERVICE_SAVE_VIDEO_SCHEMA)
+    opp.services.async_remove(DOMAIN, SERVICE_SEND_PIN)
 
     return True
 

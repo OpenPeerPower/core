@@ -104,8 +104,8 @@ class Watcher:
         self._observer.schedule(
             create_event_handler(patterns, opp), path, recursive=True
         )
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.startup)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.shutdown)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_START, self.startup)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self.shutdown)
 
     def startup(self, event):
         """Start the watcher."""

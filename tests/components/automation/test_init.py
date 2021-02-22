@@ -44,7 +44,7 @@ async def test_service_data_not_a_dict.opp, calls):
     """Test service data not dict."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
-            opp,
+            opp.
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -58,7 +58,7 @@ async def test_service_data_not_a_dict.opp, calls):
 async def test_service_specify_data.opp, calls):
     """Test service data."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -78,7 +78,7 @@ async def test_service_specify_data.opp, calls):
     time = dt_util.utcnow()
 
     with patch("openpeerpower.helpers.script.utcnow", return_value=time):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -91,7 +91,7 @@ async def test_service_specify_data.opp, calls):
 async def test_service_specify_entity_id.opp, calls):
     """Test service data."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -101,7 +101,7 @@ async def test_service_specify_entity_id.opp, calls):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert ["hello.world"] == calls[0].data.get(ATTR_ENTITY_ID)
@@ -110,7 +110,7 @@ async def test_service_specify_entity_id.opp, calls):
 async def test_service_specify_entity_id_list.opp, calls):
     """Test service data."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -123,7 +123,7 @@ async def test_service_specify_entity_id_list.opp, calls):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert ["hello.world", "hello.world2"] == calls[0].data.get(ATTR_ENTITY_ID)
@@ -132,7 +132,7 @@ async def test_service_specify_entity_id_list.opp, calls):
 async def test_two_triggers.opp, calls):
     """Test triggers."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -145,10 +145,10 @@ async def test_two_triggers.opp, calls):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
-   .opp.states.async_set("test.entity", "hello")
+    opp.states.async_set("test.entity", "hello")
     await opp.async_block_till_done()
     assert len(calls) == 2
 
@@ -156,7 +156,7 @@ async def test_two_triggers.opp, calls):
 async def test_trigger_service_ignoring_condition.opp, caplog, calls):
     """Test triggers."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -175,7 +175,7 @@ async def test_trigger_service_ignoring_condition.opp, caplog, calls):
     caplog.clear()
     caplog.set_level(logging.WARNING)
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
@@ -208,7 +208,7 @@ async def test_two_conditions_with_and.opp, calls):
     """Test two and conditions."""
     entity_id = "test.entity"
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -226,18 +226,18 @@ async def test_two_conditions_with_and.opp, calls):
         },
     )
 
-   .opp.states.async_set(entity_id, 100)
-   .opp.bus.async_fire("test_event")
+    opp.states.async_set(entity_id, 100)
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.states.async_set(entity_id, 101)
-   .opp.bus.async_fire("test_event")
+    opp.states.async_set(entity_id, 101)
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.states.async_set(entity_id, 151)
-   .opp.bus.async_fire("test_event")
+    opp.states.async_set(entity_id, 151)
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -245,7 +245,7 @@ async def test_two_conditions_with_and.opp, calls):
 async def test_shorthand_conditions_template.opp, calls):
     """Test shorthand nation form in conditions."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -256,13 +256,13 @@ async def test_shorthand_conditions_template.opp, calls):
         },
     )
 
-   .opp.states.async_set("test.entity", "hello")
-   .opp.bus.async_fire("test_event")
+    opp.states.async_set("test.entity", "hello")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.states.async_set("test.entity", "goodbye")
-   .opp.bus.async_fire("test_event")
+    opp.states.async_set("test.entity", "goodbye")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -270,7 +270,7 @@ async def test_shorthand_conditions_template.opp, calls):
 async def test_automation_list_setting.opp, calls):
     """Event is not a valid condition."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -286,11 +286,11 @@ async def test_automation_list_setting.opp, calls):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.bus.async_fire("test_event_2")
+    opp.bus.async_fire("test_event_2")
     await opp.async_block_till_done()
     assert len(calls) == 2
 
@@ -298,7 +298,7 @@ async def test_automation_list_setting.opp, calls):
 async def test_automation_calling_two_actions.opp, calls):
     """Test if we can call two actions from automation async definition."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -311,7 +311,7 @@ async def test_automation_calling_two_actions.opp, calls):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
 
     assert len(calls) == 2
@@ -322,7 +322,7 @@ async def test_automation_calling_two_actions.opp, calls):
 async def test_shared_context.opp, calls):
     """Test that the shared context is passed down the chain."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -344,9 +344,9 @@ async def test_shared_context.opp, calls):
     first_automation_listener = Mock()
     event_mock = Mock()
 
-   .opp.bus.async_listen("test_event2", first_automation_listener)
-   .opp.bus.async_listen(EVENT_AUTOMATION_TRIGGERED, event_mock)
-   .opp.bus.async_fire("test_event", context=context)
+    opp.bus.async_listen("test_event2", first_automation_listener)
+    opp.bus.async_listen(EVENT_AUTOMATION_TRIGGERED, event_mock)
+    opp.bus.async_fire("test_event", context=context)
     await opp.async_block_till_done()
 
     # Ensure events was fired
@@ -394,7 +394,7 @@ async def test_services.opp, calls):
     assert not automation.is_on.opp, entity_id)
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -408,7 +408,7 @@ async def test_services.opp, calls):
     assert.opp.states.get(entity_id) is not None
     assert automation.is_on.opp, entity_id)
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -422,7 +422,7 @@ async def test_services.opp, calls):
     )
 
     assert not automation.is_on.opp, entity_id)
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -431,7 +431,7 @@ async def test_services.opp, calls):
     )
 
     assert automation.is_on.opp, entity_id)
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 2
 
@@ -442,7 +442,7 @@ async def test_services.opp, calls):
         blocking=True,
     )
     assert not automation.is_on.opp, entity_id)
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 2
 
@@ -471,7 +471,7 @@ async def test_services.opp, calls):
 async def test_reload_config_service.opp, calls, opp_admin_user, opp_read_only_user):
     """Test the reload config service."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -490,14 +490,14 @@ async def test_reload_config_service.opp, calls, opp_admin_user, opp_read_only_u
     assert listeners.get("test_event") == 1
     assert listeners.get("test_event2") is None
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data.get("event") == "test_event"
 
     test_reload_event = []
-   .opp.bus.async_listen(
+    opp.bus.async_listen(
         EVENT_AUTOMATION_RELOADED, lambda event: test_reload_event.append(event)
     )
 
@@ -539,11 +539,11 @@ async def test_reload_config_service.opp, calls, opp_admin_user, opp_read_only_u
     assert listeners.get("test_event") is None
     assert listeners.get("test_event2") == 1
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event2")
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data.get("event") == "test_event2"
@@ -553,7 +553,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
     """Test the reload config service handling invalid config."""
     with assert_setup_component(1, automation.DOMAIN):
         assert await async_setup_component(
-            opp,
+            opp.
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -568,7 +568,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
         )
     assert.opp.states.get("automation.hello") is not None
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -583,7 +583,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
 
     assert.opp.states.get("automation.hello") is None
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -591,7 +591,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
 async def test_reload_config_handles_load_fails.opp, calls):
     """Test the reload config service."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -606,7 +606,7 @@ async def test_reload_config_handles_load_fails.opp, calls):
     )
     assert.opp.states.get("automation.hello") is not None
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -620,7 +620,7 @@ async def test_reload_config_handles_load_fails.opp, calls):
 
     assert.opp.states.get("automation.hello") is not None
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 2
 
@@ -650,10 +650,10 @@ async def test_automation_stops.opp, calls, service):
     def running_cb(event):
         running.set()
 
-   .opp.bus.async_listen_once("running", running_cb)
-   .opp.states.async_set(test_entity, "hello")
+    opp.bus.async_listen_once("running", running_cb)
+    opp.states.async_set(test_entity, "hello")
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await running.wait()
 
     if service == "turn_off_stop":
@@ -680,7 +680,7 @@ async def test_automation_stops.opp, calls, service):
                 automation.DOMAIN, SERVICE_RELOAD, blocking=True
             )
 
-   .opp.states.async_set(test_entity, "goodbye")
+    opp.states.async_set(test_entity, "goodbye")
     await opp.async_block_till_done()
 
     assert len(calls) == (1 if service == "turn_off_no_stop" else 0)
@@ -691,7 +691,7 @@ async def test_automation_restore_state.opp):
     time = dt_util.utcnow()
 
     mock_restore_cache(
-        opp,
+        opp.
         (
             State("automation.hello", STATE_ON),
             State("automation.bye", STATE_OFF, {"last_triggered": time}),
@@ -729,13 +729,13 @@ async def test_automation_restore_state.opp):
 
     assert automation.is_on.opp, "automation.bye") is False
 
-   .opp.bus.async_fire("test_event_bye")
+    opp.bus.async_fire("test_event_bye")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
     assert automation.is_on.opp, "automation.hello")
 
-   .opp.bus.async_fire("test_event_hello")
+    opp.bus.async_fire("test_event_hello")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -746,7 +746,7 @@ async def test_initial_value_off.opp):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -759,18 +759,18 @@ async def test_initial_value_off.opp):
     )
     assert not automation.is_on.opp, "automation.hello")
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
 async def test_initial_value_on.opp):
     """Test initial value on."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -788,19 +788,19 @@ async def test_initial_value_on.opp):
 
     await opp.async_start()
     await opp.async_block_till_done()
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
 async def test_initial_value_off_but_restore_on.opp):
     """Test initial value off and restored state is turned on."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     calls = async_mock_service.opp, "test", "automation")
     mock_restore_cache.opp, (State("automation.hello", STATE_ON),))
 
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -814,7 +814,7 @@ async def test_initial_value_off_but_restore_on.opp):
     assert not automation.is_on.opp, "automation.hello")
 
     await opp.async_start()
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
@@ -825,7 +825,7 @@ async def test_initial_value_on_but_restore_off.opp):
     mock_restore_cache.opp, (State("automation.hello", STATE_OFF),))
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -838,7 +838,7 @@ async def test_initial_value_on_but_restore_off.opp):
     )
     assert automation.is_on.opp, "automation.hello")
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -849,7 +849,7 @@ async def test_no_initial_value_and_restore_off.opp):
     mock_restore_cache.opp, (State("automation.hello", STATE_OFF),))
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -861,7 +861,7 @@ async def test_no_initial_value_and_restore_off.opp):
     )
     assert not automation.is_on.opp, "automation.hello")
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
@@ -871,7 +871,7 @@ async def test_automation_is_on_if_no_initial_state_or_restore.opp):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -883,18 +883,18 @@ async def test_automation_is_on_if_no_initial_state_or_restore.opp):
     )
     assert automation.is_on.opp, "automation.hello")
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
 async def test_automation_not_trigger_on_bootstrap.opp):
     """Test if automation is not trigger on bootstrap."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -906,15 +906,15 @@ async def test_automation_not_trigger_on_bootstrap.opp):
     )
     assert automation.is_on.opp, "automation.hello")
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
     await opp.async_block_till_done()
     assert automation.is_on.opp, "automation.hello")
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -924,7 +924,7 @@ async def test_automation_not_trigger_on_bootstrap.opp):
 async def test_automation_bad_trigger.opp, caplog):
     """Test bad trigger configuration."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -940,7 +940,7 @@ async def test_automation_bad_trigger.opp, caplog):
 async def test_automation_with_error_in_script.opp, caplog):
     """Test automation with an error in script."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -951,7 +951,7 @@ async def test_automation_with_error_in_script.opp, caplog):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert "Service not found" in caplog.text
     assert "Traceback" not in caplog.text
@@ -960,7 +960,7 @@ async def test_automation_with_error_in_script.opp, caplog):
 async def test_automation_with_error_in_script_2.opp, caplog):
     """Test automation with an error in script."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -971,7 +971,7 @@ async def test_automation_with_error_in_script_2.opp, caplog):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert "string value is None" in caplog.text
 
@@ -981,7 +981,7 @@ async def test_automation_restore_last_triggered_with_initial_state.opp):
     time = dt_util.utcnow()
 
     mock_restore_cache(
-        opp,
+        opp.
         (
             State("automation.hello", STATE_ON),
             State("automation.bye", STATE_ON, {"last_triggered": time}),
@@ -1033,7 +1033,7 @@ async def test_automation_restore_last_triggered_with_initial_state.opp):
 async def test_extraction_functions.opp):
     """Test extraction functions."""
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [
@@ -1131,14 +1131,14 @@ async def test_extraction_functions.opp):
 
 async def test_logbook_humanify_automation_triggered_event.opp):
     """Test humanifying Automation Trigger event."""
-   .opp.config.components.add("recorder")
+    opp.config.components.add("recorder")
     await async_setup_component.opp, automation.DOMAIN, {})
     await async_setup_component.opp, "logbook", {})
     entity_attr_cache = logbook.EntityAttributeCache.opp)
 
     event1, event2 = list(
         logbook.humanify(
-            opp,
+            opp.
             [
                 MockLazyEventPartialState(
                     EVENT_AUTOMATION_TRIGGERED,
@@ -1174,7 +1174,7 @@ async def test_automation_variables.opp, caplog):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -1217,27 +1217,27 @@ async def test_automation_variables.opp, caplog):
             ]
         },
     )
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["value"] == "defined_in_config"
     assert calls[0].data["event_type"] == "test_event"
 
-   .opp.bus.async_fire("test_event_2")
+    opp.bus.async_fire("test_event_2")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
-   .opp.bus.async_fire("test_event_2", {"pass_condition": True})
+    opp.bus.async_fire("test_event_2", {"pass_condition": True})
     await opp.async_block_till_done()
     assert len(calls) == 2
 
     assert "Error rendering variables" not in caplog.text
-   .opp.bus.async_fire("test_event_3")
+    opp.bus.async_fire("test_event_3")
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert "Error rendering variables" in caplog.text
 
-   .opp.bus.async_fire("test_event_3", {"break": 0})
+    opp.bus.async_fire("test_event_3", {"break": 0})
     await opp.async_block_till_done()
     assert len(calls) == 3
 
@@ -1247,7 +1247,7 @@ async def test_automation_trigger_variables.opp, caplog):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -1287,13 +1287,13 @@ async def test_automation_trigger_variables.opp, caplog):
             ]
         },
     )
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["value"] == "defined_in_config"
     assert calls[0].data["event_type"] == "test_event"
 
-   .opp.bus.async_fire("test_event_2")
+    opp.bus.async_fire("test_event_2")
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["value"] == "overridden_in_config"
@@ -1307,7 +1307,7 @@ async def test_automation_bad_trigger_variables.opp, caplog):
     calls = async_mock_service.opp, "test", "automation")
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -1323,7 +1323,7 @@ async def test_automation_bad_trigger_variables.opp, caplog):
             ]
         },
     )
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     assert "Use of 'states' is not supported in limited templates" in caplog.text
 
     await opp.async_block_till_done()
@@ -1333,7 +1333,7 @@ async def test_automation_bad_trigger_variables.opp, caplog):
 async def test_blueprint_automation.opp, calls):
     """Test blueprint automation."""
     assert await async_setup_component(
-        opp,
+        opp.
         "automation",
         {
             "automation": {
@@ -1347,7 +1347,7 @@ async def test_blueprint_automation.opp, calls):
             }
         },
     )
-   .opp.bus.async_fire("blueprint_event")
+    opp.bus.async_fire("blueprint_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert automation.entities_in_automation.opp, "automation.automation_0") == [

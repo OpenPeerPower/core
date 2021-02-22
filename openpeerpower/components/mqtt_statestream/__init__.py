@@ -55,22 +55,22 @@ async def async_setup_opp, config):
         payload = new_state.state
 
         mybase = f"{base_topic}{entity_id.replace('.', '/')}/"
-       .opp.components.mqtt.async_publish(f"{mybase}state", payload, 1, True)
+        opp.components.mqtt.async_publish(f"{mybase}state", payload, 1, True)
 
         if publish_timestamps:
             if new_state.last_updated:
-               .opp.components.mqtt.async_publish(
+                opp.components.mqtt.async_publish(
                     f"{mybase}last_updated", new_state.last_updated.isoformat(), 1, True
                 )
             if new_state.last_changed:
-               .opp.components.mqtt.async_publish(
+                opp.components.mqtt.async_publish(
                     f"{mybase}last_changed", new_state.last_changed.isoformat(), 1, True
                 )
 
         if publish_attributes:
             for key, val in new_state.attributes.items():
                 encoded_val = json.dumps(val, cls=JSONEncoder)
-               .opp.components.mqtt.async_publish(mybase + key, encoded_val, 1, True)
+                opp.components.mqtt.async_publish(mybase + key, encoded_val, 1, True)
 
     async_track_state_change.opp, MATCH_ALL, _state_publisher)
     return True

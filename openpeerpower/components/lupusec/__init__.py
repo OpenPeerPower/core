@@ -42,11 +42,11 @@ def setup_opp, config):
     name = conf.get(CONF_NAME)
 
     try:
-       .opp.data[DOMAIN] = LupusecSystem(username, password, ip_address, name)
+        opp.data[DOMAIN] = LupusecSystem(username, password, ip_address, name)
     except LupusecException as ex:
         _LOGGER.error(ex)
 
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {ex}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,

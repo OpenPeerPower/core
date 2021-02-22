@@ -41,7 +41,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 async def websocket_search_related.opp, connection, msg):
     """Handle search."""
     searcher = Searcher(
-        opp,
+        opp.
         await device_registry.async_get_registry.opp),
         await entity_registry.async_get_registry.opp),
     )
@@ -66,7 +66,7 @@ class Searcher:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         device_reg: device_registry.DeviceRegistry,
         entity_reg: entity_registry.EntityRegistry,
     ):

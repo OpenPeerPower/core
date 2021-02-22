@@ -67,7 +67,7 @@ async def _mock_setup_august.opp, api_instance, authenticate_mock, api_mock):
 
 
 async def _create_august_with_devices(
-    opp, devices, api_call_side_effects=None, activities=None
+    opp. devices, api_call_side_effects=None, activities=None
 ):
     if api_call_side_effects is None:
         api_call_side_effects = {}

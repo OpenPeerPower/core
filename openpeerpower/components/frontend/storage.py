@@ -13,9 +13,9 @@ STORAGE_VERSION_USER_DATA = 1
 
 async def async_setup_frontend_storage.opp):
     """Set up frontend storage."""
-   .opp.data[DATA_STORAGE] = ({}, {})
-   .opp.components.websocket_api.async_register_command(websocket_set_user_data)
-   .opp.components.websocket_api.async_register_command(websocket_get_user_data)
+    opp.data[DATA_STORAGE] = ({}, {})
+    opp.components.websocket_api.async_register_command(websocket_set_user_data)
+    opp.components.websocket_api.async_register_command(websocket_get_user_data)
 
 
 def with_store(orig_func):

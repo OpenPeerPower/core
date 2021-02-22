@@ -27,7 +27,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     if "Temperatures" in monitored_conditions:
         if not tools:
-           .opp.components.persistent_notification.create(
+            opp.components.persistent_notification.create(
                 "Your printer appears to be offline.<br />"
                 "If you do not want to have your printer on <br />"
                 " at all times, and you would like to monitor <br /> "

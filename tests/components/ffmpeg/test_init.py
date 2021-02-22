@@ -22,7 +22,7 @@ def async_start.opp, entity_id=None):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-   .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_START, data))
+    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_START, data))
 
 
 @callback
@@ -32,7 +32,7 @@ def async_stop.opp, entity_id=None):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-   .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_STOP, data))
+    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_STOP, data))
 
 
 @callback
@@ -42,7 +42,7 @@ def async_restart.opp, entity_id=None):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-   .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_RESTART, data))
+    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_RESTART, data))
 
 
 class MockFFmpegDev(ffmpeg.FFmpegBase):
@@ -104,7 +104,7 @@ async def test_setup_component_test_register.opp):
     with assert_setup_component(1):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
-   .opp.bus.async_listen_once = MagicMock()
+    opp.bus.async_listen_once = MagicMock()
     ffmpeg_dev = MockFFmpegDev.opp)
     await ffmpeg_dev.async_added_to.opp()
 
@@ -117,7 +117,7 @@ async def test_setup_component_test_register_no_startup.opp):
     with assert_setup_component(1):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
-   .opp.bus.async_listen_once = MagicMock()
+    opp.bus.async_listen_once = MagicMock()
     ffmpeg_dev = MockFFmpegDev.opp, False)
     await ffmpeg_dev.async_added_to.opp()
 

@@ -30,7 +30,7 @@ async def async_setup_opp, config):
     password = conf.get(CONF_PASSWORD)
     api = melissa.AsyncMelissa(username=username, password=password)
     await api.async_connect()
-   .opp.data[DATA_MELISSA] = api
+    opp.data[DATA_MELISSA] = api
 
-   .opp.async_create_task(async_load_platform.opp, "climate", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, "climate", DOMAIN, {}, config))
     return True

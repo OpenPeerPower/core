@@ -20,7 +20,7 @@
             "install_addon": "Veuillez patienter pendant l'installation du module compl\u00e9mentaire Z-Wave JS. Cela peut prendre plusieurs minutes."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "title": "Configurer l'int\u00e9gration Z-Wave JS avec le module compl\u00e9mentaire Z-Wave JS"
             },
             "install_addon": {

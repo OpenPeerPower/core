@@ -88,7 +88,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
         """Read current status of the alarm and translate it into HA status."""
 
         # Default - disarmed:
-       .opp_alarm_status = STATE_ALARM_DISARMED
+        opp.alarm_status = STATE_ALARM_DISARMED
 
         if not self._satel.connected:
             return None
@@ -113,7 +113,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
                 satel_state in self._satel.partition_states
                 and self._partition_id in self._satel.partition_states[satel_state]
             ):
-               .opp_alarm_status = ha_state
+                opp.alarm_status = ha_state
                 break
 
         return.opp_alarm_status

@@ -50,7 +50,7 @@ async def async_setup_opp, config):
     conf = config[DOMAIN]
 
     kafka = opp.data[DOMAIN] = KafkaManager(
-        opp,
+        opp.
         conf[CONF_IP_ADDRESS],
         conf[CONF_PORT],
         conf[CONF_TOPIC],
@@ -60,7 +60,7 @@ async def async_setup_opp, config):
         conf.get(CONF_PASSWORD),
     )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, kafka.shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, kafka.shutdown)
 
     await kafka.start()
 
@@ -85,7 +85,7 @@ class KafkaManager:
 
     def __init__(
         self,
-        opp,
+        opp.
         ip_address,
         port,
         topic,

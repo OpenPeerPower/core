@@ -71,12 +71,12 @@ async def async_setup_platform.opp, config):
             _LOGGER.error("Set telegram webhook failed %s", handler_url)
             return False
 
-   .opp.bus.async_listen_once(
+    opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, lambda event: bot.setWebhook(REMOVE_HANDLER_URL)
     )
-   .opp.http.register_view(
+    opp.http.register_view(
         BotPushReceiver(
-            opp, config[CONF_ALLOWED_CHAT_IDS], config[CONF_TRUSTED_NETWORKS]
+            opp. config[CONF_ALLOWED_CHAT_IDS], config[CONF_TRUSTED_NETWORKS]
         )
     )
     return True

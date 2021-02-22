@@ -54,7 +54,7 @@ COMPONENT_PREFIX = "openpeerpower.components.smartthings."
 
 async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
     """Set up the SmartThings platform and prerequisites."""
-   .opp.config.components.add(DOMAIN)
+    opp.config.components.add(DOMAIN)
     config_entry = ConfigEntry(
         2,
         DOMAIN,
@@ -65,10 +65,10 @@ async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
         system_options={},
     )
     broker = DeviceBroker(
-        opp, config_entry, Mock(), Mock(), devices or [], scenes or []
+        opp. config_entry, Mock(), Mock(), devices or [], scenes or []
     )
 
-   .opp.data[DOMAIN] = {DATA_BROKERS: {config_entry.entry_id: broker}}
+    opp.data[DOMAIN] = {DATA_BROKERS: {config_entry.entry_id: broker}}
     await opp.config_entries.async_forward_entry_setup(config_entry, platform)
     await opp.async_block_till_done()
     return config_entry
@@ -77,9 +77,9 @@ async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
 @pytest.fixture(autouse=True)
 async def setup_component.opp, config_file, opp_storage):
     """Load the SmartThing component."""
-   .opp_storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
+    opp.storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://test.local"},
     )
     await async_setup_component.opp, "smartthings", {})
@@ -116,7 +116,7 @@ async def app_fixture.opp, config_file):
     app.description = f".opp.config.location_name} at https://test.local"
     app.single_instance = True
     app.webhook_target_url = webhook.async_generate_url(
-        opp, opp.data[DOMAIN][CONF_WEBHOOK_ID]
+        opp. opp.data[DOMAIN][CONF_WEBHOOK_ID]
     )
 
     settings = Mock(AppSettings)

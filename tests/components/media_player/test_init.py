@@ -10,7 +10,7 @@ from openpeerpower.setup import async_setup_component
 async def test_get_image.opp, opp_ws_client, caplog):
     """Test get image via WS command."""
     await async_setup_component(
-        opp, "media_player", {"media_player": {"platform": "demo"}}
+        opp. "media_player", {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -43,7 +43,7 @@ async def test_get_image.opp, opp_ws_client, caplog):
 async def test_get_image_http.opp, aiohttp_client):
     """Test get image via http command."""
     await async_setup_component(
-        opp, "media_player", {"media_player": {"platform": "demo"}}
+        opp. "media_player", {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -71,7 +71,7 @@ async def test_get_image_http_remote.opp, aiohttp_client):
         return_value=True,
     ):
         await async_setup_component(
-            opp, "media_player", {"media_player": {"platform": "demo"}}
+            opp. "media_player", {"media_player": {"platform": "demo"}}
         )
         await opp.async_block_till_done()
 
@@ -94,7 +94,7 @@ async def test_get_image_http_remote.opp, aiohttp_client):
 async def test_get_async_get_browse_image.opp, aiohttp_client, opp_ws_client):
     """Test get browse image."""
     await async_setup_component(
-        opp, "media_player", {"media_player": {"platform": "demo"}}
+        opp. "media_player", {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -131,7 +131,7 @@ def test_deprecated_base_class(caplog):
 async def test_media_browse.opp, opp_ws_client):
     """Test browsing media."""
     await async_setup_component(
-        opp, "media_player", {"media_player": {"platform": "demo"}}
+        opp. "media_player", {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 

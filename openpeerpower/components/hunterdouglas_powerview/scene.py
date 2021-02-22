@@ -30,8 +30,8 @@ PLATFORM_SCHEMA = vol.Schema(
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Import platform from yaml."""
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_HOST: config[HUB_ADDRESS]},

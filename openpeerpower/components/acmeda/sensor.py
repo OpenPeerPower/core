@@ -17,12 +17,12 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     @callback
     def async_add_acmeda_sensors():
         async_add_acmeda_entities(
-            opp, AcmedaBattery, config_entry, current, async_add_entities
+            opp. AcmedaBattery, config_entry, current, async_add_entities
         )
 
     hub.cleanup_callbacks.append(
         async_dispatcher_connect(
-            opp,
+            opp.
             ACMEDA_HUB_UPDATE.format(config_entry.entry_id),
             async_add_acmeda_sensors,
         )

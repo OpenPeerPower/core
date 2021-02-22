@@ -37,13 +37,13 @@ def update_events.opp):
     def async_capture(event):
         events.append(event.data)
 
-   .opp.bus.async_listen(device_registry.EVENT_DEVICE_REGISTRY_UPDATED, async_capture)
+    opp.bus.async_listen(device_registry.EVENT_DEVICE_REGISTRY_UPDATED, async_capture)
 
     return events
 
 
 async def test_get_or_create_returns_same_entry(
-    opp, registry, area_registry, update_events
+    opp. registry, area_registry, update_events
 ):
     """Make sure we do not duplicate entries."""
     entry = registry.async_get_or_create(
@@ -161,7 +161,7 @@ async def test_multiple_config_entries(registry):
 @pytest.mark.parametrize("load_registries", [False])
 async def test_loading_from_storage.opp, opp_storage):
     """Test loading stored devices on start."""
-   .opp_storage[device_registry.STORAGE_KEY] = {
+    opp.storage[device_registry.STORAGE_KEY] = {
         "version": device_registry.STORAGE_VERSION,
         "data": {
             "devices": [
@@ -846,13 +846,13 @@ async def test_cleanup_device_registry_removes_expired_orphaned_devices.opp, reg
 
 async def test_cleanup_startup.opp):
     """Test we run a cleanup on startup."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
     await device_registry.async_get_registry.opp)
 
     with patch(
         "openpeerpower.helpers.device_registry.Debouncer.async_call"
     ) as mock_call:
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert len(mock_call.mock_calls) == 1
@@ -1180,7 +1180,7 @@ async def test_get_or_create_sets_default_values.opp, registry):
 
 
 async def test_verify_suggested_area_does_not_overwrite_area_id(
-    opp, registry, area_registry
+    opp. registry, area_registry
 ):
     """Make sure suggested area does not override a set area id."""
     game_room_area = area_registry.async_create("Game Room")

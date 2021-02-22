@@ -56,7 +56,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
 
             def waitfor():
                 debugpy.wait_for_client()
-               .opp.loop.call_soon_threadsafe(ready.set)
+                opp.loop.call_soon_threadsafe(ready.set)
 
             Thread(target=waitfor).start()
 
@@ -69,7 +69,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
             )
 
     async_register_admin_service(
-        opp, DOMAIN, SERVICE_START, debug_start, schema=vol.Schema({})
+        opp. DOMAIN, SERVICE_START, debug_start, schema=vol.Schema({})
     )
 
     # If set to start the debugger on startup, do so

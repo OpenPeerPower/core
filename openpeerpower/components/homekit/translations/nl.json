@@ -5,7 +5,7 @@
         },
         "step": {
             "pairing": {
-                "description": "Zodra de {name} klaar is, is het koppelen beschikbaar in \"Meldingen\" als \"HomeKit Bridge Setup\".",
+                "description": "Zodra de {name} klaar is, is het  opp.len beschikbaar in \"Meldingen\" als \"HomeKit Bridge Setup\".",
                 "title": "Koppel HomeKit Bridge"
             },
             "user": {
@@ -23,7 +23,7 @@
             "advanced": {
                 "data": {
                     "auto_start": "Autostart (uitschakelen bij gebruik van Z-Wave of een ander vertraagd startsysteem)",
-                    "safe_mode": "Veilige modus (alleen inschakelen als het koppelen mislukt)"
+                    "safe_mode": "Veilige modus (alleen inschakelen als het  opp.len mislukt)"
                 },
                 "description": "Deze instellingen hoeven alleen te worden aangepast als HomeKit niet functioneert.",
                 "title": "Geavanceerde configuratie"

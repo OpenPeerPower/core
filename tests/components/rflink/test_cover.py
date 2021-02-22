@@ -39,7 +39,7 @@ async def test_default_setup_opp, monkeypatch):
     """Test all basic functionality of the RFLink cover component."""
     # setup mocking rflink module
     event_callback, create, protocol, _ = await mock_rflink(
-        opp, CONFIG, DOMAIN, monkeypatch
+        opp. CONFIG, DOMAIN, monkeypatch
     )
 
     # make sure arguments are passed
@@ -89,8 +89,8 @@ async def test_default_setup_opp, monkeypatch):
     assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
     # test changing state from HA propagates to RFLink
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -99,8 +99,8 @@ async def test_default_setup_opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "DOWN"
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -134,7 +134,7 @@ async def test_firing_bus_event.opp, monkeypatch):
     def listener(event):
         calls.append(event)
 
-   .opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
+    opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "down"})
@@ -162,8 +162,8 @@ async def test_signal_repetitions.opp, monkeypatch):
     _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
     # test if signal repetition is performed according to configuration
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -174,8 +174,8 @@ async def test_signal_repetitions.opp, monkeypatch):
     assert protocol.send_command_ack.call_count == 2
 
     # test if default apply to configured devices
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
         )
     )
@@ -202,13 +202,13 @@ async def test_signal_repetitions_alternation.opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
         )
     )
@@ -234,14 +234,14 @@ async def test_signal_repetitions_cancelling.opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -361,10 +361,10 @@ async def test_restore_state.opp, monkeypatch):
     }
 
     mock_restore_cache(
-        opp, (State(f"{DOMAIN}.c1", STATE_OPEN), State(f"{DOMAIN}.c2", STATE_CLOSED))
+        opp. (State(f"{DOMAIN}.c1", STATE_OPEN), State(f"{DOMAIN}.c2", STATE_CLOSED))
     )
 
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     # setup mocking rflink module
     _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
@@ -422,7 +422,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     # setup mocking rflink module
     event_callback, _, protocol, _ = await mock_rflink(
-        opp, config, DOMAIN, monkeypatch
+        opp. config, DOMAIN, monkeypatch
     )
 
     # test default state of cover loaded from config
@@ -606,8 +606,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the close command from HA should result
     # in an 'DOWN' command sent to a non-newkaku device
     # that has its type set to 'standard'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_CLOSE_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_standard"},
@@ -623,8 +623,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the open command from HA should result
     # in an 'UP' command sent to a non-newkaku device
     # that has its type set to 'standard'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_OPEN_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_standard"},
@@ -640,8 +640,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the close command from HA should result
     # in an 'DOWN' command sent to a non-newkaku device
     # that has its type not specified.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_none"}
         )
     )
@@ -655,8 +655,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the open command from HA should result
     # in an 'UP' command sent to a non-newkaku device
     # that has its type not specified.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_none"}
         )
     )
@@ -670,8 +670,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the close command from HA should result
     # in an 'UP' command sent to a non-newkaku device
     # that has its type set to 'inverted'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_CLOSE_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_inverted"},
@@ -687,8 +687,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the open command from HA should result
     # in an 'DOWN' command sent to a non-newkaku device
     # that has its type set to 'inverted'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_OPEN_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_inverted"},
@@ -704,8 +704,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the close command from HA should result
     # in an 'DOWN' command sent to a newkaku device
     # that has its type set to 'standard'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_CLOSE_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_standard"},
@@ -721,8 +721,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the open command from HA should result
     # in an 'UP' command sent to a newkaku device
     # that has its type set to 'standard'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_OPEN_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_standard"},
@@ -738,8 +738,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the close command from HA should result
     # in an 'UP' command sent to a newkaku device
     # that has its type not specified.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_none"}
         )
     )
@@ -753,8 +753,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the open command from HA should result
     # in an 'DOWN' command sent to a newkaku device
     # that has its type not specified.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_none"}
         )
     )
@@ -768,8 +768,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the close command from HA should result
     # in an 'UP' command sent to a newkaku device
     # that has its type set to 'inverted'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_CLOSE_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_inverted"},
@@ -785,8 +785,8 @@ async def test_inverted_cover.opp, monkeypatch):
     # Sending the open command from HA should result
     # in an 'DOWN' command sent to a newkaku device
     # that has its type set to 'inverted'.
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_OPEN_COVER,
             {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_inverted"},

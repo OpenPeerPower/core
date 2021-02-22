@@ -53,15 +53,15 @@ SOMFY_COMPONENTS = ["climate", "cover", "sensor", "switch"]
 
 async def async_setup_opp, config):
     """Set up the Somfy component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     domain_config = config.get(DOMAIN, {})
-   .opp.data[DOMAIN][CONF_OPTIMISTIC] = domain_config.get(CONF_OPTIMISTIC, False)
+    opp.data[DOMAIN][CONF_OPTIMISTIC] = domain_config.get(CONF_OPTIMISTIC, False)
 
     if CONF_CLIENT_ID in domain_config:
         config_flow.SomfyFlowHandler.async_register_implementation(
-            opp,
+            opp.
             config_entry_oauth2_flow.LocalOAuth2Implementation(
-                opp,
+                opp.
                 DOMAIN,
                 config[DOMAIN][CONF_CLIENT_ID],
                 config[DOMAIN][CONF_CLIENT_SECRET],
@@ -77,13 +77,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Somfy from a config entry."""
     # Backwards compat
     if "auth_implementation" not in entry.data:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, "auth_implementation": DOMAIN}
         )
 
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
     )
 
@@ -100,7 +100,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         return {dev.id: dev for dev in devices}
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="somfy device update",
         update_method=_update_all_devices,
@@ -135,8 +135,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
 
     for component in SOMFY_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -144,10 +144,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-   .opp.data[DOMAIN].pop(API, None)
+    opp.data[DOMAIN].pop(API, None)
     await asyncio.gather(
         *[
-           .opp.config_entries.async_forward_entry_unload(entry, component)
+            opp.config_entries.async_forward_entry_unload(entry, component)
             for component in SOMFY_COMPONENTS
         ]
     )

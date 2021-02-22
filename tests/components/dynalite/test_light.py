@@ -34,7 +34,7 @@ async def test_light_setup_opp, mock_device):
     assert entity_state.attributes["brightness"] == mock_device.brightness
     assert entity_state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_BRIGHTNESS
     await run_service_tests(
-        opp,
+        opp.
         mock_device,
         "light",
         [

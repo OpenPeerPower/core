@@ -90,8 +90,8 @@ def setup_opp, config):
     queue_listener = QueueListener.opp)
     queue = queue_listener.queue
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, queue_listener.start_handler)
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, queue_listener.stop_handler)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, queue_listener.start_handler)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, queue_listener.stop_handler)
 
     def _setup_listener(listener_conf):
         bucket = listener_conf[CONF_LISTEN_BUCKET]
@@ -111,8 +111,8 @@ def setup_opp, config):
             events,
         )
 
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, minio_listener.start_handler)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, minio_listener.stop_handler)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_START, minio_listener.start_handler)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, minio_listener.stop_handler)
 
     for listen_conf in conf[CONF_LISTEN]:
         _setup_listener(listen_conf)
@@ -157,9 +157,9 @@ def setup_opp, config):
 
         minio_client.remove_object(bucket, key)
 
-   .opp.services.register(DOMAIN, "put", put_file, schema=BUCKET_KEY_FILE_SCHEMA)
-   .opp.services.register(DOMAIN, "get", get_file, schema=BUCKET_KEY_FILE_SCHEMA)
-   .opp.services.register(DOMAIN, "remove", remove_file, schema=BUCKET_KEY_SCHEMA)
+    opp.services.register(DOMAIN, "put", put_file, schema=BUCKET_KEY_FILE_SCHEMA)
+    opp.services.register(DOMAIN, "get", get_file, schema=BUCKET_KEY_FILE_SCHEMA)
+    opp.services.register(DOMAIN, "remove", remove_file, schema=BUCKET_KEY_SCHEMA)
 
     return True
 

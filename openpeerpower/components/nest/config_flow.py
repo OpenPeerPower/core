@@ -43,9 +43,9 @@ def register_flow_implementation.opp, domain, name, gen_authorize_url, convert_c
     convert_code: Coroutine function to convert a code to an access token.
     """
     if DATA_FLOW_IMPL not in.opp.data:
-       .opp.data[DATA_FLOW_IMPL] = OrderedDict()
+        opp.data[DATA_FLOW_IMPL] = OrderedDict()
 
-   .opp.data[DATA_FLOW_IMPL][domain] = {
+    opp.data[DATA_FLOW_IMPL][domain] = {
         "domain": domain,
         "name": name,
         "gen_authorize_url": gen_authorize_url,
@@ -85,8 +85,8 @@ class NestFlowHandler(
     def register_sdm_api(cls, opp):
         """Configure the flow handler to use the SDM API."""
         if DOMAIN not in.opp.data:
-           .opp.data[DOMAIN] = {}
-       .opp.data[DOMAIN][DATA_SDM] = {}
+            opp.data[DOMAIN] = {}
+        opp.data[DOMAIN][DATA_SDM] = {}
 
     def is_sdm_api(self):
         """Return true if this flow is setup to use SDM API."""

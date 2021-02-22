@@ -71,8 +71,8 @@ async def test_step_import.opp):
 
 async def test_step_user.opp):
     """Test that the user step works."""
-   .opp.config.latitude = -41.2
-   .opp.config.longitude = 174.7
+    opp.config.latitude = -41.2
+    opp.config.longitude = 174.7
     conf = {CONF_RADIUS: 25, CONF_MMI: 4}
 
     with patch(

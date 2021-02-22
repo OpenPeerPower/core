@@ -54,7 +54,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config: ConfigType,
     async_add_entities,
     discovery_info: Optional[DiscoveryInfoType] = None,

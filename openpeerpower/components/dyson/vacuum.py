@@ -43,12 +43,12 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Dyson 360 Eye robot vacuum platform."""
     _LOGGER.debug("Creating new Dyson 360 Eye robot vacuum")
     if DYSON_360_EYE_DEVICES not in.opp.data:
-       .opp.data[DYSON_360_EYE_DEVICES] = []
+        opp.data[DYSON_360_EYE_DEVICES] = []
 
     # Get Dyson Devices from parent component
     for device in [d for d in.opp.data[DYSON_DEVICES] if isinstance(d, Dyson360Eye)]:
         dyson_entity = Dyson360EyeDevice(device)
-       .opp.data[DYSON_360_EYE_DEVICES].append(dyson_entity)
+        opp.data[DYSON_360_EYE_DEVICES].append(dyson_entity)
 
     add_entities.opp.data[DYSON_360_EYE_DEVICES])
     return True

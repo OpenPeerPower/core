@@ -30,11 +30,11 @@ async def test_abort_if_existing_entry.opp):
 
 
 async def test_full_flow(
-    opp, aiohttp_client, aioclient_mock, current_request_with_host
+    opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check full flow."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {CONF_CLIENT_ID: CLIENT_ID, CONF_CLIENT_SECRET: CLIENT_SECRET},
@@ -46,7 +46,7 @@ async def test_full_flow(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
-        opp,
+        opp.
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

@@ -19,7 +19,7 @@ async def setup_component.opp):
     with patch.object(hue, "async_setup_entry", return_value=True):
         assert (
             await async_setup_component(
-                opp,
+                opp.
                 hue.DOMAIN,
                 {},
             )
@@ -28,7 +28,7 @@ async def setup_component.opp):
 
 
 async def test_hue_activate_scene_both_responds(
-    opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
+    opp. mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
 ):
     """Test that makes both bridges successfully activate a scene."""
 
@@ -54,7 +54,7 @@ async def test_hue_activate_scene_both_responds(
 
 
 async def test_hue_activate_scene_one_responds(
-    opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
+    opp. mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
 ):
     """Test that makes only one bridge successfully activate a scene."""
 
@@ -80,7 +80,7 @@ async def test_hue_activate_scene_one_responds(
 
 
 async def test_hue_activate_scene_zero_responds(
-    opp, mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
+    opp. mock_bridge1, mock_bridge2, mock_config_entry1, mock_config_entry2
 ):
     """Test that makes no bridge successfully activate a scene."""
 
@@ -109,7 +109,7 @@ async def test_hue_activate_scene_zero_responds(
 async def setup_bridge.opp, mock_bridge, config_entry):
     """Load the Hue light platform with the provided bridge."""
     mock_bridge.config_entry = config_entry
-   .opp.data[hue.DOMAIN][config_entry.entry_id] = mock_bridge
+    opp.data[hue.DOMAIN][config_entry.entry_id] = mock_bridge
     await opp.config_entries.async_forward_entry_setup(config_entry, "light")
     # To flush out the service call to update the group
     await opp.async_block_till_done()
@@ -155,7 +155,7 @@ def mock_bridge2.opp):
 def create_mock_bridge.opp):
     """Create a mock Hue bridge."""
     bridge = Mock(
-       .opp.opp,
+        opp.opp,
         available=True,
         authorized=True,
         allow_unreachable=False,

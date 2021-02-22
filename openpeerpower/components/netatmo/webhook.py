@@ -72,11 +72,11 @@ def async_evaluate_event.opp, event_data):
 @callback
 def async_send_event.opp, event_type, data):
     """Send events."""
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         event_type=NETATMO_EVENT, event_data={"type": event_type, "data": data}
     )
     async_dispatcher_send(
-        opp,
+        opp.
         f"signal-{DOMAIN}-webhook-{event_type}",
         {"type": event_type, "data": data},
     )

@@ -57,7 +57,7 @@ DATA_STOP_MQTT_CLIENT = "ozw_stop_mqtt_client"
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Initialize basic config of ozw component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -67,12 +67,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     ozw_data[DATA_UNSUBSCRIBE] = []
 
     data_nodes = {}
-   .opp.data[DOMAIN][NODES_VALUES] = data_values = {}
+    opp.data[DOMAIN][NODES_VALUES] = data_values = {}
     removed_nodes = []
     manager_options = {"topic_prefix": f"{TOPIC_OPENZWAVE}/"}
 
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(entry, unique_id=DOMAIN)
+        opp.config_entries.async_update_entry(entry, unique_id=DOMAIN)
 
     if entry.data.get(CONF_USE_ADDON):
         # Do not use MQTT integration. Use own MQTT client.
@@ -115,7 +115,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     options = OZWOptions(**manager_options)
     manager = OZWManager(options)
 
-   .opp.data[DOMAIN][MANAGER] = manager
+    opp.data[DOMAIN][MANAGER] = manager
 
     @callback
     def async_node_added(node):
@@ -131,7 +131,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         data_nodes[node.id] = node
         # notify devices about the node change
         if node.id not in removed_nodes:
-           .opp.async_create_task(async_handle_node_update.opp, node))
+            opp.async_create_task(async_handle_node_update.opp, node))
 
     @callback
     def async_node_removed(node):
@@ -141,7 +141,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         # cleanup device/entity registry if we know this node is permanently deleted
         # entities itself are removed by the values logic
         if node.id in removed_nodes:
-           .opp.async_create_task(async_handle_remove_node.opp, node))
+            opp.async_create_task(async_handle_remove_node.opp, node))
             removed_nodes.remove(node.id)
 
     @callback
@@ -267,7 +267,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     async def start_platforms():
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_setup(entry, component)
+                opp.config_entries.async_forward_entry_setup(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -286,7 +286,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                     pass
 
             ozw_data[DATA_UNSUBSCRIBE].append(
-               .opp.bus.async_listen_once(
+                opp.bus.async_listen_once(
                     EVENT_OPENPEERPOWER_STOP, async_stop_mqtt_client
                 )
             )
@@ -295,11 +295,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         else:
             ozw_data[DATA_UNSUBSCRIBE].append(
                 await mqtt.async_subscribe(
-                    opp, f"{manager.options.topic_prefix}#", async_receive_message
+                    opp. f"{manager.options.topic_prefix}#", async_receive_message
                 )
             )
 
-   .opp.async_create_task(start_platforms())
+    opp.async_create_task(start_platforms())
 
     return True
 
@@ -310,7 +310,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -328,7 +328,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         ]
         await async_stop_mqtt_client()
 
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN].pop(entry.entry_id)
 
     return True
 
@@ -420,7 +420,7 @@ def async_handle_scene_activated.opp: OpenPeerPower, scene_value: OZWValue):
         scene_value_id,
     )
     # Simply forward it to the.opp event bus
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         const.EVENT_SCENE_ACTIVATED,
         {
             const.ATTR_INSTANCE_ID: ozw_instance_id,

@@ -169,7 +169,7 @@ class Panel:
 @bind.opp
 @callback
 def async_register_built_in_panel(
-    opp,
+    opp.
     component_name,
     sidebar_title=None,
     sidebar_icon=None,
@@ -196,7 +196,7 @@ def async_register_built_in_panel(
 
     panels[panel.frontend_url_path] = panel
 
-   .opp.bus.async_fire(EVENT_PANELS_UPDATED)
+    opp.bus.async_fire(EVENT_PANELS_UPDATED)
 
 
 @bind.opp
@@ -208,7 +208,7 @@ def async_remove_panel.opp, frontend_url_path):
     if panel is None:
         _LOGGER.warning("Removing unknown panel %s", frontend_url_path)
 
-   .opp.bus.async_fire(EVENT_PANELS_UPDATED)
+    opp.bus.async_fire(EVENT_PANELS_UPDATED)
 
 
 def add_extra_js_url.opp, url, es5=False):
@@ -228,7 +228,7 @@ def add_manifest_json_key(key, val):
 def _frontend_root(dev_repo_path):
     """Return root path to the frontend files."""
     if dev_repo_path is not None:
-        return pathlib.Path(dev_repo_path) / .opp_frontend"
+        return pathlib.Path(dev_repo_path) /  opp.frontend"
     # Keep import here so that we can import frontend without installing reqs
     # pylint: disable=import-outside-toplevel
     import.opp_frontend
@@ -239,11 +239,11 @@ def _frontend_root(dev_repo_path):
 async def async_setup_opp, config):
     """Set up the serving of the frontend."""
     await async_setup_frontend_storage.opp)
-   .opp.components.websocket_api.async_register_command(websocket_get_panels)
-   .opp.components.websocket_api.async_register_command(websocket_get_themes)
-   .opp.components.websocket_api.async_register_command(websocket_get_translations)
-   .opp.components.websocket_api.async_register_command(websocket_get_version)
-   .opp.http.register_view(ManifestJSONView)
+    opp.components.websocket_api.async_register_command(websocket_get_panels)
+    opp.components.websocket_api.async_register_command(websocket_get_themes)
+    opp.components.websocket_api.async_register_command(websocket_get_translations)
+    opp.components.websocket_api.async_register_command(websocket_get_version)
+    opp.http.register_view(ManifestJSONView)
 
     conf = config.get(DOMAIN, {})
 
@@ -266,36 +266,36 @@ async def async_setup_opp, config):
         ("frontend_latest", not is_dev),
         ("frontend_es5", not is_dev),
     ):
-       .opp.http.register_static_path(f"/{path}", str(root_path / path), should_cache)
+        opp.http.register_static_path(f"/{path}", str(root_path / path), should_cache)
 
-   .opp.http.register_static_path(
+    opp.http.register_static_path(
         "/auth/authorize", str(root_path / "authorize.html"), False
     )
     # https://wicg.github.io/change-password-url/
-   .opp.http.register_redirect(
+    opp.http.register_redirect(
         "/.well-known/change-password", "/profile", redirect_exc=web.HTTPFound
     )
 
     local = opp.config.path("www")
     if os.path.isdir(local):
-       .opp.http.register_static_path("/local", local, not is_dev)
+        opp.http.register_static_path("/local", local, not is_dev)
 
-   .opp.http.app.router.register_resource(IndexView(repo_path, opp))
+    opp.http.app.router.register_resource(IndexView(repo_path, opp))
 
     async_register_built_in_panel.opp, "profile")
 
     # To smooth transition to new urls, add redirects to new urls of dev tools
     # Added June 27, 2019. Can be removed in 2021.
     for panel in ("event", "service", "state", "template"):
-       .opp.http.register_redirect(f"/dev-{panel}", f"/developer-tools/{panel}")
+        opp.http.register_redirect(f"/dev-{panel}", f"/developer-tools/{panel}")
     for panel in ("logs", "info", "mqtt"):
         # Can be removed in 2021.
-       .opp.http.register_redirect(f"/dev-{panel}", f"/config/{panel}")
+        opp.http.register_redirect(f"/dev-{panel}", f"/config/{panel}")
         # Added June 20 2020. Can be removed in 2022.
-       .opp.http.register_redirect(f"/developer-tools/{panel}", f"/config/{panel}")
+        opp.http.register_redirect(f"/developer-tools/{panel}", f"/config/{panel}")
 
     async_register_built_in_panel(
-        opp,
+        opp.
         "developer-tools",
         require_admin=True,
         sidebar_title="developer_tools",
@@ -303,13 +303,13 @@ async def async_setup_opp, config):
     )
 
     if DATA_EXTRA_MODULE_URL not in.opp.data:
-       .opp.data[DATA_EXTRA_MODULE_URL] = set()
+        opp.data[DATA_EXTRA_MODULE_URL] = set()
 
     for url in conf.get(CONF_EXTRA_MODULE_URL, []):
         add_extra_js_url.opp, url)
 
     if DATA_EXTRA_JS_URL_ES5 not in.opp.data:
-       .opp.data[DATA_EXTRA_JS_URL_ES5] = set()
+        opp.data[DATA_EXTRA_JS_URL_ES5] = set()
 
     for url in conf.get(CONF_EXTRA_JS_URL_ES5, []):
         add_extra_js_url.opp, url, True)
@@ -321,7 +321,7 @@ async def async_setup_opp, config):
 
 async def _async_setup_themes.opp, themes):
     """Set up themes data and services."""
-   .opp.data[DATA_THEMES] = themes or {}
+    opp.data[DATA_THEMES] = themes or {}
 
     store = opp.data[DATA_THEMES_STORE] = opp.helpers.storage.Store(
         THEMES_STORAGE_VERSION, THEMES_STORAGE_KEY
@@ -332,12 +332,12 @@ async def _async_setup_themes.opp, themes):
     dark_theme_name = theme_data.get(DATA_DEFAULT_DARK_THEME)
 
     if theme_name == DEFAULT_THEME or theme_name in.opp.data[DATA_THEMES]:
-       .opp.data[DATA_DEFAULT_THEME] = theme_name
+        opp.data[DATA_DEFAULT_THEME] = theme_name
     else:
-       .opp.data[DATA_DEFAULT_THEME] = DEFAULT_THEME
+        opp.data[DATA_DEFAULT_THEME] = DEFAULT_THEME
 
     if dark_theme_name == DEFAULT_THEME or dark_theme_name in.opp.data[DATA_THEMES]:
-       .opp.data[DATA_DEFAULT_DARK_THEME] = dark_theme_name
+        opp.data[DATA_DEFAULT_DARK_THEME] = dark_theme_name
 
     @callback
     def update_theme_and_fire_event():
@@ -350,7 +350,7 @@ async def _async_setup_themes.opp, themes):
                 "app-header-background-color",
                 themes[name].get(PRIMARY_COLOR, DEFAULT_THEME_COLOR),
             )
-       .opp.bus.async_fire(EVENT_THEMES_UPDATED)
+        opp.bus.async_fire(EVENT_THEMES_UPDATED)
 
     @callback
     def set_theme(call):
@@ -375,7 +375,7 @@ async def _async_setup_themes.opp, themes):
             _LOGGER.info("Theme %s set as default %s theme", name, mode)
             to_set = name
 
-       .opp.data[theme_key] = to_set
+        opp.data[theme_key] = to_set
         store.async_delay_save(
             lambda: {
                 DATA_DEFAULT_THEME:.opp.data[DATA_DEFAULT_THEME],
@@ -389,18 +389,18 @@ async def _async_setup_themes.opp, themes):
         """Reload themes."""
         config = await async.opp_config_yaml.opp)
         new_themes = config[DOMAIN].get(CONF_THEMES, {})
-       .opp.data[DATA_THEMES] = new_themes
+        opp.data[DATA_THEMES] = new_themes
         if opp.data[DATA_DEFAULT_THEME] not in new_themes:
-           .opp.data[DATA_DEFAULT_THEME] = DEFAULT_THEME
+            opp.data[DATA_DEFAULT_THEME] = DEFAULT_THEME
         if (
-           .opp.data.get(DATA_DEFAULT_DARK_THEME)
+            opp.data.get(DATA_DEFAULT_DARK_THEME)
             and.opp.data.get(DATA_DEFAULT_DARK_THEME) not in new_themes
         ):
-           .opp.data[DATA_DEFAULT_DARK_THEME] = None
+            opp.data[DATA_DEFAULT_DARK_THEME] = None
         update_theme_and_fire_event()
 
     service.async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_SET_THEME,
         set_theme,
@@ -413,7 +413,7 @@ async def _async_setup_themes.opp, themes):
     )
 
     service.async_register_admin_service(
-        opp, DOMAIN, SERVICE_RELOAD_THEMES, reload_themes
+        opp. DOMAIN, SERVICE_RELOAD_THEMES, reload_themes
     )
 
 
@@ -490,7 +490,7 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def get(self, request: web.Request) -> web.Response:
         """Serve the index page for panel pages."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         if not.opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})
@@ -592,7 +592,7 @@ def websocket_get_themes.opp, connection, msg):
 async def websocket_get_translations.opp, connection, msg):
     """Handle get translations command."""
     resources = await async_get_translations(
-        opp,
+        opp.
         msg["language"],
         msg["category"],
         msg.get("integration"),

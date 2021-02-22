@@ -70,13 +70,13 @@ async def async_setup_opp, config):
     """Set up the MyLink platform."""
 
     conf = config.get(DOMAIN)
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if not conf:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
     )
@@ -115,15 +115,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_SOMFY_MYLINK: somfy_mylink,
         MYLINK_STATUS: mylink_status,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
     for component in SOMFY_MYLINK_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -146,12 +146,12 @@ def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: Config
             modified = True
 
     if modified:
-       .opp.config_entries.async_update_entry(entry, data=data, options=options)
+        opp.config_entries.async_update_entry(entry, data=data, options=options)
 
 
 @callback
 def _async_migrate_entity_config(
-    opp: OpenPeerPower, entry: ConfigEntry, mylink_status: dict
+    opp. OpenPeerPower, entry: ConfigEntry, mylink_status: dict
 ):
     if CONF_ENTITY_CONFIG not in entry.options:
         return
@@ -174,7 +174,7 @@ def _async_migrate_entity_config(
         if legacy_key in options:
             del options[legacy_key]
 
-   .opp.config_entries.async_update_entry(entry, data=entry.data, options=options)
+    opp.config_entries.async_update_entry(entry, data=entry.data, options=options)
 
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
@@ -182,15 +182,15 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in SOMFY_MYLINK_COMPONENTS
             ]
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

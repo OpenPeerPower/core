@@ -512,7 +512,7 @@ async def test_import_existing_config_entry.opp, mock_panel):
     }
 
     # utilize a global access token this time
-   .opp.data[config_flow.DOMAIN] = {"access_token": "SUPERSECRETTOKEN"}
+    opp.data[config_flow.DOMAIN] = {"access_token": "SUPERSECRETTOKEN"}
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
         context={"source": "import"},

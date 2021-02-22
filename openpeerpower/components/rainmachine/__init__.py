@@ -50,7 +50,7 @@ PLATFORMS = ["binary_sensor", "sensor", "switch"]
 
 
 async def async_update_programs_and_zones(
-    opp: OpenPeerPower, entry: ConfigEntry
+    opp. OpenPeerPower, entry: ConfigEntry
 ) -> None:
     """Update program and zone DataUpdateCoordinators.
 
@@ -59,10 +59,10 @@ async def async_update_programs_and_zones(
     """
     await asyncio.gather(
         *[
-           .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+            opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
                 DATA_PROGRAMS
             ].async_refresh(),
-           .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+            opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
                 DATA_ZONES
             ].async_refresh(),
         ]
@@ -71,13 +71,13 @@ async def async_update_programs_and_zones(
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the RainMachine component."""
-   .opp.data[DOMAIN] = {DATA_CONTROLLER: {}, DATA_COORDINATOR: {}, DATA_LISTENER: {}}
+    opp.data[DOMAIN] = {DATA_CONTROLLER: {}, DATA_COORDINATOR: {}, DATA_LISTENER: {}}
     return True
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up RainMachine as config entry."""
-   .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
+    opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
 
     entry_updates = {}
     if not entry.unique_id:
@@ -93,7 +93,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             CONF_ZONE_RUN_TIME: data.pop(CONF_ZONE_RUN_TIME),
         }
     if entry_updates:
-       .opp.config_entries.async_update_entry(entry, **entry_updates)
+        opp.config_entries.async_update_entry(entry, **entry_updates)
 
     websession = aiohttp_client.async_get_clientsession.opp)
     client = Client(session=websession)
@@ -145,7 +145,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api_category
         ] = DataUpdateCoordinator(
-            opp,
+            opp.
             LOGGER,
             name=f'{controller.name} ("{api_category}")',
             update_interval=DEFAULT_UPDATE_INTERVAL,
@@ -156,11 +156,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     await asyncio.gather(*controller_init_tasks)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-   .opp.data[DOMAIN][DATA_LISTENER] = entry.add_update_listener(async_reload_entry)
+    opp.data[DOMAIN][DATA_LISTENER] = entry.add_update_listener(async_reload_entry)
 
     return True
 
@@ -170,13 +170,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
         cancel_listener = opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id)
         cancel_listener()
 

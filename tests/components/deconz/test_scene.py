@@ -35,7 +35,7 @@ async def test_scenes.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["groups"] = deepcopy(GROUPS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
 
     assert len.opp.states.async_all()) == 1

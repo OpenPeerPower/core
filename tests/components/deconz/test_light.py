@@ -118,7 +118,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
     data["groups"] = deepcopy(GROUPS)
     data["lights"] = deepcopy(LIGHTS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -287,7 +287,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
     data["groups"] = deepcopy(GROUPS)
     data["lights"] = deepcopy(LIGHTS)
     config_entry = await setup_deconz_integration(
-        opp,
+        opp.
         aioclient_mock,
         options={CONF_ALLOW_DECONZ_GROUPS: False},
         get_state_response=data,
@@ -299,7 +299,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
     assert.opp.states.get("light.light_group") is None
     assert.opp.states.get("light.empty_group") is None
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: True}
     )
     await opp.async_block_till_done()
@@ -307,7 +307,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
     assert len.opp.states.async_all()) == 6
     assert.opp.states.get("light.light_group")
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: False}
     )
     await opp.async_block_till_done()
@@ -366,7 +366,7 @@ async def test_lidl_christmas_light.opp, aioclient_mock):
         }
     }
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
 
     mock_deconz_put_request(aioclient_mock, config_entry.data, "/lights/0/state")
@@ -470,7 +470,7 @@ async def test_non_color_light_reports_color.opp, aioclient_mock):
         },
     }
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 

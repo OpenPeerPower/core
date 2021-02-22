@@ -371,12 +371,12 @@ async def async_setup_opp, config):
         return True
 
     conf = config[DOMAIN]
-   .opp.data[DATA_ZWAVE_CONFIG] = conf
-   .opp.data[DATA_ZWAVE_CONFIG_YAML_PRESENT] = True
+    opp.data[DATA_ZWAVE_CONFIG] = conf
+    opp.data[DATA_ZWAVE_CONFIG_YAML_PRESENT] = True
 
     if not.opp.config_entries.async_entries(DOMAIN):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": config_entries.SOURCE_IMPORT},
                 data={
@@ -416,7 +416,7 @@ async def async_setup_entry.opp, config_entry):
         config = {**config, *.opp.data[DATA_ZWAVE_CONFIG]}
 
     # Update.opp.data with merged config so we can access it elsewhere
-   .opp.data[DATA_ZWAVE_CONFIG] = config
+    opp.data[DATA_ZWAVE_CONFIG] = config
 
     # Load configuration
     use_debug = config.get(CONF_DEBUG, DEFAULT_DEBUG)
@@ -445,8 +445,8 @@ async def async_setup_entry.opp, config_entry):
 
     await opp.async_add_executor_job(options.lock)
     network = opp.data[DATA_NETWORK] = ZWaveNetwork(options, autostart=False)
-   .opp.data[DATA_DEVICES] = {}
-   .opp.data[DATA_ENTITY_VALUES] = []
+    opp.data[DATA_DEVICES] = {}
+    opp.data[DATA_ENTITY_VALUES] = []
 
     registry = await async_get_entity_registry.opp)
 
@@ -488,16 +488,16 @@ async def async_setup_entry.opp, config_entry):
                 continue
 
             values = ZWaveDeviceEntityValues(
-                opp, schema, value, config, device_config, registry
+                opp. schema, value, config, device_config, registry
             )
 
             # We create a new list and update the reference here so that
             # the list can be safely iterated over in the main thread
             new_values = opp.data[DATA_ENTITY_VALUES] + [values]
-           .opp.data[DATA_ENTITY_VALUES] = new_values
+            opp.data[DATA_ENTITY_VALUES] = new_values
 
     platform = EntityPlatform(
-       .opp.opp,
+        opp.opp,
         logger=_LOGGER,
         domain=DOMAIN,
         platform_name=DOMAIN,
@@ -524,17 +524,17 @@ async def async_setup_entry.opp, config_entry):
                 )
                 return
 
-           .opp.data[DATA_DEVICES][entity.unique_id] = entity
+            opp.data[DATA_DEVICES][entity.unique_id] = entity
             await platform.async_add_entities([entity])
 
         if entity.unique_id:
-           .opp.async_add_job(_add_node_to_component())
+            opp.async_add_job(_add_node_to_component())
             return
 
         @callback
         def _on_ready(sec):
             _LOGGER.info("Z-Wave node %d ready after %d seconds", entity.node_id, sec)
-           .opp.async_add_job(_add_node_to_component)
+            opp.async_add_job(_add_node_to_component)
 
         @callback
         def _on_timeout(sec):
@@ -543,9 +543,9 @@ async def async_setup_entry.opp, config_entry):
                 entity.node_id,
                 sec,
             )
-           .opp.async_add_job(_add_node_to_component)
+            opp.async_add_job(_add_node_to_component)
 
-       .opp.add_job(check_has_unique_id, entity, _on_ready, _on_timeout)
+        opp.add_job(check_has_unique_id, entity, _on_ready, _on_timeout)
 
     def node_removed(node):
         node_id = node.node_id
@@ -560,14 +560,14 @@ async def async_setup_entry.opp, config_entry):
             _LOGGER.debug(
                 "Removing Entity - value: %s - entity_id: %s", key, entity.entity_id
             )
-           .opp.add_job(entity.node_removed())
+            opp.add_job(entity.node_removed())
             del.opp.data[DATA_DEVICES][key]
 
         entity = opp.data[DATA_DEVICES][node_key]
-       .opp.add_job(entity.node_removed())
+        opp.add_job(entity.node_removed())
         del.opp.data[DATA_DEVICES][node_key]
 
-       .opp.add_job(_remove_device(node))
+        opp.add_job(_remove_device(node))
 
     async def _remove_device(node):
         dev_reg = await async_get_device_registry.opp)
@@ -584,14 +584,14 @@ async def async_setup_entry.opp, config_entry):
             "have been queried. Sleeping nodes will be "
             "queried when they awake"
         )
-       .opp.bus.fire(const.EVENT_NETWORK_READY)
+        opp.bus.fire(const.EVENT_NETWORK_READY)
 
     def network_complete():
         """Handle the querying of all nodes on network."""
         _LOGGER.info(
             "Z-Wave network is complete. All nodes on the network have been queried"
         )
-       .opp.bus.fire(const.EVENT_NETWORK_COMPLETE)
+        opp.bus.fire(const.EVENT_NETWORK_COMPLETE)
 
     def network_complete_some_dead():
         """Handle the querying of all nodes on network."""
@@ -599,7 +599,7 @@ async def async_setup_entry.opp, config_entry):
             "Z-Wave network is complete. All nodes on the network "
             "have been queried, but some nodes are marked dead"
         )
-       .opp.bus.fire(const.EVENT_NETWORK_COMPLETE_SOME_DEAD)
+        opp.bus.fire(const.EVENT_NETWORK_COMPLETE_SOME_DEAD)
 
     dispatcher.connect(value_added, ZWaveNetwork.SIGNAL_VALUE_ADDED, weak=False)
     dispatcher.connect(node_added, ZWaveNetwork.SIGNAL_NODE_ADDED, weak=False)
@@ -656,7 +656,7 @@ async def async_setup_entry.opp, config_entry):
         _LOGGER.info("Stopping Z-Wave network")
         network.stop()
         if opp.state == CoreState.running:
-           .opp.bus.fire(const.EVENT_NETWORK_STOP)
+            opp.bus.fire(const.EVENT_NETWORK_STOP)
 
     async def rename_node(service):
         """Rename a node."""
@@ -917,7 +917,7 @@ async def async_setup_entry.opp, config_entry):
         """Startup Z-Wave network."""
         _LOGGER.info("Starting Z-Wave network...")
         network.start()
-       .opp.bus.fire(const.EVENT_NETWORK_START)
+        opp.bus.fire(const.EVENT_NETWORK_START)
 
         async def _check_awaked():
             """Wait for Z-wave awaked state (or timeout) and finalize start."""
@@ -945,9 +945,9 @@ async def async_setup_entry.opp, config_entry):
 
                 await asyncio.sleep(1)
 
-           .opp.async_add_job(_finalize_start)
+            opp.async_add_job(_finalize_start)
 
-       .opp.add_job(_check_awaked)
+        opp.add_job(_check_awaked)
 
     def _finalize_start():
         """Perform final initializations after Z-Wave network is awaked."""
@@ -958,97 +958,97 @@ async def async_setup_entry.opp, config_entry):
         poll_interval = network.get_poll_interval()
         _LOGGER.info("Z-Wave polling interval set to %d ms", poll_interval)
 
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_network)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_network)
 
         # Register node services for Z-Wave network
-       .opp.services.register(DOMAIN, const.SERVICE_ADD_NODE, add_node)
-       .opp.services.register(DOMAIN, const.SERVICE_ADD_NODE_SECURE, add_node_secure)
-       .opp.services.register(DOMAIN, const.SERVICE_REMOVE_NODE, remove_node)
-       .opp.services.register(DOMAIN, const.SERVICE_CANCEL_COMMAND, cancel_command)
-       .opp.services.register(DOMAIN, const.SERVICE_HEAL_NETWORK, heal_network)
-       .opp.services.register(DOMAIN, const.SERVICE_SOFT_RESET, soft_reset)
-       .opp.services.register(DOMAIN, const.SERVICE_TEST_NETWORK, test_network)
-       .opp.services.register(DOMAIN, const.SERVICE_STOP_NETWORK, stop_network)
-       .opp.services.register(
+        opp.services.register(DOMAIN, const.SERVICE_ADD_NODE, add_node)
+        opp.services.register(DOMAIN, const.SERVICE_ADD_NODE_SECURE, add_node_secure)
+        opp.services.register(DOMAIN, const.SERVICE_REMOVE_NODE, remove_node)
+        opp.services.register(DOMAIN, const.SERVICE_CANCEL_COMMAND, cancel_command)
+        opp.services.register(DOMAIN, const.SERVICE_HEAL_NETWORK, heal_network)
+        opp.services.register(DOMAIN, const.SERVICE_SOFT_RESET, soft_reset)
+        opp.services.register(DOMAIN, const.SERVICE_TEST_NETWORK, test_network)
+        opp.services.register(DOMAIN, const.SERVICE_STOP_NETWORK, stop_network)
+        opp.services.register(
             DOMAIN, const.SERVICE_RENAME_NODE, rename_node, schema=RENAME_NODE_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, const.SERVICE_RENAME_VALUE, rename_value, schema=RENAME_VALUE_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_SET_CONFIG_PARAMETER,
             set_config_parameter,
             schema=SET_CONFIG_PARAMETER_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_SET_NODE_VALUE,
             set_node_value,
             schema=SET_NODE_VALUE_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_REFRESH_NODE_VALUE,
             refresh_node_value,
             schema=REFRESH_NODE_VALUE_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_PRINT_CONFIG_PARAMETER,
             print_config_parameter,
             schema=PRINT_CONFIG_PARAMETER_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_REMOVE_FAILED_NODE,
             remove_failed_node,
             schema=NODE_SERVICE_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_REPLACE_FAILED_NODE,
             replace_failed_node,
             schema=NODE_SERVICE_SCHEMA,
         )
 
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_CHANGE_ASSOCIATION,
             change_association,
             schema=CHANGE_ASSOCIATION_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, const.SERVICE_SET_WAKEUP, set_wakeup, schema=SET_WAKEUP_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, const.SERVICE_PRINT_NODE, print_node, schema=NODE_SERVICE_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_REFRESH_ENTITY,
             async_refresh_entity,
             schema=REFRESH_ENTITY_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, const.SERVICE_REFRESH_NODE, refresh_node, schema=NODE_SERVICE_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_RESET_NODE_METERS,
             reset_node_meters,
             schema=RESET_NODE_METERS_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN,
             const.SERVICE_SET_POLL_INTENSITY,
             set_poll_intensity,
             schema=SET_POLL_INTENSITY_SCHEMA,
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, const.SERVICE_HEAL_NODE, heal_node, schema=HEAL_NODE_SCHEMA
         )
-       .opp.services.register(
+        opp.services.register(
             DOMAIN, const.SERVICE_TEST_NODE, test_node, schema=TEST_NODE_SCHEMA
         )
 
@@ -1057,13 +1057,13 @@ async def async_setup_entry.opp, config_entry):
         _LOGGER.info("Z-Wave network autoheal is enabled")
         async_track_time_change.opp, heal_network, hour=0, minute=0, second=0)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_zwave)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_zwave)
 
-   .opp.services.async_register(DOMAIN, const.SERVICE_START_NETWORK, start_zwave)
+    opp.services.async_register(DOMAIN, const.SERVICE_START_NETWORK, start_zwave)
 
     for entry_component in SUPPORTED_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, entry_component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, entry_component)
         )
 
     return True

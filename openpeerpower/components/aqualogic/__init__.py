@@ -37,9 +37,9 @@ def setup_opp, config):
     host = config[DOMAIN][CONF_HOST]
     port = config[DOMAIN][CONF_PORT]
     processor = AquaLogicProcessor.opp, host, port)
-   .opp.data[DOMAIN] = processor
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, processor.start_listen)
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, processor.shutdown)
+    opp.data[DOMAIN] = processor
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, processor.start_listen)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, processor.shutdown)
     _LOGGER.debug("AquaLogicProcessor %s:%i initialized", host, port)
     return True
 

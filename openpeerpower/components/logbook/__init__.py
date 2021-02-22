@@ -109,7 +109,7 @@ LOG_MESSAGE_SCHEMA = vol.Schema(
 @bind.opp
 def log_entry.opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
-   .opp.add_job(async_log_entry, opp, name, message, domain, entity_id, context)
+    opp.add_job(async_log_entry, opp, name, message, domain, entity_id, context)
 
 
 @bind.opp
@@ -121,12 +121,12 @@ def async_log_entry.opp, name, message, domain=None, entity_id=None, context=Non
         data[ATTR_DOMAIN] = domain
     if entity_id is not None:
         data[ATTR_ENTITY_ID] = entity_id
-   .opp.bus.async_fire(EVENT_LOGBOOK_ENTRY, data, context=context)
+    opp.bus.async_fire(EVENT_LOGBOOK_ENTRY, data, context=context)
 
 
 async def async_setup_opp, config):
     """Logbook setup."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     @callback
     def log_message(service):
@@ -146,8 +146,8 @@ async def async_setup_opp, config):
         message = message.async_render(parse_result=False)
         async_log_entry.opp, name, message, domain, entity_id)
 
-   .opp.components.frontend.async_register_built_in_panel(
-        "logbook", "logbook", .opp:format-list-bulleted-type"
+    opp.components.frontend.async_register_built_in_panel(
+        "logbook", "logbook",  opp.format-list-bulleted-type"
     )
 
     conf = config.get(DOMAIN, {})
@@ -159,9 +159,9 @@ async def async_setup_opp, config):
         filters = None
         entities_filter = None
 
-   .opp.http.register_view(LogbookView(conf, filters, entities_filter))
+    opp.http.register_view(LogbookView(conf, filters, entities_filter))
 
-   .opp.services.async_register(DOMAIN, "log", log_message, schema=LOG_MESSAGE_SCHEMA)
+    opp.services.async_register(DOMAIN, "log", log_message, schema=LOG_MESSAGE_SCHEMA)
 
     await async_process_integration_platforms.opp, DOMAIN, _process_logbook_platform)
 
@@ -174,7 +174,7 @@ async def _process_logbook_platform.opp, domain, platform):
     @callback
     def _async_describe_event(domain, event_name, describe_callback):
         """Teach logbook how to describe a new event."""
-       .opp.data[DOMAIN][event_name] = (domain, describe_callback)
+        opp.data[DOMAIN][event_name] = (domain, describe_callback)
 
     platform.async_describe_events.opp, _async_describe_event)
 
@@ -228,7 +228,7 @@ class LogbookView(OpenPeerPowerView):
             if end_day is None:
                 return self.json_message("Invalid end_time", HTTP_BAD_REQUEST)
 
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         entity_matches_only = "entity_matches_only" in request.query
 
@@ -236,7 +236,7 @@ class LogbookView(OpenPeerPowerView):
             """Fetch events and generate JSON."""
             return self.json(
                 _get_events(
-                    opp,
+                    opp.
                     start_day,
                     end_day,
                     entity_ids,
@@ -406,7 +406,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
 
 
 def _get_events(
-    opp,
+    opp.
     start_day,
     end_day,
     entity_ids=None,
@@ -426,7 +426,7 @@ def _get_events(
             if event.event_type == EVENT_CALL_SERVICE:
                 continue
             if event.event_type == EVENT_STATE_CHANGED or _keep_event(
-                opp, event, entities_filter
+                opp. event, entities_filter
             ):
                 yield event
 
@@ -440,7 +440,7 @@ def _get_events(
             query = _generate_events_query_without_states(session)
             query = _apply_event_time_filter(query, start_day, end_day)
             query = _apply_event_types_filter(
-                opp, query, ALL_EVENT_TYPES_EXCEPT_STATE_CHANGED
+                opp. query, ALL_EVENT_TYPES_EXCEPT_STATE_CHANGED
             )
             if entity_matches_only:
                 # When entity_matches_only is provided, contexts and events that do not
@@ -456,7 +456,7 @@ def _get_events(
             query = _generate_events_query(session)
             query = _apply_event_time_filter(query, start_day, end_day)
             query = _apply_events_types_and_states_filter(
-                opp, query, old_state
+                opp. query, old_state
             ).filter(
                 (States.last_updated == States.last_changed)
                 | (Events.event_type != EVENT_STATE_CHANGED)

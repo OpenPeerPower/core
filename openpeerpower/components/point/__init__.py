@@ -60,11 +60,11 @@ async def async_setup_opp, config):
     conf = config[DOMAIN]
 
     config_flow.register_flow_implementation(
-        opp, DOMAIN, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
+        opp. DOMAIN, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
     )
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
         )
     )
@@ -77,12 +77,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     async def token_saver(token, **kwargs):
         _LOGGER.debug("Saving updated token %s", token)
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_TOKEN: token}
         )
 
     session = PointSession(
-       .opp.helpers.aiohttp_client.async_get_clientsession(),
+        opp.helpers.aiohttp_client.async_get_clientsession(),
         entry.data["refresh_args"][CONF_CLIENT_ID],
         entry.data["refresh_args"][CONF_CLIENT_SECRET],
         token=entry.data[CONF_TOKEN],
@@ -94,13 +94,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         _LOGGER.error("Authentication Error")
         return False
 
-   .opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
-   .opp.data[CONFIG_ENTRY_IS_SETUP] = set()
+    opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
+    opp.data[CONFIG_ENTRY_IS_SETUP] = set()
 
     await async_setup_webhook.opp, entry, session)
     client = MinutPointClient.opp, entry, session)
-   .opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: client})
-   .opp.async_create_task(client.update())
+    opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: client})
+    opp.async_create_task(client.update())
 
     return True
 
@@ -112,7 +112,7 @@ async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, sessio
         webhook_url = opp.components.webhook.async_generate_url(webhook_id)
         _LOGGER.info("Registering new webhook at: %s", webhook_url)
 
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry,
             data={
                 **entry.data,
@@ -126,14 +126,14 @@ async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, sessio
         ["*"],
     )
 
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "Point", entry.data[CONF_WEBHOOK_ID], handle_webhook
     )
 
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
-   .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+    opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     session = opp.data[DOMAIN].pop(entry.entry_id)
     await session.remove_webhook()
 
@@ -141,7 +141,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         await opp.config_entries.async_forward_entry_unload(entry, component)
 
     if not.opp.data[DOMAIN]:
-       .opp.data.pop(DOMAIN)
+        opp.data.pop(DOMAIN)
 
     return True
 
@@ -157,7 +157,7 @@ async def handle_webhook.opp, webhook_id, request):
     if isinstance(data, dict):
         data["webhook_id"] = webhook_id
         async_dispatcher_send.opp, SIGNAL_WEBHOOK, data, data.get("hook_id"))
-   .opp.bus.async_fire(EVENT_RECEIVED, data)
+    opp.bus.async_fire(EVENT_RECEIVED, data)
 
 
 class MinutPointClient:

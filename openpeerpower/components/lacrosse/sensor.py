@@ -78,7 +78,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.warning("Unable to open serial port: %s", exc)
         return False
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lacrosse.close)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lacrosse.close)
 
     if CONF_JEELINK_LED in config:
         lacrosse.led_mode_state(config.get(CONF_JEELINK_LED))

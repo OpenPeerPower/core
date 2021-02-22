@@ -147,9 +147,9 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Add Z-Wave Climate."""
         async_add_entities([ZWaveClimateEntity(values)])
 
-   .opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
+    opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect(
-            opp, f"{DOMAIN}_new_{CLIMATE_DOMAIN}", async_add_climate
+            opp. f"{DOMAIN}_new_{CLIMATE_DOMAIN}", async_add_climate
         )
     )
 
@@ -357,7 +357,7 @@ class ZWaveClimateEntity(ZWaveDeviceEntity, ClimateEntity):
             for val in self.values.mode.value[VALUE_LIST]:
                 if val[VALUE_ID] in MODES_LIST:
                     # treat value as hvac mode
-                   .opp_mode = ZW_HVAC_MODE_MAPPINGS.get(val[VALUE_ID])
+                    opp.mode = ZW_HVAC_MODE_MAPPINGS.get(val[VALUE_ID])
                     all_modes.opp_mode] = val[VALUE_ID]
                 else:
                     # treat value as hvac preset

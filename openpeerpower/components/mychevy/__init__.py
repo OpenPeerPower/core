@@ -76,10 +76,10 @@ def setup_opp, base_config):
     email = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
     country = config.get(CONF_COUNTRY)
-   .opp.data[DOMAIN] = MyChevyHub(
+    opp.data[DOMAIN] = MyChevyHub(
         mc.MyChevy(email, password, country), opp, base_config
     )
-   .opp.data[DOMAIN].start()
+    opp.data[DOMAIN].start()
 
     return True
 

@@ -27,13 +27,13 @@ HEOS_SIGN_OUT_SCHEMA = vol.Schema({})
 
 def register.opp: OpenPeerPowerType, controller: Heos):
     """Register HEOS services."""
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SIGN_IN,
         functools.partial(_sign_in_handler, controller),
         schema=HEOS_SIGN_IN_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SIGN_OUT,
         functools.partial(_sign_out_handler, controller),
@@ -43,8 +43,8 @@ def register.opp: OpenPeerPowerType, controller: Heos):
 
 def remove.opp: OpenPeerPowerType):
     """Unregister HEOS services."""
-   .opp.services.async_remove(DOMAIN, SERVICE_SIGN_IN)
-   .opp.services.async_remove(DOMAIN, SERVICE_SIGN_OUT)
+    opp.services.async_remove(DOMAIN, SERVICE_SIGN_IN)
+    opp.services.async_remove(DOMAIN, SERVICE_SIGN_OUT)
 
 
 async def _sign_in_handler(controller, service):

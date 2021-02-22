@@ -13,8 +13,8 @@ async def async_setup_reload_service.opp):
     async def _reload_config(call):
         """Reload the template platform config."""
         await async_reload_integration_platforms.opp, DOMAIN, PLATFORMS)
-       .opp.bus.async_fire(EVENT_TEMPLATE_RELOADED, context=call.context)
+        opp.bus.async_fire(EVENT_TEMPLATE_RELOADED, context=call.context)
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN, SERVICE_RELOAD, _reload_config
     )

@@ -35,9 +35,9 @@ async def test_get_nonexistant_feed(mock_http_client):
 
 async def test_get_rss_feed(mock_http_client, opp):
     """Test if we can retrieve the correct rss feed."""
-   .opp.states.async_set("test.test1", "a_state_1")
-   .opp.states.async_set("test.test2", "a_state_2")
-   .opp.states.async_set("test.test3", "a_state_3")
+    opp.states.async_set("test.test1", "a_state_1")
+    opp.states.async_set("test.test2", "a_state_2")
+    opp.states.async_set("test.test3", "a_state_3")
 
     resp = await mock_http_client.get("/api/rss_template/testfeed")
     assert resp.status == 200

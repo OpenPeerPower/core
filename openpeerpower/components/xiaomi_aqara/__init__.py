@@ -92,7 +92,7 @@ def setup_opp, config):
         """Service to add a new sub-device within the next 30 seconds."""
         gateway = call.data.get(ATTR_GW_MAC)
         gateway.write_to_hub(gateway.sid, join_permission="yes")
-       .opp.components.persistent_notification.async_create(
+        opp.components.persistent_notification.async_create(
             "Join permission enabled for 30 seconds! "
             "Please press the pairing button of the new device once.",
             title="Xiaomi Aqara Gateway",
@@ -106,22 +106,22 @@ def setup_opp, config):
 
     gateway_only_schema = _add_gateway_to_schema.opp, vol.Schema({}))
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_PLAY_RINGTONE,
         play_ringtone_service,
         schema=_add_gateway_to_schema.opp, SERVICE_SCHEMA_PLAY_RINGTONE),
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_STOP_RINGTONE, stop_ringtone_service, schema=gateway_only_schema
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_ADD_DEVICE, add_device_service, schema=gateway_only_schema
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_REMOVE_DEVICE,
         remove_device_service,
@@ -132,11 +132,11 @@ def setup_opp, config):
 
 
 async def async_setup_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the xiaomi aqara components from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN].setdefault(GATEWAYS_KEY, {})
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN].setdefault(GATEWAYS_KEY, {})
 
     # Connect to Xiaomi Aqara Gateway
     xiaomi_gateway = await opp.async_add_executor_job(
@@ -149,7 +149,7 @@ async def async_setup_entry(
         entry.data[CONF_PORT],
         entry.data[CONF_PROTOCOL],
     )
-   .opp.data[DOMAIN][GATEWAYS_KEY][entry.entry_id] = xiaomi_gateway
+    opp.data[DOMAIN][GATEWAYS_KEY][entry.entry_id] = xiaomi_gateway
 
     gateway_discovery = opp.data[DOMAIN].setdefault(
         LISTENER_KEY,
@@ -166,7 +166,7 @@ async def async_setup_entry(
             _LOGGER.debug("Shutting down Xiaomi Gateway Listener")
             gateway_discovery.stop_listen()
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_xiaomi)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_xiaomi)
 
     gateway_discovery.gateways[entry.data[CONF_HOST]] = xiaomi_gateway
     _LOGGER.debug(
@@ -189,15 +189,15 @@ async def async_setup_entry(
         platforms = GATEWAY_PLATFORMS_NO_KEY
 
     for component in platforms:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
 
 
 async def async_unload_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     if entry.data[CONF_KEY] is not None:
@@ -208,17 +208,17 @@ async def async_unload_entry(
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in platforms
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][GATEWAYS_KEY].pop(entry.entry_id)
+        opp.data[DOMAIN][GATEWAYS_KEY].pop(entry.entry_id)
 
     if len.opp.data[DOMAIN][GATEWAYS_KEY]) == 0:
         # No gateways left, stop Xiaomi socket
-       .opp.data[DOMAIN].pop(GATEWAYS_KEY)
+        opp.data[DOMAIN].pop(GATEWAYS_KEY)
         _LOGGER.debug("Shutting down Xiaomi Gateway Listener")
         gateway_discovery = opp.data[DOMAIN].pop(LISTENER_KEY)
         await opp.async_add_executor_job(gateway_discovery.stop_listen)

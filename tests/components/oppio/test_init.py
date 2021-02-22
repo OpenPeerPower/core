@@ -35,7 +35,7 @@ def mock_all(aioclient_mock):
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0", .oppos": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0",  opp.s": None},
         },
     )
     aioclient_mock.get(
@@ -72,7 +72,7 @@ def mock_all(aioclient_mock):
 async def test_setup_api_ping.opp, aioclient_mock):
     """Test setup with API ping."""
     with patch.dict(os.environ, MOCK_ENVIRON):
-        result = await async_setup_component.opp, .oppio", {})
+        result = await async_setup_component.opp,  opp.o", {})
         assert result
 
     assert aioclient_mock.call_count == 9
@@ -84,22 +84,22 @@ async def test_setup_api_panel.opp, aioclient_mock):
     """Test setup with API ping."""
     assert await async_setup_component.opp, "frontend", {})
     with patch.dict(os.environ, MOCK_ENVIRON):
-        result = await async_setup_component.opp, .oppio", {})
+        result = await async_setup_component.opp,  opp.o", {})
         assert result
 
     panels = opp.data[frontend.DATA_PANELS]
 
     assert panels.get(.oppio").to_response() == {
         "component_name": "custom",
-        "icon": .opp:open-peer-power",
+        "icon":  opp.open-peer-power",
         "title": "Supervisor",
-        "url_path": .oppio",
+        "url_path":  opp.o",
         "require_admin": True,
         "config": {
             "_panel_custom": {
                 "embed_iframe": True,
                 "js_url": "/api.oppio/app/entrypoint.js",
-                "name": .oppio-main",
+                "name":  opp.o-main",
                 "trust_external": False,
             }
         },
@@ -110,7 +110,7 @@ async def test_setup_api_push_api_data.opp, aioclient_mock):
     """Test setup with API push."""
     with patch.dict(os.environ, MOCK_ENVIRON):
         result = await async_setup_component(
-            opp, .oppio", {"http": {"server_port": 9999}, .oppio": {}}
+            opp.  opp.o", {"http": {"server_port": 9999},  opp.o": {}}
         )
         assert result
 
@@ -124,9 +124,9 @@ async def test_setup_api_push_api_data_server_host.opp, aioclient_mock):
     """Test setup with API push with active server host."""
     with patch.dict(os.environ, MOCK_ENVIRON):
         result = await async_setup_component(
-            opp,
-            .oppio",
-            {"http": {"server_port": 9999, "server_host": "127.0.0.1"}, .oppio": {}},
+            opp.
+             opp.o",
+            {"http": {"server_port": 9999, "server_host": "127.0.0.1"},  opp.o": {}},
         )
         assert result
 
@@ -139,15 +139,15 @@ async def test_setup_api_push_api_data_server_host.opp, aioclient_mock):
 async def test_setup_api_push_api_data_default.opp, aioclient_mock, opp_storage):
     """Test setup with API push default data."""
     with patch.dict(os.environ, MOCK_ENVIRON):
-        result = await async_setup_component.opp, .oppio", {"http": {}, .oppio": {}})
+        result = await async_setup_component.opp,  opp.o", {"http": {},  opp.o": {}})
         assert result
 
     assert aioclient_mock.call_count == 9
     assert not aioclient_mock.mock_calls[1][2]["ssl"]
     assert aioclient_mock.mock_calls[1][2]["port"] == 8123
     refresh_token = aioclient_mock.mock_calls[1][2]["refresh_token"]
-   .oppio_user = await opp.auth.async_get_user(
-       .opp_storage[STORAGE_KEY]["data"][.oppio_user"]
+    opp.o_user = await opp.auth.async_get_user(
+        opp.storage[STORAGE_KEY]["data"][.oppio_user"]
     )
     assert.oppio_user is not None
     assert.oppio_user.system_generated
@@ -167,14 +167,14 @@ async def test_setup_adds_admin_group_to_user.opp, aioclient_mock, opp_storage):
     assert not user.is_admin
     await opp.auth.async_create_refresh_token(user)
 
-   .opp_storage[STORAGE_KEY] = {
+    opp.storage[STORAGE_KEY] = {
         "data": {.oppio_user": user.id},
         "key": STORAGE_KEY,
         "version": 1,
     }
 
     with patch.dict(os.environ, MOCK_ENVIRON):
-        result = await async_setup_component.opp, .oppio", {"http": {}, .oppio": {}})
+        result = await async_setup_component.opp,  opp.o", {"http": {},  opp.o": {}})
         assert result
 
     assert user.is_admin
@@ -184,9 +184,9 @@ async def test_setup_api_existing.oppio_user.opp, aioclient_mock, opp_storage):
     """Test setup with API push default data."""
     user = await opp.auth.async_create_system_user("Hass.io test")
     token = await opp.auth.async_create_refresh_token(user)
-   .opp_storage[STORAGE_KEY] = {"version": 1, "data": {.oppio_user": user.id}}
+    opp.storage[STORAGE_KEY] = {"version": 1, "data": {.oppio_user": user.id}}
     with patch.dict(os.environ, MOCK_ENVIRON):
-        result = await async_setup_component.opp, .oppio", {"http": {}, .oppio": {}})
+        result = await async_setup_component.opp,  opp.o", {"http": {},  opp.o": {}})
         assert result
 
     assert aioclient_mock.call_count == 9
@@ -197,10 +197,10 @@ async def test_setup_api_existing.oppio_user.opp, aioclient_mock, opp_storage):
 
 async def test_setup_core_push_timezone.opp, aioclient_mock):
     """Test setup with API push default data."""
-   .opp.config.time_zone = "testzone"
+    opp.config.time_zone = "testzone"
 
     with patch.dict(os.environ, MOCK_ENVIRON):
-        result = await async_setup_component.opp, .oppio", {.oppio": {}})
+        result = await async_setup_component.opp,  opp.o", {.oppio": {}})
         assert result
 
     assert aioclient_mock.call_count == 9
@@ -217,7 +217,7 @@ async def test_setup_oppio_no_additional_data.opp, aioclient_mock):
     with patch.dict(os.environ, MOCK_ENVIRON), patch.dict(
         os.environ, {"HASSIO_TOKEN": "123456"}
     ):
-        result = await async_setup_component.opp, .oppio", {.oppio": {}})
+        result = await async_setup_component.opp,  opp.o", {.oppio": {}})
         assert result
 
     assert aioclient_mock.call_count == 9
@@ -227,7 +227,7 @@ async def test_setup_oppio_no_additional_data.opp, aioclient_mock):
 async def test_fail_setup_without_environ_var.opp):
     """Fail setup if no environ variable set."""
     with patch.dict(os.environ, {}, clear=True):
-        result = await async_setup_component.opp, .oppio", {})
+        result = await async_setup_component.opp,  opp.o", {})
         assert not result
 
 
@@ -237,7 +237,7 @@ async def test_warn_when_cannot_connect.opp, caplog):
         "openpeerpower.components.oppio.HassIO.is_connected",
         return_value=None,
     ):
-        result = await async_setup_component.opp, .oppio", {})
+        result = await async_setup_component.opp,  opp.o", {})
         assert result
 
     assert.opp.components.oppio.is.oppio()
@@ -246,7 +246,7 @@ async def test_warn_when_cannot_connect.opp, caplog):
 
 async def test_service_register.oppio_env, opp):
     """Check if service will be setup."""
-    assert await async_setup_component.opp, .oppio", {})
+    assert await async_setup_component.opp,  opp.o", {})
     assert.opp.services.has_service(.oppio", "addon_start")
     assert.opp.services.has_service(.oppio", "addon_stop")
     assert.opp.services.has_service(.oppio", "addon_restart")
@@ -262,7 +262,7 @@ async def test_service_register.oppio_env, opp):
 
 async def test_service_calls.oppio_env, opp, aioclient_mock):
     """Call service and check the API calls behind that."""
-    assert await async_setup_component.opp, .oppio", {})
+    assert await async_setup_component.opp,  opp.o", {})
 
     aioclient_mock.post("http://127.0.0.1/addons/test/start", json={"result": "ok"})
     aioclient_mock.post("http://127.0.0.1/addons/test/stop", json={"result": "ok"})
@@ -283,7 +283,7 @@ async def test_service_calls.oppio_env, opp, aioclient_mock):
     await opp.services.async_call(.oppio", "addon_stop", {"addon": "test"})
     await opp.services.async_call(.oppio", "addon_restart", {"addon": "test"})
     await opp.services.async_call(
-        .oppio", "addon_stdin", {"addon": "test", "input": "test"}
+         opp.o", "addon_stdin", {"addon": "test", "input": "test"}
     )
     await opp.async_block_till_done()
 
@@ -298,7 +298,7 @@ async def test_service_calls.oppio_env, opp, aioclient_mock):
 
     await opp.services.async_call(.oppio", "snapshot_full", {})
     await opp.services.async_call(
-        .oppio",
+         opp.o",
         "snapshot_partial",
         {"addons": ["test"], "folders": ["ssl"], "password": "123456"},
     )
@@ -313,7 +313,7 @@ async def test_service_calls.oppio_env, opp, aioclient_mock):
 
     await opp.services.async_call(.oppio", "restore_full", {"snapshot": "test"})
     await opp.services.async_call(
-        .oppio",
+         opp.o",
         "restore_partial",
         {
             "snapshot": "test",
@@ -336,7 +336,7 @@ async def test_service_calls.oppio_env, opp, aioclient_mock):
 
 async def test_service_calls_core.oppio_env, opp, aioclient_mock):
     """Call core service and check the API calls behind that."""
-    assert await async_setup_component.opp, .oppio", {})
+    assert await async_setup_component.opp,  opp.o", {})
 
     aioclient_mock.post("http://127.0.0.1/openpeerpower/restart", json={"result": "ok"})
     aioclient_mock.post("http://127.0.0.1/openpeerpower/stop", json={"result": "ok"})
@@ -362,10 +362,10 @@ async def test_service_calls_core.oppio_env, opp, aioclient_mock):
 
 
 async def test_websocket_supervisor_event(
-   .oppio_env, opp: OpenPeerPower, opp_ws_client
+    opp.o_env, opp: OpenPeerPower, opp_ws_client
 ):
     """Test Supervisor websocket event."""
-    assert await async_setup_component.opp, .oppio", {})
+    assert await async_setup_component.opp,  opp.o", {})
     websocket_client = await opp_ws_client.opp)
 
     test_event = async_capture_events.opp, EVENT_SUPERVISOR_EVENT)
@@ -381,10 +381,10 @@ async def test_websocket_supervisor_event(
 
 
 async def test_websocket_supervisor_api(
-   .oppio_env, opp: OpenPeerPower, opp_ws_client, aioclient_mock
+    opp.o_env, opp: OpenPeerPower, opp_ws_client, aioclient_mock
 ):
     """Test Supervisor websocket api."""
-    assert await async_setup_component.opp, .oppio", {})
+    assert await async_setup_component.opp,  opp.o", {})
     websocket_client = await opp_ws_client.opp)
     aioclient_mock.post(
         "http://127.0.0.1/snapshots/new/partial",

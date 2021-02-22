@@ -288,7 +288,7 @@ class MockStatusPlayingBluetooth(Status):
 async def test_ensure_setup_config(mocked_status, mocked_volume, opp, one_device):
     """Test setup OK with custom config."""
     await setup_soundtouch(
-        opp, get_config(host="192.168.1.44", port=8888, name="custom_sound")
+        opp. get_config(host="192.168.1.44", port=8888, name="custom_sound")
     )
 
     assert one_device.call_count == 1
@@ -307,7 +307,7 @@ async def test_ensure_setup_discovery(mocked_status, mocked_volume, opp, one_dev
         "hostname": "hostname.local",
     }
     await async_load_platform(
-        opp, "media_player", DOMAIN, new_device, {"media_player": {}}
+        opp. "media_player", DOMAIN, new_device, {"media_player": {}}
     )
     await opp.async_block_till_done()
 
@@ -332,7 +332,7 @@ async def test_ensure_setup_discovery_no_duplicate(
         "hostname": "hostname.local",
     }
     await async_load_platform(
-        opp, "media_player", DOMAIN, new_device, {"media_player": DEVICE_1_CONFIG}
+        opp. "media_player", DOMAIN, new_device, {"media_player": DEVICE_1_CONFIG}
     )
     await opp.async_block_till_done()
     assert one_device.call_count == 2
@@ -345,7 +345,7 @@ async def test_ensure_setup_discovery_no_duplicate(
         "hostname": "hostname.local",
     }
     await async_load_platform(
-        opp, "media_player", DOMAIN, existing_device, {"media_player": DEVICE_1_CONFIG}
+        opp. "media_player", DOMAIN, existing_device, {"media_player": DEVICE_1_CONFIG}
     )
     await opp.async_block_till_done()
     assert one_device.call_count == 2
@@ -682,7 +682,7 @@ async def test_next_previous_track(
     mocked_previous_track,
     mocked_status,
     mocked_volume,
-    opp,
+    opp.
     one_device,
 ):
     """Test next/previous track."""
@@ -817,7 +817,7 @@ async def test_select_source_invalid_source(
     mocked_select_source_bluetooth,
     mocked_status,
     mocked_volume,
-    opp,
+    opp.
     one_device,
 ):
     """Test select unsupported source."""
@@ -874,7 +874,7 @@ async def test_play_everywhere(
     for entity in list.opp.data[DATA_SOUNDTOUCH]):
         if entity.entity_id == "media_player.soundtouch_1":
             continue
-       .opp.data[DATA_SOUNDTOUCH].remove(entity)
+        opp.data[DATA_SOUNDTOUCH].remove(entity)
         await entity.async_remove()
     await opp.services.async_call(
         soundtouch.DOMAIN,
@@ -976,7 +976,7 @@ async def test_add_zone_slave(
     mocked_add_zone_slave,
     mocked_status,
     mocked_volume,
-    opp,
+    opp.
     two_zones,
 ):
     """Test removing a slave from a zone."""
@@ -1023,7 +1023,7 @@ async def test_zone_attributes(
     mocked_create_zone,
     mocked_status,
     mocked_volume,
-    opp,
+    opp.
     two_zones,
 ):
     """Test play everywhere."""

@@ -95,7 +95,7 @@ async def test_show_config_form_validate_webhook.opp, webhook_id):
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "api_method"
 
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
     with patch(
         "openpeerpower.components.cloud.async_active_subscription", return_value=True
     ), patch(

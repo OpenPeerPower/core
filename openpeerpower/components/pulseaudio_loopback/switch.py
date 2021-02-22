@@ -39,7 +39,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     host = config.get(CONF_HOST)
     port = config.get(CONF_PORT)
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     server_id = str.format("{0}:{1}", host, port)
 
@@ -52,7 +52,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         server = opp.data[DOMAIN][server_id]
     else:
         server = Pulse(server=connect_to_server, connect=False, threading_lock=True)
-       .opp.data[DOMAIN][server_id] = server
+        opp.data[DOMAIN][server_id] = server
 
     add_entities([PALoopbackSwitch(name, server, sink_name, source_name)], True)
 

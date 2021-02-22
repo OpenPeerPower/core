@@ -39,7 +39,7 @@ PLATFORMS = ["binary_sensor", "sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Aurora component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     return True
 
@@ -60,7 +60,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     name = conf[CONF_NAME]
 
     coordinator = AuroraDataUpdateCoordinator(
-       .opp.opp,
+        opp.opp,
         name=name,
         polling_interval=polling_interval,
         api=api,
@@ -74,14 +74,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: coordinator,
         AURORA_API: api,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -92,13 +92,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -108,7 +108,7 @@ class AuroraDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         name: str,
         polling_interval: int,
         api: str,
@@ -119,7 +119,7 @@ class AuroraDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize the data updater."""
 
         super().__init__(
-           .opp.opp,
+            opp.opp,
             logger=_LOGGER,
             name=name,
             update_interval=timedelta(minutes=polling_interval),

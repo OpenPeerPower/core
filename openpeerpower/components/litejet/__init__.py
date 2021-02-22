@@ -30,8 +30,8 @@ def setup_opp, config):
 
     url = config[DOMAIN].get(CONF_PORT)
 
-   .opp.data["litejet_system"] = LiteJet(url)
-   .opp.data["litejet_config"] = config[DOMAIN]
+    opp.data["litejet_system"] = LiteJet(url)
+    opp.data["litejet_config"] = config[DOMAIN]
 
     discovery.load_platform.opp, "light", DOMAIN, {}, config)
     if config[DOMAIN].get(CONF_INCLUDE_SWITCHES):

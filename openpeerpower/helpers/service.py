@@ -116,7 +116,7 @@ class SelectedEntities:
 
 @bind.opp
 def call_from_config(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config: ConfigType,
     blocking: bool = False,
     variables: TemplateVarsType = None,
@@ -125,13 +125,13 @@ def call_from_config(
     """Call a service based on a config hash."""
     asyncio.run_coroutine_threadsafe(
         async_call_from_config(opp, config, blocking, variables, validate_config),
-       .opp.loop,
+        opp.loop,
     ).result()
 
 
 @bind.opp
 async def async_call_from_config(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config: ConfigType,
     blocking: bool = False,
     variables: TemplateVarsType = None,
@@ -141,7 +141,7 @@ async def async_call_from_config(
     """Call a service based on a config hash."""
     try:
         params = async_prepare_call_from_config(
-            opp, config, variables, validate_config
+            opp. config, variables, validate_config
         )
     except OpenPeerPowerError as ex:
         if blocking:
@@ -154,7 +154,7 @@ async def async_call_from_config(
 @ha.callback
 @bind.opp
 def async_prepare_call_from_config(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config: ConfigType,
     variables: TemplateVarsType = None,
     validate_config: bool = False,
@@ -218,7 +218,7 @@ def async_prepare_call_from_config(
 
 @bind.opp
 def extract_entity_ids(
-    opp: OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
+    opp. OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
 ) -> Set[str]:
     """Extract a list of entity ids from a service call.
 
@@ -231,7 +231,7 @@ def extract_entity_ids(
 
 @bind.opp
 async def async_extract_entities(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entities: Iterable[Entity],
     service_call: ha.ServiceCall,
     expand_group: bool = True,
@@ -246,7 +246,7 @@ async def async_extract_entities(
         return [entity for entity in entities if entity.available]
 
     referenced = await async_extract_referenced_entity_ids(
-        opp, service_call, expand_group
+        opp. service_call, expand_group
     )
     combined = referenced.referenced | referenced.indirectly_referenced
 
@@ -270,21 +270,21 @@ async def async_extract_entities(
 
 @bind.opp
 async def async_extract_entity_ids(
-    opp: OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
+    opp. OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
 ) -> Set[str]:
     """Extract a set of entity ids from a service call.
 
     Will convert group entity ids to the entity ids it represents.
     """
     referenced = await async_extract_referenced_entity_ids(
-        opp, service_call, expand_group
+        opp. service_call, expand_group
     )
     return referenced.referenced | referenced.indirectly_referenced
 
 
 @bind.opp
 async def async_extract_referenced_entity_ids(
-    opp: OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
+    opp. OpenPeerPowerType, service_call: ha.ServiceCall, expand_group: bool = True
 ) -> SelectedEntities:
     """Extract referenced entity IDs from a service call."""
     entity_ids = service_call.data.get(ATTR_ENTITY_ID)
@@ -391,7 +391,7 @@ def _load_services_file.opp: OpenPeerPowerType, integration: Integration) -> JSO
 
 
 def _load_services_files(
-    opp: OpenPeerPowerType, integrations: Iterable[Integration]
+    opp. OpenPeerPowerType, integrations: Iterable[Integration]
 ) -> List[JSON_TYPE]:
     """Load service files for multiple intergrations."""
     return [_load_services_file.opp, integration) for integration in integrations]
@@ -399,7 +399,7 @@ def _load_services_files(
 
 @bind.opp
 async def async_get_all_descriptions(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
 ) -> Dict[str, Dict[str, Any]]:
     """Return descriptions (i.e. user documentation) for all service calls."""
     descriptions_cache = opp.data.setdefault(SERVICE_DESCRIPTION_CACHE, {})
@@ -466,22 +466,22 @@ async def async_get_all_descriptions(
 @ha.callback
 @bind.opp
 def async_set_service_schema(
-    opp: OpenPeerPowerType, domain: str, service: str, schema: Dict[str, Any]
+    opp. OpenPeerPowerType, domain: str, service: str, schema: Dict[str, Any]
 ) -> None:
     """Register a description for a service."""
-   .opp.data.setdefault(SERVICE_DESCRIPTION_CACHE, {})
+    opp.data.setdefault(SERVICE_DESCRIPTION_CACHE, {})
 
     description = {
         "description": schema.get("description") or "",
         "fields": schema.get("fields") or {},
     }
 
-   .opp.data[SERVICE_DESCRIPTION_CACHE][f"{domain}.{service}"] = description
+    opp.data[SERVICE_DESCRIPTION_CACHE][f"{domain}.{service}"] = description
 
 
 @bind.opp
 async def entity_service_call(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     platforms: Iterable["EntityPlatform"],
     func: Union[str, Callable[..., Any]],
     call: ha.ServiceCall,
@@ -639,7 +639,7 @@ async def entity_service_call(
 
 
 async def _handle_entity_call(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entity: Entity,
     func: Union[str, Callable[..., Any]],
     data: Union[Dict, ha.ServiceCall],
@@ -669,7 +669,7 @@ async def _handle_entity_call(
 @bind.opp
 @ha.callback
 def async_register_admin_service(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     domain: str,
     service: str,
     service_func: Callable[[ha.ServiceCall], Optional[Awaitable]],
@@ -690,13 +690,13 @@ def async_register_admin_service(
         if result is not None:
             await result
 
-   .opp.services.async_register(domain, service, admin_handler, schema)
+    opp.services.async_register(domain, service, admin_handler, schema)
 
 
 @bind.opp
 @ha.callback
 def verify_domain_control(
-    opp: OpenPeerPowerType, domain: str
+    opp. OpenPeerPowerType, domain: str
 ) -> Callable[[Callable[[ha.ServiceCall], Any]], Callable[[ha.ServiceCall], Any]]:
     """Ensure permission to access any entity under domain in service call."""
 

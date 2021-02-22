@@ -142,7 +142,7 @@ def mock_default_unifi_requests(
 
 
 async def setup_unifi_integration(
-    opp,
+    opp.
     aioclient_mock=None,
     *,
     config=ENTRY_CONFIG,
@@ -172,7 +172,7 @@ async def setup_unifi_integration(
     config_entry.add_to.opp.opp)
 
     if known_wireless_clients:
-       .opp.data[UNIFI_WIRELESS_CLIENTS].update_data(
+        opp.data[UNIFI_WIRELESS_CLIENTS].update_data(
             known_wireless_clients, config_entry
         )
 
@@ -242,7 +242,7 @@ async def test_controller_setup_opp, aioclient_mock):
 async def test_controller_mac.opp, aioclient_mock):
     """Test that it is possible to identify controller mac."""
     config_entry = await setup_unifi_integration(
-        opp, aioclient_mock, clients_response=[CONTROLLER_HOST]
+        opp. aioclient_mock, clients_response=[CONTROLLER_HOST]
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     assert controller.mac == CONTROLLER_HOST["mac"]
@@ -294,7 +294,7 @@ async def test_reset_after_successful_setup_opp, aioclient_mock):
 
 
 async def test_wireless_client_event_calls_update_wireless_devices(
-    opp, aioclient_mock
+    opp. aioclient_mock
 ):
     """Call update_wireless_devices method when receiving wireless client event."""
     config_entry = await setup_unifi_integration.opp, aioclient_mock)

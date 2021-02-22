@@ -9,7 +9,7 @@ from .common import ComponentFactory, new_simple_controller_config
 
 
 async def test_binary_sensor(
-    opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp. OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
@@ -21,7 +21,7 @@ async def test_binary_sensor(
     entity_id = "binary_sensor.dev1_1"
 
     component_data = await vera_component_factory.configure_component(
-       .opp.opp,
+        opp.opp,
         controller_config=new_simple_controller_config(devices=(vera_device,)),
     )
     update_callback = component_data.controller_data[0].update_callback

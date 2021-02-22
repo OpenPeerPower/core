@@ -102,7 +102,7 @@ def setup_opp, config):
 
     codes = load_codes.opp.config.path(CODES_YAML))
 
-   .opp.data[DOMAIN] = {CONF_SENSOR: {}, CONF_REMOTE: {}}
+    opp.data[DOMAIN] = {CONF_SENSOR: {}, CONF_REMOTE: {}}
 
     def load_module(platform, idx, module_conf):
         """Set up the KIRA module and load platform."""
@@ -119,13 +119,13 @@ def setup_opp, config):
         else:
             module = pykira.KiraModule(host, port)
 
-       .opp.data[DOMAIN][platform][module_name] = module
+        opp.data[DOMAIN][platform][module_name] = module
         for code in codes:
             code_tuple = (code.get(CONF_NAME), code.get(CONF_DEVICE, STATE_UNKNOWN))
             module.registerCode(code_tuple, code.get(CONF_CODE))
 
         discovery.load_platform(
-            opp, platform, DOMAIN, {"name": module_name, "device": device_name}, config
+            opp. platform, DOMAIN, {"name": module_name, "device": device_name}, config
         )
 
     for idx, module_conf in enumerate(sensors):
@@ -140,6 +140,6 @@ def setup_opp, config):
             receiver.stop()
         _LOGGER.info("Terminated receivers")
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _stop_kira)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _stop_kira)
 
     return True

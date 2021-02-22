@@ -6,8 +6,8 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Counter states."""
-   .opp.states.async_set("counter.entity", "5", {})
-   .opp.states.async_set(
+    opp.states.async_set("counter.entity", "5", {})
+    opp.states.async_set(
         "counter.entity_attr",
         "8",
         {"initial": 12, "minimum": 5, "maximum": 15, "step": 3},

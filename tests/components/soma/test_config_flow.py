@@ -72,7 +72,7 @@ async def test_exception.opp):
 
 async def test_full_flow.opp):
     """Check classic use case."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     flow = config_flow.SomaFlowHandler()
     flow.opp = opp
     with patch.object(SomaApi, "list_devices", return_value={"result": "success"}):

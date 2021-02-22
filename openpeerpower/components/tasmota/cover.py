@@ -22,10 +22,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             [TasmotaCover(tasmota_entity=tasmota_entity, discovery_hash=discovery_hash)]
         )
 
-   .opp.data[
+    opp.data[
         DATA_REMOVE_DISCOVER_COMPONENT.format(cover.DOMAIN)
     ] = async_dispatcher_connect(
-        opp,
+        opp.
         TASMOTA_DISCOVERY_ENTITY_NEW.format(cover.DOMAIN),
         async_discover,
     )

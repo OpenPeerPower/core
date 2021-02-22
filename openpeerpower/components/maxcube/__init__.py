@@ -50,7 +50,7 @@ def setup_opp, config):
     """Establish connection to MAX! Cube."""
 
     if DATA_KEY not in.opp.data:
-       .opp.data[DATA_KEY] = {}
+        opp.data[DATA_KEY] = {}
 
     connection_failed = 0
     gateways = config[DOMAIN][CONF_GATEWAYS]
@@ -61,10 +61,10 @@ def setup_opp, config):
 
         try:
             cube = MaxCube(MaxCubeConnection(host, port))
-           .opp.data[DATA_KEY][host] = MaxCubeHandle(cube, scan_interval)
+            opp.data[DATA_KEY][host] = MaxCubeHandle(cube, scan_interval)
         except timeout as ex:
             _LOGGER.error("Unable to connect to Max!Cube gateway: %s", str(ex))
-           .opp.components.persistent_notification.create(
+            opp.components.persistent_notification.create(
                 f"Error: {ex}<br />You will need to restart Open Peer Power after fixing.",
                 title=NOTIFICATION_TITLE,
                 notification_id=NOTIFICATION_ID,

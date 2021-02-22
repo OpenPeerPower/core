@@ -411,7 +411,7 @@ def async_log_exception(
     ex: Exception,
     domain: str,
     config: Dict,
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     link: Optional[str] = None,
 ) -> None:
     """Log an error for configuration validation.
@@ -483,7 +483,7 @@ async def async_process_op_core_config(opp: OpenPeerPower, config: Dict) -> None
         )
 
         setattr(
-            opp, "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
+            opp. "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
         )
 
     await opp.config.async_load()
@@ -676,7 +676,7 @@ def _recursive_merge(conf: Dict[str, Any], package: Dict[str, Any]) -> Union[boo
 
 
 async def merge_packages_config(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: Dict,
     packages: Dict[str, Any],
     _log_pkg_error: Callable = _log_pkg_error,
@@ -693,7 +693,7 @@ async def merge_packages_config(
 
             try:
                 integration = await async_get_integration_with_requirements(
-                    opp, domain
+                    opp. domain
                 )
                 component = integration.get_component()
             except INTEGRATION_LOAD_EXCEPTIONS as ex:
@@ -742,7 +742,7 @@ async def merge_packages_config(
 
 
 async def async_process_component_config(
-    opp: OpenPeerPower, config: ConfigType, integration: Integration
+    opp. OpenPeerPower, config: ConfigType, integration: Integration
 ) -> Optional[ConfigType]:
     """Check component configuration and return processed configuration.
 
@@ -774,7 +774,7 @@ async def async_process_component_config(
     ):
         try:
             return await config_validator.async_validate_config(  # type: ignore
-                opp, config
+                opp. config
             )
         except (vol.Invalid, OpenPeerPowerError) as ex:
             async_log_exception(ex, domain, config, opp, integration.documentation)
@@ -845,7 +845,7 @@ async def async_process_component_config(
                     ex,
                     f"{domain}.{p_name}",
                     p_config,
-                    opp,
+                    opp.
                     p_integration.documentation,
                 )
                 continue
@@ -891,7 +891,7 @@ async def async_check_op_config_file(opp: OpenPeerPower) -> Optional[str]:
 
 @callback
 def async_notify_setup_error(
-    opp: OpenPeerPower, component: str, display_link: Optional[str] = None
+    opp. OpenPeerPower, component: str, display_link: Optional[str] = None
 ) -> None:
     """Print a persistent notification.
 
@@ -916,5 +916,5 @@ def async_notify_setup_error(
     message += "\nPlease check your config and [logs](/config/logs)."
 
     persistent_notification.async_create(
-        opp, message, "Invalid config", "invalid_config"
+        opp. message, "Invalid config", "invalid_config"
     )

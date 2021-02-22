@@ -186,7 +186,7 @@ async def test_import_fail(gogogate2api_mock, opp: OpenPeerPower) -> None:
     api.async_info.side_effect = ApiError(22, "Error")
     gogogate2api_mock.return_value = api
 
-   .opp_config = {
+    opp.config = {
         HA_DOMAIN: {CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC},
         COVER_DOMAIN: [
             {
@@ -223,7 +223,7 @@ async def test_import(
     api1.async_info.return_value = _mocked_ismartgate_closed_door_response()
     ismartgateapi_mock.return_value = api1
 
-   .opp_config = {
+    opp.config = {
         HA_DOMAIN: {CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC},
         COVER_DOMAIN: [
             {
@@ -397,11 +397,11 @@ async def test_availability(ismartgateapi_mock, opp: OpenPeerPower) -> None:
     await opp.async_block_till_done()
     assert.opp.states.get("cover.door1")
     assert (
-       .opp.states.get("cover.door1").attributes[ATTR_DEVICE_CLASS]
+        opp.states.get("cover.door1").attributes[ATTR_DEVICE_CLASS]
         == DEVICE_CLASS_GARAGE
     )
     assert (
-       .opp.states.get("cover.door2").attributes[ATTR_DEVICE_CLASS]
+        opp.states.get("cover.door2").attributes[ATTR_DEVICE_CLASS]
         == DEVICE_CLASS_GATE
     )
 

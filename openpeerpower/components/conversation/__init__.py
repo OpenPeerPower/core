@@ -48,12 +48,12 @@ async_register = bind.opp(async_register)
 @bind.opp
 def async_set_agent.opp: core.OpenPeerPower, agent: AbstractConversationAgent):
     """Set the agent to handle the conversations."""
-   .opp.data[DATA_AGENT] = agent
+    opp.data[DATA_AGENT] = agent
 
 
 async def async_setup_opp, config):
     """Register the process service."""
-   .opp.data[DATA_CONFIG] = config
+    opp.data[DATA_CONFIG] = config
 
     async def handle_service(service):
         """Parse text into commands."""
@@ -65,13 +65,13 @@ async def async_setup_opp, config):
         except intent.IntentHandleError as err:
             _LOGGER.error("Error processing %s: %s", text, err)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_PROCESS, handle_service, schema=SERVICE_PROCESS_SCHEMA
     )
-   .opp.http.register_view(ConversationProcessView())
-   .opp.components.websocket_api.async_register_command(websocket_process)
-   .opp.components.websocket_api.async_register_command(websocket_get_agent_info)
-   .opp.components.websocket_api.async_register_command(websocket_set_onboarding)
+    opp.http.register_view(ConversationProcessView())
+    opp.components.websocket_api.async_register_command(websocket_process)
+    opp.components.websocket_api.async_register_command(websocket_get_agent_info)
+    opp.components.websocket_api.async_register_command(websocket_set_onboarding)
 
     return True
 
@@ -85,7 +85,7 @@ async def websocket_process.opp, connection, msg):
     connection.send_result(
         msg["id"],
         await _async_converse(
-            opp, msg["text"], msg.get("conversation_id"), connection.context(msg)
+            opp. msg["text"], msg.get("conversation_id"), connection.context(msg)
         ),
     )
 
@@ -130,11 +130,11 @@ class ConversationProcessView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Send a request for processing."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         try:
             intent_result = await _async_converse(
-                opp, data["text"], data.get("conversation_id"), self.context(request)
+                opp. data["text"], data.get("conversation_id"), self.context(request)
             )
         except intent.IntentError as err:
             _LOGGER.error("Error handling intent: %s", err)
@@ -162,7 +162,7 @@ async def _get_agent.opp: core.OpenPeerPower) -> AbstractConversationAgent:
 
 
 async def _async_converse(
-   .opp: core.OpenPeerPower, text: str, conversation_id: str, context: core.Context
+    opp. core.OpenPeerPower, text: str, conversation_id: str, context: core.Context
 ) -> intent.IntentResponse:
     """Process text and get intent."""
     agent = await _get_agent.opp)

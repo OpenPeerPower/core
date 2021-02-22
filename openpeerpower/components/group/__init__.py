@@ -171,7 +171,7 @@ def expand_entity_ids.opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
 
 @bind.opp
 def get_entity_ids(
-    opp: OpenPeerPowerType, entity_id: str, domain_filter: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: str, domain_filter: Optional[str] = None
 ) -> List[str]:
     """Get members of this group.
 
@@ -216,7 +216,7 @@ async def async_setup_opp, config):
     if component is None:
         component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp)
 
-   .opp.data[REG_KEY] = GroupIntegrationRegistry()
+    opp.data[REG_KEY] = GroupIntegrationRegistry()
 
     await async_process_integration_platforms.opp, DOMAIN, _process_group_platform)
 
@@ -235,7 +235,7 @@ async def async_setup_opp, config):
 
         await async_reload_integration_platforms.opp, DOMAIN, PLATFORMS)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
@@ -267,7 +267,7 @@ async def async_setup_opp, config):
             }
 
             await Group.async_create_group(
-                opp,
+                opp.
                 service.data.get(ATTR_NAME, object_id),
                 object_id=object_id,
                 entity_ids=entity_ids,
@@ -315,7 +315,7 @@ async def async_setup_opp, config):
         if service.service == SERVICE_REMOVE:
             await component.async_remove_entity(entity_id)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET,
         locked_service_handler,
@@ -333,7 +333,7 @@ async def async_setup_opp, config):
         ),
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_REMOVE,
         groups_service_handler,
@@ -351,7 +351,7 @@ async def _process_group_platform.opp, domain, platform):
 
 async def _async_process_config(opp, config, component):
     """Process group configuration."""
-   .opp.data.setdefault(GROUP_ORDER, 0)
+    opp.data.setdefault(GROUP_ORDER, 0)
 
     tasks = []
 
@@ -367,7 +367,7 @@ async def _async_process_config(opp, config, component):
         # the problem with concurrently creating the groups
         tasks.append(
             Group.async_create_group(
-                opp,
+                opp.
                 name,
                 entity_ids,
                 icon=icon,
@@ -380,7 +380,7 @@ async def _async_process_config(opp, config, component):
         # Keep track of the group order without iterating
         # every state in the state machine every time
         # we setup a new group
-       .opp.data[GROUP_ORDER] += 1
+        opp.data[GROUP_ORDER] += 1
 
     await asyncio.gather(*tasks)
 
@@ -423,7 +423,7 @@ class Group(Entity):
 
     def __init__(
         self,
-        opp,
+        opp.
         name,
         order=None,
         icon=None,
@@ -453,7 +453,7 @@ class Group(Entity):
 
     @staticmethod
     def create_group(
-        opp,
+        opp.
         name,
         entity_ids=None,
         user_defined=True,
@@ -465,14 +465,14 @@ class Group(Entity):
         """Initialize a group."""
         return asyncio.run_coroutine_threadsafe(
             Group.async_create_group(
-                opp, name, entity_ids, user_defined, icon, object_id, mode, order
+                opp. name, entity_ids, user_defined, icon, object_id, mode, order
             ),
-           .opp.loop,
+            opp.loop,
         ).result()
 
     @staticmethod
     async def async_create_group(
-        opp,
+        opp.
         name,
         entity_ids=None,
         user_defined=True,
@@ -486,15 +486,15 @@ class Group(Entity):
         This method must be run in the event loop.
         """
         if order is None:
-           .opp.data.setdefault(GROUP_ORDER, 0)
+            opp.data.setdefault(GROUP_ORDER, 0)
             order = opp.data[GROUP_ORDER]
             # Keep track of the group order without iterating
             # every state in the state machine every time
             # we setup a new group
-           .opp.data[GROUP_ORDER] += 1
+            opp.data[GROUP_ORDER] += 1
 
         group = Group(
-            opp,
+            opp.
             name,
             order=order,
             icon=icon,

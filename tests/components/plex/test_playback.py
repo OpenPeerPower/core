@@ -14,7 +14,7 @@ from openpeerpower.const import ATTR_ENTITY_ID
 
 
 async def test_media_player_playback(
-    opp, setup_plex_server, requests_mock, playqueue_created, player_plexweb_resources
+    opp. setup_plex_server, requests_mock, playqueue_created, player_plexweb_resources
 ):
     """Test playing media on a Plex media_player."""
     requests_mock.get("http://1.2.3.5:32400/resources", text=player_plexweb_resources)

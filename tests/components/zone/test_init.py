@@ -26,7 +26,7 @@ def storage_setup_opp, opp_storage):
 
     async def _storage(items=None, config=None):
         if items is None:
-           .opp_storage[DOMAIN] = {
+            opp.storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {
@@ -44,7 +44,7 @@ def storage_setup_opp, opp_storage):
                 },
             }
         else:
-           .opp_storage[DOMAIN] = {
+            opp.storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": items},
@@ -107,7 +107,7 @@ async def test_setup_name_can_be_same_on_multiple_zones.opp):
 async def test_active_zone_skips_passive_zones.opp):
     """Test active and passive zones."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         zone.DOMAIN,
         {
             "zone": [
@@ -129,7 +129,7 @@ async def test_active_zone_skips_passive_zones.opp):
 async def test_active_zone_skips_passive_zones_2.opp):
     """Test active and passive zones."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         zone.DOMAIN,
         {
             "zone": [
@@ -152,7 +152,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance.opp):
     latitude = 32.880600
     longitude = -117.237561
     assert await setup.async_setup_component(
-        opp,
+        opp.
         zone.DOMAIN,
         {
             "zone": [
@@ -181,7 +181,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance_2.opp):
     latitude = 32.880600
     longitude = -117.237561
     assert await setup.async_setup_component(
-        opp,
+        opp.
         zone.DOMAIN,
         {
             "zone": [
@@ -204,7 +204,7 @@ async def test_in_zone_works_for_passive_zones.opp):
     latitude = 32.880600
     longitude = -117.237561
     assert await setup.async_setup_component(
-        opp,
+        opp.
         zone.DOMAIN,
         {
             "zone": [
@@ -247,7 +247,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     ent_reg = await entity_registry.async_get_registry.opp)
 
     assert await setup.async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: [
@@ -498,7 +498,7 @@ async def test_zone_empty_setup_opp):
 async def test_unavailable_zone.opp):
     """Test active zone with unavailable zones."""
     assert await setup.async_setup_component.opp, DOMAIN, {"zone": {}})
-   .opp.states.async_set("zone.bla", "unavailable", {"restored": True})
+    opp.states.async_set("zone.bla", "unavailable", {"restored": True})
 
     assert zone.async_active_zone.opp, 0.0, 0.01) is None
 

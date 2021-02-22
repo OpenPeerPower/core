@@ -35,11 +35,11 @@ async def async_setup_opp, config):
     """Set up the Sonos component."""
     conf = config.get(DOMAIN)
 
-   .opp.data[DOMAIN] = conf or {}
+    opp.data[DOMAIN] = conf or {}
 
     if conf is not None:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
             )
         )
@@ -49,7 +49,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up Sonos from a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, MP_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, MP_DOMAIN)
     )
     return True

@@ -18,8 +18,8 @@ async def async_get.opp: OpenPeerPower) -> str:
     store = storage.Store.opp, DATA_VERSION, DATA_KEY, True)
 
     data: Optional[Dict[str, str]] = await storage.async_migrator(  # type: ignore
-        opp,
-       .opp.config.path(LEGACY_UUID_FILE),
+        opp.
+        opp.config.path(LEGACY_UUID_FILE),
         store,
     )
 

@@ -143,7 +143,7 @@ class RegistryEntry:
         if icon is not None:
             attrs[ATTR_ICON] = icon
 
-       .opp.states.async_set(self.entity_id, STATE_UNAVAILABLE, attrs)
+        opp.states.async_set(self.entity_id, STATE_UNAVAILABLE, attrs)
 
 
 class EntityRegistry:
@@ -624,7 +624,7 @@ def async_get.opp: OpenPeerPowerType) -> EntityRegistry:
 async def async_load.opp: OpenPeerPowerType) -> None:
     """Load entity registry."""
     assert DATA_REGISTRY not in.opp.data
-   .opp.data[DATA_REGISTRY] = EntityRegistry.opp)
+    opp.data[DATA_REGISTRY] = EntityRegistry.opp)
     await opp.data[DATA_REGISTRY].async_load()
 
 
@@ -681,7 +681,7 @@ async def _async_migrate(entities: Dict[str, Any]) -> Dict[str, List[Dict[str, A
 
 @callback
 def async_setup_entity_restore(
-    opp: OpenPeerPowerType, registry: EntityRegistry
+    opp. OpenPeerPowerType, registry: EntityRegistry
 ) -> None:
     """Set up the entity restore mechanism."""
 
@@ -698,9 +698,9 @@ def async_setup_entity_restore(
         if state is None or not state.attributes.get(ATTR_RESTORED):
             return
 
-       .opp.states.async_remove(event.data["entity_id"], context=event.context)
+        opp.states.async_remove(event.data["entity_id"], context=event.context)
 
-   .opp.bus.async_listen(
+    opp.bus.async_listen(
         EVENT_ENTITY_REGISTRY_UPDATED,
         cleanup_restored_states,
         event_filter=cleanup_restored_states_filter,
@@ -720,11 +720,11 @@ def async_setup_entity_restore(
 
             entry.write_unavailable_state.opp)
 
-   .opp.bus.async_listen(EVENT_OPENPEERPOWER_START, _write_unavailable_states)
+    opp.bus.async_listen(EVENT_OPENPEERPOWER_START, _write_unavailable_states)
 
 
 async def async_migrate_entries(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config_entry_id: str,
     entry_callback: Callable[[RegistryEntry], Optional[dict]],
 ) -> None:

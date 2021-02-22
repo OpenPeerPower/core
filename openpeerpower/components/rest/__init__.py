@@ -57,7 +57,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         _async_setup_shared_data.opp)
         await _async_process_config(opp, conf)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
@@ -67,7 +67,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 @callback
 def _async_setup_shared_data.opp: OpenPeerPower):
     """Create shared data for platform config and rest coordinators."""
-   .opp.data[DOMAIN] = {platform: {} for platform in COORDINATOR_AWARE_PLATFORMS}
+    opp.data[DOMAIN] = {platform: {} for platform in COORDINATOR_AWARE_PLATFORMS}
 
 
 async def _async_process_config(opp, config) -> bool:
@@ -82,20 +82,20 @@ async def _async_process_config(opp, config) -> bool:
         resource_template = conf.get(CONF_RESOURCE_TEMPLATE)
         rest = create_rest_data_from_config(opp, conf)
         coordinator = _wrap_rest_in_coordinator(
-            opp, rest, resource_template, scan_interval
+            opp. rest, resource_template, scan_interval
         )
         refresh_tasks.append(coordinator.async_refresh())
-       .opp.data[DOMAIN][rest_idx] = {REST: rest, COORDINATOR: coordinator}
+        opp.data[DOMAIN][rest_idx] = {REST: rest, COORDINATOR: coordinator}
 
         for platform_domain in COORDINATOR_AWARE_PLATFORMS:
             if platform_domain not in conf:
                 continue
 
             for platform_idx, platform_conf in enumerate(conf[platform_domain]):
-               .opp.data[DOMAIN][platform_domain][platform_idx] = platform_conf
+                opp.data[DOMAIN][platform_domain][platform_idx] = platform_conf
 
                 load = discovery.async_load_platform(
-                    opp,
+                    opp.
                     platform_domain,
                     DOMAIN,
                     {REST_IDX: rest_idx, PLATFORM_IDX: platform_idx},
@@ -136,7 +136,7 @@ def _wrap_rest_in_coordinator.opp, rest, resource_template, update_interval):
         update_method = rest.async_update
 
     return DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="rest data",
         update_method=update_method,
@@ -170,5 +170,5 @@ def create_rest_data_from_config(opp, config):
         auth = None
 
     return RestData(
-        opp, method, resource, auth, headers, params, payload, verify_ssl, timeout
+        opp. method, resource, auth, headers, params, payload, verify_ssl, timeout
     )

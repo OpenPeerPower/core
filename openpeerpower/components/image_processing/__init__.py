@@ -86,7 +86,7 @@ async def async_setup_opp, config):
         if update_tasks:
             await asyncio.wait(update_tasks)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SCAN, async_scan_service, schema=make_entity_service_schema({})
     )
 

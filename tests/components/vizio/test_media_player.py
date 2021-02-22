@@ -80,7 +80,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 
 
 async def _add_config_entry_to.opp(
-    opp: OpenPeerPowerType, config_entry: MockConfigEntry
+    opp. OpenPeerPowerType, config_entry: MockConfigEntry
 ) -> None:
     config_entry.add_to.opp.opp)
     assert await opp.config_entries.async_setup(config_entry.entry_id)
@@ -110,7 +110,7 @@ def _assert_sources_and_volume(attr: Dict[str, Any], vizio_device_class: str) ->
 
 
 def _get_attr_and_assert_base_attr(
-    opp: OpenPeerPowerType, device_class: str, power_state: str
+    opp. OpenPeerPowerType, device_class: str, power_state: str
 ) -> Dict[str, Any]:
     """Return entity attributes  after asserting name, device class, and power state."""
     attr = opp.states.get(ENTITY_ID).attributes
@@ -140,7 +140,7 @@ async def _cm_for_test_setup_without_apps(
 
 
 async def _test_setup_tv(
-    opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
+    opp. OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio TV entity setup."""
     ha_power_state = _get_op_power_state(vizio_power_state)
@@ -164,7 +164,7 @@ async def _test_setup_tv(
 
 
 async def _test_setup_speaker(
-    opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
+    opp. OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio Speaker entity setup."""
     ha_power_state = _get_op_power_state(vizio_power_state)
@@ -191,7 +191,7 @@ async def _test_setup_speaker(
             await _add_config_entry_to.opp.opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(
-                opp, DEVICE_CLASS_SPEAKER, ha_power_state
+                opp. DEVICE_CLASS_SPEAKER, ha_power_state
             )
             if ha_power_state == STATE_ON:
                 _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_SPEAKER)
@@ -201,7 +201,7 @@ async def _test_setup_speaker(
 
 @asynccontextmanager
 async def _cm_for_test_setup_tv_with_apps(
-    opp: OpenPeerPowerType, device_config: Dict[str, Any], app_config: Dict[str, Any]
+    opp. OpenPeerPowerType, device_config: Dict[str, Any], app_config: Dict[str, Any]
 ) -> None:
     """Context manager to setup test for Vizio TV with support for apps."""
     config_entry = MockConfigEntry(
@@ -251,7 +251,7 @@ async def _test_setup_failure.opp: OpenPeerPowerType, config: str) -> None:
 
 
 async def _test_service(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     domain: str,
     vizio_func_name: str,
     ha_service_name: str,
@@ -281,7 +281,7 @@ async def _test_service(
 
 
 async def test_speaker_on(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -290,7 +290,7 @@ async def test_speaker_on(
 
 
 async def test_speaker_off(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -299,7 +299,7 @@ async def test_speaker_off(
 
 
 async def test_speaker_unavailable(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -308,7 +308,7 @@ async def test_speaker_unavailable(
 
 
 async def test_init_tv_on(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -317,7 +317,7 @@ async def test_init_tv_on(
 
 
 async def test_init_tv_off(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -326,7 +326,7 @@ async def test_init_tv_off(
 
 
 async def test_init_tv_unavailable(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -335,21 +335,21 @@ async def test_init_tv_unavailable(
 
 
 async def test_setup_failure_speaker(
-    opp: OpenPeerPowerType, vizio_connect: pytest.fixture
+    opp. OpenPeerPowerType, vizio_connect: pytest.fixture
 ) -> None:
     """Test speaker entity setup failure."""
     await _test_setup_failure.opp, MOCK_SPEAKER_CONFIG)
 
 
 async def test_setup_failure_tv(
-    opp: OpenPeerPowerType, vizio_connect: pytest.fixture
+    opp. OpenPeerPowerType, vizio_connect: pytest.fixture
 ) -> None:
     """Test TV entity setup failure."""
     await _test_setup_failure.opp, MOCK_USER_VALID_TV_CONFIG)
 
 
 async def test_services(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -359,21 +359,21 @@ async def test_services(
     await _test_service.opp, MP_DOMAIN, "pow_on", SERVICE_TURN_ON, None)
     await _test_service.opp, MP_DOMAIN, "pow_off", SERVICE_TURN_OFF, None)
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "mute_on",
         SERVICE_VOLUME_MUTE,
         {ATTR_MEDIA_VOLUME_MUTED: True},
     )
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "mute_off",
         SERVICE_VOLUME_MUTE,
         {ATTR_MEDIA_VOLUME_MUTED: False},
     )
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "set_input",
         SERVICE_SELECT_SOURCE,
@@ -381,13 +381,13 @@ async def test_services(
         "USB",
     )
     await _test_service(
-        opp, MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=DEFAULT_VOLUME_STEP
+        opp. MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=DEFAULT_VOLUME_STEP
     )
     await _test_service(
-        opp, MP_DOMAIN, "vol_down", SERVICE_VOLUME_DOWN, None, num=DEFAULT_VOLUME_STEP
+        opp. MP_DOMAIN, "vol_down", SERVICE_VOLUME_DOWN, None, num=DEFAULT_VOLUME_STEP
     )
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "vol_up",
         SERVICE_VOLUME_SET,
@@ -395,7 +395,7 @@ async def test_services(
         num=(100 - 15),
     )
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "vol_down",
         SERVICE_VOLUME_SET,
@@ -405,7 +405,7 @@ async def test_services(
     await _test_service.opp, MP_DOMAIN, "ch_up", SERVICE_MEDIA_NEXT_TRACK, None)
     await _test_service.opp, MP_DOMAIN, "ch_down", SERVICE_MEDIA_PREVIOUS_TRACK, None)
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "set_setting",
         SERVICE_SELECT_SOUND_MODE,
@@ -416,7 +416,7 @@ async def test_services(
     )
     # Test that the update_setting service does config validation/transformation correctly
     await _test_service(
-        opp,
+        opp.
         DOMAIN,
         "set_setting",
         SERVICE_UPDATE_SETTING,
@@ -426,7 +426,7 @@ async def test_services(
         0,
     )
     await _test_service(
-        opp,
+        opp.
         DOMAIN,
         "set_setting",
         SERVICE_UPDATE_SETTING,
@@ -438,7 +438,7 @@ async def test_services(
 
 
 async def test_options_update(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -449,18 +449,18 @@ async def test_options_update(
     new_options = config_entry.options.copy()
     updated_options = {CONF_VOLUME_STEP: VOLUME_STEP}
     new_options.update(updated_options)
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         entry=config_entry,
         options=new_options,
     )
     assert config_entry.options == updated_options
     await _test_service(
-        opp, MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=VOLUME_STEP
+        opp. MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=VOLUME_STEP
     )
 
 
 async def _test_update_availability_switch(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     initial_power_state: Optional[bool],
     final_power_state: Optional[bool],
     caplog: pytest.fixture,
@@ -503,7 +503,7 @@ async def _test_update_availability_switch(
 
 
 async def test_update_unavailable_to_available(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
     caplog: pytest.fixture,
@@ -513,7 +513,7 @@ async def test_update_unavailable_to_available(
 
 
 async def test_update_available_to_unavailable(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
     caplog: pytest.fixture,
@@ -523,14 +523,14 @@ async def test_update_available_to_unavailable(
 
 
 async def test_setup_with_apps(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
 ) -> None:
     """Test device setup with apps."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp, MOCK_USER_VALID_TV_CONFIG, CURRENT_APP_CONFIG
+        opp. MOCK_USER_VALID_TV_CONFIG, CURRENT_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
@@ -540,7 +540,7 @@ async def test_setup_with_apps(
         assert "app_id" not in attr
 
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "launch_app",
         SERVICE_SELECT_SOURCE,
@@ -551,14 +551,14 @@ async def test_setup_with_apps(
 
 
 async def test_setup_with_apps_include(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
 ) -> None:
     """Test device setup with apps and apps["include"] in config."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp, MOCK_TV_WITH_INCLUDE_CONFIG, CURRENT_APP_CONFIG
+        opp. MOCK_TV_WITH_INCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
@@ -569,14 +569,14 @@ async def test_setup_with_apps_include(
 
 
 async def test_setup_with_apps_exclude(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
 ) -> None:
     """Test device setup with apps and apps["exclude"] in config."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp, MOCK_TV_WITH_EXCLUDE_CONFIG, CURRENT_APP_CONFIG
+        opp. MOCK_TV_WITH_EXCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
@@ -587,14 +587,14 @@ async def test_setup_with_apps_exclude(
 
 
 async def test_setup_with_apps_additional_apps_config(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
 ) -> None:
     """Test device setup with apps and apps["additional_configs"] in config."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp,
+        opp.
         MOCK_TV_WITH_ADDITIONAL_APPS_CONFIG,
         ADDITIONAL_APP_CONFIG["config"],
     ):
@@ -620,7 +620,7 @@ async def test_setup_with_apps_additional_apps_config(
         assert "app_id" not in attr
 
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "launch_app",
         SERVICE_SELECT_SOURCE,
@@ -629,7 +629,7 @@ async def test_setup_with_apps_additional_apps_config(
         APP_LIST,
     )
     await _test_service(
-        opp,
+        opp.
         MP_DOMAIN,
         "launch_app_config",
         SERVICE_SELECT_SOURCE,
@@ -663,14 +663,14 @@ def test_invalid_apps_config(opp: OpenPeerPowerType):
 
 
 async def test_setup_with_unknown_app_config(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
 ) -> None:
     """Test device setup with apps where app config returned is unknown."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp, MOCK_USER_VALID_TV_CONFIG, UNKNOWN_APP_CONFIG
+        opp. MOCK_USER_VALID_TV_CONFIG, UNKNOWN_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
@@ -680,14 +680,14 @@ async def test_setup_with_unknown_app_config(
 
 
 async def test_setup_with_no_running_app(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
 ) -> None:
     """Test device setup with apps where no app is running."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp, MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
+        opp. MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
@@ -697,7 +697,7 @@ async def test_setup_with_no_running_app(
 
 
 async def test_setup_tv_without_mute(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -721,7 +721,7 @@ async def test_setup_tv_without_mute(
 
 
 async def test_apps_update(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update_with_apps: pytest.fixture,
     caplog: pytest.fixture,
@@ -732,7 +732,7 @@ async def test_apps_update(
         return_value=None,
     ):
         async with _cm_for_test_setup_tv_with_apps(
-            opp, MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
+            opp. MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
         ):
             # Check source list, remove TV inputs, and verify that the integration is
             # using the default APPS list

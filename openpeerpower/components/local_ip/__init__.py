@@ -23,8 +23,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up local_ip from configuration.yaml."""
     conf = config.get(DOMAIN)
     if conf:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, data=conf, context={"source": SOURCE_IMPORT}
             )
         )
@@ -34,8 +34,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up local_ip from a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, PLATFORM)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, PLATFORM)
     )
 
     return True

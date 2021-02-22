@@ -152,7 +152,7 @@ def devices_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 async def async_setup_opp, config):
     """Load the scripts from the configuration."""
-   .opp.data[DOMAIN] = component = EntityComponent(_LOGGER, DOMAIN, opp)
+    opp.data[DOMAIN] = component = EntityComponent(_LOGGER, DOMAIN, opp)
 
     await _async_process_config(opp, config, component)
 
@@ -192,16 +192,16 @@ async def async_setup_opp, config):
         for script_entity in await component.async_extract_from_service(service):
             await script_entity.async_toggle(context=service.context, wait=False)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_RELOAD, reload_service, schema=RELOAD_SERVICE_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_TURN_ON, turn_on_service, schema=SCRIPT_TURN_ONOFF_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_TURN_OFF, turn_off_service, schema=SCRIPT_TURN_ONOFF_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_TOGGLE, toggle_service, schema=SCRIPT_TURN_ONOFF_SCHEMA
     )
 
@@ -235,7 +235,7 @@ async def _async_process_config(opp, config, component):
 
         cfg = config[DOMAIN][object_id]
 
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, object_id, service_handler, schema=SCRIPT_SERVICE_SCHEMA
         )
 
@@ -258,7 +258,7 @@ class ScriptEntity(ToggleEntity):
         self.icon = cfg.get(CONF_ICON)
         self.entity_id = ENTITY_ID_FORMAT.format(object_id)
         self.script = Script(
-            opp,
+            opp.
             cfg[CONF_SEQUENCE],
             cfg.get(CONF_ALIAS, object_id),
             DOMAIN,

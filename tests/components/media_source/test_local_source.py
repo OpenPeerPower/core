@@ -11,7 +11,7 @@ async def test_async_browse_media.opp):
     """Test browse media."""
     local_media = opp.config.path("media")
     await async_process_op_core_config(
-        opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
+        opp. {"media_dirs": {"local": local_media, "recordings": local_media}}
     )
     await opp.async_block_till_done()
 
@@ -21,44 +21,44 @@ async def test_async_browse_media.opp):
     # Test path not exists
     with pytest.raises(media_source.BrowseError) as excinfo:
         await media_source.async_browse_media(
-            opp, f"{const.URI_SCHEME}{const.DOMAIN}/local/test/not/exist"
+            opp. f"{const.URI_SCHEME}{const.DOMAIN}/local/test/not/exist"
         )
     assert str(excinfo.value) == "Path does not exist."
 
     # Test browse file
     with pytest.raises(media_source.BrowseError) as excinfo:
         await media_source.async_browse_media(
-            opp, f"{const.URI_SCHEME}{const.DOMAIN}/local/test.mp3"
+            opp. f"{const.URI_SCHEME}{const.DOMAIN}/local/test.mp3"
         )
     assert str(excinfo.value) == "Path is not a directory."
 
     # Test invalid base
     with pytest.raises(media_source.BrowseError) as excinfo:
         await media_source.async_browse_media(
-            opp, f"{const.URI_SCHEME}{const.DOMAIN}/invalid/base"
+            opp. f"{const.URI_SCHEME}{const.DOMAIN}/invalid/base"
         )
     assert str(excinfo.value) == "Unknown source directory."
 
     # Test directory traversal
     with pytest.raises(media_source.BrowseError) as excinfo:
         await media_source.async_browse_media(
-            opp, f"{const.URI_SCHEME}{const.DOMAIN}/local/../configuration.yaml"
+            opp. f"{const.URI_SCHEME}{const.DOMAIN}/local/../configuration.yaml"
         )
     assert str(excinfo.value) == "Invalid path."
 
     # Test successful listing
     media = await media_source.async_browse_media(
-        opp, f"{const.URI_SCHEME}{const.DOMAIN}"
+        opp. f"{const.URI_SCHEME}{const.DOMAIN}"
     )
     assert media
 
     media = await media_source.async_browse_media(
-        opp, f"{const.URI_SCHEME}{const.DOMAIN}/local/."
+        opp. f"{const.URI_SCHEME}{const.DOMAIN}/local/."
     )
     assert media
 
     media = await media_source.async_browse_media(
-        opp, f"{const.URI_SCHEME}{const.DOMAIN}/recordings/."
+        opp. f"{const.URI_SCHEME}{const.DOMAIN}/recordings/."
     )
     assert media
 
@@ -67,7 +67,7 @@ async def test_media_view.opp, opp_client):
     """Test media view."""
     local_media = opp.config.path("media")
     await async_process_op_core_config(
-        opp, {"media_dirs": {"local": local_media, "recordings": local_media}}
+        opp. {"media_dirs": {"local": local_media, "recordings": local_media}}
     )
     await opp.async_block_till_done()
 

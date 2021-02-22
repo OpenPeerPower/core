@@ -131,7 +131,7 @@ class AuthProvider:
 
 
 async def auth_provider_from_config(
-    opp: OpenPeerPower, store: AuthStore, config: Dict[str, Any]
+    opp. OpenPeerPower, store: AuthStore, config: Dict[str, Any]
 ) -> AuthProvider:
     """Initialize an auth provider from a config."""
     provider_name = config[CONF_TYPE]
@@ -151,7 +151,7 @@ async def auth_provider_from_config(
 
 
 async def load_auth_provider_module(
-    opp: OpenPeerPower, provider: str
+    opp. OpenPeerPower, provider: str
 ) -> types.ModuleType:
     """Load an auth provider."""
     try:
@@ -175,7 +175,7 @@ async def load_auth_provider_module(
     # https://github.com/python/mypy/issues/1424
     reqs = module.REQUIREMENTS  # type: ignore
     await requirements.async_process_requirements(
-        opp, f"auth provider {provider}", reqs
+        opp. f"auth provider {provider}", reqs
     )
 
     processed.add(provider)

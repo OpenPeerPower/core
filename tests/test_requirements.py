@@ -31,7 +31,7 @@ async def test_requirement_installed_in_venv.opp):
     ) as mock_install, patch.dict(
         os.environ, env_without_wheel_links(), clear=True
     ):
-       .opp.config.skip_pip = False
+        opp.config.skip_pip = False
         mock_integration.opp, MockModule("comp", requirements=["package==0.0.1"]))
         assert await setup.async_setup_component.opp, "comp", {})
         assert "comp" in.opp.config.components
@@ -51,7 +51,7 @@ async def test_requirement_installed_in_deps.opp):
     ) as mock_install, patch.dict(
         os.environ, env_without_wheel_links(), clear=True
     ):
-       .opp.config.skip_pip = False
+        opp.config.skip_pip = False
         mock_integration.opp, MockModule("comp", requirements=["package==0.0.1"]))
         assert await setup.async_setup_component.opp, "comp", {})
         assert "comp" in.opp.config.components
@@ -93,18 +93,18 @@ async def test_install_missing_package.opp):
 
 async def test_get_integration_with_requirements.opp):
     """Check getting an integration with loaded requirements."""
-   .opp.config.skip_pip = False
+    opp.config.skip_pip = False
     mock_integration(
-        opp, MockModule("test_component_dep", requirements=["test-comp-dep==1.0.0"])
+        opp. MockModule("test_component_dep", requirements=["test-comp-dep==1.0.0"])
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             "test_component_after_dep", requirements=["test-comp-after-dep==1.0.0"]
         ),
     )
     mock_integration(
-        opp,
+        opp.
         MockModule(
             "test_component",
             requirements=["test-comp==1.0.0"],
@@ -120,7 +120,7 @@ async def test_get_integration_with_requirements.opp):
     ) as mock_inst:
 
         integration = await async_get_integration_with_requirements(
-            opp, "test_component"
+            opp. "test_component"
         )
         assert integration
         assert integration.domain == "test_component"
@@ -142,7 +142,7 @@ async def test_get_integration_with_requirements.opp):
 
 async def test_install_with_wheels_index.opp):
     """Test an install attempt with wheels index URL."""
-   .opp.config.skip_pip = False
+    opp.config.skip_pip = False
     mock_integration.opp, MockModule("comp", requirements=["hello==1.0.0"]))
 
     with patch("openpeerpower.util.package.is_installed", return_value=False), patch(
@@ -166,7 +166,7 @@ async def test_install_with_wheels_index.opp):
 
 async def test_install_on_docker.opp):
     """Test an install attempt on an docker system env."""
-   .opp.config.skip_pip = False
+    opp.config.skip_pip = False
     mock_integration.opp, MockModule("comp", requirements=["hello==1.0.0"]))
 
     with patch("openpeerpower.util.package.is_installed", return_value=False), patch(
@@ -189,11 +189,11 @@ async def test_install_on_docker.opp):
 
 async def test_discovery_requirements_mqtt.opp):
     """Test that we load discovery requirements."""
-   .opp.config.skip_pip = False
+    opp.config.skip_pip = False
     mqtt = await loader.async_get_integration.opp, "mqtt")
 
     mock_integration(
-        opp, MockModule("mqtt_comp", partial_manifest={"mqtt": ["foo/discovery"]})
+        opp. MockModule("mqtt_comp", partial_manifest={"mqtt": ["foo/discovery"]})
     )
     with patch(
         "openpeerpower.requirements.async_process_requirements",
@@ -206,11 +206,11 @@ async def test_discovery_requirements_mqtt.opp):
 
 async def test_discovery_requirements_ssdp.opp):
     """Test that we load discovery requirements."""
-   .opp.config.skip_pip = False
+    opp.config.skip_pip = False
     ssdp = await loader.async_get_integration.opp, "ssdp")
 
     mock_integration(
-        opp, MockModule("ssdp_comp", partial_manifest={"ssdp": [{"st": "roku:ecp"}]})
+        opp. MockModule("ssdp_comp", partial_manifest={"ssdp": [{"st": "roku:ecp"}]})
     )
     with patch(
         "openpeerpower.requirements.async_process_requirements",
@@ -229,11 +229,11 @@ async def test_discovery_requirements_ssdp.opp):
 )
 async def test_discovery_requirements_zeroconf.opp, partial_manifest):
     """Test that we load discovery requirements."""
-   .opp.config.skip_pip = False
+    opp.config.skip_pip = False
     zeroconf = await loader.async_get_integration.opp, "zeroconf")
 
     mock_integration(
-        opp,
+        opp.
         MockModule("comp", partial_manifest=partial_manifest),
     )
 
@@ -248,11 +248,11 @@ async def test_discovery_requirements_zeroconf.opp, partial_manifest):
 
 async def test_discovery_requirements_dhcp.opp):
     """Test that we load dhcp discovery requirements."""
-   .opp.config.skip_pip = False
+    opp.config.skip_pip = False
     dhcp = await loader.async_get_integration.opp, "dhcp")
 
     mock_integration(
-        opp,
+        opp.
         MockModule(
             "comp",
             partial_manifest={

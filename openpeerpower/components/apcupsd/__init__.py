@@ -41,7 +41,7 @@ def setup_opp, config):
     port = conf[CONF_PORT]
 
     apcups_data = APCUPSdData(host, port)
-   .opp.data[DOMAIN] = apcups_data
+    opp.data[DOMAIN] = apcups_data
 
     # It doesn't really matter why we're not able to get the status, just that
     # we can't.

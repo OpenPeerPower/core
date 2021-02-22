@@ -23,7 +23,7 @@ async def test_islamic_prayer_times_sensors.opp, legacy_patchable_time):
 
         for prayer in PRAYER_TIMES:
             assert (
-               .opp.states.get(
+                opp.states.get(
                     f"sensor.{prayer}_{islamic_prayer_times.const.SENSOR_TYPES[prayer]}"
                 ).state
                 == PRAYER_TIMES_TIMESTAMPS[prayer].astimezone(dt_util.UTC).isoformat()

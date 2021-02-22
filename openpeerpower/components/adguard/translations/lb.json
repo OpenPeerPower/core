@@ -8,7 +8,7 @@
             "cannot_connect": "Feeler beim verbannen"
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "W\u00ebllt dir Open Peer Power konfigur\u00e9iere fir sech mam AdGuard Home ze verbannen dee vum.opp.io add-on {addon} bereet gestallt g\u00ebtt?",
                 "title": "AdGuard Home via Hass.io add-on"
             },

@@ -34,7 +34,7 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Smart Meter Texas component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -66,17 +66,17 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # This avoids Open Peer Power from complaining about the component taking
     # too long to update.
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="Smart Meter Texas",
         update_method=async_update_data,
         update_interval=SCAN_INTERVAL,
         request_refresh_debouncer=Debouncer(
-            opp, _LOGGER, cooldown=DEBOUNCE_COOLDOWN, immediate=True
+            opp. _LOGGER, cooldown=DEBOUNCE_COOLDOWN, immediate=True
         ),
     )
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_COORDINATOR: coordinator,
         DATA_SMART_METER: smart_meter_texas_data,
     }
@@ -84,8 +84,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     asyncio.create_task(coordinator.async_refresh())
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -122,12 +122,12 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

@@ -28,7 +28,7 @@ async def calls.opp, fixture):
         """Mock action call."""
         calls.append(call)
 
-   .opp.services.async_register("test", "dialogflow", mock_service)
+    opp.services.async_register("test", "dialogflow", mock_service)
 
     return calls
 
@@ -38,7 +38,7 @@ async def fixture.opp, aiohttp_client):
     """Initialize a Open Peer Power server for testing this module."""
     await async_setup_component.opp, dialogflow.DOMAIN, {"dialogflow": {}})
     await async_setup_component(
-        opp,
+        opp.
         intent_script.DOMAIN,
         {
             "intent_script": {
@@ -79,7 +79,7 @@ async def fixture.opp, aiohttp_client):
     )
 
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -299,8 +299,8 @@ async def test_intent_request_without_slots_v1.opp, fixture):
 
     assert text == "Anne Therese is at unknown and Paulus is at unknown"
 
-   .opp.states.async_set("device_tracker.paulus", "home")
-   .opp.states.async_set("device_tracker.anne_therese", "home")
+    opp.states.async_set("device_tracker.paulus", "home")
+    opp.states.async_set("device_tracker.anne_therese", "home")
 
     response = await mock_client.post(
         f"/api/webhook/{webhook_id}", data=json.dumps(data)
@@ -329,8 +329,8 @@ async def test_intent_request_without_slots_v2.opp, fixture):
 
     assert text == "Anne Therese is at unknown and Paulus is at unknown"
 
-   .opp.states.async_set("device_tracker.paulus", "home")
-   .opp.states.async_set("device_tracker.anne_therese", "home")
+    opp.states.async_set("device_tracker.paulus", "home")
+    opp.states.async_set("device_tracker.anne_therese", "home")
 
     response = await mock_client.post(
         f"/api/webhook/{webhook_id}", data=json.dumps(data)

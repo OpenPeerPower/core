@@ -3,7 +3,7 @@
   "name": "Open Peer Power Onboarding",
   "documentation": "https://www.open-peer-power.io/integrations/onboarding",
   "after_dependencies": [
-    .oppio"
+     opp.o"
   ],
   "dependencies": [
     "auth",

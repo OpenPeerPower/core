@@ -93,7 +93,7 @@ def setup_opp, config):
         _LOGGER.warning("Unable to setup Ombi: %s", err)
         return False
 
-   .opp.data[DOMAIN] = {"instance": ombi}
+    opp.data[DOMAIN] = {"instance": ombi}
 
     def submit_movie_request(call):
         """Submit request for movie."""
@@ -131,24 +131,24 @@ def setup_opp, config):
         else:
             raise Warning("No music album found.")
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_MOVIE_REQUEST,
         submit_movie_request,
         schema=SUBMIT_MOVIE_REQUEST_SERVICE_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_MUSIC_REQUEST,
         submit_music_request,
         schema=SUBMIT_MUSIC_REQUEST_SERVICE_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_TV_REQUEST,
         submit_tv_request,
         schema=SUBMIT_TV_REQUEST_SERVICE_SCHEMA,
     )
-   .opp.helpers.discovery.load_platform("sensor", DOMAIN, {}, config)
+    opp.helpers.discovery.load_platform("sensor", DOMAIN, {}, config)
 
     return True

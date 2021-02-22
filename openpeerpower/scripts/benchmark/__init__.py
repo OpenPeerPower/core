@@ -45,7 +45,7 @@ def run(args):
 
 async def run_benchmark(bench):
     """Run a benchmark."""
-    opp =core.OpenPeerPower()
+    opp.=core.OpenPeerPower()
     runtime = await bench.opp)
     print(f"Benchmark {bench.__name__} done in {runtime}s")
     await opp.async_stop()
@@ -70,10 +70,10 @@ async def fire_events.opp):
         nonlocal count
         count += 1
 
-   .opp.bus.async_listen(event_name, listener)
+    opp.bus.async_listen(event_name, listener)
 
     for _ in range(events_to_fire):
-       .opp.bus.async_fire(event_name)
+        opp.bus.async_fire(event_name)
 
     start = timer()
 
@@ -102,10 +102,10 @@ async def fire_events_with_filter.opp):
         nonlocal count
         count += 1
 
-   .opp.bus.async_listen(event_name, listener, event_filter=event_filter)
+    opp.bus.async_listen(event_name, listener, event_filter=event_filter)
 
     for _ in range(events_to_fire):
-       .opp.bus.async_fire(event_name)
+        opp.bus.async_fire(event_name)
 
     start = timer()
 
@@ -131,11 +131,11 @@ async def time_changed_helper.opp):
         if count == 10 ** 6:
             event.set()
 
-   .opp.helpers.event.async_track_time_change(listener, minute=0, second=0)
+    opp.helpers.event.async_track_time_change(listener, minute=0, second=0)
     event_data = {ATTR_NOW: datetime(2017, 10, 10, 15, 0, 0, tzinfo=dt_util.UTC)}
 
     for _ in range(10 ** 6):
-       .opp.bus.async_fire(EVENT_TIME_CHANGED, event_data)
+        opp.bus.async_fire(EVENT_TIME_CHANGED, event_data)
 
     start = timer()
 
@@ -161,7 +161,7 @@ async def state_changed_helper.opp):
             event.set()
 
     for idx in range(1000):
-       .opp.helpers.event.async_track_state_change(
+        opp.helpers.event.async_track_state_change(
             f"{entity_id}{idx}", listener, "off", "on"
         )
     event_data = {
@@ -171,7 +171,7 @@ async def state_changed_helper.opp):
     }
 
     for _ in range(10 ** 6):
-       .opp.bus.async_fire(EVENT_STATE_CHANGED, event_data)
+        opp.bus.async_fire(EVENT_STATE_CHANGED, event_data)
 
     start = timer()
 
@@ -193,7 +193,7 @@ async def state_changed_event_helper.opp):
         nonlocal count
         count += 1
 
-   .opp.helpers.event.async_track_state_change_event(
+    opp.helpers.event.async_track_state_change_event(
         [f"{entity_id}{idx}" for idx in range(1000)], listener
     )
 
@@ -204,7 +204,7 @@ async def state_changed_event_helper.opp):
     }
 
     for _ in range(events_to_fire):
-       .opp.bus.async_fire(EVENT_STATE_CHANGED, event_data)
+        opp.bus.async_fire(EVENT_STATE_CHANGED, event_data)
 
     start = timer()
 
@@ -228,7 +228,7 @@ async def state_changed_event_filter_helper.opp):
         nonlocal count
         count += 1
 
-   .opp.helpers.event.async_track_state_change_event(
+    opp.helpers.event.async_track_state_change_event(
         [f"{entity_id}{idx}" for idx in range(1000)], listener
     )
 
@@ -239,7 +239,7 @@ async def state_changed_event_filter_helper.opp):
     }
 
     for _ in range(events_to_fire):
-       .opp.bus.async_fire(EVENT_STATE_CHANGED, event_data)
+        opp.bus.async_fire(EVENT_STATE_CHANGED, event_data)
 
     start = timer()
 

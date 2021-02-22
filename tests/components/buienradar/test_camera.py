@@ -21,7 +21,7 @@ async def test_fetching_url_and_caching(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(), text="hello world")
 
     await async_setup_component(
-        opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
+        opp. "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
     await opp.async_block_till_done()
 
@@ -46,7 +46,7 @@ async def test_expire_delta(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(), text="hello world")
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -78,7 +78,7 @@ async def test_only_one_fetch_at_a_time(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(), text="hello world")
 
     await async_setup_component(
-        opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
+        opp. "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
     await opp.async_block_till_done()
 
@@ -100,7 +100,7 @@ async def test_dimension(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(700), text="hello world")
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {"camera": {"name": "config_test", "platform": "buienradar", "dimension": 700}},
     )
@@ -118,7 +118,7 @@ async def test_belgium_country(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(country_code="BE"), text="hello world")
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -142,7 +142,7 @@ async def test_failure_response_not_cached(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(), text="hello world", status=401)
 
     await async_setup_component(
-        opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
+        opp. "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
     await opp.async_block_till_done()
 
@@ -168,7 +168,7 @@ async def test_last_modified_updates(aioclient_mock, opp, opp_client):
     )
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -205,7 +205,7 @@ async def test_last_modified_updates(aioclient_mock, opp, opp_client):
 async def test_retries_after_error(aioclient_mock, opp, opp_client):
     """Test that it does retry after an error instead of caching."""
     await async_setup_component(
-        opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
+        opp. "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
     await opp.async_block_till_done()
 

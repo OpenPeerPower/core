@@ -73,7 +73,7 @@ PLATFORMS = ["sensor", "camera", "climate"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up Nest components with dispatch between old/new flows."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     if DOMAIN not in config:
         return True
@@ -86,13 +86,13 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         return False
 
     # For setup of ConfigEntry below
-   .opp.data[DOMAIN][DATA_NEST_CONFIG] = config[DOMAIN]
+    opp.data[DOMAIN][DATA_NEST_CONFIG] = config[DOMAIN]
     project_id = config[DOMAIN][CONF_PROJECT_ID]
     config_flow.NestFlowHandler.register_sdm_api.opp)
     config_flow.NestFlowHandler.async_register_implementation(
-        opp,
+        opp.
         config_entry_oauth2_flow.LocalOAuth2Implementation(
-            opp,
+            opp.
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -144,7 +144,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
     )
 
@@ -167,8 +167,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         await subscriber.start_async()
     except AuthException as err:
         _LOGGER.debug("Subscriber authentication error: %s", err)
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_REAUTH},
                 data=entry.data,
@@ -182,7 +182,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     except GoogleNestException as err:
         if DATA_NEST_UNAVAILABLE not in.opp.data[DOMAIN]:
             _LOGGER.error("Subscriber error: %s", err)
-           .opp.data[DOMAIN][DATA_NEST_UNAVAILABLE] = True
+            opp.data[DOMAIN][DATA_NEST_UNAVAILABLE] = True
         subscriber.stop_async()
         raise ConfigEntryNotReady from err
 
@@ -191,16 +191,16 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     except GoogleNestException as err:
         if DATA_NEST_UNAVAILABLE not in.opp.data[DOMAIN]:
             _LOGGER.error("Device manager error: %s", err)
-           .opp.data[DOMAIN][DATA_NEST_UNAVAILABLE] = True
+            opp.data[DOMAIN][DATA_NEST_UNAVAILABLE] = True
         subscriber.stop_async()
         raise ConfigEntryNotReady from err
 
-   .opp.data[DOMAIN].pop(DATA_NEST_UNAVAILABLE, None)
-   .opp.data[DOMAIN][DATA_SUBSCRIBER] = subscriber
+    opp.data[DOMAIN].pop(DATA_NEST_UNAVAILABLE, None)
+    opp.data[DOMAIN][DATA_SUBSCRIBER] = subscriber
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -217,13 +217,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(DATA_SUBSCRIBER)
-       .opp.data[DOMAIN].pop(DATA_NEST_UNAVAILABLE, None)
+        opp.data[DOMAIN].pop(DATA_SUBSCRIBER)
+        opp.data[DOMAIN].pop(DATA_NEST_UNAVAILABLE, None)
 
     return unload_ok

@@ -66,7 +66,7 @@ async def test_invalid_address.opp, aioclient_mock):
 async def test_address_already_set_up.opp, aioclient_mock):
     """Test we abort if address has already been set up."""
     MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT, title="12345").add_to.opp(
-       .opp
+        opp
     )
 
     aioclient_mock.post(

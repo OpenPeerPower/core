@@ -33,13 +33,13 @@ SCAN_INTERVAL = timedelta(seconds=30)
 async def async_setup_opp, config):
     """Track states and offer events for mailboxes."""
     mailboxes = []
-   .opp.components.frontend.async_register_built_in_panel(
+    opp.components.frontend.async_register_built_in_panel(
         "mailbox", "mailbox", "mdi:mailbox"
     )
-   .opp.http.register_view(MailboxPlatformsView(mailboxes))
-   .opp.http.register_view(MailboxMessageView(mailboxes))
-   .opp.http.register_view(MailboxMediaView(mailboxes))
-   .opp.http.register_view(MailboxDeleteView(mailboxes))
+    opp.http.register_view(MailboxPlatformsView(mailboxes))
+    opp.http.register_view(MailboxMessageView(mailboxes))
+    opp.http.register_view(MailboxMediaView(mailboxes))
+    opp.http.register_view(MailboxDeleteView(mailboxes))
 
     async def async_setup_platform(p_type, p_config=None, discovery_info=None):
         """Set up a mailbox platform."""
@@ -59,7 +59,7 @@ async def async_setup_opp, config):
         try:
             if hasattr(platform, "async_get_handler"):
                 mailbox = await platform.async_get_handler(
-                    opp, p_config, discovery_info
+                    opp. p_config, discovery_info
                 )
             elif hasattr(platform, "get_handler"):
                 mailbox = await opp.async_add_executor_job(

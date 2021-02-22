@@ -24,7 +24,7 @@ def test_get_device_detects_none.opp, mock_openzwave):
 
 def test_get_device_detects_rollershutter.opp, mock_openzwave):
     """Test device returns rollershutter."""
-   .opp.data[const.DATA_NETWORK] = MagicMock()
+    opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
     value = MockValue(
         data=0, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL
@@ -65,7 +65,7 @@ def test_get_device_detects_garagedoor_barrier.opp, mock_openzwave):
 
 def test_roller_no_position_workaround.opp, mock_openzwave):
     """Test position changed."""
-   .opp.data[const.DATA_NETWORK] = MagicMock()
+    opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(manufacturer_id="0047", product_type="5a52")
     value = MockValue(
         data=45, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL
@@ -78,7 +78,7 @@ def test_roller_no_position_workaround.opp, mock_openzwave):
 
 def test_roller_value_changed.opp, mock_openzwave):
     """Test position changed."""
-   .opp.data[const.DATA_NETWORK] = MagicMock()
+    opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
     value = MockValue(
         data=None, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL
@@ -157,7 +157,7 @@ def test_roller_invert_percent.opp, mock_openzwave):
         primary=value, open=open_value, close=close_value, node=node
     )
     device = cover.get_device(
-       .opp.opp, node=node, values=values, node_config={CONF_INVERT_PERCENT: True}
+        opp.opp, node=node, values=values, node_config={CONF_INVERT_PERCENT: True}
     )
 
     device.set_cover_position(position=25)
@@ -185,7 +185,7 @@ def test_roller_reverse_open_close.opp, mock_openzwave):
         primary=value, open=open_value, close=close_value, node=node
     )
     device = cover.get_device(
-       .opp.opp,
+        opp.opp,
         node=node,
         values=values,
         node_config={CONF_INVERT_OPENCLOSE_BUTTONS: True},

@@ -15,7 +15,7 @@ class OndiloClient(Ondilo):
 
     def __init__(
         self,
-       .opp: core.OpenPeerPower,
+        opp. core.OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
@@ -23,7 +23,7 @@ class OndiloClient(Ondilo):
         self.opp = opp
         self.config_entry = config_entry
         self.session = config_entry_oauth2_flow.OAuth2Session(
-            opp, config_entry, implementation
+            opp. config_entry, implementation
         )
         super().__init__(self.session.token)
 

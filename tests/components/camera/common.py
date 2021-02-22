@@ -11,5 +11,5 @@ def mock_camera_prefs.opp, entity_id, prefs=None):
     prefs_to_set = {PREF_PRELOAD_STREAM: True}
     if prefs is not None:
         prefs_to_set.update(prefs)
-   .opp.data[DATA_CAMERA_PREFS]._prefs[entity_id] = prefs_to_set
+    opp.data[DATA_CAMERA_PREFS]._prefs[entity_id] = prefs_to_set
     return prefs_to_set

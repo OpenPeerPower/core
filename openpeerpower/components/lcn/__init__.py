@@ -49,7 +49,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, config):
     """Set up the LCN component."""
-   .opp.data[DATA_LCN] = {}
+    opp.data[DATA_LCN] = {}
 
     conf_connections = config[DOMAIN][CONF_CONNECTIONS]
     connections = []
@@ -81,7 +81,7 @@ async def async_setup_opp, config):
             _LOGGER.error('Connection to PCHK server "%s" failed', connection_name)
             return False
 
-   .opp.data[DATA_LCN][CONF_CONNECTIONS] = connections
+    opp.data[DATA_LCN][CONF_CONNECTIONS] = connections
 
     # load platforms
     for component, conf_key in (
@@ -94,9 +94,9 @@ async def async_setup_opp, config):
         ("switch", CONF_SWITCHES),
     ):
         if conf_key in config[DOMAIN]:
-           .opp.async_create_task(
+            opp.async_create_task(
                 async_load_platform(
-                    opp, component, DOMAIN, config[DOMAIN][conf_key], config
+                    opp. component, DOMAIN, config[DOMAIN][conf_key], config
                 )
             )
 
@@ -116,7 +116,7 @@ async def async_setup_opp, config):
         ("dyn_text", DynText),
         ("pck", Pck),
     ):
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, service_name, service.opp).async_call_service, service.schema
         )
 

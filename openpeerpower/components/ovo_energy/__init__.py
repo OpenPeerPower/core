@@ -42,8 +42,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from exception
 
     if not authenticated:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": "reauth"}, data=entry.data
             )
         )
@@ -59,8 +59,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             except aiohttp.ClientError as exception:
                 raise UpdateFailed(exception) from exception
             if not authenticated:
-               .opp.async_create_task(
-                   .opp.config_entries.flow.async_init(
+                opp.async_create_task(
+                    opp.config_entries.flow.async_init(
                         DOMAIN, context={"source": "reauth"}, data=entry.data
                     )
                 )
@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             return await client.get_daily_usage(datetime.utcnow().strftime("%Y-%m"))
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         # Name of the data. For logging purposes.
         name="sensor",
@@ -77,8 +77,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         update_interval=timedelta(seconds=300),
     )
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_CLIENT: client,
         DATA_COORDINATOR: coordinator,
     }
@@ -87,8 +87,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     await coordinator.async_refresh()
 
     # Setup components
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
     return True

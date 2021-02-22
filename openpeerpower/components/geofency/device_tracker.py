@@ -19,11 +19,11 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if device in.opp.data[GF_DOMAIN]["devices"]:
             return
 
-       .opp.data[GF_DOMAIN]["devices"].add(device)
+        opp.data[GF_DOMAIN]["devices"].add(device)
 
         async_add_entities([GeofencyEntity(device, gps, location_name, attributes)])
 
-   .opp.data[GF_DOMAIN]["unsub_device_tracker"][
+    opp.data[GF_DOMAIN]["unsub_device_tracker"][
         config_entry.entry_id
     ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
 
@@ -37,7 +37,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     }
 
     if dev_ids:
-       .opp.data[GF_DOMAIN]["devices"].update(dev_ids)
+        opp.data[GF_DOMAIN]["devices"].update(dev_ids)
         async_add_entities(GeofencyEntity(dev_id) for dev_id in dev_ids)
 
     return True

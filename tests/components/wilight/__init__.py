@@ -58,7 +58,7 @@ MOCK_SSDP_DISCOVERY_INFO_MISSING_MANUFACTORER = {
 
 
 async def setup_integration(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
 ) -> MockConfigEntry:
     """Mock ConfigEntry in Open Peer Power."""
 

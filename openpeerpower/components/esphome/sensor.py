@@ -14,11 +14,11 @@ from . import EsphomeEntity, esphome_state_property, platform_async_setup_entry
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up esphome sensors based on a config entry."""
     await platform_async_setup_entry(
-        opp,
+        opp.
         entry,
         async_add_entities,
         component_key="sensor",
@@ -27,7 +27,7 @@ async def async_setup_entry(
         state_type=SensorState,
     )
     await platform_async_setup_entry(
-        opp,
+        opp.
         entry,
         async_add_entities,
         component_key="text_sensor",

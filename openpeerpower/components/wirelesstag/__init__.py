@@ -195,10 +195,10 @@ def setup_opp, config):
 
         platform = WirelessTagPlatform.opp, wirelesstags)
         platform.load_tags()
-       .opp.data[DOMAIN] = platform
+        opp.data[DOMAIN] = platform
     except (ConnectTimeout, HTTPError, WirelessTagsException) as ex:
         _LOGGER.error("Unable to connect to wirelesstag.net service: %s", str(ex))
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {ex}<br />Please restart.opp after fixing this.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
@@ -206,10 +206,10 @@ def setup_opp, config):
         return False
 
     # listen to custom events
-   .opp.bus.listen(
+    opp.bus.listen(
         "wirelesstag_update_tags", opp.data[DOMAIN].handle_update_tags_event
     )
-   .opp.bus.listen("wirelesstag_binary_event", opp.data[DOMAIN].handle_binary_event)
+    opp.bus.listen("wirelesstag_binary_event", opp.data[DOMAIN].handle_binary_event)
 
     return True
 

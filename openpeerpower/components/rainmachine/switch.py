@@ -107,7 +107,7 @@ SWITCH_TYPE_ZONE = "zone"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up RainMachine switches based on a config entry."""
     platform = entity_platform.current_platform.get()

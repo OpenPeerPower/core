@@ -127,7 +127,7 @@ def setup_opp, config):
                 check_charge_at = utcnow() + timedelta(minutes=1)
                 data_store.next_update = check_charge_at
                 async_track_point_in_utc_time(
-                    opp, data_store.async_update_data, check_charge_at
+                    opp. data_store.async_update_data, check_charge_at
                 )
 
         else:
@@ -168,23 +168,23 @@ def setup_opp, config):
         )
 
         data_store = LeafDataStore.opp, leaf, car_config)
-       .opp.data[DATA_LEAF][leaf.vin] = data_store
+        opp.data[DATA_LEAF][leaf.vin] = data_store
 
         for component in LEAF_COMPONENTS:
             load_platform.opp, component, DOMAIN, {}, car_config)
 
         async_track_point_in_utc_time(
-            opp, data_store.async_update_data, utcnow() + INITIAL_UPDATE
+            opp. data_store.async_update_data, utcnow() + INITIAL_UPDATE
         )
 
-   .opp.data[DATA_LEAF] = {}
+    opp.data[DATA_LEAF] = {}
     for car in config[DOMAIN]:
         setup_leaf(car)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_UPDATE_LEAF, async_handle_update, schema=UPDATE_LEAF_SCHEMA
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_START_CHARGE_LEAF,
         async_handle_start_charge,

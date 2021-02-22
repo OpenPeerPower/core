@@ -46,7 +46,7 @@ def setup_opp, config):
         """Stop the Shiftr.io MQTT component."""
         mqttc.disconnect()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_shiftr)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_shiftr)
 
     def shiftr_event_listener(event):
         """Listen for new messages on the bus and sends them to Shiftr.io."""
@@ -69,6 +69,6 @@ def setup_opp, config):
         except RuntimeError:
             pass
 
-   .opp.bus.listen(EVENT_STATE_CHANGED, shiftr_event_listener)
+    opp.bus.listen(EVENT_STATE_CHANGED, shiftr_event_listener)
 
     return True

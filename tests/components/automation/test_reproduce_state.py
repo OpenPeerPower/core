@@ -6,8 +6,8 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Automation states."""
-   .opp.states.async_set("automation.entity_off", "off", {})
-   .opp.states.async_set("automation.entity_on", "on", {})
+    opp.states.async_set("automation.entity_off", "off", {})
+    opp.states.async_set("automation.entity_on", "on", {})
 
     turn_on_calls = async_mock_service.opp, "automation", "turn_on")
     turn_off_calls = async_mock_service.opp, "automation", "turn_off")

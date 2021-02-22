@@ -62,7 +62,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,
@@ -82,5 +82,5 @@ async def async_attach_trigger(
     }
     state_config = state_trigger.TRIGGER_SCHEMA(state_config)
     return await state_trigger.async_attach_trigger(
-        opp, state_config, action, automation_info, platform_type="device"
+        opp. state_config, action, automation_info, platform_type="device"
     )

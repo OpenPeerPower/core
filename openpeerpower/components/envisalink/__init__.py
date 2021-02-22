@@ -129,10 +129,10 @@ async def async_setup_opp, config):
         password,
         zone_dump,
         keep_alive,
-       .opp.loop,
+        opp.loop,
         connection_timeout,
     )
-   .opp.data[DATA_EVL] = controller
+    opp.data[DATA_EVL] = controller
 
     @callback
     def login_fail_callback(data):
@@ -148,7 +148,7 @@ async def async_setup_opp, config):
             "Could not establish a connection with the Envisalink- retrying..."
         )
         if not sync_connect.done():
-           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_envisalink)
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_envisalink)
             sync_connect.set_result(True)
 
     @callback
@@ -156,7 +156,7 @@ async def async_setup_opp, config):
         """Handle a successful connection."""
         _LOGGER.info("Established a connection with the Envisalink")
         if not sync_connect.done():
-           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_envisalink)
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_envisalink)
             sync_connect.set_result(True)
 
     @callback
@@ -206,18 +206,18 @@ async def async_setup_opp, config):
 
     # Load sub-components for Envisalink
     if partitions:
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform(
-                opp,
+                opp.
                 "alarm_control_panel",
                 "envisalink",
                 {CONF_PARTITIONS: partitions, CONF_CODE: code, CONF_PANIC: panic_type},
                 config,
             )
         )
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform(
-                opp,
+                opp.
                 "sensor",
                 "envisalink",
                 {CONF_PARTITIONS: partitions, CONF_CODE: code},
@@ -225,13 +225,13 @@ async def async_setup_opp, config):
             )
         )
     if zones:
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform(
-                opp, "binary_sensor", "envisalink", {CONF_ZONES: zones}, config
+                opp. "binary_sensor", "envisalink", {CONF_ZONES: zones}, config
             )
         )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_CUSTOM_FUNCTION, handle_custom_function, schema=SERVICE_SCHEMA
     )
 

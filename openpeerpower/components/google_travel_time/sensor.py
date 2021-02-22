@@ -143,7 +143,7 @@ def setup_platform.opp, config, add_entities_callback, discovery_info=None):
 
         This allows any entities to be created already
         """
-       .opp.data.setdefault(DATA_KEY, [])
+        opp.data.setdefault(DATA_KEY, [])
         options = config.get(CONF_OPTIONS)
 
         if options.get("units") is None:
@@ -169,15 +169,15 @@ def setup_platform.opp, config, add_entities_callback, discovery_info=None):
         destination = config.get(CONF_DESTINATION)
 
         sensor = GoogleTravelTimeSensor(
-            opp, name, api_key, origin, destination, options
+            opp. name, api_key, origin, destination, options
         )
-       .opp.data[DATA_KEY].append(sensor)
+        opp.data[DATA_KEY].append(sensor)
 
         if sensor.valid_api_connection:
             add_entities_callback([sensor])
 
     # Wait until start event is sent to load this component.
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, run_setup)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, run_setup)
 
 
 class GoogleTravelTimeSensor(Entity):

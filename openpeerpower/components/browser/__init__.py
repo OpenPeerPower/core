@@ -21,7 +21,7 @@ SERVICE_BROWSE_URL_SCHEMA = vol.Schema(
 def setup_opp, config):
     """Listen for browse_url events."""
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_BROWSE_URL,
         lambda service: webbrowser.open(service.data[ATTR_URL]),

@@ -61,8 +61,8 @@ def server_id_valid(server_id):
 async def async_setup_opp, config):
     """Import integration from config."""
     if DOMAIN in config:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=config[DOMAIN]
             )
         )
@@ -90,14 +90,14 @@ async def async_setup_entry.opp, config_entry):
             # Running a speed test during startup can prevent
             # integrations from being able to setup because it
             # can saturate the network interface.
-           .opp.bus.async_listen_once(
+            opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STARTED, _enable_scheduled_speedtests
             )
 
-   .opp.data[DOMAIN] = coordinator
+    opp.data[DOMAIN] = coordinator
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
     )
 
     return True
@@ -105,13 +105,13 @@ async def async_setup_entry.opp, config_entry):
 
 async def async_unload_entry.opp, config_entry):
     """Unload SpeedTest Entry from config_entry."""
-   .opp.services.async_remove(DOMAIN, SPEED_TEST_SERVICE)
+    opp.services.async_remove(DOMAIN, SPEED_TEST_SERVICE)
 
-   .opp.data[DOMAIN].async_unload()
+    opp.data[DOMAIN].async_unload()
 
     await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
 
-   .opp.data.pop(DOMAIN)
+    opp.data.pop(DOMAIN)
 
     return True
 
@@ -221,10 +221,10 @@ class SpeedTestDataCoordinator(DataUpdateCoordinator):
 async def options_updated_listener.opp, entry):
     """Handle options update."""
     if entry.options[CONF_MANUAL]:
-       .opp.data[DOMAIN].update_interval = None
+        opp.data[DOMAIN].update_interval = None
         return
 
-   .opp.data[DOMAIN].update_interval = timedelta(
+    opp.data[DOMAIN].update_interval = timedelta(
         minutes=entry.options[CONF_SCAN_INTERVAL]
     )
     await opp.data[DOMAIN].async_request_refresh()

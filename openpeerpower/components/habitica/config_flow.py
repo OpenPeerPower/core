@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def validate_input(
-   .opp: core.OpenPeerPower, data: Dict[str, str]
+    opp. core.OpenPeerPower, data: Dict[str, str]
 ) -> Dict[str, str]:
     """Validate the user input allows us to connect."""
 

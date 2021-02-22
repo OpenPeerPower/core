@@ -202,7 +202,7 @@ async def async_setup_opp, config):
 
         # Init ip webcam
         cam = PyDroidIPCam(
-           .opp.loop,
+            opp.loop,
             websession,
             host,
             cam_config[CONF_PORT],
@@ -244,14 +244,14 @@ async def async_setup_opp, config):
         if username and password:
             mjpeg_camera.update({CONF_USERNAME: username, CONF_PASSWORD: password})
 
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform.opp, "camera", "mjpeg", mjpeg_camera, config)
         )
 
         if sensors:
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp,
+                    opp.
                     "sensor",
                     DOMAIN,
                     {CONF_NAME: name, CONF_HOST: host, CONF_SENSORS: sensors},
@@ -260,9 +260,9 @@ async def async_setup_opp, config):
             )
 
         if switches:
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp,
+                    opp.
                     "switch",
                     DOMAIN,
                     {CONF_NAME: name, CONF_HOST: host, CONF_SWITCHES: switches},
@@ -271,9 +271,9 @@ async def async_setup_opp, config):
             )
 
         if motion:
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp,
+                    opp.
                     "binary_sensor",
                     DOMAIN,
                     {CONF_HOST: host, CONF_NAME: name},

@@ -82,7 +82,7 @@ def setup_opp, config):
                     _LOGGER.warning(
                         "downloading '%s' failed, status_code=%d", url, req.status_code
                     )
-                   .opp.bus.fire(
+                    opp.bus.fire(
                         f"{DOMAIN}_{DOWNLOAD_FAILED_EVENT}",
                         {"url": url, "filename": filename},
                     )
@@ -137,14 +137,14 @@ def setup_opp, config):
                             fil.write(chunk)
 
                     _LOGGER.debug("Downloading of %s done", url)
-                   .opp.bus.fire(
+                    opp.bus.fire(
                         f"{DOMAIN}_{DOWNLOAD_COMPLETED_EVENT}",
                         {"url": url, "filename": filename},
                     )
 
             except requests.exceptions.ConnectionError:
                 _LOGGER.exception("ConnectionError occurred for %s", url)
-               .opp.bus.fire(
+                opp.bus.fire(
                     f"{DOMAIN}_{DOWNLOAD_FAILED_EVENT}",
                     {"url": url, "filename": filename},
                 )
@@ -154,7 +154,7 @@ def setup_opp, config):
                     os.remove(final_path)
             except ValueError:
                 _LOGGER.exception("Invalid value")
-               .opp.bus.fire(
+                opp.bus.fire(
                     f"{DOMAIN}_{DOWNLOAD_FAILED_EVENT}",
                     {"url": url, "filename": filename},
                 )
@@ -165,7 +165,7 @@ def setup_opp, config):
 
         threading.Thread(target=do_download).start()
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_DOWNLOAD_FILE,
         download_file,

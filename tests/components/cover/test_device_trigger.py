@@ -232,7 +232,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     assert len(triggers) == 4
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "trigger", trigger
+            opp. "trigger", trigger
         )
         assert capabilities == {"extra_fields": []}
 
@@ -279,7 +279,7 @@ async def test_get_trigger_capabilities_set_pos.opp, device_reg, entity_reg):
     assert len(triggers) == 5
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "trigger", trigger
+            opp. "trigger", trigger
         )
         if trigger["type"] == "position":
             assert capabilities == expected_capabilities
@@ -329,7 +329,7 @@ async def test_get_trigger_capabilities_set_tilt_pos.opp, device_reg, entity_reg
     assert len(triggers) == 5
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "trigger", trigger
+            opp. "trigger", trigger
         )
         if trigger["type"] == "tilt_position":
             assert capabilities == expected_capabilities
@@ -339,10 +339,10 @@ async def test_get_trigger_capabilities_set_tilt_pos.opp, device_reg, entity_reg
 
 async def test_if_fires_on_state_change.opp, calls):
     """Test for state triggers firing."""
-   .opp.states.async_set("cover.entity", STATE_CLOSED)
+    opp.states.async_set("cover.entity", STATE_CLOSED)
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -427,7 +427,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is opened.
-   .opp.states.async_set("cover.entity", STATE_OPEN)
+    opp.states.async_set("cover.entity", STATE_OPEN)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data[
@@ -435,7 +435,7 @@ async def test_if_fires_on_state_change.opp, calls):
     ] == "opened - device - {} - closed - open - None".format("cover.entity")
 
     # Fake that the entity is closed.
-   .opp.states.async_set("cover.entity", STATE_CLOSED)
+    opp.states.async_set("cover.entity", STATE_CLOSED)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data[
@@ -443,7 +443,7 @@ async def test_if_fires_on_state_change.opp, calls):
     ] == "closed - device - {} - open - closed - None".format("cover.entity")
 
     # Fake that the entity is opening.
-   .opp.states.async_set("cover.entity", STATE_OPENING)
+    opp.states.async_set("cover.entity", STATE_OPENING)
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data[
@@ -451,7 +451,7 @@ async def test_if_fires_on_state_change.opp, calls):
     ] == "opening - device - {} - closed - opening - None".format("cover.entity")
 
     # Fake that the entity is closing.
-   .opp.states.async_set("cover.entity", STATE_CLOSING)
+    opp.states.async_set("cover.entity", STATE_CLOSING)
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data[
@@ -468,7 +468,7 @@ async def test_if_fires_on_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -542,11 +542,11 @@ async def test_if_fires_on_position.opp, calls):
             ]
         },
     )
-   .opp.states.async_set(ent.entity_id, STATE_OPEN, attributes={"current_position": 1})
-   .opp.states.async_set(
+    opp.states.async_set(ent.entity_id, STATE_OPEN, attributes={"current_position": 1})
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 95}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_OPEN, attributes={"current_position": 50}
     )
     await opp.async_block_till_done()
@@ -561,11 +561,11 @@ async def test_if_fires_on_position.opp, calls):
         ]
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 95}
     )
     await opp.async_block_till_done()
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 45}
     )
     await opp.async_block_till_done()
@@ -575,7 +575,7 @@ async def test_if_fires_on_position.opp, calls):
         == "is_pos_lt_90 - device - cover.set_position_cover - closed - closed - None"
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 90}
     )
     await opp.async_block_till_done()
@@ -595,7 +595,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -669,13 +669,13 @@ async def test_if_fires_on_tilt_position.opp, calls):
             ]
         },
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_OPEN, attributes={"current_tilt_position": 1}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 95}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_OPEN, attributes={"current_tilt_position": 50}
     )
     await opp.async_block_till_done()
@@ -690,11 +690,11 @@ async def test_if_fires_on_tilt_position.opp, calls):
         ]
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 95}
     )
     await opp.async_block_till_done()
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 45}
     )
     await opp.async_block_till_done()
@@ -704,7 +704,7 @@ async def test_if_fires_on_tilt_position.opp, calls):
         == "is_pos_lt_90 - device - cover.set_position_cover - closed - closed - None"
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 90}
     )
     await opp.async_block_till_done()

@@ -16,7 +16,7 @@ from .models import MessageCallbackType
 class EntitySubscription:
     """Class to hold data about an active entity topic subscription."""
 
-    opp: OpenPeerPowerType = attr.ib()
+    opp. OpenPeerPowerType = attr.ib()
     topic: str = attr.ib()
     message_callback: MessageCallbackType = attr.ib()
     unsubscribe_callback: Optional[Callable[[], None]] = attr.ib()
@@ -44,7 +44,7 @@ class EntitySubscription:
         debug_info.add_subscription(self.opp, self.message_callback, self.topic)
 
         self.unsubscribe_callback = await mqtt.async_subscribe(
-            opp, self.topic, self.message_callback, self.qos, self.encoding
+            opp. self.topic, self.message_callback, self.qos, self.encoding
         )
 
     def _should_resubscribe(self, other):
@@ -61,7 +61,7 @@ class EntitySubscription:
 
 @bind.opp
 async def async_subscribe_topics(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     new_state: Optional[Dict[str, EntitySubscription]],
     topics: Dict[str, Any],
 ):
@@ -84,7 +84,7 @@ async def async_subscribe_topics(
             unsubscribe_callback=None,
             qos=value.get("qos", DEFAULT_QOS),
             encoding=value.get("encoding", "utf-8"),
-           .opp.opp,
+            opp.opp,
         )
         # Get the current subscription state
         current = current_subscriptions.pop(key, None)
@@ -97,7 +97,7 @@ async def async_subscribe_topics(
             remaining.unsubscribe_callback()
             # Clear debug data if it exists
             debug_info.remove_subscription(
-                opp, remaining.message_callback, remaining.topic
+                opp. remaining.message_callback, remaining.topic
             )
 
     return new_state

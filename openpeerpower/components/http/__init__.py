@@ -145,7 +145,7 @@ async def async_setup_opp, config):
     ssl_profile = conf[CONF_SSL_PROFILE]
 
     server = OpenPeerPowerHTTP(
-        opp,
+        opp.
         server_host=server_host,
         server_port=server_port,
         ssl_certificate=ssl_certificate,
@@ -171,7 +171,7 @@ async def async_setup_opp, config):
         for listener in startup_listeners:
             listener()
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_server)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_server)
 
         await start_http_server_and_save_config(opp, dict(conf), server)
 
@@ -184,13 +184,13 @@ async def async_setup_opp, config):
         await start_server(event)
 
     startup_listeners.append(
-       .opp.bus.async_listen(EVENT_COMPONENT_LOADED, async_wait_frontend_load)
+        opp.bus.async_listen(EVENT_COMPONENT_LOADED, async_wait_frontend_load)
     )
     startup_listeners.append(
-       .opp.bus.async_listen(EVENT_OPENPEERPOWER_START, start_server)
+        opp.bus.async_listen(EVENT_OPENPEERPOWER_START, start_server)
     )
 
-   .opp.http = server
+    opp.http = server
 
     local_ip = await opp.async_add_executor_job.opp_util.get_local_ip)
 
@@ -199,7 +199,7 @@ async def async_setup_opp, config):
         # Assume the first server host name provided as API host
         host = server_host[0]
 
-   .opp.config.api = ApiConfig(
+    opp.config.api = ApiConfig(
         local_ip, host, server_port, ssl_certificate is not None
     )
 
@@ -211,7 +211,7 @@ class OpenPeerPowerHTTP:
 
     def __init__(
         self,
-        opp,
+        opp.
         ssl_certificate,
         ssl_peer_certificate,
         ssl_key,
@@ -379,7 +379,7 @@ class OpenPeerPowerHTTP:
 
 
 async def start_http_server_and_save_config(
-    opp: OpenPeerPower, conf: Dict, server: OpenPeerPowerHTTP
+    opp. OpenPeerPower, conf: Dict, server: OpenPeerPowerHTTP
 ) -> None:
     """Startup the http server and save the config."""
     await server.start()  # type: ignore

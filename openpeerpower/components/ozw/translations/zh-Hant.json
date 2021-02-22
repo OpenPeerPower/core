@@ -16,7 +16,7 @@
             "install_addon": "\u8acb\u7a0d\u7b49 OpenZWave add-on \u5b89\u88dd\u5b8c\u6210\uff0c\u53ef\u80fd\u6703\u9700\u8981\u5e7e\u5206\u9418\u3002"
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "title": "\u4ee5 OpenZWave add-on \u8a2d\u5b9a OpenZwave \u6574\u5408"
             },
             "install_addon": {

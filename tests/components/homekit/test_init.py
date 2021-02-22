@@ -16,7 +16,7 @@ from tests.components.logbook.test_init import MockLazyEventPartialState
 
 async def test_humanify_homekit_changed_event.opp, hk_driver):
     """Test humanifying HomeKit changed event."""
-   .opp.config.components.add("recorder")
+    opp.config.components.add("recorder")
     with patch("openpeerpower.components.homekit.HomeKit"):
         assert await async_setup_component.opp, "homekit", {"homekit": {}})
     assert await async_setup_component.opp, "logbook", {})
@@ -24,7 +24,7 @@ async def test_humanify_homekit_changed_event.opp, hk_driver):
 
     event1, event2 = list(
         logbook.humanify(
-            opp,
+            opp.
             [
                 MockLazyEventPartialState(
                     EVENT_HOMEKIT_CHANGED,

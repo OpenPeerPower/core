@@ -8,7 +8,7 @@
             "cannot_connect": "\u00dchendamine nurjus"
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Kas soovid seadistada Open Peer Power-i \u00fchenduse AdGuard Home'iga mida pakub Hass.io lisandmoodul: {addon} ?",
                 "title": "AdGuard Home Hass.io pistikprogrammi kaudu"
             },

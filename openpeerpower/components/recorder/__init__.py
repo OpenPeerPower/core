@@ -177,7 +177,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     exclude = conf[CONF_EXCLUDE]
     exclude_t = exclude.get(CONF_EVENT_TYPES, [])
     instance = opp.data[DATA_INSTANCE] = Recorder(
-       .opp.opp,
+        opp.opp,
         auto_purge=auto_purge,
         keep_days=keep_days,
         commit_interval=commit_interval,
@@ -195,7 +195,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
         """Handle calls to the purge service."""
         instance.do_adhoc_purge(**service.data)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_PURGE, async_handle_purge_service, schema=SERVICE_PURGE_SCHEMA
     )
 
@@ -214,7 +214,7 @@ class Recorder(threading.Thread):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         auto_purge: bool,
         keep_days: int,
         commit_interval: int,
@@ -289,7 +289,7 @@ class Recorder(threading.Thread):
             return
 
         shutdown_task = object()
-       .opp_started = concurrent.futures.Future()
+        opp.started = concurrent.futures.Future()
 
         @callback
         def register():
@@ -299,20 +299,20 @@ class Recorder(threading.Thread):
             def shutdown(event):
                 """Shut down the Recorder."""
                 if not.opp_started.done():
-                   .opp_started.set_result(shutdown_task)
+                    opp.started.set_result(shutdown_task)
                 self.queue.put(None)
                 self.join()
 
             self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown)
 
             if self.opp.state == CoreState.running:
-               .opp_started.set_result(None)
+                opp.started.set_result(None)
             else:
 
                 @callback
                 def notify.opp_started(event):
                     """Notify that.opp has started."""
-                   .opp_started.set_result(None)
+                    opp.started.set_result(None)
 
                 self.opp.bus.async_listen_once(
                     EVENT_OPENPEERPOWER_START, notify.opp_started

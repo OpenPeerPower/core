@@ -23,7 +23,7 @@ from tests.common import MockConfigEntry
 
 
 async def test_refresh_library(
-    opp,
+    opp.
     mock_plex_server,
     setup_plex_server,
     requests_mock,
@@ -108,7 +108,7 @@ async def test_scan_clients.opp, mock_plex_server):
 
 
 async def test_sonos_play_media(
-    opp,
+    opp.
     entry,
     setup_plex_server,
     requests_mock,
@@ -191,7 +191,7 @@ async def test_sonos_play_media(
     content_id_with_playqueue = '{"playqueue_id": 1235}'
     with pytest.raises(OpenPeerPowerError) as excinfo:
         play_on_sonos(
-            opp, MEDIA_TYPE_MUSIC, content_id_with_playqueue, sonos_speaker_name
+            opp. MEDIA_TYPE_MUSIC, content_id_with_playqueue, sonos_speaker_name
         )
     assert "PlayQueue '1235' could not be found" in str(excinfo.value)
     assert playback_mock.call_count == 4

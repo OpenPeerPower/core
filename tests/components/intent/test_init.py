@@ -56,16 +56,16 @@ async def test_cover_intents_loading.opp):
 
     with pytest.raises(intent.UnknownIntent):
         await intent.async_handle(
-            opp, "test", "HassOpenCover", {"name": {"value": "garage door"}}
+            opp. "test", "HassOpenCover", {"name": {"value": "garage door"}}
         )
 
     assert await async_setup_component.opp, "cover", {})
 
-   .opp.states.async_set("cover.garage_door", "closed")
+    opp.states.async_set("cover.garage_door", "closed")
     calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
 
     response = await intent.async_handle(
-        opp, "test", "HassOpenCover", {"name": {"value": "garage door"}}
+        opp. "test", "HassOpenCover", {"name": {"value": "garage door"}}
     )
     await opp.async_block_till_done()
 
@@ -83,11 +83,11 @@ async def test_turn_on_intent.opp):
     result = await async_setup_component.opp, "intent", {})
     assert result
 
-   .opp.states.async_set("light.test_light", "off")
+    opp.states.async_set("light.test_light", "off")
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
     response = await intent.async_handle(
-        opp, "test", "HassTurnOn", {"name": {"value": "test light"}}
+        opp. "test", "HassTurnOn", {"name": {"value": "test light"}}
     )
     await opp.async_block_till_done()
 
@@ -105,11 +105,11 @@ async def test_turn_off_intent.opp):
     result = await async_setup_component.opp, "intent", {})
     assert result
 
-   .opp.states.async_set("light.test_light", "on")
+    opp.states.async_set("light.test_light", "on")
     calls = async_mock_service.opp, "light", SERVICE_TURN_OFF)
 
     response = await intent.async_handle(
-        opp, "test", "HassTurnOff", {"name": {"value": "test light"}}
+        opp. "test", "HassTurnOff", {"name": {"value": "test light"}}
     )
     await opp.async_block_till_done()
 
@@ -127,11 +127,11 @@ async def test_toggle_intent.opp):
     result = await async_setup_component.opp, "intent", {})
     assert result
 
-   .opp.states.async_set("light.test_light", "off")
+    opp.states.async_set("light.test_light", "off")
     calls = async_mock_service.opp, "light", SERVICE_TOGGLE)
 
     response = await intent.async_handle(
-        opp, "test", "HassToggle", {"name": {"value": "test light"}}
+        opp. "test", "HassToggle", {"name": {"value": "test light"}}
     )
     await opp.async_block_till_done()
 
@@ -152,13 +152,13 @@ async def test_turn_on_multiple_intent.opp):
     result = await async_setup_component.opp, "intent", {})
     assert result
 
-   .opp.states.async_set("light.test_light", "off")
-   .opp.states.async_set("light.test_lights_2", "off")
-   .opp.states.async_set("light.test_lighter", "off")
+    opp.states.async_set("light.test_light", "off")
+    opp.states.async_set("light.test_lights_2", "off")
+    opp.states.async_set("light.test_lighter", "off")
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
     response = await intent.async_handle(
-        opp, "test", "HassTurnOn", {"name": {"value": "test lights"}}
+        opp. "test", "HassTurnOn", {"name": {"value": "test lights"}}
     )
     await opp.async_block_till_done()
 

@@ -40,7 +40,7 @@ def setup_opp, config):
     except RuntimeError:
         return False
 
-   .opp.data[DOMAIN] = bloomsky
+    opp.data[DOMAIN] = bloomsky
 
     for component in BLOOMSKY_TYPE:
         discovery.load_platform.opp, component, DOMAIN, {}, config)

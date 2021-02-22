@@ -60,11 +60,11 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
         return True
 
     register_oauth2_implementations(
-        opp, config[DOMAIN][CONF_CLIENT_ID], config[DOMAIN][CONF_CLIENT_SECRET]
+        opp. config[DOMAIN][CONF_CLIENT_ID], config[DOMAIN][CONF_CLIENT_SECRET]
     )
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_IMPORT})
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_IMPORT})
     )
 
     return True
@@ -77,8 +77,8 @@ async def async_migrate_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         # The integration switched to OAuth and because of this, uses
         # different unique identifiers as well.
         # Force this by removing the existing entry and trigger a new flow.
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data={CONF_MIGRATE: entry.entry_id},
@@ -103,8 +103,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = coordinator
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = coordinator
 
     # Register device for the Meter Adapter, since it will have no entities.
     device_registry = await dr.async_get_registry.opp)
@@ -120,8 +120,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     # Spin up the platforms
     for component in ENTITY_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     # If Open Peer Power is already in a running state, register the webhook
@@ -129,7 +129,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if opp.state == CoreState.running:
         await coordinator.register_webhook()
     else:
-       .opp.bus.async_listen_once(
+        opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_STARTED, coordinator.register_webhook
         )
 
@@ -146,7 +146,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *(
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in ENTITY_COMPONENTS
             )
         )

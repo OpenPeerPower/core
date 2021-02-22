@@ -61,7 +61,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             CommandBinarySensor(
-                opp, data, name, device_class, payload_on, payload_off, value_template
+                opp. data, name, device_class, payload_on, payload_off, value_template
             )
         ],
         True,

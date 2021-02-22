@@ -71,7 +71,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     ):
         turn_on_action = opp.data[DOMAIN][ip_address][CONF_ON_ACTION]
         on_script = Script(
-            opp, turn_on_action, config_entry.data.get(CONF_NAME, DEFAULT_NAME), DOMAIN
+            opp. turn_on_action, config_entry.data.get(CONF_NAME, DEFAULT_NAME), DOMAIN
         )
 
     # Initialize bridge
@@ -85,7 +85,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if bridge.port is None and bridge.default_port is not None:
         # For backward compat, set default port for websocket tv
         data[CONF_PORT] = bridge.default_port
-       .opp.config_entries.async_update_entry(config_entry, data=data)
+        opp.config_entries.async_update_entry(config_entry, data=data)
         bridge = SamsungTVBridge.get_bridge(
             data[CONF_METHOD],
             data[CONF_HOST],

@@ -150,7 +150,7 @@ async def async_test_powerconfiguration.opp, cluster, entity_id):
     ),
 )
 async def test_sensor(
-    opp,
+    opp.
     zigpy_device_mock,
     zha_device_joined_restored,
     cluster_id,
@@ -201,7 +201,7 @@ def assert_state.opp, entity_id, state, unit_of_measurement):
     This is used to ensure that the logic in each sensor class handled the
     attribute report it received correctly.
     """
-   .opp_state = opp.states.get(entity_id)
+    opp.state = opp.states.get(entity_id)
     assert.opp_state.state == state
     assert.opp_state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == unit_of_measurement
 
@@ -210,14 +210,14 @@ def assert_state.opp, entity_id, state, unit_of_measurement):
 def.opp_ms.opp):
     """Hass instance with measurement system."""
 
-    async def .opp_ms(meas_sys):
+    async def  opp.ms(meas_sys):
         await config_util.async_process_op_core_config(
-            opp, {CONF_UNIT_SYSTEM: meas_sys}
+            opp. {CONF_UNIT_SYSTEM: meas_sys}
         )
         await opp.async_block_till_done()
         return.opp
 
-    return .opp_ms
+    return  opp.ms
 
 
 @pytest.fixture
@@ -227,7 +227,7 @@ def core_rs.opp_storage):
     def _storage(entity_id, uom, state):
         now = dt_util.utcnow().isoformat()
 
-       .opp_storage[restore_state.STORAGE_KEY] = {
+        opp.storage[restore_state.STORAGE_KEY] = {
             "version": restore_state.STORAGE_VERSION,
             "key": restore_state.STORAGE_KEY,
             "data": [
@@ -266,7 +266,7 @@ async def test_temp_uom(
     raw_temp,
     expected,
     restore,
-   .opp_ms,
+    opp.ms,
     core_rs,
     zigpy_device_mock,
     zha_device_restored,
@@ -277,7 +277,7 @@ async def test_temp_uom(
     if restore:
         core_rs(entity_id, uom, state=(expected - 2))
 
-    opp =await opp_ms(
+    opp.=await opp_ms(
         CONF_UNIT_SYSTEM_METRIC if uom == TEMP_CELSIUS else CONF_UNIT_SYSTEM_IMPERIAL
     )
 
@@ -317,7 +317,7 @@ async def test_temp_uom(
 
 
 async def test_electrical_measurement_init(
-    opp,
+    opp.
     zigpy_device_mock,
     zha_device_joined,
 ):

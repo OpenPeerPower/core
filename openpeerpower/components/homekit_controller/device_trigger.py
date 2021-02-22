@@ -209,7 +209,7 @@ async def async_setup_triggers_for_entry.opp: OpenPeerPower, config_entry):
             return False
 
         trigger = TriggerSource(conn, aid, triggers)
-       .opp.data[TRIGGERS][device_id] = trigger
+        opp.data[TRIGGERS][device_id] = trigger
 
         return True
 
@@ -251,7 +251,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

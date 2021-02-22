@@ -14,7 +14,7 @@ PLATFORMS = ["sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Ondilo ICO component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     return True
 
@@ -23,21 +23,21 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Ondilo ICO from a config entry."""
 
     config_flow.OAuth2FlowHandler.async_register_implementation(
-        opp,
+        opp.
         OndiloOauth2Implementation.opp),
     )
 
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id] = api.OndiloClient.opp, entry, implementation)
+    opp.data[DOMAIN][entry.entry_id] = api.OndiloClient.opp, entry, implementation)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -48,12 +48,12 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

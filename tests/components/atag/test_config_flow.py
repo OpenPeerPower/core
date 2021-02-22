@@ -28,7 +28,7 @@ async def test_show_form.opp):
 
 
 async def test_adding_second_device(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test that only one Atag configuration is allowed."""
     await init_integration.opp, aioclient_mock)
@@ -76,7 +76,7 @@ async def test_unauthorized.opp):
 
 
 async def test_full_flow_implementation(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test registering an integration and finishing flow works."""
     aioclient_mock.post(

@@ -5,7 +5,7 @@
             "single_instance_allowed": "Kun en enkelt konfiguration af AdGuard Home er tilladt."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Vil du konfigurere Open Peer Power til at oprette forbindelse til AdGuard Home leveret af Hass.io-tilf\u00f8jelsen: {addon}?",
                 "title": "AdGuard Home via Hass.io-tilf\u00f8jelse"
             },

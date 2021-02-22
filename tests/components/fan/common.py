@@ -28,7 +28,7 @@ from openpeerpower.const import (
 
 
 async def async_turn_on(
-    opp,
+    opp.
     entity_id=ENTITY_MATCH_ALL,
     speed: str = None,
     percentage: int = None,
@@ -57,7 +57,7 @@ async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL) -> None:
 
 
 async def async_oscillate(
-    opp, entity_id=ENTITY_MATCH_ALL, should_oscillate: bool = True
+    opp. entity_id=ENTITY_MATCH_ALL, should_oscillate: bool = True
 ) -> None:
     """Set oscillation on all or specified fan."""
     data = {
@@ -84,7 +84,7 @@ async def async_set_speed.opp, entity_id=ENTITY_MATCH_ALL, speed: str = None) ->
 
 
 async def async_set_preset_mode(
-    opp, entity_id=ENTITY_MATCH_ALL, preset_mode: str = None
+    opp. entity_id=ENTITY_MATCH_ALL, preset_mode: str = None
 ) -> None:
     """Set preset mode for all or specified fan."""
     data = {
@@ -97,7 +97,7 @@ async def async_set_preset_mode(
 
 
 async def async_set_percentage(
-    opp, entity_id=ENTITY_MATCH_ALL, percentage: int = None
+    opp. entity_id=ENTITY_MATCH_ALL, percentage: int = None
 ) -> None:
     """Set percentage for all or specified fan."""
     data = {
@@ -110,7 +110,7 @@ async def async_set_percentage(
 
 
 async def async_increase_speed(
-    opp, entity_id=ENTITY_MATCH_ALL, percentage_step: int = None
+    opp. entity_id=ENTITY_MATCH_ALL, percentage_step: int = None
 ) -> None:
     """Increase speed for all or specified fan."""
     data = {
@@ -126,7 +126,7 @@ async def async_increase_speed(
 
 
 async def async_decrease_speed(
-    opp, entity_id=ENTITY_MATCH_ALL, percentage_step: int = None
+    opp. entity_id=ENTITY_MATCH_ALL, percentage_step: int = None
 ) -> None:
     """Decrease speed for all or specified fan."""
     data = {
@@ -142,7 +142,7 @@ async def async_decrease_speed(
 
 
 async def async_set_direction(
-    opp, entity_id=ENTITY_MATCH_ALL, direction: str = None
+    opp. entity_id=ENTITY_MATCH_ALL, direction: str = None
 ) -> None:
     """Set direction for all or specified fan."""
     data = {

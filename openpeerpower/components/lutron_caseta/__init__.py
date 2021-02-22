@@ -68,13 +68,13 @@ LUTRON_CASETA_COMPONENTS = ["light", "switch", "cover", "scene", "fan", "binary_
 async def async_setup_opp, base_config):
     """Set up the Lutron component."""
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if DOMAIN in base_config:
         bridge_configs = base_config[DOMAIN]
         for config in bridge_configs:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": config_entries.SOURCE_IMPORT},
                     # extract the config keys one-by-one just to be explicit
@@ -126,7 +126,7 @@ async def async_setup_entry.opp, config_entry):
     await _async_register_bridge_device.opp, config_entry.entry_id, bridge_device)
     # Store this bridge (keyed by entry_id) so it can be retrieved by the
     # components we're setting up.
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data[DOMAIN][config_entry.entry_id] = {
         BRIDGE_LEAP: bridge,
         BRIDGE_DEVICE: bridge_device,
         BUTTON_DEVICES: {},
@@ -140,8 +140,8 @@ async def async_setup_entry.opp, config_entry):
         await async_setup_lip.opp, config_entry, bridge.lip_devices)
 
     for component in LUTRON_CASETA_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -168,7 +168,7 @@ async def async_setup_lip.opp, config_entry, lip_devices):
     _LOGGER.debug("Connected to Lutron Caseta bridge via LIP at %s:23", host)
     button_devices_by_lip_id = _async_merge_lip_leap_data(lip_devices, bridge)
     button_devices_by_dr_id = await _async_register_button_devices(
-        opp, config_entry_id, bridge_device, button_devices_by_lip_id
+        opp. config_entry_id, bridge_device, button_devices_by_lip_id
     )
     _async_subscribe_pico_remote_events.opp, lip, button_devices_by_lip_id)
     data[BUTTON_DEVICES] = button_devices_by_dr_id
@@ -217,7 +217,7 @@ async def _async_register_bridge_device.opp, config_entry_id, bridge_device):
 
 
 async def _async_register_button_devices(
-    opp, config_entry_id, bridge_device, button_devices_by_id
+    opp. config_entry_id, bridge_device, button_devices_by_id
 ):
     """Register button devices (Pico Remotes) in the device registry."""
     device_registry = await dr.async_get_registry.opp)
@@ -261,7 +261,7 @@ def _async_subscribe_pico_remote_events.opp, lip, button_devices_by_id):
         else:
             action = ACTION_RELEASE
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             LUTRON_CASETA_BUTTON_EVENT,
             {
                 ATTR_SERIAL: device.get("serial"),
@@ -289,14 +289,14 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in LUTRON_CASETA_COMPONENTS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 

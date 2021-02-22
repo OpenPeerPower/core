@@ -36,7 +36,7 @@ async def test_ecobee3_setup_opp):
     assert climate.unique_id == "homekit-123456789012-16"
 
     climate_helper = Helper(
-        opp, "climate.homew", pairing, accessories[0], config_entry
+        opp. "climate.homew", pairing, accessories[0], config_entry
     )
     climate_state = await climate_helper.poll_and_get_state()
     assert climate_state.attributes["friendly_name"] == "HomeW"
@@ -62,7 +62,7 @@ async def test_ecobee3_setup_opp):
     assert occ1.unique_id == "homekit-AB1C-56"
 
     occ1_helper = Helper(
-        opp, "binary_sensor.kitchen", pairing, accessories[0], config_entry
+        opp. "binary_sensor.kitchen", pairing, accessories[0], config_entry
     )
     occ1_state = await occ1_helper.poll_and_get_state()
     assert occ1_state.attributes["friendly_name"] == "Kitchen"
@@ -96,7 +96,7 @@ async def test_ecobee3_setup_from_cache.opp, opp_storage):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
     accessories = await setup_accessories_from_file.opp, "ecobee3.json")
 
-   .opp_storage["homekit_controller-entity-map"] = {
+    opp.storage["homekit_controller-entity-map"] = {
         "version": 1,
         "data": {
             "pairings": {

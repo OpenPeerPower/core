@@ -113,7 +113,7 @@ def async_sync_geo_coordinator_update_intervals.opp, api_key):
         return
 
     update_interval = async_get_cloud_api_update_interval(
-        opp, api_key, len(coordinators)
+        opp. api_key, len(coordinators)
     )
 
     for coordinator in coordinators:
@@ -127,7 +127,7 @@ def async_sync_geo_coordinator_update_intervals.opp, api_key):
 
 async def async_setup_opp, config):
     """Set up the AirVisual component."""
-   .opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_LISTENER: {}}
+    opp.data[DOMAIN] = {DATA_COORDINATOR: {}, DATA_LISTENER: {}}
     return True
 
 
@@ -152,7 +152,7 @@ def _standardize_geography_config_entry.opp, config_entry):
     if not entry_updates:
         return
 
-   .opp.config_entries.async_update_entry(config_entry, **entry_updates)
+    opp.config_entries.async_update_entry(config_entry, **entry_updates)
 
 
 @callback
@@ -170,7 +170,7 @@ def _standardize_node_pro_config_entry.opp, config_entry):
     if not entry_updates:
         return
 
-   .opp.config_entries.async_update_entry(config_entry, **entry_updates)
+    opp.config_entries.async_update_entry(config_entry, **entry_updates)
 
 
 async def async_setup_entry.opp, config_entry):
@@ -206,8 +206,8 @@ async def async_setup_entry.opp, config_entry):
                 ]
 
                 if not matching_flows:
-                   .opp.async_create_task(
-                       .opp.config_entries.flow.async_init(
+                    opp.async_create_task(
+                        opp.config_entries.flow.async_init(
                             DOMAIN,
                             context={
                                 "source": SOURCE_REAUTH,
@@ -222,7 +222,7 @@ async def async_setup_entry.opp, config_entry):
                 raise UpdateFailed(f"Error while retrieving data: {err}") from err
 
         coordinator = DataUpdateCoordinator(
-            opp,
+            opp.
             LOGGER,
             name=async_get_geography_id(config_entry.data),
             # We give a placeholder update interval in order to create the coordinator;
@@ -234,11 +234,11 @@ async def async_setup_entry.opp, config_entry):
         )
 
         async_sync_geo_coordinator_update_intervals(
-            opp, config_entry.data[CONF_API_KEY]
+            opp. config_entry.data[CONF_API_KEY]
         )
 
         # Only geography-based entries have options:
-       .opp.data[DOMAIN][DATA_LISTENER][
+        opp.data[DOMAIN][DATA_LISTENER][
             config_entry.entry_id
         ] = config_entry.add_update_listener(async_reload_entry)
     else:
@@ -255,7 +255,7 @@ async def async_setup_entry.opp, config_entry):
                 raise UpdateFailed(f"Error while retrieving data: {err}") from err
 
         coordinator = DataUpdateCoordinator(
-            opp,
+            opp.
             LOGGER,
             name="Node/Pro data",
             update_interval=DEFAULT_NODE_PRO_UPDATE_INTERVAL,
@@ -266,11 +266,11 @@ async def async_setup_entry.opp, config_entry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id] = coordinator
+    opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id] = coordinator
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -292,7 +292,7 @@ async def async_migrate_entry.opp, config_entry):
         first_geography = geographies.pop(0)
         first_id = async_get_geography_id(first_geography)
 
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry,
             unique_id=first_id,
             title=f"Cloud API ({first_id})",
@@ -305,8 +305,8 @@ async def async_migrate_entry.opp, config_entry):
                 source = "geography_by_coords"
             else:
                 source = "geography_by_name"
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": source},
                     data={CONF_API_KEY: config_entry.data[CONF_API_KEY], **geography},
@@ -323,13 +323,13 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)
         remove_listener = opp.data[DOMAIN][DATA_LISTENER].pop(config_entry.entry_id)
         remove_listener()
 
@@ -340,7 +340,7 @@ async def async_unload_entry.opp, config_entry):
             # Re-calculate the update interval period for any remaining consumers of
             # this API key:
             async_sync_geo_coordinator_update_intervals(
-                opp, config_entry.data[CONF_API_KEY]
+                opp. config_entry.data[CONF_API_KEY]
             )
 
     return unload_ok

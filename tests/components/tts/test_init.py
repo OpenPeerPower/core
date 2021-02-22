@@ -88,7 +88,7 @@ def mutagen_mock():
 async def internal_url_mock.opp):
     """Mock internal URL of the instance."""
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -147,7 +147,7 @@ async def test_setup_component_and_test_service.opp, empty_cache_dir):
 
 
 async def test_setup_component_and_test_service_with_config_language(
-    opp, empty_cache_dir
+    opp. empty_cache_dir
 ):
     """Set up the demo platform and call service."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -179,7 +179,7 @@ async def test_setup_component_and_test_service_with_config_language(
 
 
 async def test_setup_component_and_test_service_with_config_language_special(
-    opp, empty_cache_dir
+    opp. empty_cache_dir
 ):
     """Set up the demo platform and call service with extend language."""
     import openpeerpower.components.demo.tts as demo_tts
@@ -222,7 +222,7 @@ async def test_setup_component_and_test_service_with_wrong_conf_language.opp):
 
 
 async def test_setup_component_and_test_service_with_service_language(
-    opp, empty_cache_dir
+    opp. empty_cache_dir
 ):
     """Set up the demo platform and call service."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -255,7 +255,7 @@ async def test_setup_component_and_test_service_with_service_language(
 
 
 async def test_setup_component_test_service_with_wrong_service_language(
-    opp, empty_cache_dir
+    opp. empty_cache_dir
 ):
     """Set up the demo platform and call service."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -283,7 +283,7 @@ async def test_setup_component_test_service_with_wrong_service_language(
 
 
 async def test_setup_component_and_test_service_with_service_options(
-    opp, empty_cache_dir
+    opp. empty_cache_dir
 ):
     """Set up the demo platform and call service with options."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -357,7 +357,7 @@ async def test_setup_component_and_test_with_service_options_def.opp, empty_cach
 
 
 async def test_setup_component_and_test_service_with_service_options_wrong(
-    opp, empty_cache_dir
+    opp. empty_cache_dir
 ):
     """Set up the demo platform and call service with wrong options."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -452,7 +452,7 @@ async def test_setup_component_and_test_service_clear_cache.opp, empty_cache_dir
 
 
 async def test_setup_component_and_test_service_with_receive_voice(
-    opp, demo_provider, opp_client
+    opp. demo_provider, opp_client
 ):
     """Set up the demo platform and call service and receive voice."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -490,7 +490,7 @@ async def test_setup_component_and_test_service_with_receive_voice(
 
 
 async def test_setup_component_and_test_service_with_receive_voice_german(
-    opp, demo_provider, opp_client
+    opp. demo_provider, opp_client
 ):
     """Set up the demo platform and call service and receive voice."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -582,7 +582,7 @@ async def test_setup_component_test_without_cache.opp, empty_cache_dir):
 
 
 async def test_setup_component_test_with_cache_call_service_without_cache(
-    opp, empty_cache_dir
+    opp. empty_cache_dir
 ):
     """Set up demo platform with cache and call service without cache."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -610,7 +610,7 @@ async def test_setup_component_test_with_cache_call_service_without_cache(
 
 
 async def test_setup_component_test_with_cache_dir(
-    opp, empty_cache_dir, demo_provider
+    opp. empty_cache_dir, demo_provider
 ):
     """Set up demo platform with cache and call service without cache."""
     calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
@@ -660,7 +660,7 @@ async def test_setup_component_test_with_error_on_get_tts.opp):
 
 
 async def test_setup_component_load_cache_retrieve_without_mem_cache(
-    opp, demo_provider, empty_cache_dir, opp_client
+    opp. demo_provider, empty_cache_dir, opp_client
 ):
     """Set up component and load cache and get without mem cache."""
     _, demo_data = demo_provider.get_tts_audio("bla", "en")

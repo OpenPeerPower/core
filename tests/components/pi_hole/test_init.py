@@ -42,41 +42,41 @@ async def test_setup_minimal_config(opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-            opp, pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
+            opp. pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
         )
 
     await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("sensor.pi_hole_ads_blocked_today").name
+        opp.states.get("sensor.pi_hole_ads_blocked_today").name
         == "Pi-Hole Ads Blocked Today"
     )
     assert (
-       .opp.states.get("sensor.pi_hole_ads_percentage_blocked_today").name
+        opp.states.get("sensor.pi_hole_ads_percentage_blocked_today").name
         == "Pi-Hole Ads Percentage Blocked Today"
     )
     assert (
-       .opp.states.get("sensor.pi_hole_dns_queries_cached").name
+        opp.states.get("sensor.pi_hole_dns_queries_cached").name
         == "Pi-Hole DNS Queries Cached"
     )
     assert (
-       .opp.states.get("sensor.pi_hole_dns_queries_forwarded").name
+        opp.states.get("sensor.pi_hole_dns_queries_forwarded").name
         == "Pi-Hole DNS Queries Forwarded"
     )
     assert (
-       .opp.states.get("sensor.pi_hole_dns_queries_today").name
+        opp.states.get("sensor.pi_hole_dns_queries_today").name
         == "Pi-Hole DNS Queries Today"
     )
     assert (
-       .opp.states.get("sensor.pi_hole_dns_unique_clients").name
+        opp.states.get("sensor.pi_hole_dns_unique_clients").name
         == "Pi-Hole DNS Unique Clients"
     )
     assert (
-       .opp.states.get("sensor.pi_hole_dns_unique_domains").name
+        opp.states.get("sensor.pi_hole_dns_unique_domains").name
         == "Pi-Hole DNS Unique Domains"
     )
     assert (
-       .opp.states.get("sensor.pi_hole_domains_blocked").name
+        opp.states.get("sensor.pi_hole_domains_blocked").name
         == "Pi-Hole Domains Blocked"
     )
     assert.opp.states.get("sensor.pi_hole_seen_clients").name == "Pi-Hole Seen Clients"
@@ -100,7 +100,7 @@ async def test_setup_name_config(opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-            opp,
+            opp.
             pi_hole.DOMAIN,
             {pi_hole.DOMAIN: [{"host": "pi.hole", "name": "Custom"}]},
         )
@@ -108,7 +108,7 @@ async def test_setup_name_config(opp):
     await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("sensor.custom_ads_blocked_today").name
+        opp.states.get("sensor.custom_ads_blocked_today").name
         == "Custom Ads Blocked Today"
     )
 
@@ -118,7 +118,7 @@ async def test_switch.opp, caplog):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-            opp,
+            opp.
             pi_hole.DOMAIN,
             {pi_hole.DOMAIN: [{"host": "pi.hole1", "api_key": "1"}]},
         )
@@ -166,7 +166,7 @@ async def test_disable_service_call.opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-            opp,
+            opp.
             pi_hole.DOMAIN,
             {
                 pi_hole.DOMAIN: [

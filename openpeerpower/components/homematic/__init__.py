@@ -210,8 +210,8 @@ SCHEMA_SERVICE_PUT_PARAMSET = vol.Schema(
 def setup_opp, config):
     """Set up the Homematic component."""
     conf = config[DOMAIN]
-   .opp.data[DATA_CONF] = remotes = {}
-   .opp.data[DATA_STORE] = set()
+    opp.data[DATA_CONF] = remotes = {}
+    opp.data[DATA_STORE] = set()
 
     # Create hosts-dictionary for pyhomematic
     for rname, rconfig in conf[CONF_INTERFACES].items():
@@ -241,7 +241,7 @@ def setup_opp, config):
 
     # Create server thread
     bound_system_callback = partial(_system_callback_handler, opp, config)
-   .opp.data[DATA_HOMEMATIC] = homematic = HMConnection(
+    opp.data[DATA_HOMEMATIC] = homematic = HMConnection(
         local=config[DOMAIN].get(CONF_LOCAL_IP),
         localport=config[DOMAIN].get(CONF_LOCAL_PORT, DEFAULT_LOCAL_PORT),
         remotes=remotes,
@@ -253,7 +253,7 @@ def setup_opp, config):
     homematic.start()
 
     # Stops server when Open Peer Power is shutting down
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, opp.data[DATA_HOMEMATIC].stop)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, opp.data[DATA_HOMEMATIC].stop)
 
     # Init homematic hubs
     entity_hubs = []
@@ -285,7 +285,7 @@ def setup_opp, config):
         # Call parameter
         hmdevice.actionNodeData(param, True, channel)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_VIRTUALKEY,
         _hm_service_virtualkey,
@@ -312,7 +312,7 @@ def setup_opp, config):
         for hub in entities:
             hub.hm_set_variable(name, value)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SET_VARIABLE_VALUE,
         _service_handle_value,
@@ -323,7 +323,7 @@ def setup_opp, config):
         """Service to reconnect all HomeMatic hubs."""
         homematic.reconnect()
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_RECONNECT,
         _service_handle_reconnect,
@@ -361,7 +361,7 @@ def setup_opp, config):
 
         hmdevice.setValue(param, value, channel)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SET_DEVICE_VALUE,
         _service_handle_device,
@@ -377,7 +377,7 @@ def setup_opp, config):
 
         homematic.setInstallMode(interface, t=time, mode=mode, address=address)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SET_INSTALL_MODE,
         _service_handle_install_mode,
@@ -405,7 +405,7 @@ def setup_opp, config):
         )
         homematic.putParamset(interface, address, paramset_key, paramset, rx_mode)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_PUT_PARAMSET,
         _service_put_paramset,
@@ -430,7 +430,7 @@ def _system_callback_handler.opp, config, src, *args):
         for dev in dev_descriptions:
             address = dev["ADDRESS"].split(":")[0]
             if address not in.opp.data[DATA_STORE]:
-               .opp.data[DATA_STORE].add(address)
+                opp.data[DATA_STORE].add(address)
                 addresses.append(address)
 
         # Register EVENTS
@@ -461,7 +461,7 @@ def _system_callback_handler.opp, config, src, *args):
                 # they are setup in Open Peer Power and a discovery event is fired
                 if found_devices:
                     discovery.load_platform(
-                        opp,
+                        opp.
                         component_name,
                         DOMAIN,
                         {
@@ -475,7 +475,7 @@ def _system_callback_handler.opp, config, src, *args):
     elif src == "error":
         _LOGGER.error("Error: %s", args)
         (interface_id, errorcode, message) = args
-       .opp.bus.fire(EVENT_ERROR, {ATTR_ERRORCODE: errorcode, ATTR_MESSAGE: message})
+        opp.bus.fire(EVENT_ERROR, {ATTR_ERRORCODE: errorcode, ATTR_MESSAGE: message})
 
 
 def _get_devices.opp, discovery_type, keys, interface):
@@ -591,7 +591,7 @@ def _hm_event_handler.opp, interface, device, caller, attribute, value):
 
     # Keypress event
     if attribute in HM_PRESS_EVENTS:
-       .opp.bus.fire(
+        opp.bus.fire(
             EVENT_KEYPRESS,
             {ATTR_NAME: hmdevice.NAME, ATTR_PARAM: attribute, ATTR_CHANNEL: channel},
         )
@@ -599,7 +599,7 @@ def _hm_event_handler.opp, interface, device, caller, attribute, value):
 
     # Impulse event
     if attribute in HM_IMPULSE_EVENTS:
-       .opp.bus.fire(EVENT_IMPULSE, {ATTR_NAME: hmdevice.NAME, ATTR_CHANNEL: channel})
+        opp.bus.fire(EVENT_IMPULSE, {ATTR_NAME: hmdevice.NAME, ATTR_CHANNEL: channel})
         return
 
     _LOGGER.warning("Event is unknown and not forwarded")

@@ -25,11 +25,11 @@ async def test_state.opp):
     base = dt_util.utcnow()
     with patch("openpeerpower.util.dt.utcnow") as now:
         now.return_value = base
-       .opp.states.async_set(entity_id, 1, {})
+        opp.states.async_set(entity_id, 1, {})
         await opp.async_block_till_done()
 
         now.return_value += timedelta(seconds=3600)
-       .opp.states.async_set(entity_id, 1, {}, force_update=True)
+        opp.states.async_set(entity_id, 1, {}, force_update=True)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.derivative")
@@ -53,7 +53,7 @@ async def _setup_sensor.opp, config):
     assert await async_setup_component.opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
-   .opp.states.async_set(entity_id, 0, {})
+    opp.states.async_set(entity_id, 0, {})
     await opp.async_block_till_done()
 
     return config, entity_id
@@ -68,7 +68,7 @@ async def setup_tests.opp, config, times, values, expected_state):
     with patch("openpeerpower.util.dt.utcnow") as now:
         for time, value in zip(times, values):
             now.return_value = base + timedelta(seconds=time)
-           .opp.states.async_set(entity_id, value, {}, force_update=True)
+            opp.states.async_set(entity_id, value, {}, force_update=True)
             await opp.async_block_till_done()
 
     state = opp.states.get("sensor.power")
@@ -82,7 +82,7 @@ async def setup_tests.opp, config, times, values, expected_state):
 async def test_dataSet1.opp):
     """Test derivative sensor state."""
     await setup_tests(
-        opp,
+        opp.
         {"unit_time": TIME_SECONDS},
         times=[20, 30, 40, 50],
         values=[10, 30, 5, 0],
@@ -93,7 +93,7 @@ async def test_dataSet1.opp):
 async def test_dataSet2.opp):
     """Test derivative sensor state."""
     await setup_tests(
-        opp,
+        opp.
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[5, 0],
@@ -104,7 +104,7 @@ async def test_dataSet2.opp):
 async def test_dataSet3.opp):
     """Test derivative sensor state."""
     state = await setup_tests(
-        opp,
+        opp.
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[5, 10],
@@ -117,7 +117,7 @@ async def test_dataSet3.opp):
 async def test_dataSet4.opp):
     """Test derivative sensor state."""
     await setup_tests(
-        opp,
+        opp.
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[5, 5],
@@ -128,7 +128,7 @@ async def test_dataSet4.opp):
 async def test_dataSet5.opp):
     """Test derivative sensor state."""
     await setup_tests(
-        opp,
+        opp.
         {"unit_time": TIME_SECONDS},
         times=[20, 30],
         values=[10, -10],
@@ -157,7 +157,7 @@ async def test_data_moving_average_for_discrete_sensor.opp):
     times = list(range(0, 1800 + 30, 30))
 
     config, entity_id = await _setup_sensor(
-        opp,
+        opp.
         {
             "time_window": {"seconds": time_window},
             "unit_time": TIME_MINUTES,
@@ -169,7 +169,7 @@ async def test_data_moving_average_for_discrete_sensor.opp):
     for time, value in zip(times, temperature_values):
         now = base + timedelta(seconds=time)
         with patch("openpeerpower.util.dt.utcnow", return_value=now):
-           .opp.states.async_set(entity_id, value, {}, force_update=True)
+            opp.states.async_set(entity_id, value, {}, force_update=True)
             await opp.async_block_till_done()
 
         if time_window < time < times[-1] - time_window:
@@ -198,13 +198,13 @@ async def test_prefix.opp):
     base = dt_util.utcnow()
     with patch("openpeerpower.util.dt.utcnow") as now:
         now.return_value = base
-       .opp.states.async_set(
+        opp.states.async_set(
             entity_id, 1000, {"unit_of_measurement": POWER_WATT}, force_update=True
         )
         await opp.async_block_till_done()
 
         now.return_value += timedelta(seconds=3600)
-       .opp.states.async_set(
+        opp.states.async_set(
             entity_id, 1000, {"unit_of_measurement": POWER_WATT}, force_update=True
         )
         await opp.async_block_till_done()
@@ -236,11 +236,11 @@ async def test_suffix.opp):
     base = dt_util.utcnow()
     with patch("openpeerpower.util.dt.utcnow") as now:
         now.return_value = base
-       .opp.states.async_set(entity_id, 1000, {})
+        opp.states.async_set(entity_id, 1000, {})
         await opp.async_block_till_done()
 
         now.return_value += timedelta(seconds=10)
-       .opp.states.async_set(entity_id, 1000, {}, force_update=True)
+        opp.states.async_set(entity_id, 1000, {}, force_update=True)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.derivative")

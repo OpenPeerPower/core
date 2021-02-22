@@ -33,8 +33,8 @@ def setup_opp, config):
     def _stop_lirc(_event):
         lirc_interface.stopped.set()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, _start_lirc)
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _stop_lirc)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, _start_lirc)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _stop_lirc)
 
     return True
 

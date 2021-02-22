@@ -198,7 +198,7 @@ async def test_options_flow.opp):
     # Load integration and enter options
     await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
-   .opp.data[DOMAIN] = {TUYA_DATA: MockTuya()}
+    opp.data[DOMAIN] = {TUYA_DATA: MockTuya()}
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

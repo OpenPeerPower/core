@@ -54,14 +54,14 @@ def setup_opp, config):
         vultr.update()
     except RuntimeError as ex:
         _LOGGER.error("Failed to make update API request because: %s", ex)
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             "Error: {}" "".format(ex),
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
 
-   .opp.data[DATA_VULTR] = vultr
+    opp.data[DATA_VULTR] = vultr
     return True
 
 

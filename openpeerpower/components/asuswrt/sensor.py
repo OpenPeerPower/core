@@ -86,7 +86,7 @@ class _SensorInfo:
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the asuswrt sensors."""
 
@@ -99,7 +99,7 @@ async def async_setup_entry(
 
     data_handler = AsuswrtDataHandler(sensors, api)
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="sensor",
         update_method=data_handler.update_data,

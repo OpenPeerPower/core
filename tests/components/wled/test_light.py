@@ -44,7 +44,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_rgb_light_state(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the WLED lights."""
     await init_integration.opp, aioclient_mock)
@@ -101,7 +101,7 @@ async def test_rgb_light_state(
 
 
 async def test_segment_change_state(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test the change of state of the WLED segments."""
     await init_integration.opp, aioclient_mock)
@@ -159,7 +159,7 @@ async def test_segment_change_state(
 
 
 async def test_master_change_state(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test the change of state of the WLED master light control."""
     await init_integration.opp, aioclient_mock)
@@ -228,7 +228,7 @@ async def test_master_change_state(
 
 
 async def test_dynamically_handle_segments(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test if a new/deleted segment is dynamically added/removed."""
     await init_integration.opp, aioclient_mock)
@@ -261,7 +261,7 @@ async def test_dynamically_handle_segments(
 
 
 async def test_single_segment_behavior(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test the behavior of the integration with a single segment."""
     await init_integration.opp, aioclient_mock)
@@ -344,7 +344,7 @@ async def test_single_segment_behavior(
 
 
 async def test_light_error(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test error handling of the WLED lights."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)
@@ -365,7 +365,7 @@ async def test_light_error(
 
 
 async def test_light_connection_error(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test error handling of the WLED switches."""
     await init_integration.opp, aioclient_mock)
@@ -386,7 +386,7 @@ async def test_light_connection_error(
 
 
 async def test_rgbw_light(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test RGBW support for WLED."""
     await init_integration.opp, aioclient_mock, rgbw=True)
@@ -444,7 +444,7 @@ async def test_rgbw_light(
 
 
 async def test_effect_service(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the effect service of a WLED light."""
     await init_integration.opp, aioclient_mock)
@@ -570,7 +570,7 @@ async def test_effect_service(
 
 
 async def test_effect_service_error(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test error handling of the WLED effect service."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)
@@ -591,7 +591,7 @@ async def test_effect_service_error(
 
 
 async def test_preset_service(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the preset service of a WLED light."""
     await init_integration.opp, aioclient_mock)
@@ -613,7 +613,7 @@ async def test_preset_service(
 
 
 async def test_preset_service_error(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test error handling of the WLED preset service."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)

@@ -45,7 +45,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Tesla Powerwall component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     return True
 
@@ -79,11 +79,11 @@ async def _migrate_old_unique_ids.opp, entry_id, powerwall_data):
 
 
 async def _async_handle_api_changed_error(
-    opp: OpenPeerPower, error: MissingAttributeError
+    opp. OpenPeerPower, error: MissingAttributeError
 ):
     # The error might include some important information about what exactly changed.
     _LOGGER.error(str(error))
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         "It seems like your powerwall uses an unsupported version. "
         "Please update the software of your powerwall or if it is "
         "already the newest consider reporting this issue.\nSee logs for more information",
@@ -96,7 +96,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     entry_id = entry.entry_id
 
-   .opp.data[DOMAIN].setdefault(entry_id, {})
+    opp.data[DOMAIN].setdefault(entry_id, {})
     http_session = requests.Session()
 
     password = entry.data.get(CONF_PASSWORD)
@@ -139,15 +139,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             return await _async_update_powerwall_data.opp, entry, power_wall)
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="Powerwall site",
         update_method=async_update_data,
         update_interval=timedelta(seconds=UPDATE_INTERVAL),
     )
 
-   .opp.data[DOMAIN][entry.entry_id] = powerwall_data
-   .opp.data[DOMAIN][entry.entry_id].update(
+    opp.data[DOMAIN][entry.entry_id] = powerwall_data
+    opp.data[DOMAIN][entry.entry_id].update(
         {
             POWERWALL_OBJECT: power_wall,
             POWERWALL_COORDINATOR: coordinator,
@@ -159,15 +159,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await coordinator.async_refresh()
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
 
 
 async def _async_update_powerwall_data(
-    opp: OpenPeerPower, entry: ConfigEntry, power_wall: Powerwall
+    opp. OpenPeerPower, entry: ConfigEntry, power_wall: Powerwall
 ):
     """Fetch updated powerwall data."""
     try:
@@ -176,14 +176,14 @@ async def _async_update_powerwall_data(
         raise UpdateFailed("Unable to fetch data from powerwall") from err
     except MissingAttributeError as err:
         await _async_handle_api_changed_error(opp, err)
-       .opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED] = True
+        opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED] = True
         # Returns the cached data. This data can also be None
         return.opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
 
 
 def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth"},
             data=entry.data,
@@ -228,15 +228,15 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id][POWERWALL_HTTP_SESSION].close()
+    opp.data[DOMAIN][entry.entry_id][POWERWALL_HTTP_SESSION].close()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

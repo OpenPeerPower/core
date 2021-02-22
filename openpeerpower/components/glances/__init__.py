@@ -60,8 +60,8 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     """Configure Glances using config flow only."""
     if DOMAIN in config:
         for entry in config[DOMAIN]:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=entry
                 )
             )
@@ -72,7 +72,7 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
 async def async_setup_entry.opp, config_entry):
     """Set up Glances from config entry."""
     client = GlancesData.opp, config_entry)
-   .opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
+    opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
     if not await client.async_setup():
         return False
 
@@ -82,7 +82,7 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
     await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
-   .opp.data[DOMAIN].pop(config_entry.entry_id)
+    opp.data[DOMAIN].pop(config_entry.entry_id)
     return True
 
 
@@ -160,7 +160,7 @@ class GlancesData:
     @staticmethod
     async def async_options_updated.opp, entry):
         """Triggered by config entry options updates."""
-       .opp.data[DOMAIN][entry.entry_id].set_scan_interval(
+        opp.data[DOMAIN][entry.entry_id].set_scan_interval(
             entry.options[CONF_SCAN_INTERVAL]
         )
 

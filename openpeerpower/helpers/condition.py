@@ -57,7 +57,7 @@ ConditionCheckerType = Callable[[OpenPeerPower, TemplateVarsType], bool]
 
 
 async def async_from_config(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: Union[ConfigType, Template],
     config_validation: bool = True,
 ) -> ConditionCheckerType:
@@ -95,7 +95,7 @@ async def async_from_config(
 
 
 async def async_and_from_config(
-    opp: OpenPeerPower, config: ConfigType, config_validation: bool = True
+    opp. OpenPeerPower, config: ConfigType, config_validation: bool = True
 ) -> ConditionCheckerType:
     """Create multi condition matcher using 'AND'."""
     if config_validation:
@@ -105,7 +105,7 @@ async def async_and_from_config(
     ]
 
     def if_and_condition(
-        opp: OpenPeerPower, variables: TemplateVarsType = None
+        opp. OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
         """Test and condition."""
         errors = []
@@ -128,7 +128,7 @@ async def async_and_from_config(
 
 
 async def async_or_from_config(
-    opp: OpenPeerPower, config: ConfigType, config_validation: bool = True
+    opp. OpenPeerPower, config: ConfigType, config_validation: bool = True
 ) -> ConditionCheckerType:
     """Create multi condition matcher using 'OR'."""
     if config_validation:
@@ -138,7 +138,7 @@ async def async_or_from_config(
     ]
 
     def if_or_condition(
-        opp: OpenPeerPower, variables: TemplateVarsType = None
+        opp. OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
         """Test or condition."""
         errors = []
@@ -161,7 +161,7 @@ async def async_or_from_config(
 
 
 async def async_not_from_config(
-    opp: OpenPeerPower, config: ConfigType, config_validation: bool = True
+    opp. OpenPeerPower, config: ConfigType, config_validation: bool = True
 ) -> ConditionCheckerType:
     """Create multi condition matcher using 'NOT'."""
     if config_validation:
@@ -171,7 +171,7 @@ async def async_not_from_config(
     ]
 
     def if_not_condition(
-        opp: OpenPeerPower, variables: TemplateVarsType = None
+        opp. OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
         """Test not condition."""
         errors = []
@@ -194,7 +194,7 @@ async def async_not_from_config(
 
 
 def numeric_state(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entity: Union[None, str, State],
     below: Optional[Union[float, str]] = None,
     above: Optional[Union[float, str]] = None,
@@ -203,9 +203,9 @@ def numeric_state(
 ) -> bool:
     """Test a numeric state condition."""
     return run_callback_threadsafe(
-       .opp.loop,
+        opp.loop,
         async_numeric_state,
-        opp,
+        opp.
         entity,
         below,
         above,
@@ -215,7 +215,7 @@ def numeric_state(
 
 
 def async_numeric_state(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entity: Union[None, str, State],
     below: Optional[Union[float, str]] = None,
     above: Optional[Union[float, str]] = None,
@@ -307,7 +307,7 @@ def async_numeric_state_from_config(
     value_template = config.get(CONF_VALUE_TEMPLATE)
 
     def if_numeric_state(
-        opp: OpenPeerPower, variables: TemplateVarsType = None
+        opp. OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
         """Test numeric state condition."""
         if value_template is not None:
@@ -315,7 +315,7 @@ def async_numeric_state_from_config(
 
         return all(
             async_numeric_state(
-                opp, entity_id, below, above, value_template, variables, attribute
+                opp. entity_id, below, above, value_template, variables, attribute
             )
             for entity_id in entity_ids
         )
@@ -324,7 +324,7 @@ def async_numeric_state_from_config(
 
 
 def state(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entity: Union[None, str, State],
     req_state: Any,
     for_period: Optional[timedelta] = None,
@@ -407,7 +407,7 @@ def state_from_config(
 
 
 def sun(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     before: Optional[str] = None,
     after: Optional[str] = None,
     before_offset: Optional[timedelta] = None,
@@ -480,16 +480,16 @@ def sun_from_config(
 
 
 def template(
-    opp: OpenPeerPower, value_template: Template, variables: TemplateVarsType = None
+    opp. OpenPeerPower, value_template: Template, variables: TemplateVarsType = None
 ) -> bool:
     """Test if template condition matches."""
     return run_callback_threadsafe(
-       .opp.loop, async_template, opp, value_template, variables
+        opp.loop, async_template, opp, value_template, variables
     ).result()
 
 
 def async_template(
-    opp: OpenPeerPower, value_template: Template, variables: TemplateVarsType = None
+    opp. OpenPeerPower, value_template: Template, variables: TemplateVarsType = None
 ) -> bool:
     """Test if template condition matches."""
     try:
@@ -518,7 +518,7 @@ def async_template_from_config(
 
 
 def time(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     before: Optional[Union[dt_util.dt.time, str]] = None,
     after: Optional[Union[dt_util.dt.time, str]] = None,
     weekday: Union[None, str, Container[str]] = None,
@@ -600,7 +600,7 @@ def time_from_config(
 
 
 def zone(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     zone_ent: Union[None, str, State],
     entity: Union[None, str, State],
 ) -> bool:
@@ -680,13 +680,13 @@ def zone_from_config(
 
 
 async def async_device_from_config(
-    opp: OpenPeerPower, config: ConfigType, config_validation: bool = True
+    opp. OpenPeerPower, config: ConfigType, config_validation: bool = True
 ) -> ConditionCheckerType:
     """Test a device condition."""
     if config_validation:
         config = cv.DEVICE_CONDITION_SCHEMA(config)
     platform = await async_get_device_automation_platform(
-        opp, config[CONF_DOMAIN], "condition"
+        opp. config[CONF_DOMAIN], "condition"
     )
     return cast(
         ConditionCheckerType,
@@ -695,7 +695,7 @@ async def async_device_from_config(
 
 
 async def async_validate_condition_config(
-    opp: OpenPeerPower, config: Union[ConfigType, Template]
+    opp. OpenPeerPower, config: Union[ConfigType, Template]
 ) -> Union[ConfigType, Template]:
     """Validate config."""
     if isinstance(config, Template):
@@ -713,7 +713,7 @@ async def async_validate_condition_config(
         config = cv.DEVICE_CONDITION_SCHEMA(config)
         assert not isinstance(config, Template)
         platform = await async_get_device_automation_platform(
-            opp, config[CONF_DOMAIN], "condition"
+            opp. config[CONF_DOMAIN], "condition"
         )
         return cast(ConfigType, platform.CONDITION_SCHEMA(config))  # type: ignore
 

@@ -52,7 +52,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     steam.api.key.set(config.get(CONF_API_KEY))
     # Initialize steammods app list before creating sensors
     # to benefit from internal caching of the list.
-   .opp.data[APP_LIST_KEY] = steam.apps.app_list()
+    opp.data[APP_LIST_KEY] = steam.apps.app_list()
     entities = [SteamSensor(account, steam) for account in config.get(CONF_ACCOUNTS)]
     if not entities:
         return

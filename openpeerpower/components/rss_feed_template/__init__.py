@@ -56,7 +56,7 @@ def setup_opp, config):
                 item["description"].opp = opp
 
         rss_view = RssView(url, requires_auth, title, items)
-       .opp.http.register_view(rss_view)
+        opp.http.register_view(rss_view)
 
     return True
 

@@ -81,10 +81,10 @@ async def test_low_battery.opp):
 
 async def test_initial_states.opp):
     """Test plant initialises attributes if sensor already exists."""
-   .opp.states.async_set(MOISTURE_ENTITY, 5, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
+    opp.states.async_set(MOISTURE_ENTITY, 5, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
     plant_name = "some_plant"
     assert await async_setup_component(
-        opp, plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
+        opp. plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
     )
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
@@ -98,9 +98,9 @@ async def test_update_states.opp):
     """
     plant_name = "some_plant"
     assert await async_setup_component(
-        opp, plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
+        opp. plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
     )
-   .opp.states.async_set(MOISTURE_ENTITY, 5, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
+    opp.states.async_set(MOISTURE_ENTITY, 5, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
     assert STATE_PROBLEM == state.state
@@ -114,9 +114,9 @@ async def test_unavailable_state.opp):
     """
     plant_name = "some_plant"
     assert await async_setup_component(
-        opp, plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
+        opp. plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         MOISTURE_ENTITY, STATE_UNAVAILABLE, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY}
     )
     await opp.async_block_till_done()
@@ -132,14 +132,14 @@ async def test_state_problem_if_unavailable.opp):
     """
     plant_name = "some_plant"
     assert await async_setup_component(
-        opp, plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
+        opp. plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
     )
-   .opp.states.async_set(MOISTURE_ENTITY, 42, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
+    opp.states.async_set(MOISTURE_ENTITY, 42, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
     assert state.state == STATE_OK
     assert state.attributes[plant.READING_MOISTURE] == 42
-   .opp.states.async_set(
+    opp.states.async_set(
         MOISTURE_ENTITY, STATE_UNAVAILABLE, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY}
     )
     await opp.async_block_till_done()
@@ -164,15 +164,15 @@ async def test_load_from_db.opp):
     plant_name = "wise_plant"
     for value in [20, 30, 10]:
 
-       .opp.states.async_set(
+        opp.states.async_set(
             BRIGHTNESS_ENTITY, value, {ATTR_UNIT_OF_MEASUREMENT: "Lux"}
         )
         await opp.async_block_till_done()
     # wait for the recorder to really store the data
-   .opp.data[recorder.DATA_INSTANCE].block_till_done()
+    opp.data[recorder.DATA_INSTANCE].block_till_done()
 
     assert await async_setup_component(
-        opp, plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
+        opp. plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
     )
     await opp.async_block_till_done()
 
@@ -186,19 +186,19 @@ async def test_brightness_history.opp):
     """Test the min_brightness check."""
     plant_name = "some_plant"
     assert await async_setup_component(
-        opp, plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
+        opp. plant.DOMAIN, {plant.DOMAIN: {plant_name: GOOD_CONFIG}}
     )
-   .opp.states.async_set(BRIGHTNESS_ENTITY, 100, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
+    opp.states.async_set(BRIGHTNESS_ENTITY, 100, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
     assert STATE_PROBLEM == state.state
 
-   .opp.states.async_set(BRIGHTNESS_ENTITY, 600, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
+    opp.states.async_set(BRIGHTNESS_ENTITY, 600, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
     assert STATE_OK == state.state
 
-   .opp.states.async_set(BRIGHTNESS_ENTITY, 100, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
+    opp.states.async_set(BRIGHTNESS_ENTITY, 100, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
     assert STATE_OK == state.state

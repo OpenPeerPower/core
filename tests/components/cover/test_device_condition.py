@@ -232,7 +232,7 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     assert len(conditions) == 4
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "condition", condition
+            opp. "condition", condition
         )
         assert capabilities == {"extra_fields": []}
 
@@ -279,7 +279,7 @@ async def test_get_condition_capabilities_set_pos.opp, device_reg, entity_reg):
     assert len(conditions) == 5
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "condition", condition
+            opp. "condition", condition
         )
         if condition["type"] == "is_position":
             assert capabilities == expected_capabilities
@@ -329,7 +329,7 @@ async def test_get_condition_capabilities_set_tilt_pos.opp, device_reg, entity_r
     assert len(conditions) == 5
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "condition", condition
+            opp. "condition", condition
         )
         if condition["type"] == "is_tilt_position":
             assert capabilities == expected_capabilities
@@ -339,10 +339,10 @@ async def test_get_condition_capabilities_set_tilt_pos.opp, device_reg, entity_r
 
 async def test_if_state.opp, calls):
     """Test for turn_on and turn_off conditions."""
-   .opp.states.async_set("cover.entity", STATE_OPEN)
+    opp.states.async_set("cover.entity", STATE_OPEN)
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -421,29 +421,29 @@ async def test_if_state.opp, calls):
             ]
         },
     )
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_open - event - test_event1"
 
-   .opp.states.async_set("cover.entity", STATE_CLOSED)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
+    opp.states.async_set("cover.entity", STATE_CLOSED)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_closed - event - test_event2"
 
-   .opp.states.async_set("cover.entity", STATE_OPENING)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event3")
+    opp.states.async_set("cover.entity", STATE_OPENING)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_opening - event - test_event3"
 
-   .opp.states.async_set("cover.entity", STATE_CLOSING)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event4")
+    opp.states.async_set("cover.entity", STATE_CLOSING)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event4")
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_closing - event - test_event4"
@@ -458,7 +458,7 @@ async def test_if_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -523,31 +523,31 @@ async def test_if_position.opp, calls):
             ]
         },
     )
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[0].data["some"] == "is_pos_gt_45 - event - test_event1"
     assert calls[1].data["some"] == "is_pos_lt_90 - event - test_event2"
     assert calls[2].data["some"] == "is_pos_gt_45_lt_90 - event - test_event3"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 45}
     )
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_pos_lt_90 - event - test_event2"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 90}
     )
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 5
     assert calls[4].data["some"] == "is_pos_gt_45 - event - test_event1"
@@ -562,7 +562,7 @@ async def test_if_tilt_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -627,31 +627,31 @@ async def test_if_tilt_position.opp, calls):
             ]
         },
     )
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[0].data["some"] == "is_pos_gt_45 - event - test_event1"
     assert calls[1].data["some"] == "is_pos_lt_90 - event - test_event2"
     assert calls[2].data["some"] == "is_pos_gt_45_lt_90 - event - test_event3"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 45}
     )
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_pos_lt_90 - event - test_event2"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_tilt_position": 90}
     )
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 5
     assert calls[4].data["some"] == "is_pos_gt_45 - event - test_event1"

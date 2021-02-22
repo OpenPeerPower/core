@@ -61,7 +61,7 @@ class RegistrationsView(OpenPeerPowerView):
     )
     async def post(self, request: Request, data: Dict) -> Response:
         """Handle the POST request for registration."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         webhook_id = secrets.token_hex()
 
@@ -92,7 +92,7 @@ class RegistrationsView(OpenPeerPowerView):
             data[ATTR_DEVICE_NAME] = data[ATTR_DEVICE_ID]
 
         await opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+            opp.config_entries.flow.async_init(
                 DOMAIN, data=data, context={"source": "registration"}
             )
         )

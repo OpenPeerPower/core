@@ -10,12 +10,12 @@ INTENT_CLOSE_COVER = "HassCloseCover"
 
 async def async_setup_intents.opp: OpenPeerPower) -> None:
     """Set up the cover intents."""
-   .opp.helpers.intent.async_register(
+    opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
             INTENT_OPEN_COVER, DOMAIN, SERVICE_OPEN_COVER, "Opened {}"
         )
     )
-   .opp.helpers.intent.async_register(
+    opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
             INTENT_CLOSE_COVER, DOMAIN, SERVICE_CLOSE_COVER, "Closed {}"
         )

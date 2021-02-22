@@ -143,7 +143,7 @@ async def test_sensors.opp):
 
 async def test_sensors_imperial_units.opp):
     """Test that the sensors work properly with imperial units."""
-   .opp.config.units = IMPERIAL_SYSTEM
+    opp.config.units = IMPERIAL_SYSTEM
 
     await init_integration.opp)
 

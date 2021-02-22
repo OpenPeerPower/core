@@ -239,7 +239,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         config_file = load_json(config_path)
         if config_file == DEFAULT_CONFIG:
             request_app_setup(
-                opp, config, add_entities, config_path, discovery_info=None
+                opp. config, add_entities, config_path, discovery_info=None
             )
             return False
     else:
@@ -248,7 +248,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return False
 
     if "fitbit" in _CONFIGURING:
-       .opp.components.configurator.request_done(_CONFIGURING.pop("fitbit"))
+        opp.components.configurator.request_done(_CONFIGURING.pop("fitbit"))
 
     access_token = config_file.get(ATTR_ACCESS_TOKEN)
     refresh_token = config_file.get(ATTR_REFRESH_TOKEN)
@@ -290,7 +290,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                             authd_client,
                             config_path,
                             resource,
-                           .opp.config.units.is_metric,
+                            opp.config.units.is_metric,
                             clock_format,
                             dev_extra,
                         )
@@ -301,7 +301,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                         authd_client,
                         config_path,
                         resource,
-                       .opp.config.units.is_metric,
+                        opp.config.units.is_metric,
                         clock_format,
                     )
                 )
@@ -327,8 +327,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             ],
         )
 
-       .opp.http.register_redirect(FITBIT_AUTH_START, fitbit_auth_start_url)
-       .opp.http.register_view(FitbitAuthCallbackView(config, add_entities, oauth))
+        opp.http.register_redirect(FITBIT_AUTH_START, fitbit_auth_start_url)
+        opp.http.register_view(FitbitAuthCallbackView(config, add_entities, oauth))
 
         request_oauth_completion.opp)
 
@@ -349,7 +349,7 @@ class FitbitAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         data = request.query
 
         response_message = """Fitbit has been successfully authorized!
@@ -398,7 +398,7 @@ class FitbitAuthCallbackView(OpenPeerPowerView):
             }
         save_json.opp.config.path(FITBIT_CONFIG_FILE), config_contents)
 
-       .opp.async_add_job(setup_platform, opp, self.config, self.add_entities)
+        opp.async_add_job(setup_platform, opp, self.config, self.add_entities)
 
         return html_response
 

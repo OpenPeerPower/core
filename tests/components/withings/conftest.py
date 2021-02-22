@@ -13,7 +13,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 @pytest.fixture()
 def component_factory(
-    opp: OpenPeerPower, aiohttp_client, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aiohttp_client, aioclient_mock: AiohttpClientMocker
 ):
     """Return a factory for initializing the withings component."""
     with patch(

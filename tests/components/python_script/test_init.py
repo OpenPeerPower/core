@@ -34,7 +34,7 @@ async def test_setup_opp):
         )
 
     assert len(mock_ex.mock_calls) == 1
-    opp, script, source, data = mock_ex.mock_calls[0][1]
+    opp. script, source, data = mock_ex.mock_calls[0][1]
 
     assert.opp is.opp
     assert script == "hello.py"
@@ -60,7 +60,7 @@ async def test_execute_with_data.opp, caplog):
 opp.states.set('test.entity', data.get('name', 'not set'))
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {"name": "paulus"})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {"name": "paulus"})
     await opp.async_block_till_done()
 
     assert.opp.states.is_state("test.entity", "paulus")
@@ -76,7 +76,7 @@ async def test_execute_warns_print.opp, caplog):
 print("This triggers warning.")
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert "Don't use print() inside scripts." in caplog.text
@@ -89,7 +89,7 @@ async def test_execute_logging.opp, caplog):
 logger.info('Logging from inside script')
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert "Logging from inside script" in caplog.text
@@ -102,7 +102,7 @@ async def test_execute_compile_error(opp, caplog):
 this is not valid Python
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert "Error loading script test.py" in caplog.text
@@ -115,7 +115,7 @@ async def test_execute_runtime_error(opp, caplog):
 raise Exception('boom')
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert "Error executing script: boom" in caplog.text
@@ -128,7 +128,7 @@ async def test_accessing_async_methods.opp, caplog):
 opp.async_stop()
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert "Not allowed to access async methods" in caplog.text
@@ -143,7 +143,7 @@ mylist = [1, 2, 3, 4]
 logger.info('Logging from inside script: %s %s' % (mydict["a"], mylist[2]))
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert "Logging from inside script: 1 3" in caplog.text
@@ -154,13 +154,13 @@ async def test_accessing_forbidden_methods.opp, caplog):
     caplog.set_level(logging.ERROR)
 
     for source, name in {
-        .opp.stop()": "OpenPeerPower.stop",
+         opp.stop()": "OpenPeerPower.stop",
         "dt_util.set_default_time_zone()": "module.set_default_time_zone",
         "datetime.non_existing": "module.non_existing",
         "time.tzset()": "TimeWrapper.tzset",
     }.items():
         caplog.records.clear()
-       .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+        opp.async_add_executor_job(execute, opp, "test.py", source, {})
         await opp.async_block_till_done()
         assert f"Not allowed to access {name}" in caplog.text
 
@@ -169,10 +169,10 @@ async def test_iterating.opp):
     """Test compile error logs error."""
     source = """
 for i in [1, 2]:
-   .opp.states.set('hello.{}'.format(i), 'world')
+    opp.states.set('hello.{}'.format(i), 'world')
     """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert.opp.states.is_state("hello.1", "world")
@@ -190,7 +190,7 @@ opp.states.set('hello.b', b)
 opp.states.set('hello.ab_list', '{}'.format(ab_list))
 """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert.opp.states.is_state("hello.a", "1")
@@ -211,7 +211,7 @@ opp.states.set('hello.a', a[0])
 opp.states.set('hello.b', a[1])
 opp.states.set('hello.c', a[2])
 """
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert.opp.states.is_state("hello.a", "1")
@@ -232,7 +232,7 @@ opp.states.set('module.datetime',
                 datetime.timedelta(minutes=1).total_seconds())
 """
 
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert.opp.states.is_state("module.time", "1986")
@@ -248,15 +248,15 @@ async def test_execute_functions.opp, caplog):
     caplog.set_level(logging.ERROR)
     source = """
 def a():
-   .opp.states.set('hello.a', 'one')
+    opp.states.set('hello.a', 'one')
 
 def b():
     a()
-   .opp.states.set('hello.b', 'two')
+    opp.states.set('hello.b', 'two')
 
 b()
 """
-   .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+    opp.async_add_executor_job(execute, opp, "test.py", source, {})
     await opp.async_block_till_done()
 
     assert.opp.states.is_state("hello.a", "one")
@@ -314,7 +314,7 @@ async def test_service_descriptions.opp):
     )
     services_yaml1 = {
         "{}/{}/services.yaml".format(
-           .opp.config.config_dir, FOLDER
+            opp.config.config_dir, FOLDER
         ): service_descriptions1
     }
 
@@ -362,7 +362,7 @@ async def test_service_descriptions.opp):
     )
     services_yaml2 = {
         "{}/{}/services.yaml".format(
-           .opp.config.config_dir, FOLDER
+            opp.config.config_dir, FOLDER
         ): service_descriptions2
     }
 
@@ -400,7 +400,7 @@ time.sleep(5)
 """
 
     with patch("openpeerpower.components.python_script.time.sleep"):
-       .opp.async_add_executor_job(execute, opp, "test.py", source, {})
+        opp.async_add_executor_job(execute, opp, "test.py", source, {})
         await opp.async_block_till_done()
 
     assert caplog.text.count("time.sleep") == 1

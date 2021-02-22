@@ -50,14 +50,14 @@ def _bypass_throttling():
 
 
 async def test_async_update_locked_multiple_updates(
-    opp, pywemo_registry, pywemo_bridge_light, wemo_entity, pywemo_device
+    opp. pywemo_registry, pywemo_bridge_light, wemo_entity, pywemo_device
 ):
     """Test that two state updates do not proceed at the same time."""
     pywemo_device.bridge_update.reset_mock()
 
     with _bypass_throttling():
         await entity_test_helpers.test_async_update_locked_multiple_updates(
-            opp,
+            opp.
             pywemo_registry,
             wemo_entity,
             pywemo_device,
@@ -66,22 +66,22 @@ async def test_async_update_locked_multiple_updates(
 
 
 async def test_async_update_with_timeout_and_recovery(
-    opp, pywemo_bridge_light, wemo_entity, pywemo_device
+    opp. pywemo_bridge_light, wemo_entity, pywemo_device
 ):
     """Test that the entity becomes unavailable after a timeout, and that it recovers."""
     with _bypass_throttling():
         await entity_test_helpers.test_async_update_with_timeout_and_recovery(
-            opp, wemo_entity, pywemo_device
+            opp. wemo_entity, pywemo_device
         )
 
 
 async def test_async_locked_update_with_exception(
-    opp, pywemo_bridge_light, wemo_entity, pywemo_device
+    opp. pywemo_bridge_light, wemo_entity, pywemo_device
 ):
     """Test that the entity becomes unavailable when communication is lost."""
     with _bypass_throttling():
         await entity_test_helpers.test_async_locked_update_with_exception(
-            opp,
+            opp.
             wemo_entity,
             pywemo_device,
             update_polling_method=pywemo_device.bridge_update,
@@ -89,7 +89,7 @@ async def test_async_locked_update_with_exception(
 
 
 async def test_light_update_entity(
-    opp, pywemo_registry, pywemo_bridge_light, wemo_entity
+    opp. pywemo_registry, pywemo_bridge_light, wemo_entity
 ):
     """Verify that the light performs state updates."""
     await async_setup_component.opp, HA_DOMAIN, {})

@@ -89,6 +89,6 @@ def setup_opp, config):
         # Increment the count
         statsd_client.incr(state.entity_id, rate=sample_rate)
 
-   .opp.bus.listen(EVENT_STATE_CHANGED, statsd_event_listener)
+    opp.bus.listen(EVENT_STATE_CHANGED, statsd_event_listener)
 
     return True

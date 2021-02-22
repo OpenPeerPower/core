@@ -53,7 +53,7 @@ def setup_opp, config):
         _LOGGER.error("API token not valid for authentication")
         return False
 
-   .opp.data[DATA_DIGITAL_OCEAN] = digital
+    opp.data[DATA_DIGITAL_OCEAN] = digital
 
     return True
 

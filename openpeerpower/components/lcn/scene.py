@@ -21,7 +21,7 @@ PARALLEL_UPDATES = 0
 
 
 async def async_setup_platform(
-    opp, opp_config, async_add_entities, discovery_info=None
+    opp. opp_config, async_add_entities, discovery_info=None
 ):
     """Set up the LCN scene platform."""
     if discovery_info is None:

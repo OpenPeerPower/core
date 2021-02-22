@@ -240,14 +240,14 @@ def ihc_setup_opp, config, conf, controller_id):
         return False
 
     if conf[CONF_AUTOSETUP] and not autosetup_ihc_products(
-        opp, config, ihc_controller, controller_id
+        opp. config, ihc_controller, controller_id
     ):
         return False
     # Manual configuration
     get_manual_configuration.opp, config, conf, ihc_controller, controller_id)
     # Store controller configuration
     ihc_key = f"ihc{controller_id}"
-   .opp.data[ihc_key] = {IHC_CONTROLLER: ihc_controller, IHC_INFO: conf[CONF_INFO]}
+    opp.data[ihc_key] = {IHC_CONTROLLER: ihc_controller, IHC_INFO: conf[CONF_INFO]}
     # We only want to register the service functions once for the first controller
     if controller_id == 0:
         setup_service_functions.opp)
@@ -285,7 +285,7 @@ def get_manual_configuration.opp, config, conf, ihc_controller, controller_id):
 
 
 def autosetup_ihc_products(
-    opp: OpenPeerPowerType, config, ihc_controller, controller_id
+    opp. OpenPeerPowerType, config, ihc_controller, controller_id
 ):
     """Auto setup of IHC products from the IHC project file."""
     project_xml = ihc_controller.get_project()
@@ -376,24 +376,24 @@ def setup_service_functions.opp: OpenPeerPowerType):
         ihc_controller = _get_controller(call)
         await async_pulse.opp, ihc_controller, ihc_id)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SET_RUNTIME_VALUE_BOOL,
         set_runtime_value_bool,
         schema=SET_RUNTIME_VALUE_BOOL_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SET_RUNTIME_VALUE_INT,
         set_runtime_value_int,
         schema=SET_RUNTIME_VALUE_INT_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SET_RUNTIME_VALUE_FLOAT,
         set_runtime_value_float,
         schema=SET_RUNTIME_VALUE_FLOAT_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_PULSE, async_pulse_runtime_input, schema=PULSE_SCHEMA
     )

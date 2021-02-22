@@ -15,7 +15,7 @@ from .common import wait_recording_done
 
 def test_purge_old_states.opp, opp_recorder):
     """Test deleting old states."""
-   .opp = opp_recorder()
+    opp.= opp_recorder()
     _add_test_states.opp)
 
     # make sure we start with 6 states
@@ -39,7 +39,7 @@ def test_purge_old_states.opp, opp_recorder):
 
 def test_purge_old_events.opp, opp_recorder):
     """Test deleting old events."""
-   .opp = opp_recorder()
+    opp.= opp_recorder()
     _add_test_events.opp)
 
     with session_scope.opp.opp) as session:
@@ -63,7 +63,7 @@ def test_purge_old_events.opp, opp_recorder):
 
 def test_purge_old_recorder_runs.opp, opp_recorder):
     """Test deleting old recorder runs keeps current run."""
-   .opp = opp_recorder()
+    opp.= opp_recorder()
     _add_test_recorder_runs.opp)
 
     # make sure we start with 7 recorder runs
@@ -79,7 +79,7 @@ def test_purge_old_recorder_runs.opp, opp_recorder):
 
 def test_purge_method.opp, opp_recorder):
     """Test purge method."""
-   .opp = opp_recorder()
+    opp.= opp_recorder()
     service_data = {"keep_days": 4}
     _add_test_events.opp)
     _add_test_states.opp)
@@ -96,15 +96,15 @@ def test_purge_method.opp, opp_recorder):
         recorder_runs = session.query(RecorderRuns)
         assert recorder_runs.count() == 7
 
-       .opp.data[DATA_INSTANCE].block_till_done()
+        opp.data[DATA_INSTANCE].block_till_done()
         wait_recording_done.opp)
 
         # run purge method - no service data, use defaults
-       .opp.services.call("recorder", "purge")
-       .opp.block_till_done()
+        opp.services.call("recorder", "purge")
+        opp.block_till_done()
 
         # Small wait for recorder thread
-       .opp.data[DATA_INSTANCE].block_till_done()
+        opp.data[DATA_INSTANCE].block_till_done()
         wait_recording_done.opp)
 
         # only purged old events
@@ -112,11 +112,11 @@ def test_purge_method.opp, opp_recorder):
         assert events.count() == 4
 
         # run purge method - correct service data
-       .opp.services.call("recorder", "purge", service_data=service_data)
-       .opp.block_till_done()
+        opp.services.call("recorder", "purge", service_data=service_data)
+        opp.block_till_done()
 
         # Small wait for recorder thread
-       .opp.data[DATA_INSTANCE].block_till_done()
+        opp.data[DATA_INSTANCE].block_till_done()
         wait_recording_done.opp)
 
         # we should only have 2 states left after purging
@@ -133,9 +133,9 @@ def test_purge_method.opp, opp_recorder):
         # run purge method - correct service data, with repack
         with patch("openpeerpower.components.recorder.purge._LOGGER") as mock_logger:
             service_data["repack"] = True
-           .opp.services.call("recorder", "purge", service_data=service_data)
-           .opp.block_till_done()
-           .opp.data[DATA_INSTANCE].block_till_done()
+            opp.services.call("recorder", "purge", service_data=service_data)
+            opp.block_till_done()
+            opp.data[DATA_INSTANCE].block_till_done()
             wait_recording_done.opp)
             assert (
                 mock_logger.debug.mock_calls[5][1][0]
@@ -150,8 +150,8 @@ def _add_test_states.opp):
     eleven_days_ago = now - timedelta(days=11)
     attributes = {"test_attr": 5, "test_attr_10": "nice"}
 
-   .opp.block_till_done()
-   .opp.data[DATA_INSTANCE].block_till_done()
+    opp.block_till_done()
+    opp.data[DATA_INSTANCE].block_till_done()
     wait_recording_done.opp)
 
     with recorder.session_scope.opp.opp) as session:
@@ -187,8 +187,8 @@ def _add_test_events.opp):
     eleven_days_ago = now - timedelta(days=11)
     event_data = {"test_attr": 5, "test_attr_10": "nice"}
 
-   .opp.block_till_done()
-   .opp.data[DATA_INSTANCE].block_till_done()
+    opp.block_till_done()
+    opp.data[DATA_INSTANCE].block_till_done()
     wait_recording_done.opp)
 
     with recorder.session_scope.opp.opp) as session:
@@ -220,8 +220,8 @@ def _add_test_recorder_runs.opp):
     five_days_ago = now - timedelta(days=5)
     eleven_days_ago = now - timedelta(days=11)
 
-   .opp.block_till_done()
-   .opp.data[DATA_INSTANCE].block_till_done()
+    opp.block_till_done()
+    opp.data[DATA_INSTANCE].block_till_done()
     wait_recording_done.opp)
 
     with recorder.session_scope.opp.opp) as session:

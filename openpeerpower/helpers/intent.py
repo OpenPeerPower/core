@@ -49,7 +49,7 @@ def async_register.opp: OpenPeerPowerType, handler: IntentHandler) -> None:
 
 @bind.opp
 async def async_handle(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     platform: str,
     intent_type: str,
     slots: Optional[_SlotsType] = None,
@@ -103,7 +103,7 @@ class IntentUnexpectedError(IntentError):
 @callback
 @bind.opp
 def async_match_state(
-    opp: OpenPeerPowerType, name: str, states: Optional[Iterable[State]] = None
+    opp. OpenPeerPowerType, name: str, states: Optional[Iterable[State]] = None
 ) -> State:
     """Find a state that matches the name."""
     if states is None:
@@ -199,7 +199,7 @@ class ServiceIntentHandler(IntentHandler):
 
     async def async_handle(self, intent_obj: Intent) -> IntentResponse:
         """Handle the.opp intent."""
-        opp =intent_obj.opp
+        opp.=intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state = async_match_state.opp, slots["name"]["value"])
 
@@ -222,7 +222,7 @@ class Intent:
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         platform: str,
         intent_type: str,
         slots: _SlotsType,

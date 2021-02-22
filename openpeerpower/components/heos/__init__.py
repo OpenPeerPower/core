@@ -43,8 +43,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     entries = opp.config_entries.async_entries(DOMAIN)
     if not entries:
         # Create new entry based on config
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": "import"}, data={CONF_HOST: host}
             )
         )
@@ -52,7 +52,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         # Check if host needs to be updated
         entry = entries[0]
         if entry.data[CONF_HOST] != host:
-           .opp.config_entries.async_update_entry(
+            opp.config_entries.async_update_entry(
                 entry, title=format_title(host), data={**entry.data, CONF_HOST: host}
             )
 
@@ -63,7 +63,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Initialize config entry which represents the HEOS controller."""
     # For backwards compat
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(entry, unique_id=DOMAIN)
+        opp.config_entries.async_update_entry(entry, unique_id=DOMAIN)
 
     host = entry.data[CONF_HOST]
     # Setting all_progress_events=False ensures that we only receive a
@@ -81,7 +81,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     async def disconnect_controller(event):
         await controller.disconnect()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, disconnect_controller)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, disconnect_controller)
 
     # Get players and sources
     try:
@@ -107,7 +107,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     source_manager = SourceManager(favorites, inputs)
     source_manager.connect_update.opp, controller)
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         DATA_CONTROLLER_MANAGER: controller_manager,
         DATA_SOURCE_MANAGER: source_manager,
         MEDIA_PLAYER_DOMAIN: players,
@@ -115,8 +115,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     services.register.opp, controller)
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, MEDIA_PLAYER_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, MEDIA_PLAYER_DOMAIN)
     )
     return True
 
@@ -125,7 +125,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     controller_manager = opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
     await controller_manager.disconnect()
-   .opp.data.pop(DOMAIN)
+    opp.data.pop(DOMAIN)
 
     services.remove.opp)
 
@@ -335,7 +335,7 @@ class SourceManager:
                     self.source_list = self._build_source_list()
                     _LOGGER.debug("Sources updated due to changed event")
                     # Let players know to update
-                   .opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
+                    opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
 
         controller.dispatcher.connect(
             heos_const.SIGNAL_CONTROLLER_EVENT, update_sources

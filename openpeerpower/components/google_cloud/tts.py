@@ -151,7 +151,7 @@ async def async_get_engine.opp, config, discovery_info=None):
             return None
 
     return GoogleCloudTTSProvider(
-        opp,
+        opp.
         key_file,
         config[CONF_LANG],
         config[CONF_GENDER],
@@ -170,7 +170,7 @@ class GoogleCloudTTSProvider(Provider):
 
     def __init__(
         self,
-        opp,
+        opp.
         key_file=None,
         language=DEFAULT_LANG,
         gender=DEFAULT_GENDER,

@@ -60,8 +60,8 @@ async def async_setup_opp, config):
 
     for device_id in config[DOMAIN]:
         conf = config[DOMAIN][device_id]
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data={CONF_HOST: conf[CONF_HOST], CONF_PORT: conf[CONF_PORT]},
@@ -72,19 +72,19 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up the HLK-SW16 switch."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     host = entry.data[CONF_HOST]
     port = entry.data[CONF_PORT]
     address = f"{host}:{port}"
 
-   .opp.data[DOMAIN][entry.entry_id] = {}
+    opp.data[DOMAIN][entry.entry_id] = {}
 
     @callback
     def disconnected():
         """Schedule reconnect after connection has been lost."""
         _LOGGER.warning("HLK-SW16 %s disconnected", address)
         async_dispatcher_send(
-            opp, f"hlk_sw16_device_available_{entry.entry_id}", False
+            opp. f"hlk_sw16_device_available_{entry.entry_id}", False
         )
 
     @callback
@@ -108,16 +108,16 @@ async def async_setup_entry.opp, entry):
             keep_alive_interval=DEFAULT_KEEP_ALIVE_INTERVAL,
         )
 
-       .opp.data[DOMAIN][entry.entry_id][DATA_DEVICE_REGISTER] = client
+        opp.data[DOMAIN][entry.entry_id][DATA_DEVICE_REGISTER] = client
 
         # Load entities
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, "switch")
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, "switch")
         )
 
         _LOGGER.info("Connected to HLK-SW16 device: %s", address)
 
-   .opp.loop.create_task(connect())
+    opp.loop.create_task(connect())
 
     return True
 
@@ -130,9 +130,9 @@ async def async_unload_entry.opp, entry):
 
     if unload_ok:
         if opp.data[DOMAIN][entry.entry_id]:
-           .opp.data[DOMAIN].pop(entry.entry_id)
+            opp.data[DOMAIN].pop(entry.entry_id)
         if not.opp.data[DOMAIN]:
-           .opp.data.pop(DOMAIN)
+            opp.data.pop(DOMAIN)
     return unload_ok
 
 

@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Risco component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -49,12 +49,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     coordinator = RiscoDataUpdateCoordinator.opp, risco, scan_interval)
     await coordinator.async_refresh()
     events_coordinator = RiscoEventsDataUpdateCoordinator(
-        opp, risco, entry.entry_id, 60
+        opp. risco, entry.entry_id, 60
     )
 
     undo_listener = entry.add_update_listener(_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_COORDINATOR: coordinator,
         UNDO_UPDATE_LISTENER: undo_listener,
         EVENTS_COORDINATOR: events_coordinator,
@@ -63,13 +63,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     async def start_platforms():
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_setup(entry, component)
+                opp.config_entries.async_forward_entry_setup(entry, component)
                 for component in PLATFORMS
             ]
         )
         await events_coordinator.async_refresh()
 
-   .opp.async_create_task(start_platforms())
+    opp.async_create_task(start_platforms())
 
     return True
 
@@ -79,15 +79,15 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -105,7 +105,7 @@ class RiscoDataUpdateCoordinator(DataUpdateCoordinator):
         self.risco = risco
         interval = timedelta(seconds=scan_interval)
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=interval,
@@ -126,11 +126,11 @@ class RiscoEventsDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize global risco data updater."""
         self.risco = risco
         self._store = Store(
-            opp, LAST_EVENT_STORAGE_VERSION, f"risco_{eid}_last_event_timestamp"
+            opp. LAST_EVENT_STORAGE_VERSION, f"risco_{eid}_last_event_timestamp"
         )
         interval = timedelta(seconds=scan_interval)
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=f"{DOMAIN}_events",
             update_interval=interval,

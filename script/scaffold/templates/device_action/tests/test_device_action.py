@@ -58,7 +58,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
 async def test_action.opp):
     """Test for turn_on and turn_off actions."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -93,12 +93,12 @@ async def test_action.opp):
     turn_off_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_off")
     turn_on_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_on")
 
-   .opp.bus.async_fire("test_event_turn_off")
+    opp.bus.async_fire("test_event_turn_off")
     await opp.async_block_till_done()
     assert len(turn_off_calls) == 1
     assert len(turn_on_calls) == 0
 
-   .opp.bus.async_fire("test_event_turn_on")
+    opp.bus.async_fire("test_event_turn_on")
     await opp.async_block_till_done()
     assert len(turn_off_calls) == 1
     assert len(turn_on_calls) == 1

@@ -17,7 +17,7 @@ async def test_send_big_result.opp, websocket_client):
     async def send_big_result.opp, connection, msg):
         await connection.send_big_result(msg["id"], {"big": "result"})
 
-   .opp.components.websocket_api.async_register_command(send_big_result)
+    opp.components.websocket_api.async_register_command(send_big_result)
 
     await websocket_client.send_json({"id": 5, "type": "big_result"})
 

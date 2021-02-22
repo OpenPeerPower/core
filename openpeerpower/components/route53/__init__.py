@@ -62,7 +62,7 @@ def setup_opp, config):
 
     track_time_interval.opp, update_records_interval, INTERVAL)
 
-   .opp.services.register(DOMAIN, "update_records", update_records_service)
+    opp.services.register(DOMAIN, "update_records", update_records_service)
     return True
 
 

@@ -157,7 +157,7 @@ async def test_float.opp):
     """Test a configuration using a simple float."""
     config = CONFIG_SWITCH[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-        opp,
+        opp.
         SWITCH_DOMAIN,
         {SWITCH_DOMAIN: {"platform": "demo"}},
     )
@@ -200,7 +200,7 @@ async def test_switch_power.opp):
     """Test a configuration using a simple float."""
     config = CONFIG_SWITCH_NO_POWER[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-        opp,
+        opp.
         SWITCH_DOMAIN,
         {SWITCH_DOMAIN: {"platform": "demo"}},
     )
@@ -230,7 +230,7 @@ async def test_switch_power.opp):
     power = nested_value(plug, "emeter", "get_realtime", "power")
     assert math.isclose(power, power)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         ENTITY_SWITCH,
         STATE_ON,
         attributes={ATTR_CURRENT_POWER_W: 120, ATTR_FRIENDLY_NAME: "AC"},
@@ -259,7 +259,7 @@ async def test_template.opp):
     """Test a configuration using a complex template."""
     config = CONFIG_FAN[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-        opp, FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
+        opp. FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
     )
     with patch(
         "sense_energy.SenseLink",
@@ -318,10 +318,10 @@ async def test_sensor.opp):
     """Test a configuration using a sensor in a template."""
     config = CONFIG_LIGHT[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
+        opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-        opp,
+        opp.
         SENSOR_DOMAIN,
         {SENSOR_DOMAIN: {"platform": "demo"}},
     )
@@ -336,7 +336,7 @@ async def test_sensor.opp):
     await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
-   .opp.states.async_set(ENTITY_SENSOR, 35)
+    opp.states.async_set(ENTITY_SENSOR, 35)
 
     light = opp.states.get(ENTITY_LIGHT)
     assert light.state == STATE_ON
@@ -351,7 +351,7 @@ async def test_sensor.opp):
     assert math.isclose(power, 35)
 
     # change power sensor
-   .opp.states.async_set(ENTITY_SENSOR, 40)
+    opp.states.async_set(ENTITY_SENSOR, 40)
 
     plug_it = emulated_kasa.get_plug_devices.opp, config)
     plug = next(plug_it).generate_response()
@@ -375,7 +375,7 @@ async def test_sensor_state.opp):
     """Test a configuration using a sensor in a template."""
     config = CONFIG_SENSOR[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-        opp,
+        opp.
         SENSOR_DOMAIN,
         {SENSOR_DOMAIN: {"platform": "demo"}},
     )
@@ -387,7 +387,7 @@ async def test_sensor_state.opp):
     await opp.async_block_till_done()
     await emulated_kasa.validate_configs.opp, config)
 
-   .opp.states.async_set(ENTITY_SENSOR, 35)
+    opp.states.async_set(ENTITY_SENSOR, 35)
 
     sensor = opp.states.get(ENTITY_SENSOR)
     assert sensor.state == "35"
@@ -400,7 +400,7 @@ async def test_sensor_state.opp):
     assert math.isclose(power, 35)
 
     # change power sensor
-   .opp.states.async_set(ENTITY_SENSOR, 40)
+    opp.states.async_set(ENTITY_SENSOR, 40)
 
     plug_it = emulated_kasa.get_plug_devices.opp, config)
     plug = next(plug_it).generate_response()
@@ -409,7 +409,7 @@ async def test_sensor_state.opp):
     assert math.isclose(power, 40)
 
     # report 0 if device is off
-   .opp.states.async_set(ENTITY_SENSOR, 0)
+    opp.states.async_set(ENTITY_SENSOR, 0)
 
     plug_it = emulated_kasa.get_plug_devices.opp, config)
     plug = next(plug_it).generate_response()
@@ -422,16 +422,16 @@ async def test_multiple_devices.opp):
     """Test that devices are reported correctly."""
     config = CONFIG[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
-        opp, SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": "demo"}}
+        opp. SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
+        opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-        opp, FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
+        opp. FAN_DOMAIN, {FAN_DOMAIN: {"platform": "demo"}}
     )
     assert await async_setup_component(
-        opp,
+        opp.
         SENSOR_DOMAIN,
         {SENSOR_DOMAIN: {"platform": "demo"}},
     )
@@ -450,7 +450,7 @@ async def test_multiple_devices.opp):
     await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
-   .opp.states.async_set(ENTITY_SENSOR, 35)
+    opp.states.async_set(ENTITY_SENSOR, 35)
     await opp.services.async_call(
         FAN_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_FAN}, blocking=True
     )

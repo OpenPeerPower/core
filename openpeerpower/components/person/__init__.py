@@ -102,7 +102,7 @@ async def async_create_person.opp, name, *, user_id=None, device_trackers=None):
 
 @bind.opp
 async def async_add_user_device_tracker(
-    opp: OpenPeerPower, user_id: str, device_tracker_entity_id: str
+    opp. OpenPeerPower, user_id: str, device_tracker_entity_id: str
 ):
     """Add a device tracker to a person linked to a user."""
     coll = cast(PersonStorageCollection, opp.data[DOMAIN][1])
@@ -279,7 +279,7 @@ async def filter_yaml_data.opp: OpenPeerPowerType, persons: List[dict]) -> List[
         filtered.append(person_conf)
 
     if person_invalid_user:
-       .opp.components.persistent_notification.async_create(
+        opp.components.persistent_notification.async_create(
             f"""
 The following persons point at invalid users:
 
@@ -307,10 +307,10 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     )
 
     collection.sync_entity_lifecycle(
-        opp, DOMAIN, DOMAIN, entity_component, yaml_collection, Person
+        opp. DOMAIN, DOMAIN, entity_component, yaml_collection, Person
     )
     collection.sync_entity_lifecycle(
-        opp, DOMAIN, DOMAIN, entity_component, storage_collection, Person.from_yaml
+        opp. DOMAIN, DOMAIN, entity_component, storage_collection, Person.from_yaml
     )
 
     await yaml_collection.async_load(
@@ -318,7 +318,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     )
     await storage_collection.async_load()
 
-   .opp.data[DOMAIN] = (yaml_collection, storage_collection)
+    opp.data[DOMAIN] = (yaml_collection, storage_collection)
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
@@ -335,7 +335,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
                     person[CONF_ID], {CONF_USER_ID: None}
                 )
 
-   .opp.bus.async_listen(EVENT_USER_REMOVED, _handle_user_removed)
+    opp.bus.async_listen(EVENT_USER_REMOVED, _handle_user_removed)
 
     async def async_reload_yaml(call: ServiceCall):
         """Reload YAML."""
@@ -347,7 +347,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         )
 
     service.async_register_admin_service(
-        opp, DOMAIN, SERVICE_RELOAD, async_reload_yaml
+        opp. DOMAIN, SERVICE_RELOAD, async_reload_yaml
     )
 
     return True
@@ -513,7 +513,7 @@ class Person(RestoreEntity):
 
 @websocket_api.websocket_command({vol.Required(CONF_TYPE): "person/list"})
 def ws_list_person(
-    opp: OpenPeerPowerType, connection: websocket_api.ActiveConnection, msg
+    opp. OpenPeerPowerType, connection: websocket_api.ActiveConnection, msg
 ):
     """List persons."""
     yaml, storage = opp.data[DOMAIN]

@@ -50,25 +50,25 @@ async def async_setup_opp, config):
 async def async_setup_entry.opp, entry):
     """Set up a config entry for Apple TV."""
     manager = AppleTVManager.opp, entry)
-   .opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
+    opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
 
     async def on.opp_stop(event):
         """Stop push updates when.opp stops."""
         await manager.disconnect()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop)
 
     async def setup_platforms():
         """Set up platforms and initiate connection."""
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_setup(entry, component)
+                opp.config_entries.async_forward_entry_setup(entry, component)
                 for component in PLATFORMS
             ]
         )
         await manager.init()
 
-   .opp.async_create_task(setup_platforms())
+    opp.async_create_task(setup_platforms())
 
     return True
 
@@ -78,7 +78,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )

@@ -660,7 +660,7 @@ def async_get.opp: OpenPeerPowerType) -> DeviceRegistry:
 async def async_load.opp: OpenPeerPowerType) -> None:
     """Load device registry."""
     assert DATA_REGISTRY not in.opp.data
-   .opp.data[DATA_REGISTRY] = DeviceRegistry.opp)
+    opp.data[DATA_REGISTRY] = DeviceRegistry.opp)
     await opp.data[DATA_REGISTRY].async_load()
 
 
@@ -693,7 +693,7 @@ def async_entries_for_config_entry(
 
 @callback
 def async_cleanup(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     dev_reg: DeviceRegistry,
     ent_reg: "entity_registry.EntityRegistry",
 ) -> None:
@@ -740,7 +740,7 @@ def async_setup_cleanup.opp: OpenPeerPowerType, dev_reg: DeviceRegistry) -> None
         async_cleanup.opp, dev_reg, ent_reg)
 
     debounced_cleanup = Debouncer(
-        opp, _LOGGER, cooldown=CLEANUP_DELAY, immediate=False, function=cleanup
+        opp. _LOGGER, cooldown=CLEANUP_DELAY, immediate=False, function=cleanup
     )
 
     async def entity_registry_changed(event: Event) -> None:
@@ -759,7 +759,7 @@ def async_setup_cleanup.opp: OpenPeerPowerType, dev_reg: DeviceRegistry) -> None
         return True
 
     if opp.is_running:
-       .opp.bus.async_listen(
+        opp.bus.async_listen(
             entity_registry.EVENT_ENTITY_REGISTRY_UPDATED,
             entity_registry_changed,
             event_filter=entity_registry_changed_filter,
@@ -768,14 +768,14 @@ def async_setup_cleanup.opp: OpenPeerPowerType, dev_reg: DeviceRegistry) -> None
 
     async def startup_clean(event: Event) -> None:
         """Clean up on startup."""
-       .opp.bus.async_listen(
+        opp.bus.async_listen(
             entity_registry.EVENT_ENTITY_REGISTRY_UPDATED,
             entity_registry_changed,
             event_filter=entity_registry_changed_filter,
         )
         await debounced_cleanup.async_call()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, startup_clean)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, startup_clean)
 
 
 def _normalize_connections(connections: Set[Tuple[str, str]]) -> Set[Tuple[str, str]]:

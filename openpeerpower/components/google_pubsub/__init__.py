@@ -44,7 +44,7 @@ def setup_opp: OpenPeerPower, yaml_config: Dict[str, Any]):
     project_id = config[CONF_PROJECT_ID]
     topic_name = config[CONF_TOPIC_NAME]
     service_principal_path = os.path.join(
-       .opp.config.config_dir, config[CONF_SERVICE_PRINCIPAL]
+        opp.config.config_dir, config[CONF_SERVICE_PRINCIPAL]
     )
 
     if not os.path.isfile(service_principal_path):
@@ -78,7 +78,7 @@ def setup_opp: OpenPeerPower, yaml_config: Dict[str, Any]):
 
         publisher.publish(topic_path, data=data)
 
-   .opp.bus.listen(EVENT_STATE_CHANGED, send_to_pubsub)
+    opp.bus.listen(EVENT_STATE_CHANGED, send_to_pubsub)
 
     return True
 

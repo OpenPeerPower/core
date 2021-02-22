@@ -7,7 +7,7 @@
             "single_instance_allowed": "\uc774\ubbf8 \uad6c\uc131\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ud558\ub098\uc758 \uad6c\uc131\ub9cc \uac00\ub2a5\ud569\ub2c8\ub2e4."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Hass.io {addon} \uc560\ub4dc\uc628\uc73c\ub85c Almond \uc5d0 \uc5f0\uacb0\ud558\ub3c4\ub85d Open Peer Power \ub97c \uad6c\uc131\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?",
                 "title": "Hass.io \uc560\ub4dc\uc628\uc758 Almond"
             },

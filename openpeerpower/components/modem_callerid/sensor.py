@@ -55,7 +55,7 @@ class ModemCalleridSensor(Entity):
         self.modem = modem
         self._state = STATE_IDLE
         modem.registercallback(self._incomingcallcallback)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self._stop_modem)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self._stop_modem)
 
     def set_state(self, state):
         """Set the state."""

@@ -23,7 +23,7 @@ async def async_get_service.opp, config, discovery_info=None):
 class NetgearNotifyService(BaseNotificationService):
     """Implementation of a notification service."""
 
-    opp =attr.ib()
+    opp.=attr.ib()
     config = attr.ib()
 
     async def async_send_message(self, message="", **kwargs):

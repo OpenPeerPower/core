@@ -36,14 +36,14 @@ async def test_async_track_states.opp):
 
         with state.AsyncTrackStates.opp) as states:
             mock_utcnow.return_value = point1
-           .opp.states.async_set("light.test", "on")
+            opp.states.async_set("light.test", "on")
 
             mock_utcnow.return_value = point2
-           .opp.states.async_set("light.test2", "on")
+            opp.states.async_set("light.test2", "on")
             state2 = opp.states.get("light.test2")
 
             mock_utcnow.return_value = point3
-           .opp.states.async_set("light.test3", "on")
+            opp.states.async_set("light.test3", "on")
             state3 = opp.states.get("light.test3")
 
     assert [state2, state3] == sorted(states, key=lambda state: state.entity_id)
@@ -68,17 +68,17 @@ async def test_call_to_component.opp):
             context = "dummy_context"
 
             await state.async_reproduce_state(
-                opp,
+                opp.
                 [state_media_player, state_climate],
                 context=context,
             )
 
             media_player_fun.assert_called_once_with(
-                opp, [state_media_player], context=context, reproduce_options=None
+                opp. [state_media_player], context=context, reproduce_options=None
             )
 
             climate_fun.assert_called_once_with(
-                opp, [state_climate], context=context, reproduce_options=None
+                opp. [state_climate], context=context, reproduce_options=None
             )
 
 
@@ -89,15 +89,15 @@ async def test_get_changed_since.opp):
     point3 = point2 + timedelta(seconds=5)
 
     with patch("openpeerpower.core.dt_util.utcnow", return_value=point1):
-       .opp.states.async_set("light.test", "on")
+        opp.states.async_set("light.test", "on")
         state1 = opp.states.get("light.test")
 
     with patch("openpeerpower.core.dt_util.utcnow", return_value=point2):
-       .opp.states.async_set("light.test2", "on")
+        opp.states.async_set("light.test2", "on")
         state2 = opp.states.get("light.test2")
 
     with patch("openpeerpower.core.dt_util.utcnow", return_value=point3):
-       .opp.states.async_set("light.test3", "on")
+        opp.states.async_set("light.test3", "on")
         state3 = opp.states.get("light.test3")
 
     assert [state2, state3] == state.get_changed_since([state1, state2, state3], point2)
@@ -119,7 +119,7 @@ async def test_reproduce_turn_on.opp):
     """Test reproduce_state with SERVICE_TURN_ON."""
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
-   .opp.states.async_set("light.test", "off")
+    opp.states.async_set("light.test", "off")
 
     await state.async_reproduce_state.opp, ha.State("light.test", "on"))
 
@@ -136,7 +136,7 @@ async def test_reproduce_turn_off.opp):
     """Test reproduce_state with SERVICE_TURN_OFF."""
     calls = async_mock_service.opp, "light", SERVICE_TURN_OFF)
 
-   .opp.states.async_set("light.test", "on")
+    opp.states.async_set("light.test", "on")
 
     await state.async_reproduce_state.opp, ha.State("light.test", "off"))
 
@@ -153,12 +153,12 @@ async def test_reproduce_complex_data.opp):
     """Test reproduce_state with complex service data."""
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
-   .opp.states.async_set("light.test", "off")
+    opp.states.async_set("light.test", "off")
 
     complex_data = [255, 100, 100]
 
     await state.async_reproduce_state(
-        opp, ha.State("light.test", "on", {"rgb_color": complex_data})
+        opp. ha.State("light.test", "on", {"rgb_color": complex_data})
     )
 
     await opp.async_block_till_done()
@@ -174,7 +174,7 @@ async def test_reproduce_bad_state.opp):
     """Test reproduce_state with bad state."""
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
-   .opp.states.async_set("light.test", "off")
+    opp.states.async_set("light.test", "off")
 
     await state.async_reproduce_state.opp, ha.State("light.test", "bad"))
 

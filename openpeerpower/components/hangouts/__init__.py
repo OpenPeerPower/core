@@ -59,14 +59,14 @@ async def async_setup_opp, config):
     """Set up the Hangouts bot component."""
     config = config.get(DOMAIN)
     if config is None:
-       .opp.data[DOMAIN] = {
+        opp.data[DOMAIN] = {
             CONF_INTENTS: {},
             CONF_DEFAULT_CONVERSATIONS: [],
             CONF_ERROR_SUPPRESSED_CONVERSATIONS: [],
         }
         return True
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         CONF_INTENTS: config[CONF_INTENTS],
         CONF_DEFAULT_CONVERSATIONS: config[CONF_DEFAULT_CONVERSATIONS],
         CONF_ERROR_SUPPRESSED_CONVERSATIONS: config[
@@ -75,10 +75,10 @@ async def async_setup_opp, config):
     }
 
     if (
-       .opp.data[DOMAIN][CONF_INTENTS]
+        opp.data[DOMAIN][CONF_INTENTS]
         and INTENT_HELP not in.opp.data[DOMAIN][CONF_INTENTS]
     ):
-       .opp.data[DOMAIN][CONF_INTENTS][INTENT_HELP] = {CONF_SENTENCES: ["HELP"]}
+        opp.data[DOMAIN][CONF_INTENTS][INTENT_HELP] = {CONF_SENTENCES: ["HELP"]}
 
     for data in.opp.data[DOMAIN][CONF_INTENTS].values():
         matchers = []
@@ -87,8 +87,8 @@ async def async_setup_opp, config):
 
         data[CONF_MATCHERS] = matchers
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
         )
     )
@@ -100,49 +100,49 @@ async def async_setup_entry.opp, config):
     """Set up a config entry."""
     try:
         bot = HangoutsBot(
-            opp,
+            opp.
             config.data.get(CONF_REFRESH_TOKEN),
-           .opp.data[DOMAIN][CONF_INTENTS],
-           .opp.data[DOMAIN][CONF_DEFAULT_CONVERSATIONS],
-           .opp.data[DOMAIN][CONF_ERROR_SUPPRESSED_CONVERSATIONS],
+            opp.data[DOMAIN][CONF_INTENTS],
+            opp.data[DOMAIN][CONF_DEFAULT_CONVERSATIONS],
+            opp.data[DOMAIN][CONF_ERROR_SUPPRESSED_CONVERSATIONS],
         )
-       .opp.data[DOMAIN][CONF_BOT] = bot
+        opp.data[DOMAIN][CONF_BOT] = bot
     except GoogleAuthError as exception:
         _LOGGER.error("Hangouts failed to log in: %s", str(exception))
         return False
 
     dispatcher.async_dispatcher_connect(
-        opp, EVENT_HANGOUTS_CONNECTED, bot.async_handle_update_users_and_conversations
+        opp. EVENT_HANGOUTS_CONNECTED, bot.async_handle_update_users_and_conversations
     )
 
     dispatcher.async_dispatcher_connect(
-        opp, EVENT_HANGOUTS_CONVERSATIONS_CHANGED, bot.async_resolve_conversations
+        opp. EVENT_HANGOUTS_CONVERSATIONS_CHANGED, bot.async_resolve_conversations
     )
 
     dispatcher.async_dispatcher_connect(
-        opp,
+        opp.
         EVENT_HANGOUTS_CONVERSATIONS_RESOLVED,
         bot.async_update_conversation_commands,
     )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_handle.opp_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_handle.opp_stop)
 
     await bot.async_connect()
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SEND_MESSAGE,
         bot.async_handle_send_message,
         schema=MESSAGE_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_UPDATE,
         bot.async_handle_update_users_and_conversations,
         schema=vol.Schema({}),
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_RECONNECT, bot.async_handle_reconnect, schema=vol.Schema({})
     )
 

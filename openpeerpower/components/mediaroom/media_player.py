@@ -90,7 +90,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 )
             ]
         )
-       .opp.data[DATA_MEDIAROOM].append(host)
+        opp.data[DATA_MEDIAROOM].append(host)
 
     _LOGGER.debug("Trying to discover Mediaroom STB")
 
@@ -101,7 +101,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             return
 
         _LOGGER.debug("Discovered new stb %s", notify.ip_address)
-       .opp.data[DATA_MEDIAROOM].append(notify.ip_address)
+        opp.data[DATA_MEDIAROOM].append(notify.ip_address)
         new_stb = MediaroomDevice(
             host=notify.ip_address, device_id=notify.device_uuid, optimistic=False
         )
@@ -111,7 +111,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
         already_installed = opp.data.get(DISCOVERY_MEDIAROOM)
         if not already_installed:
-           .opp.data[DISCOVERY_MEDIAROOM] = await install_mediaroom_protocol(
+            opp.data[DISCOVERY_MEDIAROOM] = await install_mediaroom_protocol(
                 responses_callback=callback_notify
             )
 
@@ -119,9 +119,9 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             def stop_discovery(event):
                 """Stop discovery of new mediaroom STB's."""
                 _LOGGER.debug("Stopping internal pymediaroom discovery")
-               .opp.data[DISCOVERY_MEDIAROOM].close()
+                opp.data[DISCOVERY_MEDIAROOM].close()
 
-           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_discovery)
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_discovery)
 
             _LOGGER.debug("Auto discovery installed")
 

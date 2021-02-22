@@ -13,7 +13,7 @@ from openpeerpower.setup import async_setup_component
 @pytest.fixture(autouse=True)
 def mock_history.opp):
     """Mock history component loaded."""
-   .opp.config.components.add("history")
+    opp.config.components.add("history")
 
 
 @pytest.fixture(autouse=True)

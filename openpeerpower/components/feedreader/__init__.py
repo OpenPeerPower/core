@@ -70,7 +70,7 @@ class FeedManager:
         self._has_published_parsed = False
         self._event_type = EVENT_FEEDREADER
         self._feed_id = url
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, lambda _: self._update())
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_START, lambda _: self._update())
         self._init_regular_updates.opp)
 
     def _log_no_entries(self):

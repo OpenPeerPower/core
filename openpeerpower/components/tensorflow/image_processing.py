@@ -144,7 +144,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             "PIL at reduced resolution"
         )
 
-   .opp.data[DOMAIN] = {CONF_MODEL: None}
+    opp.data[DOMAIN] = {CONF_MODEL: None}
 
     def tensorflow.opp_start(_event):
         """Set up TensorFlow model on.opp start."""
@@ -176,9 +176,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         model(input_tensor)
 
         _LOGGER.debug("Model load took %d seconds", time.perf_counter() - start)
-       .opp.data[DOMAIN][CONF_MODEL] = model
+        opp.data[DOMAIN][CONF_MODEL] = model
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, tensorflow.opp_start)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, tensorflow.opp_start)
 
     category_index = label_map_util.create_category_index_from_labelmap(
         labels, use_display_name=True
@@ -189,7 +189,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for camera in config[CONF_SOURCE]:
         entities.append(
             TensorFlowImageProcessor(
-                opp,
+                opp.
                 camera[CONF_ENTITY_ID],
                 camera.get(CONF_NAME),
                 category_index,
@@ -205,7 +205,7 @@ class TensorFlowImageProcessor(ImageProcessingEntity):
 
     def __init__(
         self,
-        opp,
+        opp.
         camera_entity,
         name,
         category_index,

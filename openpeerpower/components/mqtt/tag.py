@@ -69,12 +69,12 @@ async def async_setup_tag.opp, config, config_entry, discovery_data):
         device_id = device.id
 
         if TAGS not in.opp.data:
-           .opp.data[TAGS] = {}
+            opp.data[TAGS] = {}
         if device_id not in.opp.data[TAGS]:
-           .opp.data[TAGS][device_id] = {}
+            opp.data[TAGS][device_id] = {}
 
     tag_scanner = MQTTTagScanner(
-        opp,
+        opp.
         config,
         device_id,
         discovery_data,
@@ -84,7 +84,7 @@ async def async_setup_tag.opp, config, config_entry, discovery_data):
     await tag_scanner.setup()
 
     if device_id:
-       .opp.data[TAGS][device_id][discovery_id] = tag_scanner
+        opp.data[TAGS][device_id][discovery_id] = tag_scanner
 
 
 def async_has_tags.opp, device_id):

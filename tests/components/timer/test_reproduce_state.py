@@ -15,10 +15,10 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Timer states."""
-   .opp.states.async_set("timer.entity_idle", STATUS_IDLE, {})
-   .opp.states.async_set("timer.entity_paused", STATUS_PAUSED, {})
-   .opp.states.async_set("timer.entity_active", STATUS_ACTIVE, {})
-   .opp.states.async_set(
+    opp.states.async_set("timer.entity_idle", STATUS_IDLE, {})
+    opp.states.async_set("timer.entity_paused", STATUS_PAUSED, {})
+    opp.states.async_set("timer.entity_active", STATUS_ACTIVE, {})
+    opp.states.async_set(
         "timer.entity_active_attr", STATUS_ACTIVE, {ATTR_DURATION: "00:01:00"}
     )
 

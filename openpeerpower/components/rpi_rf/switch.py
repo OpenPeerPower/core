@@ -74,7 +74,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     add_entities(devices)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: rfdevice.cleanup())
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: rfdevice.cleanup())
 
 
 class RPiRFSwitch(SwitchEntity):

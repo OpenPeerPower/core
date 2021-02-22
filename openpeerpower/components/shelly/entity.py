@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry_attribute_entities(
-    opp, config_entry, async_add_entities, sensors, sensor_class
+    opp. config_entry, async_add_entities, sensors, sensor_class
 ):
     """Set up entities for attributes."""
     wrapper: ShellyDeviceWrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][
@@ -32,16 +32,16 @@ async def async_setup_entry_attribute_entities(
 
     if wrapper.device.initialized:
         await async_setup_block_attribute_entities(
-            opp, async_add_entities, wrapper, sensors, sensor_class
+            opp. async_add_entities, wrapper, sensors, sensor_class
         )
     else:
         await async_restore_block_attribute_entities(
-            opp, config_entry, async_add_entities, wrapper, sensor_class
+            opp. config_entry, async_add_entities, wrapper, sensor_class
         )
 
 
 async def async_setup_block_attribute_entities(
-    opp, async_add_entities, wrapper, sensors, sensor_class
+    opp. async_add_entities, wrapper, sensors, sensor_class
 ):
     """Set up entities for block attributes."""
     blocks = []
@@ -78,7 +78,7 @@ async def async_setup_block_attribute_entities(
 
 
 async def async_restore_block_attribute_entities(
-    opp, config_entry, async_add_entities, wrapper, sensor_class
+    opp. config_entry, async_add_entities, wrapper, sensor_class
 ):
     """Restore block attributes entities."""
     entities = []
@@ -111,7 +111,7 @@ async def async_restore_block_attribute_entities(
 
 
 async def async_setup_entry_rest(
-    opp, config_entry, async_add_entities, sensors, sensor_class
+    opp. config_entry, async_add_entities, sensors, sensor_class
 ):
     """Set up entities for REST sensors."""
     wrapper: ShellyDeviceRestWrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][

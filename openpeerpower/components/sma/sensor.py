@@ -102,7 +102,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     # Use all sensors by default
     config_sensors = config[CONF_SENSORS]
-   .opp_sensors = []
+    opp.sensors = []
     used_sensors = []
 
     if isinstance(config_sensors, dict):  # will be remove from 0.99
@@ -112,7 +112,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         # Prepare all Open Peer Power sensor entities
         for name, attr in config_sensors.items():
             sub_sensors = [sensor_def[s] for s in attr]
-           .opp_sensors.append(SMAsensor(sensor_def[name], sub_sensors))
+            opp.sensors.append(SMAsensor(sensor_def[name], sub_sensors))
             used_sensors.append(name)
             used_sensors.extend(attr)
 
@@ -121,7 +121,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             config_sensors = [s.name for s in sensor_def]
         used_sensors = list(set(config_sensors + list(config[CONF_CUSTOM])))
         for sensor in used_sensors:
-           .opp_sensors.append(SMAsensor(sensor_def[sensor], []))
+            opp.sensors.append(SMAsensor(sensor_def[sensor], []))
 
     used_sensors = [sensor_def[s] for s in set(used_sensors)]
     async_add_entities.opp_sensors)
@@ -140,7 +140,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         """Close the session."""
         await sma.close_session()
 
-   .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, async_close_session)
+    opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, async_close_session)
 
     backoff = 0
     backoff_step = 0

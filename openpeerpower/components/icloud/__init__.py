@@ -94,8 +94,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         return True
 
     for account_conf in conf:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=account_conf
             )
         )
@@ -106,7 +106,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up an iCloud account from a config entry."""
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     username = entry.data[CONF_USERNAME]
     password = entry.data[CONF_PASSWORD]
@@ -116,12 +116,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     # For backwards compat
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(entry, unique_id=username)
+        opp.config_entries.async_update_entry(entry, unique_id=username)
 
     icloud_dir = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
 
     account = IcloudAccount(
-        opp,
+        opp.
         username,
         password,
         icloud_dir,
@@ -132,11 +132,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     )
     await opp.async_add_executor_job(account.setup)
 
-   .opp.data[DOMAIN][entry.unique_id] = account
+    opp.data[DOMAIN][entry.unique_id] = account
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     def play_sound(service: ServiceDataType) -> None:
@@ -196,25 +196,25 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             )
         return icloud_account
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_ICLOUD_PLAY_SOUND, play_sound, schema=SERVICE_SCHEMA_PLAY_SOUND
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_ICLOUD_DISPLAY_MESSAGE,
         display_message,
         schema=SERVICE_SCHEMA_DISPLAY_MESSAGE,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_ICLOUD_LOST_DEVICE,
         lost_device,
         schema=SERVICE_SCHEMA_LOST_DEVICE,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_ICLOUD_UPDATE, update_account, schema=SERVICE_SCHEMA
     )
 
@@ -226,12 +226,12 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.data[CONF_USERNAME])
+        opp.data[DOMAIN].pop(entry.data[CONF_USERNAME])
 
     return unload_ok

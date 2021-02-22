@@ -41,7 +41,7 @@ async def test.oppio_discovery_startup.opp, aioclient_mock, oppio_client):
         "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step.oppio",
         return_value={"type": "abort"},
     ) as mock_mqtt:
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 2
@@ -102,7 +102,7 @@ async def test.oppio_discovery_startup_done.opp, aioclient_mock, oppio_client):
         return_value={"type": "abort"},
     ) as mock_mqtt:
         await opp.async_start()
-        await async_setup_component.opp, .oppio", {})
+        await async_setup_component.opp,  opp.o", {})
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 2

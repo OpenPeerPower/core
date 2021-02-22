@@ -147,7 +147,7 @@ async def async_setup_opp, config):
     def callback_value_changed(_qsd, qsid, _val):
         """Update entity values based on device change."""
         _LOGGER.debug("Dispatch %s (update from devices)", qsid)
-       .opp.helpers.dispatcher.async_dispatcher_send(qsid, None)
+        opp.helpers.dispatcher.async_dispatcher_send(qsid, None)
 
     session = async_get_clientsession.opp)
     qsusb = QSUsb(
@@ -161,7 +161,7 @@ async def async_setup_opp, config):
     if not await qsusb.update_from_devices():
         return False
 
-   .opp.data[DOMAIN] = qsusb
+    opp.data[DOMAIN] = qsusb
 
     comps = {"switch": [], "light": [], "sensor": [], "binary_sensor": []}
 
@@ -208,28 +208,28 @@ async def async_setup_opp, config):
         # If button pressed, fire a.opp event
         if QS_ID in qspacket:
             if qspacket.get(QS_CMD, "") in cmd_buttons:
-               .opp.bus.async_fire(f"qwikswitch.button.{qspacket[QS_ID]}", qspacket)
+                opp.bus.async_fire(f"qwikswitch.button.{qspacket[QS_ID]}", qspacket)
                 return
 
             if qspacket[QS_ID] in sensor_ids:
                 _LOGGER.debug("Dispatch %s ((%s))", qspacket[QS_ID], qspacket)
-               .opp.helpers.dispatcher.async_dispatcher_send(qspacket[QS_ID], qspacket)
+                opp.helpers.dispatcher.async_dispatcher_send(qspacket[QS_ID], qspacket)
 
         # Update all ha_objects
-       .opp.async_add_job(qsusb.update_from_devices)
+        opp.async_add_job(qsusb.update_from_devices)
 
     @callback
     def async_start(_):
         """Start listening."""
-       .opp.async_add_job(qsusb.listen, callback_qs_listen)
+        opp.async_add_job(qsusb.listen, callback_qs_listen)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_start)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_start)
 
     @callback
     def async_stop(_):
         """Stop the listener."""
-       .opp.data[DOMAIN].stop()
+        opp.data[DOMAIN].stop()
 
-   .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, async_stop)
+    opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, async_stop)
 
     return True

@@ -6,8 +6,8 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing NEW_NAME states."""
-   .opp.states.async_set("NEW_DOMAIN.entity_off", "off", {})
-   .opp.states.async_set("NEW_DOMAIN.entity_on", "on", {"color": "red"})
+    opp.states.async_set("NEW_DOMAIN.entity_off", "off", {})
+    opp.states.async_set("NEW_DOMAIN.entity_on", "on", {"color": "red"})
 
     turn_on_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_on")
     turn_off_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_off")

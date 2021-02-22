@@ -28,11 +28,11 @@ def mock_cloud_inst():
 
 async def test_handler_alexa.opp):
     """Test handler Alexa."""
-   .opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
-   .opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
+    opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
+    opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
 
     await mock_cloud(
-        opp,
+        opp.
         {
             "alexa": {
                 "filter": {"exclude_entities": "switch.test2"},
@@ -81,12 +81,12 @@ async def test_handler_alexa_disabled.opp, mock_cloud_fixture):
 
 async def test_handler_google_actions.opp):
     """Test handler Google Actions."""
-   .opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
-   .opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
-   .opp.states.async_set("group.all_locks", "on", {"friendly_name": "Evil locks"})
+    opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
+    opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
+    opp.states.async_set("group.all_locks", "on", {"friendly_name": "Evil locks"})
 
     await mock_cloud(
-        opp,
+        opp.
         {
             "google_actions": {
                 "filter": {"exclude_entities": "switch.test2"},
@@ -108,7 +108,7 @@ async def test_handler_google_actions.opp):
     data = {"requestId": reqid, "inputs": [{"intent": "action.devices.SYNC"}]}
 
     with patch(
-        .opp_nabucasa.Cloud._decode_claims",
+         opp.nabucasa.Cloud._decode_claims",
         return_value={"cognito:username": "myUserName"},
     ):
         await cloud.client.get_google_config()
@@ -175,7 +175,7 @@ async def test_webhook_msg.opp, caplog):
         received.append(request)
         return web.json_response({"from": "handler"})
 
-   .opp.components.webhook.async_register("test", "Test", "mock-webhook-id", handler)
+    opp.components.webhook.async_register("test", "Test", "mock-webhook-id", handler)
 
     response = await cloud.client.async_webhook_message(
         {

@@ -178,7 +178,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             if service.service == SERVICE_SELECT_HDMI_OUTPUT:
                 device.select_output(service.data.get(ATTR_HDMI_OUTPUT))
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SELECT_HDMI_OUTPUT,
         service_handle,

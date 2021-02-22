@@ -46,12 +46,12 @@ EMPTY_CONFIG = logbook.CONFIG_SCHEMA({logbook.DOMAIN: {}})
 @pytest.fixture
 def.opp_():
     """Set up things to be run when tests are started."""
-    opp =get_test_open_peer_power()
+    opp.=get_test_open_peer_power()
     init_recorder_component.opp)  # Force an in memory DB
     with patch("openpeerpower.components.http.start_http_server_and_save_config"):
         assert setup_component.opp, logbook.DOMAIN, EMPTY_CONFIG)
         yield.opp
-   .opp.stop()
+    opp.stop()
 
 
 def test_service_call_create_logbook_entry.opp_):
@@ -63,8 +63,8 @@ def test_service_call_create_logbook_entry.opp_):
         """Append on event."""
         calls.append(event)
 
-   .opp_.bus.listen(logbook.EVENT_LOGBOOK_ENTRY, event_listener)
-   .opp_.services.call(
+    opp..bus.listen(logbook.EVENT_LOGBOOK_ENTRY, event_listener)
+    opp..services.call(
         logbook.DOMAIN,
         "log",
         {
@@ -75,7 +75,7 @@ def test_service_call_create_logbook_entry.opp_):
         },
         True,
     )
-   .opp_.services.call(
+    opp..services.call(
         logbook.DOMAIN,
         "log",
         {
@@ -88,12 +88,12 @@ def test_service_call_create_logbook_entry.opp_):
     # Our service call will unblock when the event listeners have been
     # scheduled. This means that they may not have been processed yet.
     trigger_db_commit.opp_)
-   .opp_.block_till_done()
-   .opp_.data[recorder.DATA_INSTANCE].block_till_done()
+    opp..block_till_done()
+    opp..data[recorder.DATA_INSTANCE].block_till_done()
 
     events = list(
         logbook._get_events(
-           .opp_,
+            opp.,
             dt_util.utcnow() - timedelta(hours=1),
             dt_util.utcnow() + timedelta(hours=1),
         )
@@ -124,15 +124,15 @@ def test_service_call_create_log_book_entry_no_message.opp_):
         """Append on event."""
         calls.append(event)
 
-   .opp_.bus.listen(logbook.EVENT_LOGBOOK_ENTRY, event_listener)
+    opp..bus.listen(logbook.EVENT_LOGBOOK_ENTRY, event_listener)
 
     with pytest.raises(vol.Invalid):
-       .opp_.services.call(logbook.DOMAIN, "log", {}, True)
+        opp..services.call(logbook.DOMAIN, "log", {}, True)
 
     # Logbook entry service call results in firing an event.
     # Our service call will unblock when the event listeners have been
     # scheduled. This means that they may not have been processed yet.
-   .opp_.block_till_done()
+    opp..block_till_done()
 
     assert len(calls) == 0
 
@@ -168,7 +168,7 @@ def test_open_peer_power_start_stop_grouped.opp_):
     entity_attr_cache = logbook.EntityAttributeCache.opp_)
     entries = list(
         logbook.humanify(
-           .opp_,
+            opp.,
             (
                 MockLazyEventPartialState(EVENT_OPENPEERPOWER_STOP),
                 MockLazyEventPartialState(EVENT_OPENPEERPOWER_START),
@@ -192,7 +192,7 @@ def test_open_peer_power_start.opp_):
 
     entries = list(
         logbook.humanify(
-           .opp_,
+            opp.,
             (
                 MockLazyEventPartialState(EVENT_OPENPEERPOWER_START),
                 create_state_changed_event(pointA, entity_id, 10),
@@ -216,7 +216,7 @@ def test_process_custom_logbook_entries.opp_):
 
     entries = list(
         logbook.humanify(
-           .opp_,
+            opp.,
             (
                 MockLazyEventPartialState(
                     logbook.EVENT_LOGBOOK_ENTRY,
@@ -324,11 +324,11 @@ async def test_logbook_view_period_entity.opp, opp_client):
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
-   .opp.states.async_set(entity_id_test, STATE_OFF)
-   .opp.states.async_set(entity_id_test, STATE_ON)
+    opp.states.async_set(entity_id_test, STATE_OFF)
+    opp.states.async_set(entity_id_test, STATE_ON)
     entity_id_second = "switch.second"
-   .opp.states.async_set(entity_id_second, STATE_OFF)
-   .opp.states.async_set(entity_id_second, STATE_ON)
+    opp.states.async_set(entity_id_second, STATE_OFF)
+    opp.states.async_set(entity_id_second, STATE_ON)
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
@@ -409,9 +409,9 @@ async def test_logbook_describe_event.opp, opp_client):
         """Describe an event."""
         return {"name": "Test Name", "message": "tested a message"}
 
-   .opp.config.components.add("fake_integration")
+    opp.config.components.add("fake_integration")
     mock_platform(
-        opp,
+        opp.
         "fake_integration.logbook",
         Mock(
             async_describe_events=lambda.opp, async_describe_event: async_describe_event(
@@ -425,12 +425,12 @@ async def test_logbook_describe_event.opp, opp_client):
         "openpeerpower.util.dt.utcnow",
         return_value=dt_util.utcnow() - timedelta(seconds=5),
     ):
-       .opp.bus.async_fire("some_event")
+        opp.bus.async_fire("some_event")
         await opp.async_block_till_done()
         await opp.async_add_executor_job(trigger_db_commit, opp)
         await opp.async_block_till_done()
         await opp.async_add_executor_job(
-           .opp.data[recorder.DATA_INSTANCE].block_till_done
+            opp.data[recorder.DATA_INSTANCE].block_till_done
         )
 
     client = await opp_client()
@@ -463,16 +463,16 @@ async def test_exclude_described_event.opp, opp_client):
         async_describe_event("automation", "some_automation_event", _describe)
         async_describe_event("sensor", "some_event", _describe)
 
-   .opp.config.components.add("fake_integration")
+    opp.config.components.add("fake_integration")
     mock_platform(
-        opp,
+        opp.
         "fake_integration.logbook",
         Mock(async_describe_events=async_describe_events),
     )
 
     await opp.async_add_executor_job(init_recorder_component, opp)
     assert await async_setup_component(
-        opp,
+        opp.
         logbook.DOMAIN,
         {
             logbook.DOMAIN: {
@@ -485,22 +485,22 @@ async def test_exclude_described_event.opp, opp_client):
         "openpeerpower.util.dt.utcnow",
         return_value=dt_util.utcnow() - timedelta(seconds=5),
     ):
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             "some_automation_event",
             {logbook.ATTR_NAME: name, logbook.ATTR_ENTITY_ID: entity_id},
         )
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             "some_automation_event",
             {logbook.ATTR_NAME: name, logbook.ATTR_ENTITY_ID: entity_id2},
         )
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             "some_event", {logbook.ATTR_NAME: name, logbook.ATTR_ENTITY_ID: entity_id3}
         )
         await opp.async_block_till_done()
         await opp.async_add_executor_job(trigger_db_commit, opp)
         await opp.async_block_till_done()
         await opp.async_add_executor_job(
-           .opp.data[recorder.DATA_INSTANCE].block_till_done
+            opp.data[recorder.DATA_INSTANCE].block_till_done
         )
 
     client = await opp_client()
@@ -519,11 +519,11 @@ async def test_logbook_view_end_time_entity.opp, opp_client):
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
-   .opp.states.async_set(entity_id_test, STATE_OFF)
-   .opp.states.async_set(entity_id_test, STATE_ON)
+    opp.states.async_set(entity_id_test, STATE_OFF)
+    opp.states.async_set(entity_id_test, STATE_ON)
     entity_id_second = "switch.second"
-   .opp.states.async_set(entity_id_second, STATE_OFF)
-   .opp.states.async_set(entity_id_second, STATE_ON)
+    opp.states.async_set(entity_id_second, STATE_OFF)
+    opp.states.async_set(entity_id_second, STATE_ON)
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
@@ -580,21 +580,21 @@ async def test_logbook_entity_filter_with_automations.opp, opp_client):
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "alarm_control_panel.area_001"
-   .opp.states.async_set(entity_id_test, STATE_OFF)
-   .opp.states.async_set(entity_id_test, STATE_ON)
+    opp.states.async_set(entity_id_test, STATE_OFF)
+    opp.states.async_set(entity_id_test, STATE_ON)
     entity_id_second = "alarm_control_panel.area_002"
-   .opp.states.async_set(entity_id_second, STATE_OFF)
-   .opp.states.async_set(entity_id_second, STATE_ON)
+    opp.states.async_set(entity_id_second, STATE_OFF)
+    opp.states.async_set(entity_id_second, STATE_ON)
 
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_AUTOMATION_TRIGGERED,
         {ATTR_NAME: "Mock automation", ATTR_ENTITY_ID: "automation.mock_automation"},
     )
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_SCRIPT_STARTED,
         {ATTR_NAME: "Mock script", ATTR_ENTITY_ID: "script.mock_script"},
     )
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
@@ -652,14 +652,14 @@ async def test_filter_continuous_sensor_values.opp, opp_client):
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
-   .opp.states.async_set(entity_id_test, STATE_OFF)
-   .opp.states.async_set(entity_id_test, STATE_ON)
+    opp.states.async_set(entity_id_test, STATE_OFF)
+    opp.states.async_set(entity_id_test, STATE_ON)
     entity_id_second = "sensor.bla"
-   .opp.states.async_set(entity_id_second, STATE_OFF, {"unit_of_measurement": "foo"})
-   .opp.states.async_set(entity_id_second, STATE_ON, {"unit_of_measurement": "foo"})
+    opp.states.async_set(entity_id_second, STATE_OFF, {"unit_of_measurement": "foo"})
+    opp.states.async_set(entity_id_second, STATE_ON, {"unit_of_measurement": "foo"})
     entity_id_third = "light.bla"
-   .opp.states.async_set(entity_id_third, STATE_OFF, {"unit_of_measurement": "foo"})
-   .opp.states.async_set(entity_id_third, STATE_ON, {"unit_of_measurement": "foo"})
+    opp.states.async_set(entity_id_third, STATE_OFF, {"unit_of_measurement": "foo"})
+    opp.states.async_set(entity_id_third, STATE_ON, {"unit_of_measurement": "foo"})
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
@@ -690,10 +690,10 @@ async def test_exclude_new_entities.opp, opp_client):
     entity_id = "climate.bla"
     entity_id2 = "climate.blu"
 
-   .opp.states.async_set(entity_id, STATE_OFF)
-   .opp.states.async_set(entity_id2, STATE_ON)
-   .opp.states.async_set(entity_id2, STATE_OFF)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id2, STATE_ON)
+    opp.states.async_set(entity_id2, STATE_OFF)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
@@ -725,16 +725,16 @@ async def test_exclude_removed_entities.opp, opp_client):
     entity_id = "climate.bla"
     entity_id2 = "climate.blu"
 
-   .opp.states.async_set(entity_id, STATE_ON)
-   .opp.states.async_set(entity_id, STATE_OFF)
+    opp.states.async_set(entity_id, STATE_ON)
+    opp.states.async_set(entity_id, STATE_OFF)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
-   .opp.states.async_set(entity_id2, STATE_ON)
-   .opp.states.async_set(entity_id2, STATE_OFF)
+    opp.states.async_set(entity_id2, STATE_ON)
+    opp.states.async_set(entity_id2, STATE_OFF)
 
-   .opp.states.async_remove(entity_id)
-   .opp.states.async_remove(entity_id2)
+    opp.states.async_remove(entity_id)
+    opp.states.async_remove(entity_id2)
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
@@ -764,14 +764,14 @@ async def test_exclude_attribute_changes.opp, opp_client):
     await async_setup_component.opp, "logbook", {})
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
-   .opp.states.async_set("light.kitchen", STATE_OFF)
-   .opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 100})
-   .opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 200})
-   .opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 300})
-   .opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 400})
-   .opp.states.async_set("light.kitchen", STATE_OFF)
+    opp.states.async_set("light.kitchen", STATE_OFF)
+    opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 100})
+    opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 200})
+    opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 300})
+    opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 400})
+    opp.states.async_set("light.kitchen", STATE_OFF)
 
     await opp.async_block_till_done()
 
@@ -812,17 +812,17 @@ async def test_logbook_entity_context_id.opp, opp_client):
 
     # An Automation
     automation_entity_id_test = "automation.alarm"
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_AUTOMATION_TRIGGERED,
         {ATTR_NAME: "Mock automation", ATTR_ENTITY_ID: automation_entity_id_test},
         context=context,
     )
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_SCRIPT_STARTED,
         {ATTR_NAME: "Mock script", ATTR_ENTITY_ID: "script.mock_script"},
         context=context,
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         automation_entity_id_test,
         STATE_ON,
         {ATTR_FRIENDLY_NAME: "Alarm Automation"},
@@ -830,22 +830,22 @@ async def test_logbook_entity_context_id.opp, opp_client):
     )
 
     entity_id_test = "alarm_control_panel.area_001"
-   .opp.states.async_set(entity_id_test, STATE_OFF, context=context)
+    opp.states.async_set(entity_id_test, STATE_OFF, context=context)
     await opp.async_block_till_done()
-   .opp.states.async_set(entity_id_test, STATE_ON, context=context)
+    opp.states.async_set(entity_id_test, STATE_ON, context=context)
     await opp.async_block_till_done()
     entity_id_second = "alarm_control_panel.area_002"
-   .opp.states.async_set(entity_id_second, STATE_OFF, context=context)
+    opp.states.async_set(entity_id_second, STATE_OFF, context=context)
     await opp.async_block_till_done()
-   .opp.states.async_set(entity_id_second, STATE_ON, context=context)
+    opp.states.async_set(entity_id_second, STATE_ON, context=context)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     await opp.async_add_executor_job(
         logbook.log_entry,
-        opp,
+        opp.
         "mock_name",
         "mock_message",
         "alarm_control_panel",
@@ -856,7 +856,7 @@ async def test_logbook_entity_context_id.opp, opp_client):
 
     await opp.async_add_executor_job(
         logbook.log_entry,
-        opp,
+        opp.
         "mock_name",
         "mock_message",
         "openpeerpower",
@@ -870,10 +870,10 @@ async def test_logbook_entity_context_id.opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-   .opp.states.async_set("light.switch", STATE_ON)
+    opp.states.async_set("light.switch", STATE_ON)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_CALL_SERVICE,
         {
             ATTR_DOMAIN: "light",
@@ -884,7 +884,7 @@ async def test_logbook_entity_context_id.opp, opp_client):
     )
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.switch", STATE_OFF, context=light_turn_off_service_context
     )
     await opp.async_block_till_done()
@@ -964,7 +964,7 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
 
     # An Automation triggering scripts with a new context
     automation_entity_id_test = "automation.alarm"
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_AUTOMATION_TRIGGERED,
         {ATTR_NAME: "Mock automation", ATTR_ENTITY_ID: automation_entity_id_test},
         context=context,
@@ -975,12 +975,12 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
         parent_id="ac5bd62de45711eaaeb351041eec8dd9",
         user_id="b400facee45711eaa9308bfd3d19e474",
     )
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_SCRIPT_STARTED,
         {ATTR_NAME: "Mock script", ATTR_ENTITY_ID: "script.mock_script"},
         context=child_context,
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         automation_entity_id_test,
         STATE_ON,
         {ATTR_FRIENDLY_NAME: "Alarm Automation"},
@@ -988,21 +988,21 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
     )
 
     entity_id_test = "alarm_control_panel.area_001"
-   .opp.states.async_set(entity_id_test, STATE_OFF, context=child_context)
+    opp.states.async_set(entity_id_test, STATE_OFF, context=child_context)
     await opp.async_block_till_done()
-   .opp.states.async_set(entity_id_test, STATE_ON, context=child_context)
+    opp.states.async_set(entity_id_test, STATE_ON, context=child_context)
     await opp.async_block_till_done()
     entity_id_second = "alarm_control_panel.area_002"
-   .opp.states.async_set(entity_id_second, STATE_OFF, context=child_context)
+    opp.states.async_set(entity_id_second, STATE_OFF, context=child_context)
     await opp.async_block_till_done()
-   .opp.states.async_set(entity_id_second, STATE_ON, context=child_context)
+    opp.states.async_set(entity_id_second, STATE_ON, context=child_context)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     logbook.async_log_entry(
-        opp,
+        opp.
         "mock_name",
         "mock_message",
         "alarm_control_panel",
@@ -1012,7 +1012,7 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
     await opp.async_block_till_done()
 
     logbook.async_log_entry(
-        opp,
+        opp.
         "mock_name",
         "mock_message",
         "openpeerpower",
@@ -1027,10 +1027,10 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
         parent_id="2798bfedf8234b5e9f4009c91f48f30c",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-   .opp.states.async_set("light.switch", STATE_ON)
+    opp.states.async_set("light.switch", STATE_ON)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_CALL_SERVICE,
         {
             ATTR_DOMAIN: "light",
@@ -1041,7 +1041,7 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
     )
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.switch", STATE_OFF, context=light_turn_off_service_context
     )
     await opp.async_block_till_done()
@@ -1053,7 +1053,7 @@ async def test_logbook_entity_context_parent_id.opp, opp_client):
         user_id="485cacf93ef84d25a99ced3126b921d2",
     )
     logbook.async_log_entry(
-        opp,
+        opp.
         "mock_name",
         "mock_message",
         "alarm_control_panel",
@@ -1134,7 +1134,7 @@ async def test_logbook_context_from_template.opp, opp_client):
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -1161,18 +1161,18 @@ async def test_logbook_context_from_template.opp, opp_client):
     await opp.async_block_till_done()
 
     # Entity added (should not be logged)
-   .opp.states.async_set("switch.test_state", STATE_ON)
+    opp.states.async_set("switch.test_state", STATE_ON)
     await opp.async_block_till_done()
 
     # First state change (should be logged)
-   .opp.states.async_set("switch.test_state", STATE_OFF)
+    opp.states.async_set("switch.test_state", STATE_OFF)
     await opp.async_block_till_done()
 
     switch_turn_off_context = ha.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
     await opp.async_block_till_done()
@@ -1220,7 +1220,7 @@ async def test_logbook_entity_matches_only.opp, opp_client):
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -1247,18 +1247,18 @@ async def test_logbook_entity_matches_only.opp, opp_client):
     await opp.async_block_till_done()
 
     # Entity added (should not be logged)
-   .opp.states.async_set("switch.test_state", STATE_ON)
+    opp.states.async_set("switch.test_state", STATE_ON)
     await opp.async_block_till_done()
 
     # First state change (should be logged)
-   .opp.states.async_set("switch.test_state", STATE_OFF)
+    opp.states.async_set("switch.test_state", STATE_OFF)
     await opp.async_block_till_done()
 
     switch_turn_off_context = ha.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
     await opp.async_block_till_done()
@@ -1294,7 +1294,7 @@ async def test_logbook_entity_matches_only_multiple.opp, opp_client):
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -1321,14 +1321,14 @@ async def test_logbook_entity_matches_only_multiple.opp, opp_client):
     await opp.async_block_till_done()
 
     # Entity added (should not be logged)
-   .opp.states.async_set("switch.test_state", STATE_ON)
-   .opp.states.async_set("light.test_state", STATE_ON)
+    opp.states.async_set("switch.test_state", STATE_ON)
+    opp.states.async_set("light.test_state", STATE_ON)
 
     await opp.async_block_till_done()
 
     # First state change (should be logged)
-   .opp.states.async_set("switch.test_state", STATE_OFF)
-   .opp.states.async_set("light.test_state", STATE_OFF)
+    opp.states.async_set("switch.test_state", STATE_OFF)
+    opp.states.async_set("light.test_state", STATE_OFF)
 
     await opp.async_block_till_done()
 
@@ -1336,10 +1336,10 @@ async def test_logbook_entity_matches_only_multiple.opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
-   .opp.states.async_set("light.test_state", STATE_ON, context=switch_turn_off_context)
+    opp.states.async_set("light.test_state", STATE_ON, context=switch_turn_off_context)
     await opp.async_block_till_done()
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
@@ -1398,22 +1398,22 @@ async def test_icon_and_state.opp, opp_client):
     await async_setup_component.opp, "logbook", {})
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
-   .opp.states.async_set("light.kitchen", STATE_OFF, {"icon": "mdi:chemical-weapon"})
-   .opp.states.async_set(
+    opp.states.async_set("light.kitchen", STATE_OFF, {"icon": "mdi:chemical-weapon"})
+    opp.states.async_set(
         "light.kitchen", STATE_ON, {"brightness": 100, "icon": "mdi:security"}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.kitchen", STATE_ON, {"brightness": 200, "icon": "mdi:security"}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.kitchen", STATE_ON, {"brightness": 300, "icon": "mdi:security"}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.kitchen", STATE_ON, {"brightness": 400, "icon": "mdi:security"}
     )
-   .opp.states.async_set("light.kitchen", STATE_OFF, {"icon": "mdi:chemical-weapon"})
+    opp.states.async_set("light.kitchen", STATE_OFF, {"icon": "mdi:chemical-weapon"})
 
     await _async_commit_and_wait.opp)
 
@@ -1445,12 +1445,12 @@ async def test_exclude_events_domain.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 20)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
 
@@ -1485,14 +1485,14 @@ async def test_exclude_events_domain_glob.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 20)
-   .opp.states.async_set(entity_id3, None)
-   .opp.states.async_set(entity_id3, 30)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 20)
+    opp.states.async_set(entity_id3, None)
+    opp.states.async_set(entity_id3, 30)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()
@@ -1525,12 +1525,12 @@ async def test_include_events_entity.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 20)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()
@@ -1558,12 +1558,12 @@ async def test_exclude_events_entity.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 20)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()
@@ -1592,16 +1592,16 @@ async def test_include_events_domain.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.bus.async_fire(
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.bus.async_fire(
         EVENT_ALEXA_SMART_HOME,
         {"request": {"namespace": "Alexa.Discovery", "name": "Discover"}},
     )
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 20)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()
@@ -1636,18 +1636,18 @@ async def test_include_events_domain_glob.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.bus.async_fire(
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.bus.async_fire(
         EVENT_ALEXA_SMART_HOME,
         {"request": {"namespace": "Alexa.Discovery", "name": "Discover"}},
     )
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 20)
-   .opp.states.async_set(entity_id3, None)
-   .opp.states.async_set(entity_id3, 30)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 20)
+    opp.states.async_set(entity_id3, None)
+    opp.states.async_set(entity_id3, 30)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()
@@ -1688,18 +1688,18 @@ async def test_include_exclude_events.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 10)
-   .opp.states.async_set(entity_id3, None)
-   .opp.states.async_set(entity_id3, 10)
-   .opp.states.async_set(entity_id, 20)
-   .opp.states.async_set(entity_id2, 20)
-   .opp.states.async_set(entity_id4, None)
-   .opp.states.async_set(entity_id4, 10)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 10)
+    opp.states.async_set(entity_id3, None)
+    opp.states.async_set(entity_id3, 10)
+    opp.states.async_set(entity_id, 20)
+    opp.states.async_set(entity_id2, 20)
+    opp.states.async_set(entity_id4, None)
+    opp.states.async_set(entity_id4, 10)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()
@@ -1742,22 +1742,22 @@ async def test_include_exclude_events_with_glob_filters.opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
-   .opp.states.async_set(entity_id2, None)
-   .opp.states.async_set(entity_id2, 10)
-   .opp.states.async_set(entity_id3, None)
-   .opp.states.async_set(entity_id3, 10)
-   .opp.states.async_set(entity_id, 20)
-   .opp.states.async_set(entity_id2, 20)
-   .opp.states.async_set(entity_id4, None)
-   .opp.states.async_set(entity_id4, 30)
-   .opp.states.async_set(entity_id5, None)
-   .opp.states.async_set(entity_id5, 30)
-   .opp.states.async_set(entity_id6, None)
-   .opp.states.async_set(entity_id6, 30)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
+    opp.states.async_set(entity_id2, None)
+    opp.states.async_set(entity_id2, 10)
+    opp.states.async_set(entity_id3, None)
+    opp.states.async_set(entity_id3, 10)
+    opp.states.async_set(entity_id, 20)
+    opp.states.async_set(entity_id2, 20)
+    opp.states.async_set(entity_id4, None)
+    opp.states.async_set(entity_id4, 30)
+    opp.states.async_set(entity_id5, None)
+    opp.states.async_set(entity_id5, 30)
+    opp.states.async_set(entity_id6, None)
+    opp.states.async_set(entity_id6, 30)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()
@@ -1785,10 +1785,10 @@ async def test_empty_config(opp, opp_client):
     await async_setup_component.opp, "logbook", config)
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
-   .opp.states.async_set(entity_id, None)
-   .opp.states.async_set(entity_id, 10)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, 10)
 
     await _async_commit_and_wait.opp)
     client = await opp_client()

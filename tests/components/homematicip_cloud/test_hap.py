@@ -73,7 +73,7 @@ async def test_auth_auth_check_and_register_with_exception.opp):
 
 async def test_hap_setup_works():
     """Test a successful setup of a accesspoint."""
-    opp =Mock()
+    opp.=Mock()
     entry = Mock()
     home = Mock()
     entry.data = {HMIPC_HAPID: "ABC123", HMIPC_AUTHTOKEN: "123", HMIPC_NAME: "hmip"}
@@ -95,7 +95,7 @@ async def test_hap_setup_works():
 
 async def test_hap_setup_connection_error():
     """Test a failed accesspoint setup."""
-    opp =Mock()
+    opp.=Mock()
     entry = Mock()
     entry.data = {HMIPC_HAPID: "ABC123", HMIPC_AUTHTOKEN: "123", HMIPC_NAME: "hmip"}
     hap = HomematicipHAP.opp, entry)
@@ -123,7 +123,7 @@ async def test_hap_reset_unloads_entry_if_setup_opp, default_mock_hap_factory):
 
 async def test_hap_create.opp, hmip_config_entry, simple_mock_home):
     """Mock AsyncHome to execute get_hap."""
-   .opp.config.components.add(HMIPC_DOMAIN)
+    opp.config.components.add(HMIPC_DOMAIN)
     hap = HomematicipHAP.opp, hmip_config_entry)
     assert hap
     with patch.object(hap, "async_connect"):
@@ -132,7 +132,7 @@ async def test_hap_create.opp, hmip_config_entry, simple_mock_home):
 
 async def test_hap_create_exception.opp, hmip_config_entry, mock_connection_init):
     """Mock AsyncHome to execute get_hap."""
-   .opp.config.components.add(HMIPC_DOMAIN)
+    opp.config.components.add(HMIPC_DOMAIN)
 
     hap = HomematicipHAP.opp, hmip_config_entry)
     assert hap

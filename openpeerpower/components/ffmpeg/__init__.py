@@ -73,24 +73,24 @@ async def async_setup_opp, config):
         else:
             async_dispatcher_send.opp, SIGNAL_FFMPEG_RESTART, entity_ids)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_START, async_service_handle, schema=SERVICE_FFMPEG_SCHEMA
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_STOP, async_service_handle, schema=SERVICE_FFMPEG_SCHEMA
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_RESTART, async_service_handle, schema=SERVICE_FFMPEG_SCHEMA
     )
 
-   .opp.data[DATA_FFMPEG] = manager
+    opp.data[DATA_FFMPEG] = manager
     return True
 
 
 async def async_get_image(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     input_source: str,
     output_format: str = IMAGE_JPEG,
     extra_cmd: Optional[str] = None,

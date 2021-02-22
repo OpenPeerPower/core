@@ -11,7 +11,7 @@ async def test_ipma_system_health.opp, aioclient_mock):
     """Test ipma system health."""
     aioclient_mock.get(IPMA_API_URL, json={"result": "ok", "data": {}})
 
-   .opp.config.components.add("ipma")
+    opp.config.components.add("ipma")
     assert await async_setup_component.opp, "system_health", {})
 
     info = await get_system_health_info.opp, "ipma")

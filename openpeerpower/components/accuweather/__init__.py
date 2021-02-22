@@ -28,7 +28,7 @@ PLATFORMS = ["sensor", "weather"]
 
 async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured AccuWeather."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -43,7 +43,7 @@ async def async_setup_entry.opp, config_entry) -> bool:
     websession = async_get_clientsession.opp)
 
     coordinator = AccuWeatherDataUpdateCoordinator(
-        opp, websession, api_key, location_key, forecast
+        opp. websession, api_key, location_key, forecast
     )
     await coordinator.async_refresh()
 
@@ -52,14 +52,14 @@ async def async_setup_entry.opp, config_entry) -> bool:
 
     undo_listener = config_entry.add_update_listener(update_listener)
 
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data[DOMAIN][config_entry.entry_id] = {
         COORDINATOR: coordinator,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -70,16 +70,16 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
-   .opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 

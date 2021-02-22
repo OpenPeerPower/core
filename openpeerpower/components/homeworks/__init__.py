@@ -75,12 +75,12 @@ def setup_opp, base_config):
 
     config = base_config.get(DOMAIN)
     controller = Homeworks(config[CONF_HOST], config[CONF_PORT], hw_callback)
-   .opp.data[HOMEWORKS_CONTROLLER] = controller
+    opp.data[HOMEWORKS_CONTROLLER] = controller
 
     def cleanup(event):
         controller.close()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
 
     dimmers = config[CONF_DIMMERS]
     load_platform.opp, "light", DOMAIN, {CONF_DIMMERS: dimmers}, base_config)

@@ -16,7 +16,7 @@ async def test_config_with_sensor_passed_to_config_entry.opp):
     }
 
     with patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_entries, patch.object(
         luftdaten, "configured_sensors", return_value=[]
     ):
@@ -30,7 +30,7 @@ async def test_config_already_registered_not_passed_to_config_entry.opp):
     conf = {CONF_SENSOR_ID: "12345abcde"}
 
     with patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_config_entries, patch.object(
         luftdaten, "configured_sensors", return_value=["12345abcde"]
     ):

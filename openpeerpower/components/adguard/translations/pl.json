@@ -8,7 +8,7 @@
             "cannot_connect": "Nie mo\u017cna nawi\u0105za\u0107 po\u0142\u0105czenia"
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Czy chcesz skonfigurowa\u0107 Open Peer Powera, aby po\u0142\u0105czy\u0142 si\u0119 z AdGuard Home przez dodatek Hass.io {addon}?",
                 "title": "AdGuard Home przez dodatek Hass.io"
             },

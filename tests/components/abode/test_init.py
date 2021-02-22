@@ -34,7 +34,7 @@ async def test_add_unique_id.opp):
     """Test unique_id is set to Abode username."""
     mock_entry = await setup_platform.opp, ALARM_DOMAIN)
     # Set unique_id to None to match previous config entries
-   .opp.config_entries.async_update_entry(entry=mock_entry, unique_id=None)
+    opp.config_entries.async_update_entry(entry=mock_entry, unique_id=None)
     await opp.async_block_till_done()
 
     assert mock_entry.unique_id is None

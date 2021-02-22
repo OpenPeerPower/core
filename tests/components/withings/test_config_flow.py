@@ -34,10 +34,10 @@ async def test_config_non_unique_profile.opp: OpenPeerPower) -> None:
 
 
 async def test_config_reauth_profile(
-    opp: OpenPeerPower, aiohttp_client, aioclient_mock
+    opp. OpenPeerPower, aiohttp_client, aioclient_mock
 ) -> None:
     """Test reauth an existing profile re-creates the config entry."""
-   .opp_config = {
+    opp.config = {
         HA_DOMAIN: {
             CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC,
             CONF_EXTERNAL_URL: "http://127.0.0.1:8080/",
@@ -72,7 +72,7 @@ async def test_config_reauth_profile(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-        opp,
+        opp.
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

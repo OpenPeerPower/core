@@ -28,7 +28,7 @@ async def async_setup_opp, config):
     conf = config[DOMAIN]
 
     config_flow.register_flow_implementation(
-        opp, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
+        opp. conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
     )
 
     return True
@@ -36,8 +36,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up Ambiclimate from a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "climate")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "climate")
     )
 
     return True

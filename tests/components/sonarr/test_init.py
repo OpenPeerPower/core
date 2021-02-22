@@ -17,7 +17,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_entry_not_ready(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the configuration entry not ready."""
     entry = await setup_integration.opp, aioclient_mock, connection_error=True)
@@ -25,7 +25,7 @@ async def test_config_entry_not_ready(
 
 
 async def test_config_entry_reauth(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the configuration entry needing to be re-authenticated."""
     with patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
@@ -41,7 +41,7 @@ async def test_config_entry_reauth(
 
 
 async def test_unload_config_entry(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the configuration entry unloading."""
     with patch(

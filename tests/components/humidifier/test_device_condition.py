@@ -47,7 +47,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set(
+    opp.states.async_set(
         f"{DOMAIN}.test_5678",
         STATE_ON,
         {
@@ -55,7 +55,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
             const.ATTR_AVAILABLE_MODES: [const.MODE_HOME, const.MODE_AWAY],
         },
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.test_5678", "attributes", {"supported_features": 1}
     )
     expected_conditions = [
@@ -94,7 +94,7 @@ async def test_get_conditions_toggle_only.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set(
+    opp.states.async_set(
         f"{DOMAIN}.test_5678",
         STATE_ON,
         {
@@ -102,7 +102,7 @@ async def test_get_conditions_toggle_only.opp, device_reg, entity_reg):
             const.ATTR_AVAILABLE_MODES: [const.MODE_HOME, const.MODE_AWAY],
         },
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.test_5678", "attributes", {"supported_features": 0}
     )
     expected_conditions = [
@@ -127,12 +127,12 @@ async def test_get_conditions_toggle_only.opp, device_reg, entity_reg):
 
 async def test_if_state.opp, calls):
     """Test for turn_on and turn_off conditions."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity", STATE_ON, {const.ATTR_MODE: const.MODE_AWAY}
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -200,42 +200,42 @@ async def test_if_state.opp, calls):
     assert.opp.states.get("humidifier.entity").state == STATE_ON
     assert len(calls) == 0
 
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_on event - test_event1"
 
-   .opp.states.async_set("humidifier.entity", STATE_OFF)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
+    opp.states.async_set("humidifier.entity", STATE_OFF)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_off event - test_event2"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity", STATE_ON, {const.ATTR_MODE: const.MODE_AWAY}
     )
 
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
 
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_mode - event - test_event3"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity", STATE_ON, {const.ATTR_MODE: const.MODE_HOME}
     )
 
     # Should not fire
-   .opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
     assert len(calls) == 3
 
 
 async def test_capabilities.opp):
     """Test capabilities."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity",
         STATE_ON,
         {
@@ -246,7 +246,7 @@ async def test_capabilities.opp):
 
     # Test mode
     capabilities = await device_condition.async_get_condition_capabilities(
-        opp,
+        opp.
         {
             "condition": "device",
             "domain": DOMAIN,
@@ -274,7 +274,7 @@ async def test_capabilities_no_state.opp):
     """Test capabilities while state not available."""
     # Test mode
     capabilities = await device_condition.async_get_condition_capabilities(
-        opp,
+        opp.
         {
             "condition": "device",
             "domain": DOMAIN,
@@ -310,6 +310,6 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     conditions = await async_get_device_automations.opp, "condition", device_entry.id)
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "condition", condition
+            opp. "condition", condition
         )
         assert capabilities == expected_capabilities

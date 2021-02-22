@@ -61,8 +61,8 @@ async def async_setup_opp, config):
     """Set up the AVM Fritz!Box integration."""
     if DOMAIN in config:
         for entry_config in config[DOMAIN][CONF_DEVICES]:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=entry_config
                 )
             )
@@ -81,8 +81,8 @@ async def async_setup_entry.opp, entry):
     try:
         await opp.async_add_executor_job(fritz.login)
     except LoginError:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_REAUTH},
                 data=entry,
@@ -90,19 +90,19 @@ async def async_setup_entry.opp, entry):
         )
         return False
 
-   .opp.data.setdefault(DOMAIN, {CONF_CONNECTIONS: {}, CONF_DEVICES: set()})
-   .opp.data[DOMAIN][CONF_CONNECTIONS][entry.entry_id] = fritz
+    opp.data.setdefault(DOMAIN, {CONF_CONNECTIONS: {}, CONF_DEVICES: set()})
+    opp.data[DOMAIN][CONF_CONNECTIONS][entry.entry_id] = fritz
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     def logout_fritzbox(event):
         """Close connections to this fritzbox."""
         fritz.logout()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, logout_fritzbox)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, logout_fritzbox)
 
     return True
 
@@ -115,12 +115,12 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][CONF_CONNECTIONS].pop(entry.entry_id)
+        opp.data[DOMAIN][CONF_CONNECTIONS].pop(entry.entry_id)
 
     return unload_ok

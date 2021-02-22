@@ -52,7 +52,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.test_5678", "attributes", {"supported_features": 15}
     )
     expected_triggers = [
@@ -105,10 +105,10 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 
 async def test_if_fires_on_state_change.opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_PENDING)
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_PENDING)
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -212,7 +212,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is triggered.
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_TRIGGERED)
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_TRIGGERED)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert (
@@ -221,7 +221,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is disarmed.
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_DISARMED)
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_DISARMED)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert (
@@ -230,7 +230,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is armed home.
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_HOME)
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_HOME)
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert (
@@ -239,7 +239,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is armed away.
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_AWAY)
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_AWAY)
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert (
@@ -248,7 +248,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is armed night.
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_NIGHT)
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_NIGHT)
     await opp.async_block_till_done()
     assert len(calls) == 5
     assert (

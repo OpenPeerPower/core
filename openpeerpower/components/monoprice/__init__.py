@@ -42,21 +42,21 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     first_run = not bool(entry.data.get(CONF_NOT_FIRST_RUN))
 
     if first_run:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_NOT_FIRST_RUN: True}
         )
 
     undo_listener = entry.add_update_listener(_update_listener)
 
-   .opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         MONOPRICE_OBJECT: monoprice,
         UNDO_UPDATE_LISTENER: undo_listener,
         FIRST_RUN: first_run,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -67,15 +67,15 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

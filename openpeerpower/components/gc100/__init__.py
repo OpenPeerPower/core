@@ -38,9 +38,9 @@ def setup_opp, base_config):
         """Stuff to do before stopping."""
         gc_device.quit()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gc100)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gc100)
 
-   .opp.data[DATA_GC100] = GC100Device.opp, gc_device)
+    opp.data[DATA_GC100] = GC100Device.opp, gc_device)
 
     return True
 

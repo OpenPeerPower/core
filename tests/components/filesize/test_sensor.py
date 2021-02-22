@@ -40,7 +40,7 @@ async def test_valid_path.opp):
     """Test for a valid path."""
     create_file(TEST_FILE)
     config = {"sensor": {"platform": "filesize", CONF_FILE_PATHS: [TEST_FILE]}}
-   .opp.config.allowlist_external_dirs = {TEST_DIR}
+    opp.config.allowlist_external_dirs = {TEST_DIR}
     assert await async_setup_component.opp, "sensor", config)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 1
@@ -55,7 +55,7 @@ async def test_reload.opp, tmpdir):
     await opp.async_add_executor_job(create_file, testfile)
     with patch.object.opp.config, "is_allowed_path", return_value=True):
         await async_setup_component(
-            opp,
+            opp.
             "sensor",
             {
                 "sensor": {
@@ -76,7 +76,7 @@ async def test_reload.opp, tmpdir):
         "filesize/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path), patch.object(
-       .opp.config, "is_allowed_path", return_value=True
+        opp.config, "is_allowed_path", return_value=True
     ):
         await opp.services.async_call(
             DOMAIN,

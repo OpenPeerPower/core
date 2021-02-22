@@ -252,6 +252,6 @@ class HomematicipHAP:
             raise HmipcConnectionError from err
         home.on_update(self.async_update)
         home.on_create(self.async_create_entity)
-       .opp.loop.create_task(self.async_connect())
+        opp.loop.create_task(self.async_connect())
 
         return home

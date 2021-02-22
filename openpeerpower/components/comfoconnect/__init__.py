@@ -68,7 +68,7 @@ def setup_opp, config):
 
     # Setup ComfoConnect Bridge
     ccb = ComfoConnectBridge.opp, bridge, name, token, user_agent, pin)
-   .opp.data[DOMAIN] = ccb
+    opp.data[DOMAIN] = ccb
 
     # Start connection with bridge
     ccb.connect()
@@ -77,7 +77,7 @@ def setup_opp, config):
     def _shutdown(_event):
         ccb.disconnect()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
 
     # Load platforms
     discovery.load_platform.opp, "fan", DOMAIN, {}, config)

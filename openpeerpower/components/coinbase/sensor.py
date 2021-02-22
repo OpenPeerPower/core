@@ -26,11 +26,11 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if "account" in discovery_info:
         account = discovery_info["account"]
         sensor = AccountSensor(
-           .opp.data[DATA_COINBASE], account["name"], account["balance"]["currency"]
+            opp.data[DATA_COINBASE], account["name"], account["balance"]["currency"]
         )
     if "exchange_currency" in discovery_info:
         sensor = ExchangeRateSensor(
-           .opp.data[DATA_COINBASE],
+            opp.data[DATA_COINBASE],
             discovery_info["exchange_currency"],
             discovery_info["native_currency"],
         )

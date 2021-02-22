@@ -74,7 +74,7 @@ def setup_bridge.opp, bridge, async_add_entities):
                 new_lights.append(lights[light_id])
 
         if new_lights:
-           .opp.add_job(async_add_entities, new_lights)
+            opp.add_job(async_add_entities, new_lights)
 
     update_lights()
 

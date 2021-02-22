@@ -32,7 +32,7 @@ async def test_ensure_device_tracker_platform_validation.opp):
         dev_id = "paulus"
         topic = "/location/paulus"
         assert await async_setup_component(
-            opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: topic}}}
+            opp. DOMAIN, {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: topic}}}
         )
         assert mock_sp.call_count == 1
 
@@ -44,9 +44,9 @@ async def test_new_message.opp, mock_device_tracker_conf):
     topic = "/location/paulus"
     location = "work"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: topic}}}
+        opp. DOMAIN, {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: topic}}}
     )
     async_fire_mqtt_message.opp, topic, location)
     await opp.async_block_till_done()
@@ -61,9 +61,9 @@ async def test_single_level_wildcard_topic.opp, mock_device_tracker_conf):
     topic = "/location/room/paulus"
     location = "work"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -80,9 +80,9 @@ async def test_multi_level_wildcard_topic.opp, mock_device_tracker_conf):
     topic = "/location/room/paulus"
     location = "work"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -99,9 +99,9 @@ async def test_single_level_wildcard_topic_not_matching.opp, mock_device_tracker
     topic = "/location/paulus"
     location = "work"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -118,9 +118,9 @@ async def test_multi_level_wildcard_topic_not_matching.opp, mock_device_tracker_
     topic = "/somewhere/room/paulus"
     location = "work"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -130,7 +130,7 @@ async def test_multi_level_wildcard_topic_not_matching.opp, mock_device_tracker_
 
 
 async def test_matching_custom_payload_for_home_and_not_home(
-    opp, mock_device_tracker_conf
+    opp. mock_device_tracker_conf
 ):
     """Test custom payload_home sets state to home and custom payload_not_home sets state to not_home."""
     dev_id = "paulus"
@@ -139,9 +139,9 @@ async def test_matching_custom_payload_for_home_and_not_home(
     payload_home = "present"
     payload_not_home = "not present"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -162,7 +162,7 @@ async def test_matching_custom_payload_for_home_and_not_home(
 
 
 async def test_not_matching_custom_payload_for_home_and_not_home(
-    opp, mock_device_tracker_conf
+    opp. mock_device_tracker_conf
 ):
     """Test not matching payload does not set state to home or not_home."""
     dev_id = "paulus"
@@ -172,9 +172,9 @@ async def test_not_matching_custom_payload_for_home_and_not_home(
     payload_not_home = "not present"
     payload_not_matching = "test"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -199,9 +199,9 @@ async def test_matching_source_type.opp, mock_device_tracker_conf):
     source_type = SOURCE_TYPE_BLUETOOTH
     location = "work"
 
-   .opp.config.components = {"mqtt", "zone"}
+    opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {

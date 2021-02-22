@@ -68,7 +68,7 @@ async def handle_webhook.opp, webhook_id, request):
 
 async def async_setup_entry.opp, entry):
     """Configure based on config entry."""
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "DialogFlow", entry.data[CONF_WEBHOOK_ID], handle_webhook
     )
     return True
@@ -76,7 +76,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-   .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+    opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     return True
 
 
@@ -131,7 +131,7 @@ async def async_handle_message.opp, message):
         )
 
     intent_response = await intent.async_handle(
-        opp,
+        opp.
         DOMAIN,
         action,
         {key: {"value": value} for key, value in parameters.items()},

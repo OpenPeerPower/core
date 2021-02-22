@@ -42,7 +42,7 @@ PLATFORM_SCHEMA = vol.All(
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
@@ -60,7 +60,7 @@ async def async_setup_entry(
             if device.is_online:
                 cameras.append(
                     CanaryCamera(
-                        opp,
+                        opp.
                         coordinator,
                         location_id,
                         device,

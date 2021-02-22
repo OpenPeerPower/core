@@ -99,10 +99,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     # create condition helper
     if DATA_CONDITION not in.opp.data:
         cond_keys = [str(chr(x)) for x in range(97, 123)]
-       .opp.data[DATA_CONDITION] = dict.fromkeys(cond_keys)
+        opp.data[DATA_CONDITION] = dict.fromkeys(cond_keys)
         for cond, condlst in CONDITION_CLASSES.items():
             for condi in condlst:
-               .opp.data[DATA_CONDITION][condi] = cond
+                opp.data[DATA_CONDITION][condi] = cond
 
     async_add_entities([BrWeather(data, config, coordinates)])
 

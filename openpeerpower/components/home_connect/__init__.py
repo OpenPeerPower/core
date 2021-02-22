@@ -37,15 +37,15 @@ PLATFORMS = ["binary_sensor", "light", "sensor", "switch"]
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up Home Connect component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     if DOMAIN not in config:
         return True
 
     config_flow.OAuth2FlowHandler.async_register_implementation(
-        opp,
+        opp.
         config_entry_oauth2_flow.LocalOAuth2Implementation(
-            opp,
+            opp.
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -61,19 +61,19 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Home Connect from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
     )
 
     hc_api = api.ConfigEntryAuth.opp, entry, implementation)
 
-   .opp.data[DOMAIN][entry.entry_id] = hc_api
+    opp.data[DOMAIN][entry.entry_id] = hc_api
 
     await update_all_devices.opp, entry)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -84,13 +84,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

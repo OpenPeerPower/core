@@ -79,7 +79,7 @@ class PilightBaseDevice(RestoreEntity):
                 code_list.append(_ReceiveHandle(code, echo))
 
         if any(self._code_on_receive) or any(self._code_off_receive):
-           .opp.bus.listen(EVENT, self._handle_code)
+            opp.bus.listen(EVENT, self._handle_code)
 
         self._brightness = 255
 

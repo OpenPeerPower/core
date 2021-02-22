@@ -36,15 +36,15 @@ async def _await_cancel(task):
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Set up the component."""
-   .opp.data[DOMAIN_DATA_ENTRIES] = {}
-   .opp.data[DOMAIN_DATA_TASKS] = {}
+    opp.data[DOMAIN_DATA_ENTRIES] = {}
+    opp.data[DOMAIN_DATA_TASKS] = {}
 
     async def _stop(_):
         asyncio.gather(
             *[_await_cancel(task) for task in.opp.data[DOMAIN_DATA_TASKS].values()]
         )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop)
 
     return True
 
@@ -60,8 +60,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: config_entries.Config
     task = asyncio.create_task(_run_client.opp, client, DEFAULT_SCAN_INTERVAL))
     tasks[entry.entry_id] = task
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "media_player")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "media_player")
     )
 
     return True
@@ -74,14 +74,14 @@ async def async_unload_entry.opp, entry):
     task = opp.data[DOMAIN_DATA_TASKS].pop(entry.entry_id)
     await _await_cancel(task)
 
-   .opp.data[DOMAIN_DATA_ENTRIES].pop(entry.entry_id)
+    opp.data[DOMAIN_DATA_ENTRIES].pop(entry.entry_id)
 
     return True
 
 
 async def _run_client.opp, client, interval):
     def _listen(_):
-       .opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_CLIENT_DATA, client.host)
+        opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_CLIENT_DATA, client.host)
 
     while True:
         try:
@@ -89,7 +89,7 @@ async def _run_client.opp, client, interval):
                 await client.start()
 
             _LOGGER.debug("Client connected %s", client.host)
-           .opp.helpers.dispatcher.async_dispatcher_send(
+            opp.helpers.dispatcher.async_dispatcher_send(
                 SIGNAL_CLIENT_STARTED, client.host
             )
 
@@ -100,7 +100,7 @@ async def _run_client.opp, client, interval):
                 await client.stop()
 
                 _LOGGER.debug("Client disconnected %s", client.host)
-               .opp.helpers.dispatcher.async_dispatcher_send(
+                opp.helpers.dispatcher.async_dispatcher_send(
                     SIGNAL_CLIENT_STOPPED, client.host
                 )
 

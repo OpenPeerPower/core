@@ -92,7 +92,7 @@ async def test_setup_in_bridge_mode.opp):
 async def test_setup_in_accessory_mode.opp):
     """Test we can setup a new instance in accessory."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-   .opp.states.async_set("camera.mine", "off")
+    opp.states.async_set("camera.mine", "off")
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -197,7 +197,7 @@ async def test_options_flow_exclude_mode_advanced(auto_start, opp):
     config_entry = _mock_config_entry_with_options_populated()
     config_entry.add_to.opp.opp)
 
-   .opp.states.async_set("climate.old", "off")
+    opp.states.async_set("climate.old", "off")
     await opp.async_block_till_done()
 
     result = await opp.config_entries.options.async_init(
@@ -247,7 +247,7 @@ async def test_options_flow_exclude_mode_basic.opp):
     config_entry = _mock_config_entry_with_options_populated()
     config_entry.add_to.opp.opp)
 
-   .opp.states.async_set("climate.old", "off")
+    opp.states.async_set("climate.old", "off")
     await opp.async_block_till_done()
 
     result = await opp.config_entries.options.async_init(
@@ -288,8 +288,8 @@ async def test_options_flow_include_mode_basic.opp):
     config_entry = _mock_config_entry_with_options_populated()
     config_entry.add_to.opp.opp)
 
-   .opp.states.async_set("climate.old", "off")
-   .opp.states.async_set("climate.new", "off")
+    opp.states.async_set("climate.old", "off")
+    opp.states.async_set("climate.new", "off")
 
     await opp.async_block_till_done()
 
@@ -331,10 +331,10 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
     config_entry = _mock_config_entry_with_options_populated()
     config_entry.add_to.opp.opp)
 
-   .opp.states.async_set("climate.old", "off")
-   .opp.states.async_set("camera.native_h264", "off")
-   .opp.states.async_set("camera.transcode_h264", "off")
-   .opp.states.async_set("camera.excluded", "off")
+    opp.states.async_set("climate.old", "off")
+    opp.states.async_set("camera.native_h264", "off")
+    opp.states.async_set("camera.transcode_h264", "off")
+    opp.states.async_set("camera.excluded", "off")
 
     await opp.async_block_till_done()
 
@@ -434,10 +434,10 @@ async def test_options_flow_include_mode_with_cameras.opp):
     config_entry = _mock_config_entry_with_options_populated()
     config_entry.add_to.opp.opp)
 
-   .opp.states.async_set("climate.old", "off")
-   .opp.states.async_set("camera.native_h264", "off")
-   .opp.states.async_set("camera.transcode_h264", "off")
-   .opp.states.async_set("camera.excluded", "off")
+    opp.states.async_set("climate.old", "off")
+    opp.states.async_set("camera.native_h264", "off")
+    opp.states.async_set("camera.transcode_h264", "off")
+    opp.states.async_set("camera.excluded", "off")
 
     await opp.async_block_till_done()
 
@@ -600,8 +600,8 @@ async def test_options_flow_include_mode_basic_accessory.opp):
     config_entry = _mock_config_entry_with_options_populated()
     config_entry.add_to.opp.opp)
 
-   .opp.states.async_set("media_player.tv", "off")
-   .opp.states.async_set("media_player.sonos", "off")
+    opp.states.async_set("media_player.tv", "off")
+    opp.states.async_set("media_player.sonos", "off")
 
     await opp.async_block_till_done()
 
@@ -706,8 +706,8 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
 
     config_entry = result4["result"]
 
-   .opp.states.async_set("camera.tv", "off")
-   .opp.states.async_set("camera.sonos", "off")
+    opp.states.async_set("camera.tv", "off")
+    opp.states.async_set("camera.sonos", "off")
 
     await opp.async_block_till_done()
 

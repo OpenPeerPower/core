@@ -46,8 +46,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigEntry):
 
     username = config[DOMAIN][CONF_USERNAME]
     token = config[DOMAIN][CONF_TOKEN]
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={CONF_USERNAME: username, CONF_TOKEN: token},
@@ -60,10 +60,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Establish connection with MELClooud."""
     conf = entry.data
     mel_devices = await mel_devices_setup_opp, conf[CONF_TOKEN])
-   .opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: mel_devices})
+    opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: mel_devices})
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
     return True
 
@@ -72,13 +72,13 @@ async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
     await asyncio.gather(
         *[
-           .opp.config_entries.async_forward_entry_unload(config_entry, platform)
+            opp.config_entries.async_forward_entry_unload(config_entry, platform)
             for platform in PLATFORMS
         ]
     )
-   .opp.data[DOMAIN].pop(config_entry.entry_id)
+    opp.data[DOMAIN].pop(config_entry.entry_id)
     if not.opp.data[DOMAIN]:
-       .opp.data.pop(DOMAIN)
+        opp.data.pop(DOMAIN)
     return True
 
 

@@ -102,7 +102,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     for parameter in config[CONF_MONITORED_CONDITIONS]:
         name = SENSOR_TYPES[parameter][0]
         unit = (
-           .opp.config.units.temperature_unit
+            opp.config.units.temperature_unit
             if parameter == "temperature"
             else SENSOR_TYPES[parameter][1]
         )

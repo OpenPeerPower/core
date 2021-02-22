@@ -33,12 +33,12 @@ async def async_setup_entry.opp, config_entry):
 
     upb = upb_lib.UpbPim({"url": url, "UPStartExportFile": file})
     upb.connect()
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][config_entry.entry_id] = {"upb": upb}
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][config_entry.entry_id] = {"upb": upb}
 
     for component in UPB_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     def _element_changed(element, changeset):
@@ -48,7 +48,7 @@ async def async_setup_entry.opp, config_entry):
         if change.get("command") is None:
             return
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_UPB_SCENE_CHANGED,
             {
                 ATTR_COMMAND: change["command"],
@@ -71,7 +71,7 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in UPB_PLATFORMS
             ]
         )
@@ -80,7 +80,7 @@ async def async_unload_entry.opp, config_entry):
     if unload_ok:
         upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
         upb.disconnect()
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 

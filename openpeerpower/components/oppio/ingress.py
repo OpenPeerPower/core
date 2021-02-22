@@ -25,7 +25,7 @@ def async_setup_ingress_view.opp.OpenPeerPowerType, host: str):
     websession = opp.elpers.aiohttp_client.async_get_clientsession()
 
     opp._ingress = OppIOIngress(host, websession)
-   .opp.ttp.register_view(opp._ingress)
+    opp.ttp.register_view(opp._ingress)
 
 
 class OppIOIngress(OpenPeerPowerView):

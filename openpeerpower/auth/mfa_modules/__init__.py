@@ -125,7 +125,7 @@ class SetupFlow(data_entry_flow.FlowHandler):
 
 
 async def auth_mfa_module_from_config(
-    opp: OpenPeerPower, config: Dict[str, Any]
+    opp. OpenPeerPower, config: Dict[str, Any]
 ) -> MultiFactorAuthModule:
     """Initialize an auth module from a config."""
     module_name = config[CONF_TYPE]
@@ -167,7 +167,7 @@ async def _load_mfa_module.opp: OpenPeerPower, module_name: str) -> types.Module
 
     # https://github.com/python/mypy/issues/1424
     await requirements.async_process_requirements(
-        opp, module_path, module.REQUIREMENTS  # type: ignore
+        opp. module_path, module.REQUIREMENTS  # type: ignore
     )
 
     processed.add(module_name)

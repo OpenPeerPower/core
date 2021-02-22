@@ -22,7 +22,7 @@ def store.opp):
 def provider.opp, store):
     """Mock provider."""
     return command_line.CommandLineAuthProvider(
-        opp,
+        opp.
         store,
         {
             CONF_TYPE: "command_line",

@@ -34,7 +34,7 @@ def setup_comp.opp):
     """Initialize components."""
     mock_component.opp, "group")
     dt_util.set_default_time_zone.opp.config.time_zone)
-   .opp.loop.run_until_complete(
+    opp.loop.run_until_complete(
         async_setup_component.opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}})
     )
 
@@ -51,7 +51,7 @@ async def test_sunset_trigger.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-            opp,
+            opp.
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -92,7 +92,7 @@ async def test_sunrise_trigger.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-            opp,
+            opp.
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -114,7 +114,7 @@ async def test_sunset_trigger_with_offset.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-            opp,
+            opp.
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -147,7 +147,7 @@ async def test_sunrise_trigger_with_offset.opp, calls, legacy_patchable_time):
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
         await async_setup_component(
-            opp,
+            opp.
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -173,7 +173,7 @@ async def test_if_action_before_sunrise_no_offset.opp, calls):
     Before sunrise is true from midnight until sunset, local time.
     """
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -189,28 +189,28 @@ async def test_if_action_before_sunrise_no_offset.opp, calls):
     # now = sunrise + 1s -> 'before sunrise' not true
     now = datetime(2015, 9, 16, 13, 32, 44, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunrise -> 'before sunrise' true
     now = datetime(2015, 9, 16, 13, 32, 43, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight -> 'before sunrise' true
     now = datetime(2015, 9, 16, 7, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = local midnight - 1s -> 'before sunrise' not true
     now = datetime(2015, 9, 17, 6, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
@@ -222,7 +222,7 @@ async def test_if_action_after_sunrise_no_offset.opp, calls):
     After sunrise is true from sunrise until midnight, local time.
     """
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -238,28 +238,28 @@ async def test_if_action_after_sunrise_no_offset.opp, calls):
     # now = sunrise - 1s -> 'after sunrise' not true
     now = datetime(2015, 9, 16, 13, 32, 42, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunrise + 1s -> 'after sunrise' true
     now = datetime(2015, 9, 16, 13, 32, 43, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight -> 'after sunrise' not true
     now = datetime(2015, 9, 16, 7, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight - 1s -> 'after sunrise' true
     now = datetime(2015, 9, 17, 6, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
@@ -271,7 +271,7 @@ async def test_if_action_before_sunrise_with_offset.opp, calls):
     Before sunrise is true from midnight until sunset, local time.
     """
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -291,56 +291,56 @@ async def test_if_action_before_sunrise_with_offset.opp, calls):
     # now = sunrise + 1s + 1h -> 'before sunrise' with offset +1h not true
     now = datetime(2015, 9, 16, 14, 32, 44, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunrise + 1h -> 'before sunrise' with offset +1h true
     now = datetime(2015, 9, 16, 14, 32, 43, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = UTC midnight -> 'before sunrise' with offset +1h not true
     now = datetime(2015, 9, 17, 0, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = UTC midnight - 1s -> 'before sunrise' with offset +1h not true
     now = datetime(2015, 9, 16, 23, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight -> 'before sunrise' with offset +1h true
     now = datetime(2015, 9, 16, 7, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = local midnight - 1s -> 'before sunrise' with offset +1h not true
     now = datetime(2015, 9, 17, 6, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = sunset -> 'before sunrise' with offset +1h not true
     now = datetime(2015, 9, 17, 1, 56, 48, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = sunset -1s -> 'before sunrise' with offset +1h not true
     now = datetime(2015, 9, 17, 1, 56, 45, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
@@ -352,7 +352,7 @@ async def test_if_action_before_sunset_with_offset.opp, calls):
     Before sunset is true from midnight until sunset, local time.
     """
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -372,56 +372,56 @@ async def test_if_action_before_sunset_with_offset.opp, calls):
     # now = local midnight -> 'before sunset' with offset +1h true
     now = datetime(2015, 9, 16, 7, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = sunset + 1s + 1h -> 'before sunset' with offset +1h not true
     now = datetime(2015, 9, 17, 2, 55, 25, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = sunset + 1h -> 'before sunset' with offset +1h true
     now = datetime(2015, 9, 17, 2, 55, 24, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = UTC midnight -> 'before sunset' with offset +1h true
     now = datetime(2015, 9, 17, 0, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 3
 
     # now = UTC midnight - 1s -> 'before sunset' with offset +1h true
     now = datetime(2015, 9, 16, 23, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 4
 
     # now = sunrise -> 'before sunset' with offset +1h true
     now = datetime(2015, 9, 16, 13, 32, 43, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 5
 
     # now = sunrise -1s -> 'before sunset' with offset +1h true
     now = datetime(2015, 9, 16, 13, 32, 42, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 6
 
     # now = local midnight-1s -> 'after sunrise' with offset +1h not true
     now = datetime(2015, 9, 17, 6, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 6
 
@@ -433,7 +433,7 @@ async def test_if_action_after_sunrise_with_offset.opp, calls):
     After sunrise is true from sunrise until midnight, local time.
     """
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -453,70 +453,70 @@ async def test_if_action_after_sunrise_with_offset.opp, calls):
     # now = sunrise - 1s + 1h -> 'after sunrise' with offset +1h not true
     now = datetime(2015, 9, 16, 14, 32, 42, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunrise + 1h -> 'after sunrise' with offset +1h true
     now = datetime(2015, 9, 16, 14, 32, 43, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = UTC noon -> 'after sunrise' with offset +1h not true
     now = datetime(2015, 9, 16, 12, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = UTC noon - 1s -> 'after sunrise' with offset +1h not true
     now = datetime(2015, 9, 16, 11, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local noon -> 'after sunrise' with offset +1h true
     now = datetime(2015, 9, 16, 19, 1, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = local noon - 1s -> 'after sunrise' with offset +1h true
     now = datetime(2015, 9, 16, 18, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 3
 
     # now = sunset -> 'after sunrise' with offset +1h true
     now = datetime(2015, 9, 17, 1, 55, 24, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 4
 
     # now = sunset + 1s -> 'after sunrise' with offset +1h true
     now = datetime(2015, 9, 17, 1, 55, 25, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 5
 
     # now = local midnight-1s -> 'after sunrise' with offset +1h true
     now = datetime(2015, 9, 17, 6, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 6
 
     # now = local midnight -> 'after sunrise' with offset +1h not true
     now = datetime(2015, 9, 17, 7, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 6
 
@@ -528,7 +528,7 @@ async def test_if_action_after_sunset_with_offset.opp, calls):
     After sunset is true from sunset until midnight, local time.
     """
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -548,28 +548,28 @@ async def test_if_action_after_sunset_with_offset.opp, calls):
     # now = sunset - 1s + 1h -> 'after sunset' with offset +1h not true
     now = datetime(2015, 9, 16, 2, 56, 45, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunset + 1h -> 'after sunset' with offset +1h true
     now = datetime(2015, 9, 16, 2, 56, 46, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = midnight-1s -> 'after sunset' with offset +1h true
     now = datetime(2015, 9, 16, 6, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = midnight -> 'after sunset' with offset +1h not true
     now = datetime(2015, 9, 16, 7, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
@@ -581,7 +581,7 @@ async def test_if_action_before_and_after_during.opp, calls):
     This is true from sunrise until sunset.
     """
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -601,35 +601,35 @@ async def test_if_action_before_and_after_during.opp, calls):
     # now = sunrise - 1s -> 'after sunrise' + 'before sunset' not true
     now = datetime(2015, 9, 16, 13, 32, 42, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunset + 1s -> 'after sunrise' + 'before sunset' not true
     now = datetime(2015, 9, 17, 1, 55, 25, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunrise -> 'after sunrise' + 'before sunset' true
     now = datetime(2015, 9, 16, 13, 32, 43, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = sunset -> 'after sunrise' + 'before sunset' true
     now = datetime(2015, 9, 17, 1, 55, 24, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = 9AM local  -> 'after sunrise' + 'before sunset' true
     now = datetime(2015, 9, 16, 16, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 3
 
@@ -645,10 +645,10 @@ async def test_if_action_before_sunrise_no_offset_kotzebue.opp, calls):
     """
     tz = dt_util.get_time_zone("America/Anchorage")
     dt_util.set_default_time_zone(tz)
-   .opp.config.latitude = 66.5
-   .opp.config.longitude = 162.4
+    opp.config.latitude = 66.5
+    opp.config.longitude = 162.4
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -664,28 +664,28 @@ async def test_if_action_before_sunrise_no_offset_kotzebue.opp, calls):
     # now = sunrise + 1s -> 'before sunrise' not true
     now = datetime(2015, 7, 24, 15, 17, 25, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunrise -> 'before sunrise' true
     now = datetime(2015, 7, 24, 15, 17, 24, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight -> 'before sunrise' true
     now = datetime(2015, 7, 24, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = local midnight - 1s -> 'before sunrise' not true
     now = datetime(2015, 7, 24, 7, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
@@ -701,10 +701,10 @@ async def test_if_action_after_sunrise_no_offset_kotzebue.opp, calls):
     """
     tz = dt_util.get_time_zone("America/Anchorage")
     dt_util.set_default_time_zone(tz)
-   .opp.config.latitude = 66.5
-   .opp.config.longitude = 162.4
+    opp.config.latitude = 66.5
+    opp.config.longitude = 162.4
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -720,28 +720,28 @@ async def test_if_action_after_sunrise_no_offset_kotzebue.opp, calls):
     # now = sunrise -> 'after sunrise' true
     now = datetime(2015, 7, 24, 15, 17, 24, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = sunrise - 1s -> 'after sunrise' not true
     now = datetime(2015, 7, 24, 15, 17, 23, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight -> 'after sunrise' not true
     now = datetime(2015, 7, 24, 8, 0, 1, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight - 1s -> 'after sunrise' true
     now = datetime(2015, 7, 24, 7, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
@@ -757,10 +757,10 @@ async def test_if_action_before_sunset_no_offset_kotzebue.opp, calls):
     """
     tz = dt_util.get_time_zone("America/Anchorage")
     dt_util.set_default_time_zone(tz)
-   .opp.config.latitude = 66.5
-   .opp.config.longitude = 162.4
+    opp.config.latitude = 66.5
+    opp.config.longitude = 162.4
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -776,28 +776,28 @@ async def test_if_action_before_sunset_no_offset_kotzebue.opp, calls):
     # now = sunrise + 1s -> 'before sunrise' not true
     now = datetime(2015, 7, 25, 11, 16, 28, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
     # now = sunrise -> 'before sunrise' true
     now = datetime(2015, 7, 25, 11, 16, 27, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight -> 'before sunrise' true
     now = datetime(2015, 7, 24, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
     # now = local midnight - 1s -> 'before sunrise' not true
     now = datetime(2015, 7, 24, 7, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2
 
@@ -813,10 +813,10 @@ async def test_if_action_after_sunset_no_offset_kotzebue.opp, calls):
     """
     tz = dt_util.get_time_zone("America/Anchorage")
     dt_util.set_default_time_zone(tz)
-   .opp.config.latitude = 66.5
-   .opp.config.longitude = 162.4
+    opp.config.latitude = 66.5
+    opp.config.longitude = 162.4
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -832,27 +832,27 @@ async def test_if_action_after_sunset_no_offset_kotzebue.opp, calls):
     # now = sunset -> 'after sunset' true
     now = datetime(2015, 7, 25, 11, 16, 27, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = sunset - 1s -> 'after sunset' not true
     now = datetime(2015, 7, 25, 11, 16, 26, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight -> 'after sunset' not true
     now = datetime(2015, 7, 24, 8, 0, 1, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
     # now = local midnight - 1s -> 'after sunset' true
     now = datetime(2015, 7, 24, 7, 59, 59, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.bus.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 2

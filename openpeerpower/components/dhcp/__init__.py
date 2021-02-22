@@ -63,9 +63,9 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
             for watcher in watchers:
                 await watcher.async_stop()
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_stop)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_stop)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, _initialize)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, _initialize)
     return True
 
 

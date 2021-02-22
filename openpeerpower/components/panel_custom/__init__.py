@@ -67,7 +67,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 @bind.opp
 async def async_register_panel(
-    opp,
+    opp.
     # The url to serve the panel
     frontend_url_path,
     # The webcomponent name that loads your panel
@@ -114,7 +114,7 @@ async def async_register_panel(
 
     config["_panel_custom"] = custom_panel_config
 
-   .opp.components.frontend.async_register_built_in_panel(
+    opp.components.frontend.async_register_built_in_panel(
         component_name="custom",
         sidebar_title=sidebar_title,
         sidebar_icon=sidebar_icon,

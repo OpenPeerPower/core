@@ -44,8 +44,8 @@ def setup_opp, config):
         _LOGGER.info("Stopping SCSGate monitor thread")
         scsgate.stop()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_monitor)
-   .opp.data[DOMAIN] = scsgate
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_monitor)
+    opp.data[DOMAIN] = scsgate
 
     return True
 

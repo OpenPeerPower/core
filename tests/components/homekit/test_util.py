@@ -223,7 +223,7 @@ async def test_show_setup_msg.opp, hk_driver):
     assert entry
 
     call_create_notification = async_mock_service(
-        opp, PERSISTENT_NOTIFICATION_DOMAIN, "create"
+        opp. PERSISTENT_NOTIFICATION_DOMAIN, "create"
     )
 
     await opp.async_add_executor_job(
@@ -241,7 +241,7 @@ async def test_show_setup_msg.opp, hk_driver):
 async def test_dismiss_setup_msg.opp):
     """Test dismiss setup message."""
     call_dismiss_notification = async_mock_service(
-        opp, PERSISTENT_NOTIFICATION_DOMAIN, "dismiss"
+        opp. PERSISTENT_NOTIFICATION_DOMAIN, "dismiss"
     )
 
     await opp.async_add_executor_job(dismiss_setup_message, opp, "entry_id")

@@ -80,7 +80,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, config):
     """Set up the LG WebOS TV platform."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     async def async_service_handler(service):
         method = SERVICE_TO_METHOD.get(service.service)
@@ -90,7 +90,7 @@ async def async_setup_opp, config):
 
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, service, async_service_handler, schema=schema
         )
 
@@ -108,7 +108,7 @@ async def async_setup_tv.opp, config, conf):
     config_file = opp.config.path(WEBOSTV_CONFIG_FILE)
 
     client = WebOsClient(host, config_file)
-   .opp.data[DOMAIN][host] = {"client": client}
+    opp.data[DOMAIN][host] = {"client": client}
 
     if client.is_registered():
         await async_setup_tv_finalize.opp, config, conf, client)
@@ -141,14 +141,14 @@ async def async_setup_tv_finalize.opp, config, conf, client):
         client.clear_state_update_callbacks()
         await client.disconnect()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_on_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_on_stop)
 
     await async_connect(client)
-   .opp.async_create_task(
-       .opp.helpers.discovery.async_load_platform("media_player", DOMAIN, conf, config)
+    opp.async_create_task(
+        opp.helpers.discovery.async_load_platform("media_player", DOMAIN, conf, config)
     )
-   .opp.async_create_task(
-       .opp.helpers.discovery.async_load_platform("notify", DOMAIN, conf, config)
+    opp.async_create_task(
+        opp.helpers.discovery.async_load_platform("notify", DOMAIN, conf, config)
     )
 
 

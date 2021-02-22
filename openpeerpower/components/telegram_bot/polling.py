@@ -26,8 +26,8 @@ async def async_setup_platform.opp, config):
         """Stop the bot."""
         pol.stop_polling()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _start_bot)
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_bot)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _start_bot)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_bot)
 
     return True
 

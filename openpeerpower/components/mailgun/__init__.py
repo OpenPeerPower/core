@@ -39,7 +39,7 @@ async def async_setup_opp, config):
     if DOMAIN not in config:
         return True
 
-   .opp.data[DOMAIN] = config[DOMAIN]
+    opp.data[DOMAIN] = config[DOMAIN]
     return True
 
 
@@ -54,7 +54,7 @@ async def handle_webhook.opp, webhook_id, request):
     if isinstance(data, dict) and "signature" in data:
         if await verify_webhook.opp, **data["signature"]):
             data["webhook_id"] = webhook_id
-           .opp.bus.async_fire(MESSAGE_RECEIVED, data)
+            opp.bus.async_fire(MESSAGE_RECEIVED, data)
             return
 
     _LOGGER.warning(
@@ -83,7 +83,7 @@ async def verify_webhook.opp, token=None, timestamp=None, signature=None):
 
 async def async_setup_entry.opp, entry):
     """Configure based on config entry."""
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "Mailgun", entry.data[CONF_WEBHOOK_ID], handle_webhook
     )
     return True
@@ -91,7 +91,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-   .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+    opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     return True
 
 

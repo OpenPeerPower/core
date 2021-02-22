@@ -38,8 +38,8 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Import the Islamic Prayer component from config."""
     if DOMAIN in config:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=config[DOMAIN]
             )
         )
@@ -54,15 +54,15 @@ async def async_setup_entry.opp, config_entry):
     if not await client.async_setup():
         return False
 
-   .opp.data.setdefault(DOMAIN, client)
+    opp.data.setdefault(DOMAIN, client)
     return True
 
 
 async def async_unload_entry.opp, config_entry):
     """Unload Islamic Prayer entry from config_entry."""
     if opp.data[DOMAIN].event_unsub:
-       .opp.data[DOMAIN].event_unsub()
-   .opp.data.pop(DOMAIN)
+        opp.data[DOMAIN].event_unsub()
+    opp.data.pop(DOMAIN)
     await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
 
     return True
@@ -202,5 +202,5 @@ class IslamicPrayerClient:
     async def async_options_updated.opp, entry):
         """Triggered by config entry options updates."""
         if opp.data[DOMAIN].event_unsub:
-           .opp.data[DOMAIN].event_unsub()
+            opp.data[DOMAIN].event_unsub()
         await opp.data[DOMAIN].async_update()

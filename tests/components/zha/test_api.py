@@ -387,7 +387,7 @@ async def app_controller.opp, setup_zha):
     ),
 )
 async def test_permit_ha12(
-    opp, app_controller, opp_admin_user, params, duration, node
+    opp. app_controller, opp_admin_user, params, duration, node
 ):
     """Test permit service."""
 
@@ -422,7 +422,7 @@ IC_TEST_PARAMS = (
 
 @pytest.mark.parametrize("params, src_ieee, code", IC_TEST_PARAMS)
 async def test_permit_with_install_code(
-    opp, app_controller, opp_admin_user, params, src_ieee, code
+    opp. app_controller, opp_admin_user, params, src_ieee, code
 ):
     """Test permit service with install code."""
 
@@ -473,7 +473,7 @@ IC_FAIL_PARAMS = (
 
 @pytest.mark.parametrize("params", IC_FAIL_PARAMS)
 async def test_permit_with_install_code_fail(
-    opp, app_controller, opp_admin_user, params
+    opp. app_controller, opp_admin_user, params
 ):
     """Test permit service with install code."""
 
@@ -511,7 +511,7 @@ IC_QR_CODE_TEST_PARAMS = (
 
 @pytest.mark.parametrize("params, src_ieee, code", IC_QR_CODE_TEST_PARAMS)
 async def test_permit_with_qr_code(
-    opp, app_controller, opp_admin_user, params, src_ieee, code
+    opp. app_controller, opp_admin_user, params, src_ieee, code
 ):
     """Test permit service with install code from qr code."""
 

@@ -31,11 +31,11 @@ async def async_setup_opp, config):
     """Set up the LIFX component."""
     conf = config.get(DOMAIN)
 
-   .opp.data[DOMAIN] = conf or {}
+    opp.data[DOMAIN] = conf or {}
 
     if conf is not None:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
             )
         )
@@ -45,8 +45,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up LIFX from a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, LIGHT_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, LIGHT_DOMAIN)
     )
 
     return True
@@ -54,7 +54,7 @@ async def async_setup_entry.opp, entry):
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-   .opp.data.pop(DATA_LIFX_MANAGER).cleanup()
+    opp.data.pop(DATA_LIFX_MANAGER).cleanup()
 
     await opp.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
 

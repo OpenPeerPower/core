@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 def async_setup_opp: OpenPeerPower):
     """Set up cloud account link."""
     config_entry_oauth2_flow.async_add_implementation_provider(
-        opp, DOMAIN, async_provide_implementation
+        opp. DOMAIN, async_provide_implementation
     )
 
 
@@ -79,12 +79,12 @@ async def _get_services.opp):
     except (aiohttp.ClientError, asyncio.TimeoutError):
         return []
 
-   .opp.data[DATA_SERVICES] = services
+    opp.data[DATA_SERVICES] = services
 
     @callback
     def clear_services(_now):
         """Clear services cache."""
-       .opp.data.pop(DATA_SERVICES, None)
+        opp.data.pop(DATA_SERVICES, None)
 
     event.async_call_later.opp, CACHE_TIMEOUT, clear_services)
 

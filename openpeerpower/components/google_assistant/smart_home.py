@@ -76,7 +76,7 @@ async def async_devices_sync.opp, data, payload):
 
     https://developers.google.com/assistant/smarthome/develop/process-intents#SYNC
     """
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_SYNC_RECEIVED,
         {"request_id": data.request_id, "source": data.source},
         context=data.context,
@@ -121,7 +121,7 @@ async def async_devices_query.opp, data, payload):
         devid = device["id"]
         state = opp.states.get(devid)
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_QUERY_RECEIVED,
             {
                 "request_id": data.request_id,
@@ -178,7 +178,7 @@ async def handle_devices_execute.opp, data, payload):
         for device, execution in product(command["devices"], command["execution"]):
             entity_id = device["id"]
 
-           .opp.bus.async_fire(
+            opp.bus.async_fire(
                 EVENT_COMMAND_RECEIVED,
                 {
                     "request_id": data.request_id,

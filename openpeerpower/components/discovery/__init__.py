@@ -198,12 +198,12 @@ async def async_setup_opp, config):
             )
 
             for result in results:
-               .opp.async_create_task(new_service_found(*result))
+                opp.async_create_task(new_service_found(*result))
         except OSError:
             logger.error("Network is unreachable")
 
         async_track_point_in_utc_time(
-            opp, scan_devices, dt_util.utcnow() + SCAN_INTERVAL
+            opp. scan_devices, dt_util.utcnow() + SCAN_INTERVAL
         )
 
     @callback
@@ -211,7 +211,7 @@ async def async_setup_opp, config):
         """Schedule the first discovery when Open Peer Power starts up."""
         async_track_point_in_utc_time.opp, scan_devices, dt_util.utcnow())
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, schedule_first)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, schedule_first)
 
     return True
 

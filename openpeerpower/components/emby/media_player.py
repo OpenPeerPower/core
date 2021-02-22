@@ -128,8 +128,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     emby.add_new_devices_callback(device_update_callback)
     emby.add_stale_devices_callback(device_removal_callback)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_emby)
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_emby)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_emby)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_emby)
 
 
 class EmbyDevice(MediaPlayerEntity):

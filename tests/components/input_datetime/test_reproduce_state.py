@@ -6,20 +6,20 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Input datetime states."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "input_datetime.entity_datetime",
         "2010-10-10 01:20:00",
         {"has_date": True, "has_time": True},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "input_datetime.entity_time", "01:20:00", {"has_date": False, "has_time": True}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "input_datetime.entity_date",
         "2010-10-10",
         {"has_date": True, "has_time": False},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "input_datetime.invalid_data",
         "unavailable",
         {"has_date": False, "has_time": False},

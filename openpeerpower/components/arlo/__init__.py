@@ -62,11 +62,11 @@ def setup_opp, config):
             _LOGGER.error("No Arlo camera or base station available")
             return False
 
-       .opp.data[DATA_ARLO] = arlo
+        opp.data[DATA_ARLO] = arlo
 
     except (ConnectTimeout, HTTPError) as ex:
         _LOGGER.error("Unable to connect to Netgear Arlo: %s", str(ex))
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {ex}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
@@ -76,11 +76,11 @@ def setup_opp, config):
     def hub_refresh(event_time):
         """Call ArloHub to refresh information."""
         _LOGGER.debug("Updating Arlo Hub component")
-       .opp.data[DATA_ARLO].update(update_cameras=True, update_base_station=True)
+        opp.data[DATA_ARLO].update(update_cameras=True, update_base_station=True)
         dispatcher_send.opp, SIGNAL_UPDATE_ARLO)
 
     # register service
-   .opp.services.register(DOMAIN, "update", hub_refresh)
+    opp.services.register(DOMAIN, "update", hub_refresh)
 
     # register scan interval for ArloHub
     track_time_interval.opp, hub_refresh, scan_interval)

@@ -159,8 +159,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     # there is an actual configuration in configuration.yaml, so we have to process it
     for user_input in user_inputs:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": config_entries.SOURCE_IMPORT},
                 data=user_input,
@@ -182,22 +182,22 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         return False
 
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
 
     if MYSENSORS_GATEWAYS not in.opp.data[DOMAIN]:
-       .opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
-   .opp.data[DOMAIN][MYSENSORS_GATEWAYS][entry.entry_id] = gateway
+        opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
+    opp.data[DOMAIN][MYSENSORS_GATEWAYS][entry.entry_id] = gateway
 
     async def finish():
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_setup(entry, platform)
+                opp.config_entries.async_forward_entry_setup(entry, platform)
                 for platform in SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT
             ]
         )
         await finish_setup_opp, entry, gateway)
 
-   .opp.async_create_task(finish())
+    opp.async_create_task(finish())
 
     return True
 
@@ -210,7 +210,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT
             ]
         )
@@ -230,7 +230,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 async def on_unload(
-    opp: OpenPeerPowerType, entry: Union[ConfigEntry, GatewayId], fnct: Callable
+    opp. OpenPeerPowerType, entry: Union[ConfigEntry, GatewayId], fnct: Callable
 ) -> None:
     """Register a callback to be called when entry is unloaded.
 
@@ -242,13 +242,13 @@ async def on_unload(
         uniqueid = entry.entry_id
     key = MYSENSORS_ON_UNLOAD.format(uniqueid)
     if key not in.opp.data[DOMAIN]:
-       .opp.data[DOMAIN][key] = []
-   .opp.data[DOMAIN][key].append(fnct)
+        opp.data[DOMAIN][key] = []
+    opp.data[DOMAIN][key].append(fnct)
 
 
 @callback
 def setup_mysensors_platform(
-    opp,
+    opp.
     domain: str,  #.opp platform name
     discovery_info: Optional[Dict[str, List[DevId]]],
     device_class: Union[Type[MySensorsDevice], Dict[SensorType, Type[MySensorsEntity]]],

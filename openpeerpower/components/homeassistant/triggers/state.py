@@ -64,7 +64,7 @@ def TRIGGER_SCHEMA(value: Any) -> dict:  # pylint: disable=invalid-name
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config,
     action,
     automation_info,
@@ -127,7 +127,7 @@ async def async_attach_trigger(
         @callback
         def call_action():
             """Call action with right context."""
-           .opp.async_run.opp_job(
+            opp.async_run.opp_job(
                 job,
                 {
                     "trigger": {
@@ -182,7 +182,7 @@ async def async_attach_trigger(
             return cur_value == new_value
 
         unsub_track_same[entity] = async_track_same_state(
-            opp,
+            opp.
             period[entity],
             call_action,
             _check_same_state,

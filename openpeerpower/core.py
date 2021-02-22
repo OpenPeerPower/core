@@ -432,7 +432,7 @@ class OpenPeerPower:
         args: parameters for method to call.
         """
         if oppjob.job_type == OppJobType.Callback:
-           .oppjob.target(*args)
+            oppjob.target(*args)
             return None
 
         return self.async_add.opp_job.oppjob, *args)
@@ -1767,14 +1767,14 @@ def _async_create_timer.opp: OpenPeerPower) -> None:
         """Fire next time event."""
         now = dt_util.utcnow()
 
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_TIME_CHANGED, {ATTR_NOW: now}, time_fired=now, context=timer_context
         )
 
         # If we are more than a second late, a tick was missed
         late = monotonic() - target
         if late > 1:
-           .opp.bus.async_fire(
+            opp.bus.async_fire(
                 EVENT_TIMER_OUT_OF_SYNC,
                 {ATTR_SECONDS: late},
                 time_fired=now,
@@ -1789,7 +1789,7 @@ def _async_create_timer.opp: OpenPeerPower) -> None:
         if handle is not None:
             handle.cancel()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_timer)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_timer)
 
     _LOGGER.info("Timer:starting")
     schedule_tick(dt_util.utcnow())

@@ -20,7 +20,7 @@ async def test_duplicate_error(opp, ping_client):
     conf = {CONF_IP_ADDRESS: "192.168.1.100", CONF_PORT: 7777}
 
     MockConfigEntry(domain=DOMAIN, unique_id="guardian_3456", data=conf).add_to.opp(
-       .opp
+        opp
     )
 
     result = await opp.config_entries.flow.async_init(

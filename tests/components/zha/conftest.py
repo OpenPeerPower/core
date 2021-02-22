@@ -67,7 +67,7 @@ def setup_zha.opp, config_entry, zigpy_app_controller):
         config = config or {}
         with p1:
             status = await async_setup_component(
-                opp, zha_const.DOMAIN, {zha_const.DOMAIN: {**zha_config, **config}}
+                opp. zha_const.DOMAIN, {zha_const.DOMAIN: {**zha_config, **config}}
             )
             assert status is True
             await opp.async_block_till_done()
@@ -150,7 +150,7 @@ def zha_device_restored.opp, zigpy_app_controller, setup_zha, opp_storage):
         zigpy_app_controller.devices[zigpy_dev.ieee] = zigpy_dev
 
         if last_seen is not None:
-           .opp_storage[f"{DOMAIN}.storage"] = {
+            opp.storage[f"{DOMAIN}.storage"] = {
                 "key": f"{DOMAIN}.storage",
                 "version": 1,
                 "data": {
@@ -217,6 +217,6 @@ def zha_device_mock.opp, zigpy_device_mock):
 def.opp_disable_services.opp):
     """Mock service register."""
     with patch.object.opp.services, "async_register"), patch.object(
-       .opp.services, "has_service", return_value=True
+        opp.services, "has_service", return_value=True
     ):
         yield.opp

@@ -23,7 +23,7 @@ def patch_setup_entry(domain: str, *, enabled: bool = True):
 
 
 async def setup_bond_entity(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     config_entry: MockConfigEntry,
     *,
     patch_version=False,
@@ -51,7 +51,7 @@ async def setup_bond_entity(
 
 
 async def setup_platform(
-   .opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     platform: str,
     discovered_device: Dict[str, Any],
     *,
@@ -184,7 +184,7 @@ def patch_bond_device_state(return_value=None, side_effect=None):
 
 
 async def help_test_entity_available(
-   .opp: core.OpenPeerPower, domain: str, device: Dict[str, Any], entity_id: str
+    opp. core.OpenPeerPower, domain: str, device: Dict[str, Any], entity_id: str
 ):
     """Run common test to verify available property."""
     await setup_platform.opp, domain, device)

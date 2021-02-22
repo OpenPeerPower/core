@@ -58,16 +58,16 @@ async def async_setup_opp, config):
             )
 
     # Register a local handler for scene activation
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_HUE_SCENE, hue_activate_scene, schema=SCENE_SCHEMA
     )
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
 async def async_setup_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up a bridge from a config entry."""
 
@@ -83,7 +83,7 @@ async def async_setup_entry(
         }
         data = entry.data.copy()
         data.pop(CONF_ALLOW_UNREACHABLE)
-       .opp.config_entries.async_update_entry(entry, data=data, options=options)
+        opp.config_entries.async_update_entry(entry, data=data, options=options)
 
     # Migrate allow_hue_groups from config entry data to config entry options
     if (
@@ -97,20 +97,20 @@ async def async_setup_entry(
         }
         data = entry.data.copy()
         data.pop(CONF_ALLOW_HUE_GROUPS)
-       .opp.config_entries.async_update_entry(entry, data=data, options=options)
+        opp.config_entries.async_update_entry(entry, data=data, options=options)
 
     bridge = HueBridge.opp, entry)
 
     if not await bridge.async_setup():
         return False
 
-   .opp.data[DOMAIN][entry.entry_id] = bridge
+    opp.data[DOMAIN][entry.entry_id] = bridge
     config = bridge.api.config
 
     # For backwards compat
     unique_id = normalize_bridge_id(config.bridgeid)
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(entry, unique_id=unique_id)
+        opp.config_entries.async_update_entry(entry, unique_id=unique_id)
 
     # For recovering from bug where we incorrectly assumed homekit ID = bridge ID
     elif entry.unique_id != unique_id:
@@ -126,17 +126,17 @@ async def async_setup_entry(
 
         if other_entry is None:
             # If no other entry, update unique ID of this entry ID.
-           .opp.config_entries.async_update_entry(entry, unique_id=unique_id)
+            opp.config_entries.async_update_entry(entry, unique_id=unique_id)
 
         elif other_entry.source == config_entries.SOURCE_IGNORE:
             # There is another entry but it is ignored, delete that one and update this one
-           .opp.async_create_task(
-               .opp.config_entries.async_remove(other_entry.entry_id)
+            opp.async_create_task(
+                opp.config_entries.async_remove(other_entry.entry_id)
             )
-           .opp.config_entries.async_update_entry(entry, unique_id=unique_id)
+            opp.config_entries.async_update_entry(entry, unique_id=unique_id)
         else:
             # There is another entry that already has the right unique ID. Delete this entry
-           .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+            opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
             return False
 
     device_registry = await dr.async_get_registry.opp)
@@ -152,7 +152,7 @@ async def async_setup_entry(
 
     if config.modelid == "BSB002" and config.swversion < "1935144040":
         persistent_notification.async_create(
-            opp,
+            opp.
             "Your Hue hub has a known security vulnerability ([CVE-2020-6007](https://cve.circl.lu/cve/CVE-2020-6007)). Go to the Hue app and check for software updates.",
             "Signify Hue",
             "hue_hub_firmware",
@@ -172,5 +172,5 @@ async def async_setup_entry(
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
     bridge = opp.data[DOMAIN].pop(entry.entry_id)
-   .opp.services.async_remove(DOMAIN, SERVICE_HUE_SCENE)
+    opp.services.async_remove(DOMAIN, SERVICE_HUE_SCENE)
     return await bridge.async_reset()

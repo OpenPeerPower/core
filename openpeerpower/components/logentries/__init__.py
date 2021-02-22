@@ -50,6 +50,6 @@ def setup_opp, config):
         except requests.exceptions.RequestException as error:
             _LOGGER.exception("Error sending to Logentries: %s", error)
 
-   .opp.bus.listen(EVENT_STATE_CHANGED, logentries_event_listener)
+    opp.bus.listen(EVENT_STATE_CHANGED, logentries_event_listener)
 
     return True

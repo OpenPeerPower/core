@@ -43,7 +43,7 @@ async def test_create_doorbell_offline.opp):
 async def test_create_doorbell_hardwired.opp):
     """Test creation of a doorbell that is hardwired without a battery."""
     doorbell_one = await _mock_doorbell_from_fixture(
-        opp, "get_doorbell.nobattery.json"
+        opp. "get_doorbell.nobattery.json"
     )
     await _create_august_with_devices.opp, [doorbell_one])
 
@@ -119,7 +119,7 @@ async def test_create_lock_with_low_battery_linked_keypad.opp):
         == "A6697750D607098BAE8D6BAA11EF8063_lock_operator"
     )
     assert (
-       .opp.states.get("sensor.a6697750d607098bae8d6baa11ef8063_name_operator").state
+        opp.states.get("sensor.a6697750d607098bae8d6baa11ef8063_name_operator").state
         == STATE_UNKNOWN
     )
 
@@ -129,7 +129,7 @@ async def test_lock_operator_bluetooth.opp):
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
 
     activities = await _mock_activities_from_fixture(
-        opp, "get_activity.lock_from_bluetooth.json"
+        opp. "get_activity.lock_from_bluetooth.json"
     )
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
@@ -139,29 +139,29 @@ async def test_lock_operator_bluetooth.opp):
     )
     assert lock_operator_sensor
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").state
+        opp.states.get("sensor.online_with_doorsense_name_operator").state
         == "Your favorite elven princess"
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "remote"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "keypad"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "autorelock"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "method"
         ]
         == "mobile"
@@ -173,7 +173,7 @@ async def test_lock_operator_keypad.opp):
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
 
     activities = await _mock_activities_from_fixture(
-        opp, "get_activity.lock_from_keypad.json"
+        opp. "get_activity.lock_from_keypad.json"
     )
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
@@ -183,29 +183,29 @@ async def test_lock_operator_keypad.opp):
     )
     assert lock_operator_sensor
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").state
+        opp.states.get("sensor.online_with_doorsense_name_operator").state
         == "Your favorite elven princess"
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "remote"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "keypad"
         ]
         is True
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "autorelock"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "method"
         ]
         == "keypad"
@@ -225,29 +225,29 @@ async def test_lock_operator_remote.opp):
     )
     assert lock_operator_sensor
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").state
+        opp.states.get("sensor.online_with_doorsense_name_operator").state
         == "Your favorite elven princess"
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "remote"
         ]
         is True
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "keypad"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "autorelock"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "method"
         ]
         == "remote"
@@ -259,7 +259,7 @@ async def test_lock_operator_autorelock.opp):
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
 
     activities = await _mock_activities_from_fixture(
-        opp, "get_activity.lock_from_autorelock.json"
+        opp. "get_activity.lock_from_autorelock.json"
     )
     await _create_august_with_devices.opp, [lock_one], activities=activities)
 
@@ -269,29 +269,29 @@ async def test_lock_operator_autorelock.opp):
     )
     assert lock_operator_sensor
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").state
+        opp.states.get("sensor.online_with_doorsense_name_operator").state
         == "Auto Relock"
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "remote"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "keypad"
         ]
         is False
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "autorelock"
         ]
         is True
     )
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
+        opp.states.get("sensor.online_with_doorsense_name_operator").attributes[
             "method"
         ]
         == "autorelock"

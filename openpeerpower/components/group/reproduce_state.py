@@ -9,7 +9,7 @@ from . import get_entity_ids
 
 
 async def async_reproduce_states(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     states: Iterable[State],
     *,
     context: Optional[Context] = None,
@@ -31,5 +31,5 @@ async def async_reproduce_states(
                 )
             )
     await async_reproduce_state(
-        opp, states_copy, context=context, reproduce_options=reproduce_options
+        opp. states_copy, context=context, reproduce_options=reproduce_options
     )

@@ -42,24 +42,24 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
             DATA_DELETED_IDS: [],
         }
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         DATA_CONFIG_ENTRIES: {},
         DATA_DELETED_IDS: app_config.get(DATA_DELETED_IDS, []),
         DATA_DEVICES: {},
         DATA_STORE: store,
     }
 
-   .opp.http.register_view(RegistrationsView())
+    opp.http.register_view(RegistrationsView())
 
     for deleted_id in.opp.data[DOMAIN][DATA_DELETED_IDS]:
         try:
             webhook_register(
-                opp, DOMAIN, "Deleted Webhook", deleted_id, handle_webhook
+                opp. DOMAIN, "Deleted Webhook", deleted_id, handle_webhook
             )
         except ValueError:
             pass
 
-   .opp.async_create_task(
+    opp.async_create_task(
         discovery.async_load_platform.opp, "notify", DOMAIN, {}, config)
     )
 
@@ -72,7 +72,7 @@ async def async_setup_entry.opp, entry):
 
     webhook_id = registration[CONF_WEBHOOK_ID]
 
-   .opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id] = entry
+    opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id] = entry
 
     device_registry = await dr.async_get_registry.opp)
 
@@ -85,14 +85,14 @@ async def async_setup_entry.opp, entry):
         sw_version=registration[ATTR_OS_VERSION],
     )
 
-   .opp.data[DOMAIN][DATA_DEVICES][webhook_id] = device
+    opp.data[DOMAIN][DATA_DEVICES][webhook_id] = device
 
     registration_name = f"Mobile App: {registration[ATTR_DEVICE_NAME]}"
     webhook_register.opp, DOMAIN, registration_name, webhook_id, handle_webhook)
 
     for domain in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, domain)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, domain)
         )
 
     await opp_notify.async_reload.opp, DOMAIN)
@@ -105,7 +105,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -125,7 +125,7 @@ async def async_unload_entry.opp, entry):
 
 async def async_remove_entry.opp, entry):
     """Cleanup when entry is removed."""
-   .opp.data[DOMAIN][DATA_DELETED_IDS].append(entry.data[CONF_WEBHOOK_ID])
+    opp.data[DOMAIN][DATA_DELETED_IDS].append(entry.data[CONF_WEBHOOK_ID])
     store = opp.data[DOMAIN][DATA_STORE]
     await store.async_save(savable_state.opp))
 

@@ -54,7 +54,7 @@ async def async_handle_message.opp, config, request, context=None, enabled=True)
     if directive.has_endpoint:
         request_info["entity_id"] = directive.entity_id
 
-   .opp.bus.async_fire(
+    opp.bus.async_fire(
         EVENT_ALEXA_SMART_HOME,
         {
             "request": request_info,

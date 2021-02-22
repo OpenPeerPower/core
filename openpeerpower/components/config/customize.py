@@ -16,7 +16,7 @@ async def async_setup_opp):
         """post_write_hook for Config View that reloads groups."""
         await opp.services.async_call(DOMAIN, SERVICE_RELOAD_CORE_CONFIG)
 
-   .opp.http.register_view(
+    opp.http.register_view(
         CustomizeConfigView(
             "customize", "config", CONFIG_PATH, cv.entity_id, dict, post_write_hook=hook
         )
@@ -40,4 +40,4 @@ class CustomizeConfigView(EditKeyBasedConfigView):
         state = opp.states.get(config_key)
         state_attributes = dict(state.attributes)
         state_attributes.update(new_value)
-       .opp.states.async_set(config_key, state.state, state_attributes)
+        opp.states.async_set(config_key, state.state, state_attributes)

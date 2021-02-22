@@ -136,7 +136,7 @@ async def test_setup_configuration.opp):
         return_value=MockLocation(),
     ):
         assert await async_setup_component(
-            opp,
+            opp.
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "hourly"}},
         )
@@ -183,7 +183,7 @@ async def test_daily_forecast.opp):
         return_value=MockLocation(),
     ):
         assert await async_setup_component(
-            opp,
+            opp.
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "daily"}},
         )
@@ -209,7 +209,7 @@ async def test_hourly_forecast.opp):
         return_value=MockLocation(),
     ):
         assert await async_setup_component(
-            opp,
+            opp.
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "hourly"}},
         )

@@ -555,7 +555,7 @@ SERVICE_TO_METHOD = {
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the miio fan device from config."""
     if DATA_KEY not in.opp.data:
-       .opp.data[DATA_KEY] = {}
+        opp.data[DATA_KEY] = {}
 
     host = config[CONF_HOST]
     token = config[CONF_TOKEN]
@@ -604,7 +604,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         )
         return False
 
-   .opp.data[DATA_KEY][host] = device
+    opp.data[DATA_KEY][host] = device
     async_add_entities([device], update_before_add=True)
 
     async def async_service_handler(service):
@@ -637,7 +637,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         schema = SERVICE_TO_METHOD[air_purifier_service].get(
             "schema", AIRPURIFIER_SERVICE_SCHEMA
         )
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, air_purifier_service, async_service_handler, schema=schema
         )
 

@@ -25,7 +25,7 @@ _STATE_AVAILABILITY_BOOLEAN = "availability_boolean.state"
 class TestTemplateLight:
     """Test the Template light."""
 
-    opp =None
+    opp.=None
     calls = None
     # pylint: disable=invalid-name
 
@@ -1079,7 +1079,7 @@ class TestTemplateLight:
 async def test_available_template_with_entities.opp):
     """Test availability templates with values from other entities."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "light",
         {
             "light": {
@@ -1112,14 +1112,14 @@ async def test_available_template_with_entities.opp):
     await opp.async_block_till_done()
 
     # When template returns true..
-   .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_ON)
+    opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_ON)
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
     assert.opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
-   .opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
+    opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
@@ -1129,7 +1129,7 @@ async def test_available_template_with_entities.opp):
 async def test_invalid_availability_template_keeps_component_available.opp, caplog):
     """Test that an invalid availability keeps the device available."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "light",
         {
             "light": {
@@ -1169,7 +1169,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 async def test_unique_id.opp):
     """Test unique_id option only creates one light per id."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "light",
         {
             "light": {

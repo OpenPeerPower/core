@@ -36,7 +36,7 @@ def test_recursive_flatten():
 async def test_component_translation_path.opp):
     """Test the component translation file function."""
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {"switch": [{"platform": "test"}, {"platform": "test_embedded"}]},
     )
@@ -58,7 +58,7 @@ async def test_component_translation_path.opp):
     assert path.normpath(
         translation.component_translation_path("switch.test", "en", int_test)
     ) == path.normpath(
-       .opp.config.path("custom_components", "test", "translations", "switch.en.json")
+        opp.config.path("custom_components", "test", "translations", "switch.en.json")
     )
 
     assert path.normpath(
@@ -66,7 +66,7 @@ async def test_component_translation_path.opp):
             "switch.test_embedded", "en", int_test_embedded
         )
     ) == path.normpath(
-       .opp.config.path(
+        opp.config.path(
             "custom_components", "test_embedded", "translations", "switch.en.json"
         )
     )
@@ -81,7 +81,7 @@ async def test_component_translation_path.opp):
     assert path.normpath(
         translation.component_translation_path("test_package", "en", int_test_package)
     ) == path.normpath(
-       .opp.config.path("custom_components", "test_package", "translations", "en.json")
+        opp.config.path("custom_components", "test_package", "translations", "en.json")
     )
 
 
@@ -130,7 +130,7 @@ async def test_get_translations.opp, mock_config_flows):
 
     # Test that an untranslated language falls back to English.
     translations = await translation.async_get_translations(
-        opp, "invalid-language", "state"
+        opp. "invalid-language", "state"
     )
     assert translations["component.switch.state.string1"] == "Value 1"
     assert translations["component.switch.state.string2"] == "Value 2"
@@ -153,10 +153,10 @@ async def test_get_translations_loads_config_flows.opp, mock_config_flows):
         return_value=integration,
     ):
         translations = await translation.async_get_translations(
-            opp, "en", "title", config_flow=True
+            opp. "en", "title", config_flow=True
         )
         translations_again = await translation.async_get_translations(
-            opp, "en", "title", config_flow=True
+            opp. "en", "title", config_flow=True
         )
 
         assert translations == translations_again
@@ -182,10 +182,10 @@ async def test_get_translations_loads_config_flows.opp, mock_config_flows):
         return_value=integration,
     ):
         translations = await translation.async_get_translations(
-            opp, "en", "title", config_flow=True
+            opp. "en", "title", config_flow=True
         )
         translations_again = await translation.async_get_translations(
-            opp, "en", "title", config_flow=True
+            opp. "en", "title", config_flow=True
         )
 
         assert translations == translations_again
@@ -196,7 +196,7 @@ async def test_get_translations_loads_config_flows.opp, mock_config_flows):
     }
 
     translations_all_cached = await translation.async_get_translations(
-        opp, "en", "title", config_flow=True
+        opp. "en", "title", config_flow=True
     )
     assert translations == translations_all_cached
 
@@ -208,7 +208,7 @@ async def test_get_translations_while_loading_components.opp):
     """Test the get translations helper loads config flow translations."""
     integration = Mock(file_path=pathlib.Path(__file__))
     integration.name = "Component 1"
-   .opp.config.components.add("component1")
+    opp.config.components.add("component1")
     load_count = 0
 
     def mock_load_translation_files(files):
@@ -244,26 +244,26 @@ async def test_get_translation_categories.opp):
     """Test the get translations helper loads config flow translations."""
     with patch.object(translation, "async_get_config_flows", return_value={"light"}):
         translations = await translation.async_get_translations(
-            opp, "en", "title", None, True
+            opp. "en", "title", None, True
         )
         assert "component.light.title" in translations
 
         translations = await translation.async_get_translations(
-            opp, "en", "device_automation", None, True
+            opp. "en", "device_automation", None, True
         )
         assert "component.light.device_automation.action_type.turn_on" in translations
 
 
 async def test_translation_merging.opp, caplog):
     """Test we merge translations of two integrations."""
-   .opp.config.components.add("sensor.moon")
-   .opp.config.components.add("sensor")
+    opp.config.components.add("sensor.moon")
+    opp.config.components.add("sensor")
 
     translations = await translation.async_get_translations.opp, "en", "state")
 
     assert "component.sensor.state.moon__phase.first_quarter" in translations
 
-   .opp.config.components.add("sensor.season")
+    opp.config.components.add("sensor.season")
 
     # Patch in some bad translation data
 
@@ -291,20 +291,20 @@ async def test_translation_merging.opp, caplog):
 
 async def test_translation_merging_loaded_apart.opp, caplog):
     """Test we merge translations of two integrations when they are not loaded at the same time."""
-   .opp.config.components.add("sensor")
+    opp.config.components.add("sensor")
 
     translations = await translation.async_get_translations.opp, "en", "state")
 
     assert "component.sensor.state.moon__phase.first_quarter" not in translations
 
-   .opp.config.components.add("sensor.moon")
+    opp.config.components.add("sensor.moon")
 
     translations = await translation.async_get_translations.opp, "en", "state")
 
     assert "component.sensor.state.moon__phase.first_quarter" in translations
 
     translations = await translation.async_get_translations(
-        opp, "en", "state", integration="sensor"
+        opp. "en", "state", integration="sensor"
     )
 
     assert "component.sensor.state.moon__phase.first_quarter" in translations
@@ -312,8 +312,8 @@ async def test_translation_merging_loaded_apart.opp, caplog):
 
 async def test_caching.opp):
     """Test we cache data."""
-   .opp.config.components.add("sensor")
-   .opp.config.components.add("light")
+    opp.config.components.add("sensor")
+    opp.config.components.add("light")
 
     # Patch with same method so we can count invocations
     with patch(
@@ -334,20 +334,20 @@ async def test_caching.opp):
             )
 
     load_sensor_only = await translation.async_get_translations(
-        opp, "en", "state", integration="sensor"
+        opp. "en", "state", integration="sensor"
     )
     assert load_sensor_only
     for key in load_sensor_only:
         assert key.startswith("component.sensor.state.")
 
     load_light_only = await translation.async_get_translations(
-        opp, "en", "state", integration="light"
+        opp. "en", "state", integration="light"
     )
     assert load_light_only
     for key in load_light_only:
         assert key.startswith("component.light.state.")
 
-   .opp.config.components.add("media_player")
+    opp.config.components.add("media_player")
 
     # Patch with same method so we can count invocations
     with patch(
@@ -355,7 +355,7 @@ async def test_caching.opp):
         side_effect=translation._build_resources,
     ) as mock_build:
         load_sensor_only = await translation.async_get_translations(
-            opp, "en", "title", integration="sensor"
+            opp. "en", "title", integration="sensor"
         )
         assert load_sensor_only
         for key in load_sensor_only:
@@ -363,12 +363,12 @@ async def test_caching.opp):
         assert len(mock_build.mock_calls) == 0
 
         assert await translation.async_get_translations(
-            opp, "en", "title", integration="sensor"
+            opp. "en", "title", integration="sensor"
         )
         assert len(mock_build.mock_calls) == 0
 
         load_light_only = await translation.async_get_translations(
-            opp, "en", "title", integration="media_player"
+            opp. "en", "title", integration="media_player"
         )
         assert load_light_only
         for key in load_light_only:
@@ -378,7 +378,7 @@ async def test_caching.opp):
 
 async def test_custom_component_translations.opp):
     """Test getting translation from custom components."""
-   .opp.config.components.add("test_standalone")
-   .opp.config.components.add("test_embedded")
-   .opp.config.components.add("test_package")
+    opp.config.components.add("test_standalone")
+    opp.config.components.add("test_embedded")
+    opp.config.components.add("test_package")
     assert await translation.async_get_translations.opp, "en", "state") == {}

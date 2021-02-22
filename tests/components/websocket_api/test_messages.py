@@ -18,10 +18,10 @@ async def test_cached_event_message.opp):
     def _event_listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(EVENT_STATE_CHANGED, _event_listener)
+    opp.bus.async_listen(EVENT_STATE_CHANGED, _event_listener)
 
-   .opp.states.async_set("light.window", "on")
-   .opp.states.async_set("light.window", "off")
+    opp.states.async_set("light.window", "on")
+    opp.states.async_set("light.window", "off")
     await opp.async_block_till_done()
 
     assert len(events) == 2
@@ -56,9 +56,9 @@ async def test_cached_event_message_with_different_idens.opp):
     def _event_listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(EVENT_STATE_CHANGED, _event_listener)
+    opp.bus.async_listen(EVENT_STATE_CHANGED, _event_listener)
 
-   .opp.states.async_set("light.window", "on")
+    opp.states.async_set("light.window", "on")
     await opp.async_block_till_done()
 
     assert len(events) == 1

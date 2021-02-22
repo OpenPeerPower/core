@@ -52,7 +52,7 @@ CLIENTS = [
 async def test_no_clients.opp, aioclient_mock):
     """Test the update_clients function when no clients are found."""
     await setup_unifi_integration(
-        opp,
+        opp.
         aioclient_mock,
         options={
             CONF_ALLOW_BANDWIDTH_SENSORS: True,
@@ -66,7 +66,7 @@ async def test_no_clients.opp, aioclient_mock):
 async def test_sensors.opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
-        opp,
+        opp.
         aioclient_mock,
         options={
             CONF_ALLOW_BANDWIDTH_SENSORS: True,
@@ -117,7 +117,7 @@ async def test_sensors.opp, aioclient_mock):
     wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime.state == "2020-09-15T14:41:00+00:00"
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry,
         options={
             CONF_ALLOW_BANDWIDTH_SENSORS: False,
@@ -138,7 +138,7 @@ async def test_sensors.opp, aioclient_mock):
     wireless_client_uptime = opp.states.get("sensor.wireless_client_name_uptime")
     assert wireless_client_uptime is None
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry,
         options={
             CONF_ALLOW_BANDWIDTH_SENSORS: True,
@@ -167,7 +167,7 @@ async def test_sensors.opp, aioclient_mock):
     clients_connected.add(clients[1]["mac"])
 
     async_dispatcher_send(
-        opp,
+        opp.
         controller.signal_update,
         clients_connected,
         devices_connected,
@@ -181,7 +181,7 @@ async def test_sensors.opp, aioclient_mock):
 async def test_remove_sensors.opp, aioclient_mock):
     """Test the remove_items function with some clients."""
     config_entry = await setup_unifi_integration(
-        opp,
+        opp.
         aioclient_mock,
         options={
             CONF_ALLOW_BANDWIDTH_SENSORS: True,

@@ -125,7 +125,7 @@ async def start_server_discovery.opp):
 
     def _discovered_server(server):
         asyncio.create_task(
-           .opp.config_entries.flow.async_init(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_DISCOVERY},
                 data={
@@ -136,10 +136,10 @@ async def start_server_discovery.opp):
             )
         )
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     if DISCOVERY_TASK not in.opp.data[DOMAIN]:
         _LOGGER.debug("Adding server discovery task for squeezebox")
-       .opp.data[DOMAIN][DISCOVERY_TASK] = opp.async_create_task(
+        opp.data[DOMAIN][DISCOVERY_TASK] = opp.async_create_task(
             async_discover(_discovered_server)
         )
 
@@ -163,8 +163,8 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     host = config[CONF_HOST]
     port = config[CONF_PORT]
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN].setdefault(config_entry.entry_id, {})
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN].setdefault(config_entry.entry_id, {})
 
     known_players = opp.data[DOMAIN].setdefault(KNOWN_PLAYERS, [])
 
@@ -188,7 +188,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             if entity:
                 await player.async_update()
                 async_dispatcher_send(
-                    opp, SIGNAL_PLAYER_REDISCOVERED, player.player_id, player.connected
+                    opp. SIGNAL_PLAYER_REDISCOVERED, player.player_id, player.connected
                 )
 
             if not entity:
@@ -200,9 +200,9 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         players = await lms.async_get_players()
         if players:
             for player in players:
-               .opp.async_create_task(_discovered_player(player))
+                opp.async_create_task(_discovered_player(player))
 
-       .opp.data[DOMAIN][config_entry.entry_id][
+        opp.data[DOMAIN][config_entry.entry_id][
             PLAYER_DISCOVERY_UNSUB
         ] = opp.helpers.event.async_call_later(DISCOVERY_INTERVAL, _discovery)
 
@@ -242,7 +242,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if opp.is_running:
         asyncio.create_task(start_server_discovery.opp))
     else:
-       .opp.bus.async_listen_once(
+        opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_START, start_server_discovery.opp)
         )
 

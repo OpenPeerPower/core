@@ -164,7 +164,7 @@ async def test_update_name.opp: OpenPeerPower):
         nonlocal updated_config_entry
         updated_config_entry = co
 
-   .opp.config_entries.async_get_entry(entity.unique_id).add_update_listener(on_update)
+    opp.config_entries.async_get_entry(entity.unique_id).add_update_listener(on_update)
 
     client.change_name("new_device_name")
     await opp.services.async_call(
@@ -189,7 +189,7 @@ async def test_unload.opp: OpenPeerPower):
 
 
 async def _create_entries(
-    opp: OpenPeerPower, client=None
+    opp. OpenPeerPower, client=None
 ) -> Tuple[RegistryEntry, DeviceEntry, ClientMock]:
     client = ClientMock() if client is None else client
 

@@ -115,7 +115,7 @@ async def test_get_actions_not_support_open.opp, device_reg, entity_reg):
 async def test_action.opp):
     """Test for lock actions."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -155,19 +155,19 @@ async def test_action.opp):
     unlock_calls = async_mock_service.opp, "lock", "unlock")
     open_calls = async_mock_service.opp, "lock", "open")
 
-   .opp.bus.async_fire("test_event_lock")
+    opp.bus.async_fire("test_event_lock")
     await opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 0
     assert len(open_calls) == 0
 
-   .opp.bus.async_fire("test_event_unlock")
+    opp.bus.async_fire("test_event_unlock")
     await opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 1
     assert len(open_calls) == 0
 
-   .opp.bus.async_fire("test_event_open")
+    opp.bus.async_fire("test_event_open")
     await opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 1

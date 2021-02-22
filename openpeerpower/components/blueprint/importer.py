@@ -135,7 +135,7 @@ def _extract_blueprint_from_community_topic(
 
 
 async def fetch_blueprint_from_community_post(
-    opp: OpenPeerPower, url: str
+    opp. OpenPeerPower, url: str
 ) -> Optional[ImportedBlueprint]:
     """Get blueprints from a community post url.
 
@@ -153,7 +153,7 @@ async def fetch_blueprint_from_community_post(
 
 
 async def fetch_blueprint_from_github_url(
-    opp: OpenPeerPower, url: str
+    opp. OpenPeerPower, url: str
 ) -> ImportedBlueprint:
     """Get a blueprint from a github url."""
     import_url = _get_github_import_url(url)
@@ -173,7 +173,7 @@ async def fetch_blueprint_from_github_url(
 
 
 async def fetch_blueprint_from_github_gist_url(
-    opp: OpenPeerPower, url: str
+    opp. OpenPeerPower, url: str
 ) -> ImportedBlueprint:
     """Get a blueprint from a Github Gist."""
     if not url.startswith("https://gist.github.com/"):

@@ -31,17 +31,17 @@ def setup_opp: core.OpenPeerPower, config: dict):
 
 
 async def async_setup_entry(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the motion_blinds components from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     host = entry.data[CONF_HOST]
     key = entry.data[CONF_API_KEY]
 
     # Create multicast Listener
     if KEY_MULTICAST_LISTENER not in.opp.data[DOMAIN]:
         multicast = MotionMulticast()
-       .opp.data[DOMAIN][KEY_MULTICAST_LISTENER] = multicast
+        opp.data[DOMAIN][KEY_MULTICAST_LISTENER] = multicast
         # start listening for local pushes (only once)
         await opp.async_add_executor_job(multicast.Start_listen)
 
@@ -51,7 +51,7 @@ async def async_setup_entry(
             _LOGGER.debug("Shutting down Motion Listener")
             multicast.Stop_listen()
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_motion_multicast)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_motion_multicast)
 
     # Connect to motion gateway
     multicast = opp.data[DOMAIN][KEY_MULTICAST_LISTENER]
@@ -79,7 +79,7 @@ async def async_setup_entry(
             pass
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         # Name of the data. For logging purposes.
         name=entry.title,
@@ -91,7 +91,7 @@ async def async_setup_entry(
     # Fetch initial data so we have data when entities subscribe
     await coordinator.async_refresh()
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         KEY_GATEWAY: motion_gateway,
         KEY_COORDINATOR: coordinator,
     }
@@ -108,28 +108,28 @@ async def async_setup_entry(
     )
 
     for component in MOTION_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
 
 
 async def async_unload_entry(
-   .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in MOTION_PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     if len.opp.data[DOMAIN]) == 1:
         # No motion gateways left, stop Motion multicast

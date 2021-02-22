@@ -294,7 +294,7 @@ class NotifySetupFlow(SetupFlow):
         """Let user select available notify services."""
         errors: Dict[str, str] = {}
 
-        opp =self._auth_module.opp
+        opp.=self._auth_module.opp
         if user_input:
             self._notify_service = user_input["notify_service"]
             self._target = user_input.get("target")
@@ -320,7 +320,7 @@ class NotifySetupFlow(SetupFlow):
         """Verify user can receive one-time password."""
         errors: Dict[str, str] = {}
 
-        opp =self._auth_module.opp
+        opp.=self._auth_module.opp
         if user_input:
             verified = await opp.async_add_executor_job(
                 _verify_otp, self._secret, user_input["code"], self._count

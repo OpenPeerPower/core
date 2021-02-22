@@ -54,7 +54,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
     # Create a coordinator for polling updates
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="sensor",
         update_method=async_update_data,
@@ -67,13 +67,13 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
         raise ConfigEntryNotReady
 
     # Load the client in the data of open peer power
-   .opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = {
         DATA_COORDINATOR: coordinator
     }
 
     # Offload the loading of entities to the platform
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
     )
 
     return True
@@ -88,7 +88,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
     # If successful, unload the Huisbaasje client
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 

@@ -32,9 +32,9 @@ def register_flow_implementation.opp, domain, client_id, client_secret):
     client_secret: Client secret.
     """
     if DATA_FLOW_IMPL not in.opp.data:
-       .opp.data[DATA_FLOW_IMPL] = OrderedDict()
+        opp.data[DATA_FLOW_IMPL] = OrderedDict()
 
-   .opp.data[DATA_FLOW_IMPL][domain] = {
+    opp.data[DATA_FLOW_IMPL][domain] = {
         CONF_CLIENT_ID: client_id,
         CONF_CLIENT_SECRET: client_secret,
     }
@@ -181,10 +181,10 @@ class MinutAuthCallbackView(OpenPeerPowerView):
     @staticmethod
     async def get(request):
         """Receive authorization code."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         if "code" in request.query:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": "code"}, data=request.query["code"]
                 )
             )

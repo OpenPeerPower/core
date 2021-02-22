@@ -61,7 +61,7 @@ def setup_opp, config):
         if token:
             _LOGGER.debug("found token for account %s", account_name)
             _create_instance(
-                opp,
+                opp.
                 account_name,
                 api_key,
                 shared_secret,
@@ -71,7 +71,7 @@ def setup_opp, config):
             )
         else:
             _register_new_account(
-                opp, account_name, api_key, shared_secret, stored_rtm_config, component
+                opp. account_name, api_key, shared_secret, stored_rtm_config, component
             )
 
     _LOGGER.debug("Finished adding all Remember the milk accounts")
@@ -79,19 +79,19 @@ def setup_opp, config):
 
 
 def _create_instance(
-    opp, account_name, api_key, shared_secret, token, stored_rtm_config, component
+    opp. account_name, api_key, shared_secret, token, stored_rtm_config, component
 ):
     entity = RememberTheMilk(
         account_name, api_key, shared_secret, token, stored_rtm_config
     )
     component.add_entities([entity])
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         f"{account_name}_create_task",
         entity.create_task,
         schema=SERVICE_SCHEMA_CREATE_TASK,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         f"{account_name}_complete_task",
         entity.complete_task,
@@ -100,7 +100,7 @@ def _create_instance(
 
 
 def _register_new_account(
-    opp, account_name, api_key, shared_secret, stored_rtm_config, component
+    opp. account_name, api_key, shared_secret, stored_rtm_config, component
 ):
     request_id = None
     configurator = opp.components.configurator
@@ -123,7 +123,7 @@ def _register_new_account(
         _LOGGER.debug("Retrieved new token from server")
 
         _create_instance(
-            opp,
+            opp.
             account_name,
             api_key,
             shared_secret,
@@ -277,7 +277,7 @@ class RememberTheMilk(Entity):
         """
         try:
             task_name = call.data.get(CONF_NAME)
-           .opp_id = call.data.get(CONF_ID)
+            opp.id = call.data.get(CONF_ID)
             rtm_id = None
             if opp_id is not None:
                 rtm_id = self._rtm_config.get_rtm_id(self._name, opp_id)
@@ -293,7 +293,7 @@ class RememberTheMilk(Entity):
                 )
                 self._rtm_config.set_rtm_id(
                     self._name,
-                   .opp_id,
+                    opp.id,
                     result.list.id,
                     result.list.taskseries.id,
                     result.list.taskseries.task.id,
@@ -308,7 +308,7 @@ class RememberTheMilk(Entity):
                 )
                 _LOGGER.debug(
                     "Updated task with id '%s' in account %s to name %s",
-                   .opp_id,
+                    opp.id,
                     self.name,
                     task_name,
                 )
@@ -323,13 +323,13 @@ class RememberTheMilk(Entity):
 
     def complete_task(self, call):
         """Complete a task that was previously created by this component."""
-       .opp_id = call.data.get(CONF_ID)
+        opp.id = call.data.get(CONF_ID)
         rtm_id = self._rtm_config.get_rtm_id(self._name, opp_id)
         if rtm_id is None:
             _LOGGER.error(
                 "Could not find task with ID %s in account %s. "
                 "So task could not be closed",
-               .opp_id,
+                opp.id,
                 self._name,
             )
             return False

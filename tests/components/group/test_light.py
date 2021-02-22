@@ -36,9 +36,9 @@ from openpeerpower.setup import async_setup_component
 
 async def test_default_state.opp):
     """Test light group default state."""
-   .opp.states.async_set("light.kitchen", "on")
+    opp.states.async_set("light.kitchen", "on")
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -68,7 +68,7 @@ async def test_default_state.opp):
 async def test_state_reporting.opp):
     """Test the state reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -81,23 +81,23 @@ async def test_state_reporting.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("light.test1", STATE_ON)
-   .opp.states.async_set("light.test2", STATE_UNAVAILABLE)
+    opp.states.async_set("light.test1", STATE_ON)
+    opp.states.async_set("light.test2", STATE_UNAVAILABLE)
     await opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_ON
 
-   .opp.states.async_set("light.test1", STATE_ON)
-   .opp.states.async_set("light.test2", STATE_OFF)
+    opp.states.async_set("light.test1", STATE_ON)
+    opp.states.async_set("light.test2", STATE_OFF)
     await opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_ON
 
-   .opp.states.async_set("light.test1", STATE_OFF)
-   .opp.states.async_set("light.test2", STATE_OFF)
+    opp.states.async_set("light.test1", STATE_OFF)
+    opp.states.async_set("light.test2", STATE_OFF)
     await opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_OFF
 
-   .opp.states.async_set("light.test1", STATE_UNAVAILABLE)
-   .opp.states.async_set("light.test2", STATE_UNAVAILABLE)
+    opp.states.async_set("light.test1", STATE_UNAVAILABLE)
+    opp.states.async_set("light.test2", STATE_UNAVAILABLE)
     await opp.async_block_till_done()
     assert.opp.states.get("light.light_group").state == STATE_UNAVAILABLE
 
@@ -105,7 +105,7 @@ async def test_state_reporting.opp):
 async def test_brightness.opp):
     """Test brightness reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -118,7 +118,7 @@ async def test_brightness.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_BRIGHTNESS: 255, ATTR_SUPPORTED_FEATURES: 1}
     )
     await opp.async_block_till_done()
@@ -127,7 +127,7 @@ async def test_brightness.opp):
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 1
     assert state.attributes[ATTR_BRIGHTNESS] == 255
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_BRIGHTNESS: 100, ATTR_SUPPORTED_FEATURES: 1}
     )
     await opp.async_block_till_done()
@@ -135,7 +135,7 @@ async def test_brightness.opp):
     assert state.state == STATE_ON
     assert state.attributes[ATTR_BRIGHTNESS] == 177
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_OFF, {ATTR_BRIGHTNESS: 255, ATTR_SUPPORTED_FEATURES: 1}
     )
     await opp.async_block_till_done()
@@ -148,7 +148,7 @@ async def test_brightness.opp):
 async def test_color.opp):
     """Test RGB reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -161,7 +161,7 @@ async def test_color.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_HS_COLOR: (0, 100), ATTR_SUPPORTED_FEATURES: 16}
     )
     await opp.async_block_till_done()
@@ -170,14 +170,14 @@ async def test_color.opp):
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 16
     assert state.attributes[ATTR_HS_COLOR] == (0, 100)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_HS_COLOR: (0, 50), ATTR_SUPPORTED_FEATURES: 16}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_HS_COLOR] == (0, 75)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_OFF, {ATTR_HS_COLOR: (0, 0), ATTR_SUPPORTED_FEATURES: 16}
     )
     await opp.async_block_till_done()
@@ -188,7 +188,7 @@ async def test_color.opp):
 async def test_white_value.opp):
     """Test white value reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -201,21 +201,21 @@ async def test_white_value.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_WHITE_VALUE: 255, ATTR_SUPPORTED_FEATURES: 128}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_WHITE_VALUE] == 255
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_WHITE_VALUE: 100, ATTR_SUPPORTED_FEATURES: 128}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_WHITE_VALUE] == 177
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_OFF, {ATTR_WHITE_VALUE: 255, ATTR_SUPPORTED_FEATURES: 128}
     )
     await opp.async_block_till_done()
@@ -226,7 +226,7 @@ async def test_white_value.opp):
 async def test_color_temp.opp):
     """Test color temp reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -239,21 +239,21 @@ async def test_color_temp.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_ON, {"color_temp": 2, ATTR_SUPPORTED_FEATURES: 2}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_COLOR_TEMP] == 2
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2", STATE_ON, {"color_temp": 1000, ATTR_SUPPORTED_FEATURES: 2}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_COLOR_TEMP] == 501
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_OFF, {"color_temp": 2, ATTR_SUPPORTED_FEATURES: 2}
     )
     await opp.async_block_till_done()
@@ -264,7 +264,7 @@ async def test_color_temp.opp):
 async def test_emulated_color_temp_group.opp):
     """Test emulated color temperature in a group."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -284,11 +284,11 @@ async def test_emulated_color_temp_group.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("light.bed_light", STATE_ON, {ATTR_SUPPORTED_FEATURES: 2})
-   .opp.states.async_set(
+    opp.states.async_set("light.bed_light", STATE_ON, {ATTR_SUPPORTED_FEATURES: 2})
+    opp.states.async_set(
         "light.ceiling_lights", STATE_ON, {ATTR_SUPPORTED_FEATURES: 63}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.kitchen_lights", STATE_ON, {ATTR_SUPPORTED_FEATURES: 61}
     )
     await opp.async_block_till_done()
@@ -318,7 +318,7 @@ async def test_emulated_color_temp_group.opp):
 async def test_min_max_mireds.opp):
     """Test min/max mireds reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -331,7 +331,7 @@ async def test_min_max_mireds.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1",
         STATE_ON,
         {ATTR_MIN_MIREDS: 2, ATTR_MAX_MIREDS: 5, ATTR_SUPPORTED_FEATURES: 2},
@@ -341,7 +341,7 @@ async def test_min_max_mireds.opp):
     assert state.attributes[ATTR_MIN_MIREDS] == 2
     assert state.attributes[ATTR_MAX_MIREDS] == 5
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2",
         STATE_ON,
         {ATTR_MIN_MIREDS: 7, ATTR_MAX_MIREDS: 1234567890, ATTR_SUPPORTED_FEATURES: 2},
@@ -351,7 +351,7 @@ async def test_min_max_mireds.opp):
     assert state.attributes[ATTR_MIN_MIREDS] == 2
     assert state.attributes[ATTR_MAX_MIREDS] == 1234567890
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1",
         STATE_OFF,
         {ATTR_MIN_MIREDS: 1, ATTR_MAX_MIREDS: 2, ATTR_SUPPORTED_FEATURES: 2},
@@ -365,7 +365,7 @@ async def test_min_max_mireds.opp):
 async def test_effect_list.opp):
     """Test effect_list reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -378,7 +378,7 @@ async def test_effect_list.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1",
         STATE_ON,
         {ATTR_EFFECT_LIST: ["None", "Random", "Colorloop"], ATTR_SUPPORTED_FEATURES: 4},
@@ -387,7 +387,7 @@ async def test_effect_list.opp):
     state = opp.states.get("light.light_group")
     assert set(state.attributes[ATTR_EFFECT_LIST]) == {"None", "Random", "Colorloop"}
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2",
         STATE_ON,
         {ATTR_EFFECT_LIST: ["None", "Random", "Rainbow"], ATTR_SUPPORTED_FEATURES: 4},
@@ -401,7 +401,7 @@ async def test_effect_list.opp):
         "Rainbow",
     }
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1",
         STATE_OFF,
         {ATTR_EFFECT_LIST: ["None", "Colorloop", "Seven"], ATTR_SUPPORTED_FEATURES: 4},
@@ -420,7 +420,7 @@ async def test_effect_list.opp):
 async def test_effect.opp):
     """Test effect reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -433,31 +433,31 @@ async def test_effect.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_ON, {ATTR_EFFECT: "None", ATTR_SUPPORTED_FEATURES: 6}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_EFFECT] == "None"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2", STATE_ON, {ATTR_EFFECT: "None", ATTR_SUPPORTED_FEATURES: 6}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_EFFECT] == "None"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test3", STATE_ON, {ATTR_EFFECT: "Random", ATTR_SUPPORTED_FEATURES: 6}
     )
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_EFFECT] == "None"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test1", STATE_OFF, {ATTR_EFFECT: "None", ATTR_SUPPORTED_FEATURES: 6}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "light.test2", STATE_OFF, {ATTR_EFFECT: "None", ATTR_SUPPORTED_FEATURES: 6}
     )
     await opp.async_block_till_done()
@@ -468,7 +468,7 @@ async def test_effect.opp):
 async def test_supported_features.opp):
     """Test supported features reporting."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -481,22 +481,22 @@ async def test_supported_features.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("light.test1", STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
+    opp.states.async_set("light.test1", STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 0
 
-   .opp.states.async_set("light.test2", STATE_ON, {ATTR_SUPPORTED_FEATURES: 2})
+    opp.states.async_set("light.test2", STATE_ON, {ATTR_SUPPORTED_FEATURES: 2})
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 2
 
-   .opp.states.async_set("light.test1", STATE_OFF, {ATTR_SUPPORTED_FEATURES: 41})
+    opp.states.async_set("light.test1", STATE_OFF, {ATTR_SUPPORTED_FEATURES: 41})
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 43
 
-   .opp.states.async_set("light.test2", STATE_OFF, {ATTR_SUPPORTED_FEATURES: 256})
+    opp.states.async_set("light.test2", STATE_OFF, {ATTR_SUPPORTED_FEATURES: 256})
     await opp.async_block_till_done()
     state = opp.states.get("light.light_group")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 41
@@ -505,7 +505,7 @@ async def test_supported_features.opp):
 async def test_service_calls.opp):
     """Test service calls."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -592,7 +592,7 @@ async def test_invalid_service_calls.opp):
     """Test invalid service call arguments get discarded."""
     add_entities = MagicMock()
     await group.async_setup_platform(
-        opp, {"entities": ["light.test1", "light.test2"]}, add_entities
+        opp. {"entities": ["light.test1", "light.test2"]}, add_entities
     )
     await opp.async_block_till_done()
     await opp.async_start()
@@ -639,7 +639,7 @@ async def test_invalid_service_calls.opp):
 async def test_reload.opp):
     """Test the ability to reload lights."""
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -684,9 +684,9 @@ async def test_reload.opp):
 
 async def test_reload_with_platform_not_setup_opp):
     """Test the ability to reload lights."""
-   .opp.states.async_set("light.bowl", STATE_ON)
+    opp.states.async_set("light.bowl", STATE_ON)
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -695,7 +695,7 @@ async def test_reload_with_platform_not_setup_opp):
         },
     )
     assert await async_setup_component(
-        opp,
+        opp.
         "group",
         {
             "group": {
@@ -727,7 +727,7 @@ async def test_reload_with_platform_not_setup_opp):
 async def test_reload_with_base_integration_platform_not_setup_opp):
     """Test the ability to reload lights."""
     assert await async_setup_component(
-        opp,
+        opp.
         "group",
         {
             "group": {
@@ -736,11 +736,11 @@ async def test_reload_with_base_integration_platform_not_setup_opp):
         },
     )
     await opp.async_block_till_done()
-   .opp.states.async_set("light.master_hall_lights", STATE_ON)
-   .opp.states.async_set("light.master_hall_lights_2", STATE_OFF)
+    opp.states.async_set("light.master_hall_lights", STATE_ON)
+    opp.states.async_set("light.master_hall_lights_2", STATE_OFF)
 
-   .opp.states.async_set("light.outside_patio_lights", STATE_OFF)
-   .opp.states.async_set("light.outside_patio_lights_2", STATE_OFF)
+    opp.states.async_set("light.outside_patio_lights", STATE_OFF)
+    opp.states.async_set("light.outside_patio_lights_2", STATE_OFF)
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -765,9 +765,9 @@ async def test_reload_with_base_integration_platform_not_setup_opp):
 
 async def test_nested_group.opp):
     """Test nested light group."""
-   .opp.states.async_set("light.kitchen", "on")
+    opp.states.async_set("light.kitchen", "on")
     await async_setup_component(
-        opp,
+        opp.
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [

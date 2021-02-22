@@ -9,7 +9,7 @@ async def test_request_least_info.opp):
     request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
 
     assert 1 == len(
-       .opp.services.async_services().get(configurator.DOMAIN, [])
+        opp.services.async_services().get(configurator.DOMAIN, [])
     ), "No new service registered"
 
     states = opp.states.async_all()
@@ -35,7 +35,7 @@ async def test_request_all_info.opp):
         configurator.ATTR_FIELDS: [],
         configurator.ATTR_ENTITY_PICTURE: "config entity picture",
         configurator.ATTR_CONFIGURE_ID: configurator.async_request_config(
-            opp,
+            opp.
             name="Test Request",
             callback=lambda _: None,
             description="config description",
@@ -60,7 +60,7 @@ async def test_callback_called_on_configure.opp):
     """Test if our callback gets called when configure service called."""
     calls = []
     request_id = configurator.async_request_config(
-        opp, "Test Request", lambda _: calls.append(1)
+        opp. "Test Request", lambda _: calls.append(1)
     )
 
     await opp.services.async_call(
@@ -96,7 +96,7 @@ async def test_request_done_works.opp):
     configurator.async_request_done.opp, request_id)
     assert 1 == len.opp.states.async_all())
 
-   .opp.bus.async_fire(EVENT_TIME_CHANGED)
+    opp.bus.async_fire(EVENT_TIME_CHANGED)
     await opp.async_block_till_done()
     assert 0 == len.opp.states.async_all())
 

@@ -32,15 +32,15 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Set up a config entry."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     if DOMAIN not in config:
         return True
 
     conf = config[DOMAIN]
 
     if not.opp.config_entries.async_entries(DOMAIN):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
             )
         )
@@ -64,11 +64,11 @@ async def async_setup_entry.opp, entry):
         _LOGGER.error("Can't connect to the Spider API: %s", err)
         raise ConfigEntryNotReady from err
 
-   .opp.data[DOMAIN][entry.entry_id] = api
+    opp.data[DOMAIN][entry.entry_id] = api
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -79,7 +79,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -88,6 +88,6 @@ async def async_unload_entry.opp, entry):
     if not unload_ok:
         return False
 
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN].pop(entry.entry_id)
 
     return True

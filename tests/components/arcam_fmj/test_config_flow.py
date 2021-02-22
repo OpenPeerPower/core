@@ -193,5 +193,5 @@ async def test_get_entry_client.opp):
     entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONFIG_ENTRY, title=MOCK_NAME, unique_id=MOCK_UUID
     )
-   .opp.data[DOMAIN_DATA_ENTRIES] = {entry.entry_id: "dummy"}
+    opp.data[DOMAIN_DATA_ENTRIES] = {entry.entry_id: "dummy"}
     assert get_entry_client.opp, entry) == "dummy"

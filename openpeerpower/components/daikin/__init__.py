@@ -51,14 +51,14 @@ async def async_setup_opp, config):
 
     hosts = config[DOMAIN][CONF_HOSTS]
     if not hosts:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}
             )
         )
     for host in hosts:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data={CONF_HOST: host}
             )
         )
@@ -70,11 +70,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     conf = entry.data
     # For backwards compat, set unique ID
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(entry, unique_id=conf[KEY_MAC])
+        opp.config_entries.async_update_entry(entry, unique_id=conf[KEY_MAC])
     elif ".local" in entry.unique_id:
-       .opp.config_entries.async_update_entry(entry, unique_id=conf[KEY_MAC])
+        opp.config_entries.async_update_entry(entry, unique_id=conf[KEY_MAC])
     daikin_api = await daikin_api_setup(
-        opp,
+        opp.
         conf[CONF_HOST],
         conf.get(CONF_API_KEY),
         conf.get(CONF_UUID),
@@ -82,10 +82,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     )
     if not daikin_api:
         return False
-   .opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: daikin_api})
+    opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: daikin_api})
     for component in COMPONENT_TYPES:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
     return True
 
@@ -94,13 +94,13 @@ async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
     await asyncio.wait(
         [
-           .opp.config_entries.async_forward_entry_unload(config_entry, component)
+            opp.config_entries.async_forward_entry_unload(config_entry, component)
             for component in COMPONENT_TYPES
         ]
     )
-   .opp.data[DOMAIN].pop(config_entry.entry_id)
+    opp.data[DOMAIN].pop(config_entry.entry_id)
     if not.opp.data[DOMAIN]:
-       .opp.data.pop(DOMAIN)
+        opp.data.pop(DOMAIN)
     return True
 
 

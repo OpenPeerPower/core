@@ -11,7 +11,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         [
             TeslaBinarySensor(
                 device,
-               .opp.data[TESLA_DOMAIN][config_entry.entry_id]["coordinator"],
+                opp.data[TESLA_DOMAIN][config_entry.entry_id]["coordinator"],
             )
             for device in.opp.data[TESLA_DOMAIN][config_entry.entry_id]["devices"][
                 "binary_sensor"

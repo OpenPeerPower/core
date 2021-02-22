@@ -14,7 +14,7 @@ async def surepetcare.opp):
         instance = mock_surepetcare.return_value = SurePetcare(
             "test-username",
             "test-password",
-           .opp.loop,
+            opp.loop,
             async_get_clientsession.opp),
             api_timeout=1,
         )

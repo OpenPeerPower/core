@@ -92,7 +92,7 @@ class RestoreStateData:
             if opp.state == CoreState.running:
                 data.async_setup_dump()
             else:
-               .opp.bus.async_listen_once(
+                opp.bus.async_listen_once(
                     EVENT_OPENPEERPOWER_START, data.async_setup_dump
                 )
 
@@ -104,7 +104,7 @@ class RestoreStateData:
         """Initialize the restore state data class."""
         self.opp: OpenPeerPower = opp
         self.store: Store = Store(
-            opp, STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
+            opp. STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
         )
         self.last_states: Dict[str, StoredState] = {}
         self.entity_ids: Set[str] = set()

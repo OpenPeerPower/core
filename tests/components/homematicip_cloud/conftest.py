@@ -70,7 +70,7 @@ def hmip_config_entry_fixture() -> config_entries.ConfigEntry:
 
 @pytest.fixture(name="default_mock_hap_factory")
 async def default_mock_hap_factory_fixture(
-    opp: OpenPeerPowerType, mock_connection, hmip_config_entry
+    opp. OpenPeerPowerType, mock_connection, hmip_config_entry
 ) -> HomematicipHAP:
     """Create a mocked homematic access point."""
     return HomeFactory.opp, mock_connection, hmip_config_entry)
@@ -98,13 +98,13 @@ def dummy_config_fixture() -> ConfigType:
 
 @pytest.fixture(name="mock_hap_with_service")
 async def mock_hap_with_service_fixture(
-    opp: OpenPeerPowerType, default_mock_hap_factory, dummy_config
+    opp. OpenPeerPowerType, default_mock_hap_factory, dummy_config
 ) -> HomematicipHAP:
     """Create a fake homematic access point with.opp services."""
     mock_hap = await default_mock_hap_factory.async_get_mock_hap()
     await hmip_async_setup_opp, dummy_config)
     await opp.async_block_till_done()
-   .opp.data[HMIPC_DOMAIN] = {HAPID: mock_hap}
+    opp.data[HMIPC_DOMAIN] = {HAPID: mock_hap}
     return mock_hap
 
 

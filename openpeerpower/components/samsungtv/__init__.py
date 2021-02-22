@@ -43,16 +43,16 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Set up the Samsung TV integration."""
     if DOMAIN in config:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
         for entry_config in config[DOMAIN]:
             ip_address = await opp.async_add_executor_job(
                 socket.gethostbyname, entry_config[CONF_HOST]
             )
-           .opp.data[DOMAIN][ip_address] = {
+            opp.data[DOMAIN][ip_address] = {
                 CONF_ON_ACTION: entry_config.get(CONF_ON_ACTION)
             }
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": "import"}, data=entry_config
                 )
             )
@@ -62,8 +62,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up the Samsung TV platform."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, MP_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, MP_DOMAIN)
     )
 
     return True

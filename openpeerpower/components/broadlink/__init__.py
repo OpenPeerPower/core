@@ -15,7 +15,7 @@ class BroadlinkData:
 
 async def async_setup_opp, config):
     """Set up the Broadlink integration."""
-   .opp.data[DOMAIN] = BroadlinkData()
+    opp.data[DOMAIN] = BroadlinkData()
     return True
 
 

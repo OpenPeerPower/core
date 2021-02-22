@@ -57,7 +57,7 @@ async def help_test_availability_without_topic.opp, mqtt_mock, domain, config):
 
 
 async def help_test_default_availability_payload(
-    opp,
+    opp.
     mqtt_mock,
     domain,
     config,
@@ -73,7 +73,7 @@ async def help_test_default_availability_payload(
     config = copy.deepcopy(config)
     config[domain]["availability_topic"] = "availability-topic"
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -107,7 +107,7 @@ async def help_test_default_availability_payload(
 
 
 async def help_test_default_availability_list_payload(
-    opp,
+    opp.
     mqtt_mock,
     domain,
     config,
@@ -126,7 +126,7 @@ async def help_test_default_availability_list_payload(
         {"topic": "availability-topic2"},
     ]
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -172,7 +172,7 @@ async def help_test_default_availability_list_payload(
 
 
 async def help_test_default_availability_list_payload_all(
-    opp,
+    opp.
     mqtt_mock,
     domain,
     config,
@@ -192,7 +192,7 @@ async def help_test_default_availability_list_payload_all(
         {"topic": "availability-topic2"},
     ]
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -239,7 +239,7 @@ async def help_test_default_availability_list_payload_all(
 
 
 async def help_test_default_availability_list_payload_any(
-    opp,
+    opp.
     mqtt_mock,
     domain,
     config,
@@ -259,7 +259,7 @@ async def help_test_default_availability_list_payload_any(
         {"topic": "availability-topic2"},
     ]
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -301,7 +301,7 @@ async def help_test_default_availability_list_payload_any(
 
 
 async def help_test_default_availability_list_single(
-    opp,
+    opp.
     mqtt_mock,
     caplog,
     domain,
@@ -321,7 +321,7 @@ async def help_test_default_availability_list_single(
     ]
     config[domain]["availability_topic"] = "availability-topic"
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -336,7 +336,7 @@ async def help_test_default_availability_list_single(
 
 
 async def help_test_custom_availability_payload(
-    opp,
+    opp.
     mqtt_mock,
     domain,
     config,
@@ -354,7 +354,7 @@ async def help_test_custom_availability_payload(
     config[domain]["payload_available"] = "good"
     config[domain]["payload_not_available"] = "nogood"
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -388,7 +388,7 @@ async def help_test_custom_availability_payload(
 
 
 async def help_test_discovery_update_availability(
-    opp,
+    opp.
     mqtt_mock,
     domain,
     config,
@@ -468,7 +468,7 @@ async def help_test_discovery_update_availability(
 
 
 async def help_test_setting_attribute_via_mqtt_json_message(
-    opp, mqtt_mock, domain, config
+    opp. mqtt_mock, domain, config
 ):
     """Test the setting of attribute via MQTT with JSON payload.
 
@@ -478,7 +478,7 @@ async def help_test_setting_attribute_via_mqtt_json_message(
     config = copy.deepcopy(config)
     config[domain]["json_attributes_topic"] = "attr-topic"
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -500,14 +500,14 @@ async def help_test_setting_attribute_with_template.opp, mqtt_mock, domain, conf
     config[domain]["json_attributes_topic"] = "attr-topic"
     config[domain]["json_attributes_template"] = "{{ value_json['Timer1'] | tojson }}"
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
     await opp.async_block_till_done()
 
     async_fire_mqtt_message(
-        opp, "attr-topic", json.dumps({"Timer1": {"Arm": 0, "Time": "22:18"}})
+        opp. "attr-topic", json.dumps({"Timer1": {"Arm": 0, "Time": "22:18"}})
     )
     state = opp.states.get(f"{domain}.test")
 
@@ -516,7 +516,7 @@ async def help_test_setting_attribute_with_template.opp, mqtt_mock, domain, conf
 
 
 async def help_test_update_with_json_attrs_not_dict(
-    opp, mqtt_mock, caplog, domain, config
+    opp. mqtt_mock, caplog, domain, config
 ):
     """Test attributes get extracted from a JSON result.
 
@@ -526,7 +526,7 @@ async def help_test_update_with_json_attrs_not_dict(
     config = copy.deepcopy(config)
     config[domain]["json_attributes_topic"] = "attr-topic"
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -540,7 +540,7 @@ async def help_test_update_with_json_attrs_not_dict(
 
 
 async def help_test_update_with_json_attrs_bad_JSON(
-    opp, mqtt_mock, caplog, domain, config
+    opp. mqtt_mock, caplog, domain, config
 ):
     """Test JSON validation of attributes.
 
@@ -550,7 +550,7 @@ async def help_test_update_with_json_attrs_bad_JSON(
     config = copy.deepcopy(config)
     config[domain]["json_attributes_topic"] = "attr-topic"
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -624,7 +624,7 @@ async def help_test_discovery_removal.opp, mqtt_mock, caplog, domain, data):
 
 
 async def help_test_discovery_update(
-    opp,
+    opp.
     mqtt_mock,
     caplog,
     domain,
@@ -678,7 +678,7 @@ async def help_test_discovery_update(
 
 
 async def help_test_discovery_update_unchanged(
-    opp, mqtt_mock, caplog, domain, data1, discovery_update
+    opp. mqtt_mock, caplog, domain, data1, discovery_update
 ):
     """Test update of discovered component without changes.
 
@@ -822,7 +822,7 @@ async def help_test_entity_device_info_update.opp, mqtt_mock, domain, config):
 
 
 async def help_test_entity_id_update_subscriptions(
-    opp, mqtt_mock, domain, config, topics=None
+    opp. mqtt_mock, domain, config, topics=None
 ):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     # Add unique_id to config
@@ -837,7 +837,7 @@ async def help_test_entity_id_update_subscriptions(
     assert len(topics) > 0
     registry = mock_registry.opp, {})
     assert await async_setup_component(
-        opp,
+        opp.
         domain,
         config,
     )
@@ -863,7 +863,7 @@ async def help_test_entity_id_update_subscriptions(
 
 
 async def help_test_entity_id_update_discovery_update(
-    opp, mqtt_mock, domain, config, topic=None
+    opp. mqtt_mock, domain, config, topic=None
 ):
     """Test MQTT discovery update after entity_id is updated."""
     # Add unique_id to config
@@ -989,7 +989,7 @@ async def help_test_entity_debug_info_max_messages.opp, mqtt_mock, domain, confi
 
 
 async def help_test_entity_debug_info_message(
-    opp, mqtt_mock, domain, config, topic=None, payload=None
+    opp. mqtt_mock, domain, config, topic=None, payload=None
 ):
     """Test debug_info message overflow.
 

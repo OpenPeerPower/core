@@ -16,7 +16,7 @@ async def test_reload_config_service.opp.
     assert await async_setup_component.opp."scene", {})
 
     test_reloaded_event = []
-   .opp.us.async_listen(
+    opp.us.async_listen(
         EVENT_SCENE_RELOADED, lambda event: test_reloaded_event.append(event)
     )
 
@@ -89,7 +89,7 @@ async def test_apply_service.opp.
 async def test_create_service.opp.caplog):
     """Test the create service."""
     assert await async_setup_component(
-        opp,
+        opp.
         "scene",
         {"scene": {"name": "hallo_2", "entities": {"light.kitchen": "on"}}},
     )
@@ -167,7 +167,7 @@ async def test_snapshot_service.opp.caplog):
     """Test the snapshot option."""
     assert await async_setup_component.opp."scene", {"scene": {}})
     await opp.async_block_till_done()
-   .opp.tates.async_set("light.my_light", "on", {"hs_color": (345, 75)})
+    opp.tates.async_set("light.my_light", "on", {"hs_color": (345, 75)})
     assert.opp.tates.get("scene.hallo") is None
 
     assert await opp.services.async_call(
@@ -181,7 +181,7 @@ async def test_snapshot_service.opp.caplog):
     assert scene is not None
     assert scene.attributes.get("entity_id") == ["light.my_light"]
 
-   .opp.tates.async_set("light.my_light", "off", {"hs_color": (123, 45)})
+    opp.tates.async_set("light.my_light", "off", {"hs_color": (123, 45)})
     turn_on_calls = async_mock_service.opp."light", "turn_on")
     assert await opp.services.async_call(
         "scene", "turn_on", {"entity_id": "scene.hallo"}, blocking=True
@@ -245,7 +245,7 @@ async def test_ensure_no_intersection.opp.
 async def test_scenes_with_entity.opp.
     """Test finding scenes with a specific entity."""
     assert await async_setup_component(
-        opp,
+        opp.
         "scene",
         {
             "scene": [
@@ -269,7 +269,7 @@ async def test_scenes_with_entity.opp.
 async def test_entities_in_scene.opp.
     """Test finding entities in a scene."""
     assert await async_setup_component(
-        opp,
+        opp.
         "scene",
         {
             "scene": [
@@ -295,7 +295,7 @@ async def test_entities_in_scene.opp.
 async def test_config(opp.
     """Test passing config in YAML."""
     assert await async_setup_component(
-        opp,
+        opp.
         "scene",
         {
             "scene": [

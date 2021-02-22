@@ -114,7 +114,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Stop ZhongHongHub socket."""
         hub.stop_listen()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_listen)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_listen)
 
 
 class ZhongHongClimate(ClimateEntity):

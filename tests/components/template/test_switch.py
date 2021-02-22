@@ -33,7 +33,7 @@ async def test_template_state_text.opp):
     """Test the state text of a template."""
     with assert_setup_component(1, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -59,13 +59,13 @@ async def test_template_state_text.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.test_state", STATE_ON)
+    opp.states.async_set("switch.test_state", STATE_ON)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
     assert state.state == STATE_ON
 
-   .opp.states.async_set("switch.test_state", STATE_OFF)
+    opp.states.async_set("switch.test_state", STATE_OFF)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -76,7 +76,7 @@ async def test_template_state_boolean_on.opp):
     """Test the setting of the state with boolean on."""
     with assert_setup_component(1, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -110,7 +110,7 @@ async def test_template_state_boolean_off.opp):
     """Test the setting of the state with off."""
     with assert_setup_component(1, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -144,7 +144,7 @@ async def test_icon_template.opp):
     """Test icon template."""
     with assert_setup_component(1, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -176,7 +176,7 @@ async def test_icon_template.opp):
     state = opp.states.get("switch.test_template_switch")
     assert state.attributes.get("icon") == ""
 
-   .opp.states.async_set("switch.test_state", STATE_ON)
+    opp.states.async_set("switch.test_state", STATE_ON)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -187,7 +187,7 @@ async def test_entity_picture_template.opp):
     """Test entity_picture template."""
     with assert_setup_component(1, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -219,7 +219,7 @@ async def test_entity_picture_template.opp):
     state = opp.states.get("switch.test_template_switch")
     assert state.attributes.get("entity_picture") == ""
 
-   .opp.states.async_set("switch.test_state", STATE_ON)
+    opp.states.async_set("switch.test_state", STATE_ON)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -230,7 +230,7 @@ async def test_template_syntax_error(opp):
     """Test templating syntax error."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -263,7 +263,7 @@ async def test_invalid_name_does_not_create.opp):
     """Test invalid name."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -296,7 +296,7 @@ async def test_invalid_switch_does_not_create.opp):
     """Test invalid switch."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -317,7 +317,7 @@ async def test_no_switches_does_not_create.opp):
     """Test if there are no switches no creation."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp, "switch", {"switch": {"platform": "template"}}
+            opp. "switch", {"switch": {"platform": "template"}}
         )
 
     await opp.async_block_till_done()
@@ -331,7 +331,7 @@ async def test_missing_on_does_not_create.opp):
     """Test missing on."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -364,7 +364,7 @@ async def test_missing_off_does_not_create.opp):
     """Test missing off."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp,
+            opp.
             "switch",
             {
                 "switch": {
@@ -396,7 +396,7 @@ async def test_missing_off_does_not_create.opp):
 async def test_on_action.opp, calls):
     """Test on action."""
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -419,7 +419,7 @@ async def test_on_action.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.test_state", STATE_OFF)
+    opp.states.async_set("switch.test_state", STATE_OFF)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -438,7 +438,7 @@ async def test_on_action.opp, calls):
 async def test_on_action_optimistic.opp, calls):
     """Test on action in optimistic mode."""
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -459,7 +459,7 @@ async def test_on_action_optimistic.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.test_template_switch", STATE_OFF)
+    opp.states.async_set("switch.test_template_switch", STATE_OFF)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -480,7 +480,7 @@ async def test_on_action_optimistic.opp, calls):
 async def test_off_action.opp, calls):
     """Test off action."""
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -503,7 +503,7 @@ async def test_off_action.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.test_state", STATE_ON)
+    opp.states.async_set("switch.test_state", STATE_ON)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -522,7 +522,7 @@ async def test_off_action.opp, calls):
 async def test_off_action_optimistic.opp, calls):
     """Test off action in optimistic mode."""
     assert await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -543,7 +543,7 @@ async def test_off_action_optimistic.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("switch.test_template_switch", STATE_ON)
+    opp.states.async_set("switch.test_template_switch", STATE_ON)
     await opp.async_block_till_done()
 
     state = opp.states.get("switch.test_template_switch")
@@ -564,18 +564,18 @@ async def test_off_action_optimistic.opp, calls):
 async def test_restore_state.opp):
     """Test state restoration."""
     mock_restore_cache(
-        opp,
+        opp.
         (
             State("switch.s1", STATE_ON),
             State("switch.s2", STATE_OFF),
         ),
     )
 
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
     mock_component.opp, "recorder")
 
     await async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -607,7 +607,7 @@ async def test_restore_state.opp):
 async def test_available_template_with_entities.opp):
     """Test availability templates with values from other entities."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -634,12 +634,12 @@ async def test_available_template_with_entities.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("availability_state.state", STATE_ON)
+    opp.states.async_set("availability_state.state", STATE_ON)
     await opp.async_block_till_done()
 
     assert.opp.states.get("switch.test_template_switch").state != STATE_UNAVAILABLE
 
-   .opp.states.async_set("availability_state.state", STATE_OFF)
+    opp.states.async_set("availability_state.state", STATE_OFF)
     await opp.async_block_till_done()
 
     assert.opp.states.get("switch.test_template_switch").state == STATE_UNAVAILABLE
@@ -648,7 +648,7 @@ async def test_available_template_with_entities.opp):
 async def test_invalid_availability_template_keeps_component_available.opp, caplog):
     """Test that an invalid availability keeps the device available."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {
@@ -682,7 +682,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 async def test_unique_id.opp):
     """Test unique_id option only creates one switch per id."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "switch",
         {
             "switch": {

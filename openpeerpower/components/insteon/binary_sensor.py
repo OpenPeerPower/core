@@ -56,7 +56,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     def async_add_insteon_binary_sensor_entities(discovery_info=None):
         """Add the Insteon entities for the platform."""
         async_add_insteon_entities(
-            opp,
+            opp.
             BINARY_SENSOR_DOMAIN,
             InsteonBinarySensorEntity,
             async_add_entities,

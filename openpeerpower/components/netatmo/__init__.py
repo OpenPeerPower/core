@@ -64,7 +64,7 @@ PLATFORMS = ["camera", "climate", "light", "sensor"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Netatmo component."""
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         DATA_PERSONS: {},
         DATA_DEVICE_IDS: {},
         DATA_SCHEDULES: {},
@@ -77,9 +77,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         return True
 
     config_flow.NetatmoFlowHandler.async_register_implementation(
-        opp,
+        opp.
         config_entry_oauth2_flow.LocalOAuth2Implementation(
-            opp,
+            opp.
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -95,25 +95,25 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Netatmo from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
     )
 
     # Set unique id if non was set (migration)
     if not entry.unique_id:
-       .opp.config_entries.async_update_entry(entry, unique_id=DOMAIN)
+        opp.config_entries.async_update_entry(entry, unique_id=DOMAIN)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         AUTH: api.ConfigEntryNetatmoAuth.opp, entry, implementation)
     }
 
     data_handler = NetatmoDataHandler.opp, entry)
     await data_handler.async_setup()
-   .opp.data[DOMAIN][entry.entry_id][DATA_HANDLER] = data_handler
+    opp.data[DOMAIN][entry.entry_id][DATA_HANDLER] = data_handler
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     async def unregister_webhook(_):
@@ -121,7 +121,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             return
         _LOGGER.debug("Unregister Netatmo webhook (%s)", entry.data[CONF_WEBHOOK_ID])
         async_dispatcher_send(
-            opp,
+            opp.
             f"signal-{DOMAIN}-webhook-None",
             {"type": "None", "data": {"push_type": "webhook_deactivation"}},
         )
@@ -130,7 +130,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     async def register_webhook(event):
         if CONF_WEBHOOK_ID not in entry.data:
             data = {**entry.data, CONF_WEBHOOK_ID: secrets.token_hex()}
-           .opp.config_entries.async_update_entry(entry, data=data)
+            opp.config_entries.async_update_entry(entry, data=data)
 
         if opp.components.cloud.async_active_subscription():
             if CONF_CLOUDHOOK_URL not in entry.data:
@@ -138,7 +138,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                     entry.data[CONF_WEBHOOK_ID]
                 )
                 data = {**entry.data, CONF_CLOUDHOOK_URL: webhook_url}
-               .opp.config_entries.async_update_entry(entry, data=data)
+                opp.config_entries.async_update_entry(entry, data=data)
             else:
                 webhook_url = entry.data[CONF_CLOUDHOOK_URL]
         else:
@@ -157,7 +157,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
         try:
             webhook_register(
-                opp, DOMAIN, "Netatmo", entry.data[CONF_WEBHOOK_ID], handle_webhook
+                opp. DOMAIN, "Netatmo", entry.data[CONF_WEBHOOK_ID], handle_webhook
             )
 
             async def handle_event(event):
@@ -172,7 +172,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                         activation_timeout()
 
             activation_listener = async_dispatcher_connect(
-                opp,
+                opp.
                 f"signal-{DOMAIN}-webhook-None",
                 handle_event,
             )
@@ -180,21 +180,21 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             activation_timeout = async_call_later.opp, 10, unregister_webhook)
 
             await opp.async_add_executor_job(
-               .opp.data[DOMAIN][entry.entry_id][AUTH].addwebhook, webhook_url
+                opp.data[DOMAIN][entry.entry_id][AUTH].addwebhook, webhook_url
             )
             _LOGGER.info("Register Netatmo webhook: %s", webhook_url)
         except pyatmo.ApiError as err:
             _LOGGER.error("Error during webhook registration - %s", err)
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, unregister_webhook)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, unregister_webhook)
 
     if opp.state == CoreState.running:
         await register_webhook(None)
     else:
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, register_webhook)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, register_webhook)
 
-   .opp.services.async_register(DOMAIN, "register_webhook", register_webhook)
-   .opp.services.async_register(DOMAIN, "unregister_webhook", unregister_webhook)
+    opp.services.async_register(DOMAIN, "register_webhook", register_webhook)
+    opp.services.async_register(DOMAIN, "unregister_webhook", unregister_webhook)
 
     return True
 
@@ -203,7 +203,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if CONF_WEBHOOK_ID in entry.data:
         await opp.async_add_executor_job(
-           .opp.data[DOMAIN][entry.entry_id][AUTH].dropwebhook
+            opp.data[DOMAIN][entry.entry_id][AUTH].dropwebhook
         )
         _LOGGER.info("Unregister Netatmo webhook.")
 
@@ -212,14 +212,14 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

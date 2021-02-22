@@ -15,8 +15,8 @@ async def test_services.opp, coap_wrapper):
     """Test device turn on/off services."""
     assert coap_wrapper
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
     await opp.async_block_till_done()
 
@@ -41,8 +41,8 @@ async def test_update.opp, coap_wrapper, monkeypatch):
     """Test device update."""
     assert coap_wrapper
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
     await opp.async_block_till_done()
 
@@ -66,8 +66,8 @@ async def test_no_relay_blocks.opp, coap_wrapper, monkeypatch):
     assert coap_wrapper
 
     monkeypatch.setattr(coap_wrapper.device.blocks[RELAY_BLOCK_ID], "type", "roller")
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
     await opp.async_block_till_done()
     assert.opp.states.get("switch.test_name_channel_1") is None
@@ -78,8 +78,8 @@ async def test_device_mode_roller.opp, coap_wrapper, monkeypatch):
     assert coap_wrapper
 
     monkeypatch.setitem(coap_wrapper.device.settings, "mode", "roller")
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, SWITCH_DOMAIN)
     )
     await opp.async_block_till_done()
     assert.opp.states.get("switch.test_name_channel_1") is None

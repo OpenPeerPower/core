@@ -42,12 +42,12 @@ async def test.opp_binary_sensor_notification.opp, numato_fixture):
     assert await async_setup_component.opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()  # wait until services are registered
     assert (
-       .opp.states.get("binary_sensor.numato_binary_sensor_mock_port2").state == "on"
+        opp.states.get("binary_sensor.numato_binary_sensor_mock_port2").state == "on"
     )
     await opp.async_add_executor_job(numato_fixture.devices[0].callbacks[2], 2, False)
     await opp.async_block_till_done()
     assert (
-       .opp.states.get("binary_sensor.numato_binary_sensor_mock_port2").state == "off"
+        opp.states.get("binary_sensor.numato_binary_sensor_mock_port2").state == "off"
     )
 
 

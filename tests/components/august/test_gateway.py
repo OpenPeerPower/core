@@ -21,7 +21,7 @@ async def test_refresh_access_token.opp):
     "openpeerpower.components.august.gateway.AuthenticatorAsync.async_refresh_access_token"
 )
 async def _patched_refresh_access_token(
-    opp,
+    opp.
     new_token,
     new_token_expire_time,
     refresh_access_token_mock,

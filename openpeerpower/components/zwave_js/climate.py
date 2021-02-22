@@ -86,7 +86,7 @@ ATTR_FAN_STATE = "fan_state"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave climate from config entry."""
     client: ZwaveClient = opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
@@ -99,9 +99,9 @@ async def async_setup_entry(
 
         async_add_entities(entities)
 
-   .opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
+    opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect(
-            opp,
+            opp.
             f"{DOMAIN}_{config_entry.entry_id}_add_{CLIMATE_DOMAIN}",
             async_add_climate,
         )
@@ -195,7 +195,7 @@ class ZWaveClimate(ZWaveBaseEntity, ClimateEntity):
             mode_id = int(mode_id)
             if mode_id in THERMOSTAT_MODES:
                 # treat value as hvac mode
-               .opp_mode = ZW_HVAC_MODE_MAP.get(mode_id)
+                opp.mode = ZW_HVAC_MODE_MAP.get(mode_id)
                 if opp_mode:
                     all_modes.opp_mode] = mode_id
             else:

@@ -31,7 +31,7 @@ async def test_duplicate_error(opp):
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 
     MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to.opp(
-       .opp
+        opp
     )
 
     result = await opp.config_entries.flow.async_init(

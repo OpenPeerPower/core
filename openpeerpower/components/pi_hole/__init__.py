@@ -61,13 +61,13 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Set up the Pi-hole integration."""
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     # import
     if DOMAIN in config:
         for conf in config[DOMAIN]:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
                 )
             )
@@ -86,7 +86,7 @@ async def async_setup_entry.opp, entry):
 
     # For backward compatibility
     if CONF_STATISTICS_ONLY not in entry.data:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_STATISTICS_ONLY: not api_key}
         )
 
@@ -96,7 +96,7 @@ async def async_setup_entry.opp, entry):
         session = async_get_clientsession.opp, verify_tls)
         api = Hole(
             host,
-           .opp.loop,
+            opp.loop,
             session,
             location=location,
             tls=use_tls,
@@ -115,20 +115,20 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(f"Failed to communicating with API: {err}") from err
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=name,
         update_method=async_update_data,
         update_interval=MIN_TIME_BETWEEN_UPDATES,
     )
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_KEY_API: api,
         DATA_KEY_COORDINATOR: coordinator,
     }
 
     for platform in _async_platforms(entry):
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -139,13 +139,13 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in _async_platforms(entry)
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
     return unload_ok
 
 

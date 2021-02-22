@@ -187,12 +187,12 @@ SERVICE_KNX_EVENT_REGISTER_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Set up the KNX component."""
     try:
-       .opp.data[DOMAIN] = KNXModule.opp, config)
-       .opp.data[DOMAIN].async_create_exposures()
+        opp.data[DOMAIN] = KNXModule.opp, config)
+        opp.data[DOMAIN].async_create_exposures()
         await opp.data[DOMAIN].start()
     except XKNXException as ex:
         _LOGGER.warning("Could not connect to KNX interface: %s", ex)
-       .opp.components.persistent_notification.async_create(
+        opp.components.persistent_notification.async_create(
             f"Could not connect to KNX interface: <br><b>{ex}</b>", title="KNX"
         )
 
@@ -203,7 +203,7 @@ async def async_setup_opp, config):
 
     # We need to wait until all entities are loaded into the device list since they could also be created from other platforms
     for platform in SupportedPlatforms:
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform.opp, platform.value, DOMAIN, {}, config)
         )
 
@@ -213,25 +213,25 @@ async def async_setup_opp, config):
             "https://www.open-peer-power.io/blog/2020/09/17/release-115/#breaking-changes"
         )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_KNX_SEND,
-       .opp.data[DOMAIN].service_send_to_knx_bus,
+        opp.data[DOMAIN].service_send_to_knx_bus,
         schema=SERVICE_KNX_SEND_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_KNX_READ,
-       .opp.data[DOMAIN].service_read_to_knx_bus,
+        opp.data[DOMAIN].service_read_to_knx_bus,
         schema=SERVICE_KNX_READ_SCHEMA,
     )
 
     async_register_admin_service(
-        opp,
+        opp.
         DOMAIN,
         SERVICE_KNX_EVENT_REGISTER,
-       .opp.data[DOMAIN].service_event_register_modify,
+        opp.data[DOMAIN].service_event_register_modify,
         schema=SERVICE_KNX_EVENT_REGISTER_SCHEMA,
     )
 
@@ -254,7 +254,7 @@ async def async_setup_opp, config):
         await async_setup_opp, config)
 
     async_register_admin_service(
-        opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
+        opp. DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True

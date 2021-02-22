@@ -25,7 +25,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
     async_add_entities(
         PlaatoBinarySensor(
-           .opp.data[DOMAIN][config_entry.entry_id],
+            opp.data[DOMAIN][config_entry.entry_id],
             sensor_type,
             coordinator,
         )

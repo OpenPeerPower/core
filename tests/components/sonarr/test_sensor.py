@@ -23,7 +23,7 @@ UPCOMING_ENTITY_ID = f"{SENSOR_DOMAIN}.sonarr_upcoming"
 
 
 async def test_sensors(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the sensors."""
     entry = await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
@@ -103,7 +103,7 @@ async def test_sensors(
     ),
 )
 async def test_disabled_by_default_sensors(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker, entity_id: str
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker, entity_id: str
 ) -> None:
     """Test the disabled by default sensors."""
     await setup_integration.opp, aioclient_mock)
@@ -120,7 +120,7 @@ async def test_disabled_by_default_sensors(
 
 
 async def test_availability(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test entity availability."""
     now = dt_util.utcnow()

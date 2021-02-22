@@ -52,7 +52,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         return {thermo.serial_number: thermo for thermo in thermostats}
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="schluter",
         update_method=async_update_data,

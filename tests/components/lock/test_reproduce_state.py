@@ -6,8 +6,8 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Lock states."""
-   .opp.states.async_set("lock.entity_locked", "locked", {})
-   .opp.states.async_set("lock.entity_unlocked", "unlocked", {})
+    opp.states.async_set("lock.entity_locked", "locked", {})
+    opp.states.async_set("lock.entity_unlocked", "unlocked", {})
 
     lock_calls = async_mock_service.opp, "lock", "lock")
     unlock_calls = async_mock_service.opp, "lock", "unlock")

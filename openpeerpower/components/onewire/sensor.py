@@ -244,8 +244,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         # https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
         config[CONF_TYPE] = CONF_TYPE_OWFS
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=config
         )
     )

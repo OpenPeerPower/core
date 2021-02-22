@@ -61,7 +61,7 @@ def disable_status_sensor(status_sensor_disabled):
 
 async def setup_tasmota_helper.opp):
     """Set up Tasmota."""
-   .opp.config.components.add("tasmota")
+    opp.config.components.add("tasmota")
 
     entry = MockConfigEntry(
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,

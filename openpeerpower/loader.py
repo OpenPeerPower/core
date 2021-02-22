@@ -115,7 +115,7 @@ def manifest_from_legacy_module(domain: str, module: ModuleType) -> Manifest:
 
 
 async def _async_get_custom_components(
-   .opp: "OpenPeerPower",
+    opp: "OpenPeerPower",
 ) -> Dict[str, Integration]:
     """Return list of custom integrations."""
     if opp.config.safe_mode:
@@ -141,7 +141,7 @@ async def _async_get_custom_components(
 
     integrations = await asyncio.gather(
         *(
-           .opp.async_add_executor_job(
+            opp.async_add_executor_job(
                 Integration.resolve_from_root, opp, custom_components, comp.name
             )
             for comp in dirs
@@ -156,7 +156,7 @@ async def _async_get_custom_components(
 
 
 async def async_get_custom_components(
-   .opp: "OpenPeerPower",
+    opp: "OpenPeerPower",
 ) -> Dict[str, Integration]:
     """Return cached list of custom integrations."""
     reg_or_evt = opp.data.get(DATA_CUSTOM_COMPONENTS)
@@ -166,7 +166,7 @@ async def async_get_custom_components(
 
         reg = await _async_get_custom_components.opp)
 
-       .opp.data[DATA_CUSTOM_COMPONENTS] = reg
+        opp.data[DATA_CUSTOM_COMPONENTS] = reg
         evt.set()
         return reg
 
@@ -333,7 +333,7 @@ class Integration:
 
     def __init__(
         self,
-       .opp: "OpenPeerPower",
+        opp: "OpenPeerPower",
         pkg_path: str,
         file_path: pathlib.Path,
         manifest: Manifest,
@@ -593,7 +593,7 @@ class CircularDependency(LoaderError):
 
 
 def _load_file(
-   .opp: "OpenPeerPower", comp_or_platform: str, base_paths: List[str]
+    opp: "OpenPeerPower", comp_or_platform: str, base_paths: List[str]
 ) -> Optional[ModuleType]:
     """Try to load specified file.
 
@@ -718,7 +718,7 @@ def bind.opp(func: CALLABLE_T) -> CALLABLE_T:
 
 
 async def _async_component_dependencies(
-   .opp: "OpenPeerPower",
+    opp: "OpenPeerPower",
     start_domain: str,
     integration: Integration,
     loaded: Set[str],

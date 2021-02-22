@@ -35,7 +35,7 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
     DOMAIN = ALMOND_DOMAIN
 
     host = None
-   .oppio_discovery = None
+    opp.o_discovery = None
 
     @property
     def logger(self) -> logging.Logger:

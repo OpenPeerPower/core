@@ -28,7 +28,7 @@ TRIGGER_SCHEMA = IF_ACTION_SCHEMA = vol.Schema(
 
 
 async def async_attach_trigger(
-    opp, config, action, automation_info, *, platform_type="template"
+    opp. config, action, automation_info, *, platform_type="template"
 ):
     """Listen for state changes based on configuration."""
     value_template = config.get(CONF_VALUE_TEMPLATE)
@@ -104,7 +104,7 @@ async def async_attach_trigger(
         def call_action(*_):
             """Call action with right context."""
             nonlocal trigger_variables
-           .opp.async_run.opp_job(
+            opp.async_run.opp_job(
                 job,
                 {"trigger": {**template_variables, **trigger_variables}},
                 (to_s.context if to_s else None),
@@ -129,7 +129,7 @@ async def async_attach_trigger(
         delay_cancel = async_call_later.opp, period.seconds, call_action)
 
     info = async_track_template_result(
-        opp,
+        opp.
         [TrackTemplate(value_template, automation_info["variables"])],
         template_listener,
     )

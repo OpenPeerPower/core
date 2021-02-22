@@ -33,7 +33,7 @@ async def async_setup_opp):
 
         ent_reg.async_remove(entity_id)
 
-   .opp.http.register_view(
+    opp.http.register_view(
         EditAutomationConfigView(
             DOMAIN,
             "config",

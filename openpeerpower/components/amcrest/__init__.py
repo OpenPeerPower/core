@@ -224,7 +224,7 @@ def _start_event_monitor.opp, name, api, event_codes):
 
 def setup_opp, config):
     """Set up the Amcrest IP Camera component."""
-   .opp.data.setdefault(DATA_AMCREST, {DEVICES: {}, CAMERAS: []})
+    opp.data.setdefault(DATA_AMCREST, {DEVICES: {}, CAMERAS: []})
 
     for device in config[DOMAIN]:
         name = device[CONF_NAME]
@@ -232,7 +232,7 @@ def setup_opp, config):
         password = device[CONF_PASSWORD]
 
         api = AmcrestChecker(
-            opp, name, device[CONF_HOST], device[CONF_PORT], username, password
+            opp. name, device[CONF_HOST], device[CONF_PORT], username, password
         )
 
         ffmpeg_arguments = device[CONF_FFMPEG_ARGUMENTS]
@@ -249,7 +249,7 @@ def setup_opp, config):
         else:
             authentication = None
 
-       .opp.data[DATA_AMCREST][DEVICES][name] = AmcrestDevice(
+        opp.data[DATA_AMCREST][DEVICES][name] = AmcrestDevice(
             api,
             authentication,
             ffmpeg_arguments,
@@ -262,7 +262,7 @@ def setup_opp, config):
 
         if binary_sensors:
             discovery.load_platform(
-                opp,
+                opp.
                 BINARY_SENSOR,
                 DOMAIN,
                 {CONF_NAME: name, CONF_BINARY_SENSORS: binary_sensors},
@@ -278,7 +278,7 @@ def setup_opp, config):
 
         if sensors:
             discovery.load_platform(
-                opp, SENSOR, DOMAIN, {CONF_NAME: name, CONF_SENSORS: sensors}, config
+                opp. SENSOR, DOMAIN, {CONF_NAME: name, CONF_SENSORS: sensors}, config
             )
 
     if not.opp.data[DATA_AMCREST][DEVICES]:
@@ -326,7 +326,7 @@ def setup_opp, config):
             async_dispatcher_send.opp, service_signal(call.service, entity_id), *args)
 
     for service, params in CAMERA_SERVICES.items():
-       .opp.services.register(DOMAIN, service, async_service_handler, params[0])
+        opp.services.register(DOMAIN, service, async_service_handler, params[0])
 
     return True
 

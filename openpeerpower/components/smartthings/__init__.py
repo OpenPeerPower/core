@@ -67,12 +67,12 @@ async def async_migrate_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     elements. Force this by removing the entry and triggering a new flow.
     """
     # Remove the entry which will invoke the callback to delete the app.
-   .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+    opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
     # only create new flow if there isn't a pending one for SmartThings.
     flows = opp.config_entries.flow.async_progress()
     if not [flow for flow in flows if flow["handler"] == DOMAIN]:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
         )
 
     # Return False because it could not be migrated.
@@ -83,7 +83,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Initialize config entry which represents an installed SmartApp."""
     # For backwards compat
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry,
             unique_id=format_unique_id(
                 entry.data[CONF_APP_ID], entry.data[CONF_LOCATION_ID]
@@ -123,7 +123,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
             entry.data[CONF_CLIENT_SECRET],
             entry.data[CONF_REFRESH_TOKEN],
         )
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_REFRESH_TOKEN: token.refresh_token}
         )
 
@@ -146,7 +146,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
         # Sync device subscriptions
         await smartapp_sync_subscriptions(
-            opp,
+            opp.
             token.access_token,
             installed_app.location_id,
             installed_app.installed_app_id,
@@ -156,7 +156,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         # Setup device broker
         broker = DeviceBroker.opp, entry, token, smart_app, devices, scenes)
         broker.connect()
-       .opp.data[DOMAIN][DATA_BROKERS][entry.entry_id] = broker
+        opp.data[DOMAIN][DATA_BROKERS][entry.entry_id] = broker
 
     except ClientResponseError as ex:
         if ex.status in (HTTP_UNAUTHORIZED, HTTP_FORBIDDEN):
@@ -173,20 +173,20 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         raise ConfigEntryNotReady from ex
 
     if remove_entry:
-       .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+        opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
         # only create new flow if there isn't a pending one for SmartThings.
         flows = opp.config_entries.flow.async_progress()
         if not [flow for flow in flows if flow["handler"] == DOMAIN]:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": "import"}
                 )
             )
         return False
 
     for component in SUPPORTED_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
     return True
 
@@ -213,7 +213,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         broker.disconnect()
 
     tasks = [
-       .opp.config_entries.async_forward_entry_unload(entry, component)
+        opp.config_entries.async_forward_entry_unload(entry, component)
         for component in SUPPORTED_PLATFORMS
     ]
     return all(await asyncio.gather(*tasks))
@@ -268,7 +268,7 @@ class DeviceBroker:
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         entry: ConfigEntry,
         token,
         smart_app,

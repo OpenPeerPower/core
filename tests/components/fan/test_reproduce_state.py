@@ -6,11 +6,11 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Fan states."""
-   .opp.states.async_set("fan.entity_off", "off", {})
-   .opp.states.async_set("fan.entity_on", "on", {})
-   .opp.states.async_set("fan.entity_speed", "on", {"speed": "high"})
-   .opp.states.async_set("fan.entity_oscillating", "on", {"oscillating": True})
-   .opp.states.async_set("fan.entity_direction", "on", {"direction": "forward"})
+    opp.states.async_set("fan.entity_off", "off", {})
+    opp.states.async_set("fan.entity_on", "on", {})
+    opp.states.async_set("fan.entity_speed", "on", {"speed": "high"})
+    opp.states.async_set("fan.entity_oscillating", "on", {"oscillating": True})
+    opp.states.async_set("fan.entity_direction", "on", {"direction": "forward"})
 
     turn_on_calls = async_mock_service.opp, "fan", "turn_on")
     turn_off_calls = async_mock_service.opp, "fan", "turn_off")

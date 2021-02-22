@@ -47,7 +47,7 @@ def setup_opp, config):
         _LOGGER.error(_ex)
         return False
 
-   .opp.data[DATA_LINODE] = _linode
+    opp.data[DATA_LINODE] = _linode
 
     return True
 

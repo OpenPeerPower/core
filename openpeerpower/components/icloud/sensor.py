@@ -14,7 +14,7 @@ from .const import DOMAIN
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for iCloud component."""
     account = opp.data[DOMAIN][entry.unique_id]

@@ -73,7 +73,7 @@ ICON_EXTERNAL_SOURCE = "mdi:television-ambient-light"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> bool:
     """Set up a Hyperion platform from config entry."""
 
@@ -111,7 +111,7 @@ async def async_setup_entry(
         assert server_id
         for light_type in LIGHT_TYPES:
             async_dispatcher_send(
-                opp,
+                opp.
                 SIGNAL_ENTITY_REMOVE.format(
                     get_hyperion_unique_id(server_id, instance_num, light_type)
                 ),

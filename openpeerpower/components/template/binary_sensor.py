@@ -77,7 +77,7 @@ async def _async_create_entities.opp, config):
 
         sensors.append(
             BinarySensorTemplate(
-                opp,
+                opp.
                 device,
                 friendly_name,
                 device_class,
@@ -106,7 +106,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
 
     def __init__(
         self,
-        opp,
+        opp.
         device,
         friendly_name,
         device_class,

@@ -12,7 +12,7 @@
         },
         "flow_title": "deCONZ Zigbee gateway ({host})",
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Vil du konfigurere Open Peer Power til at oprette forbindelse til deCONZ-gateway'en leveret af Hass.io-tilf\u00f8jelsen {addon}?",
                 "title": "deCONZ Zigbee-gateway via Hass.io-tilf\u00f8jelse"
             },

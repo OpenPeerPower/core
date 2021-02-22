@@ -196,7 +196,7 @@ PLATFORM_SCHEMA = vol.All(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp. OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT cover through configuration.yaml."""
     await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
@@ -212,7 +212,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 async def _async_setup_entity(
-    opp, async_add_entities, config, config_entry=None, discovery_data=None
+    opp. async_add_entities, config, config_entry=None, discovery_data=None
 ):
     """Set up the MQTT Cover."""
     async_add_entities([MqttCover.opp, config, config_entry, discovery_data)])

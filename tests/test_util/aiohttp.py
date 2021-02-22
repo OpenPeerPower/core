@@ -283,7 +283,7 @@ def mock_aiohttp_client():
             """Close session."""
             await session.close()
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, close_session)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, close_session)
 
         return session
 

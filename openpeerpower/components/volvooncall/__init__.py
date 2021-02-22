@@ -151,9 +151,9 @@ async def async_setup_opp, config):
 
             data.instruments.add(instrument)
 
-           .opp.async_create_task(
+            opp.async_create_task(
                 discovery.async_load_platform(
-                    opp,
+                    opp.
                     COMPONENTS[instrument.component],
                     DOMAIN,
                     (vehicle.vin, instrument.component, instrument.attr),

@@ -42,7 +42,7 @@ DEPENDENCIES = ("http",)
 @bind.opp
 @callback
 def async_register_command(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     command_or_handler: Union[str, const.WebSocketCommandHandler],
     handler: Optional[const.WebSocketCommandHandler] = None,
     schema: Optional[vol.Schema] = None,
@@ -63,6 +63,6 @@ def async_register_command(
 
 async def async_setup_opp, config):
     """Initialize the websocket API."""
-   .opp.http.register_view(http.WebsocketAPIView)
+    opp.http.register_view(http.WebsocketAPIView)
     commands.async_register_commands.opp, async_register_command)
     return True

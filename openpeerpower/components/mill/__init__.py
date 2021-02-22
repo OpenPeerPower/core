@@ -8,8 +8,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up the Mill heater."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "climate")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "climate")
     )
     return True
 

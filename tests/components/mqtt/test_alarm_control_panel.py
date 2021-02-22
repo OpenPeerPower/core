@@ -75,7 +75,7 @@ async def test_fail_setup_without_state_topic.opp, mqtt_mock):
     """Test for failing with no state topic."""
     with assert_setup_component(0) as config:
         assert await async_setup_component(
-            opp,
+            opp.
             alarm_control_panel.DOMAIN,
             {
                 alarm_control_panel.DOMAIN: {
@@ -91,7 +91,7 @@ async def test_fail_setup_without_command_topic.opp, mqtt_mock):
     """Test failing with no command topic."""
     with assert_setup_component(0):
         assert await async_setup_component(
-            opp,
+            opp.
             alarm_control_panel.DOMAIN,
             {
                 alarm_control_panel.DOMAIN: {
@@ -105,7 +105,7 @@ async def test_fail_setup_without_command_topic.opp, mqtt_mock):
 async def test_update_state_via_state_topic.opp, mqtt_mock):
     """Test updating with via state topic."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
@@ -133,7 +133,7 @@ async def test_update_state_via_state_topic.opp, mqtt_mock):
 async def test_ignore_update_state_if_unknown_via_state_topic.opp, mqtt_mock):
     """Test ignoring updates via state topic."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
@@ -150,7 +150,7 @@ async def test_ignore_update_state_if_unknown_via_state_topic.opp, mqtt_mock):
 async def test_arm_home_publishes_mqtt.opp, mqtt_mock):
     """Test publishing of MQTT messages while armed."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
@@ -168,7 +168,7 @@ async def test_arm_home_not_publishes_mqtt_with_invalid_code_when_req.opp, mqtt_
     When code_arm_required = True
     """
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG_CODE,
     )
@@ -186,7 +186,7 @@ async def test_arm_home_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
     config = copy.deepcopy(DEFAULT_CONFIG_CODE)
     config[alarm_control_panel.DOMAIN]["code_arm_required"] = False
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         config,
     )
@@ -201,7 +201,7 @@ async def test_arm_home_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
 async def test_arm_away_publishes_mqtt.opp, mqtt_mock):
     """Test publishing of MQTT messages while armed."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
@@ -219,7 +219,7 @@ async def test_arm_away_not_publishes_mqtt_with_invalid_code_when_req.opp, mqtt_
     When code_arm_required = True
     """
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG_CODE,
     )
@@ -237,7 +237,7 @@ async def test_arm_away_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
     config = copy.deepcopy(DEFAULT_CONFIG_CODE)
     config[alarm_control_panel.DOMAIN]["code_arm_required"] = False
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         config,
     )
@@ -252,7 +252,7 @@ async def test_arm_away_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
 async def test_arm_night_publishes_mqtt.opp, mqtt_mock):
     """Test publishing of MQTT messages while armed."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
@@ -270,7 +270,7 @@ async def test_arm_night_not_publishes_mqtt_with_invalid_code_when_req.opp, mqtt
     When code_arm_required = True
     """
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG_CODE,
     )
@@ -288,7 +288,7 @@ async def test_arm_night_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
     config = copy.deepcopy(DEFAULT_CONFIG_CODE)
     config[alarm_control_panel.DOMAIN]["code_arm_required"] = False
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         config,
     )
@@ -303,7 +303,7 @@ async def test_arm_night_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
 async def test_arm_custom_bypass_publishes_mqtt.opp, mqtt_mock):
     """Test publishing of MQTT messages while armed."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -323,14 +323,14 @@ async def test_arm_custom_bypass_publishes_mqtt.opp, mqtt_mock):
 
 
 async def test_arm_custom_bypass_not_publishes_mqtt_with_invalid_code_when_req(
-    opp, mqtt_mock
+    opp. mqtt_mock
 ):
     """Test not publishing of MQTT messages with invalid code.
 
     When code_arm_required = True
     """
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -356,7 +356,7 @@ async def test_arm_custom_bypass_publishes_mqtt_when_code_not_req.opp, mqtt_mock
     When code_arm_required = False
     """
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -380,7 +380,7 @@ async def test_arm_custom_bypass_publishes_mqtt_when_code_not_req.opp, mqtt_mock
 async def test_disarm_publishes_mqtt.opp, mqtt_mock):
     """Test publishing of MQTT messages while disarmed."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG,
     )
@@ -401,7 +401,7 @@ async def test_disarm_publishes_mqtt_with_template.opp, mqtt_mock):
         "command_template"
     ] = '{"action":"{{ action }}","code":"{{ code }}"}'
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         config,
     )
@@ -422,7 +422,7 @@ async def test_disarm_publishes_mqtt_when_code_not_req.opp, mqtt_mock):
     config[alarm_control_panel.DOMAIN]["code"] = "1234"
     config[alarm_control_panel.DOMAIN]["code_disarm_required"] = False
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         config,
     )
@@ -438,7 +438,7 @@ async def test_disarm_not_publishes_mqtt_with_invalid_code_when_req.opp, mqtt_mo
     When code_disarm_required = True
     """
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         DEFAULT_CONFIG_CODE,
     )
@@ -451,7 +451,7 @@ async def test_disarm_not_publishes_mqtt_with_invalid_code_when_req.opp, mqtt_mo
 async def test_update_state_via_state_topic_template.opp, mqtt_mock):
     """Test updating with template_value via state topic."""
     assert await async_setup_component(
-        opp,
+        opp.
         alarm_control_panel.DOMAIN,
         {
             alarm_control_panel.DOMAIN: {
@@ -512,63 +512,63 @@ async def test_attributes_code_text.opp, mqtt_mock):
 async def test_availability_when_connection_lost.opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
     )
 
 
 async def test_availability_without_topic.opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
     )
 
 
 async def test_default_availability_payload.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
     )
 
 
 async def test_custom_availability_payload.opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG_CODE
     )
 
 
 async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_setting_attribute_with_template.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
-        opp, mqtt_mock, caplog, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, caplog, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
-        opp, mqtt_mock, caplog, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, caplog, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_discovery_update_attr.opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
-        opp, mqtt_mock, caplog, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, caplog, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -599,7 +599,7 @@ async def test_discovery_removal_alarm.opp, mqtt_mock, caplog):
     """Test removal of discovered alarm_control_panel."""
     data = json.dumps(DEFAULT_CONFIG[alarm_control_panel.DOMAIN])
     await help_test_discovery_removal(
-        opp, mqtt_mock, caplog, alarm_control_panel.DOMAIN, data
+        opp. mqtt_mock, caplog, alarm_control_panel.DOMAIN, data
     )
 
 
@@ -627,7 +627,7 @@ async def test_discovery_update_alarm_topic_and_template.opp, mqtt_mock, caplog)
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp,
+        opp.
         mqtt_mock,
         caplog,
         alarm_control_panel.DOMAIN,
@@ -660,7 +660,7 @@ async def test_discovery_update_alarm_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp,
+        opp.
         mqtt_mock,
         caplog,
         alarm_control_panel.DOMAIN,
@@ -681,7 +681,7 @@ async def test_discovery_update_unchanged_alarm.opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.alarm_control_panel.MqttAlarm.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-            opp, mqtt_mock, caplog, alarm_control_panel.DOMAIN, data1, discovery_update
+            opp. mqtt_mock, caplog, alarm_control_panel.DOMAIN, data1, discovery_update
         )
 
 
@@ -695,54 +695,54 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
         '  "command_topic": "test_topic" }'
     )
     await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, alarm_control_panel.DOMAIN, data1, data2
+        opp. mqtt_mock, caplog, alarm_control_panel.DOMAIN, data1, data2
     )
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT alarm control panel device registry integration."""
     await help_test_entity_device_info_with_connection(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT alarm control panel device registry integration."""
     await help_test_entity_device_info_with_identifier(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_remove.opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_subscriptions.opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_id_update_discovery_update.opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_debug_info_message.opp, mqtt_mock):
     """Test MQTT debug info."""
     await help_test_entity_debug_info_message(
-        opp, mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, alarm_control_panel.DOMAIN, DEFAULT_CONFIG
     )

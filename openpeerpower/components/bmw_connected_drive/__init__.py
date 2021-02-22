@@ -76,13 +76,13 @@ UNDO_UPDATE_LISTENER = "undo_update_listener"
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the BMW Connected Drive component from configuration.yaml."""
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][DATA_HASS_CONFIG] = config
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][DATA_HASS_CONFIG] = config
 
     if DOMAIN in config:
         for entry_config in config[DOMAIN].values():
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=entry_config
                 )
             )
@@ -99,13 +99,13 @@ def _async_migrate_options_from_data_if_missing.opp, entry):
         options = dict(DEFAULT_OPTIONS, **options)
         options[CONF_READ_ONLY] = data.pop(CONF_READ_ONLY, False)
 
-       .opp.config_entries.async_update_entry(entry, data=data, options=options)
+        opp.config_entries.async_update_entry(entry, data=data, options=options)
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up BMW Connected Drive from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN].setdefault(DATA_ENTRIES, {})
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN].setdefault(DATA_ENTRIES, {})
 
     _async_migrate_options_from_data_if_missing.opp, entry)
 
@@ -128,31 +128,31 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # Add update listener for config entry changes (options)
     undo_listener = entry.add_update_listener(update_listener)
 
-   .opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id] = {
+    opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id] = {
         CONF_ACCOUNT: account,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
     # Service to manually trigger updates for all accounts.
-   .opp.services.async_register(DOMAIN, SERVICE_UPDATE_STATE, _async_update_all)
+    opp.services.async_register(DOMAIN, SERVICE_UPDATE_STATE, _async_update_all)
 
     await _async_update_all()
 
     for platform in BMW_PLATFORMS:
         if platform != NOTIFY_DOMAIN:
-           .opp.async_create_task(
-               .opp.config_entries.async_forward_entry_setup(entry, platform)
+            opp.async_create_task(
+                opp.config_entries.async_forward_entry_setup(entry, platform)
             )
 
     # set up notify platform, no entry support for notify component yet,
     # have to use discovery to load platform.
-   .opp.async_create_task(
+    opp.async_create_task(
         discovery.async_load_platform(
-            opp,
+            opp.
             NOTIFY_DOMAIN,
             DOMAIN,
             {CONF_NAME: DOMAIN},
-           .opp.data[DOMAIN][DATA_HASS_CONFIG],
+            opp.data[DOMAIN][DATA_HASS_CONFIG],
         )
     )
 
@@ -164,7 +164,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in BMW_PLATFORMS
                 if component != NOTIFY_DOMAIN
             ]
@@ -178,16 +178,16 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     ):
         services = list(_SERVICE_MAP) + [SERVICE_UPDATE_STATE]
         for service in services:
-           .opp.services.async_remove(DOMAIN, service)
+            opp.services.async_remove(DOMAIN, service)
 
     for vehicle in.opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][
         CONF_ACCOUNT
     ].account.vehicles:
-       .opp.services.async_remove(NOTIFY_DOMAIN, slugify(f"{DOMAIN}_{vehicle.name}"))
+        opp.services.async_remove(NOTIFY_DOMAIN, slugify(f"{DOMAIN}_{vehicle.name}"))
 
     if unload_ok:
-       .opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][UNDO_UPDATE_LISTENER]()
-       .opp.data[DOMAIN][DATA_ENTRIES].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][UNDO_UPDATE_LISTENER]()
+        opp.data[DOMAIN][DATA_ENTRIES].pop(entry.entry_id)
 
     return unload_ok
 
@@ -208,7 +208,7 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
     _LOGGER.debug("Adding new account %s", name)
 
     pos = (
-        .opp.config.latitude, opp.config.longitude) if use_location else (None, None)
+         opp.config.latitude, opp.config.longitude) if use_location else (None, None)
     )
     cd_account = BMWConnectedDriveAccount(
         username, password, region, name, read_only, *pos
@@ -237,7 +237,7 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
     if not read_only:
         # register the remote services
         for service in _SERVICE_MAP:
-           .opp.services.register(
+            opp.services.register(
                 DOMAIN, service, execute_service, schema=SERVICE_SCHEMA
             )
 
@@ -245,7 +245,7 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
     # this should even out the load on the servers
     now = dt_util.utcnow()
     track_utc_time_change(
-        opp,
+        opp.
         cd_account.update,
         minute=range(now.minute % UPDATE_INTERVAL, 60, UPDATE_INTERVAL),
         second=now.second,

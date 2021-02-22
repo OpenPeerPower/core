@@ -20,9 +20,9 @@ def calls.opp):
 def setup_comp.opp):
     """Initialize components."""
     mock_component.opp, "group")
-   .opp.loop.run_until_complete(
+    opp.loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             zone.DOMAIN,
             {
                 "zone": {
@@ -39,13 +39,13 @@ def setup_comp.opp):
 async def test_if_fires_on_zone_enter.opp, calls):
     """Test for firing on zone enter."""
     context = Context()
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -74,7 +74,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity",
         "hello",
         {"latitude": 32.880586, "longitude": -117.237564},
@@ -87,7 +87,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
     assert "zone - test.entity - hello - hello - test" == calls[0].data["some"]
 
     # Set out of zone again so we can trigger call
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
     await opp.async_block_till_done()
@@ -99,7 +99,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
         blocking=True,
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
     await opp.async_block_till_done()
@@ -109,13 +109,13 @@ async def test_if_fires_on_zone_enter.opp, calls):
 
 async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
     """Test for not firing on zone leave."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -130,7 +130,7 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
     await opp.async_block_till_done()
@@ -140,13 +140,13 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
 
 async def test_if_fires_on_zone_leave.opp, calls):
     """Test for firing on zone leave."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -161,7 +161,7 @@ async def test_if_fires_on_zone_leave.opp, calls):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
     await opp.async_block_till_done()
@@ -171,13 +171,13 @@ async def test_if_fires_on_zone_leave.opp, calls):
 
 async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
     """Test for not firing on zone enter."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.881011, "longitude": -117.234758}
     )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -192,7 +192,7 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
         },
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
     await opp.async_block_till_done()
@@ -202,13 +202,13 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
 
 async def test_zone_condition.opp, calls):
     """Test for zone condition."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.entity", "hello", {"latitude": 32.880586, "longitude": -117.237564}
     )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -223,6 +223,6 @@ async def test_zone_condition.opp, calls):
         },
     )
 
-   .opp.bus.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1

@@ -50,9 +50,9 @@ async def async_setup_entry.opp, entry):
     def token_updater(token):
         """Handle from sync context when token is updated."""
         run_callback_threadsafe(
-           .opp.loop,
+            opp.loop,
             partial(
-               .opp.config_entries.async_update_entry,
+                opp.config_entries.async_update_entry,
                 entry,
                 data={**entry.data, "token": token},
             ),
@@ -67,14 +67,14 @@ async def async_setup_entry.opp, entry):
         _LOGGER.error("Access token is no longer valid. Please set up Ring again")
         return False
 
-   .opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         "api": ring,
         "devices": ring.devices(),
         "device_data": GlobalDataUpdater(
-            opp, "device", entry.entry_id, ring, "update_devices", timedelta(minutes=1)
+            opp. "device", entry.entry_id, ring, "update_devices", timedelta(minutes=1)
         ),
         "dings_data": GlobalDataUpdater(
-            opp,
+            opp.
             "active dings",
             entry.entry_id,
             ring,
@@ -82,7 +82,7 @@ async def async_setup_entry.opp, entry):
             timedelta(seconds=5),
         ),
         "history_data": DeviceDataUpdater(
-            opp,
+            opp.
             "history",
             entry.entry_id,
             ring,
@@ -90,7 +90,7 @@ async def async_setup_entry.opp, entry):
             timedelta(minutes=1),
         ),
         "health_data": DeviceDataUpdater(
-            opp,
+            opp.
             "health",
             entry.entry_id,
             ring,
@@ -100,8 +100,8 @@ async def async_setup_entry.opp, entry):
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     if opp.services.has_service(DOMAIN, "update"):
@@ -116,7 +116,7 @@ async def async_setup_entry.opp, entry):
             await opp.async_add_executor_job(info["health_data"].refresh_all)
 
     # register service
-   .opp.services.async_register(DOMAIN, "update", async_refresh_all)
+    opp.services.async_register(DOMAIN, "update", async_refresh_all)
 
     return True
 
@@ -126,7 +126,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -134,13 +134,13 @@ async def async_unload_entry.opp, entry):
     if not unload_ok:
         return False
 
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN].pop(entry.entry_id)
 
     if len.opp.data[DOMAIN]) != 0:
         return True
 
     # Last entry unloaded, clean up service
-   .opp.services.async_remove(DOMAIN, "update")
+    opp.services.async_remove(DOMAIN, "update")
 
     return True
 
@@ -150,7 +150,7 @@ class GlobalDataUpdater:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         data_type: str,
         config_entry_id: str,
         ring: Ring,
@@ -223,7 +223,7 @@ class DeviceDataUpdater:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         data_type: str,
         config_entry_id: str,
         ring: Ring,

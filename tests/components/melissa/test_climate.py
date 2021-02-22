@@ -68,7 +68,7 @@ async def test_setup_platform.opp):
         thermostat = mocked_thermostat(api, device["serial_number"], device)
         thermostats = [thermostat]
 
-       .opp.data[DATA_MELISSA] = api
+        opp.data[DATA_MELISSA] = api
 
         config = {}
         add_entities = Mock()

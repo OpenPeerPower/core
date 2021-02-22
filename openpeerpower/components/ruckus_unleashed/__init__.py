@@ -29,7 +29,7 @@ from .coordinator import RuckusUnleashedDataUpdateCoordinator
 
 async def async_setup_opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up the Ruckus Unleashed component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -66,14 +66,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             sw_version=system_info[API_SYSTEM_OVERVIEW][API_VERSION],
         )
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: coordinator,
         UNDO_UPDATE_LISTENERS: [],
     }
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -84,7 +84,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -93,6 +93,6 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         for listener in.opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENERS]:
             listener()
 
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

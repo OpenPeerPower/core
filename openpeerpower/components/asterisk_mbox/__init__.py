@@ -47,7 +47,7 @@ def setup_opp, config):
     port = conf[CONF_PORT]
     password = conf[CONF_PASSWORD]
 
-   .opp.data[DOMAIN] = AsteriskData.opp, host, port, password, config)
+    opp.data[DOMAIN] = AsteriskData.opp, host, port, password, config)
 
     return True
 

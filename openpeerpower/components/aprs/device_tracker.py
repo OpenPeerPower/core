@@ -94,7 +94,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         aprs_listener.stop()
 
     aprs_listener.start()
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, aprs_disconnect)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, aprs_disconnect)
 
     if not aprs_listener.start_event.wait(timeout):
         _LOGGER.error("Timeout waiting for APRS to connect")

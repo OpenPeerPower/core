@@ -147,7 +147,7 @@ def preprocess_turn_on_alternatives.opp, params):
         return
 
     if ATTR_PROFILE in params:
-       .opp.data[DATA_PROFILES].apply_profile(params.pop(ATTR_PROFILE), params)
+        opp.data[DATA_PROFILES].apply_profile(params.pop(ATTR_PROFILE), params)
 
     color_name = params.pop(ATTR_COLOR_NAME, None)
     if color_name is not None:

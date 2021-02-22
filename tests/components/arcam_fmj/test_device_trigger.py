@@ -68,7 +68,7 @@ async def test_if_fires_on_turn_on_request.opp, calls, player_setup, state):
     state.get_power.return_value = None
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [

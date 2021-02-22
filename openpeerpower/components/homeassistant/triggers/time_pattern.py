@@ -71,7 +71,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def time_automation_listener(now):
         """Listen for time changes and calls action."""
-       .opp.async_run.opp_job(
+        opp.async_run.opp_job(
             job,
             {
                 "trigger": {
@@ -83,5 +83,5 @@ async def async_attach_trigger.opp, config, action, automation_info):
         )
 
     return async_track_time_change(
-        opp, time_automation_listener, hour=hours, minute=minutes, second=seconds
+        opp. time_automation_listener, hour=hours, minute=minutes, second=seconds
     )

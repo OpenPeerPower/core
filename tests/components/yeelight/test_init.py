@@ -68,7 +68,7 @@ async def test_setup_import.opp: OpenPeerPower):
         f"{MODULE_CONFIG_FLOW}.yeelight.Bulb", return_value=mocked_bulb
     ):
         assert await async_setup_component(
-            opp,
+            opp.
             DOMAIN,
             {
                 DOMAIN: {
@@ -176,7 +176,7 @@ async def test_bulb_off_while_adding_in_ha.opp: OpenPeerPower):
     type(mocked_bulb).get_capabilities = MagicMock(CAPABILITIES)
     type(mocked_bulb).get_properties = MagicMock(None)
 
-   .opp.data[DOMAIN][DATA_CONFIG_ENTRIES][config_entry.entry_id][DATA_DEVICE].update()
+    opp.data[DOMAIN][DATA_CONFIG_ENTRIES][config_entry.entry_id][DATA_DEVICE].update()
     await opp.async_block_till_done()
 
     er = await entity_registry.async_get_registry.opp)

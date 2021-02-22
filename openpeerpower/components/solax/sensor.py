@@ -31,7 +31,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     endpoint = RealTimeDataEndpoint.opp, api)
     resp = await api.get_data()
     serial = resp.serial_number
-   .opp.async_add_job(endpoint.async_refresh)
+    opp.async_add_job(endpoint.async_refresh)
     async_track_time_interval.opp, endpoint.async_refresh, SCAN_INTERVAL)
     devices = []
     for sensor, (idx, unit) in api.inverter.sensor_map().items():

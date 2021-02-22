@@ -96,7 +96,7 @@ async def test_one_lock_operation.opp):
     )
     assert lock_operator_sensor
     assert (
-       .opp.states.get("sensor.online_with_doorsense_name_operator").state
+        opp.states.get("sensor.online_with_doorsense_name_operator").state
         == STATE_UNKNOWN
     )
 
@@ -104,7 +104,7 @@ async def test_one_lock_operation.opp):
 async def test_one_lock_unknown_state.opp):
     """Test creation of a lock with doorsense and bridge."""
     lock_one = await _mock_lock_from_fixture(
-        opp,
+        opp.
         "get_lock.online.unknown_state.json",
     )
     await _create_august_with_devices.opp, [lock_one])

@@ -9,8 +9,8 @@ from openpeerpower.components.nws.const import DOMAIN
 
 async def test_form.opp, mock_simple_nws_config):
     """Test we get the form."""
-   .opp.config.latitude = 35
-   .opp.config.longitude = -90
+    opp.config.latitude = 35
+    opp.config.longitude = -90
 
     await setup.async_setup_component.opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(

@@ -28,7 +28,7 @@ def _schema_value(value):
 
 
 async def async_attach_trigger(
-    opp, config, action, automation_info, *, platform_type="event"
+    opp. config, action, automation_info, *, platform_type="event"
 ):
     """Listen for events based on configuration."""
     variables = None
@@ -88,7 +88,7 @@ async def async_attach_trigger(
             # If event doesn't match, skip event
             return
 
-       .opp.async_run.opp_job(
+        opp.async_run.opp_job(
             job,
             {
                 "trigger": {
@@ -101,7 +101,7 @@ async def async_attach_trigger(
         )
 
     removes = [
-       .opp.bus.async_listen(event_type, handle_event) for event_type in event_types
+        opp.bus.async_listen(event_type, handle_event) for event_type in event_types
     ]
 
     @callback

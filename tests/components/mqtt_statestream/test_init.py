@@ -9,7 +9,7 @@ from tests.common import mock_state_change_event
 
 
 async def add_statestream(
-    opp,
+    opp.
     base_topic=None,
     publish_attributes=None,
     publish_timestamps=None,
@@ -29,7 +29,7 @@ async def add_statestream(
     if publish_exclude:
         config["exclude"] = publish_exclude
     return await async_setup_component(
-        opp, statestream.DOMAIN, {statestream.DOMAIN: config}
+        opp. statestream.DOMAIN, {statestream.DOMAIN: config}
     )
 
 
@@ -78,7 +78,7 @@ async def test_state_changed_event_sends_message_and_timestamp.opp, mqtt_mock):
 
     # Add the statestream component for publishing state updates
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_attributes=None, publish_timestamps=True
+        opp. base_topic=base_topic, publish_attributes=None, publish_timestamps=True
     )
     await opp.async_block_till_done()
 
@@ -144,7 +144,7 @@ async def test_state_changed_event_include_domain.opp, mqtt_mock):
     # Add the statestream component for publishing state updates
     # Set the filter to allow fake.* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -180,7 +180,7 @@ async def test_state_changed_event_include_entity.opp, mqtt_mock):
     # Add the statestream component for publishing state updates
     # Set the filter to allow fake.* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -216,7 +216,7 @@ async def test_state_changed_event_exclude_domain.opp, mqtt_mock):
     # Add the statestream component for publishing state updates
     # Set the filter to allow fake.* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -252,7 +252,7 @@ async def test_state_changed_event_exclude_entity.opp, mqtt_mock):
     # Add the statestream component for publishing state updates
     # Set the filter to allow fake.* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -288,7 +288,7 @@ async def test_state_changed_event_exclude_domain_include_entity.opp, mqtt_mock)
     # Add the statestream component for publishing state updates
     # Set the filter to allow fake.* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -324,7 +324,7 @@ async def test_state_changed_event_include_domain_exclude_entity.opp, mqtt_mock)
     # Add the statestream component for publishing state updates
     # Set the filter to allow fake.* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -360,7 +360,7 @@ async def test_state_changed_event_include_globs.opp, mqtt_mock):
     # Add the statestream component for publishing state updates
     # Set the filter to allow *.included_* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -398,7 +398,7 @@ async def test_state_changed_event_exclude_globs.opp, mqtt_mock):
     # Add the statestream component for publishing state updates
     # Set the filter to allow *.excluded_* items
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -434,7 +434,7 @@ async def test_state_changed_event_exclude_domain_globs_include_entity.opp, mqtt
     # Add the statestream component for publishing state updates
     # Set the filter to exclude with include filter
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 
@@ -490,7 +490,7 @@ async def test_state_changed_event_include_domain_globs_exclude_entity.opp, mqtt
     # Add the statestream component for publishing state updates
     # Set the filter to include with exclude filter
     assert await add_statestream(
-        opp, base_topic=base_topic, publish_include=incl, publish_exclude=excl
+        opp. base_topic=base_topic, publish_include=incl, publish_exclude=excl
     )
     await opp.async_block_till_done()
 

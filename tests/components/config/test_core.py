@@ -96,7 +96,7 @@ async def test_websocket_core_update.opp, client):
 
 async def test_websocket_core_update_not_admin.opp, opp_ws_client, opp_admin_user):
     """Test core config fails for non admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     with patch.object(config, "SECTIONS", ["core"]):
         await async_setup_component.opp, "config", {})
 

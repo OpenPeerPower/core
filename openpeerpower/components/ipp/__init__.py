@@ -41,7 +41,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     """Set up the IPP component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -52,14 +52,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not coordinator:
         # Create IPP instance for this entry
         coordinator = IPPDataUpdateCoordinator(
-            opp,
+            opp.
             host=entry.data[CONF_HOST],
             port=entry.data[CONF_PORT],
             base_path=entry.data[CONF_BASE_PATH],
             tls=entry.data[CONF_SSL],
             verify_ssl=entry.data[CONF_VERIFY_SSL],
         )
-       .opp.data[DOMAIN][entry.entry_id] = coordinator
+        opp.data[DOMAIN][entry.entry_id] = coordinator
 
     await coordinator.async_refresh()
 
@@ -67,8 +67,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -79,14 +79,14 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -96,7 +96,7 @@ class IPPDataUpdateCoordinator(DataUpdateCoordinator[IPPPrinter]):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         *,
         host: str,
         port: int,
@@ -115,7 +115,7 @@ class IPPDataUpdateCoordinator(DataUpdateCoordinator[IPPPrinter]):
         )
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

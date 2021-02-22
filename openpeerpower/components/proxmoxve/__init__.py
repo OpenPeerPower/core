@@ -85,11 +85,11 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the platform."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     def build_client() -> ProxmoxAPI:
         """Build the Proxmox client connection."""
-       .opp.data[PROXMOX_CLIENTS] = {}
+        opp.data[PROXMOX_CLIENTS] = {}
         for entry in config[DOMAIN]:
             host = entry[CONF_HOST]
             port = entry[CONF_PORT]
@@ -175,21 +175,21 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         return await opp.async_add_executor_job(poll_api)
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="proxmox_coordinator",
         update_method=async_update_data,
         update_interval=timedelta(seconds=UPDATE_INTERVAL),
     )
 
-   .opp.data[DOMAIN][COORDINATOR] = coordinator
+    opp.data[DOMAIN][COORDINATOR] = coordinator
 
     # Fetch initial data
     await coordinator.async_refresh()
 
     for component in PLATFORMS:
         await opp.async_create_task(
-           .opp.helpers.discovery.async_load_platform(
+            opp.helpers.discovery.async_load_platform(
                 component, DOMAIN, {"config": config}, config
             )
         )

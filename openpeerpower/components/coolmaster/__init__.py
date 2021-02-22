@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, config):
     """Set up Coolmaster components."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -32,12 +32,12 @@ async def async_setup_entry.opp, entry):
         raise ConfigEntryNotReady() from error
     coordinator = CoolmasterDataUpdateCoordinator.opp, coolmaster)
     await coordinator.async_refresh()
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_INFO: info,
         DATA_COORDINATOR: coordinator,
     }
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "climate")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "climate")
     )
 
     return True
@@ -48,7 +48,7 @@ async def async_unload_entry.opp, entry):
     unload_ok = await opp.config_entries.async_forward_entry_unload(entry, "climate")
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -61,7 +61,7 @@ class CoolmasterDataUpdateCoordinator(DataUpdateCoordinator):
         self._coolmaster = coolmaster
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

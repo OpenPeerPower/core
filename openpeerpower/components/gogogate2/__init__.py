@@ -26,7 +26,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         }
 
     if config_updates:
-       .opp.config_entries.async_update_entry(config_entry, **config_updates)
+        opp.config_entries.async_update_entry(config_entry, **config_updates)
 
     data_update_coordinator = get_data_update_coordinator.opp, config_entry)
     await data_update_coordinator.async_refresh()
@@ -34,8 +34,8 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     if not data_update_coordinator.last_update_success:
         raise ConfigEntryNotReady()
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, COVER_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, COVER_DOMAIN)
     )
 
     return True
@@ -43,8 +43,8 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload Gogogate2 config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
     )
 
     return True

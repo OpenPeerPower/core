@@ -19,7 +19,7 @@ def mock_user_data():
 @pytest.fixture
 def mock_cloud_fixture.opp):
     """Fixture for cloud component."""
-   .opp.loop.run_until_complete(mock_cloud.opp))
+    opp.loop.run_until_complete(mock_cloud.opp))
     return mock_cloud_prefs.opp)
 
 
@@ -40,7 +40,7 @@ async def mock_cloud_setup_opp):
 @pytest.fixture
 def mock_cloud_login.opp, mock_cloud_setup):
     """Mock cloud is logged in."""
-   .opp.data[const.DOMAIN].id_token = jwt.encode(
+    opp.data[const.DOMAIN].id_token = jwt.encode(
         {
             "email": "hello@open-peer-power.io",
             "custom:sub-exp": "2300-01-03",
@@ -53,7 +53,7 @@ def mock_cloud_login.opp, mock_cloud_setup):
 @pytest.fixture
 def mock_expired_cloud_login.opp, mock_cloud_setup):
     """Mock cloud is logged in."""
-   .opp.data[const.DOMAIN].id_token = jwt.encode(
+    opp.data[const.DOMAIN].id_token = jwt.encode(
         {
             "email": "hello@open-peer-power.io",
             "custom:sub-exp": "2018-01-01",

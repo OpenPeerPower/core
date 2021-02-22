@@ -51,7 +51,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities) -> None:
 
     gateway.listeners.append(
         async_dispatcher_connect(
-            opp, gateway.async_signal_new_device(NEW_LIGHT), async_add_fan
+            opp. gateway.async_signal_new_device(NEW_LIGHT), async_add_fan
         )
     )
 

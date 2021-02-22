@@ -66,7 +66,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, config):
     """Set up the Almond component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     if DOMAIN not in config:
         return True
@@ -77,9 +77,9 @@ async def async_setup_opp, config):
 
     if conf[CONF_TYPE] == TYPE_OAUTH2:
         config_flow.AlmondFlowHandler.async_register_implementation(
-            opp,
+            opp.
             config_entry_oauth2_flow.LocalOAuth2Implementation(
-                opp,
+                opp.
                 DOMAIN,
                 conf[CONF_CLIENT_ID],
                 conf[CONF_CLIENT_SECRET],
@@ -90,8 +90,8 @@ async def async_setup_opp, config):
         return True
 
     if not.opp.config_entries.async_entries(DOMAIN):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": config_entries.SOURCE_IMPORT},
                 data={"type": TYPE_LOCAL, "host": conf[CONF_HOST]},
@@ -110,11 +110,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
         # OAuth2
         implementation = (
             await config_entry_oauth2_flow.async_get_config_entry_implementation(
-                opp, entry
+                opp. entry
             )
         )
         oauth_session = config_entry_oauth2_flow.OAuth2Session(
-            opp, entry, implementation
+            opp. entry, implementation
         )
         auth = AlmondOAuth(entry.data["host"], websession, oauth_session)
 
@@ -142,23 +142,23 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
             async def almond.opp_start(_event):
                 event.async_call_later.opp, ALMOND_SETUP_DELAY, configure_almond)
 
-           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, almond.opp_start)
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, almond.opp_start)
 
     conversation.async_set_agent.opp, agent)
     return True
 
 
 async def _configure_almond_for_ha(
-    opp: OpenPeerPower, entry: config_entries.ConfigEntry, api: WebAlmondAPI
+    opp. OpenPeerPower, entry: config_entries.ConfigEntry, api: WebAlmondAPI
 ):
     """Configure Almond to connect to HA."""
     try:
         if entry.data["type"] == TYPE_OAUTH2:
             # If we're connecting over OAuth2, we will only set up connection
             # with Open Peer Power if we're remotely accessible.
-           .opp_url = network.get_url.opp, allow_internal=False, prefer_cloud=True)
+            opp.url = network.get_url.opp, allow_internal=False, prefer_cloud=True)
         else:
-           .opp_url = network.get_url.opp)
+            opp.url = network.get_url.opp)
     except network.NoURLAvailableError:
         # If no URL is available, we're not going to configure Almond to connect to HA.
         return
@@ -194,7 +194,7 @@ async def _configure_almond_for_ha(
             await api.async_create_device(
                 {
                     "kind": "io.open-peer-power",
-                    .oppUrl":.opp_url,
+                     opp.rl":.opp_url,
                     "accessToken": access_token,
                     "refreshToken": "",
                     # 5 years from now in ms.

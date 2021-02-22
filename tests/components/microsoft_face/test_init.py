@@ -27,7 +27,7 @@ def create_group.opp, name):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_NAME: name}
-   .opp.services.call(DOMAIN, SERVICE_CREATE_GROUP, data)
+    opp.services.call(DOMAIN, SERVICE_CREATE_GROUP, data)
 
 
 def delete_group.opp, name):
@@ -36,7 +36,7 @@ def delete_group.opp, name):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_NAME: name}
-   .opp.services.call(DOMAIN, SERVICE_DELETE_GROUP, data)
+    opp.services.call(DOMAIN, SERVICE_DELETE_GROUP, data)
 
 
 def train_group.opp, group):
@@ -45,7 +45,7 @@ def train_group.opp, group):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_GROUP: group}
-   .opp.services.call(DOMAIN, SERVICE_TRAIN_GROUP, data)
+    opp.services.call(DOMAIN, SERVICE_TRAIN_GROUP, data)
 
 
 def create_person.opp, group, name):
@@ -54,7 +54,7 @@ def create_person.opp, group, name):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_GROUP: group, ATTR_NAME: name}
-   .opp.services.call(DOMAIN, SERVICE_CREATE_PERSON, data)
+    opp.services.call(DOMAIN, SERVICE_CREATE_PERSON, data)
 
 
 def delete_person.opp, group, name):
@@ -63,7 +63,7 @@ def delete_person.opp, group, name):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_GROUP: group, ATTR_NAME: name}
-   .opp.services.call(DOMAIN, SERVICE_DELETE_PERSON, data)
+    opp.services.call(DOMAIN, SERVICE_DELETE_PERSON, data)
 
 
 def face_person.opp, group, person, camera_entity):
@@ -72,7 +72,7 @@ def face_person.opp, group, person, camera_entity):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_GROUP: group, ATTR_PERSON: person, ATTR_CAMERA_ENTITY: camera_entity}
-   .opp.services.call(DOMAIN, SERVICE_FACE_PERSON, data)
+    opp.services.call(DOMAIN, SERVICE_FACE_PERSON, data)
 
 
 class TestMicrosoftFaceSetup:

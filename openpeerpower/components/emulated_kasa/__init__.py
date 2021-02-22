@@ -71,9 +71,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         except OSError as error:
             _LOGGER.error("Failed to create UDP server at port 9999: %s", error)
         else:
-           .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_emulated_kasa)
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_emulated_kasa)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, start_emulated_kasa)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, start_emulated_kasa)
 
     return True
 

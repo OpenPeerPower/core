@@ -118,7 +118,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
     assert len(actions) == 3
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         assert capabilities == {"extra_fields": []}
 
@@ -154,7 +154,7 @@ async def test_get_action_capabilities_brightness.opp, device_reg, entity_reg):
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         if action["type"] == "turn_on":
             assert capabilities == expected_capabilities
@@ -193,7 +193,7 @@ async def test_get_action_capabilities_flash.opp, device_reg, entity_reg):
     assert len(actions) == 4
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp, "action", action
+            opp. "action", action
         )
         if action["type"] == "turn_on":
             assert capabilities == expected_capabilities
@@ -212,7 +212,7 @@ async def test_action.opp, calls):
     ent1, ent2, ent3 = platform.ENTITIES
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -303,84 +303,84 @@ async def test_action.opp, calls):
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
-   .opp.bus.async_fire("test_off")
+    opp.bus.async_fire("test_off")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_off")
+    opp.bus.async_fire("test_off")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_on")
+    opp.bus.async_fire("test_on")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
-   .opp.bus.async_fire("test_on")
+    opp.bus.async_fire("test_on")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
-   .opp.bus.async_fire("test_toggle")
+    opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_toggle")
+    opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
-   .opp.bus.async_fire("test_toggle")
+    opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_flash_short")
+    opp.bus.async_fire("test_flash_short")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
-   .opp.bus.async_fire("test_toggle")
+    opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_OFF
 
-   .opp.bus.async_fire("test_flash_long")
+    opp.bus.async_fire("test_flash_long")
     await opp.async_block_till_done()
     assert.opp.states.get(ent1.entity_id).state == STATE_ON
 
     turn_on_calls = async_mock_service.opp, DOMAIN, "turn_on")
 
-   .opp.bus.async_fire("test_brightness_increase")
+    opp.bus.async_fire("test_brightness_increase")
     await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 1
     assert turn_on_calls[0].data["entity_id"] == ent1.entity_id
     assert turn_on_calls[0].data["brightness_step_pct"] == 10
 
-   .opp.bus.async_fire("test_brightness_decrease")
+    opp.bus.async_fire("test_brightness_decrease")
     await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 2
     assert turn_on_calls[1].data["entity_id"] == ent1.entity_id
     assert turn_on_calls[1].data["brightness_step_pct"] == -10
 
-   .opp.bus.async_fire("test_brightness")
+    opp.bus.async_fire("test_brightness")
     await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 3
     assert turn_on_calls[2].data["entity_id"] == ent1.entity_id
     assert turn_on_calls[2].data["brightness_pct"] == 75
 
-   .opp.bus.async_fire("test_on")
+    opp.bus.async_fire("test_on")
     await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 4
     assert turn_on_calls[3].data["entity_id"] == ent1.entity_id
     assert "brightness_pct" not in turn_on_calls[3].data
 
-   .opp.bus.async_fire("test_flash_short")
+    opp.bus.async_fire("test_flash_short")
     await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 5
     assert turn_on_calls[4].data["entity_id"] == ent1.entity_id
     assert turn_on_calls[4].data["flash"] == FLASH_SHORT
 
-   .opp.bus.async_fire("test_flash_long")
+    opp.bus.async_fire("test_flash_long")
     await opp.async_block_till_done()
 
     assert len(turn_on_calls) == 6

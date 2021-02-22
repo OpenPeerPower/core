@@ -24,7 +24,7 @@ class SharkIqUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         config_entry: ConfigEntry,
         ayla_api: AylaApi,
         shark_vacs: List[SharkIqVacuum],

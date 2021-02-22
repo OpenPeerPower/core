@@ -23,7 +23,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_light_state(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the Elgato Key Lights."""
     await init_integration.opp, aioclient_mock)
@@ -43,7 +43,7 @@ async def test_light_state(
 
 
 async def test_light_change_state(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the change of state of a Elgato Key Light device."""
     await init_integration.opp, aioclient_mock)
@@ -85,7 +85,7 @@ async def test_light_change_state(
 
 
 async def test_light_unavailable(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test error/unavailable handling of an Elgato Key Light."""
     await init_integration.opp, aioclient_mock)

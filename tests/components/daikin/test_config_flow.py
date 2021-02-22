@@ -137,7 +137,7 @@ async def test_device_abort.opp, mock_daikin, s_effect, reason):
     ],
 )
 async def test_discovery_zeroconf(
-    opp, mock_daikin, mock_daikin_discovery, source, data, unique_id
+    opp. mock_daikin, mock_daikin_discovery, source, data, unique_id
 ):
     """Test discovery/zeroconf step."""
     result = await opp.config_entries.flow.async_init(

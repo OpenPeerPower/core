@@ -16,7 +16,7 @@ VALID_NUMBER2 = "99.9"
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Number states."""
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "number.test_number", VALID_NUMBER1, {ATTR_MIN: 5, ATTR_MAX: 100}
     )
 

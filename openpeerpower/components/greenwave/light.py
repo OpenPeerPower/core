@@ -39,7 +39,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                 token = tokenfile.read()
         else:
             try:
-                token = greenwave.grab_token(host, .opp", "openpeerpower")
+                token = greenwave.grab_token(host,  opp., "openpeerpower")
             except PermissionError:
                 _LOGGER.error("The Gateway Is Not In Sync Mode")
                 raise

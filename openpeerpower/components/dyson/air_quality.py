@@ -19,7 +19,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-   .opp.data.setdefault(DYSON_AIQ_DEVICES, [])
+    opp.data.setdefault(DYSON_AIQ_DEVICES, [])
 
     # Get Dyson Devices from parent component
     device_ids = [device.unique_id for device in.opp.data[DYSON_AIQ_DEVICES]]
@@ -31,7 +31,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if not new_entities:
         return
 
-   .opp.data[DYSON_AIQ_DEVICES].extend(new_entities)
+    opp.data[DYSON_AIQ_DEVICES].extend(new_entities)
     add_entities.opp.data[DYSON_AIQ_DEVICES])
 
 

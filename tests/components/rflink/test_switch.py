@@ -36,7 +36,7 @@ async def test_default_setup_opp, monkeypatch):
     """Test all basic functionality of the rflink switch component."""
     # setup mocking rflink module
     event_callback, create, protocol, _ = await mock_rflink(
-        opp, CONFIG, DOMAIN, monkeypatch
+        opp. CONFIG, DOMAIN, monkeypatch
     )
 
     # make sure arguments are passed
@@ -76,8 +76,8 @@ async def test_default_setup_opp, monkeypatch):
     # events because every new unknown device is added as a light by default.
 
     # test changing state from HA propagates to Rflink
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -86,8 +86,8 @@ async def test_default_setup_opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "off"
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -209,7 +209,7 @@ async def test_device_defaults.opp, monkeypatch):
     def listener(event):
         calls.append(event)
 
-   .opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
+    opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "off"})
@@ -240,7 +240,7 @@ async def test_not_firing_default.opp, monkeypatch):
     def listener(event):
         calls.append(event)
 
-   .opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
+    opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "off"})
@@ -264,10 +264,10 @@ async def test_restore_state.opp, monkeypatch):
     }
 
     mock_restore_cache(
-        opp, (State(f"{DOMAIN}.s1", STATE_ON), State(f"{DOMAIN}.s2", STATE_OFF))
+        opp. (State(f"{DOMAIN}.s1", STATE_ON), State(f"{DOMAIN}.s2", STATE_OFF))
     )
 
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     # setup mocking rflink module
     _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)

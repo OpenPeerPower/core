@@ -45,8 +45,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         return True
 
     for city_conf in conf:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=city_conf
             )
         )
@@ -56,7 +56,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up an Meteo-France account from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     latitude = entry.data.get(CONF_LATITUDE)
 
@@ -66,7 +66,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         places = await opp.async_add_executor_job(
             client.search_places, entry.data[CONF_CITY]
         )
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry,
             title=f"{places[0]}",
             data={
@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         )
 
     coordinator_forecast = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=f"Météo-France forecast for city {entry.title}",
         update_method=_async_update_data_forecast_forecast,
@@ -113,7 +113,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     # Check if rain forecast is available.
     if coordinator_forecast.data.position.get("rain_product_available") == 1:
         coordinator_rain = DataUpdateCoordinator(
-            opp,
+            opp.
             _LOGGER,
             name=f"Météo-France rain for city {entry.title}",
             update_method=_async_update_data_rain,
@@ -138,7 +138,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     if is_valid_warning_department(department):
         if not.opp.data[DOMAIN].get(department):
             coordinator_alert = DataUpdateCoordinator(
-                opp,
+                opp.
                 _LOGGER,
                 name=f"Météo-France alert for department {department}",
                 update_method=_async_update_data_alert,
@@ -150,7 +150,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             if not coordinator_alert.last_update_success:
                 raise ConfigEntryNotReady
 
-           .opp.data[DOMAIN][department] = True
+            opp.data[DOMAIN][department] = True
         else:
             _LOGGER.warning(
                 "Weather alert for department %s won't be added with city %s, as it has already been added within another city",
@@ -165,7 +165,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR_FORECAST: coordinator_forecast,
         COORDINATOR_RAIN: coordinator_rain,
         COORDINATOR_ALERT: coordinator_alert,
@@ -173,8 +173,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     }
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -187,7 +187,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         department = opp.data[DOMAIN][entry.entry_id][
             COORDINATOR_FORECAST
         ].data.position.get("dept")
-       .opp.data[DOMAIN][department] = False
+        opp.data[DOMAIN][department] = False
         _LOGGER.debug(
             "Weather alert for depatment %s unloaded and released. It can be added now by another city.",
             department,
@@ -196,16 +196,16 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+        opp.data[DOMAIN].pop(entry.entry_id)
         if not.opp.data[DOMAIN]:
-           .opp.data.pop(DOMAIN)
+            opp.data.pop(DOMAIN)
 
     return unload_ok
 

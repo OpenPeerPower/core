@@ -59,7 +59,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
         """On Open Peer Power stop, gracefully stop the bridge if running."""
         await v2bridge.stop()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_bridge)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_bridge)
 
     try:
         device_data = await wait_for(v2bridge.queue.get(), timeout=10.0)
@@ -67,9 +67,9 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
         _LOGGER.exception("Failed to get response from device")
         await v2bridge.stop()
         return False
-   .opp.data[DOMAIN] = {DATA_DEVICE: device_data}
+    opp.data[DOMAIN] = {DATA_DEVICE: device_data}
 
-   .opp.async_create_task(async_load_platform.opp, SWITCH_DOMAIN, DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, SWITCH_DOMAIN, DOMAIN, {}, config))
 
     @callback
     def device_updates(timestamp: Optional[datetime]) -> None:
@@ -79,7 +79,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
                 device_new_data = v2bridge.queue.get_nowait()
                 if device_new_data:
                     async_dispatcher_send(
-                        opp, SIGNAL_SWITCHER_DEVICE_UPDATE, device_new_data
+                        opp. SIGNAL_SWITCHER_DEVICE_UPDATE, device_new_data
                     )
             except QueueEmpty:
                 pass

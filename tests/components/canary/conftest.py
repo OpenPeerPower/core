@@ -8,7 +8,7 @@ from pytest import fixture
 @fixture(autouse=True)
 def mock_ffmpeg.opp):
     """Mock ffmpeg is loaded."""
-   .opp.config.components.add("ffmpeg")
+    opp.config.components.add("ffmpeg")
 
 
 @fixture

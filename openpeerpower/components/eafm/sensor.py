@@ -65,8 +65,8 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
         return data
 
-   .opp.data[DOMAIN][station_key] = coordinator = DataUpdateCoordinator(
-        opp,
+    opp.data[DOMAIN][station_key] = coordinator = DataUpdateCoordinator(
+        opp.
         _LOGGER,
         name="sensor",
         update_method=async_update_data,

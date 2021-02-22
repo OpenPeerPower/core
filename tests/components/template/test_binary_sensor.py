@@ -40,7 +40,7 @@ async def test_setup_no_sensors.opp):
     """Test setup with no sensors."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-            opp, binary_sensor.DOMAIN, {"binary_sensor": {"platform": "template"}}
+            opp. binary_sensor.DOMAIN, {"binary_sensor": {"platform": "template"}}
         )
 
 
@@ -48,7 +48,7 @@ async def test_setup_invalid_device.opp):
     """Test the setup with invalid devices."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             binary_sensor.DOMAIN,
             {"binary_sensor": {"platform": "template", "sensors": {"foo bar": {}}}},
         )
@@ -58,7 +58,7 @@ async def test_setup_invalid_device_class.opp):
     """Test setup with invalid sensor class."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -78,7 +78,7 @@ async def test_setup_invalid_missing_template.opp):
     """Test setup with invalid and missing template."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -93,7 +93,7 @@ async def test_icon_template.opp):
     """Test icon template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -119,7 +119,7 @@ async def test_icon_template.opp):
     state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes.get("icon") == ""
 
-   .opp.states.async_set("binary_sensor.test_state", "Works")
+    opp.states.async_set("binary_sensor.test_state", "Works")
     await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes["icon"] == "mdi:check"
@@ -129,7 +129,7 @@ async def test_entity_picture_template.opp):
     """Test entity_picture template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -155,7 +155,7 @@ async def test_entity_picture_template.opp):
     state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes.get("entity_picture") == ""
 
-   .opp.states.async_set("binary_sensor.test_state", "Works")
+    opp.states.async_set("binary_sensor.test_state", "Works")
     await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes["entity_picture"] == "/local/sensor.png"
@@ -165,7 +165,7 @@ async def test_attribute_templates.opp):
     """Test attribute_templates template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             binary_sensor.DOMAIN,
             {
                 "binary_sensor": {
@@ -188,9 +188,9 @@ async def test_attribute_templates.opp):
 
     state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes.get("test_attribute") == "It ."
-   .opp.states.async_set("sensor.test_state", "Works2")
+    opp.states.async_set("sensor.test_state", "Works2")
     await opp.async_block_till_done()
-   .opp.states.async_set("sensor.test_state", "Works")
+    opp.states.async_set("sensor.test_state", "Works")
     await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test_template_sensor")
     assert state.attributes["test_attribute"] == "It Works."
@@ -204,7 +204,7 @@ async def test_match_all.opp):
     ) as _update_state:
         with assert_setup_component(1):
             assert await setup.async_setup_component(
-                opp,
+                opp.
                 binary_sensor.DOMAIN,
                 {
                     "binary_sensor": {
@@ -228,7 +228,7 @@ async def test_match_all.opp):
             await opp.async_block_till_done()
             init_calls = len(_update_state.mock_calls)
 
-           .opp.states.async_set("sensor.any_state", "update")
+            opp.states.async_set("sensor.any_state", "update")
             await opp.async_block_till_done()
             assert len(_update_state.mock_calls) == init_calls
 
@@ -257,7 +257,7 @@ async def test_event.opp):
     state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -283,7 +283,7 @@ async def test_template_delay_on.opp):
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -297,19 +297,19 @@ async def test_template_delay_on.opp):
     assert state.state == "on"
 
     # check with time changes
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -338,12 +338,12 @@ async def test_template_delay_off.opp):
             },
         }
     }
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -357,19 +357,19 @@ async def test_template_delay_off.opp):
     assert state.state == "off"
 
     # check with time changes
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -402,7 +402,7 @@ async def test_template_with_templated_delay_on.opp):
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -416,19 +416,19 @@ async def test_template_with_templated_delay_on.opp):
     assert state.state == "on"
 
     # check with time changes
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -457,12 +457,12 @@ async def test_template_with_templated_delay_off.opp):
             },
         }
     }
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await setup.async_setup_component.opp, binary_sensor.DOMAIN, config)
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -476,19 +476,19 @@ async def test_template_with_templated_delay_off.opp):
     assert state.state == "off"
 
     # check with time changes
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -521,16 +521,16 @@ async def test_template_with_delay_on_based_on_input.opp):
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
-   .opp.states.async_set("input_number.delay", 3)
+    opp.states.async_set("input_number.delay", 3)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -544,16 +544,16 @@ async def test_template_with_delay_on_based_on_input.opp):
     assert state.state == "on"
 
     # set input to 4 seconds
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "off"
 
-   .opp.states.async_set("input_number.delay", 4)
+    opp.states.async_set("input_number.delay", 4)
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -593,16 +593,16 @@ async def test_template_with_delay_off_based_on_input.opp):
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
-   .opp.states.async_set("input_number.delay", 3)
+    opp.states.async_set("input_number.delay", 3)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -616,16 +616,16 @@ async def test_template_with_delay_off_based_on_input.opp):
     assert state.state == "off"
 
     # set input to 4 seconds
-   .opp.states.async_set("sensor.test_state", "on")
+    opp.states.async_set("sensor.test_state", "on")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.state == "on"
 
-   .opp.states.async_set("input_number.delay", 4)
+    opp.states.async_set("input_number.delay", 4)
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sensor.test_state", "off")
+    opp.states.async_set("sensor.test_state", "off")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -693,12 +693,12 @@ async def test_availability_template.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sensor.test_state", STATE_OFF)
+    opp.states.async_set("sensor.test_state", STATE_OFF)
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test").state == STATE_UNAVAILABLE
 
-   .opp.states.async_set("sensor.test_state", STATE_ON)
+    opp.states.async_set("sensor.test_state", STATE_ON)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
@@ -709,10 +709,10 @@ async def test_availability_template.opp):
 
 async def test_invalid_attribute_template.opp, caplog):
     """Test that errors are logged if rendering template fails."""
-   .opp.states.async_set("binary_sensor.test_sensor", "true")
+    opp.states.async_set("binary_sensor.test_sensor", "true")
 
     await setup.async_setup_component(
-        opp,
+        opp.
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -741,7 +741,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     """Test that an invalid availability keeps the device available."""
 
     await setup.async_setup_component(
-        opp,
+        opp.
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -765,12 +765,12 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 
 async def test_no_update_template_match_all.opp, caplog):
     """Test that we do not update sensors that match on all."""
-   .opp.states.async_set("binary_sensor.test_sensor", "true")
+    opp.states.async_set("binary_sensor.test_sensor", "true")
 
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     await setup.async_setup_component(
-        opp,
+        opp.
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -801,7 +801,7 @@ async def test_no_update_template_match_all.opp, caplog):
     assert.opp.states.get("binary_sensor.all_entity_picture").state == "off"
     assert.opp.states.get("binary_sensor.all_attribute").state == "off"
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.all_state").state == "on"
@@ -809,7 +809,7 @@ async def test_no_update_template_match_all.opp, caplog):
     assert.opp.states.get("binary_sensor.all_entity_picture").state == "on"
     assert.opp.states.get("binary_sensor.all_attribute").state == "on"
 
-   .opp.states.async_set("binary_sensor.test_sensor", "false")
+    opp.states.async_set("binary_sensor.test_sensor", "false")
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.all_state").state == "on"
@@ -836,7 +836,7 @@ async def test_no_update_template_match_all.opp, caplog):
 async def test_unique_id.opp):
     """Test unique_id option only creates one binary sensor per id."""
     await setup.async_setup_component(
-        opp,
+        opp.
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -887,13 +887,13 @@ async def test_template_validation_error(opp, caplog):
     state = opp.states.get("binary_sensor.test")
     assert state.attributes.get("icon") == ""
 
-   .opp.states.async_set("sensor.test_state", "mdi:check")
+    opp.states.async_set("sensor.test_state", "mdi:check")
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test")
     assert state.attributes.get("icon") == "mdi:check"
 
-   .opp.states.async_set("sensor.test_state", "invalid_icon")
+    opp.states.async_set("sensor.test_state", "invalid_icon")
     await opp.async_block_till_done()
     assert len(caplog.records) == 1
     assert caplog.records[0].message.startswith(

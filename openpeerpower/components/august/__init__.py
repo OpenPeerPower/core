@@ -82,7 +82,7 @@ async def async_request_validation.opp, config_entry, august_gateway):
 
         if result == ValidationResult.INVALID_VERIFICATION_CODE:
             configurator.async_notify_errors(
-               .opp.data[DOMAIN][entry_id][TWO_FA_REVALIDATE],
+                opp.data[DOMAIN][entry_id][TWO_FA_REVALIDATE],
                 "Invalid verification code, please make sure you are using the latest code and try again.",
             )
         elif result == ValidationResult.VALIDATED:
@@ -97,7 +97,7 @@ async def async_request_validation.opp, config_entry, august_gateway):
     login_method = entry_data.get(CONF_LOGIN_METHOD)
     username = entry_data.get(CONF_USERNAME)
 
-   .opp.data[DOMAIN][entry_id][TWO_FA_REVALIDATE] = configurator.async_request_config(
+    opp.data[DOMAIN][entry_id][TWO_FA_REVALIDATE] = configurator.async_request_config(
         f"{DEFAULT_NAME} ({username})",
         async_august_configuration_validation_callback,
         description=(
@@ -117,7 +117,7 @@ async def async_setup_august.opp, config_entry, august_gateway):
     """Set up the August component."""
 
     entry_id = config_entry.entry_id
-   .opp.data[DOMAIN].setdefault(entry_id, {})
+    opp.data[DOMAIN].setdefault(entry_id, {})
 
     try:
         await august_gateway.async_authenticate()
@@ -129,17 +129,17 @@ async def async_setup_august.opp, config_entry, august_gateway):
     # when needed since config_flow doesn't have a way
     # to re-request if it expires
     if TWO_FA_REVALIDATE in.opp.data[DOMAIN][entry_id]:
-       .opp.components.configurator.async_request_done(
-           .opp.data[DOMAIN][entry_id].pop(TWO_FA_REVALIDATE)
+        opp.components.configurator.async_request_done(
+            opp.data[DOMAIN][entry_id].pop(TWO_FA_REVALIDATE)
         )
 
-   .opp.data[DOMAIN][entry_id][DATA_AUGUST] = AugustData.opp, august_gateway)
+    opp.data[DOMAIN][entry_id][DATA_AUGUST] = AugustData.opp, august_gateway)
 
     await opp.data[DOMAIN][entry_id][DATA_AUGUST].async_setup()
 
     for component in AUGUST_COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -149,13 +149,13 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the August component from YAML."""
 
     conf = config.get(DOMAIN)
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if not conf:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={
@@ -194,8 +194,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 
 def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth"},
             data=entry.data,
@@ -209,14 +209,14 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in AUGUST_COMPONENTS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

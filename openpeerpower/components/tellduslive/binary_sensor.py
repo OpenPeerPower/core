@@ -15,7 +15,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([TelldusLiveSensor(client, device_id)])
 
     async_dispatcher_connect(
-        opp,
+        opp.
         tellduslive.TELLDUS_DISCOVERY_NEW.format(
             binary_sensor.DOMAIN, tellduslive.DOMAIN
         ),

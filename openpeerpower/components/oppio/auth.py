@@ -28,8 +28,8 @@ def async_setup_auth_view.opp.OpenPeerPowerType, user: User):
     opp._auth = OppIOAuth.opp.user)
     opp._password_reset = OppIOPasswordReset.opp.user)
 
-   .opp.ttp.register_view(opp._auth)
-   .opp.ttp.register_view(opp._password_reset)
+    opp.ttp.register_view(opp._auth)
+    opp.ttp.register_view(opp._password_reset)
 
 
 class OppIOBaseAuth(OpenPeerPowerView):

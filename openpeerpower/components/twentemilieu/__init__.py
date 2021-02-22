@@ -28,7 +28,7 @@ SERVICE_SCHEMA = vol.Schema({vol.Optional(CONF_ID): cv.string})
 
 
 async def _update_twentemilieu(
-    opp: OpenPeerPowerType, unique_id: Optional[str]
+    opp. OpenPeerPowerType, unique_id: Optional[str]
 ) -> None:
     """Update Twente Milieu."""
     if unique_id is not None:
@@ -54,7 +54,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         unique_id = call.data.get(CONF_ID)
         await _update_twentemilieu.opp, unique_id)
 
-   .opp.services.async_register(DOMAIN, SERVICE_UPDATE, update, schema=SERVICE_SCHEMA)
+    opp.services.async_register(DOMAIN, SERVICE_UPDATE, update, schema=SERVICE_SCHEMA)
 
     return True
 
@@ -70,10 +70,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     )
 
     unique_id = entry.data[CONF_ID]
-   .opp.data.setdefault(DOMAIN, {})[unique_id] = twentemilieu
+    opp.data.setdefault(DOMAIN, {})[unique_id] = twentemilieu
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
     async def _interval_update(now=None) -> None:

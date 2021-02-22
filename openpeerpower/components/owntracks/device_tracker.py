@@ -46,7 +46,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
         entity = opp.data[OT_DOMAIN]["devices"][dev_id] = OwnTracksEntity(dev_id, data)
         async_add_entities([entity])
 
-   .opp.data[OT_DOMAIN]["context"].set_async_see(_receive_data)
+    opp.data[OT_DOMAIN]["context"].set_async_see(_receive_data)
 
     if entities:
         async_add_entities(entities)

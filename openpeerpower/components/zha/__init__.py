@@ -70,11 +70,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, config):
     """Set up ZHA from config."""
-   .opp.data[DATA_ZHA] = {}
+    opp.data[DATA_ZHA] = {}
 
     if DOMAIN in config:
         conf = config[DOMAIN]
-       .opp.data[DATA_ZHA][DATA_ZHA_CONFIG] = conf
+        opp.data[DATA_ZHA][DATA_ZHA_CONFIG] = conf
 
     return True
 
@@ -122,7 +122,7 @@ async def async_setup_entry.opp, config_entry):
         await zha_data[DATA_ZHA_GATEWAY].shutdown()
         await zha_data[DATA_ZHA_GATEWAY].async_update_device_storage()
 
-   .opp.bus.async_listen_once(ha_const.EVENT_OPENPEERPOWER_STOP, async_zha_shutdown)
+    opp.bus.async_listen_once(ha_const.EVENT_OPENPEERPOWER_STOP, async_zha_shutdown)
     asyncio.create_task(async_load_entities.opp))
     return True
 
@@ -156,7 +156,7 @@ async def async_load_entities.opp: OpenPeerPowerType) -> None:
 
 
 async def async_migrate_entry(
-    opp: OpenPeerPowerType, config_entry: config_entries.ConfigEntry
+    opp. OpenPeerPowerType, config_entry: config_entries.ConfigEntry
 ):
     """Migrate old entry."""
     _LOGGER.debug("Migrating from version %s", config_entry.version)
@@ -172,7 +172,7 @@ async def async_migrate_entry(
             data[CONF_DEVICE][CONF_BAUDRATE] = baudrate
 
         config_entry.version = 2
-       .opp.config_entries.async_update_entry(config_entry, data=data)
+        opp.config_entries.async_update_entry(config_entry, data=data)
 
     _LOGGER.info("Migration to version %s successful", config_entry.version)
     return True

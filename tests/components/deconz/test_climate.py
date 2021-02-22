@@ -119,7 +119,7 @@ async def test_simple_climate_device.opp, aioclient_mock):
         }
     }
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -202,7 +202,7 @@ async def test_climate_device_without_cooling_support.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -375,7 +375,7 @@ async def test_climate_device_with_cooling_support.opp, aioclient_mock):
         }
     }
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -452,7 +452,7 @@ async def test_climate_device_with_fan_support.opp, aioclient_mock):
         }
     }
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -580,7 +580,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
         }
     }
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 
@@ -614,7 +614,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert (
-       .opp.states.get("climate.zen_01").attributes["preset_mode"]
+        opp.states.get("climate.zen_01").attributes["preset_mode"]
         == DECONZ_PRESET_MANUAL
     )
 
@@ -672,7 +672,7 @@ async def test_clip_climate_device.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp,
+        opp.
         aioclient_mock,
         options={CONF_ALLOW_CLIP_SENSOR: True},
         get_state_response=data,
@@ -686,7 +686,7 @@ async def test_clip_climate_device.opp, aioclient_mock):
 
     # Disallow clip sensors
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: False}
     )
     await opp.async_block_till_done()
@@ -696,7 +696,7 @@ async def test_clip_climate_device.opp, aioclient_mock):
 
     # Allow clip sensors
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_CLIP_SENSOR: True}
     )
     await opp.async_block_till_done()
@@ -710,7 +710,7 @@ async def test_verify_state_update.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
+        opp. aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry.opp, config_entry)
 

@@ -45,7 +45,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         sensors.append(
             DeLijnPublicTransportSensor(
                 Passages(
-                   .opp.loop,
+                    opp.loop,
                     nextpassage[CONF_STOP_ID],
                     nextpassage[CONF_NUMBER_OF_DEPARTURES],
                     api_key,

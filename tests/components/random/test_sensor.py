@@ -14,7 +14,7 @@ async def test_random_sensor.opp):
     }
 
     assert await async_setup_component(
-        opp,
+        opp.
         "sensor",
         config,
     )

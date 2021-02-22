@@ -78,7 +78,7 @@ def async_activate_log_queue_handler.opp: OpenPeerPower) -> None:
         logging.root.removeHandler(queue_handler)
         listener.stop()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_handler)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_handler)
 
 
 def log_exception(format_err: Callable[..., Any], *args: Any) -> None:

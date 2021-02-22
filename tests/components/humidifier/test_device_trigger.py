@@ -51,7 +51,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
     entity_id = f"{DOMAIN}.test_5678"
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {
@@ -90,7 +90,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 
 async def test_if_fires_on_state_change.opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity",
         STATE_ON,
         {
@@ -102,7 +102,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -202,13 +202,13 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the humidity is changing
-   .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 7})
+    opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 7})
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "target_humidity_changed_below"
 
     # Fake that the humidity is changing
-   .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 37})
+    opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 37})
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "target_humidity_changed_above"
@@ -220,7 +220,7 @@ async def test_if_fires_on_state_change.opp, calls):
     assert calls[2].data["some"] == "target_humidity_changed_above_for"
 
     # Fake turn off
-   .opp.states.async_set("humidifier.entity", STATE_OFF, {const.ATTR_HUMIDITY: 37})
+    opp.states.async_set("humidifier.entity", STATE_OFF, {const.ATTR_HUMIDITY: 37})
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert (
@@ -228,7 +228,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake turn on
-   .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 37})
+    opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 37})
     await opp.async_block_till_done()
     assert len(calls) == 5
     assert (
@@ -238,7 +238,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
 async def test_invalid_config(opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity",
         STATE_ON,
         {
@@ -250,7 +250,7 @@ async def test_invalid_config(opp, calls):
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -274,7 +274,7 @@ async def test_invalid_config(opp, calls):
     )
 
     # Fake that the humidity is changing
-   .opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 7})
+    opp.states.async_set("humidifier.entity", STATE_ON, {const.ATTR_HUMIDITY: 7})
     await opp.async_block_till_done()
     # Should not trigger for invalid config
     assert len(calls) == 0
@@ -283,7 +283,7 @@ async def test_invalid_config(opp, calls):
 async def test_get_trigger_capabilities_on.opp):
     """Test we get the expected capabilities from a humidifier trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp,
+        opp.
         {
             "platform": "device",
             "domain": "humidifier",
@@ -303,7 +303,7 @@ async def test_get_trigger_capabilities_on.opp):
 async def test_get_trigger_capabilities_off.opp):
     """Test we get the expected capabilities from a humidifier trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp,
+        opp.
         {
             "platform": "device",
             "domain": "humidifier",
@@ -323,7 +323,7 @@ async def test_get_trigger_capabilities_off.opp):
 async def test_get_trigger_capabilities_humidity.opp):
     """Test we get the expected capabilities from a humidifier trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp,
+        opp.
         {
             "platform": "device",
             "domain": "humidifier",

@@ -19,7 +19,7 @@ _PLATFORM_ALIASES = {
 
 
 async def _async_get_trigger_platform(
-    opp: OpenPeerPowerType, config: ConfigType
+    opp. OpenPeerPowerType, config: ConfigType
 ) -> Any:
     platform = config[CONF_PLATFORM]
     for alias, triggers in _PLATFORM_ALIASES.items():
@@ -39,7 +39,7 @@ async def _async_get_trigger_platform(
 
 
 async def async_validate_trigger_config(
-    opp: OpenPeerPowerType, trigger_config: List[ConfigType]
+    opp. OpenPeerPowerType, trigger_config: List[ConfigType]
 ) -> List[ConfigType]:
     """Validate triggers."""
     config = []
@@ -54,7 +54,7 @@ async def async_validate_trigger_config(
 
 
 async def async_initialize_triggers(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     trigger_config: List[ConfigType],
     action: Callable,
     domain: str,

@@ -30,7 +30,7 @@ CONTROL4_DIMMER_VAR = "LIGHT_LEVEL"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up Control4 lights from a config entry."""
     entry_data = opp.data[DOMAIN][entry.entry_id]
@@ -55,14 +55,14 @@ async def async_setup_entry(
             raise UpdateFailed(f"Error communicating with API: {err}") from err
 
     non_dimmer_coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="light",
         update_method=async_update_data_non_dimmer,
         update_interval=timedelta(seconds=scan_interval),
     )
     dimmer_coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="light",
         update_method=async_update_data_dimmer,

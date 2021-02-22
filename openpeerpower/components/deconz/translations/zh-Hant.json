@@ -13,7 +13,7 @@
         },
         "flow_title": "deCONZ Zigbee \u9598\u9053\u5668\uff08{host}\uff09",
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "\u662f\u5426\u8981\u8a2d\u5b9a Open Peer Power \u4ee5\u9023\u7dda\u81f3 Hass.io \u9644\u52a0\u6574\u5408 {addon} \u4e4b deCONZ \u9598\u9053\u5668\uff1f",
                 "title": "\u900f\u904e Hass.io \u9644\u52a0\u7d44\u4ef6 deCONZ Zigbee \u9598\u9053\u5668"
             },

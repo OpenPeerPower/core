@@ -56,19 +56,19 @@ STATUS_READ = "read"
 @bind.opp
 def create.opp, message, title=None, notification_id=None):
     """Generate a notification."""
-   .opp.add_job(async_create, opp, message, title, notification_id)
+    opp.add_job(async_create, opp, message, title, notification_id)
 
 
 @bind.opp
 def dismiss.opp, notification_id):
     """Remove a notification."""
-   .opp.add_job(async_dismiss, opp, notification_id)
+    opp.add_job(async_dismiss, opp, notification_id)
 
 
 @callback
 @bind.opp
 def async_create(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     message: str,
     title: Optional[str] = None,
     notification_id: Optional[str] = None,
@@ -84,7 +84,7 @@ def async_create(
         if value is not None
     }
 
-   .opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_CREATE, data))
+    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_CREATE, data))
 
 
 @callback
@@ -93,13 +93,13 @@ def async_dismiss.opp: OpenPeerPower, notification_id: str) -> None:
     """Remove a notification."""
     data = {ATTR_NOTIFICATION_ID: notification_id}
 
-   .opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_DISMISS, data))
+    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_DISMISS, data))
 
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the persistent notification component."""
     persistent_notifications: MutableMapping[str, MutableMapping] = OrderedDict()
-   .opp.data[DOMAIN] = {"notifications": persistent_notifications}
+    opp.data[DOMAIN] = {"notifications": persistent_notifications}
 
     @callback
     def create_service(call):
@@ -137,7 +137,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 
         attr[ATTR_MESSAGE] = message
 
-       .opp.states.async_set(entity_id, STATE, attr)
+        opp.states.async_set(entity_id, STATE, attr)
 
         # Store notification and fire event
         # This will eventually replace state machine storage
@@ -149,7 +149,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
             ATTR_CREATED_AT: dt_util.utcnow(),
         }
 
-       .opp.bus.async_fire(EVENT_PERSISTENT_NOTIFICATIONS_UPDATED)
+        opp.bus.async_fire(EVENT_PERSISTENT_NOTIFICATIONS_UPDATED)
 
     @callback
     def dismiss_service(call):
@@ -160,10 +160,10 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
         if entity_id not in persistent_notifications:
             return
 
-       .opp.states.async_remove(entity_id, call.context)
+        opp.states.async_remove(entity_id, call.context)
 
         del persistent_notifications[entity_id]
-       .opp.bus.async_fire(EVENT_PERSISTENT_NOTIFICATIONS_UPDATED)
+        opp.bus.async_fire(EVENT_PERSISTENT_NOTIFICATIONS_UPDATED)
 
     @callback
     def mark_read_service(call):
@@ -180,21 +180,21 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
             return
 
         persistent_notifications[entity_id][ATTR_STATUS] = STATUS_READ
-       .opp.bus.async_fire(EVENT_PERSISTENT_NOTIFICATIONS_UPDATED)
+        opp.bus.async_fire(EVENT_PERSISTENT_NOTIFICATIONS_UPDATED)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_CREATE, create_service, SCHEMA_SERVICE_CREATE
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_DISMISS, dismiss_service, SCHEMA_SERVICE_DISMISS
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_MARK_READ, mark_read_service, SCHEMA_SERVICE_MARK_READ
     )
 
-   .opp.components.websocket_api.async_register_command(websocket_get_notifications)
+    opp.components.websocket_api.async_register_command(websocket_get_notifications)
 
     return True
 
@@ -202,7 +202,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 @callback
 @websocket_api.websocket_command({vol.Required("type"): "persistent_notification/get"})
 def websocket_get_notifications(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     connection: websocket_api.ActiveConnection,
     msg: Mapping[str, Any],
 ) -> None:

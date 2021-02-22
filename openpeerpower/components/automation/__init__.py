@@ -162,7 +162,7 @@ def devices_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 async def async_setup_opp, config):
     """Set up the automation."""
-   .opp.data[DOMAIN] = component = EntityComponent(LOGGER, DOMAIN, opp)
+    opp.data[DOMAIN] = component = EntityComponent(LOGGER, DOMAIN, opp)
 
     # To register the automation blueprints
     async_get_blueprints.opp)
@@ -201,10 +201,10 @@ async def async_setup_opp, config):
             return
         async_get_blueprints.opp).async_reset_cache()
         await _async_process_config(opp, conf, component)
-       .opp.bus.async_fire(EVENT_AUTOMATION_RELOADED, context=service_call.context)
+        opp.bus.async_fire(EVENT_AUTOMATION_RELOADED, context=service_call.context)
 
     async_register_admin_service(
-        opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
+        opp. DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True
@@ -505,7 +505,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
 
 
 async def _async_process_config(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: Dict[str, Any],
     component: EntityComponent,
 ) -> bool:
@@ -530,7 +530,7 @@ async def _async_process_config(
                     config_block = cast(
                         Dict[str, Any],
                         await async_validate_config_item(
-                            opp, blueprint_inputs.async_substitute()
+                            opp. blueprint_inputs.async_substitute()
                         ),
                     )
                 except vol.Invalid as err:
@@ -548,7 +548,7 @@ async def _async_process_config(
             initial_state = config_block.get(CONF_INITIAL_STATE)
 
             action_script = Script(
-                opp,
+                opp.
                 config_block[CONF_ACTION],
                 name,
                 DOMAIN,

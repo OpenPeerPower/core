@@ -23,7 +23,7 @@ async def test_setup_entry.opp: OpenPeerPower):
         return_value=MOCK_CURRENT_MEASUREMENTS,
     ) as mock_current_measurements:
 
-       .opp.config.components.add(huisbaasje.DOMAIN)
+        opp.config.components.add(huisbaasje.DOMAIN)
         config_entry = ConfigEntry(
             1,
             huisbaasje.DOMAIN,
@@ -37,7 +37,7 @@ async def test_setup_entry.opp: OpenPeerPower):
             CONN_CLASS_CLOUD_POLL,
             system_options={},
         )
-       .opp.config_entries._entries.append(config_entry)
+        opp.config_entries._entries.append(config_entry)
 
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -46,11 +46,11 @@ async def test_setup_entry.opp: OpenPeerPower):
         assert.opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"
         assert.opp.states.get("sensor.huisbaasje_current_power_in").state == "1012.0"
         assert (
-           .opp.states.get("sensor.huisbaasje_current_power_in_low").state == "unknown"
+            opp.states.get("sensor.huisbaasje_current_power_in_low").state == "unknown"
         )
         assert.opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
-           .opp.states.get("sensor.huisbaasje_current_power_out_low").state
+            opp.states.get("sensor.huisbaasje_current_power_out_low").state
             == "unknown"
         )
         assert.opp.states.get("sensor.huisbaasje_current_gas").state == "0.0"
@@ -80,7 +80,7 @@ async def test_setup_entry_absent_measurement.opp: OpenPeerPower):
         return_value=MOCK_LIMITED_CURRENT_MEASUREMENTS,
     ) as mock_current_measurements:
 
-       .opp.config.components.add(huisbaasje.DOMAIN)
+        opp.config.components.add(huisbaasje.DOMAIN)
         config_entry = ConfigEntry(
             1,
             huisbaasje.DOMAIN,
@@ -94,7 +94,7 @@ async def test_setup_entry_absent_measurement.opp: OpenPeerPower):
             CONN_CLASS_CLOUD_POLL,
             system_options={},
         )
-       .opp.config_entries._entries.append(config_entry)
+        opp.config_entries._entries.append(config_entry)
 
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -103,11 +103,11 @@ async def test_setup_entry_absent_measurement.opp: OpenPeerPower):
         assert.opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"
         assert.opp.states.get("sensor.huisbaasje_current_power_in").state == "unknown"
         assert (
-           .opp.states.get("sensor.huisbaasje_current_power_in_low").state == "unknown"
+            opp.states.get("sensor.huisbaasje_current_power_in_low").state == "unknown"
         )
         assert.opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
-           .opp.states.get("sensor.huisbaasje_current_power_out_low").state
+            opp.states.get("sensor.huisbaasje_current_power_out_low").state
             == "unknown"
         )
         assert.opp.states.get("sensor.huisbaasje_current_gas").state == "unknown"

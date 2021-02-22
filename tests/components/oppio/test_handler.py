@@ -36,7 +36,7 @@ async def test_api_info.oppio_handler, aioclient_mock):
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0", .oppos": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0",  opp.s": None},
         },
     )
 

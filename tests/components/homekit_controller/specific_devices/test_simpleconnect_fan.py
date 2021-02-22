@@ -26,7 +26,7 @@ async def test_simpleconnect_fan_setup_opp):
     assert fan.unique_id == "homekit-1234567890abcd-8"
 
     fan_helper = Helper(
-        opp,
+        opp.
         "fan.simpleconnect_fan_06f674",
         pairing,
         accessories[0],

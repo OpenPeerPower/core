@@ -46,7 +46,7 @@ PLATFORMS = ["alarm_control_panel", "camera", "sensor"]
 
 async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
     """Set up the Canary integration."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if opp.config_entries.async_entries(DOMAIN):
         return True
@@ -67,8 +67,8 @@ async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
         if ffmpeg_arguments != DEFAULT_FFMPEG_ARGUMENTS:
             config[DOMAIN][CONF_FFMPEG_ARGUMENTS] = ffmpeg_arguments
 
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=config[DOMAIN],
@@ -86,7 +86,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             ),
             CONF_TIMEOUT: entry.data.get(CONF_TIMEOUT, DEFAULT_TIMEOUT),
         }
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
     try:
         canary_api = await opp.async_add_executor_job(_get_canary_api_instance, entry)
@@ -102,14 +102,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_COORDINATOR: coordinator,
         DATA_UNDO_UPDATE_LISTENER: undo_listener,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -120,15 +120,15 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

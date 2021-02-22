@@ -68,7 +68,7 @@ async def test_abort_if_already_setup_opp):
 
 
 async def test_full_flow_implementation(
-    opp, mock_pypoint  # pylint: disable=redefined-outer-name
+    opp. mock_pypoint  # pylint: disable=redefined-outer-name
 ):
     """Test registering an implementation and finishing flow works."""
     config_flow.register_flow_implementation.opp, "test-other", None, None)
@@ -106,7 +106,7 @@ async def test_step_import.opp, mock_pypoint):  # pylint: disable=redefined-oute
 
 @pytest.mark.parametrize("is_authorized", [False])
 async def test_wrong_code_flow_implementation(
-    opp, mock_pypoint
+    opp. mock_pypoint
 ):  # pylint: disable=redefined-outer-name
     """Test wrong code."""
     flow = init_config_flow.opp)

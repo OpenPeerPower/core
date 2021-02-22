@@ -78,7 +78,7 @@ def setup_opp, config):
     )
     if not HUB.login():
         return False
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: HUB.logout())
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: HUB.logout())
     HUB.update_overview()
 
     for component in (
@@ -100,7 +100,7 @@ def setup_opp, config):
         except verisure.Error as ex:
             LOGGER.error("Could not capture image, %s", ex)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_CAPTURE_SMARTCAM, capture_smartcam, schema=DEVICE_SERIAL_SCHEMA
     )
 
@@ -113,7 +113,7 @@ def setup_opp, config):
         except verisure.Error as ex:
             LOGGER.error("Could not disable autolock, %s", ex)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_DISABLE_AUTOLOCK, disable_autolock, schema=DEVICE_SERIAL_SCHEMA
     )
 
@@ -126,7 +126,7 @@ def setup_opp, config):
         except verisure.Error as ex:
             LOGGER.error("Could not enable autolock, %s", ex)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_ENABLE_AUTOLOCK, enable_autolock, schema=DEVICE_SERIAL_SCHEMA
     )
     return True

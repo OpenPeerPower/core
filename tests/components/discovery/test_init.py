@@ -47,7 +47,7 @@ async def mock_discovery.opp, discoveries, config=BASE_CONFIG):
         assert await async_setup_component.opp, "discovery", config)
         await opp.async_block_till_done()
         await opp.async_start()
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
         async_fire_time_changed.opp, utcnow())
         # Work around an issue where our loop.call_soon not get caught
@@ -82,7 +82,7 @@ async def test_load_platform.opp):
     assert not mock_discover.called
     assert mock_platform.called
     mock_platform.assert_called_with(
-        opp, SERVICE_COMPONENT, SERVICE, SERVICE_INFO, BASE_CONFIG
+        opp. SERVICE_COMPONENT, SERVICE, SERVICE_INFO, BASE_CONFIG
     )
 
 
@@ -98,7 +98,7 @@ async def test_load_component.opp):
     assert mock_discover.called
     assert not mock_platform.called
     mock_discover.assert_called_with(
-        opp,
+        opp.
         SERVICE_NO_PLATFORM,
         SERVICE_INFO,
         SERVICE_NO_PLATFORM_COMPONENT,
@@ -135,7 +135,7 @@ async def test_discover_duplicates.opp):
     assert mock_discover.call_count == 1
     assert not mock_platform.called
     mock_discover.assert_called_with(
-        opp,
+        opp.
         SERVICE_NO_PLATFORM,
         SERVICE_INFO,
         SERVICE_NO_PLATFORM_COMPONENT,

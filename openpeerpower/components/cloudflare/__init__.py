@@ -53,14 +53,14 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     """Set up the component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if len.opp.config_entries.async_entries(DOMAIN)) > 0:
         return True
 
     if DOMAIN in config and CONF_API_KEY in config[DOMAIN]:
         persistent_notification.async_create(
-            opp,
+            opp.
             "Cloudflare integration now requires an API Token. Please go to the integrations page to setup.",
             "Cloudflare Setup",
             "cloudflare_setup",
@@ -103,19 +103,19 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     update_interval = timedelta(minutes=DEFAULT_UPDATE_INTERVAL)
     undo_interval = async_track_time_interval.opp, update_records, update_interval)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_UNDO_UPDATE_INTERVAL: undo_interval,
     }
 
-   .opp.services.async_register(DOMAIN, SERVICE_UPDATE_RECORDS, update_records_service)
+    opp.services.async_register(DOMAIN, SERVICE_UPDATE_RECORDS, update_records_service)
 
     return True
 
 
 async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Cloudflare config entry."""
-   .opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_INTERVAL]()
-   .opp.data[DOMAIN].pop(entry.entry_id)
+    opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_INTERVAL]()
+    opp.data[DOMAIN].pop(entry.entry_id)
 
     return True
 

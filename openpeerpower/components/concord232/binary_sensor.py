@@ -76,7 +76,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         if zone["number"] not in exclude:
             sensors.append(
                 Concord232ZoneSensor(
-                    opp,
+                    opp.
                     client,
                     zone,
                     zone_types.get(zone["number"], get_opening_type(zone)),

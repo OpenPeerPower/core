@@ -34,7 +34,7 @@ BARRIER_STATE_OPEN = 255
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Z-Wave Cover from Config Entry."""
     client: ZwaveClient = opp.data[DOMAIN][config_entry.entry_id][DATA_CLIENT]
@@ -49,9 +49,9 @@ async def async_setup_entry(
             entities.append(ZWaveCover(config_entry, client, info))
         async_add_entities(entities)
 
-   .opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
+    opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect(
-            opp,
+            opp.
             f"{DOMAIN}_{config_entry.entry_id}_add_{COVER_DOMAIN}",
             async_add_cover,
         )

@@ -60,7 +60,7 @@ async def test_loading_non_existing.opp, store):
 
 async def test_loading_parallel.opp, store, opp_storage, caplog):
     """Test we can save and load data."""
-   .opp_storage[store.key] = {"version": MOCK_VERSION, "data": MOCK_DATA}
+    opp.storage[store.key] = {"version": MOCK_VERSION, "data": MOCK_DATA}
 
     results = await asyncio.gather(store.async_load(), store.async_load())
 
@@ -89,15 +89,15 @@ async def test_saving_on_final_write.opp, opp_storage):
     store.async_delay_save(lambda: MOCK_DATA, 5)
     assert store.key not in.opp_storage
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-   .opp.state = CoreState.stopping
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.state = CoreState.stopping
     await opp.async_block_till_done()
 
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert store.key not in.opp_storage
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_FINAL_WRITE)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_FINAL_WRITE)
     await opp.async_block_till_done()
     assert.opp_storage[store.key] == {
         "version": MOCK_VERSION,
@@ -109,9 +109,9 @@ async def test_saving_on_final_write.opp, opp_storage):
 async def test_not_delayed_saving_while_stopping.opp, opp_storage):
     """Test delayed saves don't write after the stop event has fired."""
     store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
-   .opp.state = CoreState.stopping
+    opp.state = CoreState.stopping
 
     store.async_delay_save(lambda: MOCK_DATA, 1)
     async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=2))
@@ -125,8 +125,8 @@ async def test_not_delayed_saving_after_stopping.opp, opp_storage):
     store.async_delay_save(lambda: MOCK_DATA, 10)
     assert store.key not in.opp_storage
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-   .opp.state = CoreState.stopping
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+    opp.state = CoreState.stopping
     await opp.async_block_till_done()
     assert store.key not in.opp_storage
 
@@ -138,7 +138,7 @@ async def test_not_delayed_saving_after_stopping.opp, opp_storage):
 async def test_not_saving_while_stopping.opp, opp_storage):
     """Test saves don't write when stopping Open Peer Power."""
     store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
-   .opp.state = CoreState.stopping
+    opp.state = CoreState.stopping
     await store.async_save(MOCK_DATA)
     assert store.key not in.opp_storage
 
@@ -244,7 +244,7 @@ async def test_migrator_existing_config(opp, store, opp_storage):
     """Test migrating existing config."""
     with patch("os.path.isfile", return_value=True), patch("os.remove") as mock_remove:
         data = await storage.async_migrator(
-            opp, "old-path", store, old_conf_load_func=lambda _: {"old": "config"}
+            opp. "old-path", store, old_conf_load_func=lambda _: {"old": "config"}
         )
 
     assert len(mock_remove.mock_calls) == 1
@@ -265,7 +265,7 @@ async def test_migrator_transforming_config(opp, store, opp_storage):
 
     with patch("os.path.isfile", return_value=True), patch("os.remove") as mock_remove:
         data = await storage.async_migrator(
-            opp,
+            opp.
             "old-path",
             store,
             old_conf_migrate_func=old_conf_migrate_func,

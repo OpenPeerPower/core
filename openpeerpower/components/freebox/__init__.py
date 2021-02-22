@@ -34,8 +34,8 @@ async def async_setup_opp, config):
             host = discovery_info.get("properties", {}).get("api_domain")
             port = discovery_info.get("properties", {}).get("https_port")
             _LOGGER.info("Discovered Freebox server: %s:%s", host, port)
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": SOURCE_DISCOVERY},
                     data={CONF_HOST: host, CONF_PORT: port},
@@ -48,8 +48,8 @@ async def async_setup_opp, config):
         return True
 
     for freebox_conf in conf:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=freebox_conf,
@@ -64,12 +64,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     router = FreeboxRouter.opp, entry)
     await router.setup()
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.unique_id] = router
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.unique_id] = router
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     # Services
@@ -77,13 +77,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Handle reboot service call."""
         await router.reboot()
 
-   .opp.services.async_register(DOMAIN, "reboot", async_reboot)
+    opp.services.async_register(DOMAIN, "reboot", async_reboot)
 
     async def async_close_connection(event):
         """Close Freebox connection on HA Stop."""
         await router.close()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_close_connection)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_close_connection)
 
     return True
 
@@ -93,7 +93,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )

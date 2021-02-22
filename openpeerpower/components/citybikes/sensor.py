@@ -148,7 +148,7 @@ async def async_citybikes_request.opp, uri, schema):
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the CityBikes platform."""
     if PLATFORM not in.opp.data:
-       .opp.data[PLATFORM] = {MONITORED_NETWORKS: {}}
+        opp.data[PLATFORM] = {MONITORED_NETWORKS: {}}
 
     latitude = config.get(CONF_LATITUDE, opp.config.latitude)
     longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
@@ -167,8 +167,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     if network_id not in.opp.data[PLATFORM][MONITORED_NETWORKS]:
         network = CityBikesNetwork.opp, network_id)
-       .opp.data[PLATFORM][MONITORED_NETWORKS][network_id] = network
-       .opp.async_create_task(network.async_refresh())
+        opp.data[PLATFORM][MONITORED_NETWORKS][network_id] = network
+        opp.async_create_task(network.async_refresh())
         async_track_time_interval.opp, network.async_refresh, SCAN_INTERVAL)
     else:
         network = opp.data[PLATFORM][MONITORED_NETWORKS][network_id]

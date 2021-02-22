@@ -177,7 +177,7 @@ async def test_if_fires_on_event.opp, mock_devices, calls):
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -209,7 +209,7 @@ async def test_if_fires_on_event.opp, mock_devices, calls):
 
 
 async def test_device_offline_fires(
-    opp, zigpy_device_mock, zha_device_restored, calls
+    opp. zigpy_device_mock, zha_device_restored, calls
 ):
     """Test for device offline triggers firing."""
 
@@ -228,7 +228,7 @@ async def test_device_offline_fires(
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -286,7 +286,7 @@ async def test_exception_no_triggers.opp, mock_devices, calls, caplog):
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -328,7 +328,7 @@ async def test_exception_bad_trigger.opp, mock_devices, calls, caplog):
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [

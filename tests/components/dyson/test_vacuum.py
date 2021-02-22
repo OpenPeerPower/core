@@ -90,7 +90,7 @@ async def test_state.opp: OpenPeerPower, device: Dyson360Eye) -> None:
     indirect=["device"],
 )
 async def test_commands(
-    opp: OpenPeerPower, device: Dyson360Eye, service: str, command: str
+    opp. OpenPeerPower, device: Dyson360Eye, service: str, command: str
 ) -> None:
     """Test sending commands to the vacuum."""
     await opp.services.async_call(

@@ -15,7 +15,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([TelldusLiveSwitch(client, device_id)])
 
     async_dispatcher_connect(
-        opp,
+        opp.
         tellduslive.TELLDUS_DISCOVERY_NEW.format(switch.DOMAIN, tellduslive.DOMAIN),
         async_discover_switch,
     )

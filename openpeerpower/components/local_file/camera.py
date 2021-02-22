@@ -32,11 +32,11 @@ CAMERA_SERVICE_UPDATE_FILE_PATH = CAMERA_SERVICE_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Camera that works with local files."""
     if DATA_LOCAL_FILE not in.opp.data:
-       .opp.data[DATA_LOCAL_FILE] = []
+        opp.data[DATA_LOCAL_FILE] = []
 
     file_path = config[CONF_FILE_PATH]
     camera = LocalFile(config[CONF_NAME], file_path)
-   .opp.data[DATA_LOCAL_FILE].append(camera)
+    opp.data[DATA_LOCAL_FILE].append(camera)
 
     def update_file_path_service(call):
         """Update the file path."""
@@ -49,7 +49,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                 camera.update_file_path(file_path)
         return True
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_UPDATE_FILE_PATH,
         update_file_path_service,

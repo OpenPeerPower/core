@@ -38,7 +38,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Set up the iFrame frontend panels."""
     for url_path, info in config[DOMAIN].items():
-       .opp.components.frontend.async_register_built_in_panel(
+        opp.components.frontend.async_register_built_in_panel(
             "iframe",
             info.get(CONF_TITLE),
             info.get(CONF_ICON),

@@ -17,7 +17,7 @@ ATTR_URL_PATH = "dashboard_path"
 
 
 async def async_setup_op_cast(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up Open Peer Power Cast."""
     user_id: Optional[str] = entry.data.get("user_id")
@@ -30,7 +30,7 @@ async def async_setup_op_cast(
         user = await opp.auth.async_create_system_user(
             "Open Peer Power Cast", [auth.GROUP_ID_ADMIN]
         )
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, "user_id": user.id}
         )
 
@@ -41,18 +41,18 @@ async def async_setup_op_cast(
 
     async def handle_show_view(call: core.ServiceCall):
         """Handle a Show View service call."""
-       .opp_url = get_url.opp, require_ssl=True, prefer_external=True)
+        opp.url = get_url.opp, require_ssl=True, prefer_external=True)
 
         controller = OpenPeerPowerController(
             # If you are developing Open Peer Power Cast, uncomment and set to your dev app id.
             # app_id="5FE44367",
-           .opp_url.opp_url,
+            opp.url.opp_url,
             client_id=None,
             refresh_token=refresh_token.token,
         )
 
         dispatcher.async_dispatcher_send(
-            opp,
+            opp.
             SIGNAL_HASS_CAST_SHOW_VIEW,
             controller,
             call.data[ATTR_ENTITY_ID],
@@ -60,7 +60,7 @@ async def async_setup_op_cast(
             call.data.get(ATTR_URL_PATH),
         )
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         DOMAIN,
         SERVICE_SHOW_VIEW,
         handle_show_view,
@@ -75,7 +75,7 @@ async def async_setup_op_cast(
 
 
 async def async_remove_user(
-   .opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Remove Open Peer Power Cast user."""
     user_id: Optional[str] = entry.data.get("user_id")

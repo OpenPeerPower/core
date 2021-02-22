@@ -96,7 +96,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     minimum_magnitude = config[CONF_MINIMUM_MAGNITUDE]
     # Initialize the entity manager.
     feed = UsgsEarthquakesFeedEntityManager(
-        opp,
+        opp.
         add_entities,
         scan_interval,
         coordinates,
@@ -109,7 +109,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Start feed manager."""
         feed.startup()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_feed_manager)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_feed_manager)
 
 
 class UsgsEarthquakesFeedEntityManager:
@@ -117,7 +117,7 @@ class UsgsEarthquakesFeedEntityManager:
 
     def __init__(
         self,
-        opp,
+        opp.
         add_entities,
         scan_interval,
         coordinates,

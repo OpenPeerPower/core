@@ -8,7 +8,7 @@ from openpeerpower.core import callback
 async def test_config_flow_registers_webhook.opp, aiohttp_client):
     """Test setting up IFTTT and sending webhook."""
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -28,7 +28,7 @@ async def test_config_flow_registers_webhook.opp, aiohttp_client):
         """Handle IFTTT event."""
         ifttt_events.append(event)
 
-   .opp.bus.async_listen(ifttt.EVENT_RECEIVED, handle_event)
+    opp.bus.async_listen(ifttt.EVENT_RECEIVED, handle_event)
 
     client = await aiohttp_client.opp.http.app)
     await client.post(f"/api/webhook/{webhook_id}", json={"hello": "ifttt"})

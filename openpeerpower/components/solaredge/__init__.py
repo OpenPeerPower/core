@@ -27,8 +27,8 @@ async def async_setup_opp, config):
     if DOMAIN not in config:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=dict(config[DOMAIN])
         )
     )
@@ -37,7 +37,7 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     """Load the saved entities."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
     return True

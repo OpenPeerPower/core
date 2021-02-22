@@ -54,7 +54,7 @@ def storage_setup_opp, opp_storage):
 
     async def _storage(items=None, config=None):
         if items is None:
-           .opp_storage[DOMAIN] = {
+            opp.storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {
@@ -68,7 +68,7 @@ def storage_setup_opp, opp_storage):
                 },
             }
         else:
-           .opp_storage[DOMAIN] = {
+            opp.storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": items},
@@ -137,7 +137,7 @@ async def test_config_options.opp):
 
 async def test_methods_and_events.opp):
     """Test methods and events."""
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
@@ -151,11 +151,11 @@ async def test_methods_and_events.opp):
         """Fake event listener for trigger."""
         results.append(event)
 
-   .opp.bus.async_listen(EVENT_TIMER_STARTED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_RESTARTED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_PAUSED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_STARTED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_RESTARTED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_PAUSED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
 
     steps = [
         {"call": SERVICE_START, "state": STATUS_ACTIVE, "event": EVENT_TIMER_STARTED},
@@ -192,7 +192,7 @@ async def test_methods_and_events.opp):
 
 async def test_wait_till_timer_expires.opp):
     """Test for a timer to end."""
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
@@ -206,10 +206,10 @@ async def test_wait_till_timer_expires.opp):
         """Fake event listener for trigger."""
         results.append(event)
 
-   .opp.bus.async_listen(EVENT_TIMER_STARTED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_PAUSED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_STARTED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_PAUSED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
@@ -236,7 +236,7 @@ async def test_wait_till_timer_expires.opp):
 
 async def test_no_initial_state_and_no_restore_state.opp):
     """Ensure that entity is create without initial and restore feature."""
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
@@ -343,7 +343,7 @@ async def test_config_reload.opp, opp_admin_user, opp_read_only_user):
 
 async def test_timer_restarted_event.opp):
     """Ensure restarted event is called after starting a paused or running timer."""
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
@@ -357,11 +357,11 @@ async def test_timer_restarted_event.opp):
         """Fake event listener for trigger."""
         results.append(event)
 
-   .opp.bus.async_listen(EVENT_TIMER_STARTED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_RESTARTED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_PAUSED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
-   .opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_STARTED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_RESTARTED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_PAUSED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_FINISHED, fake_event_listener)
+    opp.bus.async_listen(EVENT_TIMER_CANCELLED, fake_event_listener)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}
@@ -410,7 +410,7 @@ async def test_timer_restarted_event.opp):
 
 async def test_state_changed_when_timer_restarted.opp):
     """Ensure timer's state changes when it restarted."""
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
@@ -424,7 +424,7 @@ async def test_state_changed_when_timer_restarted.opp):
         """Fake event listener for trigger."""
         results.append(event)
 
-   .opp.bus.async_listen(EVENT_STATE_CHANGED, fake_event_listener)
+    opp.bus.async_listen(EVENT_STATE_CHANGED, fake_event_listener)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_START, {CONF_ENTITY_ID: "timer.test1"}

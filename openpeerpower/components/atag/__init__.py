@@ -38,14 +38,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = coordinator
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = coordinator
     if entry.unique_id is None:
-       .opp.config_entries.async_update_entry(entry, unique_id=coordinator.atag.id)
+        opp.config_entries.async_update_entry(entry, unique_id=coordinator.atag.id)
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -59,7 +59,7 @@ class AtagDataUpdateCoordinator(DataUpdateCoordinator):
         self.atag = AtagOne(session=session, **entry.data)
 
         super().__init__(
-            opp, _LOGGER, name=DOMAIN, update_interval=timedelta(seconds=30)
+            opp. _LOGGER, name=DOMAIN, update_interval=timedelta(seconds=30)
         )
 
     async def _async_update_data(self):
@@ -78,13 +78,13 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
     return unload_ok
 
 

@@ -47,7 +47,7 @@ def storage_setup_opp, opp_storage):
 
     async def _storage(items=None, config=None):
         if items is None:
-           .opp_storage[DOMAIN] = {
+            opp.storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {
@@ -63,7 +63,7 @@ def storage_setup_opp, opp_storage):
                 },
             }
         else:
-           .opp_storage[DOMAIN] = {
+            opp.storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": items},
@@ -126,7 +126,7 @@ def test_invalid_configs(config):
 async def test_set_datetime.opp):
     """Test set_datetime method using date & time."""
     await async_setup_component(
-        opp, DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
+        opp. DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_datetime"
@@ -152,7 +152,7 @@ async def test_set_datetime.opp):
 async def test_set_datetime_2.opp):
     """Test set_datetime method using datetime."""
     await async_setup_component(
-        opp, DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
+        opp. DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_datetime"
@@ -178,7 +178,7 @@ async def test_set_datetime_2.opp):
 async def test_set_datetime_3.opp):
     """Test set_datetime method using timestamp."""
     await async_setup_component(
-        opp, DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
+        opp. DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_datetime"
@@ -204,7 +204,7 @@ async def test_set_datetime_3.opp):
 async def test_set_datetime_time.opp):
     """Test set_datetime method with only time."""
     await async_setup_component(
-        opp, DOMAIN, {DOMAIN: {"test_time": {"has_time": True, "has_date": False}}}
+        opp. DOMAIN, {DOMAIN: {"test_time": {"has_time": True, "has_date": False}}}
     )
 
     entity_id = "input_datetime.test_time"
@@ -225,7 +225,7 @@ async def test_set_invalid.opp):
     """Test set_datetime method with only time."""
     initial = "2017-01-01"
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -255,7 +255,7 @@ async def test_set_invalid_2.opp):
     """Test set_datetime method with date and datetime."""
     initial = "2017-01-01"
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -284,7 +284,7 @@ async def test_set_invalid_2.opp):
 async def test_set_datetime_date.opp):
     """Test set_datetime method with only date."""
     await async_setup_component(
-        opp, DOMAIN, {DOMAIN: {"test_date": {"has_time": False, "has_date": True}}}
+        opp. DOMAIN, {DOMAIN: {"test_date": {"has_time": False, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_date"
@@ -306,7 +306,7 @@ async def test_set_datetime_date.opp):
 async def test_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp,
+        opp.
         (
             State("input_datetime.test_time", "19:46:00"),
             State("input_datetime.test_date", "2017-09-07"),
@@ -317,13 +317,13 @@ async def test_restore_state.opp):
         ),
     )
 
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     initial = datetime.datetime(2017, 1, 1, 23, 42)
     default = datetime.datetime.combine(datetime.date.today(), DEFAULT_TIME)
 
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -364,7 +364,7 @@ async def test_restore_state.opp):
 async def test_default_value.opp):
     """Test default value if none has been set via initial or restore state."""
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -392,7 +392,7 @@ async def test_default_value.opp):
 async def test_input_datetime_context.opp, opp_admin_user):
     """Test that input_datetime context works."""
     assert await async_setup_component(
-        opp, "input_datetime", {"input_datetime": {"only_date": {"has_date": True}}}
+        opp. "input_datetime", {"input_datetime": {"only_date": {"has_date": True}}}
     )
 
     state = opp.states.get("input_datetime.only_date")
@@ -418,7 +418,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     ent_reg = await entity_registry.async_get_registry.opp)
 
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -653,7 +653,7 @@ async def test_timestamp.opp):
         dt_util.set_default_time_zone(dt_util.get_time_zone("America/Los_Angeles"))
 
         assert await async_setup_component(
-            opp,
+            opp.
             DOMAIN,
             {
                 DOMAIN: {

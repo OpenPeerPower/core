@@ -10,7 +10,7 @@ OBSERVER_URL = f"http://{os.environ['OPPIO']}:4357"
 
 @callback
 def async_register(
-   .opp.OpenPeerPower, register: system_health.SystemHealthRegistration
+    opp.OpenPeerPower, register: system_health.SystemHealthRegistration
 ) -> None:
     """Register system health callbacks."""
     register.async_register_info(system_health_info, "/opp.")
@@ -56,10 +56,10 @@ async def system_health_info.opp.OpenPeerPower):
         information["board"] = os_info.get("board")
 
     information["supervisor_api"] = system_health.async_check_can_reach_url(
-       .opp.SUPERVISOR_PING, OBSERVER_URL
+        opp.SUPERVISOR_PING, OBSERVER_URL
     )
     information["version_api"] = system_health.async_check_can_reach_url(
-        opp,
+        opp.
         f"https://version.openpeerpower.io/{info.get('channel')}.json",
         "/opp./system",
     )

@@ -84,7 +84,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
             for person_id, person_data in data_handler.data[
                 CAMERA_DATA_CLASS_NAME
             ].persons.items():
-               .opp.data[DOMAIN][DATA_PERSONS][person_id] = person_data.get(
+                opp.data[DOMAIN][DATA_PERSONS][person_id] = person_data.get(
                     ATTR_PSEUDO
                 )
         except pyatmo.NoDevice:

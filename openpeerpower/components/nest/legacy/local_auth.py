@@ -15,7 +15,7 @@ from .const import DOMAIN
 def initialize.opp, client_id, client_secret):
     """Initialize a local auth provider."""
     register_flow_implementation(
-        opp,
+        opp.
         DOMAIN,
         "configuration.yaml",
         partial(generate_auth_url, client_id),

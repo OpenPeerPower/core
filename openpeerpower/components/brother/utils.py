@@ -25,6 +25,6 @@ def get_snmp_engine.opp):
             _LOGGER.debug("Unconfiguring SNMP engine")
             lcd.unconfigure.opp.data[DOMAIN][SNMP], None)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown_listener)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown_listener)
 
     return snmp_engine

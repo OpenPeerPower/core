@@ -162,7 +162,7 @@ async def test_setup_reload_service_when_async_process_component_config_fails.op
 
 
 async def test_setup_reload_service_with_platform_that_provides_async_reset_platform(
-    opp,
+    opp.
 ):
     """Test setting up a reload service using a platform that has its own async_reset_platform."""
     component_setup = AsyncMock(return_value=True)

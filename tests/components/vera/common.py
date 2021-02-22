@@ -85,7 +85,7 @@ class ComponentFactory:
 
     async def configure_component(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         controller_config: ControllerConfig = None,
         controller_configs: Tuple[ControllerConfig] = (),
     ) -> ComponentData:
@@ -138,11 +138,11 @@ class ComponentFactory:
 
         self.vera_controller_class_mock.return_value = controller
 
-       .opp_config = {}
+        opp.config = {}
 
         # Setup component through config file import.
         if controller_config.config_source == ConfigSource.FILE:
-           .opp_config[DOMAIN] = component_config
+            opp.config[DOMAIN] = component_config
 
         # Setup Open Peer Power.
         assert await async_setup_component.opp, DOMAIN, opp_config)

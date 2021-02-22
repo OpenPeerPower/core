@@ -148,7 +148,7 @@ automation:
       service_to_call: test.automation
 input_datetime:
 """,
-       .opp.config.path(
+        opp.config.path(
             "blueprints/automation/test_event_service.yaml"
         ): """
 blueprint:
@@ -174,7 +174,7 @@ action:
 async def test_config_platform_raise.opp):
     """Test bad config validation platform."""
     mock_platform(
-        opp,
+        opp.
         "bla.config",
         Mock(async_validate_config=Mock(side_effect=Exception("Broken"))),
     )

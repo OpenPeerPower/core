@@ -18,13 +18,13 @@ from openpeerpower.setup import async_setup_component
 @pytest.fixture(autouse=True)
 def init_sensors_fixture.opp):
     """Set up things to be run when tests are started."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoortemp", "20", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.outdoortemp", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity", "50", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
 
@@ -32,7 +32,7 @@ def init_sensors_fixture.opp):
 async def test_setup_opp):
     """Test the mold indicator sensor setup."""
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {
             "sensor": {
@@ -52,18 +52,18 @@ async def test_setup_opp):
 
 async def test_invalidcalib.opp):
     """Test invalid sensor values."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoortemp", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.outdoortemp", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity", "0", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {
             "sensor": {
@@ -87,18 +87,18 @@ async def test_invalidcalib.opp):
 
 async def test_invalidhum.opp):
     """Test invalid sensor values."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoortemp", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.outdoortemp", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity", "-1", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {
             "sensor": {
@@ -120,7 +120,7 @@ async def test_invalidhum.opp):
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
     assert moldind.attributes.get(ATTR_CRITICAL_TEMP) is None
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity", "A", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
     await opp.async_block_till_done()
@@ -130,7 +130,7 @@ async def test_invalidhum.opp):
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
     assert moldind.attributes.get(ATTR_CRITICAL_TEMP) is None
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
@@ -144,7 +144,7 @@ async def test_invalidhum.opp):
 async def test_calculation.opp):
     """Test the mold indicator internal calculations."""
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {
             "sensor": {
@@ -183,7 +183,7 @@ async def test_calculation.opp):
 async def test_unknown_sensor.opp):
     """Test the sensor_changed function."""
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {
             "sensor": {
@@ -198,7 +198,7 @@ async def test_unknown_sensor.opp):
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoortemp", STATE_UNKNOWN, {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
@@ -208,10 +208,10 @@ async def test_unknown_sensor.opp):
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
     assert moldind.attributes.get(ATTR_CRITICAL_TEMP) is None
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoortemp", "30", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.outdoortemp", STATE_UNKNOWN, {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
@@ -221,10 +221,10 @@ async def test_unknown_sensor.opp):
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
     assert moldind.attributes.get(ATTR_CRITICAL_TEMP) is None
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.outdoortemp", "25", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity",
         STATE_UNKNOWN,
         {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE},
@@ -236,7 +236,7 @@ async def test_unknown_sensor.opp):
     assert moldind.attributes.get(ATTR_DEWPOINT) is None
     assert moldind.attributes.get(ATTR_CRITICAL_TEMP) is None
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity", "20", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
     await opp.async_block_till_done()
@@ -257,7 +257,7 @@ async def test_unknown_sensor.opp):
 async def test_sensor_changed.opp):
     """Test the sensor_changed function."""
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {
             "sensor": {
@@ -272,19 +272,19 @@ async def test_sensor_changed.opp):
     await opp.async_block_till_done()
     await opp.async_start()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoortemp", "30", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
     assert.opp.states.get("sensor.mold_indicator").state == "90"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.outdoortemp", "25", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
     assert.opp.states.get("sensor.mold_indicator").state == "57"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.indoorhumidity", "20", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
     await opp.async_block_till_done()

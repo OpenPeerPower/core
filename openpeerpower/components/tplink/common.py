@@ -66,7 +66,7 @@ async def async_get_discoverable_devices.opp):
 
 
 async def async_discover_devices(
-    opp: OpenPeerPowerType, existing_devices: SmartDevices
+    opp. OpenPeerPowerType, existing_devices: SmartDevices
 ) -> SmartDevices:
     """Get devices through discovery."""
     _LOGGER.debug("Discovering devices")
@@ -153,5 +153,5 @@ def add_available_devices.opp, device_type, device_class):
                 ex,
             )
 
-   .opp.data[TPLINK_DOMAIN][f"{device_type}_remaining"] = devices_unavailable
+    opp.data[TPLINK_DOMAIN][f"{device_type}_remaining"] = devices_unavailable
     return entities_ready

@@ -46,4 +46,4 @@ def import_device.opp, host):
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_HOST: host},
         )
-       .opp.async_create_task(task)
+        opp.async_create_task(task)

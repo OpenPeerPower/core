@@ -139,7 +139,7 @@ async def test_sensors.opp, connect):
     assert.opp.states.get(f"{device_tracker.DOMAIN}.testthree").state == STATE_HOME
     assert.opp.states.get(f"{sensor.DOMAIN}.asuswrt_connected_devices").state == "2"
 
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, options={CONF_CONSIDER_HOME: 0}
     )
     await opp.async_block_till_done()

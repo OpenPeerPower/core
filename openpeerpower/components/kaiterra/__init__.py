@@ -77,9 +77,9 @@ async def async_setup_opp, config):
             device[CONF_DEVICE_ID],
         )
         for component in KAITERRA_COMPONENTS:
-           .opp.async_create_task(
+            opp.async_create_task(
                 async_load_platform(
-                    opp,
+                    opp.
                     component,
                     DOMAIN,
                     {CONF_NAME: device_name, CONF_DEVICE_ID: device_id},

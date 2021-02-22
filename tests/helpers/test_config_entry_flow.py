@@ -248,7 +248,7 @@ async def test_webhook_multiple_entries_allowed.opp, webhook_flow_conf):
     flow.opp = opp
 
     MockConfigEntry(domain="test_multiple").add_to.opp.opp)
-   .opp.config.api = Mock(base_url="http://example.com")
+    opp.config.api = Mock(base_url="http://example.com")
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -260,7 +260,7 @@ async def test_webhook_config_flow_registers_webhook.opp, webhook_flow_conf):
     flow.opp = opp
 
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "https://example.com"},
     )
     result = await flow.async_step_user(user_input={})
@@ -277,7 +277,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
     async_unload_entry = Mock(return_value=True)
 
     mock_integration(
-        opp,
+        opp.
         MockModule(
             "test_single",
             async_setup_entry=async_setup_entry,
@@ -293,7 +293,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     with patch(
-        .opp_nabucasa.cloudhooks.Cloudhooks.async_create",
+         opp.nabucasa.cloudhooks.Cloudhooks.async_create",
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_create, patch(
         "openpeerpower.components.cloud.async_active_subscription", return_value=True
@@ -309,7 +309,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
     assert len(async_setup_entry.mock_calls) == 1
 
     with patch(
-        .opp_nabucasa.cloudhooks.Cloudhooks.async_delete",
+         opp.nabucasa.cloudhooks.Cloudhooks.async_delete",
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_delete:
 

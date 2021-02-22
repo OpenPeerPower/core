@@ -247,12 +247,12 @@ async def test_delivered_not_shown.opp):
     )
     ProfileMock.package_list = [package]
 
-   .opp.components.persistent_notification = MagicMock()
+    opp.components.persistent_notification = MagicMock()
     await _setup_seventeentrack.opp, VALID_CONFIG_FULL_NO_DELIVERED)
     await _goto_future.opp)
 
     assert not.opp.states.async_entity_ids()
-   .opp.components.persistent_notification.create.assert_called()
+    opp.components.persistent_notification.create.assert_called()
 
 
 async def test_delivered_shown.opp):
@@ -262,12 +262,12 @@ async def test_delivered_shown.opp):
     )
     ProfileMock.package_list = [package]
 
-   .opp.components.persistent_notification = MagicMock()
+    opp.components.persistent_notification = MagicMock()
     await _setup_seventeentrack.opp, VALID_CONFIG_FULL)
 
     assert.opp.states.get("sensor.seventeentrack_package_456") is not None
     assert len.opp.states.async_entity_ids()) == 1
-   .opp.components.persistent_notification.create.assert_not_called()
+    opp.components.persistent_notification.create.assert_not_called()
 
 
 async def test_becomes_delivered_not_shown_notification.opp):
@@ -287,10 +287,10 @@ async def test_becomes_delivered_not_shown_notification.opp):
     )
     ProfileMock.package_list = [package_delivered]
 
-   .opp.components.persistent_notification = MagicMock()
+    opp.components.persistent_notification = MagicMock()
     await _goto_future.opp)
 
-   .opp.components.persistent_notification.create.assert_called()
+    opp.components.persistent_notification.create.assert_called()
     assert not.opp.states.async_entity_ids()
 
 

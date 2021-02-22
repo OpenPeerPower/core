@@ -78,7 +78,7 @@ def _call_util_function.opp, connection, msg, send_result, function, *args):
     """Call an openzwavemqtt.util function."""
     try:
         node = get_node_from_manager(
-           .opp.data[DOMAIN][MANAGER], msg[OZW_INSTANCE], msg[NODE_ID]
+            opp.data[DOMAIN][MANAGER], msg[OZW_INSTANCE], msg[NODE_ID]
         )
     except NotFoundError as err:
         connection.send_error(
@@ -292,7 +292,7 @@ def websocket_get_nodes.opp, connection, msg):
 def websocket_set_usercode.opp, connection, msg):
     """Set a usercode to a node code slot."""
     _call_util_function(
-        opp, connection, msg, False, set_usercode, msg[ATTR_CODE_SLOT], ATTR_USERCODE
+        opp. connection, msg, False, set_usercode, msg[ATTR_CODE_SLOT], ATTR_USERCODE
     )
 
 
@@ -307,7 +307,7 @@ def websocket_set_usercode.opp, connection, msg):
 def websocket_clear_usercode.opp, connection, msg):
     """Clear a node code slot."""
     _call_util_function(
-        opp, connection, msg, False, clear_usercode, msg[ATTR_CODE_SLOT]
+        opp. connection, msg, False, clear_usercode, msg[ATTR_CODE_SLOT]
     )
 
 
@@ -364,7 +364,7 @@ def websocket_get_config_parameters.opp, connection, msg):
 def websocket_set_config_parameter.opp, connection, msg):
     """Set a config parameter to a node."""
     _call_util_function(
-        opp, connection, msg, True, set_config_parameter, msg[PARAMETER], msg[VALUE]
+        opp. connection, msg, True, set_config_parameter, msg[PARAMETER], msg[VALUE]
     )
 
 
@@ -416,7 +416,7 @@ def websocket_node_status.opp, connection, msg):
     """Get the status for a Z-Wave node."""
     try:
         node = get_node_from_manager(
-           .opp.data[DOMAIN][MANAGER], msg[OZW_INSTANCE], msg[NODE_ID]
+            opp.data[DOMAIN][MANAGER], msg[OZW_INSTANCE], msg[NODE_ID]
         )
     except NotFoundError as err:
         connection.send_error(
@@ -461,7 +461,7 @@ def websocket_node_metadata.opp, connection, msg):
     """Get the metadata for a Z-Wave node."""
     try:
         node = get_node_from_manager(
-           .opp.data[DOMAIN][MANAGER], msg[OZW_INSTANCE], msg[NODE_ID]
+            opp.data[DOMAIN][MANAGER], msg[OZW_INSTANCE], msg[NODE_ID]
         )
     except NotFoundError as err:
         connection.send_error(

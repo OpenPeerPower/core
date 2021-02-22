@@ -58,7 +58,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         [
             MoldIndicator(
                 name,
-               .opp.config.units.is_metric,
+                opp.config.units.is_metric,
                 indoor_temp_sensor,
                 outdoor_temp_sensor,
                 indoor_humidity_sensor,

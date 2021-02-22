@@ -17,7 +17,7 @@ from .common import ComponentFactory, new_simple_controller_config
 
 
 async def test_climate(
-    opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp. OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraThermostat)  # type: pv.VeraThermostat
@@ -33,7 +33,7 @@ async def test_climate(
     entity_id = "climate.dev1_1"
 
     component_data = await vera_component_factory.configure_component(
-       .opp.opp,
+        opp.opp,
         controller_config=new_simple_controller_config(devices=(vera_device,)),
     )
     update_callback = component_data.controller_data[0].update_callback
@@ -128,7 +128,7 @@ async def test_climate(
 
 
 async def test_climate_f(
-    opp: OpenPeerPower, vera_component_factory: ComponentFactory
+    opp. OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraThermostat)  # type: pv.VeraThermostat
@@ -147,7 +147,7 @@ async def test_climate_f(
         controller.temperature_units = "F"
 
     component_data = await vera_component_factory.configure_component(
-       .opp.opp,
+        opp.opp,
         controller_config=new_simple_controller_config(
             devices=(vera_device,), setup_callback=setup_callback
         ),

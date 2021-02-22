@@ -15,13 +15,13 @@ def storage_setup_opp, opp_storage):
 
     async def _storage(items=None):
         if items is None:
-           .opp_storage[DOMAIN] = {
+            opp.storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": [{"id": "test tag"}]},
             }
         else:
-           .opp_storage[DOMAIN] = items
+            opp.storage[DOMAIN] = items
         config = {DOMAIN: {}}
         return await async_setup_component.opp, DOMAIN, config)
 

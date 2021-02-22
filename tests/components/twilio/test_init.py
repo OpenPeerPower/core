@@ -8,7 +8,7 @@ from openpeerpower.core import callback
 async def test_config_flow_registers_webhook.opp, aiohttp_client):
     """Test setting up Twilio and sending webhook."""
     await async_process_op_core_config(
-        opp,
+        opp.
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
@@ -27,7 +27,7 @@ async def test_config_flow_registers_webhook.opp, aiohttp_client):
         """Handle Twilio event."""
         twilio_events.append(event)
 
-   .opp.bus.async_listen(twilio.RECEIVED_DATA, handle_event)
+    opp.bus.async_listen(twilio.RECEIVED_DATA, handle_event)
 
     client = await aiohttp_client.opp.http.app)
     await client.post(f"/api/webhook/{webhook_id}", data={"hello": "twilio"})

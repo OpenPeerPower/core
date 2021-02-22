@@ -61,7 +61,7 @@ def pywemo_device_fixture(pywemo_registry, pywemo_model):
 async def async_wemo_entity_fixture.opp, pywemo_device):
     """Fixture for a Wemo entity in.opp."""
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {

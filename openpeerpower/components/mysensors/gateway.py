@@ -78,7 +78,7 @@ async def try_connect.opp: OpenPeerPowerType, user_input: Dict[str, str]) -> boo
             gateway_ready.set_result(True)
 
         gateway: Optional[BaseAsyncGateway] = await _get_gateway(
-            opp,
+            opp.
             device=user_input[CONF_DEVICE],
             version=user_input[CONF_VERSION],
             event_callback=gateway_ready_callback,
@@ -112,22 +112,22 @@ async def try_connect.opp: OpenPeerPowerType, user_input: Dict[str, str]) -> boo
 
 
 def get_mysensors_gateway(
-    opp: OpenPeerPowerType, gateway_id: GatewayId
+    opp. OpenPeerPowerType, gateway_id: GatewayId
 ) -> Optional[BaseAsyncGateway]:
     """Return the Gateway for a given GatewayId."""
     if MYSENSORS_GATEWAYS not in.opp.data[DOMAIN]:
-       .opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
+        opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
     gateways = opp.data[DOMAIN].get(MYSENSORS_GATEWAYS)
     return gateways.get(gateway_id)
 
 
 async def setup_gateway(
-    opp: OpenPeerPowerType, entry: ConfigEntry
+    opp. OpenPeerPowerType, entry: ConfigEntry
 ) -> Optional[BaseAsyncGateway]:
     """Set up the Gateway for the given ConfigEntry."""
 
     ready_gateway = await _get_gateway(
-        opp,
+        opp.
         device=entry.data[CONF_DEVICE],
         version=entry.data[CONF_VERSION],
         event_callback=_gw_callback_factory.opp, entry.entry_id),
@@ -144,7 +144,7 @@ async def setup_gateway(
 
 
 async def _get_gateway(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     device: str,
     version: str,
     event_callback: Callable[[Message], None],
@@ -180,7 +180,7 @@ async def _get_gateway(
                 """Call callback."""
                 sub_cb(msg.topic, msg.payload, msg.qos)
 
-           .opp.async_create_task(mqtt.async_subscribe(topic, internal_callback, qos))
+            opp.async_create_task(mqtt.async_subscribe(topic, internal_callback, qos))
 
         gateway = mysensors.AsyncMQTTGateway(
             pub_callback,
@@ -231,7 +231,7 @@ async def _get_gateway(
 
 
 async def finish_setup(
-    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp. OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Load any persistent devices and platforms and start gateway."""
     discover_tasks = []
@@ -246,7 +246,7 @@ async def finish_setup(
 
 
 async def _discover_persistent_devices(
-    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp. OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Discover platforms for devices loaded via persistence file."""
     tasks = []
@@ -277,11 +277,11 @@ async def gw_stop.opp, entry: ConfigEntry, gateway: BaseAsyncGateway):
 
 
 async def _gw_start(
-    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp. OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Start the gateway."""
     # Don't use.opp.async_create_task to avoid holding up setup indefinitely.
-   .opp.data[DOMAIN][
+    opp.data[DOMAIN][
         MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id)
     ] = asyncio.create_task(
         gateway.start()
@@ -290,13 +290,13 @@ async def _gw_start(
     async def stop_this_gw(_: Event):
         await gw_stop.opp, entry, gateway)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_this_gw)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_this_gw)
     if entry.data[CONF_DEVICE] == MQTT_COMPONENT:
         # Gatways connected via mqtt doesn't send gateway ready message.
         return
     gateway_ready = asyncio.Future()
     gateway_ready_key = MYSENSORS_GATEWAY_READY.format(entry.entry_id)
-   .opp.data[DOMAIN][gateway_ready_key] = gateway_ready
+    opp.data[DOMAIN][gateway_ready_key] = gateway_ready
 
     try:
         with async_timeout.timeout(GATEWAY_READY_TIMEOUT):
@@ -308,11 +308,11 @@ async def _gw_start(
             GATEWAY_READY_TIMEOUT,
         )
     finally:
-       .opp.data[DOMAIN].pop(gateway_ready_key, None)
+        opp.data[DOMAIN].pop(gateway_ready_key, None)
 
 
 def _gw_callback_factory(
-    opp: OpenPeerPowerType, gateway_id: GatewayId
+    opp. OpenPeerPowerType, gateway_id: GatewayId
 ) -> Callable[[Message], None]:
     """Return a new callback for the gateway."""
 
@@ -333,6 +333,6 @@ def _gw_callback_factory(
         if msg_handler is None:
             return
 
-       .opp.async_create_task(msg_handler.opp, gateway_id, msg))
+        opp.async_create_task(msg_handler.opp, gateway_id, msg))
 
     return mysensors_callback

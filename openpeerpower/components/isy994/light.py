@@ -27,12 +27,12 @@ ATTR_LAST_BRIGHTNESS = "last_brightness"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[list], None],
 ) -> bool:
     """Set up the ISY994 light platform."""
-   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     isy_options = entry.options
     restore_light_state = isy_options.get(CONF_RESTORE_LIGHT_STATE, False)
 

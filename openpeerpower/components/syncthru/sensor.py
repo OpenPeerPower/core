@@ -43,8 +43,8 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         "Loading syncthru via platform config is deprecated and no longer "
         "necessary as of 0.113. Please remove it from your configuration YAML."
     )
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={

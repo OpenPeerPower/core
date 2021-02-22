@@ -154,7 +154,7 @@ PLATFORMS = ["binary_sensor", "light"]
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Yeelight bulbs."""
     conf = config.get(DOMAIN, {})
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         DATA_CUSTOM_EFFECTS: conf.get(CONF_CUSTOM_EFFECTS, {}),
         DATA_CONFIG_ENTRIES: {},
         DATA_SCAN_INTERVAL: conf.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL),
@@ -167,8 +167,8 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
             CONF_HOST: host,
             **device_config,
         }
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=entry_config,
@@ -183,30 +183,30 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     async def _initialize(host: str, capabilities: Optional[dict] = None) -> None:
         remove_dispatcher = async_dispatcher_connect(
-            opp,
+            opp.
             DEVICE_INITIALIZED.format(host),
             _load_platforms,
         )
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id][
+        opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id][
             DATA_REMOVE_INIT_DISPATCHER
         ] = remove_dispatcher
 
         device = await _async_get_device.opp, host, entry, capabilities)
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id][DATA_DEVICE] = device
+        opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id][DATA_DEVICE] = device
 
         await device.async_setup()
 
     async def _load_platforms():
 
         for component in PLATFORMS:
-           .opp.async_create_task(
-               .opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.async_create_task(
+                opp.config_entries.async_forward_entry_setup(entry, component)
             )
 
     # Move options from data for imported entries
     # Initialize options with default values for other entries
     if not entry.options:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry,
             data={
                 CONF_HOST: entry.data.get(CONF_HOST),
@@ -226,7 +226,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             },
         )
 
-   .opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id] = {
+    opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id] = {
         DATA_UNSUB_UPDATE_LISTENER: entry.add_update_listener(_async_update_listener)
     }
 
@@ -246,7 +246,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -590,7 +590,7 @@ class YeelightEntity(Entity):
 
 
 async def _async_get_device(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     host: str,
     entry: ConfigEntry,
     capabilities: Optional[dict],

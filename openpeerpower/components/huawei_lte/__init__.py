@@ -302,7 +302,7 @@ class Router:
 class HuaweiLteData:
     """Shared state."""
 
-   .opp_config: dict = attr.ib()
+    opp.config: dict = attr.ib()
     # Our YAML config, keyed by router URL
     config: Dict[str, Dict[str, Any]] = attr.ib()
     routers: Dict[str, Router] = attr.ib(init=False, factory=dict)
@@ -341,7 +341,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
             new_options[CONF_NAME] = yaml_notify_name
         # Update entry if overrides were found
         if new_data or new_options:
-           .opp.config_entries.async_update_entry(
+            opp.config_entries.async_update_entry(
                 config_entry,
                 data={**config_entry.data, **new_data},
                 options={**config_entry.options, **new_options},
@@ -388,7 +388,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Set up router and store reference to it
     router = Router(connection, url, mac, signal_update)
-   .opp.data[DOMAIN].routers[url] = router
+    opp.data[DOMAIN].routers[url] = router
 
     # Do initial data update
     await opp.async_add_executor_job(router.update)
@@ -420,12 +420,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Forward config entry setup to platforms
     for domain in CONFIG_ENTRY_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, domain)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, domain)
         )
     # Notify doesn't support config entry setup yet, load with discovery for now
     await discovery.async_load_platform(
-        opp,
+        opp.
         NOTIFY_DOMAIN,
         DOMAIN,
         {
@@ -433,7 +433,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
             CONF_NAME: config_entry.options.get(CONF_NAME, DEFAULT_NOTIFY_SERVICE_NAME),
             CONF_RECIPIENT: config_entry.options.get(CONF_RECIPIENT),
         },
-       .opp.data[DOMAIN].opp_config,
+        opp.data[DOMAIN].opp_config,
     )
 
     # Add config entry options update listener
@@ -455,13 +455,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     )
 
     # Clean up at end
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, router.cleanup)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, router.cleanup)
 
     return True
 
 
 async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload config entry."""
 
@@ -486,7 +486,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     # Arrange our YAML config to dict with normalized URLs as keys
     domain_config: Dict[str, Dict[str, Any]] = {}
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = HuaweiLteData.opp_config=config, config=domain_config)
+        opp.data[DOMAIN] = HuaweiLteData.opp_config=config, config=domain_config)
     for router_config in config.get(DOMAIN, []):
         domain_config[url_normalize(router_config.pop(CONF_URL))] = router_config
 
@@ -536,7 +536,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
             _LOGGER.error("%s: unsupported service", service.service)
 
     for service in ADMIN_SERVICES:
-       .opp.helpers.service.async_register_admin_service(
+        opp.helpers.service.async_register_admin_service(
             DOMAIN,
             service,
             service_handler,
@@ -544,8 +544,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         )
 
     for url, router_config in domain_config.items():
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data={
@@ -560,14 +560,14 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 
 async def async_signal_options_update(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Handle config entry options update."""
     async_dispatcher_send.opp, UPDATE_OPTIONS_SIGNAL, config_entry)
 
 
 async def async_migrate_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Migrate config entry to new version."""
     if config_entry.version == 1:
@@ -576,7 +576,7 @@ async def async_migrate_entry(
         if isinstance(recipient, str):
             options[CONF_RECIPIENT] = [x.strip() for x in recipient.split(",")]
         config_entry.version = 2
-       .opp.config_entries.async_update_entry(config_entry, options=options)
+        opp.config_entries.async_update_entry(config_entry, options=options)
         _LOGGER.info("Migrated config entry to version %d", config_entry.version)
     return True
 

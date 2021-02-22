@@ -17,7 +17,7 @@ class ScriptVariables:
     @callback
     def async_render(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         run_variables: Optional[Mapping[str, Any]],
         *,
         render_as_defaults: bool = True,

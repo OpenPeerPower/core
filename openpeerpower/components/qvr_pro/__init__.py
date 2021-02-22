@@ -79,7 +79,7 @@ def setup_opp, config):
 
         channels.append(channel)
 
-   .opp.data[DOMAIN] = {"channels": channels, "client": qvrpro}
+    opp.data[DOMAIN] = {"channels": channels, "client": qvrpro}
 
     load_platform.opp, CAMERA_DOMAIN, DOMAIN, {}, config)
 
@@ -92,13 +92,13 @@ def setup_opp, config):
         guid = call.data[SERVICE_CHANNEL_GUID]
         qvrpro.stop_recording(guid)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_START_RECORD,
         handle_start_record,
         schema=SERVICE_CHANNEL_RECORD_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_STOP_RECORD,
         handle_stop_record,

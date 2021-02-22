@@ -22,7 +22,7 @@ async def test_bridge_setup_opp):
     hue_bridge = bridge.HueBridge.opp, entry)
 
     with patch("aiohue.Bridge", return_value=api), patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward:
         assert await hue_bridge.async_setup() is True
 
@@ -94,7 +94,7 @@ async def test_reset_unloads_entry_if_setup_opp):
     assert len(mock_forward.mock_calls) == 3
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_unload", return_value=True
+        opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
         assert await hue_bridge.async_reset()
 
@@ -176,7 +176,7 @@ async def test_hue_activate_scene.opp, mock_api):
     mock_api.mock_scene_responses.append(SCENE_RESPONSE)
 
     with patch("aiohue.Bridge", return_value=mock_api), patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ):
         assert await hue_bridge.async_setup() is True
 
@@ -210,7 +210,7 @@ async def test_hue_activate_scene_transition.opp, mock_api):
     mock_api.mock_scene_responses.append(SCENE_RESPONSE)
 
     with patch("aiohue.Bridge", return_value=mock_api), patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ):
         assert await hue_bridge.async_setup() is True
 
@@ -245,7 +245,7 @@ async def test_hue_activate_scene_group_not_found.opp, mock_api):
     mock_api.mock_scene_responses.append(SCENE_RESPONSE)
 
     with patch("aiohue.Bridge", return_value=mock_api), patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ):
         assert await hue_bridge.async_setup() is True
 
@@ -275,7 +275,7 @@ async def test_hue_activate_scene_scene_not_found.opp, mock_api):
     mock_api.mock_scene_responses.append({})
 
     with patch("aiohue.Bridge", return_value=mock_api), patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ):
         assert await hue_bridge.async_setup() is True
 

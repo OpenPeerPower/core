@@ -70,7 +70,7 @@ async def test_thermostat.opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {
@@ -110,7 +110,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_target_temp.properties[PROP_MIN_VALUE] == 7.0
     assert acc.char_target_temp.properties[PROP_MIN_STEP] == 0.1
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT,
         {
@@ -134,7 +134,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 17.8
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT,
         {
@@ -158,7 +158,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 23.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_FAN_ONLY,
         {
@@ -182,7 +182,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 25.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_COOL,
         {
@@ -198,7 +198,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 19.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {ATTR_TEMPERATURE: 22.0, ATTR_CURRENT_TEMPERATURE: 18.0},
@@ -210,7 +210,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 18.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_AUTO,
         {
@@ -234,7 +234,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 18.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT_COOL,
         {
@@ -258,7 +258,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 25.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_AUTO,
         {
@@ -282,7 +282,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 22.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_FAN_ONLY,
         {
@@ -306,7 +306,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_current_temp.value == 22.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_DRY,
         {
@@ -411,7 +411,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
     entity_id = "climate.test"
 
     # support_auto = True
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {
@@ -444,7 +444,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
     assert acc.char_heating_thresh_temp.properties[PROP_MIN_VALUE] == 7.0
     assert acc.char_heating_thresh_temp.properties[PROP_MIN_STEP] == 0.1
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT_COOL,
         {
@@ -470,7 +470,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
     assert acc.char_current_temp.value == 18.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_COOL,
         {
@@ -496,7 +496,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
     assert acc.char_current_temp.value == 24.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_AUTO,
         {
@@ -565,7 +565,7 @@ async def test_thermostat_humidity.opp, hk_driver, events):
     entity_id = "climate.test"
 
     # support_auto = True
-   .opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_SUPPORTED_FEATURES: 4})
+    opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_SUPPORTED_FEATURES: 4})
     await opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
@@ -578,14 +578,14 @@ async def test_thermostat_humidity.opp, hk_driver, events):
 
     assert acc.char_target_humidity.properties[PROP_MIN_VALUE] == DEFAULT_MIN_HUMIDITY
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_HEAT_COOL, {ATTR_HUMIDITY: 65, ATTR_CURRENT_HUMIDITY: 40}
     )
     await opp.async_block_till_done()
     assert acc.char_current_humidity.value == 40
     assert acc.char_target_humidity.value == 65
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_COOL, {ATTR_HUMIDITY: 35, ATTR_CURRENT_HUMIDITY: 70}
     )
     await opp.async_block_till_done()
@@ -624,7 +624,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
     entity_id = "climate.test"
 
     # SUPPORT_ON_OFF = True
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT,
         {
@@ -651,7 +651,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
     assert acc.char_current_heat_cool.value == 1
     assert acc.char_target_heat_cool.value == 1
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {
@@ -671,7 +671,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
     assert acc.char_current_heat_cool.value == 0
     assert acc.char_target_heat_cool.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {
@@ -744,7 +744,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
     entity_id = "climate.test"
 
     # support_ = True
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {
@@ -759,7 +759,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
     await acc.run()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT_COOL,
         {
@@ -852,18 +852,18 @@ async def test_thermostat_get_temperature_range.opp, hk_driver):
     """Test if temperature range is evaluated correctly."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(entity_id, HVAC_MODE_OFF)
+    opp.states.async_set(entity_id, HVAC_MODE_OFF)
     await opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 2, None)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_MIN_TEMP: 20, ATTR_MAX_TEMP: 25}
     )
     await opp.async_block_till_done()
     assert acc.get_temperature_range() == (20, 25)
 
     acc._unit = TEMP_FAHRENHEIT
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_MIN_TEMP: 60, ATTR_MAX_TEMP: 70}
     )
     await opp.async_block_till_done()
@@ -874,7 +874,7 @@ async def test_thermostat_temperature_step_whole.opp, hk_driver):
     """Test climate device with single digit precision."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_TARGET_TEMP_STEP: 1})
+    opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_TARGET_TEMP_STEP: 1})
     await opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
@@ -887,7 +887,7 @@ async def test_thermostat_temperature_step_whole.opp, hk_driver):
 
 async def test_thermostat_restore.opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     registry = await entity_registry.async_get_registry.opp)
 
@@ -908,7 +908,7 @@ async def test_thermostat_restore.opp, hk_driver, events):
         device_class="mock-device-class",
     )
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "Climate", "climate.simple", 2, None)
@@ -934,7 +934,7 @@ async def test_thermostat_hvac_modes.opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_HVAC_MODES: [HVAC_MODE_HEAT, HVAC_MODE_OFF]}
     )
 
@@ -967,7 +967,7 @@ async def test_thermostat_hvac_modes_with_auto_heat_cool.opp, hk_driver):
     """Test we get heat cool over auto."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {
@@ -1030,7 +1030,7 @@ async def test_thermostat_hvac_modes_with_auto_no_heat_cool.opp, hk_driver):
     """Test we get auto when there is no heat cool."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT,
         {ATTR_HVAC_MODES: [HVAC_MODE_AUTO, HVAC_MODE_HEAT, HVAC_MODE_OFF]},
@@ -1087,7 +1087,7 @@ async def test_thermostat_hvac_modes_with_auto_only.opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_AUTO, {ATTR_HVAC_MODES: [HVAC_MODE_AUTO, HVAC_MODE_OFF]}
     )
 
@@ -1141,7 +1141,7 @@ async def test_thermostat_hvac_modes_with_heat_only.opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit and siri calls get converted to heat."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_HEAT, {ATTR_HVAC_MODES: [HVAC_MODE_HEAT, HVAC_MODE_OFF]}
     )
 
@@ -1201,7 +1201,7 @@ async def test_thermostat_hvac_modes_with_cool_only.opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit and siri calls get converted to cool."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_COOL, {ATTR_HVAC_MODES: [HVAC_MODE_COOL, HVAC_MODE_OFF]}
     )
 
@@ -1260,7 +1260,7 @@ async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit and siri calls get converted to heat or cool."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_COOL,
         {
@@ -1354,7 +1354,7 @@ async def test_thermostat_hvac_modes_without_off.opp, hk_driver):
     """Test a thermostat that has no off."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_AUTO, {ATTR_HVAC_MODES: [HVAC_MODE_AUTO, HVAC_MODE_HEAT]}
     )
 
@@ -1392,7 +1392,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     entity_id = "climate.test"
 
     # support_auto = True
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {ATTR_SUPPORTED_FEATURES: SUPPORT_TARGET_TEMPERATURE_RANGE},
@@ -1414,7 +1414,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     assert acc.char_heating_thresh_temp.properties[PROP_MIN_VALUE] == 7.0
     assert acc.char_heating_thresh_temp.properties[PROP_MIN_STEP] == 0.1
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT_COOL,
         {
@@ -1441,7 +1441,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     assert acc.char_current_temp.value == 18.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_COOL,
         {
@@ -1468,7 +1468,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     assert acc.char_current_temp.value == 24.0
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_COOL,
         {
@@ -1522,7 +1522,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] == "CoolingThresholdTemperature to 17.0°C"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT,
         {
@@ -1573,7 +1573,7 @@ async def test_water_heater.opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "water_heater.test"
 
-   .opp.states.async_set(entity_id, HVAC_MODE_HEAT)
+    opp.states.async_set(entity_id, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
     acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
     await acc.run()
@@ -1596,7 +1596,7 @@ async def test_water_heater.opp, hk_driver, events):
     )
     assert acc.char_target_temp.properties[PROP_MIN_STEP] == 0.1
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT,
         {
@@ -1612,7 +1612,7 @@ async def test_water_heater.opp, hk_driver, events):
     assert acc.char_current_heat_cool.value == 1
     assert acc.char_display_units.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_HEAT_COOL, {ATTR_HVAC_MODE: HVAC_MODE_HEAT_COOL}
     )
     await opp.async_block_till_done()
@@ -1621,7 +1621,7 @@ async def test_water_heater.opp, hk_driver, events):
 
     # Set from HomeKit
     call_set_temperature = async_mock_service(
-        opp, DOMAIN_WATER_HEATER, "set_temperature"
+        opp. DOMAIN_WATER_HEATER, "set_temperature"
     )
 
     await opp.async_add_executor_job(acc.char_target_temp.client_update_value, 52.0)
@@ -1651,14 +1651,14 @@ async def test_water_heater_fahrenheit.opp, hk_driver, events):
     """Test if accessory and HA are update accordingly."""
     entity_id = "water_heater.test"
 
-   .opp.states.async_set(entity_id, HVAC_MODE_HEAT)
+    opp.states.async_set(entity_id, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
     with patch.object.opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
         acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(entity_id, HVAC_MODE_HEAT, {ATTR_TEMPERATURE: 131})
+    opp.states.async_set(entity_id, HVAC_MODE_HEAT, {ATTR_TEMPERATURE: 131})
     await opp.async_block_till_done()
     assert acc.char_target_temp.value == 55.0
     assert acc.char_current_temp.value == 50
@@ -1666,7 +1666,7 @@ async def test_water_heater_fahrenheit.opp, hk_driver, events):
 
     # Set from HomeKit
     call_set_temperature = async_mock_service(
-        opp, DOMAIN_WATER_HEATER, "set_temperature"
+        opp. DOMAIN_WATER_HEATER, "set_temperature"
     )
 
     await opp.async_add_executor_job(acc.char_target_temp.client_update_value, 60)
@@ -1683,18 +1683,18 @@ async def test_water_heater_get_temperature_range.opp, hk_driver):
     """Test if temperature range is evaluated correctly."""
     entity_id = "water_heater.test"
 
-   .opp.states.async_set(entity_id, HVAC_MODE_HEAT)
+    opp.states.async_set(entity_id, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
     acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_HEAT, {ATTR_MIN_TEMP: 20, ATTR_MAX_TEMP: 25}
     )
     await opp.async_block_till_done()
     assert acc.get_temperature_range() == (20, 25)
 
     acc._unit = TEMP_FAHRENHEIT
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_MIN_TEMP: 60, ATTR_MAX_TEMP: 70}
     )
     await opp.async_block_till_done()
@@ -1703,7 +1703,7 @@ async def test_water_heater_get_temperature_range.opp, hk_driver):
 
 async def test_water_heater_restore.opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     registry = await entity_registry.async_get_registry.opp)
 
@@ -1720,7 +1720,7 @@ async def test_water_heater_restore.opp, hk_driver, events):
         device_class="mock-device-class",
     )
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "WaterHeater", "water_heater.simple", 2, None)
@@ -1733,7 +1733,7 @@ async def test_water_heater_restore.opp, hk_driver, events):
     }
 
     acc = WaterHeater(
-        opp, hk_driver, "WaterHeater", "water_heater.all_info_set", 2, None
+        opp. hk_driver, "WaterHeater", "water_heater.all_info_set", 2, None
     )
     assert acc.category == 9
     assert acc.get_temperature_range() == (60.0, 70.0)
@@ -1749,7 +1749,7 @@ async def test_thermostat_with_no_modes_when_we_first_see.opp, hk_driver, events
     entity_id = "climate.test"
 
     # support_auto = True
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_OFF,
         {
@@ -1777,7 +1777,7 @@ async def test_thermostat_with_no_modes_when_we_first_see.opp, hk_driver, events
 
     assert acc.char_target_heat_cool.value == 0
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT_COOL,
         {
@@ -1802,7 +1802,7 @@ async def test_thermostat_with_no_off_after_recheck.opp, hk_driver, events):
     entity_id = "climate.test"
 
     # support_auto = True
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_COOL,
         {
@@ -1830,7 +1830,7 @@ async def test_thermostat_with_no_off_after_recheck.opp, hk_driver, events):
 
     assert acc.char_target_heat_cool.value == 2
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT_COOL,
         {
@@ -1854,7 +1854,7 @@ async def test_thermostat_with_temp_clamps.opp, hk_driver, events):
     """Test that tempatures are clamped to valid values to prevent homekit crash."""
     entity_id = "climate.test"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_COOL,
         {
@@ -1884,7 +1884,7 @@ async def test_thermostat_with_temp_clamps.opp, hk_driver, events):
 
     assert acc.char_target_heat_cool.value == 2
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         HVAC_MODE_HEAT_COOL,
         {

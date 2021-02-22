@@ -38,7 +38,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up FireServiceRota from a config entry."""
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     client = FireServiceRotaClient.opp, entry)
     await client.setup()
@@ -50,7 +50,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         return await client.async_update()
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name="duty binary sensor",
         update_method=async_update_data,
@@ -59,14 +59,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     await coordinator.async_refresh()
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_CLIENT: client,
         DATA_COORDINATOR: coordinator,
     }
 
     for platform in SUPPORTED_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -76,13 +76,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload FireServiceRota config entry."""
 
     await opp.async_add_executor_job(
-       .opp.data[DOMAIN][entry.entry_id].websocket.stop_listener
+        opp.data[DOMAIN][entry.entry_id].websocket.stop_listener
     )
 
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in SUPPORTED_PLATFORMS
             ]
         )

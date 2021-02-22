@@ -33,12 +33,12 @@ async def async_setup_entry.opp, config_entry) -> bool:
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][config_entry.entry_id] = coordinator
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
@@ -49,12 +49,12 @@ async def async_unload_entry.opp, config_entry) -> bool:
     tasks = []
     for platform in PLATFORMS:
         tasks.append(
-           .opp.config_entries.async_forward_entry_unload(config_entry, platform)
+            opp.config_entries.async_forward_entry_unload(config_entry, platform)
         )
 
     unload_ok = all(await gather(*tasks))
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 

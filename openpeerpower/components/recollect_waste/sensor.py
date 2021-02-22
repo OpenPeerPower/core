@@ -48,7 +48,7 @@ def async_get_pickup_type_names(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: dict,
     async_add_entities: Callable,
     discovery_info: dict = None,
@@ -58,8 +58,8 @@ async def async_setup_platform(
         "Loading ReCollect Waste via platform setup is deprecated. "
         "Please remove it from your configuration."
     )
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data=config,
@@ -68,7 +68,7 @@ async def async_setup_platform(
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up ReCollect Waste sensors based on a config entry."""
     coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]

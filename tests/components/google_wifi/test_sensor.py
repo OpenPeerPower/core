@@ -35,7 +35,7 @@ async def test_setup_minimum.opp, requests_mock):
     resource = f"http://{google_wifi.DEFAULT_HOST}{google_wifi.ENDPOINT}"
     requests_mock.get(resource, status_code=200)
     assert await async_setup_component(
-        opp,
+        opp.
         "sensor",
         {"sensor": {"platform": "google_wifi", "monitored_conditions": ["uptime"]}},
     )
@@ -47,7 +47,7 @@ async def test_setup_get.opp, requests_mock):
     resource = f"http://localhost{google_wifi.ENDPOINT}"
     requests_mock.get(resource, status_code=200)
     assert await async_setup_component(
-        opp,
+        opp.
         "sensor",
         {
             "sensor": {
@@ -89,7 +89,7 @@ def setup_api(data, requests_mock):
 
 def fake_delay.opp, ha_delay):
     """Fake delay to prevent update throttle."""
-   .opp_now = dt_util.utcnow()
+    opp.now = dt_util.utcnow()
     shifted_time = opp_now + timedelta(seconds=ha_delay)
     async_fire_time_changed.opp, shifted_time)
 

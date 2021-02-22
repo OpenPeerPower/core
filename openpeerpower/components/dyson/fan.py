@@ -103,7 +103,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     _LOGGER.debug("Creating new Dyson fans")
     if DYSON_FAN_DEVICES not in.opp.data:
-       .opp.data[DYSON_FAN_DEVICES] = []
+        opp.data[DYSON_FAN_DEVICES] = []
 
     # Get Dyson Devices from parent component
     has_purecool_devices = False
@@ -113,10 +113,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             if isinstance(device, DysonPureCool):
                 has_purecool_devices = True
                 dyson_entity = DysonPureCoolEntity(device)
-               .opp.data[DYSON_FAN_DEVICES].append(dyson_entity)
+                opp.data[DYSON_FAN_DEVICES].append(dyson_entity)
             elif isinstance(device, DysonPureCoolLink):
                 dyson_entity = DysonPureCoolLinkEntity(device)
-               .opp.data[DYSON_FAN_DEVICES].append(dyson_entity)
+                opp.data[DYSON_FAN_DEVICES].append(dyson_entity)
 
     async_add_entities.opp.data[DYSON_FAN_DEVICES])
 

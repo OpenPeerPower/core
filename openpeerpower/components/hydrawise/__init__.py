@@ -85,10 +85,10 @@ def setup_opp, config):
 
     try:
         hydrawise = Hydrawiser(user_token=access_token)
-       .opp.data[DATA_HYDRAWISE] = HydrawiseHub(hydrawise)
+        opp.data[DATA_HYDRAWISE] = HydrawiseHub(hydrawise)
     except (ConnectTimeout, HTTPError) as ex:
         _LOGGER.error("Unable to connect to Hydrawise cloud service: %s", str(ex))
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {ex}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
@@ -98,7 +98,7 @@ def setup_opp, config):
     def hub_refresh(event_time):
         """Call Hydrawise hub to refresh information."""
         _LOGGER.debug("Updating Hydrawise Hub component")
-       .opp.data[DATA_HYDRAWISE].data.update_controller_info()
+        opp.data[DATA_HYDRAWISE].data.update_controller_info()
         dispatcher_send.opp, SIGNAL_UPDATE_HYDRAWISE)
 
     # Call the Hydrawise API to refresh updates

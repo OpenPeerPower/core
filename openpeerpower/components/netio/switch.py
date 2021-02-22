@@ -58,7 +58,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     port = config.get(CONF_PORT)
 
     if not DEVICES:
-       .opp.http.register_view(NetioApiView)
+        opp.http.register_view(NetioApiView)
 
     dev = Netio(host, port, username, password)
 
@@ -73,7 +73,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     add_entities(DEVICES[host].entities)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, dispose)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, dispose)
     return True
 
 

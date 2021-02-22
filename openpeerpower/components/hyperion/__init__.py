@@ -103,16 +103,16 @@ async def async_create_connect_hyperion_client(
 
 async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up Hyperion component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
 async def _create_reauth_flow(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config_entry: ConfigEntry,
 ) -> None:
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={CONF_SOURCE: SOURCE_REAUTH}, data=config_entry.data
         )
     )
@@ -120,22 +120,22 @@ async def _create_reauth_flow(
 
 @callback
 def listen_for_instance_updates(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config_entry: ConfigEntry,
     add_func: Callable,
     remove_func: Callable,
 ) -> None:
     """Listen for instance additions/removals."""
 
-   .opp.data[DOMAIN][config_entry.entry_id][CONF_ON_UNLOAD].extend(
+    opp.data[DOMAIN][config_entry.entry_id][CONF_ON_UNLOAD].extend(
         [
             async_dispatcher_connect(
-                opp,
+                opp.
                 SIGNAL_INSTANCE_ADD.format(config_entry.entry_id),
                 add_func,
             ),
             async_dispatcher_connect(
-                opp,
+                opp.
                 SIGNAL_INSTANCE_REMOVE.format(config_entry.entry_id),
                 remove_func,
             ),
@@ -201,7 +201,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     # We need 1 root client (to manage instances being removed/added) and then 1 client
     # per Hyperion server instance which is shared for all entities associated with
     # that instance.
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data[DOMAIN][config_entry.entry_id] = {
         CONF_ROOT_CLIENT: hyperion_client,
         CONF_INSTANCE_CLIENTS: {},
         CONF_ON_UNLOAD: [],
@@ -249,7 +249,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
             existing_instances[instance_num] = hyperion_client
             instance_name = instance.get(hyperion_const.KEY_FRIENDLY_NAME, DEFAULT_NAME)
             async_dispatcher_send(
-                opp,
+                opp.
                 SIGNAL_INSTANCE_ADD.format(config_entry.entry_id),
                 instance_num,
                 instance_name,
@@ -259,7 +259,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         for instance_num in set(existing_instances) - running_instances:
             del existing_instances[instance_num]
             async_dispatcher_send(
-                opp, SIGNAL_INSTANCE_REMOVE.format(config_entry.entry_id), instance_num
+                opp. SIGNAL_INSTANCE_REMOVE.format(config_entry.entry_id), instance_num
             )
 
         # Deregister entities that belong to removed instances.
@@ -281,35 +281,35 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     async def setup_then_listen() -> None:
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_setup(config_entry, component)
+                opp.config_entries.async_forward_entry_setup(config_entry, component)
                 for component in PLATFORMS
             ]
         )
         assert hyperion_client
         await async_instances_to_clients_raw(hyperion_client.instances)
-       .opp.data[DOMAIN][config_entry.entry_id][CONF_ON_UNLOAD].append(
+        opp.data[DOMAIN][config_entry.entry_id][CONF_ON_UNLOAD].append(
             config_entry.add_update_listener(_async_entry_updated)
         )
 
-   .opp.async_create_task(setup_then_listen())
+    opp.async_create_task(setup_then_listen())
     return True
 
 
 async def _async_entry_updated(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Handle entry updates."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )

@@ -30,13 +30,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             entry.data.get(CONF_USERNAME),
             entry.data.get(CONF_PASSWORD),
         )
-       .opp.data[SRP_ENERGY_DOMAIN] = srp_energy_client
+        opp.data[SRP_ENERGY_DOMAIN] = srp_energy_client
     except (Exception) as ex:
         _LOGGER.error("Unable to connect to Srp Energy: %s", str(ex))
         raise ConfigEntryNotReady from ex
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
     return True
@@ -45,7 +45,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     """Unload a config entry."""
     # unload srp client
-   .opp.data[SRP_ENERGY_DOMAIN] = None
+    opp.data[SRP_ENERGY_DOMAIN] = None
     # Remove config entry
     await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
 

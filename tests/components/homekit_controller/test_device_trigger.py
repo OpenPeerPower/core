@@ -195,7 +195,7 @@ async def test_handle_events.opp, utcnow, calls):
     device = device_registry.async_get(entry.device_id)
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [

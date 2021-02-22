@@ -286,7 +286,7 @@ class PlexFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_plex_website_auth(self):
         """Begin external auth flow on Plex website."""
         self.opp.http.register_view(PlexAuthorizationCallbackView)
-       .opp_url = get_url(self.opp)
+        opp.url = get_url(self.opp)
         headers = {"Origin":.opp_url}
         payload = {
             "X-Plex-Device-Name": X_PLEX_DEVICE_NAME,
@@ -417,7 +417,7 @@ class PlexAuthorizationCallbackView(OpenPeerPowerView):
 
     async def get(self, request):
         """Receive authorization confirmation."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         await opp.config_entries.flow.async_configure(
             flow_id=request.query["flow_id"], user_input=None
         )

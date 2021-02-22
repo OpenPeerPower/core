@@ -33,18 +33,18 @@ async def async_setup_entry.opp, config_entry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][config_entry.entry_id] = coordinator
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "air_quality")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "air_quality")
     )
     return True
 
 
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
-   .opp.data[DOMAIN].pop(config_entry.entry_id)
+    opp.data[DOMAIN].pop(config_entry.entry_id)
     await opp.config_entries.async_forward_entry_unload(config_entry, "air_quality")
     return True
 

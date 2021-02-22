@@ -39,11 +39,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     except BSBLanConnectionError as exception:
         raise ConfigEntryNotReady from exception
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = {DATA_BSBLAN_CLIENT: bsblan}
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = {DATA_BSBLAN_CLIENT: bsblan}
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
     )
 
     return True

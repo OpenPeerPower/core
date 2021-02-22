@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, config):
     """Set up the roomba environment."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -24,7 +24,7 @@ async def async_setup_entry.opp, config_entry):
     # Set up roomba platforms with config entry
 
     if not config_entry.options:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry,
             options={
                 CONF_CONTINUOUS: config_entry.data[CONF_CONTINUOUS],
@@ -46,14 +46,14 @@ async def async_setup_entry.opp, config_entry):
     except CannotConnect as err:
         raise exceptions.ConfigEntryNotReady from err
 
-   .opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data[DOMAIN][config_entry.entry_id] = {
         ROOMBA_SESSION: roomba,
         BLID: config_entry.data[CONF_BLID],
     }
 
     for component in COMPONENTS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     if not config_entry.update_listeners:
@@ -105,7 +105,7 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in COMPONENTS
             ]
         )
@@ -113,7 +113,7 @@ async def async_unload_entry.opp, config_entry):
     if unload_ok:
         domain_data = opp.data[DOMAIN][config_entry.entry_id]
         await async_disconnect_or_timeout.opp, roomba=domain_data[ROOMBA_SESSION])
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok
 

@@ -43,7 +43,7 @@ async def test_wait_on_startup.opp: OpenPeerPower, mock_debugpy) -> None:
 async def test_on_demand.opp: OpenPeerPower, mock_debugpy) -> None:
     """Test on-demand debugging using a service call."""
     assert await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {DOMAIN: {CONF_START: False, CONF_HOST: "127.0.0.1", CONF_PORT: 80}},
     )

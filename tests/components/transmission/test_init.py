@@ -116,7 +116,7 @@ async def test_unload_entry.opp, api):
     entry.add_to.opp.opp)
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_unload", return_value=mock_coro(True)
+        opp.config_entries, "async_forward_entry_unload", return_value=mock_coro(True)
     ) as unload_entry:
         assert await transmission.async_setup_entry.opp, entry)
 

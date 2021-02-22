@@ -80,7 +80,7 @@ class Trigger:
 
     device_id: str = attr.ib()
     discovery_hash: dict = attr.ib()
-    opp: OpenPeerPowerType = attr.ib()
+    opp. OpenPeerPowerType = attr.ib()
     remove_update_signal: Callable[[], None] = attr.ib()
     subtype: str = attr.ib()
     tasmota_trigger: TasmotaTrigger = attr.ib()
@@ -192,7 +192,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash
         return
 
     remove_update_signal = async_dispatcher_connect(
-        opp, TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash), discovery_update
+        opp. TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash), discovery_update
     )
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
@@ -205,10 +205,10 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash
         return
 
     if DEVICE_TRIGGERS not in.opp.data:
-       .opp.data[DEVICE_TRIGGERS] = {}
+        opp.data[DEVICE_TRIGGERS] = {}
     if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
         device_trigger = Trigger(
-           .opp.opp,
+            opp.opp,
             device_id=device.id,
             discovery_hash=discovery_hash,
             subtype=tasmota_trigger.cfg.subtype,
@@ -216,7 +216,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash
             type=tasmota_trigger.cfg.type,
             remove_update_signal=remove_update_signal,
         )
-       .opp.data[DEVICE_TRIGGERS][discovery_id] = device_trigger
+        opp.data[DEVICE_TRIGGERS][discovery_id] = device_trigger
     else:
         # This Tasmota trigger is wanted by device trigger(s), set them up
         device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
@@ -263,22 +263,22 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     action: Callable,
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a device trigger."""
     if DEVICE_TRIGGERS not in.opp.data:
-       .opp.data[DEVICE_TRIGGERS] = {}
+        opp.data[DEVICE_TRIGGERS] = {}
     config = TRIGGER_SCHEMA(config)
     device_id = config[CONF_DEVICE_ID]
     discovery_id = config[CONF_DISCOVERY_ID]
 
     if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
         # The trigger has not (yet) been discovered, prepare it for later
-       .opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-           .opp.opp,
+        opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
+            opp.opp,
             device_id=device_id,
             discovery_hash=None,
             remove_update_signal=None,

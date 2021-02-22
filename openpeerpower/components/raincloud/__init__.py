@@ -103,10 +103,10 @@ def setup_opp, config):
         raincloud = RainCloudy(username=username, password=password)
         if not raincloud.is_connected:
             raise HTTPError
-       .opp.data[DATA_RAINCLOUD] = RainCloudHub(raincloud)
+        opp.data[DATA_RAINCLOUD] = RainCloudHub(raincloud)
     except (ConnectTimeout, HTTPError) as ex:
         _LOGGER.error("Unable to connect to Rain Cloud service: %s", str(ex))
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {ex}<br />" "You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
@@ -116,7 +116,7 @@ def setup_opp, config):
     def hub_refresh(event_time):
         """Call Raincloud hub to refresh information."""
         _LOGGER.debug("Updating RainCloud Hub component")
-       .opp.data[DATA_RAINCLOUD].data.update()
+        opp.data[DATA_RAINCLOUD].data.update()
         dispatcher_send.opp, SIGNAL_UPDATE_RAINCLOUD)
 
     # Call the Raincloud API to refresh updates

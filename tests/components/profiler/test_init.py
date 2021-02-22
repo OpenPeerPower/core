@@ -41,7 +41,7 @@ async def test_basic_usage.opp, tmpdir):
         return last_filename
 
     with patch("openpeerpower.components.profiler.cProfile.Profile"), patch.object(
-       .opp.config, "path", _mock_path
+        opp.config, "path", _mock_path
     ):
         await opp.services.async_call(DOMAIN, SERVICE_START, {CONF_SECONDS: 0.000001})
         await opp.async_block_till_done()
@@ -73,7 +73,7 @@ async def test_memory_usage.opp, tmpdir):
         return last_filename
 
     with patch("openpeerpower.components.profiler.hpy") as mock_hpy, patch.object(
-       .opp.config, "path", _mock_path
+        opp.config, "path", _mock_path
     ):
         await opp.services.async_call(DOMAIN, SERVICE_MEMORY, {CONF_SECONDS: 0.000001})
         await opp.async_block_till_done()

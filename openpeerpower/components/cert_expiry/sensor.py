@@ -39,13 +39,13 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     @callback
     def do_import(_):
         """Process YAML import."""
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=dict(config)
             )
         )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, schedule_import)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, schedule_import)
 
 
 async def async_setup_entry.opp, entry, async_add_entities):

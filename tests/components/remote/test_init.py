@@ -31,10 +31,10 @@ ENTITY_ID = "entity_id_val"
 
 async def test_is_on.opp):
     """Test is_on."""
-   .opp.states.async_set("remote.test", STATE_ON)
+    opp.states.async_set("remote.test", STATE_ON)
     assert remote.is_on.opp, "remote.test")
 
-   .opp.states.async_set("remote.test", STATE_OFF)
+    opp.states.async_set("remote.test", STATE_OFF)
     assert not remote.is_on.opp, "remote.test")
 
 
@@ -120,7 +120,7 @@ async def test_learn_command.opp):
 async def test_delete_command.opp):
     """Test delete_command."""
     delete_command_calls = async_mock_service(
-        opp, remote.DOMAIN, SERVICE_DELETE_COMMAND
+        opp. remote.DOMAIN, SERVICE_DELETE_COMMAND
     )
 
     data = {

@@ -62,17 +62,17 @@ async def async_setup_opp, config):
     """Try to start embedded Lightwave broker."""
     host = config[DOMAIN][CONF_HOST]
     lwlink = LWLink(host)
-   .opp.data[LIGHTWAVE_LINK] = lwlink
+    opp.data[LIGHTWAVE_LINK] = lwlink
 
     lights = config[DOMAIN][CONF_LIGHTS]
     if lights:
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform.opp, "light", DOMAIN, lights, config)
         )
 
     switches = config[DOMAIN][CONF_SWITCHES]
     if switches:
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform.opp, "switch", DOMAIN, switches, config)
         )
 
@@ -85,7 +85,7 @@ async def async_setup_opp, config):
 
         platforms = [CLIMATE_DOMAIN, SENSOR_DOMAIN]
         for platform in platforms:
-           .opp.async_create_task(
+            opp.async_create_task(
                 async_load_platform.opp, platform, DOMAIN, trvs, config)
             )
 

@@ -92,7 +92,7 @@ async def test_reauth_success.opp: OpenPeerPower):
     ],
 )
 async def test_reauth(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     side_effect: Exception,
     result_type: str,
     msg_field: str,

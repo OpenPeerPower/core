@@ -257,14 +257,14 @@ async def async_setup_opp, config):
     if CONF_PUSH not in ios_config[CONF_USER]:
         ios_config[CONF_USER][CONF_PUSH] = {}
 
-   .opp.data[DOMAIN] = ios_config
+    opp.data[DOMAIN] = ios_config
 
     # No entry support for notify component yet
     discovery.load_platform.opp, "notify", DOMAIN, {}, config)
 
     if conf is not None:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
             )
         )
@@ -274,13 +274,13 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up an iOS entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
-   .opp.http.register_view(iOSIdentifyDeviceView.opp.config.path(CONFIGURATION_FILE)))
-   .opp.http.register_view(iOSPushConfigView.opp.data[DOMAIN][CONF_USER][CONF_PUSH]))
-   .opp.http.register_view(iOSConfigView.opp.data[DOMAIN][CONF_USER]))
+    opp.http.register_view(iOSIdentifyDeviceView.opp.config.path(CONFIGURATION_FILE)))
+    opp.http.register_view(iOSPushConfigView.opp.data[DOMAIN][CONF_USER][CONF_PUSH]))
+    opp.http.register_view(iOSConfigView.opp.data[DOMAIN][CONF_USER]))
 
     return True
 
@@ -335,7 +335,7 @@ class iOSIdentifyDeviceView(OpenPeerPowerView):
         except ValueError:
             return self.json_message("Invalid JSON", HTTP_BAD_REQUEST)
 
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         # Commented for now while iOS app is getting frequent updates
         # try:
@@ -349,7 +349,7 @@ class iOSIdentifyDeviceView(OpenPeerPowerView):
 
         device_id = data[ATTR_DEVICE_ID]
 
-       .opp.data[DOMAIN][ATTR_DEVICES][device_id] = data
+        opp.data[DOMAIN][ATTR_DEVICES][device_id] = data
 
         async_dispatcher_send.opp, f"{DOMAIN}.{device_id}", data)
 

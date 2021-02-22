@@ -52,7 +52,7 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         logger: logging.Logger,
         *,
         name: str,
@@ -63,7 +63,7 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
     ):
         """Initialize NWS coordinator."""
         super().__init__(
-            opp,
+            opp.
             logger,
             name=name,
             update_interval=update_interval,
@@ -110,38 +110,38 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await nws_data.set_station(station)
 
     coordinator_observation = NwsDataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=f"NWS observation station {station}",
         update_method=nws_data.update_observation,
         update_interval=DEFAULT_SCAN_INTERVAL,
         failed_update_interval=FAILED_SCAN_INTERVAL,
         request_refresh_debouncer=debounce.Debouncer(
-            opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
+            opp. _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
 
     coordinator_forecast = NwsDataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=f"NWS forecast station {station}",
         update_method=nws_data.update_forecast,
         update_interval=DEFAULT_SCAN_INTERVAL,
         failed_update_interval=FAILED_SCAN_INTERVAL,
         request_refresh_debouncer=debounce.Debouncer(
-            opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
+            opp. _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
 
     coordinator_forecast_hourly = NwsDataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=f"NWS forecast hourly station {station}",
         update_method=nws_data.update_forecast_hourly,
         update_interval=DEFAULT_SCAN_INTERVAL,
         failed_update_interval=FAILED_SCAN_INTERVAL,
         request_refresh_debouncer=debounce.Debouncer(
-            opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
+            opp. _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
     nws.opp_data = opp.data.setdefault(DOMAIN, {})
@@ -158,8 +158,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await coordinator_forecast_hourly.async_refresh()
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
     return True
 
@@ -169,13 +169,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
         if len.opp.data[DOMAIN]) == 0:
-           .opp.data.pop(DOMAIN)
+            opp.data.pop(DOMAIN)
     return unload_ok

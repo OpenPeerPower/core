@@ -31,7 +31,7 @@ def discover_chromecast.opp: OpenPeerPower, info: ChromecastInfo):
     else:
         _LOGGER.debug("Discovered chromecast %s", info)
 
-   .opp.data[KNOWN_CHROMECAST_INFO_KEY][info.uuid] = info
+    opp.data[KNOWN_CHROMECAST_INFO_KEY][info.uuid] = info
     dispatcher_send.opp, SIGNAL_CAST_DISCOVERED, info)
 
 
@@ -45,7 +45,7 @@ def _remove_chromecast.opp: OpenPeerPower, info: ChromecastInfo):
 def setup_internal_discovery.opp: OpenPeerPower) -> None:
     """Set up the pychromecast internal discovery."""
     if INTERNAL_DISCOVERY_RUNNING_KEY not in.opp.data:
-       .opp.data[INTERNAL_DISCOVERY_RUNNING_KEY] = threading.Lock()
+        opp.data[INTERNAL_DISCOVERY_RUNNING_KEY] = threading.Lock()
 
     if not.opp.data[INTERNAL_DISCOVERY_RUNNING_KEY].acquire(blocking=False):
         # Internal discovery is already running
@@ -82,7 +82,7 @@ def setup_internal_discovery.opp: OpenPeerPower) -> None:
         host = addresses[0] if addresses else service_info.server
 
         discover_chromecast(
-            opp,
+            opp.
             ChromecastInfo(
                 services=service[0],
                 uuid=service[1],
@@ -96,7 +96,7 @@ def setup_internal_discovery.opp: OpenPeerPower) -> None:
     def internal_remove_callback(uuid, service_name, service):
         """Handle zeroconf discovery of a removed chromecast."""
         _remove_chromecast(
-            opp,
+            opp.
             ChromecastInfo(
                 services=service[0],
                 uuid=service[1],
@@ -117,6 +117,6 @@ def setup_internal_discovery.opp: OpenPeerPower) -> None:
         """Stop discovery of new chromecasts."""
         _LOGGER.debug("Stopping internal pychromecast discovery")
         pychromecast.discovery.stop_discovery(browser)
-       .opp.data[INTERNAL_DISCOVERY_RUNNING_KEY].release()
+        opp.data[INTERNAL_DISCOVERY_RUNNING_KEY].release()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_discovery)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_discovery)

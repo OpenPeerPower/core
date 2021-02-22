@@ -102,8 +102,8 @@ async def async_setup_opp, config):
     """Import the Transmission Component from config."""
     if DOMAIN in config:
         for entry in config[DOMAIN]:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=entry
                 )
             )
@@ -114,7 +114,7 @@ async def async_setup_opp, config):
 async def async_setup_entry.opp, config_entry):
     """Set up the Transmission Component."""
     client = TransmissionClient.opp, config_entry)
-   .opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
+    opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
 
     if not await client.async_setup():
         return False
@@ -132,10 +132,10 @@ async def async_unload_entry.opp, config_entry):
         await opp.config_entries.async_forward_entry_unload(config_entry, platform)
 
     if not.opp.data[DOMAIN]:
-       .opp.services.async_remove(DOMAIN, SERVICE_ADD_TORRENT)
-       .opp.services.async_remove(DOMAIN, SERVICE_REMOVE_TORRENT)
-       .opp.services.async_remove(DOMAIN, SERVICE_START_TORRENT)
-       .opp.services.async_remove(DOMAIN, SERVICE_STOP_TORRENT)
+        opp.services.async_remove(DOMAIN, SERVICE_ADD_TORRENT)
+        opp.services.async_remove(DOMAIN, SERVICE_REMOVE_TORRENT)
+        opp.services.async_remove(DOMAIN, SERVICE_START_TORRENT)
+        opp.services.async_remove(DOMAIN, SERVICE_STOP_TORRENT)
 
     return True
 

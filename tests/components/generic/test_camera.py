@@ -22,7 +22,7 @@ async def test_fetching_url.opp, opp_client):
     respx.get("http://example.com").respond(text="hello world")
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -54,7 +54,7 @@ async def test_fetching_without_verify_ssl(aioclient_mock, opp, opp_client):
     aioclient_mock.get("https://example.com", text="hello world")
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -81,7 +81,7 @@ async def test_fetching_url_with_verify_ssl(aioclient_mock, opp, opp_client):
     aioclient_mock.get("https://example.com", text="hello world")
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -112,7 +112,7 @@ async def test_limit_refetch.opp, opp_client):
     respx.get("http://example.com/20a").respond(status_code=HTTP_NOT_FOUND)
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -129,14 +129,14 @@ async def test_limit_refetch.opp, opp_client):
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 
-   .opp.states.async_set("sensor.temp", "5")
+    opp.states.async_set("sensor.temp", "5")
 
     with patch("async_timeout.timeout", side_effect=asyncio.TimeoutError()):
         resp = await client.get("/api/camera_proxy/camera.config_test")
         assert respx.calls.call_count == 0
         assert resp.status == HTTP_INTERNAL_SERVER_ERROR
 
-   .opp.states.async_set("sensor.temp", "10")
+    opp.states.async_set("sensor.temp", "10")
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
     assert respx.calls.call_count == 1
@@ -150,7 +150,7 @@ async def test_limit_refetch.opp, opp_client):
     body = await resp.text()
     assert body == "hello world"
 
-   .opp.states.async_set("sensor.temp", "15")
+    opp.states.async_set("sensor.temp", "15")
 
     # Url change = fetch new image
     resp = await client.get("/api/camera_proxy/camera.config_test")
@@ -160,7 +160,7 @@ async def test_limit_refetch.opp, opp_client):
     assert body == "hello planet"
 
     # Cause a template render error
-   .opp.states.async_remove("sensor.temp")
+    opp.states.async_remove("sensor.temp")
     resp = await client.get("/api/camera_proxy/camera.config_test")
     assert respx.calls.call_count == 2
     assert resp.status == 200
@@ -171,7 +171,7 @@ async def test_limit_refetch.opp, opp_client):
 async def test_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
     """Test that the stream source is rendered."""
     assert await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -186,7 +186,7 @@ async def test_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
     assert await async_setup_component.opp, "stream", {})
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sensor.temp", "5")
+    opp.states.async_set("sensor.temp", "5")
 
     with patch(
         "openpeerpower.components.camera.Stream.endpoint_url",
@@ -211,7 +211,7 @@ async def test_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
 async def test_stream_source_error(aioclient_mock, opp, opp_client, opp_ws_client):
     """Test that the stream source has an error."""
     assert await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -253,7 +253,7 @@ async def test_stream_source_error(aioclient_mock, opp, opp_client, opp_ws_clien
 async def test_setup_alternative_options.opp, opp_ws_client):
     """Test that the stream source is setup with different config options."""
     assert await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -275,7 +275,7 @@ async def test_setup_alternative_options.opp, opp_ws_client):
 async def test_no_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
     """Test a stream request without stream source option set."""
     assert await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -329,7 +329,7 @@ async def test_camera_content_type.opp, opp_client):
     cam_config_normal["name"] = "config_test_jpg"
 
     await async_setup_component(
-        opp, "camera", {"camera": [cam_config_svg, cam_config_normal]}
+        opp. "camera", {"camera": [cam_config_svg, cam_config_normal]}
     )
     await opp.async_block_till_done()
 
@@ -356,7 +356,7 @@ async def test_reloading.opp, opp_client):
     respx.get("http://example.com").respond(text="hello world")
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {

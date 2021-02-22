@@ -245,36 +245,36 @@ def _build_publish_data(topic: Any, qos: int, retain: bool) -> ServiceDataType:
 @bind.opp
 def publish.opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> None:
     """Publish message to an MQTT topic."""
-   .opp.add_job(async_publish, opp, topic, payload, qos, retain)
+    opp.add_job(async_publish, opp, topic, payload, qos, retain)
 
 
 @callback
 @bind.opp
 def async_publish(
-    opp: OpenPeerPowerType, topic: Any, payload, qos=None, retain=None
+    opp. OpenPeerPowerType, topic: Any, payload, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic."""
     data = _build_publish_data(topic, qos, retain)
     data[ATTR_PAYLOAD] = payload
-   .opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
+    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
 
 
 @bind.opp
 def publish_template(
-    opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
+    opp. OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic."""
-   .opp.add_job(async_publish_template, opp, topic, payload_template, qos, retain)
+    opp.add_job(async_publish_template, opp, topic, payload_template, qos, retain)
 
 
 @bind.opp
 def async_publish_template(
-    opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
+    opp. OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic using a template payload."""
     data = _build_publish_data(topic, qos, retain)
     data[ATTR_PAYLOAD_TEMPLATE] = payload_template
-   .opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
+    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
 
 
 def wrap_msg_callback(msg_callback: MessageCallbackType) -> MessageCallbackType:
@@ -306,7 +306,7 @@ def wrap_msg_callback(msg_callback: MessageCallbackType) -> MessageCallbackType:
 
 @bind.opp
 async def async_subscribe(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     topic: str,
     msg_callback: MessageCallbackType,
     qos: int = DEFAULT_QOS,
@@ -351,7 +351,7 @@ async def async_subscribe(
 
 @bind.opp
 def subscribe(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     topic: str,
     msg_callback: MessageCallbackType,
     qos: int = DEFAULT_QOS,
@@ -370,14 +370,14 @@ def subscribe(
 
 
 async def _async_setup_discovery(
-    opp: OpenPeerPowerType, conf: ConfigType, config_entry
+    opp. OpenPeerPowerType, conf: ConfigType, config_entry
 ) -> bool:
     """Try to start the discovery of MQTT devices.
 
     This method is a coroutine.
     """
     success: bool = await discovery.async_start(
-        opp, conf[CONF_DISCOVERY_PREFIX], config_entry
+        opp. conf[CONF_DISCOVERY_PREFIX], config_entry
     )
 
     return success
@@ -398,12 +398,12 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     conf = dict(conf)
 
-   .opp.data[DATA_MQTT_CONFIG] = conf
+    opp.data[DATA_MQTT_CONFIG] = conf
 
     # Only import if we haven't before.
     if not.opp.config_entries.async_entries(DOMAIN):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
             )
         )
@@ -423,7 +423,7 @@ async def async_setup_entry.opp, entry):
     # Config entry was created because user had configuration.yaml entry
     # They removed that, so remove entry.
     if conf is None and entry.source == config_entries.SOURCE_IMPORT:
-       .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+        opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
         return False
 
     # If user didn't have configuration.yaml config, generate defaults
@@ -442,8 +442,8 @@ async def async_setup_entry.opp, entry):
 
     conf = _merge_config(entry, conf)
 
-   .opp.data[DATA_MQTT] = MQTT(
-        opp,
+    opp.data[DATA_MQTT] = MQTT(
+        opp.
         entry,
         conf,
     )
@@ -454,7 +454,7 @@ async def async_setup_entry.opp, entry):
         """Stop MQTT component."""
         await opp.data[DATA_MQTT].async_disconnect()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_mqtt)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_mqtt)
 
     async def async_publish_service(call: ServiceCall):
         """Handle MQTT publish service calls."""
@@ -480,7 +480,7 @@ async def async_setup_entry.opp, entry):
 
         await opp.data[DATA_MQTT].async_publish(msg_topic, payload, qos, retain)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_PUBLISH, async_publish_service, schema=MQTT_PUBLISH_SCHEMA
     )
 
@@ -506,7 +506,7 @@ async def async_setup_entry.opp, entry):
 
         event.async_call_later.opp, call.data["duration"], finish_dump)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_DUMP,
         async_dump_service,
@@ -540,7 +540,7 @@ class MQTT:
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         config_entry,
         conf,
     ) -> None:
@@ -1045,7 +1045,7 @@ async def websocket_subscribe.opp, connection, msg):
         )
 
     connection.subscriptions[msg["id"]] = await async_subscribe(
-        opp, msg["topic"], forward_messages
+        opp. msg["topic"], forward_messages
     )
 
     connection.send_message(websocket_api.result_message(msg["id"]))

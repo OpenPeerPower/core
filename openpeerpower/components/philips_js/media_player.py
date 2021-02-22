@@ -87,8 +87,8 @@ def _inverted(data):
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Philips TV platform."""
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=config,
@@ -97,7 +97,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config_entry: config_entries.ConfigEntry,
     async_add_entities,
 ):

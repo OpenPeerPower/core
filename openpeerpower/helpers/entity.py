@@ -51,7 +51,7 @@ def generate_entity_id(
     entity_id_format: str,
     name: Optional[str],
     current_ids: Optional[List[str]] = None,
-   .opp: Optional[OpenPeerPower] = None,
+    opp. Optional[OpenPeerPower] = None,
 ) -> str:
     """Generate a unique entity ID based on given entity IDs or used IDs."""
     return async_generate_entity_id(entity_id_format, name, current_ids, opp)
@@ -62,7 +62,7 @@ def async_generate_entity_id(
     entity_id_format: str,
     name: Optional[str],
     current_ids: Optional[Iterable[str]] = None,
-   .opp: Optional[OpenPeerPower] = None,
+    opp. Optional[OpenPeerPower] = None,
 ) -> str:
     """Generate a unique entity ID based on given entity IDs or used IDs."""
     name = (name or DEVICE_DEFAULT_NAME).lower()
@@ -92,7 +92,7 @@ class Entity(ABC):
     entity_id = None  # type: str
 
     # Owning.opp instance. Will be set by EntityPlatform
-   .opp: Optional[OpenPeerPower] = None
+    opp. Optional[OpenPeerPower] = None
 
     # Owning platform instance. Will be set by EntityPlatform
     platform: Optional[EntityPlatform] = None
@@ -500,7 +500,7 @@ class Entity(ABC):
     @callback
     def add_to_platform_start(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         platform: EntityPlatform,
         parallel_updates: Optional[asyncio.Semaphore],
     ) -> None:

@@ -32,7 +32,7 @@ from tests.common import MockConfigEntry
 
 def config_schema_validate(withings_config) -> dict:
     """Assert a schema config succeeds."""
-   .opp_config = {const.DOMAIN: withings_config}
+    opp.config = {const.DOMAIN: withings_config}
 
     return CONFIG_SCHEMA.opp_config)
 
@@ -109,11 +109,11 @@ def test_config_schema_use_webhook() -> None:
 
 async def test_async_setup_no_config(opp: OpenPeerPower) -> None:
     """Test method."""
-   .opp.async_create_task = MagicMock()
+    opp.async_create_task = MagicMock()
 
     await async_setup_opp, {})
 
-   .opp.async_create_task.assert_not_called()
+    opp.async_create_task.assert_not_called()
 
 
 @pytest.mark.parametrize(
@@ -125,7 +125,7 @@ async def test_async_setup_no_config(opp: OpenPeerPower) -> None:
     ],
 )
 async def test_auth_failure(
-    opp: OpenPeerPower, component_factory: ComponentFactory, exception: Exception
+    opp. OpenPeerPower, component_factory: ComponentFactory, exception: Exception
 ) -> None:
     """Test auth failure."""
     person0 = new_profile_config(
@@ -164,7 +164,7 @@ async def test_auth_failure(
 
 
 async def test_set_config_unique_id(
-    opp: OpenPeerPower, component_factory: ComponentFactory
+    opp. OpenPeerPower, component_factory: ComponentFactory
 ) -> None:
     """Test upgrading configs to use a unique id."""
     person0 = new_profile_config("person0", 0)
@@ -201,7 +201,7 @@ async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
     )
     config_entry.add_to.opp.opp)
 
-   .opp_config = {
+    opp.config = {
         HA_DOMAIN: {
             CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC,
             CONF_EXTERNAL_URL: "http://127.0.0.1:8080/",

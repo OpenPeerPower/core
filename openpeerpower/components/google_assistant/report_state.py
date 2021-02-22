@@ -55,7 +55,7 @@ def async_enable_report_state.opp: OpenPeerPower, google_config: AbstractConfig)
 
     @callback
     def extra_significant_check(
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         old_state: str,
         old_attrs: dict,
         old_extra_arg: dict,

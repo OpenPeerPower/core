@@ -150,7 +150,7 @@ CONFIG_SCHEMA = vol.Schema({DOMAIN: LIFE360_SCHEMA}, extra=vol.ALLOW_EXTRA)
 def setup_opp, config):
     """Set up integration."""
     conf = config.get(DOMAIN, LIFE360_SCHEMA({}))
-   .opp.data[DOMAIN] = {"config": conf, "apis": {}}
+    opp.data[DOMAIN] = {"config": conf, "apis": {}}
     discovery.load_platform.opp, DEVICE_TRACKER, DOMAIN, None, config)
 
     if CONF_ACCOUNTS not in conf:
@@ -178,13 +178,13 @@ def setup_opp, config):
             or password
             and password != entry.data[CONF_PASSWORD]
         ):
-           .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+            opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
 
     # Create config entries for accounts listed in configuration.
     for account in conf[CONF_ACCOUNTS]:
         if account[CONF_USERNAME] not in already_configured:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": config_entries.SOURCE_IMPORT},
                     data=account,
@@ -195,7 +195,7 @@ def setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up config entry."""
-   .opp.data[DOMAIN]["apis"][entry.data[CONF_USERNAME]] = get_api(
+    opp.data[DOMAIN]["apis"][entry.data[CONF_USERNAME]] = get_api(
         entry.data[CONF_AUTHORIZATION]
     )
     return True
@@ -204,7 +204,7 @@ async def async_setup_entry.opp, entry):
 async def async_unload_entry.opp, entry):
     """Unload config entry."""
     try:
-       .opp.data[DOMAIN]["apis"].pop(entry.data[CONF_USERNAME])
+        opp.data[DOMAIN]["apis"].pop(entry.data[CONF_USERNAME])
         return True
     except KeyError:
         return False

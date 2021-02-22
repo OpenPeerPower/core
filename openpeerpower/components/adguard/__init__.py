@@ -62,7 +62,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         session=session,
     )
 
-   .opp.data.setdefault(DOMAIN, {})[DATA_ADGUARD_CLIENT] = adguard
+    opp.data.setdefault(DOMAIN, {})[DATA_ADGUARD_CLIENT] = adguard
 
     try:
         await adguard.version()
@@ -70,8 +70,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from exception
 
     for component in "sensor", "switch":
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     async def add_url(call) -> None:
@@ -96,19 +96,19 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         """Service call to refresh the filter subscriptions in AdGuard Home."""
         await adguard.filtering.refresh(call.data.get(CONF_FORCE))
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_ADD_URL, add_url, schema=SERVICE_ADD_URL_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_REMOVE_URL, remove_url, schema=SERVICE_URL_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_ENABLE_URL, enable_url, schema=SERVICE_URL_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_DISABLE_URL, disable_url, schema=SERVICE_URL_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_REFRESH, refresh, schema=SERVICE_REFRESH_SCHEMA
     )
 
@@ -117,11 +117,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     """Unload AdGuard Home config entry."""
-   .opp.services.async_remove(DOMAIN, SERVICE_ADD_URL)
-   .opp.services.async_remove(DOMAIN, SERVICE_REMOVE_URL)
-   .opp.services.async_remove(DOMAIN, SERVICE_ENABLE_URL)
-   .opp.services.async_remove(DOMAIN, SERVICE_DISABLE_URL)
-   .opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
+    opp.services.async_remove(DOMAIN, SERVICE_ADD_URL)
+    opp.services.async_remove(DOMAIN, SERVICE_REMOVE_URL)
+    opp.services.async_remove(DOMAIN, SERVICE_ENABLE_URL)
+    opp.services.async_remove(DOMAIN, SERVICE_DISABLE_URL)
+    opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
 
     for component in "sensor", "switch":
         await opp.config_entries.async_forward_entry_unload(entry, component)

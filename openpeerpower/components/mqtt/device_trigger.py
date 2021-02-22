@@ -114,7 +114,7 @@ class Trigger:
 
     device_id: str = attr.ib()
     discovery_data: dict = attr.ib()
-    opp: OpenPeerPowerType = attr.ib()
+    opp. OpenPeerPowerType = attr.ib()
     payload: str = attr.ib()
     qos: int = attr.ib()
     remove_signal: Callable[[], None] = attr.ib()
@@ -217,7 +217,7 @@ async def async_setup_trigger.opp, config, config_entry, discovery_data):
         async_dispatcher_send.opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
 
     remove_signal = async_dispatcher_connect(
-        opp, MQTT_DISCOVERY_UPDATED.format(discovery_hash), discovery_update
+        opp. MQTT_DISCOVERY_UPDATED.format(discovery_hash), discovery_update
     )
 
     await _update_device.opp, config_entry, config)
@@ -233,10 +233,10 @@ async def async_setup_trigger.opp, config, config_entry, discovery_data):
         return
 
     if DEVICE_TRIGGERS not in.opp.data:
-       .opp.data[DEVICE_TRIGGERS] = {}
+        opp.data[DEVICE_TRIGGERS] = {}
     if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
-       .opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-           .opp.opp,
+        opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
+            opp.opp,
             device_id=device.id,
             discovery_data=discovery_data,
             type=config[CONF_TYPE],
@@ -251,7 +251,7 @@ async def async_setup_trigger.opp, config, config_entry, discovery_data):
             config, discovery_hash, remove_signal
         )
     debug_info.add_trigger_discovery_data(
-        opp, discovery_hash, discovery_data, device.id
+        opp. discovery_hash, discovery_data, device.id
     )
 
     async_dispatcher_send.opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
@@ -271,7 +271,7 @@ async def async_device_removed.opp: OpenPeerPower, device_id: str):
             clear_discovery_hash.opp, discovery_hash)
             device_trigger.remove_signal()
             mqtt.publish(
-                opp,
+                opp.
                 discovery_topic,
                 "",
                 retain=True,
@@ -302,21 +302,21 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
     if DEVICE_TRIGGERS not in.opp.data:
-       .opp.data[DEVICE_TRIGGERS] = {}
+        opp.data[DEVICE_TRIGGERS] = {}
     config = TRIGGER_SCHEMA(config)
     device_id = config[CONF_DEVICE_ID]
     discovery_id = config[CONF_DISCOVERY_ID]
 
     if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
-       .opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-           .opp.opp,
+        opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
+            opp.opp,
             device_id=device_id,
             discovery_data=None,
             remove_signal=None,

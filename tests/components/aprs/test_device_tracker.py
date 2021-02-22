@@ -304,8 +304,8 @@ def test_setup_scanner():
     with patch(
         "openpeerpower.components.aprs.device_tracker.AprsListenerThread"
     ) as listener:
-        opp =get_test_open_peer_power()
-       .opp.start()
+        opp.=get_test_open_peer_power()
+        opp.start()
 
         config = {
             "username": TEST_CALLSIGN,
@@ -316,8 +316,8 @@ def test_setup_scanner():
 
         see = Mock()
         res = device_tracker.setup_scanner.opp, config, see)
-       .opp.bus.fire(EVENT_OPENPEERPOWER_START)
-       .opp.stop()
+        opp.bus.fire(EVENT_OPENPEERPOWER_START)
+        opp.stop()
 
         assert res
         listener.assert_called_with(
@@ -327,8 +327,8 @@ def test_setup_scanner():
 
 def test_setup_scanner_timeout():
     """Test setup_scanner failure from timeout."""
-    opp =get_test_open_peer_power()
-   .opp.start()
+    opp.=get_test_open_peer_power()
+    opp.start()
 
     config = {
         "username": TEST_CALLSIGN,
@@ -342,4 +342,4 @@ def test_setup_scanner_timeout():
     try:
         assert not device_tracker.setup_scanner.opp, config, see)
     finally:
-       .opp.stop()
+        opp.stop()

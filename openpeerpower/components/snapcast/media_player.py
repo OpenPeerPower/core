@@ -73,7 +73,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     try:
         server = await snapcast.control.create_server(
-           .opp.loop, host, port, reconnect=True
+            opp.loop, host, port, reconnect=True
         )
     except socket.gaierror:
         _LOGGER.error("Could not connect to Snapcast server at %s:%d", host, port)
@@ -85,7 +85,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     groups = [SnapcastGroupDevice(group, hpid) for group in server.groups]
     clients = [SnapcastClientDevice(client, hpid) for client in server.clients]
     devices = groups + clients
-   .opp.data[DATA_KEY] = devices
+    opp.data[DATA_KEY] = devices
     async_add_entities(devices)
 
 

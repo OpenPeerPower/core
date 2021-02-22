@@ -24,7 +24,7 @@ HANDLERS = decorator.Registry()
 
 @HANDLERS.register("set")
 async def handle_set(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
+    opp. OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle a mysensors set message."""
     validated = validate_set_msg(gateway_id, msg)
@@ -33,7 +33,7 @@ async def handle_set(
 
 @HANDLERS.register("internal")
 async def handle_internal(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
+    opp. OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle a mysensors internal message."""
     internal = msg.gateway.const.Internal(msg.sub_type)
@@ -45,7 +45,7 @@ async def handle_internal(
 
 @HANDLERS.register("I_BATTERY_LEVEL")
 async def handle_battery_level(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
+    opp. OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an internal battery level message."""
     _handle_node_update.opp, gateway_id, msg)
@@ -53,7 +53,7 @@ async def handle_battery_level(
 
 @HANDLERS.register("I_HEARTBEAT_RESPONSE")
 async def handle_heartbeat(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
+    opp. OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an heartbeat."""
     _handle_node_update.opp, gateway_id, msg)
@@ -61,7 +61,7 @@ async def handle_heartbeat(
 
 @HANDLERS.register("I_SKETCH_NAME")
 async def handle_sketch_name(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
+    opp. OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an internal sketch name message."""
     _handle_node_update.opp, gateway_id, msg)
@@ -69,7 +69,7 @@ async def handle_sketch_name(
 
 @HANDLERS.register("I_SKETCH_VERSION")
 async def handle_sketch_version(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
+    opp. OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an internal sketch version message."""
     _handle_node_update.opp, gateway_id, msg)
@@ -77,7 +77,7 @@ async def handle_sketch_version(
 
 @HANDLERS.register("I_GATEWAY_READY")
 async def handle_gateway_ready(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
+    opp. OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an internal gateway ready message.
 
@@ -91,7 +91,7 @@ async def handle_gateway_ready(
 
 @callback
 def _handle_child_update(
-    opp: OpenPeerPowerType, gateway_id: GatewayId, validated: Dict[str, List[DevId]]
+    opp. OpenPeerPowerType, gateway_id: GatewayId, validated: Dict[str, List[DevId]]
 ):
     """Handle a child update."""
     signals: List[str] = []

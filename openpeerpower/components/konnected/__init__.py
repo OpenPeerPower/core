@@ -228,13 +228,13 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         cfg = {}
 
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {
+        opp.data[DOMAIN] = {
             CONF_ACCESS_TOKEN: cfg.get(CONF_ACCESS_TOKEN),
             CONF_API_HOST: cfg.get(CONF_API_HOST),
             CONF_DEVICES: {},
         }
 
-   .opp.http.register_view(KonnectedView)
+    opp.http.register_view(KonnectedView)
 
     # Check if they have yaml configured devices
     if CONF_DEVICES not in cfg:
@@ -243,8 +243,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     for device in cfg.get(CONF_DEVICES, []):
         # Attempt to importing the cfg. Use
         #.opp.async_add_job to avoid a deadlock.
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=device
             )
         )
@@ -262,12 +262,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await client.async_connect()
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     # config entry specific data to enable unload
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         UNDO_UPDATE_LISTENER: entry.add_update_listener(async_entry_updated)
     }
     return True
@@ -278,17 +278,17 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
-   .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN][CONF_DEVICES].pop(entry.data[CONF_ID])
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN][CONF_DEVICES].pop(entry.data[CONF_ID])
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -317,7 +317,7 @@ class KonnectedView(OpenPeerPowerView):
 
     async def update_sensor(self, request: Request, device_id) -> Response:
         """Process a put or post."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         data = opp.data[DOMAIN]
 
         auth = request.headers.get(AUTHORIZATION)
@@ -355,7 +355,7 @@ class KonnectedView(OpenPeerPowerView):
         panel = device.get("panel")
         if panel is not None:
             # connect if we haven't already
-           .opp.async_create_task(panel.async_connect())
+            opp.async_create_task(panel.async_connect())
 
         try:
             zone_num = str(payload.get(CONF_ZONE) or PIN_TO_ZONE[payload[CONF_PIN]])
@@ -377,13 +377,13 @@ class KonnectedView(OpenPeerPowerView):
             value = payload.get(attr)
             handler = HANDLERS.get(attr)
             if value is not None and handler:
-               .opp.async_create_task(handler.opp, zone_data, payload))
+                opp.async_create_task(handler.opp, zone_data, payload))
 
         return self.json_message("ok")
 
     async def get(self, request: Request, device_id) -> Response:
         """Return the current binary state of a switch."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         data = opp.data[DOMAIN]
 
         device = data[CONF_DEVICES].get(device_id)
@@ -395,7 +395,7 @@ class KonnectedView(OpenPeerPowerView):
         panel = device.get("panel")
         if panel is not None:
             # connect if we haven't already
-           .opp.async_create_task(panel.async_connect())
+            opp.async_create_task(panel.async_connect())
 
         # Our data model is based on zone ids but we convert from/to pin ids
         # based on whether they are specified in the request
@@ -434,7 +434,7 @@ class KonnectedView(OpenPeerPowerView):
         zone_entity_id = zone.get(ATTR_ENTITY_ID)
         if zone_entity_id:
             resp["state"] = self.binary_value(
-               .opp.states.get(zone_entity_id).state, zone[CONF_ACTIVATION]
+                opp.states.get(zone_entity_id).state, zone[CONF_ACTIVATION]
             )
             return self.json(resp)
 

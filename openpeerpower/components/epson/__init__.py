@@ -34,7 +34,7 @@ async def validate_projector.opp: OpenPeerPower, host, port):
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the epson component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -42,15 +42,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up epson from a config entry."""
     try:
         projector = await validate_projector(
-            opp, entry.data[CONF_HOST], entry.data[CONF_PORT]
+            opp. entry.data[CONF_HOST], entry.data[CONF_PORT]
         )
     except CannotConnect:
         _LOGGER.warning("Cannot connect to projector %s", entry.data[CONF_HOST])
         return False
-   .opp.data[DOMAIN][entry.entry_id] = projector
+    opp.data[DOMAIN][entry.entry_id] = projector
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
     return True
 
@@ -60,11 +60,11 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
     return unload_ok

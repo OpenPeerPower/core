@@ -99,16 +99,16 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if not entities:
             return
 
-       .opp.async_add_executor_job(_call_service, entities, service_call)
+        opp.async_add_executor_job(_call_service, entities, service_call)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SNAPSHOT,
         async_service_handle,
         schema=cv.make_entity_service_schema({}),
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_RESTORE,
         async_service_handle,

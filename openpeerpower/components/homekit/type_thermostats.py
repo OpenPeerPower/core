@@ -284,7 +284,7 @@ class Thermostat(HomeAccessory):
                             break
 
                 service = SERVICE_SET_HVAC_MODE_THERMOSTAT
-               .opp_value = self.hc_homekit_to.opp[target_hc]
+                opp.value = self.hc_homekit_to.opp[target_hc]
                 params = {ATTR_HVAC_MODE:.opp_value}
                 events.append(
                     f"{CHAR_TARGET_HEATING_COOLING} to {char_values[CHAR_TARGET_HEATING_COOLING]}"
@@ -574,7 +574,7 @@ class WaterHeater(HomeAccessory):
     def set_heat_cool(self, value):
         """Change operation mode to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set heat-cool to %d", self.entity_id, value)
-       .opp_value = HC_HOMEKIT_TO_HASS[value]
+        opp.value = HC_HOMEKIT_TO_HASS[value]
         if opp_value != HVAC_MODE_HEAT:
             if self.char_target_heat_cool.value != 1:
                 self.char_target_heat_cool.set_value(1)  # Heat

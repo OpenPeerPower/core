@@ -65,7 +65,7 @@ MELACHA_TEST_IDS = [
     ids=MELACHA_TEST_IDS,
 )
 async def test_issur_melacha_sensor(
-    opp,
+    opp.
     legacy_patchable_time,
     now,
     candle_lighting,
@@ -80,15 +80,15 @@ async def test_issur_melacha_sensor(
     time_zone = dt_util.get_time_zone(tzname)
     test_time = time_zone.localize(now)
 
-   .opp.config.time_zone = time_zone
-   .opp.config.latitude = latitude
-   .opp.config.longitude = longitude
+    opp.config.time_zone = time_zone
+    opp.config.latitude = latitude
+    opp.config.longitude = longitude
 
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     with alter_time(test_time):
         assert await async_setup_component(
-            opp,
+            opp.
             jewish_calendar.DOMAIN,
             {
                 "jewish_calendar": {
@@ -107,7 +107,7 @@ async def test_issur_melacha_sensor(
         await opp.async_block_till_done()
 
         assert (
-           .opp.states.get("binary_sensor.test_issur_melacha_in_effect").state
+            opp.states.get("binary_sensor.test_issur_melacha_in_effect").state
             == result
         )
         entity = registry.async_get("binary_sensor.test_issur_melacha_in_effect")

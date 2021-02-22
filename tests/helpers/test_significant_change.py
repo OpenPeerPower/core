@@ -13,11 +13,11 @@ async def checker_fixture.opp):
     checker = await significant_change.create_checker.opp, "test")
 
     def async_check_significant_change(
-         opp, old_state, _old_attrs, new_state, _new_attrs, **kwargs
+         opp. old_state, _old_attrs, new_state, _new_attrs, **kwargs
     ):
         return abs(float(old_state) - float(new_state)) > 4
 
-   .opp.data[significant_change.DATA_FUNCTIONS][
+    opp.data[significant_change.DATA_FUNCTIONS][
         "test_domain"
     ] = async_check_significant_change
     return checker
@@ -60,7 +60,7 @@ async def test_significant_change_extra.opp, checker):
     assert checker.async_is_significant_change(State(ent_id, "100", attrs), extra_arg=1)
 
     def extra_significant_check(
-        opp, old_state, old_attrs, old_extra_arg, new_state, new_attrs, new_extra_arg
+        opp. old_state, old_attrs, old_extra_arg, new_state, new_attrs, new_extra_arg
     ):
         return old_extra_arg != new_extra_arg
 

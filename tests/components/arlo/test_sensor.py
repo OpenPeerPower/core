@@ -85,7 +85,7 @@ def platform_setup():
 @pytest.fixture()
 def sensor_with.opp_data(default_sensor, opp):
     """Create a sensor with async_dispatcher_connected mocked."""
-   .opp.data = {}
+    opp.data = {}
     default_sensor.opp = opp
     return default_sensor
 
@@ -120,7 +120,7 @@ def test_setup_with_valid_data(platform_setup, opp):
         ]
     }
 
-   .opp.data[DATA_ARLO] = _get_named_tuple(
+    opp.data[DATA_ARLO] = _get_named_tuple(
         {
             "cameras": [_get_named_tuple({"name": "Camera", "model_id": "ABC1000"})],
             "base_stations": [

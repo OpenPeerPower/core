@@ -56,7 +56,7 @@ def setup_opp, config):
     state = authentication.state
 
     if state == AuthenticationState.AUTHENTICATED:
-       .opp.data[DOMAIN] = {
+        opp.data[DOMAIN] = {
             DATA_SCHLUTER_API: api,
             DATA_SCHLUTER_SESSION: authentication.session_id,
         }

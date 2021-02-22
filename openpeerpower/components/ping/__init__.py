@@ -23,6 +23,6 @@ def async_get_next_ping_id.opp):
     else:
         next_id = current_id + 1
 
-   .opp.data[DOMAIN][PING_ID] = next_id
+    opp.data[DOMAIN][PING_ID] = next_id
 
     return next_id

@@ -72,7 +72,7 @@ def clear_discovery_hash.opp, discovery_hash):
 
 def set_discovery_hash.opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
-   .opp.data[ALREADY_DISCOVERED][discovery_hash] = {}
+    opp.data[ALREADY_DISCOVERED][discovery_hash] = {}
 
 
 class MQTTConfig(dict):
@@ -80,14 +80,14 @@ class MQTTConfig(dict):
 
 
 async def async_start(
-    opp: OpenPeerPowerType, discovery_topic, config_entry=None
+    opp. OpenPeerPowerType, discovery_topic, config_entry=None
 ) -> bool:
     """Start MQTT Discovery."""
     mqtt_integrations = {}
 
     async def async_discovery_message_received(msg):
         """Process the received message."""
-       .opp.data[LAST_DISCOVERY] = time.time()
+        opp.data[LAST_DISCOVERY] = time.time()
         payload = msg.payload
         topic = msg.topic
         topic_trimmed = topic.replace(f"{discovery_topic}/", "", 1)
@@ -170,8 +170,8 @@ async def async_start(
                 pending = opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
                 _LOGGER.debug("Pending discovery for %s: %s", discovery_hash, pending)
                 if not pending:
-                   .opp.data[PENDING_DISCOVERED][discovery_hash]["unsub"]()
-                   .opp.data[PENDING_DISCOVERED].pop(discovery_hash)
+                    opp.data[PENDING_DISCOVERED][discovery_hash]["unsub"]()
+                    opp.data[PENDING_DISCOVERED].pop(discovery_hash)
                 else:
                     payload = pending.pop()
                     await async_process_discovery_payload(
@@ -179,9 +179,9 @@ async def async_start(
                     )
 
             if discovery_hash not in.opp.data[PENDING_DISCOVERED]:
-               .opp.data[PENDING_DISCOVERED][discovery_hash] = {
+                opp.data[PENDING_DISCOVERED][discovery_hash] = {
                     "unsub": async_dispatcher_connect(
-                        opp,
+                        opp.
                         MQTT_DISCOVERY_DONE.format(discovery_hash),
                         discovery_done,
                     ),
@@ -196,12 +196,12 @@ async def async_start(
                 discovery_id,
             )
             async_dispatcher_send(
-                opp, MQTT_DISCOVERY_UPDATED.format(discovery_hash), payload
+                opp. MQTT_DISCOVERY_UPDATED.format(discovery_hash), payload
             )
         elif payload:
             # Add component
             _LOGGER.info("Found new component: %s %s", component, discovery_id)
-           .opp.data[ALREADY_DISCOVERED][discovery_hash] = None
+            opp.data[ALREADY_DISCOVERED][discovery_hash] = None
 
             config_entries_key = f"{component}.mqtt"
             async with.opp.data[DATA_CONFIG_ENTRY_LOCK]:
@@ -222,39 +222,39 @@ async def async_start(
                         await opp.config_entries.async_forward_entry_setup(
                             config_entry, component
                         )
-                   .opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
+                    opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
 
             async_dispatcher_send(
-                opp, MQTT_DISCOVERY_NEW.format(component, "mqtt"), payload
+                opp. MQTT_DISCOVERY_NEW.format(component, "mqtt"), payload
             )
         else:
             # Unhandled discovery message
             async_dispatcher_send(
-                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
+                opp. MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
 
-   .opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
-   .opp.data[DATA_CONFIG_FLOW_LOCK] = asyncio.Lock()
-   .opp.data[CONFIG_ENTRY_IS_SETUP] = set()
+    opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
+    opp.data[DATA_CONFIG_FLOW_LOCK] = asyncio.Lock()
+    opp.data[CONFIG_ENTRY_IS_SETUP] = set()
 
-   .opp.data[ALREADY_DISCOVERED] = {}
-   .opp.data[PENDING_DISCOVERED] = {}
+    opp.data[ALREADY_DISCOVERED] = {}
+    opp.data[PENDING_DISCOVERED] = {}
 
     discovery_topics = [
         f"{discovery_topic}/+/+/config",
         f"{discovery_topic}/+/+/+/config",
     ]
-   .opp.data[DISCOVERY_UNSUBSCRIBE] = await asyncio.gather(
+    opp.data[DISCOVERY_UNSUBSCRIBE] = await asyncio.gather(
         *(
             mqtt.async_subscribe.opp, topic, async_discovery_message_received, 0)
             for topic in discovery_topics
         )
     )
 
-   .opp.data[LAST_DISCOVERY] = time.time()
+    opp.data[LAST_DISCOVERY] = time.time()
     mqtt_integrations = await async_get_mqtt.opp)
 
-   .opp.data[INTEGRATION_UNSUBSCRIBE] = {}
+    opp.data[INTEGRATION_UNSUBSCRIBE] = {}
 
     for (integration, topics) in mqtt_integrations.items():
 
@@ -285,8 +285,8 @@ async def async_start(
 
         for topic in topics:
             key = f"{integration}_{topic}"
-           .opp.data[INTEGRATION_UNSUBSCRIBE][key] = await mqtt.async_subscribe(
-                opp,
+            opp.data[INTEGRATION_UNSUBSCRIBE][key] = await mqtt.async_subscribe(
+                opp.
                 topic,
                 functools.partial(async_integration_message_received, integration),
                 0,
@@ -300,8 +300,8 @@ async def async_stop.opp: OpenPeerPowerType) -> bool:
     if DISCOVERY_UNSUBSCRIBE in.opp.data:
         for unsub in.opp.data[DISCOVERY_UNSUBSCRIBE]:
             unsub()
-       .opp.data[DISCOVERY_UNSUBSCRIBE] = []
+        opp.data[DISCOVERY_UNSUBSCRIBE] = []
     if INTEGRATION_UNSUBSCRIBE in.opp.data:
         for key, unsub in list.opp.data[INTEGRATION_UNSUBSCRIBE].items()):
             unsub()
-           .opp.data[INTEGRATION_UNSUBSCRIBE].pop(key)
+            opp.data[INTEGRATION_UNSUBSCRIBE].pop(key)

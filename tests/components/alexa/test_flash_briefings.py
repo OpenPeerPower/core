@@ -28,11 +28,11 @@ def alexa_client(loop, opp, opp_client):
     def mock_service(call):
         calls.append(call)
 
-   .opp.services.async_register("test", "alexa", mock_service)
+    opp.services.async_register("test", "alexa", mock_service)
 
     assert loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             alexa.DOMAIN,
             {
                 # Key is here to verify we allow other keys in config too

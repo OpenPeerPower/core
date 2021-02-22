@@ -59,14 +59,14 @@ ISY_SUPPORTED_FEATURES = (
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[list], None],
 ) -> bool:
     """Set up the ISY994 thermostat platform."""
     entities = []
 
-   .opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in.opp_isy_data[ISY994_NODES][CLIMATE]:
         entities.append(ISYThermostatEntity(node))
 

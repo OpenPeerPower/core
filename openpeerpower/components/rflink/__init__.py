@@ -122,14 +122,14 @@ async def async_setup_opp, config):
     """Set up the Rflink component."""
     # Allow entities to register themselves by device_id to be looked up when
     # new rflink events arrive to be handled
-   .opp.data[DATA_ENTITY_LOOKUP] = {
+    opp.data[DATA_ENTITY_LOOKUP] = {
         EVENT_KEY_COMMAND: defaultdict(list),
         EVENT_KEY_SENSOR: defaultdict(list),
     }
-   .opp.data[DATA_ENTITY_GROUP_LOOKUP] = {EVENT_KEY_COMMAND: defaultdict(list)}
+    opp.data[DATA_ENTITY_GROUP_LOOKUP] = {EVENT_KEY_COMMAND: defaultdict(list)}
 
     # Allow platform to specify function to register new unknown devices
-   .opp.data[DATA_DEVICE_REGISTER] = {}
+    opp.data[DATA_DEVICE_REGISTER] = {}
 
     async def async_send_command(call):
         """Send Rflink command."""
@@ -141,7 +141,7 @@ async def async_setup_opp, config):
         ):
             _LOGGER.error("Failed Rflink command for %s", str(call.data))
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SEND_COMMAND, async_send_command, schema=SEND_COMMAND_SCHEMA
     )
 
@@ -189,11 +189,11 @@ async def async_setup_opp, config):
                 # event before the device is created
                 # Any additional events received before the device has been
                 # created will thus be ignored.
-               .opp.data[DATA_ENTITY_LOOKUP][event_type][event_id].append(
+                opp.data[DATA_ENTITY_LOOKUP][event_type][event_id].append(
                     TMP_ENTITY.format(event_id)
                 )
-               .opp.async_create_task(
-                   .opp.data[DATA_DEVICE_REGISTER][event_type](event)
+                opp.async_create_task(
+                    opp.data[DATA_DEVICE_REGISTER][event_type](event)
                 )
             else:
                 _LOGGER.debug("device_id not known and automatic add disabled")
@@ -234,7 +234,7 @@ async def async_setup_opp, config):
         # If HA is not stopping, initiate new connection
         if opp.state != CoreState.stopping:
             _LOGGER.warning("disconnected from Rflink, reconnecting")
-           .opp.async_create_task(connect())
+            opp.async_create_task(connect())
 
     async def connect():
         """Set up connection and hook it into HA for reconnect/shutdown."""
@@ -272,7 +272,7 @@ async def async_setup_opp, config):
             # Connection to Rflink device is lost, make entities unavailable
             async_dispatcher_send.opp, SIGNAL_AVAILABILITY, False)
 
-           .opp.loop.call_later(reconnect_interval, reconnect, exc)
+            opp.loop.call_later(reconnect_interval, reconnect, exc)
             return
 
         # There is a valid connection to a Rflink device now so
@@ -283,13 +283,13 @@ async def async_setup_opp, config):
         RflinkCommand.set_rflink_protocol(protocol, config[DOMAIN][CONF_WAIT_FOR_ACK])
 
         # handle shutdown of Rflink asyncio transport
-       .opp.bus.async_listen_once(
+        opp.bus.async_listen_once(
             EVENT_OPENPEERPOWER_STOP, lambda x: transport.close()
         )
 
         _LOGGER.info("Connected to Rflink")
 
-   .opp.async_create_task(connect())
+    opp.async_create_task(connect())
     return True
 
 

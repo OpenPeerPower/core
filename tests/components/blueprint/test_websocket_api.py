@@ -62,7 +62,7 @@ async def test_list_blueprints_non_existing_domain.opp, opp_ws_client):
 async def test_import_blueprint.opp, aioclient_mock, opp_ws_client):
     """Test importing blueprints."""
     raw_data = Path(
-       .opp.config.path("blueprints/automation/test_event_service.yaml")
+        opp.config.path("blueprints/automation/test_event_service.yaml")
     ).read_text()
 
     aioclient_mock.get(
@@ -101,7 +101,7 @@ async def test_import_blueprint.opp, aioclient_mock, opp_ws_client):
 async def test_save_blueprint.opp, aioclient_mock, opp_ws_client):
     """Test saving blueprints."""
     raw_data = Path(
-       .opp.config.path("blueprints/automation/test_event_service.yaml")
+        opp.config.path("blueprints/automation/test_event_service.yaml")
     ).read_text()
 
     with patch("pathlib.Path.write_text") as write_mock:

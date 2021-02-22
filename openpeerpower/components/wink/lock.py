@@ -101,30 +101,30 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                 code = service.data.get(ATTR_CODE)
                 lock.add_new_key(code, name)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SET_VACATION_MODE, service_handle, schema=SET_ENABLED_SCHEMA
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SET_ALARM_STATE, service_handle, schema=SET_ENABLED_SCHEMA
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SET_BEEPER_STATE, service_handle, schema=SET_ENABLED_SCHEMA
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SET_ALARM_MODE, service_handle, schema=SET_ALARM_MODES_SCHEMA
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_SET_ALARM_SENSITIVITY,
         service_handle,
         schema=SET_SENSITIVITY_SCHEMA,
     )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_ADD_KEY, service_handle, schema=ADD_KEY_SCHEMA
     )
 

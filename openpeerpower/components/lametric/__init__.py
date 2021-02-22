@@ -39,7 +39,7 @@ def setup_opp, config):
         _LOGGER.error("No LaMetric devices found")
         return False
 
-   .opp.data[DOMAIN] = hlmn
+    opp.data[DOMAIN] = hlmn
     for dev in devices:
         _LOGGER.debug("Discovered LaMetric device: %s", dev)
 

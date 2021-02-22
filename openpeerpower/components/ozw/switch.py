@@ -17,9 +17,9 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
         async_add_entities([switch])
 
-   .opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
+    opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect(
-            opp, f"{DOMAIN}_new_{SWITCH_DOMAIN}", async_add_switch
+            opp. f"{DOMAIN}_new_{SWITCH_DOMAIN}", async_add_switch
         )
     )
 

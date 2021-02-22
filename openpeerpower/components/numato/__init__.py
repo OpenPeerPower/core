@@ -129,7 +129,7 @@ def setup_opp, config):
     No exceptions should occur, since the platforms are initialized on a best
     effort basis, which means, errors are handled locally.
     """
-   .opp.data[DOMAIN] = config[DOMAIN]
+    opp.data[DOMAIN] = config[DOMAIN]
 
     try:
         gpio.discover(config[DOMAIN][CONF_DISCOVER])
@@ -143,21 +143,21 @@ def setup_opp, config):
         ", ".join(str(d) for d in gpio.devices),
     )
 
-   .opp.data[DOMAIN][DATA_API] = NumatoAPI()
+    opp.data[DOMAIN][DATA_API] = NumatoAPI()
 
     def cleanup_gpio(event):
         """Stuff to do before stopping."""
         _LOGGER.debug("Clean up Numato GPIO")
         gpio.cleanup()
         if DATA_API in.opp.data[DOMAIN]:
-           .opp.data[DOMAIN][DATA_API].ports_registered.clear()
+            opp.data[DOMAIN][DATA_API].ports_registered.clear()
 
     def prepare_gpio(event):
         """Stuff to do when open peer power starts."""
         _LOGGER.debug("Setup cleanup at stop for Numato GPIO")
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gpio)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gpio)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, prepare_gpio)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, prepare_gpio)
 
     load_platform.opp, "binary_sensor", DOMAIN, {}, config)
     load_platform.opp, "sensor", DOMAIN, {}, config)

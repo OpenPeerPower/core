@@ -52,7 +52,7 @@ async def async_setup_services.opp):
     if opp.data.get(DECONZ_SERVICES, False):
         return
 
-   .opp.data[DECONZ_SERVICES] = True
+    opp.data[DECONZ_SERVICES] = True
 
     async def async_call_deconz_service(service_call):
         """Call correct deCONZ service."""
@@ -68,21 +68,21 @@ async def async_setup_services.opp):
         elif service == SERVICE_REMOVE_ORPHANED_ENTRIES:
             await async_remove_orphaned_entries_service.opp, service_data)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_CONFIGURE_DEVICE,
         async_call_deconz_service,
         schema=SERVICE_CONFIGURE_DEVICE_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_DEVICE_REFRESH,
         async_call_deconz_service,
         schema=SELECT_GATEWAY_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_REMOVE_ORPHANED_ENTRIES,
         async_call_deconz_service,
@@ -95,11 +95,11 @@ async def async_unload_services.opp):
     if not.opp.data.get(DECONZ_SERVICES):
         return
 
-   .opp.data[DECONZ_SERVICES] = False
+    opp.data[DECONZ_SERVICES] = False
 
-   .opp.services.async_remove(DOMAIN, SERVICE_CONFIGURE_DEVICE)
-   .opp.services.async_remove(DOMAIN, SERVICE_DEVICE_REFRESH)
-   .opp.services.async_remove(DOMAIN, SERVICE_REMOVE_ORPHANED_ENTRIES)
+    opp.services.async_remove(DOMAIN, SERVICE_CONFIGURE_DEVICE)
+    opp.services.async_remove(DOMAIN, SERVICE_DEVICE_REFRESH)
+    opp.services.async_remove(DOMAIN, SERVICE_REMOVE_ORPHANED_ENTRIES)
 
 
 async def async_configure_service.opp, data):
@@ -159,8 +159,8 @@ async def async_remove_orphaned_entries_service.opp, data):
         gateway = opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
 
     device_registry, entity_registry = await asyncio.gather(
-       .opp.helpers.device_registry.async_get_registry(),
-       .opp.helpers.entity_registry.async_get_registry(),
+        opp.helpers.device_registry.async_get_registry(),
+        opp.helpers.entity_registry.async_get_registry(),
     )
 
     entity_entries = async_entries_for_config_entry(

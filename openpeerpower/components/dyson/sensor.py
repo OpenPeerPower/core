@@ -63,7 +63,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
 
-   .opp.data.setdefault(DYSON_SENSOR_DEVICES, [])
+    opp.data.setdefault(DYSON_SENSOR_DEVICES, [])
     unit = opp.config.units.temperature_unit
     devices = opp.data[DYSON_SENSOR_DEVICES]
 

@@ -36,8 +36,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 _LOGGER.warning(
                     "Could not authorize with Azure DevOps. You may need to update your token"
                 )
-               .opp.async_create_task(
-                   .opp.config_entries.flow.async_init(
+                opp.async_create_task(
+                    opp.config_entries.flow.async_init(
                         DOMAIN,
                         context={"source": "reauth"},
                         data=entry.data,
@@ -50,11 +50,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from exception
 
     instance_key = f"{DOMAIN}_{entry.data[CONF_ORG]}_{entry.data[CONF_PROJECT]}"
-   .opp.data.setdefault(instance_key, {})[DATA_AZURE_DEVOPS_CLIENT] = client
+    opp.data.setdefault(instance_key, {})[DATA_AZURE_DEVOPS_CLIENT] = client
 
     # Setup components
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
     return True

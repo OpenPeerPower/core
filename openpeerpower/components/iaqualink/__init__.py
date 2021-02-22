@@ -60,11 +60,11 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> None:
     """Set up the Aqualink component."""
     conf = config.get(DOMAIN)
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     if conf is not None:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=conf
             )
         )
@@ -122,19 +122,19 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     forward_setup = opp.config_entries.async_forward_entry_setup
     if binary_sensors:
         _LOGGER.debug("Got %s binary sensors: %s", len(binary_sensors), binary_sensors)
-       .opp.async_create_task(forward_setup(entry, BINARY_SENSOR_DOMAIN))
+        opp.async_create_task(forward_setup(entry, BINARY_SENSOR_DOMAIN))
     if climates:
         _LOGGER.debug("Got %s climates: %s", len(climates), climates)
-       .opp.async_create_task(forward_setup(entry, CLIMATE_DOMAIN))
+        opp.async_create_task(forward_setup(entry, CLIMATE_DOMAIN))
     if lights:
         _LOGGER.debug("Got %s lights: %s", len(lights), lights)
-       .opp.async_create_task(forward_setup(entry, LIGHT_DOMAIN))
+        opp.async_create_task(forward_setup(entry, LIGHT_DOMAIN))
     if sensors:
         _LOGGER.debug("Got %s sensors: %s", len(sensors), sensors)
-       .opp.async_create_task(forward_setup(entry, SENSOR_DOMAIN))
+        opp.async_create_task(forward_setup(entry, SENSOR_DOMAIN))
     if switches:
         _LOGGER.debug("Got %s switches: %s", len(switches), switches)
-       .opp.async_create_task(forward_setup(entry, SWITCH_DOMAIN))
+        opp.async_create_task(forward_setup(entry, SWITCH_DOMAIN))
 
     async def _async_systems_update(now):
         """Refresh internal state for all systems."""
@@ -172,7 +172,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     if opp.data[DOMAIN][SWITCH_DOMAIN]:
         tasks += [forward_unload(entry, SWITCH_DOMAIN)]
 
-   .opp.data[DOMAIN].clear()
+    opp.data[DOMAIN].clear()
 
     return all(await asyncio.gather(*tasks))
 

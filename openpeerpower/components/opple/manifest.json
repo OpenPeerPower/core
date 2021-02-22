@@ -1,5 +1,5 @@
 {
-  "domain": "opple",
+  "domain":  opp.e",
   "name": "Opple",
   "documentation": "https://www.open-peer-power.io/integrations/opple",
   "requirements": ["pyoppleio==1.0.5"],

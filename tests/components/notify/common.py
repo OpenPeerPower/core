@@ -24,4 +24,4 @@ def send_message.opp, message, title=None, data=None):
     if data is not None:
         info[ATTR_DATA] = data
 
-   .opp.services.call(DOMAIN, SERVICE_NOTIFY, info)
+    opp.services.call(DOMAIN, SERVICE_NOTIFY, info)

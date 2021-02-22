@@ -68,7 +68,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     def _stop_pianobar(_event):
         pandora.turn_off()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _stop_pianobar)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _stop_pianobar)
     add_entities([pandora])
 
 

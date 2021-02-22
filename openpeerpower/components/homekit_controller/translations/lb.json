@@ -20,29 +20,29 @@
         "flow_title": "{name} via HomeKit Accessoire Protokoll",
         "step": {
             "busy_error": {
-                "description": "Briech d'Kopplung op all Kontroller of, oder start den Apparat fr\u00ebsch, da versich et nach emol mat der Kopplung.",
-                "title": "Den Apparat ass am gaange mat engem anere Kontroller ze koppelen."
+                "description": "Briech d'Kopplung op all Kontroller of, oder start den Apparat fr\u00ebsch, da versich et nach emol mat der  opp.ung.",
+                "title": "Den Apparat ass am gaange mat engem anere Kontroller ze  opp.len."
             },
             "max_tries_error": {
-                "description": "Den Apparat huet m\u00e9i w\u00e9i 100 net erfollegr\u00e4ich Authentifikatioun Versich. Prob\u00e9ier den Apparat nei ze starten, da versich et nach emol mat der Kopplung.",
+                "description": "Den Apparat huet m\u00e9i w\u00e9i 100 net erfollegr\u00e4ich Authentifikatioun Versich. Prob\u00e9ier den Apparat nei ze starten, da versich et nach emol mat der  opp.ung.",
                 "title": "Maximum  vun den Authentifikatioun Versich iwwerschratt"
             },
             "pair": {
                 "data": {
                     "pairing_code": "Pairing Code"
                 },
-                "description": "HomeKit Kontroller kommuniz\u00e9iert mat {name} iwwert lokal Netzwierk m\u00ebttels enger ges\u00e9cherter verschl\u00ebsselter Verbindung ouni ee separate HomeKit Kontroller oder iCloud. G\u00ebff dain HomeKit Kopplung Code (am Format XXX-XX-XXX) an fir den Accessoire ze benotzen. De Code ass normalerweis um Apparat selwer oder op senger K\u00ebscht.",
-                "title": "Een Apparat via Homekit Accessoire Protokoll kopplen"
+                "description": "HomeKit Kontroller kommuniz\u00e9iert mat {name} iwwert lokal Netzwierk m\u00ebttels enger ges\u00e9cherter verschl\u00ebsselter Verbindung ouni ee separate HomeKit Kontroller oder iCloud. G\u00ebff dain HomeKit  opp.ung Code (am Format XXX-XX-XXX) an fir den Accessoire ze benotzen. De Code ass normalerweis um Apparat selwer oder op senger K\u00ebscht.",
+                "title": "Een Apparat via Homekit Accessoire Protokoll  opp.en"
             },
             "protocol_error": {
-                "description": "Den Apparat ass vill\u00e4icht net am Kopplungs Modus an et muss ee Kn\u00e4ppche gedr\u00e9ckt ginn. Stell s\u00e9cher dass den Apparat am Kopplung Modus ass oder prob\u00e9ier den Apparat fr\u00ebsch ze starten, da versich et nach emol mat der Kopplung.",
+                "description": "Den Apparat ass vill\u00e4icht net am  opp.ungs Modus an et muss ee Kn\u00e4ppche gedr\u00e9ckt ginn. Stell s\u00e9cher dass den Apparat am  opp.ung Modus ass oder prob\u00e9ier den Apparat fr\u00ebsch ze starten, da versich et nach emol mat der  opp.ung.",
                 "title": "Feeler bei der Kommunikatioun mam Accessoire"
             },
             "user": {
                 "data": {
                     "device": "Apparat"
                 },
-                "description": "HomeKit Kontroller kommuniz\u00e9iert mat {name} iwwert lokal Netzwierk m\u00ebttels enger ges\u00e9cherter verschl\u00ebsselter Verbindung ouni ee separate HomeKit Kontroller oder iCloud. Wiel den Apparat aus fir ze koppelen:",
+                "description": "HomeKit Kontroller kommuniz\u00e9iert mat {name} iwwert lokal Netzwierk m\u00ebttels enger ges\u00e9cherter verschl\u00ebsselter Verbindung ouni ee separate HomeKit Kontroller oder iCloud. Wiel den Apparat aus fir ze  opp.len:",
                 "title": "Appart auswiel"
             }
         }

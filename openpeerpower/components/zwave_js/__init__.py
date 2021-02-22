@@ -53,13 +53,13 @@ DATA_START_PLATFORM_TASK = "start_platform_task"
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Z-Wave JS component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
 @callback
 def register_node_in_dev_reg(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entry: ConfigEntry,
     dev_reg: device_registry.DeviceRegistry,
     client: ZwaveClient,
@@ -95,7 +95,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         for disc_info in async_discover_values(node):
             LOGGER.debug("Discovered entity: %s", disc_info)
             async_dispatcher_send(
-                opp, f"{DOMAIN}_{entry.entry_id}_add_{disc_info.platform}", disc_info
+                opp. f"{DOMAIN}_{entry.entry_id}_add_{disc_info.platform}", disc_info
             )
         # add listener for stateless node value notification events
         node.on(
@@ -141,7 +141,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         value = notification.value
         if notification.metadata.states:
             value = notification.metadata.states.get(str(value), value)
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             ZWAVE_JS_EVENT,
             {
                 ATTR_TYPE: "value_notification",
@@ -163,7 +163,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     def async_on_notification(notification: Notification) -> None:
         """Relay stateless notification events from Z-Wave nodes to.opp."""
         device = dev_reg.async_get_device({get_device_id(client, notification.node)})
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             ZWAVE_JS_EVENT,
             {
                 ATTR_TYPE: "notification",
@@ -186,7 +186,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         LOGGER.info("Connected to Zwave JS Server")
 
     unsubscribe_callbacks: List[Callable] = []
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_CLIENT: client,
         DATA_UNSUBSCRIBE: unsubscribe_callbacks,
     }
@@ -199,7 +199,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         # wait until all required platforms are ready
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_setup(entry, component)
+                opp.config_entries.async_forward_entry_setup(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -213,9 +213,9 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         listen_task = asyncio.create_task(
             client_listen.opp, entry, client, driver_ready)
         )
-       .opp.data[DOMAIN][entry.entry_id][DATA_CLIENT_LISTEN_TASK] = listen_task
+        opp.data[DOMAIN][entry.entry_id][DATA_CLIENT_LISTEN_TASK] = listen_task
         unsubscribe_callbacks.append(
-           .opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, handle_op_shutdown)
+            opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, handle_op_shutdown)
         )
 
         await driver_ready.wait()
@@ -251,13 +251,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
 
     platform_task = opp.async_create_task(start_platforms())
-   .opp.data[DOMAIN][entry.entry_id][DATA_START_PLATFORM_TASK] = platform_task
+    opp.data[DOMAIN][entry.entry_id][DATA_START_PLATFORM_TASK] = platform_task
 
     return True
 
 
 async def client_listen(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entry: ConfigEntry,
     client: ZwaveClient,
     driver_ready: asyncio.Event,
@@ -280,7 +280,7 @@ async def client_listen(
 
 
 async def disconnect_client(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     entry: ConfigEntry,
     client: ZwaveClient,
     listen_task: asyncio.Task,
@@ -302,7 +302,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -317,7 +317,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     if DATA_CLIENT_LISTEN_TASK in info:
         await disconnect_client(
-            opp,
+            opp.
             entry,
             info[DATA_CLIENT],
             info[DATA_CLIENT_LISTEN_TASK],

@@ -123,7 +123,7 @@ def get_service.opp, config, discovery_info=None):
         color,
         interrupt,
         timeout,
-       .opp.config.is_allowed_path,
+        opp.config.is_allowed_path,
     )
 
 

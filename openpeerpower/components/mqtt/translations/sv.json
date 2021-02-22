@@ -17,7 +17,7 @@
                 },
                 "description": "V\u00e4nligen ange anslutningsinformationen f\u00f6r din MQTT broker."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Aktivera uppt\u00e4ckt"
                 },

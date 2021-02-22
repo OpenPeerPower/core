@@ -83,7 +83,7 @@ async def test_number.opp, zha_device_joined_restored, zigpy_analog_output_devic
     assert.opp.states.get(entity_id).attributes.get("icon") == "mdi:percent"
     assert.opp.states.get(entity_id).attributes.get("unit_of_measurement") == "%"
     assert (
-       .opp.states.get(entity_id).attributes.get("friendly_name")
+        opp.states.get(entity_id).attributes.get("friendly_name")
         == "FakeManufacturer FakeModel e769900a analog_output PWM1"
     )
 

@@ -41,7 +41,7 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
 
                 result = await func.opp)
 
-               .opp.data[data_key] = result
+                opp.data[data_key] = result
                 evt.set()
                 return cast(T, result)
 

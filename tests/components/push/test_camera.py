@@ -12,12 +12,12 @@ from tests.common import async_fire_time_changed
 async def test_bad_posting.opp, aiohttp_client):
     """Test that posting to wrong api endpoint fails."""
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "http://example.com"},
     )
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {
@@ -43,12 +43,12 @@ async def test_bad_posting.opp, aiohttp_client):
 async def test_posting_url.opp, aiohttp_client):
     """Test that posting to api endpoint works."""
     await async_process_op_core_config(
-        opp,
+        opp.
         {"external_url": "http://example.com"},
     )
 
     await async_setup_component(
-        opp,
+        opp.
         "camera",
         {
             "camera": {

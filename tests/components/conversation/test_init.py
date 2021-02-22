@@ -17,7 +17,7 @@ async def test_calling_intent.opp):
     assert result
 
     result = await async_setup_component(
-        opp,
+        opp.
         "conversation",
         {"conversation": {"intents": {"OrderBeer": ["I would like the {type} beer"]}}},
     )
@@ -46,10 +46,10 @@ async def test_register_before_setup_opp):
     """Test calling an intent from a conversation."""
     intents = async_mock_intent.opp, "OrderBeer")
 
-   .opp.components.conversation.async_register("OrderBeer", ["A {type} beer, please"])
+    opp.components.conversation.async_register("OrderBeer", ["A {type} beer, please"])
 
     result = await async_setup_component(
-        opp,
+        opp.
         "conversation",
         {"conversation": {"intents": {"OrderBeer": ["I would like the {type} beer"]}}},
     )
@@ -105,7 +105,7 @@ async def test_http_processing_intent.opp, opp_client, opp_admin_user):
     intent.async_register.opp, TestIntentHandler())
 
     result = await async_setup_component(
-        opp,
+        opp.
         "conversation",
         {"conversation": {"intents": {"OrderBeer": ["I would like the {type} beer"]}}},
     )
@@ -136,7 +136,7 @@ async def test_turn_on_intent.opp, sentence):
     result = await async_setup_component.opp, "conversation", {})
     assert result
 
-   .opp.states.async_set("light.kitchen", "off")
+    opp.states.async_set("light.kitchen", "off")
     calls = async_mock_service.opp, HASS_DOMAIN, "turn_on")
 
     await opp.services.async_call(
@@ -160,7 +160,7 @@ async def test_turn_off_intent.opp, sentence):
     result = await async_setup_component.opp, "conversation", {})
     assert result
 
-   .opp.states.async_set("light.kitchen", "on")
+    opp.states.async_set("light.kitchen", "on")
     calls = async_mock_service.opp, HASS_DOMAIN, "turn_off")
 
     await opp.services.async_call(
@@ -184,7 +184,7 @@ async def test_toggle_intent.opp, sentence):
     result = await async_setup_component.opp, "conversation", {})
     assert result
 
-   .opp.states.async_set("light.kitchen", "on")
+    opp.states.async_set("light.kitchen", "on")
     calls = async_mock_service.opp, HASS_DOMAIN, "toggle")
 
     await opp.services.async_call(
@@ -206,7 +206,7 @@ async def test_http_api.opp, opp_client):
     assert await async_setup_component.opp, "intent", {})
 
     client = await opp_client()
-   .opp.states.async_set("light.kitchen", "off")
+    opp.states.async_set("light.kitchen", "off")
     calls = async_mock_service.opp, HASS_DOMAIN, "turn_on")
 
     resp = await client.post(

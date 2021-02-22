@@ -47,8 +47,8 @@ async def async_setup_opp, config):
         return True
 
     if not configured_instances.opp):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data={
@@ -80,21 +80,21 @@ async def async_setup_entry.opp, config_entry):
 
     forward_setup = opp.config_entries.async_forward_entry_setup
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][VS_MANAGER] = manager
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][VS_MANAGER] = manager
 
     switches = opp.data[DOMAIN][VS_SWITCHES] = []
     fans = opp.data[DOMAIN][VS_FANS] = []
 
-   .opp.data[DOMAIN][VS_DISPATCHERS] = []
+    opp.data[DOMAIN][VS_DISPATCHERS] = []
 
     if device_dict[VS_SWITCHES]:
         switches.extend(device_dict[VS_SWITCHES])
-       .opp.async_create_task(forward_setup(config_entry, "switch"))
+        opp.async_create_task(forward_setup(config_entry, "switch"))
 
     if device_dict[VS_FANS]:
         fans.extend(device_dict[VS_FANS])
-       .opp.async_create_task(forward_setup(config_entry, "fan"))
+        opp.async_create_task(forward_setup(config_entry, "fan"))
 
     async def async_new_device_discovery(service):
         """Discover if new devices should be added."""
@@ -114,7 +114,7 @@ async def async_setup_entry.opp, config_entry):
             return
         if new_switches and not switches:
             switches.extend(new_switches)
-           .opp.async_create_task(forward_setup(config_entry, "switch"))
+            opp.async_create_task(forward_setup(config_entry, "switch"))
 
         fan_set = set(fan_devs)
         new_fans = list(fan_set.difference(fans))
@@ -124,9 +124,9 @@ async def async_setup_entry.opp, config_entry):
             return
         if new_fans and not fans:
             fans.extend(new_fans)
-           .opp.async_create_task(forward_setup(config_entry, "fan"))
+            opp.async_create_task(forward_setup(config_entry, "fan"))
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_UPDATE_DEVS, async_new_device_discovery
     )
 
@@ -138,12 +138,12 @@ async def async_unload_entry.opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok

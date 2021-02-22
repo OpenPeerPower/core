@@ -46,9 +46,9 @@ def calls.opp):
 @pytest.fixture(autouse=True)
 def setup_zone.opp):
     """Create test zone."""
-   .opp.loop.run_until_complete(
+    opp.loop.run_until_complete(
         async_setup_component(
-            opp,
+            opp.
             zone.DOMAIN,
             {
                 "zone": {
@@ -93,14 +93,14 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 
 async def test_if_fires_on_zone_change.opp, calls):
     """Test for enter and leave triggers firing."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "device_tracker.entity",
         "state",
         {"latitude": AWAY_LATITUDE, "longitude": AWAY_LONGITUDE},
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -149,7 +149,7 @@ async def test_if_fires_on_zone_change.opp, calls):
     )
 
     # Fake that the entity is entering.
-   .opp.states.async_set(
+    opp.states.async_set(
         "device_tracker.entity",
         "state",
         {"latitude": HOME_LATITUDE, "longitude": HOME_LONGITUDE},
@@ -161,7 +161,7 @@ async def test_if_fires_on_zone_change.opp, calls):
     )
 
     # Fake that the entity is leaving.
-   .opp.states.async_set(
+    opp.states.async_set(
         "device_tracker.entity",
         "state",
         {"latitude": AWAY_LATITUDE, "longitude": AWAY_LONGITUDE},
@@ -183,7 +183,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp,
+        opp.
         {
             "platform": "device",
             "domain": DOMAIN,

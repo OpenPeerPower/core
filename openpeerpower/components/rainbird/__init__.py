@@ -59,7 +59,7 @@ CONFIG_SCHEMA = vol.Schema(
 def setup_opp, config):
     """Set up the Rain Bird component."""
 
-   .opp.data[DATA_RAINBIRD] = []
+    opp.data[DATA_RAINBIRD] = []
     success = False
     for controller_config in config[DOMAIN]:
         success = success or _setup_controller.opp, controller_config, config)
@@ -78,11 +78,11 @@ def _setup_controller.opp, controller_config, config):
     except Exception as exc:  # pylint: disable=broad-except
         _LOGGER.error("Unable to setup controller: %s", exc)
         return False
-   .opp.data[DATA_RAINBIRD].append(controller)
+    opp.data[DATA_RAINBIRD].append(controller)
     _LOGGER.debug("Rain Bird Controller %d set to: %s", position, server)
     for platform in SUPPORTED_PLATFORMS:
         discovery.load_platform(
-            opp,
+            opp.
             platform,
             DOMAIN,
             {RAINBIRD_CONTROLLER: position, **controller_config},

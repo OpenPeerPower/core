@@ -31,7 +31,7 @@ async def test_setting_level.opp):
 
     with patch("logging.getLogger", mocks.__getitem__):
         assert await async_setup_component(
-            opp,
+            opp.
             "logger",
             {
                 "logger": {
@@ -94,7 +94,7 @@ async def test_can_set_level.opp):
     """Test logger propagation."""
 
     assert await async_setup_component(
-        opp,
+        opp.
         "logger",
         {
             "logger": {

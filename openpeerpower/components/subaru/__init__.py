@@ -39,7 +39,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp, base_config):
     """Do nothing since this integration does not support configuration.yml setup."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -79,7 +79,7 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(err.message) from err
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=COORDINATOR_NAME,
         update_method=async_update_data,
@@ -88,15 +88,15 @@ async def async_setup_entry.opp, entry):
 
     await coordinator.async_refresh()
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         ENTRY_CONTROLLER: controller,
         ENTRY_COORDINATOR: coordinator,
         ENTRY_VEHICLES: vehicle_info,
     }
 
     for component in SUPPORTED_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -107,13 +107,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in SUPPORTED_PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
     return unload_ok
 
 

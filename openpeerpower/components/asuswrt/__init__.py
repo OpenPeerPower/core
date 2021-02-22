@@ -86,7 +86,7 @@ async def async_setup_opp, config):
             if name == CONF_REQUIRE_IP and mode != MODE_AP:
                 continue
             options[name] = value
-   .opp.data[DOMAIN] = {"yaml_options": options}
+    opp.data[DOMAIN] = {"yaml_options": options}
 
     # check if already configured
     domains_list = opp.config_entries.async_domains()
@@ -103,8 +103,8 @@ async def async_setup_opp, config):
     conf.pop(CONF_INTERFACE, "")
     conf.pop(CONF_DNSMASQ, "")
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
         )
     )
@@ -118,7 +118,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     # import options from yaml if empty
     yaml_options = opp.data.get(DOMAIN, {}).pop("yaml_options", {})
     if not entry.options and yaml_options:
-       .opp.config_entries.async_update_entry(entry, options=yaml_options)
+        opp.config_entries.async_update_entry(entry, options=yaml_options)
 
     router = AsusWrtRouter.opp, entry)
     await router.setup()
@@ -126,8 +126,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     router.async_on_close(entry.add_update_listener(update_listener))
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     async def async_close_connection(event):
@@ -138,7 +138,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         EVENT_OPENPEERPOWER_STOP, async_close_connection
     )
 
-   .opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         DATA_ASUSWRT: router,
         "stop_listener": stop_listener,
     }
@@ -151,17 +151,17 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][entry.entry_id]["stop_listener"]()
+        opp.data[DOMAIN][entry.entry_id]["stop_listener"]()
         router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
         await router.close()
 
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

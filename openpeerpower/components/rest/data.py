@@ -15,7 +15,7 @@ class RestData:
 
     def __init__(
         self,
-        opp,
+        opp.
         method,
         resource,
         auth,

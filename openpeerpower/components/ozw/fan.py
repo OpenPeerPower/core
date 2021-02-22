@@ -30,7 +30,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         fan = ZwaveFan(values)
         async_add_entities([fan])
 
-   .opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
+    opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect.opp, f"{DOMAIN}_new_{FAN_DOMAIN}", async_add_fan)
     )
 

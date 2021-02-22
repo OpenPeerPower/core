@@ -16,11 +16,11 @@ async def async_setup_entry.opp, entry, async_add_entities):
         if device in.opp.data[LT_DOMAIN]["devices"]:
             return
 
-       .opp.data[LT_DOMAIN]["devices"].add(device)
+        opp.data[LT_DOMAIN]["devices"].add(device)
 
         async_add_entities([LocativeEntity(device, location, location_name)])
 
-   .opp.data[LT_DOMAIN]["unsub_device_tracker"][
+    opp.data[LT_DOMAIN]["unsub_device_tracker"][
         entry.entry_id
     ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
 

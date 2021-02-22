@@ -32,9 +32,9 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     device_name = config.get(CONF_NAME)
 
     if not.opp.data.get(DATA_RSN):
-       .opp.data[DATA_RSN] = RSNetwork()
+        opp.data[DATA_RSN] = RSNetwork()
         job = opp.data[DATA_RSN].create_datagram_endpoint()
-       .opp.async_create_task(job)
+        opp.async_create_task(job)
 
     device = opp.data[DATA_RSN].register_device(mac_address, host)
     async_add_entities([RecSwitchSwitch(device, device_name, mac_address)])

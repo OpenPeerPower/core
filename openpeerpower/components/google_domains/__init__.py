@@ -43,7 +43,7 @@ async def async_setup_opp, config):
     session = opp.helpers.aiohttp_client.async_get_clientsession()
 
     result = await _update_google_domains(
-        opp, session, domain, user, password, timeout
+        opp. session, domain, user, password, timeout
     )
 
     if not result:
@@ -53,7 +53,7 @@ async def async_setup_opp, config):
         """Update the Google Domains entry."""
         await _update_google_domains.opp, session, domain, user, password, timeout)
 
-   .opp.helpers.event.async_track_time_interval(update_domain_interval, INTERVAL)
+    opp.helpers.event.async_track_time_interval(update_domain_interval, INTERVAL)
 
     return True
 

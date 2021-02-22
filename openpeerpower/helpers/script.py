@@ -138,7 +138,7 @@ STATIC_VALIDATION_ACTION_TYPES = (
 
 
 async def async_validate_actions_config(
-    opp: OpenPeerPower, actions: List[ConfigType]
+    opp. OpenPeerPower, actions: List[ConfigType]
 ) -> List[ConfigType]:
     """Validate a list of actions."""
     return await asyncio.gather(
@@ -147,7 +147,7 @@ async def async_validate_actions_config(
 
 
 async def async_validate_action_config(
-    opp: OpenPeerPower, config: ConfigType
+    opp. OpenPeerPower, config: ConfigType
 ) -> ConfigType:
     """Validate config."""
     action_type = cv.determine_script_action(config)
@@ -157,36 +157,36 @@ async def async_validate_action_config(
 
     elif action_type == cv.SCRIPT_ACTION_DEVICE_AUTOMATION:
         platform = await device_automation.async_get_device_automation_platform(
-            opp, config[CONF_DOMAIN], "action"
+            opp. config[CONF_DOMAIN], "action"
         )
         config = platform.ACTION_SCHEMA(config)  # type: ignore
 
     elif action_type == cv.SCRIPT_ACTION_CHECK_CONDITION:
         if config[CONF_CONDITION] == "device":
             platform = await device_automation.async_get_device_automation_platform(
-                opp, config[CONF_DOMAIN], "condition"
+                opp. config[CONF_DOMAIN], "condition"
             )
             config = platform.CONDITION_SCHEMA(config)  # type: ignore
 
     elif action_type == cv.SCRIPT_ACTION_WAIT_FOR_TRIGGER:
         config[CONF_WAIT_FOR_TRIGGER] = await async_validate_trigger_config(
-            opp, config[CONF_WAIT_FOR_TRIGGER]
+            opp. config[CONF_WAIT_FOR_TRIGGER]
         )
 
     elif action_type == cv.SCRIPT_ACTION_REPEAT:
         config[CONF_SEQUENCE] = await async_validate_actions_config(
-            opp, config[CONF_REPEAT][CONF_SEQUENCE]
+            opp. config[CONF_REPEAT][CONF_SEQUENCE]
         )
 
     elif action_type == cv.SCRIPT_ACTION_CHOOSE:
         if CONF_DEFAULT in config:
             config[CONF_DEFAULT] = await async_validate_actions_config(
-                opp, config[CONF_DEFAULT]
+                opp. config[CONF_DEFAULT]
             )
 
         for choose_conf in config[CONF_CHOOSE]:
             choose_conf[CONF_SEQUENCE] = await async_validate_actions_config(
-                opp, choose_conf[CONF_SEQUENCE]
+                opp. choose_conf[CONF_SEQUENCE]
             )
 
     else:
@@ -204,7 +204,7 @@ class _ScriptRun:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         script: "Script",
         variables: Dict[str, Any],
         context: Optional[Context],
@@ -748,7 +748,7 @@ async def _async_stop_scripts_after_shutdown.opp, point_in_time):
 async def _async_stop_scripts_at_shutdown.opp, event):
     """Stop running Script objects started before shutdown."""
     async_call_later(
-        opp, _SHUTDOWN_MAX_WAIT, partial(_async_stop_scripts_after_shutdown, opp)
+        opp. _SHUTDOWN_MAX_WAIT, partial(_async_stop_scripts_after_shutdown, opp)
     )
 
     running_scripts = [
@@ -789,7 +789,7 @@ class Script:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         sequence: Sequence[Dict[str, Any]],
         name: str,
         domain: str,
@@ -809,7 +809,7 @@ class Script:
         all_scripts = opp.data.get(DATA_SCRIPTS)
         if not all_scripts:
             all_scripts = opp.data[DATA_SCRIPTS] = []
-           .opp.bus.async_listen_once(
+            opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, partial(_async_stop_scripts_at_shutdown, opp)
             )
         self._top_level = top_level

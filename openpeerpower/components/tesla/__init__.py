@@ -62,7 +62,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 @callback
 def _async_save_tokens.opp, config_entry, access_token, refresh_token):
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry,
         data={
             **config_entry.data,
@@ -94,7 +94,7 @@ async def async_setup_opp, base_config):
         for entry in.opp.config_entries.async_entries(DOMAIN):
             if email != entry.title:
                 continue
-           .opp.config_entries.async_update_entry(entry, data=data, options=options)
+            opp.config_entries.async_update_entry(entry, data=data, options=options)
 
     config = base_config.get(DOMAIN)
     if not config:
@@ -118,30 +118,30 @@ async def async_setup_opp, base_config):
             options={CONF_SCAN_INTERVAL: scan_interval},
         )
     else:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data={CONF_USERNAME: email, CONF_PASSWORD: password},
             )
         )
-       .opp.data.setdefault(DOMAIN, {})
-       .opp.data[DOMAIN][email] = {CONF_SCAN_INTERVAL: scan_interval}
+        opp.data.setdefault(DOMAIN, {})
+        opp.data[DOMAIN][email] = {CONF_SCAN_INTERVAL: scan_interval}
     return True
 
 
 async def async_setup_entry.opp, config_entry):
     """Set up Tesla as config entry."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     config = config_entry.data
     websession = aiohttp_client.async_get_clientsession.opp)
     email = config_entry.title
     if email in.opp.data[DOMAIN] and CONF_SCAN_INTERVAL in.opp.data[DOMAIN][email]:
         scan_interval = opp.data[DOMAIN][email][CONF_SCAN_INTERVAL]
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry, options={CONF_SCAN_INTERVAL: scan_interval}
         )
-       .opp.data[DOMAIN].pop(email)
+        opp.data[DOMAIN].pop(email)
     try:
         controller = TeslaAPI(
             websession,
@@ -168,7 +168,7 @@ async def async_setup_entry.opp, config_entry):
         return False
     _async_save_tokens.opp, config_entry, access_token, refresh_token)
     coordinator = TeslaDataUpdateCoordinator(
-        opp, config_entry=config_entry, controller=controller
+        opp. config_entry=config_entry, controller=controller
     )
     # Fetch initial data so we have data when entities subscribe
     entry_data = opp.data[DOMAIN][config_entry.entry_id] = {
@@ -192,8 +192,8 @@ async def async_setup_entry.opp, config_entry):
 
     for component in TESLA_COMPONENTS:
         _LOGGER.debug("Loading %s", component)
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
     return True
 
@@ -203,7 +203,7 @@ async def async_unload_entry.opp, config_entry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in TESLA_COMPONENTS
             ]
         )
@@ -212,15 +212,15 @@ async def async_unload_entry.opp, config_entry) -> bool:
         listener()
     username = config_entry.title
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
         _LOGGER.debug("Unloaded entry for %s", username)
         return True
     return False
 
 
 def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": "reauth"},
             data=entry.data,
@@ -253,7 +253,7 @@ class TeslaDataUpdateCoordinator(DataUpdateCoordinator):
         update_interval = timedelta(seconds=MIN_SCAN_INTERVAL)
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=update_interval,

@@ -46,7 +46,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Quit the player on shutdown."""
         player.quit()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
     add_entities([GstreamerDevice(player, name)])
 
 

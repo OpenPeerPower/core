@@ -26,8 +26,8 @@ async def async_setup_opp: OpenPeerPowerType, config: OrderedDict) -> bool:
     if conf is None:
         return True
     for config_entry in conf:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=config_entry,
@@ -38,8 +38,8 @@ async def async_setup_opp: OpenPeerPowerType, config: OrderedDict) -> bool:
 
 async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up songpal media player."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "media_player")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "media_player")
     )
     return True
 

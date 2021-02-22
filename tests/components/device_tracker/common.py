@@ -23,7 +23,7 @@ from openpeerpower.loader import bind.opp
 @callback
 @bind.opp
 def async_see(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     mac: str = None,
     dev_id: str = None,
     host_name: str = None,
@@ -49,4 +49,4 @@ def async_see(
     }
     if attributes:
         data[ATTR_ATTRIBUTES] = attributes
-   .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_SEE, data))
+    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_SEE, data))

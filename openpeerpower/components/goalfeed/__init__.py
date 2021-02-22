@@ -39,7 +39,7 @@ def setup_opp, config):
         """Handle goal events."""
         goal = json.loads(json.loads(data))
 
-       .opp.bus.fire("goal", event_data=goal)
+        opp.bus.fire("goal", event_data=goal)
 
     def connect_handler(data):
         """Handle connection."""

@@ -23,10 +23,10 @@ from .const import (
 
 async def async_setup_opp, data, store):
     """Set up the onboarding view."""
-   .opp.http.register_view(OnboardingView(data, store))
-   .opp.http.register_view(UserOnboardingView(data, store))
-   .opp.http.register_view(CoreConfigOnboardingView(data, store))
-   .opp.http.register_view(IntegrationOnboardingView(data, store))
+    opp.http.register_view(OnboardingView(data, store))
+    opp.http.register_view(UserOnboardingView(data, store))
+    opp.http.register_view(CoreConfigOnboardingView(data, store))
+    opp.http.register_view(IntegrationOnboardingView(data, store))
 
 
 class OnboardingView(OpenPeerPowerView):
@@ -70,7 +70,7 @@ class _BaseOnboardingView(OpenPeerPowerView):
         await self._store.async_save(self._data)
 
         if set(self._data["done"]) == set(STEPS):
-           .opp.data[DOMAIN] = True
+            opp.data[DOMAIN] = True
 
 
 class UserOnboardingView(_BaseOnboardingView):
@@ -94,7 +94,7 @@ class UserOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle user creation, area creation."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -148,7 +148,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
     async def post(self, request):
         """Handle finishing core config step."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -163,7 +163,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
             )
 
             if (
-               .opp.components.oppio.is.oppio()
+                opp.components.oppio.is.oppio()
                 and "raspberrypi" in.opp.components.oppio.get_core_info()["machine"]
             ):
                 await opp.config_entries.flow.async_init(
@@ -185,7 +185,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle token creation."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         refresh_token_id = request[KEY_HASS_REFRESH_TOKEN_ID]
 
         async with self._lock:

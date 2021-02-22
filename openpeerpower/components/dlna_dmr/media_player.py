@@ -112,14 +112,14 @@ def catch_request_errors():
 
 
 async def async_start_event_handler(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     server_host: str,
     server_port: int,
     requester,
     callback_url_override: Optional[str] = None,
 ):
     """Register notify view."""
-   .opp_data = opp.data[DLNA_DMR_DATA]
+    opp.data = opp.data[DLNA_DMR_DATA]
     if "event_handler" in.opp_data:
         return.opp_data["event_handler"]
 
@@ -132,8 +132,8 @@ async def async_start_event_handler(
     )
     await server.start_server()
     _LOGGER.info("UPNP/DLNA event handler listening, url: %s", server.callback_url)
-   .opp_data["notify_server"] = server
-   .opp_data["event_handler"] = server.event_handler
+    opp.data["notify_server"] = server
+    opp.data["event_handler"] = server.event_handler
 
     # register for graceful shutdown
     async def async_stop_server(event):
@@ -141,13 +141,13 @@ async def async_start_event_handler(
         _LOGGER.debug("Stopping UPNP/DLNA event handler")
         await server.stop_server()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_server)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_server)
 
     return.opp_data["event_handler"]
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config, async_add_entities, discovery_info=None
+    opp. OpenPeerPowerType, config, async_add_entities, discovery_info=None
 ):
     """Set up DLNA DMR platform."""
     if config.get(CONF_URL) is not None:
@@ -158,10 +158,10 @@ async def async_setup_platform(
         name = discovery_info.get("name")
 
     if DLNA_DMR_DATA not in.opp.data:
-       .opp.data[DLNA_DMR_DATA] = {}
+        opp.data[DLNA_DMR_DATA] = {}
 
     if "lock" not in.opp.data[DLNA_DMR_DATA]:
-       .opp.data[DLNA_DMR_DATA]["lock"] = asyncio.Lock()
+        opp.data[DLNA_DMR_DATA]["lock"] = asyncio.Lock()
 
     # build upnp/aiohttp requester
     session = async_get_clientsession.opp)
@@ -175,7 +175,7 @@ async def async_setup_platform(
         server_port = config.get(CONF_LISTEN_PORT, DEFAULT_LISTEN_PORT)
         callback_url_override = config.get(CONF_CALLBACK_URL_OVERRIDE)
         event_handler = await async_start_event_handler(
-            opp, server_host, server_port, requester, callback_url_override
+            opp. server_host, server_port, requester, callback_url_override
         )
 
     # create upnp device

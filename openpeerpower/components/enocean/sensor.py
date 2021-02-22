@@ -243,7 +243,7 @@ class EnOceanWindowHandle(EnOceanSensor):
     """Representation of an EnOcean window handle device.
 
     EEPs (EnOcean Equipment Profiles):
-    - F6-10-00 (Mechanical handle / Hoppe AG)
+    - F6-10-00 (Mechanical handle /  opp. AG)
     """
 
     def __init__(self, dev_id, dev_name):

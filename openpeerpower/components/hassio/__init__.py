@@ -141,7 +141,7 @@ async def async_get_addon_info.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio = opp.data[DOMAIN]
+    opp.o = opp.data[DOMAIN]
     return await oppio.get_addon_info(slug)
 
 
@@ -152,7 +152,7 @@ async def async_install_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio = opp.data[DOMAIN]
+    opp.o = opp.data[DOMAIN]
     command = f"/addons/{slug}/install"
     return await oppio.send_command(command, timeout=None)
 
@@ -164,7 +164,7 @@ async def async_uninstall_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio = opp.data[DOMAIN]
+    opp.o = opp.data[DOMAIN]
     command = f"/addons/{slug}/uninstall"
     return await oppio.send_command(command, timeout=60)
 
@@ -176,7 +176,7 @@ async def async_start_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio = opp.data[DOMAIN]
+    opp.o = opp.data[DOMAIN]
     command = f"/addons/{slug}/start"
     return await oppio.send_command(command, timeout=60)
 
@@ -188,7 +188,7 @@ async def async_stop_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio = opp.data[DOMAIN]
+    opp.o = opp.data[DOMAIN]
     command = f"/addons/{slug}/stop"
     return await oppio.send_command(command, timeout=60)
 
@@ -196,23 +196,23 @@ async def async_stop_addon.opp: OpenPeerPowerType, slug: str) -> dict:
 @bind.opp
 @api_data
 async def async_set_addon_options(
-    opp: OpenPeerPowerType, slug: str, options: dict
+    opp. OpenPeerPowerType, slug: str, options: dict
 ) -> dict:
     """Set add-on options.
 
     The caller of the function should handle HassioAPIError.
     """
-   .oppio = opp.data[DOMAIN]
+    opp.o = opp.data[DOMAIN]
     command = f"/addons/{slug}/options"
     return await oppio.send_command(command, payload=options)
 
 
 @bind.opp
 async def async_get_addon_discovery_info(
-    opp: OpenPeerPowerType, slug: str
+    opp. OpenPeerPowerType, slug: str
 ) -> Optional[dict]:
     """Return discovery data for an add-on."""
-   .oppio = opp.data[DOMAIN]
+    opp.o = opp.data[DOMAIN]
     data = await oppio.retrieve_discovery_messages()
     discovered_addons = data[ATTR_DISCOVERY]
     return next((addon for addon in discovered_addons if addon["addon"] == slug), None)
@@ -299,7 +299,7 @@ async def async_setup_opp, config):
 
     host = os.environ["HASSIO"]
     websession = opp.helpers.aiohttp_client.async_get_clientsession()
-   .opp.data[DOMAIN] = oppio = HassIO.opp.loop, websession, host)
+    opp.data[DOMAIN] = oppio = HassIO.opp.loop, websession, host)
 
     if not await oppio.is_connected():
         _LOGGER.warning("Not connected with Hass.io / system too busy!")
@@ -311,7 +311,7 @@ async def async_setup_opp, config):
         data = {}
 
     refresh_token = None
-    if .oppio_user" in data:
+    if  opp.o_user" in data:
         user = await opp.auth.async_get_user(data[.oppio_user"])
         if user and user.refresh_tokens:
             refresh_token = list(user.refresh_tokens.values())[0]
@@ -329,11 +329,11 @@ async def async_setup_opp, config):
     # This overrides the normal API call that would be forwarded
     development_repo = config.get(DOMAIN, {}).get(CONF_FRONTEND_REPO)
     if development_repo is not None:
-       .opp.http.register_static_path(
-            "/api.oppio/app", os.path.join(development_repo, .oppio/build"), False
+        opp.http.register_static_path(
+            "/api.oppio/app", os.path.join(development_repo,  opp.o/build"), False
         )
 
-   .opp.http.register_view(HassIOView(host, websession))
+    opp.http.register_view(HassIOView(host, websession))
 
     await opp.components.panel_custom.async_register_panel(
         frontend_url_path= oppio",
@@ -361,7 +361,7 @@ async def async_setup_opp, config):
         last_timezone = new_timezone
         await oppio.update.opp_timezone(new_timezone)
 
-   .opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, push_config)
+    opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, push_config)
 
     await push_config(None)
 
@@ -390,22 +390,22 @@ async def async_setup_opp, config):
             _LOGGER.error("Error on Hass.io API: %s", err)
 
     for service, settings in MAP_SERVICE_API.items():
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, service, async_service_handler, schema=settings[1]
         )
 
     async def update_info_data(now):
         """Update last available supervisor information."""
         try:
-           .opp.data[DATA_INFO] = await oppio.get_info()
-           .opp.data[DATA_HOST_INFO] = await oppio.get_host_info()
-           .opp.data[DATA_CORE_INFO] = await oppio.get_core_info()
-           .opp.data[DATA_SUPERVISOR_INFO] = await oppio.get_supervisor_info()
-           .opp.data[DATA_OS_INFO] = await oppio.get_os_info()
+            opp.data[DATA_INFO] = await oppio.get_info()
+            opp.data[DATA_HOST_INFO] = await oppio.get_host_info()
+            opp.data[DATA_CORE_INFO] = await oppio.get_core_info()
+            opp.data[DATA_SUPERVISOR_INFO] = await oppio.get_supervisor_info()
+            opp.data[DATA_OS_INFO] = await oppio.get_os_info()
         except HassioAPIError as err:
             _LOGGER.warning("Can't read last version: %s", err)
 
-       .opp.helpers.event.async_track_point_in_utc_time(
+        opp.helpers.event.async_track_point_in_utc_time(
             update_info_data, utcnow() + HASSIO_UPDATE_INTERVAL
         )
 
@@ -425,7 +425,7 @@ async def async_setup_opp, config):
 
         if errors:
             _LOGGER.error(errors)
-           .opp.components.persistent_notification.async_create(
+            opp.components.persistent_notification.async_create(
                 "Config error. See [the logs](/config/logs) for details.",
                 "Config validating",
                 f"{HASS_DOMAIN}.check_config",
@@ -441,7 +441,7 @@ async def async_setup_opp, config):
         SERVICE_OPENPEERPOWER_RESTART,
         SERVICE_CHECK_CONFIG,
     ):
-       .opp.services.async_register(HASS_DOMAIN, service, async_handle_core_service)
+        opp.services.async_register(HASS_DOMAIN, service, async_handle_core_service)
 
     # Init discovery Hass.io feature
     async_setup_discovery_view.opp, oppio)

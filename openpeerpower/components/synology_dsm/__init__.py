@@ -110,8 +110,8 @@ async def async_setup_opp, config):
         return True
 
     for dsm_conf in conf:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=dsm_conf,
@@ -184,7 +184,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     # Migrate existing entry configuration
     if entry.data.get(CONF_VERIFY_SSL) is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_VERIFY_SSL: DEFAULT_VERIFY_SSL}
         )
 
@@ -198,8 +198,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.unique_id] = {
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.unique_id] = {
         SYNO_API: api,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
@@ -210,7 +210,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     # For SSDP compat
     if not entry.data.get(CONF_MAC):
         network = await opp.async_add_executor_job(getattr, api.dsm, "network")
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, data={**entry.data, CONF_MAC: network.macs}
         )
 
@@ -233,10 +233,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
             }
         }
 
-   .opp.data[DOMAIN][entry.unique_id][
+    opp.data[DOMAIN][entry.unique_id][
         COORDINATOR_SURVEILLANCE
     ] = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=f"{entry.unique_id}_surveillance_station",
         update_method=async_coordinator_update_data_surveillance_station,
@@ -244,8 +244,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     )
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -256,7 +256,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in PLATFORMS
             ]
         )
@@ -266,7 +266,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         entry_data = opp.data[DOMAIN][entry.unique_id]
         entry_data[UNDO_UPDATE_LISTENER]()
         await entry_data[SYNO_API].async_unload()
-       .opp.data[DOMAIN].pop(entry.unique_id)
+        opp.data[DOMAIN].pop(entry.unique_id)
 
     return unload_ok
 
@@ -310,7 +310,7 @@ async def _async_setup_services.opp: OpenPeerPowerType):
             await dsm_api.system.shutdown()
 
     for service in SERVICES:
-       .opp.services.async_register(DOMAIN, service, service_handler)
+        opp.services.async_register(DOMAIN, service, service_handler)
 
 
 class SynoApi:

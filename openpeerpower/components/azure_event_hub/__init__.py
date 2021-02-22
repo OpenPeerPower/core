@@ -77,7 +77,7 @@ async def async_setup_opp, yaml_config):
         conn_str_client = False
 
     instance = opp.data[DOMAIN] = AzureEventHub(
-        opp,
+        opp.
         client_args,
         conn_str_client,
         config[CONF_FILTER],
@@ -85,7 +85,7 @@ async def async_setup_opp, yaml_config):
         config[CONF_MAX_DELAY],
     )
 
-   .opp.async_create_task(instance.async_start())
+    opp.async_create_task(instance.async_start())
     return True
 
 
@@ -94,7 +94,7 @@ class AzureEventHub:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         client_args: Dict[str, Any],
         conn_str_client: bool,
         entities_filter: vol.Schema,

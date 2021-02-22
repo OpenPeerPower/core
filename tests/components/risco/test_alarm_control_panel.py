@@ -172,7 +172,7 @@ async def test_states.opp, two_part_alarm):
     assert.opp.states.get(FIRST_ENTITY_ID).state == STATE_UNKNOWN
     for partition_id, entity_id in {0: FIRST_ENTITY_ID, 1: SECOND_ENTITY_ID}.items():
         await _check_state(
-            opp,
+            opp.
             two_part_alarm,
             "triggered",
             STATE_ALARM_TRIGGERED,
@@ -180,10 +180,10 @@ async def test_states.opp, two_part_alarm):
             partition_id,
         )
         await _check_state(
-            opp, two_part_alarm, "arming", STATE_ALARM_ARMING, entity_id, partition_id
+            opp. two_part_alarm, "arming", STATE_ALARM_ARMING, entity_id, partition_id
         )
         await _check_state(
-            opp,
+            opp.
             two_part_alarm,
             "armed",
             STATE_ALARM_ARMED_AWAY,
@@ -191,7 +191,7 @@ async def test_states.opp, two_part_alarm):
             partition_id,
         )
         await _check_state(
-            opp,
+            opp.
             two_part_alarm,
             "partially_armed",
             STATE_ALARM_ARMED_HOME,
@@ -199,7 +199,7 @@ async def test_states.opp, two_part_alarm):
             partition_id,
         )
         await _check_state(
-            opp,
+            opp.
             two_part_alarm,
             "disarmed",
             STATE_ALARM_DISARMED,
@@ -214,7 +214,7 @@ async def test_states.opp, two_part_alarm):
             new_callable=PropertyMock(return_value=groups),
         ):
             await _check_state(
-                opp,
+                opp.
                 two_part_alarm,
                 "partially_armed",
                 STATE_ALARM_ARMED_NIGHT,
@@ -224,7 +224,7 @@ async def test_states.opp, two_part_alarm):
 
 
 async def _test_service_call(
-    opp, service, method, entity_id, partition_id, *args, **kwargs
+    opp. service, method, entity_id, partition_id, *args, **kwargs
 ):
     with patch(f"openpeerpower.components.risco.RiscoAPI.{method}") as set_mock:
         await _call_alarm_service.opp, service, entity_id, **kwargs)
@@ -232,7 +232,7 @@ async def _test_service_call(
 
 
 async def _test_no_service_call(
-    opp, service, method, entity_id, partition_id, **kwargs
+    opp. service, method, entity_id, partition_id, **kwargs
 ):
     with patch(f"openpeerpower.components.risco.RiscoAPI.{method}") as set_mock:
         await _call_alarm_service.opp, service, entity_id, **kwargs)
@@ -260,16 +260,16 @@ async def test_sets_custom_mapping.opp, two_part_alarm):
     await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0)
     await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1)
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, "C"
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, "C"
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, "C"
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, "C"
     )
 
 
@@ -288,22 +288,22 @@ async def test_sets_full_custom_mapping.opp, two_part_alarm):
     await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0)
     await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1)
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, "C"
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, "C"
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, "C"
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, "C"
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_CUSTOM_BYPASS, "group_arm", FIRST_ENTITY_ID, 0, "D"
+        opp. SERVICE_ALARM_ARM_CUSTOM_BYPASS, "group_arm", FIRST_ENTITY_ID, 0, "D"
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_CUSTOM_BYPASS, "group_arm", SECOND_ENTITY_ID, 1, "D"
+        opp. SERVICE_ALARM_ARM_CUSTOM_BYPASS, "group_arm", SECOND_ENTITY_ID, 1, "D"
     )
 
 
@@ -313,34 +313,34 @@ async def test_sets_with_correct_code.opp, two_part_alarm):
 
     code = {"code": 1234}
     await _test_service_call(
-        opp, SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1, **code
+        opp. SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1, **code
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1, **code
+        opp. SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1, **code
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1, **code
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1, **code
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, "C", **code
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, "C", **code
     )
     await _test_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, "C", **code
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, "C", **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_CUSTOM_BYPASS, "partial_arm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_ARM_CUSTOM_BYPASS, "partial_arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp,
+        opp.
         SERVICE_ALARM_ARM_CUSTOM_BYPASS,
         "partial_arm",
         SECOND_ENTITY_ID,
@@ -355,34 +355,34 @@ async def test_sets_with_incorrect_code.opp, two_part_alarm):
 
     code = {"code": 4321}
     await _test_no_service_call(
-        opp, SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1, **code
+        opp. SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1, **code
+        opp. SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1, **code
+        opp. SERVICE_ALARM_ARM_HOME, "partial_arm", SECOND_ENTITY_ID, 1, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, **code
+        opp. SERVICE_ALARM_ARM_NIGHT, "group_arm", SECOND_ENTITY_ID, 1, **code
     )
     await _test_no_service_call(
-        opp, SERVICE_ALARM_ARM_CUSTOM_BYPASS, "partial_arm", FIRST_ENTITY_ID, 0, **code
+        opp. SERVICE_ALARM_ARM_CUSTOM_BYPASS, "partial_arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp,
+        opp.
         SERVICE_ALARM_ARM_CUSTOM_BYPASS,
         "partial_arm",
         SECOND_ENTITY_ID,

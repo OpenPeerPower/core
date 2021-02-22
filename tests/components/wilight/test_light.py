@@ -128,7 +128,7 @@ def mock_dummy_device_from_host_color():
 
 
 async def test_loading_light(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     dummy_device_from_host_light_fan,
     dummy_get_components_from_model_light,
 ) -> None:
@@ -153,7 +153,7 @@ async def test_loading_light(
 
 
 async def test_on_off_light_state(
-    opp: OpenPeerPowerType, dummy_device_from_host_pb
+    opp. OpenPeerPowerType, dummy_device_from_host_pb
 ) -> None:
     """Test the change of state of the light switches."""
     await setup_integration.opp)
@@ -186,7 +186,7 @@ async def test_on_off_light_state(
 
 
 async def test_dimmer_light_state(
-    opp: OpenPeerPowerType, dummy_device_from_host_dimmer
+    opp. OpenPeerPowerType, dummy_device_from_host_dimmer
 ) -> None:
     """Test the change of state of the light switches."""
     await setup_integration.opp)
@@ -256,7 +256,7 @@ async def test_dimmer_light_state(
 
 
 async def test_color_light_state(
-    opp: OpenPeerPowerType, dummy_device_from_host_color
+    opp. OpenPeerPowerType, dummy_device_from_host_color
 ) -> None:
     """Test the change of state of the light switches."""
     await setup_integration.opp)

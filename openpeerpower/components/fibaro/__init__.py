@@ -356,7 +356,7 @@ class FibaroController:
 def setup_opp, base_config):
     """Set up the Fibaro Component."""
     gateways = base_config[DOMAIN][CONF_GATEWAYS]
-   .opp.data[FIBARO_CONTROLLERS] = {}
+    opp.data[FIBARO_CONTROLLERS] = {}
 
     def stop_fibaro(event):
         """Stop Fibaro Thread."""
@@ -364,16 +364,16 @@ def setup_opp, base_config):
         for controller in.opp.data[FIBARO_CONTROLLERS].values():
             controller.disable_state_handler()
 
-   .opp.data[FIBARO_DEVICES] = {}
+    opp.data[FIBARO_DEVICES] = {}
     for component in FIBARO_COMPONENTS:
-       .opp.data[FIBARO_DEVICES][component] = []
+        opp.data[FIBARO_DEVICES][component] = []
 
     for gateway in gateways:
         controller = FibaroController(gateway)
         if controller.connect():
-           .opp.data[FIBARO_CONTROLLERS][controller.hub_serial] = controller
+            opp.data[FIBARO_CONTROLLERS][controller.hub_serial] = controller
             for component in FIBARO_COMPONENTS:
-               .opp.data[FIBARO_DEVICES][component].extend(
+                opp.data[FIBARO_DEVICES][component].extend(
                     controller.fibaro_devices[component]
                 )
 
@@ -382,7 +382,7 @@ def setup_opp, base_config):
             discovery.load_platform.opp, component, DOMAIN, {}, base_config)
         for controller in.opp.data[FIBARO_CONTROLLERS].values():
             controller.enable_state_handler()
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_fibaro)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_fibaro)
         return True
 
     return False

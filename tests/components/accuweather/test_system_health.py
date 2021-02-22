@@ -13,12 +13,12 @@ from tests.common import get_system_health_info
 async def test_accuweather_system_health.opp, aioclient_mock):
     """Test AccuWeather system health."""
     aioclient_mock.get("https://dataservice.accuweather.com/", text="")
-   .opp.config.components.add(DOMAIN)
+    opp.config.components.add(DOMAIN)
     assert await async_setup_component.opp, "system_health", {})
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN]["0123xyz"] = {}
-   .opp.data[DOMAIN]["0123xyz"][COORDINATOR] = Mock(
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN]["0123xyz"] = {}
+    opp.data[DOMAIN]["0123xyz"][COORDINATOR] = Mock(
         accuweather=Mock(requests_remaining="42")
     )
 
@@ -37,12 +37,12 @@ async def test_accuweather_system_health.opp, aioclient_mock):
 async def test_accuweather_system_health_fail.opp, aioclient_mock):
     """Test AccuWeather system health."""
     aioclient_mock.get("https://dataservice.accuweather.com/", exc=ClientError)
-   .opp.config.components.add(DOMAIN)
+    opp.config.components.add(DOMAIN)
     assert await async_setup_component.opp, "system_health", {})
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN]["0123xyz"] = {}
-   .opp.data[DOMAIN]["0123xyz"][COORDINATOR] = Mock(
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN]["0123xyz"] = {}
+    opp.data[DOMAIN]["0123xyz"][COORDINATOR] = Mock(
         accuweather=Mock(requests_remaining="0")
     )
 

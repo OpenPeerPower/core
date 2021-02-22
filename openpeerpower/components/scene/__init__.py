@@ -19,7 +19,7 @@ STATE = "scening"
 STATES = "states"
 
 
-def .opp_domain_validator(config):
+def  opp.domain_validator(config):
     """Validate platform in config for openpeerpower domain."""
     if CONF_PLATFORM not in config:
         config = {CONF_PLATFORM: HA_DOMAIN, STATES: config}
@@ -49,7 +49,7 @@ def _platform_validator(config):
 
 PLATFORM_SCHEMA = vol.Schema(
     vol.All(
-        .opp_domain_validator,
+         opp.domain_validator,
         vol.Schema({vol.Required(CONF_PLATFORM): str}, extra=vol.ALLOW_EXTRA),
         _platform_validator,
     ),

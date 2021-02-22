@@ -39,8 +39,8 @@ async def test_get_actions.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set("climate.test_5678", const.HVAC_MODE_COOL, {})
-   .opp.states.async_set("climate.test_5678", "attributes", {"supported_features": 17})
+    opp.states.async_set("climate.test_5678", const.HVAC_MODE_COOL, {})
+    opp.states.async_set("climate.test_5678", "attributes", {"supported_features": 17})
     expected_actions = [
         {
             "domain": DOMAIN,
@@ -68,8 +68,8 @@ async def test_get_action_hvac_only.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set("climate.test_5678", const.HVAC_MODE_COOL, {})
-   .opp.states.async_set("climate.test_5678", "attributes", {"supported_features": 1})
+    opp.states.async_set("climate.test_5678", const.HVAC_MODE_COOL, {})
+    opp.states.async_set("climate.test_5678", "attributes", {"supported_features": 1})
     expected_actions = [
         {
             "domain": DOMAIN,
@@ -84,7 +84,7 @@ async def test_get_action_hvac_only.opp, device_reg, entity_reg):
 
 async def test_action.opp):
     """Test for actions."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "climate.entity",
         const.HVAC_MODE_COOL,
         {
@@ -94,7 +94,7 @@ async def test_action.opp):
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -131,12 +131,12 @@ async def test_action.opp):
     set_hvac_mode_calls = async_mock_service.opp, "climate", "set_hvac_mode")
     set_preset_mode_calls = async_mock_service.opp, "climate", "set_preset_mode")
 
-   .opp.bus.async_fire("test_event_set_hvac_mode")
+    opp.bus.async_fire("test_event_set_hvac_mode")
     await opp.async_block_till_done()
     assert len(set_hvac_mode_calls) == 1
     assert len(set_preset_mode_calls) == 0
 
-   .opp.bus.async_fire("test_event_set_preset_mode")
+    opp.bus.async_fire("test_event_set_preset_mode")
     await opp.async_block_till_done()
     assert len(set_hvac_mode_calls) == 1
     assert len(set_preset_mode_calls) == 1
@@ -144,7 +144,7 @@ async def test_action.opp):
 
 async def test_capabilities.opp):
     """Test getting capabilities."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "climate.entity",
         const.HVAC_MODE_COOL,
         {
@@ -155,7 +155,7 @@ async def test_capabilities.opp):
 
     # Set HVAC mode
     capabilities = await device_action.async_get_action_capabilities(
-        opp,
+        opp.
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",
@@ -179,7 +179,7 @@ async def test_capabilities.opp):
 
     # Set preset mode
     capabilities = await device_action.async_get_action_capabilities(
-        opp,
+        opp.
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",

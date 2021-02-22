@@ -117,16 +117,16 @@ async def test_discovery_lock.opp, mock_entry):
         await opp.async_block_till_done()
 
         with patch.object(
-            opp, "async_add_executor_job", side_effect=mock_discovery
+            opp. "async_add_executor_job", side_effect=mock_discovery
         ) as mock_run_discovery:
             discovery_coroutine = mock_track_time_interval.call_args[0][1]
 
             discovery_finished = asyncio.Event()
 
             # Schedule multiple discoveries
-           .opp.async_create_task(discovery_coroutine())
-           .opp.async_create_task(discovery_coroutine())
-           .opp.async_create_task(discovery_coroutine())
+            opp.async_create_task(discovery_coroutine())
+            opp.async_create_task(discovery_coroutine())
+            opp.async_create_task(discovery_coroutine())
 
             # Wait until the first discovery call is blocked
             await first_discovery_started.wait()

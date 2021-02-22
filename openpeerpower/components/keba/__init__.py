@@ -59,7 +59,7 @@ async def async_setup_opp, config):
     rfid = config[DOMAIN][CONF_RFID]
     refresh_interval = config[DOMAIN][CONF_FS_INTERVAL]
     keba = KebaHandler.opp, host, rfid, refresh_interval)
-   .opp.data[DOMAIN] = keba
+    opp.data[DOMAIN] = keba
 
     # Wait for KebaHandler setup complete (initial values loaded)
     if not await keba.setup():
@@ -72,7 +72,7 @@ async def async_setup_opp, config):
     fallback = config[DOMAIN][CONF_FS_FALLBACK] if failsafe else 0
     persist = config[DOMAIN][CONF_FS_PERSIST] if failsafe else 0
     try:
-       .opp.loop.create_task(keba.set_failsafe(timeout, fallback, persist))
+        opp.loop.create_task(keba.set_failsafe(timeout, fallback, persist))
     except ValueError as ex:
         _LOGGER.warning("Could not set failsafe mode %s", ex)
 
@@ -88,11 +88,11 @@ async def async_setup_opp, config):
         await function_call(call.data)
 
     for service in _SERVICE_MAP:
-       .opp.services.async_register(DOMAIN, service, execute_service)
+        opp.services.async_register(DOMAIN, service, execute_service)
 
     # Load components
     for domain in SUPPORTED_COMPONENTS:
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform.opp, domain, DOMAIN, {}, config)
         )
 

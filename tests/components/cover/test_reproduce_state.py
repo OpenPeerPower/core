@@ -22,30 +22,30 @@ from tests.common import async_mock_service
 
 async def test_reproducing_states.opp, caplog):
     """Test reproducing Cover states."""
-   .opp.states.async_set("cover.entity_close", STATE_CLOSED, {})
-   .opp.states.async_set(
+    opp.states.async_set("cover.entity_close", STATE_CLOSED, {})
+    opp.states.async_set(
         "cover.entity_close_attr",
         STATE_CLOSED,
         {ATTR_CURRENT_POSITION: 0, ATTR_CURRENT_TILT_POSITION: 0},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "cover.entity_close_tilt", STATE_CLOSED, {ATTR_CURRENT_TILT_POSITION: 50}
     )
-   .opp.states.async_set("cover.entity_open", STATE_OPEN, {})
-   .opp.states.async_set(
+    opp.states.async_set("cover.entity_open", STATE_OPEN, {})
+    opp.states.async_set(
         "cover.entity_slightly_open", STATE_OPEN, {ATTR_CURRENT_POSITION: 50}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "cover.entity_open_attr",
         STATE_OPEN,
         {ATTR_CURRENT_POSITION: 100, ATTR_CURRENT_TILT_POSITION: 0},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "cover.entity_open_tilt",
         STATE_OPEN,
         {ATTR_CURRENT_POSITION: 50, ATTR_CURRENT_TILT_POSITION: 50},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "cover.entity_entirely_open",
         STATE_OPEN,
         {ATTR_CURRENT_POSITION: 100, ATTR_CURRENT_TILT_POSITION: 100},
@@ -57,7 +57,7 @@ async def test_reproducing_states.opp, caplog):
     open_tilt_calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER_TILT)
     position_calls = async_mock_service.opp, "cover", SERVICE_SET_COVER_POSITION)
     position_tilt_calls = async_mock_service(
-        opp, "cover", SERVICE_SET_COVER_TILT_POSITION
+        opp. "cover", SERVICE_SET_COVER_TILT_POSITION
     )
 
     # These calls should do nothing as entities already in desired state

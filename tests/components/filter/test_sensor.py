@@ -71,7 +71,7 @@ async def test_chain.opp, values):
         await opp.async_block_till_done()
 
         for value in values:
-           .opp.states.async_set(config["sensor"]["entity_id"], value.state)
+            opp.states.async_set(config["sensor"]["entity_id"], value.state)
             await opp.async_block_till_done()
 
         state = opp.states.get("sensor.test")
@@ -126,7 +126,7 @@ async def test_chain_history.opp, values, missing=False):
                 await opp.async_block_till_done()
 
             for value in values:
-               .opp.states.async_set(config["sensor"]["entity_id"], value.state)
+                opp.states.async_set(config["sensor"]["entity_id"], value.state)
                 await opp.async_block_till_done()
 
             state = opp.states.get("sensor.test")
@@ -167,7 +167,7 @@ async def test_source_state_none.opp, values):
     await async_setup_component.opp, "sensor", config)
     await opp.async_block_till_done()
 
-   .opp.states.async_set("sensor.test_state", 0)
+    opp.states.async_set("sensor.test_state", 0)
 
     await opp.async_block_till_done()
     state = opp.states.get("sensor.template_test")
@@ -267,7 +267,7 @@ async def test_setup_opp):
         assert await async_setup_component.opp, "sensor", config)
         await opp.async_block_till_done()
 
-       .opp.states.async_set(
+        opp.states.async_set(
             "sensor.test_monitored",
             1,
             {"icon": "mdi:test", "device_class": DEVICE_CLASS_TEMPERATURE},
@@ -298,13 +298,13 @@ async def test_invalid_state.opp):
         assert await async_setup_component.opp, "sensor", config)
         await opp.async_block_till_done()
 
-       .opp.states.async_set("sensor.test_monitored", STATE_UNAVAILABLE)
+        opp.states.async_set("sensor.test_monitored", STATE_UNAVAILABLE)
         await opp.async_block_till_done()
 
         state = opp.states.get("sensor.test")
         assert state.state == STATE_UNAVAILABLE
 
-       .opp.states.async_set("sensor.test_monitored", "invalid")
+        opp.states.async_set("sensor.test_monitored", "invalid")
         await opp.async_block_till_done()
 
         state = opp.states.get("sensor.test")
@@ -445,9 +445,9 @@ async def test_reload.opp):
     """Verify we can reload filter sensors."""
     await async_init_recorder_component.opp)
 
-   .opp.states.async_set("sensor.test_monitored", 12345)
+    opp.states.async_set("sensor.test_monitored", 12345)
     await async_setup_component(
-        opp,
+        opp.
         "sensor",
         {
             "sensor": {

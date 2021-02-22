@@ -329,7 +329,7 @@ async def test_set_target_temperature.opp, mqtt_mock):
     # also test directly supplying the operation mode to set_temperature
     mqtt_mock.async_publish.reset_mock()
     await common.async_set_temperature(
-        opp, temperature=21, hvac_mode="cool", entity_id=ENTITY_CLIMATE
+        opp. temperature=21, hvac_mode="cool", entity_id=ENTITY_CLIMATE
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.state == "cool"
@@ -372,7 +372,7 @@ async def test_set_target_temperature_low_high.opp, mqtt_mock):
     await opp.async_block_till_done()
 
     await common.async_set_temperature(
-        opp, target_temp_low=20, target_temp_high=23, entity_id=ENTITY_CLIMATE
+        opp. target_temp_low=20, target_temp_high=23, entity_id=ENTITY_CLIMATE
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get("target_temp_low") == 20
@@ -393,7 +393,7 @@ async def test_set_target_temperature_low_highpessimistic.opp, mqtt_mock):
     assert state.attributes.get("target_temp_low") is None
     assert state.attributes.get("target_temp_high") is None
     await common.async_set_temperature(
-        opp, target_temp_low=20, target_temp_high=23, entity_id=ENTITY_CLIMATE
+        opp. target_temp_low=20, target_temp_high=23, entity_id=ENTITY_CLIMATE
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get("target_temp_low") is None
@@ -619,28 +619,28 @@ async def test_set_aux.opp, mqtt_mock):
 async def test_availability_when_connection_lost.opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_availability_without_topic.opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_default_availability_payload.opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_custom_availability_payload.opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -662,7 +662,7 @@ async def test_get_target_temperature_low_high_with_templates.opp, mqtt_mock, ca
     assert state.attributes.get("target_temp_high") is None
 
     async_fire_mqtt_message(
-        opp, "temperature-state", '{"temp_low": "1031", "temp_high": "1032"}'
+        opp. "temperature-state", '{"temp_low": "1031", "temp_high": "1032"}'
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get("target_temp_low") == 1031
@@ -751,7 +751,7 @@ async def test_get_with_templates.opp, mqtt_mock, caplog):
 
     # Hold Mode
     async_fire_mqtt_message(
-        opp,
+        opp.
         "hold-state",
         """
         { "attribute": "somemode" }
@@ -842,7 +842,7 @@ async def test_set_with_templates.opp, mqtt_mock, caplog):
 
     # Temperature Low/High
     await common.async_set_temperature(
-        opp, target_temp_low=20, target_temp_high=23, entity_id=ENTITY_CLIMATE
+        opp. target_temp_low=20, target_temp_high=23, entity_id=ENTITY_CLIMATE
     )
     mqtt_mock.async_publish.assert_any_call(
         "temperature-low-topic", "temp_lo: 20.0", 0, False
@@ -919,35 +919,35 @@ async def test_temperature_unit.opp, mqtt_mock):
 async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_setting_attribute_with_template.opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
-        opp, mqtt_mock, caplog, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, caplog, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
-        opp, mqtt_mock, caplog, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, caplog, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_discovery_update_attr.opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
-        opp, mqtt_mock, caplog, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, caplog, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -985,7 +985,7 @@ async def test_discovery_update_climate.opp, mqtt_mock, caplog):
     data1 = '{ "name": "Beer" }'
     data2 = '{ "name": "Milk" }'
     await help_test_discovery_update(
-        opp, mqtt_mock, caplog, CLIMATE_DOMAIN, data1, data2
+        opp. mqtt_mock, caplog, CLIMATE_DOMAIN, data1, data2
     )
 
 
@@ -996,7 +996,7 @@ async def test_discovery_update_unchanged_climate.opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.climate.MqttClimate.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-            opp, mqtt_mock, caplog, CLIMATE_DOMAIN, data1, discovery_update
+            opp. mqtt_mock, caplog, CLIMATE_DOMAIN, data1, discovery_update
         )
 
 
@@ -1006,35 +1006,35 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     data1 = '{ "name": "Beer", "power_command_topic": "test_topic#" }'
     data2 = '{ "name": "Milk", "power_command_topic": "test_topic" }'
     await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, CLIMATE_DOMAIN, data1, data2
+        opp. mqtt_mock, caplog, CLIMATE_DOMAIN, data1, data2
     )
 
 
 async def test_entity_device_info_with_connection.opp, mqtt_mock):
     """Test MQTT climate device registry integration."""
     await help_test_entity_device_info_with_connection(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_with_identifier.opp, mqtt_mock):
     """Test MQTT climate device registry integration."""
     await help_test_entity_device_info_with_identifier(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_update.opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_entity_device_info_remove.opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -1049,14 +1049,14 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock):
         }
     }
     await help_test_entity_id_update_subscriptions(
-        opp, mqtt_mock, CLIMATE_DOMAIN, config, ["test-topic", "avty-topic"]
+        opp. mqtt_mock, CLIMATE_DOMAIN, config, ["test-topic", "avty-topic"]
     )
 
 
 async def test_entity_id_update_discovery_update.opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
-        opp, mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
+        opp. mqtt_mock, CLIMATE_DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -1070,7 +1070,7 @@ async def test_entity_debug_info_message.opp, mqtt_mock):
         }
     }
     await help_test_entity_debug_info_message(
-        opp, mqtt_mock, CLIMATE_DOMAIN, config, "test-topic"
+        opp. mqtt_mock, CLIMATE_DOMAIN, config, "test-topic"
     )
 
 
@@ -1080,7 +1080,7 @@ async def test_precision_default.opp, mqtt_mock):
     await opp.async_block_till_done()
 
     await common.async_set_temperature(
-        opp, temperature=23.67, entity_id=ENTITY_CLIMATE
+        opp. temperature=23.67, entity_id=ENTITY_CLIMATE
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get("temperature") == 23.7
@@ -1095,7 +1095,7 @@ async def test_precision_halves.opp, mqtt_mock):
     await opp.async_block_till_done()
 
     await common.async_set_temperature(
-        opp, temperature=23.67, entity_id=ENTITY_CLIMATE
+        opp. temperature=23.67, entity_id=ENTITY_CLIMATE
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get("temperature") == 23.5
@@ -1110,7 +1110,7 @@ async def test_precision_whole.opp, mqtt_mock):
     await opp.async_block_till_done()
 
     await common.async_set_temperature(
-        opp, temperature=23.67, entity_id=ENTITY_CLIMATE
+        opp. temperature=23.67, entity_id=ENTITY_CLIMATE
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get("temperature") == 24.0

@@ -28,7 +28,7 @@ SCAN_INTERVAL = timedelta(seconds=180)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up configured Dexcom."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -47,7 +47,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from error
 
     if not entry.options:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, options={CONF_UNIT_OF_MEASUREMENT: MG_DL}
         )
 
@@ -57,9 +57,9 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         except SessionError as error:
             raise UpdateFailed(error) from error
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: DataUpdateCoordinator(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_method=async_update_data,
@@ -71,8 +71,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await opp.data[DOMAIN][entry.entry_id][COORDINATOR].async_refresh()
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -83,15 +83,15 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
-   .opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
     return unload_ok
 
 

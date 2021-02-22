@@ -104,7 +104,7 @@ async def test.oppio_single_instance.opp):
     result = await opp.config_entries.flow.async_init(
         "adguard",
         data={"addon": "AdGuard Home Addon", "host": "mock-adguard", "port": "3000"},
-        context={"source": .oppio"},
+        context={"source":  opp.o"},
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
@@ -125,7 +125,7 @@ async def test.oppio_update_instance_not_running.opp):
             "host": "mock-adguard-updated",
             "port": "3000",
         },
-        context={"source": .oppio"},
+        context={"source":  opp.o"},
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "existing_instance_updated"
@@ -158,7 +158,7 @@ async def test.oppio_update_instance_running.opp, aioclient_mock):
     entry.add_to.opp.opp)
 
     with patch.object(
-       .opp.config_entries,
+        opp.config_entries,
         "async_forward_entry_setup",
         return_value=True,
     ) as mock_load:
@@ -167,11 +167,11 @@ async def test.oppio_update_instance_running.opp, aioclient_mock):
         assert len(mock_load.mock_calls) == 2
 
     with patch.object(
-       .opp.config_entries,
+        opp.config_entries,
         "async_forward_entry_unload",
         return_value=True,
     ) as mock_unload, patch.object(
-       .opp.config_entries,
+        opp.config_entries,
         "async_forward_entry_setup",
         return_value=True,
     ) as mock_load:
@@ -182,7 +182,7 @@ async def test.oppio_update_instance_running.opp, aioclient_mock):
                 "host": "mock-adguard-updated",
                 "port": "3000",
             },
-            context={"source": .oppio"},
+            context={"source":  opp.o"},
         )
         assert len(mock_unload.mock_calls) == 2
         assert len(mock_load.mock_calls) == 2
@@ -203,7 +203,7 @@ async def test.oppio_confirm.opp, aioclient_mock):
     result = await opp.config_entries.flow.async_init(
         "adguard",
         data={"addon": "AdGuard Home Addon", "host": "mock-adguard", "port": 3000},
-        context={"source": .oppio"},
+        context={"source":  opp.o"},
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == oppio_confirm"
@@ -229,7 +229,7 @@ async def test.oppio_connection_error(opp, aioclient_mock):
     result = await opp.config_entries.flow.async_init(
         "adguard",
         data={"addon": "AdGuard Home Addon", "host": "mock-adguard", "port": 3000},
-        context={"source": .oppio"},
+        context={"source":  opp.o"},
     )
 
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})

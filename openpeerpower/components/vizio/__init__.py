@@ -45,8 +45,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Component setup, run import config flow for each entry in config."""
     if DOMAIN in config:
         for entry in config[DOMAIN]:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=entry
                 )
             )
@@ -57,31 +57,31 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Load the saved entities."""
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     if (
         CONF_APPS not in.opp.data[DOMAIN]
         and config_entry.data[CONF_DEVICE_CLASS] == DEVICE_CLASS_TV
     ):
         coordinator = VizioAppsDataUpdateCoordinator.opp)
         await coordinator.async_refresh()
-       .opp.data[DOMAIN][CONF_APPS] = coordinator
+        opp.data[DOMAIN][CONF_APPS] = coordinator
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
 
 
 async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
+    opp. OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
                 for platform in PLATFORMS
             ]
         )
@@ -94,10 +94,10 @@ async def async_unload_entry(
         and entry.data[CONF_DEVICE_CLASS] == DEVICE_CLASS_TV
         for entry in.opp.config_entries.async_entries(DOMAIN)
     ):
-       .opp.data[DOMAIN].pop(CONF_APPS, None)
+        opp.data[DOMAIN].pop(CONF_APPS, None)
 
     if not.opp.data[DOMAIN]:
-       .opp.data.pop(DOMAIN)
+        opp.data.pop(DOMAIN)
 
     return unload_ok
 
@@ -108,7 +108,7 @@ class VizioAppsDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize."""
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=timedelta(days=1),

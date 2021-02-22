@@ -63,7 +63,7 @@ async def async_setup_opp, config):
     if set(data["done"]) == set(STEPS):
         return True
 
-   .opp.data[DOMAIN] = data
+    opp.data[DOMAIN] = data
 
     await views.async_setup_opp, data, store)
 

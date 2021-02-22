@@ -143,11 +143,11 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
             if board[CONF_SERIAL_PORT] == entry.data[CONF_SERIAL_PORT]:
                 existing_entry = True
                 firmata_config[CONF_NAME] = entry.data[CONF_NAME]
-               .opp.config_entries.async_update_entry(entry, data=firmata_config)
+                opp.config_entries.async_update_entry(entry, data=firmata_config)
                 break
         if not existing_entry:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": config_entries.SOURCE_IMPORT},
                     data=firmata_config,
@@ -158,11 +158,11 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up a Firmata board for a config entry."""
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
 
     _LOGGER.debug(
         "Setting up Firmata id %s, name %s, config %s",
@@ -176,7 +176,7 @@ async def async_setup_entry(
     if not await board.async_setup():
         return False
 
-   .opp.data[DOMAIN][config_entry.entry_id] = board
+    opp.data[DOMAIN][config_entry.entry_id] = board
 
     async def handle_shutdown(event) -> None:
         """Handle shutdown of board when Open Peer Power shuts down."""
@@ -184,7 +184,7 @@ async def async_setup_entry(
         if config_entry.entry_id in.opp.data[DOMAIN]:
             await board.async_reset()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_shutdown)
 
     device_registry = await dr.async_get_registry.opp)
     device_registry.async_get_or_create(
@@ -198,14 +198,14 @@ async def async_setup_entry(
 
     for (conf, platform) in CONF_PLATFORM_MAP.items():
         if conf in config_entry.data:
-           .opp.async_create_task(
-               .opp.config_entries.async_forward_entry_setup(config_entry, platform)
+            opp.async_create_task(
+                opp.config_entries.async_forward_entry_setup(config_entry, platform)
             )
     return True
 
 
 async def async_unload_entry(
-    opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> None:
     """Shutdown and close a Firmata board for a config entry."""
     _LOGGER.debug("Closing Firmata board %s", config_entry.data[CONF_NAME])
@@ -214,7 +214,7 @@ async def async_unload_entry(
     for (conf, platform) in CONF_PLATFORM_MAP.items():
         if conf in config_entry.data:
             unload_entries.append(
-               .opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
             )
     results = []
     if unload_entries:

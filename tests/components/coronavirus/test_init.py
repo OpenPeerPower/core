@@ -15,7 +15,7 @@ async def test_migration.opp):
     )
     worldwide_entry.add_to.opp.opp)
     mock_registry(
-        opp,
+        opp.
         {
             "sensor.netherlands_confirmed": entity_registry.RegistryEntry(
                 entity_id="sensor.netherlands_confirmed",

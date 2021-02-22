@@ -46,7 +46,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Set up the Hisense AEH-W4A1 integration."""
     conf = config.get(DOMAIN)
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     if conf is not None:
         devices = conf[CONF_IP_ADDRESS][:]
@@ -57,9 +57,9 @@ async def async_setup_opp, config):
                 conf[CONF_IP_ADDRESS].remove(device)
                 _LOGGER.warning("Hisense AEH-W4A1 at %s not found", device)
         if conf[CONF_IP_ADDRESS]:
-           .opp.data[DOMAIN] = conf
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.data[DOMAIN] = conf
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": config_entries.SOURCE_IMPORT},
                 )
@@ -70,8 +70,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up a config entry for Hisense AEH-W4A1."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
     )
 
     return True

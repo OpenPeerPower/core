@@ -18,16 +18,16 @@ from .const import (
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the Met Office weather sensor platform."""
-   .opp_data = opp.data[DOMAIN][entry.entry_id]
+    opp.data = opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [
             MetOfficeWeather(
                 entry.data,
-               .opp_data,
+                opp.data,
             )
         ],
         False,
@@ -42,7 +42,7 @@ class MetOfficeWeather(WeatherEntity):
         self._data = opp_data[METOFFICE_DATA]
         self._coordinator = opp_data[METOFFICE_COORDINATOR]
 
-        self._name = f"{DEFAULT_NAME} .opp_data[METOFFICE_NAME]}"
+        self._name = f"{DEFAULT_NAME}  opp.data[METOFFICE_NAME]}"
         self._unique_id = f"{self._data.latitude}_{self._data.longitude}"
 
         self.metoffice_now = None

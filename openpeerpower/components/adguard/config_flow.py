@@ -23,7 +23,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
-    .oppio_discovery = None
+     opp.o_discovery = None
 
     async def _show_setup_form(self, errors=None):
         """Show the setup form to the user."""

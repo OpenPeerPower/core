@@ -319,8 +319,8 @@ def show_setup_message.opp, entry_id, bridge_name, pincode, uri):
     url.svg(buffer, scale=5, module_color="#000", background="#FFF")
     pairing_secret = secrets.token_hex(32)
 
-   .opp.data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR] = buffer.getvalue()
-   .opp.data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET] = pairing_secret
+    opp.data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR] = buffer.getvalue()
+    opp.data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET] = pairing_secret
 
     message = (
         f"To set up {bridge_name} in the Home App, "
@@ -328,14 +328,14 @@ def show_setup_message.opp, entry_id, bridge_name, pincode, uri):
         f"### {pin}\n"
         f"![image](/api/homekit/pairingqr?{entry_id}-{pairing_secret})"
     )
-   .opp.components.persistent_notification.create(
+    opp.components.persistent_notification.create(
         message, "HomeKit Bridge Setup", entry_id
     )
 
 
 def dismiss_setup_message.opp, entry_id):
     """Dismiss persistent notification and remove QR code."""
-   .opp.components.persistent_notification.dismiss(entry_id)
+    opp.components.persistent_notification.dismiss(entry_id)
 
 
 def convert_to_float(state):

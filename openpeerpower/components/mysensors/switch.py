@@ -22,7 +22,7 @@ SEND_IR_CODE_SERVICE_SCHEMA = vol.Schema(
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ):
     """Set up this platform for a specific ConfigEntry(==Gateway)."""
     device_class_map = {
@@ -44,7 +44,7 @@ async def async_setup_entry(
     async def async_discover(discovery_info):
         """Discover and add a MySensors switch."""
         mysensors.setup_mysensors_platform(
-            opp,
+            opp.
             DOMAIN,
             discovery_info,
             device_class_map,
@@ -75,7 +75,7 @@ async def async_setup_entry(
         for device in _devices:
             await device.async_turn_on(**kwargs)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         MYSENSORS_DOMAIN,
         SERVICE_SEND_IR_CODE,
         async_send_ir_code_service,
@@ -83,10 +83,10 @@ async def async_setup_entry(
     )
 
     await on_unload(
-        opp,
+        opp.
         config_entry,
         async_dispatcher_connect(
-            opp,
+            opp.
             MYSENSORS_DISCOVERY.format(config_entry.entry_id, DOMAIN),
             async_discover,
         ),

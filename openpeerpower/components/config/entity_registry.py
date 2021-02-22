@@ -15,10 +15,10 @@ from openpeerpower.helpers.entity_registry import async_get_registry
 
 async def async_setup_opp):
     """Enable the Entity Registry views."""
-   .opp.components.websocket_api.async_register_command(websocket_list_entities)
-   .opp.components.websocket_api.async_register_command(websocket_get_entity)
-   .opp.components.websocket_api.async_register_command(websocket_update_entity)
-   .opp.components.websocket_api.async_register_command(websocket_remove_entity)
+    opp.components.websocket_api.async_register_command(websocket_list_entities)
+    opp.components.websocket_api.async_register_command(websocket_get_entity)
+    opp.components.websocket_api.async_register_command(websocket_update_entity)
+    opp.components.websocket_api.async_register_command(websocket_remove_entity)
     return True
 
 

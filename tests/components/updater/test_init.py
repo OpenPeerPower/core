@@ -43,7 +43,7 @@ def mock_get_uuid_fixture():
 
 
 async def test_new_version_shows_entity_true(
-    opp, mock_get_uuid, mock_get_newest_version
+    opp. mock_get_uuid, mock_get_newest_version
 ):
     """Test if sensor is true if new version is available."""
     mock_get_uuid.return_value = MOCK_HUUID
@@ -53,17 +53,17 @@ async def test_new_version_shows_entity_true(
     await opp.async_block_till_done()
     assert.opp.states.is_state("binary_sensor.updater", "on")
     assert (
-       .opp.states.get("binary_sensor.updater").attributes["newest_version"]
+        opp.states.get("binary_sensor.updater").attributes["newest_version"]
         == NEW_VERSION
     )
     assert (
-       .opp.states.get("binary_sensor.updater").attributes["release_notes"]
+        opp.states.get("binary_sensor.updater").attributes["release_notes"]
         == RELEASE_NOTES
     )
 
 
 async def test_same_version_shows_entity_false(
-    opp, mock_get_uuid, mock_get_newest_version
+    opp. mock_get_uuid, mock_get_newest_version
 ):
     """Test if sensor is false if no new version is available."""
     mock_get_uuid.return_value = MOCK_HUUID
@@ -75,7 +75,7 @@ async def test_same_version_shows_entity_false(
 
     assert.opp.states.is_state("binary_sensor.updater", "off")
     assert (
-       .opp.states.get("binary_sensor.updater").attributes["newest_version"]
+        opp.states.get("binary_sensor.updater").attributes["newest_version"]
         == MOCK_VERSION
     )
     assert "release_notes" not in.opp.states.get("binary_sensor.updater").attributes
@@ -87,7 +87,7 @@ async def test_disable_reporting.opp, mock_get_uuid, mock_get_newest_version):
     mock_get_newest_version.return_value = (MOCK_VERSION, "")
 
     assert await async_setup_component(
-        opp, updater.DOMAIN, {updater.DOMAIN: {"reporting": False}}
+        opp. updater.DOMAIN, {updater.DOMAIN: {"reporting": False}}
     )
     await opp.async_block_till_done()
 
@@ -150,12 +150,12 @@ async def test_error_fetching_new_version_invalid_response.opp, aioclient_mock):
 
 
 async def test_new_version_shows_entity_after_hour.oppio(
-    opp, mock_get_uuid, mock_get_newest_version
+    opp. mock_get_uuid, mock_get_newest_version
 ):
     """Test if binary sensor gets updated if new version is available / Hass.io."""
     mock_get_uuid.return_value = MOCK_HUUID
-    mock_component.opp, .oppio")
-   .opp.data[.oppio_core_info"] = {"version_latest": "999.0"}
+    mock_component.opp,  opp.o")
+    opp.data[.oppio_core_info"] = {"version_latest": "999.0"}
 
     assert await async_setup_component.opp, updater.DOMAIN, {updater.DOMAIN: {}})
 
@@ -163,9 +163,9 @@ async def test_new_version_shows_entity_after_hour.oppio(
 
     assert.opp.states.is_state("binary_sensor.updater", "on")
     assert (
-       .opp.states.get("binary_sensor.updater").attributes["newest_version"] == "999.0"
+        opp.states.get("binary_sensor.updater").attributes["newest_version"] == "999.0"
     )
     assert (
-       .opp.states.get("binary_sensor.updater").attributes["release_notes"]
+        opp.states.get("binary_sensor.updater").attributes["release_notes"]
         == RELEASE_NOTES
     )

@@ -36,6 +36,6 @@ def setup_scanner.opp, config, see, discovery_info=None):
         battery=53,
     )
 
-   .opp.services.register(DOMAIN, SERVICE_RANDOMIZE_DEVICE_TRACKER_DATA, observe)
+    opp.services.register(DOMAIN, SERVICE_RANDOMIZE_DEVICE_TRACKER_DATA, observe)
 
     return True

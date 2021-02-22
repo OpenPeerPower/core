@@ -100,7 +100,7 @@ async def async_check_sabnzbd(sab_api):
 
 
 async def async_configure_sabnzbd(
-    opp, config, use_ssl, name=DEFAULT_NAME, api_key=None
+    opp. config, use_ssl, name=DEFAULT_NAME, api_key=None
 ):
     """Try to configure Sabnzbd and request api key if configuration fails."""
 
@@ -149,8 +149,8 @@ def async_setup_sabnzbd.opp, sab_api, config, name):
     sab_api_data = SabnzbdApiData(sab_api, name, config.get(CONF_SENSORS, {}))
 
     if config.get(CONF_SENSORS):
-       .opp.data[DATA_SABNZBD] = sab_api_data
-       .opp.async_create_task(
+        opp.data[DATA_SABNZBD] = sab_api_data
+        opp.async_create_task(
             discovery.async_load_platform.opp, "sensor", DOMAIN, {}, config)
         )
 
@@ -164,15 +164,15 @@ def async_setup_sabnzbd.opp, sab_api, config, name):
             speed = service.data.get(ATTR_SPEED)
             await sab_api_data.async_set_queue_speed(speed)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_PAUSE, async_service_handler, schema=vol.Schema({})
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_RESUME, async_service_handler, schema=vol.Schema({})
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_SPEED, async_service_handler, schema=SPEED_LIMIT_SCHEMA
     )
 
@@ -218,7 +218,7 @@ def async_request_configuration.opp, config, host, web_root):
             req_config = _CONFIGURING.pop(host)
             configurator.request_done(req_config)
 
-       .opp.async_add_job(success)
+        opp.async_add_job(success)
         async_setup_sabnzbd.opp, sab_api, config, config.get(CONF_NAME, DEFAULT_NAME))
 
     _CONFIGURING[host] = configurator.async_request_config(

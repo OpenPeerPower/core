@@ -87,7 +87,7 @@ async def assert_request_calls_service(
     name,
     endpoint,
     service,
-    opp,
+    opp.
     response_type="Response",
     payload=None,
     instance=None,
@@ -157,7 +157,7 @@ async def assert_scene_controller_works(
         "Activate",
         endpoint,
         activate_service,
-        opp,
+        opp.
         response_type="ActivationStarted",
     )
     assert response["event"]["payload"]["cause"]["type"] == "VOICE_INTERACTION"
@@ -169,7 +169,7 @@ async def assert_scene_controller_works(
             "Deactivate",
             endpoint,
             deactivate_service,
-            opp,
+            opp.
             response_type="DeactivationStarted",
         )
         cause_type = response["event"]["payload"]["cause"]["type"]

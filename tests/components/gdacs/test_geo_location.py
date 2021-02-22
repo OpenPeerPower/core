@@ -93,7 +93,7 @@ async def test_setup_opp, legacy_patchable_time):
         assert await async_setup_component.opp, gdacs.DOMAIN, CONFIG)
         await opp.async_block_till_done()
         # Artificially trigger update and collect events.
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         all_states = opp.states.async_all()
@@ -193,7 +193,7 @@ async def test_setup_opp, legacy_patchable_time):
 
 async def test_setup_imperial.opp, legacy_patchable_time):
     """Test the setup of the integration using imperial unit system."""
-   .opp.config.units = IMPERIAL_SYSTEM
+    opp.config.units = IMPERIAL_SYSTEM
     # Set up some mock feed entries for this test.
     mock_entry_1 = _generate_mock_feed_entry(
         "1234",
@@ -216,7 +216,7 @@ async def test_setup_imperial.opp, legacy_patchable_time):
         assert await async_setup_component.opp, gdacs.DOMAIN, CONFIG)
         await opp.async_block_till_done()
         # Artificially trigger update and collect events.
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
         all_states = opp.states.async_all()

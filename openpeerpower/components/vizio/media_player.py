@@ -63,7 +63,7 @@ PARALLEL_UPDATES = 0
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config_entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
@@ -103,7 +103,7 @@ async def async_setup_entry(
         params["data"] = new_data
 
     if params:
-       .opp.config_entries.async_update_entry(config_entry, **params)
+        opp.config_entries.async_update_entry(config_entry, **params)
 
     device = VizioAsync(
         DEVICE_ID,
@@ -287,7 +287,7 @@ class VizioDevice(MediaPlayerEntity):
 
     @staticmethod
     async def _async_send_update_options_signal(
-        opp: OpenPeerPowerType, config_entry: ConfigEntry
+        opp. OpenPeerPowerType, config_entry: ConfigEntry
     ) -> None:
         """Send update event when Vizio config entry is updated."""
         # Move this method to component level if another entity ever gets added for a single config entry.

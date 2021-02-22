@@ -42,7 +42,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the HomematicIP Cloud component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     accesspoints = config.get(DOMAIN, [])
 
@@ -51,8 +51,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
             entry.data[HMIPC_HAPID]
             for entry in.opp.config_entries.async_entries(DOMAIN)
         }:
-           .opp.async_add_job(
-               .opp.config_entries.flow.async_init(
+            opp.async_add_job(
+                opp.config_entries.flow.async_init(
                     DOMAIN,
                     context={"source": config_entries.SOURCE_IMPORT},
                     data={
@@ -73,12 +73,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     if entry.unique_id is None:
         new_data = dict(entry.data)
 
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry, unique_id=new_data[HMIPC_HAPID], data=new_data
         )
 
     hap = HomematicipHAP.opp, entry)
-   .opp.data[DOMAIN][entry.unique_id] = hap
+    opp.data[DOMAIN][entry.unique_id] = hap
 
     if not await hap.async_setup():
         return False
@@ -118,7 +118,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 async def async_remove_obsolete_entities(
-    opp: OpenPeerPowerType, entry: ConfigEntry, hap: HomematicipHAP
+    opp. OpenPeerPowerType, entry: ConfigEntry, hap: HomematicipHAP
 ):
     """Remove obsolete entities from entity registry."""
 

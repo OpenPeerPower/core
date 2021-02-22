@@ -46,7 +46,7 @@ def setup_bans.opp, app, login_threshold):
     async def ban_startup(app):
         """Initialize bans when app starts up."""
         app[KEY_BANNED_IPS] = await async_load_ip_bans_config(
-            opp, opp.config.path(IP_BANS_FILE)
+            opp. opp.config.path(IP_BANS_FILE)
         )
 
     app.on_startup.append(ban_startup)
@@ -94,7 +94,7 @@ async def process_wrong_login(request):
     Increase failed login attempts counter for remote IP address.
     Add ip ban entry if failed login attempts exceeds threshold.
     """
-    opp =request.app[.opp"]
+    opp.=request.app[.opp"]
 
     remote_addr = ip_address(request.remote)
     remote_host = request.remote
@@ -115,7 +115,7 @@ async def process_wrong_login(request):
 
     _LOGGER.warning(log_msg)
 
-   .opp.components.persistent_notification.async_create(
+    opp.components.persistent_notification.async_create(
         notification_msg, "Login attempt failed", NOTIFICATION_ID_LOGIN
     )
 
@@ -127,7 +127,7 @@ async def process_wrong_login(request):
 
     # Supervisor IP should never be banned
     if (
-        .oppio" in.opp.config.components
+         opp.o" in.opp.config.components
         and.opp.components.oppio.get_supervisor_ip() == str(remote_addr)
     ):
         return
@@ -145,7 +145,7 @@ async def process_wrong_login(request):
 
         _LOGGER.warning("Banned IP %s for too many login attempts", remote_addr)
 
-       .opp.components.persistent_notification.async_create(
+        opp.components.persistent_notification.async_create(
             f"Too many login attempts from {remote_addr}",
             "Banning IP address",
             NOTIFICATION_ID_BAN,

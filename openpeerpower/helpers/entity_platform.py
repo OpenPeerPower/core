@@ -45,7 +45,7 @@ class EntityPlatform:
     def __init__(
         self,
         *,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         logger: Logger,
         domain: str,
         platform_name: str,
@@ -78,7 +78,7 @@ class EntityPlatform:
         # which powers entity_component.add_entities
         self.parallel_updates_created = platform is None
 
-       .opp.data.setdefault(DATA_ENTITY_PLATFORM, {}).setdefault(
+        opp.data.setdefault(DATA_ENTITY_PLATFORM, {}).setdefault(
             self.platform_name, []
         ).append(self)
 
@@ -120,7 +120,7 @@ class EntityPlatform:
     async def async_setup(self, platform_config, discovery_info=None):  # type: ignore[no-untyped-def]
         """Set up the platform from a config file."""
         platform = self.platform
-        opp =self.opp
+        opp.=self.opp
 
         if not hasattr(platform, "async_setup_platform") and not hasattr(
             platform, "setup_platform"
@@ -137,7 +137,7 @@ class EntityPlatform:
             """Get task to set up platform."""
             if getattr(platform, "async_setup_platform", None):
                 return platform.async_setup_platform(  # type: ignore
-                    opp,
+                    opp.
                     platform_config,
                     self._async_schedule_add_entities,
                     discovery_info,
@@ -148,7 +148,7 @@ class EntityPlatform:
             return.opp.loop.run_in_executor(  # type: ignore[return-value]
                 None,
                 platform.setup_platform,  # type: ignore
-                opp,
+                opp.
                 platform_config,
                 self._schedule_add_entities,
                 discovery_info,
@@ -180,7 +180,7 @@ class EntityPlatform:
         """
         current_platform.set(self)
         logger = self.logger
-        opp =self.opp
+        opp.=self.opp
         full_name = f"{self.domain}.{self.platform_name}"
 
         logger.info("Setting up %s", full_name)
@@ -207,7 +207,7 @@ class EntityPlatform:
                 if pending:
                     await asyncio.gather(*pending)
 
-           .opp.config.components.add(full_name)
+            opp.config.components.add(full_name)
             self._setup_complete = True
             return True
         except PlatformNotReady:
@@ -225,7 +225,7 @@ class EntityPlatform:
                 await self._async_setup_platform(async_create_setup_task, tries)
 
             self._async_cancel_retry_setup = async_call_later(
-                opp, wait_time, setup_again
+                opp. wait_time, setup_again
             )
             return False
         except asyncio.TimeoutError:
@@ -296,7 +296,7 @@ class EntityPlatform:
         if not new_entities:
             return
 
-        opp =self.opp
+        opp.=self.opp
 
         device_registry = await opp.helpers.device_registry.async_get_registry()
         entity_registry = await opp.helpers.entity_registry.async_get_registry()
@@ -628,7 +628,7 @@ current_platform: ContextVar[Optional[EntityPlatform]] = ContextVar(
 
 @callback
 def async_get_platforms(
-    opp: OpenPeerPowerType, integration_name: str
+    opp. OpenPeerPowerType, integration_name: str
 ) -> List[EntityPlatform]:
     """Find existing platforms."""
     if (

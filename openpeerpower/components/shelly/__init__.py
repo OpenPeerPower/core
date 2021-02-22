@@ -45,14 +45,14 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Shelly component."""
-   .opp.data[DOMAIN] = {DATA_CONFIG_ENTRY: {}}
+    opp.data[DOMAIN] = {DATA_CONFIG_ENTRY: {}}
     return True
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Shelly from a config entry."""
-   .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = {}
-   .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = None
+    opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = {}
+    opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = None
 
     temperature_unit = "C" if opp.config.units.is_metric else "F"
 
@@ -81,15 +81,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     @callback
     def _async_device_online(_):
         _LOGGER.debug("Device %s is online, resuming setup", entry.title)
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = None
+        opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = None
 
         if sleep_period is None:
             data = {**entry.data}
             data["sleep_period"] = get_device_sleep_period(device.settings)
             data["model"] = device.settings["device"]["type"]
-           .opp.config_entries.async_update_entry(entry, data=data)
+            opp.config_entries.async_update_entry(entry, data=data)
 
-       .opp.async_create_task(async_device_setup_opp, entry, device))
+        opp.async_create_task(async_device_setup_opp, entry, device))
 
     if sleep_period == 0:
         # Not a sleeping device, finish setup
@@ -103,7 +103,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         await async_device_setup_opp, entry, device)
     elif sleep_period is None or device_entry is None:
         # Need to get sleep info or first time sleeping device setup, wait for device
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = device
+        opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = device
         _LOGGER.debug(
             "Setup for device %s will resume when device is online", entry.title
         )
@@ -117,7 +117,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 
 async def async_device_setup(
-    opp: OpenPeerPower, entry: ConfigEntry, device: aioshelly.Device
+    opp. OpenPeerPower, entry: ConfigEntry, device: aioshelly.Device
 ):
     """Set up a device that is online."""
     device_wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
@@ -128,14 +128,14 @@ async def async_device_setup(
     platforms = SLEEPING_PLATFORMS
 
     if not entry.data.get("sleep_period"):
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
+        opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
             REST
         ] = ShellyDeviceRestWrapper.opp, device)
         platforms = PLATFORMS
 
     for component in platforms:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
 
@@ -156,7 +156,7 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
 
         device_name = get_device_name(device) if device.initialized else entry.title
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=device_name,
             update_interval=timedelta(seconds=update_interval),
@@ -170,7 +170,7 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
         )
         self._last_input_events_count = {}
 
-       .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._handle_op_stop)
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._handle_op_stop)
 
     @callback
     def _async_device_updates_handler(self):
@@ -283,7 +283,7 @@ class ShellyDeviceRestWrapper(update_coordinator.DataUpdateCoordinator):
             update_interval = REST_SENSORS_UPDATE_INTERVAL
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=get_device_name(device),
             update_interval=timedelta(seconds=update_interval),
@@ -316,19 +316,19 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     platforms = SLEEPING_PLATFORMS
 
     if not entry.data.get("sleep_period"):
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][REST] = None
+        opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][REST] = None
         platforms = PLATFORMS
 
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in platforms
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][COAP].shutdown()
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRY].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][COAP].shutdown()
+        opp.data[DOMAIN][DATA_CONFIG_ENTRY].pop(entry.entry_id)
 
     return unload_ok

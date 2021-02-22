@@ -192,7 +192,7 @@ async def test_import_connection_legacy.opp, mock_gateway_info, mock_entry_setup
 
 
 async def test_import_connection_legacy_no_groups(
-    opp, mock_gateway_info, mock_entry_setup
+    opp. mock_gateway_info, mock_entry_setup
 ):
     """Test a connection via legacy import and no groups allowed."""
     mock_gateway_info.side_effect = lambda.opp, host, identity, key: {

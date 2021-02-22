@@ -66,7 +66,7 @@ STAGE_1_INTEGRATIONS = {
     # To provide account link implementations
     "cloud",
     # Ensure supervisor is available
-    "oppio",
+     opp.o",
     # Get the frontend up and running as soon
     # as possible so problem integrations can
     # be removed
@@ -78,11 +78,11 @@ async def async_setup_opp(
     runtime_config: "RuntimeConfig",
 ) -> Optional[core.OpenPeerPower]:
     """Set up Open Peer Power."""
-    opp = core.OpenPeerPower()
+    opp.= core.OpenPeerPower()
     opp.config.config_dir = runtime_config.config_dir
 
     async_enable_logging(
-        opp,
+        opp.
         runtime_config.verbose,
         runtime_config.log_rotate_days,
         runtime_config.log_file,
@@ -146,7 +146,7 @@ async def async_setup_opp(
         safe_mode = True
         old_config = opp.config
 
-        opp = core.OpenPeerPower()
+        opp.= core.OpenPeerPower()
         opp.config.skip_pip = old_config.skip_pip
         opp.config.internal_url = old_config.internal_url
         opp.config.external_url = old_config.external_url
@@ -160,7 +160,7 @@ async def async_setup_opp(
 
         await async_from_config_dict(
             {"safe_mode": {}, "http": http_conf},
-            opp,
+            opp.
         )
 
     if runtime_config.open_ui:
@@ -256,7 +256,7 @@ async def async_from_config_dict(
 
 @core.callback
 def async_enable_logging(
-    opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     verbose: bool = False,
     log_rotate_days: Optional[int] = None,
     log_file: Optional[str] = None,
@@ -382,7 +382,7 @@ def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
 
 
 async def _async_log_pending_setups(
-    opp: core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
+    opp. core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
 ) -> None:
     """Periodic log of setups that are pending for longer than LOG_SLOW_STARTUP_INTERVAL."""
     while True:
@@ -398,7 +398,7 @@ async def _async_log_pending_setups(
 
 
 async def async_setup_multi_components(
-    opp: core.OpenPeerPower,
+    opp. core.OpenPeerPower,
     domains: Set[str],
     config: Dict[str, Any],
     setup_started: Dict[str, datetime],
@@ -425,7 +425,7 @@ async def async_setup_multi_components(
 
 
 async def _async_set_up_integrations(
-    opp: core.OpenPeerPower, config: Dict[str, Any]
+    opp. core.OpenPeerPower, config: Dict[str, Any]
 ) -> None:
     """Set up all the integrations."""
     setup_started = opp.data[DATA_SETUP_STARTED] = {}
@@ -526,7 +526,7 @@ async def _async_set_up_integrations(
                 STAGE_1_TIMEOUT, cool_down=COOLDOWN_TIME
             ):
                 await async_setup_multi_components(
-                    opp, stage_1_domains, config, setup_started
+                    opp. stage_1_domains, config, setup_started
                 )
         except asyncio.TimeoutError:
             _LOGGER.warning("Setup timed out for stage 1 - moving forward")
@@ -541,7 +541,7 @@ async def _async_set_up_integrations(
                 STAGE_2_TIMEOUT, cool_down=COOLDOWN_TIME
             ):
                 await async_setup_multi_components(
-                    opp, stage_2_domains, config, setup_started
+                    opp. stage_2_domains, config, setup_started
                 )
         except asyncio.TimeoutError:
             _LOGGER.warning("Setup timed out for stage 2 - moving forward")

@@ -49,7 +49,7 @@ from tests.common import async_mock_service
 def events.opp):
     """Fixture that catches alexa events."""
     events = []
-   .opp.bus.async_listen(
+    opp.bus.async_listen(
         smart_home.EVENT_ALEXA_SMART_HOME, callback(lambda e: events.append(e))
     )
     yield events
@@ -59,7 +59,7 @@ def events.opp):
 async def mock_camera.opp):
     """Initialize a demo camera platform."""
     assert await async_setup_component(
-        opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
+        opp. "camera", {camera.DOMAIN: {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -133,7 +133,7 @@ async def discovery_test(device, opp, expected_endpoints=1):
     request = get_new_request("Alexa.Discovery", "Discover")
 
     # setup test devices
-   .opp.states.async_set(*device)
+    opp.states.async_set(*device)
 
     msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
 
@@ -260,7 +260,7 @@ async def test_dimmable_light.opp):
         "SetBrightness",
         "light#test_2",
         "light.turn_on",
-        opp,
+        opp.
         payload={"brightness": "50"},
     )
     assert call.data["brightness_pct"] == 50
@@ -425,7 +425,7 @@ async def test_variable_fan.opp):
         "SetPercentage",
         "fan#test_2",
         "fan.set_percentage",
-        opp,
+        opp.
         payload={"percentage": "50"},
     )
     assert call.data["percentage"] == 50
@@ -435,7 +435,7 @@ async def test_variable_fan.opp):
         "SetPercentage",
         "fan#test_2",
         "fan.set_percentage",
-        opp,
+        opp.
         payload={"percentage": "33"},
     )
     assert call.data["percentage"] == 33
@@ -445,13 +445,13 @@ async def test_variable_fan.opp):
         "SetPercentage",
         "fan#test_2",
         "fan.set_percentage",
-        opp,
+        opp.
         payload={"percentage": "100"},
     )
     assert call.data["percentage"] == 100
 
     await assert_percentage_changes(
-        opp,
+        opp.
         [(95, "-5"), (100, "5"), (20, "-80"), (66, "-34")],
         "Alexa.PercentageController",
         "AdjustPercentage",
@@ -466,7 +466,7 @@ async def test_variable_fan.opp):
         "SetPowerLevel",
         "fan#test_2",
         "fan.set_percentage",
-        opp,
+        opp.
         payload={"powerLevel": "20"},
     )
     assert call.data["percentage"] == 20
@@ -476,7 +476,7 @@ async def test_variable_fan.opp):
         "SetPowerLevel",
         "fan#test_2",
         "fan.set_percentage",
-        opp,
+        opp.
         payload={"powerLevel": "50"},
     )
     assert call.data["percentage"] == 50
@@ -486,13 +486,13 @@ async def test_variable_fan.opp):
         "SetPowerLevel",
         "fan#test_2",
         "fan.set_percentage",
-        opp,
+        opp.
         payload={"powerLevel": "99"},
     )
     assert call.data["percentage"] == 99
 
     await assert_percentage_changes(
-        opp,
+        opp.
         [(95, "-5"), (50, "-50"), (20, "-80")],
         "Alexa.PowerLevelController",
         "AdjustPowerLevel",
@@ -543,7 +543,7 @@ async def test_oscillating_fan.opp):
         "TurnOn",
         "fan#test_3",
         "fan.oscillate",
-        opp,
+        opp.
         payload={},
         instance="fan.oscillating",
     )
@@ -554,7 +554,7 @@ async def test_oscillating_fan.opp):
         "TurnOff",
         "fan#test_3",
         "fan.oscillate",
-        opp,
+        opp.
         payload={},
         instance="fan.oscillating",
     )
@@ -628,7 +628,7 @@ async def test_direction_fan.opp):
         "SetMode",
         "fan#test_4",
         "fan.set_direction",
-        opp,
+        opp.
         payload={"mode": "direction.reverse"},
         instance="fan.direction",
     )
@@ -643,7 +643,7 @@ async def test_direction_fan.opp):
         "SetMode",
         "fan#test_4",
         "fan.set_direction",
-        opp,
+        opp.
         payload={"mode": "direction.forward"},
         instance="fan.direction",
     )
@@ -660,7 +660,7 @@ async def test_direction_fan.opp):
             "AdjustMode",
             "fan#test_4",
             "fan.set_direction",
-            opp,
+            opp.
             payload={},
             instance=None,
         )
@@ -760,7 +760,7 @@ async def test_fan_range.opp):
         "SetRangeValue",
         "fan#test_5",
         "fan.set_speed",
-        opp,
+        opp.
         payload={"rangeValue": 1},
         instance="fan.speed",
     )
@@ -771,7 +771,7 @@ async def test_fan_range.opp):
         "SetRangeValue",
         "fan#test_5",
         "fan.set_speed",
-        opp,
+        opp.
         payload={"rangeValue": 5},
         instance="fan.speed",
     )
@@ -782,14 +782,14 @@ async def test_fan_range.opp):
         "SetRangeValue",
         "fan#test_5",
         "fan.set_speed",
-        opp,
+        opp.
         payload={"rangeValue": 6},
         instance="fan.speed",
     )
     assert call.data["speed"] == "warp_speed"
 
     await assert_range_changes(
-        opp,
+        opp.
         [
             ("low", -1, False),
             ("high", 1, False),
@@ -824,14 +824,14 @@ async def test_fan_range_off.opp):
         "SetRangeValue",
         "fan#test_6",
         "fan.turn_off",
-        opp,
+        opp.
         payload={"rangeValue": 0},
         instance="fan.speed",
     )
     assert call.data["speed"] == "off"
 
     await assert_range_changes(
-        opp,
+        opp.
         [("off", -3, False), ("off", -99, False)],
         "Alexa.RangeController",
         "AdjustRangeValue",
@@ -929,7 +929,7 @@ async def test_media_player.opp):
         "Play",
         "media_player#test",
         "media_player.media_play",
-        opp,
+        opp.
     )
 
     await assert_request_calls_service(
@@ -937,7 +937,7 @@ async def test_media_player.opp):
         "Pause",
         "media_player#test",
         "media_player.media_pause",
-        opp,
+        opp.
     )
 
     await assert_request_calls_service(
@@ -945,7 +945,7 @@ async def test_media_player.opp):
         "Stop",
         "media_player#test",
         "media_player.media_stop",
-        opp,
+        opp.
     )
 
     await assert_request_calls_service(
@@ -953,7 +953,7 @@ async def test_media_player.opp):
         "Next",
         "media_player#test",
         "media_player.media_next_track",
-        opp,
+        opp.
     )
 
     await assert_request_calls_service(
@@ -961,7 +961,7 @@ async def test_media_player.opp):
         "Previous",
         "media_player#test",
         "media_player.media_previous_track",
-        opp,
+        opp.
     )
 
     await assert_request_calls_service(
@@ -969,7 +969,7 @@ async def test_media_player.opp):
         "ChangeChannel",
         "media_player#test",
         "media_player.play_media",
-        opp,
+        opp.
         payload={"channel": {"number": "24"}, "channelMetadata": {"name": ""}},
     )
 
@@ -978,7 +978,7 @@ async def test_media_player.opp):
         "ChangeChannel",
         "media_player#test",
         "media_player.play_media",
-        opp,
+        opp.
         payload={"channel": {"callSign": "ABC"}, "channelMetadata": {"name": ""}},
     )
 
@@ -987,7 +987,7 @@ async def test_media_player.opp):
         "ChangeChannel",
         "media_player#test",
         "media_player.play_media",
-        opp,
+        opp.
         payload={"channel": {"number": ""}, "channelMetadata": {"name": "ABC"}},
     )
 
@@ -996,7 +996,7 @@ async def test_media_player.opp):
         "ChangeChannel",
         "media_player#test",
         "media_player.play_media",
-        opp,
+        opp.
         payload={
             "channel": {"affiliateCallSign": "ABC"},
             "channelMetadata": {"name": ""},
@@ -1008,7 +1008,7 @@ async def test_media_player.opp):
         "ChangeChannel",
         "media_player#test",
         "media_player.play_media",
-        opp,
+        opp.
         payload={"channel": {"uri": "ABC"}, "channelMetadata": {"name": ""}},
     )
 
@@ -1017,7 +1017,7 @@ async def test_media_player.opp):
         "SkipChannels",
         "media_player#test",
         "media_player.media_next_track",
-        opp,
+        opp.
         payload={"channelCount": 1},
     )
 
@@ -1026,7 +1026,7 @@ async def test_media_player.opp):
         "SkipChannels",
         "media_player#test",
         "media_player.media_previous_track",
-        opp,
+        opp.
         payload={"channelCount": -1},
     )
 
@@ -1065,7 +1065,7 @@ async def test_media_player_power.opp):
         "TurnOn",
         "media_player#test",
         "media_player.media_play",
-        opp,
+        opp.
     )
 
     await assert_request_calls_service(
@@ -1073,7 +1073,7 @@ async def test_media_player_power.opp):
         "TurnOff",
         "media_player#test",
         "media_player.media_stop",
-        opp,
+        opp.
     )
 
 
@@ -1135,7 +1135,7 @@ async def test_media_player_inputs.opp):
         "SelectInput",
         "media_player#test",
         "media_player.select_source",
-        opp,
+        opp.
         payload={"input": "HDMI 1"},
     )
     assert call.data["source"] == "hdmi"
@@ -1145,7 +1145,7 @@ async def test_media_player_inputs.opp):
         "SelectInput",
         "media_player#test",
         "media_player.select_source",
-        opp,
+        opp.
         payload={"input": "HDMI 2"},
     )
     assert call.data["source"] == "hdmi_2"
@@ -1155,7 +1155,7 @@ async def test_media_player_inputs.opp):
         "SelectInput",
         "media_player#test",
         "media_player.select_source",
-        opp,
+        opp.
         payload={"input": "HDMI 5"},
     )
     assert call.data["source"] == "hdmi 5"
@@ -1165,7 +1165,7 @@ async def test_media_player_inputs.opp):
         "SelectInput",
         "media_player#test",
         "media_player.select_source",
-        opp,
+        opp.
         payload={"input": "HDMI 6"},
     )
     assert call.data["source"] == "HDMI 6"
@@ -1175,7 +1175,7 @@ async def test_media_player_inputs.opp):
         "SelectInput",
         "media_player#test",
         "media_player.select_source",
-        opp,
+        opp.
         payload={"input": "TV"},
     )
     assert call.data["source"] == "tv"
@@ -1252,7 +1252,7 @@ async def test_media_player_speaker.opp):
         "SetVolume",
         "media_player#test_speaker",
         "media_player.volume_set",
-        opp,
+        opp.
         payload={"volume": 50},
     )
     assert call.data["volume_level"] == 0.5
@@ -1262,7 +1262,7 @@ async def test_media_player_speaker.opp):
         "SetMute",
         "media_player#test_speaker",
         "media_player.volume_mute",
-        opp,
+        opp.
         payload={"mute": True},
     )
     assert call.data["is_volume_muted"]
@@ -1272,13 +1272,13 @@ async def test_media_player_speaker.opp):
         "SetMute",
         "media_player#test_speaker",
         "media_player.volume_mute",
-        opp,
+        opp.
         payload={"mute": False},
     )
     assert not call.data["is_volume_muted"]
 
     await assert_percentage_changes(
-        opp,
+        opp.
         [(0.7, "-5"), (0.8, "5"), (0, "-80")],
         "Alexa.Speaker",
         "AdjustVolume",
@@ -1311,7 +1311,7 @@ async def test_media_player_step_speaker.opp):
         "SetMute",
         "media_player#test_step_speaker",
         "media_player.volume_mute",
-        opp,
+        opp.
         payload={"mute": True},
     )
     assert call.data["is_volume_muted"]
@@ -1321,7 +1321,7 @@ async def test_media_player_step_speaker.opp):
         "SetMute",
         "media_player#test_step_speaker",
         "media_player.volume_mute",
-        opp,
+        opp.
         payload={"mute": False},
     )
     assert not call.data["is_volume_muted"]
@@ -1331,7 +1331,7 @@ async def test_media_player_step_speaker.opp):
         "AdjustVolume",
         "media_player#test_step_speaker",
         "media_player.volume_up",
-        opp,
+        opp.
         payload={"volumeSteps": 1, "volumeStepsDefault": False},
     )
 
@@ -1340,7 +1340,7 @@ async def test_media_player_step_speaker.opp):
         "AdjustVolume",
         "media_player#test_step_speaker",
         "media_player.volume_down",
-        opp,
+        opp.
         payload={"volumeSteps": -1, "volumeStepsDefault": False},
     )
 
@@ -1349,7 +1349,7 @@ async def test_media_player_step_speaker.opp):
         "AdjustVolume",
         "media_player#test_step_speaker",
         "media_player.volume_up",
-        opp,
+        opp.
         payload={"volumeSteps": 10, "volumeStepsDefault": True},
     )
 
@@ -1386,7 +1386,7 @@ async def test_media_player_seek.opp):
         "AdjustSeekPosition",
         "media_player#test_seek",
         "media_player.media_seek",
-        opp,
+        opp.
         response_type="StateReport",
         payload={"deltaPositionMilliseconds": 30000},
     )
@@ -1401,7 +1401,7 @@ async def test_media_player_seek.opp):
         "AdjustSeekPosition",
         "media_player#test_seek",
         "media_player.media_seek",
-        opp,
+        opp.
         response_type="StateReport",
         payload={"deltaPositionMilliseconds": -30000},
     )
@@ -1416,7 +1416,7 @@ async def test_media_player_seek.opp):
         "AdjustSeekPosition",
         "media_player#test_seek",
         "media_player.media_seek",
-        opp,
+        opp.
         response_type="StateReport",
         payload={"deltaPositionMilliseconds": -500000},
     )
@@ -1431,7 +1431,7 @@ async def test_media_player_seek.opp):
         "AdjustSeekPosition",
         "media_player#test_seek",
         "media_player.media_seek",
-        opp,
+        opp.
         response_type="StateReport",
         payload={"deltaPositionMilliseconds": 800000},
     )
@@ -1457,7 +1457,7 @@ async def test_media_player_seek_error(opp):
             "AdjustSeekPosition",
             "media_player#test_seek",
             "media_player.media_seek",
-            opp,
+            opp.
             response_type="StateReport",
             payload={"deltaPositionMilliseconds": 30000},
         )
@@ -1610,7 +1610,7 @@ async def test_cover_position_range.opp):
         "SetRangeValue",
         "cover#test_range",
         "cover.set_cover_position",
-        opp,
+        opp.
         payload={"rangeValue": 50},
         instance="cover.position",
     )
@@ -1621,7 +1621,7 @@ async def test_cover_position_range.opp):
         "SetRangeValue",
         "cover#test_range",
         "cover.close_cover",
-        opp,
+        opp.
         payload={"rangeValue": 0},
         instance="cover.position",
     )
@@ -1635,7 +1635,7 @@ async def test_cover_position_range.opp):
         "SetRangeValue",
         "cover#test_range",
         "cover.open_cover",
-        opp,
+        opp.
         payload={"rangeValue": 100},
         instance="cover.position",
     )
@@ -1649,7 +1649,7 @@ async def test_cover_position_range.opp):
         "AdjustRangeValue",
         "cover#test_range",
         "cover.open_cover",
-        opp,
+        opp.
         payload={"rangeValueDelta": 99, "rangeValueDeltaDefault": False},
         instance="cover.position",
     )
@@ -1663,7 +1663,7 @@ async def test_cover_position_range.opp):
         "AdjustRangeValue",
         "cover#test_range",
         "cover.close_cover",
-        opp,
+        opp.
         payload={"rangeValueDelta": -99, "rangeValueDeltaDefault": False},
         instance="cover.position",
     )
@@ -1673,7 +1673,7 @@ async def test_cover_position_range.opp):
     assert properties["value"] == 0
 
     await assert_range_changes(
-        opp,
+        opp.
         [(25, -5, False), (35, 5, False), (50, 1, True), (10, -1, True)],
         "Alexa.RangeController",
         "AdjustRangeValue",
@@ -1685,7 +1685,7 @@ async def test_cover_position_range.opp):
 
 
 async def assert_percentage_changes(
-    opp, adjustments, namespace, name, endpoint, parameter, service, changed_parameter
+    opp. adjustments, namespace, name, endpoint, parameter, service, changed_parameter
 ):
     """Assert an API request making percentage changes works.
 
@@ -1700,7 +1700,7 @@ async def assert_percentage_changes(
 
 
 async def assert_range_changes(
-    opp, adjustments, namespace, name, endpoint, service, changed_parameter, instance
+    opp. adjustments, namespace, name, endpoint, service, changed_parameter, instance
 ):
     """Assert an API request making range changes works.
 
@@ -1895,7 +1895,7 @@ async def test_unknown_sensor.opp):
 
 async def test_thermostat.opp):
     """Test thermostat discovery."""
-   .opp.config.units.temperature_unit = TEMP_FAHRENHEIT
+    opp.config.units.temperature_unit = TEMP_FAHRENHEIT
     device = (
         "climate.test_thermostat",
         "cool",
@@ -1953,7 +1953,7 @@ async def test_thermostat.opp):
         "SetTargetTemperature",
         "climate#test_thermostat",
         "climate.set_temperature",
-        opp,
+        opp.
         payload={"targetSetpoint": {"value": 69.0, "scale": "FAHRENHEIT"}},
     )
     assert call.data["temperature"] == 69.0
@@ -1969,7 +1969,7 @@ async def test_thermostat.opp):
         "SetTargetTemperature",
         "climate#test_thermostat",
         "climate.set_temperature",
-        opp,
+        opp.
         payload={"targetSetpoint": {"value": 0.0, "scale": "CELSIUS"}},
     )
     assert msg["event"]["payload"]["type"] == "TEMPERATURE_VALUE_OUT_OF_RANGE"
@@ -1979,7 +1979,7 @@ async def test_thermostat.opp):
         "SetTargetTemperature",
         "climate#test_thermostat",
         "climate.set_temperature",
-        opp,
+        opp.
         payload={
             "targetSetpoint": {"value": 70.0, "scale": "FAHRENHEIT"},
             "lowerSetpoint": {"value": 293.15, "scale": "KELVIN"},
@@ -2011,7 +2011,7 @@ async def test_thermostat.opp):
         "SetTargetTemperature",
         "climate#test_thermostat",
         "climate.set_temperature",
-        opp,
+        opp.
         payload={
             "lowerSetpoint": {"value": 273.15, "scale": "KELVIN"},
             "upperSetpoint": {"value": 75.0, "scale": "FAHRENHEIT"},
@@ -2024,7 +2024,7 @@ async def test_thermostat.opp):
         "SetTargetTemperature",
         "climate#test_thermostat",
         "climate.set_temperature",
-        opp,
+        opp.
         payload={
             "lowerSetpoint": {"value": 293.15, "scale": "FAHRENHEIT"},
             "upperSetpoint": {"value": 75.0, "scale": "CELSIUS"},
@@ -2037,7 +2037,7 @@ async def test_thermostat.opp):
         "AdjustTargetTemperature",
         "climate#test_thermostat",
         "climate.set_temperature",
-        opp,
+        opp.
         payload={"targetSetpointDelta": {"value": -10.0, "scale": "KELVIN"}},
     )
     assert call.data["temperature"] == 52.0
@@ -2053,7 +2053,7 @@ async def test_thermostat.opp):
         "AdjustTargetTemperature",
         "climate#test_thermostat",
         "climate.set_temperature",
-        opp,
+        opp.
         payload={"targetSetpointDelta": {"value": 20.0, "scale": "CELSIUS"}},
     )
     assert msg["event"]["payload"]["type"] == "TEMPERATURE_VALUE_OUT_OF_RANGE"
@@ -2064,7 +2064,7 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_hvac_mode",
-        opp,
+        opp.
         payload={"thermostatMode": {"value": "HEAT"}},
     )
     assert call.data["hvac_mode"] == "heat"
@@ -2076,7 +2076,7 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_hvac_mode",
-        opp,
+        opp.
         payload={"thermostatMode": {"value": "COOL"}},
     )
     assert call.data["hvac_mode"] == "cool"
@@ -2089,7 +2089,7 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_hvac_mode",
-        opp,
+        opp.
         payload={"thermostatMode": "HEAT"},
     )
     assert call.data["hvac_mode"] == "heat"
@@ -2102,7 +2102,7 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_hvac_mode",
-        opp,
+        opp.
         payload={"thermostatMode": {"value": "CUSTOM", "customName": "DEHUMIDIFY"}},
     )
     assert call.data["hvac_mode"] == "dry"
@@ -2115,7 +2115,7 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_hvac_mode",
-        opp,
+        opp.
         payload={"thermostatMode": {"value": "CUSTOM", "customName": "INVALID"}},
     )
     assert msg["event"]["payload"]["type"] == "UNSUPPORTED_THERMOSTAT_MODE"
@@ -2125,7 +2125,7 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_hvac_mode",
-        opp,
+        opp.
         payload={"thermostatMode": {"value": "INVALID"}},
     )
     assert msg["event"]["payload"]["type"] == "UNSUPPORTED_THERMOSTAT_MODE"
@@ -2135,7 +2135,7 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_hvac_mode",
-        opp,
+        opp.
         payload={"thermostatMode": "OFF"},
     )
     assert call.data["hvac_mode"] == "off"
@@ -2146,13 +2146,13 @@ async def test_thermostat.opp):
         "SetThermostatMode",
         "climate#test_thermostat",
         "climate.set_preset_mode",
-        opp,
+        opp.
         payload={"thermostatMode": "ECO"},
     )
     assert call.data["preset_mode"] == "eco"
 
     # Reset config temperature_unit back to CELSIUS, required for additional tests outside this component.
-   .opp.config.units.temperature_unit = TEMP_CELSIUS
+    opp.config.units.temperature_unit = TEMP_CELSIUS
 
 
 async def test_exclude_filters.opp):
@@ -2160,11 +2160,11 @@ async def test_exclude_filters.opp):
     request = get_new_request("Alexa.Discovery", "Discover")
 
     # setup test devices
-   .opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
+    opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
 
-   .opp.states.async_set("script.deny", "off", {"friendly_name": "Blocked script"})
+    opp.states.async_set("script.deny", "off", {"friendly_name": "Blocked script"})
 
-   .opp.states.async_set("cover.deny", "off", {"friendly_name": "Blocked cover"})
+    opp.states.async_set("cover.deny", "off", {"friendly_name": "Blocked cover"})
 
     alexa_config = Mockconfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
@@ -2187,15 +2187,15 @@ async def test_include_filters.opp):
     request = get_new_request("Alexa.Discovery", "Discover")
 
     # setup test devices
-   .opp.states.async_set("switch.deny", "on", {"friendly_name": "Blocked switch"})
+    opp.states.async_set("switch.deny", "on", {"friendly_name": "Blocked switch"})
 
-   .opp.states.async_set("script.deny", "off", {"friendly_name": "Blocked script"})
+    opp.states.async_set("script.deny", "off", {"friendly_name": "Blocked script"})
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "automation.allow", "off", {"friendly_name": "Allowed automation"}
     )
 
-   .opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
+    opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
 
     alexa_config = Mockconfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
@@ -2218,9 +2218,9 @@ async def test_never_exposed_entities.opp):
     request = get_new_request("Alexa.Discovery", "Discover")
 
     # setup test devices
-   .opp.states.async_set("group.all_locks", "on", {"friendly_name": "Blocked locks"})
+    opp.states.async_set("group.all_locks", "on", {"friendly_name": "Blocked locks"})
 
-   .opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
+    opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
 
     alexa_config = Mockconfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
@@ -2296,8 +2296,8 @@ async def test_entity_config(opp):
     """Test that we can configure things via entity config."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
-   .opp.states.async_set("light.test_1", "on", {"friendly_name": "Test light 1"})
-   .opp.states.async_set("scene.test_1", "scening", {"friendly_name": "Test 1"})
+    opp.states.async_set("light.test_1", "on", {"friendly_name": "Test light 1"})
+    opp.states.async_set("scene.test_1", "scening", {"friendly_name": "Test 1"})
 
     alexa_config = Mockconfig(opp)
     alexa_config.entity_config = {
@@ -2376,13 +2376,13 @@ async def test_logging_request_with_entity.opp, events):
 
 async def test_disabled.opp):
     """When enabled=False, everything fails."""
-   .opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
+    opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#test")
 
     call_switch = async_mock_service.opp, "switch", "turn_on")
 
     msg = await smart_home.async_handle_message(
-        opp, DEFAULT_CONFIG, request, enabled=False
+        opp. DEFAULT_CONFIG, request, enabled=False
     )
     await opp.async_block_till_done()
 
@@ -2461,7 +2461,7 @@ async def test_alarm_control_panel_disarmed.opp):
         "Arm",
         "alarm_control_panel#test_1",
         "alarm_control_panel.alarm_arm_home",
-        opp,
+        opp.
         response_type="Arm.Response",
         payload={"armState": "ARMED_STAY"},
     )
@@ -2473,7 +2473,7 @@ async def test_alarm_control_panel_disarmed.opp):
         "Arm",
         "alarm_control_panel#test_1",
         "alarm_control_panel.alarm_arm_away",
-        opp,
+        opp.
         response_type="Arm.Response",
         payload={"armState": "ARMED_AWAY"},
     )
@@ -2485,7 +2485,7 @@ async def test_alarm_control_panel_disarmed.opp):
         "Arm",
         "alarm_control_panel#test_1",
         "alarm_control_panel.alarm_arm_night",
-        opp,
+        opp.
         response_type="Arm.Response",
         payload={"armState": "ARMED_NIGHT"},
     )
@@ -2523,7 +2523,7 @@ async def test_alarm_control_panel_armed.opp):
         "Disarm",
         "alarm_control_panel#test_2",
         "alarm_control_panel.alarm_disarm",
-        opp,
+        opp.
         payload={"authorization": {"type": "FOUR_DIGIT_PIN", "value": "1234"}},
     )
     assert call.data["code"] == "1234"
@@ -2535,7 +2535,7 @@ async def test_alarm_control_panel_armed.opp):
         "Arm",
         "alarm_control_panel#test_2",
         "alarm_control_panel.alarm_arm_home",
-        opp,
+        opp.
         payload={"armState": "ARMED_STAY"},
     )
     assert msg["event"]["payload"]["type"] == "AUTHORIZATION_REQUIRED"
@@ -2740,7 +2740,7 @@ async def test_cover_position_mode.opp):
         "SetMode",
         "cover#test_mode",
         "cover.close_cover",
-        opp,
+        opp.
         payload={"mode": "position.closed"},
         instance="cover.position",
     )
@@ -2754,7 +2754,7 @@ async def test_cover_position_mode.opp):
         "SetMode",
         "cover#test_mode",
         "cover.open_cover",
-        opp,
+        opp.
         payload={"mode": "position.open"},
         instance="cover.position",
     )
@@ -2768,7 +2768,7 @@ async def test_cover_position_mode.opp):
         "SetMode",
         "cover#test_mode",
         "cover.stop_cover",
-        opp,
+        opp.
         payload={"mode": "position.custom"},
         instance="cover.position",
     )
@@ -2903,7 +2903,7 @@ async def test_cover_tilt_position_range.opp):
         "SetRangeValue",
         "cover#test_tilt_range",
         "cover.set_cover_tilt_position",
-        opp,
+        opp.
         payload={"rangeValue": 50},
         instance="cover.tilt",
     )
@@ -2914,7 +2914,7 @@ async def test_cover_tilt_position_range.opp):
         "SetRangeValue",
         "cover#test_tilt_range",
         "cover.close_cover_tilt",
-        opp,
+        opp.
         payload={"rangeValue": 0},
         instance="cover.tilt",
     )
@@ -2928,7 +2928,7 @@ async def test_cover_tilt_position_range.opp):
         "SetRangeValue",
         "cover#test_tilt_range",
         "cover.open_cover_tilt",
-        opp,
+        opp.
         payload={"rangeValue": 100},
         instance="cover.tilt",
     )
@@ -2942,7 +2942,7 @@ async def test_cover_tilt_position_range.opp):
         "AdjustRangeValue",
         "cover#test_tilt_range",
         "cover.open_cover_tilt",
-        opp,
+        opp.
         payload={"rangeValueDelta": 99, "rangeValueDeltaDefault": False},
         instance="cover.tilt",
     )
@@ -2956,7 +2956,7 @@ async def test_cover_tilt_position_range.opp):
         "AdjustRangeValue",
         "cover#test_tilt_range",
         "cover.close_cover_tilt",
-        opp,
+        opp.
         payload={"rangeValueDelta": -99, "rangeValueDeltaDefault": False},
         instance="cover.tilt",
     )
@@ -2966,7 +2966,7 @@ async def test_cover_tilt_position_range.opp):
     assert properties["value"] == 0
 
     await assert_range_changes(
-        opp,
+        opp.
         [(25, -5, False), (35, 5, False), (50, 1, True), (10, -1, True)],
         "Alexa.RangeController",
         "AdjustRangeValue",
@@ -3124,14 +3124,14 @@ async def test_input_number.opp):
         "SetRangeValue",
         "input_number#test_slider",
         "input_number.set_value",
-        opp,
+        opp.
         payload={"rangeValue": 10},
         instance="input_number.value",
     )
     assert call.data["value"] == 10
 
     await assert_range_changes(
-        opp,
+        opp.
         [(25, -5, False), (35, 5, False), (-20, -100, False), (35, 100, False)],
         "Alexa.RangeController",
         "AdjustRangeValue",
@@ -3209,14 +3209,14 @@ async def test_input_number_float.opp):
         "SetRangeValue",
         "input_number#test_slider_float",
         "input_number.set_value",
-        opp,
+        opp.
         payload={"rangeValue": 0.333},
         instance="input_number.value",
     )
     assert call.data["value"] == 0.333
 
     await assert_range_changes(
-        opp,
+        opp.
         [
             (0.4, -0.1, False),
             (0.6, 0.1, False),
@@ -3274,7 +3274,7 @@ async def test_media_player_eq_modes.opp):
             "SetMode",
             "media_player#test",
             "media_player.select_sound_mode",
-            opp,
+            opp.
             payload={"mode": mode},
         )
         assert call.data["sound_mode"] == mode.lower()
@@ -3576,7 +3576,7 @@ async def test_vacuum_fan_speed.opp):
         "SetRangeValue",
         "vacuum#test_2",
         "vacuum.set_fan_speed",
-        opp,
+        opp.
         payload={"rangeValue": 1},
         instance="vacuum.fan_speed",
     )
@@ -3587,14 +3587,14 @@ async def test_vacuum_fan_speed.opp):
         "SetRangeValue",
         "vacuum#test_2",
         "vacuum.set_fan_speed",
-        opp,
+        opp.
         payload={"rangeValue": 5},
         instance="vacuum.fan_speed",
     )
     assert call.data["fan_speed"] == "super_sucker"
 
     await assert_range_changes(
-        opp,
+        opp.
         [
             ("low", -1, False),
             ("high", 1, False),
@@ -3672,7 +3672,7 @@ async def test_vacuum_resume.opp):
         "Resume",
         "vacuum#test_4",
         "vacuum.start_pause",
-        opp,
+        opp.
     )
 
 
@@ -3733,7 +3733,7 @@ async def test_vacuum_discovery_no_turn_off.opp):
         "TurnOff",
         "vacuum#test_6",
         "vacuum.return_to_base",
-        opp,
+        opp.
     )
 
 
@@ -3762,7 +3762,7 @@ async def test_vacuum_discovery_no_turn_on_or_off.opp):
         "TurnOff",
         "vacuum#test_7",
         "vacuum.return_to_base",
-        opp,
+        opp.
     )
 
 
@@ -3774,9 +3774,9 @@ async def test_camera_discovery.opp, mock_stream):
         {"friendly_name": "Test camera", "supported_features": 3},
     )
 
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
     with patch.object(
-       .opp.components.cloud,
+        opp.components.cloud,
         "async_remote_ui_url",
         return_value="https://example.nabu.casa",
     ):
@@ -3805,9 +3805,9 @@ async def test_camera_discovery_without_stream.opp):
         {"friendly_name": "Test camera", "supported_features": 3},
     )
 
-   .opp.config.components.add("cloud")
+    opp.config.components.add("cloud")
     with patch.object(
-       .opp.components.cloud,
+        opp.components.cloud,
         "async_remote_ui_url",
         return_value="https://example.nabu.casa",
     ):
@@ -3846,7 +3846,7 @@ async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
     )
 
     await async_process_op_core_config(
-        opp, {"external_url": "https://mycamerastream.test"}
+        opp. {"external_url": "https://mycamerastream.test"}
     )
 
     with patch(

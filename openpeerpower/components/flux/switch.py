@@ -144,7 +144,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     transition = config.get(ATTR_TRANSITION)
     flux = FluxSwitch(
         name,
-        opp,
+        opp.
         lights,
         start_time,
         stop_time,
@@ -164,7 +164,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         await flux.async_flux_update()
 
     service_name = slugify(f"{name} update")
-   .opp.services.async_register(DOMAIN, service_name, async_update)
+    opp.services.async_register(DOMAIN, service_name, async_update)
 
 
 class FluxSwitch(SwitchEntity, RestoreEntity):
@@ -173,7 +173,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
     def __init__(
         self,
         name,
-        opp,
+        opp.
         lights,
         start_time,
         stop_time,

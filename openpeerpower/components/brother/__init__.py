@@ -34,21 +34,21 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     snmp_engine = get_snmp_engine.opp)
 
     coordinator = BrotherDataUpdateCoordinator(
-        opp, host=host, kind=kind, snmp_engine=snmp_engine
+        opp. host=host, kind=kind, snmp_engine=snmp_engine
     )
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN].setdefault(DATA_CONFIG_ENTRY, {})
-   .opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = coordinator
-   .opp.data[DOMAIN][SNMP] = snmp_engine
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN].setdefault(DATA_CONFIG_ENTRY, {})
+    opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = coordinator
+    opp.data[DOMAIN][SNMP] = snmp_engine
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -59,16 +59,16 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_CONFIG_ENTRY].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_CONFIG_ENTRY].pop(entry.entry_id)
         if not.opp.data[DOMAIN][DATA_CONFIG_ENTRY]:
-           .opp.data[DOMAIN].pop(SNMP)
-           .opp.data[DOMAIN].pop(DATA_CONFIG_ENTRY)
+            opp.data[DOMAIN].pop(SNMP)
+            opp.data[DOMAIN].pop(DATA_CONFIG_ENTRY)
 
     return unload_ok
 
@@ -81,7 +81,7 @@ class BrotherDataUpdateCoordinator(DataUpdateCoordinator):
         self.brother = Brother(host, kind=kind, snmp_engine=snmp_engine)
 
         super().__init__(
-            opp,
+            opp.
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

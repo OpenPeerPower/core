@@ -67,7 +67,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     except TravisError as ex:
         _LOGGER.error("Unable to connect to Travis CI service: %s", str(ex))
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             "Error: {}<br />"
             "You will need to restart.opp after fixing."
             "".format(ex),

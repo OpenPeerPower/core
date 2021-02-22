@@ -65,7 +65,7 @@ async def test_get_minimum_conditions.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.test_5678", "attributes", {"supported_features": 0}
     )
     expected_conditions = [
@@ -98,7 +98,7 @@ async def test_get_maximum_conditions.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set(
+    opp.states.async_set(
         "alarm_control_panel.test_5678", "attributes", {"supported_features": 31}
     )
     expected_conditions = [
@@ -153,7 +153,7 @@ async def test_get_maximum_conditions.opp, device_reg, entity_reg):
 async def test_if_state.opp, calls):
     """Test for all conditions."""
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -268,68 +268,68 @@ async def test_if_state.opp, calls):
             ]
         },
     )
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_TRIGGERED)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
-   .opp.bus.async_fire("test_event4")
-   .opp.bus.async_fire("test_event5")
-   .opp.bus.async_fire("test_event6")
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_TRIGGERED)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event4")
+    opp.bus.async_fire("test_event5")
+    opp.bus.async_fire("test_event6")
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_triggered - event - test_event1"
 
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_DISARMED)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
-   .opp.bus.async_fire("test_event4")
-   .opp.bus.async_fire("test_event5")
-   .opp.bus.async_fire("test_event6")
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_DISARMED)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event4")
+    opp.bus.async_fire("test_event5")
+    opp.bus.async_fire("test_event6")
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_disarmed - event - test_event2"
 
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_HOME)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
-   .opp.bus.async_fire("test_event4")
-   .opp.bus.async_fire("test_event5")
-   .opp.bus.async_fire("test_event6")
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_HOME)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event4")
+    opp.bus.async_fire("test_event5")
+    opp.bus.async_fire("test_event6")
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_armed_home - event - test_event3"
 
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_AWAY)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
-   .opp.bus.async_fire("test_event4")
-   .opp.bus.async_fire("test_event5")
-   .opp.bus.async_fire("test_event6")
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_AWAY)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event4")
+    opp.bus.async_fire("test_event5")
+    opp.bus.async_fire("test_event6")
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].data["some"] == "is_armed_away - event - test_event4"
 
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_NIGHT)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
-   .opp.bus.async_fire("test_event4")
-   .opp.bus.async_fire("test_event5")
-   .opp.bus.async_fire("test_event6")
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_NIGHT)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event4")
+    opp.bus.async_fire("test_event5")
+    opp.bus.async_fire("test_event6")
     await opp.async_block_till_done()
     assert len(calls) == 5
     assert calls[4].data["some"] == "is_armed_night - event - test_event5"
 
-   .opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_CUSTOM_BYPASS)
-   .opp.bus.async_fire("test_event1")
-   .opp.bus.async_fire("test_event2")
-   .opp.bus.async_fire("test_event3")
-   .opp.bus.async_fire("test_event4")
-   .opp.bus.async_fire("test_event5")
-   .opp.bus.async_fire("test_event6")
+    opp.states.async_set("alarm_control_panel.entity", STATE_ALARM_ARMED_CUSTOM_BYPASS)
+    opp.bus.async_fire("test_event1")
+    opp.bus.async_fire("test_event2")
+    opp.bus.async_fire("test_event3")
+    opp.bus.async_fire("test_event4")
+    opp.bus.async_fire("test_event5")
+    opp.bus.async_fire("test_event6")
     await opp.async_block_till_done()
     assert len(calls) == 6
     assert calls[5].data["some"] == "is_armed_custom_bypass - event - test_event6"

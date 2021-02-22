@@ -45,9 +45,9 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
 
     if CONF_CLIENT_ID in config[DOMAIN]:
         config_flow.SpotifyFlowHandler.async_register_implementation(
-            opp,
+            opp.
             config_entry_oauth2_flow.LocalOAuth2Implementation(
-                opp,
+                opp.
                 DOMAIN,
                 config[DOMAIN][CONF_CLIENT_ID],
                 config[DOMAIN][CONF_CLIENT_SECRET],
@@ -76,24 +76,24 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     except SpotifyException as err:
         raise ConfigEntryNotReady from err
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_SPOTIFY_CLIENT: spotify,
         DATA_SPOTIFY_ME: current_user,
         DATA_SPOTIFY_SESSION: session,
     }
 
     if not set(session.token["scope"].split(" ")).issuperset(SPOTIFY_SCOPES):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": "reauth"},
                 data=entry.data,
             )
         )
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, MEDIA_PLAYER_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, MEDIA_PLAYER_DOMAIN)
     )
     return True
 

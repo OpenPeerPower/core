@@ -41,7 +41,7 @@ async def test_update_device.opp):
     async_dispatcher_connect.opp, f"dynalite-update-{host}", wide_func)
     specific_func = Mock()
     async_dispatcher_connect(
-        opp, f"dynalite-update-{host}-{device.unique_id}", specific_func
+        opp. f"dynalite-update-{host}-{device.unique_id}", specific_func
     )
     update_device_func()
     await opp.async_block_till_done()
@@ -126,7 +126,7 @@ async def test_notifications.opp):
         await opp.async_block_till_done()
         notification_func = mock_dyn_dev.mock_calls[1][2]["notification_func"]
     event_listener1 = Mock()
-   .opp.bus.async_listen("dynalite_packet", event_listener1)
+    opp.bus.async_listen("dynalite_packet", event_listener1)
     packet = [5, 4, 3, 2]
     notification_func(
         DynaliteNotification(NOTIFICATION_PACKET, {NOTIFICATION_PACKET: packet})
@@ -137,7 +137,7 @@ async def test_notifications.opp):
     assert my_event.data[ATTR_HOST] == host
     assert my_event.data[ATTR_PACKET] == packet
     event_listener2 = Mock()
-   .opp.bus.async_listen("dynalite_preset", event_listener2)
+    opp.bus.async_listen("dynalite_preset", event_listener2)
     notification_func(
         DynaliteNotification(
             NOTIFICATION_PRESET, {dyn_CONF_AREA: 7, dyn_CONF_PRESET: 2}

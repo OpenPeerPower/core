@@ -357,7 +357,7 @@ def mock_plex_calls(
 
 @pytest.fixture
 def setup_plex_server(
-    opp,
+    opp.
     entry,
     mock_websocket,
     mock_plex_calls,

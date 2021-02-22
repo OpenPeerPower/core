@@ -32,11 +32,11 @@ FLASH_LENGTHS = {FLASH_SHORT: 2, FLASH_LONG: 10}
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up ESPHome lights based on a config entry."""
     await platform_async_setup_entry(
-        opp,
+        opp.
         entry,
         async_add_entities,
         component_key="light",

@@ -7,7 +7,7 @@ from openpeerpower.auth import auth_store
 
 async def test_loading_no_group_data_format.opp, opp_storage):
     """Test we correctly load old data without any groups."""
-   .opp_storage[auth_store.STORAGE_KEY] = {
+    opp.storage[auth_store.STORAGE_KEY] = {
         "version": 1,
         "data": {
             "credentials": [],
@@ -100,7 +100,7 @@ async def test_loading_no_group_data_format.opp, opp_storage):
 
 async def test_loading_all_access_group_data_format.opp, opp_storage):
     """Test we correctly load old data with single group."""
-   .opp_storage[auth_store.STORAGE_KEY] = {
+    opp.storage[auth_store.STORAGE_KEY] = {
         "version": 1,
         "data": {
             "credentials": [],

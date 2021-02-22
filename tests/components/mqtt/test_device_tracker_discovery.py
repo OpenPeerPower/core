@@ -23,7 +23,7 @@ def entity_reg.opp):
 async def test_discover_device_tracker.opp, mqtt_mock, caplog):
     """Test discovering an MQTT device tracker component."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "test", "state_topic": "test_topic" }',
     )
@@ -40,7 +40,7 @@ async def test_discover_device_tracker.opp, mqtt_mock, caplog):
 async def test_discovery_broken.opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer" }',
     )
@@ -50,7 +50,7 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     assert state is None
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "required-topic" }',
     )
@@ -64,12 +64,12 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
 async def test_non_duplicate_device_tracker_discovery.opp, mqtt_mock, caplog):
     """Test for a non duplicate component."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -87,7 +87,7 @@ async def test_non_duplicate_device_tracker_discovery.opp, mqtt_mock, caplog):
 async def test_device_tracker_removal.opp, mqtt_mock, caplog):
     """Test removal of component through empty discovery message."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -104,7 +104,7 @@ async def test_device_tracker_removal.opp, mqtt_mock, caplog):
 async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
     """Test rediscover of removed component."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -118,7 +118,7 @@ async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
     assert state is None
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -130,7 +130,7 @@ async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
 async def test_duplicate_device_tracker_removal.opp, mqtt_mock, caplog):
     """Test for a non duplicate component."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -150,7 +150,7 @@ async def test_duplicate_device_tracker_removal.opp, mqtt_mock, caplog):
 async def test_device_tracker_discovery_update.opp, mqtt_mock, caplog):
     """Test for a discovery update event."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -161,7 +161,7 @@ async def test_device_tracker_discovery_update.opp, mqtt_mock, caplog):
     assert state.name == "Beer"
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "Cider", "state_topic": "test-topic" }',
     )
@@ -175,7 +175,7 @@ async def test_device_tracker_discovery_update.opp, mqtt_mock, caplog):
 async def test_cleanup_device_tracker.opp, device_reg, entity_reg, mqtt_mock):
     """Test discvered device is cleaned up when removed from registry."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "device":{"identifiers":["0AFFD2"]},'
         '  "state_topic": "foobar/tracker",'
@@ -216,7 +216,7 @@ async def test_cleanup_device_tracker.opp, device_reg, entity_reg, mqtt_mock):
 async def test_setting_device_tracker_value_via_mqtt_message.opp, mqtt_mock, caplog):
     """Test the setting of the value via MQTT."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "test", "state_topic": "test-topic" }',
     )
@@ -237,11 +237,11 @@ async def test_setting_device_tracker_value_via_mqtt_message.opp, mqtt_mock, cap
 
 
 async def test_setting_device_tracker_value_via_mqtt_message_and_template(
-    opp, mqtt_mock, caplog
+    opp. mqtt_mock, caplog
 ):
     """Test the setting of the value via MQTT."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         "{"
         '"name": "test", '
@@ -261,11 +261,11 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template(
 
 
 async def test_setting_device_tracker_value_via_mqtt_message_and_template2(
-    opp, mqtt_mock, caplog
+    opp. mqtt_mock, caplog
 ):
     """Test the setting of the value via MQTT."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         "{"
         '"name": "test", '
@@ -288,11 +288,11 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template2(
 
 
 async def test_setting_device_tracker_location_via_mqtt_message(
-    opp, mqtt_mock, caplog
+    opp. mqtt_mock, caplog
 ):
     """Test the setting of the location via MQTT."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         '{ "name": "test", "state_topic": "test-topic" }',
     )
@@ -308,11 +308,11 @@ async def test_setting_device_tracker_location_via_mqtt_message(
 
 
 async def test_setting_device_tracker_location_via_lat_lon_message(
-    opp, mqtt_mock, caplog
+    opp. mqtt_mock, caplog
 ):
     """Test the setting of the latitude and longitude via MQTT."""
     async_fire_mqtt_message(
-        opp,
+        opp.
         "openpeerpower/device_tracker/bla/config",
         "{ "
         '"name": "test", '
@@ -326,11 +326,11 @@ async def test_setting_device_tracker_location_via_lat_lon_message(
 
     assert state.state == STATE_UNKNOWN
 
-   .opp.config.latitude = 32.87336
-   .opp.config.longitude = -117.22743
+    opp.config.latitude = 32.87336
+    opp.config.longitude = -117.22743
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         "attributes-topic",
         '{"latitude":32.87336,"longitude": -117.22743, "gps_accuracy":1.5}',
     )
@@ -341,7 +341,7 @@ async def test_setting_device_tracker_location_via_lat_lon_message(
     assert state.state == STATE_HOME
 
     async_fire_mqtt_message(
-        opp,
+        opp.
         "attributes-topic",
         '{"latitude":50.1,"longitude": -2.1, "gps_accuracy":1.5}',
     )

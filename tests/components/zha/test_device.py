@@ -105,7 +105,7 @@ def _send_time_changed.opp, seconds):
     new=mock.MagicMock(),
 )
 async def test_check_available_success(
-    opp, device_with_basic_channel, zha_device_restored
+    opp. device_with_basic_channel, zha_device_restored
 ):
     """Check device availability success on 1st try."""
 
@@ -159,7 +159,7 @@ async def test_check_available_success(
     new=mock.MagicMock(),
 )
 async def test_check_available_unsuccessful(
-    opp, device_with_basic_channel, zha_device_restored
+    opp. device_with_basic_channel, zha_device_restored
 ):
     """Check device availability all tries fail."""
 
@@ -202,7 +202,7 @@ async def test_check_available_unsuccessful(
     new=mock.MagicMock(),
 )
 async def test_check_available_no_basic_channel(
-    opp, device_without_basic_channel, zha_device_restored, caplog
+    opp. device_without_basic_channel, zha_device_restored, caplog
 ):
     """Check device availability for a device without basic cluster."""
 
@@ -283,7 +283,7 @@ async def test_ota_sw_version.opp, ota_zha_device):
     ),
 )
 async def test_device_restore_availability(
-    opp, request, device, last_seen_delta, is_available, zha_device_restored
+    opp. request, device, last_seen_delta, is_available, zha_device_restored
 ):
     """Test initial availability for restored devices."""
 

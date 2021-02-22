@@ -75,13 +75,13 @@ def setup_opp, config):
         """Run when Open Peer Power starts."""
         pilight_client.start()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_pilight_client)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, start_pilight_client)
 
     def stop_pilight_client(_):
         """Run once when Open Peer Power stops."""
         pilight_client.stop()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_pilight_client)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_pilight_client)
 
     @send_throttler.limited
     def send_code(call):
@@ -95,7 +95,7 @@ def setup_opp, config):
         except OSError:
             _LOGGER.error("Pilight send failed for %s", str(message_data))
 
-   .opp.services.register(DOMAIN, SERVICE_NAME, send_code, schema=RF_CODE_SCHEMA)
+    opp.services.register(DOMAIN, SERVICE_NAME, send_code, schema=RF_CODE_SCHEMA)
 
     # Publish received codes on the HA event bus
     # A whitelist of codes to be published in the event bus
@@ -111,10 +111,10 @@ def setup_opp, config):
 
         # No whitelist defined, put data on event bus
         if not whitelist:
-           .opp.bus.fire(EVENT, data)
+            opp.bus.fire(EVENT, data)
         # Check if data matches the defined whitelist
         elif all(str(data[key]) in whitelist[key] for key in whitelist):
-           .opp.bus.fire(EVENT, data)
+            opp.bus.fire(EVENT, data)
 
     pilight_client.set_callback(handle_received_code)
 

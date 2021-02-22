@@ -60,8 +60,8 @@ async def async_setup_opp, config):
     if DOMAIN not in config:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
         )
     )
@@ -95,34 +95,34 @@ async def async_setup_entry.opp, config_entry):
     data = opp.data[DOMAIN] = ShoppingData.opp)
     await data.async_load()
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_ADD_ITEM, add_item_service, schema=SERVICE_ITEM_SCHEMA
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_COMPLETE_ITEM, complete_item_service, schema=SERVICE_ITEM_SCHEMA
     )
 
-   .opp.http.register_view(ShoppingListView)
-   .opp.http.register_view(CreateShoppingListItemView)
-   .opp.http.register_view(UpdateShoppingListItemView)
-   .opp.http.register_view(ClearCompletedItemsView)
+    opp.http.register_view(ShoppingListView)
+    opp.http.register_view(CreateShoppingListItemView)
+    opp.http.register_view(UpdateShoppingListItemView)
+    opp.http.register_view(ClearCompletedItemsView)
 
-   .opp.components.frontend.async_register_built_in_panel(
+    opp.components.frontend.async_register_built_in_panel(
         "shopping-list", "shopping_list", "mdi:cart"
     )
 
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_SHOPPING_LIST_ITEMS, websocket_handle_items, SCHEMA_WEBSOCKET_ITEMS
     )
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_SHOPPING_LIST_ADD_ITEM, websocket_handle_add, SCHEMA_WEBSOCKET_ADD_ITEM
     )
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_SHOPPING_LIST_UPDATE_ITEM,
         websocket_handle_update,
         SCHEMA_WEBSOCKET_UPDATE_ITEM,
     )
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_SHOPPING_LIST_CLEAR_ITEMS,
         websocket_handle_clear,
         SCHEMA_WEBSOCKET_CLEAR_ITEMS,
@@ -258,9 +258,9 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Retrieve if API is running."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
         await opp.data[DOMAIN].async_clear_completed()
-       .opp.bus.async_fire(EVENT)
+        opp.bus.async_fire(EVENT)
         return self.json_message("Cleared completed items.")
 
 
@@ -276,7 +276,7 @@ def websocket_handle_items.opp, connection, msg):
 async def websocket_handle_add.opp, connection, msg):
     """Handle add item to shopping_list."""
     item = await opp.data[DOMAIN].async_add(msg["name"])
-   .opp.bus.async_fire(EVENT, {"action": "add", "item": item})
+    opp.bus.async_fire(EVENT, {"action": "add", "item": item})
     connection.send_message(websocket_api.result_message(msg["id"], item))
 
 
@@ -290,7 +290,7 @@ async def websocket_handle_update.opp, connection, msg):
 
     try:
         item = await opp.data[DOMAIN].async_update(item_id, data)
-       .opp.bus.async_fire(EVENT, {"action": "update", "item": item})
+        opp.bus.async_fire(EVENT, {"action": "update", "item": item})
         connection.send_message(websocket_api.result_message(msg_id, item))
     except KeyError:
         connection.send_message(
@@ -302,7 +302,7 @@ async def websocket_handle_update.opp, connection, msg):
 async def websocket_handle_clear.opp, connection, msg):
     """Handle clearing shopping_list items."""
     await opp.data[DOMAIN].async_clear_completed()
-   .opp.bus.async_fire(EVENT, {"action": "clear"})
+    opp.bus.async_fire(EVENT, {"action": "clear"})
     connection.send_message(websocket_api.result_message(msg["id"]))
 
 
@@ -316,8 +316,8 @@ def websocket_handle_reorder.opp, connection, msg):
     """Handle reordering shopping_list items."""
     msg_id = msg.pop("id")
     try:
-       .opp.data[DOMAIN].async_reorder(msg.pop("item_ids"))
-       .opp.bus.async_fire(EVENT, {"action": "reorder"})
+        opp.data[DOMAIN].async_reorder(msg.pop("item_ids"))
+        opp.bus.async_fire(EVENT, {"action": "reorder"})
         connection.send_result(msg_id)
     except KeyError:
         connection.send_error(

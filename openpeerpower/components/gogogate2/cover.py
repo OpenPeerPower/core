@@ -48,18 +48,18 @@ COVER_SCHEMA = vol.Schema(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPower, config: dict, add_entities: Callable, discovery_info=None
+    opp. OpenPeerPower, config: dict, add_entities: Callable, discovery_info=None
 ) -> None:
     """Convert old style file configs to new style configs."""
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=config
         )
     )
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config_entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], Optional[bool]], None],
 ) -> None:

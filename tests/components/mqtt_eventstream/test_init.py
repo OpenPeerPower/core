@@ -26,7 +26,7 @@ async def add_eventstream.opp, sub_topic=None, pub_topic=None, ignore_event=None
     if ignore_event:
         config["ignore_event"] = ignore_event
     return await async_setup_component(
-        opp, eventstream.DOMAIN, {eventstream.DOMAIN: config}
+        opp. eventstream.DOMAIN, {eventstream.DOMAIN: config}
     )
 
 
@@ -129,7 +129,7 @@ async def test_receiving_remote_event_fires.opp_event.opp, mqtt_mock):
     def listener(_):
         calls.append(1)
 
-   .opp.bus.async_listen_once("test_event", listener)
+    opp.bus.async_listen_once("test_event", listener)
     await opp.async_block_till_done()
 
     payload = json.dumps(

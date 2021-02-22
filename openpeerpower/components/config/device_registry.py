@@ -29,10 +29,10 @@ SCHEMA_WS_UPDATE = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 
 async def async_setup_opp):
     """Enable the Device Registry views."""
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_LIST, websocket_list_devices, SCHEMA_WS_LIST
     )
-   .opp.components.websocket_api.async_register_command(
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_UPDATE, websocket_update_device, SCHEMA_WS_UPDATE
     )
     return True

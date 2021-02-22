@@ -34,7 +34,7 @@ async def test_missing_optional_config(opp, calls):
     """Test: missing optional template is ok."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -57,7 +57,7 @@ async def test_missing_start_config(opp, calls):
     """Test: missing 'start' will fail."""
     with assert_setup_component(0, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -78,7 +78,7 @@ async def test_invalid_config(opp, calls):
     """Test: invalid config structure will fail."""
     with assert_setup_component(0, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "platform": "template",
@@ -103,7 +103,7 @@ async def test_templates_with_entities.opp, calls):
     """Test templates with values from other entities."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -125,8 +125,8 @@ async def test_templates_with_entities.opp, calls):
 
     _verify.opp, STATE_UNKNOWN, None)
 
-   .opp.states.async_set(_STATE_INPUT_SELECT, STATE_CLEANING)
-   .opp.states.async_set(_BATTERY_LEVEL_INPUT_NUMBER, 100)
+    opp.states.async_set(_STATE_INPUT_SELECT, STATE_CLEANING)
+    opp.states.async_set(_BATTERY_LEVEL_INPUT_NUMBER, 100)
     await opp.async_block_till_done()
 
     _verify.opp, STATE_CLEANING, 100)
@@ -136,7 +136,7 @@ async def test_templates_with_valid_values.opp, calls):
     """Test templates with valid values."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -163,7 +163,7 @@ async def test_templates_invalid_values.opp, calls):
     """Test templates with invalid values."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -190,7 +190,7 @@ async def test_invalid_templates.opp, calls):
     """Test invalid templates."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -218,7 +218,7 @@ async def test_available_template_with_entities.opp, calls):
     """Test availability templates with values from other entities."""
 
     assert await setup.async_setup_component(
-        opp,
+        opp.
         "vacuum",
         {
             "vacuum": {
@@ -238,14 +238,14 @@ async def test_available_template_with_entities.opp, calls):
     await opp.async_block_till_done()
 
     # When template returns true..
-   .opp.states.async_set("availability_state.state", STATE_ON)
+    opp.states.async_set("availability_state.state", STATE_ON)
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
     assert.opp.states.get("vacuum.test_template_vacuum").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
-   .opp.states.async_set("availability_state.state", STATE_OFF)
+    opp.states.async_set("availability_state.state", STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
@@ -255,7 +255,7 @@ async def test_available_template_with_entities.opp, calls):
 async def test_invalid_availability_template_keeps_component_available.opp, caplog):
     """Test that an invalid availability keeps the device available."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         "vacuum",
         {
             "vacuum": {
@@ -281,7 +281,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 async def test_attribute_templates.opp, calls):
     """Test attribute_templates template."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         "vacuum",
         {
             "vacuum": {
@@ -306,7 +306,7 @@ async def test_attribute_templates.opp, calls):
     state = opp.states.get("vacuum.test_template_vacuum")
     assert state.attributes["test_attribute"] == "It ."
 
-   .opp.states.async_set("sensor.test_state", "Works")
+    opp.states.async_set("sensor.test_state", "Works")
     await opp.async_block_till_done()
     await opp.helpers.entity_component.async_update_entity(
         "vacuum.test_template_vacuum"
@@ -318,7 +318,7 @@ async def test_attribute_templates.opp, calls):
 async def test_invalid_attribute_template.opp, caplog):
     """Test that errors are logged if rendering template fails."""
     assert await setup.async_setup_component(
-        opp,
+        opp.
         "vacuum",
         {
             "vacuum": {
@@ -491,14 +491,14 @@ async def _register_basic_vacuum.opp):
     """Register basic vacuum with only required options for testing."""
     with assert_setup_component(1, "input_select"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "input_select",
             {"input_select": {"state": {"name": "State", "options": [STATE_CLEANING]}}},
         )
 
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -527,14 +527,14 @@ async def _register_components.opp):
     """Register basic components for testing."""
     with assert_setup_component(2, "input_boolean"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "input_boolean",
             {"input_boolean": {"spot_cleaning": None, "locating": None}},
         )
 
     with assert_setup_component(2, "input_select"):
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "input_select",
             {
                 "input_select": {
@@ -598,7 +598,7 @@ async def _register_components.opp):
         }
 
         assert await setup.async_setup_component(
-            opp,
+            opp.
             "vacuum",
             {
                 "vacuum": {
@@ -616,7 +616,7 @@ async def _register_components.opp):
 async def test_unique_id.opp):
     """Test unique_id option only creates one vacuum per id."""
     await setup.async_setup_component(
-        opp,
+        opp.
         "vacuum",
         {
             "vacuum": {

@@ -50,7 +50,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
     """Set up the Bluetooth LE Scanner."""
 
     new_devices = {}
-   .opp.data.setdefault(DATA_BLE, {DATA_BLE_ADAPTER: None})
+    opp.data.setdefault(DATA_BLE, {DATA_BLE_ADAPTER: None})
 
     def handle_stop(event):
         """Try to shut down the bluetooth child process nicely."""
@@ -60,7 +60,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         if adapter is not None:
             adapter.kill()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_stop)
 
     if config[CONF_TRACK_BATTERY]:
         battery_track_interval = config[CONF_TRACK_BATTERY_INTERVAL]
@@ -105,7 +105,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
         _LOGGER.debug("Discovering Bluetooth LE devices")
         try:
             adapter = pygatt.GATTToolBackend()
-           .opp.data[DATA_BLE][DATA_BLE_ADAPTER] = adapter
+            opp.data[DATA_BLE][DATA_BLE_ADAPTER] = adapter
             devs = adapter.scan()
 
             devices = {x["address"]: x["name"] for x in devs}

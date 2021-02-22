@@ -48,13 +48,13 @@ async def test.oppio_addon_panel_startup.opp, aioclient_mock, oppio_env):
     with patch(
         "openpeerpower.components.oppio.addon_panel._register_panel",
     ) as mock_panel:
-        await async_setup_component.opp, .oppio", {})
+        await async_setup_component.opp,  opp.o", {})
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 3
         assert mock_panel.called
         mock_panel.assert_called_with(
-            opp,
+            opp.
             "test1",
             {"enable": True, "title": "Test", "icon": "mdi:test", "admin": False},
         )
@@ -90,18 +90,18 @@ async def test.oppio_addon_panel_api.opp, aioclient_mock, oppio_env, opp_client)
     with patch(
         "openpeerpower.components.oppio.addon_panel._register_panel",
     ) as mock_panel:
-        await async_setup_component.opp, .oppio", {})
+        await async_setup_component.opp,  opp.o", {})
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 3
         assert mock_panel.called
         mock_panel.assert_called_with(
-            opp,
+            opp.
             "test1",
             {"enable": True, "title": "Test", "icon": "mdi:test", "admin": False},
         )
 
-       .opp_client = await opp_client()
+        opp.client = await opp_client()
 
         resp = await opp_client.post("/api.oppio_push/panel/test2")
         assert resp.status == 400
@@ -111,7 +111,7 @@ async def test.oppio_addon_panel_api.opp, aioclient_mock, oppio_env, opp_client)
         assert mock_panel.call_count == 2
 
         mock_panel.assert_called_with(
-            opp,
+            opp.
             "test1",
             {"enable": True, "title": "Test", "icon": "mdi:test", "admin": False},
         )

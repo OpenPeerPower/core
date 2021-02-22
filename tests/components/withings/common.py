@@ -106,7 +106,7 @@ class ComponentFactory:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         api_class_mock: MagicMock,
         aiohttp_client,
         aioclient_mock: AiohttpClientMocker,
@@ -131,7 +131,7 @@ class ComponentFactory:
         self._client_secret = client_secret
         self._profile_configs = profile_configs
 
-       .opp_config = {
+        opp.config = {
             "openpeerpower": {
                 CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC,
                 CONF_EXTERNAL_URL: "http://127.0.0.1:8080/",
@@ -293,7 +293,7 @@ class ComponentFactory:
 
 
 def get_config_entries_for_user_id(
-    opp: OpenPeerPower, user_id: int
+    opp. OpenPeerPower, user_id: int
 ) -> Tuple[ConfigEntry]:
     """Get a list of config entries that apply to a specific withings user."""
     return tuple(
@@ -315,7 +315,7 @@ def async_get_flow_for_user_id.opp: OpenPeerPower, user_id: int) -> List[dict]:
 
 
 def get_data_manager_by_user_id(
-    opp: OpenPeerPower, user_id: int
+    opp. OpenPeerPower, user_id: int
 ) -> Optional[DataManager]:
     """Get a data manager by the user id."""
     return next(

@@ -29,7 +29,7 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the rachio component from YAML."""
 
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     return True
 
@@ -39,14 +39,14 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in SUPPORTED_DOMAINS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -67,7 +67,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not options.get(CONF_MANUAL_RUN_MINS) and config.get(CONF_MANUAL_RUN_MINS):
         options_copy = options.copy()
         options_copy[CONF_MANUAL_RUN_MINS] = config[CONF_MANUAL_RUN_MINS]
-       .opp.config_entries.async_update_entry(entry, options=options_copy)
+        opp.config_entries.async_update_entry(entry, options=options_copy)
 
     # Configure API
     api_key = config[CONF_API_KEY]
@@ -76,7 +76,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # Get the URL of this server
     rachio.webhook_auth = secrets.token_hex()
     webhook_id, webhook_url = await async_get_or_create_registered_webhook_id_and_url(
-        opp, entry
+        opp. entry
     )
     rachio.webhook_url = webhook_url
 
@@ -100,12 +100,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     # Enable component
-   .opp.data[DOMAIN][entry.entry_id] = person
+    opp.data[DOMAIN][entry.entry_id] = person
     async_register_webhook.opp, webhook_id, entry.entry_id)
 
     for component in SUPPORTED_DOMAINS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True

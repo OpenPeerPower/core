@@ -171,11 +171,11 @@ async def async_setup_opp, yaml_config):
             if protocol:
                 protocol.close()
         else:
-           .opp.bus.async_listen_once(
+            opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, stop_emulated_hue_bridge
             )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_emulated_hue_bridge)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_emulated_hue_bridge)
 
     return True
 

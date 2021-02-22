@@ -115,5 +115,5 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
             )
 
     for name in conf:
-       .opp.services.async_register(DOMAIN, name, async_service_handler)
+        opp.services.async_register(DOMAIN, name, async_service_handler)
     return True

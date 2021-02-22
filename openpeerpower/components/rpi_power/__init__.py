@@ -10,8 +10,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Raspberry Pi Power Supply Checker from a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, "binary_sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "binary_sensor")
     )
     return True
 

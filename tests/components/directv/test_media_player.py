@@ -77,7 +77,7 @@ def mock_now() -> datetime:
 
 
 async def async_turn_on(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: Optional[str] = None
 ) -> None:
     """Turn on specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -85,7 +85,7 @@ async def async_turn_on(
 
 
 async def async_turn_off(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: Optional[str] = None
 ) -> None:
     """Turn off specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -93,7 +93,7 @@ async def async_turn_off(
 
 
 async def async_media_pause(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: Optional[str] = None
 ) -> None:
     """Send the media player the command for pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -101,7 +101,7 @@ async def async_media_pause(
 
 
 async def async_media_play(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: Optional[str] = None
 ) -> None:
     """Send the media player the command for play/pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -109,7 +109,7 @@ async def async_media_play(
 
 
 async def async_media_stop(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: Optional[str] = None
 ) -> None:
     """Send the media player the command for stop."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -117,7 +117,7 @@ async def async_media_stop(
 
 
 async def async_media_next_track(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: Optional[str] = None
 ) -> None:
     """Send the media player the command for next track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -125,7 +125,7 @@ async def async_media_next_track(
 
 
 async def async_media_previous_track(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp. OpenPeerPowerType, entity_id: Optional[str] = None
 ) -> None:
     """Send the media player the command for prev track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -133,7 +133,7 @@ async def async_media_previous_track(
 
 
 async def async_play_media(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     media_type: str,
     media_id: str,
     entity_id: Optional[str] = None,
@@ -152,7 +152,7 @@ async def async_play_media(
 
 
 async def test_setup(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setup with basic config."""
     await setup_integration.opp, aioclient_mock)
@@ -162,7 +162,7 @@ async def test_setup(
 
 
 async def test_unique_id(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test unique id."""
     await setup_integration.opp, aioclient_mock)
@@ -183,7 +183,7 @@ async def test_unique_id(
 
 
 async def test_supported_features(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test supported features."""
     await setup_integration.opp, aioclient_mock)
@@ -216,7 +216,7 @@ async def test_supported_features(
 
 
 async def test_check_attributes(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     mock_now: dt_util.dt.datetime,
     aioclient_mock: AiohttpClientMocker,
 ) -> None:
@@ -323,7 +323,7 @@ async def test_check_attributes(
 
 
 async def test_attributes_paused(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     mock_now: dt_util.dt.datetime,
     aioclient_mock: AiohttpClientMocker,
 ):
@@ -347,7 +347,7 @@ async def test_attributes_paused(
 
 
 async def test_main_services(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     mock_now: dt_util.dt.datetime,
     aioclient_mock: AiohttpClientMocker,
 ) -> None:

@@ -21,7 +21,7 @@ _API_TIMEOUT = SLOW_UPDATE_WARNING - 1
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Bond component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -41,14 +41,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     bpup_subs = BPUPSubscriptions()
     stop_bpup = await start_bpup(host, bpup_subs)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         HUB: hub,
         BPUP_SUBS: bpup_subs,
         BPUP_STOP: stop_bpup,
     }
 
     if not entry.unique_id:
-       .opp.config_entries.async_update_entry(entry, unique_id=hub.bond_id)
+        opp.config_entries.async_update_entry(entry, unique_id=hub.bond_id)
 
     hub_name = hub.name or hub.bond_id
     device_registry = await dr.async_get_registry.opp)
@@ -65,8 +65,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     _async_remove_old_device_identifiers(config_entry_id, device_registry, hub)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -77,7 +77,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -88,7 +88,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         data[BPUP_STOP]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

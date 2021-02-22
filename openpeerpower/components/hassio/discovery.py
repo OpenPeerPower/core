@@ -25,8 +25,8 @@ _LOGGER = logging.getLogger(__name__)
 @callback
 def async_setup_discovery_view.opp: OpenPeerPowerView, oppio):
     """Discovery setup."""
-   .oppio_discovery = HassIODiscovery.opp, oppio)
-   .opp.http.register_view.oppio_discovery)
+    opp.o_discovery = HassIODiscovery.opp, oppio)
+    opp.http.register_view.oppio_discovery)
 
     # Handle exists discovery messages
     async def _async_discovery_start_handler(event):
@@ -38,13 +38,13 @@ def async_setup_discovery_view.opp: OpenPeerPowerView, oppio):
             return
 
         jobs = [
-           .oppio_discovery.async_process_new(discovery)
+            opp.o_discovery.async_process_new(discovery)
             for discovery in data[ATTR_DISCOVERY]
         ]
         if jobs:
             await asyncio.wait(jobs)
 
-   .opp.bus.async_listen_once(
+    opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_START, _async_discovery_start_handler
     )
 
@@ -94,7 +94,7 @@ class HassIODiscovery(OpenPeerPowerView):
 
         # Use config flow
         await self.opp.config_entries.flow.async_init(
-            service, context={"source": .oppio"}, data=config_data
+            service, context={"source":  opp.o"}, data=config_data
         )
 
     async def async_process_del(self, data):

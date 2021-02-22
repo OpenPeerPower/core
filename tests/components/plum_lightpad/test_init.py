@@ -28,7 +28,7 @@ async def test_async_setup_imports_from_config(opp: OpenPeerPower):
         return_value=True,
     ) as mock_async_setup_entry:
         result = await async_setup_component(
-            opp,
+            opp.
             DOMAIN,
             {
                 DOMAIN: {

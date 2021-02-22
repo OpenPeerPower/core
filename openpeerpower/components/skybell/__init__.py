@@ -56,10 +56,10 @@ def setup_opp, config):
             agent_identifier=AGENT_IDENTIFIER,
         )
 
-       .opp.data[DOMAIN] = skybell
+        opp.data[DOMAIN] = skybell
     except (ConnectTimeout, HTTPError) as ex:
         _LOGGER.error("Unable to connect to Skybell service: %s", str(ex))
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             "Error: {}<br />"
             "You will need to restart.opp after fixing."
             "".format(ex),

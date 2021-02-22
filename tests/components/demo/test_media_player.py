@@ -34,7 +34,7 @@ async def test_source_select.opp):
     entity_id = "media_player.lounge_room"
 
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
     state = opp.states.get(entity_id)
@@ -65,7 +65,7 @@ async def test_repeat_set.opp):
     entity_id = "media_player.walkman"
 
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
     state = opp.states.get(entity_id)
@@ -84,7 +84,7 @@ async def test_repeat_set.opp):
 async def test_clear_playlist.opp):
     """Test clear playlist."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -104,7 +104,7 @@ async def test_clear_playlist.opp):
 async def test_volume_services.opp):
     """Test the volume service."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -176,7 +176,7 @@ async def test_volume_services.opp):
 async def test_turning_off_and_on.opp):
     """Test turn_on and turn_off."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -217,7 +217,7 @@ async def test_turning_off_and_on.opp):
 async def test_playing_pausing.opp):
     """Test media_pause."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -264,7 +264,7 @@ async def test_playing_pausing.opp):
 async def test_prev_next_track.opp):
     """Test media_next_track and media_previous_track ."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -299,7 +299,7 @@ async def test_prev_next_track.opp):
     assert state.attributes.get(mp.ATTR_MEDIA_TRACK) == 2
 
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -329,7 +329,7 @@ async def test_prev_next_track.opp):
 async def test_play_media.opp):
     """Test play_media ."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -367,7 +367,7 @@ async def test_play_media.opp):
 async def test_seek.opp, mock_media_seek):
     """Test seek."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -403,7 +403,7 @@ async def test_seek.opp, mock_media_seek):
 async def test_media_image_proxy.opp, opp_client):
     """Test the media server image proxy server ."""
     assert await async_setup_component(
-        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+        opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -434,7 +434,7 @@ async def test_media_image_proxy.opp, opp_client):
         def detach(self):
             """Test websession detach."""
 
-   .opp.data[DATA_CLIENTSESSION] = MockWebsession()
+    opp.data[DATA_CLIENTSESSION] = MockWebsession()
 
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING

@@ -23,7 +23,7 @@ async def auth_provider(local_auth):
 async def owner_access_token.opp, opp_owner_user):
     """Access token for owner user."""
     refresh_token = await opp.auth.async_create_refresh_token(
-       .opp_owner_user, CLIENT_ID
+        opp.owner_user, CLIENT_ID
     )
     return.opp.auth.async_create_access_token(refresh_token)
 
@@ -87,7 +87,7 @@ async def test_create_auth_unknown_user.opp_ws_client, opp):
 
 
 async def test_create_auth_requires_admin(
-    opp, opp_ws_client, opp_read_only_access_token
+    opp. opp_ws_client, opp_read_only_access_token
 ):
     """Test create requires admin to call API."""
     client = await opp_ws_client.opp, opp_read_only_access_token)
@@ -141,7 +141,7 @@ async def test_create_auth_duplicate_username.opp, opp_ws_client, opp_storage):
     client = await opp_ws_client.opp)
     user = MockUser().add_to.opp.opp)
 
-   .opp_storage[prov_ha.STORAGE_KEY] = {
+    opp.storage[prov_ha.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -165,7 +165,7 @@ async def test_delete_removes_just_auth.opp_ws_client, opp, opp_storage):
     """Test deleting an auth without being connected to a user."""
     client = await opp_ws_client.opp)
 
-   .opp_storage[prov_ha.STORAGE_KEY] = {
+    opp.storage[prov_ha.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -188,7 +188,7 @@ async def test_delete_removes_credential.opp, opp_ws_client, opp_storage):
     client = await opp_ws_client.opp)
 
     user = MockUser().add_to.opp.opp)
-   .opp_storage[prov_ha.STORAGE_KEY] = {
+    opp.storage[prov_ha.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -264,7 +264,7 @@ async def test_change_password.opp, opp_ws_client, auth_provider):
 
 
 async def test_change_password_wrong_pw(
-    opp, opp_ws_client, opp_admin_user, auth_provider
+    opp. opp_ws_client, opp_admin_user, auth_provider
 ):
     """Test that change password fails with invalid password."""
 
@@ -287,7 +287,7 @@ async def test_change_password_wrong_pw(
 
 async def test_change_password_no_creds.opp, opp_ws_client, opp_admin_user):
     """Test that change password fails with no credentials."""
-   .opp_admin_user.credentials.clear()
+    opp.admin_user.credentials.clear()
     client = await opp_ws_client.opp)
 
     await client.send_json(
@@ -344,11 +344,11 @@ async def test_admin_change_password_no_user.opp, opp_ws_client, owner_access_to
 
 
 async def test_admin_change_password_no_cred(
-    opp, opp_ws_client, owner_access_token, opp_admin_user
+    opp. opp_ws_client, owner_access_token, opp_admin_user
 ):
     """Test that change password fails with unknown credential."""
 
-   .opp_admin_user.credentials.clear()
+    opp.admin_user.credentials.clear()
     client = await opp_ws_client.opp, owner_access_token)
 
     await client.send_json(
@@ -366,11 +366,11 @@ async def test_admin_change_password_no_cred(
 
 
 async def test_admin_change_password(
-    opp,
-   .opp_ws_client,
+    opp.
+    opp.ws_client,
     owner_access_token,
     auth_provider,
-   .opp_admin_user,
+    opp.admin_user,
 ):
     """Test that owners can change any password."""
     client = await opp_ws_client.opp, owner_access_token)

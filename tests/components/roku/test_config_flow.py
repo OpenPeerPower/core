@@ -26,7 +26,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_duplicate_error(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test that errors are shown when duplicates are added."""
     await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
@@ -58,7 +58,7 @@ async def test_duplicate_error(
 
 
 async def test_form(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the user step."""
     await async_setup_component.opp, "persistent_notification", {})
@@ -93,7 +93,7 @@ async def test_form(
 
 
 async def test_form_cannot_connect(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we handle cannot connect roku error."""
     mock_connection(aioclient_mock, error=True)
@@ -133,7 +133,7 @@ async def test_form_unknown_error(opp: OpenPeerPowerType) -> None:
 
 
 async def test_homekit_cannot_connect(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort homekit flow on connection error."""
     mock_connection(
@@ -154,7 +154,7 @@ async def test_homekit_cannot_connect(
 
 
 async def test_homekit_unknown_error(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort homekit flow on unknown error."""
     discovery_info = MOCK_HOMEKIT_DISCOVERY_INFO.copy()
@@ -173,7 +173,7 @@ async def test_homekit_unknown_error(
 
 
 async def test_homekit_discovery(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the homekit discovery flow."""
     mock_connection(aioclient_mock, device="rokutv", host=HOMEKIT_HOST)
@@ -219,7 +219,7 @@ async def test_homekit_discovery(
 
 
 async def test_ssdp_cannot_connect(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow on connection error."""
     mock_connection(aioclient_mock, error=True)
@@ -236,7 +236,7 @@ async def test_ssdp_cannot_connect(
 
 
 async def test_ssdp_unknown_error(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow on unknown error."""
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
@@ -255,7 +255,7 @@ async def test_ssdp_unknown_error(
 
 
 async def test_ssdp_discovery(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the SSDP discovery flow."""
     mock_connection(aioclient_mock)

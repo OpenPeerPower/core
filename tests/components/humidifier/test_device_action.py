@@ -40,8 +40,8 @@ async def test_get_actions.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set("humidifier.test_5678", STATE_ON, {})
-   .opp.states.async_set(
+    opp.states.async_set("humidifier.test_5678", STATE_ON, {})
+    opp.states.async_set(
         "humidifier.test_5678", "attributes", {"supported_features": 1}
     )
     expected_actions = [
@@ -89,8 +89,8 @@ async def test_get_action_no_modes.opp, device_reg, entity_reg):
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
-   .opp.states.async_set("humidifier.test_5678", STATE_ON, {})
-   .opp.states.async_set(
+    opp.states.async_set("humidifier.test_5678", STATE_ON, {})
+    opp.states.async_set(
         "humidifier.test_5678", "attributes", {"supported_features": 0}
     )
     expected_actions = [
@@ -164,14 +164,14 @@ async def test_get_action_no_state.opp, device_reg, entity_reg):
 
 async def test_action.opp):
     """Test for actions."""
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity",
         STATE_ON,
         {const.ATTR_AVAILABLE_MODES: [const.MODE_HOME, const.MODE_AWAY]},
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -250,7 +250,7 @@ async def test_action.opp):
     assert len(turn_off_calls) == 0
     assert len(toggle_calls) == 0
 
-   .opp.bus.async_fire("test_event_set_humidity")
+    opp.bus.async_fire("test_event_set_humidity")
     await opp.async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 0
@@ -258,7 +258,7 @@ async def test_action.opp):
     assert len(turn_off_calls) == 0
     assert len(toggle_calls) == 0
 
-   .opp.bus.async_fire("test_event_set_mode")
+    opp.bus.async_fire("test_event_set_mode")
     await opp.async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
@@ -266,7 +266,7 @@ async def test_action.opp):
     assert len(turn_off_calls) == 0
     assert len(toggle_calls) == 0
 
-   .opp.bus.async_fire("test_event_turn_off")
+    opp.bus.async_fire("test_event_turn_off")
     await opp.async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
@@ -274,7 +274,7 @@ async def test_action.opp):
     assert len(turn_off_calls) == 1
     assert len(toggle_calls) == 0
 
-   .opp.bus.async_fire("test_event_turn_on")
+    opp.bus.async_fire("test_event_turn_on")
     await opp.async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
@@ -282,7 +282,7 @@ async def test_action.opp):
     assert len(turn_off_calls) == 1
     assert len(toggle_calls) == 0
 
-   .opp.bus.async_fire("test_event_toggle")
+    opp.bus.async_fire("test_event_toggle")
     await opp.async_block_till_done()
     assert len(set_humidity_calls) == 1
     assert len(set_mode_calls) == 1
@@ -295,7 +295,7 @@ async def test_capabilities.opp):
     """Test getting capabilities."""
     # Test capabililities without state
     capabilities = await device_action.async_get_action_capabilities(
-        opp,
+        opp.
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",
@@ -311,7 +311,7 @@ async def test_capabilities.opp):
     ) == [{"name": "mode", "options": [], "required": True, "type": "select"}]
 
     # Set state
-   .opp.states.async_set(
+    opp.states.async_set(
         "humidifier.entity",
         STATE_ON,
         {const.ATTR_AVAILABLE_MODES: [const.MODE_HOME, const.MODE_AWAY]},
@@ -319,7 +319,7 @@ async def test_capabilities.opp):
 
     # Set humidity
     capabilities = await device_action.async_get_action_capabilities(
-        opp,
+        opp.
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",
@@ -336,7 +336,7 @@ async def test_capabilities.opp):
 
     # Set mode
     capabilities = await device_action.async_get_action_capabilities(
-        opp,
+        opp.
         {
             "domain": DOMAIN,
             "device_id": "abcdefgh",

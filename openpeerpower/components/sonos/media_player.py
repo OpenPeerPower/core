@@ -270,7 +270,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 async def async_setup_entry.opp, config_entry, async_add_entities):
     """Set up Sonos from a config entry."""
     if DATA_SONOS not in.opp.data:
-       .opp.data[DATA_SONOS] = SonosData()
+        opp.data[DATA_SONOS] = SonosData()
 
     config = opp.data[SONOS_DOMAIN].get("media_player", {})
     _LOGGER.debug("Reached async_setup_entry, config=%s", config)
@@ -299,13 +299,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
                 if soco.uid not in.opp.data[DATA_SONOS].discovered:
                     _LOGGER.debug("Adding new entity")
-                   .opp.data[DATA_SONOS].discovered.append(soco.uid)
-                   .opp.add_job(async_add_entities, [SonosEntity(soco)])
+                    opp.data[DATA_SONOS].discovered.append(soco.uid)
+                    opp.add_job(async_add_entities, [SonosEntity(soco)])
                 else:
                     entity = _get_entity_from_soco_uid.opp, soco.uid)
                     if entity and (entity.soco == soco or not entity.available):
                         _LOGGER.debug("Seen %s", entity)
-                       .opp.add_job(entity.async_seen(soco))
+                        opp.add_job(entity.async_seen(soco))
 
             except SoCoException as ex:
                 _LOGGER.debug("SoCoException, ex=%s", ex)
@@ -326,20 +326,20 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                         _LOGGER.warning("Failed to initialize '%s'", host)
 
             _LOGGER.debug("Tested all hosts")
-           .opp.data[DATA_SONOS].hosts_heartbeat = opp.helpers.event.call_later(
+            opp.data[DATA_SONOS].hosts_heartbeat = opp.helpers.event.call_later(
                 DISCOVERY_INTERVAL, _discovery
             )
         else:
             _LOGGER.debug("Starting discovery thread")
-           .opp.data[DATA_SONOS].discovery_thread = pysonos.discover_thread(
+            opp.data[DATA_SONOS].discovery_thread = pysonos.discover_thread(
                 _discovered_player,
                 interval=DISCOVERY_INTERVAL,
                 interface_addr=config.get(CONF_INTERFACE_ADDR),
             )
 
     _LOGGER.debug("Adding discovery job")
-   .opp.async_add_executor_job(_discovery)
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_discovery)
+    opp.async_add_executor_job(_discovery)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_discovery)
 
     platform = entity_platform.current_platform.get()
 
@@ -364,21 +364,21 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             await SonosEntity.unjoin_multi.opp, entities)
         elif service_call.service == SERVICE_SNAPSHOT:
             await SonosEntity.snapshot_multi(
-                opp, entities, service_call.data[ATTR_WITH_GROUP]
+                opp. entities, service_call.data[ATTR_WITH_GROUP]
             )
         elif service_call.service == SERVICE_RESTORE:
             await SonosEntity.restore_multi(
-                opp, entities, service_call.data[ATTR_WITH_GROUP]
+                opp. entities, service_call.data[ATTR_WITH_GROUP]
             )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         SONOS_DOMAIN,
         SERVICE_JOIN,
         async_service_handle,
         cv.make_entity_service_schema({vol.Required(ATTR_MASTER): cv.entity_id}),
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         SONOS_DOMAIN,
         SERVICE_UNJOIN,
         async_service_handle,
@@ -389,11 +389,11 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         {vol.Optional(ATTR_WITH_GROUP, default=True): cv.boolean}
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         SONOS_DOMAIN, SERVICE_SNAPSHOT, async_service_handle, join_unjoin_schema
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         SONOS_DOMAIN, SERVICE_RESTORE, async_service_handle, join_unjoin_schema
     )
 

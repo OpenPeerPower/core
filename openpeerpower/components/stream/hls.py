@@ -14,10 +14,10 @@ from .fmp4utils import get_codec_string, get_init, get_m4s
 @callback
 def async_setup_hls.opp):
     """Set up api endpoints."""
-   .opp.http.register_view(HlsPlaylistView())
-   .opp.http.register_view(HlsSegmentView())
-   .opp.http.register_view(HlsInitView())
-   .opp.http.register_view(HlsMasterPlaylistView())
+    opp.http.register_view(HlsPlaylistView())
+    opp.http.register_view(HlsSegmentView())
+    opp.http.register_view(HlsInitView())
+    opp.http.register_view(HlsMasterPlaylistView())
     return "/api/hls/{}/master_playlist.m3u8"
 
 

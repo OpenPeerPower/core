@@ -105,7 +105,7 @@ async def test.oppio_single_instance.opp):
     MockConfigEntry(domain="mqtt").add_to.opp.opp)
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source": .oppio"}
+        "mqtt", context={"source":  opp.o"}
     )
     assert result["type"] == "abort"
     assert result["reason"] == "single_instance_allowed"
@@ -125,7 +125,7 @@ async def test.oppio_confirm.opp, mock_try_connection, mock_finish_setup):
             "password": "mock-pass",
             "protocol": "3.1.1",
         },
-        context={"source": .oppio"},
+        context={"source":  opp.o"},
     )
     assert result["type"] == "form"
     assert result["step_id"] == oppio_confirm"
@@ -303,7 +303,7 @@ def get_suggested(schema, key):
 
 
 async def test_option_flow_default_suggested_values(
-    opp, mqtt_mock, mock_try_connection
+    opp. mqtt_mock, mock_try_connection
 ):
     """Test config flow options has default/suggested values."""
     mock_try_connection.return_value = True

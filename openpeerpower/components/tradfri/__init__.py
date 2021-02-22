@@ -77,8 +77,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         info[CONF_HOST] = host
         info[CONF_IMPORT_GROUPS] = conf[CONF_ALLOW_TRADFRI_GROUPS]
 
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=info
             )
         )
@@ -89,8 +89,8 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     if host is None or host in configured_hosts or host in legacy_hosts:
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_HOST: host, CONF_IMPORT_GROUPS: import_groups},
@@ -149,8 +149,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     )
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     async def async_keep_alive(now):
@@ -174,7 +174,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )

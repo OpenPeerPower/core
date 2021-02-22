@@ -68,7 +68,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the isy994 integration from YAML."""
     isy_config: Optional[ConfigType] = config.get(DOMAIN)
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if not isy_config:
         return True
@@ -76,8 +76,8 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     # Only import if we haven't before.
     config_entry = _async_find_matching_config_entry.opp)
     if not config_entry:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": config_entries.SOURCE_IMPORT},
                 data=dict(isy_config),
@@ -86,7 +86,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
         return True
 
     # Update the entry based on the YAML configuration, in case it changed.
-   .opp.config_entries.async_update_entry(config_entry, data=dict(isy_config))
+    opp.config_entries.async_update_entry(config_entry, data=dict(isy_config))
     return True
 
 
@@ -98,7 +98,7 @@ def _async_find_matching_config_entry.opp):
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up the ISY 994 integration."""
     # As there currently is no way to import options from yaml
@@ -107,18 +107,18 @@ async def async_setup_entry(
     # they are missing from the options
     _async_import_options_from_data_if_missing.opp, entry)
 
-   .opp.data[DOMAIN][entry.entry_id] = {}
-   .opp_isy_data = opp.data[DOMAIN][entry.entry_id]
+    opp.data[DOMAIN][entry.entry_id] = {}
+    opp.isy_data = opp.data[DOMAIN][entry.entry_id]
 
-   .opp_isy_data[ISY994_NODES] = {}
+    opp.isy_data[ISY994_NODES] = {}
     for platform in SUPPORTED_PLATFORMS:
-       .opp_isy_data[ISY994_NODES][platform] = []
+        opp.isy_data[ISY994_NODES][platform] = []
 
-   .opp_isy_data[ISY994_PROGRAMS] = {}
+    opp.isy_data[ISY994_PROGRAMS] = {}
     for platform in SUPPORTED_PROGRAM_PLATFORMS:
-       .opp_isy_data[ISY994_PROGRAMS][platform] = []
+        opp.isy_data[ISY994_PROGRAMS][platform] = []
 
-   .opp_isy_data[ISY994_VARIABLES] = []
+    opp.isy_data[ISY994_VARIABLES] = []
 
     isy_config = entry.data
     isy_options = entry.options
@@ -172,13 +172,13 @@ async def async_setup_entry(
     # Dump ISY Clock Information. Future: Add ISY as sensor to Hass with attrs
     _LOGGER.info(repr(isy.clock))
 
-   .opp_isy_data[ISY994_ISY] = isy
+    opp.isy_data[ISY994_ISY] = isy
     await _async_get_or_create_isy_device_in_registry.opp, entry, isy)
 
     # Load platforms for the devices in the ISY controller that we support.
     for platform in SUPPORTED_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     def _start_auto_update() -> None:
@@ -190,7 +190,7 @@ async def async_setup_entry(
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp_isy_data[UNDO_UPDATE_LISTENER] = undo_listener
+    opp.isy_data[UNDO_UPDATE_LISTENER] = undo_listener
 
     # Register Integration-wide Services:
     async_setup_services.opp)
@@ -199,7 +199,7 @@ async def async_setup_entry(
 
 
 async def _async_update_listener(
-    opp: OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
@@ -207,7 +207,7 @@ async def _async_update_listener(
 
 @callback
 def _async_import_options_from_data_if_missing(
-    opp: OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     options = dict(entry.options)
     modified = False
@@ -221,11 +221,11 @@ def _async_import_options_from_data_if_missing(
             modified = True
 
     if modified:
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
 
 async def _async_get_or_create_isy_device_in_registry(
-    opp: OpenPeerPower, entry: config_entries.ConfigEntry, isy
+    opp. OpenPeerPower, entry: config_entries.ConfigEntry, isy
 ) -> None:
     device_registry = await dr.async_get_registry.opp)
 
@@ -241,19 +241,19 @@ async def _async_get_or_create_isy_device_in_registry(
 
 
 async def async_unload_entry(
-    opp: OpenPeerPower, entry: config_entries.ConfigEntry
+    opp. OpenPeerPower, entry: config_entries.ConfigEntry
 ) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, platform)
+                opp.config_entries.async_forward_entry_unload(entry, platform)
                 for platform in SUPPORTED_PLATFORMS
             ]
         )
     )
 
-   .opp_isy_data = opp.data[DOMAIN][entry.entry_id]
+    opp.isy_data = opp.data[DOMAIN][entry.entry_id]
 
     isy = opp_isy_data[ISY994_ISY]
 
@@ -264,10 +264,10 @@ async def async_unload_entry(
 
     await opp.async_add_executor_job(_stop_auto_update)
 
-   .opp_isy_data[UNDO_UPDATE_LISTENER]()
+    opp.isy_data[UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     async_unload_services.opp)
 

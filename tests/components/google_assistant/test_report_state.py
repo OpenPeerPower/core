@@ -13,8 +13,8 @@ from tests.common import async_fire_time_changed
 async def test_report_state.opp, caplog, legacy_patchable_time):
     """Test report state works."""
     assert await async_setup_component.opp, "switch", {})
-   .opp.states.async_set("light.ceiling", "off")
-   .opp.states.async_set("switch.ac", "on")
+    opp.states.async_set("light.ceiling", "off")
+    opp.states.async_set("switch.ac", "on")
 
     with patch.object(
         BASIC_CONFIG, "async_report_state_all", AsyncMock()
@@ -38,7 +38,7 @@ async def test_report_state.opp, caplog, legacy_patchable_time):
     with patch.object(
         BASIC_CONFIG, "async_report_state_all", AsyncMock()
     ) as mock_report:
-       .opp.states.async_set("light.kitchen", "on")
+        opp.states.async_set("light.kitchen", "on")
         await opp.async_block_till_done()
 
     assert len(mock_report.mock_calls) == 1
@@ -52,11 +52,11 @@ async def test_report_state.opp, caplog, legacy_patchable_time):
         return_value={"same": "info"},
     ), patch.object(BASIC_CONFIG, "async_report_state_all", AsyncMock()) as mock_report:
         # New state, so reported
-       .opp.states.async_set("light.double_report", "on")
+        opp.states.async_set("light.double_report", "on")
         await opp.async_block_till_done()
 
         # Changed, but serialize is same, so filtered out by extra check
-       .opp.states.async_set("light.double_report", "off")
+        opp.states.async_set("light.double_report", "off")
         await opp.async_block_till_done()
 
         assert len(mock_report.mock_calls) == 1
@@ -68,7 +68,7 @@ async def test_report_state.opp, caplog, legacy_patchable_time):
     with patch.object(
         BASIC_CONFIG, "async_report_state_all", AsyncMock()
     ) as mock_report:
-       .opp.states.async_set("switch.ac", "on", {"something": "else"})
+        opp.states.async_set("switch.ac", "on", {"something": "else"})
         await opp.async_block_till_done()
 
     assert len(mock_report.mock_calls) == 0
@@ -80,7 +80,7 @@ async def test_report_state.opp, caplog, legacy_patchable_time):
         "openpeerpower.components.google_assistant.report_state.GoogleEntity.query_serialize",
         side_effect=error.SmartHomeError("mock-error", "mock-msg"),
     ):
-       .opp.states.async_set("light.kitchen", "off")
+        opp.states.async_set("light.kitchen", "off")
         await opp.async_block_till_done()
 
     assert "Not reporting state for light.kitchen: mock-error"
@@ -91,7 +91,7 @@ async def test_report_state.opp, caplog, legacy_patchable_time):
     with patch.object(
         BASIC_CONFIG, "async_report_state_all", AsyncMock()
     ) as mock_report:
-       .opp.states.async_set("light.kitchen", "on")
+        opp.states.async_set("light.kitchen", "on")
         await opp.async_block_till_done()
 
     assert len(mock_report.mock_calls) == 0

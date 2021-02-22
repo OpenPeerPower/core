@@ -52,8 +52,8 @@ async def async_setup_opp: OpenPeerPower, config: dict):
             }
 
     for conf in configs.values():
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
             )
         )
@@ -64,7 +64,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ONVIF from a config entry."""
     if DOMAIN not in.opp.data:
-       .opp.data[DOMAIN] = {}
+        opp.data[DOMAIN] = {}
 
     if not entry.options:
         await async_populate_options.opp, entry)
@@ -81,7 +81,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not entry.data.get(CONF_SNAPSHOT_AUTH):
         await async_populate_snapshot_auth.opp, device, entry)
 
-   .opp.data[DOMAIN][entry.unique_id] = device
+    opp.data[DOMAIN][entry.unique_id] = device
 
     platforms = ["camera"]
 
@@ -89,11 +89,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         platforms += ["binary_sensor", "sensor"]
 
     for component in platforms:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.async_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.async_stop)
 
     return True
 
@@ -111,7 +111,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in platforms
             ]
         )
@@ -139,7 +139,7 @@ async def async_populate_snapshot_auth.opp, device, entry):
     """Check if digest auth for snapshots is possible."""
     auth = await _get_snapshot_auth(device)
     new_data = {**entry.data, CONF_SNAPSHOT_AUTH: auth}
-   .opp.config_entries.async_update_entry(entry, data=new_data)
+    opp.config_entries.async_update_entry(entry, data=new_data)
 
 
 async def async_populate_options.opp, entry):
@@ -149,4 +149,4 @@ async def async_populate_options.opp, entry):
         CONF_RTSP_TRANSPORT: RTSP_TRANS_PROTOCOLS[0],
     }
 
-   .opp.config_entries.async_update_entry(entry, options=options)
+    opp.config_entries.async_update_entry(entry, options=options)

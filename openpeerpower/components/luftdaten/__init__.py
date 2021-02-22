@@ -86,16 +86,16 @@ CONFIG_SCHEMA = vol.Schema(
 
 @callback
 def _async_fixup_sensor_id.opp, config_entry, sensor_id):
-   .opp.config_entries.async_update_entry(
+    opp.config_entries.async_update_entry(
         config_entry, data={**config_entry.data, CONF_SENSOR_ID: int(sensor_id)}
     )
 
 
 async def async_setup_opp, config):
     """Set up the Luftdaten component."""
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT] = {}
-   .opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER] = {}
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT] = {}
+    opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER] = {}
 
     if DOMAIN not in config:
         return True
@@ -104,8 +104,8 @@ async def async_setup_opp, config):
     station_id = conf[CONF_SENSOR_ID]
 
     if station_id not in configured_sensors.opp):
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data={
@@ -116,7 +116,7 @@ async def async_setup_opp, config):
             )
         )
 
-   .opp.data[DOMAIN][CONF_SCAN_INTERVAL] = conf[CONF_SCAN_INTERVAL]
+    opp.data[DOMAIN][CONF_SCAN_INTERVAL] = conf[CONF_SCAN_INTERVAL]
 
     return True
 
@@ -135,7 +135,7 @@ async def async_setup_entry.opp, config_entry):
             "Removing duplicate sensors for station %s",
             config_entry.data[CONF_SENSOR_ID],
         )
-       .opp.async_create_task.opp.config_entries.async_remove(config_entry.entry_id))
+        opp.async_create_task.opp.config_entries.async_remove(config_entry.entry_id))
         return False
 
     session = async_get_clientsession.opp)
@@ -148,12 +148,12 @@ async def async_setup_entry.opp, config_entry):
             ),
         )
         await luftdaten.async_update()
-       .opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT][config_entry.entry_id] = luftdaten
+        opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT][config_entry.entry_id] = luftdaten
     except LuftdatenError as err:
         raise ConfigEntryNotReady from err
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
     )
 
     async def refresh_sensors(event_time):
@@ -161,12 +161,12 @@ async def async_setup_entry.opp, config_entry):
         await luftdaten.async_update()
         async_dispatcher_send.opp, TOPIC_UPDATE)
 
-   .opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER][
+    opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER][
         config_entry.entry_id
     ] = async_track_time_interval(
-        opp,
+        opp.
         refresh_sensors,
-       .opp.data[DOMAIN].get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+        opp.data[DOMAIN].get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
     )
 
     return True
@@ -179,7 +179,7 @@ async def async_unload_entry.opp, config_entry):
     )
     remove_listener()
 
-   .opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT].pop(config_entry.entry_id)
+    opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT].pop(config_entry.entry_id)
 
     return await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
 

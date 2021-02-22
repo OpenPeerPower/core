@@ -81,13 +81,13 @@ async def test_mix_global_timeout_freeze_and_zone_freeze_different_order.opp):
             time.sleep(0.4)
 
     async with timeout.async_timeout(0.1):
-       .opp.async_add_executor_job(_some_sync_work)
+        opp.async_add_executor_job(_some_sync_work)
         async with timeout.async_timeout(0.2, zone_name="recorder"):
             await asyncio.sleep(0.3)
 
 
 async def test_mix_global_timeout_freeze_and_zone_freeze_other_zone_inside_executor_job(
-    opp,
+    opp.
 ):
     """Test a simple global timeout freeze other zone inside an executor job."""
     timeout = TimeoutManager()
@@ -104,7 +104,7 @@ async def test_mix_global_timeout_freeze_and_zone_freeze_other_zone_inside_execu
 
 
 async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job_second_job_outside_zone_context(
-    opp,
+    opp.
 ):
     """Test a simple global timeout freeze inside an executor job with second job outside of zone context."""
     timeout = TimeoutManager()
@@ -277,7 +277,7 @@ async def test_simple_zone_timeout_freeze_without_timeout_cleanup.opp):
             await asyncio.sleep(0.4)
 
     async with timeout.async_timeout(0.1):
-       .opp.async_create_task(background())
+        opp.async_create_task(background())
         await asyncio.sleep(0.2)
 
 
@@ -291,7 +291,7 @@ async def test_simple_zone_timeout_freeze_without_timeout_cleanup2.opp):
 
     with pytest.raises(asyncio.TimeoutError):
         async with timeout.async_timeout(0.1):
-           .opp.async_create_task(background())
+            opp.async_create_task(background())
             await asyncio.sleep(0.3)
 
 

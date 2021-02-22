@@ -79,7 +79,7 @@ def get_calendar_info(calendar):
 @pytest.fixture(autouse=True)
 def mock_google_setup_opp, test_calendar):
     """Mock the google set up functions."""
-   .opp.loop.run_until_complete(async_setup_component.opp, "group", {"group": {}}))
+    opp.loop.run_until_complete(async_setup_component.opp, "group", {"group": {}}))
     calendar = get_calendar_info(test_calendar)
     calendars = {calendar[CONF_CAL_ID]: calendar}
     patch_google_auth = patch(
@@ -98,7 +98,7 @@ def mock_google_setup_opp, test_calendar):
 @pytest.fixture(autouse=True)
 def mock_http.opp):
     """Mock the http component."""
-   .opp.http = Mock()
+    opp.http = Mock()
 
 
 @pytest.fixture(autouse=True)

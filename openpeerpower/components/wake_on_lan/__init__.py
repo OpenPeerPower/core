@@ -49,7 +49,7 @@ async def async_setup_opp, config):
             partial(wakeonlan.send_magic_packet, mac_address, **service_kwargs)
         )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SEND_MAGIC_PACKET,
         send_magic_packet,

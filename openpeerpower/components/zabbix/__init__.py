@@ -91,7 +91,7 @@ def setup_opp, config):
         event_helper.call_later.opp, RETRY_INTERVAL, lambda _: setup_opp, config))
         return True
 
-   .opp.data[DOMAIN] = zapi
+    opp.data[DOMAIN] = zapi
 
     def event_to_metrics(event, float_keys, string_keys):
         """Add an event to the outgoing Zabbix list."""
@@ -177,8 +177,8 @@ class ZabbixThread(threading.Thread):
 
     def setup(self, opp):
         """Set up the thread and start it."""
-       .opp.bus.listen(EVENT_STATE_CHANGED, self._event_listener)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self._shutdown)
+        opp.bus.listen(EVENT_STATE_CHANGED, self._event_listener)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, self._shutdown)
         self.start()
         _LOGGER.debug("Started publishing state changes to Zabbix")
 

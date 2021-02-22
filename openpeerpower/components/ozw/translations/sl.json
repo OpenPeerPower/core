@@ -9,7 +9,7 @@
             "install_addon": "Po\u010dakajte, da se namestitev dodatka OpenZWave zaklju\u010di. To lahko traja ve\u010d minut."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "title": "Namestite OpenZWave integracijo z OpenZWave dodatkom."
             },
             "install_addon": {

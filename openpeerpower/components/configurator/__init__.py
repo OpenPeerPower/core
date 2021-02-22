@@ -43,7 +43,7 @@ STATE_CONFIGURED = "configured"
 @bind.opp
 @async_callback
 def async_request_config(
-    opp,
+    opp.
     name,
     callback=None,
     description=None,
@@ -74,9 +74,9 @@ def async_request_config(
     )
 
     if DATA_REQUESTS not in.opp.data:
-       .opp.data[DATA_REQUESTS] = {}
+        opp.data[DATA_REQUESTS] = {}
 
-   .opp.data[DATA_REQUESTS][request_id] = instance
+    opp.data[DATA_REQUESTS][request_id] = instance
 
     return request_id
 
@@ -88,7 +88,7 @@ def request_config(opp, *args, **kwargs):
     Will return an ID to be used for sequent calls.
     """
     return run_callback_threadsafe(
-       .opp.loop, ft.partial(async_request_config, opp, *args, **kwargs)
+        opp.loop, ft.partial(async_request_config, opp, *args, **kwargs)
     ).result()
 
 
@@ -97,7 +97,7 @@ def request_config(opp, *args, **kwargs):
 def async_notify_errors.opp, request_id, error):
     """Add errors to a config request."""
     try:
-       .opp.data[DATA_REQUESTS][request_id].async_notify_errors(request_id, error)
+        opp.data[DATA_REQUESTS][request_id].async_notify_errors(request_id, error)
     except KeyError:
         # If request_id does not exist
         pass
@@ -107,7 +107,7 @@ def async_notify_errors.opp, request_id, error):
 def notify_errors.opp, request_id, error):
     """Add errors to a config request."""
     return run_callback_threadsafe(
-       .opp.loop, async_notify_errors, opp, request_id, error
+        opp.loop, async_notify_errors, opp, request_id, error
     ).result()
 
 
@@ -116,7 +116,7 @@ def notify_errors.opp, request_id, error):
 def async_request_done.opp, request_id):
     """Mark a configuration request as done."""
     try:
-       .opp.data[DATA_REQUESTS].pop(request_id).async_request_done(request_id)
+        opp.data[DATA_REQUESTS].pop(request_id).async_request_done(request_id)
     except KeyError:
         # If request_id does not exist
         pass
@@ -126,7 +126,7 @@ def async_request_done.opp, request_id):
 def request_done.opp, request_id):
     """Mark a configuration request as done."""
     return run_callback_threadsafe(
-       .opp.loop, async_request_done, opp, request_id
+        opp.loop, async_request_done, opp, request_id
     ).result()
 
 
@@ -143,7 +143,7 @@ class Configurator:
         self.opp = opp
         self._cur_id = 0
         self._requests = {}
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, SERVICE_CONFIGURE, self.async_handle_service_call
         )
 

@@ -8,7 +8,7 @@ import time
 def install_osx():
     """Set up to run via launchd on OS X."""
     with os.popen("which.opp") as inp:
-       .opp_path = inp.read().strip()
+        opp.path = inp.read().strip()
 
     with os.popen("whoami") as inp:
         user = inp.read().strip()

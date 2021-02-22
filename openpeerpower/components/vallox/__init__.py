@@ -110,11 +110,11 @@ async def async_setup_opp, config):
     state_proxy = ValloxStateProxy.opp, client)
     service_handler = ValloxServiceHandler(client, state_proxy)
 
-   .opp.data[DOMAIN] = {"client": client, "state_proxy": state_proxy, "name": name}
+    opp.data[DOMAIN] = {"client": client, "state_proxy": state_proxy, "name": name}
 
     for vallox_service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[vallox_service]["schema"]
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN, vallox_service, service_handler.async_handle, schema=schema
         )
 
@@ -125,8 +125,8 @@ async def async_setup_opp, config):
     # code will be called with update_before_add=False to intentionally delay
     # the first request, increasing chance that it is issued only when the
     # machine is less busy again.
-   .opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
-   .opp.async_create_task(async_load_platform.opp, "fan", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, "fan", DOMAIN, {}, config))
 
     async_track_time_interval.opp, state_proxy.async_update, SCAN_INTERVAL)
 

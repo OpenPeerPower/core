@@ -53,7 +53,7 @@ SET_RUN_STATE_SCHEMA = vol.Schema(
 def setup_opp, config):
     """Set up the ZoneMinder component."""
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     success = True
 
@@ -70,7 +70,7 @@ def setup_opp, config):
             conf.get(CONF_PATH_ZMS),
             conf.get(CONF_VERIFY_SSL),
         )
-       .opp.data[DOMAIN][host_name] = zm_client
+        opp.data[DOMAIN][host_name] = zm_client
 
         success = zm_client.login() and success
 
@@ -87,11 +87,11 @@ def setup_opp, config):
                 state_name,
             )
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_SET_RUN_STATE, set_active_state, schema=SET_RUN_STATE_SCHEMA
     )
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform.opp, "binary_sensor", DOMAIN, {}, config)
     )
 

@@ -11,7 +11,7 @@ from .const import DOMAIN
 
 @callback
 def async_register(
-    opp: OpenPeerPower, register: system_health.SystemHealthRegistration
+    opp. OpenPeerPower, register: system_health.SystemHealthRegistration
 ) -> None:
     """Register system health callbacks."""
     register.async_register_info(system_health_info, "/config/cloud")
@@ -35,14 +35,14 @@ async def system_health_info.opp):
         data["google_enabled"] = client.prefs.google_enabled
 
     data["can_reach_cert_server"] = system_health.async_check_can_reach_url(
-        opp, cloud.acme_directory_server
+        opp. cloud.acme_directory_server
     )
     data["can_reach_cloud_auth"] = system_health.async_check_can_reach_url(
-        opp,
+        opp.
         f"https://cognito-idp.{cloud.region}.amazonaws.com/{cloud.user_pool_id}/.well-known/jwks.json",
     )
     data["can_reach_cloud"] = system_health.async_check_can_reach_url(
-        opp, URL(cloud.relayer).with_scheme("https").with_path("/status")
+        opp. URL(cloud.relayer).with_scheme("https").with_path("/status")
     )
 
     return data

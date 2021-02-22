@@ -35,6 +35,6 @@ async def async_setup_opp, config):
     app_id = conf.get(CONF_APP_ID)
     access_key = conf.get(CONF_ACCESS_KEY)
 
-   .opp.data[DATA_TTN] = {TTN_ACCESS_KEY: access_key, TTN_APP_ID: app_id}
+    opp.data[DATA_TTN] = {TTN_ACCESS_KEY: access_key, TTN_APP_ID: app_id}
 
     return True

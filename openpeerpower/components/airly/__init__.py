@@ -58,30 +58,30 @@ async def async_setup_entry.opp, config_entry):
 
     # For backwards compat, set unique ID
     if config_entry.unique_id is None:
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry, unique_id=f"{latitude}-{longitude}"
         )
 
     websession = async_get_clientsession.opp)
     # Change update_interval for other Airly instances
     update_interval = set_update_interval(
-        opp, len.opp.config_entries.async_entries(DOMAIN))
+        opp. len.opp.config_entries.async_entries(DOMAIN))
     )
 
     coordinator = AirlyDataUpdateCoordinator(
-        opp, websession, api_key, latitude, longitude, update_interval, use_nearest
+        opp. websession, api_key, latitude, longitude, update_interval, use_nearest
     )
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][config_entry.entry_id] = coordinator
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
     return True
@@ -92,13 +92,13 @@ async def async_unload_entry.opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(config_entry, component)
+                opp.config_entries.async_forward_entry_unload(config_entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(config_entry.entry_id)
 
     # Change update_interval for other Airly instances
     set_update_interval.opp, len.opp.data[DOMAIN]))
@@ -111,7 +111,7 @@ class AirlyDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp,
+        opp.
         session,
         api_key,
         latitude,

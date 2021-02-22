@@ -236,28 +236,28 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
             thermostat.schedule_update_op_state(True)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_CREATE_VACATION,
         create_vacation_service,
         schema=CREATE_VACATION_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_DELETE_VACATION,
         delete_vacation_service,
         schema=DELETE_VACATION_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_FAN_MIN_ON_TIME,
         fan_min_on_time_set_service,
         schema=SET_FAN_MIN_ON_TIME_SCHEMA,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_RESUME_PROGRAM,
         resume_program_set_service,

@@ -67,7 +67,7 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
 
     # turn state flip
     await send_attributes_report(
-        opp, cluster, {0x0000: 0, 0x0020: 23, 0x0021: 200, 0x0001: 2}
+        opp. cluster, {0x0000: 0, 0x0020: 23, 0x0021: 200, 0x0001: 2}
     )
 
     zigpy_device_dt.last_seen = time.time() + 10

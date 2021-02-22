@@ -37,7 +37,7 @@ async def test_valid_path.opp):
         os.mkdir(TEST_DIR)
     create_file(TEST_FILE)
 
-   .opp.config.allowlist_external_dirs = {TEST_DIR}
+    opp.config.allowlist_external_dirs = {TEST_DIR}
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: TEST_DIR}}
     assert await async_setup_component.opp, "sensor", config)
     await opp.async_block_till_done()

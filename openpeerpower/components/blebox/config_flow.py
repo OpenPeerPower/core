@@ -79,7 +79,7 @@ class BleBoxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input=None):
         """Handle initial user-triggered config step."""
 
-        opp =self.opp
+        opp.=self.opp
         schema = create_schema(user_input)
 
         if user_input is None:

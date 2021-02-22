@@ -97,7 +97,7 @@ def setup_opp, config):
 
         _LOGGER.debug("Sent metric %s: %s (tags: %s)", metric, value, tags)
 
-   .opp.bus.listen(EVENT_LOGBOOK_ENTRY, logbook_entry_listener)
-   .opp.bus.listen(EVENT_STATE_CHANGED, state_changed_listener)
+    opp.bus.listen(EVENT_LOGBOOK_ENTRY, logbook_entry_listener)
+    opp.bus.listen(EVENT_STATE_CHANGED, state_changed_listener)
 
     return True

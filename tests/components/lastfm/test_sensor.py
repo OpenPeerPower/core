@@ -50,7 +50,7 @@ async def test_update_not_playing.opp, lastfm_network):
     lastfm_network.return_value.get_user.return_value = MockUser(None)
 
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {"sensor": {"platform": "lastfm", "api_key": "secret-key", "users": ["test"]}},
     )
@@ -71,7 +71,7 @@ async def test_update_playing.opp, lastfm_network):
     )
 
     assert await async_setup_component(
-        opp,
+        opp.
         sensor.DOMAIN,
         {"sensor": {"platform": "lastfm", "api_key": "secret-key", "users": ["test"]}},
     )

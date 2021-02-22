@@ -26,8 +26,8 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp, config):
     """Set up the velux component."""
     try:
-       .opp.data[DATA_VELUX] = VeluxModule.opp, config[DOMAIN])
-       .opp.data[DATA_VELUX].setup()
+        opp.data[DATA_VELUX] = VeluxModule.opp, config[DOMAIN])
+        opp.data[DATA_VELUX].setup()
         await opp.data[DATA_VELUX].async_start()
 
     except PyVLXException as ex:
@@ -35,7 +35,7 @@ async def async_setup_opp, config):
         return False
 
     for component in SUPPORTED_DOMAINS:
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform.opp, component, DOMAIN, {}, config)
         )
     return True

@@ -37,7 +37,7 @@ async def test_fan_basic.opp, hk_driver, events):
     """Test fan with char state."""
     entity_id = "fan.demo"
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
     await opp.async_block_till_done()
     acc = Fan.opp, hk_driver, "Fan", entity_id, 1, None)
     hk_driver.add_accessory(acc)
@@ -53,15 +53,15 @@ async def test_fan_basic.opp, hk_driver, events):
     await opp.async_block_till_done()
     assert acc.char_active.value == 1
 
-   .opp.states.async_set(entity_id, STATE_OFF, {ATTR_SUPPORTED_FEATURES: 0})
+    opp.states.async_set(entity_id, STATE_OFF, {ATTR_SUPPORTED_FEATURES: 0})
     await opp.async_block_till_done()
     assert acc.char_active.value == 0
 
-   .opp.states.async_set(entity_id, STATE_UNKNOWN)
+    opp.states.async_set(entity_id, STATE_UNKNOWN)
     await opp.async_block_till_done()
     assert acc.char_active.value == 0
 
-   .opp.states.async_remove(entity_id)
+    opp.states.async_remove(entity_id)
     await opp.async_block_till_done()
     assert acc.char_active.value == 0
 
@@ -89,7 +89,7 @@ async def test_fan_basic.opp, hk_driver, events):
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] is None
 
-   .opp.states.async_set(entity_id, STATE_ON)
+    opp.states.async_set(entity_id, STATE_ON)
     await opp.async_block_till_done()
 
     hk_driver.set_characteristics(
@@ -115,7 +115,7 @@ async def test_fan_direction.opp, hk_driver, events):
     """Test fan with direction."""
     entity_id = "fan.demo"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {ATTR_SUPPORTED_FEATURES: SUPPORT_DIRECTION, ATTR_DIRECTION: DIRECTION_FORWARD},
@@ -130,7 +130,7 @@ async def test_fan_direction.opp, hk_driver, events):
     await opp.async_block_till_done()
     assert acc.char_direction.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_DIRECTION: DIRECTION_REVERSE})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_DIRECTION: DIRECTION_REVERSE})
     await opp.async_block_till_done()
     assert acc.char_direction.value == 1
 
@@ -183,7 +183,7 @@ async def test_fan_oscillate.opp, hk_driver, events):
     """Test fan with oscillate."""
     entity_id = "fan.demo"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {ATTR_SUPPORTED_FEATURES: SUPPORT_OSCILLATE, ATTR_OSCILLATING: False},
@@ -198,7 +198,7 @@ async def test_fan_oscillate.opp, hk_driver, events):
     await opp.async_block_till_done()
     assert acc.char_swing.value == 0
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_OSCILLATING: True})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_OSCILLATING: True})
     await opp.async_block_till_done()
     assert acc.char_swing.value == 1
 
@@ -252,7 +252,7 @@ async def test_fan_speed.opp, hk_driver, events):
     """Test fan with speed."""
     entity_id = "fan.demo"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {
@@ -273,7 +273,7 @@ async def test_fan_speed.opp, hk_driver, events):
     await acc.run()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(entity_id, STATE_ON, {ATTR_PERCENTAGE: 100})
+    opp.states.async_set(entity_id, STATE_ON, {ATTR_PERCENTAGE: 100})
     await opp.async_block_till_done()
     assert acc.char_speed.value == 100
 
@@ -307,7 +307,7 @@ async def test_fan_speed.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == 42
 
     # Verify speed is preserved from off to on
-   .opp.states.async_set(entity_id, STATE_OFF, {ATTR_PERCENTAGE: 42})
+    opp.states.async_set(entity_id, STATE_OFF, {ATTR_PERCENTAGE: 42})
     await opp.async_block_till_done()
     assert acc.char_speed.value == 42
     assert acc.char_active.value == 0
@@ -333,7 +333,7 @@ async def test_fan_set_all_one_shot.opp, hk_driver, events):
     """Test fan with speed."""
     entity_id = "fan.demo"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {
@@ -355,7 +355,7 @@ async def test_fan_set_all_one_shot.opp, hk_driver, events):
     await acc.run()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_OFF,
         {
@@ -426,7 +426,7 @@ async def test_fan_set_all_one_shot.opp, hk_driver, events):
     assert events[1].data[ATTR_VALUE] == DIRECTION_REVERSE
     assert events[2].data[ATTR_VALUE] == 42
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {
@@ -524,7 +524,7 @@ async def test_fan_set_all_one_shot.opp, hk_driver, events):
 
 async def test_fan_restore.opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
-   .opp.state = CoreState.not_running
+    opp.state = CoreState.not_running
 
     registry = await entity_registry.async_get_registry.opp)
 
@@ -544,7 +544,7 @@ async def test_fan_restore.opp, hk_driver, events):
         device_class="mock-device-class",
     )
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
     acc = Fan.opp, hk_driver, "Fan", "fan.simple", 2, None)
@@ -566,7 +566,7 @@ async def test_fan_preset_modes.opp, hk_driver, events):
     """Test fan with direction."""
     entity_id = "fan.demo"
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {
@@ -585,7 +585,7 @@ async def test_fan_preset_modes.opp, hk_driver, events):
     await acc.run()
     await opp.async_block_till_done()
 
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id,
         STATE_ON,
         {

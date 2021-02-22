@@ -83,18 +83,18 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Set up AWS component."""
-   .opp.data[DATA_HASS_CONFIG] = config
+    opp.data[DATA_HASS_CONFIG] = config
 
     conf = config.get(DOMAIN)
     if conf is None:
         # create a default conf using default profile
         conf = CONFIG_SCHEMA({ATTR_CREDENTIALS: DEFAULT_CREDENTIAL})
 
-   .opp.data[DATA_CONFIG] = conf
-   .opp.data[DATA_SESSIONS] = OrderedDict()
+    opp.data[DATA_CONFIG] = conf
+    opp.data[DATA_SESSIONS] = OrderedDict()
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=conf
         )
     )
@@ -113,12 +113,12 @@ async def async_setup_entry.opp, entry):
     if entry.source == config_entries.SOURCE_IMPORT:
         if conf is None:
             # user removed config from configuration.yaml, abort setup
-           .opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+            opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
             return False
 
         if conf != entry.data:
             # user changed config from configuration.yaml, use conf to setup
-           .opp.config_entries.async_update_entry(entry, data=conf)
+            opp.config_entries.async_update_entry(entry, data=conf)
 
     if conf is None:
         conf = CONFIG_SCHEMA({DOMAIN: entry.data})[DOMAIN]
@@ -141,12 +141,12 @@ async def async_setup_entry.opp, entry):
                 )
                 validation = False
             else:
-               .opp.data[DATA_SESSIONS][name] = result
+                opp.data[DATA_SESSIONS][name] = result
 
     # set up notify platform, no entry support for notify component yet,
     # have to use discovery to load platform.
     for notify_config in conf[CONF_NOTIFY]:
-       .opp.async_create_task(
+        opp.async_create_task(
             discovery.async_load_platform.opp, "notify", DOMAIN, notify_config, config)
         )
 

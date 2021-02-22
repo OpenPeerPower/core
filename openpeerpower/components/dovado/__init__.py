@@ -39,7 +39,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 def setup_opp, config):
     """Set up the Dovado component."""
 
-   .opp.data[DOMAIN] = DovadoData(
+    opp.data[DOMAIN] = DovadoData(
         dovado.Dovado(
             config[DOMAIN][CONF_USERNAME],
             config[DOMAIN][CONF_PASSWORD],

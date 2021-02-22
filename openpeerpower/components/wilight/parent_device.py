@@ -34,7 +34,7 @@ class WiLightParent:
     async def async_setup(self):
         """Set up a WiLight Parent Device based on host parameter."""
         host = self._host
-        opp =self.opp
+        opp.=self.opp
 
         api_device = await opp.async_add_executor_job(create_api_device, host)
 
@@ -46,7 +46,7 @@ class WiLightParent:
             # Schedule reconnect after connection has been lost.
             _LOGGER.warning("WiLight %s disconnected", api_device.device_id)
             async_dispatcher_send(
-                opp, f"wilight_device_available_{api_device.device_id}", False
+                opp. f"wilight_device_available_{api_device.device_id}", False
             )
 
         @callback
@@ -54,7 +54,7 @@ class WiLightParent:
             # Schedule reconnect after connection has been lost.
             _LOGGER.warning("WiLight %s reconnect", api_device.device_id)
             async_dispatcher_send(
-                opp, f"wilight_device_available_{api_device.device_id}", True
+                opp. f"wilight_device_available_{api_device.device_id}", True
             )
 
         async def connect(api_device):
@@ -69,7 +69,7 @@ class WiLightParent:
             )
 
             # handle shutdown of WiLight asyncio transport
-           .opp.bus.async_listen_once(
+            opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, lambda x: client.stop()
             )
 

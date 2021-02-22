@@ -63,7 +63,7 @@ def setup_opp, config):
 
         send_data(name, json_body)
 
-   .opp.bus.listen(EVENT_STATE_CHANGED, dweet_event_listener)
+    opp.bus.listen(EVENT_STATE_CHANGED, dweet_event_listener)
 
     return True
 

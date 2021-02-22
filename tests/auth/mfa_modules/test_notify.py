@@ -98,8 +98,8 @@ async def test_setup_depose_user.opp):
 
 async def test_login_flow_validates_mfa.opp):
     """Test login flow with mfa enabled."""
-   .opp.auth = await auth_manager_from_config(
-        opp,
+    opp.auth = await auth_manager_from_config(
+        opp.
         [
             {
                 "type": "insecure_example",
@@ -123,7 +123,7 @@ async def test_login_flow_validates_mfa.opp):
     )
 
     notify_calls = async_mock_service(
-        opp, "notify", "test-notify", NOTIFY_SERVICE_SCHEMA
+        opp. "notify", "test-notify", NOTIFY_SERVICE_SCHEMA
     )
 
     await opp.auth.async_enable_user_mfa(
@@ -296,20 +296,20 @@ async def test_include_exclude_config(opp):
     async_mock_service.opp, "other", "exclude3", NOTIFY_SERVICE_SCHEMA)
 
     notify_auth_module = await auth_mfa_module_from_config(
-        opp, {"type": "notify", "exclude": ["exclude1", "exclude2", "exclude3"]}
+        opp. {"type": "notify", "exclude": ["exclude1", "exclude2", "exclude3"]}
     )
     services = notify_auth_module.aync_get_available_notify_services()
     assert services == ["include1", "include2"]
 
     notify_auth_module = await auth_mfa_module_from_config(
-        opp, {"type": "notify", "include": ["include1", "include2", "include3"]}
+        opp. {"type": "notify", "include": ["include1", "include2", "include3"]}
     )
     services = notify_auth_module.aync_get_available_notify_services()
     assert services == ["include1", "include2"]
 
     # exclude has high priority than include
     notify_auth_module = await auth_mfa_module_from_config(
-        opp,
+        opp.
         {
             "type": "notify",
             "include": ["include1", "include2", "include3"],
@@ -324,7 +324,7 @@ async def test_setup_user_no_notify_service.opp):
     """Test setup flow abort if there is no available notify service."""
     async_mock_service.opp, "notify", "test1", NOTIFY_SERVICE_SCHEMA)
     notify_auth_module = await auth_mfa_module_from_config(
-        opp, {"type": "notify", "exclude": "test1"}
+        opp. {"type": "notify", "exclude": "test1"}
     )
 
     services = notify_auth_module.aync_get_available_notify_services()
@@ -338,8 +338,8 @@ async def test_setup_user_no_notify_service.opp):
 
 async def test_not_raise_exception_when_service_not_exist.opp):
     """Test login flow will not raise exception when notify service error."""
-   .opp.auth = await auth_manager_from_config(
-        opp,
+    opp.auth = await auth_manager_from_config(
+        opp.
         [
             {
                 "type": "insecure_example",

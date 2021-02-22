@@ -15,16 +15,16 @@ async def async_setup_opp, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up DSMR from a config entry."""
-   .opp.data.setdefault(DOMAIN, {})
-   .opp.data[DOMAIN][entry.entry_id] = {}
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = {}
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     listener = entry.add_update_listener(async_update_options)
-   .opp.data[DOMAIN][entry.entry_id][DATA_LISTENER] = listener
+    opp.data[DOMAIN][entry.entry_id][DATA_LISTENER] = listener
 
     return True
 
@@ -44,7 +44,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
@@ -52,7 +52,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if unload_ok:
         listener()
 
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

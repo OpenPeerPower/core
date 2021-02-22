@@ -14,14 +14,14 @@ ACTION_SCHEMA = toggle_entity.ACTION_SCHEMA.extend({vol.Required(CONF_DOMAIN): D
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     variables: TemplateVarsType,
     context: Context,
 ) -> None:
     """Change state based on configuration."""
     await toggle_entity.async_call_action_from_config(
-        opp, config, variables, context, DOMAIN
+        opp. config, variables, context, DOMAIN
     )
 
 

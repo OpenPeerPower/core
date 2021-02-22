@@ -26,8 +26,8 @@ async def async_setup_opp, config):
         # there is no need to import the yaml based config.
         return True
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=config[DOMAIN]
         )
     )
@@ -36,7 +36,7 @@ async def async_setup_opp, config):
 
 
 async def async_setup_entry(
-   .opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp. core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Set up an EnOcean dongle for the given entry."""
     enocean_data = opp.data.setdefault(DATA_ENOCEAN, {})
@@ -52,6 +52,6 @@ async def async_unload_entry.opp, config_entry):
 
     enocean_dongle = opp.data[DATA_ENOCEAN][ENOCEAN_DONGLE]
     enocean_dongle.unload()
-   .opp.data.pop(DATA_ENOCEAN)
+    opp.data.pop(DATA_ENOCEAN)
 
     return True

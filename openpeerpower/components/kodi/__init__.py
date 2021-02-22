@@ -31,7 +31,7 @@ PLATFORMS = ["media_player"]
 
 async def async_setup_opp, config):
     """Set up the Kodi integration."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -66,15 +66,15 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     remove_stop_listener = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_CONNECTION: conn,
         DATA_KODI: kodi,
         DATA_REMOVE_LISTENER: remove_stop_listener,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -85,7 +85,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )

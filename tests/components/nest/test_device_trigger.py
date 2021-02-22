@@ -63,7 +63,7 @@ async def async_setup_camera.opp, devices=None):
 async def setup_automation.opp, device_id, trigger_type):
     """Set up an automation trigger for testing triggering."""
     return await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -211,7 +211,7 @@ async def test_fires_on_camera_motion.opp, calls):
     assert await setup_automation.opp, DEVICE_ID, "camera_motion")
 
     message = {"device_id": DEVICE_ID, "type": "camera_motion", "timestamp": utcnow()}
-   .opp.bus.async_fire(NEST_EVENT, message)
+    opp.bus.async_fire(NEST_EVENT, message)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
@@ -222,7 +222,7 @@ async def test_fires_on_camera_person.opp, calls):
     assert await setup_automation.opp, DEVICE_ID, "camera_person")
 
     message = {"device_id": DEVICE_ID, "type": "camera_person", "timestamp": utcnow()}
-   .opp.bus.async_fire(NEST_EVENT, message)
+    opp.bus.async_fire(NEST_EVENT, message)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
@@ -233,7 +233,7 @@ async def test_fires_on_camera_sound.opp, calls):
     assert await setup_automation.opp, DEVICE_ID, "camera_sound")
 
     message = {"device_id": DEVICE_ID, "type": "camera_sound", "timestamp": utcnow()}
-   .opp.bus.async_fire(NEST_EVENT, message)
+    opp.bus.async_fire(NEST_EVENT, message)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
@@ -244,7 +244,7 @@ async def test_fires_on_doorbell_chime.opp, calls):
     assert await setup_automation.opp, DEVICE_ID, "doorbell_chime")
 
     message = {"device_id": DEVICE_ID, "type": "doorbell_chime", "timestamp": utcnow()}
-   .opp.bus.async_fire(NEST_EVENT, message)
+    opp.bus.async_fire(NEST_EVENT, message)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data == DATA_MESSAGE
@@ -259,7 +259,7 @@ async def test_trigger_for_wrong_device_id.opp, calls):
         "type": "camera_motion",
         "timestamp": utcnow(),
     }
-   .opp.bus.async_fire(NEST_EVENT, message)
+    opp.bus.async_fire(NEST_EVENT, message)
     await opp.async_block_till_done()
     assert len(calls) == 0
 
@@ -273,7 +273,7 @@ async def test_trigger_for_wrong_event_type.opp, calls):
         "type": "wrong-event-type",
         "timestamp": utcnow(),
     }
-   .opp.bus.async_fire(NEST_EVENT, message)
+    opp.bus.async_fire(NEST_EVENT, message)
     await opp.async_block_till_done()
     assert len(calls) == 0
 

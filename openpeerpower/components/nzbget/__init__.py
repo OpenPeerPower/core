@@ -62,14 +62,14 @@ SPEED_LIMIT_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
     """Set up the NZBGet integration."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     if opp.config_entries.async_entries(DOMAIN):
         return True
 
     if DOMAIN in config:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN,
                 context={"source": SOURCE_IMPORT},
                 data=config[DOMAIN],
@@ -87,10 +87,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
             ),
         }
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
     coordinator = NZBGetDataUpdateCoordinator(
-        opp,
+        opp.
         config=entry.data,
         options=entry.options,
     )
@@ -102,14 +102,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_COORDINATOR: coordinator,
         DATA_UNDO_UPDATE_LISTENER: undo_listener,
     }
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     _async_register_services.opp, coordinator)
@@ -122,21 +122,21 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
 
 def _async_register_services(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     coordinator: NZBGetDataUpdateCoordinator,
 ) -> None:
     """Register integration-level services."""
@@ -153,9 +153,9 @@ def _async_register_services(
         """Service call to rate limit speeds in NZBGet."""
         coordinator.nzbget.rate(call.data[ATTR_SPEED])
 
-   .opp.services.async_register(DOMAIN, SERVICE_PAUSE, pause, schema=vol.Schema({}))
-   .opp.services.async_register(DOMAIN, SERVICE_RESUME, resume, schema=vol.Schema({}))
-   .opp.services.async_register(
+    opp.services.async_register(DOMAIN, SERVICE_PAUSE, pause, schema=vol.Schema({}))
+    opp.services.async_register(DOMAIN, SERVICE_RESUME, resume, schema=vol.Schema({}))
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_SPEED, set_speed, schema=SPEED_LIMIT_SCHEMA
     )
 

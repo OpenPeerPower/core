@@ -35,7 +35,7 @@ class PlexSensor(Entity):
         self._name = NAME_FORMAT.format(plex_server.friendly_name)
         self._unique_id = f"sensor-{plex_server.machine_identifier}"
         self.async_refresh_sensor = Debouncer(
-            opp,
+            opp.
             _LOGGER,
             cooldown=3,
             immediate=False,

@@ -55,7 +55,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             )
     except (TypeError, KeyError, NameError, ValueError) as ex:
         _LOGGER.error("%s", ex)
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             "Error: {ex}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,

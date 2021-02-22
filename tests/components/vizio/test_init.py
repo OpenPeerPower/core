@@ -13,20 +13,20 @@ from tests.common import MockConfigEntry
 
 
 async def test_setup_component(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
     """Test component setup."""
     assert await async_setup_component(
-        opp, DOMAIN, {DOMAIN: MOCK_USER_VALID_TV_CONFIG}
+        opp. DOMAIN, {DOMAIN: MOCK_USER_VALID_TV_CONFIG}
     )
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 1
 
 
 async def test_tv_load_and_unload(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:
@@ -50,7 +50,7 @@ async def test_tv_load_and_unload(
 
 
 async def test_speaker_load_and_unload(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     vizio_connect: pytest.fixture,
     vizio_update: pytest.fixture,
 ) -> None:

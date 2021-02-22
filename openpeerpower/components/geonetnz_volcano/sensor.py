@@ -46,10 +46,10 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
     manager.listeners.append(
         async_dispatcher_connect(
-            opp, manager.async_event_new_entity(), async_add_sensor
+            opp. manager.async_event_new_entity(), async_add_sensor
         )
     )
-   .opp.async_create_task(manager.async_update())
+    opp.async_create_task(manager.async_update())
     _LOGGER.debug("Sensor setup done")
 
 

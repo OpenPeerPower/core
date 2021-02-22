@@ -45,7 +45,7 @@ async def test_setup_platform.opp, dsmr_connection_fixture):
         return_value=serial_data,
     ):
         assert await async_setup_component(
-            opp, SENSOR_DOMAIN, {SENSOR_DOMAIN: entry_data}
+            opp. SENSOR_DOMAIN, {SENSOR_DOMAIN: entry_data}
         )
         await opp.async_block_till_done()
 
@@ -589,7 +589,7 @@ async def test_reconnect.opp, dsmr_connection_fixture):
 
     # mock waiting coroutine while connection lasts
     closed = asyncio.Event()
-    # Handshake so that .opp.async_block_till_done()` doesn't cycle forever
+    # Handshake so that  opp.async_block_till_done()` doesn't cycle forever
     closed2 = asyncio.Event()
 
     async def wait_closed():

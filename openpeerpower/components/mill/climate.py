@@ -73,7 +73,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
             room_name, sleep_temp, comfort_temp, away_temp
         )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_ROOM_TEMP, set_room_temp, schema=SET_ROOM_TEMP_SCHEMA
     )
 

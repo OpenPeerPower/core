@@ -72,7 +72,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.info("Shutting down loopenergy")
         controller.terminate()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_loopenergy)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_loopenergy)
 
     sensors = [LoopEnergyElec(controller)]
 

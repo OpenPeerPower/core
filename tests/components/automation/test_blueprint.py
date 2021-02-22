@@ -42,14 +42,14 @@ async def test_notify_leaving_zone.opp):
     """Test notifying leaving a zone blueprint."""
 
     def set_person_state(state, extra={}):
-       .opp.states.async_set(
+        opp.states.async_set(
             "person.test_person", state, {"friendly_name": "Paulus", **extra}
         )
 
     set_person_state("School")
 
     assert await async_setup_component(
-        opp, "zone", {"zone": {"name": "School", "latitude": 1, "longitude": 2}}
+        opp. "zone", {"zone": {"name": "School", "latitude": 1, "longitude": 2}}
     )
 
     with patch_blueprint(
@@ -57,7 +57,7 @@ async def test_notify_leaving_zone.opp):
         BUILTIN_BLUEPRINT_FOLDER / "notify_leaving_zone.yaml",
     ):
         assert await async_setup_component(
-            opp,
+            opp.
             "automation",
             {
                 "automation": {
@@ -81,7 +81,7 @@ async def test_notify_leaving_zone.opp):
         await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
-         opp, config, variables, _context = mock_call_action.mock_calls[0][1]
+         opp. config, variables, _context = mock_call_action.mock_calls[0][1]
         message_tpl = config.pop("message")
         assert config == {
             "domain": "mobile_app",
@@ -127,14 +127,14 @@ async def test_notify_leaving_zone.opp):
 
 async def test_motion_light.opp):
     """Test motion light blueprint."""
-   .opp.states.async_set("binary_sensor.kitchen", "off")
+    opp.states.async_set("binary_sensor.kitchen", "off")
 
     with patch_blueprint(
         "motion_light.yaml",
         BUILTIN_BLUEPRINT_FOLDER / "motion_light.yaml",
     ):
         assert await async_setup_component(
-            opp,
+            opp.
             "automation",
             {
                 "automation": {
@@ -153,7 +153,7 @@ async def test_motion_light.opp):
     turn_off_calls = async_mock_service.opp, "light", "turn_off")
 
     # Turn on motion
-   .opp.states.async_set("binary_sensor.kitchen", "on")
+    opp.states.async_set("binary_sensor.kitchen", "on")
     # Can't block till done because delay is active
     # So wait 5 event loop iterations to process script
     for _ in range(5):
@@ -170,7 +170,7 @@ async def test_motion_light.opp):
     assert len(turn_off_calls) == 0
 
     # Test light turns off off 120s after last motion
-   .opp.states.async_set("binary_sensor.kitchen", "off")
+    opp.states.async_set("binary_sensor.kitchen", "off")
 
     for _ in range(5):
         await asyncio.sleep(0)
@@ -181,7 +181,7 @@ async def test_motion_light.opp):
     assert len(turn_off_calls) == 1
 
     # Test restarting the script
-   .opp.states.async_set("binary_sensor.kitchen", "on")
+    opp.states.async_set("binary_sensor.kitchen", "on")
 
     for _ in range(5):
         await asyncio.sleep(0)
@@ -189,12 +189,12 @@ async def test_motion_light.opp):
     assert len(turn_on_calls) == 2
     assert len(turn_off_calls) == 1
 
-   .opp.states.async_set("binary_sensor.kitchen", "off")
+    opp.states.async_set("binary_sensor.kitchen", "off")
 
     for _ in range(5):
         await asyncio.sleep(0)
 
-   .opp.states.async_set("binary_sensor.kitchen", "on")
+    opp.states.async_set("binary_sensor.kitchen", "on")
 
     for _ in range(15):
         await asyncio.sleep(0)

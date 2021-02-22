@@ -233,16 +233,16 @@ async def async_setup_opp, config):
 
     prefs = CameraPreferences.opp)
     await prefs.async_initialize()
-   .opp.data[DATA_CAMERA_PREFS] = prefs
+    opp.data[DATA_CAMERA_PREFS] = prefs
 
-   .opp.http.register_view(CameraImageView(component))
-   .opp.http.register_view(CameraMjpegStream(component))
-   .opp.components.websocket_api.async_register_command(
+    opp.http.register_view(CameraImageView(component))
+    opp.http.register_view(CameraMjpegStream(component))
+    opp.components.websocket_api.async_register_command(
         WS_TYPE_CAMERA_THUMBNAIL, websocket_camera_thumbnail, SCHEMA_WS_CAMERA_THUMBNAIL
     )
-   .opp.components.websocket_api.async_register_command(ws_camera_stream)
-   .opp.components.websocket_api.async_register_command(websocket_get_prefs)
-   .opp.components.websocket_api.async_register_command(websocket_update_prefs)
+    opp.components.websocket_api.async_register_command(ws_camera_stream)
+    opp.components.websocket_api.async_register_command(websocket_get_prefs)
+    opp.components.websocket_api.async_register_command(websocket_update_prefs)
 
     await component.async_setup(config)
 
@@ -258,7 +258,7 @@ async def async_setup_opp, config):
             stream.add_provider("hls")
             stream.start()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, preload_stream)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, preload_stream)
 
     @callback
     def update_tokens(time):
@@ -267,7 +267,7 @@ async def async_setup_opp, config):
             entity.async_update_token()
             entity.async_write_op_state()
 
-   .opp.helpers.event.async_track_time_interval(update_tokens, TOKEN_CHANGE_INTERVAL)
+    opp.helpers.event.async_track_time_interval(update_tokens, TOKEN_CHANGE_INTERVAL)
 
     component.async_register_entity_service(
         SERVICE_ENABLE_MOTION, CAMERA_SERVICE_SCHEMA, "async_enable_motion_detection"
@@ -625,7 +625,7 @@ async def websocket_update_prefs.opp, connection, msg):
 
 async def async_handle_snapshot_service(camera, service):
     """Handle snapshot services calls."""
-    opp =camera.opp
+    opp.=camera.opp
     filename = service.data[ATTR_FILENAME]
     filename.opp = opp
 
@@ -656,7 +656,7 @@ async def async_handle_play_stream_service(camera, service_call):
     fmt = service_call.data[ATTR_FORMAT]
     url = await _async_stream_endpoint_url(camera.opp, camera, fmt)
 
-    opp =camera.opp
+    opp.=camera.opp
     data = {
         ATTR_MEDIA_CONTENT_ID: f"{get_url.opp)}{url}",
         ATTR_MEDIA_CONTENT_TYPE: FORMAT_CONTENT_TYPE[fmt],
@@ -725,7 +725,7 @@ async def async_handle_record_service(camera, call):
     if not stream:
         raise OpenPeerPowerError(f"{camera.entity_id} does not support record service")
 
-    opp =camera.opp
+    opp.=camera.opp
     filename = call.data[CONF_FILENAME]
     filename.opp = opp
     video_path = filename.async_render(variables={ATTR_ENTITY_ID: camera})

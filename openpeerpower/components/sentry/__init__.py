@@ -56,7 +56,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         options = {**entry.options, CONF_ENVIRONMENT: entry.data[CONF_ENVIRONMENT]}
         data = entry.data.copy()
         data.pop(CONF_ENVIRONMENT)
-       .opp.config_entries.async_update_entry(entry, data=data, options=options)
+        opp.config_entries.async_update_entry(entry, data=data, options=options)
 
     # https://docs.sentry.io/platforms/python/logging/
     sentry_logging = LoggingIntegration(
@@ -86,7 +86,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         integrations=[sentry_logging, AioHttpIntegration(), SqlalchemyIntegration()],
         release=current_version,
         before_send=lambda event, hint: process_before_send(
-            opp,
+            opp.
             entry.options,
             channel,
             huuid,
@@ -103,9 +103,9 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         system_info = await opp.helpers.system_info.async_get_system_info()
 
         # Update system info every hour
-       .opp.helpers.event.async_call_later(3600, update_system_info)
+        opp.helpers.event.async_call_later(3600, update_system_info)
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, update_system_info)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, update_system_info)
 
     return True
 
@@ -122,7 +122,7 @@ def get_channel(version: str) -> str:
 
 
 def process_before_send(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     options,
     channel: str,
     huuid: str,

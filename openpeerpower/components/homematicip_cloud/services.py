@@ -135,42 +135,42 @@ async def async_setup_services.opp: OpenPeerPowerType) -> None:
         elif service_name == SERVICE_SET_ACTIVE_CLIMATE_PROFILE:
             await _set_active_climate_profile.opp, service)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=HMIPC_DOMAIN,
         service=SERVICE_ACTIVATE_ECO_MODE_WITH_DURATION,
         service_func=async_call_hmipc_service,
         schema=SCHEMA_ACTIVATE_ECO_MODE_WITH_DURATION,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=HMIPC_DOMAIN,
         service=SERVICE_ACTIVATE_ECO_MODE_WITH_PERIOD,
         service_func=async_call_hmipc_service,
         schema=SCHEMA_ACTIVATE_ECO_MODE_WITH_PERIOD,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=HMIPC_DOMAIN,
         service=SERVICE_ACTIVATE_VACATION,
         service_func=async_call_hmipc_service,
         schema=SCHEMA_ACTIVATE_VACATION,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=HMIPC_DOMAIN,
         service=SERVICE_DEACTIVATE_ECO_MODE,
         service_func=async_call_hmipc_service,
         schema=SCHEMA_DEACTIVATE_ECO_MODE,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=HMIPC_DOMAIN,
         service=SERVICE_DEACTIVATE_VACATION,
         service_func=async_call_hmipc_service,
         schema=SCHEMA_DEACTIVATE_VACATION,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         domain=HMIPC_DOMAIN,
         service=SERVICE_SET_ACTIVE_CLIMATE_PROFILE,
         service_func=async_call_hmipc_service,
@@ -178,7 +178,7 @@ async def async_setup_services.opp: OpenPeerPowerType) -> None:
     )
 
     async_register_admin_service(
-       .opp.opp,
+        opp.opp,
         domain=HMIPC_DOMAIN,
         service=SERVICE_DUMP_HAP_CONFIG,
         service_func=async_call_hmipc_service,
@@ -186,7 +186,7 @@ async def async_setup_services.opp: OpenPeerPowerType) -> None:
     )
 
     async_register_admin_service(
-       .opp.opp,
+        opp.opp,
         domain=HMIPC_DOMAIN,
         service=SERVICE_RESET_ENERGY_COUNTER,
         service_func=async_call_hmipc_service,
@@ -200,11 +200,11 @@ async def async_unload_services.opp: OpenPeerPowerType):
         return
 
     for hmipc_service in HMIPC_SERVICES:
-       .opp.services.async_remove(domain=HMIPC_DOMAIN, service=hmipc_service)
+        opp.services.async_remove(domain=HMIPC_DOMAIN, service=hmipc_service)
 
 
 async def _async_activate_eco_mode_with_duration(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to activate eco mode with duration."""
     duration = service.data[ATTR_DURATION]
@@ -220,7 +220,7 @@ async def _async_activate_eco_mode_with_duration(
 
 
 async def _async_activate_eco_mode_with_period(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to activate eco mode with period."""
     endtime = service.data[ATTR_ENDTIME]
@@ -236,7 +236,7 @@ async def _async_activate_eco_mode_with_period(
 
 
 async def _async_activate_vacation(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to activate vacation."""
     endtime = service.data[ATTR_ENDTIME]
@@ -253,7 +253,7 @@ async def _async_activate_vacation(
 
 
 async def _async_deactivate_eco_mode(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to deactivate eco mode."""
     hapid = service.data.get(ATTR_ACCESSPOINT_ID)
@@ -268,7 +268,7 @@ async def _async_deactivate_eco_mode(
 
 
 async def _async_deactivate_vacation(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to deactivate vacation."""
     hapid = service.data.get(ATTR_ACCESSPOINT_ID)
@@ -283,7 +283,7 @@ async def _async_deactivate_vacation(
 
 
 async def _set_active_climate_profile(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to set the active climate profile."""
     entity_id_list = service.data[ATTR_ENTITY_ID]
@@ -302,7 +302,7 @@ async def _set_active_climate_profile(
 
 
 async def _async_dump_hap_config(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to dump the configuration of a Homematic IP Access Point."""
     config_path = service.data.get(ATTR_CONFIG_OUTPUT_PATH) or.opp.config.config_dir
@@ -326,7 +326,7 @@ async def _async_dump_hap_config(
 
 
 async def _async_reset_energy_counter(
-    opp: OpenPeerPowerType, service: ServiceCallType
+    opp. OpenPeerPowerType, service: ServiceCallType
 ):
     """Service to reset the energy counter."""
     entity_id_list = service.data[ATTR_ENTITY_ID]

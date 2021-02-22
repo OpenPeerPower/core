@@ -30,7 +30,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     async_add_entities(
         [
             TileDeviceTracker(
-               .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][tile_uuid], tile
+                opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][tile_uuid], tile
             )
             for tile_uuid, tile in.opp.data[DOMAIN][DATA_TILE][entry.entry_id].items()
         ]
@@ -39,8 +39,8 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
 async def async_setup_scanner.opp, config, async_see, discovery_info=None):
     """Detect a legacy configuration and import it."""
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
             data={

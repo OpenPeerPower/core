@@ -117,7 +117,7 @@ EVENT_NEW_DEVICE = "device_tracker_new_device"
 
 
 def see(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     mac: str = None,
     dev_id: str = None,
     host_name: str = None,
@@ -143,7 +143,7 @@ def see(
     }
     if attributes:
         data[ATTR_ATTRIBUTES] = attributes
-   .opp.services.call(DOMAIN, SERVICE_SEE, data)
+    opp.services.call(DOMAIN, SERVICE_SEE, data)
 
 
 async def async_setup_integration.opp: OpenPeerPowerType, config: ConfigType) -> None:
@@ -173,7 +173,7 @@ async def async_setup_integration.opp: OpenPeerPowerType, config: ConfigType) ->
 
     # Clean up stale devices
     async_track_utc_time_change(
-        opp, tracker.async_update_stale, second=range(0, 60, 5)
+        opp. tracker.async_update_stale, second=range(0, 60, 5)
     )
 
     async def async_see_service(call):
@@ -184,7 +184,7 @@ async def async_setup_integration.opp: OpenPeerPowerType, config: ConfigType) ->
         data.pop("battery_status", None)
         await tracker.async_see(**data)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SEE, async_see_service, SERVICE_SEE_PAYLOAD_SCHEMA
     )
 
@@ -225,7 +225,7 @@ class DeviceTrackerPlatform:
             setup = None
             if hasattr(self.platform, "async_get_scanner"):
                 scanner = await self.platform.async_get_scanner(
-                    opp, {DOMAIN: self.config}
+                    opp. {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "get_scanner"):
                 scanner = await opp.async_add_executor_job(
@@ -233,12 +233,12 @@ class DeviceTrackerPlatform:
                 )
             elif hasattr(self.platform, "async_setup_scanner"):
                 setup = await self.platform.async_setup_scanner(
-                    opp, self.config, tracker.async_see, discovery_info
+                    opp. self.config, tracker.async_see, discovery_info
                 )
             elif hasattr(self.platform, "setup_scanner"):
                 setup = await opp.async_add_executor_job(
                     self.platform.setup_scanner,
-                    opp,
+                    opp.
                     self.config,
                     tracker.see,
                     discovery_info,
@@ -248,7 +248,7 @@ class DeviceTrackerPlatform:
 
             if scanner:
                 async_setup_scanner_platform(
-                    opp, self.config, scanner, tracker.async_see, self.type
+                    opp. self.config, scanner, tracker.async_see, self.type
                 )
                 return
 
@@ -284,7 +284,7 @@ async def async_extract_config(opp, config):
 
 
 async def async_create_platform_type(
-    opp, config, p_type, p_config
+    opp. config, p_type, p_config
 ) -> Optional[DeviceTrackerPlatform]:
     """Determine type of platform."""
     platform = await async_prepare_setup_platform.opp, config, DOMAIN, p_type)
@@ -297,7 +297,7 @@ async def async_create_platform_type(
 
 @callback
 def async_setup_scanner_platform(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config: ConfigType,
     scanner: Any,
     async_see_device: Callable,
@@ -358,10 +358,10 @@ def async_setup_scanner_platform(
                 ]
                 kwargs["gps_accuracy"] = 0
 
-           .opp.async_create_task(async_see_device(**kwargs))
+            opp.async_create_task(async_see_device(**kwargs))
 
     async_track_time_interval.opp, async_device_tracker_scan, interval)
-   .opp.async_create_task(async_device_tracker_scan(None))
+    opp.async_create_task(async_device_tracker_scan(None))
 
 
 async def get_tracker.opp, config):
@@ -387,7 +387,7 @@ class DeviceTracker:
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         consider_home: timedelta,
         track_new: bool,
         defaults: dict,
@@ -604,7 +604,7 @@ class Device(RestoreEntity):
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         consider_home: timedelta,
         track: bool,
         dev_id: str,
@@ -784,7 +784,7 @@ class Device(RestoreEntity):
 class DeviceScanner:
     """Device scanner object."""
 
-    opp: OpenPeerPowerType = None
+    opp. OpenPeerPowerType = None
 
     def scan_devices(self) -> List[str]:
         """Scan for devices."""

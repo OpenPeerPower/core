@@ -127,7 +127,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         if update_tasks:
             await asyncio.wait(update_tasks)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         SENSIBO_DOMAIN,
         SERVICE_ASSUME_STATE,
         async_assume_state,

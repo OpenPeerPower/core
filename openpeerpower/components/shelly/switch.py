@@ -33,7 +33,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     f'{wrapper.device.shelly["mac"]}-{block.type}_{block.channel}'
                 )
                 await async_remove_shelly_entity(
-                    opp,
+                    opp.
                     "light",
                     unique_id,
                 )

@@ -177,8 +177,8 @@ async def async_setup_opp, config):
         )
         event_config[CONF_DEVICE_ID] = device_id
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data=data,
@@ -189,9 +189,9 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry: config_entries.ConfigEntry):
     """Set up the RFXtrx component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
-   .opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS] = []
+    opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS] = []
 
     try:
         await async_setup_internal.opp, entry)
@@ -203,8 +203,8 @@ async def async_setup_entry.opp, entry: config_entries.ConfigEntry):
         return False
 
     for domain in DOMAINS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, domain)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, domain)
         )
 
     return True
@@ -215,14 +215,14 @@ async def async_unload_entry.opp, entry: config_entries.ConfigEntry):
     if not all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in DOMAINS
             ]
         )
     ):
         return False
 
-   .opp.services.async_remove(DOMAIN, SERVICE_SEND)
+    opp.services.async_remove(DOMAIN, SERVICE_SEND)
 
     for cleanup_callback in.opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS]:
         cleanup_callback()
@@ -233,7 +233,7 @@ async def async_unload_entry.opp, entry: config_entries.ConfigEntry):
     rfx_object = opp.data[DOMAIN][DATA_RFXOBJECT]
     await opp.async_add_executor_job(rfx_object.close_connection)
 
-   .opp.data.pop(DOMAIN)
+    opp.data.pop(DOMAIN)
 
     return True
 
@@ -317,12 +317,12 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
             event_data[ATTR_DEVICE_ID] = device_entry.id
 
         # Callback to HA registered components.
-       .opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_EVENT, event, device_id)
+        opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_EVENT, event, device_id)
 
         # Signal event to any other listeners
         fire_event = devices.get(device_id, {}).get(CONF_FIRE_EVENT)
         if fire_event:
-           .opp.bus.async_fire(EVENT_RFXTRX_EVENT, event_data)
+            opp.bus.async_fire(EVENT_RFXTRX_EVENT, event_data)
 
     @callback
     def _add_device(event, device_id):
@@ -334,7 +334,7 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
         data[CONF_DEVICES] = copy.deepcopy(entry.data[CONF_DEVICES])
         event_code = binascii.hexlify(event.data).decode("ASCII")
         data[CONF_DEVICES][event_code] = config
-       .opp.config_entries.async_update_entry(entry=entry, data=data)
+        opp.config_entries.async_update_entry(entry=entry, data=data)
         devices[device_id] = config
 
     def _shutdown_rfxtrx(event):
@@ -343,8 +343,8 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
 
     listener = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown_rfxtrx)
 
-   .opp.data[DOMAIN][DATA_LISTENER] = listener
-   .opp.data[DOMAIN][DATA_RFXOBJECT] = rfx_object
+    opp.data[DOMAIN][DATA_LISTENER] = listener
+    opp.data[DOMAIN][DATA_RFXOBJECT] = rfx_object
 
     rfx_object.event_callback = lambda event:.opp.add_job(async_handle_receive, event)
 
@@ -352,7 +352,7 @@ async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
         event = call.data[ATTR_EVENT]
         rfx_object.transport.send(event)
 
-   .opp.services.async_register(DOMAIN, SERVICE_SEND, send, schema=SERVICE_SEND_SCHEMA)
+    opp.services.async_register(DOMAIN, SERVICE_SEND, send, schema=SERVICE_SEND_SCHEMA)
 
 
 def get_rfx_object(packetid):
@@ -457,8 +457,8 @@ def get_device_id(device, data_bits=None):
 def connect_auto_add.opp, entry_data, callback_fun):
     """Connect to dispatcher for automatic add."""
     if entry_data[CONF_AUTOMATIC_ADD]:
-       .opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS].append(
-           .opp.helpers.dispatcher.async_dispatcher_connect(SIGNAL_EVENT, callback_fun)
+        opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS].append(
+            opp.helpers.dispatcher.async_dispatcher_connect(SIGNAL_EVENT, callback_fun)
         )
 
 

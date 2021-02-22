@@ -138,14 +138,14 @@ async def async_setup_opp, config):
         """Retry setup if a connection/timeout happens on Slide API."""
         await async_setup_opp, config)
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN][SLIDES] = {}
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN][SLIDES] = {}
 
     username = config[DOMAIN][CONF_USERNAME]
     password = config[DOMAIN][CONF_PASSWORD]
     scaninterval = config[DOMAIN][CONF_SCAN_INTERVAL]
 
-   .opp.data[DOMAIN][API] = GoSlideCloud(username, password)
+    opp.data[DOMAIN][API] = GoSlideCloud(username, password)
 
     try:
         result = await opp.data[DOMAIN][API].login()
@@ -166,7 +166,7 @@ async def async_setup_opp, config):
 
     await update_slides()
 
-   .opp.async_create_task(async_load_platform.opp, COMPONENT, DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, COMPONENT, DOMAIN, {}, config))
 
     async_track_time_interval.opp, update_slides, scaninterval)
 

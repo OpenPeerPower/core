@@ -238,21 +238,21 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         session=async_get_clientsession.opp),
     )
 
-   .opp.data[DOMAIN] = {}
-   .opp.data[DOMAIN]["broker"] = broker = EvoBroker(
-        opp, client_v2, client_v1, store, config[DOMAIN]
+    opp.data[DOMAIN] = {}
+    opp.data[DOMAIN]["broker"] = broker = EvoBroker(
+        opp. client_v2, client_v1, store, config[DOMAIN]
     )
 
     await broker.save_auth_tokens()
     await broker.async_update()  # get initial state
 
-   .opp.async_create_task(async_load_platform.opp, "climate", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, "climate", DOMAIN, {}, config))
     if broker.tcs.hotwater:
-       .opp.async_create_task(
+        opp.async_create_task(
             async_load_platform.opp, "water_heater", DOMAIN, {}, config)
         )
 
-   .opp.helpers.event.async_track_time_interval(
+    opp.helpers.event.async_track_time_interval(
         broker.async_update, config[DOMAIN][CONF_SCAN_INTERVAL]
     )
 
@@ -309,14 +309,14 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
 
         async_dispatcher_send.opp, DOMAIN, payload)
 
-   .opp.services.async_register(DOMAIN, SVC_REFRESH_SYSTEM, force_refresh)
+    opp.services.async_register(DOMAIN, SVC_REFRESH_SYSTEM, force_refresh)
 
     # Enumerate which operating modes are supported by this system
     modes = broker.config["allowedSystemModes"]
 
     # Not all systems support "AutoWithReset": register this handler only if required
     if [m["systemMode"] for m in modes if m["systemMode"] == "AutoWithReset"]:
-       .opp.services.async_register(DOMAIN, SVC_RESET_SYSTEM, set_system_mode)
+        opp.services.async_register(DOMAIN, SVC_RESET_SYSTEM, set_system_mode)
 
     system_mode_schemas = []
     modes = [m for m in modes if m["systemMode"] != "AutoWithReset"]
@@ -358,7 +358,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
         system_mode_schemas.append(schema)
 
     if system_mode_schemas:
-       .opp.services.async_register(
+        opp.services.async_register(
             DOMAIN,
             SVC_SET_SYSTEM_MODE,
             set_system_mode,
@@ -366,13 +366,13 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
         )
 
     # The zone modes are consistent across all systems and use the same schema
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SVC_RESET_ZONE_OVERRIDE,
         set_zone_override,
         schema=RESET_ZONE_OVERRIDE_SCHEMA,
     )
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SVC_SET_ZONE_OVERRIDE,
         set_zone_override,

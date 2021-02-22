@@ -20,18 +20,18 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, config_entry):
     """Set up the Axis component."""
-   .opp.data.setdefault(AXIS_DOMAIN, {})
+    opp.data.setdefault(AXIS_DOMAIN, {})
 
     device = AxisNetworkDevice.opp, config_entry)
 
     if not await device.async_setup():
         return False
 
-   .opp.data[AXIS_DOMAIN][config_entry.unique_id] = device
+    opp.data[AXIS_DOMAIN][config_entry.unique_id] = device
 
     await device.async_update_device_registry()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.shutdown)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.shutdown)
 
     return True
 
@@ -50,7 +50,7 @@ async def async_migrate_entry.opp, config_entry):
     if config_entry.version == 1:
         unique_id = config_entry.data[CONF_MAC]
         data = {**config_entry.data, **config_entry.data[CONF_DEVICE]}
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             config_entry, unique_id=unique_id, data=data
         )
         config_entry.version = 2
@@ -72,7 +72,7 @@ async def async_migrate_entry.opp, config_entry):
         if old_unique_id != new_unique_id:
             await async_migrate_entries.opp, config_entry.entry_id, update_unique_id)
 
-           .opp.config_entries.async_update_entry(
+            opp.config_entries.async_update_entry(
                 config_entry, unique_id=new_unique_id
             )
 

@@ -43,7 +43,7 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower,
+    opp. OpenPeerPower,
     config: ConfigType,
     variables: TemplateVarsType,
     context: Context,
@@ -54,7 +54,7 @@ async def async_call_action_from_config(
         and config[CONF_TYPE] != toggle_entity.CONF_TURN_ON
     ):
         await toggle_entity.async_call_action_from_config(
-            opp, config, variables, context, DOMAIN
+            opp. config, variables, context, DOMAIN
         )
         return
 

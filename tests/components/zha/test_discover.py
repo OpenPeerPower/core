@@ -62,13 +62,13 @@ def channels_mock(zha_device_mock):
 @pytest.mark.parametrize("device", DEVICES)
 async def test_devices(
     device,
-   .opp_disable_services,
+    opp.disable_services,
     zigpy_device_mock,
     zha_device_joined_restored,
 ):
     """Test device discovery."""
     entity_registry = await openpeerpower.helpers.entity_registry.async_get_registry(
-       .opp_disable_services
+        opp.disable_services
     )
 
     zigpy_device = zigpy_device_mock(
@@ -373,7 +373,7 @@ def test_single_input_cluster_device_class_by_cluster_class():
     ],
 )
 async def test_device_override(
-   .opp_disable_services, zigpy_device_mock, setup_zha, override, entity_id
+    opp.disable_services, zigpy_device_mock, setup_zha, override, entity_id
 ):
     """Test device discovery override."""
 
@@ -405,7 +405,7 @@ async def test_device_override(
 
 
 async def test_group_probe_cleanup_called(
-   .opp_disable_services, setup_zha, config_entry
+    opp.disable_services, setup_zha, config_entry
 ):
     """Test cleanup happens when zha is unloaded."""
     await setup_zha()

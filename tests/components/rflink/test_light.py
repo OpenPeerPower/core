@@ -40,7 +40,7 @@ async def test_default_setup_opp, monkeypatch):
     """Test all basic functionality of the RFLink switch component."""
     # setup mocking rflink module
     event_callback, create, protocol, _ = await mock_rflink(
-        opp, CONFIG, DOMAIN, monkeypatch
+        opp. CONFIG, DOMAIN, monkeypatch
     )
 
     # make sure arguments are passed
@@ -96,8 +96,8 @@ async def test_default_setup_opp, monkeypatch):
     assert.opp.states.get(f"{DOMAIN}.protocol2_0_1").state == "on"
 
     # test changing state from HA propagates to RFLink
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -106,8 +106,8 @@ async def test_default_setup_opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "off"
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -118,8 +118,8 @@ async def test_default_setup_opp, monkeypatch):
     # protocols supporting dimming and on/off should create hybrid light entity
     event_callback({"id": "newkaku_0_1", "command": "off"})
     await opp.async_block_till_done()
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_0_1"}
         )
     )
@@ -131,8 +131,8 @@ async def test_default_setup_opp, monkeypatch):
     # and send on command for fallback
     assert protocol.send_command_ack.call_args_list[3][0][1] == "on"
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_0_1", ATTR_BRIGHTNESS: 128},
@@ -142,8 +142,8 @@ async def test_default_setup_opp, monkeypatch):
 
     assert protocol.send_command_ack.call_args_list[4][0][1] == "7"
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: f"{DOMAIN}.dim_test", ATTR_BRIGHTNESS: 128},
@@ -179,7 +179,7 @@ async def test_firing_bus_event.opp, monkeypatch):
     def listener(event):
         calls.append(event)
 
-   .opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
+    opp.bus.async_listen_once(EVENT_BUTTON_PRESSED, listener)
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "off"})
@@ -206,12 +206,12 @@ async def test_signal_repetitions.opp, monkeypatch):
 
     # setup mocking rflink module
     event_callback, _, protocol, _ = await mock_rflink(
-        opp, config, DOMAIN, monkeypatch
+        opp. config, DOMAIN, monkeypatch
     )
 
     # test if signal repetition is performed according to configuration
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
         )
     )
@@ -222,8 +222,8 @@ async def test_signal_repetitions.opp, monkeypatch):
     assert protocol.send_command_ack.call_count == 2
 
     # test if default apply to configured devices
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
         )
     )
@@ -239,8 +239,8 @@ async def test_signal_repetitions.opp, monkeypatch):
     # make sure entity is created before setting state
     await opp.async_block_till_done()
 
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.protocol_0_2"}
         )
     )
@@ -340,8 +340,8 @@ async def test_type_toggle.opp, monkeypatch):
     assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
 
     # test async_turn_off, must set state = 'on' ('off' + toggle)
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.toggle_test"}
         )
     )
@@ -350,8 +350,8 @@ async def test_type_toggle.opp, monkeypatch):
     assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "on"
 
     # test async_turn_on, must set state = 'off' (yes, sounds crazy)
-   .opp.async_create_task(
-       .opp.services.async_call(
+    opp.async_create_task(
+        opp.services.async_call(
             DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: f"{DOMAIN}.toggle_test"}
         )
     )
@@ -486,7 +486,7 @@ async def test_restore_state.opp, monkeypatch):
     }
 
     mock_restore_cache(
-        opp,
+        opp.
         (
             State(f"{DOMAIN}.l1", STATE_ON, {ATTR_BRIGHTNESS: "123"}),
             State(f"{DOMAIN}.l2", STATE_ON, {ATTR_BRIGHTNESS: "321"}),
@@ -495,7 +495,7 @@ async def test_restore_state.opp, monkeypatch):
         ),
     )
 
-   .opp.state = CoreState.starting
+    opp.state = CoreState.starting
 
     # setup mocking rflink module
     _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)

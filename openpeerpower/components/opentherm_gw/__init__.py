@@ -89,19 +89,19 @@ async def options_updated.opp, entry):
 async def async_setup_entry.opp, config_entry):
     """Set up the OpenTherm Gateway component."""
     if DATA_OPENTHERM_GW not in.opp.data:
-       .opp.data[DATA_OPENTHERM_GW] = {DATA_GATEWAYS: {}}
+        opp.data[DATA_OPENTHERM_GW] = {DATA_GATEWAYS: {}}
 
     gateway = OpenThermGatewayDevice.opp, config_entry)
-   .opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]] = gateway
+    opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]] = gateway
 
     config_entry.add_update_listener(options_updated)
 
     # Schedule directly on the loop to avoid blocking HA startup.
-   .opp.loop.create_task(gateway.connect_and_subscribe())
+    opp.loop.create_task(gateway.connect_and_subscribe())
 
     for comp in [COMP_BINARY_SENSOR, COMP_CLIMATE, COMP_SENSOR]:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(config_entry, comp)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, comp)
         )
 
     register_services.opp)
@@ -115,8 +115,8 @@ async def async_setup_opp, config):
         for device_id, device_config in conf.items():
             device_config[CONF_ID] = device_id
 
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=device_config
                 )
             )
@@ -244,7 +244,7 @@ def register_services.opp):
         gw_dev.status = status
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_RESET_GATEWAY, reset_gateway, service_reset_schema
     )
 
@@ -253,7 +253,7 @@ def register_services.opp):
         gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][call.data[ATTR_GW_ID]]
         await gw_dev.gateway.set_ch_enable_bit(1 if call.data[ATTR_CH_OVRD] else 0)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_CH_OVRD,
         set_ch_ovrd,
@@ -268,7 +268,7 @@ def register_services.opp):
         gw_dev.status.update({gw_var: value})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_CONTROL_SETPOINT,
         set_control_setpoint,
@@ -283,7 +283,7 @@ def register_services.opp):
         gw_dev.status.update({gw_var: value})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_HOT_WATER_OVRD,
         set_dhw_ovrd,
@@ -298,7 +298,7 @@ def register_services.opp):
         gw_dev.status.update({gw_var: value})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_HOT_WATER_SETPOINT,
         set_dhw_setpoint,
@@ -312,7 +312,7 @@ def register_services.opp):
         attr_time = call.data[ATTR_TIME]
         await gw_dev.gateway.set_clock(datetime.combine(attr_date, attr_time))
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_CLOCK, set_device_clock, service_set_clock_schema
     )
 
@@ -326,7 +326,7 @@ def register_services.opp):
         gw_dev.status.update({gpio_var: mode})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_GPIO_MODE, set_gpio_mode, service_set_gpio_mode_schema
     )
 
@@ -340,7 +340,7 @@ def register_services.opp):
         gw_dev.status.update({led_var: mode})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_LED_MODE, set_led_mode, service_set_led_mode_schema
     )
 
@@ -356,7 +356,7 @@ def register_services.opp):
         gw_dev.status.update({gw_var: value})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_MAX_MOD, set_max_mod, service_set_max_mod_schema
     )
 
@@ -368,7 +368,7 @@ def register_services.opp):
         gw_dev.status.update({gw_var: value})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_OAT, set_outside_temp, service_set_oat_schema
     )
 
@@ -380,7 +380,7 @@ def register_services.opp):
         gw_dev.status.update({gw_var: value})
         async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_SET_SB_TEMP, set_setback_temp, service_set_sb_temp_schema
     )
 
@@ -388,9 +388,9 @@ def register_services.opp):
 async def async_unload_entry.opp, entry):
     """Cleanup and disconnect from gateway."""
     await asyncio.gather(
-       .opp.config_entries.async_forward_entry_unload(entry, COMP_BINARY_SENSOR),
-       .opp.config_entries.async_forward_entry_unload(entry, COMP_CLIMATE),
-       .opp.config_entries.async_forward_entry_unload(entry, COMP_SENSOR),
+        opp.config_entries.async_forward_entry_unload(entry, COMP_BINARY_SENSOR),
+        opp.config_entries.async_forward_entry_unload(entry, COMP_CLIMATE),
+        opp.config_entries.async_forward_entry_unload(entry, COMP_SENSOR),
     )
     gateway = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][entry.data[CONF_ID]]
     await gateway.cleanup()

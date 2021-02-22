@@ -199,7 +199,7 @@ class HomeAccessory(Accessory):
 
     def __init__(
         self,
-        opp,
+        opp.
         driver,
         name,
         entity_id,

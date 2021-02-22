@@ -118,7 +118,7 @@ async def async_setup_opp, config):
     prefix = get_unique_prefix(
         location, language, candle_lighting_offset, havdalah_offset
     )
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         "location": location,
         "name": name,
         "language": language,
@@ -128,9 +128,9 @@ async def async_setup_opp, config):
         "prefix": prefix,
     }
 
-   .opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform.opp, "binary_sensor", DOMAIN, {}, config)
     )
 

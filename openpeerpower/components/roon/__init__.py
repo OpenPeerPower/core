@@ -8,7 +8,7 @@ from .server import RoonServer
 
 async def async_setup_opp, config):
     """Set up the Roon platform."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
     return True
 
 
@@ -20,7 +20,7 @@ async def async_setup_entry.opp, entry):
     if not await roonserver.async_setup():
         return False
 
-   .opp.data[DOMAIN][entry.entry_id] = roonserver
+    opp.data[DOMAIN][entry.entry_id] = roonserver
     device_registry = await dr.async_get_registry.opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,

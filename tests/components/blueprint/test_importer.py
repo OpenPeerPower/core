@@ -160,7 +160,7 @@ async def test_fetch_blueprint_from_community_url.opp, aioclient_mock, community
         "https://community.open-peer-power.io/t/test-topic/123.json", text=community_post
     )
     imported_blueprint = await importer.fetch_blueprint_from_url(
-        opp, "https://community.open-peer-power.io/t/test-topic/123/2"
+        opp. "https://community.open-peer-power.io/t/test-topic/123/2"
     )
     assert isinstance(imported_blueprint, importer.ImportedBlueprint)
     assert imported_blueprint.blueprint.domain == "automation"
@@ -188,7 +188,7 @@ async def test_fetch_blueprint_from_github_url.opp, aioclient_mock, url):
     aioclient_mock.get(
         "https://raw.githubusercontent.com/balloob/open-peer-power-config/main/blueprints/automation/motion_light.yaml",
         text=Path(
-           .opp.config.path("blueprints/automation/test_event_service.yaml")
+            opp.config.path("blueprints/automation/test_event_service.yaml")
         ).read_text(),
     )
 

@@ -86,7 +86,7 @@ class ZHADevice(LogMixin):
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         zigpy_device: zha_typing.ZigpyDeviceType,
         zha_gateway: zha_typing.ZhaGatewayType,
     ):
@@ -286,7 +286,7 @@ class ZHADevice(LogMixin):
     @classmethod
     def new(
         cls,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         zigpy_dev: zha_typing.ZigpyDeviceType,
         gateway: zha_typing.ZhaGatewayType,
         restored: bool = False,
@@ -296,7 +296,7 @@ class ZHADevice(LogMixin):
         zha_dev.channels = channels.Channels.new(zha_dev)
         zha_dev.unsubs.append(
             async_dispatcher_connect(
-                opp,
+                opp.
                 SIGNAL_UPDATE_DEVICE.format(zha_dev.channels.unique_id),
                 zha_dev.async_update_sw_build_id,
             )

@@ -27,7 +27,7 @@ def setup_opp, config):
     """Set up the Danfoss Air component."""
     conf = config[DOMAIN]
 
-   .opp.data[DOMAIN] = DanfossAir(conf[CONF_HOST])
+    opp.data[DOMAIN] = DanfossAir(conf[CONF_HOST])
 
     for platform in DANFOSS_AIR_PLATFORMS:
         discovery.load_platform.opp, platform, DOMAIN, {}, config)

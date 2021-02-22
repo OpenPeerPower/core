@@ -67,10 +67,10 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 
 async def test_if_fires_on_state_change.opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-   .opp.states.async_set("lock.entity", STATE_UNLOCKED)
+    opp.states.async_set("lock.entity", STATE_UNLOCKED)
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -117,7 +117,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is turning on.
-   .opp.states.async_set("lock.entity", STATE_LOCKED)
+    opp.states.async_set("lock.entity", STATE_LOCKED)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data[
@@ -125,7 +125,7 @@ async def test_if_fires_on_state_change.opp, calls):
     ] == "locked - device - {} - unlocked - locked - None".format("lock.entity")
 
     # Fake that the entity is turning off.
-   .opp.states.async_set("lock.entity", STATE_UNLOCKED)
+    opp.states.async_set("lock.entity", STATE_UNLOCKED)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data[

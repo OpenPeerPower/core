@@ -84,15 +84,15 @@ async def async_setup_opp, config):
         _LOGGER.error("Could not setup integration")
         return False
 
-   .opp.data[DOMAIN] = tankerkoenig
+    opp.data[DOMAIN] = tankerkoenig
 
-   .opp.async_create_task(
+    opp.async_create_task(
         async_load_platform(
-            opp,
+            opp.
             SENSOR_DOMAIN,
             DOMAIN,
             discovered=tankerkoenig.stations,
-           .opp_config=conf,
+            opp.config=conf,
         )
     )
 

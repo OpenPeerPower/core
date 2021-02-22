@@ -29,7 +29,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             PilightSensor(
-               .opp.opp,
+                opp.opp,
                 name=config.get(CONF_NAME),
                 variable=config.get(CONF_VARIABLE),
                 payload=config.get(CONF_PAYLOAD),
@@ -51,7 +51,7 @@ class PilightSensor(Entity):
         self._payload = payload
         self._unit_of_measurement = unit_of_measurement
 
-       .opp.bus.listen(pilight.EVENT, self._handle_code)
+        opp.bus.listen(pilight.EVENT, self._handle_code)
 
     @property
     def should_poll(self):

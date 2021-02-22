@@ -27,7 +27,7 @@ NUKI_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Set up the Nuki component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     for platform in NUKI_PLATFORMS:
         confs = config.get(platform)
@@ -35,8 +35,8 @@ async def async_setup_opp, config):
             continue
 
         for conf in confs:
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
                 )
             )
@@ -46,8 +46,8 @@ async def async_setup_opp, config):
 
 async def async_setup_entry.opp, entry):
     """Set up the Nuki entry."""
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, LOCK_DOMAIN)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, LOCK_DOMAIN)
     )
 
     return True

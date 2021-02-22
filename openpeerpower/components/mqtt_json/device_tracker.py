@@ -58,7 +58,7 @@ async def async_setup_scanner.opp, config, async_see, discovery_info=None):
                 return
 
             kwargs = _parse_see_args(dev_id, data)
-           .opp.async_create_task(async_see(**kwargs))
+            opp.async_create_task(async_see(**kwargs))
 
         await mqtt.async_subscribe.opp, topic, async_message_received, qos)
 

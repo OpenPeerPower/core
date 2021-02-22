@@ -94,7 +94,7 @@ async def async_reset_platform.opp: OpenPeerPowerType, integration_name: str) ->
 
 
 def _async_integration_has_notify_services(
-    opp: OpenPeerPowerType, integration_name: str
+    opp. OpenPeerPowerType, integration_name: str
 ) -> bool:
     """Determine if an integration has notify services registered."""
     if (
@@ -109,7 +109,7 @@ def _async_integration_has_notify_services(
 class BaseNotificationService:
     """An abstract class for notification services."""
 
-   .opp: Optional[OpenPeerPowerType] = None
+    opp. Optional[OpenPeerPowerType] = None
     # Name => target
     registered_targets: Dict[str, str]
 
@@ -150,7 +150,7 @@ class BaseNotificationService:
 
     async def async_setup(
         self,
-        opp: OpenPeerPowerType,
+        opp. OpenPeerPowerType,
         service_name: str,
         target_service_name_prefix: str,
     ) -> None:
@@ -227,7 +227,7 @@ class BaseNotificationService:
 
 async def async_setup_opp, config):
     """Set up the notify services."""
-   .opp.data.setdefault(NOTIFY_SERVICES, {})
+    opp.data.setdefault(NOTIFY_SERVICES, {})
 
     async def persistent_notification(service: ServiceCall) -> None:
         """Send notification via the built-in persistsent_notify integration."""
@@ -253,7 +253,7 @@ async def async_setup_opp, config):
             p_config = {}
 
         platform = await async_prepare_setup_platform(
-            opp, config, DOMAIN, integration_name
+            opp. config, DOMAIN, integration_name
         )
 
         if platform is None:
@@ -265,7 +265,7 @@ async def async_setup_opp, config):
         try:
             if hasattr(platform, "async_get_service"):
                 notify_service = await platform.async_get_service(
-                    opp, p_config, discovery_info
+                    opp. p_config, discovery_info
                 )
             elif hasattr(platform, "get_service"):
                 notify_service = await opp.async_add_executor_job(
@@ -297,14 +297,14 @@ async def async_setup_opp, config):
         await notify_service.async_setup_opp, service_name, target_service_name_prefix)
         await notify_service.async_register_services()
 
-       .opp.data[NOTIFY_SERVICES].setdefault(integration_name, []).append(
+        opp.data[NOTIFY_SERVICES].setdefault(integration_name, []).append(
             notify_service
         )
-       .opp.config.components.add(f"{DOMAIN}.{integration_name}")
+        opp.config.components.add(f"{DOMAIN}.{integration_name}")
 
         return True
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_PERSISTENT_NOTIFICATION,
         persistent_notification,

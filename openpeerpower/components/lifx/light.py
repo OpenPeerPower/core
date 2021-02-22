@@ -184,7 +184,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     platform = entity_platform.current_platform.get()
     lifx_manager = LIFXManager.opp, platform, async_add_entities)
-   .opp.data[DATA_LIFX_MANAGER] = lifx_manager
+    opp.data[DATA_LIFX_MANAGER] = lifx_manager
 
     for interface in interfaces:
         lifx_manager.start_discovery(interface)

@@ -13,7 +13,7 @@
         },
         "flow_title": "deCONZ Zigbee Gateway",
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "M\u00f6chtest du Open Peer Power so konfigurieren, dass er eine Verbindung mit dem deCONZ Gateway herstellt, der vom Hass.io Add-on {addon} bereitgestellt wird?",
                 "title": "deCONZ Zigbee Gateway \u00fcber das Hass.io Add-on"
             },
@@ -60,7 +60,7 @@
         },
         "trigger_type": {
             "remote_awakened": "Ger\u00e4t aufgeweckt",
-            "remote_button_double_press": "\"{subtype}\" Taste doppelt angeklickt",
+            "remote_button_double_press": "\"{subtype}\" Taste  opp.lt angeklickt",
             "remote_button_long_press": "\"{subtype}\" Taste kontinuierlich gedr\u00fcckt",
             "remote_button_long_release": "\"{subtype}\" Taste nach langem Dr\u00fccken losgelassen",
             "remote_button_quadruple_press": "\"{subtype}\" Taste vierfach geklickt",
@@ -71,8 +71,8 @@
             "remote_button_short_press": "\"{subtype}\" Taste gedr\u00fcckt",
             "remote_button_short_release": "\"{subtype}\" Taste losgelassen",
             "remote_button_triple_press": "\"{subtype}\" Taste dreimal geklickt",
-            "remote_double_tap": "Ger\u00e4t \"{subtype}\" doppelt getippt",
-            "remote_double_tap_any_side": "Ger\u00e4t auf beliebiger Seite doppelt angetippt",
+            "remote_double_tap": "Ger\u00e4t \"{subtype}\"  opp.lt getippt",
+            "remote_double_tap_any_side": "Ger\u00e4t auf beliebiger Seite  opp.lt angetippt",
             "remote_falling": "Ger\u00e4t im freien Fall",
             "remote_flip_180_degrees": "Ger\u00e4t um 180 Grad gekippt",
             "remote_flip_90_degrees": "Ger\u00e4t um 90 Grad gekippt",

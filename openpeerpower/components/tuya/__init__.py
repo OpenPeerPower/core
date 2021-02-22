@@ -109,8 +109,8 @@ async def async_setup_opp, config):
 
     conf = config.get(DOMAIN)
     if conf is not None:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
             )
         )
@@ -149,7 +149,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
         return False
 
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         TUYA_DATA: tuya,
         TUYA_DEVICES_CONF: entry.options.copy(),
         TUYA_TRACKER: None,
@@ -160,11 +160,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     }
 
     _update_discovery_interval(
-        opp, entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
+        opp. entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
     )
 
     _update_query_interval(
-        opp, entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
+        opp. entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
     )
 
     async def async_load_devices(device_list):
@@ -180,16 +180,16 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 if ha_type not in device_type_list:
                     device_type_list[ha_type] = []
                 device_type_list[ha_type].append(device.object_id())
-               .opp.data[DOMAIN]["entities"][device.object_id()] = None
+                opp.data[DOMAIN]["entities"][device.object_id()] = None
 
         for ha_type, dev_ids in device_type_list.items():
             config_entries_key = f"{ha_type}.tuya"
             if config_entries_key not in.opp.data[DOMAIN][ENTRY_IS_SETUP]:
-               .opp.data[DOMAIN]["pending"][ha_type] = dev_ids
-               .opp.async_create_task(
-                   .opp.config_entries.async_forward_entry_setup(entry, ha_type)
+                opp.data[DOMAIN]["pending"][ha_type] = dev_ids
+                opp.async_create_task(
+                    opp.config_entries.async_forward_entry_setup(entry, ha_type)
                 )
-               .opp.data[DOMAIN][ENTRY_IS_SETUP].add(config_entries_key)
+                opp.data[DOMAIN][ENTRY_IS_SETUP].add(config_entries_key)
             else:
                 async_dispatcher_send.opp, TUYA_DISCOVERY_NEW.format(ha_type), dev_ids)
 
@@ -215,13 +215,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         for dev_id in list.opp.data[DOMAIN]["entities"]):
             if dev_id not in newlist_ids:
                 async_dispatcher_send.opp, SIGNAL_DELETE_ENTITY, dev_id)
-               .opp.data[DOMAIN]["entities"].pop(dev_id)
+                opp.data[DOMAIN]["entities"].pop(dev_id)
 
-   .opp.data[DOMAIN][TUYA_TRACKER] = async_track_time_interval(
-        opp, async_poll_devices_update, timedelta(minutes=2)
+    opp.data[DOMAIN][TUYA_TRACKER] = async_track_time_interval(
+        opp. async_poll_devices_update, timedelta(minutes=2)
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN, SERVICE_PULL_DEVICES, async_poll_devices_update
     )
 
@@ -229,7 +229,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         """Force all devices to pull data."""
         async_dispatcher_send.opp, SIGNAL_UPDATE_ENTITY)
 
-   .opp.services.async_register(DOMAIN, SERVICE_FORCE_UPDATE, async_force_update)
+    opp.services.async_register(DOMAIN, SERVICE_FORCE_UPDATE, async_force_update)
 
     return True
 
@@ -239,7 +239,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(
+                opp.config_entries.async_forward_entry_unload(
                     entry, component.split(".", 1)[0]
                 )
                 for component in.opp.data[DOMAIN][ENTRY_IS_SETUP]
@@ -247,23 +247,23 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN]["listener"]()
-       .opp.data[DOMAIN][TUYA_TRACKER]()
-       .opp.services.async_remove(DOMAIN, SERVICE_FORCE_UPDATE)
-       .opp.services.async_remove(DOMAIN, SERVICE_PULL_DEVICES)
-       .opp.data.pop(DOMAIN)
+        opp.data[DOMAIN]["listener"]()
+        opp.data[DOMAIN][TUYA_TRACKER]()
+        opp.services.async_remove(DOMAIN, SERVICE_FORCE_UPDATE)
+        opp.services.async_remove(DOMAIN, SERVICE_PULL_DEVICES)
+        opp.data.pop(DOMAIN)
 
     return unload_ok
 
 
 async def update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     """Update when config_entry options update."""
-   .opp.data[DOMAIN][TUYA_DEVICES_CONF] = entry.options.copy()
+    opp.data[DOMAIN][TUYA_DEVICES_CONF] = entry.options.copy()
     _update_discovery_interval(
-        opp, entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
+        opp. entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
     )
     _update_query_interval(
-        opp, entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
+        opp. entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
     )
     async_dispatcher_send.opp, SIGNAL_CONFIG_ENTITY)
 

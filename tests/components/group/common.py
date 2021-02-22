@@ -19,19 +19,19 @@ from openpeerpower.loader import bind.opp
 @bind.opp
 def reload.opp):
     """Reload the automation from config."""
-   .opp.add_job(async_reload, opp)
+    opp.add_job(async_reload, opp)
 
 
 @callback
 @bind.opp
 def async_reload.opp):
     """Reload the automation from config."""
-   .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_RELOAD))
+    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_RELOAD))
 
 
 @bind.opp
 def set_group(
-    opp,
+    opp.
     object_id,
     name=None,
     entity_ids=None,
@@ -39,9 +39,9 @@ def set_group(
     add=None,
 ):
     """Create/Update a group."""
-   .opp.add_job(
+    opp.add_job(
         async_set_group,
-        opp,
+        opp.
         object_id,
         name,
         entity_ids,
@@ -53,7 +53,7 @@ def set_group(
 @callback
 @bind.opp
 def async_set_group(
-    opp,
+    opp.
     object_id,
     name=None,
     entity_ids=None,
@@ -73,7 +73,7 @@ def async_set_group(
         if value is not None
     }
 
-   .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_SET, data))
+    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_SET, data))
 
 
 @callback
@@ -81,4 +81,4 @@ def async_set_group(
 def async_remove.opp, object_id):
     """Remove a user group."""
     data = {ATTR_OBJECT_ID: object_id}
-   .opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_REMOVE, data))
+    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_REMOVE, data))

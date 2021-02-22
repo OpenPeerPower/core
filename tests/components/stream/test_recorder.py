@@ -99,7 +99,7 @@ async def test_record_stream.opp, opp_client, stream_worker_sync, record_worker_
 
 
 async def test_record_lookback(
-    opp, opp_client, stream_worker_sync, record_worker_sync
+    opp. opp_client, stream_worker_sync, record_worker_sync
 ):
     """Exercise record with loopback."""
     await async_setup_component.opp, "stream", {"stream": {}})
@@ -162,7 +162,7 @@ async def test_record_path_not_allowed.opp, opp_client):
     source = generate_h264_video()
     stream = create_stream.opp, source)
     with patch.object(
-       .opp.config, "is_allowed_path", return_value=False
+        opp.config, "is_allowed_path", return_value=False
     ), pytest.raises(OpenPeerPowerError):
         await stream.async_record("/example/path")
 
@@ -181,7 +181,7 @@ async def test_recorder_save(tmpdir):
 
 
 async def test_record_stream_audio(
-    opp, opp_client, stream_worker_sync, record_worker_sync
+    opp. opp_client, stream_worker_sync, record_worker_sync
 ):
     """
     Test treatment of different audio inputs.

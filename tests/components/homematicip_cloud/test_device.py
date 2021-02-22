@@ -35,7 +35,7 @@ async def test_hmip_remove_device.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -67,7 +67,7 @@ async def test_hmip_add_device.opp, default_mock_hap_factory, hmip_config_entry)
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -113,7 +113,7 @@ async def test_hmip_remove_group.opp, default_mock_hap_factory):
     mock_hap = await default_mock_hap_factory.async_get_mock_hap(test_groups=["Strom"])
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -135,7 +135,7 @@ async def test_hmip_remove_group.opp, default_mock_hap_factory):
 
 
 async def test_all_devices_unavailable_when_hap_not_connected(
-    opp, default_mock_hap_factory
+    opp. default_mock_hap_factory
 ):
     """Test make all devices unavaulable when hap is not connected."""
     entity_id = "light.treppe_ch"
@@ -146,7 +146,7 @@ async def test_all_devices_unavailable_when_hap_not_connected(
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -170,7 +170,7 @@ async def test_hap_reconnected.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert ha_state.state == STATE_ON
@@ -199,12 +199,12 @@ async def test_hap_with_name.opp, mock_connection, hmip_config_entry):
 
     hmip_config_entry.data = {**hmip_config_entry.data, "name": home_name}
     mock_hap = await HomeFactory(
-        opp, mock_connection, hmip_config_entry
+        opp. mock_connection, hmip_config_entry
     ).async_get_mock_hap(test_devices=["Treppe"])
     assert mock_hap
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
 
     assert hmip_device
@@ -222,7 +222,7 @@ async def test_hmip_reset_energy_counter_services.opp, default_mock_hap_factory)
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
     assert ha_state
 
@@ -252,7 +252,7 @@ async def test_hmip_multi_area_device.opp, default_mock_hap_factory):
     )
 
     ha_state, hmip_device = get_and_check_entity_basics(
-        opp, mock_hap, entity_id, entity_name, device_model
+        opp. mock_hap, entity_id, entity_name, device_model
     )
     assert ha_state
 

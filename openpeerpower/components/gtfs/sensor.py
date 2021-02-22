@@ -481,7 +481,7 @@ def get_next_departure(
 
 
 def setup_platform(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config: ConfigType,
     add_entities: Callable[[list], None],
     discovery_info: Optional[DiscoveryInfoType] = None,

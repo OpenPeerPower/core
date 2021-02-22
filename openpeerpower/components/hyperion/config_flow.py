@@ -210,7 +210,7 @@ class HyperionConfigFlow(ConfigFlow, domain=DOMAIN):
             return self.async_abort(reason="no_id")
 
         # For discovery mechanisms, we set the unique_id as early as possible to
-        # avoid discovery popping up a duplicate on the screen. The unique_id is set
+        # avoid discovery  opp.ng up a duplicate on the screen. The unique_id is set
         # authoritatively later in the flow by asking the server to confirm its id
         # (which should theoretically be the same as specified here)
         await self.async_set_unique_id(hyperion_id)

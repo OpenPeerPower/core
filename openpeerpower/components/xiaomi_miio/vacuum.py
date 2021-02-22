@@ -118,7 +118,7 @@ STATE_CODE_TO_STATE = {
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Xiaomi vacuum cleaner robot platform."""
     if DATA_KEY not in.opp.data:
-       .opp.data[DATA_KEY] = {}
+        opp.data[DATA_KEY] = {}
 
     host = config[CONF_HOST]
     token = config[CONF_TOKEN]
@@ -129,7 +129,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     vacuum = Vacuum(host, token)
 
     mirobo = MiroboVacuum(name, vacuum)
-   .opp.data[DATA_KEY][host] = mirobo
+    opp.data[DATA_KEY][host] = mirobo
 
     async_add_entities([mirobo], update_before_add=True)
 

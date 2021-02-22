@@ -73,15 +73,15 @@ SENSOR_OUTPUT = {
 def mock_client.opp, opp_client):
     """Start the Open Peer Power HTTP component."""
     with patch("openpeerpower.components.spaceapi", return_value=mock_coro(True)):
-       .opp.loop.run_until_complete(async_setup_component.opp, "spaceapi", CONFIG))
+        opp.loop.run_until_complete(async_setup_component.opp, "spaceapi", CONFIG))
 
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.temp1", 25, attributes={ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.temp2", 23, attributes={ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         "test.hum1", 88, attributes={ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
 
@@ -134,7 +134,7 @@ async def test_spaceapi_get.opp, mock_client):
 
 async def test_spaceapi_state_get.opp, mock_client):
     """Test response if the state entity was set."""
-   .opp.states.async_set("test.test_door", True)
+    opp.states.async_set("test.test_door", True)
 
     resp = await mock_client.get(URL_API_SPACEAPI)
     assert resp.status == 200

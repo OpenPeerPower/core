@@ -13,7 +13,7 @@ async def test_abort_already_setup_opp):
     flow = config_flow.VeSyncFlowHandler()
     flow.opp = opp
     MockConfigEntry(domain=DOMAIN, title="user", data={"user": "pass"}).add_to.opp(
-       .opp
+        opp
     )
     result = await flow.async_step_user()
 

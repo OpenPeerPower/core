@@ -121,24 +121,24 @@ async def async_setup_opp, config):
         _LOGGER.error("Hive API initialization failed")
         return False
 
-   .opp.data[DOMAIN][DATA_HIVE] = hive
-   .opp.data[DOMAIN]["entity_lookup"] = {}
+    opp.data[DOMAIN][DATA_HIVE] = hive
+    opp.data[DOMAIN]["entity_lookup"] = {}
 
     for ha_type in DEVICETYPES:
         devicelist = devices.get(DEVICETYPES[ha_type])
         if devicelist:
-           .opp.async_create_task(
+            opp.async_create_task(
                 async_load_platform.opp, ha_type, DOMAIN, devicelist, config)
             )
             if ha_type == "climate":
-               .opp.services.async_register(
+                opp.services.async_register(
                     DOMAIN,
                     SERVICE_BOOST_HEATING,
                     heating_boost,
                     schema=BOOST_HEATING_SCHEMA,
                 )
             if ha_type == "water_heater":
-               .opp.services.async_register(
+                opp.services.async_register(
                     DOMAIN,
                     SERVICE_BOOST_HOT_WATER,
                     hot_water_boost,

@@ -26,7 +26,7 @@ PLATFORMS = ["binary_sensor"]
 async def async_setup_opp: OpenPeerPower, config):
     """Set up the Goal Zero Yeti component."""
 
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     return True
 
@@ -52,20 +52,20 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(f"Failed to communicating with API: {err}") from err
 
     coordinator = DataUpdateCoordinator(
-        opp,
+        opp.
         _LOGGER,
         name=name,
         update_method=async_update_data,
         update_interval=MIN_TIME_BETWEEN_UPDATES,
     )
-   .opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         DATA_KEY_API: api,
         DATA_KEY_COORDINATOR: coordinator,
     }
 
     for platform in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, platform)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -76,13 +76,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
     return unload_ok
 
 

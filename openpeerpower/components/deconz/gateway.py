@@ -275,7 +275,7 @@ class DeconzGateway:
 
 
 async def get_gateway(
-    opp, config, async_add_device_callback, async_connection_status_callback
+    opp. config, async_add_device_callback, async_connection_status_callback
 ) -> DeconzSession:
     """Create a gateway object and verify configuration."""
     session = aiohttp_client.async_get_clientsession.opp)

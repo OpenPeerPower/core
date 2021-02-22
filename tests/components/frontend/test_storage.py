@@ -8,7 +8,7 @@ from openpeerpower.setup import async_setup_component
 @pytest.fixture(autouse=True)
 def setup_frontend.opp):
     """Fixture to setup the frontend."""
-   .opp.loop.run_until_complete(async_setup_component.opp, "frontend", {}))
+    opp.loop.run_until_complete(async_setup_component.opp, "frontend", {}))
 
 
 async def test_get_user_data_empty.opp, opp_ws_client, opp_storage):
@@ -27,7 +27,7 @@ async def test_get_user_data_empty.opp, opp_ws_client, opp_storage):
 async def test_get_user_data.opp, opp_ws_client, opp_admin_user, opp_storage):
     """Test get_user_data command."""
     storage_key = f"{DOMAIN}.user_data_.opp_admin_user.id}"
-   .opp_storage[storage_key] = {
+    opp.storage[storage_key] = {
         "key": storage_key,
         "version": 1,
         "data": {"test-key": "test-value", "test-complex": [{"foo": "bar"}]},
@@ -103,7 +103,7 @@ async def test_set_user_data_empty.opp, opp_ws_client, opp_storage):
 async def test_set_user_data.opp, opp_ws_client, opp_storage, opp_admin_user):
     """Test set_user_data command with initial data."""
     storage_key = f"{DOMAIN}.user_data_.opp_admin_user.id}"
-   .opp_storage[storage_key] = {
+    opp.storage[storage_key] = {
         "version": 1,
         "data": {"test-key": "test-value", "test-complex": "string"},
     }

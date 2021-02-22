@@ -17,7 +17,7 @@
                 },
                 "description": "Gitt Verbindungs Informatioune vun \u00e4rem MQTT Broker an."
             },
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "data": {
                     "discovery": "Entdeckung aktiv\u00e9ieren"
                 },

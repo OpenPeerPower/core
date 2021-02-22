@@ -49,17 +49,17 @@ PLATFORMS = ["camera", "vacuum", "switch", "sensor"]
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the Neato component."""
-   .opp.data[NEATO_DOMAIN] = {}
+    opp.data[NEATO_DOMAIN] = {}
 
     if NEATO_DOMAIN not in config:
         return True
 
-   .opp.data[NEATO_CONFIG] = config[NEATO_DOMAIN]
+    opp.data[NEATO_CONFIG] = config[NEATO_DOMAIN]
     vendor = Neato()
     config_flow.OAuth2FlowHandler.async_register_implementation(
-        opp,
+        opp.
         api.NeatoImplementation(
-            opp,
+            opp.
             NEATO_DOMAIN,
             config[NEATO_DOMAIN][CONF_CLIENT_ID],
             config[NEATO_DOMAIN][CONF_CLIENT_SECRET],
@@ -75,8 +75,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up config entry."""
     if CONF_TOKEN not in entry.data:
         # Init reauth flow
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 NEATO_DOMAIN,
                 context={CONF_SOURCE: SOURCE_REAUTH},
             )
@@ -85,14 +85,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
+            opp. entry
         )
     )
 
     session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
 
     neato_session = api.ConfigEntryAuth.opp, entry, session)
-   .opp.data[NEATO_DOMAIN][entry.entry_id] = neato_session
+    opp.data[NEATO_DOMAIN][entry.entry_id] = neato_session
     hub = NeatoHub.opp, Account(neato_session))
 
     try:
@@ -101,11 +101,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         _LOGGER.debug("Failed to connect to Neato API")
         raise ConfigEntryNotReady from ex
 
-   .opp.data[NEATO_LOGIN] = hub
+    opp.data[NEATO_LOGIN] = hub
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -114,13 +114,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     """Unload config entry."""
     unload_functions = (
-       .opp.config_entries.async_forward_entry_unload(entry, platform)
+        opp.config_entries.async_forward_entry_unload(entry, platform)
         for platform in PLATFORMS
     )
 
     unload_ok = all(await asyncio.gather(*unload_functions))
     if unload_ok:
-       .opp.data[NEATO_DOMAIN].pop(entry.entry_id)
+        opp.data[NEATO_DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

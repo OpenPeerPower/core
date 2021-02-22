@@ -98,7 +98,7 @@ async def test_setup_min.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp,
+        opp.
         BRIDGE_NAME,
         DEFAULT_PORT,
         None,
@@ -112,7 +112,7 @@ async def test_setup_min.opp, mock_zeroconf):
 
     # Test auto start enabled
     mock_homekit.reset_mock()
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
     await opp.async_block_till_done()
 
     mock_homekit().async_start.assert_called()
@@ -134,7 +134,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp,
+        opp.
         "Test Name",
         11111,
         "172.0.0.0",
@@ -149,7 +149,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
     # Test auto_start disabled
     homekit.reset_mock()
     homekit.async_start.reset_mock()
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
     await opp.async_block_till_done()
     assert homekit.async_start.called is False
 
@@ -180,7 +180,7 @@ async def test_homekit_setup_opp, hk_driver, mock_zeroconf):
         source=SOURCE_IMPORT,
     )
     homekit = HomeKit(
-        opp,
+        opp.
         BRIDGE_NAME,
         DEFAULT_PORT,
         None,
@@ -191,8 +191,8 @@ async def test_homekit_setup_opp, hk_driver, mock_zeroconf):
         entry_id=entry.entry_id,
     )
 
-   .opp.states.async_set("light.demo", "on")
-   .opp.states.async_set("light.demo2", "on")
+    opp.states.async_set("light.demo", "on")
+    opp.states.async_set("light.demo2", "on")
     zeroconf_mock = MagicMock()
     with patch(
         f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver
@@ -202,7 +202,7 @@ async def test_homekit_setup_opp, hk_driver, mock_zeroconf):
 
     path = get_persist_fullpath_for_entry_id.opp, entry.entry_id)
     mock_driver.assert_called_with(
-        opp,
+        opp.
         entry.entry_id,
         BRIDGE_NAME,
         loop.opp.loop,
@@ -226,7 +226,7 @@ async def test_homekit_setup_ip_address.opp, hk_driver, mock_zeroconf):
         source=SOURCE_IMPORT,
     )
     homekit = HomeKit(
-        opp,
+        opp.
         BRIDGE_NAME,
         DEFAULT_PORT,
         "172.0.0.0",
@@ -242,7 +242,7 @@ async def test_homekit_setup_ip_address.opp, hk_driver, mock_zeroconf):
     with patch(f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver) as mock_driver:
         await opp.async_add_executor_job(homekit.setup, mock_zeroconf)
     mock_driver.assert_called_with(
-        opp,
+        opp.
         entry.entry_id,
         BRIDGE_NAME,
         loop.opp.loop,
@@ -262,7 +262,7 @@ async def test_homekit_setup_advertise_ip.opp, hk_driver, mock_zeroconf):
         source=SOURCE_IMPORT,
     )
     homekit = HomeKit(
-        opp,
+        opp.
         BRIDGE_NAME,
         DEFAULT_PORT,
         "0.0.0.0",
@@ -278,7 +278,7 @@ async def test_homekit_setup_advertise_ip.opp, hk_driver, mock_zeroconf):
     with patch(f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver) as mock_driver:
         await opp.async_add_executor_job(homekit.setup, zeroconf_instance)
     mock_driver.assert_called_with(
-        opp,
+        opp.
         entry.entry_id,
         BRIDGE_NAME,
         loop.opp.loop,
@@ -295,7 +295,7 @@ async def test_homekit_add_accessory.opp, mock_zeroconf):
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -330,13 +330,13 @@ async def test_homekit_add_accessory.opp, mock_zeroconf):
 
 @pytest.mark.parametrize("acc_category", [CATEGORY_TELEVISION, CATEGORY_CAMERA])
 async def test_homekit_warn_add_accessory_bridge(
-    opp, acc_category, mock_zeroconf, caplog
+    opp. acc_category, mock_zeroconf, caplog
 ):
     """Test we warn when adding cameras or tvs to a bridge."""
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -372,7 +372,7 @@ async def test_homekit_remove_accessory.opp, mock_zeroconf):
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -397,7 +397,7 @@ async def test_homekit_entity_filter.opp, mock_zeroconf):
 
     entity_filter = generate_filter(["cover"], ["demo.test"], [], [])
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -433,7 +433,7 @@ async def test_homekit_entity_glob_filter.opp, mock_zeroconf):
         ["cover"], ["demo.test"], [], [], ["*.included_*"], ["*.excluded_*"]
     )
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -472,7 +472,7 @@ async def test_homekit_start.opp, hk_driver, device_reg):
 
     pin = b"123-45-678"
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -498,8 +498,8 @@ async def test_homekit_start.opp, hk_driver, device_reg):
         model="Open Peer Power HomeKit Bridge",
     )
 
-   .opp.states.async_set("light.demo", "on")
-   .opp.states.async_set("light.demo2", "on")
+    opp.states.async_set("light.demo", "on")
+    opp.states.async_set("light.demo2", "on")
     state = opp.states.async_all()[0]
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.add_bridge_accessory") as mock_add_acc, patch(
@@ -564,7 +564,7 @@ async def test_homekit_start_with_a_broken_accessory.opp, hk_driver, mock_zeroco
 
     await async_init_entry.opp, entry)
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -580,8 +580,8 @@ async def test_homekit_start_with_a_broken_accessory.opp, hk_driver, mock_zeroco
     homekit.driver = hk_driver
     homekit.driver.accessory = Accessory(hk_driver, "any")
 
-   .opp.states.async_set("light.demo", "on")
-   .opp.states.async_set("light.broken", "on")
+    opp.states.async_set("light.demo", "on")
+    opp.states.async_set("light.broken", "on")
 
     with patch(f"{PATH_HOMEKIT}.get_accessory", side_effect=Exception), patch(
         f"{PATH_HOMEKIT}.show_setup_message"
@@ -610,7 +610,7 @@ async def test_homekit_stop.opp):
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -650,7 +650,7 @@ async def test_homekit_reset_accessories.opp, mock_zeroconf):
     )
     entity_id = "light.demo"
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -698,7 +698,7 @@ async def test_homekit_too_many_accessories.opp, hk_driver, caplog, mock_zerocon
     entity_filter = generate_filter(["cover", "light"], ["demo.test"], [], [])
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -718,9 +718,9 @@ async def test_homekit_too_many_accessories.opp, hk_driver, caplog, mock_zerocon
     homekit.driver = hk_driver
     homekit.driver.accessory = Accessory(hk_driver, "any")
 
-   .opp.states.async_set("light.demo", "on")
-   .opp.states.async_set("light.demo2", "on")
-   .opp.states.async_set("light.demo3", "on")
+    opp.states.async_set("light.demo", "on")
+    opp.states.async_set("light.demo2", "on")
+    opp.states.async_set("light.demo3", "on")
 
     with patch("pyhap.accessory_driver.AccessoryDriver.start_service"), patch(
         "pyhap.accessory_driver.AccessoryDriver.add_accessory"
@@ -733,13 +733,13 @@ async def test_homekit_too_many_accessories.opp, hk_driver, caplog, mock_zerocon
 
 
 async def test_homekit_finds_linked_batteries(
-    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -782,15 +782,15 @@ async def test_homekit_finds_linked_batteries(
         "light", "powerwall", "demo", device_id=device_entry.id
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         binary_charging_sensor.entity_id,
         STATE_ON,
         {ATTR_DEVICE_CLASS: DEVICE_CLASS_BATTERY_CHARGING},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         battery_sensor.entity_id, 30, {ATTR_DEVICE_CLASS: DEVICE_CLASS_BATTERY}
     )
-   .opp.states.async_set(light.entity_id, STATE_ON)
+    opp.states.async_set(light.entity_id, STATE_ON)
 
     def _mock_get_accessory(*args, **kwargs):
         return [None, "acc", None]
@@ -804,7 +804,7 @@ async def test_homekit_finds_linked_batteries(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp,
+        opp.
         hk_driver,
         ANY,
         ANY,
@@ -819,13 +819,13 @@ async def test_homekit_finds_linked_batteries(
 
 
 async def test_homekit_async_get_integration_fails(
-    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test that we continue if async_get_integration fails."""
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -867,15 +867,15 @@ async def test_homekit_async_get_integration_fails(
         "light", "invalid_integration_does_not_exist", "demo", device_id=device_entry.id
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         binary_charging_sensor.entity_id,
         STATE_ON,
         {ATTR_DEVICE_CLASS: DEVICE_CLASS_BATTERY_CHARGING},
     )
-   .opp.states.async_set(
+    opp.states.async_set(
         battery_sensor.entity_id, 30, {ATTR_DEVICE_CLASS: DEVICE_CLASS_BATTERY}
     )
-   .opp.states.async_set(light.entity_id, STATE_ON)
+    opp.states.async_set(light.entity_id, STATE_ON)
 
     def _mock_get_accessory(*args, **kwargs):
         return [None, "acc", None]
@@ -889,7 +889,7 @@ async def test_homekit_async_get_integration_fails(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp,
+        opp.
         hk_driver,
         ANY,
         ANY,
@@ -917,12 +917,12 @@ async def test_yaml_updates_update_config_entry_for_name.opp, mock_zeroconf):
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
         assert await async_setup_component(
-            opp, "homekit", {"homekit": {CONF_NAME: BRIDGE_NAME, CONF_PORT: 12345}}
+            opp. "homekit", {"homekit": {CONF_NAME: BRIDGE_NAME, CONF_PORT: 12345}}
         )
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp,
+        opp.
         BRIDGE_NAME,
         12345,
         None,
@@ -936,7 +936,7 @@ async def test_yaml_updates_update_config_entry_for_name.opp, mock_zeroconf):
 
     # Test auto start enabled
     mock_homekit.reset_mock()
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
     await opp.async_block_till_done()
 
     mock_homekit().async_start.assert_called()
@@ -985,13 +985,13 @@ def _write_data(path: str, data: Dict) -> None:
 
 
 async def test_homekit_ignored_missing_devices(
-    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit handles a device in the entity registry but missing from the device registry."""
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -1038,8 +1038,8 @@ async def test_homekit_ignored_missing_devices(
     # to using the platform
     device_reg.async_remove_device(device_entry.id)
 
-   .opp.states.async_set(light.entity_id, STATE_ON)
-   .opp.states.async_set("light.two", STATE_ON)
+    opp.states.async_set(light.entity_id, STATE_ON)
+    opp.states.async_set("light.two", STATE_ON)
 
     def _mock_get_accessory(*args, **kwargs):
         return [None, "acc", None]
@@ -1053,7 +1053,7 @@ async def test_homekit_ignored_missing_devices(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_any_call(
-        opp,
+        opp.
         hk_driver,
         ANY,
         ANY,
@@ -1066,13 +1066,13 @@ async def test_homekit_ignored_missing_devices(
 
 
 async def test_homekit_finds_linked_motion_sensors(
-    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -1108,12 +1108,12 @@ async def test_homekit_finds_linked_motion_sensors(
         "camera", "camera", "demo", device_id=device_entry.id
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         binary_motion_sensor.entity_id,
         STATE_ON,
         {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION},
     )
-   .opp.states.async_set(camera.entity_id, STATE_ON)
+    opp.states.async_set(camera.entity_id, STATE_ON)
 
     def _mock_get_accessory(*args, **kwargs):
         return [None, "acc", None]
@@ -1127,7 +1127,7 @@ async def test_homekit_finds_linked_motion_sensors(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp,
+        opp.
         hk_driver,
         ANY,
         ANY,
@@ -1141,13 +1141,13 @@ async def test_homekit_finds_linked_motion_sensors(
 
 
 async def test_homekit_finds_linked_humidity_sensors(
-    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -1182,7 +1182,7 @@ async def test_homekit_finds_linked_humidity_sensors(
         "humidifier", "humidifier", "demo", device_id=device_entry.id
     )
 
-   .opp.states.async_set(
+    opp.states.async_set(
         humidity_sensor.entity_id,
         "42",
         {
@@ -1190,7 +1190,7 @@ async def test_homekit_finds_linked_humidity_sensors(
             ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
         },
     )
-   .opp.states.async_set(humidifier.entity_id, STATE_ON)
+    opp.states.async_set(humidifier.entity_id, STATE_ON)
 
     def _mock_get_accessory(*args, **kwargs):
         return [None, "acc", None]
@@ -1204,7 +1204,7 @@ async def test_homekit_finds_linked_humidity_sensors(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp,
+        opp.
         hk_driver,
         ANY,
         ANY,
@@ -1231,12 +1231,12 @@ async def test_reload.opp, mock_zeroconf):
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
         assert await async_setup_component(
-            opp, "homekit", {"homekit": {CONF_NAME: "reloadable", CONF_PORT: 12345}}
+            opp. "homekit", {"homekit": {CONF_NAME: "reloadable", CONF_PORT: 12345}}
         )
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp,
+        opp.
         "reloadable",
         12345,
         None,
@@ -1272,7 +1272,7 @@ async def test_reload.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit2.assert_any_call(
-        opp,
+        opp.
         "reloadable",
         45678,
         None,
@@ -1295,7 +1295,7 @@ async def test_homekit_start_in_accessory_mode.opp, hk_driver, device_reg):
 
     pin = b"123-45-678"
     homekit = HomeKit(
-        opp,
+        opp.
         None,
         None,
         None,
@@ -1312,7 +1312,7 @@ async def test_homekit_start_in_accessory_mode.opp, hk_driver, device_reg):
     homekit._filter = Mock(return_value=True)
     homekit.driver.accessory = Accessory(hk_driver, "any")
 
-   .opp.states.async_set("light.demo", "on")
+    opp.states.async_set("light.demo", "on")
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.add_bridge_accessory") as mock_add_acc, patch(
         "pyhap.accessory_driver.AccessoryDriver.add_accessory"

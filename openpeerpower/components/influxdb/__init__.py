@@ -489,7 +489,7 @@ def setup_opp, config):
         instance.join()
         influx.close()
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, shutdown)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, shutdown)
 
     return True
 
@@ -506,7 +506,7 @@ class InfluxThread(threading.Thread):
         self.max_tries = max_tries
         self.write_errors = 0
         self.shutdown = False
-       .opp.bus.listen(EVENT_STATE_CHANGED, self._event_listener)
+        opp.bus.listen(EVENT_STATE_CHANGED, self._event_listener)
 
     @callback
     def _event_listener(self, event):

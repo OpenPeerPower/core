@@ -76,7 +76,7 @@ async def async_setup_opp: OpenPeerPowerType, config):
 
     discovery.async_listen_platform.opp, DOMAIN, async_platform_discovered)
 
-   .opp.http.register_view(SpeechToTextView(providers))
+    opp.http.register_view(SpeechToTextView(providers))
     return True
 
 
@@ -103,7 +103,7 @@ class SpeechResult:
 class Provider(ABC):
     """Represent a single STT provider."""
 
-   .opp: Optional[OpenPeerPowerType] = None
+    opp. Optional[OpenPeerPowerType] = None
     name: Optional[str] = None
 
     @property

@@ -195,7 +195,7 @@ async def get_coap_context.opp):
     def shutdown_listener(ev):
         context.close()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown_listener)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown_listener)
 
     return context
 

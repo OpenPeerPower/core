@@ -7,7 +7,7 @@
             "single_instance_allowed": "\u50c5\u80fd\u8a2d\u5b9a\u4e00\u7d44\u88dd\u7f6e\u3002"
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "\u662f\u5426\u8981\u8a2d\u5b9a Open Peer Power \u4ee5\u4f7f\u7528 Hass.io \u9644\u52a0\u7d44\u4ef6\uff1a{addon} \u9023\u7dda\u81f3 Almond\uff1f",
                 "title": "\u4f7f\u7528 Hass.io \u9644\u52a0\u7d44\u4ef6 Almond"
             },

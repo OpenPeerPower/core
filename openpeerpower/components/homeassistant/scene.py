@@ -183,9 +183,9 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
             _process_scenes_config(opp, async_add_entities, p_config)
 
-       .opp.bus.async_fire(EVENT_SCENE_RELOADED, context=call.context)
+        opp.bus.async_fire(EVENT_SCENE_RELOADED, context=call.context)
 
-   .opp.helpers.service.async_register_admin_service(
+    opp.helpers.service.async_register_admin_service(
         SCENE_DOMAIN, SERVICE_RELOAD, reload_config
     )
 
@@ -197,13 +197,13 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             reproduce_options[ATTR_TRANSITION] = call.data.get(ATTR_TRANSITION)
 
         await async_reproduce_state(
-            opp,
+            opp.
             call.data[CONF_ENTITIES].values(),
             context=call.context,
             reproduce_options=reproduce_options,
         )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         SCENE_DOMAIN,
         SERVICE_APPLY,
         apply_service,
@@ -246,7 +246,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             await platform.async_remove_entity(entity_id)
         async_add_entities([OpenPeerPowerScene.opp, scene_config, from_service=True)])
 
-   .opp.services.async_register(
+    opp.services.async_register(
         SCENE_DOMAIN, SERVICE_CREATE, create_service, CREATE_SCENE_SCHEMA
     )
 
@@ -261,7 +261,7 @@ def _process_scenes_config(opp, async_add_entities, config):
 
     async_add_entities(
         OpenPeerPowerScene(
-            opp,
+            opp.
             SCENECONFIG(
                 scene.get(CONF_ID),
                 scene[CONF_NAME],

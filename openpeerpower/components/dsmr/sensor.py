@@ -64,15 +64,15 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Import the platform into a config entry."""
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=config
         )
     )
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the DSMR sensor."""
     config = entry.data
@@ -282,7 +282,7 @@ async def async_setup_entry(
     task = asyncio.create_task(connect_and_reconnect())
 
     # Save the task to be able to cancel it when unloading
-   .opp.data[DOMAIN][entry.entry_id][DATA_TASK] = task
+    opp.data[DOMAIN][entry.entry_id][DATA_TASK] = task
 
 
 class DSMREntity(Entity):

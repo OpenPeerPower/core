@@ -16,18 +16,18 @@ PLATFORMS = ["camera"]
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the foscam component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up foscam from a config entry."""
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-   .opp.data[DOMAIN][entry.entry_id] = entry.data
+    opp.data[DOMAIN][entry.entry_id] = entry.data
 
     return True
 
@@ -37,18 +37,18 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
         if not.opp.data[DOMAIN]:
-           .opp.services.async_remove(domain=DOMAIN, service=SERVICE_PTZ)
-           .opp.services.async_remove(domain=DOMAIN, service=SERVICE_PTZ_PRESET)
+            opp.services.async_remove(domain=DOMAIN, service=SERVICE_PTZ)
+            opp.services.async_remove(domain=DOMAIN, service=SERVICE_PTZ_PRESET)
 
     return unload_ok
 

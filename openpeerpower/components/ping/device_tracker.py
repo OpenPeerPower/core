@@ -140,7 +140,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
             for host in hosts:
                 host.update(see)
         finally:
-           .opp.helpers.event.track_point_in_utc_time(
+            opp.helpers.event.track_point_in_utc_time(
                 update_interval, util.dt.utcnow() + interval
             )
 

@@ -58,7 +58,7 @@ WEBHOOK_SCHEMA = vol.Schema(
 
 async def async_setup_opp, opp_config):
     """Set up the GPSLogger component."""
-   .opp.data[DOMAIN] = {"devices": set(), "unsub_device_tracker": {}}
+    opp.data[DOMAIN] = {"devices": set(), "unsub_device_tracker": {}}
     return True
 
 
@@ -80,7 +80,7 @@ async def handle_webhook.opp, webhook_id, request):
     device = data[ATTR_DEVICE]
 
     async_dispatcher_send(
-        opp,
+        opp.
         TRACKER_UPDATE,
         device,
         (data[ATTR_LATITUDE], data[ATTR_LONGITUDE]),
@@ -94,20 +94,20 @@ async def handle_webhook.opp, webhook_id, request):
 
 async def async_setup_entry.opp, entry):
     """Configure based on config entry."""
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "GPSLogger", entry.data[CONF_WEBHOOK_ID], handle_webhook
     )
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(entry, DEVICE_TRACKER)
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, DEVICE_TRACKER)
     )
     return True
 
 
 async def async_unload_entry.opp, entry):
     """Unload a config entry."""
-   .opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-   .opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
+    opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
+    opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
     await opp.config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
     return True
 

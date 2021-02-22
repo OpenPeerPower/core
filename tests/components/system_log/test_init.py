@@ -30,8 +30,8 @@ async def _async_block_until_queue_empty.opp, sq):
     await opp.async_block_till_done()
     while not sq.empty():
         await asyncio.sleep(0.01)
-   .opp.data[system_log.DOMAIN].acquire()
-   .opp.data[system_log.DOMAIN].release()
+    opp.data[system_log.DOMAIN].acquire()
+    opp.data[system_log.DOMAIN].release()
     await opp.async_block_till_done()
 
 
@@ -124,7 +124,7 @@ async def test_config_not_fire_event.opp, simple_queue):
         """Listen to events of type system_log_event."""
         events.append(event)
 
-   .opp.bus.async_listen(system_log.EVENT_SYSTEM_LOG, event_listener)
+    opp.bus.async_listen(system_log.EVENT_SYSTEM_LOG, event_listener)
 
     _LOGGER.error("error message")
     await _async_block_until_queue_empty.opp, simple_queue)
@@ -135,7 +135,7 @@ async def test_config_not_fire_event.opp, simple_queue):
 async def test_error_posted_as_event.opp, simple_queue):
     """Test that error are posted as events."""
     await async_setup_component(
-        opp, system_log.DOMAIN, {"system_log": {"max_entries": 2, "fire_event": True}}
+        opp. system_log.DOMAIN, {"system_log": {"max_entries": 2, "fire_event": True}}
     )
     events = []
 
@@ -144,7 +144,7 @@ async def test_error_posted_as_event.opp, simple_queue):
         """Listen to events of type system_log_event."""
         events.append(event)
 
-   .opp.bus.async_listen(system_log.EVENT_SYSTEM_LOG, event_listener)
+    opp.bus.async_listen(system_log.EVENT_SYSTEM_LOG, event_listener)
 
     _LOGGER.error("error message")
     await _async_block_until_queue_empty.opp, simple_queue)
@@ -315,7 +315,7 @@ async def test_openpeerpower_path.opp, simple_queue, opp_client):
         new=["venv_path/openpeerpower"],
     ):
         await async_log_error_from_test_path(
-            opp, "venv_path/openpeerpower/component/component.py", simple_queue
+            opp. "venv_path/openpeerpower/component/component.py", simple_queue
         )
         log = (await get_error_log.opp, opp_client, 1))[0]
     assert log["source"] == ["component/component.py", 5]
@@ -326,7 +326,7 @@ async def test_config_path.opp, simple_queue, opp_client):
     await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
     with patch.object.opp.config, "config_dir", new="config"):
         await async_log_error_from_test_path(
-            opp, "config/custom_component/test.py", simple_queue
+            opp. "config/custom_component/test.py", simple_queue
         )
         log = (await get_error_log.opp, opp_client, 1))[0]
     assert log["source"] == ["custom_component/test.py", 5]

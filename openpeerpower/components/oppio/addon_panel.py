@@ -17,7 +17,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_addon_panel.opp.OpenPeerPowerType, opp.):
     """Add-on Ingress Panel setup."""
     opp._addon_panel = OppIOAddonPanel.opp.opp.)
-   .opp.ttp.register_view(opp._addon_panel)
+    opp.ttp.register_view(opp._addon_panel)
 
     # If panels are exists
     panels = await opp.o_addon_panel.get_panels()

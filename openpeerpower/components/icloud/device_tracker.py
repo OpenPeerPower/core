@@ -18,13 +18,13 @@ from .const import (
 
 
 async def async_setup_scanner(
-    opp: OpenPeerPowerType, config, see, discovery_info=None
+    opp. OpenPeerPowerType, config, see, discovery_info=None
 ):
     """Old way of setting up the iCloud tracker."""
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for iCloud component."""
     account = opp.data[DOMAIN][entry.unique_id]

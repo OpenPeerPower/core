@@ -20,7 +20,7 @@ async def async_setup_opp):
         """post_write_hook for Config View that reloads groups."""
         await opp.services.async_call(DOMAIN, SERVICE_RELOAD)
 
-   .opp.http.register_view(
+    opp.http.register_view(
         EditKeyBasedConfigView(
             "group",
             "config",
@@ -35,7 +35,7 @@ async def async_setup_opp):
 
 @callback
 def async_describe_on_off_states(
-    opp: OpenPeerPowerType, registry: GroupIntegrationRegistry
+    opp. OpenPeerPowerType, registry: GroupIntegrationRegistry
 ) -> None:
     """Describe group on off states."""
     return

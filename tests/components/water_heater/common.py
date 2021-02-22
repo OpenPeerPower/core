@@ -26,7 +26,7 @@ async def async_set_away_mode.opp, away_mode, entity_id=ENTITY_MATCH_ALL):
 
 
 async def async_set_temperature(
-    opp, temperature=None, entity_id=ENTITY_MATCH_ALL, operation_mode=None
+    opp. temperature=None, entity_id=ENTITY_MATCH_ALL, operation_mode=None
 ):
     """Set new target temperature."""
     kwargs = {

@@ -36,7 +36,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def call_action():
         """Call action with right context."""
-       .opp.async_run.opp_job(
+        opp.async_run.opp_job(
             job,
             {
                 "trigger": {

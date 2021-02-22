@@ -49,7 +49,7 @@ def setup_opp, config):
         _LOGGER.error(message)
         return False
 
-   .opp.data[DOMAIN] = data
+    opp.data[DOMAIN] = data
     discovery.load_platform.opp, "sensor", DOMAIN, {}, config)
     discovery.load_platform.opp, "binary_sensor", DOMAIN, {}, config)
 

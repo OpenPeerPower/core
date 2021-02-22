@@ -226,7 +226,7 @@ CALDAV_CONFIG = {
 @pytest.fixture(autouse=True)
 def mock_http.opp):
     """Mock the http component."""
-   .opp.http = Mock()
+    opp.http = Mock()
 
 
 @pytest.fixture
@@ -782,7 +782,7 @@ async def test_get_events.opp, calendar):
     await opp.async_block_till_done()
     entity = opp.data["calendar"].get_entity("calendar.private")
     events = await entity.async_get_events(
-        opp, datetime.date(2015, 11, 27), datetime.date(2015, 11, 28)
+        opp. datetime.date(2015, 11, 27), datetime.date(2015, 11, 28)
     )
     assert len(events) == 14
 
@@ -799,7 +799,7 @@ async def test_get_events_custom_calendars.opp, calendar):
 
     entity = opp.data["calendar"].get_entity("calendar.private_private")
     events = await entity.async_get_events(
-        opp, datetime.date(2015, 11, 27), datetime.date(2015, 11, 28)
+        opp. datetime.date(2015, 11, 27), datetime.date(2015, 11, 28)
     )
     assert len(events) == 1
     assert events[0]["summary"] == "This is a normal event"

@@ -18,7 +18,7 @@ async def test_get_entity.opp, opp_client):
         """Mock reading data."""
         return {"hello.beer": {"free": "beer"}, "other.entity": {"do": "something"}}
 
-   .opp.data[DATA_CUSTOMIZE] = {"hello.beer": {"cold": "beer"}}
+    opp.data[DATA_CUSTOMIZE] = {"hello.beer": {"cold": "beer"}}
     with patch("openpeerpower.components.config._read", mock_read):
         resp = await client.get("/api/config/customize/config/hello.beer")
 
@@ -50,7 +50,7 @@ async def test_update_entity.opp, opp_client):
         """Mock writing data."""
         written.append(data)
 
-   .opp.states.async_set("hello.world", "state", {"a": "b"})
+    opp.states.async_set("hello.world", "state", {"a": "b"})
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
     ), patch(

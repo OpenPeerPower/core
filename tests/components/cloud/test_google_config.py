@@ -18,7 +18,7 @@ from tests.common import async_fire_time_changed
 def mock_conf.opp, cloud_prefs):
     """Mock Google conf."""
     return CloudGoogleConfig(
-        opp,
+        opp.
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -44,7 +44,7 @@ async def test_google_update_report_state(mock_conf, opp, cloud_prefs):
 async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
     """Test sync devices."""
     config = CloudGoogleConfig(
-        opp,
+        opp.
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -52,7 +52,7 @@ async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
     )
 
     with patch(
-        .opp_nabucasa.cloud_api.async_google_actions_request_sync",
+         opp.nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=HTTP_NOT_FOUND),
     ) as mock_request_sync:
         assert await config.async_sync_entities("user") == HTTP_NOT_FOUND
@@ -60,11 +60,11 @@ async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
 
 
 async def test_google_update_expose_trigger_sync(
-    opp, legacy_patchable_time, cloud_prefs
+    opp. legacy_patchable_time, cloud_prefs
 ):
     """Test Google config responds to updating exposed entities."""
     config = CloudGoogleConfig(
-        opp,
+        opp.
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -107,7 +107,7 @@ async def test_google_update_expose_trigger_sync(
 async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
     """Test Google config responds to entity registry."""
     config = CloudGoogleConfig(
-        opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+        opp. GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
     await config.async_initialize()
     await config.async_connect_agent_user("mock-user-id")
@@ -116,7 +116,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
         config, "async_schedule_google_sync_all"
     ) as mock_sync, patch.object(ga_helpers, "SYNC_DELAY", 0):
         # Created entity
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "create", "entity_id": "light.kitchen"},
         )
@@ -125,7 +125,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
         assert len(mock_sync.mock_calls) == 1
 
         # Removed entity
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "remove", "entity_id": "light.kitchen"},
         )
@@ -134,7 +134,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
         assert len(mock_sync.mock_calls) == 2
 
         # Entity registry updated with relevant changes
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_ENTITY_REGISTRY_UPDATED,
             {
                 "action": "update",
@@ -147,7 +147,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
         assert len(mock_sync.mock_calls) == 3
 
         # Entity registry updated with non-relevant changes
-       .opp.bus.async_fire(
+        opp.bus.async_fire(
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "update", "entity_id": "light.kitchen", "changes": ["icon"]},
         )
@@ -156,8 +156,8 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
         assert len(mock_sync.mock_calls) == 3
 
         # When.opp is not started yet we wait till started
-       .opp.state = CoreState.starting
-       .opp.bus.async_fire(
+        opp.state = CoreState.starting
+        opp.bus.async_fire(
             EVENT_ENTITY_REGISTRY_UPDATED,
             {"action": "create", "entity_id": "light.kitchen"},
         )
@@ -166,7 +166,7 @@ async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
         assert len(mock_sync.mock_calls) == 3
 
     with patch.object(config, "async_sync_entities_all") as mock_sync:
-       .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
         assert len(mock_sync.mock_calls) == 1
 
@@ -201,7 +201,7 @@ def test_enabled_requires_valid_sub.opp, mock_expired_cloud_login, cloud_prefs):
     assert.opp.data["cloud"].subscription_expired
 
     config = CloudGoogleConfig(
-        opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+        opp. GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
     )
 
     assert not config.enabled

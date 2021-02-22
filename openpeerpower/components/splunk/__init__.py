@@ -122,6 +122,6 @@ async def async_setup_opp, config):
         except ClientResponseError as err:
             _LOGGER.error(err.message)
 
-   .opp.bus.async_listen(EVENT_STATE_CHANGED, splunk_event_listener)
+    opp.bus.async_listen(EVENT_STATE_CHANGED, splunk_event_listener)
 
     return True

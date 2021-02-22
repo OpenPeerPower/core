@@ -36,16 +36,16 @@ async def test_services.opp):
     assert await async_setup_component.opp, SENSOR_DOMAIN, config)
     await opp.async_block_till_done()
 
-   .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     entity_id = config[DOMAIN]["energy_bill"]["source"]
-   .opp.states.async_set(
+    opp.states.async_set(
         entity_id, 1, {ATTR_UNIT_OF_MEASUREMENT: ENERGY_KILO_WATT_HOUR}
     )
     await opp.async_block_till_done()
 
     now = dt_util.utcnow() + timedelta(seconds=10)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.states.async_set(
+        opp.states.async_set(
             entity_id,
             3,
             {ATTR_UNIT_OF_MEASUREMENT: ENERGY_KILO_WATT_HOUR},
@@ -66,7 +66,7 @@ async def test_services.opp):
 
     now += timedelta(seconds=10)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.states.async_set(
+        opp.states.async_set(
             entity_id,
             4,
             {ATTR_UNIT_OF_MEASUREMENT: ENERGY_KILO_WATT_HOUR},
@@ -87,7 +87,7 @@ async def test_services.opp):
 
     now += timedelta(seconds=10)
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-       .opp.states.async_set(
+        opp.states.async_set(
             entity_id,
             5,
             {ATTR_UNIT_OF_MEASUREMENT: ENERGY_KILO_WATT_HOUR},

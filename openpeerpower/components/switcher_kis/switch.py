@@ -51,7 +51,7 @@ SERVICE_TURN_ON_WITH_TIMER_SCHEMA = {
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType,
+    opp. OpenPeerPowerType,
     config: Dict,
     async_add_entities: Callable,
     discovery_info: Dict,
@@ -63,7 +63,7 @@ async def async_setup_platform(
     async def async_set_auto_off_service(entity, service_call: ServiceCallType) -> None:
         """Use for handling setting device auto-off service calls."""
         async with SwitcherV2Api(
-           .opp.loop,
+            opp.loop,
             device_data.ip_addr,
             device_data.phone_id,
             device_data.device_id,
@@ -76,7 +76,7 @@ async def async_setup_platform(
     ) -> None:
         """Use for handling turning device on with a timer service calls."""
         async with SwitcherV2Api(
-           .opp.loop,
+            opp.loop,
             device_data.ip_addr,
             device_data.phone_id,
             device_data.device_id,

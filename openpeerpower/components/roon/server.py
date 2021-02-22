@@ -31,7 +31,7 @@ class RoonServer:
 
     async def async_setup(self, tries=0):
         """Set up a roon server based on config parameters."""
-        opp =self.opp
+        opp.=self.opp
         # Host will be None for configs using discovery
         host = self.config_entry.data[CONF_HOST]
         token = self.config_entry.data[CONF_API_KEY]
@@ -50,8 +50,8 @@ class RoonServer:
         self.roon_id = core_id if core_id is not None else host
 
         # initialize media_player platform
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(
                 self.config_entry, "media_player"
             )
         )

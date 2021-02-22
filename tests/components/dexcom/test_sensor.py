@@ -98,7 +98,7 @@ async def test_sensors_options_changed.opp):
         "openpeerpower.components.dexcom.Dexcom.create_session",
         return_value="test_session_id",
     ):
-       .opp.config_entries.async_update_entry(
+        opp.config_entries.async_update_entry(
             entry=entry,
             options={CONF_UNIT_OF_MEASUREMENT: MMOL_L},
         )

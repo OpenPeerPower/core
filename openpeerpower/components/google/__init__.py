@@ -145,14 +145,14 @@ def do_authentication.opp, opp_config, config):
     try:
         dev_flow = oauth.step1_get_device_and_user_codes()
     except OAuth2DeviceCodeError as err:
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {err}<br />You will need to restart.opp after fixing." "",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
 
-   .opp.components.persistent_notification.create(
+    opp.components.persistent_notification.create(
         (
             f"In order to authorize Open-Peer-Power to view your calendars "
             f'you must visit: <a href="{dev_flow.verification_url}" target="_blank">{dev_flow.verification_url}</a> and enter '
@@ -165,7 +165,7 @@ def do_authentication.opp, opp_config, config):
     def step2_exchange(now):
         """Keep trying to validate the user_code until it expires."""
         if now >= dt.as_local(dev_flow.user_code_expiry):
-           .opp.components.persistent_notification.create(
+            opp.components.persistent_notification.create(
                 "Authentication code expired, please restart "
                 "Open-Peer-Power and try again",
                 title=NOTIFICATION_TITLE,
@@ -183,7 +183,7 @@ def do_authentication.opp, opp_config, config):
         storage.put(credentials)
         do_setup_opp, opp_config, config)
         listener()
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             (
                 f"We are all setup now. Check {YAML_DEVICES} for calendars that have "
                 f"been found"
@@ -193,7 +193,7 @@ def do_authentication.opp, opp_config, config):
         )
 
     listener = track_time_change(
-        opp, step2_exchange, second=range(0, 60, dev_flow.interval)
+        opp. step2_exchange, second=range(0, 60, dev_flow.interval)
     )
 
     return True
@@ -202,7 +202,7 @@ def do_authentication.opp, opp_config, config):
 def setup_opp, config):
     """Set up the Google platform."""
     if DATA_INDEX not in.opp.data:
-       .opp.data[DATA_INDEX] = {}
+        opp.data[DATA_INDEX] = {}
 
     conf = config.get(DOMAIN, {})
     if not conf:
@@ -239,21 +239,21 @@ def setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
         if opp.data[DATA_INDEX].get(calendar[CONF_CAL_ID]) is not None:
             return
 
-       .opp.data[DATA_INDEX].update({calendar[CONF_CAL_ID]: calendar})
+        opp.data[DATA_INDEX].update({calendar[CONF_CAL_ID]: calendar})
 
         update_config(
-           .opp.config.path(YAML_DEVICES), opp.data[DATA_INDEX][calendar[CONF_CAL_ID]]
+            opp.config.path(YAML_DEVICES), opp.data[DATA_INDEX][calendar[CONF_CAL_ID]]
         )
 
         discovery.load_platform(
-            opp,
+            opp.
             "calendar",
             DOMAIN,
-           .opp.data[DATA_INDEX][calendar[CONF_CAL_ID]],
-           .opp_config,
+            opp.data[DATA_INDEX][calendar[CONF_CAL_ID]],
+            opp.config,
         )
 
-   .opp.services.register(DOMAIN, SERVICE_FOUND_CALENDARS, _found_calendar)
+    opp.services.register(DOMAIN, SERVICE_FOUND_CALENDARS, _found_calendar)
 
     def _scan_for_calendars(service):
         """Scan for new calendars."""
@@ -262,9 +262,9 @@ def setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
         calendars = cal_list.list().execute()["items"]
         for calendar in calendars:
             calendar["track"] = track_new_found_calendars
-           .opp.services.call(DOMAIN, SERVICE_FOUND_CALENDARS, calendar)
+            opp.services.call(DOMAIN, SERVICE_FOUND_CALENDARS, calendar)
 
-   .opp.services.register(DOMAIN, SERVICE_SCAN_CALENDARS, _scan_for_calendars)
+    opp.services.register(DOMAIN, SERVICE_SCAN_CALENDARS, _scan_for_calendars)
 
     def _add_event(call):
         """Add a new event to calendar."""
@@ -312,7 +312,7 @@ def setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
         service_data = {"calendarId": call.data[EVENT_CALENDAR_ID], "body": event}
         event = service.events().insert(**service_data).execute()
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN, SERVICE_ADD_EVENT, _add_event, schema=ADD_EVENT_SERVICE_SCHEMA
     )
     return True
@@ -321,7 +321,7 @@ def setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
 def do_setup_opp, opp_config, config):
     """Run the setup after we have everything configured."""
     # Load calendars the user has configured
-   .opp.data[DATA_INDEX] = load_config(opp.config.path(YAML_DEVICES))
+    opp.data[DATA_INDEX] = load_config(opp.config.path(YAML_DEVICES))
 
     calendar_service = GoogleCalendarService.opp.config.path(TOKEN_FILE))
     track_new_found_calendars = convert(
@@ -333,7 +333,7 @@ def do_setup_opp, opp_config, config):
         discovery.load_platform.opp, "calendar", DOMAIN, calendar, opp_config)
 
     # Look for any new calendars
-   .opp.services.call(DOMAIN, SERVICE_SCAN_CALENDARS, None)
+    opp.services.call(DOMAIN, SERVICE_SCAN_CALENDARS, None)
     return True
 
 

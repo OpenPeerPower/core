@@ -78,7 +78,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     if discovery:
         start_scanning(config, add_entities, client)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: client.close())
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda event: client.close())
 
     # Start the pyflic event handling thread
     threading.Thread(target=client.handle_events).start()
@@ -225,7 +225,7 @@ class FlicButton(BinarySensorEntity):
             return
 
         # Return if click event is in ignored click types
-       .opp_click_type = self.opp_click_types[click_type]
+        opp.click_type = self.opp_click_types[click_type]
         if opp_click_type in self._ignored_click_types:
             return
 

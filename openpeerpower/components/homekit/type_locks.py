@@ -52,7 +52,7 @@ class Lock(HomeAccessory):
         """Set lock state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set state to %d", self.entity_id, value)
 
-       .opp_value = HOMEKIT_TO_HASS.get(value)
+        opp.value = HOMEKIT_TO_HASS.get(value)
         service = STATE_TO_SERVICE.opp_value]
 
         if self.char_current_state.value != value:
@@ -66,13 +66,13 @@ class Lock(HomeAccessory):
     @callback
     def async_update_state(self, new_state):
         """Update lock after state changed."""
-       .opp_state = new_state.state
+        opp.state = new_state.state
         if opp_state in HASS_TO_HOMEKIT:
             current_lock_state = HASS_TO_HOMEKIT.opp_state]
             _LOGGER.debug(
                 "%s: Updated current state to %s (%d)",
                 self.entity_id,
-               .opp_state,
+                opp.state,
                 current_lock_state,
             )
             # LockTargetState only supports locked and unlocked

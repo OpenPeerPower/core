@@ -30,7 +30,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured Met."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
     return True
 
 
@@ -45,10 +45,10 @@ async def async_setup_entry.opp, config_entry):
     if config_entry.data.get(CONF_TRACK_HOME, False):
         coordinator.track_home()
 
-   .opp.data[DOMAIN][config_entry.entry_id] = coordinator
+    opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
-   .opp.async_create_task(
-       .opp.config_entries.async_forward_entry_setup(config_entry, "weather")
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(config_entry, "weather")
     )
 
     return True
@@ -57,8 +57,8 @@ async def async_setup_entry.opp, config_entry):
 async def async_unload_entry.opp, config_entry):
     """Unload a config entry."""
     await opp.config_entries.async_forward_entry_unload(config_entry, "weather")
-   .opp.data[DOMAIN][config_entry.entry_id].untrack_home()
-   .opp.data[DOMAIN].pop(config_entry.entry_id)
+    opp.data[DOMAIN][config_entry.entry_id].untrack_home()
+    opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return True
 
@@ -70,7 +70,7 @@ class MetDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize global Met data updater."""
         self._unsub_track_home = None
         self.weather = MetWeatherData(
-            opp, config_entry.data, opp.config.units.is_metric
+            opp. config_entry.data, opp.config.units.is_metric
         )
         self.weather.init_data()
 

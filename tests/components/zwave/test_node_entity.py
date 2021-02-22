@@ -50,11 +50,11 @@ async def test_node_event_activated.opp, mock_openzwave):
     def listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(const.EVENT_NODE_EVENT, listener)
+    opp.bus.async_listen(const.EVENT_NODE_EVENT, listener)
 
     # Test event before entity added to.opp
     value = 234
-   .opp.async_add_job(mock_receivers[0], node, value)
+    opp.async_add_job(mock_receivers[0], node, value)
     await opp.async_block_till_done()
     assert len(events) == 0
 
@@ -63,7 +63,7 @@ async def test_node_event_activated.opp, mock_openzwave):
     entity.entity_id = "zwave.mock_node"
 
     value = 234
-   .opp.async_add_job(mock_receivers[0], node, value)
+    opp.async_add_job(mock_receivers[0], node, value)
     await opp.async_block_till_done()
 
     assert len(events) == 1
@@ -92,11 +92,11 @@ async def test_scene_activated.opp, mock_openzwave):
     def listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(const.EVENT_SCENE_ACTIVATED, listener)
+    opp.bus.async_listen(const.EVENT_SCENE_ACTIVATED, listener)
 
     # Test event before entity added to.opp
     scene_id = 123
-   .opp.async_add_job(mock_receivers[0], node, scene_id)
+    opp.async_add_job(mock_receivers[0], node, scene_id)
     await opp.async_block_till_done()
     assert len(events) == 0
 
@@ -105,7 +105,7 @@ async def test_scene_activated.opp, mock_openzwave):
     entity.entity_id = "zwave.mock_node"
 
     scene_id = 123
-   .opp.async_add_job(mock_receivers[0], node, scene_id)
+    opp.async_add_job(mock_receivers[0], node, scene_id)
     await opp.async_block_till_done()
 
     assert len(events) == 1
@@ -134,7 +134,7 @@ async def test_central_scene_activated.opp, mock_openzwave):
     def listener(event):
         events.append(event)
 
-   .opp.bus.async_listen(const.EVENT_SCENE_ACTIVATED, listener)
+    opp.bus.async_listen(const.EVENT_SCENE_ACTIVATED, listener)
 
     # Test event before entity added to.opp
     scene_id = 1
@@ -142,7 +142,7 @@ async def test_central_scene_activated.opp, mock_openzwave):
     value = mock_zwave.MockValue(
         command_class=const.COMMAND_CLASS_CENTRAL_SCENE, index=scene_id, data=scene_data
     )
-   .opp.async_add_job(mock_receivers[0], node, value)
+    opp.async_add_job(mock_receivers[0], node, value)
     await opp.async_block_till_done()
     assert len(events) == 0
 
@@ -155,7 +155,7 @@ async def test_central_scene_activated.opp, mock_openzwave):
     value = mock_zwave.MockValue(
         command_class=const.COMMAND_CLASS_CENTRAL_SCENE, index=scene_id, data=scene_data
     )
-   .opp.async_add_job(mock_receivers[0], node, value)
+    opp.async_add_job(mock_receivers[0], node, value)
     await opp.async_block_till_done()
 
     assert len(events) == 1
@@ -207,7 +207,7 @@ async def test_application_version.opp, mock_openzwave):
         label="Application Version",
         data="5.10",
     )
-   .opp.async_add_job(
+    opp.async_add_job(
         mock_receivers[mock_zwave.MockNetwork.SIGNAL_VALUE_ADDED], node, value
     )
     await opp.async_block_till_done()
@@ -222,7 +222,7 @@ async def test_application_version.opp, mock_openzwave):
         label="Application Version",
         data="4.14",
     )
-   .opp.async_add_job(
+    opp.async_add_job(
         mock_receivers[mock_zwave.MockNetwork.SIGNAL_VALUE_CHANGED], node, value
     )
     await opp.async_block_till_done()

@@ -18,7 +18,7 @@ from tests.components.rfxtrx.conftest import create_rfx_test_cfg
 async def test_valid_config(opp):
     """Test configuration."""
     assert await async_setup_component(
-        opp,
+        opp.
         "rfxtrx",
         {
             "rfxtrx": {
@@ -32,7 +32,7 @@ async def test_valid_config(opp):
 async def test_valid_config2.opp):
     """Test configuration."""
     assert await async_setup_component(
-        opp,
+        opp.
         "rfxtrx",
         {
             "rfxtrx": {
@@ -49,7 +49,7 @@ async def test_invalid_config(opp):
     assert not await async_setup_component.opp, "rfxtrx", {"rfxtrx": {}})
 
     assert not await async_setup_component(
-        opp,
+        opp.
         "rfxtrx",
         {
             "rfxtrx": {
@@ -89,7 +89,7 @@ async def test_fire_event.opp, rfxtrx):
         assert event.event_type == "rfxtrx_event"
         calls.append(event.data)
 
-   .opp.bus.async_listen(EVENT_RFXTRX_EVENT, record_event)
+    opp.bus.async_listen(EVENT_RFXTRX_EVENT, record_event)
 
     await rfxtrx.signal("0b1100cd0213c7f210010f51")
     await rfxtrx.signal("0716000100900970")

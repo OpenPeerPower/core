@@ -123,13 +123,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
         if device in.opp.data[DOMAIN]["devices"]:
             return
 
-       .opp.data[DOMAIN]["devices"].add(device)
+        opp.data[DOMAIN]["devices"].add(device)
 
         async_add_entities(
             [TraccarEntity(device, latitude, longitude, battery, accuracy, attrs)]
         )
 
-   .opp.data[DOMAIN]["unsub_device_tracker"][
+    opp.data[DOMAIN]["unsub_device_tracker"][
         entry.entry_id
     ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
 
@@ -146,7 +146,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
 
     entities = []
     for dev_id in dev_ids:
-       .opp.data[DOMAIN]["devices"].add(dev_id)
+        opp.data[DOMAIN]["devices"].add(dev_id)
         entity = TraccarEntity(dev_id, None, None, None, None, None)
         entities.append(entity)
 
@@ -159,7 +159,7 @@ async def async_setup_scanner.opp, config, async_see, discovery_info=None):
     session = async_get_clientsession.opp, config[CONF_VERIFY_SSL])
 
     api = API(
-       .opp.loop,
+        opp.loop,
         session,
         config[CONF_USERNAME],
         config[CONF_PASSWORD],
@@ -170,7 +170,7 @@ async def async_setup_scanner.opp, config, async_see, discovery_info=None):
 
     scanner = TraccarScanner(
         api,
-        opp,
+        opp.
         async_see,
         config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL),
         config[CONF_MAX_ACCURACY],
@@ -188,7 +188,7 @@ class TraccarScanner:
     def __init__(
         self,
         api,
-        opp,
+        opp.
         async_see,
         scan_interval,
         max_accuracy,

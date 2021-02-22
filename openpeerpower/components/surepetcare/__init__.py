@@ -75,14 +75,14 @@ async def async_setup_opp, config) -> bool:
     scan_interval = conf[CONF_SCAN_INTERVAL]
 
     # shared data
-   .opp.data[DOMAIN] = opp.data[DATA_SURE_PETCARE] = {}
+    opp.data[DOMAIN] = opp.data[DATA_SURE_PETCARE] = {}
 
     # sure petcare api connection
     try:
         surepy = SurePetcare(
             conf[CONF_USERNAME],
             conf[CONF_PASSWORD],
-           .opp.loop,
+            opp.loop,
             async_get_clientsession.opp),
             api_timeout=SURE_API_TIMEOUT,
         )
@@ -140,11 +140,11 @@ async def async_setup_opp, config) -> bool:
     async_track_time_interval.opp, spc.async_update, scan_interval)
 
     # load platforms
-   .opp.async_create_task(
-       .opp.helpers.discovery.async_load_platform("binary_sensor", DOMAIN, {}, config)
+    opp.async_create_task(
+        opp.helpers.discovery.async_load_platform("binary_sensor", DOMAIN, {}, config)
     )
-   .opp.async_create_task(
-       .opp.helpers.discovery.async_load_platform("sensor", DOMAIN, {}, config)
+    opp.async_create_task(
+        opp.helpers.discovery.async_load_platform("sensor", DOMAIN, {}, config)
     )
 
     async def handle_set_lock_state(call):
@@ -172,7 +172,7 @@ async def async_setup_opp, config) -> bool:
         }
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_LOCK_STATE,
         handle_set_lock_state,

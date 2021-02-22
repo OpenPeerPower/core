@@ -42,7 +42,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.error("'raspistill' was not found")
         return
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, kill_raspistill)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, kill_raspistill)
 
     setup_config = opp.data[DOMAIN]
     file_path = setup_config[CONF_FILE_PATH]
@@ -60,7 +60,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         temp_file.close()
         file_path = temp_file.name
         setup_config[CONF_FILE_PATH] = file_path
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, delete_temp_file)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, delete_temp_file)
 
     # Check whether the file path has been whitelisted
     elif not.opp.config.is_allowed_path(file_path):

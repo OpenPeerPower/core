@@ -40,13 +40,13 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Smappee component."""
-   .opp.data[DOMAIN] = {}
+    opp.data[DOMAIN] = {}
 
     if DOMAIN not in config:
         return True
 
     client_id = config[DOMAIN][CONF_CLIENT_ID]
-   .opp.data[DOMAIN][client_id] = {}
+    opp.data[DOMAIN][client_id] = {}
 
     # decide platform
     platform = "PRODUCTION"
@@ -55,12 +55,12 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     elif client_id == "openpeerpower_f3":
         platform = "DEVELOPMENT"
 
-   .opp.data[DOMAIN][CONF_PLATFORM] = platform
+    opp.data[DOMAIN][CONF_PLATFORM] = platform
 
     config_flow.SmappeeFlowHandler.async_register_implementation(
-        opp,
+        opp.
         config_entry_oauth2_flow.LocalOAuth2Implementation(
-            opp,
+            opp.
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -81,7 +81,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     else:
         implementation = (
             await config_entry_oauth2_flow.async_get_config_entry_implementation(
-                opp, entry
+                opp. entry
             )
         )
 
@@ -90,11 +90,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         smappee = Smappee(api=smappee_api)
         await opp.async_add_executor_job(smappee.load_service_locations)
 
-   .opp.data[DOMAIN][entry.entry_id] = SmappeeBase.opp, smappee)
+    opp.data[DOMAIN][entry.entry_id] = SmappeeBase.opp, smappee)
 
     for component in SMAPPEE_PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -105,14 +105,14 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in SMAPPEE_PLATFORMS
             ]
         )
     )
 
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id, None)
+        opp.data[DOMAIN].pop(entry.entry_id, None)
 
     return unload_ok
 

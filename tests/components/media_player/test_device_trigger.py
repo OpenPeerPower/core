@@ -69,7 +69,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
 
 async def test_if_fires_on_state_change.opp, calls):
     """Test triggers firing."""
-   .opp.states.async_set("media_player.entity", STATE_OFF)
+    opp.states.async_set("media_player.entity", STATE_OFF)
 
     data_template = (
         "{label} - {{{{ trigger.platform}}}} - "
@@ -79,7 +79,7 @@ async def test_if_fires_on_state_change.opp, calls):
     trigger_types = {"turned_on", "turned_off", "idle", "paused", "playing"}
 
     assert await async_setup_component(
-        opp,
+        opp.
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -102,7 +102,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is turning on.
-   .opp.states.async_set("media_player.entity", STATE_ON)
+    opp.states.async_set("media_player.entity", STATE_ON)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert (
@@ -111,7 +111,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is turning off.
-   .opp.states.async_set("media_player.entity", STATE_OFF)
+    opp.states.async_set("media_player.entity", STATE_OFF)
     await opp.async_block_till_done()
     assert len(calls) == 2
     assert (
@@ -120,7 +120,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity becomes idle.
-   .opp.states.async_set("media_player.entity", STATE_IDLE)
+    opp.states.async_set("media_player.entity", STATE_IDLE)
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert (
@@ -129,7 +129,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity starts playing.
-   .opp.states.async_set("media_player.entity", STATE_PLAYING)
+    opp.states.async_set("media_player.entity", STATE_PLAYING)
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert (
@@ -138,7 +138,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     # Fake that the entity is paused.
-   .opp.states.async_set("media_player.entity", STATE_PAUSED)
+    opp.states.async_set("media_player.entity", STATE_PAUSED)
     await opp.async_block_till_done()
     assert len(calls) == 5
     assert (

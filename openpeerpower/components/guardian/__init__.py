@@ -38,7 +38,7 @@ PLATFORMS = ["binary_sensor", "sensor", "switch"]
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Elexa Guardian component."""
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         DATA_CLIENT: {},
         DATA_COORDINATOR: {},
         DATA_LAST_SENSOR_PAIR_DUMP: {},
@@ -53,10 +53,10 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     client = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id] = Client(
         entry.data[CONF_IP_ADDRESS], port=entry.data[CONF_PORT]
     )
-   .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {
+    opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {
         API_SENSOR_PAIRED_SENSOR_STATUS: {}
     }
-   .opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id] = []
+    opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id] = []
 
     # The valve controller's UDP-based API can't handle concurrent requests very well,
     # so we use a lock to ensure that only one API request is reaching it at a time:
@@ -74,7 +74,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
             api
         ] = GuardianDataUpdateCoordinator(
-            opp,
+            opp.
             client=client,
             api_name=api,
             api_coro=api_coro,
@@ -95,18 +95,18 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     @callback
     def async_process_paired_sensor_uids():
         """Define a callback for when new paired sensor data is received."""
-       .opp.async_create_task(
+        opp.async_create_task(
             paired_sensor_manager.async_process_latest_paired_sensor_uids()
         )
 
-   .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+    opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
         API_SENSOR_PAIR_DUMP
     ].async_add_listener(async_process_paired_sensor_uids)
 
     # Set up all of the Guardian entity platforms:
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -117,18 +117,18 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN][DATA_CLIENT].pop(entry.entry_id)
-       .opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
-       .opp.data[DOMAIN][DATA_LAST_SENSOR_PAIR_DUMP].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_CLIENT].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_LAST_SENSOR_PAIR_DUMP].pop(entry.entry_id)
         for unsub in.opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id]:
             unsub()
-       .opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT].pop(entry.entry_id)
+        opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT].pop(entry.entry_id)
 
     return unload_ok
 
@@ -138,7 +138,7 @@ class PairedSensorManager:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         entry: ConfigEntry,
         client: Client,
         api_lock: asyncio.Lock,

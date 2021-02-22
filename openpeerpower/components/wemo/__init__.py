@@ -80,15 +80,15 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp, config):
     """Set up for WeMo devices."""
-   .opp.data[DOMAIN] = {
+    opp.data[DOMAIN] = {
         "config": config.get(DOMAIN, {}),
         "registry": None,
         "pending": {},
     }
 
     if DOMAIN in config:
-       .opp.async_create_task(
-           .opp.config_entries.flow.async_init(
+        opp.async_create_task(
+            opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
             )
         )
@@ -113,7 +113,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         await opp.async_add_executor_job(registry.stop)
         wemo_discovery.async_stop_discovery()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_wemo)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_wemo)
 
     static_conf = config.get(CONF_STATIC, [])
     if static_conf:
@@ -121,7 +121,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         for device in await gather_with_concurrency(
             MAX_CONCURRENCY,
             *[
-               .opp.async_add_executor_job(validate_static_config, host, port)
+                opp.async_add_executor_job(validate_static_config, host, port)
                 for host, port in static_conf
             ],
         ):
@@ -159,20 +159,20 @@ class WemoDispatcher:
         # - Component is loaded, backlog is gone, dispatch discovery
 
         if component not in self._loaded_components:
-           .opp.data[DOMAIN]["pending"][component] = [device]
+            opp.data[DOMAIN]["pending"][component] = [device]
             self._loaded_components.add(component)
-           .opp.async_create_task(
-               .opp.config_entries.async_forward_entry_setup(
+            opp.async_create_task(
+                opp.config_entries.async_forward_entry_setup(
                     self._config_entry, component
                 )
             )
 
         elif component in.opp.data[DOMAIN]["pending"]:
-           .opp.data[DOMAIN]["pending"][component].append(device)
+            opp.data[DOMAIN]["pending"][component].append(device)
 
         else:
             async_dispatcher_send(
-                opp,
+                opp.
                 f"{DOMAIN}.{component}",
                 device,
             )

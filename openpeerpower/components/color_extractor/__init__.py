@@ -95,7 +95,7 @@ async def async_setup_opp, opp_config):
                 LIGHT_DOMAIN, LIGHT_SERVICE_TURN_ON, service_data, blocking=True
             )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_TURN_ON,
         async_handle_service,

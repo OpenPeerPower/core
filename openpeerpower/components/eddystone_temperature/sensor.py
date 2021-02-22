@@ -77,8 +77,8 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         add_entities(devices)
         mon.start()
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, monitor_stop)
-       .opp.bus.listen_once(EVENT_OPENPEERPOWER_START, monitor_start)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, monitor_stop)
+        opp.bus.listen_once(EVENT_OPENPEERPOWER_START, monitor_start)
     else:
         _LOGGER.warning("No devices were added")
 

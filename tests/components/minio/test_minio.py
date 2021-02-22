@@ -54,10 +54,10 @@ def minio_client_event_fixture():
 
 async def test_minio_services.opp, caplog, minio_client):
     """Test Minio services."""
-   .opp.config.allowlist_external_dirs = {"/test"}
+    opp.config.allowlist_external_dirs = {"/test"}
 
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -116,10 +116,10 @@ async def test_minio_listen.opp, caplog, minio_client_event):
         """Handle event callbback."""
         events.append(event)
 
-   .opp.bus.async_listen("minio", event_callback)
+    opp.bus.async_listen("minio", event_callback)
 
     await async_setup_component(
-        opp,
+        opp.
         DOMAIN,
         {
             DOMAIN: {
@@ -155,7 +155,7 @@ async def test_minio_listen.opp, caplog, minio_client_event):
 
 async def test_queue_listener():
     """Tests QueueListener firing events on Open Peer Power event bus."""
-    opp =MagicMock()
+    opp.=MagicMock()
 
     queue_listener = QueueListener.opp)
     queue_listener.start()

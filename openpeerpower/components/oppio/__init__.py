@@ -55,11 +55,11 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-DATA_CORE_INFO = "opp._core_info"
-DATA_HOST_INFO = "opp._host_info"
-DATA_INFO = "opp._info"
-DATA_OS_INFO = "opp._os_info"
-DATA_SUPERVISOR_INFO = "opp._supervisor_info"
+DATA_CORE_INFO =  opp._core_info"
+DATA_HOST_INFO =  opp._host_info"
+DATA_INFO =  opp._info"
+DATA_OS_INFO =  opp._os_info"
+DATA_SUPERVISOR_INFO =  opp._supervisor_info"
 OPPIO_UPDATE_INTERVAL = timedelta(minutes=55)
 
 SERVICE_ADDON_START = "addon_start"
@@ -196,7 +196,7 @@ async def async_stop_addon.opp.OpenPeerPowerType, slug: str) -> dict:
 @bind_opp
 @api_data
 async def async_set_addon_options(
-   .opp.OpenPeerPowerType, slug: str, options: dict
+    opp.OpenPeerPowerType, slug: str, options: dict
 ) -> dict:
     """Set add-on options.
 
@@ -209,7 +209,7 @@ async def async_set_addon_options(
 
 @bind_opp
 async def async_get_addon_discovery_info(
-   .opp.OpenPeerPowerType, slug: str
+    opp.OpenPeerPowerType, slug: str
 ) -> Optional[dict]:
     """Return discovery data for an add-on."""
     opp. = opp.ata[DOMAIN]
@@ -299,7 +299,7 @@ async def async_setup_opp.config):
 
     host = os.environ["OPPIO"]
     websession = opp.elpers.aiohttp_client.async_get_clientsession()
-   .opp.ata[DOMAIN] = opp. = OppIO.opp.oop, websession, host)
+    opp.ata[DOMAIN] = opp. = OppIO.opp.oop, websession, host)
 
     if not await opp.o.is_connected():
         _LOGGER.warning("Not connected with Opp.io / system too busy!")
@@ -311,7 +311,7 @@ async def async_setup_opp.config):
         data = {}
 
     refresh_token = None
-    if "opp._user" in data:
+    if  opp._user" in data:
         user = await opp.auth.async_get_user(data["opp._user"])
         if user and user.refresh_tokens:
             refresh_token = list(user.refresh_tokens.values())[0]
@@ -329,11 +329,11 @@ async def async_setup_opp.config):
     # This overrides the normal API call that would be forwarded
     development_repo = config.get(DOMAIN, {}).get(CONF_FRONTEND_REPO)
     if development_repo is not None:
-       .opp.ttp.register_static_path(
-            "/api/opp./app", os.path.join(development_repo, "opp./build"), False
+        opp.ttp.register_static_path(
+            "/api/opp./app", os.path.join(development_repo,  opp./build"), False
         )
 
-   .opp.ttp.register_view(OppIOView(host, websession))
+    opp.ttp.register_view(OppIOView(host, websession))
 
     await opp.components.panel_custom.async_register_panel(
         frontend_url_path= opp.",
@@ -361,7 +361,7 @@ async def async_setup_opp.config):
         last_timezone = new_timezone
         await opp.o.update_opp.imezone(new_timezone)
 
-   .opp.us.async_listen(EVENT_CORE_CONFIG_UPDATE, push_config)
+    opp.us.async_listen(EVENT_CORE_CONFIG_UPDATE, push_config)
 
     await push_config(None)
 
@@ -390,22 +390,22 @@ async def async_setup_opp.config):
             _LOGGER.error("Error on Opp.io API: %s", err)
 
     for service, settings in MAP_SERVICE_API.items():
-       .opp.ervices.async_register(
+        opp.ervices.async_register(
             DOMAIN, service, async_service_handler, schema=settings[1]
         )
 
     async def update_info_data(now):
         """Update last available supervisor information."""
         try:
-           .opp.ata[DATA_INFO] = await opp.o.get_info()
-           .opp.ata[DATA_HOST_INFO] = await opp.o.get_host_info()
-           .opp.ata[DATA_CORE_INFO] = await opp.o.get_core_info()
-           .opp.ata[DATA_SUPERVISOR_INFO] = await opp.o.get_supervisor_info()
-           .opp.ata[DATA_OS_INFO] = await opp.o.get_os_info()
+            opp.ata[DATA_INFO] = await opp.o.get_info()
+            opp.ata[DATA_HOST_INFO] = await opp.o.get_host_info()
+            opp.ata[DATA_CORE_INFO] = await opp.o.get_core_info()
+            opp.ata[DATA_SUPERVISOR_INFO] = await opp.o.get_supervisor_info()
+            opp.ata[DATA_OS_INFO] = await opp.o.get_os_info()
         except OppioAPIError as err:
             _LOGGER.warning("Can't read last version: %s", err)
 
-       .opp.elpers.event.async_track_point_in_utc_time(
+        opp.elpers.event.async_track_point_in_utc_time(
             update_info_data, utcnow() + OPPIO_UPDATE_INTERVAL
         )
 
@@ -425,7 +425,7 @@ async def async_setup_opp.config):
 
         if errors:
             _LOGGER.error(errors)
-           .opp.omponents.persistent_notification.async_create(
+            opp.omponents.persistent_notification.async_create(
                 "Config error. See [the logs](/config/logs) for details.",
                 "Config validating",
                 f"{OPP_DOMAIN}.check_config",
@@ -441,7 +441,7 @@ async def async_setup_opp.config):
         SERVICE_OPENPEERPOWER_RESTART,
         SERVICE_CHECK_CONFIG,
     ):
-       .opp.ervices.async_register(OPP_DOMAIN, service, async_op.dle_core_service)
+        opp.ervices.async_register(OPP_DOMAIN, service, async_op.dle_core_service)
 
     # Init discovery Opp.io feature
     async_setup_discovery_view.opp.opp.)

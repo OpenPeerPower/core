@@ -14,7 +14,7 @@ from tests.common import assert_setup_component, get_test_open_peer_power
 class TestTrendBinarySensor:
     """Test the Trend sensor."""
 
-    opp =None
+    opp.=None
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
@@ -377,10 +377,10 @@ class TestTrendBinarySensor:
 
 async def test_reload.opp):
     """Verify we can reload trend sensors."""
-   .opp.states.async_set("sensor.test_state", 1234)
+    opp.states.async_set("sensor.test_state", 1234)
 
     await setup.async_setup_component(
-        opp,
+        opp.
         "binary_sensor",
         {
             "binary_sensor": {

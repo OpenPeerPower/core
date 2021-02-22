@@ -97,7 +97,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform.opp, config, add_entities, discovery_info=None):
     """Set up the Bose Soundtouch platform."""
     if DATA_SOUNDTOUCH not in.opp.data:
-       .opp.data[DATA_SOUNDTOUCH] = []
+        opp.data[DATA_SOUNDTOUCH] = []
 
     if discovery_info:
         host = discovery_info["host"]
@@ -109,7 +109,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         remote_config = {"id": "ha.component.soundtouch", "host": host, "port": port}
         bose_soundtouch_entity = SoundTouchDevice(None, remote_config)
-       .opp.data[DATA_SOUNDTOUCH].append(bose_soundtouch_entity)
+        opp.data[DATA_SOUNDTOUCH].append(bose_soundtouch_entity)
         add_entities([bose_soundtouch_entity], True)
     else:
         name = config.get(CONF_NAME)
@@ -119,7 +119,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             "host": config.get(CONF_HOST),
         }
         bose_soundtouch_entity = SoundTouchDevice(name, remote_config)
-       .opp.data[DATA_SOUNDTOUCH].append(bose_soundtouch_entity)
+        opp.data[DATA_SOUNDTOUCH].append(bose_soundtouch_entity)
         add_entities([bose_soundtouch_entity], True)
 
     def service_handle(service):
@@ -161,25 +161,25 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         elif service.service == SERVICE_ADD_ZONE_SLAVE:
             master.add_zone_slave(slaves)
 
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_PLAY_EVERYWHERE,
         service_handle,
         schema=SOUNDTOUCH_PLAY_EVERYWHERE,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_CREATE_ZONE,
         service_handle,
         schema=SOUNDTOUCH_CREATE_ZONE_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_REMOVE_ZONE_SLAVE,
         service_handle,
         schema=SOUNDTOUCH_REMOVE_ZONE_SCHEMA,
     )
-   .opp.services.register(
+    opp.services.register(
         DOMAIN,
         SERVICE_ADD_ZONE_SLAVE,
         service_handle,

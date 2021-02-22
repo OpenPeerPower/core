@@ -165,7 +165,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     add_entities(entities, update_before_add=True)
 
-   .opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda _: influx.close())
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda _: influx.close())
 
 
 class InfluxSensor(Entity):

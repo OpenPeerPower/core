@@ -38,7 +38,7 @@ SERVICE_UPGRADE_FIRMWARE = "upgrade_firmware"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up Guardian switches based on a config entry."""
     platform = entity_platform.current_platform.get()
@@ -70,8 +70,8 @@ async def async_setup_entry(
         [
             ValveControllerSwitch(
                 entry,
-               .opp.data[DOMAIN][DATA_CLIENT][entry.entry_id],
-               .opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id],
+                opp.data[DOMAIN][DATA_CLIENT][entry.entry_id],
+                opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id],
             )
         ]
     )

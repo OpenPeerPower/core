@@ -72,18 +72,18 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the DoorBird component."""
-   .opp.data.setdefault(DOMAIN, {})
+    opp.data.setdefault(DOMAIN, {})
 
     # Provide an endpoint for the doorstations to call to trigger events
-   .opp.http.register_view(DoorBirdRequestView)
+    opp.http.register_view(DoorBirdRequestView)
 
     if DOMAIN in config and CONF_DEVICES in config[DOMAIN]:
         for index, doorstation_config in enumerate(config[DOMAIN][CONF_DEVICES]):
             if CONF_NAME not in doorstation_config:
                 doorstation_config[CONF_NAME] = f"DoorBird {index + 1}"
 
-           .opp.async_create_task(
-               .opp.config_entries.flow.async_init(
+            opp.async_create_task(
+                opp.config_entries.flow.async_init(
                     DOMAIN, context={"source": SOURCE_IMPORT}, data=doorstation_config
                 )
             )
@@ -108,7 +108,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
             for favorite_id in favorites[favorite_type]:
                 doorstation.device.delete_favorite(favorite_type, favorite_id)
 
-   .opp.bus.async_listen(RESET_DEVICE_FAVORITES, _reset_device_favorites_handler)
+    opp.bus.async_listen(RESET_DEVICE_FAVORITES, _reset_device_favorites_handler)
 
     return True
 
@@ -159,7 +159,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     if not await _async_register_events.opp, doorstation):
         raise ConfigEntryNotReady
 
-   .opp.data[DOMAIN][config_entry_id] = {
+    opp.data[DOMAIN][config_entry_id] = {
         DOOR_STATION: doorstation,
         DOOR_STATION_INFO: info,
     }
@@ -167,8 +167,8 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     entry.add_update_listener(_update_listener)
 
     for component in PLATFORMS:
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     return True
@@ -180,13 +180,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-               .opp.config_entries.async_forward_entry_unload(entry, component)
+                opp.config_entries.async_forward_entry_unload(entry, component)
                 for component in PLATFORMS
             ]
         )
     )
     if unload_ok:
-       .opp.data[DOMAIN].pop(entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -195,7 +195,7 @@ async def _async_register_events.opp, doorstation):
     try:
         await opp.async_add_executor_job(doorstation.register_events, opp)
     except HTTPError:
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             "Doorbird configuration failed.  Please verify that API "
             "Operator permission is enabled for the Doorbird user. "
             "A restart will be required once permissions have been "
@@ -228,7 +228,7 @@ def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: Config
             modified = True
 
     if modified:
-       .opp.config_entries.async_update_entry(entry, options=options)
+        opp.config_entries.async_update_entry(entry, options=options)
 
 
 class ConfiguredDoorBird:
@@ -266,11 +266,11 @@ class ConfiguredDoorBird:
     def register_events(self, opp):
         """Register events on device."""
         # Get the URL of this server
-       .opp_url = get_url.opp)
+        opp.url = get_url.opp)
 
         # Override url if another is specified in the configuration
         if self.custom_url is not None:
-           .opp_url = self.custom_url
+            opp.url = self.custom_url
 
         for event in self.doorstation_events:
             self._register_event.opp_url, event)
@@ -354,7 +354,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
     async def get(self, request, event):
         """Respond to requests from the device."""
-        opp =request.app[.opp"]
+        opp.=request.app[.opp"]
 
         token = request.query.get("token")
 
@@ -371,7 +371,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
             event_data = {}
 
         if event == "clear":
-           .opp.bus.async_fire(RESET_DEVICE_FAVORITES, {"token": token})
+            opp.bus.async_fire(RESET_DEVICE_FAVORITES, {"token": token})
 
             message = f"HTTP Favorites cleared for {device.slug}"
             return web.Response(status=HTTP_OK, text=message)
@@ -380,6 +380,6 @@ class DoorBirdRequestView(OpenPeerPowerView):
             DOOR_STATION_EVENT_ENTITY_IDS
         ].get(event)
 
-       .opp.bus.async_fire(f"{DOMAIN}_{event}", event_data)
+        opp.bus.async_fire(f"{DOMAIN}_{event}", event_data)
 
         return web.Response(status=HTTP_OK, text="OK")

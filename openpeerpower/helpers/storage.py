@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @bind.opp
 async def async_migrator(
-    opp,
+    opp.
     old_path,
     store,
     *,
@@ -66,7 +66,7 @@ class Store:
 
     def __init__(
         self,
-        opp: OpenPeerPower,
+        opp. OpenPeerPower,
         version: int,
         key: str,
         private: bool = False,

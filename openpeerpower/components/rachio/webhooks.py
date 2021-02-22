@@ -97,7 +97,7 @@ def async_register_webhook.opp, webhook_id, entry_id):
 
         return web.Response(status=web.HTTPNoContent.status_code)
 
-   .opp.components.webhook.async_register(
+    opp.components.webhook.async_register(
         DOMAIN, "Rachio", webhook_id, _async_handle_rachio_webhook
     )
 
@@ -129,6 +129,6 @@ async def async_get_or_create_registered_webhook_id_and_url.opp, entry):
         webhook_url = opp.components.webhook.async_generate_url(webhook_id)
 
     if updated_config:
-       .opp.config_entries.async_update_entry(entry, data=config)
+        opp.config_entries.async_update_entry(entry, data=config)
 
     return webhook_id, webhook_url

@@ -38,7 +38,7 @@ class FlowHandler(config_entries.ConfigFlow):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
-    .oppio_discovery = None
+     opp.o_discovery = None
 
     @staticmethod
     def async_get_options_flow(config_entry):

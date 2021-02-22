@@ -93,7 +93,7 @@ async def test_ssdp_not_wilight_abort_2.opp: OpenPeerPowerType) -> None:
 
 
 async def test_ssdp_not_wilight_abort_3(
-    opp: OpenPeerPowerType, dummy_get_components_from_model_clear
+    opp. OpenPeerPowerType, dummy_get_components_from_model_clear
 ) -> None:
     """Test that the ssdp aborts not_wilight."""
 
@@ -107,7 +107,7 @@ async def test_ssdp_not_wilight_abort_3(
 
 
 async def test_ssdp_not_supported_abort(
-    opp: OpenPeerPowerType, dummy_get_components_from_model_wrong
+    opp. OpenPeerPowerType, dummy_get_components_from_model_wrong
 ) -> None:
     """Test that the ssdp aborts not_supported."""
 

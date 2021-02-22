@@ -23,9 +23,9 @@ async def test_device_setup_opp):
     device = get_device("Office")
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp)
 
@@ -46,9 +46,9 @@ async def test_device_setup_authentication_error(opp):
     mock_api.auth.side_effect = blke.AuthenticationError()
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -70,9 +70,9 @@ async def test_device_setup_network_timeout.opp):
     mock_api.auth.side_effect = blke.NetworkTimeoutError()
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -89,9 +89,9 @@ async def test_device_setup_os_error(opp):
     mock_api.auth.side_effect = OSError()
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -108,9 +108,9 @@ async def test_device_setup_broadlink_exception.opp):
     mock_api.auth.side_effect = blke.BroadlinkException()
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -127,9 +127,9 @@ async def test_device_setup_update_network_timeout.opp):
     mock_api.check_sensors.side_effect = blke.NetworkTimeoutError()
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -147,9 +147,9 @@ async def test_device_setup_update_authorization_error(opp):
     mock_api.check_sensors.side_effect = (blke.AuthorizationError(), None)
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -171,9 +171,9 @@ async def test_device_setup_update_authentication_error(opp):
     mock_api.auth.side_effect = (None, blke.AuthenticationError())
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -196,9 +196,9 @@ async def test_device_setup_update_broadlink_exception.opp):
     mock_api.check_sensors.side_effect = blke.BroadlinkException()
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_setup"
+        opp.config_entries, "async_forward_entry_setup"
     ) as mock_forward, patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ) as mock_init:
         mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
@@ -272,7 +272,7 @@ async def test_device_unload_works.opp):
         mock_api, mock_entry = await device.setup_entry.opp)
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_unload", return_value=True
+        opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
         await opp.config_entries.async_unload(mock_entry.entry_id)
 
@@ -290,12 +290,12 @@ async def test_device_unload_authentication_error(opp):
     mock_api.auth.side_effect = blke.AuthenticationError()
 
     with patch.object.opp.config_entries, "async_forward_entry_setup"), patch.object(
-       .opp.config_entries.flow, "async_init"
+        opp.config_entries.flow, "async_init"
     ):
         _, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_unload", return_value=True
+        opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
         await opp.config_entries.async_unload(mock_entry.entry_id)
 
@@ -313,7 +313,7 @@ async def test_device_unload_update_failed.opp):
         _, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
 
     with patch.object(
-       .opp.config_entries, "async_forward_entry_unload", return_value=True
+        opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_forward:
         await opp.config_entries.async_unload(mock_entry.entry_id)
 
@@ -334,7 +334,7 @@ async def test_device_update_listener.opp):
     with patch(
         "openpeerpower.components.broadlink.device.blk.gendevice", return_value=mock_api
     ):
-       .opp.config_entries.async_update_entry(mock_entry, title="New Name")
+        opp.config_entries.async_update_entry(mock_entry, title="New Name")
         await opp.async_block_till_done()
 
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})

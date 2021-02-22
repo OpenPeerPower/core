@@ -49,13 +49,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
     """Set up the Push Camera platform."""
     if PUSH_CAMERA_DATA not in.opp.data:
-       .opp.data[PUSH_CAMERA_DATA] = {}
+        opp.data[PUSH_CAMERA_DATA] = {}
 
     webhook_id = config.get(CONF_WEBHOOK_ID)
 
     cameras = [
         PushCamera(
-            opp,
+            opp.
             config[CONF_NAME],
             config[CONF_BUFFER_SIZE],
             config[CONF_TIMEOUT],

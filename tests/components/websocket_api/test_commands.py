@@ -27,7 +27,7 @@ async def test_call_service.opp, websocket_client):
     def service_call(call):
         calls.append(call)
 
-   .opp.services.async_register("domain_test", "test_service", service_call)
+    opp.services.async_register("domain_test", "test_service", service_call)
 
     await websocket_client.send_json(
         {
@@ -60,7 +60,7 @@ async def test_call_service_target.opp, websocket_client):
     def service_call(call):
         calls.append(call)
 
-   .opp.services.async_register("domain_test", "test_service", service_call)
+    opp.services.async_register("domain_test", "test_service", service_call)
 
     await websocket_client.send_json(
         {
@@ -118,7 +118,7 @@ async def test_call_service_child_not_found.opp, websocket_client):
     async def serv_handler(call):
         await opp.services.async_call("non", "existing")
 
-   .opp.services.async_register("domain_test", "test_service", serv_handler)
+    opp.services.async_register("domain_test", "test_service", serv_handler)
 
     await websocket_client.send_json(
         {
@@ -138,7 +138,7 @@ async def test_call_service_child_not_found.opp, websocket_client):
 
 
 async def test_call_service_schema_validation_error(
-    opp: OpenPeerPowerType, websocket_client
+    opp. OpenPeerPowerType, websocket_client
 ):
     """Test call service command with invalid service data."""
 
@@ -153,7 +153,7 @@ async def test_call_service_schema_validation_error(
     def service_call(call):
         calls.append(call)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         "domain_test",
         "test_service",
         service_call,
@@ -215,12 +215,12 @@ async def test_call_service_error(opp, websocket_client):
     def ha_error_call(_):
         raise OpenPeerPowerError("error_message")
 
-   .opp.services.async_register("domain_test", "ha_error", ha_error_call)
+    opp.services.async_register("domain_test", "ha_error", ha_error_call)
 
     async def unknown_error_call(_):
         raise ValueError("value_error")
 
-   .opp.services.async_register("domain_test", "unknown_error", unknown_error_call)
+    opp.services.async_register("domain_test", "unknown_error", unknown_error_call)
 
     await websocket_client.send_json(
         {
@@ -273,9 +273,9 @@ async def test_subscribe_unsubscribe_events.opp, websocket_client):
     # Verify we have a new listener
     assert sum.opp.bus.async_listeners().values()) == init_count + 1
 
-   .opp.bus.async_fire("ignore_event")
-   .opp.bus.async_fire("test_event", {"hello": "world"})
-   .opp.bus.async_fire("ignore_event")
+    opp.bus.async_fire("ignore_event")
+    opp.bus.async_fire("test_event", {"hello": "world"})
+    opp.bus.async_fire("ignore_event")
 
     with timeout(3):
         msg = await websocket_client.receive_json()
@@ -303,8 +303,8 @@ async def test_subscribe_unsubscribe_events.opp, websocket_client):
 
 async def test_get_states.opp, websocket_client):
     """Test get_states command."""
-   .opp.states.async_set("greeting.hello", "world")
-   .opp.states.async_set("greeting.bye", "universe")
+    opp.states.async_set("greeting.hello", "world")
+    opp.states.async_set("greeting.bye", "universe")
 
     await websocket_client.send_json({"id": 5, "type": "get_states"})
 
@@ -408,7 +408,7 @@ async def test_call_service_context_with_user.opp, aiohttp_client, opp_access_to
 
 async def test_subscribe_requires_admin(websocket_client, opp_admin_user):
     """Test subscribing events without being admin."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
     await websocket_client.send_json(
         {"id": 5, "type": "subscribe_events", "event_type": "test_event"}
     )
@@ -420,9 +420,9 @@ async def test_subscribe_requires_admin(websocket_client, opp_admin_user):
 
 async def test_states_filters_visible.opp, opp_admin_user, websocket_client):
     """Test we only get entities that we're allowed to see."""
-   .opp_admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
-   .opp.states.async_set("test.entity", "hello")
-   .opp.states.async_set("test.not_visible_entity", "invisible")
+    opp.admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
+    opp.states.async_set("test.entity", "hello")
+    opp.states.async_set("test.not_visible_entity", "invisible")
     await websocket_client.send_json({"id": 5, "type": "get_states"})
 
     msg = await websocket_client.receive_json()
@@ -436,7 +436,7 @@ async def test_states_filters_visible.opp, opp_admin_user, websocket_client):
 
 async def test_get_states_not_allows_nan.opp, websocket_client):
     """Test get_states command not allows NaN floats."""
-   .opp.states.async_set("greeting.hello", "world", {"hello": float("NaN")})
+    opp.states.async_set("greeting.hello", "world", {"hello": float("NaN")})
 
     await websocket_client.send_json({"id": 5, "type": "get_states"})
 
@@ -446,10 +446,10 @@ async def test_get_states_not_allows_nan.opp, websocket_client):
 
 
 async def test_subscribe_unsubscribe_events_whitelist(
-    opp, websocket_client, opp_admin_user
+    opp. websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe events on whitelist."""
-   .opp_admin_user.groups = []
+    opp.admin_user.groups = []
 
     await websocket_client.send_json(
         {"id": 5, "type": "subscribe_events", "event_type": "not-in-whitelist"}
@@ -470,7 +470,7 @@ async def test_subscribe_unsubscribe_events_whitelist(
     assert msg["type"] == const.TYPE_RESULT
     assert msg["success"]
 
-   .opp.bus.async_fire("themes_updated")
+    opp.bus.async_fire("themes_updated")
 
     with timeout(3):
         msg = await websocket_client.receive_json()
@@ -483,11 +483,11 @@ async def test_subscribe_unsubscribe_events_whitelist(
 
 
 async def test_subscribe_unsubscribe_events_state_changed(
-    opp, websocket_client, opp_admin_user
+    opp. websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe state_changed events."""
-   .opp_admin_user.groups = []
-   .opp_admin_user.mock_policy({"entities": {"entity_ids": {"light.permitted": True}}})
+    opp.admin_user.groups = []
+    opp.admin_user.mock_policy({"entities": {"entity_ids": {"light.permitted": True}}})
 
     await websocket_client.send_json(
         {"id": 7, "type": "subscribe_events", "event_type": "state_changed"}
@@ -498,8 +498,8 @@ async def test_subscribe_unsubscribe_events_state_changed(
     assert msg["type"] == const.TYPE_RESULT
     assert msg["success"]
 
-   .opp.states.async_set("light.not_permitted", "on")
-   .opp.states.async_set("light.permitted", "on")
+    opp.states.async_set("light.not_permitted", "on")
+    opp.states.async_set("light.permitted", "on")
 
     msg = await websocket_client.receive_json()
     assert msg["id"] == 7
@@ -510,7 +510,7 @@ async def test_subscribe_unsubscribe_events_state_changed(
 
 async def test_render_template_renders_template.opp, websocket_client):
     """Test simple template is rendered and updated."""
-   .opp.states.async_set("light.test", "on")
+    opp.states.async_set("light.test", "on")
 
     await websocket_client.send_json(
         {
@@ -539,7 +539,7 @@ async def test_render_template_renders_template.opp, websocket_client):
         },
     }
 
-   .opp.states.async_set("light.test", "off")
+    opp.states.async_set("light.test", "off")
     msg = await websocket_client.receive_json()
     assert msg["id"] == 5
     assert msg["type"] == "event"
@@ -556,10 +556,10 @@ async def test_render_template_renders_template.opp, websocket_client):
 
 
 async def test_render_template_manual_entity_ids_no_longer_needed(
-    opp, websocket_client
+    opp. websocket_client
 ):
     """Test that updates to specified entity ids cause a template rerender."""
-   .opp.states.async_set("light.test", "on")
+    opp.states.async_set("light.test", "on")
 
     await websocket_client.send_json(
         {
@@ -588,7 +588,7 @@ async def test_render_template_manual_entity_ids_no_longer_needed(
         },
     }
 
-   .opp.states.async_set("light.test", "off")
+    opp.states.async_set("light.test", "off")
     msg = await websocket_client.receive_json()
     assert msg["id"] == 5
     assert msg["type"] == "event"
@@ -656,7 +656,7 @@ async def test_render_template_error_in_template_code.opp, websocket_client, cap
 
 async def test_render_template_with_delayed_error(opp, websocket_client, caplog):
     """Test a template with an error that only happens after a state change."""
-   .opp.states.async_set("sensor.test", "on")
+    opp.states.async_set("sensor.test", "on")
     await opp.async_block_till_done()
 
     template_str = """
@@ -678,7 +678,7 @@ async def test_render_template_with_delayed_error(opp, websocket_client, caplog)
     assert msg["type"] == const.TYPE_RESULT
     assert msg["success"]
 
-   .opp.states.async_remove("sensor.test")
+    opp.states.async_remove("sensor.test")
     await opp.async_block_till_done()
 
     msg = await websocket_client.receive_json()
@@ -870,8 +870,8 @@ async def test_entity_source_admin.opp, websocket_client, opp_admin_user):
     assert msg["error"]["code"] == const.ERR_NOT_FOUND
 
     # Mock policy
-   .opp_admin_user.groups = []
-   .opp_admin_user.mock_policy(
+    opp.admin_user.groups = []
+    opp.admin_user.mock_policy(
         {"entities": {"entity_ids": {"test_domain.entity_2": True}}}
     )
 
@@ -924,9 +924,9 @@ async def test_subscribe_trigger.opp, websocket_client):
 
     context = Context()
 
-   .opp.bus.async_fire("ignore_event")
-   .opp.bus.async_fire("test_event", {"hello": "world"}, context=context)
-   .opp.bus.async_fire("ignore_event")
+    opp.bus.async_fire("ignore_event")
+    opp.bus.async_fire("test_event", {"hello": "world"}, context=context)
+    opp.bus.async_fire("ignore_event")
 
     with timeout(3):
         msg = await websocket_client.receive_json()
@@ -957,7 +957,7 @@ async def test_subscribe_trigger.opp, websocket_client):
 
 async def test_test_condition.opp, websocket_client):
     """Test testing a condition."""
-   .opp.states.async_set("hello.world", "paulus")
+    opp.states.async_set("hello.world", "paulus")
 
     await websocket_client.send_json(
         {

@@ -97,7 +97,7 @@ async def async_setup_opp, config):
     conf = config[DOMAIN]
 
     config_flow.register_flow_implementation(
-        opp,
+        opp.
         DOMAIN,
         client_id=conf[CONF_CLIENT_ID],
         client_secret=conf[CONF_CLIENT_SECRET],
@@ -106,8 +106,8 @@ async def async_setup_opp, config):
         sensors=conf[CONF_SENSORS],
     )
 
-   .opp.async_create_task(
-       .opp.config_entries.flow.async_init(
+    opp.async_create_task(
+        opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
         )
     )
@@ -126,7 +126,7 @@ async def async_setup_entry.opp, entry):
     )
 
     if not logi_circle.authorized:
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             (
                 f"Error: The cached access tokens are missing from {DEFAULT_CACHEDB}.<br />"
                 f"Please unload then re-add the Logi Circle integration to resolve."
@@ -142,7 +142,7 @@ async def async_setup_entry.opp, entry):
             # all devices. Performs implicit login and session validation.
             await logi_circle.synchronize_cameras()
     except AuthorizationFailed:
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             "Error: Failed to obtain an access token from the cached "
             "refresh token.<br />"
             "Token may have expired or been revoked.<br />"
@@ -155,25 +155,25 @@ async def async_setup_entry.opp, entry):
         # The TimeoutError exception object returns nothing when casted to a
         # string, so we'll handle it separately.
         err = f"{_TIMEOUT}s timeout exceeded when connecting to Logi Circle API"
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {err}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
     except ClientResponseError as ex:
-       .opp.components.persistent_notification.create(
+        opp.components.persistent_notification.create(
             f"Error: {ex}<br />You will need to restart.opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
 
-   .opp.data[DATA_LOGI] = logi_circle
+    opp.data[DATA_LOGI] = logi_circle
 
     for component in "camera", "sensor":
-       .opp.async_create_task(
-           .opp.config_entries.async_forward_entry_setup(entry, component)
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
     async def service_handler(service):
@@ -187,21 +187,21 @@ async def async_setup_entry.opp, entry):
         if service.service == SERVICE_LIVESTREAM_RECORD:
             async_dispatcher_send.opp, SIGNAL_LOGI_CIRCLE_RECORD, params)
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_SET_CONFIG,
         service_handler,
         schema=LOGI_CIRCLE_SERVICE_SET_CONFIG,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_LIVESTREAM_SNAPSHOT,
         service_handler,
         schema=LOGI_CIRCLE_SERVICE_SNAPSHOT,
     )
 
-   .opp.services.async_register(
+    opp.services.async_register(
         DOMAIN,
         SERVICE_LIVESTREAM_RECORD,
         service_handler,
@@ -212,7 +212,7 @@ async def async_setup_entry.opp, entry):
         """Close Logi Circle aiohttp session."""
         await logi_circle.auth_provider.close()
 
-   .opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
 
     return True
 

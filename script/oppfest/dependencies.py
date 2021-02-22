@@ -96,7 +96,7 @@ ALLOWED_USED_COMPONENTS = {
     "device_automation",
     "frontend",
     "group",
-    .oppio",
+     opp.o",
     "openpeerpower",
     "input_boolean",
     "input_datetime",

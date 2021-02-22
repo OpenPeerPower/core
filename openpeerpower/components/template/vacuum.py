@@ -122,7 +122,7 @@ async def _async_create_entities.opp, config):
 
         vacuums.append(
             TemplateVacuum(
-                opp,
+                opp.
                 device,
                 friendly_name,
                 state_template,
@@ -156,7 +156,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
 
     def __init__(
         self,
-        opp,
+        opp.
         device_id,
         friendly_name,
         state_template,
@@ -206,14 +206,14 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
         self._return_to_base_script = None
         if return_to_base_action:
             self._return_to_base_script = Script(
-                opp, return_to_base_action, friendly_name, domain
+                opp. return_to_base_action, friendly_name, domain
             )
             self._supported_features |= SUPPORT_RETURN_HOME
 
         self._clean_spot_script = None
         if clean_spot_action:
             self._clean_spot_script = Script(
-                opp, clean_spot_action, friendly_name, domain
+                opp. clean_spot_action, friendly_name, domain
             )
             self._supported_features |= SUPPORT_CLEAN_SPOT
 
@@ -225,7 +225,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
         self._set_fan_speed_script = None
         if set_fan_speed_action:
             self._set_fan_speed_script = Script(
-                opp, set_fan_speed_action, friendly_name, domain
+                opp. set_fan_speed_action, friendly_name, domain
             )
             self._supported_features |= SUPPORT_FAN_SPEED
 

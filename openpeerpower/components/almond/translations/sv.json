@@ -5,7 +5,7 @@
             "missing_configuration": "Kontrollera dokumentationen f\u00f6r hur du st\u00e4ller in Almond."
         },
         "step": {
-            .oppio_confirm": {
+             opp.o_confirm": {
                 "description": "Vill du konfigurera Open Peer Power f\u00f6r att ansluta till Almond som tillhandah\u00e5lls av Hass.io-till\u00e4gget: {addon} ?",
                 "title": "Almond via Hass.io-till\u00e4gget"
             },

@@ -35,7 +35,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def get_service.opp, config, discovery_info=None):
     """Get the Twilio SMS notification service."""
     return TwilioSMSNotificationService(
-       .opp.data[DATA_TWILIO], config[CONF_FROM_NUMBER]
+        opp.data[DATA_TWILIO], config[CONF_FROM_NUMBER]
     )
 
 

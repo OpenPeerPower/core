@@ -55,7 +55,7 @@ COMPONENT_SWITCHES = [
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ) -> bool:
     """Set up a Hyperion platform from config entry."""
     entry_data = opp.data[DOMAIN][config_entry.entry_id]
@@ -104,7 +104,7 @@ async def async_setup_entry(
         assert server_id
         for component in COMPONENT_SWITCHES:
             async_dispatcher_send(
-                opp,
+                opp.
                 SIGNAL_ENTITY_REMOVE.format(
                     component_to_unique_id(component, instance_num),
                 ),

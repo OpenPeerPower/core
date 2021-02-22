@@ -94,7 +94,7 @@ class RuntimeEntryData:
             tasks = []
             for platform in needed:
                 tasks.append(
-                   .opp.config_entries.async_forward_entry_setup(entry, platform)
+                    opp.config_entries.async_forward_entry_setup(entry, platform)
                 )
             if tasks:
                 await asyncio.wait(tasks)
