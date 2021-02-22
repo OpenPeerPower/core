@@ -10,7 +10,7 @@ from openpeerpower.components.hue.const import (
     CONF_ALLOW_HUE_GROUPS,
     CONF_ALLOW_UNREACHABLE,
 )
-from openpeerpowerr.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryNotReady
 
 
 async def test_bridge_setup.opp):
@@ -61,7 +61,7 @@ async def test_bridge_setup_timeout.opp):
         await hue_bridge.async_setup()
 
 
-async def test_reset_if_entry_op._wrong_auth.opp):
+async def test_reset_if_entry_had_wrong_auth.opp):
     """Test calling reset when the entry contained wrong auth."""
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
@@ -102,7 +102,7 @@ async def test_reset_unloads_entry_if_setup.opp):
     assert len.opp.services.async_services()) == 0
 
 
-async def test_op.dle_unauthorized.opp):
+async def test_handle_unauthorized.opp):
     """Test handling an unauthorized error on update."""
     entry = Mock(async_setup=AsyncMock())
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}

@@ -16,8 +16,8 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpowerr.exceptions import Unauthorized
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import Unauthorized
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
 
@@ -36,7 +36,7 @@ async def test_methods.opp):
     # Test turn_on
     turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -69,7 +69,7 @@ async def test_methods.opp):
     # Test turn_off
     turn_off_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_OFF)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_OFF,
         {
@@ -90,7 +90,7 @@ async def test_methods.opp):
     # Test toggle
     toggle_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TOGGLE)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TOGGLE,
         {ATTR_ENTITY_ID: "entity_id_val", light.ATTR_TRANSITION: "transition_val"},
@@ -114,7 +114,7 @@ async def test_services.opp, mock_light_profiles):
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
 
@@ -124,10 +124,10 @@ async def test_services.opp, mock_light_profiles):
     assert not light.is_on.opp, ent3.entity_id)
 
     # Test basic turn_on, turn_off, toggle services
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ent1.entity_id}, blocking=True
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ent2.entity_id}, blocking=True
     )
 
@@ -135,7 +135,7 @@ async def test_services.opp, mock_light_profiles):
     assert light.is_on.opp, ent2.entity_id)
 
     # turn on all lights
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
 
@@ -144,7 +144,7 @@ async def test_services.opp, mock_light_profiles):
     assert light.is_on.opp, ent3.entity_id)
 
     # turn off all lights
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_OFF,
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL},
@@ -156,10 +156,10 @@ async def test_services.opp, mock_light_profiles):
     assert not light.is_on.opp, ent3.entity_id)
 
     # turn off all lights by setting brightness to 0
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL, light.ATTR_BRIGHTNESS: 0},
@@ -171,7 +171,7 @@ async def test_services.opp, mock_light_profiles):
     assert not light.is_on.opp, ent3.entity_id)
 
     # toggle all lights
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
 
@@ -180,7 +180,7 @@ async def test_services.opp, mock_light_profiles):
     assert light.is_on.opp, ent3.entity_id)
 
     # toggle all lights
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
 
@@ -189,7 +189,7 @@ async def test_services.opp, mock_light_profiles):
     assert not light.is_on.opp, ent3.entity_id)
 
     # Ensure all attributes process correctly
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -200,7 +200,7 @@ async def test_services.opp, mock_light_profiles):
         },
         blocking=True,
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -210,7 +210,7 @@ async def test_services.opp, mock_light_profiles):
         },
         blocking=True,
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -234,7 +234,7 @@ async def test_services.opp, mock_light_profiles):
     assert data == {light.ATTR_HS_COLOR: (71.059, 100)}
 
     # Ensure attributes are filtered when light is turned off
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -245,7 +245,7 @@ async def test_services.opp, mock_light_profiles):
         },
         blocking=True,
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -256,7 +256,7 @@ async def test_services.opp, mock_light_profiles):
         },
         blocking=True,
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -285,14 +285,14 @@ async def test_services.opp, mock_light_profiles):
     mock_light_profiles[profile.name] = profile
 
     # Test light profiles
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: ent1.entity_id, light.ATTR_PROFILE: profile.name},
         blocking=True,
     )
     # Specify a profile and a brightness attribute to overwrite it
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -319,7 +319,7 @@ async def test_services.opp, mock_light_profiles):
     }
 
     # Test toggle with parameters
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TOGGLE,
         {
@@ -337,7 +337,7 @@ async def test_services.opp, mock_light_profiles):
         light.ATTR_TRANSITION: profile.transition,
     }
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TOGGLE,
         {
@@ -353,24 +353,24 @@ async def test_services.opp, mock_light_profiles):
     }
 
     # Test bad data
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {ATTR_ENTITY_ID: ent1.entity_id, light.ATTR_PROFILE: -1},
         blocking=True,
     )
     with pytest.raises(vol.MultipleInvalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             light.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: ent2.entity_id, light.ATTR_XY_COLOR: ["bla-di-bla", 5]},
             blocking=True,
         )
     with pytest.raises(vol.MultipleInvalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             light.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: ent3.entity_id, light.ATTR_RGB_COLOR: [255, None, 2]},
@@ -388,7 +388,7 @@ async def test_services.opp, mock_light_profiles):
 
     # faulty attributes will not trigger a service call
     with pytest.raises(vol.MultipleInvalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             light.DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -399,7 +399,7 @@ async def test_services.opp, mock_light_profiles):
             blocking=True,
         )
     with pytest.raises(vol.MultipleInvalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             light.DOMAIN,
             SERVICE_TURN_ON,
             {
@@ -409,7 +409,7 @@ async def test_services.opp, mock_light_profiles):
             blocking=True,
         )
     with pytest.raises(vol.MultipleInvalid):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             light.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: ent2.entity_id, light.ATTR_WHITE_VALUE: "high"},
@@ -513,11 +513,11 @@ async def test_light_profiles(
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     ent1, _, _ = platform.ENTITIES
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -543,13 +543,13 @@ async def test_default_profiles_group.opp, mock_light_profiles):
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     profile = light.Profile("group.all_lights.default", 0.4, 0.6, 99, 2)
     mock_light_profiles[profile.name] = profile
 
     ent, _, _ = platform.ENTITIES
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ent.entity_id}, blocking=True
     )
 
@@ -620,7 +620,7 @@ async def test_default_profiles_light(
     assert await async_setup_component(
        .opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     profile = light.Profile("group.all_lights.default", 0.3, 0.5, 200, 0)
     mock_light_profiles[profile.name] = profile
@@ -628,7 +628,7 @@ async def test_default_profiles_light(
     mock_light_profiles[profile.name] = profile
 
     dev = next(filter(lambda x: x.entity_id == "light.ceiling_2", platform.ENTITIES))
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -641,7 +641,7 @@ async def test_default_profiles_light(
     _, data = dev.last_call("turn_on")
     assert data == expected_params
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
@@ -662,12 +662,12 @@ async def test_light_context.opp,.opp_admin_user):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.ceiling")
+    state =.opp.states.get("light.ceiling")
     assert state is not None
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "toggle",
         {"entity_id": state.entity_id},
@@ -675,10 +675,10 @@ async def test_light_context.opp,.opp_admin_user):
         context=core.Context(user_id.opp_admin_user.id),
     )
 
-    state2 = opp.states.get("light.ceiling")
+    state2 =.opp.states.get("light.ceiling")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id == opp_admin_user.id
+    assert state2.context.user_id ==.opp_admin_user.id
 
 
 async def test_light_turn_on_auth.opp,.opp_admin_user):
@@ -686,15 +686,15 @@ async def test_light_turn_on_auth.opp,.opp_admin_user):
     platform = getattr.opp.components, "test.light")
     platform.init()
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get("light.ceiling")
+    state =.opp.states.get("light.ceiling")
     assert state is not None
 
    .opp_admin_user.mock_policy({})
 
     with pytest.raises(Unauthorized):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "light",
             "turn_on",
             {"entity_id": state.entity_id},
@@ -711,13 +711,13 @@ async def test_light_brightness_step.opp):
     entity.supported_features = light.SUPPORT_BRIGHTNESS
     entity.brightness = 100
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity.entity_id)
+    state =.opp.states.get(entity.entity_id)
     assert state is not None
     assert state.attributes["brightness"] == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity.entity_id, "brightness_step": -10},
@@ -727,7 +727,7 @@ async def test_light_brightness_step.opp):
     _, data = entity.last_call("turn_on")
     assert data["brightness"] == 90, data
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity.entity_id, "brightness_step_pct": 10},
@@ -746,13 +746,13 @@ async def test_light_brightness_pct_conversion.opp):
     entity.supported_features = light.SUPPORT_BRIGHTNESS
     entity.brightness = 100
     assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity.entity_id)
+    state =.opp.states.get(entity.entity_id)
     assert state is not None
     assert state.attributes["brightness"] == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity.entity_id, "brightness_pct": 1},
@@ -762,7 +762,7 @@ async def test_light_brightness_pct_conversion.opp):
     _, data = entity.last_call("turn_on")
     assert data["brightness"] == 3, data
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity.entity_id, "brightness_pct": 2},
@@ -772,7 +772,7 @@ async def test_light_brightness_pct_conversion.opp):
     _, data = entity.last_call("turn_on")
     assert data["brightness"] == 5, data
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity.entity_id, "brightness_pct": 50},
@@ -782,7 +782,7 @@ async def test_light_brightness_pct_conversion.opp):
     _, data = entity.last_call("turn_on")
     assert data["brightness"] == 128, data
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity.entity_id, "brightness_pct": 99},
@@ -792,7 +792,7 @@ async def test_light_brightness_pct_conversion.opp):
     _, data = entity.last_call("turn_on")
     assert data["brightness"] == 252, data
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "light",
         "turn_on",
         {"entity_id": entity.entity_id, "brightness_pct": 100},
@@ -855,7 +855,7 @@ invalid_no_brightness_no_color_no_transition,,,
     profiles = orig_Profiles.opp)
     with patch("builtins.open", mock_open(read_data=csv_file)):
         await profiles.async_initialize()
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert profiles.data["no_color"].hs_color is None
     assert profiles.data["no_color"].brightness == 100

@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_TYPE,
     CONF_VERIFY_SSL,
 )
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -141,7 +141,7 @@ async def init_integration(
         },
     )
 
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     mock_connection(
         aioclient_mock,
@@ -153,7 +153,7 @@ async def init_integration(
     )
 
     if not skip_setup:
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

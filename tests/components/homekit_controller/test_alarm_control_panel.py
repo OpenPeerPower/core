@@ -30,7 +30,7 @@ async def test_switch_change_alarm_state.opp, utcnow):
     """Test that we can turn a HomeKit alarm on and off again."""
     helper = await setup_test_component.opp, create_security_system_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "alarm_control_panel",
         "alarm_arm_home",
         {"entity_id": "alarm_control_panel.testdevice"},
@@ -38,7 +38,7 @@ async def test_switch_change_alarm_state.opp, utcnow):
     )
     assert helper.characteristics[TARGET_STATE].value == 0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "alarm_control_panel",
         "alarm_arm_away",
         {"entity_id": "alarm_control_panel.testdevice"},
@@ -46,7 +46,7 @@ async def test_switch_change_alarm_state.opp, utcnow):
     )
     assert helper.characteristics[TARGET_STATE].value == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "alarm_control_panel",
         "alarm_arm_night",
         {"entity_id": "alarm_control_panel.testdevice"},
@@ -54,7 +54,7 @@ async def test_switch_change_alarm_state.opp, utcnow):
     )
     assert helper.characteristics[TARGET_STATE].value == 2
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "alarm_control_panel",
         "alarm_disarm",
         {"entity_id": "alarm_control_panel.testdevice"},

@@ -2,7 +2,7 @@
 import asyncio
 
 from openpeerpower.components.ipma.system_health import IPMA_API_URL
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import get_system_health_info
 

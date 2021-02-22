@@ -5,8 +5,8 @@ import pytest
 
 from openpeerpower.components import jewish_calendar
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from . import (
     HDATE_DEFAULT_ALTITUDE,
@@ -37,10 +37,10 @@ MELACHA_TEST_IDS = [
     "currently_first_shabbat",
     "after_first_shabbat",
     "friday_upcoming_shabbat",
-    "upcoming_rosh_op.hana",
-    "currently_rosh_op.hana",
-    "second_day_rosh_op.hana",
-    "currently_shabbat_chol_op.oed",
+    "upcoming_rosh_hashana",
+    "currently_rosh_hashana",
+    "second_day_rosh_hashana",
+    "currently_shabbat_chol_hamoed",
     "upcoming_two_day_yomtov_in_diaspora",
     "currently_first_day_of_two_day_yomtov_in_diaspora",
     "currently_second_day_of_two_day_yomtov_in_diaspora",
@@ -84,7 +84,7 @@ async def test_issur_melacha_sensor(
    .opp.config.latitude = latitude
    .opp.config.longitude = longitude
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     with alter_time(test_time):
         assert await async_setup_component(
@@ -96,15 +96,15 @@ async def test_issur_melacha_sensor(
                     "language": "english",
                     "diaspora": diaspora,
                     "candle_lighting_minutes_before_sunset": candle_lighting,
-                    "havdalah_minutes_after_sunset": op.dalah,
+                    "havdalah_minutes_after_sunset": havdalah,
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert (
            .opp.states.get("binary_sensor.test_issur_melacha_in_effect").state

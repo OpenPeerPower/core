@@ -18,9 +18,9 @@ from openpeerpower.components.http.ban import (
     IpBan,
     setup_bans,
 )
-from openpeerpower.components.http.view import request_op.dler_factory
+from openpeerpower.components.http.view import request_handler_factory
 from openpeerpower.const import HTTP_FORBIDDEN
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import mock_real_ip
 
@@ -31,13 +31,13 @@ BANNED_IPS = ["200.201.202.203", "100.64.0.2"]
 BANNED_IPS_WITH_SUPERVISOR = BANNED_IPS + [SUPERVISOR_IP]
 
 
-@pytest.fixture(name="oppio_env")
-def oppio_env_fixture():
-    """Fixture to inject oppio env."""
-    with patch.dict(os.environ, {"OPPIO": "127.0.0.1"}), patch(
-        "openpeerpower.components.oppio.OppIO.is_connected",
+@pytest.fixture(name=.oppio_env")
+def.oppio_env_fixture():
+    """Fixture to inject.oppio env."""
+    with patch.dict(os.environ, {"HASSIO": "127.0.0.1"}), patch(
+        "openpeerpower.components.oppio.HassIO.is_connected",
         return_value={"result": "ok", "data": {}},
-    ), patch.dict(os.environ, {"OPPIO_TOKEN": "123456"}):
+    ), patch.dict(os.environ, {"HASSIO_TOKEN": "123456"}):
         yield
 
 
@@ -54,7 +54,7 @@ def gethostbyaddr_mock():
 async def test_access_from_banned_ip.opp, aiohttp_client):
     """Test accessing to server from banned IP. Both trusted and not."""
     app = web.Application()
-    app["opp"] = opp
+    app[.opp"] =.opp
     setup_bans.opp, app, 5)
     set_real_ip = mock_real_ip(app)
 
@@ -79,17 +79,17 @@ async def test_access_from_banned_ip.opp, aiohttp_client):
     ),
 )
 async def test_access_from_supervisor_ip(
-    remote_addr, bans, status,.opp, aiohttp_client, oppio_env
+    remote_addr, bans, status,.opp, aiohttp_client,.oppio_env
 ):
     """Test accessing to server from supervisor IP."""
     app = web.Application()
-    app["opp"] = opp
+    app[.opp"] =.opp
 
-    async def unauth_op.dler(request):
+    async def unauth_handler(request):
         """Return a mock web response."""
         raise HTTPUnauthorized
 
-    app.router.add_get("/", unauth_op.dler)
+    app.router.add_get("/", unauth_handler)
     setup_bans.opp, app, 1)
     mock_real_ip(app)(remote_addr)
 
@@ -98,7 +98,7 @@ async def test_access_from_supervisor_ip(
     ):
         client = await aiohttp_client(app)
 
-    assert await async_setup_component.opp, "oppio", {"oppio": {}})
+    assert await async_setup_component.opp, .oppio", {.oppio": {}})
 
     m_open = mock_open()
 
@@ -139,13 +139,13 @@ async def test_ip_bans_file_creation.opp, aiohttp_client):
     notification_calls = async_mock_service.opp, "persistent_notification", "create")
 
     app = web.Application()
-    app["opp"] = opp
+    app[.opp"] =.opp
 
-    async def unauth_op.dler(request):
+    async def unauth_handler(request):
         """Return a mock web response."""
         raise HTTPUnauthorized
 
-    app.router.add_get("/", unauth_op.dler)
+    app.router.add_get("/", unauth_handler)
     setup_bans.opp, app, 2)
     mock_real_ip(app)("200.201.202.204")
 
@@ -182,20 +182,20 @@ async def test_ip_bans_file_creation.opp, aiohttp_client):
 async def test_failed_login_attempts_counter.opp, aiohttp_client):
     """Testing if failed login attempts counter increased."""
     app = web.Application()
-    app["opp"] = opp
+    app[.opp"] =.opp
 
-    async def auth_op.dler(request):
+    async def auth_handler(request):
         """Return 200 status code."""
         return None, 200
 
     app.router.add_get(
-        "/auth_true", request_op.dler_factory(Mock(requires_auth=True), auth_op.dler)
+        "/auth_true", request_handler_factory(Mock(requires_auth=True), auth_handler)
     )
     app.router.add_get(
-        "/auth_false", request_op.dler_factory(Mock(requires_auth=True), auth_op.dler)
+        "/auth_false", request_handler_factory(Mock(requires_auth=True), auth_handler)
     )
     app.router.add_get(
-        "/", request_op.dler_factory(Mock(requires_auth=False), auth_op.dler)
+        "/", request_handler_factory(Mock(requires_auth=False), auth_handler)
     )
 
     setup_bans.opp, app, 5)

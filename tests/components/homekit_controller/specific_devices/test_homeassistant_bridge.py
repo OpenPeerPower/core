@@ -13,14 +13,14 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_openpeerpowerr_bridge_fan_setup.opp):
+async def test_openpeerpower_bridge_fan_setup.opp):
     """Test that a SIMPLEconnect fan can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(
-       .opp, "home_assistant_bridge_fan.json"
+       .opp, "open_peer_power_bridge_fan.json"
     )
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # Check that the fan is correctly found and set up
     fan_id = "fan.living_room_fan"
@@ -42,7 +42,7 @@ async def test_openpeerpowerr_bridge_fan_setup.opp):
         SUPPORT_DIRECTION | SUPPORT_SET_SPEED | SUPPORT_OSCILLATE
     )
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(fan.device_id)
     assert device.manufacturer == "Open Peer Power"

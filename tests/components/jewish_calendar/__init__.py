@@ -5,7 +5,7 @@ from datetime import datetime
 from unittest.mock import patch
 
 from openpeerpower.components import jewish_calendar
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 _LatLng = namedtuple("_LatLng", ["lat", "lng"])
 
@@ -65,8 +65,8 @@ def make_jerusalem_test_params(dtime, results, havdalah_offset=0):
 def alter_time(local_time):
     """Manage multiple time mocks."""
     utc_time = dt_util.as_utc(local_time)
-    patch1 = patch("openpeerpowerr.util.dt.utcnow", return_value=utc_time)
-    patch2 = patch("openpeerpowerr.util.dt.now", return_value=local_time)
+    patch1 = patch("openpeerpower.util.dt.utcnow", return_value=utc_time)
+    patch2 = patch("openpeerpower.util.dt.now", return_value=local_time)
 
     with patch1, patch2:
         yield

@@ -4,8 +4,8 @@ import pytest
 import openpeerpower.components.automation as automation
 from openpeerpower.components.lock import DOMAIN
 from openpeerpower.const import CONF_PLATFORM
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -35,10 +35,10 @@ async def test_get_actions_support_open.opp, device_reg, entity_reg):
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -79,10 +79,10 @@ async def test_get_actions_not_support_open.opp, device_reg, entity_reg):
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -149,26 +149,26 @@ async def test_action.opp):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     lock_calls = async_mock_service.opp, "lock", "lock")
     unlock_calls = async_mock_service.opp, "lock", "unlock")
     open_calls = async_mock_service.opp, "lock", "open")
 
    .opp.bus.async_fire("test_event_lock")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 0
     assert len(open_calls) == 0
 
    .opp.bus.async_fire("test_event_unlock")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 1
     assert len(open_calls) == 0
 
    .opp.bus.async_fire("test_event_open")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(lock_calls) == 1
     assert len(unlock_calls) == 1
     assert len(open_calls) == 1

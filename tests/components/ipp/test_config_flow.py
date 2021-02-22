@@ -4,8 +4,8 @@ from unittest.mock import patch
 from openpeerpower.components.ipp.const import CONF_BASE_PATH, CONF_UUID, DOMAIN
 from openpeerpower.config_entries import SOURCE_USER, SOURCE_ZEROCONF
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_SSL
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.data_entry_flow import (
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
@@ -24,7 +24,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 async def test_show_user_form.opp: OpenPeerPower) -> None:
     """Test that the user set up form is served."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -40,7 +40,7 @@ async def test_show_zeroconf_form(
     mock_connection(aioclient_mock)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -58,7 +58,7 @@ async def test_connection_error(
     mock_connection(aioclient_mock, conn_error=True)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=user_input,
@@ -76,7 +76,7 @@ async def test_zeroconf_connection_error(
     mock_connection(aioclient_mock, conn_error=True)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -93,7 +93,7 @@ async def test_zeroconf_confirm_connection_error(
     mock_connection(aioclient_mock, conn_error=True)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}, data=discovery_info
     )
 
@@ -108,7 +108,7 @@ async def test_user_connection_upgrade_required(
     mock_connection(aioclient_mock, conn_upgrade_error=True)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=user_input,
@@ -126,7 +126,7 @@ async def test_zeroconf_connection_upgrade_required(
     mock_connection(aioclient_mock, conn_upgrade_error=True)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -143,7 +143,7 @@ async def test_user_parse_error(
     mock_connection(aioclient_mock, parse_error=True)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=user_input,
@@ -160,7 +160,7 @@ async def test_zeroconf_parse_error(
     mock_connection(aioclient_mock, parse_error=True)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -177,7 +177,7 @@ async def test_user_ipp_error(
     mock_connection(aioclient_mock, ipp_error=True)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=user_input,
@@ -194,7 +194,7 @@ async def test_zeroconf_ipp_error(
     mock_connection(aioclient_mock, ipp_error=True)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -211,7 +211,7 @@ async def test_user_ipp_version_error(
     mock_connection(aioclient_mock, version_not_supported=True)
 
     user_input = {**MOCK_USER_INPUT}
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=user_input,
@@ -228,7 +228,7 @@ async def test_zeroconf_ipp_version_error(
     mock_connection(aioclient_mock, version_not_supported=True)
 
     discovery_info = {**MOCK_ZEROCONF_IPP_SERVICE_INFO}
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -245,7 +245,7 @@ async def test_user_device_exists_abort(
     await init_integration.opp, aioclient_mock, skip_setup=True)
 
     user_input = MOCK_USER_INPUT.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
         data=user_input,
@@ -262,7 +262,7 @@ async def test_zeroconf_device_exists_abort(
     await init_integration.opp, aioclient_mock, skip_setup=True)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -285,7 +285,7 @@ async def test_zeroconf_with_uuid_device_exists_abort(
             "UUID": "cfe92100-67c4-11d4-a45f-f8d027761251",
         },
     }
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -305,7 +305,7 @@ async def test_zeroconf_empty_unique_id(
         **MOCK_ZEROCONF_IPP_SERVICE_INFO,
         "properties": {**MOCK_ZEROCONF_IPP_SERVICE_INFO["properties"], "UUID": ""},
     }
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -321,7 +321,7 @@ async def test_zeroconf_no_unique_id(
     mock_connection(aioclient_mock, no_unique_id=True)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -336,7 +336,7 @@ async def test_full_user_flow_implementation(
     """Test the full manual user flow from start to finish."""
     mock_connection(aioclient_mock)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
@@ -347,7 +347,7 @@ async def test_full_user_flow_implementation(
     with patch(
         "openpeerpower.components.ipp.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.ipp.async_setup", return_value=True):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             user_input={CONF_HOST: "192.168.1.31", CONF_BASE_PATH: "/ipp/print"},
         )
@@ -370,7 +370,7 @@ async def test_full_zeroconf_flow_implementation(
     mock_connection(aioclient_mock)
 
     discovery_info = MOCK_ZEROCONF_IPP_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -382,7 +382,7 @@ async def test_full_zeroconf_flow_implementation(
     with patch(
         "openpeerpower.components.ipp.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.ipp.async_setup", return_value=True):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
 
@@ -406,7 +406,7 @@ async def test_full_zeroconf_tls_flow_implementation(
     mock_connection(aioclient_mock, ssl=True)
 
     discovery_info = MOCK_ZEROCONF_IPPS_SERVICE_INFO.copy()
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
         data=discovery_info,
@@ -419,7 +419,7 @@ async def test_full_zeroconf_tls_flow_implementation(
     with patch(
         "openpeerpower.components.ipp.async_setup_entry", return_value=True
     ), patch("openpeerpower.components.ipp.async_setup", return_value=True):
-        result = await opp..config_entries.flow.async_configure(
+        result = await.opp.config_entries.flow.async_configure(
             result["flow_id"], user_input={}
         )
 

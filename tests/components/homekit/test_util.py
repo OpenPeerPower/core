@@ -50,7 +50,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.core import State
+from openpeerpower.core import State
 
 from .util import async_init_integration
 
@@ -226,10 +226,10 @@ async def test_show_setup_msg.opp, hk_driver):
        .opp, PERSISTENT_NOTIFICATION_DOMAIN, "create"
     )
 
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         show_setup_message,.opp, entry.entry_id, "bridge_name", pincode, "X-HM://0"
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.data[DOMAIN][entry.entry_id][HOMEKIT_PAIRING_QR_SECRET]
     assert.opp.data[DOMAIN][entry.entry_id][HOMEKIT_PAIRING_QR]
 
@@ -244,8 +244,8 @@ async def test_dismiss_setup_msg.opp):
        .opp, PERSISTENT_NOTIFICATION_DOMAIN, "dismiss"
     )
 
-    await opp..async_add_executor_job(dismiss_setup_message,.opp, "entry_id")
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(dismiss_setup_message,.opp, "entry_id")
+    await.opp.async_block_till_done()
 
     assert call_dismiss_notification
     assert call_dismiss_notification[0].data[ATTR_NOTIFICATION_ID] == "entry_id"
@@ -257,7 +257,7 @@ async def test_port_is_available.opp):
 
     assert next_port
 
-    assert await opp..async_add_executor_job(port_is_available, next_port)
+    assert await.opp.async_add_executor_job(port_is_available, next_port)
 
 
 async def test_port_is_available_skips_existing_entries.opp):
@@ -267,14 +267,14 @@ async def test_port_is_available_skips_existing_entries.opp):
         data={CONF_NAME: BRIDGE_NAME, CONF_PORT: DEFAULT_CONFIG_FLOW_PORT},
         options={},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     next_port = await async_find_next_available_port.opp, DEFAULT_CONFIG_FLOW_PORT)
 
     assert next_port
     assert next_port != DEFAULT_CONFIG_FLOW_PORT
 
-    assert await opp..async_add_executor_job(port_is_available, next_port)
+    assert await.opp.async_add_executor_job(port_is_available, next_port)
 
 
 async def test_format_sw_version():

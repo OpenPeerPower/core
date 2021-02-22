@@ -20,7 +20,7 @@ from openpeerpower.components.homematicip_cloud.const import (
 )
 from openpeerpower.components.homematicip_cloud.hap import HomematicipHAP
 from openpeerpower.config_entries import SOURCE_IMPORT
-from openpeerpowerr.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 from .helper import AUTH_TOKEN, HAPID, HAPPIN, HomeFactory
 
@@ -68,8 +68,8 @@ def hmip_config_entry_fixture() -> config_entries.ConfigEntry:
     return config_entry
 
 
-@pytest.fixture(name="default_mock_op._factory")
-async def default_mock_op._factory_fixture(
+@pytest.fixture(name="default_mock_hap_factory")
+async def default_mock_hap_factory_fixture(
    .opp: OpenPeerPowerType, mock_connection, hmip_config_entry
 ) -> HomematicipHAP:
     """Create a mocked homematic access point."""
@@ -96,16 +96,16 @@ def dummy_config_fixture() -> ConfigType:
     return {"blabla": None}
 
 
-@pytest.fixture(name="mock_op._with_service")
-async def mock_op._with_service_fixture(
-   .opp: OpenPeerPowerType, default_mock_op._factory, dummy_config
+@pytest.fixture(name="mock_hap_with_service")
+async def mock_hap_with_service_fixture(
+   .opp: OpenPeerPowerType, default_mock_hap_factory, dummy_config
 ) -> HomematicipHAP:
-    """Create a fake homematic access point with opp services."""
-    mock_op. = await default_mock_op._factory.async_get_mock_op.()
+    """Create a fake homematic access point with.opp services."""
+    mock_hap = await default_mock_hap_factory.async_get_mock_hap()
     await hmip_async_setup.opp, dummy_config)
-    await opp..async_block_till_done()
-   .opp.data[HMIPC_DOMAIN] = {HAPID: mock_op.}
-    return mock_op.
+    await.opp.async_block_till_done()
+   .opp.data[HMIPC_DOMAIN] = {HAPID: mock_hap}
+    return mock_hap
 
 
 @pytest.fixture(name="simple_mock_home")

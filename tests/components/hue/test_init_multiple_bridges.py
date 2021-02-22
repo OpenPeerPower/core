@@ -11,7 +11,7 @@ import pytest
 from openpeerpower import config_entries
 from openpeerpower.components import hue
 from openpeerpower.components.hue import sensor_base as hue_sensor_base
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def setup_component.opp):
@@ -42,7 +42,7 @@ async def test_hue_activate_scene_both_responds(
     ) as mock_hue_activate_scene1, patch.object(
         mock_bridge2, "hue_activate_scene", return_value=None
     ) as mock_hue_activate_scene2:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "hue",
             "hue_activate_scene",
             {"group_name": "group_2", "scene_name": "my_scene"},
@@ -68,7 +68,7 @@ async def test_hue_activate_scene_one_responds(
     ) as mock_hue_activate_scene1, patch.object(
         mock_bridge2, "hue_activate_scene", return_value=False
     ) as mock_hue_activate_scene2:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "hue",
             "hue_activate_scene",
             {"group_name": "group_2", "scene_name": "my_scene"},
@@ -94,7 +94,7 @@ async def test_hue_activate_scene_zero_responds(
     ) as mock_hue_activate_scene1, patch.object(
         mock_bridge2, "hue_activate_scene", return_value=False
     ) as mock_hue_activate_scene2:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "hue",
             "hue_activate_scene",
             {"group_name": "group_2", "scene_name": "my_scene"},
@@ -110,9 +110,9 @@ async def setup_bridge.opp, mock_bridge, config_entry):
     """Load the Hue light platform with the provided bridge."""
     mock_bridge.config_entry = config_entry
    .opp.data[hue.DOMAIN][config_entry.entry_id] = mock_bridge
-    await opp..config_entries.async_forward_entry_setup(config_entry, "light")
+    await.opp.config_entries.async_forward_entry_setup(config_entry, "light")
     # To flush out the service call to update the group
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 @pytest.fixture

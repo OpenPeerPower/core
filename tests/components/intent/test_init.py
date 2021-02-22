@@ -3,13 +3,13 @@ import pytest
 
 from openpeerpower.components.cover import SERVICE_OPEN_COVER
 from openpeerpower.const import SERVICE_TOGGLE, SERVICE_TURN_OFF, SERVICE_TURN_ON
-from openpeerpowerr.helpers import intent
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import intent
+from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
 
 
-async def test_http_op.dle_intent.opp,.opp_client,.opp_admin_user):
+async def test_http_handle_intent.opp,.opp_client,.opp_admin_user):
     """Test handle intent via HTTP API."""
 
     class TestIntentHandler(intent.IntentHandler):
@@ -17,9 +17,9 @@ async def test_http_op.dle_intent.opp,.opp_client,.opp_admin_user):
 
         intent_type = "OrderBeer"
 
-        async def async_op.dle(self, intent):
+        async def async_handle(self, intent):
             """Handle the intent."""
-            assert intent.context.user_id == opp_admin_user.id
+            assert intent.context.user_id ==.opp_admin_user.id
             response = intent.create_response()
             response.async_set_speech(
                 "I've ordered a {}!".format(intent.slots["type"]["value"])
@@ -34,7 +34,7 @@ async def test_http_op.dle_intent.opp,.opp_client,.opp_admin_user):
     result = await async_setup_component.opp, "intent", {})
     assert result
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.post(
         "/api/intent/handle", json={"name": "OrderBeer", "data": {"type": "Belgian"}}
     )
@@ -55,8 +55,8 @@ async def test_cover_intents_loading.opp):
     assert await async_setup_component.opp, "intent", {})
 
     with pytest.raises(intent.UnknownIntent):
-        await intent.async_op.dle(
-           .opp, "test", "OppOpenCover", {"name": {"value": "garage door"}}
+        await intent.async_handle(
+           .opp, "test", "HassOpenCover", {"name": {"value": "garage door"}}
         )
 
     assert await async_setup_component.opp, "cover", {})
@@ -64,10 +64,10 @@ async def test_cover_intents_loading.opp):
    .opp.states.async_set("cover.garage_door", "closed")
     calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
 
-    response = await intent.async_op.dle(
-       .opp, "test", "OppOpenCover", {"name": {"value": "garage door"}}
+    response = await intent.async_handle(
+       .opp, "test", "HassOpenCover", {"name": {"value": "garage door"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Opened garage door"
     assert len(calls) == 1
@@ -78,18 +78,18 @@ async def test_cover_intents_loading.opp):
 
 
 async def test_turn_on_intent.opp):
-    """Test OppTurnOn intent."""
-    result = await async_setup_component.opp, "openpeerpowerr", {})
+    """Test HassTurnOn intent."""
+    result = await async_setup_component.opp, "openpeerpower", {})
     result = await async_setup_component.opp, "intent", {})
     assert result
 
    .opp.states.async_set("light.test_light", "off")
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
-    response = await intent.async_op.dle(
-       .opp, "test", "OppTurnOn", {"name": {"value": "test light"}}
+    response = await intent.async_handle(
+       .opp, "test", "HassTurnOn", {"name": {"value": "test light"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Turned test light on"
     assert len(calls) == 1
@@ -100,18 +100,18 @@ async def test_turn_on_intent.opp):
 
 
 async def test_turn_off_intent.opp):
-    """Test OppTurnOff intent."""
-    result = await async_setup_component.opp, "openpeerpowerr", {})
+    """Test HassTurnOff intent."""
+    result = await async_setup_component.opp, "openpeerpower", {})
     result = await async_setup_component.opp, "intent", {})
     assert result
 
    .opp.states.async_set("light.test_light", "on")
     calls = async_mock_service.opp, "light", SERVICE_TURN_OFF)
 
-    response = await intent.async_op.dle(
-       .opp, "test", "OppTurnOff", {"name": {"value": "test light"}}
+    response = await intent.async_handle(
+       .opp, "test", "HassTurnOff", {"name": {"value": "test light"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Turned test light off"
     assert len(calls) == 1
@@ -122,18 +122,18 @@ async def test_turn_off_intent.opp):
 
 
 async def test_toggle_intent.opp):
-    """Test OppToggle intent."""
-    result = await async_setup_component.opp, "openpeerpowerr", {})
+    """Test HassToggle intent."""
+    result = await async_setup_component.opp, "openpeerpower", {})
     result = await async_setup_component.opp, "intent", {})
     assert result
 
    .opp.states.async_set("light.test_light", "off")
     calls = async_mock_service.opp, "light", SERVICE_TOGGLE)
 
-    response = await intent.async_op.dle(
-       .opp, "test", "OppToggle", {"name": {"value": "test light"}}
+    response = await intent.async_handle(
+       .opp, "test", "HassToggle", {"name": {"value": "test light"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Toggled test light"
     assert len(calls) == 1
@@ -144,11 +144,11 @@ async def test_toggle_intent.opp):
 
 
 async def test_turn_on_multiple_intent.opp):
-    """Test OppTurnOn intent with multiple similar entities.
+    """Test HassTurnOn intent with multiple similar entities.
 
     This tests that matching finds the proper entity among similar names.
     """
-    result = await async_setup_component.opp, "openpeerpowerr", {})
+    result = await async_setup_component.opp, "openpeerpower", {})
     result = await async_setup_component.opp, "intent", {})
     assert result
 
@@ -157,10 +157,10 @@ async def test_turn_on_multiple_intent.opp):
    .opp.states.async_set("light.test_lighter", "off")
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
-    response = await intent.async_op.dle(
-       .opp, "test", "OppTurnOn", {"name": {"value": "test lights"}}
+    response = await intent.async_handle(
+       .opp, "test", "HassTurnOn", {"name": {"value": "test lights"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert response.speech["plain"]["speech"] == "Turned test lights 2 on"
     assert len(calls) == 1

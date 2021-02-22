@@ -21,9 +21,9 @@ from openpeerpower.components.influxdb.const import (
 from openpeerpower.components.influxdb.sensor import PLATFORM_SCHEMA
 import openpeerpower.components.sensor as sensor
 from openpeerpower.const import STATE_UNKNOWN
-from openpeerpowerr.helpers.entity_platform import PLATFORM_NOT_READY_BASE_WAIT_TIME
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.helpers.entity_platform import PLATFORM_NOT_READY_BASE_WAIT_TIME
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util
 
 from tests.common import async_fire_time_changed
 
@@ -186,11 +186,11 @@ async def _setup.opp, config_ext, queries, expected_sensors):
     influx_config.update(queries)
 
     assert await async_setup_component.opp, sensor.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     sensors = []
     for expected_sensor in expected_sensors:
-        state = opp.states.get(expected_sensor)
+        state =.opp.states.get(expected_sensor)
         assert state is not None
         sensors.append(state)
 
@@ -554,7 +554,7 @@ async def test_connection_error_at_startup(
     set_query_mock(mock_client, return_value=make_resultset(42))
     new_time = dt_util.utcnow() + timedelta(seconds=PLATFORM_NOT_READY_BASE_WAIT_TIME)
     async_fire_time_changed.opp, new_time)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get(expected_sensor) is not None
 
 

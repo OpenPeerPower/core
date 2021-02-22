@@ -12,12 +12,12 @@ from openpeerpower import config as.opp_config
 from openpeerpower.components.history_stats import DOMAIN
 from openpeerpower.components.history_stats.sensor import HistoryStatsSensor
 from openpeerpower.const import SERVICE_RELOAD, STATE_UNKNOWN
-import openpeerpowerr.core as ha
-from openpeerpowerr.helpers.template import Template
-from openpeerpowerr.setup import async_setup_component, setup_component
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.core as ha
+from openpeerpower.helpers.template import Template
+from openpeerpower.setup import async_setup_component, setup_component
+import openpeerpower.util.dt as dt_util
 
-from tests.common import get_test_home_assistant, init_recorder_component
+from tests.common import get_test_open_peer_power, init_recorder_component
 
 
 class TestHistoryStatsSensor(unittest.TestCase):
@@ -25,7 +25,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.opp.stop)
 
     def test_setup(self):
@@ -73,13 +73,13 @@ class TestHistoryStatsSensor(unittest.TestCase):
         assert state.state == STATE_UNKNOWN
 
     @patch(
-        "openpeerpowerr.helpers.template.TemplateEnvironment.is_safe_callable",
+        "openpeerpower.helpers.template.TemplateEnvironment.is_safe_callable",
         return_value=True,
     )
     def test_period_parsing(self, mock):
         """Test the conversion from templates to period."""
         now = datetime(2019, 1, 1, 23, 30, 0, tzinfo=pytz.utc)
-        with patch("openpeerpowerr.util.dt.now", return_value=now):
+        with patch("openpeerpower.util.dt.now", return_value=now):
             today = Template(
                 "{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}",
                 self.opp,
@@ -130,9 +130,9 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
         fake_states = {
             "binary_sensor.test_id": [
-                op.State("binary_sensor.test_id", "on", last_changed=t0),
-                op.State("binary_sensor.test_id", "off", last_changed=t1),
-                op.State("binary_sensor.test_id", "on", last_changed=t2),
+                ha.State("binary_sensor.test_id", "on", last_changed=t0),
+                ha.State("binary_sensor.test_id", "off", last_changed=t1),
+                ha.State("binary_sensor.test_id", "on", last_changed=t2),
             ]
         }
 
@@ -186,9 +186,9 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
         fake_states = {
             "input_select.test_id": [
-                op.State("input_select.test_id", "orange", last_changed=t0),
-                op.State("input_select.test_id", "default", last_changed=t1),
-                op.State("input_select.test_id", "blue", last_changed=t2),
+                ha.State("input_select.test_id", "orange", last_changed=t0),
+                ha.State("input_select.test_id", "default", last_changed=t1),
+                ha.State("input_select.test_id", "blue", last_changed=t2),
             ]
         }
 
@@ -368,11 +368,11 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
 async def test_reload.opp):
     """Verify we can reload history_stats sensors."""
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         init_recorder_component,.opp
     )  # force in memory db
 
-   .opp.state = op.CoreState.not_running
+   .opp.state = ha.CoreState.not_running
    .opp.states.async_set("binary_sensor.test_id", "on")
 
     await async_setup_component(
@@ -389,9 +389,9 @@ async def test_reload.opp):
             },
         },
     )
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 
@@ -403,13 +403,13 @@ async def test_reload.opp):
         "history_stats/configuration.yaml",
     )
     with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             {},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 2
 

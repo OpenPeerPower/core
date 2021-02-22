@@ -11,21 +11,21 @@ import voluptuous as vol
 
 from openpeerpower.components.http.view import (
     OpenPeerPowerView,
-    request_op.dler_factory,
+    request_handler_factory,
 )
-from openpeerpowerr.exceptions import ServiceNotFound, Unauthorized
+from openpeerpower.exceptions import ServiceNotFound, Unauthorized
 
 
 @pytest.fixture
 def mock_request():
     """Mock a request."""
-    return Mock(app={"opp": Mock(is_stopping=False)}, match_info={})
+    return Mock(app={.opp": Mock(is_stopping=False)}, match_info={})
 
 
 @pytest.fixture
 def mock_request_with_stopping():
     """Mock a request."""
-    return Mock(app={"opp": Mock(is_stopping=True)}, match_info={})
+    return Mock(app={.opp": Mock(is_stopping=True)}, match_info={})
 
 
 async def test_invalid_json(caplog):
@@ -38,26 +38,26 @@ async def test_invalid_json(caplog):
     assert str(float("NaN")) in caplog.text
 
 
-async def test_op.dling_unauthorized(mock_request):
+async def test_handling_unauthorized(mock_request):
     """Test handling unauth exceptions."""
     with pytest.raises(HTTPUnauthorized):
-        await request_op.dler_factory(
+        await request_handler_factory(
             Mock(requires_auth=False), AsyncMock(side_effect=Unauthorized)
         )(mock_request)
 
 
-async def test_op.dling_invalid_data(mock_request):
+async def test_handling_invalid_data(mock_request):
     """Test handling unauth exceptions."""
     with pytest.raises(HTTPBadRequest):
-        await request_op.dler_factory(
+        await request_handler_factory(
             Mock(requires_auth=False), AsyncMock(side_effect=vol.Invalid("yo"))
         )(mock_request)
 
 
-async def test_op.dling_service_not_found(mock_request):
+async def test_handling_service_not_found(mock_request):
     """Test handling unauth exceptions."""
     with pytest.raises(HTTPInternalServerError):
-        await request_op.dler_factory(
+        await request_handler_factory(
             Mock(requires_auth=False),
             AsyncMock(side_effect=ServiceNotFound("test", "test")),
         )(mock_request)
@@ -65,7 +65,7 @@ async def test_op.dling_service_not_found(mock_request):
 
 async def test_not_running(mock_request_with_stopping):
     """Test we get a 503 when not running."""
-    response = await request_op.dler_factory(
+    response = await request_handler_factory(
         Mock(requires_auth=False), AsyncMock(side_effect=Unauthorized)
     )(mock_request_with_stopping)
     assert response.status == 503

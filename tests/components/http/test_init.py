@@ -6,8 +6,8 @@ from unittest.mock import Mock, patch
 import pytest
 
 import openpeerpower.components.http as http
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.ssl import server_context_intermediate, server_context_modern
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.ssl import server_context_intermediate, server_context_modern
 
 
 @pytest.fixture
@@ -55,7 +55,7 @@ async def test_registering_view_while_running(
        .opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: aiohttp_unused_port()}}
     )
 
-    await opp..async_start()
+    await.opp.async_start()
     # This raises a RuntimeError if app is frozen
    .opp.http.register_view(TestView)
 
@@ -120,11 +120,11 @@ async def test_ssl_profile_defaults_modern.opp):
    .opp.http.ssl_certificate = "bla"
 
     with patch("ssl.SSLContext.load_cert_chain"), patch(
-        "openpeerpowerr.util.ssl.server_context_modern",
+        "openpeerpower.util.ssl.server_context_modern",
         side_effect=server_context_modern,
     ) as mock_context:
-        await opp..async_start()
-        await opp..async_block_till_done()
+        await.opp.async_start()
+        await.opp.async_block_till_done()
 
     assert len(mock_context.mock_calls) == 1
 
@@ -141,11 +141,11 @@ async def test_ssl_profile_change_intermediate.opp):
    .opp.http.ssl_certificate = "bla"
 
     with patch("ssl.SSLContext.load_cert_chain"), patch(
-        "openpeerpowerr.util.ssl.server_context_intermediate",
+        "openpeerpower.util.ssl.server_context_intermediate",
         side_effect=server_context_intermediate,
     ) as mock_context:
-        await opp..async_start()
-        await opp..async_block_till_done()
+        await.opp.async_start()
+        await.opp.async_block_till_done()
 
     assert len(mock_context.mock_calls) == 1
 
@@ -160,11 +160,11 @@ async def test_ssl_profile_change_modern.opp):
    .opp.http.ssl_certificate = "bla"
 
     with patch("ssl.SSLContext.load_cert_chain"), patch(
-        "openpeerpowerr.util.ssl.server_context_modern",
+        "openpeerpower.util.ssl.server_context_modern",
         side_effect=server_context_modern,
     ) as mock_context:
-        await opp..async_start()
-        await opp..async_block_till_done()
+        await.opp.async_start()
+        await.opp.async_block_till_done()
 
     assert len(mock_context.mock_calls) == 1
 
@@ -176,8 +176,8 @@ async def test_cors_defaults.opp):
 
     assert len(mock_setup.mock_calls) == 1
     assert mock_setup.mock_calls[0][1][1] == [
-        "https://cast.openpeerpower.io",
-        "https://my.openpeerpower.io",
+        "https://cast.open-peer-power.io",
+        "https://my.open-peer-power.io",
     ]
 
 
@@ -191,8 +191,8 @@ async def test_storing_config.opp, aiohttp_client, aiohttp_unused_port):
 
     assert await async_setup_component.opp, http.DOMAIN, {http.DOMAIN: config})
 
-    await opp..async_start()
-    restored = await opp..components.http.async_get_last_config()
+    await.opp.async_start()
+    restored = await.opp.components.http.async_get_last_config()
     restored["trusted_proxies"][0] = ip_network(restored["trusted_proxies"][0])
 
     assert restored == http.HTTP_SCHEMA(config)

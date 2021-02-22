@@ -5,8 +5,8 @@ from unittest.mock import patch
 from openpeerpower.components.ipp.const import DOMAIN
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.const import ATTR_ICON, ATTR_UNIT_OF_MEASUREMENT, PERCENTAGE
-from openpeerpowerr.core import OpenPeerPower
-from openpeerpowerr.util import dt as dt_util
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.util import dt as dt_util
 
 from tests.components.ipp import init_integration, mock_connection
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -19,7 +19,7 @@ async def test_sensors(
     mock_connection(aioclient_mock)
 
     entry = await init_integration.opp, aioclient_mock, skip_setup=True)
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # Pre-create registry entries for disabled by default sensors
     registry.async_get_or_create(
@@ -32,45 +32,45 @@ async def test_sensors(
 
     test_time = datetime(2019, 11, 11, 9, 10, 32, tzinfo=dt_util.UTC)
     with patch("openpeerpower.components.ipp.sensor.utcnow", return_value=test_time):
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("sensor.epson_xp_6000_series")
+    state =.opp.states.get("sensor.epson_xp_6000_series")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:printer"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is None
 
-    state = opp.states.get("sensor.epson_xp_6000_series_black_ink")
+    state =.opp.states.get("sensor.epson_xp_6000_series_black_ink")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:water"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is PERCENTAGE
     assert state.state == "58"
 
-    state = opp.states.get("sensor.epson_xp_6000_series_photo_black_ink")
+    state =.opp.states.get("sensor.epson_xp_6000_series_photo_black_ink")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:water"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is PERCENTAGE
     assert state.state == "98"
 
-    state = opp.states.get("sensor.epson_xp_6000_series_cyan_ink")
+    state =.opp.states.get("sensor.epson_xp_6000_series_cyan_ink")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:water"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is PERCENTAGE
     assert state.state == "91"
 
-    state = opp.states.get("sensor.epson_xp_6000_series_yellow_ink")
+    state =.opp.states.get("sensor.epson_xp_6000_series_yellow_ink")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:water"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is PERCENTAGE
     assert state.state == "95"
 
-    state = opp.states.get("sensor.epson_xp_6000_series_magenta_ink")
+    state =.opp.states.get("sensor.epson_xp_6000_series_magenta_ink")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:water"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is PERCENTAGE
     assert state.state == "73"
 
-    state = opp.states.get("sensor.epson_xp_6000_series_uptime")
+    state =.opp.states.get("sensor.epson_xp_6000_series_uptime")
     assert state
     assert state.attributes.get(ATTR_ICON) == "mdi:clock-outline"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) is None
@@ -86,9 +86,9 @@ async def test_disabled_by_default_sensors(
 ) -> None:
     """Test the disabled by default IPP sensors."""
     await init_integration.opp, aioclient_mock)
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
-    state = opp.states.get("sensor.epson_xp_6000_series_uptime")
+    state =.opp.states.get("sensor.epson_xp_6000_series_uptime")
     assert state is None
 
     entry = registry.async_get("sensor.epson_xp_6000_series_uptime")
@@ -102,7 +102,7 @@ async def test_missing_entry_unique_id(
 ) -> None:
     """Test the unique_id of IPP sensor when printer is missing identifiers."""
     entry = await init_integration.opp, aioclient_mock, uuid=None, unique_id=None)
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     entity = registry.async_get("sensor.epson_xp_6000_series")
     assert entity

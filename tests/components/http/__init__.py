@@ -2,7 +2,7 @@
 from aiohttp import web
 
 # Relic from the past. Kept here so we can run negative tests.
-HTTP_HEADER_HA_AUTH = "X-OP-access"
+HTTP_HEADER_HA_AUTH = "X-HA-access"
 
 
 def mock_real_ip(app):

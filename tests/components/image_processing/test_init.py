@@ -4,13 +4,13 @@ from unittest.mock import PropertyMock, patch
 import openpeerpower.components.http as http
 import openpeerpower.components.image_processing as ip
 from openpeerpower.const import ATTR_ENTITY_PICTURE
-from openpeerpowerr.core import callback
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.setup import setup_component
+from openpeerpower.core import callback
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.setup import setup_component
 
 from tests.common import (
     assert_setup_component,
-    get_test_home_assistant,
+    get_test_open_peer_power,
     get_test_instance_port,
 )
 from tests.components.image_processing import common
@@ -21,7 +21,7 @@ class TestSetupImageProcessing:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""
@@ -49,7 +49,7 @@ class TestImageProcessing:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         setup_component(
             self.opp,
@@ -106,7 +106,7 @@ class TestImageProcessingAlpr:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         config = {ip.DOMAIN: {"platform": "demo"}, "camera": {"platform": "demo"}}
 
@@ -212,7 +212,7 @@ class TestImageProcessingFace:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
 
         config = {ip.DOMAIN: {"platform": "demo"}, "camera": {"platform": "demo"}}
 

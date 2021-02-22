@@ -7,11 +7,11 @@ from aiohttp import BasicAuth, web
 from aiohttp.web_exceptions import HTTPUnauthorized
 import pytest
 
-from openpeerpowerr.auth.providers import trusted_networks
+from openpeerpower.auth.providers import trusted_networks
 from openpeerpower.components.http.auth import async_sign_path, setup_auth
 from openpeerpower.components.http.const import KEY_AUTHENTICATED
 from openpeerpower.components.http.forwarded import async_setup_forwarded
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import HTTP_HEADER_HA_AUTH, mock_real_ip
 
@@ -28,12 +28,12 @@ TRUSTED_ADDRESSES = ["100.64.0.1", "192.0.2.100", "FD01:DB8::1", "2001:DB8:ABCD:
 UNTRUSTED_ADDRESSES = ["198.51.100.1", "2001:DB8:FA1::1", "127.0.0.1", "::1"]
 
 
-async def mock_op.dler(request):
+async def mock_handler(request):
     """Return if request was authenticated."""
     if not request[KEY_AUTHENTICATED]:
         raise HTTPUnauthorized
 
-    user = request.get("opp_user")
+    user = request.get(.opp_user")
     user_id = user.id if user else None
 
     return web.json_response(status=200, data={"user_id": user_id})
@@ -51,8 +51,8 @@ async def get_legacy_user(auth):
 def app.opp):
     """Fixture to set up a web.Application."""
     app = web.Application()
-    app["opp"] = opp
-    app.router.add_get("/", mock_op.dler)
+    app[.opp"] =.opp
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [])
     return app
 
@@ -61,8 +61,8 @@ def app.opp):
 def app2.opp):
     """Fixture to set up a web.Application without real_ip middleware."""
     app = web.Application()
-    app["opp"] = opp
-    app.router.add_get("/", mock_op.dler)
+    app[.opp"] =.opp
+    app.router.add_get("/", mock_handler)
     return app
 
 
@@ -122,13 +122,13 @@ async def test_basic_auth_does_not_work(app, aiohttp_client,.opp, legacy_auth):
     setup_auth.opp, app)
     client = await aiohttp_client(app)
 
-    req = await client.get("/", auth=BasicAuth("openpeerpowerr", API_PASSWORD))
+    req = await client.get("/", auth=BasicAuth("openpeerpower", API_PASSWORD))
     assert req.status == 401
 
     req = await client.get("/", auth=BasicAuth("wrong_username", API_PASSWORD))
     assert req.status == 401
 
-    req = await client.get("/", auth=BasicAuth("openpeerpowerr", "wrong password"))
+    req = await client.get("/", auth=BasicAuth("openpeerpower", "wrong password"))
     assert req.status == 401
 
     req = await client.get("/", headers={"authorization": "NotBasic abcdefg"})
@@ -159,10 +159,10 @@ async def test_auth_active_access_with_access_token_in_header(
    .opp, app, aiohttp_client,.opp_access_token
 ):
     """Test access with access token in header."""
-    token = opp_access_token
+    token =.opp_access_token
     setup_auth.opp, app)
     client = await aiohttp_client(app)
-    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
+    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
     req = await client.get("/", headers={"Authorization": f"Bearer {token}"})
     assert req.status == 200
@@ -182,7 +182,7 @@ async def test_auth_active_access_with_access_token_in_header(
     req = await client.get("/", headers={"Authorization": f"BEARER {token}"})
     assert req.status == 401
 
-    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
+    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
     refresh_token.user.is_active = False
     req = await client.get("/", headers={"Authorization": f"Bearer {token}"})
     assert req.status == 401
@@ -221,18 +221,18 @@ async def test_auth_legacy_support_api_password_cannot_access(
     resp = await client.get("/", params={"api_password": API_PASSWORD})
     assert resp.status == 401
 
-    req = await client.get("/", auth=BasicAuth("openpeerpowerr", API_PASSWORD))
+    req = await client.get("/", auth=BasicAuth("openpeerpower", API_PASSWORD))
     assert req.status == 401
 
 
 async def test_auth_access_signed_path.opp, app, aiohttp_client,.opp_access_token):
     """Test access with signed url."""
-    app.router.add_post("/", mock_op.dler)
-    app.router.add_get("/another_path", mock_op.dler)
+    app.router.add_post("/", mock_handler)
+    app.router.add_get("/another_path", mock_handler)
     setup_auth.opp, app)
     client = await aiohttp_client(app)
 
-    refresh_token = await opp..auth.async_validate_access_token.opp_access_token)
+    refresh_token = await.opp.auth.async_validate_access_token.opp_access_token)
 
     signed_path = async_sign_path.opp, refresh_token.id, "/", timedelta(seconds=5))
 
@@ -258,6 +258,6 @@ async def test_auth_access_signed_path.opp, app, aiohttp_client,.opp_access_toke
     assert req.status == 401
 
     # refresh token gone should also invalidate signature
-    await opp..auth.async_remove_refresh_token(refresh_token)
+    await.opp.auth.async_remove_refresh_token(refresh_token)
     req = await client.get(signed_path)
     assert req.status == 401

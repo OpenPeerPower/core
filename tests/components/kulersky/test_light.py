@@ -26,7 +26,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from tests.common import MockConfigEntry, async_fire_time_changed
 
@@ -61,9 +61,9 @@ async def mock_light.opp, mock_entry):
         ), patch.object(light, "connect") as mock_connect, patch.object(
             light, "get_color", return_value=(0, 0, 0, 0)
         ):
-            mock_entry.add_to_opp.opp)
-            await opp..config_entries.async_setup(mock_entry.entry_id)
-            await opp..async_block_till_done()
+            mock_entry.add_to.opp.opp)
+            await.opp.config_entries.async_setup(mock_entry.entry_id)
+            await.opp.async_block_till_done()
 
         assert mock_connect.called
         light.connected = True
@@ -73,7 +73,7 @@ async def mock_light.opp, mock_entry):
 
 async def test_init.opp, mock_light):
     """Test platform setup."""
-    state = opp.states.get("light.bedroom")
+    state =.opp.states.get("light.bedroom")
     assert state.state == STATE_OFF
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",
@@ -85,8 +85,8 @@ async def test_init.opp, mock_light):
     with patch.object.opp.loop, "stop"), patch.object(
         mock_light, "disconnect"
     ) as mock_disconnect:
-        await opp..async_stop()
-        await opp..async_block_till_done()
+        await.opp.async_stop()
+        await.opp.async_block_till_done()
 
     assert mock_disconnect.called
 
@@ -112,9 +112,9 @@ async def test_discovery_lock.opp, mock_entry):
     ), patch(
         "openpeerpower.components.kulersky.light.async_track_time_interval",
     ) as mock_track_time_interval:
-        mock_entry.add_to_opp.opp)
-        await opp..config_entries.async_setup(mock_entry.entry_id)
-        await opp..async_block_till_done()
+        mock_entry.add_to.opp.opp)
+        await.opp.config_entries.async_setup(mock_entry.entry_id)
+        await.opp.async_block_till_done()
 
         with patch.object(
            .opp, "async_add_executor_job", side_effect=mock_discovery
@@ -135,7 +135,7 @@ async def test_discovery_lock.opp, mock_entry):
             discovery_finished.set()
 
             # Flush the remaining jobs
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
             # The discovery method should only have been called once
             mock_run_discovery.assert_called_once()
@@ -164,19 +164,19 @@ async def test_discovery_connection_error.opp, mock_entry):
             light, "connect", side_effect=pykulersky.PykulerskyException
         ):
             mockdevice.return_value = light
-            mock_entry.add_to_opp.opp)
-            await opp..config_entries.async_setup(mock_entry.entry_id)
-            await opp..async_block_till_done()
+            mock_entry.add_to.opp.opp)
+            await.opp.config_entries.async_setup(mock_entry.entry_id)
+            await.opp.async_block_till_done()
 
     # Assert entity was not added
-    state = opp.states.get("light.bedroom")
+    state =.opp.states.get("light.bedroom")
     assert state is None
 
 
 async def test_remove_entry.opp, mock_light, mock_entry):
     """Test platform setup."""
     with patch.object(mock_light, "disconnect") as mock_disconnect:
-        await opp..config_entries.async_remove(mock_entry.entry_id)
+        await.opp.config_entries.async_remove(mock_entry.entry_id)
 
     assert mock_disconnect.called
 
@@ -188,8 +188,8 @@ async def test_update_exception.opp, mock_light):
     with patch.object(
         mock_light, "get_color", side_effect=pykulersky.PykulerskyException
     ):
-        await opp..helpers.entity_component.async_update_entity("light.bedroom")
-    state = opp.states.get("light.bedroom")
+        await.opp.helpers.entity_component.async_update_entity("light.bedroom")
+    state =.opp.states.get("light.bedroom")
     assert state is not None
     assert state.state == STATE_UNAVAILABLE
 
@@ -199,50 +199,50 @@ async def test_light_turn_on.opp, mock_light):
     with patch.object(mock_light, "set_color") as mock_set_color, patch.object(
         mock_light, "get_color", return_value=(255, 255, 255, 255)
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "light",
             "turn_on",
             {ATTR_ENTITY_ID: "light.bedroom"},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     mock_set_color.assert_called_with(255, 255, 255, 255)
 
     with patch.object(mock_light, "set_color") as mock_set_color, patch.object(
         mock_light, "get_color", return_value=(50, 50, 50, 255)
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "light",
             "turn_on",
             {ATTR_ENTITY_ID: "light.bedroom", ATTR_BRIGHTNESS: 50},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     mock_set_color.assert_called_with(50, 50, 50, 255)
 
     with patch.object(mock_light, "set_color") as mock_set_color, patch.object(
         mock_light, "get_color", return_value=(50, 45, 25, 255)
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "light",
             "turn_on",
             {ATTR_ENTITY_ID: "light.bedroom", ATTR_HS_COLOR: (50, 50)},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     mock_set_color.assert_called_with(50, 45, 25, 255)
 
     with patch.object(mock_light, "set_color") as mock_set_color, patch.object(
         mock_light, "get_color", return_value=(220, 201, 110, 180)
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "light",
             "turn_on",
             {ATTR_ENTITY_ID: "light.bedroom", ATTR_WHITE_VALUE: 180},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     mock_set_color.assert_called_with(50, 45, 25, 180)
 
 
@@ -251,13 +251,13 @@ async def test_light_turn_off.opp, mock_light):
     with patch.object(mock_light, "set_color") as mock_set_color, patch.object(
         mock_light, "get_color", return_value=(0, 0, 0, 0)
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "light",
             "turn_off",
             {ATTR_ENTITY_ID: "light.bedroom"},
             blocking=True,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
     mock_set_color.assert_called_with(0, 0, 0, 0)
 
 
@@ -265,7 +265,7 @@ async def test_light_update.opp, mock_light):
     """Test KulerSkyLight update."""
     utcnow = dt_util.utcnow()
 
-    state = opp.states.get("light.bedroom")
+    state =.opp.states.get("light.bedroom")
     assert state.state == STATE_OFF
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",
@@ -280,9 +280,9 @@ async def test_light_update.opp, mock_light):
     ):
         utcnow = utcnow + SCAN_INTERVAL
         async_fire_time_changed.opp, utcnow)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("light.bedroom")
+    state =.opp.states.get("light.bedroom")
     assert state.state == STATE_UNAVAILABLE
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",
@@ -298,9 +298,9 @@ async def test_light_update.opp, mock_light):
     ):
         utcnow = utcnow + SCAN_INTERVAL
         async_fire_time_changed.opp, utcnow)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("light.bedroom")
+    state =.opp.states.get("light.bedroom")
     assert state.state == STATE_ON
     assert state.attributes == {
         ATTR_FRIENDLY_NAME: "Bedroom",

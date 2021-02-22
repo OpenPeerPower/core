@@ -4,7 +4,7 @@ from unittest.mock import patch
 from openpeerpower.components import huisbaasje
 from openpeerpower.config_entries import CONN_CLASS_CLOUD_POLL, ConfigEntry
 from openpeerpower.const import CONF_ID, CONF_PASSWORD, CONF_USERNAME
-from openpeerpowerr.core import OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 
 from tests.components.huisbaasje.test_data import (
     MOCK_CURRENT_MEASUREMENTS,
@@ -39,8 +39,8 @@ async def test_setup_entry.opp: OpenPeerPower):
         )
        .opp.config_entries._entries.append(config_entry)
 
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
         # Assert data is loaded
         assert.opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"
@@ -96,8 +96,8 @@ async def test_setup_entry_absent_measurement.opp: OpenPeerPower):
         )
        .opp.config_entries._entries.append(config_entry)
 
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
         # Assert data is loaded
         assert.opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"

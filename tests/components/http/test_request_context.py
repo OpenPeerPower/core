@@ -11,7 +11,7 @@ async def test_request_context_middleware(aiohttp_client):
     context = ContextVar("request", default=None)
     app = web.Application()
 
-    async def mock_op.dler(request):
+    async def mock_handler(request):
         """Return the real IP as text."""
         request_context = context.get()
         assert request_context
@@ -19,7 +19,7 @@ async def test_request_context_middleware(aiohttp_client):
 
         return web.Response(text="hi!")
 
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     setup_request_context(app, context)
     mock_api_client = await aiohttp_client(app)
 

@@ -2,7 +2,7 @@
 from unittest.mock import patch
 
 from openpeerpower.components import islamic_prayer_times
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from . import NOW, PRAYER_TIMES, PRAYER_TIMES_TIMESTAMPS
 
@@ -12,14 +12,14 @@ from tests.common import MockConfigEntry
 async def test_islamic_prayer_times_sensors.opp, legacy_patchable_time):
     """Test minimum Islamic prayer times configuration."""
     entry = MockConfigEntry(domain=islamic_prayer_times.DOMAIN, data={})
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch(
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
         return_value=PRAYER_TIMES,
-    ), patch("openpeerpowerr.util.dt.now", return_value=NOW):
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+    ), patch("openpeerpower.util.dt.now", return_value=NOW):
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
         for prayer in PRAYER_TIMES:
             assert (

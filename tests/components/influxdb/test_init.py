@@ -14,8 +14,8 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_STANDBY,
 )
-from openpeerpowerr.core import split_entity_id
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import split_entity_id
+from openpeerpower.setup import async_setup_component
 
 INFLUX_PATH = "openpeerpower.components.influxdb"
 INFLUX_CLIENT_PATH = f"{INFLUX_PATH}.InfluxDBClient"
@@ -125,9 +125,9 @@ async def test_setup_config_full.opp, mock_client, config_ext, get_write_api):
     config["influxdb"].update(config_ext)
 
     assert await async_setup_component.opp, influxdb.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
     assert get_write_api(mock_client).call_count == 1
 
 
@@ -257,10 +257,10 @@ async def test_setup_config_ssl(
     with patch("os.access", return_value=True):
         with patch("os.path.isfile", return_value=True):
             assert await async_setup_component.opp, influxdb.DOMAIN, config)
-            await opp..async_block_till_done()
+            await.opp.async_block_till_done()
 
             assert.opp.bus.listen.called
-            assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+            assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
             assert expected_client_args.items() <= mock_client.call_args.kwargs.items()
 
 
@@ -278,9 +278,9 @@ async def test_setup_minimal_config.opp, mock_client, config_ext, get_write_api)
     config["influxdb"].update(config_ext)
 
     assert await async_setup_component.opp, influxdb.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
     assert get_write_api(mock_client).call_count == 1
 
 
@@ -335,7 +335,7 @@ async def _setup.opp, mock_influx_client, config_ext, get_write_api):
     }
     config["influxdb"].update(config_ext)
     assert await async_setup_component.opp, influxdb.DOMAIN, config)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     # A call is made to the write API during setup to test the connection.
     # Therefore we reset the write API mock here before the test begins.
     get_write_api(mock_influx_client).reset_mock()
@@ -1621,7 +1621,7 @@ async def test_connection_failure_on_startup(
 
     with patch(f"{INFLUX_PATH}.event_helper") as event_helper:
         assert await async_setup_component.opp, influxdb.DOMAIN, config)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         assert (
             len([record for record in caplog.records if record.levelname == "ERROR"])

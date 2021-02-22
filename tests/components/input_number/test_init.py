@@ -19,10 +19,10 @@ from openpeerpower.const import (
     ATTR_FRIENDLY_NAME,
     ATTR_NAME,
 )
-from openpeerpowerr.core import Context, CoreState, State
-from openpeerpowerr.exceptions import Unauthorized
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import Context, CoreState, State
+from openpeerpower.exceptions import Unauthorized
+from openpeerpower.helpers import entity_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_restore_cache
 
@@ -68,7 +68,7 @@ async def set_value.opp, entity_id, value):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN,
         SERVICE_SET_VALUE,
         {ATTR_ENTITY_ID: entity_id, ATTR_VALUE: value},
@@ -81,7 +81,7 @@ async def increment.opp, entity_id):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_INCREMENT, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
@@ -91,7 +91,7 @@ async def decrement.opp, entity_id):
 
     This is a legacy helper method. Do not use it for new tests.
     """
-    await opp..services.async_call(
+    await.opp.services.async_call(
         DOMAIN, SERVICE_DECREMENT, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
@@ -115,17 +115,17 @@ async def test_set_value.opp, caplog):
     )
     entity_id = "input_number.test_1"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 50 == float(state.state)
 
     await set_value.opp, entity_id, "30.4")
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 30.4 == float(state.state)
 
     await set_value.opp, entity_id, "70")
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 70 == float(state.state)
 
     with pytest.raises(vol.Invalid) as excinfo:
@@ -135,7 +135,7 @@ async def test_set_value.opp, caplog):
         excinfo.value
     )
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 70 == float(state.state)
 
 
@@ -146,19 +146,19 @@ async def test_increment.opp):
     )
     entity_id = "input_number.test_2"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 50 == float(state.state)
 
     await increment.opp, entity_id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 51 == float(state.state)
 
     await increment.opp, entity_id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 51 == float(state.state)
 
 
@@ -169,19 +169,19 @@ async def test_decrement.opp):
     )
     entity_id = "input_number.test_3"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 50 == float(state.state)
 
     await decrement.opp, entity_id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 49 == float(state.state)
 
     await decrement.opp, entity_id)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert 49 == float(state.state)
 
 
@@ -199,15 +199,15 @@ async def test_mode.opp):
         },
     )
 
-    state = opp.states.get("input_number.test_default_slider")
+    state =.opp.states.get("input_number.test_default_slider")
     assert state
     assert "slider" == state.attributes["mode"]
 
-    state = opp.states.get("input_number.test_explicit_box")
+    state =.opp.states.get("input_number.test_explicit_box")
     assert state
     assert "box" == state.attributes["mode"]
 
-    state = opp.states.get("input_number.test_explicit_slider")
+    state =.opp.states.get("input_number.test_explicit_slider")
     assert state
     assert "slider" == state.attributes["mode"]
 
@@ -226,11 +226,11 @@ async def test_restore_state.opp):
         {DOMAIN: {"b1": {"min": 0, "max": 100}, "b2": {"min": 10, "max": 100}}},
     )
 
-    state = opp.states.get("input_number.b1")
+    state =.opp.states.get("input_number.b1")
     assert state
     assert float(state.state) == 70
 
-    state = opp.states.get("input_number.b2")
+    state =.opp.states.get("input_number.b2")
     assert state
     assert float(state.state) == 10
 
@@ -254,11 +254,11 @@ async def test_initial_state_overrules_restore_state.opp):
         },
     )
 
-    state = opp.states.get("input_number.b1")
+    state =.opp.states.get("input_number.b1")
     assert state
     assert float(state.state) == 50
 
-    state = opp.states.get("input_number.b2")
+    state =.opp.states.get("input_number.b2")
     assert state
     assert float(state.state) == 60
 
@@ -269,7 +269,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"b1": {"min": 0, "max": 100}}})
 
-    state = opp.states.get("input_number.b1")
+    state =.opp.states.get("input_number.b1")
     assert state
     assert float(state.state) == 0
 
@@ -280,10 +280,10 @@ async def test_input_number_context.opp,.opp_admin_user):
        .opp, "input_number", {"input_number": {"b1": {"min": 0, "max": 100}}}
     )
 
-    state = opp.states.get("input_number.b1")
+    state =.opp.states.get("input_number.b1")
     assert state is not None
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "input_number",
         "increment",
         {"entity_id": state.entity_id},
@@ -291,10 +291,10 @@ async def test_input_number_context.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 = opp.states.get("input_number.b1")
+    state2 =.opp.states.get("input_number.b1")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id == opp_admin_user.id
+    assert state2.context.user_id ==.opp_admin_user.id
 
 
 async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
@@ -315,9 +315,9 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 = opp.states.get("input_number.test_1")
-    state_2 = opp.states.get("input_number.test_2")
-    state_3 = opp.states.get("input_number.test_3")
+    state_1 =.opp.states.get("input_number.test_1")
+    state_2 =.opp.states.get("input_number.test_2")
+    state_3 =.opp.states.get("input_number.test_3")
 
     assert state_1 is not None
     assert state_2 is None
@@ -339,25 +339,25 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
         },
     ):
         with pytest.raises(Unauthorized):
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
                 context=Context(user_id.opp_read_only_user.id),
             )
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 = opp.states.get("input_number.test_1")
-    state_2 = opp.states.get("input_number.test_2")
-    state_3 = opp.states.get("input_number.test_3")
+    state_1 =.opp.states.get("input_number.test_1")
+    state_2 =.opp.states.get("input_number.test_2")
+    state_3 =.opp.states.get("input_number.test_3")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -372,7 +372,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 async def test_load_from_storage.opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
-    state = opp.states.get(f"{DOMAIN}.from_storage")
+    state =.opp.states.get(f"{DOMAIN}.from_storage")
     assert float(state.state) == 10
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "from storage"
     assert state.attributes.get(ATTR_EDITABLE)
@@ -394,12 +394,12 @@ async def test_editable_state_attribute.opp, storage_setup):
         }
     )
 
-    state = opp.states.get(f"{DOMAIN}.from_storage")
+    state =.opp.states.get(f"{DOMAIN}.from_storage")
     assert float(state.state) == 10
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "from storage"
     assert state.attributes.get(ATTR_EDITABLE)
 
-    state = opp.states.get(f"{DOMAIN}.from_yaml")
+    state =.opp.states.get(f"{DOMAIN}.from_yaml")
     assert float(state.state) == 5
     assert not state.attributes.get(ATTR_EDITABLE)
 
@@ -420,7 +420,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
         }
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -444,11 +444,11 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -456,7 +456,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
@@ -480,12 +480,12 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state is not None
     assert state.state
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/update", f"{DOMAIN}_id": f"{input_id}", "min": 9}
@@ -493,7 +493,7 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert float(state.state) == 9
 
     await client.send_json(
@@ -508,7 +508,7 @@ async def test_update_min_max.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert float(state.state) == 5
 
 
@@ -520,11 +520,11 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -541,7 +541,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert float(state.state) == 10
 
 
@@ -553,12 +553,12 @@ async def test_setup_no_config.opp,.opp_admin_user):
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

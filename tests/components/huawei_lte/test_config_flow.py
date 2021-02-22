@@ -35,7 +35,7 @@ FIXTURE_USER_INPUT_OPTIONS = {
 
 async def test_show_set_form.opp):
     """Test that the setup form is served."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=None
     )
 
@@ -48,7 +48,7 @@ async def test_urlize_plain_host.opp, requests_mock):
     requests_mock.request(ANY, ANY, exc=ConnectionError())
     host = "192.168.100.1"
     user_input = {**FIXTURE_USER_INPUT, CONF_URL: host}
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=user_input
     )
 
@@ -61,9 +61,9 @@ async def test_already_configured.opp):
     """Test we reject already configured devices."""
     MockConfigEntry(
         domain=DOMAIN, data=FIXTURE_USER_INPUT, title="Already configured"
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
         data={
@@ -80,7 +80,7 @@ async def test_already_configured.opp):
 async def test_connection_error.opp, requests_mock):
     """Test we show user form on connection error."""
     requests_mock.request(ANY, ANY, exc=ConnectionError())
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=FIXTURE_USER_INPUT
     )
 
@@ -126,7 +126,7 @@ async def test_login_error.opp, login_requests_mock, code, errors):
         f"{FIXTURE_USER_INPUT[CONF_URL]}api/user/login",
         text=f"<error><code>{code}</code><message/></error>",
     )
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=FIXTURE_USER_INPUT
     )
 
@@ -145,12 +145,12 @@ async def test_success.opp, login_requests_mock):
     with patch("openpeerpower.components.huawei_lte.async_setup"), patch(
         "openpeerpower.components.huawei_lte.async_setup_entry"
     ):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_USER},
             data=FIXTURE_USER_INPUT,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"][CONF_URL] == FIXTURE_USER_INPUT[CONF_URL]
@@ -162,7 +162,7 @@ async def test_ssdp.opp):
     """Test SSDP discovery initiates config properly."""
     url = "http://192.168.100.1/"
     context = {"source": config_entries.SOURCE_SSDP}
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         context=context,
         data={
@@ -191,14 +191,14 @@ async def test_options.opp):
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=FIXTURE_USER_INPUT, options=FIXTURE_USER_INPUT_OPTIONS
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
-    result = await opp..config_entries.options.async_init(config_entry.entry_id)
+    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
     recipient = "+15555550000"
-    result = await opp..config_entries.options.async_configure(
+    result = await.opp.config_entries.options.async_configure(
         result["flow_id"], user_input={CONF_RECIPIENT: recipient}
     )
     assert result["data"][CONF_NAME] == DOMAIN

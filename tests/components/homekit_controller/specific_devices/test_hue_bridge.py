@@ -13,7 +13,7 @@ async def test_hue_bridge_setup.opp):
     accessories = await setup_accessories_from_file.opp, "hue_bridge.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     # Check that the battery is correctly found and set up
     battery_id = "sensor.hue_dimmer_switch_battery"
@@ -28,7 +28,7 @@ async def test_hue_bridge_setup.opp):
     assert battery_state.attributes["icon"] == "mdi:battery"
     assert battery_state.state == "100"
 
-    device_registry = await opp..helpers.device_registry.async_get_registry()
+    device_registry = await.opp.helpers.device_registry.async_get_registry()
 
     device = device_registry.async_get(battery.device_id)
     assert device.manufacturer == "Philips"

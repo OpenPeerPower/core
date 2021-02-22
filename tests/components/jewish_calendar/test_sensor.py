@@ -4,8 +4,8 @@ from datetime import datetime as dt, timedelta
 import pytest
 
 from openpeerpower.components import jewish_calendar
-from openpeerpowerr.setup import async_setup_component
-import openpeerpowerr.util.dt as dt_util
+from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from . import (
     HDATE_DEFAULT_ALTITUDE,
@@ -22,7 +22,7 @@ async def test_jewish_calendar_min_config.opp):
     assert await async_setup_component(
        .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.jewish_calendar_date") is not None
 
 
@@ -31,7 +31,7 @@ async def test_jewish_calendar_hebrew.opp):
     assert await async_setup_component(
        .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"language": "hebrew"}}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.jewish_calendar_date") is not None
 
 
@@ -64,7 +64,7 @@ TEST_PARAMS = [
         31.778,
         35.235,
         "hebrew",
-        "parshat_op.havua",
+        "parshat_hashavua",
         False,
         "נצבים",
     ),
@@ -74,7 +74,7 @@ TEST_PARAMS = [
         40.7128,
         -74.0060,
         "hebrew",
-        "t_set_op.ochavim",
+        "t_set_hakochavim",
         True,
         dt(2018, 9, 8, 19, 48),
     ),
@@ -84,7 +84,7 @@ TEST_PARAMS = [
         31.778,
         35.235,
         "hebrew",
-        "t_set_op.ochavim",
+        "t_set_hakochavim",
         False,
         dt(2018, 9, 8, 19, 21),
     ),
@@ -94,7 +94,7 @@ TEST_PARAMS = [
         31.778,
         35.235,
         "hebrew",
-        "parshat_op.havua",
+        "parshat_hashavua",
         False,
         "לך לך",
     ),
@@ -180,21 +180,21 @@ async def test_jewish_calendar_sensor(
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     result = (
         dt_util.as_utc(time_zone.localize(result)) if isinstance(result, dt) else result
     )
 
-    sensor_object = opp.states.get(f"sensor.test_{sensor}")
+    sensor_object =.opp.states.get(f"sensor.test_{sensor}")
     assert sensor_object.state == str(result)
 
     if sensor == "holiday":
-        assert sensor_object.attributes.get("id") == "rosh_op.hana_i"
+        assert sensor_object.attributes.get("id") == "rosh_hashana_i"
         assert sensor_object.attributes.get("type") == "YOM_TOV"
         assert sensor_object.attributes.get("type_id") == 1
 
@@ -204,22 +204,22 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 1, 16, 0),
         {
             "english_upcoming_candle_lighting": dt(2018, 8, 31, 19, 15),
-            "english_upcoming_op.dalah": dt(2018, 9, 1, 20, 14),
+            "english_upcoming_havdalah": dt(2018, 9, 1, 20, 14),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 8, 31, 19, 15),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 1, 20, 14),
-            "english_parshat_op.havua": "Ki Tavo",
-            "hebrew_parshat_op.havua": "כי תבוא",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 1, 20, 14),
+            "english_parshat_hashavua": "Ki Tavo",
+            "hebrew_parshat_hashavua": "כי תבוא",
         },
     ),
     make_nyc_test_params(
         dt(2018, 9, 1, 16, 0),
         {
             "english_upcoming_candle_lighting": dt(2018, 8, 31, 19, 15),
-            "english_upcoming_op.dalah": dt(2018, 9, 1, 20, 22),
+            "english_upcoming_havdalah": dt(2018, 9, 1, 20, 22),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 8, 31, 19, 15),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 1, 20, 22),
-            "english_parshat_op.havua": "Ki Tavo",
-            "hebrew_parshat_op.havua": "כי תבוא",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 1, 20, 22),
+            "english_parshat_hashavua": "Ki Tavo",
+            "hebrew_parshat_hashavua": "כי תבוא",
         },
         havdalah_offset=50,
     ),
@@ -227,44 +227,44 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 1, 20, 0),
         {
             "english_upcoming_shabbat_candle_lighting": dt(2018, 8, 31, 19, 15),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 1, 20, 14),
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 1, 20, 14),
             "english_upcoming_candle_lighting": dt(2018, 8, 31, 19, 15),
-            "english_upcoming_op.dalah": dt(2018, 9, 1, 20, 14),
-            "english_parshat_op.havua": "Ki Tavo",
-            "hebrew_parshat_op.havua": "כי תבוא",
+            "english_upcoming_havdalah": dt(2018, 9, 1, 20, 14),
+            "english_parshat_hashavua": "Ki Tavo",
+            "hebrew_parshat_hashavua": "כי תבוא",
         },
     ),
     make_nyc_test_params(
         dt(2018, 9, 1, 20, 21),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 7, 19, 4),
-            "english_upcoming_op.dalah": dt(2018, 9, 8, 20, 2),
+            "english_upcoming_havdalah": dt(2018, 9, 8, 20, 2),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 9, 7, 19, 4),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 8, 20, 2),
-            "english_parshat_op.havua": "Nitzavim",
-            "hebrew_parshat_op.havua": "נצבים",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 8, 20, 2),
+            "english_parshat_hashavua": "Nitzavim",
+            "hebrew_parshat_hashavua": "נצבים",
         },
     ),
     make_nyc_test_params(
         dt(2018, 9, 7, 13, 1),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 7, 19, 4),
-            "english_upcoming_op.dalah": dt(2018, 9, 8, 20, 2),
+            "english_upcoming_havdalah": dt(2018, 9, 8, 20, 2),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 9, 7, 19, 4),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 8, 20, 2),
-            "english_parshat_op.havua": "Nitzavim",
-            "hebrew_parshat_op.havua": "נצבים",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 8, 20, 2),
+            "english_parshat_hashavua": "Nitzavim",
+            "hebrew_parshat_hashavua": "נצבים",
         },
     ),
     make_nyc_test_params(
         dt(2018, 9, 8, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 9, 19, 1),
-            "english_upcoming_op.dalah": dt(2018, 9, 11, 19, 57),
+            "english_upcoming_havdalah": dt(2018, 9, 11, 19, 57),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 9, 14, 18, 52),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 15, 19, 50),
-            "english_parshat_op.havua": "Vayeilech",
-            "hebrew_parshat_op.havua": "וילך",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 15, 19, 50),
+            "english_parshat_hashavua": "Vayeilech",
+            "hebrew_parshat_hashavua": "וילך",
             "english_holiday": "Erev Rosh Hashana",
             "hebrew_holiday": "ערב ראש השנה",
         },
@@ -273,11 +273,11 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 9, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 9, 19, 1),
-            "english_upcoming_op.dalah": dt(2018, 9, 11, 19, 57),
+            "english_upcoming_havdalah": dt(2018, 9, 11, 19, 57),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 9, 14, 18, 52),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 15, 19, 50),
-            "english_parshat_op.havua": "Vayeilech",
-            "hebrew_parshat_op.havua": "וילך",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 15, 19, 50),
+            "english_parshat_hashavua": "Vayeilech",
+            "hebrew_parshat_hashavua": "וילך",
             "english_holiday": "Rosh Hashana I",
             "hebrew_holiday": "א' ראש השנה",
         },
@@ -286,11 +286,11 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 10, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 9, 19, 1),
-            "english_upcoming_op.dalah": dt(2018, 9, 11, 19, 57),
+            "english_upcoming_havdalah": dt(2018, 9, 11, 19, 57),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 9, 14, 18, 52),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 15, 19, 50),
-            "english_parshat_op.havua": "Vayeilech",
-            "hebrew_parshat_op.havua": "וילך",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 15, 19, 50),
+            "english_parshat_hashavua": "Vayeilech",
+            "hebrew_parshat_hashavua": "וילך",
             "english_holiday": "Rosh Hashana II",
             "hebrew_holiday": "ב' ראש השנה",
         },
@@ -299,22 +299,22 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 28, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 28, 18, 28),
-            "english_upcoming_op.dalah": dt(2018, 9, 29, 19, 25),
+            "english_upcoming_havdalah": dt(2018, 9, 29, 19, 25),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 9, 28, 18, 28),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 9, 29, 19, 25),
-            "english_parshat_op.havua": "none",
-            "hebrew_parshat_op.havua": "none",
+            "english_upcoming_shabbat_havdalah": dt(2018, 9, 29, 19, 25),
+            "english_parshat_hashavua": "none",
+            "hebrew_parshat_hashavua": "none",
         },
     ),
     make_nyc_test_params(
         dt(2018, 9, 29, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 30, 18, 25),
-            "english_upcoming_op.dalah": dt(2018, 10, 2, 19, 20),
+            "english_upcoming_havdalah": dt(2018, 10, 2, 19, 20),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 10, 5, 18, 17),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 10, 6, 19, 13),
-            "english_parshat_op.havua": "Bereshit",
-            "hebrew_parshat_op.havua": "בראשית",
+            "english_upcoming_shabbat_havdalah": dt(2018, 10, 6, 19, 13),
+            "english_parshat_hashavua": "Bereshit",
+            "hebrew_parshat_hashavua": "בראשית",
             "english_holiday": "Hoshana Raba",
             "hebrew_holiday": "הושענא רבה",
         },
@@ -323,11 +323,11 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 30, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 30, 18, 25),
-            "english_upcoming_op.dalah": dt(2018, 10, 2, 19, 20),
+            "english_upcoming_havdalah": dt(2018, 10, 2, 19, 20),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 10, 5, 18, 17),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 10, 6, 19, 13),
-            "english_parshat_op.havua": "Bereshit",
-            "hebrew_parshat_op.havua": "בראשית",
+            "english_upcoming_shabbat_havdalah": dt(2018, 10, 6, 19, 13),
+            "english_parshat_hashavua": "Bereshit",
+            "hebrew_parshat_hashavua": "בראשית",
             "english_holiday": "Shmini Atzeret",
             "hebrew_holiday": "שמיני עצרת",
         },
@@ -336,11 +336,11 @@ SHABBAT_PARAMS = [
         dt(2018, 10, 1, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 30, 18, 25),
-            "english_upcoming_op.dalah": dt(2018, 10, 2, 19, 20),
+            "english_upcoming_havdalah": dt(2018, 10, 2, 19, 20),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 10, 5, 18, 17),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 10, 6, 19, 13),
-            "english_parshat_op.havua": "Bereshit",
-            "hebrew_parshat_op.havua": "בראשית",
+            "english_upcoming_shabbat_havdalah": dt(2018, 10, 6, 19, 13),
+            "english_parshat_hashavua": "Bereshit",
+            "hebrew_parshat_hashavua": "בראשית",
             "english_holiday": "Simchat Torah",
             "hebrew_holiday": "שמחת תורה",
         },
@@ -349,11 +349,11 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 29, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 30, 18, 10),
-            "english_upcoming_op.dalah": dt(2018, 10, 1, 19, 2),
+            "english_upcoming_havdalah": dt(2018, 10, 1, 19, 2),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 10, 5, 18, 3),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 10, 6, 18, 56),
-            "english_parshat_op.havua": "Bereshit",
-            "hebrew_parshat_op.havua": "בראשית",
+            "english_upcoming_shabbat_havdalah": dt(2018, 10, 6, 18, 56),
+            "english_parshat_hashavua": "Bereshit",
+            "hebrew_parshat_hashavua": "בראשית",
             "english_holiday": "Hoshana Raba",
             "hebrew_holiday": "הושענא רבה",
         },
@@ -362,11 +362,11 @@ SHABBAT_PARAMS = [
         dt(2018, 9, 30, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 9, 30, 18, 10),
-            "english_upcoming_op.dalah": dt(2018, 10, 1, 19, 2),
+            "english_upcoming_havdalah": dt(2018, 10, 1, 19, 2),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 10, 5, 18, 3),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 10, 6, 18, 56),
-            "english_parshat_op.havua": "Bereshit",
-            "hebrew_parshat_op.havua": "בראשית",
+            "english_upcoming_shabbat_havdalah": dt(2018, 10, 6, 18, 56),
+            "english_parshat_hashavua": "Bereshit",
+            "hebrew_parshat_hashavua": "בראשית",
             "english_holiday": "Shmini Atzeret",
             "hebrew_holiday": "שמיני עצרת",
         },
@@ -375,22 +375,22 @@ SHABBAT_PARAMS = [
         dt(2018, 10, 1, 21, 25),
         {
             "english_upcoming_candle_lighting": dt(2018, 10, 5, 18, 3),
-            "english_upcoming_op.dalah": dt(2018, 10, 6, 18, 56),
+            "english_upcoming_havdalah": dt(2018, 10, 6, 18, 56),
             "english_upcoming_shabbat_candle_lighting": dt(2018, 10, 5, 18, 3),
-            "english_upcoming_shabbat_op.dalah": dt(2018, 10, 6, 18, 56),
-            "english_parshat_op.havua": "Bereshit",
-            "hebrew_parshat_op.havua": "בראשית",
+            "english_upcoming_shabbat_havdalah": dt(2018, 10, 6, 18, 56),
+            "english_parshat_hashavua": "Bereshit",
+            "hebrew_parshat_hashavua": "בראשית",
         },
     ),
     make_nyc_test_params(
         dt(2016, 6, 11, 8, 25),
         {
             "english_upcoming_candle_lighting": dt(2016, 6, 10, 20, 7),
-            "english_upcoming_op.dalah": dt(2016, 6, 13, 21, 17),
+            "english_upcoming_havdalah": dt(2016, 6, 13, 21, 17),
             "english_upcoming_shabbat_candle_lighting": dt(2016, 6, 10, 20, 7),
-            "english_upcoming_shabbat_op.dalah": "unknown",
-            "english_parshat_op.havua": "Bamidbar",
-            "hebrew_parshat_op.havua": "במדבר",
+            "english_upcoming_shabbat_havdalah": "unknown",
+            "english_parshat_hashavua": "Bamidbar",
+            "hebrew_parshat_hashavua": "במדבר",
             "english_holiday": "Erev Shavuot",
             "hebrew_holiday": "ערב שבועות",
         },
@@ -399,11 +399,11 @@ SHABBAT_PARAMS = [
         dt(2016, 6, 12, 8, 25),
         {
             "english_upcoming_candle_lighting": dt(2016, 6, 10, 20, 7),
-            "english_upcoming_op.dalah": dt(2016, 6, 13, 21, 17),
+            "english_upcoming_havdalah": dt(2016, 6, 13, 21, 17),
             "english_upcoming_shabbat_candle_lighting": dt(2016, 6, 17, 20, 10),
-            "english_upcoming_shabbat_op.dalah": dt(2016, 6, 18, 21, 19),
-            "english_parshat_op.havua": "Nasso",
-            "hebrew_parshat_op.havua": "נשא",
+            "english_upcoming_shabbat_havdalah": dt(2016, 6, 18, 21, 19),
+            "english_parshat_hashavua": "Nasso",
+            "hebrew_parshat_hashavua": "נשא",
             "english_holiday": "Shavuot",
             "hebrew_holiday": "שבועות",
         },
@@ -412,11 +412,11 @@ SHABBAT_PARAMS = [
         dt(2017, 9, 21, 8, 25),
         {
             "english_upcoming_candle_lighting": dt(2017, 9, 20, 18, 23),
-            "english_upcoming_op.dalah": dt(2017, 9, 23, 19, 13),
+            "english_upcoming_havdalah": dt(2017, 9, 23, 19, 13),
             "english_upcoming_shabbat_candle_lighting": dt(2017, 9, 22, 19, 14),
-            "english_upcoming_shabbat_op.dalah": dt(2017, 9, 23, 19, 13),
-            "english_parshat_op.havua": "Ha'Azinu",
-            "hebrew_parshat_op.havua": "האזינו",
+            "english_upcoming_shabbat_havdalah": dt(2017, 9, 23, 19, 13),
+            "english_parshat_hashavua": "Ha'Azinu",
+            "hebrew_parshat_hashavua": "האזינו",
             "english_holiday": "Rosh Hashana I",
             "hebrew_holiday": "א' ראש השנה",
         },
@@ -425,11 +425,11 @@ SHABBAT_PARAMS = [
         dt(2017, 9, 22, 8, 25),
         {
             "english_upcoming_candle_lighting": dt(2017, 9, 20, 18, 23),
-            "english_upcoming_op.dalah": dt(2017, 9, 23, 19, 13),
+            "english_upcoming_havdalah": dt(2017, 9, 23, 19, 13),
             "english_upcoming_shabbat_candle_lighting": dt(2017, 9, 22, 19, 14),
-            "english_upcoming_shabbat_op.dalah": dt(2017, 9, 23, 19, 13),
-            "english_parshat_op.havua": "Ha'Azinu",
-            "hebrew_parshat_op.havua": "האזינו",
+            "english_upcoming_shabbat_havdalah": dt(2017, 9, 23, 19, 13),
+            "english_parshat_hashavua": "Ha'Azinu",
+            "hebrew_parshat_hashavua": "האזינו",
             "english_holiday": "Rosh Hashana II",
             "hebrew_holiday": "ב' ראש השנה",
         },
@@ -438,11 +438,11 @@ SHABBAT_PARAMS = [
         dt(2017, 9, 23, 8, 25),
         {
             "english_upcoming_candle_lighting": dt(2017, 9, 20, 18, 23),
-            "english_upcoming_op.dalah": dt(2017, 9, 23, 19, 13),
+            "english_upcoming_havdalah": dt(2017, 9, 23, 19, 13),
             "english_upcoming_shabbat_candle_lighting": dt(2017, 9, 22, 19, 14),
-            "english_upcoming_shabbat_op.dalah": dt(2017, 9, 23, 19, 13),
-            "english_parshat_op.havua": "Ha'Azinu",
-            "hebrew_parshat_op.havua": "האזינו",
+            "english_upcoming_shabbat_havdalah": dt(2017, 9, 23, 19, 13),
+            "english_parshat_hashavua": "Ha'Azinu",
+            "hebrew_parshat_hashavua": "האזינו",
             "english_holiday": "",
             "hebrew_holiday": "",
         },
@@ -451,14 +451,14 @@ SHABBAT_PARAMS = [
 
 SHABBAT_TEST_IDS = [
     "currently_first_shabbat",
-    "currently_first_shabbat_with_op.dalah_offset",
-    "currently_first_shabbat_bein_op.hmashot_lagging_date",
+    "currently_first_shabbat_with_havdalah_offset",
+    "currently_first_shabbat_bein_hashmashot_lagging_date",
     "after_first_shabbat",
     "friday_upcoming_shabbat",
-    "upcoming_rosh_op.hana",
-    "currently_rosh_op.hana",
-    "second_day_rosh_op.hana",
-    "currently_shabbat_chol_op.oed",
+    "upcoming_rosh_hashana",
+    "currently_rosh_hashana",
+    "second_day_rosh_hashana",
+    "currently_shabbat_chol_hamoed",
     "upcoming_two_day_yomtov_in_diaspora",
     "currently_first_day_of_two_day_yomtov_in_diaspora",
     "currently_second_day_of_two_day_yomtov_in_diaspora",
@@ -511,7 +511,7 @@ async def test_shabbat_times_sensor(
    .opp.config.latitude = latitude
    .opp.config.longitude = longitude
 
-    registry = await opp..helpers.entity_registry.async_get_registry()
+    registry = await.opp.helpers.entity_registry.async_get_registry()
 
     with alter_time(test_time):
         assert await async_setup_component(
@@ -523,15 +523,15 @@ async def test_shabbat_times_sensor(
                     "language": language,
                     "diaspora": diaspora,
                     "candle_lighting_minutes_before_sunset": candle_lighting,
-                    "havdalah_minutes_after_sunset": op.dalah,
+                    "havdalah_minutes_after_sunset": havdalah,
                 }
             },
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     for sensor_type, result_value in result.items():
         if not sensor_type.startswith(language):
@@ -551,7 +551,7 @@ async def test_shabbat_times_sensor(
         ), f"Value for {sensor_type}"
 
         entity = registry.async_get(f"sensor.test_{sensor_type}")
-        target_sensor_type = sensor_type.replace("parshat_op.havua", "weekly_portion")
+        target_sensor_type = sensor_type.replace("parshat_hashavua", "weekly_portion")
         target_uid = "_".join(
             map(
                 str,
@@ -592,17 +592,17 @@ OMER_TEST_IDS = [
 @pytest.mark.parametrize(["test_time", "result"], OMER_PARAMS, ids=OMER_TEST_IDS)
 async def test_omer_sensor.opp, legacy_patchable_time, test_time, result):
     """Test Omer Count sensor output."""
-    test_time = opp.config.time_zone.localize(test_time)
+    test_time =.opp.config.time_zone.localize(test_time)
 
     with alter_time(test_time):
         assert await async_setup_component(
            .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test_day_of_the_omer").state == result
 
@@ -626,16 +626,16 @@ DAFYOMI_TEST_IDS = [
 @pytest.mark.parametrize(["test_time", "result"], DAFYOMI_PARAMS, ids=DAFYOMI_TEST_IDS)
 async def test_dafyomi_sensor.opp, legacy_patchable_time, test_time, result):
     """Test Daf Yomi sensor output."""
-    test_time = opp.config.time_zone.localize(test_time)
+    test_time =.opp.config.time_zone.localize(test_time)
 
     with alter_time(test_time):
         assert await async_setup_component(
            .opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
         async_fire_time_changed.opp, future)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test_daf_yomi").state == result

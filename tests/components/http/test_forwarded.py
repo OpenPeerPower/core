@@ -8,7 +8,7 @@ import pytest
 from openpeerpower.components.http.forwarded import async_setup_forwarded
 
 
-async def mock_op.dler(request):
+async def mock_handler(request):
     """Return the real IP as text."""
     return web.Response(text=request.remote)
 
@@ -147,7 +147,7 @@ async def test_x_forwarded_for_with_malformed_header(
 ):
     """Test that we get a HTTP 400 bad request with a malformed header."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [ip_network("127.0.0.1")])
 
     mock_api_client = await aiohttp_client(app)
@@ -161,7 +161,7 @@ async def test_x_forwarded_for_with_malformed_header(
 async def test_x_forwarded_for_with_multiple_headers(aiohttp_client, caplog):
     """Test that we get a HTTP 400 bad request with multiple headers."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [ip_network("127.0.0.1")])
 
     mock_api_client = await aiohttp_client(app)
@@ -312,7 +312,7 @@ async def test_x_forwarded_proto_not_processed_without_for(aiohttp_client):
 async def test_x_forwarded_proto_with_multiple_headers(aiohttp_client, caplog):
     """Test that we get a HTTP 400 bad request with multiple headers."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [ip_network("127.0.0.1")])
 
     mock_api_client = await aiohttp_client(app)
@@ -338,7 +338,7 @@ async def test_x_forwarded_proto_empty_element(
 ):
     """Test that we get a HTTP 400 bad request with empty proto."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [ip_network("127.0.0.1")])
 
     mock_api_client = await aiohttp_client(app)
@@ -363,7 +363,7 @@ async def test_x_forwarded_proto_incorrect_number_of_elements(
 ):
     """Test that we get a HTTP 400 bad request with incorrect number of elements."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [ip_network("127.0.0.1")])
 
     mock_api_client = await aiohttp_client(app)
@@ -457,7 +457,7 @@ async def test_x_forwarded_host_not_processed_without_for(aiohttp_client):
 async def test_x_forwarded_host_with_multiple_headers(aiohttp_client, caplog):
     """Test that we get a HTTP 400 bad request with multiple headers."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [ip_network("127.0.0.1")])
 
     mock_api_client = await aiohttp_client(app)
@@ -477,7 +477,7 @@ async def test_x_forwarded_host_with_multiple_headers(aiohttp_client, caplog):
 async def test_x_forwarded_host_with_empty_header(aiohttp_client, caplog):
     """Test that we get a HTTP 400 bad request with empty host value."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [ip_network("127.0.0.1")])
 
     mock_api_client = await aiohttp_client(app)

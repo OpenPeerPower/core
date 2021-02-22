@@ -5,9 +5,9 @@ import pytest
 
 from openpeerpower.components import konnected
 from openpeerpower.components.konnected import config_flow
-from openpeerpower.config import async_process_op.core_config
+from openpeerpower.config import async_process_ha_core_config
 from openpeerpower.const import HTTP_NOT_FOUND
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
 
@@ -238,12 +238,12 @@ async def test_setup_defined_hosts_known_auth.opp, mock_panel):
         domain="konnected",
         unique_id="112233445566",
         data={"host": "0.0.0.0", "id": "112233445566"},
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
     MockConfigEntry(
         domain="konnected",
         unique_id="aabbccddeeff",
         data={"host": "1.2.3.4", "id": "aabbccddeeff"},
-    ).add_to_opp.opp)
+    ).add_to.opp.opp)
 
     assert (
         await async_setup_component(
@@ -362,7 +362,7 @@ async def test_config_passed_to_config_entry.opp):
         domain=konnected.DOMAIN,
         data={config_flow.CONF_ID: "aabbccddeeff", config_flow.CONF_HOST: "0.0.0.0"},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
     with patch.object(konnected, "AlarmPanel", autospec=True) as mock_int:
         assert (
             await async_setup_component(
@@ -379,22 +379,22 @@ async def test_config_passed_to_config_entry.opp):
         )
 
     assert len(mock_int.mock_calls) == 3
-    p_opp, p_entry = mock_int.mock_calls[0][1]
+    p.opp, p_entry = mock_int.mock_calls[0][1]
 
-    assert p_opp is.opp
+    assert p.opp is.opp
     assert p_entry is entry
 
 
 async def test_unload_entry.opp, mock_panel):
     """Test being able to unload an entry."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
     entry = MockConfigEntry(
         domain=konnected.DOMAIN, data={konnected.CONF_ID: "aabbccddeeff"}
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     assert await async_setup_component.opp, konnected.DOMAIN, {}) is True
     assert.opp.data[konnected.DOMAIN]["devices"].get("aabbccddeeff") is not None
@@ -459,7 +459,7 @@ async def test_api.opp, aiohttp_client, mock_panel):
         data=device_config,
         options=device_options,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     assert (
         await async_setup_component(
@@ -571,7 +571,7 @@ async def test_api.opp, aiohttp_client, mock_panel):
 
 async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     """Test callback view."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
@@ -627,11 +627,11 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
         data=device_config,
         options=device_options,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # Add empty data field to ensure we process it correctly (possible if entry is ignored)
     entry = MockConfigEntry(domain="konnected", title="Konnected Alarm Panel", data={})
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     assert (
         await async_setup_component(
@@ -653,7 +653,7 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("binary_sensor.konnected_445566_zone_1").state == "off"
 
     resp = await client.post(
@@ -664,7 +664,7 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("binary_sensor.konnected_445566_zone_1").state == "on"
 
     # Test updating sht sensor
@@ -676,7 +676,7 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.konnected_445566_sensor_4_humidity").state == "20"
     assert (
        .opp.states.get("sensor.konnected_445566_sensor_4_temperature").state == "22.0"
@@ -690,7 +690,7 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.konnected_445566_sensor_4_humidity").state == "23"
     assert (
        .opp.states.get("sensor.konnected_445566_sensor_4_temperature").state == "25.0"
@@ -705,7 +705,7 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.temper_temperature").state == "32.0"
 
     resp = await client.post(
@@ -716,13 +716,13 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.temper_temperature").state == "42.0"
 
 
 async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     """Test callback view."""
-    await async_process_op.core_config(
+    await async_process_ha_core_config(
        .opp,
         {"internal_url": "http://example.local:8123"},
     )
@@ -778,7 +778,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
         data=device_config,
         options=device_options,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # Add empty data field to ensure we process it correctly (possible if entry is ignored)
     entry = MockConfigEntry(
@@ -786,7 +786,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
         title="Konnected Alarm Panel",
         data={},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     assert (
         await async_setup_component(
@@ -808,7 +808,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("binary_sensor.konnected_445566_zone_1").state == "off"
 
     resp = await client.post(
@@ -819,7 +819,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("binary_sensor.konnected_445566_zone_1").state == "on"
 
     # Test updating sht sensor
@@ -831,7 +831,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.konnected_445566_sensor_4_humidity").state == "20"
     assert (
        .opp.states.get("sensor.konnected_445566_sensor_4_temperature").state == "22.0"
@@ -845,7 +845,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.konnected_445566_sensor_4_humidity").state == "23"
     assert (
        .opp.states.get("sensor.konnected_445566_sensor_4_temperature").state == "25.0"
@@ -860,7 +860,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.temper_temperature").state == "32.0"
 
     resp = await client.post(
@@ -871,5 +871,5 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     assert resp.status == 200
     result = await resp.json()
     assert result == {"message": "ok"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("sensor.temper_temperature").state == "42.0"

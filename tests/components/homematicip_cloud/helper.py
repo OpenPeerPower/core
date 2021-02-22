@@ -19,8 +19,8 @@ from openpeerpower.components.homematicip_cloud.generic_entity import (
     ATTR_MODEL_TYPE,
 )
 from openpeerpower.components.homematicip_cloud.hap import HomematicipHAP
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.setup import async_setup_component
 
 from tests.common import load_fixture
 
@@ -31,15 +31,15 @@ HOME_JSON = "homematicip_cloud.json"
 FIXTURE_DATA = load_fixture(HOME_JSON)
 
 
-def get_and_check_entity_basics.opp, mock_op., entity_id, entity_name, device_model):
+def get_and_check_entity_basics.opp, mock_hap, entity_id, entity_name, device_model):
     """Get and test basic device."""
-    ha_state = opp.states.get(entity_id)
+    ha_state =.opp.states.get(entity_id)
     assert ha_state is not None
     if device_model:
         assert ha_state.attributes[ATTR_MODEL_TYPE] == device_model
     assert ha_state.name == entity_name
 
-    hmip_device = mock_op..hmip_device_by_entity_id.get(entity_id)
+    hmip_device = mock_hap.hmip_device_by_entity_id.get(entity_id)
 
     if hmip_device:
         if isinstance(hmip_device, AsyncDevice):
@@ -68,7 +68,7 @@ async def async_manipulate_test_data(
     else:
         fire_target.fire_update_event()
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 class HomeFactory:
@@ -81,11 +81,11 @@ class HomeFactory:
         hmip_config_entry: config_entries.ConfigEntry,
     ):
         """Initialize the Factory."""
-        self.opp = opp
+        self.opp =.opp
         self.mock_connection = mock_connection
         self.hmip_config_entry = hmip_config_entry
 
-    async def async_get_mock_op.(
+    async def async_get_mock_hap(
         self, test_devices=[], test_groups=[]
     ) -> HomematicipHAP:
         """Create a mocked homematic access point."""
@@ -101,9 +101,9 @@ class HomeFactory:
             .get_async_home_mock()
         )
 
-        self.hmip_config_entry.add_to_opp(self.opp)
+        self.hmip_config_entry.add_to.opp(self.opp)
         with patch(
-            "openpeerpower.components.homematicip_cloud.hap.HomematicipHAP.get_op.",
+            "openpeerpower.components.homematicip_cloud.hap.HomematicipHAP.get_hap",
             return_value=mock_home,
         ):
             assert await async_setup_component(self.opp, HMIPC_DOMAIN, {})

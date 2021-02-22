@@ -42,12 +42,12 @@ async def test_switch_change_outlet_state.opp, utcnow):
     """Test that we can turn a HomeKit outlet on and off again."""
     helper = await setup_test_component.opp, create_switch_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.testdevice"}, blocking=True
     )
     assert helper.characteristics[("outlet", "on")].value == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch", "turn_off", {"entity_id": "switch.testdevice"}, blocking=True
     )
     assert helper.characteristics[("outlet", "on")].value == 0
@@ -84,12 +84,12 @@ async def test_valve_change_active_state.opp, utcnow):
     """Test that we can turn a valve on and off again."""
     helper = await setup_test_component.opp, create_valve_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.testdevice"}, blocking=True
     )
     assert helper.characteristics[("valve", "active")].value == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "switch", "turn_off", {"entity_id": "switch.testdevice"}, blocking=True
     )
     assert helper.characteristics[("valve", "active")].value == 0

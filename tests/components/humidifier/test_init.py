@@ -16,7 +16,7 @@ class MockHumidifierEntity(HumidifierEntity):
 async def test_sync_turn_on.opp):
     """Test if async turn_on calls sync turn_on."""
     humidifier = MockHumidifierEntity()
-    humidifier.opp = opp
+    humidifier.opp =.opp
 
     humidifier.turn_on = MagicMock()
     await humidifier.async_turn_on()
@@ -27,7 +27,7 @@ async def test_sync_turn_on.opp):
 async def test_sync_turn_off.opp):
     """Test if async turn_off calls sync turn_off."""
     humidifier = MockHumidifierEntity()
-    humidifier.opp = opp
+    humidifier.opp =.opp
 
     humidifier.turn_off = MagicMock()
     await humidifier.async_turn_off()

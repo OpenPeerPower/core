@@ -8,13 +8,13 @@ from unittest.mock import patch, sentinel
 
 from openpeerpower.components import history, recorder
 from openpeerpower.components.recorder.models import process_timestamp
-import openpeerpowerr.core as ha
-from openpeerpowerr.helpers.json import JSONEncoder
-from openpeerpowerr.setup import async_setup_component, setup_component
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.core as ha
+from openpeerpower.helpers.json import JSONEncoder
+from openpeerpower.setup import async_setup_component, setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import (
-    get_test_home_assistant,
+    get_test_open_peer_power,
     init_recorder_component,
     mock_state_change_event,
 )
@@ -26,7 +26,7 @@ class TestComponentHistory(unittest.TestCase):
 
     def setUp(self):  # pylint: disable=invalid-name
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.tear_down_cleanup)
 
     def tear_down_cleanup(self):
@@ -43,7 +43,7 @@ class TestComponentHistory(unittest.TestCase):
         """Test setup method of history."""
         config = history.CONFIG_SCHEMA(
             {
-                # op.DOMAIN: {},
+                # ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["media_player"],
@@ -69,7 +69,7 @@ class TestComponentHistory(unittest.TestCase):
             "openpeerpower.components.recorder.dt_util.utcnow", return_value=now
         ):
             for i in range(5):
-                state = op.State(
+                state = ha.State(
                     "test.point_in_time_{}".format(i % 5),
                     f"State {i}",
                     {"attribute_test": i},
@@ -86,7 +86,7 @@ class TestComponentHistory(unittest.TestCase):
             "openpeerpower.components.recorder.dt_util.utcnow", return_value=future
         ):
             for i in range(5):
-                state = op.State(
+                state = ha.State(
                     "test.point_in_time_{}".format(i % 5),
                     f"State {i}",
                     {"attribute_test": i},
@@ -277,17 +277,17 @@ class TestComponentHistory(unittest.TestCase):
         """
         zero, four, states = self.record_states()
         one = zero + timedelta(seconds=1)
-        one_and_op.f = zero + timedelta(seconds=1.5)
+        one_and_half = zero + timedelta(seconds=1.5)
         for entity_id in states:
             if entity_id == "media_player.test":
                 states[entity_id] = states[entity_id][1:]
             for state in states[entity_id]:
                 if state.last_changed == one:
-                    state.last_changed = one_and_op.f
+                    state.last_changed = one_and_half
 
         hist = history.get_significant_states(
             self.opp,
-            one_and_op.f,
+            one_and_half,
             four,
             filters=history.Filters(),
             include_start_time_state=True,
@@ -303,7 +303,7 @@ class TestComponentHistory(unittest.TestCase):
         """
         zero, four, states = self.record_states()
         one = zero + timedelta(seconds=1)
-        one_and_op.f = zero + timedelta(seconds=1.5)
+        one_and_half = zero + timedelta(seconds=1.5)
         for entity_id in states:
             states[entity_id] = list(
                 filter(lambda s: s.last_changed != one, states[entity_id])
@@ -312,7 +312,7 @@ class TestComponentHistory(unittest.TestCase):
 
         hist = history.get_significant_states(
             self.opp,
-            one_and_op.f,
+            one_and_half,
             four,
             filters=history.Filters(),
             include_start_time_state=False,
@@ -363,7 +363,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_EXCLUDE: {history.CONF_DOMAINS: ["media_player"]}
                 },
@@ -382,7 +382,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_EXCLUDE: {history.CONF_ENTITIES: ["media_player.test"]}
                 },
@@ -402,7 +402,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_EXCLUDE: {
                         history.CONF_DOMAINS: ["thermostat"],
@@ -427,7 +427,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_ENTITIES: ["media_player.test", "thermostat.test"]
@@ -451,7 +451,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["thermostat", "script"]
@@ -475,7 +475,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {history.CONF_ENTITIES: ["media_player.test"]}
                 },
@@ -496,7 +496,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["thermostat"],
@@ -523,7 +523,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {history.CONF_DOMAINS: ["media_player"]},
                     history.CONF_EXCLUDE: {history.CONF_DOMAINS: ["media_player"]},
@@ -548,7 +548,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_ENTITIES: ["media_player.test"]
@@ -574,7 +574,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                op.DOMAIN: {},
+                ha.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["media_player"],
@@ -761,32 +761,32 @@ class TestComponentHistory(unittest.TestCase):
 
 async def test_fetch_period_api.opp,.opp_client):
     """Test the fetch period view for history."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "history", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    client = await opp._client()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    client = await.opp_client()
     response = await client.get(f"/api/history/period/{dt_util.utcnow().isoformat()}")
     assert response.status == 200
 
 
 async def test_fetch_period_api_with_use_include_order.opp,.opp_client):
     """Test the fetch period view for history with include order."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component(
        .opp, "history", {history.DOMAIN: {history.CONF_ORDER: True}}
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    client = await opp._client()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    client = await.opp_client()
     response = await client.get(f"/api/history/period/{dt_util.utcnow().isoformat()}")
     assert response.status == 200
 
 
 async def test_fetch_period_api_with_minimal_response.opp,.opp_client):
     """Test the fetch period view for history with minimal_response."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "history", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    client = await opp._client()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    client = await.opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}?minimal_response"
     )
@@ -795,17 +795,17 @@ async def test_fetch_period_api_with_minimal_response.opp,.opp_client):
 
 async def test_fetch_period_api_with_no_timestamp.opp,.opp_client):
     """Test the fetch period view for history with no timestamp."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "history", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    client = await opp._client()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    client = await.opp_client()
     response = await client.get("/api/history/period")
     assert response.status == 200
 
 
 async def test_fetch_period_api_with_include_order.opp,.opp_client):
     """Test the fetch period view for history."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component(
        .opp,
         "history",
@@ -816,8 +816,8 @@ async def test_fetch_period_api_with_include_order.opp,.opp_client):
             }
         },
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    client = await opp._client()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    client = await.opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}",
         params={"filter_entity_id": "non.existing,something.else"},
@@ -827,7 +827,7 @@ async def test_fetch_period_api_with_include_order.opp,.opp_client):
 
 async def test_fetch_period_api_with_entity_glob_include.opp,.opp_client):
     """Test the fetch period view for history."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component(
        .opp,
         "history",
@@ -837,18 +837,18 @@ async def test_fetch_period_api_with_entity_glob_include.opp,.opp_client):
             }
         },
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
    .opp.states.async_set("light.kitchen", "on")
    .opp.states.async_set("light.cow", "on")
    .opp.states.async_set("light.nomatch", "on")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}",
     )
@@ -859,7 +859,7 @@ async def test_fetch_period_api_with_entity_glob_include.opp,.opp_client):
 
 async def test_fetch_period_api_with_entity_glob_exclude.opp,.opp_client):
     """Test the fetch period view for history."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component(
        .opp,
         "history",
@@ -873,20 +873,20 @@ async def test_fetch_period_api_with_entity_glob_exclude.opp,.opp_client):
             }
         },
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
    .opp.states.async_set("light.kitchen", "on")
    .opp.states.async_set("light.cow", "on")
    .opp.states.async_set("light.match", "on")
    .opp.states.async_set("switch.match", "on")
    .opp.states.async_set("media_player.test", "on")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}",
     )
@@ -899,7 +899,7 @@ async def test_fetch_period_api_with_entity_glob_exclude.opp,.opp_client):
 
 async def test_fetch_period_api_with_entity_glob_include_and_exclude.opp,.opp_client):
     """Test the fetch period view for history."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component(
        .opp,
         "history",
@@ -916,7 +916,7 @@ async def test_fetch_period_api_with_entity_glob_include_and_exclude.opp,.opp_cl
             }
         },
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
    .opp.states.async_set("light.kitchen", "on")
    .opp.states.async_set("light.cow", "on")
    .opp.states.async_set("light.match", "on")
@@ -924,13 +924,13 @@ async def test_fetch_period_api_with_entity_glob_include_and_exclude.opp,.opp_cl
    .opp.states.async_set("switch.match", "on")
    .opp.states.async_set("media_player.test", "on")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}",
     )
@@ -944,24 +944,24 @@ async def test_fetch_period_api_with_entity_glob_include_and_exclude.opp,.opp_cl
 
 async def test_entity_ids_limit_via_api.opp,.opp_client):
     """Test limiting history to entity_ids."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component(
        .opp,
         "history",
         {"history": {}},
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
    .opp.states.async_set("light.kitchen", "on")
    .opp.states.async_set("light.cow", "on")
    .opp.states.async_set("light.nomatch", "on")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}?filter_entity_id=light.kitchen,light.cow",
     )
@@ -974,24 +974,24 @@ async def test_entity_ids_limit_via_api.opp,.opp_client):
 
 async def test_entity_ids_limit_via_api_with_skip_initial_state.opp,.opp_client):
     """Test limiting history to entity_ids with skip_initial_state."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component(
        .opp,
         "history",
         {"history": {}},
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
    .opp.states.async_set("light.kitchen", "on")
    .opp.states.async_set("light.cow", "on")
    .opp.states.async_set("light.nomatch", "on")
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}?filter_entity_id=light.kitchen,light.cow&skip_initial_state",
     )

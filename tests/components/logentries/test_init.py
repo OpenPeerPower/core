@@ -6,7 +6,7 @@ import pytest
 
 import openpeerpower.components.logentries as logentries
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_OFF, STATE_ON
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 async def test_setup_config_full.opp):
@@ -15,7 +15,7 @@ async def test_setup_config_full.opp):
    .opp.bus.listen = MagicMock()
     assert await async_setup_component.opp, logentries.DOMAIN, config)
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
 
 
 async def test_setup_config_defaults.opp):
@@ -24,7 +24,7 @@ async def test_setup_config_defaults.opp):
    .opp.bus.listen = MagicMock()
     assert await async_setup_component.opp, logentries.DOMAIN, config)
     assert.opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert EVENT_STATE_CHANGED ==.opp.bus.listen.call_args_list[0][0][0]
 
 
 @pytest.fixture
@@ -49,7 +49,7 @@ async def test_event_listener.opp, mock_dump, mock_requests):
     config = {"logentries": {"token": "token"}}
    .opp.bus.listen = MagicMock()
     assert await async_setup_component.opp, logentries.DOMAIN, config)
-    handler_method = opp.bus.listen.call_args_list[0][0][1]
+    handler_method =.opp.bus.listen.call_args_list[0][0][1]
 
     valid = {"1": 1, "1.0": 1.0, STATE_ON: 1, STATE_OFF: 0, "foo": "foo"}
     for in_, out in valid.items():

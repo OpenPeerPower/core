@@ -23,11 +23,11 @@ from openpeerpower.const import (
     ATTR_NAME,
     SERVICE_RELOAD,
 )
-from openpeerpowerr.core import Context, CoreState, State
-from openpeerpowerr.exceptions import Unauthorized
-from openpeerpowerr.helpers import entity_registry
-from openpeerpowerr.loader import bind_opp
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import Context, CoreState, State
+from openpeerpower.exceptions import Unauthorized
+from openpeerpower.helpers import entity_registry
+from openpeerpower.loader import bind.opp
+from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_restore_cache
 
@@ -70,7 +70,7 @@ def storage_setup.opp,.opp_storage):
     return _storage
 
 
-@bind_opp
+@bind.opp
 def set_value.opp, entity_id, value):
     """Set input_text to value.
 
@@ -102,19 +102,19 @@ async def test_set_value.opp):
     )
     entity_id = "input_text.test_1"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert str(state.state) == "test"
 
     set_value.opp, entity_id, "testing")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert str(state.state) == "testing"
 
     set_value.opp, entity_id, "testing too long")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
     assert str(state.state) == "testing"
 
 
@@ -142,15 +142,15 @@ async def test_mode.opp):
         },
     )
 
-    state = opp.states.get("input_text.test_default_text")
+    state =.opp.states.get("input_text.test_default_text")
     assert state
     assert state.attributes["mode"] == "text"
 
-    state = opp.states.get("input_text.test_explicit_text")
+    state =.opp.states.get("input_text.test_explicit_text")
     assert state
     assert state.attributes["mode"] == "text"
 
-    state = opp.states.get("input_text.test_explicit_password")
+    state =.opp.states.get("input_text.test_explicit_password")
     assert state
     assert state.attributes["mode"] == "password"
 
@@ -168,11 +168,11 @@ async def test_restore_state.opp):
        .opp, DOMAIN, {DOMAIN: {"b1": None, "b2": {"min": 0, "max": 10}}}
     )
 
-    state = opp.states.get("input_text.b1")
+    state =.opp.states.get("input_text.b1")
     assert state
     assert str(state.state) == "test"
 
-    state = opp.states.get("input_text.b2")
+    state =.opp.states.get("input_text.b2")
     assert state
     assert str(state.state) == "unknown"
 
@@ -197,11 +197,11 @@ async def test_initial_state_overrules_restore_state.opp):
         },
     )
 
-    state = opp.states.get("input_text.b1")
+    state =.opp.states.get("input_text.b1")
     assert state
     assert str(state.state) == "test"
 
-    state = opp.states.get("input_text.b2")
+    state =.opp.states.get("input_text.b2")
     assert state
     assert str(state.state) == "test"
 
@@ -212,7 +212,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
 
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"b1": {"min": 0, "max": 100}}})
 
-    state = opp.states.get("input_text.b1")
+    state =.opp.states.get("input_text.b1")
     assert state
     assert str(state.state) == "unknown"
 
@@ -223,10 +223,10 @@ async def test_input_text_context.opp,.opp_admin_user):
        .opp, "input_text", {"input_text": {"t1": {"initial": "bla"}}}
     )
 
-    state = opp.states.get("input_text.t1")
+    state =.opp.states.get("input_text.t1")
     assert state is not None
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "input_text",
         "set_value",
         {"entity_id": state.entity_id, "value": "new_value"},
@@ -234,17 +234,17 @@ async def test_input_text_context.opp,.opp_admin_user):
         Context(user_id.opp_admin_user.id),
     )
 
-    state2 = opp.states.get("input_text.t1")
+    state2 =.opp.states.get("input_text.t1")
     assert state2 is not None
     assert state.state != state2.state
-    assert state2.context.user_id == opp_admin_user.id
+    assert state2.context.user_id ==.opp_admin_user.id
 
 
 async def test_config_none.opp):
     """Set up input_text without any config."""
     await async_setup_component.opp, DOMAIN, {DOMAIN: {"b1": None}})
 
-    state = opp.states.get("input_text.b1")
+    state =.opp.states.get("input_text.b1")
     assert state
     assert str(state.state) == "unknown"
 
@@ -266,9 +266,9 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 = opp.states.get("input_text.test_1")
-    state_2 = opp.states.get("input_text.test_2")
-    state_3 = opp.states.get("input_text.test_3")
+    state_1 =.opp.states.get("input_text.test_1")
+    state_2 =.opp.states.get("input_text.test_2")
+    state_3 =.opp.states.get("input_text.test_3")
 
     assert state_1 is not None
     assert state_2 is not None
@@ -289,25 +289,25 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
         },
     ):
         with pytest.raises(Unauthorized):
-            await opp..services.async_call(
+            await.opp.services.async_call(
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
                 context=Context(user_id.opp_read_only_user.id),
             )
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
 
-    state_1 = opp.states.get("input_text.test_1")
-    state_2 = opp.states.get("input_text.test_2")
-    state_3 = opp.states.get("input_text.test_3")
+    state_1 =.opp.states.get("input_text.test_1")
+    state_2 =.opp.states.get("input_text.test_2")
+    state_3 =.opp.states.get("input_text.test_3")
 
     assert state_1 is None
     assert state_2 is not None
@@ -319,7 +319,7 @@ async def test_reload.opp,.opp_admin_user,.opp_read_only_user):
 async def test_load_from_storage.opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
-    state = opp.states.get(f"{DOMAIN}.from_storage")
+    state =.opp.states.get(f"{DOMAIN}.from_storage")
     assert state.state == "loaded from storage"
     assert state.attributes.get(ATTR_EDITABLE)
     assert state.attributes[ATTR_MAX] == TEST_VAL_MAX
@@ -342,13 +342,13 @@ async def test_editable_state_attribute.opp, storage_setup):
         }
     )
 
-    state = opp.states.get(f"{DOMAIN}.from_storage")
+    state =.opp.states.get(f"{DOMAIN}.from_storage")
     assert state.state == "loaded from storage"
     assert state.attributes.get(ATTR_EDITABLE)
     assert state.attributes[ATTR_MAX] == TEST_VAL_MAX
     assert state.attributes[ATTR_MIN] == TEST_VAL_MIN
 
-    state = opp.states.get(f"{DOMAIN}.from_yaml")
+    state =.opp.states.get(f"{DOMAIN}.from_yaml")
     assert state.state == "yaml initial value"
     assert not state.attributes[ATTR_EDITABLE]
     assert state.attributes[ATTR_MAX] == 33
@@ -371,7 +371,7 @@ async def test_ws_list.opp,.opp_ws_client, storage_setup):
         }
     )
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -395,11 +395,11 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -407,7 +407,7 @@ async def test_ws_delete.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
@@ -421,13 +421,13 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "from storage"
     assert state.attributes[ATTR_MODE] == MODE_TEXT
     assert state.state == "loaded from storage"
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -443,7 +443,7 @@ async def test_update.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state.state == "loaded from storage"
     assert state.attributes[ATTR_FRIENDLY_NAME] == "even newer name"
     assert state.attributes[ATTR_MODE] == "password"
@@ -459,11 +459,11 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     input_entity_id = f"{DOMAIN}.{input_id}"
     ent_reg = await entity_registry.async_get_registry.opp)
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await opp._ws_client.opp)
+    client = await.opp_ws_client.opp)
 
     await client.send_json(
         {
@@ -477,7 +477,7 @@ async def test_ws_create.opp,.opp_ws_client, storage_setup):
     resp = await client.receive_json()
     assert resp["success"]
 
-    state = opp.states.get(input_entity_id)
+    state =.opp.states.get(input_entity_id)
     assert state.state == "even newer option"
     assert state.attributes[ATTR_FRIENDLY_NAME] == "New Input"
     assert state.attributes[ATTR_EDITABLE]
@@ -493,12 +493,12 @@ async def test_setup_no_config.opp,.opp_admin_user):
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}
     ):
-        await opp..services.async_call(
+        await.opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
             context=Context(user_id.opp_admin_user.id),
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert count_start == len.opp.states.async_entity_ids())

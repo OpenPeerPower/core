@@ -26,10 +26,10 @@ from openpeerpower.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
 )
-from openpeerpowerr.loader import bind_opp
+from openpeerpower.loader import bind.opp
 
 
-@bind_opp
+@bind.opp
 def turn_on(
    .opp,
     entity_id=ENTITY_MATCH_ALL,
@@ -107,10 +107,10 @@ async def async_turn_on(
         if value is not None
     }
 
-    await opp..services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
+    await.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
-@bind_opp
+@bind.opp
 def turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):
     """Turn all or specified light off."""
    .opp.add_job(async_turn_off,.opp, entity_id, transition)
@@ -124,10 +124,10 @@ async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL, transition=None):
         if value is not None
     }
 
-    await opp..services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
+    await.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
 
 
-@bind_opp
+@bind.opp
 def toggle(
    .opp,
     entity_id=ENTITY_MATCH_ALL,
@@ -205,4 +205,4 @@ async def async_toggle(
         if value is not None
     }
 
-    await opp..services.async_call(DOMAIN, SERVICE_TOGGLE, data, blocking=True)
+    await.opp.services.async_call(DOMAIN, SERVICE_TOGGLE, data, blocking=True)

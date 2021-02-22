@@ -47,7 +47,7 @@ async def test_user_flow.opp):
 
         # step: user
 
-        result_user = await opp..config_entries.flow.async_init(
+        result_user = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={
@@ -60,7 +60,7 @@ async def test_user_flow.opp):
         assert result_user["step_id"] == "station"
 
         # step: station
-        result_station = await opp..config_entries.flow.async_configure(
+        result_station = await.opp.config_entries.flow.async_configure(
             result_user["flow_id"],
             {CONF_STATION: "Wartenau"},
         )
@@ -68,7 +68,7 @@ async def test_user_flow.opp):
         assert result_station["step_id"] == "station_select"
 
         # step: station_select
-        result_station_select = await opp..config_entries.flow.async_configure(
+        result_station_select = await.opp.config_entries.flow.async_configure(
             result_user["flow_id"],
             {CONF_STATION: "Wartenau"},
         )
@@ -110,7 +110,7 @@ async def test_user_flow_no_results.opp):
 
         # step: user
 
-        result_user = await opp..config_entries.flow.async_init(
+        result_user = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={
@@ -123,7 +123,7 @@ async def test_user_flow_no_results.opp):
         assert result_user["step_id"] == "station"
 
         # step: station
-        result_station = await opp..config_entries.flow.async_configure(
+        result_station = await.opp.config_entries.flow.async_configure(
             result_user["flow_id"],
             {CONF_STATION: "non_existing_station"},
         )
@@ -145,7 +145,7 @@ async def test_user_flow_invalid_auth.opp):
     ):
 
         # step: user
-        result_user = await opp..config_entries.flow.async_init(
+        result_user = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={
@@ -168,7 +168,7 @@ async def test_user_flow_cannot_connect.opp):
     ):
 
         # step: user
-        result_user = await opp..config_entries.flow.async_init(
+        result_user = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={
@@ -195,7 +195,7 @@ async def test_user_flow_station.opp):
 
         # step: user
 
-        result_user = await opp..config_entries.flow.async_init(
+        result_user = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={
@@ -208,7 +208,7 @@ async def test_user_flow_station.opp):
         assert result_user["step_id"] == "station"
 
         # step: station
-        result_station = await opp..config_entries.flow.async_configure(
+        result_station = await.opp.config_entries.flow.async_configure(
             result_user["flow_id"],
             None,
         )
@@ -226,7 +226,7 @@ async def test_user_flow_station_select.opp):
         "openpeerpower.components.hvv_departures.hub.GTI.checkName",
         return_value=FIXTURE_CHECK_NAME,
     ):
-        result_user = await opp..config_entries.flow.async_init(
+        result_user = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},
             data={
@@ -236,13 +236,13 @@ async def test_user_flow_station_select.opp):
             },
         )
 
-        result_station = await opp..config_entries.flow.async_configure(
+        result_station = await.opp.config_entries.flow.async_configure(
             result_user["flow_id"],
             {CONF_STATION: "Wartenau"},
         )
 
         # step: station_select
-        result_station_select = await opp..config_entries.flow.async_configure(
+        result_station_select = await.opp.config_entries.flow.async_configure(
             result_station["flow_id"],
             None,
         )
@@ -265,7 +265,7 @@ async def test_options_flow.opp):
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.hvv_departures.PLATFORMS", new=[]), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.init",
@@ -274,15 +274,15 @@ async def test_options_flow.opp):
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
         return_value=FIXTURE_DEPARTURE_LIST,
     ):
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
 
-        result = await opp..config_entries.options.async_configure(
+        result = await.opp.config_entries.options.async_configure(
             result["flow_id"],
             user_input={CONF_FILTER: ["0"], CONF_OFFSET: 15, CONF_REAL_TIME: False},
         )
@@ -316,7 +316,7 @@ async def test_options_flow_invalid_auth.opp):
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.hvv_departures.PLATFORMS", new=[]), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.init", return_value=True
@@ -324,8 +324,8 @@ async def test_options_flow_invalid_auth.opp):
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
         return_value=FIXTURE_DEPARTURE_LIST,
     ):
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
@@ -335,7 +335,7 @@ async def test_options_flow_invalid_auth.opp):
             "Authentication failed!",
         ),
     ):
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"
@@ -357,7 +357,7 @@ async def test_options_flow_cannot_connect.opp):
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.hvv_departures.PLATFORMS", new=[]), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.init", return_value=True
@@ -365,14 +365,14 @@ async def test_options_flow_cannot_connect.opp):
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
         return_value=FIXTURE_DEPARTURE_LIST,
     ):
-        assert await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        assert await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
 
     with patch(
         "openpeerpower.components.hvv_departures.hub.GTI.departureList",
         side_effect=CannotConnect(),
     ):
-        result = await opp..config_entries.options.async_init(config_entry.entry_id)
+        result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "init"

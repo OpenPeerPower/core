@@ -5,7 +5,7 @@ from pyhap.accessory_driver import AccessoryDriver
 import pytest
 
 from openpeerpower.components.homekit.const import EVENT_HOMEKIT_CHANGED
-from openpeerpowerr.core import callback as ha_callback
+from openpeerpower.core import callback as ha_callback
 
 
 @pytest.fixture

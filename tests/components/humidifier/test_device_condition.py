@@ -5,8 +5,8 @@ import voluptuous_serialize
 import openpeerpower.components.automation as automation
 from openpeerpower.components.humidifier import DOMAIN, const, device_condition
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpowerr.helpers import config_validation as cv, device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import config_validation as cv, device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -41,7 +41,7 @@ def calls.opp):
 async def test_get_conditions.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a humidifier."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -88,7 +88,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
 async def test_get_conditions_toggle_only.opp, device_reg, entity_reg):
     """Test we get the expected conditions from a humidifier."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -196,20 +196,20 @@ async def test_if_state.opp, calls):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("humidifier.entity").state == STATE_ON
     assert len(calls) == 0
 
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "is_on event - test_event1"
 
    .opp.states.async_set("humidifier.entity", STATE_OFF)
    .opp.bus.async_fire("test_event1")
    .opp.bus.async_fire("test_event2")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_off event - test_event2"
 
@@ -218,7 +218,7 @@ async def test_if_state.opp, calls):
     )
 
    .opp.bus.async_fire("test_event3")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_mode - event - test_event3"
@@ -229,7 +229,7 @@ async def test_if_state.opp, calls):
 
     # Should not fire
    .opp.bus.async_fire("test_event3")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 3
 
 
@@ -296,7 +296,7 @@ async def test_capabilities_no_state.opp):
 async def test_get_condition_capabilities.opp, device_reg, entity_reg):
     """Test we get the expected toggle capabilities."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},

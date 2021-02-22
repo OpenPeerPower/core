@@ -311,9 +311,9 @@ async def test_sensors.opp, mock_bridge):
     # 2 "physical" sensors with 3 virtual sensors each
     assert len.opp.states.async_all()) == 7
 
-    presence_sensor_1 = opp.states.get("binary_sensor.living_room_sensor_motion")
-    light_level_sensor_1 = opp.states.get("sensor.living_room_sensor_light_level")
-    temperature_sensor_1 = opp.states.get("sensor.living_room_sensor_temperature")
+    presence_sensor_1 =.opp.states.get("binary_sensor.living_room_sensor_motion")
+    light_level_sensor_1 =.opp.states.get("sensor.living_room_sensor_light_level")
+    temperature_sensor_1 =.opp.states.get("sensor.living_room_sensor_temperature")
     assert presence_sensor_1 is not None
     assert presence_sensor_1.state == "on"
     assert light_level_sensor_1 is not None
@@ -323,9 +323,9 @@ async def test_sensors.opp, mock_bridge):
     assert temperature_sensor_1.state == "17.75"
     assert temperature_sensor_1.name == "Living room sensor temperature"
 
-    presence_sensor_2 = opp.states.get("binary_sensor.kitchen_sensor_motion")
-    light_level_sensor_2 = opp.states.get("sensor.kitchen_sensor_light_level")
-    temperature_sensor_2 = opp.states.get("sensor.kitchen_sensor_temperature")
+    presence_sensor_2 =.opp.states.get("binary_sensor.kitchen_sensor_motion")
+    light_level_sensor_2 =.opp.states.get("sensor.kitchen_sensor_light_level")
+    temperature_sensor_2 =.opp.states.get("sensor.kitchen_sensor_temperature")
     assert presence_sensor_2 is not None
     assert presence_sensor_2.state == "off"
     assert light_level_sensor_2 is not None
@@ -335,7 +335,7 @@ async def test_sensors.opp, mock_bridge):
     assert temperature_sensor_2.state == "18.75"
     assert temperature_sensor_2.name == "Kitchen sensor temperature"
 
-    battery_remote_1 = opp.states.get("sensor.hue_dimmer_switch_1_battery_level")
+    battery_remote_1 =.opp.states.get("sensor.hue_dimmer_switch_1_battery_level")
     assert battery_remote_1 is not None
     assert battery_remote_1.state == "100"
     assert battery_remote_1.name == "Hue dimmer switch 1 battery level"
@@ -373,15 +373,15 @@ async def test_new_sensor_discovered.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
     assert len.opp.states.async_all()) == 10
 
-    presence = opp.states.get("binary_sensor.bedroom_sensor_motion")
+    presence =.opp.states.get("binary_sensor.bedroom_sensor_motion")
     assert presence is not None
     assert presence.state == "on"
-    temperature = opp.states.get("sensor.bedroom_sensor_temperature")
+    temperature =.opp.states.get("sensor.bedroom_sensor_temperature")
     assert temperature is not None
     assert temperature.state == "17.75"
 
@@ -402,15 +402,15 @@ async def test_sensor_removed.opp, mock_bridge):
     await mock_bridge.sensor_manager.coordinator.async_refresh()
 
     # To flush out the service call to update the group
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
     assert len.opp.states.async_all()) == 3
 
-    sensor = opp.states.get("binary_sensor.living_room_sensor_motion")
+    sensor =.opp.states.get("binary_sensor.living_room_sensor_motion")
     assert sensor is not None
 
-    removed_sensor = opp.states.get("binary_sensor.kitchen_sensor_motion")
+    removed_sensor =.opp.states.get("binary_sensor.kitchen_sensor_motion")
     assert removed_sensor is None
 
 
@@ -436,7 +436,7 @@ async def test_hue_events.opp, mock_bridge):
     mock_bridge.mock_sensor_responses.append(SENSOR_RESPONSE)
 
     mock_listener = Mock()
-    unsub = opp.bus.async_listen(CONF_HUE_EVENT, mock_listener)
+    unsub =.opp.bus.async_listen(CONF_HUE_EVENT, mock_listener)
 
     await setup_bridge.opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
@@ -452,7 +452,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
     assert len.opp.states.async_all()) == 7
@@ -473,7 +473,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 3
     assert len.opp.states.async_all()) == 7
@@ -522,7 +522,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 4
     assert len.opp.states.async_all()) == 8
@@ -534,7 +534,7 @@ async def test_hue_events.opp, mock_bridge):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 5
     assert len.opp.states.async_all()) == 8

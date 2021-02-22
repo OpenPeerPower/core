@@ -5,7 +5,7 @@ from unittest import mock
 from openpeerpower import setup
 from openpeerpower.components import litejet
 
-from tests.common import get_test_home_assistant
+from tests.common import get_test_open_peer_power
 from tests.components.scene import common
 
 ENTITY_SCENE = "scene.mock_scene_1"
@@ -20,7 +20,7 @@ class TestLiteJetScene(unittest.TestCase):
     @mock.patch("openpeerpower.components.litejet.LiteJet")
     def setup_method(self, method, mock_pylitejet):
         """Set up things to be run when tests are started."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.opp.start()
 
         def get_scene_name(number):

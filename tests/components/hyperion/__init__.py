@@ -10,7 +10,7 @@ from hyperion import const
 from openpeerpower.components.hyperion.const import CONF_PRIORITY, DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_PORT
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 
@@ -133,7 +133,7 @@ def add_test_config_entry(
         unique_id=TEST_SYSINFO_ID,
         options=TEST_CONFIG_ENTRY_OPTIONS,
     )
-    config_entry.add_to_opp.opp)  # type: ignore[no-untyped-call]
+    config_entry.add_to.opp.opp)  # type: ignore[no-untyped-call]
     return config_entry
 
 
@@ -153,8 +153,8 @@ async def setup_test_config_entry(
         "openpeerpower.components.hyperion.client.HyperionClient",
         return_value=hyperion_client,
     ):
-        await opp..config_entries.async_setup(config_entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(config_entry.entry_id)
+        await.opp.async_block_till_done()
     return config_entry
 
 

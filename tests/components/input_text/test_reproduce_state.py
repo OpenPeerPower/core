@@ -1,6 +1,6 @@
 """Test reproduce state for Input text."""
-from openpeerpowerr.core import State
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.core import State
+from openpeerpower.setup import async_setup_component
 
 VALID_TEXT1 = "Test text"
 VALID_TEXT2 = "LoremIpsum"
@@ -23,7 +23,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # These calls should do nothing as entities already in desired state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("input_text.test_text", VALID_TEXT1),
             # Should not raise
@@ -35,7 +35,7 @@ async def test_reproducing_states.opp, caplog):
     assert.opp.states.get("input_text.test_text").state == VALID_TEXT1
 
     # Try reproducing with different state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State("input_text.test_text", VALID_TEXT2),
             # Should not raise
@@ -47,7 +47,7 @@ async def test_reproducing_states.opp, caplog):
     assert.opp.states.get("input_text.test_text").state == VALID_TEXT2
 
     # Test setting state to invalid state (length too long)
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [State("input_text.test_text", INVALID_TEXT1)]
     )
 
@@ -55,7 +55,7 @@ async def test_reproducing_states.opp, caplog):
     assert.opp.states.get("input_text.test_text").state == VALID_TEXT2
 
     # Test setting state to invalid state (length too short)
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [State("input_text.test_text", INVALID_TEXT2)]
     )
 

@@ -8,7 +8,7 @@ import pytest
 from openpeerpower import setup
 from openpeerpower.components import litejet
 import openpeerpower.components.automation as automation
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed, async_mock_service
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
@@ -70,12 +70,12 @@ async def simulate_press.opp, mock_lj, number):
     _LOGGER.info("*** simulate press of %d", number)
     callback = mock_lj.switch_pressed_callbacks.get(number)
     with mock.patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow",
+        "openpeerpower.helpers.condition.dt_util.utcnow",
         return_value=mock_lj.start_time + mock_lj.last_delta,
     ):
         if callback is not None:
-            await opp..async_add_executor_job(callback)
-        await opp..async_block_till_done()
+            await.opp.async_add_executor_job(callback)
+        await.opp.async_block_till_done()
 
 
 async def simulate_release.opp, mock_lj, number):
@@ -83,12 +83,12 @@ async def simulate_release.opp, mock_lj, number):
     _LOGGER.info("*** simulate release of %d", number)
     callback = mock_lj.switch_released_callbacks.get(number)
     with mock.patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow",
+        "openpeerpower.helpers.condition.dt_util.utcnow",
         return_value=mock_lj.start_time + mock_lj.last_delta,
     ):
         if callback is not None:
-            await opp..async_add_executor_job(callback)
-        await opp..async_block_till_done()
+            await.opp.async_add_executor_job(callback)
+        await.opp.async_block_till_done()
 
 
 async def simulate_time.opp, mock_lj, delta):
@@ -98,12 +98,12 @@ async def simulate_time.opp, mock_lj, delta):
     )
     mock_lj.last_delta = delta
     with mock.patch(
-        "openpeerpowerr.helpers.condition.dt_util.utcnow",
+        "openpeerpower.helpers.condition.dt_util.utcnow",
         return_value=mock_lj.start_time + delta,
     ):
         _LOGGER.info("now=%s", dt_util.utcnow())
         async_fire_time_changed.opp, mock_lj.start_time + delta)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         _LOGGER.info("done with now=%s", dt_util.utcnow())
 
 
@@ -122,7 +122,7 @@ async def setup_automation.opp, trigger):
             ]
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_simple.opp, calls, mock_lj):

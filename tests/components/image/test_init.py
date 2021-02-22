@@ -6,8 +6,8 @@ from unittest.mock import patch
 from aiohttp import ClientSession, ClientWebSocketResponse
 
 from openpeerpower.components.websocket_api import const as ws_const
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import dt as util_dt
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as util_dt
 
 
 async def test_upload_image.opp,.opp_client,.opp_ws_client):
@@ -17,10 +17,10 @@ async def test_upload_image.opp,.opp_client,.opp_ws_client):
 
     with tempfile.TemporaryDirectory() as tempdir, patch.object(
        .opp.config, "path", return_value=tempdir
-    ), patch("openpeerpowerr.util.dt.utcnow", return_value=now):
+    ), patch("openpeerpower.util.dt.utcnow", return_value=now):
         assert await async_setup_component.opp, "image", {})
-        ws_client: ClientWebSocketResponse = await opp._ws_client()
-        client: ClientSession = await opp._client()
+        ws_client: ClientWebSocketResponse = await.opp_ws_client()
+        client: ClientSession = await.opp_client()
 
         with test_image.open("rb") as fp:
             res = await client.post("/api/image/upload", data={"file": fp})

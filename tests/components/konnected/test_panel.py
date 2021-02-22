@@ -5,8 +5,8 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.components.konnected import config_flow, panel
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util import utcnow
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util import utcnow
 
 from tests.common import MockConfigEntry, async_fire_time_changed
 
@@ -95,7 +95,7 @@ async def test_create_and_setup.opp, mock_panel):
         data=device_config,
         options=device_options,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # override get_status to reflect non-pro board
     mock_panel.get_status.return_value = {
@@ -130,7 +130,7 @@ async def test_create_and_setup.opp, mock_panel):
 
     # confirm panel instance was created and configured
     #.opp.data is the only mechanism to get a reference to the created panel instance
-    device = opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
+    device =.opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
     await device.update_switch("1", 0)
 
     # confirm the correct api is used
@@ -264,7 +264,7 @@ async def test_create_and_setup_pro.opp, mock_panel):
         data=device_config,
         options=device_options,
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # setup the integration and inspect panel behavior
     assert (
@@ -283,7 +283,7 @@ async def test_create_and_setup_pro.opp, mock_panel):
 
     # confirm panel instance was created and configured
     #.opp.data is the only mechanism to get a reference to the created panel instance
-    device = opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
+    device =.opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
     await device.update_switch("2", 1)
 
     # confirm the correct api is used
@@ -443,7 +443,7 @@ async def test_default_options.opp, mock_panel):
         data=device_config,
         options={},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # override get_status to reflect non-pro board
     mock_panel.get_status.return_value = {
@@ -478,7 +478,7 @@ async def test_default_options.opp, mock_panel):
 
     # confirm panel instance was created and configured.
     #.opp.data is the only mechanism to get a reference to the created panel instance
-    device = opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
+    device =.opp.data[panel.DOMAIN][panel.CONF_DEVICES]["112233445566"]["panel"]
     await device.update_switch("1", 0)
 
     # confirm the correct api is used
@@ -609,7 +609,7 @@ async def test_connect_retry.opp, mock_panel):
         data=device_config,
         options={},
     )
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     # fail first 2 attempts, and succeed the third
     mock_panel.get_status.side_effect = [
@@ -648,21 +648,21 @@ async def test_connect_retry.opp, mock_panel):
     )
 
     # confirm switch is unavailable after initial attempt
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert.opp.states.get("switch.konnected_445566_actuator_6").state == "unavailable"
 
     # confirm switch is unavailable after second attempt
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=11))
-    await opp..async_block_till_done()
-    await opp..helpers.entity_component.async_update_entity(
+    await.opp.async_block_till_done()
+    await.opp.helpers.entity_component.async_update_entity(
         "switch.konnected_445566_actuator_6"
     )
     assert.opp.states.get("switch.konnected_445566_actuator_6").state == "unavailable"
 
     # confirm switch is available after third attempt
     async_fire_time_changed.opp, utcnow() + timedelta(seconds=21))
-    await opp..async_block_till_done()
-    await opp..helpers.entity_component.async_update_entity(
+    await.opp.async_block_till_done()
+    await.opp.helpers.entity_component.async_update_entity(
         "switch.konnected_445566_actuator_6"
     )
     assert.opp.states.get("switch.konnected_445566_actuator_6").state == "off"

@@ -2,7 +2,7 @@
 from openpeerpower.components import light
 from openpeerpower.components.light import intent
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_SUPPORTED_FEATURES, SERVICE_TURN_ON
-from openpeerpowerr.helpers.intent import IntentHandleError
+from openpeerpower.helpers.intent import IntentHandleError
 
 from tests.common import async_mock_service
 
@@ -16,12 +16,12 @@ async def test_intent_set_color.opp):
     calls = async_mock_service.opp, light.DOMAIN, light.SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
-    result = await opp..helpers.intent.async_op.dle(
+    result = await.opp.helpers.intent.async_handle(
         "test",
         intent.INTENT_SET,
         {"name": {"value": "Hello"}, "color": {"value": "blue"}},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert result.speech["plain"]["speech"] == "Changed hello 2 to the color blue"
 
@@ -40,7 +40,7 @@ async def test_intent_set_color_tests_feature.opp):
     await intent.async_setup_intents.opp)
 
     try:
-        await opp..helpers.intent.async_op.dle(
+        await.opp.helpers.intent.async_handle(
             "test",
             intent.INTENT_SET,
             {"name": {"value": "Hello"}, "color": {"value": "blue"}},
@@ -63,7 +63,7 @@ async def test_intent_set_color_and_brightness.opp):
     calls = async_mock_service.opp, light.DOMAIN, light.SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
-    result = await opp..helpers.intent.async_op.dle(
+    result = await.opp.helpers.intent.async_handle(
         "test",
         intent.INTENT_SET,
         {
@@ -72,7 +72,7 @@ async def test_intent_set_color_and_brightness.opp):
             "brightness": {"value": "20"},
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert (
         result.speech["plain"]["speech"]

@@ -31,7 +31,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.core import State
+from openpeerpower.core import State
 
 
 def test_not_supported(caplog):

@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 from openpeerpower.components.kira import remote as kira
 
-from tests.common import get_test_home_assistant
+from tests.common import get_test_open_peer_power
 
 SERVICE_SEND_COMMAND = "send_command"
 
@@ -26,7 +26,7 @@ class TestKiraSensor(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self.opp = get_test_home_assistant()
+        self.opp = get_test_open_peer_power()
         self.mock_kira = MagicMock()
         self.opp.data[kira.DOMAIN] = {kira.CONF_REMOTE: {}}
         self.opp.data[kira.DOMAIN][kira.CONF_REMOTE]["kira"] = self.mock_kira

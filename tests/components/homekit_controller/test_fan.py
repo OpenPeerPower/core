@@ -67,7 +67,7 @@ async def test_turn_on.opp, utcnow):
     """Test that we can turn a fan on."""
     helper = await setup_test_component.opp, create_fan_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.testdevice", "speed": "high"},
@@ -76,7 +76,7 @@ async def test_turn_on.opp, utcnow):
     assert helper.characteristics[V1_ON].value == 1
     assert helper.characteristics[V1_ROTATION_SPEED].value == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.testdevice", "speed": "medium"},
@@ -85,7 +85,7 @@ async def test_turn_on.opp, utcnow):
     assert helper.characteristics[V1_ON].value == 1
     assert helper.characteristics[V1_ROTATION_SPEED].value == 66.0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.testdevice", "speed": "low"},
@@ -101,7 +101,7 @@ async def test_turn_off.opp, utcnow):
 
     helper.characteristics[V1_ON].value = 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_off",
         {"entity_id": "fan.testdevice"},
@@ -116,7 +116,7 @@ async def test_set_speed.opp, utcnow):
 
     helper.characteristics[V1_ON].value = 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "high"},
@@ -124,7 +124,7 @@ async def test_set_speed.opp, utcnow):
     )
     assert helper.characteristics[V1_ROTATION_SPEED].value == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "medium"},
@@ -132,7 +132,7 @@ async def test_set_speed.opp, utcnow):
     )
     assert helper.characteristics[V1_ROTATION_SPEED].value == 66.0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "low"},
@@ -140,7 +140,7 @@ async def test_set_speed.opp, utcnow):
     )
     assert helper.characteristics[V1_ROTATION_SPEED].value == 33.0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "off"},
@@ -155,7 +155,7 @@ async def test_set_percentage.opp, utcnow):
 
     helper.characteristics[V1_ON].value = 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_percentage",
         {"entity_id": "fan.testdevice", "percentage": 66},
@@ -163,7 +163,7 @@ async def test_set_percentage.opp, utcnow):
     )
     assert helper.characteristics[V1_ROTATION_SPEED].value == 66
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_percentage",
         {"entity_id": "fan.testdevice", "percentage": 0},
@@ -203,7 +203,7 @@ async def test_set_direction.opp, utcnow):
     """Test that we can set fan spin direction."""
     helper = await setup_test_component.opp, create_fan_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_direction",
         {"entity_id": "fan.testdevice", "direction": "reverse"},
@@ -211,7 +211,7 @@ async def test_set_direction.opp, utcnow):
     )
     assert helper.characteristics[V1_ROTATION_DIRECTION].value == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_direction",
         {"entity_id": "fan.testdevice", "direction": "forward"},
@@ -250,7 +250,7 @@ async def test_v2_turn_on.opp, utcnow):
     """Test that we can turn a fan on."""
     helper = await setup_test_component.opp, create_fanv2_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.testdevice", "speed": "high"},
@@ -259,7 +259,7 @@ async def test_v2_turn_on.opp, utcnow):
     assert helper.characteristics[V2_ACTIVE].value == 1
     assert helper.characteristics[V2_ROTATION_SPEED].value == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.testdevice", "speed": "medium"},
@@ -268,7 +268,7 @@ async def test_v2_turn_on.opp, utcnow):
     assert helper.characteristics[V2_ACTIVE].value == 1
     assert helper.characteristics[V2_ROTATION_SPEED].value == 66.0
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_on",
         {"entity_id": "fan.testdevice", "speed": "low"},
@@ -284,7 +284,7 @@ async def test_v2_turn_off.opp, utcnow):
 
     helper.characteristics[V2_ACTIVE].value = 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "turn_off",
         {"entity_id": "fan.testdevice"},
@@ -299,7 +299,7 @@ async def test_v2_set_speed.opp, utcnow):
 
     helper.characteristics[V2_ACTIVE].value = 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "high"},
@@ -307,7 +307,7 @@ async def test_v2_set_speed.opp, utcnow):
     )
     assert helper.characteristics[V2_ROTATION_SPEED].value == 100
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "medium"},
@@ -315,7 +315,7 @@ async def test_v2_set_speed.opp, utcnow):
     )
     assert helper.characteristics[V2_ROTATION_SPEED].value == 66
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "low"},
@@ -323,7 +323,7 @@ async def test_v2_set_speed.opp, utcnow):
     )
     assert helper.characteristics[V2_ROTATION_SPEED].value == 33
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_speed",
         {"entity_id": "fan.testdevice", "speed": "off"},
@@ -338,7 +338,7 @@ async def test_v2_set_percentage.opp, utcnow):
 
     helper.characteristics[V2_ACTIVE].value = 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_percentage",
         {"entity_id": "fan.testdevice", "percentage": 66},
@@ -346,7 +346,7 @@ async def test_v2_set_percentage.opp, utcnow):
     )
     assert helper.characteristics[V2_ROTATION_SPEED].value == 66
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_percentage",
         {"entity_id": "fan.testdevice", "percentage": 0},
@@ -386,7 +386,7 @@ async def test_v2_set_direction.opp, utcnow):
     """Test that we can set fan spin direction."""
     helper = await setup_test_component.opp, create_fanv2_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_direction",
         {"entity_id": "fan.testdevice", "direction": "reverse"},
@@ -394,7 +394,7 @@ async def test_v2_set_direction.opp, utcnow):
     )
     assert helper.characteristics[V2_ROTATION_DIRECTION].value == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "set_direction",
         {"entity_id": "fan.testdevice", "direction": "forward"},
@@ -420,7 +420,7 @@ async def test_v2_oscillate.opp, utcnow):
     """Test that we can control a fans oscillation."""
     helper = await setup_test_component.opp, create_fanv2_service)
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "oscillate",
         {"entity_id": "fan.testdevice", "oscillating": True},
@@ -428,7 +428,7 @@ async def test_v2_oscillate.opp, utcnow):
     )
     assert helper.characteristics[V2_SWING_MODE].value == 1
 
-    await opp..services.async_call(
+    await.opp.services.async_call(
         "fan",
         "oscillate",
         {"entity_id": "fan.testdevice", "oscillating": False},

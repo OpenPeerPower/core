@@ -31,13 +31,13 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpowerr.core as ha
-from openpeerpowerr.helpers.entityfilter import CONF_ENTITY_GLOBS
-from openpeerpowerr.helpers.json import JSONEncoder
-from openpeerpowerr.setup import async_setup_component, setup_component
-import openpeerpowerr.util.dt as dt_util
+import openpeerpower.core as ha
+from openpeerpower.helpers.entityfilter import CONF_ENTITY_GLOBS
+from openpeerpower.helpers.json import JSONEncoder
+from openpeerpower.setup import async_setup_component, setup_component
+import openpeerpower.util.dt as dt_util
 
-from tests.common import get_test_home_assistant, init_recorder_component, mock_platform
+from tests.common import get_test_open_peer_power, init_recorder_component, mock_platform
 from tests.components.recorder.common import trigger_db_commit
 
 EMPTY_CONFIG = logbook.CONFIG_SCHEMA({logbook.DOMAIN: {}})
@@ -46,7 +46,7 @@ EMPTY_CONFIG = logbook.CONFIG_SCHEMA({logbook.DOMAIN: {}})
 @pytest.fixture
 def.opp_():
     """Set up things to be run when tests are started."""
-    opp = get_test_home_assistant()
+   .opp = get_test_open_peer_power()
     init_recorder_component.opp)  # Force an in memory DB
     with patch("openpeerpower.components.http.start_http_server_and_save_config"):
         assert setup_component.opp, logbook.DOMAIN, EMPTY_CONFIG)
@@ -58,7 +58,7 @@ def test_service_call_create_logbook_entry.opp_):
     """Test if service call create log book entry."""
     calls = []
 
-    @op.callback
+    @ha.callback
     def event_listener(event):
         """Append on event."""
         calls.append(event)
@@ -119,7 +119,7 @@ def test_service_call_create_log_book_entry_no_message.opp_):
     """Test if service call create log book entry without message."""
     calls = []
 
-    @op.callback
+    @ha.callback
     def event_listener(event):
         """Append on event."""
         calls.append(event)
@@ -160,7 +160,7 @@ def test_humanify_filter_sensor.opp_):
     assert_entry(entries[1], pointC, "bla", entity_id=entity_id)
 
 
-def test_home_assistant_start_stop_grouped.opp_):
+def test_open_peer_power_start_stop_grouped.opp_):
     """Test if HA start and stop events are grouped.
 
     Events that are occurring in the same minute.
@@ -180,11 +180,11 @@ def test_home_assistant_start_stop_grouped.opp_):
 
     assert len(entries) == 1
     assert_entry(
-        entries[0], name="Open Peer Power", message="restarted", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="restarted", domain=ha.DOMAIN
     )
 
 
-def test_home_assistant_start.opp_):
+def test_open_peer_power_start.opp_):
     """Test if HA start is not filtered or converted into a restart."""
     entity_id = "switch.bla"
     pointA = dt_util.utcnow()
@@ -203,7 +203,7 @@ def test_home_assistant_start.opp_):
     )
 
     assert len(entries) == 2
-    assert_entry(entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN)
+    assert_entry(entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN)
     assert_entry(entries[1], pointA, "bla", entity_id=entity_id)
 
 
@@ -253,10 +253,10 @@ def create_state_changed_event(
     last_updated=None,
 ):
     """Create state changed event."""
-    old_state = op.State(
+    old_state = ha.State(
         entity_id, "old", attributes, last_changed, last_updated
     ).as_dict()
-    new_state = op.State(
+    new_state = ha.State(
         entity_id, state, attributes, last_changed, last_updated
     ).as_dict()
 
@@ -298,7 +298,7 @@ def create_state_changed_event_from_old_new(
     row.time_fired = event_time_fired
     row.state = new_state and new_state.get("state")
     row.entity_id = entity_id
-    row.domain = entity_id and op.split_entity_id(entity_id)[0]
+    row.domain = entity_id and ha.split_entity_id(entity_id)[0]
     row.context_id = None
     row.context_user_id = None
     row.context_parent_id = None
@@ -309,19 +309,19 @@ def create_state_changed_event_from_old_new(
 
 async def test_logbook_view.opp,.opp_client):
     """Test the logbook view."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    client = await opp._client()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    client = await.opp_client()
     response = await client.get(f"/api/logbook/{dt_util.utcnow().isoformat()}")
     assert response.status == 200
 
 
 async def test_logbook_view_period_entity.opp,.opp_client):
     """Test the logbook view with period and entity."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -329,11 +329,11 @@ async def test_logbook_view_period_entity.opp,.opp_client):
     entity_id_second = "switch.second"
    .opp.states.async_set(entity_id_second, STATE_OFF)
    .opp.states.async_set(entity_id_second, STATE_ON)
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -403,7 +403,7 @@ async def test_logbook_view_period_entity.opp,.opp_client):
 
 async def test_logbook_describe_event.opp,.opp_client):
     """Test teaching logbook about a new event."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
 
     def _describe(event):
         """Describe an event."""
@@ -422,18 +422,18 @@ async def test_logbook_describe_event.opp,.opp_client):
 
     assert await async_setup_component.opp, "logbook", {})
     with patch(
-        "openpeerpowerr.util.dt.utcnow",
+        "openpeerpower.util.dt.utcnow",
         return_value=dt_util.utcnow() - timedelta(seconds=5),
     ):
        .opp.bus.async_fire("some_event")
-        await opp..async_block_till_done()
-        await opp..async_add_executor_job(trigger_db_commit,.opp)
-        await opp..async_block_till_done()
-        await opp..async_add_executor_job(
+        await.opp.async_block_till_done()
+        await.opp.async_add_executor_job(trigger_db_commit,.opp)
+        await.opp.async_block_till_done()
+        await.opp.async_add_executor_job(
            .opp.data[recorder.DATA_INSTANCE].block_till_done
         )
 
-    client = await opp._client()
+    client = await.opp_client()
     response = await client.get("/api/logbook")
     results = await response.json()
     assert len(results) == 1
@@ -470,7 +470,7 @@ async def test_exclude_described_event.opp,.opp_client):
         Mock(async_describe_events=async_describe_events),
     )
 
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     assert await async_setup_component(
        .opp,
         logbook.DOMAIN,
@@ -482,7 +482,7 @@ async def test_exclude_described_event.opp,.opp_client):
     )
 
     with patch(
-        "openpeerpowerr.util.dt.utcnow",
+        "openpeerpower.util.dt.utcnow",
         return_value=dt_util.utcnow() - timedelta(seconds=5),
     ):
        .opp.bus.async_fire(
@@ -496,14 +496,14 @@ async def test_exclude_described_event.opp,.opp_client):
        .opp.bus.async_fire(
             "some_event", {logbook.ATTR_NAME: name, logbook.ATTR_ENTITY_ID: entity_id3}
         )
-        await opp..async_block_till_done()
-        await opp..async_add_executor_job(trigger_db_commit,.opp)
-        await opp..async_block_till_done()
-        await opp..async_add_executor_job(
+        await.opp.async_block_till_done()
+        await.opp.async_add_executor_job(trigger_db_commit,.opp)
+        await.opp.async_block_till_done()
+        await.opp.async_add_executor_job(
            .opp.data[recorder.DATA_INSTANCE].block_till_done
         )
 
-    client = await opp._client()
+    client = await.opp_client()
     response = await client.get("/api/logbook")
     results = await response.json()
     assert len(results) == 1
@@ -514,9 +514,9 @@ async def test_exclude_described_event.opp,.opp_client):
 
 async def test_logbook_view_end_time_entity.opp,.opp_client):
     """Test the logbook view with end_time and entity."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -524,11 +524,11 @@ async def test_logbook_view_end_time_entity.opp,.opp_client):
     entity_id_second = "switch.second"
    .opp.states.async_set(entity_id_second, STATE_OFF)
    .opp.states.async_set(entity_id_second, STATE_ON)
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -572,12 +572,12 @@ async def test_logbook_view_end_time_entity.opp,.opp_client):
 
 async def test_logbook_entity_filter_with_automations.opp,.opp_client):
     """Test the logbook view with end_time and entity with automations and scripts."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     await async_setup_component.opp, "automation", {})
     await async_setup_component.opp, "script", {})
 
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "alarm_control_panel.area_001"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -596,11 +596,11 @@ async def test_logbook_entity_filter_with_automations.opp,.opp_client):
     )
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -618,7 +618,7 @@ async def test_logbook_entity_filter_with_automations.opp,.opp_client):
     assert json_dict[1]["entity_id"] == entity_id_second
     assert json_dict[2]["entity_id"] == "automation.mock_automation"
     assert json_dict[3]["entity_id"] == "script.mock_script"
-    assert json_dict[4]["domain"] == "openpeerpowerr"
+    assert json_dict[4]["domain"] == "openpeerpower"
 
     # Test entries for 3 days with filter by entity_id
     end_time = start + timedelta(hours=72)
@@ -647,9 +647,9 @@ async def test_logbook_entity_filter_with_automations.opp,.opp_client):
 
 async def test_filter_continuous_sensor_values.opp,.opp_client):
     """Test remove continuous sensor events from logbook."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id_test = "switch.test"
    .opp.states.async_set(entity_id_test, STATE_OFF)
@@ -661,11 +661,11 @@ async def test_filter_continuous_sensor_values.opp,.opp_client):
    .opp.states.async_set(entity_id_third, STATE_OFF, {"unit_of_measurement": "foo"})
    .opp.states.async_set(entity_id_third, STATE_ON, {"unit_of_measurement": "foo"})
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -683,9 +683,9 @@ async def test_filter_continuous_sensor_values.opp,.opp_client):
 
 async def test_exclude_new_entities.opp,.opp_client):
     """Test if events are excluded on first update."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id = "climate.bla"
     entity_id2 = "climate.blu"
@@ -695,11 +695,11 @@ async def test_exclude_new_entities.opp,.opp_client):
    .opp.states.async_set(entity_id2, STATE_OFF)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -712,15 +712,15 @@ async def test_exclude_new_entities.opp,.opp_client):
 
     assert len(response_json) == 2
     assert response_json[0]["entity_id"] == entity_id2
-    assert response_json[1]["domain"] == "openpeerpowerr"
+    assert response_json[1]["domain"] == "openpeerpower"
     assert response_json[1]["message"] == "started"
 
 
 async def test_exclude_removed_entities.opp,.opp_client):
     """Test if events are excluded on last update."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     entity_id = "climate.bla"
     entity_id2 = "climate.blu"
@@ -736,11 +736,11 @@ async def test_exclude_removed_entities.opp,.opp_client):
    .opp.states.async_remove(entity_id)
    .opp.states.async_remove(entity_id2)
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -753,16 +753,16 @@ async def test_exclude_removed_entities.opp,.opp_client):
 
     assert len(response_json) == 3
     assert response_json[0]["entity_id"] == entity_id
-    assert response_json[1]["domain"] == "openpeerpowerr"
+    assert response_json[1]["domain"] == "openpeerpower"
     assert response_json[1]["message"] == "started"
     assert response_json[2]["entity_id"] == entity_id2
 
 
 async def test_exclude_attribute_changes.opp,.opp_client):
     """Test if events of attribute changes are filtered."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
@@ -773,13 +773,13 @@ async def test_exclude_attribute_changes.opp,.opp_client):
    .opp.states.async_set("light.kitchen", STATE_ON, {"brightness": 400})
    .opp.states.async_set("light.kitchen", STATE_OFF)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -791,21 +791,21 @@ async def test_exclude_attribute_changes.opp,.opp_client):
     response_json = await response.json()
 
     assert len(response_json) == 3
-    assert response_json[0]["domain"] == "openpeerpowerr"
+    assert response_json[0]["domain"] == "openpeerpower"
     assert response_json[1]["entity_id"] == "light.kitchen"
     assert response_json[2]["entity_id"] == "light.kitchen"
 
 
 async def test_logbook_entity_context_id.opp,.opp_client):
     """Test the logbook view with end_time and entity with automations and scripts."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     await async_setup_component.opp, "automation", {})
     await async_setup_component.opp, "script", {})
 
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    context = op.Context(
+    context = ha.Context(
         id="ac5bd62de45711eaaeb351041eec8dd9",
         user_id="b400facee45711eaa9308bfd3d19e474",
     )
@@ -831,19 +831,19 @@ async def test_logbook_entity_context_id.opp,.opp_client):
 
     entity_id_test = "alarm_control_panel.area_001"
    .opp.states.async_set(entity_id_test, STATE_OFF, context=context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set(entity_id_test, STATE_ON, context=context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     entity_id_second = "alarm_control_panel.area_002"
    .opp.states.async_set(entity_id_second, STATE_OFF, context=context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set(entity_id_second, STATE_ON, context=context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         logbook.log_entry,
        .opp,
         "mock_name",
@@ -852,26 +852,26 @@ async def test_logbook_entity_context_id.opp,.opp_client):
         "alarm_control_panel.area_003",
         context,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         logbook.log_entry,
        .opp,
         "mock_name",
         "mock_message",
-        "openpeerpowerr",
+        "openpeerpower",
         None,
         context,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # A service call
-    light_turn_off_service_context = op.Context(
+    light_turn_off_service_context = ha.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
    .opp.states.async_set("light.switch", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.bus.async_fire(
         EVENT_CALL_SERVICE,
@@ -882,18 +882,18 @@ async def test_logbook_entity_context_id.opp,.opp_client):
         },
         context=light_turn_off_service_context,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.switch", STATE_OFF, context=light_turn_off_service_context
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -929,7 +929,7 @@ async def test_logbook_entity_context_id.opp,.opp_client):
     assert json_dict[3]["context_entity_id_name"] == "Alarm Automation"
     assert json_dict[3]["context_user_id"] == "b400facee45711eaa9308bfd3d19e474"
 
-    assert json_dict[4]["domain"] == "openpeerpowerr"
+    assert json_dict[4]["domain"] == "openpeerpower"
 
     assert json_dict[5]["entity_id"] == "alarm_control_panel.area_003"
     assert json_dict[5]["context_event_type"] == "automation_triggered"
@@ -938,7 +938,7 @@ async def test_logbook_entity_context_id.opp,.opp_client):
     assert json_dict[5]["context_entity_id_name"] == "Alarm Automation"
     assert json_dict[5]["context_user_id"] == "b400facee45711eaa9308bfd3d19e474"
 
-    assert json_dict[6]["domain"] == "openpeerpowerr"
+    assert json_dict[6]["domain"] == "openpeerpower"
     assert json_dict[6]["context_user_id"] == "b400facee45711eaa9308bfd3d19e474"
 
     assert json_dict[7]["entity_id"] == "light.switch"
@@ -950,14 +950,14 @@ async def test_logbook_entity_context_id.opp,.opp_client):
 
 async def test_logbook_entity_context_parent_id.opp,.opp_client):
     """Test the logbook view links events via context parent_id."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     await async_setup_component.opp, "automation", {})
     await async_setup_component.opp, "script", {})
 
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    context = op.Context(
+    context = ha.Context(
         id="ac5bd62de45711eaaeb351041eec8dd9",
         user_id="b400facee45711eaa9308bfd3d19e474",
     )
@@ -970,7 +970,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         context=context,
     )
 
-    child_context = op.Context(
+    child_context = ha.Context(
         id="2798bfedf8234b5e9f4009c91f48f30c",
         parent_id="ac5bd62de45711eaaeb351041eec8dd9",
         user_id="b400facee45711eaa9308bfd3d19e474",
@@ -989,17 +989,17 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
 
     entity_id_test = "alarm_control_panel.area_001"
    .opp.states.async_set(entity_id_test, STATE_OFF, context=child_context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set(entity_id_test, STATE_ON, context=child_context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     entity_id_second = "alarm_control_panel.area_002"
    .opp.states.async_set(entity_id_second, STATE_OFF, context=child_context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
    .opp.states.async_set(entity_id_second, STATE_ON, context=child_context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     logbook.async_log_entry(
        .opp,
@@ -1009,26 +1009,26 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         "alarm_control_panel.area_003",
         child_context,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     logbook.async_log_entry(
        .opp,
         "mock_name",
         "mock_message",
-        "openpeerpowerr",
+        "openpeerpower",
         None,
         child_context,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # A state change via service call with the script as the parent
-    light_turn_off_service_context = op.Context(
+    light_turn_off_service_context = ha.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         parent_id="2798bfedf8234b5e9f4009c91f48f30c",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
    .opp.states.async_set("light.switch", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.bus.async_fire(
         EVENT_CALL_SERVICE,
@@ -1039,15 +1039,15 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         },
         context=light_turn_off_service_context,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         "light.switch", STATE_OFF, context=light_turn_off_service_context
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # An event with a parent event, but the parent event isn't available
-    missing_parent_context = op.Context(
+    missing_parent_context = ha.Context(
         id="fc40b9a0d1f246f98c34b33c76228ee6",
         parent_id="c8ce515fe58e442f8664246c65ed964f",
         user_id="485cacf93ef84d25a99ced3126b921d2",
@@ -1060,13 +1060,13 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
         "alarm_control_panel.area_009",
         missing_parent_context,
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1103,7 +1103,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
     assert json_dict[3]["context_entity_id_name"] == "mock script"
     assert json_dict[3]["context_user_id"] == "b400facee45711eaa9308bfd3d19e474"
 
-    assert json_dict[4]["domain"] == "openpeerpowerr"
+    assert json_dict[4]["domain"] == "openpeerpower"
 
     assert json_dict[5]["entity_id"] == "alarm_control_panel.area_003"
     assert json_dict[5]["context_event_type"] == "script_started"
@@ -1112,7 +1112,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
     assert json_dict[5]["context_entity_id_name"] == "mock script"
     assert json_dict[5]["context_user_id"] == "b400facee45711eaa9308bfd3d19e474"
 
-    assert json_dict[6]["domain"] == "openpeerpowerr"
+    assert json_dict[6]["domain"] == "openpeerpower"
     assert json_dict[6]["context_user_id"] == "b400facee45711eaa9308bfd3d19e474"
 
     assert json_dict[7]["entity_id"] == "light.switch"
@@ -1131,7 +1131,7 @@ async def test_logbook_entity_context_parent_id.opp,.opp_client):
 
 async def test_logbook_context_from_template.opp,.opp_client):
     """Test the logbook view with end_time and entity with automations and scripts."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
        .opp,
@@ -1155,33 +1155,33 @@ async def test_logbook_context_from_template.opp,.opp_client):
             }
         },
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     # Entity added (should not be logged)
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # First state change (should be logged)
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    switch_turn_off_context = op.Context(
+    switch_turn_off_context = ha.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
    .opp.states.async_set(
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1195,7 +1195,7 @@ async def test_logbook_context_from_template.opp,.opp_client):
     assert response.status == 200
     json_dict = await response.json()
 
-    assert json_dict[0]["domain"] == "openpeerpowerr"
+    assert json_dict[0]["domain"] == "openpeerpower"
     assert "context_entity_id" not in json_dict[0]
 
     assert json_dict[1]["entity_id"] == "switch.test_template_switch"
@@ -1217,7 +1217,7 @@ async def test_logbook_context_from_template.opp,.opp_client):
 
 async def test_logbook_entity_matches_only.opp,.opp_client):
     """Test the logbook view with a single entity and entity_matches_only."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
        .opp,
@@ -1241,33 +1241,33 @@ async def test_logbook_entity_matches_only.opp,.opp_client):
             }
         },
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     # Entity added (should not be logged)
    .opp.states.async_set("switch.test_state", STATE_ON)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # First state change (should be logged)
    .opp.states.async_set("switch.test_state", STATE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    switch_turn_off_context = op.Context(
+    switch_turn_off_context = ha.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
    .opp.states.async_set(
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1291,7 +1291,7 @@ async def test_logbook_entity_matches_only.opp,.opp_client):
 
 async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
     """Test the logbook view with a multiple entities and entity_matches_only."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
     assert await async_setup_component(
        .opp,
@@ -1315,24 +1315,24 @@ async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
             }
         },
     )
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp..async_block_till_done()
-    await opp..async_start()
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_block_till_done()
+    await.opp.async_start()
+    await.opp.async_block_till_done()
 
     # Entity added (should not be logged)
    .opp.states.async_set("switch.test_state", STATE_ON)
    .opp.states.async_set("light.test_state", STATE_ON)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     # First state change (should be logged)
    .opp.states.async_set("switch.test_state", STATE_OFF)
    .opp.states.async_set("light.test_state", STATE_OFF)
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    switch_turn_off_context = op.Context(
+    switch_turn_off_context = ha.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
@@ -1340,13 +1340,13 @@ async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
         "switch.test_state", STATE_ON, context=switch_turn_off_context
     )
    .opp.states.async_set("light.test_state", STATE_ON, context=switch_turn_off_context)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    client = await opp._client()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1375,10 +1375,10 @@ async def test_logbook_entity_matches_only_multiple.opp,.opp_client):
 
 async def test_logbook_invalid_entity.opp,.opp_client):
     """Test the logbook view with requesting an invalid entity."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_block_till_done()
-    client = await opp._client()
+    await.opp.async_block_till_done()
+    client = await.opp_client()
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
@@ -1394,9 +1394,9 @@ async def test_logbook_invalid_entity.opp,.opp_client):
 
 async def test_icon_and_state.opp,.opp_client):
     """Test to ensure state and custom icons are returned."""
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", {})
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
 
@@ -1417,11 +1417,11 @@ async def test_icon_and_state.opp,.opp_client):
 
     await _async_commit_and_wait.opp)
 
-    client = await opp._client()
+    client = await.opp_client()
     response_json = await _async_fetch_logbook(client)
 
     assert len(response_json) == 3
-    assert response_json[0]["domain"] == "openpeerpowerr"
+    assert response_json[0]["domain"] == "openpeerpower"
     assert response_json[1]["entity_id"] == "light.kitchen"
     assert response_json[1]["icon"] == "mdi:security"
     assert response_json[1]["state"] == STATE_ON
@@ -1437,13 +1437,13 @@ async def test_exclude_events_domain.opp,.opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {CONF_EXCLUDE: {CONF_DOMAINS: ["switch", "alexa"]}},
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1454,12 +1454,12 @@ async def test_exclude_events_domain.opp,.opp_client):
 
     await _async_commit_and_wait.opp)
 
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1472,7 +1472,7 @@ async def test_exclude_events_domain_glob.opp,.opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_EXCLUDE: {
                     CONF_DOMAINS: ["switch", "alexa"],
@@ -1481,9 +1481,9 @@ async def test_exclude_events_domain_glob.opp,.opp_client):
             },
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1495,12 +1495,12 @@ async def test_exclude_events_domain_glob.opp,.opp_client):
    .opp.states.async_set(entity_id3, 30)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1512,18 +1512,18 @@ async def test_include_events_entity.opp,.opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
-                    CONF_DOMAINS: ["openpeerpowerr"],
+                    CONF_DOMAINS: ["openpeerpower"],
                     CONF_ENTITIES: [entity_id2],
                 }
             },
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1533,12 +1533,12 @@ async def test_include_events_entity.opp,.opp_client):
    .opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1550,13 +1550,13 @@ async def test_exclude_events_entity.opp,.opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {CONF_EXCLUDE: {CONF_ENTITIES: [entity_id]}},
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1566,11 +1566,11 @@ async def test_exclude_events_entity.opp,.opp_client):
    .opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1582,15 +1582,15 @@ async def test_include_events_domain.opp,.opp_client):
     entity_id2 = "sensor.blu"
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {
-                CONF_INCLUDE: {CONF_DOMAINS: ["openpeerpowerr", "sensor", "alexa"]}
+                CONF_INCLUDE: {CONF_DOMAINS: ["openpeerpower", "sensor", "alexa"]}
             },
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1604,12 +1604,12 @@ async def test_include_events_domain.opp,.opp_client):
    .opp.states.async_set(entity_id2, 20)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="Amazon Alexa", domain="alexa")
     _assert_entry(entries[2], name="blu", entity_id=entity_id2)
@@ -1623,18 +1623,18 @@ async def test_include_events_domain_glob.opp,.opp_client):
     entity_id3 = "switch.included"
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
-                    CONF_DOMAINS: ["openpeerpowerr", "sensor", "alexa"],
+                    CONF_DOMAINS: ["openpeerpower", "sensor", "alexa"],
                     CONF_ENTITY_GLOBS: ["*.included"],
                 }
             },
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1650,12 +1650,12 @@ async def test_include_events_domain_glob.opp,.opp_client):
    .opp.states.async_set(entity_id3, 30)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 4
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="Amazon Alexa", domain="alexa")
     _assert_entry(entries[2], name="blu", entity_id=entity_id2)
@@ -1671,10 +1671,10 @@ async def test_include_exclude_events.opp,.opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
-                    CONF_DOMAINS: ["sensor", "openpeerpowerr"],
+                    CONF_DOMAINS: ["sensor", "openpeerpower"],
                     CONF_ENTITIES: ["switch.bla"],
                 },
                 CONF_EXCLUDE: {
@@ -1684,9 +1684,9 @@ async def test_include_exclude_events.opp,.opp_client):
             },
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1702,12 +1702,12 @@ async def test_include_exclude_events.opp,.opp_client):
    .opp.states.async_set(entity_id4, 10)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
     _assert_entry(entries[2], name="keep", entity_id=entity_id4)
@@ -1723,10 +1723,10 @@ async def test_include_exclude_events_with_glob_filters.opp,.opp_client):
     entity_id6 = "sensor.excluded"
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
-                    CONF_DOMAINS: ["sensor", "openpeerpowerr"],
+                    CONF_DOMAINS: ["sensor", "openpeerpower"],
                     CONF_ENTITIES: ["switch.bla"],
                     CONF_ENTITY_GLOBS: ["*.included"],
                 },
@@ -1738,9 +1738,9 @@ async def test_include_exclude_events_with_glob_filters.opp,.opp_client):
             },
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1760,12 +1760,12 @@ async def test_include_exclude_events_with_glob_filters.opp,.opp_client):
    .opp.states.async_set(entity_id6, 30)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
     _assert_entry(entries[2], name="included", entity_id=entity_id4)
@@ -1777,13 +1777,13 @@ async def test_empty_config.opp,.opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            op.DOMAIN: {},
+            ha.DOMAIN: {},
             logbook.DOMAIN: {},
         }
     )
-    await opp..async_add_executor_job(init_recorder_component,.opp)
+    await.opp.async_add_executor_job(init_recorder_component,.opp)
     await async_setup_component.opp, "logbook", config)
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
@@ -1791,12 +1791,12 @@ async def test_empty_config.opp,.opp_client):
    .opp.states.async_set(entity_id, 10)
 
     await _async_commit_and_wait.opp)
-    client = await opp._client()
+    client = await.opp_client()
     entries = await _async_fetch_logbook(client)
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id)
 
@@ -1817,11 +1817,11 @@ async def _async_fetch_logbook(client):
 
 
 async def _async_commit_and_wait.opp):
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job(trigger_db_commit,.opp)
-    await opp..async_block_till_done()
-    await opp..async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job(trigger_db_commit,.opp)
+    await.opp.async_block_till_done()
+    await.opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await.opp.async_block_till_done()
 
 
 def _assert_entry(
@@ -1844,7 +1844,7 @@ def _assert_entry(
         assert entity_id == entry["entity_id"]
 
 
-class MockLazyEventPartialState(op.Event):
+class MockLazyEventPartialState(ha.Event):
     """Minimal mock of a Lazy event."""
 
     @property

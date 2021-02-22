@@ -10,8 +10,8 @@ from openpeerpower.components.homekit.aidmanager import (
     get_aid_storage_filename_for_entry_id,
     get_system_unique_id,
 )
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.helpers.storage import STORAGE_DIR
+from openpeerpower.helpers import device_registry
+from openpeerpower.helpers.storage import STORAGE_DIR
 
 from tests.common import MockConfigEntry, mock_device_registry, mock_registry
 
@@ -31,7 +31,7 @@ def entity_reg.opp):
 async def test_aid_generation.opp, device_reg, entity_reg):
     """Test generating aids."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -101,7 +101,7 @@ async def test_aid_generation.opp, device_reg, entity_reg):
 async def test_no_aid_collision.opp, device_reg, entity_reg):
     """Test generating aids."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -125,12 +125,12 @@ async def test_no_aid_collision.opp, device_reg, entity_reg):
         seen_aids.add(aid)
 
 
-async def test_aid_generation_no_unique_ids_op.dles_collision(
+async def test_aid_generation_no_unique_ids_handles_collision(
    .opp, device_reg, entity_reg
 ):
     """Test colliding aids is stable."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     aid_storage = AccessoryAidStorage.opp, config_entry)
     await aid_storage.async_initialize()
 
@@ -386,7 +386,7 @@ async def test_aid_generation_no_unique_ids_op.dles_collision(
     }
 
     await aid_storage.async_save()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     with patch("fnvhash.fnv1a_32", side_effect=Exception):
         aid_storage = AccessoryAidStorage.opp, config_entry)
@@ -617,6 +617,6 @@ async def test_aid_generation_no_unique_ids_op.dles_collision(
     }
 
     aidstore = get_aid_storage_filename_for_entry_id(config_entry.entry_id)
-    aid_storage_path = opp.config.path(STORAGE_DIR, aidstore)
-    if await opp..async_add_executor_job(os.path.exists, aid_storage_path):
-        await opp..async_add_executor_job(os.unlink, aid_storage_path)
+    aid_storage_path =.opp.config.path(STORAGE_DIR, aidstore)
+    if await.opp.async_add_executor_job(os.path.exists, aid_storage_path):
+        await.opp.async_add_executor_job(os.unlink, aid_storage_path)

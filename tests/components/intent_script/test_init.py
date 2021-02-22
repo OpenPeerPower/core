@@ -1,6 +1,6 @@
 """Test intent_script component."""
-from openpeerpowerr.bootstrap import async_setup_component
-from openpeerpowerr.helpers import intent
+from openpeerpower.bootstrap import async_setup_component
+from openpeerpower.helpers import intent
 
 from tests.common import async_mock_service
 
@@ -29,7 +29,7 @@ async def test_intent_script.opp):
         },
     )
 
-    response = await intent.async_op.dle(
+    response = await intent.async_handle(
        .opp, "test", "HelloWorld", {"name": {"value": "Paulus"}}
     )
 

@@ -6,7 +6,7 @@ import urllib3
 from openpeerpower.components.http.security_filter import setup_security_filter
 
 
-async def mock_op.dler(request):
+async def mock_handler(request):
     """Return OK."""
     return web.Response(text="OK")
 
@@ -24,7 +24,7 @@ async def mock_op.dler(request):
 async def test_ok_requests(request_path, request_params, aiohttp_client):
     """Test request paths that should not be filtered."""
     app = web.Application()
-    app.router.add_get("/{all:.*}", mock_op.dler)
+    app.router.add_get("/{all:.*}", mock_handler)
 
     setup_security_filter(app)
 
@@ -58,7 +58,7 @@ async def test_bad_requests(
 ):
     """Test request paths that should be filtered."""
     app = web.Application()
-    app.router.add_get("/{all:.*}", mock_op.dler)
+    app.router.add_get("/{all:.*}", mock_handler)
 
     setup_security_filter(app)
 

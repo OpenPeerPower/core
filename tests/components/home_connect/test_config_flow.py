@@ -8,7 +8,7 @@ from openpeerpower.components.home_connect.const import (
     OAUTH2_TOKEN,
 )
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
-from openpeerpowerr.helpers import config_entry_oauth2_flow
+from openpeerpower.helpers import config_entry_oauth2_flow
 
 CLIENT_ID = "1234"
 CLIENT_SECRET = "5678"
@@ -30,7 +30,7 @@ async def test_full_flow(
         },
     )
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         "home_connect", context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
@@ -66,8 +66,8 @@ async def test_full_flow(
     with patch(
         "openpeerpower.components.home_connect.async_setup_entry", return_value=True
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_configure(result["flow_id"])
-        await opp..async_block_till_done()
+        result = await.opp.config_entries.flow.async_configure(result["flow_id"])
+        await.opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup_entry.mock_calls) == 1

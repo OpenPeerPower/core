@@ -23,8 +23,8 @@ from openpeerpower.const import (
     CONF_USERNAME,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.setup import async_setup_component
 
 from .const import (
     MOCK_ADDRESS,
@@ -57,7 +57,7 @@ async def mock_failed_connection(*args, **kwargs):
 async def test_setup_entry.opp: OpenPeerPowerType):
     """Test setting up the entry."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_INPUT_PLM)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch.object(
         insteon, "async_connect", new=mock_successful_connection
@@ -69,9 +69,9 @@ async def test_setup_entry.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             {},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
        .opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         # pylint: disable=no-member
         assert insteon.devices.async_save.call_count == 1
         assert mock_close.called
@@ -94,10 +94,10 @@ async def test_import_plm.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         await asyncio.sleep(0.01)
     assert.opp.config_entries.async_entries(DOMAIN)
-    data = opp.config_entries.async_entries(DOMAIN)[0].data
+    data =.opp.config_entries.async_entries(DOMAIN)[0].data
     assert data[CONF_DEVICE] == MOCK_IMPORT_CONFIG_PLM[CONF_PORT]
     assert CONF_PORT not in data
 
@@ -119,10 +119,10 @@ async def test_import_hub1.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         await asyncio.sleep(0.01)
         assert.opp.config_entries.async_entries(DOMAIN)
-    data = opp.config_entries.async_entries(DOMAIN)[0].data
+    data =.opp.config_entries.async_entries(DOMAIN)[0].data
     assert data[CONF_HOST] == MOCK_IMPORT_FULL_CONFIG_HUB_V1[CONF_HOST]
     assert data[CONF_PORT] == PORT_HUB_V1
     assert CONF_USERNAME not in data
@@ -146,10 +146,10 @@ async def test_import_hub2.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         await asyncio.sleep(0.01)
         assert.opp.config_entries.async_entries(DOMAIN)
-    data = opp.config_entries.async_entries(DOMAIN)[0].data
+    data =.opp.config_entries.async_entries(DOMAIN)[0].data
     assert data[CONF_HOST] == MOCK_IMPORT_FULL_CONFIG_HUB_V2[CONF_HOST]
     assert data[CONF_PORT] == PORT_HUB_V2
     assert data[CONF_USERNAME] == MOCK_IMPORT_MINIMUM_HUB_V2[CONF_USERNAME]
@@ -173,12 +173,12 @@ async def test_import_options.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         await asyncio.sleep(0.01)  # Need to yield to async processes
         # pylint: disable=no-member
         assert insteon.devices.add_x10_device.call_count == 2
         assert insteon.devices.set_id.call_count == 1
-    options = opp.config_entries.async_entries(DOMAIN)[0].options
+    options =.opp.config_entries.async_entries(DOMAIN)[0].options
     assert len(options[CONF_OVERRIDE]) == 1
     assert options[CONF_OVERRIDE][0][CONF_ADDRESS] == str(Address(MOCK_ADDRESS))
     assert options[CONF_OVERRIDE][0][CONF_CAT] == MOCK_CAT
@@ -204,14 +204,14 @@ async def test_import_failed_connection.opp: OpenPeerPowerType):
             insteon.DOMAIN,
             config,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
         assert not.opp.config_entries.async_entries(DOMAIN)
 
 
 async def test_setup_entry_failed_connection.opp: OpenPeerPowerType, caplog):
     """Test setting up the entry with a failed connection."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_INPUT_PLM)
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
 
     with patch.object(
         insteon, "async_connect", new=mock_failed_connection

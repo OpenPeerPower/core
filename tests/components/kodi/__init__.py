@@ -28,7 +28,7 @@ async def init_integration.opp) -> MockConfigEntry:
         CONF_SSL: False,
     }
     entry = MockConfigEntry(domain=DOMAIN, data=entry_data, title="name")
-    entry.add_to_opp.opp)
+    entry.add_to.opp.opp)
 
     with patch("openpeerpower.components.kodi.Kodi.ping", return_value=True), patch(
         "openpeerpower.components.kodi.Kodi.get_application_properties",
@@ -37,7 +37,7 @@ async def init_integration.opp) -> MockConfigEntry:
         "openpeerpower.components.kodi.get_kodi_connection",
         return_value=MockConnection(),
     ):
-        await opp..config_entries.async_setup(entry.entry_id)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_setup(entry.entry_id)
+        await.opp.async_block_till_done()
 
     return entry

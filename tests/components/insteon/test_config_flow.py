@@ -35,7 +35,7 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_USERNAME,
 )
-from openpeerpowerr.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     MOCK_HOSTNAME,
@@ -67,13 +67,13 @@ async def mock_failed_connection(*args, **kwargs):
 
 async def _init_form.opp, modem_type):
     """Run the user form."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {}
 
-    result2 = await opp..config_entries.flow.async_configure(
+    result2 = await.opp.config_entries.flow.async_configure(
         result["flow_id"],
         {MODEM_TYPE: modem_type},
     )
@@ -88,8 +88,8 @@ async def _device_form.opp, flow_id, connection, user_input):
         PATCH_ASYNC_SETUP_ENTRY,
         return_value=True,
     ) as mock_setup_entry:
-        result = await opp..config_entries.flow.async_configure(flow_id, user_input)
-        await opp..async_block_till_done()
+        result = await.opp.config_entries.flow.async_configure(flow_id, user_input)
+        await.opp.async_block_till_done()
     return result, mock_setup, mock_setup_entry
 
 
@@ -109,10 +109,10 @@ async def test_fail_on_existing.opp: OpenPeerPowerType):
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         options={},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN,
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         context={"source": config_entries.SOURCE_USER},
@@ -201,7 +201,7 @@ async def _import_config.opp, config):
     with patch(PATCH_CONNECTION, new=mock_successful_connection,), patch(
         PATCH_ASYNC_SETUP, return_value=True
     ), patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True):
-        return await opp..config_entries.flow.async_init(
+        return await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=config
         )
 
@@ -221,12 +221,12 @@ async def test_import_plm.opp: OpenPeerPowerType):
 async def _options_init_form.opp, entry_id, step):
     """Run the init options form."""
     with patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True):
-        result = await opp..config_entries.options.async_init(entry_id)
+        result = await.opp.config_entries.options.async_init(entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result2 = await opp..config_entries.options.async_configure(
+    result2 = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         {step: True},
     )
@@ -275,7 +275,7 @@ async def test_import_existing.opp: OpenPeerPowerType):
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         options={},
     )
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
     result = await _import_config(
@@ -292,7 +292,7 @@ async def test_import_failed_connection.opp: OpenPeerPowerType):
     with patch(PATCH_CONNECTION, new=mock_failed_connection,), patch(
         PATCH_ASYNC_SETUP, return_value=True
     ), patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True):
-        result = await opp..config_entries.flow.async_init(
+        result = await.opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": config_entries.SOURCE_IMPORT},
             data={**MOCK_IMPORT_MINIMUM_HUB_V2, CONF_PORT: 25105, CONF_HUB_VERSION: 2},
@@ -306,7 +306,7 @@ async def _options_form.opp, flow_id, user_input):
     """Test an options form."""
 
     with patch(PATCH_ASYNC_SETUP_ENTRY, return_value=True) as mock_setup_entry:
-        result = await opp..config_entries.options.async_configure(flow_id, user_input)
+        result = await.opp.config_entries.options.async_configure(flow_id, user_input)
         return result, mock_setup_entry
 
 
@@ -319,7 +319,7 @@ async def test_options_change_hub_config.opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form(
        .opp, config_entry.entry_id, STEP_CHANGE_HUB_CONFIG
     )
@@ -346,7 +346,7 @@ async def test_options_add_device_override.opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form.opp, config_entry.entry_id, STEP_ADD_OVERRIDE)
 
     user_input = {
@@ -369,12 +369,15 @@ async def test_options_add_device_override.opp: OpenPeerPowerType):
         CONF_CAT: "05",
         CONF_SUBCAT: "bb",
     }
-    await _options_form.opp, result2["flow_id"], user_input)
+    result3, _ = await _options_form.opp, result2["flow_id"], user_input)
 
     assert len(config_entry.options[CONF_OVERRIDE]) == 2
     assert config_entry.options[CONF_OVERRIDE][1][CONF_ADDRESS] == "4D.5E.6F"
     assert config_entry.options[CONF_OVERRIDE][1][CONF_CAT] == 5
     assert config_entry.options[CONF_OVERRIDE][1][CONF_SUBCAT] == 187
+
+    # If result1 eq result2 the changes will not save
+    assert result["data"] != result3["data"]
 
 
 async def test_options_remove_device_override.opp: OpenPeerPowerType):
@@ -391,7 +394,7 @@ async def test_options_remove_device_override.opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form.opp, config_entry.entry_id, STEP_REMOVE_OVERRIDE)
 
     user_input = {CONF_ADDRESS: "1A.2B.3C"}
@@ -423,7 +426,7 @@ async def test_options_remove_device_override_with_x10.opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form.opp, config_entry.entry_id, STEP_REMOVE_OVERRIDE)
 
     user_input = {CONF_ADDRESS: "1A.2B.3C"}
@@ -443,7 +446,7 @@ async def test_options_add_x10_device.opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form.opp, config_entry.entry_id, STEP_ADD_X10)
 
     user_input = {
@@ -477,6 +480,9 @@ async def test_options_add_x10_device.opp: OpenPeerPowerType):
     assert config_entry.options[CONF_X10][1][CONF_PLATFORM] == "binary_sensor"
     assert config_entry.options[CONF_X10][1][CONF_DIM_STEPS] == 15
 
+    # If result2 eq result3 the changes will not save
+    assert result2["data"] != result3["data"]
+
 
 async def test_options_remove_x10_device.opp: OpenPeerPowerType):
     """Test removing an X10 device."""
@@ -502,7 +508,7 @@ async def test_options_remove_x10_device.opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form.opp, config_entry.entry_id, STEP_REMOVE_X10)
 
     for device in config_entry.options[CONF_X10]:
@@ -542,7 +548,7 @@ async def test_options_remove_x10_device_with_override.opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form.opp, config_entry.entry_id, STEP_REMOVE_X10)
 
     for device in config_entry.options[CONF_X10]:
@@ -566,13 +572,13 @@ async def test_options_dup_selection.opp: OpenPeerPowerType):
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         options={},
     )
-    config_entry.add_to_opp.opp)
-    result = await opp..config_entries.options.async_init(config_entry.entry_id)
+    config_entry.add_to.opp.opp)
+    result = await.opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "init"
 
-    result2 = await opp..config_entries.options.async_configure(
+    result2 = await.opp.config_entries.options.async_configure(
         result["flow_id"],
         {STEP_ADD_OVERRIDE: True, STEP_ADD_X10: True},
     )
@@ -590,7 +596,7 @@ async def test_options_override_bad_data.opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     result = await _options_init_form.opp, config_entry.entry_id, STEP_ADD_OVERRIDE)
 
     user_input = {

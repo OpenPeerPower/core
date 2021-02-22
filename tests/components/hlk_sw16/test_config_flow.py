@@ -50,7 +50,7 @@ async def create_mock_hlk_sw16_connection(fail):
 async def test_form.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
@@ -72,11 +72,11 @@ async def test_form.opp):
         "openpeerpower.components.hlk_sw16.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             conf,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "127.0.0.1:8080"
@@ -93,26 +93,26 @@ async def test_form.opp):
         "openpeerpower.components.hlk_sw16.config_flow.create_hlk_sw16_connection",
         return_value=mock_hlk_sw16_connection,
     ):
-        result3 = await opp..config_entries.flow.async_init(
+        result3 = await.opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
     assert result3["type"] == "form"
     assert result3["errors"] == {}
 
-    result4 = await opp..config_entries.flow.async_configure(
+    result4 = await.opp.config_entries.flow.async_configure(
         result3["flow_id"],
         conf,
     )
 
     assert result4["type"] == "form"
     assert result4["errors"] == {"base": "already_configured"}
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
 
 async def test_import.opp):
     """Test we get the form."""
     await setup.async_setup_component.opp, "persistent_notification", {})
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}
     )
     assert result["type"] == "form"
@@ -134,11 +134,11 @@ async def test_import.opp):
         "openpeerpower.components.hlk_sw16.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             conf,
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "127.0.0.1:8080"
@@ -152,7 +152,7 @@ async def test_import.opp):
 
 async def test_form_invalid_data.opp):
     """Test we handle invalid auth."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -167,7 +167,7 @@ async def test_form_invalid_data.opp):
         "openpeerpower.components.hlk_sw16.config_flow.connect_client",
         return_value=mock_hlk_sw16_connection,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             conf,
         )
@@ -178,7 +178,7 @@ async def test_form_invalid_data.opp):
 
 async def test_form_cannot_connect.opp):
     """Test we handle cannot connect error."""
-    result = await opp..config_entries.flow.async_init(
+    result = await.opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
@@ -192,7 +192,7 @@ async def test_form_cannot_connect.opp):
         side_effect=asyncio.TimeoutError,
         return_value=None,
     ):
-        result2 = await opp..config_entries.flow.async_configure(
+        result2 = await.opp.config_entries.flow.async_configure(
             result["flow_id"],
             conf,
         )

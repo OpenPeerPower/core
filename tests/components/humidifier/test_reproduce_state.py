@@ -14,7 +14,7 @@ from openpeerpower.components.humidifier.const import (
 )
 from openpeerpower.components.humidifier.reproduce_state import async_reproduce_states
 from openpeerpower.const import SERVICE_TURN_OFF, SERVICE_TURN_ON, STATE_OFF, STATE_ON
-from openpeerpowerr.core import Context, State
+from openpeerpower.core import Context, State
 
 from tests.common import async_mock_service
 
@@ -33,7 +33,7 @@ async def test_reproducing_on_off_states.opp, caplog):
     humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     # These calls should do nothing as entities already in desired state
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State(ENTITY_1, "off", {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45}),
             State(ENTITY_2, "on", {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45}),
@@ -46,7 +46,7 @@ async def test_reproducing_on_off_states.opp, caplog):
     assert len(humidity_calls) == 0
 
     # Test invalid state is handled
-    await opp..helpers.state.async_reproduce_state([State(ENTITY_1, "not_supported")])
+    await.opp.helpers.state.async_reproduce_state([State(ENTITY_1, "not_supported")])
 
     assert "not_supported" in caplog.text
     assert len(turn_on_calls) == 0
@@ -55,7 +55,7 @@ async def test_reproducing_on_off_states.opp, caplog):
     assert len(humidity_calls) == 0
 
     # Make sure correct services are called
-    await opp..helpers.state.async_reproduce_state(
+    await.opp.helpers.state.async_reproduce_state(
         [
             State(ENTITY_2, "off"),
             State(ENTITY_1, "on", {}),
@@ -90,7 +90,7 @@ async def test_multiple_attrs.opp):
        .opp, [State(ENTITY_1, STATE_ON, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(turn_on_calls) == 1
     assert turn_on_calls[0].data == {"entity_id": ENTITY_1}
@@ -114,7 +114,7 @@ async def test_turn_off_multiple_attrs.opp):
        .opp, [State(ENTITY_1, STATE_OFF, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(turn_on_calls) == 0
     assert len(turn_off_calls) == 1
@@ -141,7 +141,7 @@ async def test_multiple_modes.opp):
         ],
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(turn_on_calls) == 2
     assert len(turn_off_calls) == 0
@@ -174,7 +174,7 @@ async def test_state_with_none.opp):
 
     await async_reproduce_states.opp, [State(ENTITY_1, None)])
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(turn_on_calls) == 0
     assert len(turn_off_calls) == 0
@@ -199,7 +199,7 @@ async def test_state_with_context.opp):
         context=context,
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(turn_on_calls) == 1
     assert turn_on_calls[0].data == {"entity_id": ENTITY_1}
@@ -229,7 +229,7 @@ async def test_attribute.opp, service, attribute):
 
     await async_reproduce_states.opp, [State(ENTITY_1, STATE_ON, {attribute: value})])
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(turn_on_calls) == 0
     assert len(turn_off_calls) == 0

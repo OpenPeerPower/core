@@ -1,7 +1,7 @@
 """The tests for the Homematic notification platform."""
 
 import openpeerpower.components.notify as notify_comp
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component
 

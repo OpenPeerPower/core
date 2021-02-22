@@ -6,7 +6,7 @@ import pytest
 
 from openpeerpower.components import sensor
 from openpeerpower.components.lastfm.sensor import STATE_NOT_SCROBBLING
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 
 class MockUser:
@@ -54,11 +54,11 @@ async def test_update_not_playing.opp, lastfm_network):
         sensor.DOMAIN,
         {"sensor": {"platform": "lastfm", "api_key": "secret-key", "users": ["test"]}},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "sensor.test"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
 
     assert state.state == STATE_NOT_SCROBBLING
 
@@ -75,10 +75,10 @@ async def test_update_playing.opp, lastfm_network):
         sensor.DOMAIN,
         {"sensor": {"platform": "lastfm", "api_key": "secret-key", "users": ["test"]}},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     entity_id = "sensor.test"
 
-    state = opp.states.get(entity_id)
+    state =.opp.states.get(entity_id)
 
     assert state.state == "artist - title"

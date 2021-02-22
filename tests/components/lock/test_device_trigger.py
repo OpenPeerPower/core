@@ -4,8 +4,8 @@ import pytest
 import openpeerpower.components.automation as automation
 from openpeerpower.components.lock import DOMAIN
 from openpeerpower.const import STATE_LOCKED, STATE_UNLOCKED
-from openpeerpowerr.helpers import device_registry
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.helpers import device_registry
+from openpeerpower.setup import async_setup_component
 
 from tests.common import (
     MockConfigEntry,
@@ -39,7 +39,7 @@ def calls.opp):
 async def test_get_triggers.opp, device_reg, entity_reg):
     """Test we get the expected triggers from a lock."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to_opp.opp)
+    config_entry.add_to.opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -118,7 +118,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is turning on.
    .opp.states.async_set("lock.entity", STATE_LOCKED)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data[
         "some"
@@ -126,7 +126,7 @@ async def test_if_fires_on_state_change.opp, calls):
 
     # Fake that the entity is turning off.
    .opp.states.async_set("lock.entity", STATE_UNLOCKED)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(calls) == 2
     assert calls[1].data[
         "some"

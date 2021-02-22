@@ -15,11 +15,11 @@ import pytest
 
 from openpeerpower.components.http.cors import setup_cors
 from openpeerpower.components.http.view import OpenPeerPowerView
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from . import HTTP_HEADER_HA_AUTH
 
-TRUSTED_ORIGIN = "https://openpeerpower.io"
+TRUSTED_ORIGIN = "https://open-peer-power.io"
 
 
 async def test_cors_middleware_loaded_by_default.opp):
@@ -36,13 +36,13 @@ async def test_cors_middleware_loaded_from_config.opp):
         await async_setup_component(
            .opp,
             "http",
-            {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}},
+            {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}},
         )
 
     assert len(mock_setup.mock_calls) == 1
 
 
-async def mock_op.dler(request):
+async def mock_handler(request):
     """Return if request was authenticated."""
     return web.Response(status=200)
 
@@ -51,7 +51,7 @@ async def mock_op.dler(request):
 def client(loop, aiohttp_client):
     """Fixture to set up a web.Application."""
     app = web.Application()
-    app.router.add_get("/", mock_op.dler)
+    app.router.add_get("/", mock_handler)
     setup_cors(app, [TRUSTED_ORIGIN])
     return loop.run_until_complete(aiohttp_client(app))
 
@@ -119,7 +119,7 @@ async def test_cors_middleware_with_cors_allowed_view.opp):
             return "test"
 
     assert await async_setup_component(
-       .opp, "http", {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}}
+       .opp, "http", {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}}
     )
 
    .opp.http.register_view(MyView("/api/test", "api:test"))
@@ -127,7 +127,7 @@ async def test_cors_middleware_with_cors_allowed_view.opp):
    .opp.http.register_view(MyView("/api/test2", "api:test"))
 
    .opp.http.app._on_startup.freeze()
-    await opp..http.app.startup()
+    await.opp.http.app.startup()
 
 
 async def test_cors_works_with_frontend.opp,.opp_client):
@@ -135,9 +135,9 @@ async def test_cors_works_with_frontend.opp,.opp_client):
     assert await async_setup_component(
        .opp,
         "frontend",
-        {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}},
+        {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}},
     )
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.get("/")
     assert resp.status == 200
 
@@ -149,7 +149,7 @@ async def test_cors_on_static_files.opp,.opp_client):
     )
    .opp.http.register_static_path("/something", str(Path(__file__).parent))
 
-    client = await opp._client()
+    client = await.opp_client()
     resp = await client.options(
         "/something/__init__.py",
         headers={

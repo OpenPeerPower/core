@@ -6,8 +6,8 @@ from aiohttp.hdrs import AUTHORIZATION
 
 import openpeerpower.components.html5.notify as html5
 from openpeerpower.const import HTTP_INTERNAL_SERVER_ERROR
-from openpeerpowerr.exceptions import OpenPeerPowerError
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.setup import async_setup_component
 
 CONFIG_FILE = "file.conf"
 
@@ -71,9 +71,9 @@ async def mock_client.opp,.opp_client, registrations=None):
         "openpeerpower.components.html5.notify._load_config", return_value=registrations
     ):
         await async_setup_component.opp, "notify", {"notify": {"platform": "html5"}})
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    return await opp._client()
+    return await.opp_client()
 
 
 class TestHtml5Notify:
@@ -81,10 +81,10 @@ class TestHtml5Notify:
 
     def test_get_service_with_no_json(self):
         """Test empty json file."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         m = mock_open()
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service.opp, {})
 
         assert service is not None
@@ -92,12 +92,12 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_dismissing_message(self, mock_wp):
         """Test dismissing message."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         data = {"device": SUBSCRIPTION_1}
 
         m = mock_open(read_data=json.dumps(data))
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service.opp, {"gcm_sender_id": "100"})
 
         assert service is not None
@@ -120,12 +120,12 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_sending_message(self, mock_wp):
         """Test sending message."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         data = {"device": SUBSCRIPTION_1}
 
         m = mock_open(read_data=json.dumps(data))
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service.opp, {"gcm_sender_id": "100"})
 
         assert service is not None
@@ -150,12 +150,12 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_gcm_key_include(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         data = {"chrome": SUBSCRIPTION_1, "firefox": SUBSCRIPTION_2}
 
         m = mock_open(read_data=json.dumps(data))
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service(
                .opp, {"gcm_sender_id": "100", "gcm_api_key": "Y6i0JdZ0mj9LOaSI"}
             )
@@ -181,12 +181,12 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_key_include(self, mock_wp):
         """Test if the FCM header is included."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 
         m = mock_open(read_data=json.dumps(data))
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service.opp, VAPID_CONF)
 
         assert service is not None
@@ -206,12 +206,12 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_send_with_unknown_priority(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 
         m = mock_open(read_data=json.dumps(data))
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service.opp, VAPID_CONF)
 
         assert service is not None
@@ -231,12 +231,12 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_no_targets(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 
         m = mock_open(read_data=json.dumps(data))
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service.opp, VAPID_CONF)
 
         assert service is not None
@@ -256,12 +256,12 @@ class TestHtml5Notify:
     @patch("openpeerpower.components.html5.notify.WebPusher")
     def test_fcm_additional_data(self, mock_wp):
         """Test if the gcm_key is only included for GCM endpoints."""
-        opp = MagicMock()
+       .opp = MagicMock()
 
         data = {"chrome": SUBSCRIPTION_5}
 
         m = mock_open(read_data=json.dumps(data))
-        with patch("openpeerpowerr.util.json.open", m, create=True):
+        with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service.opp, VAPID_CONF)
 
         assert service is not None
@@ -422,7 +422,7 @@ async def test_unregistering_device_view.opp,.opp_client):
     assert registrations == {"other device": SUBSCRIPTION_2}
 
 
-async def test_unregister_device_view_op.dle_unknown_subscription.opp,.opp_client):
+async def test_unregister_device_view_handle_unknown_subscription.opp,.opp_client):
     """Test that the HTML unregister view handles unknown subscriptions."""
     registrations = {}
     client = await mock_client.opp,.opp_client, registrations)
@@ -438,7 +438,7 @@ async def test_unregister_device_view_op.dle_unknown_subscription.opp,.opp_clien
     assert len(mock_save.mock_calls) == 0
 
 
-async def test_unregistering_device_view_op.dles_save_error.opp,.opp_client):
+async def test_unregistering_device_view_handles_save_error.opp,.opp_client):
     """Test that the HTML unregister view handles save errors."""
     registrations = {"some device": SUBSCRIPTION_1, "other device": SUBSCRIPTION_2}
     client = await mock_client.opp,.opp_client, registrations)
@@ -478,7 +478,7 @@ async def test_callback_view_with_jwt.opp,.opp_client):
     client = await mock_client.opp,.opp_client, registrations)
 
     with patch("openpeerpower.components.html5.notify.WebPusher") as mock_wp:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "notify",
             "notify",
             {"message": "Hello", "target": ["device"], "data": {"icon": "beer.png"}},
@@ -514,7 +514,7 @@ async def test_send_fcm_without_targets.opp,.opp_client):
     registrations = {"device": SUBSCRIPTION_5}
     await mock_client.opp,.opp_client, registrations)
     with patch("openpeerpower.components.html5.notify.WebPusher") as mock_wp:
-        await opp..services.async_call(
+        await.opp.services.async_call(
             "notify",
             "notify",
             {"message": "Hello", "target": ["device"], "data": {"icon": "beer.png"}},

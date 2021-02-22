@@ -4,7 +4,7 @@ import pytest
 from openpeerpower.components import hue
 import openpeerpower.components.automation as automation
 from openpeerpower.components.hue import device_trigger
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from .conftest import setup_bridge_for_sensors as setup_bridge
 from .test_sensor_base import HUE_DIMMER_REMOTE_1, HUE_TAP_REMOTE_1
@@ -148,7 +148,7 @@ async def test_if_fires_on_state_change.opp, mock_bridge, device_reg, calls):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
 
@@ -165,6 +165,6 @@ async def test_if_fires_on_state_change.opp, mock_bridge, device_reg, calls):
 
     # Force updates to run again
     await mock_bridge.sensor_manager.coordinator.async_refresh()
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert len(mock_bridge.mock_requests) == 3
     assert len(calls) == 1

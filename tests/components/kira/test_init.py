@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 import openpeerpower.components.kira as kira
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 TEST_CONFIG = {
     kira.DOMAIN: {

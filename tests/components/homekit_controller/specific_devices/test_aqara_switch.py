@@ -4,7 +4,7 @@ Regression tests for Aqara AR004.
 This device has a non-standard programmable stateless switch service that has a
 service-label-index despite not being linked to a service-label.
 
-https://github.com/openpeerpower/core/pull/39090
+https://github.com/open-peer-power/core/pull/39090
 """
 
 from tests.common import assert_lists_same, async_get_device_automations
@@ -19,7 +19,7 @@ async def test_aqara_switch_setup.opp):
     accessories = await setup_accessories_from_file.opp, "aqara_switch.json")
     config_entry, pairing = await setup_test_accessories.opp, accessories)
 
-    entity_registry = await opp..helpers.entity_registry.async_get_registry()
+    entity_registry = await.opp.helpers.entity_registry.async_get_registry()
 
     battery_id = "sensor.programmable_switch_battery"
     battery = entity_registry.async_get(battery_id)

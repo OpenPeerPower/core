@@ -9,7 +9,7 @@ from openpeerpower.components.homekit.const import (
     EVENT_HOMEKIT_CHANGED,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_SERVICE
-from openpeerpowerr.setup import async_setup_component
+from openpeerpower.setup import async_setup_component
 
 from tests.components.logbook.test_init import MockLazyEventPartialState
 

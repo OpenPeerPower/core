@@ -19,8 +19,8 @@ from openpeerpower.components.weather import (
     ATTR_WEATHER_WIND_SPEED,
     DOMAIN as WEATHER_DOMAIN,
 )
-from openpeerpowerr.setup import async_setup_component
-from openpeerpowerr.util.dt import now
+from openpeerpower.setup import async_setup_component
+from openpeerpower.util.dt import now
 
 from tests.common import MockConfigEntry
 
@@ -140,9 +140,9 @@ async def test_setup_configuration.opp):
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "hourly"}},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.hometown")
+    state =.opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     data = state.attributes
@@ -161,10 +161,10 @@ async def test_setup_config_flow.opp):
         return_value=MockLocation(),
     ):
         entry = MockConfigEntry(domain="ipma", data=TEST_CONFIG)
-        await opp..config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
-        await opp..async_block_till_done()
+        await.opp.config_entries.async_forward_entry_setup(entry, WEATHER_DOMAIN)
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.hometown")
+    state =.opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     data = state.attributes
@@ -187,9 +187,9 @@ async def test_daily_forecast.opp):
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "daily"}},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.hometown")
+    state =.opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     forecast = state.attributes.get(ATTR_FORECAST)[0]
@@ -213,9 +213,9 @@ async def test_hourly_forecast.opp):
             weather.DOMAIN,
             {"weather": {"name": "HomeTown", "platform": "ipma", "mode": "hourly"}},
         )
-        await opp..async_block_till_done()
+        await.opp.async_block_till_done()
 
-    state = opp.states.get("weather.hometown")
+    state =.opp.states.get("weather.hometown")
     assert state.state == "rainy"
 
     forecast = state.attributes.get(ATTR_FORECAST)[0]

@@ -60,8 +60,8 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpowerr.core import CoreState
-from openpeerpowerr.helpers import entity_registry
+from openpeerpower.core import CoreState
+from openpeerpower.helpers import entity_registry
 
 from tests.common import async_mock_service
 
@@ -85,12 +85,12 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.aid == 1
     assert acc.category == 9  # Thermostat
@@ -127,7 +127,7 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.2
     assert acc.char_current_heat_cool.value == 1
     assert acc.char_target_heat_cool.value == 1
@@ -151,7 +151,7 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 0
     assert acc.char_target_heat_cool.value == 1
@@ -175,7 +175,7 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 20.0
     assert acc.char_current_heat_cool.value == 2
     assert acc.char_target_heat_cool.value == 2
@@ -191,7 +191,7 @@ async def test_thermostat.opp, hk_driver, events):
             ATTR_HVAC_ACTION: CURRENT_HVAC_IDLE,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 20.0
     assert acc.char_current_heat_cool.value == 0
     assert acc.char_target_heat_cool.value == 2
@@ -203,7 +203,7 @@ async def test_thermostat.opp, hk_driver, events):
         HVAC_MODE_OFF,
         {ATTR_TEMPERATURE: 22.0, ATTR_CURRENT_TEMPERATURE: 18.0},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 0
     assert acc.char_target_heat_cool.value == 0
@@ -227,7 +227,7 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 1
     assert acc.char_target_heat_cool.value == 3
@@ -251,7 +251,7 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 2
     assert acc.char_target_heat_cool.value == 3
@@ -275,7 +275,7 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 0
     assert acc.char_target_heat_cool.value == 3
@@ -299,7 +299,7 @@ async def test_thermostat.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 2
     assert acc.char_target_heat_cool.value == 2
@@ -316,7 +316,7 @@ async def test_thermostat.opp, hk_driver, events):
             ATTR_HVAC_ACTION: CURRENT_HVAC_DRY,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 2
     assert acc.char_target_heat_cool.value == 2
@@ -342,7 +342,7 @@ async def test_thermostat.opp, hk_driver, events):
         },
         "mock_addr",
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_temperature
     assert call_set_temperature[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[0].data[ATTR_TEMPERATURE] == 19.0
@@ -362,7 +362,7 @@ async def test_thermostat.opp, hk_driver, events):
         },
         "mock_addr",
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert not call_set_hvac_mode
 
     hk_driver.set_characteristics(
@@ -377,7 +377,7 @@ async def test_thermostat.opp, hk_driver, events):
         },
         "mock_addr",
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT
@@ -397,7 +397,7 @@ async def test_thermostat.opp, hk_driver, events):
         },
         "mock_addr",
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[1].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[1].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT_COOL
@@ -427,12 +427,12 @@ async def test_thermostat_auto.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_heating_thresh_temp.value == 19.0
@@ -462,7 +462,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 20.0
     assert acc.char_cooling_thresh_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 1
@@ -488,7 +488,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 19.0
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_current_heat_cool.value == 2
@@ -514,7 +514,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 19.0
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_current_heat_cool.value == 0
@@ -546,7 +546,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_temperature[0]
     assert call_set_temperature[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[0].data[ATTR_TARGET_TEMP_LOW] == 20.0
@@ -566,12 +566,12 @@ async def test_thermostat_humidity.opp, hk_driver, events):
 
     # support_auto = True
    .opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_SUPPORTED_FEATURES: 4})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_target_humidity.value == 50
     assert acc.char_current_humidity.value == 50
@@ -581,14 +581,14 @@ async def test_thermostat_humidity.opp, hk_driver, events):
    .opp.states.async_set(
         entity_id, HVAC_MODE_HEAT_COOL, {ATTR_HUMIDITY: 65, ATTR_CURRENT_HUMIDITY: 40}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_current_humidity.value == 40
     assert acc.char_target_humidity.value == 65
 
    .opp.states.async_set(
         entity_id, HVAC_MODE_COOL, {ATTR_HUMIDITY: 35, ATTR_CURRENT_HUMIDITY: 70}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_current_humidity.value == 70
     assert acc.char_target_humidity.value == 35
 
@@ -610,7 +610,7 @@ async def test_thermostat_humidity.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_humidity[0]
     assert call_set_humidity[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_humidity[0].data[ATTR_HUMIDITY] == 35
@@ -641,12 +641,12 @@ async def test_thermostat_power_state.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_current_heat_cool.value == 1
     assert acc.char_target_heat_cool.value == 1
@@ -667,7 +667,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_current_heat_cool.value == 0
     assert acc.char_target_heat_cool.value == 0
 
@@ -687,7 +687,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_current_heat_cool.value == 0
     assert acc.char_target_heat_cool.value == 0
 
@@ -709,7 +709,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT
@@ -730,7 +730,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[1].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[1].data[ATTR_HVAC_MODE] == HVAC_MODE_COOL
@@ -752,12 +752,12 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
             | SUPPORT_TARGET_TEMPERATURE_RANGE
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     with patch.object.opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
         acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(
         entity_id,
@@ -771,7 +771,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
             | SUPPORT_TARGET_TEMPERATURE_RANGE,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.get_temperature_range() == (7.0, 35.0)
     assert acc.char_heating_thresh_temp.value == 20.1
     assert acc.char_cooling_thresh_temp.value == 24.0
@@ -799,7 +799,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_temperature[0]
     assert call_set_temperature[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[0].data[ATTR_TARGET_TEMP_HIGH] == 73.5
@@ -820,7 +820,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_temperature[1]
     assert call_set_temperature[1].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[1].data[ATTR_TARGET_TEMP_HIGH] == 73.5
@@ -840,7 +840,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
         },
         "mock_addr",
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_temperature[2]
     assert call_set_temperature[2].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[2].data[ATTR_TEMPERATURE] == 75.0
@@ -853,20 +853,20 @@ async def test_thermostat_get_temperature_range.opp, hk_driver):
     entity_id = "climate.test"
 
    .opp.states.async_set(entity_id, HVAC_MODE_OFF)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 2, None)
 
    .opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_MIN_TEMP: 20, ATTR_MAX_TEMP: 25}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.get_temperature_range() == (20, 25)
 
     acc._unit = TEMP_FAHRENHEIT
    .opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_MIN_TEMP: 60, ATTR_MAX_TEMP: 70}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.get_temperature_range() == (15.5, 21.0)
 
 
@@ -875,12 +875,12 @@ async def test_thermostat_temperature_step_whole.opp, hk_driver):
     entity_id = "climate.test"
 
    .opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_TARGET_TEMP_STEP: 1})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_target_temp.properties[PROP_MIN_STEP] == 0.1
 
@@ -909,7 +909,7 @@ async def test_thermostat_restore.opp, hk_driver, events):
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "Climate", "climate.simple", 2, None)
     assert acc.category == 9
@@ -938,28 +938,28 @@ async def test_thermostat_hvac_modes.opp, hk_driver):
         entity_id, HVAC_MODE_OFF, {ATTR_HVAC_MODES: [HVAC_MODE_HEAT, HVAC_MODE_OFF]}
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [0, 1]
     assert acc.char_target_heat_cool.value == 0
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 0
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
 
@@ -980,28 +980,28 @@ async def test_thermostat_hvac_modes_with_auto_heat_cool.opp, hk_driver):
         },
     )
     call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [0, 1, 3]
     assert acc.char_target_heat_cool.value == 0
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 3
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
@@ -1019,7 +1019,7 @@ async def test_thermostat_hvac_modes_with_auto_heat_cool.opp, hk_driver):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT_COOL
@@ -1036,33 +1036,33 @@ async def test_thermostat_hvac_modes_with_auto_no_heat_cool.opp, hk_driver):
         {ATTR_HVAC_MODES: [HVAC_MODE_AUTO, HVAC_MODE_HEAT, HVAC_MODE_OFF]},
     )
     call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [0, 1, 3]
     assert acc.char_target_heat_cool.value == 1
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 3
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
     call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     hk_driver.set_characteristics(
         {
             HAP_REPR_CHARS: [
@@ -1076,7 +1076,7 @@ async def test_thermostat_hvac_modes_with_auto_no_heat_cool.opp, hk_driver):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_AUTO
@@ -1091,33 +1091,33 @@ async def test_thermostat_hvac_modes_with_auto_only.opp, hk_driver):
         entity_id, HVAC_MODE_AUTO, {ATTR_HVAC_MODES: [HVAC_MODE_AUTO, HVAC_MODE_OFF]}
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [0, 3]
     assert acc.char_target_heat_cool.value == 3
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 3
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 3
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 3
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
     call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     hk_driver.set_characteristics(
         {
             HAP_REPR_CHARS: [
@@ -1131,7 +1131,7 @@ async def test_thermostat_hvac_modes_with_auto_only.opp, hk_driver):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_AUTO
@@ -1145,39 +1145,39 @@ async def test_thermostat_hvac_modes_with_heat_only.opp, hk_driver):
         entity_id, HVAC_MODE_HEAT, {ATTR_HVAC_MODES: [HVAC_MODE_HEAT, HVAC_MODE_OFF]}
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [HC_HEAT_COOL_OFF, HC_HEAT_COOL_HEAT]
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_HEAT
 
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         acc.char_target_heat_cool.set_value, HC_HEAT_COOL_HEAT
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_HEAT
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(
+        await.opp.async_add_executor_job(
             acc.char_target_heat_cool.set_value, HC_HEAT_COOL_COOL
         )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_HEAT
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(
+        await.opp.async_add_executor_job(
             acc.char_target_heat_cool.set_value, HC_HEAT_COOL_AUTO
         )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_HEAT
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
     call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     hk_driver.set_characteristics(
         {
             HAP_REPR_CHARS: [
@@ -1191,7 +1191,7 @@ async def test_thermostat_hvac_modes_with_heat_only.opp, hk_driver):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT
@@ -1205,34 +1205,34 @@ async def test_thermostat_hvac_modes_with_cool_only.opp, hk_driver):
         entity_id, HVAC_MODE_COOL, {ATTR_HVAC_MODES: [HVAC_MODE_COOL, HVAC_MODE_OFF]}
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [HC_HEAT_COOL_OFF, HC_HEAT_COOL_COOL]
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         acc.char_target_heat_cool.set_value, HC_HEAT_COOL_COOL
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(
+        await.opp.async_add_executor_job(
             acc.char_target_heat_cool.set_value, HC_HEAT_COOL_AUTO
         )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(
+        await.opp.async_add_executor_job(
             acc.char_target_heat_cool.set_value, HC_HEAT_COOL_HEAT
         )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
@@ -1250,7 +1250,7 @@ async def test_thermostat_hvac_modes_with_cool_only.opp, hk_driver):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_COOL
@@ -1269,12 +1269,12 @@ async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
         },
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [
         HC_HEAT_COOL_OFF,
@@ -1283,23 +1283,23 @@ async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
     ]
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         acc.char_target_heat_cool.set_value, HC_HEAT_COOL_COOL
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(
+        await.opp.async_add_executor_job(
             acc.char_target_heat_cool.set_value, HC_HEAT_COOL_AUTO
         )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
-    await opp..async_add_executor_job(
+    await.opp.async_add_executor_job(
         acc.char_target_heat_cool.set_value, HC_HEAT_COOL_HEAT
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_HEAT
     char_target_temp_iid = acc.char_target_temp.to_HAP()[HAP_REPR_IID]
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
@@ -1322,7 +1322,7 @@ async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_COOL
@@ -1344,7 +1344,7 @@ async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_hvac_mode
     assert call_set_hvac_mode[1].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_hvac_mode[1].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT
@@ -1358,32 +1358,32 @@ async def test_thermostat_hvac_modes_without_off.opp, hk_driver):
         entity_id, HVAC_MODE_AUTO, {ATTR_HVAC_MODES: [HVAC_MODE_AUTO, HVAC_MODE_HEAT]}
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
     hap = acc.char_target_heat_cool.to_HAP()
     assert hap["valid-values"] == [1, 3]
     assert acc.char_target_heat_cool.value == 3
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 3
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 1)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 2)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 0)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 0)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
 
@@ -1397,12 +1397,12 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
         HVAC_MODE_OFF,
         {ATTR_SUPPORTED_FEATURES: SUPPORT_TARGET_TEMPERATURE_RANGE},
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_heating_thresh_temp.value == 19.0
@@ -1433,7 +1433,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 20.0
     assert acc.char_cooling_thresh_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 1
@@ -1460,7 +1460,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 19.0
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_current_heat_cool.value == 2
@@ -1487,7 +1487,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
             ],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 19.0
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_current_heat_cool.value == 0
@@ -1513,7 +1513,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_temperature[0]
     assert call_set_temperature[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[0].data[ATTR_TARGET_TEMP_LOW] == 12.0
@@ -1533,7 +1533,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
             ATTR_SUPPORTED_FEATURES: SUPPORT_TARGET_TEMPERATURE_RANGE,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 19.0
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_current_heat_cool.value == 0
@@ -1559,7 +1559,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
         "mock_addr",
     )
 
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert call_set_temperature[0]
     assert call_set_temperature[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[0].data[ATTR_TARGET_TEMP_LOW] == 27.0
@@ -1574,10 +1574,10 @@ async def test_water_heater.opp, hk_driver, events):
     entity_id = "water_heater.test"
 
    .opp.states.async_set(entity_id, HVAC_MODE_HEAT)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.aid == 2
     assert acc.category == 9  # Thermostat
@@ -1605,7 +1605,7 @@ async def test_water_heater.opp, hk_driver, events):
             ATTR_CURRENT_TEMPERATURE: 35.0,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 56.0
     assert acc.char_current_temp.value == 35.0
     assert acc.char_target_heat_cool.value == 1
@@ -1615,7 +1615,7 @@ async def test_water_heater.opp, hk_driver, events):
    .opp.states.async_set(
         entity_id, HVAC_MODE_HEAT_COOL, {ATTR_HVAC_MODE: HVAC_MODE_HEAT_COOL}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
     assert acc.char_current_heat_cool.value == 1
 
@@ -1624,8 +1624,8 @@ async def test_water_heater.opp, hk_driver, events):
        .opp, DOMAIN_WATER_HEATER, "set_temperature"
     )
 
-    await opp..async_add_executor_job(acc.char_target_temp.client_update_value, 52.0)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_temp.client_update_value, 52.0)
+    await.opp.async_block_till_done()
     assert call_set_temperature
     assert call_set_temperature[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[0].data[ATTR_TEMPERATURE] == 52.0
@@ -1633,17 +1633,17 @@ async def test_water_heater.opp, hk_driver, events):
     assert len(events) == 1
     assert events[-1].data[ATTR_VALUE] == f"52.0{TEMP_CELSIUS}"
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.client_update_value, 0)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.client_update_value, 0)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
-    await opp..async_add_executor_job(acc.char_target_heat_cool.client_update_value, 2)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_heat_cool.client_update_value, 2)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
     with pytest.raises(ValueError):
-        await opp..async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
-    await opp..async_block_till_done()
+        await.opp.async_add_executor_job(acc.char_target_heat_cool.set_value, 3)
+    await.opp.async_block_till_done()
     assert acc.char_target_heat_cool.value == 1
 
 
@@ -1652,14 +1652,14 @@ async def test_water_heater_fahrenheit.opp, hk_driver, events):
     entity_id = "water_heater.test"
 
    .opp.states.async_set(entity_id, HVAC_MODE_HEAT)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     with patch.object.opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
         acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
    .opp.states.async_set(entity_id, HVAC_MODE_HEAT, {ATTR_TEMPERATURE: 131})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_target_temp.value == 55.0
     assert acc.char_current_temp.value == 50
     assert acc.char_display_units.value == 1
@@ -1669,8 +1669,8 @@ async def test_water_heater_fahrenheit.opp, hk_driver, events):
        .opp, DOMAIN_WATER_HEATER, "set_temperature"
     )
 
-    await opp..async_add_executor_job(acc.char_target_temp.client_update_value, 60)
-    await opp..async_block_till_done()
+    await.opp.async_add_executor_job(acc.char_target_temp.client_update_value, 60)
+    await.opp.async_block_till_done()
     assert call_set_temperature
     assert call_set_temperature[0].data[ATTR_ENTITY_ID] == entity_id
     assert call_set_temperature[0].data[ATTR_TEMPERATURE] == 140.0
@@ -1684,20 +1684,20 @@ async def test_water_heater_get_temperature_range.opp, hk_driver):
     entity_id = "water_heater.test"
 
    .opp.states.async_set(entity_id, HVAC_MODE_HEAT)
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
 
    .opp.states.async_set(
         entity_id, HVAC_MODE_HEAT, {ATTR_MIN_TEMP: 20, ATTR_MAX_TEMP: 25}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.get_temperature_range() == (20, 25)
 
     acc._unit = TEMP_FAHRENHEIT
    .opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_MIN_TEMP: 60, ATTR_MAX_TEMP: 70}
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.get_temperature_range() == (15.5, 21.0)
 
 
@@ -1721,7 +1721,7 @@ async def test_water_heater_restore.opp, hk_driver, events):
     )
 
    .opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "WaterHeater", "water_heater.simple", 2, None)
     assert acc.category == 9
@@ -1758,12 +1758,12 @@ async def test_thermostat_with_no_modes_when_we_first_see.opp, hk_driver, events
             ATTR_HVAC_MODES: [],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_heating_thresh_temp.value == 19.0
@@ -1788,7 +1788,7 @@ async def test_thermostat_with_no_modes_when_we_first_see.opp, hk_driver, events
             ATTR_HVAC_MODES: [HVAC_MODE_HEAT_COOL, HVAC_MODE_OFF, HVAC_MODE_AUTO],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 20.0
     assert acc.char_cooling_thresh_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 1
@@ -1811,12 +1811,12 @@ async def test_thermostat_with_no_off_after_recheck.opp, hk_driver, events):
             ATTR_HVAC_MODES: [],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_cooling_thresh_temp.value == 23.0
     assert acc.char_heating_thresh_temp.value == 19.0
@@ -1841,7 +1841,7 @@ async def test_thermostat_with_no_off_after_recheck.opp, hk_driver, events):
             ATTR_HVAC_MODES: [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 20.0
     assert acc.char_cooling_thresh_temp.value == 22.0
     assert acc.char_current_heat_cool.value == 1
@@ -1865,12 +1865,12 @@ async def test_thermostat_with_temp_clamps.opp, hk_driver, events):
             ATTR_MIN_TEMP: 100,
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
-    await acc.run_op.dler()
-    await opp..async_block_till_done()
+    await acc.run()
+    await.opp.async_block_till_done()
 
     assert acc.char_cooling_thresh_temp.value == 100
     assert acc.char_heating_thresh_temp.value == 100
@@ -1895,7 +1895,7 @@ async def test_thermostat_with_temp_clamps.opp, hk_driver, events):
             ATTR_HVAC_MODES: [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO],
         },
     )
-    await opp..async_block_till_done()
+    await.opp.async_block_till_done()
     assert acc.char_heating_thresh_temp.value == 100.0
     assert acc.char_cooling_thresh_temp.value == 100.0
     assert acc.char_current_heat_cool.value == 1
