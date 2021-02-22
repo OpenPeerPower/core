@@ -82,7 +82,7 @@ async def async_setup_opp(
     opp.config.config_dir = runtime_config.config_dir
 
     async_enable_logging(
-       .opp,
+        opp,
         runtime_config.verbose,
         runtime_config.log_rotate_days,
         runtime_config.log_file,
@@ -95,7 +95,7 @@ async def async_setup_opp(
             "Skipping pip installation of required modules. This may cause issues"
         )
 
-    if not await conf_util.async_ensure_config_exists.opp):
+    if not await conf_util.async_ensure_config_exists(opp):
         _LOGGER.error("Error getting configuration path")
         return None
 
@@ -106,10 +106,10 @@ async def async_setup_opp(
     safe_mode = runtime_config.safe_mode
 
     if not safe_mode:
-        await.opp.async_add_executor_job(conf_util.process_ha_config_upgrade,.opp)
+        await opp_async_add_executor_job(conf_util.process_ha_config_upgrade, opp)
 
         try:
-            config_dict = await conf_util.async.opp_config_yaml.opp)
+            config_dict = await conf_util.async_opp_config_yaml(opp)
         except OpenPeerPowerError as err:
             _LOGGER.error(
                 "Failed to parse configuration.yaml: %s. Activating safe mode",
@@ -120,7 +120,7 @@ async def async_setup_opp(
                 await async_mount_local_lib_path(runtime_config.config_dir)
 
             basic_setup_success = (
-                await async_from_config_dict(config_dict,.opp) is not None
+                await async_from_config_dict(config_dict, opp) is not None
             )
         finally:
             clear_secret_cache()
@@ -133,15 +133,15 @@ async def async_setup_opp(
         safe_mode = True
 
     elif (
-        "frontend" in.opp.data.get(DATA_SETUP, {})
+        "frontend" in opp.data.get(DATA_SETUP, {})
         and "frontend" not in opp.config.components
     ):
         _LOGGER.warning("Detected that frontend did not load. Activating safe mode")
         # Ask integrations to shut down. It's messy but we can't
         # do a clean stop without knowing what is broken
         with contextlib.suppress(asyncio.TimeoutError):
-            async with.opp.timeout.async_timeout(10):
-                await.opp.async_stop()
+            async with opp.timeout.async_timeout(10):
+                await opp.async_stop()
 
         safe_mode = True
         old_config = opp.config
@@ -156,20 +156,20 @@ async def async_setup_opp(
         _LOGGER.info("Starting in safe mode")
         opp.config.safe_mode = True
 
-        http_conf = (await http.async_get_last_config.opp)) or {}
+        http_conf = (await http.async_get_last_config(opp)) or {}
 
         await async_from_config_dict(
             {"safe_mode": {}, "http": http_conf},
-           .opp,
+            opp,
         )
 
     if runtime_config.open_ui:
-       .opp.add_job(open.opp_ui,.opp)
+        opp.add_job(open_opp_ui, opp)
 
-    return.opp
+    return opp
 
 
-def open.opp_ui.opp: core.OpenPeerPower) -> None:
+def open_opp_ui(opp: core.OpenPeerPower) -> None:
     """Open the UI."""
     import webbrowser  # pylint: disable=import-outside-toplevel
 
@@ -190,7 +190,7 @@ def open.opp_ui.opp: core.OpenPeerPower) -> None:
 
 
 async def async_from_config_dict(
-    config: ConfigType,.opp: core.OpenPeerPower
+    config: ConfigType, opp: core.OpenPeerPower
 ) -> Optional[core.OpenPeerPower]:
     """Try to configure Open Peer Power from a configuration dictionary.
 
@@ -199,7 +199,7 @@ async def async_from_config_dict(
     """
     start = monotonic()
 
-    opp.config_entries = config_entries.ConfigEntries.opp, config)
+    opp.config_entries = config_entries.ConfigEntries(opp, config)
     await opp.config_entries.async_initialize()
 
     # Set up core.
@@ -208,7 +208,7 @@ async def async_from_config_dict(
     if not all(
         await asyncio.gather(
             *(
-                async_setup_component.opp, domain, config)
+                async_setup_component(opp, domain, config)
                 for domain in CORE_INTEGRATIONS
             )
         )
@@ -221,9 +221,9 @@ async def async_from_config_dict(
     core_config = config.get(core.DOMAIN, {})
 
     try:
-        await conf_util.async_process_ha_core_config.opp, core_config)
+        await conf_util.async_process_op_core_config(opp, core_config)
     except vol.Invalid as config_err:
-        conf_util.async_log_exception(config_err, "openpeerpower", core_config,.opp)
+        conf_util.async_log_exception(config_err, "openpeerpower", core_config, opp)
         return None
     except OpenPeerPowerError:
         _LOGGER.error(
@@ -232,7 +232,7 @@ async def async_from_config_dict(
         )
         return None
 
-    await _async_set_up_integrations.opp, config)
+    await _async_set_up_integrations(opp, config)
 
     stop = monotonic()
     _LOGGER.info("Open Peer Power initialized in %.2fs", stop - start)
@@ -247,16 +247,16 @@ async def async_from_config_dict(
             "higher."
         )
         _LOGGER.warning(msg)
-       .opp.components.persistent_notification.async_create(
+        opp.components.persistent_notification.async_create(
             msg, "Python version", "python_version"
         )
 
-    return.opp
+    return opp
 
 
 @core.callback
 def async_enable_logging(
-   .opp: core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     verbose: bool = False,
     log_rotate_days: Optional[int] = None,
     log_file: Optional[str] = None,
@@ -345,11 +345,11 @@ def async_enable_logging(
         logger.setLevel(logging.INFO if verbose else logging.WARNING)
 
         # Save the log file location for access by other components.
-       .opp.data[DATA_LOGGING] = err_log_path
+        opp.data[DATA_LOGGING] = err_log_path
     else:
         _LOGGER.error("Unable to set up error log %s (access denied)", err_log_path)
 
-    async_activate_log_queue_handler.opp)
+    async_activate_log_queue_handler.(opp)
 
 
 async def async_mount_local_lib_path(config_dir: str) -> str:
@@ -365,7 +365,7 @@ async def async_mount_local_lib_path(config_dir: str) -> str:
 
 
 @core.callback
-def _get_domains.opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
+def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
     """Get domains of components to set up."""
     # Filter out the repeating and common config section [openpeerpower]
     domains = {key.split(" ")[0] for key in config if key != core.DOMAIN}
@@ -375,14 +375,14 @@ def _get_domains.opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
         domains.update opp.config_entries.async_domains())
 
     # Make sure the Hass.io component is loaded
-    if "HASSIO" in os.environ:
-        domains.add(.oppio")
+    if "OPPIO" in os.environ:
+        domains.add("oppio")
 
     return domains
 
 
 async def _async_log_pending_setups(
-   .opp: core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
+    opp: core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
 ) -> None:
     """Periodic log of setups that are pending for longer than LOG_SLOW_STARTUP_INTERVAL."""
     while True:
@@ -394,22 +394,22 @@ async def _async_log_pending_setups(
                 "Waiting on integrations to complete setup: %s",
                 ", ".join(remaining),
             )
-        _LOGGER.debug("Running timeout Zones: %s",.opp.timeout.zones)
+        _LOGGER.debug("Running timeout Zones: %s", opp.timeout.zones)
 
 
 async def async_setup_multi_components(
-   .opp: core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     domains: Set[str],
     config: Dict[str, Any],
     setup_started: Dict[str, datetime],
 ) -> None:
     """Set up multiple domains. Log on failure."""
     futures = {
-        domain:.opp.async_create_task(async_setup_component.opp, domain, config))
+        domain: opp.async_create_task(async_setup_component(opp, domain, config))
         for domain in domains
     }
     log_task = asyncio.create_task(
-        _async_log_pending_setups.opp, domains, setup_started)
+        _async_log_pending_setups(opp, domains, setup_started)
     )
     await asyncio.wait(futures.values())
     log_task.cancel()
@@ -425,11 +425,11 @@ async def async_setup_multi_components(
 
 
 async def _async_set_up_integrations(
-   .opp: core.OpenPeerPower, config: Dict[str, Any]
+    opp: core.OpenPeerPower, config: Dict[str, Any]
 ) -> None:
     """Set up all the integrations."""
-    setup_started =.opp.data[DATA_SETUP_STARTED] = {}
-    domains_to_setup = _get_domains.opp, config)
+    setup_started = opp.data[DATA_SETUP_STARTED] = {}
+    domains_to_setup = _get_domains(opp, config)
 
     # Resolve all dependencies so we know all integrations
     # that will have to be loaded and start rightaway
@@ -444,7 +444,7 @@ async def _async_set_up_integrations(
             for int_or_exc in await gather_with_concurrency(
                 loader.MAX_LOAD_CONCURRENTLY,
                 *(
-                    loader.async_get_integration.opp, domain)
+                    loader.async_get_integration(opp, domain)
                     for domain in old_to_resolve
                 ),
                 return_exceptions=True,
@@ -477,14 +477,14 @@ async def _async_set_up_integrations(
     # Load logging as soon as possible
     if logging_domains:
         _LOGGER.info("Setting up logging: %s", logging_domains)
-        await async_setup_multi_components.opp, logging_domains, config, setup_started)
+        await async_setup_multi_components(opp, logging_domains, config, setup_started)
 
     # Start up debuggers. Start these first in case they want to wait.
     debuggers = domains_to_setup & DEBUGGER_INTEGRATIONS
 
     if debuggers:
         _LOGGER.debug("Setting up debuggers: %s", debuggers)
-        await async_setup_multi_components.opp, debuggers, config, setup_started)
+        await async_setup_multi_components(opp, debuggers, config, setup_started)
 
     # calculate what components to setup in what stage
     stage_1_domains = set()
@@ -513,35 +513,35 @@ async def _async_set_up_integrations(
 
     # Load the registries
     await asyncio.gather(
-        device_registry.async_load.opp),
-        entity_registry.async_load.opp),
-        area_registry.async_load.opp),
+        device_registry.async_load(opp),
+        entity_registry.async_load(opp),
+        area_registry.async_load(opp),
     )
 
     # Start setup
     if stage_1_domains:
         _LOGGER.info("Setting up stage 1: %s", stage_1_domains)
         try:
-            async with.opp.timeout.async_timeout(
+            async with opp.timeout.async_timeout(
                 STAGE_1_TIMEOUT, cool_down=COOLDOWN_TIME
             ):
                 await async_setup_multi_components(
-                   .opp, stage_1_domains, config, setup_started
+                    opp, stage_1_domains, config, setup_started
                 )
         except asyncio.TimeoutError:
             _LOGGER.warning("Setup timed out for stage 1 - moving forward")
 
     # Enables after dependencies
-    async_set_domains_to_be_loaded.opp, stage_2_domains)
+    async_set_domains_to_be_loaded(opp, stage_2_domains)
 
     if stage_2_domains:
         _LOGGER.info("Setting up stage 2: %s", stage_2_domains)
         try:
-            async with.opp.timeout.async_timeout(
+            async with opp.timeout.async_timeout(
                 STAGE_2_TIMEOUT, cool_down=COOLDOWN_TIME
             ):
                 await async_setup_multi_components(
-                   .opp, stage_2_domains, config, setup_started
+                    opp, stage_2_domains, config, setup_started
                 )
         except asyncio.TimeoutError:
             _LOGGER.warning("Setup timed out for stage 2 - moving forward")
@@ -549,7 +549,7 @@ async def _async_set_up_integrations(
     # Wrap up startup
     _LOGGER.debug("Waiting for startup to wrap up")
     try:
-        async with.opp.timeout.async_timeout(WRAP_UP_TIMEOUT, cool_down=COOLDOWN_TIME):
-            await.opp.async_block_till_done()
+        async with opp.timeout.async_timeout(WRAP_UP_TIMEOUT, cool_down=COOLDOWN_TIME):
+            await opp.async_block_till_done()
     except asyncio.TimeoutError:
         _LOGGER.warning("Setup timed out for bootstrap - moving forward")
