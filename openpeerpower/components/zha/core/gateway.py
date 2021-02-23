@@ -41,8 +41,8 @@ from .const import (
     CONF_RADIO_TYPE,
     CONF_ZIGPY,
     DATA_ZHA,
-    DATA_ZHA_BRIDGE_ID,
-    DATA_ZHA_GATEWAY,
+    DATA_ZOP_BRIDGE_ID,
+    DATA_ZOP_GATEWAY,
     DEBUG_COMP_BELLOWS,
     DEBUG_COMP_ZHA,
     DEBUG_COMP_ZIGPY,
@@ -62,19 +62,19 @@ from .const import (
     SIGNAL_REMOVE,
     UNKNOWN_MANUFACTURER,
     UNKNOWN_MODEL,
-    ZHA_GW_MSG,
-    ZHA_GW_MSG_DEVICE_FULL_INIT,
-    ZHA_GW_MSG_DEVICE_INFO,
-    ZHA_GW_MSG_DEVICE_JOINED,
-    ZHA_GW_MSG_DEVICE_REMOVED,
-    ZHA_GW_MSG_GROUP_ADDED,
-    ZHA_GW_MSG_GROUP_INFO,
-    ZHA_GW_MSG_GROUP_MEMBER_ADDED,
-    ZHA_GW_MSG_GROUP_MEMBER_REMOVED,
-    ZHA_GW_MSG_GROUP_REMOVED,
-    ZHA_GW_MSG_LOG_ENTRY,
-    ZHA_GW_MSG_LOG_OUTPUT,
-    ZHA_GW_MSG_RAW_INIT,
+    ZOP_GW_MSG,
+    ZOP_GW_MSG_DEVICE_FULL_INIT,
+    ZOP_GW_MSG_DEVICE_INFO,
+    ZOP_GW_MSG_DEVICE_JOINED,
+    ZOP_GW_MSG_DEVICE_REMOVED,
+    ZOP_GW_MSG_GROUP_ADDED,
+    ZOP_GW_MSG_GROUP_INFO,
+    ZOP_GW_MSG_GROUP_MEMBER_ADDED,
+    ZOP_GW_MSG_GROUP_MEMBER_REMOVED,
+    ZOP_GW_MSG_GROUP_REMOVED,
+    ZOP_GW_MSG_LOG_ENTRY,
+    ZOP_GW_MSG_LOG_OUTPUT,
+    ZOP_GW_MSG_RAW_INIT,
     RadioType,
 )
 from .device import (
@@ -167,8 +167,8 @@ class ZHAGateway:
 
         self.application_controller.add_listener(self)
         self.application_controller.groups.add_listener(self)
-        self.opp.data[DATA_ZHA][DATA_ZHA_GATEWAY] = self
-        self.opp.data[DATA_ZHA][DATA_ZHA_BRIDGE_ID] = str(
+        self.opp.data[DATA_ZHA][DATA_ZOP_GATEWAY] = self
+        self.opp.data[DATA_ZHA][DATA_ZOP_BRIDGE_ID] = str(
             self.application_controller.ieee
         )
         self.async_load_devices()
@@ -248,10 +248,10 @@ class ZHAGateway:
         """
         async_dispatcher_send(
             self.opp,
-            ZHA_GW_MSG,
+            ZOP_GW_MSG,
             {
-                ATTR_TYPE: ZHA_GW_MSG_DEVICE_JOINED,
-                ZHA_GW_MSG_DEVICE_INFO: {
+                ATTR_TYPE: ZOP_GW_MSG_DEVICE_JOINED,
+                ZOP_GW_MSG_DEVICE_INFO: {
                     ATTR_NWK: device.nwk,
                     ATTR_IEEE: str(device.ieee),
                     DEVICE_PAIRING_STATUS: DevicePairingStatus.PAIRED.name,
@@ -264,10 +264,10 @@ class ZHAGateway:
         manuf = device.manufacturer
         async_dispatcher_send(
             self.opp,
-            ZHA_GW_MSG,
+            ZOP_GW_MSG,
             {
-                ATTR_TYPE: ZHA_GW_MSG_RAW_INIT,
-                ZHA_GW_MSG_DEVICE_INFO: {
+                ATTR_TYPE: ZOP_GW_MSG_RAW_INIT,
+                ZOP_GW_MSG_DEVICE_INFO: {
                     ATTR_NWK: device.nwk,
                     ATTR_IEEE: str(device.ieee),
                     DEVICE_PAIRING_STATUS: DevicePairingStatus.INTERVIEW_COMPLETE.name,
@@ -293,7 +293,7 @@ class ZHAGateway:
         # need to handle endpoint correctly on groups
         zha_group = self._async_get_or_create_group(zigpy_group)
         zha_group.info("group_member_removed - endpoint: %s", endpoint)
-        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_MEMBER_REMOVED)
+        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_MEMBER_REMOVED)
         async_dispatcher_send(
             self.opp, f"{SIGNAL_GROUP_MEMBERSHIP_CHANGE}_0x{zigpy_group.group_id:04x}"
         )
@@ -305,7 +305,7 @@ class ZHAGateway:
         # need to handle endpoint correctly on groups
         zha_group = self._async_get_or_create_group(zigpy_group)
         zha_group.info("group_member_added - endpoint: %s", endpoint)
-        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_MEMBER_ADDED)
+        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_MEMBER_ADDED)
         async_dispatcher_send(
             self.opp, f"{SIGNAL_GROUP_MEMBERSHIP_CHANGE}_0x{zigpy_group.group_id:04x}"
         )
@@ -318,11 +318,11 @@ class ZHAGateway:
         zha_group = self._async_get_or_create_group(zigpy_group)
         zha_group.info("group_added")
         # need to dispatch for entity creation here
-        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_ADDED)
+        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_ADDED)
 
     def group_removed(self, zigpy_group: ZigpyGroupType) -> None:
         """Handle zigpy group removed event."""
-        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_REMOVED)
+        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_REMOVED)
         zha_group = self._groups.pop(zigpy_group.group_id, None)
         zha_group.info("group_removed")
         self._cleanup_group_entity_registry_entries(zigpy_group)
@@ -335,10 +335,10 @@ class ZHAGateway:
         if zha_group is not None:
             async_dispatcher_send(
                 self.opp,
-                ZHA_GW_MSG,
+                ZOP_GW_MSG,
                 {
                     ATTR_TYPE: gateway_message_type,
-                    ZHA_GW_MSG_GROUP_INFO: zha_group.group_info,
+                    ZOP_GW_MSG_GROUP_INFO: zha_group.group_info,
                 },
             )
 
@@ -366,10 +366,10 @@ class ZHAGateway:
             if device_info is not None:
                 async_dispatcher_send(
                     self.opp,
-                    ZHA_GW_MSG,
+                    ZOP_GW_MSG,
                     {
-                        ATTR_TYPE: ZHA_GW_MSG_DEVICE_REMOVED,
-                        ZHA_GW_MSG_DEVICE_INFO: device_info,
+                        ATTR_TYPE: ZOP_GW_MSG_DEVICE_REMOVED,
+                        ZOP_GW_MSG_DEVICE_INFO: device_info,
                     },
                 )
 
@@ -573,10 +573,10 @@ class ZHAGateway:
         device_info[DEVICE_PAIRING_STATUS] = DevicePairingStatus.INITIALIZED.name
         async_dispatcher_send(
             self.opp,
-            ZHA_GW_MSG,
+            ZOP_GW_MSG,
             {
-                ATTR_TYPE: ZHA_GW_MSG_DEVICE_FULL_INIT,
-                ZHA_GW_MSG_DEVICE_INFO: device_info,
+                ATTR_TYPE: ZOP_GW_MSG_DEVICE_FULL_INIT,
+                ZOP_GW_MSG_DEVICE_INFO: device_info,
             },
         )
 
@@ -587,10 +587,10 @@ class ZHAGateway:
         device_info[DEVICE_PAIRING_STATUS] = DevicePairingStatus.CONFIGURED.name
         async_dispatcher_send(
             self.opp,
-            ZHA_GW_MSG,
+            ZOP_GW_MSG,
             {
-                ATTR_TYPE: ZHA_GW_MSG_DEVICE_FULL_INIT,
-                ZHA_GW_MSG_DEVICE_INFO: device_info,
+                ATTR_TYPE: ZOP_GW_MSG_DEVICE_FULL_INIT,
+                ZOP_GW_MSG_DEVICE_INFO: device_info,
             },
         )
         await zha_device.async_initialize(from_cache=False)
@@ -608,10 +608,10 @@ class ZHAGateway:
         device_info[DEVICE_PAIRING_STATUS] = DevicePairingStatus.CONFIGURED.name
         async_dispatcher_send(
             self.opp,
-            ZHA_GW_MSG,
+            ZOP_GW_MSG,
             {
-                ATTR_TYPE: ZHA_GW_MSG_DEVICE_FULL_INIT,
-                ZHA_GW_MSG_DEVICE_INFO: device_info,
+                ATTR_TYPE: ZOP_GW_MSG_DEVICE_FULL_INIT,
+                ZOP_GW_MSG_DEVICE_INFO: device_info,
             },
         )
         # force async_initialize() to fire so don't explicitly call it
@@ -734,6 +734,6 @@ class LogRelayHandler(logging.Handler):
         entry = LogEntry(record, stack, _figure_out_source(record, stack, self.opp))
         async_dispatcher_send(
             self.opp,
-            ZHA_GW_MSG,
-            {ATTR_TYPE: ZHA_GW_MSG_LOG_OUTPUT, ZHA_GW_MSG_LOG_ENTRY: entry.to_dict()},
+            ZOP_GW_MSG,
+            {ATTR_TYPE: ZOP_GW_MSG_LOG_OUTPUT, ZOP_GW_MSG_LOG_ENTRY: entry.to_dict()},
         )

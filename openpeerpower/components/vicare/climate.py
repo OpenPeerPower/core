@@ -69,7 +69,7 @@ VICARE_TO_OP_HVAC_HEATING = {
     VICARE_MODE_OFF: HVAC_MODE_OFF,
 }
 
-HA_TO_VICARE_HVAC_HEATING = {
+OP_TO_VICARE_HVAC_HEATING = {
     HVAC_MODE_HEAT: VICARE_MODE_FORCEDNORMAL,
     HVAC_MODE_OFF: VICARE_MODE_FORCEDREDUCED,
     HVAC_MODE_AUTO: VICARE_MODE_DHWANDHEATING,
@@ -80,7 +80,7 @@ VICARE_TO_OP_PRESET_HEATING = {
     VICARE_PROGRAM_ECO: PRESET_ECO,
 }
 
-HA_TO_VICARE_PRESET_HEATING = {
+OP_TO_VICARE_PRESET_HEATING = {
     PRESET_COMFORT: VICARE_PROGRAM_COMFORT,
     PRESET_ECO: VICARE_PROGRAM_ECO,
 }
@@ -212,7 +212,7 @@ class ViCareClimate(ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode):
         """Set a new hvac mode on the ViCare API."""
-        vicare_mode = HA_TO_VICARE_HVAC_HEATING.get(hvac_mode)
+        vicare_mode = OP_TO_VICARE_HVAC_HEATING.get(hvac_mode)
         if vicare_mode is None:
             raise ValueError(
                 f"Cannot set invalid vicare mode: {hvac_mode} / {vicare_mode}"
@@ -224,7 +224,7 @@ class ViCareClimate(ClimateEntity):
     @property
     def hvac_modes(self):
         """Return the list of available hvac modes."""
-        return list(HA_TO_VICARE_HVAC_HEATING)
+        return list(OP_TO_VICARE_HVAC_HEATING)
 
     @property
     def hvac_action(self):
@@ -267,7 +267,7 @@ class ViCareClimate(ClimateEntity):
 
     def set_preset_mode(self, preset_mode):
         """Set new preset mode and deactivate any existing programs."""
-        vicare_program = HA_TO_VICARE_PRESET_HEATING.get(preset_mode)
+        vicare_program = OP_TO_VICARE_PRESET_HEATING.get(preset_mode)
         if vicare_program is None:
             raise ValueError(
                 f"Cannot set invalid vicare program: {preset_mode}/{vicare_program}"

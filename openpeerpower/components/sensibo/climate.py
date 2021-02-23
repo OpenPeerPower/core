@@ -81,7 +81,7 @@ SENSIBO_TO_HA = {
     "dry": HVAC_MODE_DRY,
 }
 
-HA_TO_SENSIBO = {value: key for key, value in SENSIBO_TO_HA.items()}
+OP_TO_SENSIBO = {value: key for key, value in SENSIBO_TO_HA.items()}
 
 
 async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
@@ -346,7 +346,7 @@ class SensiboClimate(ClimateEntity):
 
         with async_timeout.timeout(TIMEOUT):
             await self._client.async_set_ac_state_property(
-                self._id, "mode", HA_TO_SENSIBO[hvac_mode], self._ac_states
+                self._id, "mode", OP_TO_SENSIBO[hvac_mode], self._ac_states
             )
 
     async def async_set_swing_mode(self, swing_mode):

@@ -9,7 +9,7 @@ import pytest
 
 from openpeerpower.components import tplink
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as HA_DOMAIN,
+    DOMAIN as OP_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.light import (
@@ -242,7 +242,7 @@ def dimmer_switch_mock_data_fixture() -> None:
 async def update_entity.opp: OpenPeerPower, entity_id: str) -> None:
     """Run an update action for an entity."""
     await opp.services.async_call(
-        HA_DOMAIN,
+        OP_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: entity_id},
         blocking=True,
@@ -256,7 +256,7 @@ async def test_smartswitch(
     """Test function."""
     sys_info = dimmer_switch_mock_data.sys_info
 
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -348,7 +348,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     light_state = light_mock_data.light_state
     set_light_state = light_mock_data.set_light_state
 
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -494,7 +494,7 @@ async def test_get_light_state_retry(
     light_mock_data.set_light_state_mock.side_effect = set_light_state_side_effect
 
     # Setup component.
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -532,7 +532,7 @@ async def test_update_failure(
 ):
     """Test that update failures are logged."""
 
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -593,7 +593,7 @@ async def test_async_setup_entry_unavailable(
         "openpeerpower.components.tplink.common.SmartDevice.get_sysinfo",
         side_effect=SmartDeviceException,
     ):
-        await async_setup_component.opp, HA_DOMAIN, {})
+        await async_setup_component.opp, OP_DOMAIN, {})
         await opp.async_block_till_done()
 
         await async_setup_component(

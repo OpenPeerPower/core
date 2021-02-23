@@ -6,7 +6,7 @@ from unittest.mock import patch
 from openpeerpower import config as.opp_config
 from openpeerpower.components.bayesian import DOMAIN, binary_sensor as bayesian
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as HA_DOMAIN,
+    DOMAIN as OP_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.const import (
@@ -546,14 +546,14 @@ async def test_update_request_with_template.opp):
     }
 
     await async_setup_component.opp, "binary_sensor", config)
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
 
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
     await opp.services.async_call(
-        HA_DOMAIN,
+        OP_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: "binary_sensor.test_binary"},
         blocking=True,
@@ -583,7 +583,7 @@ async def test_update_request_without_template.opp):
     }
 
     await async_setup_component.opp, "binary_sensor", config)
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
 
     await opp.async_block_till_done()
 
@@ -593,7 +593,7 @@ async def test_update_request_without_template.opp):
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
     await opp.services.async_call(
-        HA_DOMAIN,
+        OP_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: "binary_sensor.test_binary"},
         blocking=True,
@@ -623,7 +623,7 @@ async def test_monitored_sensor_goes_away.opp):
     }
 
     await async_setup_component.opp, "binary_sensor", config)
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
 
     await opp.async_block_till_done()
 

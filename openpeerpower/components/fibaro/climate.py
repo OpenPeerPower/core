@@ -46,7 +46,7 @@ FANMODES = {
     128: "auto",
 }
 
-HA_FANMODES = {v: k for k, v in FANMODES.items()}
+OP_FANMODES = {v: k for k, v in FANMODES.items()}
 
 # SDS13781-10 Z-Wave Application Command Class Specification 2019-01-04
 # Table 130, Thermostat Mode Set version 3::Mode encoding.
@@ -63,7 +63,7 @@ OPMODES_PRESET = {
     31: PRESET_FORCE_OPEN,
 }
 
-HA_OPMODES_PRESET = {v: k for k, v in OPMODES_PRESET.items()}
+OP_OPMODES_PRESET = {v: k for k, v in OPMODES_PRESET.items()}
 
 OPMODES_HVAC = {
     0: HVAC_MODE_OFF,
@@ -84,7 +84,7 @@ OPMODES_HVAC = {
     31: HVAC_MODE_HEAT,
 }
 
-HA_OPMODES_HVAC = {
+OP_OPMODES_HVAC = {
     HVAC_MODE_OFF: 0,
     HVAC_MODE_HEAT: 1,
     HVAC_MODE_COOL: 2,
@@ -235,7 +235,7 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
         """Set new target fan mode."""
         if not self._fan_mode_device:
             return
-        self._fan_mode_device.action("setFanMode", HA_FANMODES[fan_mode])
+        self._fan_mode_device.action("setFanMode", OP_FANMODES[fan_mode])
 
     @property
     def fibaro_op_mode(self):
@@ -268,9 +268,9 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
             return
 
         if "setOperatingMode" in self._op_mode_device.fibaro_device.actions:
-            self._op_mode_device.action("setOperatingMode", HA_OPMODES_HVAC[hvac_mode])
+            self._op_mode_device.action("setOperatingMode", OP_OPMODES_HVAC[hvac_mode])
         elif "setMode" in self._op_mode_device.fibaro_device.actions:
-            self._op_mode_device.action("setMode", HA_OPMODES_HVAC[hvac_mode])
+            self._op_mode_device.action("setMode", OP_OPMODES_HVAC[hvac_mode])
 
     @property
     def preset_mode(self):
@@ -306,10 +306,10 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
             return
         if "setOperatingMode" in self._op_mode_device.fibaro_device.actions:
             self._op_mode_device.action(
-                "setOperatingMode", HA_OPMODES_PRESET[preset_mode]
+                "setOperatingMode", OP_OPMODES_PRESET[preset_mode]
             )
         elif "setMode" in self._op_mode_device.fibaro_device.actions:
-            self._op_mode_device.action("setMode", HA_OPMODES_PRESET[preset_mode])
+            self._op_mode_device.action("setMode", OP_OPMODES_PRESET[preset_mode])
 
     @property
     def temperature_unit(self):

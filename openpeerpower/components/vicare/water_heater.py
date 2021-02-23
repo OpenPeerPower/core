@@ -41,7 +41,7 @@ VICARE_TO_OP_HVAC_DHW = {
     VICARE_MODE_OFF: OPERATION_MODE_OFF,
 }
 
-HA_TO_VICARE_HVAC_DHW = {
+OP_TO_VICARE_HVAC_DHW = {
     OPERATION_MODE_OFF: VICARE_MODE_OFF,
     OPERATION_MODE_ON: VICARE_MODE_DHW,
 }
@@ -152,4 +152,4 @@ class ViCareWater(WaterHeaterEntity):
     @property
     def operation_list(self):
         """Return the list of available operation modes."""
-        return list(HA_TO_VICARE_HVAC_DHW)
+        return list(OP_TO_VICARE_HVAC_DHW)

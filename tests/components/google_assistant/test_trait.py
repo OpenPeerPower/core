@@ -49,7 +49,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpower.core import DOMAIN as HA_DOMAIN, EVENT_CALL_SERVICE, State
+from openpeerpower.core import DOMAIN as OP_DOMAIN, EVENT_CALL_SERVICE, State
 from openpeerpower.util import color
 
 from . import BASIC_CONFIG, MockConfig
@@ -152,12 +152,12 @@ async def test_onoff_group.opp):
 
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service.opp, HA_DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service.opp, OP_DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "group.bla"}
 
-    off_calls = async_mock_service.opp, HA_DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service.opp, OP_DOMAIN, SERVICE_TURN_OFF)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
     assert off_calls[0].data == {ATTR_ENTITY_ID: "group.bla"}

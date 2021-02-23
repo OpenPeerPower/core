@@ -77,7 +77,7 @@ class ProbeEndpoint:
 
         if component and component in zha_const.COMPONENTS:
             channels = channel_pool.unclaimed_channels()
-            entity_class, claimed = zha_regs.ZHA_ENTITIES.get_entity(
+            entity_class, claimed = zha_regs.ZOP_ENTITIES.get_entity(
                 component, channel_pool.manufacturer, channel_pool.model, channels
             )
             if entity_class is None:
@@ -127,7 +127,7 @@ class ProbeEndpoint:
         channel_list = [channel]
         unique_id = f"{ep_channels.unique_id}-{channel.cluster.cluster_id}"
 
-        entity_class, claimed = zha_regs.ZHA_ENTITIES.get_entity(
+        entity_class, claimed = zha_regs.ZOP_ENTITIES.get_entity(
             component, ep_channels.manufacturer, ep_channels.model, channel_list
         )
         if entity_class is None:
@@ -160,7 +160,7 @@ class ProbeEndpoint:
 
     def initialize(self, opp: OpenPeerPowerType) -> None:
         """Update device overrides config."""
-        zha_config = opp.data[zha_const.DATA_ZHA].get(zha_const.DATA_ZHA_CONFIG, {})
+        zha_config = opp.data[zha_const.DATA_ZHA].get(zha_const.DATA_ZOP_CONFIG, {})
         overrides = zha_config.get(zha_const.CONF_DEVICE_CONFIG)
         if overrides:
             self._device_configs.update(overrides)
@@ -191,7 +191,7 @@ class GroupProbe:
 
     def _reprobe_group(self, group_id: int) -> None:
         """Reprobe a group for entities after its members change."""
-        zha_gateway = self.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway = self.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZOP_GATEWAY]
         zha_group = zha_gateway.groups.get(group_id)
         if zha_group is None:
             return
@@ -214,9 +214,9 @@ class GroupProbe:
         if not entity_domains:
             return
 
-        zha_gateway = self.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway = self.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZOP_GATEWAY]
         for domain in entity_domains:
-            entity_class = zha_regs.ZHA_ENTITIES.get_group_entity(domain)
+            entity_class = zha_regs.ZOP_ENTITIES.get_group_entity(domain)
             if entity_class is None:
                 continue
             self.opp.data[zha_const.DATA_ZHA][domain].append(
@@ -238,7 +238,7 @@ class GroupProbe:
     ) -> List[str]:
         """Determine the entity domains for this group."""
         entity_domains: List[str] = []
-        zha_gateway = opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
+        zha_gateway = opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZOP_GATEWAY]
         all_domain_occurrences = []
         for member in group.members:
             if member.device.is_coordinator:

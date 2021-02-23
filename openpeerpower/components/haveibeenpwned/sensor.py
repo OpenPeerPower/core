@@ -26,7 +26,7 @@ ATTRIBUTION = "Data provided by Have I Been Pwned (HIBP)"
 
 DATE_STR_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-HA_USER_AGENT = "Open Peer Power HaveIBeenPwned Sensor Component"
+OP_USER_AGENT = "Open Peer Power HaveIBeenPwned Sensor Component"
 
 MIN_TIME_BETWEEN_FORCED_UPDATES = timedelta(seconds=5)
 MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=15)
@@ -156,7 +156,7 @@ class HaveIBeenPwnedData:
         """Get the latest data for current email from REST service."""
         try:
             url = f"{URL}{self._email}?truncateResponse=false"
-            header = {USER_AGENT: HA_USER_AGENT, "hibp-api-key": self._api_key}
+            header = {USER_AGENT: OP_USER_AGENT, "hibp-api-key": self._api_key}
             _LOGGER.debug("Checking for breaches for email: %s", self._email)
             req = requests.get(url, headers=header, allow_redirects=True, timeout=5)
 

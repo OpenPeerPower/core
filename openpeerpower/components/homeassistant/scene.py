@@ -20,7 +20,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpower.core import DOMAIN as HA_DOMAIN, OpenPeerPower, State, callback
+from openpeerpower.core import DOMAIN as OP_DOMAIN, OpenPeerPower, State, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import (
     config_per_platform,
@@ -81,7 +81,7 @@ STATES_SCHEMA = vol.All(dict, _convert_states)
 
 PLATFORM_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_PLATFORM): HA_DOMAIN,
+        vol.Required(CONF_PLATFORM): OP_DOMAIN,
         vol.Required(STATES): vol.All(
             cv.ensure_list,
             [
@@ -178,7 +178,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
         # Extract only the config for the Open Peer Power platform, ignore the rest.
         for p_type, p_config in config_per_platform(conf, SCENE_DOMAIN):
-            if p_type != HA_DOMAIN:
+            if p_type != OP_DOMAIN:
                 continue
 
             _process_scenes_config(opp, async_add_entities, p_config)

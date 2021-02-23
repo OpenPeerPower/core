@@ -28,7 +28,7 @@ from openpeerpower.components.gogogate2.const import (
     DOMAIN,
     MANUFACTURER,
 )
-from openpeerpower.components.openpeerpower import DOMAIN as HA_DOMAIN
+from openpeerpower.components.openpeerpower import DOMAIN as OP_DOMAIN
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import (
@@ -187,7 +187,7 @@ async def test_import_fail(gogogate2api_mock, opp: OpenPeerPower) -> None:
     gogogate2api_mock.return_value = api
 
     opp.config = {
-        HA_DOMAIN: {CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC},
+        OP_DOMAIN: {CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC},
         COVER_DOMAIN: [
             {
                 CONF_PLATFORM: "gogogate2",
@@ -200,8 +200,8 @@ async def test_import_fail(gogogate2api_mock, opp: OpenPeerPower) -> None:
         ],
     }
 
-    await async_process_op_core_config(opp, opp_config[HA_DOMAIN])
-    assert await async_setup_component.opp, HA_DOMAIN, {})
+    await async_process_op_core_config(opp, opp_config[OP_DOMAIN])
+    assert await async_setup_component.opp, OP_DOMAIN, {})
     assert await async_setup_component.opp, COVER_DOMAIN, opp_config)
     await opp.async_block_till_done()
 
@@ -224,7 +224,7 @@ async def test_import(
     ismartgateapi_mock.return_value = api1
 
     opp.config = {
-        HA_DOMAIN: {CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC},
+        OP_DOMAIN: {CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC},
         COVER_DOMAIN: [
             {
                 CONF_PLATFORM: "gogogate2",
@@ -245,8 +245,8 @@ async def test_import(
         ],
     }
 
-    await async_process_op_core_config(opp, opp_config[HA_DOMAIN])
-    assert await async_setup_component.opp, HA_DOMAIN, {})
+    await async_process_op_core_config(opp, opp_config[OP_DOMAIN])
+    assert await async_setup_component.opp, OP_DOMAIN, {})
     assert await async_setup_component.opp, COVER_DOMAIN, opp_config)
     await opp.async_block_till_done()
 

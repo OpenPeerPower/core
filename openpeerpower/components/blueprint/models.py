@@ -17,7 +17,7 @@ from openpeerpower.const import (
     CONF_PATH,
     __version__,
 )
-from openpeerpower.core import DOMAIN as HA_DOMAIN, OpenPeerPower, callback
+from openpeerpower.core import DOMAIN as OP_DOMAIN, OpenPeerPower, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.util import yaml
 
@@ -339,7 +339,7 @@ class DomainBlueprints:
 
             shutil.copytree(
                 integration.file_path / BLUEPRINT_FOLDER,
-                self.blueprint_folder / HA_DOMAIN,
+                self.blueprint_folder / OP_DOMAIN,
             )
 
         await self.opp.async_add_executor_job(populate)

@@ -33,7 +33,7 @@ from openpeerpower.components.zha.core.const import (
     ATTR_QUIRK_APPLIED,
     CLUSTER_TYPE_IN,
     DATA_ZHA,
-    DATA_ZHA_GATEWAY,
+    DATA_ZOP_GATEWAY,
     GROUP_ID,
     GROUP_IDS,
     GROUP_NAME,
@@ -362,7 +362,7 @@ async def test_remove_group(zha_client):
 async def app_controller.opp, setup_zha):
     """Fixture for zigpy Application Controller."""
     await setup_zha()
-    controller = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].application_controller
+    controller = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY].application_controller
     p1 = patch.object(controller, "permit")
     p2 = patch.object(controller, "permit_with_key", new=AsyncMock())
     with p1, p2:

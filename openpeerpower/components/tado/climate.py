@@ -35,8 +35,8 @@ from .const import (
     CONST_OVERLAY_TIMER,
     DATA,
     DOMAIN,
-    HA_TO_TADO_FAN_MODE_MAP,
-    HA_TO_TADO_HVAC_MODE_MAP,
+    OP_TO_TADO_FAN_MODE_MAP,
+    OP_TO_TADO_HVAC_MODE_MAP,
     ORDERED_KNOWN_TADO_MODES,
     SIGNAL_TADO_UPDATE_RECEIVED,
     SUPPORT_PRESET,
@@ -339,7 +339,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
 
     def set_fan_mode(self, fan_mode: str):
         """Turn fan on/off."""
-        self._control_hvac(fan_mode=HA_TO_TADO_FAN_MODE_MAP[fan_mode])
+        self._control_hvac(fan_mode=OP_TO_TADO_FAN_MODE_MAP[fan_mode])
 
     @property
     def preset_mode(self):
@@ -416,7 +416,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
     def set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
 
-        self._control_hvac(hvac_mode=HA_TO_TADO_HVAC_MODE_MAP[hvac_mode])
+        self._control_hvac(hvac_mode=OP_TO_TADO_HVAC_MODE_MAP[hvac_mode])
 
     @property
     def available(self):

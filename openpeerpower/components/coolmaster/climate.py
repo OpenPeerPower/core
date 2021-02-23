@@ -29,7 +29,7 @@ CM_TO_OP_STATE = {
     "fan": HVAC_MODE_FAN_ONLY,
 }
 
-HA_STATE_TO_CM = {value: key for key, value in CM_TO_OP_STATE.items()}
+OP_STATE_TO_CM = {value: key for key, value in CM_TO_OP_STATE.items()}
 
 FAN_MODES = ["low", "med", "high", "auto"]
 
@@ -162,7 +162,7 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         if hvac_mode == HVAC_MODE_OFF:
             await self.async_turn_off()
         else:
-            self._unit = await self._unit.set_mode(HA_STATE_TO_CM[hvac_mode])
+            self._unit = await self._unit.set_mode(OP_STATE_TO_CM[hvac_mode])
             await self.async_turn_on()
 
     async def async_turn_on(self):

@@ -17,7 +17,7 @@ from withings_api.common import (
 
 from openpeerpower import data_entry_flow
 import openpeerpower.components.api as api
-from openpeerpower.components.openpeerpower import DOMAIN as HA_DOMAIN
+from openpeerpower.components.openpeerpower import DOMAIN as OP_DOMAIN
 import openpeerpower.components.webhook as webhook
 from openpeerpower.components.withings import async_unload_entry
 from openpeerpower.components.withings.common import (
@@ -145,7 +145,7 @@ class ComponentFactory:
         }
 
         await async_process_op_core_config(self.opp, opp_config.get("openpeerpower"))
-        assert await async_setup_component(self.opp, HA_DOMAIN, {})
+        assert await async_setup_component(self.opp, OP_DOMAIN, {})
         assert await async_setup_component(self.opp, webhook.DOMAIN, opp_config)
 
         assert await async_setup_component(self.opp, const.DOMAIN, opp_config)

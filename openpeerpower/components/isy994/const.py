@@ -628,7 +628,7 @@ ISY_HVAC_MODES = [
     HVAC_MODE_FAN_ONLY,
 ]
 
-HA_HVAC_TO_ISY = {
+OP_HVAC_TO_ISY = {
     HVAC_MODE_OFF: "off",
     HVAC_MODE_HEAT: "heat",
     HVAC_MODE_COOL: "cool",
@@ -637,7 +637,7 @@ HA_HVAC_TO_ISY = {
     HVAC_MODE_AUTO: "program_auto",
 }
 
-HA_FAN_TO_ISY = {FAN_ON: "on", FAN_AUTO: "auto"}
+OP_FAN_TO_ISY = {FAN_ON: "on", FAN_AUTO: "auto"}
 
 BINARY_SENSOR_DEVICE_TYPES_ISY = {
     DEVICE_CLASS_MOISTURE: ["16.8.", "16.13.", "16.14."],

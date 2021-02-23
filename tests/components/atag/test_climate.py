@@ -14,7 +14,7 @@ from openpeerpower.components.climate import (
 )
 from openpeerpower.components.climate.const import CURRENT_HVAC_HEAT, PRESET_AWAY
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as HA_DOMAIN,
+    DOMAIN as OP_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_TEMPERATURE, STATE_UNKNOWN
@@ -98,10 +98,10 @@ async def test_update_service(
 ) -> None:
     """Test the updater service is called."""
     await init_integration.opp, aioclient_mock)
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
     with patch("pyatag.AtagOne.update") as updater:
         await opp.services.async_call(
-            HA_DOMAIN,
+            OP_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: CLIMATE_ID},
             blocking=True,

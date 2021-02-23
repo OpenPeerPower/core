@@ -50,7 +50,7 @@ EPH_TO_OP_STATE = {
     "OFF": HVAC_MODE_OFF,
 }
 
-HA_STATE_TO_EPH = {value: key for key, value in EPH_TO_OP_STATE.items()}
+OP_STATE_TO_EPH = {value: key for key, value in EPH_TO_OP_STATE.items()}
 
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
@@ -200,7 +200,7 @@ class EphEmberThermostat(ClimateEntity):
     @staticmethod
     def map_mode.opp_eph(operation_mode):
         """Map from Open Peer Power mode to eph mode."""
-        return getattr(ZoneMode, HA_STATE_TO_EPH.get(operation_mode), None)
+        return getattr(ZoneMode, OP_STATE_TO_EPH.get(operation_mode), None)
 
     @staticmethod
     def map_mode_eph.opp(operation_mode):

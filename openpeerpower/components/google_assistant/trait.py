@@ -57,7 +57,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpower.core import DOMAIN as HA_DOMAIN
+from openpeerpower.core import DOMAIN as OP_DOMAIN
 from openpeerpower.helpers.network import get_url
 from openpeerpower.util import color as color_util, dt, temperature as temp_util
 
@@ -333,7 +333,7 @@ class OnOffTrait(_Trait):
         domain = self.state.domain
 
         if domain == group.DOMAIN:
-            service_domain = HA_DOMAIN
+            service_domain = OP_DOMAIN
             service = SERVICE_TURN_ON if params["on"] else SERVICE_TURN_OFF
 
         else:

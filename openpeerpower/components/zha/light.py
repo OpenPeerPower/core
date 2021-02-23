@@ -46,7 +46,7 @@ from .core.const import (
     CHANNEL_LEVEL,
     CHANNEL_ON_OFF,
     DATA_ZHA,
-    DATA_ZHA_DISPATCHERS,
+    DATA_ZOP_DISPATCHERS,
     EFFECT_BLINK,
     EFFECT_BREATHE,
     EFFECT_DEFAULT_VARIANT,
@@ -55,7 +55,7 @@ from .core.const import (
     SIGNAL_SET_LEVEL,
 )
 from .core.helpers import LogMixin
-from .core.registries import ZHA_ENTITIES
+from .core.registries import ZOP_ENTITIES
 from .core.typing import ZhaDeviceType
 from .entity import ZhaEntity, ZhaGroupEntity
 
@@ -73,8 +73,8 @@ UPDATE_COLORLOOP_HUE = 0x8
 FLASH_EFFECTS = {light.FLASH_SHORT: EFFECT_BLINK, light.FLASH_LONG: EFFECT_BREATHE}
 
 UNSUPPORTED_ATTRIBUTE = 0x86
-STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, light.DOMAIN)
-GROUP_MATCH = functools.partial(ZHA_ENTITIES.group_match, light.DOMAIN)
+STRICT_MATCH = functools.partial(ZOP_ENTITIES.strict_match, light.DOMAIN)
+GROUP_MATCH = functools.partial(ZOP_ENTITIES.group_match, light.DOMAIN)
 PARALLEL_UPDATES = 0
 SIGNAL_LIGHT_GROUP_STATE_CHANGED = "zha_light_group_state_changed"
 
@@ -108,7 +108,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             discovery.async_add_entities, async_add_entities, entities_to_create
         ),
     )
-    opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
+    opp.data[DATA_ZHA][DATA_ZOP_DISPATCHERS].append(unsub)
 
 
 class BaseLight(LogMixin, light.LightEntity):

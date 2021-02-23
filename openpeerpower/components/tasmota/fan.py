@@ -11,14 +11,14 @@ from .const import DATA_REMOVE_DISCOVER_COMPONENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_NEW
 from .mixins import TasmotaAvailability, TasmotaDiscoveryUpdate
 
-HA_TO_TASMOTA_SPEED_MAP = {
+OP_TO_TASMOTA_SPEED_MAP = {
     fan.SPEED_OFF: tasmota_const.FAN_SPEED_OFF,
     fan.SPEED_LOW: tasmota_const.FAN_SPEED_LOW,
     fan.SPEED_MEDIUM: tasmota_const.FAN_SPEED_MEDIUM,
     fan.SPEED_HIGH: tasmota_const.FAN_SPEED_HIGH,
 }
 
-TASMOTA_TO_OP_SPEED_MAP = {v: k for k, v in HA_TO_TASMOTA_SPEED_MAP.items()}
+TASMOTA_TO_OP_SPEED_MAP = {v: k for k, v in OP_TO_TASMOTA_SPEED_MAP.items()}
 
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
@@ -63,7 +63,7 @@ class TasmotaFan(
     @property
     def speed_list(self):
         """Get the list of available speeds."""
-        return list(HA_TO_TASMOTA_SPEED_MAP)
+        return list(OP_TO_TASMOTA_SPEED_MAP)
 
     @property
     def supported_features(self):
@@ -72,12 +72,12 @@ class TasmotaFan(
 
     async def async_set_speed(self, speed):
         """Set the speed of the fan."""
-        if speed not in HA_TO_TASMOTA_SPEED_MAP:
+        if speed not in OP_TO_TASMOTA_SPEED_MAP:
             raise ValueError(f"Unsupported speed {speed}")
         if speed == fan.SPEED_OFF:
             await self.async_turn_off()
         else:
-            self._tasmota_entity.set_speed(HA_TO_TASMOTA_SPEED_MAP[speed])
+            self._tasmota_entity.set_speed(OP_TO_TASMOTA_SPEED_MAP[speed])
 
     #
     # The fan entity model has changed to use percentages and preset_modes

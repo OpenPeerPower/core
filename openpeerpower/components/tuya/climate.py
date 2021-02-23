@@ -46,14 +46,14 @@ DEVICE_TYPE = "climate"
 
 SCAN_INTERVAL = timedelta(seconds=15)
 
-HA_STATE_TO_TUYA = {
+OP_STATE_TO_TUYA = {
     HVAC_MODE_AUTO: "auto",
     HVAC_MODE_COOL: "cold",
     HVAC_MODE_FAN_ONLY: "wind",
     HVAC_MODE_HEAT: "hot",
 }
 
-TUYA_STATE_TO_HA = {value: key for key, value in HA_STATE_TO_TUYA.items()}
+TUYA_STATE_TO_HA = {value: key for key, value in OP_STATE_TO_TUYA.items()}
 
 FAN_MODES = {FAN_LOW, FAN_MEDIUM, FAN_HIGH}
 
@@ -228,7 +228,7 @@ class TuyaClimateEntity(TuyaDevice, ClimateEntity):
             self._tuya.turn_on()
 
         if self._has_operation:
-            self._tuya.set_operation_mode(HA_STATE_TO_TUYA.get(hvac_mode))
+            self._tuya.set_operation_mode(OP_STATE_TO_TUYA.get(hvac_mode))
 
     @property
     def supported_features(self):

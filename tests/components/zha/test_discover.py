@@ -183,7 +183,7 @@ def test_discover_by_device_type(device_type, component, hit):
         return_value=(mock.sentinel.entity_cls, mock.sentinel.claimed)
     )
     with mock.patch(
-        "openpeerpower.components.zha.core.registries.ZHA_ENTITIES.get_entity",
+        "openpeerpower.components.zha.core.registries.ZOP_ENTITIES.get_entity",
         get_entity_mock,
     ):
         disc.PROBE.discover_by_device_type(ep_channels)
@@ -210,7 +210,7 @@ def test_discover_by_device_type_override():
         return_value=(mock.sentinel.entity_cls, mock.sentinel.claimed)
     )
     with mock.patch(
-        "openpeerpower.components.zha.core.registries.ZHA_ENTITIES.get_entity",
+        "openpeerpower.components.zha.core.registries.ZOP_ENTITIES.get_entity",
         get_entity_mock,
     ):
         with mock.patch.dict(disc.PROBE._device_configs, overrides, clear=True):
@@ -239,7 +239,7 @@ def test_discover_probe_single_cluster():
     )
     channel_mock = mock.MagicMock(spec_set=base_channels.ZigbeeChannel)
     with mock.patch(
-        "openpeerpower.components.zha.core.registries.ZHA_ENTITIES.get_entity",
+        "openpeerpower.components.zha.core.registries.ZOP_ENTITIES.get_entity",
         get_entity_mock,
     ):
         disc.PROBE.probe_single_cluster(zha_const.SWITCH, channel_mock, ep_channels)

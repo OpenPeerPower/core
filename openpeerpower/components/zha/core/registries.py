@@ -320,4 +320,4 @@ class ZHAEntityRegistry:
         return decorator
 
 
-ZHA_ENTITIES = ZHAEntityRegistry()
+ZOP_ENTITIES = ZHAEntityRegistry()

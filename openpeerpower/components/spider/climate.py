@@ -15,13 +15,13 @@ SUPPORT_FAN = ["Auto", "Low", "Medium", "High", "Boost 10", "Boost 20", "Boost 3
 
 SUPPORT_HVAC = [HVAC_MODE_HEAT, HVAC_MODE_COOL]
 
-HA_STATE_TO_SPIDER = {
+OP_STATE_TO_SPIDER = {
     HVAC_MODE_COOL: "Cool",
     HVAC_MODE_HEAT: "Heat",
     HVAC_MODE_OFF: "Idle",
 }
 
-SPIDER_STATE_TO_HA = {value: key for key, value in HA_STATE_TO_SPIDER.items()}
+SPIDER_STATE_TO_HA = {value: key for key, value in OP_STATE_TO_SPIDER.items()}
 
 
 async def async_setup_entry.opp, config, async_add_entities):
@@ -121,7 +121,7 @@ class SpiderThermostat(ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode):
         """Set new target operation mode."""
-        self.thermostat.set_operation_mode(HA_STATE_TO_SPIDER.get(hvac_mode))
+        self.thermostat.set_operation_mode(OP_STATE_TO_SPIDER.get(hvac_mode))
 
     @property
     def fan_mode(self):

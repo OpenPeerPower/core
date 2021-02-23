@@ -409,7 +409,7 @@ class OnkyoDevice(MediaPlayerEntity):
         volume in HA will give 80% volume on the receiver. Then we convert
         that to the correct scale for the receiver.
         """
-        #        HA_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
+        #        OP_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
         self.command(
             f"volume {int(volume * (self._max_volume / 100) * self._receiver_max_volume)}"
         )
@@ -576,7 +576,7 @@ class OnkyoDeviceZone(OnkyoDevice):
         volume in HA will give 80% volume on the receiver. Then we convert
         that to the correct scale for the receiver.
         """
-        # HA_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
+        # OP_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
         self.command(
             f"zone{self._zone}.volume={int(volume * (self._max_volume / 100) * self._receiver_max_volume)}"
         )

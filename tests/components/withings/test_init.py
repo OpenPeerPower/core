@@ -16,7 +16,7 @@ from openpeerpower.const import (
     CONF_UNIT_SYSTEM,
     CONF_UNIT_SYSTEM_METRIC,
 )
-from openpeerpower.core import DOMAIN as HA_DOMAIN, OpenPeerPower
+from openpeerpower.core import DOMAIN as OP_DOMAIN, OpenPeerPower
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 from openpeerpower.setup import async_setup_component
 
@@ -202,7 +202,7 @@ async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
     config_entry.add_to.opp.opp)
 
     opp.config = {
-        HA_DOMAIN: {
+        OP_DOMAIN: {
             CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC,
             CONF_EXTERNAL_URL: "http://127.0.0.1:8080/",
         },
@@ -217,8 +217,8 @@ async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
         "openpeerpower.components.withings.common.ConfigEntryWithingsApi",
         spec=ConfigEntryWithingsApi,
     ):
-        await async_process_op_core_config(opp, opp_config.get(HA_DOMAIN))
-        assert await async_setup_component.opp, HA_DOMAIN, {})
+        await async_process_op_core_config(opp, opp_config.get(OP_DOMAIN))
+        assert await async_setup_component.opp, OP_DOMAIN, {})
         assert await async_setup_component.opp, webhook.DOMAIN, opp_config)
         assert await async_setup_component.opp, const.DOMAIN, opp_config)
         await opp.async_block_till_done()

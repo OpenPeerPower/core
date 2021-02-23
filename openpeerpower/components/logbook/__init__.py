@@ -33,7 +33,7 @@ from openpeerpower.const import (
     EVENT_STATE_CHANGED,
     HTTP_BAD_REQUEST,
 )
-from openpeerpower.core import DOMAIN as HA_DOMAIN, callback, split_entity_id
+from openpeerpower.core import DOMAIN as OP_DOMAIN, callback, split_entity_id
 from openpeerpower.exceptions import InvalidEntityFormatError
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entityfilter import (
@@ -63,7 +63,7 @@ GROUP_BY_MINUTES = 15
 EMPTY_JSON_OBJECT = "{}"
 UNIT_OF_MEASUREMENT_JSON = '"unit_of_measurement":'
 
-HA_DOMAIN_ENTITY_ID = f"{HA_DOMAIN}."
+OP_DOMAIN_ENTITY_ID = f"{OP_DOMAIN}."
 
 CONFIG_SCHEMA = vol.Schema(
     {DOMAIN: INCLUDE_EXCLUDE_BASE_FILTER_SCHEMA}, extra=vol.ALLOW_EXTRA
@@ -356,7 +356,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
                     "when": event.time_fired_isoformat,
                     "name": "Open Peer Power",
                     "message": "started",
-                    "domain": HA_DOMAIN,
+                    "domain": OP_DOMAIN,
                 }
 
             elif event.event_type == EVENT_OPENPEERPOWER_STOP:
@@ -369,7 +369,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
                     "when": event.time_fired_isoformat,
                     "name": "Open Peer Power",
                     "message": action,
-                    "domain": HA_DOMAIN,
+                    "domain": OP_DOMAIN,
                 }
 
             elif event.event_type == EVENT_LOGBOOK_ENTRY:
@@ -570,7 +570,7 @@ def _apply_event_entity_id_matchers(events_query, entity_ids):
 
 def _keep_event.opp, event, entities_filter):
     if event.event_type in OPENPEERPOWER_EVENTS:
-        return entities_filter is None or entities_filter(HA_DOMAIN_ENTITY_ID)
+        return entities_filter is None or entities_filter(OP_DOMAIN_ENTITY_ID)
 
     entity_id = event.data_entity_id
     if entity_id:

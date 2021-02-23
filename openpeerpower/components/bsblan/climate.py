@@ -54,15 +54,15 @@ PRESET_MODES = [
     PRESET_NONE,
 ]
 
-HA_STATE_TO_BSBLAN = {
+OP_STATE_TO_BSBLAN = {
     HVAC_MODE_AUTO: "1",
     HVAC_MODE_HEAT: "3",
     HVAC_MODE_OFF: "0",
 }
 
-BSBLAN_TO_OP_STATE = {value: key for key, value in HA_STATE_TO_BSBLAN.items()}
+BSBLAN_TO_OP_STATE = {value: key for key, value in OP_STATE_TO_BSBLAN.items()}
 
-HA_PRESET_TO_BSBLAN = {
+OP_PRESET_TO_BSBLAN = {
     PRESET_ECO: "2",
 }
 
@@ -190,12 +190,12 @@ class BSBLanClimate(ClimateEntity):
             _LOGGER.debug("Set temperature data = %s", data)
 
         if ATTR_HVAC_MODE in kwargs:
-            data[ATTR_HVAC_MODE] = HA_STATE_TO_BSBLAN[kwargs[ATTR_HVAC_MODE]]
+            data[ATTR_HVAC_MODE] = OP_STATE_TO_BSBLAN[kwargs[ATTR_HVAC_MODE]]
             _LOGGER.debug("Set hvac mode data = %s", data)
 
         if ATTR_PRESET_MODE in kwargs:
             # for now we set the preset as hvac_mode as the api expect this
-            data[ATTR_HVAC_MODE] = HA_PRESET_TO_BSBLAN[kwargs[ATTR_PRESET_MODE]]
+            data[ATTR_HVAC_MODE] = OP_PRESET_TO_BSBLAN[kwargs[ATTR_PRESET_MODE]]
 
         try:
             await self.bsblan.thermostat(**data)

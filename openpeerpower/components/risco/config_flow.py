@@ -31,7 +31,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 DATA_SCHEMA = vol.Schema({CONF_USERNAME: str, CONF_PASSWORD: str, CONF_PIN: str})
-HA_STATES = [
+OP_STATES = [
     STATE_ALARM_ARMED_AWAY,
     STATE_ALARM_ARMED_HOME,
     STATE_ALARM_ARMED_NIGHT,
@@ -132,7 +132,7 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
         options = vol.Schema(
             {
                 vol.Required(risco_state, default=risco_to_ha[risco_state]): vol.In(
-                    HA_STATES
+                    OP_STATES
                 )
                 for risco_state in RISCO_STATES
             }
@@ -148,9 +148,9 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
 
         options = {}
         risco_to_ha = self._data[CONF_RISCO_STATES_TO_HA]
-        # we iterate over HA_STATES, instead of set(self._risco_to_ha.values())
+        # we iterate over OP_STATES, instead of set(self._risco_to_ha.values())
         # to ensure a consistent order
-        for op_state in HA_STATES:
+        for op_state in OP_STATES:
             if op_state not in risco_to_ha.values():
                 continue
 

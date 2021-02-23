@@ -29,7 +29,7 @@ SUPPORT_FLAGS_HEATER = (
 ATTR_RHEEM_TYPE = "rheem_type"
 ATTR_VACATION_MODE = "vacation_mode"
 
-HA_STATE_TO_WINK = {
+OP_STATE_TO_WINK = {
     STATE_ECO: "eco",
     STATE_ELECTRIC: "electric_only",
     STATE_GAS: "gas",
@@ -39,7 +39,7 @@ HA_STATE_TO_WINK = {
     STATE_PERFORMANCE: "performance",
 }
 
-WINK_STATE_TO_HA = {value: key for key, value in HA_STATE_TO_WINK.items()}
+WINK_STATE_TO_HA = {value: key for key, value in OP_STATE_TO_WINK.items()}
 
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
@@ -116,7 +116,7 @@ class WinkWaterHeater(WinkDevice, WaterHeaterEntity):
 
     def set_operation_mode(self, operation_mode):
         """Set operation mode."""
-        op_mode_to_set = HA_STATE_TO_WINK.get(operation_mode)
+        op_mode_to_set = OP_STATE_TO_WINK.get(operation_mode)
         self.wink.set_operation_mode(op_mode_to_set)
 
     @property

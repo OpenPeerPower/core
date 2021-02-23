@@ -91,7 +91,7 @@ AC_TO_OP_STATE = {
     "0000": HVAC_MODE_FAN_ONLY,
 }
 
-HA_STATE_TO_AC = {
+OP_STATE_TO_AC = {
     HVAC_MODE_OFF: "off",
     HVAC_MODE_HEAT: "mode_heat",
     HVAC_MODE_COOL: "mode_cool",
@@ -108,7 +108,7 @@ AC_TO_OP_FAN_MODES = {
     "00001000": FAN_HIGH,
 }
 
-HA_FAN_MODES_TO_AC = {
+OP_FAN_MODES_TO_AC = {
     "mute": "speed_mute",
     FAN_LOW: "speed_low",
     FAN_MEDIUM: "speed_med",
@@ -344,7 +344,7 @@ class ClimateAehW4a1(ClimateEntity):
             self._hvac_mode != HVAC_MODE_FAN_ONLY or fan_mode != FAN_AUTO
         ):
             _LOGGER.debug("Setting fan mode of %s to %s", self._unique_id, fan_mode)
-            await self._device.command(HA_FAN_MODES_TO_AC[fan_mode])
+            await self._device.command(OP_FAN_MODES_TO_AC[fan_mode])
 
     async def async_set_swing_mode(self, swing_mode):
         """Set new target swing operation."""
@@ -413,8 +413,8 @@ class ClimateAehW4a1(ClimateEntity):
                 await self._device.command("energysave_off")
             elif self._previous_state == PRESET_BOOST:
                 await self._device.command("turbo_off")
-            elif self._previous_state in HA_STATE_TO_AC:
-                await self._device.command(HA_STATE_TO_AC[self._previous_state])
+            elif self._previous_state in OP_STATE_TO_AC:
+                await self._device.command(OP_STATE_TO_AC[self._previous_state])
             self._previous_state = None
 
     async def async_set_hvac_mode(self, hvac_mode):
@@ -423,7 +423,7 @@ class ClimateAehW4a1(ClimateEntity):
         if hvac_mode == HVAC_MODE_OFF:
             await self.async_turn_off()
         else:
-            await self._device.command(HA_STATE_TO_AC[hvac_mode])
+            await self._device.command(OP_STATE_TO_AC[hvac_mode])
             if self._on != "1":
                 await self.async_turn_on()
 

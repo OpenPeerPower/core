@@ -17,8 +17,8 @@ ACTION_SQUAWK = "squawk"
 ACTION_WARN = "warn"
 ATTR_DATA = "data"
 ATTR_IEEE = "ieee"
-CONF_ZHA_ACTION_TYPE = "zha_action_type"
-ZHA_ACTION_TYPE_SERVICE_CALL = "service_call"
+CONF_ZOP_ACTION_TYPE = "zha_action_type"
+ZOP_ACTION_TYPE_SERVICE_CALL = "service_call"
 
 ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
     {vol.Required(CONF_DOMAIN): DOMAIN, vol.Required(CONF_TYPE): str}
@@ -32,8 +32,8 @@ DEVICE_ACTIONS = {
 }
 
 DEVICE_ACTION_TYPES = {
-    ACTION_SQUAWK: ZHA_ACTION_TYPE_SERVICE_CALL,
-    ACTION_WARN: ZHA_ACTION_TYPE_SERVICE_CALL,
+    ACTION_SQUAWK: ZOP_ACTION_TYPE_SERVICE_CALL,
+    ACTION_WARN: ZOP_ACTION_TYPE_SERVICE_CALL,
 }
 
 SERVICE_NAMES = {
@@ -49,7 +49,7 @@ async def async_call_action_from_config(
     context: Context,
 ) -> None:
     """Perform an action based on configuration."""
-    await ZHA_ACTION_TYPES[DEVICE_ACTION_TYPES[config[CONF_TYPE]]](
+    await ZOP_ACTION_TYPES[DEVICE_ACTION_TYPES[config[CONF_TYPE]]](
         opp. config, variables, context
     )
 
@@ -96,4 +96,4 @@ async def _execute_service_based_action(
     )
 
 
-ZHA_ACTION_TYPES = {ZHA_ACTION_TYPE_SERVICE_CALL: _execute_service_based_action}
+ZOP_ACTION_TYPES = {ZOP_ACTION_TYPE_SERVICE_CALL: _execute_service_based_action}

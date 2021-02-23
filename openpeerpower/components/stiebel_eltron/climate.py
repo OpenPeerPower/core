@@ -44,13 +44,13 @@ STE_TO_OP_PRESET = {
     "EMERGENCY OPERATION": PRESET_EMERGENCY,
 }
 
-HA_TO_STE_HVAC = {
+OP_TO_STE_HVAC = {
     HVAC_MODE_AUTO: "AUTOMATIC",
     HVAC_MODE_HEAT: "MANUAL MODE",
     HVAC_MODE_OFF: "DHW",
 }
 
-HA_TO_STE_PRESET = {k: i for i, k in STE_TO_OP_PRESET.items()}
+OP_TO_STE_PRESET = {k: i for i, k in STE_TO_OP_PRESET.items()}
 
 
 def setup_platform.opp, config, add_entities, discovery_info=None):
@@ -165,7 +165,7 @@ class StiebelEltron(ClimateEntity):
         """Set new operation mode."""
         if self.preset_mode:
             return
-        new_mode = HA_TO_STE_HVAC.get(hvac_mode)
+        new_mode = OP_TO_STE_HVAC.get(hvac_mode)
         _LOGGER.debug("set_hvac_mode: %s -> %s", self._operation, new_mode)
         self._ste_data.api.set_operation(new_mode)
         self._force_update = True
@@ -180,7 +180,7 @@ class StiebelEltron(ClimateEntity):
 
     def set_preset_mode(self, preset_mode: str):
         """Set new preset mode."""
-        new_mode = HA_TO_STE_PRESET.get(preset_mode)
+        new_mode = OP_TO_STE_PRESET.get(preset_mode)
         _LOGGER.debug("set_hvac_mode: %s -> %s", self._operation, new_mode)
         self._ste_data.api.set_operation(new_mode)
         self._force_update = True

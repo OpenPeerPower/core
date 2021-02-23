@@ -44,7 +44,7 @@ EQ_TO_OP_HVAC = {
     eq3.Mode.Away: HVAC_MODE_HEAT,
 }
 
-HA_TO_EQ_HVAC = {
+OP_TO_EQ_HVAC = {
     HVAC_MODE_HEAT: eq3.Mode.Manual,
     HVAC_MODE_OFF: eq3.Mode.Closed,
     HVAC_MODE_AUTO: eq3.Mode.Auto,
@@ -52,7 +52,7 @@ HA_TO_EQ_HVAC = {
 
 EQ_TO_OP_PRESET = {eq3.Mode.Boost: PRESET_BOOST, eq3.Mode.Away: PRESET_AWAY}
 
-HA_TO_EQ_PRESET = {PRESET_BOOST: eq3.Mode.Boost, PRESET_AWAY: eq3.Mode.Away}
+OP_TO_EQ_PRESET = {PRESET_BOOST: eq3.Mode.Boost, PRESET_AWAY: eq3.Mode.Away}
 
 
 DEVICE_SCHEMA = vol.Schema({vol.Required(CONF_MAC): cv.string})
@@ -136,13 +136,13 @@ class EQ3BTSmartThermostat(ClimateEntity):
     @property
     def hvac_modes(self):
         """Return the list of available operation modes."""
-        return list(HA_TO_EQ_HVAC)
+        return list(OP_TO_EQ_HVAC)
 
     def set_hvac_mode(self, hvac_mode):
         """Set operation mode."""
         if self.preset_mode:
             return
-        self._thermostat.mode = HA_TO_EQ_HVAC[hvac_mode]
+        self._thermostat.mode = OP_TO_EQ_HVAC[hvac_mode]
 
     @property
     def min_temp(self):
@@ -181,13 +181,13 @@ class EQ3BTSmartThermostat(ClimateEntity):
 
         Requires SUPPORT_PRESET_MODE.
         """
-        return list(HA_TO_EQ_PRESET)
+        return list(OP_TO_EQ_PRESET)
 
     def set_preset_mode(self, preset_mode):
         """Set new preset mode."""
         if preset_mode == PRESET_NONE:
             self.set_hvac_mode(HVAC_MODE_HEAT)
-        self._thermostat.mode = HA_TO_EQ_PRESET[preset_mode]
+        self._thermostat.mode = OP_TO_EQ_PRESET[preset_mode]
 
     def update(self):
         """Update the data from the thermostat."""

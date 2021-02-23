@@ -2,7 +2,7 @@
 from unittest.mock import patch
 
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as HA_DOMAIN,
+    DOMAIN as OP_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.smart_meter_texas.const import DOMAIN
@@ -44,11 +44,11 @@ async def test_api_timeout.opp, config_entry, aioclient_mock):
 async def test_update_failure.opp, config_entry, aioclient_mock):
     """Test that the coordinator handles a bad response."""
     await setup_integration.opp, config_entry, aioclient_mock, bad_reading=True)
-    await async_setup_component.opp, HA_DOMAIN, {})
+    await async_setup_component.opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
     with patch("smart_meter_texas.Meter.read_meter") as updater:
         await opp.services.async_call(
-            HA_DOMAIN,
+            OP_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: TEST_ENTITY_ID},
             blocking=True,

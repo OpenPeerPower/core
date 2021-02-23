@@ -67,7 +67,7 @@ DATA_PERSISTENT_ERRORS = "bootstrap_persistent_errors"
 RE_YAML_ERROR = re.compile(r"openpeerpower\.util\.yaml")
 RE_ASCII = re.compile(r"\033\[[^m]*m")
 YAML_CONFIG_FILE = "configuration.yaml"
-VERSION_FILE = ".HA_VERSION"
+VERSION_FILE = ".OP_VERSION"
 CONFIG_DIR_NAME = ".openpeerpower"
 DATA_CUSTOMIZE = opp_customize"
 
