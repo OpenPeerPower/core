@@ -10,7 +10,7 @@ from tests.common import CLIENT_ID, MockUser
 @pytest.fixture(autouse=True)
 async def setup_config(opp, local_auth):
     """Fixture that sets up the auth provider ."""
-    await auth_ha.async_setup_opp)
+    await auth_op.async_setup_opp)
 
 
 @pytest.fixture
@@ -20,7 +20,7 @@ async def auth_provider(local_auth):
 
 
 @pytest.fixture
-async def owner_access_token.opp, opp_owner_user):
+async def owner_access_token(opp, opp_owner_user):
     """Access token for owner user."""
     refresh_token = await opp.auth.async_create_refresh_token(
         opp.owner_user, CLIENT_ID
@@ -40,10 +40,10 @@ async def.opp_admin_credential.opp, auth_provider):
     )
 
 
-async def test_create_auth_system_generated_user.opp, opp_ws_client):
+async def test_create_auth_system_generated_user(opp, opp_ws_client):
     """Test we can't add auth to system generated users."""
     system_user = MockUser(system_generated=True).add_to.opp.opp)
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -66,9 +66,9 @@ async def test_create_auth_user_already_credentials():
     # assert False
 
 
-async def test_create_auth_unknown_user.opp_ws_client, opp):
+async def test_create_auth_unknown_user(opp_ws_client, opp):
     """Test create pointing at unknown user."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -107,9 +107,9 @@ async def test_create_auth_requires_admin(
     assert result["error"]["code"] == "unauthorized"
 
 
-async def test_create_auth.opp, opp_ws_client, opp_storage):
+async def test_create_auth(opp, opp_ws_client, opp_storage):
     """Test create auth command works."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     user = MockUser().add_to.opp.opp)
 
     assert len(user.credentials) == 0
@@ -136,9 +136,9 @@ async def test_create_auth.opp, opp_ws_client, opp_storage):
     assert entry["username"] == "test-user2"
 
 
-async def test_create_auth_duplicate_username.opp, opp_ws_client, opp_storage):
+async def test_create_auth_duplicate_username(opp, opp_ws_client, opp_storage):
     """Test we can't create auth with a duplicate username."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     user = MockUser().add_to.opp.opp)
 
     opp.storage[prov_ha.STORAGE_KEY] = {
@@ -161,9 +161,9 @@ async def test_create_auth_duplicate_username.opp, opp_ws_client, opp_storage):
     assert result["error"]["code"] == "username_exists"
 
 
-async def test_delete_removes_just_auth.opp_ws_client, opp, opp_storage):
+async def test_delete_removes_just_auth(opp_ws_client, opp, opp_storage):
     """Test deleting an auth without being connected to a user."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     opp.storage[prov_ha.STORAGE_KEY] = {
         "version": 1,
@@ -183,9 +183,9 @@ async def test_delete_removes_just_auth.opp_ws_client, opp, opp_storage):
     assert len.opp_storage[prov_ha.STORAGE_KEY]["data"]["users"]) == 0
 
 
-async def test_delete_removes_credential.opp, opp_ws_client, opp_storage):
+async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
     """Test deleting auth that is connected to a user."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     user = MockUser().add_to.opp.opp)
     opp.storage[prov_ha.STORAGE_KEY] = {
@@ -212,9 +212,9 @@ async def test_delete_removes_credential.opp, opp_ws_client, opp_storage):
     assert len.opp_storage[prov_ha.STORAGE_KEY]["data"]["users"]) == 0
 
 
-async def test_delete_requires_admin.opp, opp_ws_client, opp_read_only_access_token):
+async def test_delete_requires_admin(opp, opp_ws_client, opp_read_only_access_token):
     """Test delete requires admin."""
-    client = await opp_ws_client.opp, opp_read_only_access_token)
+    client = await opp_ws_client(opp, opp_read_only_access_token)
 
     await client.send_json(
         {
@@ -229,9 +229,9 @@ async def test_delete_requires_admin.opp, opp_ws_client, opp_read_only_access_to
     assert result["error"]["code"] == "unauthorized"
 
 
-async def test_delete_unknown_auth.opp, opp_ws_client):
+async def test_delete_unknown_auth(opp, opp_ws_client):
     """Test trying to delete an unknown auth username."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -246,9 +246,9 @@ async def test_delete_unknown_auth.opp, opp_ws_client):
     assert result["error"]["code"] == "auth_not_found"
 
 
-async def test_change_password.opp, opp_ws_client, auth_provider):
+async def test_change_password(opp, opp_ws_client, auth_provider):
     """Test that change password succeeds with valid password."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {
             "id": 6,
@@ -285,7 +285,7 @@ async def test_change_password_wrong_pw(
         await auth_provider.async_validate_login("test-user", "new-pass")
 
 
-async def test_change_password_no_creds.opp, opp_ws_client, opp_admin_user):
+async def test_change_password_no_creds(opp, opp_ws_client, opp_admin_user):
     """Test that change password fails with no credentials."""
     opp.admin_user.credentials.clear()
     client = await opp_ws_client.opp)
@@ -304,7 +304,7 @@ async def test_change_password_no_creds.opp, opp_ws_client, opp_admin_user):
     assert result["error"]["code"] == "credentials_not_found"
 
 
-async def test_admin_change_password_not_owner.opp, opp_ws_client, auth_provider):
+async def test_admin_change_password_not_owner(opp, opp_ws_client, auth_provider):
     """Test that change password fails when not owner."""
     client = await opp_ws_client.opp)
 
@@ -325,7 +325,7 @@ async def test_admin_change_password_not_owner.opp, opp_ws_client, auth_provider
     await auth_provider.async_validate_login("test-user", "test-pass")
 
 
-async def test_admin_change_password_no_user.opp, opp_ws_client, owner_access_token):
+async def test_admin_change_password_no_user(opp, opp_ws_client, owner_access_token):
     """Test that change password fails with unknown user."""
     client = await opp_ws_client.opp, owner_access_token)
 
@@ -344,7 +344,7 @@ async def test_admin_change_password_no_user.opp, opp_ws_client, owner_access_to
 
 
 async def test_admin_change_password_no_cred(
-    opp. opp_ws_client, owner_access_token, opp_admin_user
+    opp, opp_ws_client, owner_access_token, opp_admin_user
 ):
     """Test that change password fails with unknown credential."""
 
@@ -366,11 +366,11 @@ async def test_admin_change_password_no_cred(
 
 
 async def test_admin_change_password(
-    opp.
-    opp.ws_client,
+    opp,
+    opp_ws_client,
     owner_access_token,
     auth_provider,
-    opp.admin_user,
+    opp_admin_user,
 ):
     """Test that owners can change any password."""
     client = await opp_ws_client.opp, owner_access_token)
