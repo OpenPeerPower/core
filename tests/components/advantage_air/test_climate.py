@@ -3,8 +3,8 @@
 from json import loads
 
 from openpeerpower.components.advantage_air.climate import (
-    HASS_FAN_MODES,
-    HASS_HVAC_MODES,
+    OPP_FAN_MODES,
+    OPP_HVAC_MODES,
 )
 from openpeerpower.components.advantage_air.const import (
     ADVANTAGE_AIR_STATE_OFF,
@@ -74,7 +74,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-2][1].path == "/setAircon"
     data = loads(aioclient_mock.mock_calls[-2][1].query["json"])
     assert data["ac1"]["info"]["state"] == ADVANTAGE_AIR_STATE_ON
-    assert data["ac1"]["info"]["mode"] == HASS_HVAC_MODES[HVAC_MODE_FAN_ONLY]
+    assert data["ac1"]["info"]["mode"] == OPP_HVAC_MODES[HVAC_MODE_FAN_ONLY]
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
@@ -102,7 +102,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-2][0] == "GET"
     assert aioclient_mock.mock_calls[-2][1].path == "/setAircon"
     data = loads(aioclient_mock.mock_calls[-2][1].query["json"])
-    assert data["ac1"]["info"]["fan"] == HASS_FAN_MODES[FAN_LOW]
+    assert data["ac1"]["info"]["fan"] == OPP_FAN_MODES[FAN_LOW]
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 

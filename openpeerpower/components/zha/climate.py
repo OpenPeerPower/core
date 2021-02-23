@@ -539,7 +539,7 @@ class SinopeTechnologiesThermostat(Thermostat):
         )
 
     async def async_added_to.opp(self):
-        """Run when about to be added to Hass."""
+        """Run when about to be added to Opp."""
         await super().async_added_to.opp()
         async_track_time_interval(
             self.opp, self._async_update_time, self.update_time_interval

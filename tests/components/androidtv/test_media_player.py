@@ -1108,7 +1108,7 @@ async def test_get_image.opp, opp_ws_client):
 async def _test_service(
     opp.
     entity_id,
-    ha_service_name,
+    op_service_name,
     androidtv_method,
     additional_service_data=None,
     return_value=None,
@@ -1128,7 +1128,7 @@ async def _test_service(
     ) as service_call:
         await opp.services.async_call(
             DOMAIN,
-            ha_service_name,
+            op_service_name,
             service_data=service_data,
             blocking=True,
         )

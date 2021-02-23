@@ -8,8 +8,8 @@
         },
         "step": {
              opp.o_confirm": {
-                "description": "Vuoi configurare Open Peer Power a connettersi ad Almond tramite il componente aggiuntivo Hass.io: {addon} ?",
-                "title": "Almond tramite il componente aggiuntivo di Hass.io"
+                "description": "Vuoi configurare Open Peer Power a connettersi ad Almond tramite il componente aggiuntivo Opp.io: {addon} ?",
+                "title": "Almond tramite il componente aggiuntivo di Opp.io"
             },
             "pick_implementation": {
                 "title": "Scegli il metodo di autenticazione"

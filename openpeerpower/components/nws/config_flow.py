@@ -27,8 +27,8 @@ async def validate_input.opp: core.OpenPeerPower, data):
     station = data.get(CONF_STATION)
 
     client_session = async_get_clientsession.opp)
-    ha_api_key = f"{api_key} openpeerpower"
-    nws = SimpleNWS(latitude, longitude, ha_api_key, client_session)
+    op_api_key = f"{api_key} openpeerpower"
+    nws = SimpleNWS(latitude, longitude, op_api_key, client_session)
 
     try:
         await nws.set_station(station)

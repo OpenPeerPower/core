@@ -40,7 +40,7 @@ async def test_list.opp, opp_ws_client, opp_admin_user):
         )
     )
 
-    system = MockUser(id="efg", name="Test Hass.io", system_generated=True).add_to.opp(
+    system = MockUser(id="efg", name="Test Opp.io", system_generated=True).add_to.opp(
         opp
     )
 
@@ -83,7 +83,7 @@ async def test_list.opp, opp_ws_client, opp_admin_user):
     assert data[2] == {
         "id": system.id,
         "username": None,
-        "name": "Test Hass.io",
+        "name": "Test Opp.io",
         "is_owner": False,
         "is_active": True,
         "system_generated": True,

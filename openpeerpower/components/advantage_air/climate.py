@@ -31,7 +31,7 @@ ADVANTAGE_AIR_HVAC_MODES = {
     "vent": HVAC_MODE_FAN_ONLY,
     "dry": HVAC_MODE_DRY,
 }
-HASS_HVAC_MODES = {v: k for k, v in ADVANTAGE_AIR_HVAC_MODES.items()}
+OPP_HVAC_MODES = {v: k for k, v in ADVANTAGE_AIR_HVAC_MODES.items()}
 
 ADVANTAGE_AIR_FAN_MODES = {
     "auto": FAN_AUTO,
@@ -39,7 +39,7 @@ ADVANTAGE_AIR_FAN_MODES = {
     "medium": FAN_MEDIUM,
     "high": FAN_HIGH,
 }
-HASS_FAN_MODES = {v: k for k, v in ADVANTAGE_AIR_FAN_MODES.items()}
+OPP_FAN_MODES = {v: k for k, v in ADVANTAGE_AIR_FAN_MODES.items()}
 FAN_SPEEDS = {FAN_LOW: 30, FAN_MEDIUM: 60, FAN_HIGH: 100}
 
 AC_HVAC_MODES = [
@@ -150,7 +150,7 @@ class AdvantageAirAC(AdvantageAirClimateEntity):
                     self.ac_key: {
                         "info": {
                             "state": ADVANTAGE_AIR_STATE_ON,
-                            "mode": HASS_HVAC_MODES.get(hvac_mode),
+                            "mode": OPP_HVAC_MODES.get(hvac_mode),
                         }
                     }
                 }
@@ -159,7 +159,7 @@ class AdvantageAirAC(AdvantageAirClimateEntity):
     async def async_set_fan_mode(self, fan_mode):
         """Set the Fan Mode."""
         await self.async_change(
-            {self.ac_key: {"info": {"fan": HASS_FAN_MODES.get(fan_mode)}}}
+            {self.ac_key: {"info": {"fan": OPP_FAN_MODES.get(fan_mode)}}}
         )
 
     async def async_set_temperature(self, **kwargs):

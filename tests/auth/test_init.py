@@ -371,7 +371,7 @@ async def test_generating_system_user.opp):
     opp.bus.async_listen("user_added", user_added)
 
     manager = await auth.auth_manager_from_config(opp, [], [])
-    user = await manager.async_create_system_user("Hass.io")
+    user = await manager.async_create_system_user("Opp.io")
     token = await manager.async_create_refresh_token(user)
     assert user.system_generated
     assert token is not None
@@ -402,7 +402,7 @@ async def test_refresh_token_requires_client_for_user.opp):
 async def test_refresh_token_not_requires_client_for_system_user.opp):
     """Test create refresh token for a system user w/o client_id."""
     manager = await auth.auth_manager_from_config(opp, [], [])
-    user = await manager.async_create_system_user("Hass.io")
+    user = await manager.async_create_system_user("Opp.io")
     assert user.system_generated is True
 
     with pytest.raises(ValueError):

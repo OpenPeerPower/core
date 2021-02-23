@@ -68,7 +68,7 @@ async def async_setup_entry(
 
         async_add_entities(entities)
 
-    # Handle adding paired sensors after HASS startup:
+    # Handle adding paired sensors after OPP startup:
     opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id].append(
         async_dispatcher_connect(
             opp.

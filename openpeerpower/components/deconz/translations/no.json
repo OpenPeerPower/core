@@ -14,8 +14,8 @@
         "flow_title": "",
         "step": {
              opp.o_confirm": {
-                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble seg til deCONZ-gateway levert av Hass.io-tillegg {addon} ?",
-                "title": "deCONZ Zigbee gateway via Hass.io-tillegg"
+                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble seg til deCONZ-gateway levert av Opp.io-tillegg {addon} ?",
+                "title": "deCONZ Zigbee gateway via Opp.io-tillegg"
             },
             "link": {
                 "description": "L\u00e5s opp deCONZ-gatewayen din for \u00e5 registrere deg med Open Peer Power. \n\n 1. G\u00e5 til deCONZ-systeminnstillinger -> Gateway -> Avansert \n 2. Trykk p\u00e5 \"Autentiser app\" knappen",

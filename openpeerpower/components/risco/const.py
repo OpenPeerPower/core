@@ -18,7 +18,7 @@ DEFAULT_SCAN_INTERVAL = 30
 CONF_CODE_ARM_REQUIRED = "code_arm_required"
 CONF_CODE_DISARM_REQUIRED = "code_disarm_required"
 CONF_RISCO_STATES_TO_HA = "risco_states_to_ha"
-CONF_OP_STATES_TO_RISCO = "ha_states_to_risco"
+CONF_OP_STATES_TO_RISCO = "op_states_to_risco"
 
 RISCO_GROUPS = ["A", "B", "C", "D"]
 RISCO_ARM = "arm"

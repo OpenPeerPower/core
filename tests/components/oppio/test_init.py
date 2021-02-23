@@ -22,7 +22,7 @@ from openpeerpower.setup import async_setup_component
 
 from tests.common import async_capture_events
 
-MOCK_ENVIRON = {"HASSIO": "127.0.0.1", "HASSIO_TOKEN": "abcdefgh"}
+MOCK_ENVIRON = {" OPPIO": "127.0.0.1", " OPPIO_TOKEN": "abcdefgh"}
 
 
 @pytest.fixture(autouse=True)
@@ -163,7 +163,7 @@ async def test_setup_api_push_api_data_default.opp, aioclient_mock, opp_storage)
 async def test_setup_adds_admin_group_to_user.opp, aioclient_mock, opp_storage):
     """Test setup with API push default data."""
     # Create user without admin
-    user = await opp.auth.async_create_system_user("Hass.io")
+    user = await opp.auth.async_create_system_user("Opp.io")
     assert not user.is_admin
     await opp.auth.async_create_refresh_token(user)
 
@@ -182,7 +182,7 @@ async def test_setup_adds_admin_group_to_user.opp, aioclient_mock, opp_storage):
 
 async def test_setup_api_existing.oppio_user.opp, aioclient_mock, opp_storage):
     """Test setup with API push default data."""
-    user = await opp.auth.async_create_system_user("Hass.io test")
+    user = await opp.auth.async_create_system_user("Opp.io test")
     token = await opp.auth.async_create_refresh_token(user)
     opp.storage[STORAGE_KEY] = {"version": 1, "data": {.oppio_user": user.id}}
     with patch.dict(os.environ, MOCK_ENVIRON):
@@ -215,13 +215,13 @@ async def test_setup_core_push_timezone.opp, aioclient_mock):
 async def test_setup_oppio_no_additional_data.opp, aioclient_mock):
     """Test setup with API push default data."""
     with patch.dict(os.environ, MOCK_ENVIRON), patch.dict(
-        os.environ, {"HASSIO_TOKEN": "123456"}
+        os.environ, {" OPPIO_TOKEN": "123456"}
     ):
         result = await async_setup_component.opp,  opp.o", {.oppio": {}})
         assert result
 
     assert aioclient_mock.call_count == 9
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
 
 
 async def test_fail_setup_without_environ_var.opp):
@@ -234,14 +234,14 @@ async def test_fail_setup_without_environ_var.opp):
 async def test_warn_when_cannot_connect.opp, caplog):
     """Fail warn when we cannot connect."""
     with patch.dict(os.environ, MOCK_ENVIRON), patch(
-        "openpeerpower.components.oppio.HassIO.is_connected",
+        "openpeerpower.components.oppio. OppIO.is_connected",
         return_value=None,
     ):
         result = await async_setup_component.opp,  opp.o", {})
         assert result
 
     assert.opp.components.oppio.is.oppio()
-    assert "Not connected with Hass.io / system too busy!" in caplog.text
+    assert "Not connected with Opp.io / system too busy!" in caplog.text
 
 
 async def test_service_register.oppio_env, opp):

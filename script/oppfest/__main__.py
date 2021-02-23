@@ -34,7 +34,7 @@ INTEGRATION_PLUGINS = [
     zeroconf,
     dhcp,
 ]
-HASS_PLUGINS = [
+OPP_PLUGINS = [
     coverage,
 ]
 
@@ -50,7 +50,7 @@ def valid_integration_path(integration_path):
 
 def get_config() -> Config:
     """Return config."""
-    parser = argparse.ArgumentParser(description="Hassfest")
+    parser = argparse.ArgumentParser(description=" Oppfest")
     parser.add_argument(
         "--action", type=str, choices=["validate", "generate"], default=None
     )
@@ -112,7 +112,7 @@ def main():
 
     else:
         integrations = Integration.load_dir(pathlib.Path("openpeerpower/components"))
-        plugins += HASS_PLUGINS
+        plugins += OPP_PLUGINS
 
     for plugin in plugins:
         try:

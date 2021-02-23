@@ -221,7 +221,7 @@ async def test.oppio_confirm.opp, aioclient_mock):
 
 
 async def test.oppio_connection_error(opp, aioclient_mock):
-    """Test we show Hass.io confirm form on AdGuard Home connection error."""
+    """Test we show Opp.io confirm form on AdGuard Home connection error."""
     aioclient_mock.get(
         "http://mock-adguard:3000/control/status", exc=aiohttp.ClientError
     )

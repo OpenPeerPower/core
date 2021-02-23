@@ -494,4 +494,4 @@ async def test_get_instance.opp, mock_zeroconf):
     assert await opp.components.zeroconf.async_get_instance() is mock_zeroconf
     opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
-    assert len(mock_zeroconf.ha_close.mock_calls) == 1
+    assert len(mock_zeroconf.op_close.mock_calls) == 1

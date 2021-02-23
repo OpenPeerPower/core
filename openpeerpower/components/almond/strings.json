@@ -5,8 +5,8 @@
         "title": "[%key:common::config_flow::title::oauth2_pick_implementation%]"
       },
        opp.o_confirm": {
-        "title": "Almond via Hass.io add-on",
-        "description": "Do you want to configure Open Peer Power to connect to Almond provided by the Hass.io add-on: {addon}?"
+        "title": "Almond via Opp.io add-on",
+        "description": "Do you want to configure Open Peer Power to connect to Almond provided by the Opp.io add-on: {addon}?"
       }
     },
     "abort": {

@@ -6,8 +6,8 @@
         },
         "step": {
              opp.o_confirm": {
-                "description": "Deseja configurar o Open Peer Power para se conectar ao AdGuard Home fornecido pelo complemento Hass.io: {addon} ?",
-                "title": "AdGuard Home via add-on Hass.io"
+                "description": "Deseja configurar o Open Peer Power para se conectar ao AdGuard Home fornecido pelo complemento Opp.io: {addon} ?",
+                "title": "AdGuard Home via add-on Opp.io"
             },
             "user": {
                 "data": {

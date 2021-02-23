@@ -17,8 +17,8 @@ from . import (
     SUPPORT_MODES,
 )
 
-INTENT_HUMIDITY = "HassHumidifierSetpoint"
-INTENT_MODE = "HassHumidifierMode"
+INTENT_HUMIDITY = " OppHumidifierSetpoint"
+INTENT_MODE = " OppHumidifierMode"
 
 
 async def async_setup_intents.opp: OpenPeerPower) -> None:

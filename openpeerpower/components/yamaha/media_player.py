@@ -45,7 +45,7 @@ CONF_SOURCE_NAMES = "source_names"
 CONF_ZONE_IGNORE = "zone_ignore"
 CONF_ZONE_NAMES = "zone_names"
 
-DATA_YAMAHA = "yamaha_known_receivers"
+DATA_YAMAHA = "yamaop_known_receivers"
 DEFAULT_NAME = "Yamaha Receiver"
 
 SUPPORT_YAMAHA = (

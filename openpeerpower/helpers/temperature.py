@@ -12,7 +12,7 @@ def display_temp(
 ) -> Optional[float]:
     """Convert temperature into preferred units/precision for display."""
     temperature_unit = unit
-    ha_unit = opp.config.units.temperature_unit
+    op_unit = opp.config.units.temperature_unit
 
     if temperature is None:
         return temperature
@@ -22,8 +22,8 @@ def display_temp(
     if not isinstance(temperature, Number):
         raise TypeError(f"Temperature is not a number: {temperature}")
 
-    if temperature_unit != ha_unit:
-        temperature = convert_temperature(temperature, temperature_unit, ha_unit)
+    if temperature_unit != op_unit:
+        temperature = convert_temperature(temperature, temperature_unit, op_unit)
 
     # Round in the units appropriate
     if precision == PRECISION_HALVES:

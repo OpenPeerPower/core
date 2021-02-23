@@ -750,7 +750,7 @@ def entity_to_json(config, entity):
         # Extended Color light (Zigbee Device ID: 0x0210)
         # Same as Color light, but which supports additional setting of color temperature
         retval["type"] = "Extended color light"
-        retval["modelid"] = "HASS231"
+        retval["modelid"] = " OPP231"
         retval["state"].update(
             {
                 HUE_API_STATE_BRI: state[STATE_BRIGHTNESS],
@@ -768,7 +768,7 @@ def entity_to_json(config, entity):
         # Color light (Zigbee Device ID: 0x0200)
         # Supports on/off, dimming and color control (hue/saturation, enhanced hue, color loop and XY)
         retval["type"] = "Color light"
-        retval["modelid"] = "HASS213"
+        retval["modelid"] = " OPP213"
         retval["state"].update(
             {
                 HUE_API_STATE_BRI: state[STATE_BRIGHTNESS],
@@ -784,7 +784,7 @@ def entity_to_json(config, entity):
         # Color temperature light (Zigbee Device ID: 0x0220)
         # Supports groups, scenes, on/off, dimming, and setting of a color temperature
         retval["type"] = "Color temperature light"
-        retval["modelid"] = "HASS312"
+        retval["modelid"] = " OPP312"
         retval["state"].update(
             {
                 HUE_API_STATE_COLORMODE: "ct",
@@ -802,20 +802,20 @@ def entity_to_json(config, entity):
         # Dimmable light (Zigbee Device ID: 0x0100)
         # Supports groups, scenes, on/off and dimming
         retval["type"] = "Dimmable light"
-        retval["modelid"] = "HASS123"
+        retval["modelid"] = " OPP123"
         retval["state"].update({HUE_API_STATE_BRI: state[STATE_BRIGHTNESS]})
     elif not config.lights_all_dimmable:
         # On/Off light (ZigBee Device ID: 0x0000)
         # Supports groups, scenes and on/off control
         retval["type"] = "On/Off light"
         retval["productname"] = "On/Off light"
-        retval["modelid"] = "HASS321"
+        retval["modelid"] = " OPP321"
     else:
         # Dimmable light (Zigbee Device ID: 0x0100)
         # Supports groups, scenes, on/off and dimming
         # Reports fixed brightness for compatibility with Alexa.
         retval["type"] = "Dimmable light"
-        retval["modelid"] = "HASS123"
+        retval["modelid"] = " OPP123"
         retval["state"].update({HUE_API_STATE_BRI: HUE_API_STATE_BRI_MAX})
 
     return retval
@@ -833,7 +833,7 @@ def create_config_model(config, request):
         "mac": "00:00:00:00:00:00",
         "swversion": "01003542",
         "apiversion": "1.17.0",
-        "whitelist": {HUE_API_USERNAME: {"name": "HASS BRIDGE"}},
+        "whitelist": {HUE_API_USERNAME: {"name": "OPP BRIDGE"}},
         "ipaddress": f"{config.advertise_ip}:{config.advertise_port}",
         "linkbutton": True,
     }

@@ -451,14 +451,14 @@ def test_ct_value_changed(mock_openzwave):
     values = MockLightValues(primary=value, color=color, color_channels=color_channels)
     device = light.get_device(node=node, values=values, node_config={})
 
-    assert device.color_temp == light.TEMP_MID_HASS
+    assert device.color_temp == light.TEMP_MID_OPP
 
     color.data = "#000000ff00"
     value_changed(color)
 
-    assert device.color_temp == light.TEMP_WARM_HASS
+    assert device.color_temp == light.TEMP_WARM_OPP
 
     color.data = "#00000000ff"
     value_changed(color)
 
-    assert device.color_temp == light.TEMP_COLD_HASS
+    assert device.color_temp == light.TEMP_COLD_OPP

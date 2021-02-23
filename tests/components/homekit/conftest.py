@@ -5,7 +5,7 @@ from pyhap.accessory_driver import AccessoryDriver
 import pytest
 
 from openpeerpower.components.homekit.const import EVENT_HOMEKIT_CHANGED
-from openpeerpower.core import callback as ha_callback
+from openpeerpower.core import callback as op_callback
 
 
 @pytest.fixture
@@ -26,6 +26,6 @@ def events.opp):
     """Yield caught homekit_changed events."""
     events = []
     opp.bus.async_listen(
-        EVENT_HOMEKIT_CHANGED, ha_callback(lambda e: events.append(e))
+        EVENT_HOMEKIT_CHANGED, op_callback(lambda e: events.append(e))
     )
     yield events

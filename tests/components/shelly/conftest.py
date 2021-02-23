@@ -10,7 +10,7 @@ from openpeerpower.components.shelly.const import (
     DOMAIN,
     EVENT_SHELLY_CLICK,
 )
-from openpeerpower.core import callback as ha_callback
+from openpeerpower.core import callback as op_callback
 from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, async_mock_service, mock_device_registry
@@ -81,9 +81,9 @@ def calls.opp):
 @pytest.fixture
 def events.opp):
     """Yield caught shelly_click events."""
-    ha_events = []
-    opp.bus.async_listen(EVENT_SHELLY_CLICK, ha_callback(ha_events.append))
-    yield ha_events
+    op_events = []
+    opp.bus.async_listen(EVENT_SHELLY_CLICK, op_callback(op_events.append))
+    yield op_events
 
 
 @pytest.fixture

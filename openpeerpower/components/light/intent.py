@@ -16,7 +16,7 @@ from . import (
     SUPPORT_COLOR,
 )
 
-INTENT_SET = "HassLightSet"
+INTENT_SET = " OppLightSet"
 
 
 async def async_setup_intents.opp: OpenPeerPower) -> None:

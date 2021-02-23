@@ -97,7 +97,7 @@ async def _async_get_instance.opp, **zcargs):
 
     def _stop_zeroconf(_):
         """Stop Zeroconf."""
-        zeroconf.ha_close()
+        zeroconf.op_close()
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_zeroconf)
 
@@ -131,7 +131,7 @@ class HaZeroconf(Zeroconf):
     def close(self):
         """Fake method to avoid integrations closing it."""
 
-    ha_close = Zeroconf.close
+    op_close = Zeroconf.close
 
 
 async def async_setup(opp, config):

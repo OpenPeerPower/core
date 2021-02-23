@@ -9,7 +9,7 @@
         "step": {
              opp.o_confirm": {
                 "description": "Wilt u Open Peer Power configureren om verbinding te maken met Almond die wordt aangeboden door de.opp.io add-on {addon} ?",
-                "title": "Almond via Hass.io add-on"
+                "title": "Almond via Opp.io add-on"
             },
             "pick_implementation": {
                 "title": "Kies de authenticatie methode"

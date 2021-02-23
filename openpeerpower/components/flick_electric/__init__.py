@@ -30,7 +30,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Flick Electric from a config entry."""
-    auth = HassFlickAuth.opp, entry)
+    auth = OppFlickAuth.opp, entry)
 
     opp.data[DOMAIN][entry.entry_id] = FlickAPI(auth)
 
@@ -50,7 +50,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return False
 
 
-class HassFlickAuth(AbstractFlickAuth):
+class OppFlickAuth(AbstractFlickAuth):
     """Implementation of AbstractFlickAuth based on a Open Peer Power entity config."""
 
     def __init__(self, opp: OpenPeerPower, entry: ConfigEntry):
@@ -96,7 +96,7 @@ class HassFlickAuth(AbstractFlickAuth):
         )
 
     async def async_get_access_token(self):
-        """Get Access Token from HASS Storage."""
+        """Get Access Token from OPP Storage."""
         token = await self._get_entry_token()
 
         return token[CONF_ID_TOKEN]

@@ -4,7 +4,7 @@ from datetime import timedelta
 from pyhaversion import (
     DockerVersion,
     HaIoVersion,
-    HassioVersion,
+    OppioVersion,
     LocalVersion,
     PyPiVersion,
 )
@@ -77,7 +77,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     if source == "pypi":
         haversion = VersionData(PyPiVersion.opp.loop, session, branch))
     elif source == oppio":
-        haversion = VersionData(HassioVersion.opp.loop, session, branch, image))
+        haversion = VersionData( OppioVersion.opp.loop, session, branch, image))
     elif source == "docker":
         haversion = VersionData(DockerVersion.opp.loop, session, branch, image))
     elif source == "haio":

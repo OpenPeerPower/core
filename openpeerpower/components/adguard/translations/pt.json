@@ -8,7 +8,7 @@
         },
         "step": {
              opp.o_confirm": {
-                "title": "AdGuard Home via Hass.io add-on"
+                "title": "AdGuard Home via Opp.io add-on"
             },
             "user": {
                 "data": {

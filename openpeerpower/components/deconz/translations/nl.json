@@ -15,7 +15,7 @@
         "step": {
              opp.o_confirm": {
                 "description": "Wilt u de Open Peer Power configureren om verbinding te maken met de deCONZ gateway van de.opp.io add-on {addon}?",
-                "title": "deCONZ Zigbee Gateway via Hass.io add-on"
+                "title": "deCONZ Zigbee Gateway via Opp.io add-on"
             },
             "link": {
                 "description": "Ontgrendel je deCONZ gateway om te registreren met Open Peer Power.\n\n1. Ga naar deCONZ systeeminstellingen (Instellingen -> Gateway -> Geavanceerd)\n2. Druk op de knop \"Gateway ontgrendelen\"",

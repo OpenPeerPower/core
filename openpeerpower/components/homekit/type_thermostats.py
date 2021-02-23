@@ -106,7 +106,7 @@ HC_HEAT_COOL_PREFER_COOL = [
 HC_MIN_TEMP = 10
 HC_MAX_TEMP = 38
 
-UNIT_HOMEKIT_TO_HASS = {c: s for s, c in UNIT_OPP_TO_HOMEKIT.items()}
+UNIT_HOMEKIT_TO_OPP = {c: s for s, c in UNIT_OPP_TO_HOMEKIT.items()}
 HC_OPP_TO_HOMEKIT = {
     HVAC_MODE_OFF: HC_HEAT_COOL_OFF,
     HVAC_MODE_HEAT: HC_HEAT_COOL_HEAT,
@@ -116,7 +116,7 @@ HC_OPP_TO_HOMEKIT = {
     HVAC_MODE_DRY: HC_HEAT_COOL_COOL,
     HVAC_MODE_FAN_ONLY: HC_HEAT_COOL_COOL,
 }
-HC_HOMEKIT_TO_HASS = {c: s for s, c in HC_OPP_TO_HOMEKIT.items()}
+HC_HOMEKIT_TO_OPP = {c: s for s, c in HC_OPP_TO_HOMEKIT.items()}
 
 HC_OPP_TO_HOMEKIT_ACTION = {
     CURRENT_HVAC_OFF: HC_HEAT_COOL_OFF,
@@ -574,7 +574,7 @@ class WaterHeater(HomeAccessory):
     def set_heat_cool(self, value):
         """Change operation mode to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set heat-cool to %d", self.entity_id, value)
-        opp.value = HC_HOMEKIT_TO_HASS[value]
+        opp.value = HC_HOMEKIT_TO_OPP[value]
         if opp_value != HVAC_MODE_HEAT:
             if self.char_target_heat_cool.value != 1:
                 self.char_target_heat_cool.set_value(1)  # Heat

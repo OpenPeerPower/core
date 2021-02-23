@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower import config_entries, setup
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 from openpeerpower.components.ozw.config_flow import TITLE
 from openpeerpower.components.ozw.const import DOMAIN
 
@@ -193,7 +193,7 @@ async def test_addon_running.opp, supervisor, addon_running, addon_options):
 
 async def test_addon_info_failure.opp, supervisor, addon_info):
     """Test add-on info failure."""
-    addon_info.side_effect = HassioAPIError()
+    addon_info.side_effect = OppioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -248,7 +248,7 @@ async def test_set_addon_config_failure(
     opp. supervisor, addon_installed, addon_options, set_addon_options
 ):
     """Test add-on set config failure."""
-    set_addon_options.side_effect = HassioAPIError()
+    set_addon_options.side_effect = OppioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -270,7 +270,7 @@ async def test_start_addon_failure(
     opp. supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test add-on start failure."""
-    start_addon.side_effect = HassioAPIError()
+    start_addon.side_effect = OppioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -344,7 +344,7 @@ async def test_addon_not_installed(
 async def test_install_addon_failure.opp, supervisor, addon_installed, install_addon):
     """Test add-on install failure."""
     addon_installed.return_value["version"] = None
-    install_addon.side_effect = HassioAPIError()
+    install_addon.side_effect = OppioAPIError()
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -374,7 +374,7 @@ async def test_supervisor_discovery.opp, supervisor, addon_running, addon_option
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": config_entries.SOURCE_HASSIO},
+        context={"source": config_entries.SOURCE_OPPIO},
         data=ADDON_DISCOVERY_INFO,
     )
 
@@ -410,7 +410,7 @@ async def test_clean_discovery_on_user_create(
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": config_entries.SOURCE_HASSIO},
+        context={"source": config_entries.SOURCE_OPPIO},
         data=ADDON_DISCOVERY_INFO,
     )
 
@@ -456,7 +456,7 @@ async def test_abort_discovery_with_user_flow(
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": config_entries.SOURCE_HASSIO},
+        context={"source": config_entries.SOURCE_OPPIO},
         data=ADDON_DISCOVERY_INFO,
     )
 
@@ -476,7 +476,7 @@ async def test_abort_discovery_with_existing_entry(
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": config_entries.SOURCE_HASSIO},
+        context={"source": config_entries.SOURCE_OPPIO},
         data=ADDON_DISCOVERY_INFO,
     )
 
@@ -493,7 +493,7 @@ async def test_discovery_addon_not_running(
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": config_entries.SOURCE_HASSIO},
+        context={"source": config_entries.SOURCE_OPPIO},
         data=ADDON_DISCOVERY_INFO,
     )
 
@@ -515,7 +515,7 @@ async def test_discovery_addon_not_installed(
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": config_entries.SOURCE_HASSIO},
+        context={"source": config_entries.SOURCE_OPPIO},
         data=ADDON_DISCOVERY_INFO,
     )
 

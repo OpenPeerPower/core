@@ -42,7 +42,7 @@ class RuntimeConfig:
     open_ui: bool = False
 
 
-class HassEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-type,misc]
+class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-type,misc]
     """Event loop policy for Open Peer Power."""
 
     def __init__(self, debug: bool) -> None:
@@ -107,5 +107,5 @@ async def setup_and_run.opp(runtime_config: RuntimeConfig) -> int:
 
 def run(runtime_config: RuntimeConfig) -> int:
     """Run Open Peer Power."""
-    asyncio.set_event_loop_policy(HassEventLoopPolicy(runtime_config.debug))
+    asyncio.set_event_loop_policy( OppEventLoopPolicy(runtime_config.debug))
     return asyncio.run(setup_and_run.opp(runtime_config))

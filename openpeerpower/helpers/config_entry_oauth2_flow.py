@@ -130,12 +130,12 @@ class LocalOAuth2Implementation(AbstractOAuth2Implementation):
         if req is None:
             raise RuntimeError("No current request in context")
 
-        ha_host = req.headers.get(HEADER_FRONTEND_BASE)
+        op_host = req.headers.get(HEADER_FRONTEND_BASE)
 
-        if ha_host is None:
+        if op_host is None:
             raise RuntimeError("No header in request")
 
-        return f"{ha_host}{AUTH_CALLBACK_PATH}"
+        return f"{op_host}{AUTH_CALLBACK_PATH}"
 
     @property
     def extra_authorize_data(self) -> dict:

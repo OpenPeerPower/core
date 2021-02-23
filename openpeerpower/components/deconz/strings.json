@@ -18,8 +18,8 @@
         "description": "Unlock your deCONZ gateway to register with Open Peer Power.\n\n1. Go to deCONZ Settings -> Gateway -> Advanced\n2. Press \"Authenticate app\" button"
       },
        opp.o_confirm": {
-        "title": "deCONZ Zigbee gateway via Hass.io add-on",
-        "description": "Do you want to configure Open Peer Power to connect to the deCONZ gateway provided by the Hass.io add-on {addon}?"
+        "title": "deCONZ Zigbee gateway via Opp.io add-on",
+        "description": "Do you want to configure Open Peer Power to connect to the deCONZ gateway provided by the Opp.io add-on {addon}?"
       }
     },
     "error": {

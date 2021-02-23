@@ -48,7 +48,7 @@ class KNXWeather(KnxEntity, WeatherEntity):
     @property
     def condition(self):
         """Return current weather condition."""
-        return self._device.ha_current_state().value
+        return self._device.op_current_state().value
 
     @property
     def humidity(self):

@@ -43,7 +43,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
         )
 
     async def _show.oppio_form(self, errors=None):
-        """Show the Hass.io confirmation form to the user."""
+        """Show the Opp.io confirmation form to the user."""
         return self.async_show_form(
             step_id = "oppio_confirm",
             description_placeholders={"addon": self.oppio_discovery["addon"]},
@@ -92,7 +92,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
         )
 
     async def async_step.oppio(self, discovery_info):
-        """Prepare configuration for a Hass.io AdGuard Home add-on.
+        """Prepare configuration for a Opp.io AdGuard Home add-on.
 
         This flow is triggered by the discovery component.
         """
@@ -130,7 +130,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
         return self.async_abort(reason="existing_instance_updated")
 
     async def async_step.oppio_confirm(self, user_input=None):
-        """Confirm Hass.io discovery."""
+        """Confirm Opp.io discovery."""
         if user_input is None:
             return await self._show.oppio_form()
 

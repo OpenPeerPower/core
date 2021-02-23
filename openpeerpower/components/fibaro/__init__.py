@@ -177,10 +177,10 @@ class FibaroController:
                     if property_name in device.properties:
                         device.properties[property_name] = value
                         _LOGGER.debug(
-                            "<- %s.%s = %s", device.ha_id, property_name, str(value)
+                            "<- %s.%s = %s", device.op_id, property_name, str(value)
                         )
                     else:
-                        _LOGGER.warning("%s.%s not found", device.ha_id, property_name)
+                        _LOGGER.warning("%s.%s not found", device.op_id, property_name)
                     if dev_id in self._callbacks:
                         callback_set.add(dev_id)
             except (ValueError, KeyError):
@@ -265,13 +265,13 @@ class FibaroController:
                 room_name = self._room_map[device.roomID].name
             device.room_name = room_name
             device.friendly_name = f"{room_name} {device.name}"
-            device.ha_id = (
+            device.op_id = (
                 f"scene_{slugify(room_name)}_{slugify(device.name)}_{device.id}"
             )
             device.unique_id_str = f"{self.hub_serial}.scene.{device.id}"
             self._scene_map[device.id] = device
             self.fibaro_devices["scene"].append(device)
-            _LOGGER.debug("%s scene -> %s", device.ha_id, device)
+            _LOGGER.debug("%s scene -> %s", device.op_id, device)
 
     def _read_devices(self):
         """Read and process the device list."""
@@ -291,7 +291,7 @@ class FibaroController:
                     room_name = self._room_map[device.roomID].name
                 device.room_name = room_name
                 device.friendly_name = f"{room_name} {device.name}"
-                device.ha_id = (
+                device.op_id = (
                     f"{slugify(room_name)}_{slugify(device.name)}_{device.id}"
                 )
                 if (
@@ -300,10 +300,10 @@ class FibaroController:
                         "isPlugin" not in device
                         or (not device.isPlugin or self._import_plugins)
                     )
-                    and device.ha_id not in self._excluded_devices
+                    and device.op_id not in self._excluded_devices
                 ):
                     device.mapped_type = self._map_device_to_type(device)
-                    device.device_config = self._device_config.get(device.ha_id, {})
+                    device.device_config = self._device_config.get(device.op_id, {})
                 else:
                     device.mapped_type = None
                 dtype = device.mapped_type
@@ -313,7 +313,7 @@ class FibaroController:
                 self._device_map[device.id] = device
                 _LOGGER.debug(
                     "%s (%s, %s) -> %s %s",
-                    device.ha_id,
+                    device.op_id,
                     device.type,
                     device.baseType,
                     dtype,
@@ -327,11 +327,11 @@ class FibaroController:
                 if "endPointId" in device.properties:
                     _LOGGER.debug(
                         "climate device: %s, endPointId: %s",
-                        device.ha_id,
+                        device.op_id,
                         device.properties.endPointId,
                     )
                 else:
-                    _LOGGER.debug("climate device: %s, no endPointId", device.ha_id)
+                    _LOGGER.debug("climate device: %s, no endPointId", device.op_id)
                 # If a sibling of this device has been added, skip this one
                 # otherwise add the first visible device in the group
                 # which is a hack, but solves a problem with FGT having
@@ -396,7 +396,7 @@ class FibaroDevice(Entity):
         self.fibaro_device = fibaro_device
         self.controller = fibaro_device.fibaro_controller
         self._name = fibaro_device.friendly_name
-        self.ha_id = fibaro_device.ha_id
+        self.op_id = fibaro_device.op_id
 
     async def async_added_to.opp(self):
         """Call when entity is added to.opp."""
@@ -424,7 +424,7 @@ class FibaroDevice(Entity):
         """Make a warning in case we don't know how to perform an action."""
         _LOGGER.warning(
             "Not sure how to setValue: %s (available actions: %s)",
-            str(self.ha_id),
+            str(self.op_id),
             str(self.fibaro_device.actions),
         )
 
@@ -464,7 +464,7 @@ class FibaroDevice(Entity):
         """Perform an action on the Fibaro HC."""
         if cmd in self.fibaro_device.actions:
             getattr(self.fibaro_device, cmd)(*args)
-            _LOGGER.debug("-> %s.%s%s called", str(self.ha_id), str(cmd), str(args))
+            _LOGGER.debug("-> %s.%s%s called", str(self.op_id), str(cmd), str(args))
         else:
             self.dont_know_message(cmd)
 

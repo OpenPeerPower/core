@@ -11,14 +11,14 @@ from tests.common import async_mock_service
 
 
 async def test_open_cover_intent.opp):
-    """Test HassOpenCover intent."""
+    """Test OppOpenCover intent."""
     await cover_intent.async_setup_intents.opp)
 
     opp.states.async_set("cover.garage_door", "closed")
     calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
 
     response = await intent.async_handle(
-        opp. "test", "HassOpenCover", {"name": {"value": "garage door"}}
+        opp. "test", " OppOpenCover", {"name": {"value": "garage door"}}
     )
     await opp.async_block_till_done()
 
@@ -31,14 +31,14 @@ async def test_open_cover_intent.opp):
 
 
 async def test_close_cover_intent.opp):
-    """Test HassCloseCover intent."""
+    """Test OppCloseCover intent."""
     await cover_intent.async_setup_intents.opp)
 
     opp.states.async_set("cover.garage_door", "open")
     calls = async_mock_service.opp, "cover", SERVICE_CLOSE_COVER)
 
     response = await intent.async_handle(
-        opp. "test", "HassCloseCover", {"name": {"value": "garage door"}}
+        opp. "test", " OppCloseCover", {"name": {"value": "garage door"}}
     )
     await opp.async_block_till_done()
 

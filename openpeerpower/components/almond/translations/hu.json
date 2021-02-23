@@ -6,8 +6,8 @@
         },
         "step": {
              opp.o_confirm": {
-                "description": "Be szeretn\u00e9 \u00e1ll\u00edtani a Open Peer Power alkalmaz\u00e1st az Almondhoz val\u00f3 csatlakoz\u00e1shoz, amelyet a Hass.io kieg\u00e9sz\u00edt\u0151 biztos\u00edt: {addon} ?",
-                "title": "Almond a Hass.io kieg\u00e9sz\u00edt\u0151n kereszt\u00fcl"
+                "description": "Be szeretn\u00e9 \u00e1ll\u00edtani a Open Peer Power alkalmaz\u00e1st az Almondhoz val\u00f3 csatlakoz\u00e1shoz, amelyet a Opp.io kieg\u00e9sz\u00edt\u0151 biztos\u00edt: {addon} ?",
+                "title": "Almond a Opp.io kieg\u00e9sz\u00edt\u0151n kereszt\u00fcl"
             },
             "pick_implementation": {
                 "title": "V\u00e1lassza ki a hiteles\u00edt\u00e9si m\u00f3dszert"

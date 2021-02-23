@@ -56,7 +56,7 @@ async def test_cover_intents_loading.opp):
 
     with pytest.raises(intent.UnknownIntent):
         await intent.async_handle(
-            opp. "test", "HassOpenCover", {"name": {"value": "garage door"}}
+            opp. "test", " OppOpenCover", {"name": {"value": "garage door"}}
         )
 
     assert await async_setup_component.opp, "cover", {})
@@ -65,7 +65,7 @@ async def test_cover_intents_loading.opp):
     calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
 
     response = await intent.async_handle(
-        opp. "test", "HassOpenCover", {"name": {"value": "garage door"}}
+        opp. "test", " OppOpenCover", {"name": {"value": "garage door"}}
     )
     await opp.async_block_till_done()
 
@@ -78,7 +78,7 @@ async def test_cover_intents_loading.opp):
 
 
 async def test_turn_on_intent.opp):
-    """Test HassTurnOn intent."""
+    """Test OppTurnOn intent."""
     result = await async_setup_component.opp, "openpeerpower", {})
     result = await async_setup_component.opp, "intent", {})
     assert result
@@ -87,7 +87,7 @@ async def test_turn_on_intent.opp):
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
     response = await intent.async_handle(
-        opp. "test", "HassTurnOn", {"name": {"value": "test light"}}
+        opp. "test", " OppTurnOn", {"name": {"value": "test light"}}
     )
     await opp.async_block_till_done()
 
@@ -100,7 +100,7 @@ async def test_turn_on_intent.opp):
 
 
 async def test_turn_off_intent.opp):
-    """Test HassTurnOff intent."""
+    """Test OppTurnOff intent."""
     result = await async_setup_component.opp, "openpeerpower", {})
     result = await async_setup_component.opp, "intent", {})
     assert result
@@ -109,7 +109,7 @@ async def test_turn_off_intent.opp):
     calls = async_mock_service.opp, "light", SERVICE_TURN_OFF)
 
     response = await intent.async_handle(
-        opp. "test", "HassTurnOff", {"name": {"value": "test light"}}
+        opp. "test", " OppTurnOff", {"name": {"value": "test light"}}
     )
     await opp.async_block_till_done()
 
@@ -122,7 +122,7 @@ async def test_turn_off_intent.opp):
 
 
 async def test_toggle_intent.opp):
-    """Test HassToggle intent."""
+    """Test OppToggle intent."""
     result = await async_setup_component.opp, "openpeerpower", {})
     result = await async_setup_component.opp, "intent", {})
     assert result
@@ -131,7 +131,7 @@ async def test_toggle_intent.opp):
     calls = async_mock_service.opp, "light", SERVICE_TOGGLE)
 
     response = await intent.async_handle(
-        opp. "test", "HassToggle", {"name": {"value": "test light"}}
+        opp. "test", " OppToggle", {"name": {"value": "test light"}}
     )
     await opp.async_block_till_done()
 
@@ -144,7 +144,7 @@ async def test_toggle_intent.opp):
 
 
 async def test_turn_on_multiple_intent.opp):
-    """Test HassTurnOn intent with multiple similar entities.
+    """Test OppTurnOn intent with multiple similar entities.
 
     This tests that matching finds the proper entity among similar names.
     """
@@ -158,7 +158,7 @@ async def test_turn_on_multiple_intent.opp):
     calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
 
     response = await intent.async_handle(
-        opp. "test", "HassTurnOn", {"name": {"value": "test lights"}}
+        opp. "test", " OppTurnOn", {"name": {"value": "test lights"}}
     )
     await opp.async_block_till_done()
 

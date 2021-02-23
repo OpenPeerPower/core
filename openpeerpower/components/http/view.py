@@ -18,7 +18,7 @@ from openpeerpower.const import CONTENT_TYPE_JSON, HTTP_OK, HTTP_SERVICE_UNAVAIL
 from openpeerpower.core import Context, is_callback
 from openpeerpower.helpers.json import JSONEncoder
 
-from .const import KEY_AUTHENTICATED, KEY_HASS
+from .const import KEY_AUTHENTICATED, KEY_OPP
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -107,7 +107,7 @@ def request_handler_factory(view: OpenPeerPowerView, handler: Callable) -> Calla
 
     async def handle(request: web.Request) -> web.StreamResponse:
         """Handle incoming request."""
-        if request.app[KEY_HASS].is_stopping:
+        if request.app[KEY_OPP].is_stopping:
             return web.Response(status=HTTP_SERVICE_UNAVAILABLE)
 
         authenticated = request.get(KEY_AUTHENTICATED, False)

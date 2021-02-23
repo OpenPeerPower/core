@@ -60,12 +60,12 @@ TEST_FULL_OP_TO_RISCO = {
 }
 CUSTOM_MAPPING_OPTIONS = {
     "risco_states_to_ha": TEST_RISCO_TO_HA,
-    "ha_states_to_risco": TEST_OP_TO_RISCO,
+    "op_states_to_risco": TEST_OP_TO_RISCO,
 }
 
 FULL_CUSTOM_MAPPING = {
     "risco_states_to_ha": TEST_FULL_RISCO_TO_HA,
-    "ha_states_to_risco": TEST_FULL_OP_TO_RISCO,
+    "op_states_to_risco": TEST_FULL_OP_TO_RISCO,
 }
 
 EXPECTED_FEATURES = (

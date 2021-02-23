@@ -2,7 +2,7 @@
 from unittest.mock import patch
 
 from openpeerpower import config_entries
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 from openpeerpower.components.ozw import DOMAIN, PLATFORMS, const
 from openpeerpower.const import ATTR_RESTORED, STATE_UNAVAILABLE
 
@@ -146,7 +146,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     # test add-on stop failure
     entry.add_to.opp.opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    stop_addon.side_effect = HassioAPIError()
+    stop_addon.side_effect = OppioAPIError()
 
     await opp.config_entries.async_remove(entry.entry_id)
 
@@ -162,7 +162,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     # test add-on uninstall failure
     entry.add_to.opp.opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    uninstall_addon.side_effect = HassioAPIError()
+    uninstall_addon.side_effect = OppioAPIError()
 
     await opp.config_entries.async_remove(entry.entry_id)
 

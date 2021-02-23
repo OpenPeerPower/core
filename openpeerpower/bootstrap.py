@@ -374,7 +374,7 @@ def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
     if not opp.config.safe_mode:
         domains.update opp.config_entries.async_domains())
 
-    # Make sure the Hass.io component is loaded
+    # Make sure the Opp.io component is loaded
     if "OPPIO" in os.environ:
         domains.add("oppio")
 

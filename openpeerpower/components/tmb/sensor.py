@@ -92,7 +92,7 @@ class TMBSensor(Entity):
 
     @property
     def unique_id(self):
-        """Return a unique, HASS-friendly identifier for this entity."""
+        """Return a unique, OPP-friendly identifier for this entity."""
         return f"{self._stop}_{self._line}"
 
     @property

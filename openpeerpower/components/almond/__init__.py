@@ -121,7 +121,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
     api = WebAlmondAPI(auth)
     agent = AlmondAgent.opp, api, entry)
 
-    # Hass.io does its own configuration.
+    # Opp.io does its own configuration.
     if not entry.data.get("is.oppio"):
         # If we're not starting or local, set up Almond right away
         if opp.state != CoreState.not_running or entry.data["type"] == TYPE_LOCAL:

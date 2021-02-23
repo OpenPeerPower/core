@@ -34,7 +34,7 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
 )
 import openpeerpower.core as ha
-from openpeerpower.core import DOMAIN as HASS_DOMAIN, CoreState, State, callback
+from openpeerpower.core import DOMAIN as OPP_DOMAIN, CoreState, State, callback
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.unit_system import METRIC_SYSTEM
 
@@ -383,7 +383,7 @@ async def test_set_target_temp_heater_on.opp, setup_comp_2):
     await common.async_set_temperature.opp, 30)
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -396,7 +396,7 @@ async def test_set_target_temp_heater_off.opp, setup_comp_2):
     await common.async_set_temperature.opp, 25)
     assert 2 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -418,7 +418,7 @@ async def test_temp_change_heater_on_outside_tolerance.opp, setup_comp_2):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -440,7 +440,7 @@ async def test_temp_change_heater_off_outside_tolerance.opp, setup_comp_2):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -452,7 +452,7 @@ async def test_running_when_hvac_mode_is_off.opp, setup_comp_2):
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -480,7 +480,7 @@ async def test_hvac_mode_heat.opp, setup_comp_2):
     await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -533,7 +533,7 @@ async def test_set_target_temp_ac_off.opp, setup_comp_3):
     await common.async_set_temperature.opp, 30)
     assert 2 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -562,7 +562,7 @@ async def test_hvac_mode_cool.opp, setup_comp_3):
     await common.async_set_hvac_mode.opp, HVAC_MODE_COOL)
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -575,7 +575,7 @@ async def test_set_target_temp_ac_on.opp, setup_comp_3):
     await common.async_set_temperature.opp, 25)
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -597,7 +597,7 @@ async def test_set_temp_change_ac_off_outside_tolerance.opp, setup_comp_3):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -619,7 +619,7 @@ async def test_temp_change_ac_on_outside_tolerance.opp, setup_comp_3):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -631,7 +631,7 @@ async def test_running_when_operating_mode_is_off_2.opp, setup_comp_3):
     await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -693,7 +693,7 @@ async def test_temp_change_ac_trigger_on_long_enough.opp, setup_comp_4):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -721,7 +721,7 @@ async def test_temp_change_ac_trigger_off_long_enough.opp, setup_comp_4):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -803,7 +803,7 @@ async def test_temp_change_ac_trigger_on_long_enough_2.opp, setup_comp_5):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -831,7 +831,7 @@ async def test_temp_change_ac_trigger_off_long_enough_2.opp, setup_comp_5):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -921,7 +921,7 @@ async def test_temp_change_heater_trigger_on_long_enough.opp, setup_comp_6):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -940,7 +940,7 @@ async def test_temp_change_heater_trigger_off_long_enough.opp, setup_comp_6):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1020,7 +1020,7 @@ async def test_temp_change_ac_trigger_on_long_enough_3.opp, setup_comp_7):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1043,7 +1043,7 @@ async def test_temp_change_ac_trigger_off_long_enough_3.opp, setup_comp_7):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1091,7 +1091,7 @@ async def test_temp_change_heater_trigger_on_long_enough_2.opp, setup_comp_8):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_ON == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 
@@ -1114,7 +1114,7 @@ async def test_temp_change_heater_trigger_off_long_enough_2.opp, setup_comp_8):
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
-    assert HASS_DOMAIN == call.domain
+    assert OPP_DOMAIN == call.domain
     assert SERVICE_TURN_OFF == call.service
     assert ENT_SWITCH == call.data["entity_id"]
 

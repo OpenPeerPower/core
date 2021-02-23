@@ -25,7 +25,7 @@ from openpeerpower.util import ssl as ssl_util
 
 from .auth import setup_auth
 from .ban import setup_bans
-from .const import KEY_AUTHENTICATED, KEY_HASS, KEY_OPP_USER  # noqa: F401
+from .const import KEY_AUTHENTICATED, KEY_OPP, KEY_OPP_USER  # noqa: F401
 from .cors import setup_cors
 from .forwarded import async_setup_forwarded
 from .request_context import setup_request_context
@@ -228,7 +228,7 @@ class OpenPeerPowerHTTP:
         app = self.app = web.Application(
             middlewares=[], client_max_size=MAX_CLIENT_SIZE
         )
-        app[KEY_HASS] = opp
+        app[KEY_OPP] = opp
 
         # Order matters, security filters middle ware needs to go first,
         # forwarded middleware needs to go second.

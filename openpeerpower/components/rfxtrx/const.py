@@ -40,5 +40,5 @@ DEVICE_PACKET_TYPE_LIGHTING4 = 0x13
 EVENT_RFXTRX_EVENT = "rfxtrx_event"
 
 DATA_RFXOBJECT = "rfxobject"
-DATA_LISTENER = "ha_stop"
+DATA_LISTENER = "op_stop"
 DATA_CLEANUP_CALLBACKS = "cleanup_callbacks"

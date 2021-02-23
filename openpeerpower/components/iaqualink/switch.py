@@ -15,11 +15,11 @@ async def async_setup_entry(
     """Set up discovered switches."""
     devs = []
     for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append(HassAqualinkSwitch(dev))
+        devs.append( OppAqualinkSwitch(dev))
     async_add_entities(devs, True)
 
 
-class HassAqualinkSwitch(AqualinkEntity, SwitchEntity):
+class OppAqualinkSwitch(AqualinkEntity, SwitchEntity):
     """Representation of a switch."""
 
     @property

@@ -33,11 +33,11 @@ CONFIG_SCHEMA = vol.All(AUTH_PROVIDER_SCHEMA, _disallow_id)
 
 
 @callback
-def async_get_provider.opp: OpenPeerPower) -> HassAuthProvider:
+def async_get_provider.opp: OpenPeerPower) -> OppAuthProvider:
     """Get the provider."""
     for prv in.opp.auth.auth_providers:
         if prv.type == "openpeerpower":
-            return cast(HassAuthProvider, prv)
+            return cast( OppAuthProvider, prv)
 
     raise RuntimeError("Provider not found")
 
@@ -212,7 +212,7 @@ class Data:
 
 
 @AUTH_PROVIDERS.register("openpeerpower")
-class HassAuthProvider(AuthProvider):
+class OppAuthProvider(AuthProvider):
     """Auth provider based on a local storage of users in Open Peer Power config dir."""
 
     DEFAULT_TITLE = "Open Peer Power Local"
@@ -235,7 +235,7 @@ class HassAuthProvider(AuthProvider):
 
     async def async_login_flow(self, context: Optional[Dict]) -> LoginFlow:
         """Return a flow to login."""
-        return HassLoginFlow(self)
+        return OppLoginFlow(self)
 
     async def async_validate_login(self, username: str, password: str) -> None:
         """Validate a username and password."""
@@ -314,7 +314,7 @@ class HassAuthProvider(AuthProvider):
             pass
 
 
-class HassLoginFlow(LoginFlow):
+class OppLoginFlow(LoginFlow):
     """Handler for the login flow."""
 
     async def async_step_init(
@@ -325,7 +325,7 @@ class HassLoginFlow(LoginFlow):
 
         if user_input is not None:
             try:
-                await cast(HassAuthProvider, self._auth_provider).async_validate_login(
+                await cast( OppAuthProvider, self._auth_provider).async_validate_login(
                     user_input["username"], user_input["password"]
                 )
             except InvalidAuth:

@@ -31,7 +31,7 @@ def setup(opp, config):
     """Set up the LaMetricManager."""
     _LOGGER.debug("Setting up LaMetric platform")
     conf = config[DOMAIN]
-    hlmn = HassLaMetricManager(
+    hlmn = OppLaMetricManager(
         client_id=conf[CONF_CLIENT_ID], client_secret=conf[CONF_CLIENT_SECRET]
     )
     devices = hlmn.manager.get_devices()
@@ -46,11 +46,11 @@ def setup(opp, config):
     return True
 
 
-class HassLaMetricManager:
+class OppLaMetricManager:
     """A class that encapsulated requests to the LaMetric manager."""
 
     def __init__(self, client_id, client_secret):
-        """Initialize HassLaMetricManager and connect to LaMetric."""
+        """Initialize OppLaMetricManager and connect to LaMetric."""
 
         _LOGGER.debug("Connecting to LaMetric")
         self.manager = LaMetricManager(client_id, client_secret)

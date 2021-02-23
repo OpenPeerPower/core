@@ -25,7 +25,7 @@ class FibaroCover(FibaroDevice, CoverEntity):
     def __init__(self, fibaro_device):
         """Initialize the Vera device."""
         super().__init__(fibaro_device)
-        self.entity_id = f"{DOMAIN}.{self.ha_id}"
+        self.entity_id = f"{DOMAIN}.{self.op_id}"
 
     @staticmethod
     def bound(position):

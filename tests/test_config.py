@@ -252,7 +252,7 @@ async def test_entity_customization.opp):
 @patch("openpeerpower.config.is_docker_env", return_value=False)
 def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil, opp):
     """Test removal of library on upgrade from before 0.50."""
-    ha_version = "0.49.0"
+    op_version = "0.49.0"
     mock_os.path.isdir = mock.Mock(return_value=True)
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True):
@@ -274,7 +274,7 @@ def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil, opp):
 @patch("openpeerpower.config.is_docker_env", return_value=True)
 def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil, opp):
     """Test removal of library on upgrade from before 0.94 and in Docker."""
-    ha_version = "0.93.0.dev0"
+    op_version = "0.93.0.dev0"
     mock_os.path.isdir = mock.Mock(return_value=True)
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True):
@@ -293,7 +293,7 @@ def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil, opp):
 
 def test_process_config_upgrade.opp):
     """Test update of version on upgrade."""
-    ha_version = "0.92.0"
+    op_version = "0.92.0"
 
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True), patch.object(
@@ -311,7 +311,7 @@ def test_process_config_upgrade.opp):
 
 def test_config_upgrade_same_version.opp):
     """Test no update of version on no upgrade."""
-    ha_version = __version__
+    op_version = __version__
 
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True):

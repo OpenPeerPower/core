@@ -169,7 +169,7 @@ async def async_setup_entry(
     _categorize_programs.opp_isy_data, isy.programs)
     _categorize_variables.opp_isy_data, isy.variables, variable_identifier)
 
-    # Dump ISY Clock Information. Future: Add ISY as sensor to Hass with attrs
+    # Dump ISY Clock Information. Future: Add ISY as sensor to OPP with attrs
     _LOGGER.info(repr(isy.clock))
 
     opp.isy_data[ISY994_ISY] = isy

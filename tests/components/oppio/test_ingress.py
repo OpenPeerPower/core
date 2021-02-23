@@ -33,7 +33,7 @@ async def test_ingress_request_get.oppio_client, build_type, aioclient_mock):
 
     # Check we forwarded command
     assert len(aioclient_mock.mock_calls) == 1
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
     assert aioclient_mock.mock_calls[-1][3][
         "X-Ingress-Path"
     ] == "/api.oppio_ingress/{}".format(build_type[0])
@@ -72,7 +72,7 @@ async def test_ingress_request_post.oppio_client, build_type, aioclient_mock):
 
     # Check we forwarded command
     assert len(aioclient_mock.mock_calls) == 1
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
     assert aioclient_mock.mock_calls[-1][3][
         "X-Ingress-Path"
     ] == "/api.oppio_ingress/{}".format(build_type[0])
@@ -111,7 +111,7 @@ async def test_ingress_request_put.oppio_client, build_type, aioclient_mock):
 
     # Check we forwarded command
     assert len(aioclient_mock.mock_calls) == 1
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
     assert aioclient_mock.mock_calls[-1][3][
         "X-Ingress-Path"
     ] == "/api.oppio_ingress/{}".format(build_type[0])
@@ -150,7 +150,7 @@ async def test_ingress_request_delete.oppio_client, build_type, aioclient_mock):
 
     # Check we forwarded command
     assert len(aioclient_mock.mock_calls) == 1
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
     assert aioclient_mock.mock_calls[-1][3][
         "X-Ingress-Path"
     ] == "/api.oppio_ingress/{}".format(build_type[0])
@@ -189,7 +189,7 @@ async def test_ingress_request_patch.oppio_client, build_type, aioclient_mock):
 
     # Check we forwarded command
     assert len(aioclient_mock.mock_calls) == 1
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
     assert aioclient_mock.mock_calls[-1][3][
         "X-Ingress-Path"
     ] == "/api.oppio_ingress/{}".format(build_type[0])
@@ -228,7 +228,7 @@ async def test_ingress_request_options.oppio_client, build_type, aioclient_mock)
 
     # Check we forwarded command
     assert len(aioclient_mock.mock_calls) == 1
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
     assert aioclient_mock.mock_calls[-1][3][
         "X-Ingress-Path"
     ] == "/api.oppio_ingress/{}".format(build_type[0])
@@ -262,7 +262,7 @@ async def test_ingress_websocket.oppio_client, build_type, aioclient_mock):
 
     # Check we forwarded command
     assert len(aioclient_mock.mock_calls) == 1
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
     assert aioclient_mock.mock_calls[-1][3][
         "X-Ingress-Path"
     ] == "/api.oppio_ingress/{}".format(build_type[0])

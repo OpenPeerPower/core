@@ -128,8 +128,8 @@ async def test_forwarding_user_info.oppio_client, opp_admin_user, aioclient_mock
     assert len(aioclient_mock.mock_calls) == 1
 
     req_headers = aioclient_mock.mock_calls[0][-1]
-    req_headers["X-Hass-User-ID"] == opp_admin_user.id
-    req_headers["X-Hass-Is-Admin"] == "1"
+    req_headers["X- Opp-User-ID"] == opp_admin_user.id
+    req_headers["X- Opp-Is-Admin"] == "1"
 
 
 async def test_snapshot_upload_headers.oppio_client, aioclient_mock):

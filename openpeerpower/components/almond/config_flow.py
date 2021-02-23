@@ -95,7 +95,7 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
         )
 
     async def async_step.oppio(self, discovery_info):
-        """Receive a Hass.io discovery."""
+        """Receive a Opp.io discovery."""
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
 
@@ -104,7 +104,7 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
         return await self.async_step.oppio_confirm()
 
     async def async_step.oppio_confirm(self, user_input=None):
-        """Confirm a Hass.io discovery."""
+        """Confirm a Opp.io discovery."""
         data = self.oppio_discovery
 
         if user_input is not None:

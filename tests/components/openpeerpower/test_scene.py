@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 import voluptuous as vol
 
-from openpeerpower.components.openpeerpower import scene as ha_scene
+from openpeerpower.components.openpeerpower import scene as op_scene
 from openpeerpower.components.openpeerpower.scene import EVENT_SCENE_RELOADED
 from openpeerpower.setup import async_setup_component
 
@@ -260,7 +260,7 @@ async def test_scenes_with_entity.opp.
     )
     await opp.async_block_till_done()
 
-    assert sorted(ha_scene.scenes_with_entity.opp."light.kitchen")) == [
+    assert sorted(op_scene.scenes_with_entity.opp."light.kitchen")) == [
         "scene.scene_1",
         "scene.scene_3",
     ]
@@ -289,7 +289,7 @@ async def test_entities_in_scene.opp.
         ("scene.scene_2", ["light.living_room"]),
         ("scene.scene_3", ["light.kitchen", "light.living_room"]),
     ):
-        assert ha_scene.entities_in_scene.opp.scene_id) == entities
+        assert op_scene.entities_in_scene.opp.scene_id) == entities
 
 
 async def test_config(opp.

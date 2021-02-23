@@ -221,29 +221,29 @@ class MetWeather(CoordinatorEntity, WeatherEntity):
         else:
             met_forecast = self.coordinator.data.daily_forecast
         required_keys = {ATTR_FORECAST_TEMP, ATTR_FORECAST_TIME}
-        ha_forecast = []
+        op_forecast = []
         for met_item in met_forecast:
             if not set(met_item).issuperset(required_keys):
                 continue
-            ha_item = {
+            op_item = {
                 k: met_item[v]
                 for k, v in FORECAST_MAP.items()
                 if met_item.get(v) is not None
             }
             if not self._is_metric:
-                if ATTR_FORECAST_PRECIPITATION in ha_item:
+                if ATTR_FORECAST_PRECIPITATION in op_item:
                     precip_inches = convert_distance(
-                        ha_item[ATTR_FORECAST_PRECIPITATION],
+                        op_item[ATTR_FORECAST_PRECIPITATION],
                         LENGTH_MILLIMETERS,
                         LENGTH_INCHES,
                     )
-                    ha_item[ATTR_FORECAST_PRECIPITATION] = round(precip_inches, 2)
-            if ha_item.get(ATTR_FORECAST_CONDITION):
-                ha_item[ATTR_FORECAST_CONDITION] = format_condition(
-                    ha_item[ATTR_FORECAST_CONDITION]
+                    op_item[ATTR_FORECAST_PRECIPITATION] = round(precip_inches, 2)
+            if op_item.get(ATTR_FORECAST_CONDITION):
+                op_item[ATTR_FORECAST_CONDITION] = format_condition(
+                    op_item[ATTR_FORECAST_CONDITION]
                 )
-            ha_forecast.append(ha_item)
-        return ha_forecast
+            op_forecast.append(op_item)
+        return op_forecast
 
     @property
     def device_info(self):

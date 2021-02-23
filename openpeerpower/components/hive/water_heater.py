@@ -23,7 +23,7 @@ HIVE_TO_OPP_STATE = {
     "OFF": STATE_OFF,
 }
 
-HASS_TO_HIVE_STATE = {
+OPP_TO_HIVE_STATE = {
     STATE_ECO: "SCHEDULE",
     STATE_ON: "MANUAL",
     STATE_OFF: "OFF",
@@ -102,7 +102,7 @@ class HiveWaterHeater(HiveEntity, WaterHeaterEntity):
     @refresh_system
     async def async_set_operation_mode(self, operation_mode):
         """Set operation mode."""
-        new_mode = HASS_TO_HIVE_STATE[operation_mode]
+        new_mode = OPP_TO_HIVE_STATE[operation_mode]
         await self.hive.hotwater.set_mode(self.device, new_mode)
 
     async def async_update(self):

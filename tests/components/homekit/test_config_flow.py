@@ -72,7 +72,7 @@ async def test_setup_in_bridge_mode.opp):
         await opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    assert result4["title"][:11] == "HASS Bridge"
+    assert result4["title"][:11] == "OPP Bridge"
     bridge_name = (result4["title"].split(":"))[0]
     assert result4["data"] == {
         "filter": {
@@ -131,7 +131,7 @@ async def test_setup_in_accessory_mode.opp):
         await opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    assert result4["title"][:14] == "HASS Accessory"
+    assert result4["title"][:14] == "OPP Accessory"
     bridge_name = (result4["title"].split(":"))[0]
     assert result4["data"] == {
         "filter": {
@@ -689,7 +689,7 @@ async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
         await opp.async_block_till_done()
 
     assert result4["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    assert result4["title"][:11] == "HASS Bridge"
+    assert result4["title"][:11] == "OPP Bridge"
     bridge_name = (result4["title"].split(":"))[0]
     assert result4["data"] == {
         "filter": {

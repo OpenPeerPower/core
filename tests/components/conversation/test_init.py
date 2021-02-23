@@ -2,7 +2,7 @@
 import pytest
 
 from openpeerpower.components import conversation
-from openpeerpower.core import DOMAIN as HASS_DOMAIN, Context
+from openpeerpower.core import DOMAIN as OPP_DOMAIN, Context
 from openpeerpower.helpers import intent
 from openpeerpower.setup import async_setup_component
 
@@ -137,7 +137,7 @@ async def test_turn_on_intent.opp, sentence):
     assert result
 
     opp.states.async_set("light.kitchen", "off")
-    calls = async_mock_service.opp, HASS_DOMAIN, "turn_on")
+    calls = async_mock_service.opp, OPP_DOMAIN, "turn_on")
 
     await opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
@@ -146,7 +146,7 @@ async def test_turn_on_intent.opp, sentence):
 
     assert len(calls) == 1
     call = calls[0]
-    assert call.domain == HASS_DOMAIN
+    assert call.domain == OPP_DOMAIN
     assert call.service == "turn_on"
     assert call.data == {"entity_id": "light.kitchen"}
 
@@ -161,7 +161,7 @@ async def test_turn_off_intent.opp, sentence):
     assert result
 
     opp.states.async_set("light.kitchen", "on")
-    calls = async_mock_service.opp, HASS_DOMAIN, "turn_off")
+    calls = async_mock_service.opp, OPP_DOMAIN, "turn_off")
 
     await opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
@@ -170,7 +170,7 @@ async def test_turn_off_intent.opp, sentence):
 
     assert len(calls) == 1
     call = calls[0]
-    assert call.domain == HASS_DOMAIN
+    assert call.domain == OPP_DOMAIN
     assert call.service == "turn_off"
     assert call.data == {"entity_id": "light.kitchen"}
 
@@ -185,7 +185,7 @@ async def test_toggle_intent.opp, sentence):
     assert result
 
     opp.states.async_set("light.kitchen", "on")
-    calls = async_mock_service.opp, HASS_DOMAIN, "toggle")
+    calls = async_mock_service.opp, OPP_DOMAIN, "toggle")
 
     await opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
@@ -194,7 +194,7 @@ async def test_toggle_intent.opp, sentence):
 
     assert len(calls) == 1
     call = calls[0]
-    assert call.domain == HASS_DOMAIN
+    assert call.domain == OPP_DOMAIN
     assert call.service == "toggle"
     assert call.data == {"entity_id": "light.kitchen"}
 
@@ -207,7 +207,7 @@ async def test_http_api.opp, opp_client):
 
     client = await opp_client()
     opp.states.async_set("light.kitchen", "off")
-    calls = async_mock_service.opp, HASS_DOMAIN, "turn_on")
+    calls = async_mock_service.opp, OPP_DOMAIN, "turn_on")
 
     resp = await client.post(
         "/api/conversation/process", json={"text": "Turn the kitchen on"}
@@ -216,7 +216,7 @@ async def test_http_api.opp, opp_client):
 
     assert len(calls) == 1
     call = calls[0]
-    assert call.domain == HASS_DOMAIN
+    assert call.domain == OPP_DOMAIN
     assert call.service == "turn_on"
     assert call.data == {"entity_id": "light.kitchen"}
 

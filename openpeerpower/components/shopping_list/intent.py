@@ -4,8 +4,8 @@ import openpeerpower.helpers.config_validation as cv
 
 from . import DOMAIN, EVENT
 
-INTENT_ADD_ITEM = "HassShoppingListAddItem"
-INTENT_LAST_ITEMS = "HassShoppingListLastItems"
+INTENT_ADD_ITEM = " OppShoppingListAddItem"
+INTENT_LAST_ITEMS = " OppShoppingListLastItems"
 
 
 async def async_setup_intents.opp):

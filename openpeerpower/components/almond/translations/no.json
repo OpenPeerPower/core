@@ -8,8 +8,8 @@
         },
         "step": {
              opp.o_confirm": {
-                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til Almond levert av Hass.io-tillegg: {addon}?",
-                "title": "Almond via Hass.io-tillegg"
+                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til Almond levert av Opp.io-tillegg: {addon}?",
+                "title": "Almond via Opp.io-tillegg"
             },
             "pick_implementation": {
                 "title": "Velg godkjenningsmetode"

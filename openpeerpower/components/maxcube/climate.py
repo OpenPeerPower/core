@@ -47,7 +47,7 @@ MAX_TEMPERATURE = 30.0
 
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 
-HASS_PRESET_TO_MAX_MODE = {
+OPP_PRESET_TO_MAX_MODE = {
     PRESET_AWAY: MAX_DEVICE_MODE_VACATION,
     PRESET_BOOST: MAX_DEVICE_MODE_BOOST,
     PRESET_NONE: MAX_DEVICE_MODE_AUTOMATIC,
@@ -272,7 +272,7 @@ class MaxCubeClimate(ClimateEntity):
             else:
                 temp = ON_TEMPERATURE
         else:
-            mode = HASS_PRESET_TO_MAX_MODE[preset_mode] or MAX_DEVICE_MODE_AUTOMATIC
+            mode = OPP_PRESET_TO_MAX_MODE[preset_mode] or MAX_DEVICE_MODE_AUTOMATIC
 
         with self._cubehandle.mutex:
             try:

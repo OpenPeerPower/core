@@ -5,16 +5,16 @@ from openpeerpower.helpers import intent
 async def test_recent_items_intent.opp, sl_setup):
     """Test recent items."""
     await intent.async_handle(
-        opp. "test", "HassShoppingListAddItem", {"item": {"value": "beer"}}
+        opp. "test", " OppShoppingListAddItem", {"item": {"value": "beer"}}
     )
     await intent.async_handle(
-        opp. "test", "HassShoppingListAddItem", {"item": {"value": "wine"}}
+        opp. "test", " OppShoppingListAddItem", {"item": {"value": "wine"}}
     )
     await intent.async_handle(
-        opp. "test", "HassShoppingListAddItem", {"item": {"value": "soda"}}
+        opp. "test", " OppShoppingListAddItem", {"item": {"value": "soda"}}
     )
 
-    response = await intent.async_handle.opp, "test", "HassShoppingListLastItems")
+    response = await intent.async_handle.opp, "test", " OppShoppingListLastItems")
 
     assert (
         response.speech["plain"]["speech"]

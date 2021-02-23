@@ -27,12 +27,12 @@ AUTH_MESSAGE_SCHEMA = vol.Schema(
 
 def auth_ok_message():
     """Return an auth_ok message."""
-    return {"type": TYPE_AUTH_OK, "ha_version": __version__}
+    return {"type": TYPE_AUTH_OK, "op_version": __version__}
 
 
 def auth_required_message():
     """Return an auth_required message."""
-    return {"type": TYPE_AUTH_REQUIRED, "ha_version": __version__}
+    return {"type": TYPE_AUTH_REQUIRED, "op_version": __version__}
 
 
 def auth_invalid_message(message):

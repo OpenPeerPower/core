@@ -6,7 +6,7 @@ import voluptuous as vol
 from openpeerpower.auth.permissions.const import CAT_ENTITIES, POLICY_READ
 from openpeerpower.components.websocket_api.const import ERR_NOT_FOUND
 from openpeerpower.const import EVENT_STATE_CHANGED, EVENT_TIME_CHANGED, MATCH_ALL
-from openpeerpower.core import DOMAIN as HASS_DOMAIN, callback
+from openpeerpower.core import DOMAIN as OPP_DOMAIN, callback
 from openpeerpower.exceptions import (
     OpenPeerPowerError,
     ServiceNotFound,
@@ -129,7 +129,7 @@ def handle_unsubscribe_events.opp, connection, msg):
 async def handle_call_service.opp, connection, msg):
     """Handle call service command."""
     blocking = True
-    if msg["domain"] == HASS_DOMAIN and msg["service"] in ["restart", "stop"]:
+    if msg["domain"] == OPP_DOMAIN and msg["service"] in ["restart", "stop"]:
         blocking = False
 
     try:

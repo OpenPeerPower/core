@@ -54,10 +54,10 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         _LOGGER.error(exp)
         return
 
-    # now, let's build the HASS devices
+    # now, let's build the OPP devices
     camera_entities = []
 
-    # Add the cameras as devices in HASS
+    # Add the cameras as devices in OPP
     for camera in cameras:
 
         camera_username = DEFAULT_CAMERA_USERNAME
@@ -90,12 +90,12 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         camera["ezviz_camera"] = EzvizCamera(ezviz_client, camera_serial)
 
-        camera_entities.append(HassEzvizCamera(**camera))
+        camera_entities.append( OppEzvizCamera(**camera))
 
     add_entities(camera_entities)
 
 
-class HassEzvizCamera(Camera):
+class OppEzvizCamera(Camera):
     """An implementation of a Foscam IP camera."""
 
     def __init__(self, **data):

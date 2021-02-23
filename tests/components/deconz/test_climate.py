@@ -636,7 +636,7 @@ async def test_climate_device_with_preset.opp, aioclient_mock):
 
     mock_deconz_put_request(aioclient_mock, config_entry.data, "/sensors/0/config")
 
-    # Service set preset to HASS preset
+    # Service set preset to OPP preset
 
     await opp.services.async_call(
         CLIMATE_DOMAIN,

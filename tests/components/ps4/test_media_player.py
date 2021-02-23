@@ -41,7 +41,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry, mock_device_registry, mock_registry
 
 MOCK_CREDS = "123412341234abcd12341234abcd12341234abcd12341234abcd12341234abcd"
-MOCK_NAME = "ha_ps4_name"
+MOCK_NAME = "op_ps4_name"
 MOCK_REGION = DEFAULT_REGION
 MOCK_GAMES_FILE = GAMES_FILE
 MOCK_HOST = "192.168.0.2"

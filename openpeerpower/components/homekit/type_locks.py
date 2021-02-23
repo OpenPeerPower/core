@@ -12,14 +12,14 @@ from .const import CHAR_LOCK_CURRENT_STATE, CHAR_LOCK_TARGET_STATE, SERV_LOCK
 
 _LOGGER = logging.getLogger(__name__)
 
-HASS_TO_HOMEKIT = {
+OPP_TO_HOMEKIT = {
     STATE_UNLOCKED: 0,
     STATE_LOCKED: 1,
     # Value 2 is Jammed which.opp doesn't have a state for
     STATE_UNKNOWN: 3,
 }
 
-HOMEKIT_TO_HASS = {c: s for s, c in HASS_TO_HOMEKIT.items()}
+HOMEKIT_TO_OPP = {c: s for s, c in OPP_TO_HOMEKIT.items()}
 
 STATE_TO_SERVICE = {STATE_LOCKED: "lock", STATE_UNLOCKED: "unlock"}
 
@@ -39,11 +39,11 @@ class Lock(HomeAccessory):
 
         serv_lock_mechanism = self.add_preload_service(SERV_LOCK)
         self.char_current_state = serv_lock_mechanism.configure_char(
-            CHAR_LOCK_CURRENT_STATE, value=HASS_TO_HOMEKIT[STATE_UNKNOWN]
+            CHAR_LOCK_CURRENT_STATE, value=OPP_TO_HOMEKIT[STATE_UNKNOWN]
         )
         self.char_target_state = serv_lock_mechanism.configure_char(
             CHAR_LOCK_TARGET_STATE,
-            value=HASS_TO_HOMEKIT[STATE_LOCKED],
+            value=OPP_TO_HOMEKIT[STATE_LOCKED],
             setter_callback=self.set_state,
         )
         self.async_update_state(state)
@@ -52,7 +52,7 @@ class Lock(HomeAccessory):
         """Set lock state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set state to %d", self.entity_id, value)
 
-        opp.value = HOMEKIT_TO_HASS.get(value)
+        opp.value = HOMEKIT_TO_OPP.get(value)
         service = STATE_TO_SERVICE.opp_value]
 
         if self.char_current_state.value != value:
@@ -67,8 +67,8 @@ class Lock(HomeAccessory):
     def async_update_state(self, new_state):
         """Update lock after state changed."""
         opp.state = new_state.state
-        if opp_state in HASS_TO_HOMEKIT:
-            current_lock_state = HASS_TO_HOMEKIT.opp_state]
+        if opp_state in OPP_TO_HOMEKIT:
+            current_lock_state = OPP_TO_HOMEKIT.opp_state]
             _LOGGER.debug(
                 "%s: Updated current state to %s (%d)",
                 self.entity_id,

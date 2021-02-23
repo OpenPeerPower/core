@@ -61,7 +61,7 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
         self._poll = True
         self.water_heater = water_heater
         self.econet_state_to_ha = {}
-        self.ha_state_to_econet = {}
+        self.op_state_to_econet = {}
 
     @callback
     def on_update_received(self):
@@ -102,8 +102,8 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
                 mode is not WaterHeaterOperationMode.UNKNOWN
                 and mode is not WaterHeaterOperationMode.VACATION
             ):
-                ha_mode = ECONET_STATE_TO_HA[mode]
-                op_list.append(ha_mode)
+                op_mode = ECONET_STATE_TO_HA[mode]
+                op_list.append(op_mode)
         return op_list
 
     @property

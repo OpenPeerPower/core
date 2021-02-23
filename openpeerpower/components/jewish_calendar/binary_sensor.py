@@ -65,4 +65,4 @@ class JewishCalendarBinarySensor(BinarySensorEntity):
             hebrew=self._hebrew,
         )
 
-        self._state = zmanim.issur_melacha_in_effect
+        self._state = zmanim.issur_melacop_in_effect

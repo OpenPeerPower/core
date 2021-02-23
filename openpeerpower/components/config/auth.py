@@ -135,7 +135,7 @@ async def websocket_update.opp, connection, msg):
 def _user_info(user):
     """Format a user."""
 
-    ha_username = next(
+    op_username = next(
         (
             cred.data.get("username")
             for cred in user.credentials
@@ -146,7 +146,7 @@ def _user_info(user):
 
     return {
         "id": user.id,
-        "username": ha_username,
+        "username": op_username,
         "name": user.name,
         "is_owner": user.is_owner,
         "is_active": user.is_active,

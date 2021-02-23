@@ -54,7 +54,7 @@ SAVE_DELAY = 10
 _LOGGER = logging.getLogger(__name__)
 DISABLED_CONFIG_ENTRY = "config_entry"
 DISABLED_DEVICE = "device"
-DISABLED_HASS = opp"
+DISABLED_OPP = opp"
 DISABLED_INTEGRATION = "integration"
 DISABLED_USER = "user"
 
@@ -92,7 +92,7 @@ class RegistryEntry:
             (
                 DISABLED_CONFIG_ENTRY,
                 DISABLED_DEVICE,
-                DISABLED_HASS,
+                DISABLED_OPP,
                 DISABLED_INTEGRATION,
                 DISABLED_USER,
                 None,

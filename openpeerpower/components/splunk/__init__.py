@@ -31,7 +31,7 @@ CONF_FILTER = "filter"
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 8088
 DEFAULT_SSL = False
-DEFAULT_NAME = "HASS"
+DEFAULT_NAME = " OPP"
 
 CONFIG_SCHEMA = vol.Schema(
     {

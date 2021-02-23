@@ -152,7 +152,7 @@ async def test_error_fetching_new_version_invalid_response.opp, aioclient_mock):
 async def test_new_version_shows_entity_after_hour.oppio(
     opp. mock_get_uuid, mock_get_newest_version
 ):
-    """Test if binary sensor gets updated if new version is available / Hass.io."""
+    """Test if binary sensor gets updated if new version is available / Opp.io."""
     mock_get_uuid.return_value = MOCK_HUUID
     mock_component.opp,  opp.o")
     opp.data[.oppio_core_info"] = {"version_latest": "999.0"}

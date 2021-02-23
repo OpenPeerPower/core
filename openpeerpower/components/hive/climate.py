@@ -24,7 +24,7 @@ HIVE_TO_OPP_STATE = {
     "OFF": HVAC_MODE_OFF,
 }
 
-HASS_TO_HIVE_STATE = {
+OPP_TO_HIVE_STATE = {
     HVAC_MODE_AUTO: "SCHEDULE",
     HVAC_MODE_HEAT: "MANUAL",
     HVAC_MODE_OFF: "OFF",
@@ -159,7 +159,7 @@ class HiveClimateEntity(HiveEntity, ClimateEntity):
     @refresh_system
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
-        new_mode = HASS_TO_HIVE_STATE[hvac_mode]
+        new_mode = OPP_TO_HIVE_STATE[hvac_mode]
         await self.hive.heating.set_mode(self.device, new_mode)
 
     @refresh_system

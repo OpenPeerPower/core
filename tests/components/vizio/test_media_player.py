@@ -143,7 +143,7 @@ async def _test_setup_tv(
     opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio TV entity setup."""
-    ha_power_state = _get_op_power_state(vizio_power_state)
+    op_power_state = _get_op_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -157,8 +157,8 @@ async def _test_setup_tv(
     ):
         await _add_config_entry_to.opp.opp, config_entry)
 
-        attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, ha_power_state)
-        if ha_power_state == STATE_ON:
+        attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, op_power_state)
+        if op_power_state == STATE_ON:
             _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_TV)
             assert "sound_mode" not in attr
 
@@ -167,7 +167,7 @@ async def _test_setup_speaker(
     opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio Speaker entity setup."""
-    ha_power_state = _get_op_power_state(vizio_power_state)
+    op_power_state = _get_op_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -191,9 +191,9 @@ async def _test_setup_speaker(
             await _add_config_entry_to.opp.opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(
-                opp. DEVICE_CLASS_SPEAKER, ha_power_state
+                opp. DEVICE_CLASS_SPEAKER, op_power_state
             )
-            if ha_power_state == STATE_ON:
+            if op_power_state == STATE_ON:
                 _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_SPEAKER)
                 assert not service_call.called
                 assert "sound_mode" in attr
@@ -254,7 +254,7 @@ async def _test_service(
     opp: OpenPeerPowerType,
     domain: str,
     vizio_func_name: str,
-    ha_service_name: str,
+    op_service_name: str,
     additional_service_data: Optional[Dict[str, Any]],
     *args,
     **kwargs,
@@ -270,7 +270,7 @@ async def _test_service(
     ) as service_call:
         await opp.services.async_call(
             domain,
-            ha_service_name,
+            op_service_name,
             service_data=service_data,
             blocking=True,
         )

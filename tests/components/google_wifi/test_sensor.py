@@ -87,10 +87,10 @@ def setup_api(data, requests_mock):
     return api, sensor_dict
 
 
-def fake_delay.opp, ha_delay):
+def fake_delay.opp, op_delay):
     """Fake delay to prevent update throttle."""
     opp.now = dt_util.utcnow()
-    shifted_time = opp_now + timedelta(seconds=ha_delay)
+    shifted_time = opp_now + timedelta(seconds=op_delay)
     async_fire_time_changed.opp, shifted_time)
 
 

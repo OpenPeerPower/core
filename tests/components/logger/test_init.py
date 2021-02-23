@@ -9,8 +9,8 @@ from openpeerpower.components import logger
 from openpeerpower.components.logger import LOGSEVERITY
 from openpeerpower.setup import async_setup_component
 
-HASS_NS = "unused.openpeerpower"
-COMPONENTS_NS = f"{HASS_NS}.components"
+OPP_NS = "unused.openpeerpower"
+COMPONENTS_NS = f"{OPP_NS}.components"
 ZONE_NS = f"{COMPONENTS_NS}.zone"
 GROUP_NS = f"{COMPONENTS_NS}.group"
 CONFIGED_NS = "otherlibx"
@@ -102,7 +102,7 @@ async def test_can_set_level.opp):
                     CONFIGED_NS: "warning",
                     f"{CONFIGED_NS}.info": "info",
                     f"{CONFIGED_NS}.debug": "debug",
-                    HASS_NS: "warning",
+                    OPP_NS: "warning",
                     COMPONENTS_NS: "info",
                     ZONE_NS: "debug",
                     GROUP_NS: "info",
@@ -143,8 +143,8 @@ async def test_can_set_level.opp):
         is True
     )
 
-    assert logging.getLogger(HASS_NS).isEnabledFor(logging.DEBUG) is False
-    assert logging.getLogger(HASS_NS).isEnabledFor(logging.WARNING) is True
+    assert logging.getLogger(OPP_NS).isEnabledFor(logging.DEBUG) is False
+    assert logging.getLogger(OPP_NS).isEnabledFor(logging.WARNING) is True
 
     assert logging.getLogger(COMPONENTS_NS).isEnabledFor(logging.DEBUG) is False
     assert logging.getLogger(COMPONENTS_NS).isEnabledFor(logging.WARNING) is True

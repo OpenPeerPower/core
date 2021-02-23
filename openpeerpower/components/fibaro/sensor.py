@@ -56,7 +56,7 @@ class FibaroSensor(FibaroDevice, Entity):
         self.current_value = None
         self.last_changed_time = None
         super().__init__(fibaro_device)
-        self.entity_id = f"{DOMAIN}.{self.ha_id}"
+        self.entity_id = f"{DOMAIN}.{self.op_id}"
         if fibaro_device.type in SENSOR_TYPES:
             self._unit = SENSOR_TYPES[fibaro_device.type][1]
             self._icon = SENSOR_TYPES[fibaro_device.type][2]

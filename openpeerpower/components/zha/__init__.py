@@ -6,7 +6,7 @@ import logging
 import voluptuous as vol
 from zigpy.config import CONF_DEVICE, CONF_DEVICE_PATH
 
-from openpeerpower import config_entries, const as ha_const
+from openpeerpower import config_entries, const as op_const
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.device_registry import CONNECTION_ZIGBEE
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
@@ -35,7 +35,7 @@ from .core.const import (
 )
 from .core.discovery import GROUP_PROBE
 
-DEVICE_CONFIG_SCHEMA_ENTRY = vol.Schema({vol.Optional(ha_const.CONF_TYPE): cv.string})
+DEVICE_CONFIG_SCHEMA_ENTRY = vol.Schema({vol.Optional(op_const.CONF_TYPE): cv.string})
 ZHA_CONFIG_SCHEMA = {
     vol.Optional(CONF_BAUDRATE): cv.positive_int,
     vol.Optional(CONF_DATABASE): cv.string,
@@ -122,7 +122,7 @@ async def async_setup_entry.opp, config_entry):
         await zha_data[DATA_ZHA_GATEWAY].shutdown()
         await zha_data[DATA_ZHA_GATEWAY].async_update_device_storage()
 
-    opp.bus.async_listen_once(ha_const.EVENT_OPENPEERPOWER_STOP, async_zha_shutdown)
+    opp.bus.async_listen_once(op_const.EVENT_OPENPEERPOWER_STOP, async_zha_shutdown)
     asyncio.create_task(async_load_entities.opp))
     return True
 

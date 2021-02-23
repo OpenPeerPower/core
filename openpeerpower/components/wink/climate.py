@@ -249,8 +249,8 @@ class WinkThermostat(WinkDevice, ClimateEntity):
             if mode in ("eco", "aux"):
                 continue
             try:
-                ha_mode = WINK_HVAC_TO_HA[mode]
-                hvac_list.append(ha_mode)
+                op_mode = WINK_HVAC_TO_HA[mode]
+                hvac_list.append(op_mode)
             except KeyError:
                 _LOGGER.error(
                     "Invalid operation mode mapping. %s doesn't map. "
@@ -452,8 +452,8 @@ class WinkAC(WinkDevice, ClimateEntity):
             if mode == "auto_eco":
                 continue
             try:
-                ha_mode = WINK_HVAC_TO_HA[mode]
-                hvac_list.append(ha_mode)
+                op_mode = WINK_HVAC_TO_HA[mode]
+                hvac_list.append(op_mode)
             except KeyError:
                 _LOGGER.error(
                     "Invalid operation mode mapping. %s doesn't map. "

@@ -37,8 +37,8 @@ from .const import (
     DEFAULT_UNMUTE_VOLUME,
     DOMAIN,
     FD_NAME,
-    HASS_DATA_REMOVE_LISTENERS_KEY,
-    HASS_DATA_UPDATER_KEY,
+    OPP_DATA_REMOVE_LISTENERS_KEY,
+    OPP_DATA_UPDATER_KEY,
     KNOWN_PIPES,
     PIPE_FUNCTION_MAP,
     SIGNAL_ADD_ZONES,
@@ -94,7 +94,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     if not.opp.data.get(DOMAIN):
         opp.data[DOMAIN] = {config_entry.entry_id: {}}
     opp.data[DOMAIN][config_entry.entry_id] = {
-        HASS_DATA_REMOVE_LISTENERS_KEY: [
+        OPP_DATA_REMOVE_LISTENERS_KEY: [
             remove_add_zones_listener,
             remove_entry_listener,
         ]
@@ -105,7 +105,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     )
     await forked_daapd_updater.async_init()
     opp.data[DOMAIN][config_entry.entry_id][
-        HASS_DATA_UPDATER_KEY
+        OPP_DATA_UPDATER_KEY
     ] = forked_daapd_updater
 
 

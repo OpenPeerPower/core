@@ -6,8 +6,8 @@
         },
         "step": {
              opp.o_confirm": {
-                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo z Almondom, ki ga ponuja dodatek Hass.io: {addon} ?",
-                "title": "Almond prek dodatka Hass.io"
+                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo z Almondom, ki ga ponuja dodatek Opp.io: {addon} ?",
+                "title": "Almond prek dodatka Opp.io"
             },
             "pick_implementation": {
                 "title": "Izberite na\u010din preverjanja pristnosti"

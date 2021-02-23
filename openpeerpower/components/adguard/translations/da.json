@@ -6,8 +6,8 @@
         },
         "step": {
              opp.o_confirm": {
-                "description": "Vil du konfigurere Open Peer Power til at oprette forbindelse til AdGuard Home leveret af Hass.io-tilf\u00f8jelsen: {addon}?",
-                "title": "AdGuard Home via Hass.io-tilf\u00f8jelse"
+                "description": "Vil du konfigurere Open Peer Power til at oprette forbindelse til AdGuard Home leveret af Opp.io-tilf\u00f8jelsen: {addon}?",
+                "title": "AdGuard Home via Opp.io-tilf\u00f8jelse"
             },
             "user": {
                 "data": {

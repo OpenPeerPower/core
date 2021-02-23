@@ -12,7 +12,7 @@ DOMAIN = "jewish_calendar"
 
 SENSOR_TYPES = {
     "binary": {
-        "issur_melacha_in_effect": ["Issur Melacha in Effect", "mdi:power-plug-off"]
+        "issur_melacop_in_effect": ["Issur Melacha in Effect", "mdi:power-plug-off"]
     },
     "data": {
         "date": ["Date", "mdi:judaism"],

@@ -19,11 +19,11 @@ async def async_setup_entry(
     """Set up discovered binary sensors."""
     devs = []
     for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append(HassAqualinkBinarySensor(dev))
+        devs.append( OppAqualinkBinarySensor(dev))
     async_add_entities(devs, True)
 
 
-class HassAqualinkBinarySensor(AqualinkEntity, BinarySensorEntity):
+class OppAqualinkBinarySensor(AqualinkEntity, BinarySensorEntity):
     """Representation of a binary sensor."""
 
     @property

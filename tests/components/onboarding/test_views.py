@@ -63,26 +63,26 @@ async def mock_supervisor_fixture.opp, aioclient_mock):
     """Mock supervisor."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/options", json={"result": "ok"})
     aioclient_mock.post("http://127.0.0.1/supervisor/options", json={"result": "ok"})
-    with patch.dict(os.environ, {"HASSIO": "127.0.0.1"}), patch(
-        "openpeerpower.components.oppio.HassIO.is_connected",
+    with patch.dict(os.environ, {" OPPIO": "127.0.0.1"}), patch(
+        "openpeerpower.components.oppio. OppIO.is_connected",
         return_value=True,
     ), patch(
-        "openpeerpower.components.oppio.HassIO.get_info",
+        "openpeerpower.components.oppio. OppIO.get_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio.HassIO.get_host_info",
+        "openpeerpower.components.oppio. OppIO.get_host_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio.HassIO.get_supervisor_info",
+        "openpeerpower.components.oppio. OppIO.get_supervisor_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio.HassIO.get_os_info",
+        "openpeerpower.components.oppio. OppIO.get_os_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio.HassIO.get_ingress_panels",
+        "openpeerpower.components.oppio. OppIO.get_ingress_panels",
         return_value={"panels": {}},
     ), patch.dict(
-        os.environ, {"HASSIO_TOKEN": "123456"}
+        os.environ, {" OPPIO_TOKEN": "123456"}
     ):
         yield
 

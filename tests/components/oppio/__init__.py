@@ -1,3 +1,3 @@
-"""Tests for Hass.io component."""
+"""Tests for Opp.io component."""
 
-HASSIO_TOKEN = "123456"
+ OPPIO_TOKEN = "123456"

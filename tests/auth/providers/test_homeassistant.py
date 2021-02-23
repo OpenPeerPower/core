@@ -110,7 +110,7 @@ async def test_login_flow_validates(data, opp):
     data.add_auth("test-user", "test-pass")
     await data.async_save()
 
-    provider = opp_auth.HassAuthProvider(
+    provider = opp_auth. OppAuthProvider(
         opp. auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
@@ -211,7 +211,7 @@ async def test_legacy_login_flow_validates(legacy_data, opp):
     legacy_data.add_auth("test-user", "test-pass")
     await legacy_data.async_save()
 
-    provider = opp_auth.HassAuthProvider(
+    provider = opp_auth. OppAuthProvider(
         opp. auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
@@ -286,7 +286,7 @@ async def test_race_condition_in_data_loading.opp):
         counter += 1
         await asyncio.sleep(0)
 
-    provider = opp_auth.HassAuthProvider(
+    provider = opp_auth. OppAuthProvider(
         opp. auth_store.AuthStore.opp), {"type": "openpeerpower"}
     )
     with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):

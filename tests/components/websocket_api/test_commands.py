@@ -212,10 +212,10 @@ async def test_call_service_error(opp, websocket_client):
     """Test call service command with error."""
 
     @callback
-    def ha_error_call(_):
+    def op_error_call(_):
         raise OpenPeerPowerError("error_message")
 
-    opp.services.async_register("domain_test", "ha_error", ha_error_call)
+    opp.services.async_register("domain_test", "op_error", op_error_call)
 
     async def unknown_error_call(_):
         raise ValueError("value_error")
@@ -227,7 +227,7 @@ async def test_call_service_error(opp, websocket_client):
             "id": 5,
             "type": "call_service",
             "domain": "domain_test",
-            "service": "ha_error",
+            "service": "op_error",
         }
     )
 

@@ -110,7 +110,7 @@ def _get_logger_class.opp_overrides):
     so we cannot use partial to inject.opp_overrides.
     """
 
-    class HassLogger(logging.Logger):
+    class OppLogger(logging.Logger):
         """Open Peer Power aware logger class."""
 
         def setLevel(self, level) -> None:
@@ -125,4 +125,4 @@ def _get_logger_class.opp_overrides):
             """Set the log level."""
             super().setLevel(level)
 
-    return HassLogger
+    return OppLogger

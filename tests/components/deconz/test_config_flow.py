@@ -23,7 +23,7 @@ from openpeerpower.components.ssdp import (
     ATTR_UPNP_SERIAL,
 )
 from openpeerpower.config_entries import (
-    SOURCE_HASSIO,
+    SOURCE_OPPIO,
     SOURCE_REAUTH,
     SOURCE_SSDP,
     SOURCE_USER,
@@ -489,9 +489,9 @@ async def test_ssdp_discovery_dont_update_configuration.opp, aioclient_mock):
 async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
     opp. aioclient_mock
 ):
-    """Test to ensure the SSDP discovery does not update an Hass.io entry."""
+    """Test to ensure the SSDP discovery does not update an Opp.io entry."""
     config_entry = await setup_deconz_integration(
-        opp. aioclient_mock, source=SOURCE_HASSIO
+        opp. aioclient_mock, source=SOURCE_OPPIO
     )
 
     result = await opp.config_entries.flow.async_init(
@@ -520,7 +520,7 @@ async def test_flow.oppio_discovery.opp):
             CONF_SERIAL: BRIDGEID,
             CONF_API_KEY: API_KEY,
         },
-        context={"source": SOURCE_HASSIO},
+        context={"source": SOURCE_OPPIO},
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == oppio_confirm"
@@ -563,7 +563,7 @@ async def test.oppio_discovery_update_configuration.opp, aioclient_mock):
                 CONF_API_KEY: "updated",
                 CONF_SERIAL: BRIDGEID,
             },
-            context={"source": SOURCE_HASSIO},
+            context={"source": SOURCE_OPPIO},
         )
         await opp.async_block_till_done()
 
@@ -587,7 +587,7 @@ async def test.oppio_discovery_dont_update_configuration.opp, aioclient_mock):
             CONF_API_KEY: API_KEY,
             CONF_SERIAL: BRIDGEID,
         },
-        context={"source": SOURCE_HASSIO},
+        context={"source": SOURCE_OPPIO},
     )
 
     assert result["type"] == RESULT_TYPE_ABORT

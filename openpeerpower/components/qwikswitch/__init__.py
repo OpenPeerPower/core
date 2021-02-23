@@ -215,7 +215,7 @@ async def async_setup(opp, config):
                 _LOGGER.debug("Dispatch %s ((%s))", qspacket[QS_ID], qspacket)
                 opp.helpers.dispatcher.async_dispatcher_send(qspacket[QS_ID], qspacket)
 
-        # Update all ha_objects
+        # Update all op_objects
         opp.async_add_job(qsusb.update_from_devices)
 
     @callback

@@ -98,9 +98,9 @@ class WinkWaterHeater(WinkDevice, WaterHeaterEntity):
         for mode in modes:
             if mode == "aux":
                 continue
-            ha_mode = WINK_STATE_TO_HA.get(mode)
-            if ha_mode is not None:
-                op_list.append(ha_mode)
+            op_mode = WINK_STATE_TO_HA.get(mode)
+            if op_mode is not None:
+                op_list.append(op_mode)
             else:
                 error = (
                     "Invalid operation mode mapping. "

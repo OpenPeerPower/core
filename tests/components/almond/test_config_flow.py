@@ -46,7 +46,7 @@ async def test_import_cannot_connect.opp):
 
 
 async def test.oppio.opp):
-    """Test that Hass.io can discover this integration."""
+    """Test that Opp.io can discover this integration."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source":  opp.o"},

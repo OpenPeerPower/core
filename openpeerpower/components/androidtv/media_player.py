@@ -12,7 +12,7 @@ from adb_shell.exceptions import (
     InvalidResponseError,
     TcpTimeoutException,
 )
-from androidtv import ha_state_detection_rules_validator
+from androidtv import op_state_detection_rules_validator
 from androidtv.adb_manager.adb_manager_sync import ADBPythonSync
 from androidtv.constants import APPS, KEYS
 from androidtv.exceptions import LockNotAcquiredException
@@ -149,7 +149,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_TURN_ON_COMMAND): cv.string,
         vol.Optional(CONF_TURN_OFF_COMMAND): cv.string,
         vol.Optional(CONF_STATE_DETECTION_RULES, default={}): vol.Schema(
-            {cv.string: ha_state_detection_rules_validator(vol.Invalid)}
+            {cv.string: op_state_detection_rules_validator(vol.Invalid)}
         ),
         vol.Optional(CONF_EXCLUDE_UNNAMED_APPS, default=False): cv.boolean,
         vol.Optional(CONF_SCREENCAP, default=DEFAULT_SCREENCAP): cv.boolean,

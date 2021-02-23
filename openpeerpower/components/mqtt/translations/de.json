@@ -21,8 +21,8 @@
                 "data": {
                     "discovery": "Suche aktivieren"
                 },
-                "description": "M\u00f6chtest du Open Peer Power so konfigurieren, dass er eine Verbindung mit dem MQTT-Broker herstellt, der vom Hass.io Add-on {addon} bereitgestellt wird?",
-                "title": "MQTT Broker per Hass.io add-on"
+                "description": "M\u00f6chtest du Open Peer Power so konfigurieren, dass er eine Verbindung mit dem MQTT-Broker herstellt, der vom Opp.io Add-on {addon} bereitgestellt wird?",
+                "title": "MQTT Broker per Opp.io add-on"
             }
         }
     },

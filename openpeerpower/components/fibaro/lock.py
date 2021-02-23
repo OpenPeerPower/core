@@ -21,7 +21,7 @@ class FibaroLock(FibaroDevice, LockEntity):
         """Initialize the Fibaro device."""
         self._state = False
         super().__init__(fibaro_device)
-        self.entity_id = f"{DOMAIN}.{self.ha_id}"
+        self.entity_id = f"{DOMAIN}.{self.op_id}"
 
     def lock(self, **kwargs):
         """Lock the device."""

@@ -205,7 +205,7 @@ class ShellyBlockEntity(entity.Entity):
         return f"{self.wrapper.mac}-{self.block.description}"
 
     async def async_added_to.opp(self):
-        """When entity is added to HASS."""
+        """When entity is added to OPP."""
         self.async_on_remove(self.wrapper.async_add_listener(self._update_callback))
 
     async def async_update(self):

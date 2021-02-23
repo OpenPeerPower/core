@@ -108,12 +108,12 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
         )
         _LOGGER.debug("State map of Satel: %s", self._satel.partition_states)
 
-        for satel_state, ha_state in state_map.items():
+        for satel_state, op_state in state_map.items():
             if (
                 satel_state in self._satel.partition_states
                 and self._partition_id in self._satel.partition_states[satel_state]
             ):
-                opp.alarm_status = ha_state
+                opp.alarm_status = op_state
                 break
 
         return.opp_alarm_status

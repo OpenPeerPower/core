@@ -17,9 +17,9 @@ from openpeerpower.loader import bind.opp
 _LOGGER = logging.getLogger(__name__)
 _SlotsType = Dict[str, Any]
 
-INTENT_TURN_OFF = "HassTurnOff"
-INTENT_TURN_ON = "HassTurnOn"
-INTENT_TOGGLE = "HassToggle"
+INTENT_TURN_OFF = " OppTurnOff"
+INTENT_TURN_ON = " OppTurnOn"
+INTENT_TOGGLE = " OppToggle"
 
 SLOT_SCHEMA = vol.Schema({}, extra=vol.ALLOW_EXTRA)
 

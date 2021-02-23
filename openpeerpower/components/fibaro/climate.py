@@ -115,13 +115,13 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
         self._op_mode_device = None
         self._fan_mode_device = None
         self._support_flags = 0
-        self.entity_id = f"climate.{self.ha_id}"
+        self.entity_id = f"climate.{self.op_id}"
         self._hvac_support = []
         self._preset_support = []
         self._fan_support = []
 
         siblings = fibaro_device.fibaro_controller.get_siblings(fibaro_device)
-        _LOGGER.debug("%s siblings: %s", fibaro_device.ha_id, siblings)
+        _LOGGER.debug("%s siblings: %s", fibaro_device.op_id, siblings)
         tempunit = "C"
         for device in siblings:
             # Detecting temperature device, one strong and one weak way of
@@ -197,11 +197,11 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
             "- _target_temp_device %s\n"
             "- _op_mode_device %s\n"
             "- _fan_mode_device %s",
-            self.ha_id,
-            self._temp_sensor_device.ha_id if self._temp_sensor_device else "None",
-            self._target_temp_device.ha_id if self._target_temp_device else "None",
-            self._op_mode_device.ha_id if self._op_mode_device else "None",
-            self._fan_mode_device.ha_id if self._fan_mode_device else "None",
+            self.op_id,
+            self._temp_sensor_device.op_id if self._temp_sensor_device else "None",
+            self._target_temp_device.op_id if self._target_temp_device else "None",
+            self._op_mode_device.op_id if self._op_mode_device else "None",
+            self._fan_mode_device.op_id if self._fan_mode_device else "None",
         )
         await super().async_added_to.opp()
 

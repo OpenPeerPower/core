@@ -44,7 +44,7 @@ def run(args):
     parser_change_pw.add_argument("new_password", type=str)
     parser_change_pw.set_defaults(func=change_password)
 
-    asyncio.set_event_loop_policy(runner.HassEventLoopPolicy(False))
+    asyncio.set_event_loop_policy(runner. OppEventLoopPolicy(False))
     asyncio.run(run_command(parser.parse_args(args)))
 
 

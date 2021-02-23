@@ -33,7 +33,7 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
     __version__,
 )
-from openpeerpower.core import Context, callback as ha_callback, split_entity_id
+from openpeerpower.core import Context, callback as op_callback, split_entity_id
 from openpeerpower.helpers.event import async_track_state_change_event
 from openpeerpower.util.decorator import Registry
 
@@ -344,12 +344,12 @@ class HomeAccessory(Accessory):
         if battery_state is not None or battery_charging_state is not None:
             self.async_update_battery(battery_state, battery_charging_state)
 
-    @ha_callback
+    @op_callback
     def async_update_event_state_callback(self, event):
         """Handle state change event listener callback."""
         self.async_update_state_callback(event.data.get("new_state"))
 
-    @ha_callback
+    @op_callback
     def async_update_state_callback(self, new_state):
         """Handle state change listener callback."""
         _LOGGER.debug("New_state: %s", new_state)
@@ -371,7 +371,7 @@ class HomeAccessory(Accessory):
             self.async_update_battery(battery_state, battery_charging_state)
         self.async_update_state(new_state)
 
-    @ha_callback
+    @op_callback
     def async_update_linked_battery_callback(self, event):
         """Handle linked battery sensor state change listener callback."""
         new_state = event.data.get("new_state")
@@ -383,7 +383,7 @@ class HomeAccessory(Accessory):
             battery_charging_state = new_state.attributes.get(ATTR_BATTERY_CHARGING)
         self.async_update_battery(new_state.state, battery_charging_state)
 
-    @ha_callback
+    @op_callback
     def async_update_linked_battery_charging_callback(self, event):
         """Handle linked battery charging sensor state change listener callback."""
         new_state = event.data.get("new_state")
@@ -391,7 +391,7 @@ class HomeAccessory(Accessory):
             return
         self.async_update_battery(None, new_state.state == STATE_ON)
 
-    @ha_callback
+    @op_callback
     def async_update_battery(self, battery_level, battery_charging):
         """Update battery service if available.
 
@@ -423,7 +423,7 @@ class HomeAccessory(Accessory):
                 "%s: Updated battery charging to %d", self.entity_id, hk_charging
             )
 
-    @ha_callback
+    @op_callback
     def async_update_state(self, new_state):
         """Handle state change to update HomeKit value.
 
@@ -431,7 +431,7 @@ class HomeAccessory(Accessory):
         """
         raise NotImplementedError()
 
-    @ha_callback
+    @op_callback
     def async_call_service(self, domain, service, service_data, value=None):
         """Fire event and call service for changes from HomeKit."""
         event_data = {
@@ -449,7 +449,7 @@ class HomeAccessory(Accessory):
             )
         )
 
-    @ha_callback
+    @op_callback
     def async_stop(self):
         """Cancel any subscriptions when the bridge is stopped."""
         while self._subscriptions:

@@ -767,17 +767,17 @@ async def async_api_set_thermostat_mode.opp, config, directive, context):
 
     data = {ATTR_ENTITY_ID: entity.entity_id}
 
-    ha_preset = next((k for k, v in API_THERMOSTAT_PRESETS.items() if v == mode), None)
+    op_preset = next((k for k, v in API_THERMOSTAT_PRESETS.items() if v == mode), None)
 
-    if ha_preset:
+    if op_preset:
         presets = entity.attributes.get(climate.ATTR_PRESET_MODES, [])
 
-        if ha_preset not in presets:
-            msg = f"The requested thermostat mode {ha_preset} is not supported"
+        if op_preset not in presets:
+            msg = f"The requested thermostat mode {op_preset} is not supported"
             raise AlexaUnsupportedThermostatModeError(msg)
 
         service = climate.SERVICE_SET_PRESET_MODE
-        data[climate.ATTR_PRESET_MODE] = ha_preset
+        data[climate.ATTR_PRESET_MODE] = op_preset
 
     elif mode == "CUSTOM":
         operation_list = entity.attributes.get(climate.ATTR_HVAC_MODES)
@@ -797,14 +797,14 @@ async def async_api_set_thermostat_mode.opp, config, directive, context):
 
     else:
         operation_list = entity.attributes.get(climate.ATTR_HVAC_MODES)
-        ha_modes = {k: v for k, v in API_THERMOSTAT_MODES.items() if v == mode}
-        ha_mode = next(iter(set(ha_modes).intersection(operation_list)), None)
-        if ha_mode not in operation_list:
+        op_modes = {k: v for k, v in API_THERMOSTAT_MODES.items() if v == mode}
+        op_mode = next(iter(set(op_modes).intersection(operation_list)), None)
+        if op_mode not in operation_list:
             msg = f"The requested thermostat mode {mode} is not supported"
             raise AlexaUnsupportedThermostatModeError(msg)
 
         service = climate.SERVICE_SET_HVAC_MODE
-        data[climate.ATTR_HVAC_MODE] = ha_mode
+        data[climate.ATTR_HVAC_MODE] = op_mode
 
     response = directive.response()
     await opp.services.async_call(

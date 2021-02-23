@@ -150,9 +150,9 @@ class TuyaClimateEntity(TuyaDevice, ClimateEntity):
         for mode in modes:
             if mode not in TUYA_STATE_TO_HA:
                 continue
-            ha_mode = TUYA_STATE_TO_HA[mode]
-            if ha_mode not in self.operations:
-                self.operations.append(ha_mode)
+            op_mode = TUYA_STATE_TO_HA[mode]
+            if op_mode not in self.operations:
+                self.operations.append(op_mode)
             self._has_operation = True
 
     @property

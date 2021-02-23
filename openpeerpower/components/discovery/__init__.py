@@ -31,7 +31,7 @@ SERVICE_DLNA_DMR = "dlna_dmr"
 SERVICE_ENIGMA2 = "enigma2"
 SERVICE_FREEBOX = "freebox"
 SERVICE_OPP_IOS_APP = opp_ios"
-SERVICE_HASSIO = oppio"
+SERVICE_OPPIO = oppio"
 SERVICE_HEOS = "heos"
 SERVICE_KONNECTED = "konnected"
 SERVICE_MOBILE_APP = opp_mobile_app"
@@ -55,7 +55,7 @@ SERVICE_HANDLERS = {
     SERVICE_MOBILE_APP: ("mobile_app", None),
     SERVICE_OPP_IOS_APP: ("ios", None),
     SERVICE_NETGEAR: ("device_tracker", None),
-    SERVICE_HASSIO: (.oppio", None),
+    SERVICE_OPPIO: (.oppio", None),
     SERVICE_APPLE_TV: ("apple_tv", None),
     SERVICE_ENIGMA2: ("media_player", "enigma2"),
     SERVICE_WINK: ("wink", None),

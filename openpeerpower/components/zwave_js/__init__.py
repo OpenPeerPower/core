@@ -10,7 +10,7 @@ from zwave_js_server.model.node import Node as ZwaveNode
 from zwave_js_server.model.notification import Notification
 from zwave_js_server.model.value import ValueNotification
 
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_URL, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import Event, OpenPeerPower, callback
@@ -334,10 +334,10 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
 
     try:
         await opp.components.oppio.async_stop_addon("core_zwave_js")
-    except HassioAPIError as err:
+    except OppioAPIError as err:
         LOGGER.error("Failed to stop the Z-Wave JS add-on: %s", err)
         return
     try:
         await opp.components.oppio.async_uninstall_addon("core_zwave_js")
-    except HassioAPIError as err:
+    except OppioAPIError as err:
         LOGGER.error("Failed to uninstall the Z-Wave JS add-on: %s", err)

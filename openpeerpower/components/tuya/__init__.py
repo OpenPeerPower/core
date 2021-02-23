@@ -176,22 +176,22 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 dev_type in TUYA_TYPE_TO_HA
                 and device.object_id() not in.opp.data[DOMAIN]["entities"]
             ):
-                ha_type = TUYA_TYPE_TO_HA[dev_type]
-                if ha_type not in device_type_list:
-                    device_type_list[ha_type] = []
-                device_type_list[ha_type].append(device.object_id())
+                op_type = TUYA_TYPE_TO_HA[dev_type]
+                if op_type not in device_type_list:
+                    device_type_list[op_type] = []
+                device_type_list[op_type].append(device.object_id())
                 opp.data[DOMAIN]["entities"][device.object_id()] = None
 
-        for ha_type, dev_ids in device_type_list.items():
-            config_entries_key = f"{ha_type}.tuya"
+        for op_type, dev_ids in device_type_list.items():
+            config_entries_key = f"{op_type}.tuya"
             if config_entries_key not in.opp.data[DOMAIN][ENTRY_IS_SETUP]:
-                opp.data[DOMAIN]["pending"][ha_type] = dev_ids
+                opp.data[DOMAIN]["pending"][op_type] = dev_ids
                 opp.async_create_task(
-                    opp.config_entries.async_forward_entry_setup(entry, ha_type)
+                    opp.config_entries.async_forward_entry_setup(entry, op_type)
                 )
                 opp.data[DOMAIN][ENTRY_IS_SETUP].add(config_entries_key)
             else:
-                async_dispatcher_send.opp, TUYA_DISCOVERY_NEW.format(ha_type), dev_ids)
+                async_dispatcher_send.opp, TUYA_DISCOVERY_NEW.format(op_type), dev_ids)
 
     await async_load_devices(tuya.get_all_devices())
 

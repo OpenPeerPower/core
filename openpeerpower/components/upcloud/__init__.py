@@ -110,7 +110,7 @@ class UpCloudDataUpdateCoordinator(
 
 
 @dataclasses.dataclass
-class UpCloudHassData:
+class UpCloud OppData:
     """Open Peer Power UpCloud runtime data."""
 
     coordinators: Dict[str, UpCloudDataUpdateCoordinator] = dataclasses.field(
@@ -141,7 +141,7 @@ async def async_setup_opp: OpenPeerPowerType, config) -> bool:
     )
 
     if domain_config[CONF_SCAN_INTERVAL]:
-        opp.data[DATA_UPCLOUD] = UpCloudHassData()
+        opp.data[DATA_UPCLOUD] = UpCloud OppData()
         opp.data[DATA_UPCLOUD].scan_interval_migrations[
             domain_config[CONF_USERNAME]
         ] = domain_config[CONF_SCAN_INTERVAL]
@@ -179,7 +179,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         _LOGGER.error("Failed to connect", exc_info=True)
         raise ConfigEntryNotReady from err
 
-    upcloud_data = opp.data.setdefault(DATA_UPCLOUD, UpCloudHassData())
+    upcloud_data = opp.data.setdefault(DATA_UPCLOUD, UpCloud OppData())
 
     # Handle pre config entry (0.117) scan interval migration to options
     migrated_scan_interval = upcloud_data.scan_interval_migrations.pop(

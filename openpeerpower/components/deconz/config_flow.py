@@ -216,11 +216,11 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         return await self.async_step_link()
 
     async def async_step.oppio(self, discovery_info):
-        """Prepare configuration for a Hass.io deCONZ bridge.
+        """Prepare configuration for a Opp.io deCONZ bridge.
 
         This flow is triggered by the discovery component.
         """
-        LOGGER.debug("deCONZ HASSIO discovery %s", pformat(discovery_info))
+        LOGGER.debug("deCONZ OPPIO discovery %s", pformat(discovery_info))
 
         self.bridge_id = normalize_bridge_id(discovery_info[CONF_SERIAL])
         await self.async_set_unique_id(self.bridge_id)
@@ -238,7 +238,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         return await self.async_step.oppio_confirm()
 
     async def async_step.oppio_confirm(self, user_input=None):
-        """Confirm a Hass.io discovery."""
+        """Confirm a Opp.io discovery."""
         if user_input is not None:
             self.deconz_config = {
                 CONF_HOST: self.oppio_discovery[CONF_HOST],

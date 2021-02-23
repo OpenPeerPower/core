@@ -184,7 +184,7 @@ async def test_options_flow.opp):
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == "ha_to_risco"
+    assert result["step_id"] == "op_to_risco"
 
     with patch("openpeerpower.components.risco.async_setup_entry", return_value=True):
         result = await opp.config_entries.options.async_configure(
@@ -196,7 +196,7 @@ async def test_options_flow.opp):
     assert entry.options == {
         **TEST_OPTIONS,
         "risco_states_to_ha": TEST_RISCO_TO_HA,
-        "ha_states_to_risco": TEST_OP_TO_RISCO,
+        "op_states_to_risco": TEST_OP_TO_RISCO,
     }
 
 

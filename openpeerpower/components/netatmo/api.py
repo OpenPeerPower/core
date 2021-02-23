@@ -1,4 +1,4 @@
-"""API for Netatmo bound to HASS OAuth."""
+"""API for Netatmo bound to OPP OAuth."""
 from asyncio import run_coroutine_threadsafe
 
 import pyatmo

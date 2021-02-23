@@ -566,10 +566,10 @@ class MQTT:
         else:
 
             @callback
-            def ha_started(_):
+            def op_started(_):
                 self._op_started.set()
 
-            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, ha_started)
+            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, op_started)
 
         self.init_client()
         self.config_entry.add_update_listener(self.async_config_entry_updated)

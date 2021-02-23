@@ -76,7 +76,7 @@ async def test_set_up_oauth_no_external_url.opp, aioclient_mock):
 
 
 async def test_set_up.oppio.opp, aioclient_mock):
-    """Test we do not set up Almond to connect to HA if we use Hass.io."""
+    """Test we do not set up Almond to connect to HA if we use Opp.io."""
     entry = MockConfigEntry(
         domain="almond",
         data={

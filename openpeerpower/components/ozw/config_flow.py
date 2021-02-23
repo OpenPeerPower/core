@@ -137,7 +137,7 @@ class DomainConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         try:
             await self.install_task
-        except self.opp.components.oppio.HassioAPIError as err:
+        except self.opp.components.oppio. OppioAPIError as err:
             _LOGGER.error("Failed to install OpenZWave add-on: %s", err)
             return self.async_show_progress_done(next_step_id="install_failed")
 
@@ -170,7 +170,7 @@ class DomainConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             try:
                 await self.opp.components.oppio.async_start_addon("core_zwave")
-            except self.opp.components.oppio.HassioAPIError as err:
+            except self.opp.components.oppio. OppioAPIError as err:
                 _LOGGER.error("Failed to start OpenZWave add-on: %s", err)
                 errors["base"] = "addon_start_failed"
             else:
@@ -198,7 +198,7 @@ class DomainConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             addon_info = await self.opp.components.oppio.async_get_addon_info(
                 "core_zwave"
             )
-        except self.opp.components.oppio.HassioAPIError as err:
+        except self.opp.components.oppio. OppioAPIError as err:
             _LOGGER.error("Failed to get OpenZWave add-on info: %s", err)
             raise AbortFlow("addon_info_failed") from err
 
@@ -226,7 +226,7 @@ class DomainConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             await self.opp.components.oppio.async_set_addon_options(
                 "core_zwave", options
             )
-        except self.opp.components.oppio.HassioAPIError as err:
+        except self.opp.components.oppio. OppioAPIError as err:
             _LOGGER.error("Failed to set OpenZWave add-on config: %s", err)
             raise AbortFlow("addon_set_config_failed") from err
 

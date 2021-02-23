@@ -74,7 +74,7 @@ def test_get_or_create_updates_data(registry):
         capabilities={"max": 100},
         supported_features=5,
         device_class="mock-device-class",
-        disabled_by=entity_registry.DISABLED_HASS,
+        disabled_by=entity_registry.DISABLED_OPP,
         unit_of_measurement="initial-unit_of_measurement",
         original_name="initial-original_name",
         original_icon="initial-original_icon",
@@ -85,7 +85,7 @@ def test_get_or_create_updates_data(registry):
     assert orig_entry.capabilities == {"max": 100}
     assert orig_entry.supported_features == 5
     assert orig_entry.device_class == "mock-device-class"
-    assert orig_entry.disabled_by == entity_registry.DISABLED_HASS
+    assert orig_entry.disabled_by == entity_registry.DISABLED_OPP
     assert orig_entry.unit_of_measurement == "initial-unit_of_measurement"
     assert orig_entry.original_name == "initial-original_name"
     assert orig_entry.original_icon == "initial-original_icon"
@@ -116,7 +116,7 @@ def test_get_or_create_updates_data(registry):
     assert new_entry.original_name == "updated-original_name"
     assert new_entry.original_icon == "updated-original_icon"
     # Should not be updated
-    assert new_entry.disabled_by == entity_registry.DISABLED_HASS
+    assert new_entry.disabled_by == entity_registry.DISABLED_OPP
 
 
 def test_get_or_create_suggested_object_id_conflict_register(registry):
@@ -162,7 +162,7 @@ async def test_loading_saving_data.opp, registry):
         capabilities={"max": 100},
         supported_features=5,
         device_class="mock-device-class",
-        disabled_by=entity_registry.DISABLED_HASS,
+        disabled_by=entity_registry.DISABLED_OPP,
         original_name="Original Name",
         original_icon= opp:original-icon",
     )
@@ -187,7 +187,7 @@ async def test_loading_saving_data.opp, registry):
 
     assert new_entry2.device_id == "mock-dev-id"
     assert new_entry2.area_id == "mock-area-id"
-    assert new_entry2.disabled_by == entity_registry.DISABLED_HASS
+    assert new_entry2.disabled_by == entity_registry.DISABLED_OPP
     assert new_entry2.capabilities == {"max": 100}
     assert new_entry2.supported_features == 5
     assert new_entry2.device_class == "mock-device-class"
@@ -279,7 +279,7 @@ async def test_loading_extra_values.opp, opp_storage):
         "test", "super_platform", "disabled-user"
     )
     assert entry_disabled.opp.disabled
-    assert entry_disabled.opp.disabled_by == entity_registry.DISABLED_HASS
+    assert entry_disabled.opp.disabled_by == entity_registry.DISABLED_OPP
     assert entry_disabled_user.disabled
     assert entry_disabled_user.disabled_by == entity_registry.DISABLED_USER
 
@@ -545,7 +545,7 @@ async def test_restore_states.opp):
         "hue",
         "5678",
         suggested_object_id="disabled",
-        disabled_by=entity_registry.DISABLED_HASS,
+        disabled_by=entity_registry.DISABLED_OPP,
     )
     registry.async_get_or_create(
         "light",

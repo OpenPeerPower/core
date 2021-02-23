@@ -43,7 +43,7 @@ class FibaroBinarySensor(FibaroDevice, BinarySensorEntity):
         """Initialize the binary_sensor."""
         self._state = None
         super().__init__(fibaro_device)
-        self.entity_id = f"{DOMAIN}.{self.ha_id}"
+        self.entity_id = f"{DOMAIN}.{self.op_id}"
         stype = None
         devconf = fibaro_device.device_config
         if fibaro_device.type in SENSOR_TYPES:
