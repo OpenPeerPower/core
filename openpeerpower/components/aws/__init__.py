@@ -26,7 +26,7 @@ from .const import (
     CONF_SECRET_ACCESS_KEY,
     CONF_VALIDATE,
     DATA_CONFIG,
-    DATA_HASS_CONFIG,
+    DATA_OPP_CONFIG,
     DATA_SESSIONS,
     DOMAIN,
 )
@@ -83,7 +83,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(opp, config):
     """Set up AWS component."""
-    opp.data[DATA_HASS_CONFIG] = config
+    opp.data[DATA_OPP_CONFIG] = config
 
     conf = config.get(DOMAIN)
     if conf is None:
@@ -107,7 +107,7 @@ async def async_setup_entry.opp, entry):
 
     Validate and save sessions per aws credential.
     """
-    config = opp.data.get(DATA_HASS_CONFIG)
+    config = opp.data.get(DATA_OPP_CONFIG)
     conf = opp.data.get(DATA_CONFIG)
 
     if entry.source == config_entries.SOURCE_IMPORT:

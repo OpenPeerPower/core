@@ -21,7 +21,7 @@ USER_AGENT = "User-Agent"
 @callback
 @bind.opp
 def get_async_client(
-    opp. OpenPeerPowerType, verify_ssl: bool = True
+    opp: OpenPeerPowerType, verify_ssl: bool = True
 ) -> httpx.AsyncClient:
     """Return default httpx AsyncClient.
 
@@ -39,7 +39,7 @@ def get_async_client(
 
 @callback
 def create_async_httpx_client(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     verify_ssl: bool = True,
     auto_cleanup: bool = True,
     **kwargs: Any,
@@ -71,7 +71,7 @@ def create_async_httpx_client(
 
 @callback
 def _async_register_async_client_shutdown(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     client: httpx.AsyncClient,
     original_aclose: Callable[..., Any],
 ) -> None:

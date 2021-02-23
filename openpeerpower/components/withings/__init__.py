@@ -174,7 +174,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 
 async def async_webhook_handler(
-    opp. OpenPeerPower, webhook_id: str, request: Request
+    opp: OpenPeerPower, webhook_id: str, request: Request
 ) -> Optional[Response]:
     """Handle webhooks calls."""
     # Handle http head calls to the path.

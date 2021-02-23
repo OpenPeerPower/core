@@ -81,7 +81,7 @@ class UpCloudDataUpdateCoordinator(
 
     def __init__(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         *,
         cloud_manager: upcloud_api.CloudManager,
         update_interval: timedelta,
@@ -155,7 +155,7 @@ def _config_entry_update_signal_name(config_entry: ConfigEntry) -> str:
 
 
 async def _async_signal_options_update(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Signal config entry options update."""
     async_dispatcher_send(

@@ -67,7 +67,7 @@ async def test_config_entry_withings_api.opp: OpenPeerPower) -> None:
     ],
 )
 async def test_webhook_post(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     component_factory: ComponentFactory,
     aiohttp_client,
     user_id: int,
@@ -104,7 +104,7 @@ async def test_webhook_post(
 
 
 async def test_webhook_head(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     component_factory: ComponentFactory,
     aiohttp_client,
 ) -> None:
@@ -121,7 +121,7 @@ async def test_webhook_head(
 
 
 async def test_webhook_put(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     component_factory: ComponentFactory,
     aiohttp_client,
 ) -> None:
@@ -145,7 +145,7 @@ async def test_webhook_put(
 
 
 async def test_data_manager_webhook_subscription(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     component_factory: ComponentFactory,
     aioclient_mock: AiohttpClientMocker,
 ) -> None:

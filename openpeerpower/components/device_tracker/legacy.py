@@ -117,7 +117,7 @@ EVENT_NEW_DEVICE = "device_tracker_new_device"
 
 
 def see(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     mac: str = None,
     dev_id: str = None,
     host_name: str = None,
@@ -297,7 +297,7 @@ async def async_create_platform_type(
 
 @callback
 def async_setup_scanner_platform(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config: ConfigType,
     scanner: Any,
     async_see_device: Callable,
@@ -387,7 +387,7 @@ class DeviceTracker:
 
     def __init__(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         consider_home: timedelta,
         track_new: bool,
         defaults: dict,
@@ -604,7 +604,7 @@ class Device(RestoreEntity):
 
     def __init__(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         consider_home: timedelta,
         track: bool,
         dev_id: str,
@@ -784,7 +784,7 @@ class Device(RestoreEntity):
 class DeviceScanner:
     """Device scanner object."""
 
-    opp. OpenPeerPowerType = None
+    opp: OpenPeerPowerType = None
 
     def scan_devices(self) -> List[str]:
         """Scan for devices."""

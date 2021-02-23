@@ -40,7 +40,7 @@ def set_discovery_hash.opp, discovery_hash):
 
 
 async def async_start(
-    opp. OpenPeerPowerType, discovery_topic, config_entry, tasmota_mqtt, setup_device
+    opp: OpenPeerPowerType, discovery_topic, config_entry, tasmota_mqtt, setup_device
 ) -> bool:
     """Start Tasmota device discovery."""
 

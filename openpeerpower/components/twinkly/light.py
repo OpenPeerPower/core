@@ -30,7 +30,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Setups an entity from a config entry (UI config flow)."""
 
@@ -45,7 +45,7 @@ class TwinklyLight(LightEntity):
     def __init__(
         self,
         conf: ConfigEntry,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
     ):
         """Initialize a TwinklyLight entity."""
         self._id = conf.data[CONF_ENTRY_ID]

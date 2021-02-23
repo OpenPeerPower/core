@@ -32,7 +32,7 @@ async def test_show_user_form.opp: OpenPeerPower) -> None:
 
 
 async def test_connection_error(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we show user form on BSBLan connection error."""
     aioclient_mock.post(
@@ -58,7 +58,7 @@ async def test_connection_error(
 
 
 async def test_user_device_exists_abort(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if BSBLan device already configured."""
     await init_integration.opp, aioclient_mock)
@@ -79,7 +79,7 @@ async def test_user_device_exists_abort(
 
 
 async def test_full_user_flow_implementation(
-    opp. OpenPeerPower, aioclient_mock
+    opp: OpenPeerPower, aioclient_mock
 ) -> None:
     """Test the full manual user flow from start to finish."""
     aioclient_mock.post(
@@ -121,7 +121,7 @@ async def test_full_user_flow_implementation(
 
 
 async def test_full_user_flow_implementation_without_auth(
-    opp. OpenPeerPower, aioclient_mock
+    opp: OpenPeerPower, aioclient_mock
 ) -> None:
     """Test the full manual user flow from start to finish."""
     aioclient_mock.post(

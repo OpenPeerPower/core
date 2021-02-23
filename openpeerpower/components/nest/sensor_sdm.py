@@ -33,7 +33,7 @@ DEVICE_TYPE_MAP = {
 
 
 async def async_setup_sdm_entry(
-    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the sensors."""
 

@@ -65,7 +65,7 @@ ATW_ZONE_HVAC_MODE_REVERSE_LOOKUP = {v: k for k, v in ATW_ZONE_HVAC_MODE_LOOKUP.
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ):
     """Set up MelCloud device climate based on config_entry."""
     mel_devices = opp.data[DOMAIN][entry.entry_id]

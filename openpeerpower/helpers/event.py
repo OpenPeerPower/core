@@ -126,7 +126,7 @@ def threaded_listener_factory(
         """Call async event helper safely."""
        opp = args[0]
 
-        if not isinstance.opp, OpenPeerPower):
+        if not isinstance.opp: OpenPeerPower):
             raise TypeError("First parameter needs to be a.opp instance")
 
         async_remove = run_callback_threadsafe(
@@ -145,7 +145,7 @@ def threaded_listener_factory(
 @callback
 @bind.opp
 def async_track_state_change(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
     action: Callable[[str, State, State], None],
     from_state: Union[None, str, Iterable[str]] = None,
@@ -239,7 +239,7 @@ track_state_change = threaded_listener_factory(async_track_state_change)
 
 @bind.opp
 def async_track_state_change_event(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
     action: Callable[[Event], Any],
 ) -> Callable[[], None]:
@@ -315,7 +315,7 @@ def _remove_empty_listener() -> None:
 
 @callback
 def _async_remove_indexed_listeners(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     data_key: str,
     listener_key: str,
     storage_keys: Iterable[str],
@@ -336,7 +336,7 @@ def _async_remove_indexed_listeners(
 
 @bind.opp
 def async_track_entity_registry_updated_event(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
     action: Callable[[Event], Any],
 ) -> Callable[[], None]:
@@ -402,7 +402,7 @@ def async_track_entity_registry_updated_event(
 
 @callback
 def _async_dispatch_domain_event(
-    opp. OpenPeerPower, event: Event, callbacks: Dict[str, List]
+    opp: OpenPeerPower, event: Event, callbacks: Dict[str, List]
 ) -> None:
     domain = split_entity_id(event.data["entity_id"])[0]
 
@@ -422,7 +422,7 @@ def _async_dispatch_domain_event(
 
 @bind.opp
 def async_track_state_added_domain(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     domains: Union[str, Iterable[str]],
     action: Callable[[Event], Any],
 ) -> Callable[[], None]:
@@ -475,7 +475,7 @@ def async_track_state_added_domain(
 
 @bind.opp
 def async_track_state_removed_domain(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     domains: Union[str, Iterable[str]],
     action: Callable[[Event], Any],
 ) -> Callable[[], None]:
@@ -539,7 +539,7 @@ class _TrackStateChangeFiltered:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         track_states: TrackStates,
         action: Callable[[Event], Any],
     ):
@@ -660,7 +660,7 @@ class _TrackStateChangeFiltered:
 @callback
 @bind.opp
 def async_track_state_change_filtered(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     track_states: TrackStates,
     action: Callable[[Event], Any],
 ) -> _TrackStateChangeFiltered:
@@ -689,7 +689,7 @@ def async_track_state_change_filtered(
 @callback
 @bind.opp
 def async_track_template(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     template: Template,
     action: Callable[[str, Optional[State], Optional[State]], None],
     variables: Optional[TemplateVarsType] = None,
@@ -780,7 +780,7 @@ class _TrackTemplateResultInfo:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         track_templates: Iterable[TrackTemplate],
         action: Callable,
     ):
@@ -1027,7 +1027,7 @@ TrackTemplateResultListener = Callable[
 @callback
 @bind.opp
 def async_track_template_result(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     track_templates: Iterable[TrackTemplate],
     action: TrackTemplateResultListener,
     raise_on_template_error: bool = False,
@@ -1073,7 +1073,7 @@ def async_track_template_result(
 @callback
 @bind.opp
 def async_track_same_state(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     period: timedelta,
     action: Callable[..., None],
     async_check_same_func: Callable[[str, Optional[State], Optional[State]], bool],
@@ -1143,7 +1143,7 @@ track_same_state = threaded_listener_factory(async_track_same_state)
 @callback
 @bind.opp
 def async_track_point_in_time(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     action: Union[OppJob, Callable[..., None]],
     point_in_time: datetime,
 ) -> CALLBACK_TYPE:
@@ -1164,7 +1164,7 @@ track_point_in_time = threaded_listener_factory(async_track_point_in_time)
 @callback
 @bind.opp
 def async_track_point_in_utc_time(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     action: Union[OppJob, Callable[..., None]],
     point_in_time: datetime,
 ) -> CALLBACK_TYPE:
@@ -1217,7 +1217,7 @@ track_point_in_utc_time = threaded_listener_factory(async_track_point_in_utc_tim
 @callback
 @bind.opp
 def async_call_later(
-    opp. OpenPeerPower, delay: float, action: Union[OppJob, Callable[..., None]]
+    opp: OpenPeerPower, delay: float, action: Union[OppJob, Callable[..., None]]
 ) -> CALLBACK_TYPE:
     """Add a listener that is called in <delay>."""
     return async_track_point_in_utc_time(
@@ -1231,7 +1231,7 @@ call_later = threaded_listener_factory(async_call_later)
 @callback
 @bind.opp
 def async_track_time_interval(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     action: Callable[..., Union[None, Awaitable]],
     interval: timedelta,
 ) -> CALLBACK_TYPE:
@@ -1273,7 +1273,7 @@ track_time_interval = threaded_listener_factory(async_track_time_interval)
 class SunListener:
     """Helper class to help listen to sun events."""
 
-    opp. OpenPeerPower = attr.ib()
+    opp: OpenPeerPower = attr.ib()
     job: OppJob = attr.ib()
     event: str = attr.ib()
     offset: Optional[timedelta] = attr.ib()
@@ -1332,7 +1332,7 @@ class SunListener:
 @callback
 @bind.opp
 def async_track_sunrise(
-    opp. OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
+    opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunrise daily."""
     listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNRISE, offset)
@@ -1346,7 +1346,7 @@ track_sunrise = threaded_listener_factory(async_track_sunrise)
 @callback
 @bind.opp
 def async_track_sunset(
-    opp. OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
+    opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunset daily."""
     listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNSET, offset)
@@ -1363,7 +1363,7 @@ time_tracker_utcnow = dt_util.utcnow
 @callback
 @bind.opp
 def async_track_utc_time_change(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     action: Callable[..., None],
     hour: Optional[Any] = None,
     minute: Optional[Any] = None,
@@ -1429,7 +1429,7 @@ track_utc_time_change = threaded_listener_factory(async_track_utc_time_change)
 @callback
 @bind.opp
 def async_track_time_change(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     action: Callable[..., None],
     hour: Optional[Any] = None,
     minute: Optional[Any] = None,

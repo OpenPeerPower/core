@@ -138,7 +138,7 @@ STATIC_VALIDATION_ACTION_TYPES = (
 
 
 async def async_validate_actions_config(
-    opp. OpenPeerPower, actions: List[ConfigType]
+    opp: OpenPeerPower, actions: List[ConfigType]
 ) -> List[ConfigType]:
     """Validate a list of actions."""
     return await asyncio.gather(
@@ -147,7 +147,7 @@ async def async_validate_actions_config(
 
 
 async def async_validate_action_config(
-    opp. OpenPeerPower, config: ConfigType
+    opp: OpenPeerPower, config: ConfigType
 ) -> ConfigType:
     """Validate config."""
     action_type = cv.determine_script_action(config)
@@ -204,7 +204,7 @@ class _ScriptRun:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         script: "Script",
         variables: Dict[str, Any],
         context: Optional[Context],
@@ -789,7 +789,7 @@ class Script:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         sequence: Sequence[Dict[str, Any]],
         name: str,
         domain: str,

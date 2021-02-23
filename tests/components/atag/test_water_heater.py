@@ -14,7 +14,7 @@ WATER_HEATER_ID = f"{WATER_HEATER}.{DOMAIN}"
 
 
 async def test_water_heater(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation of Atag water heater."""
     with patch("pyatag.entities.DHW.status"):
@@ -27,7 +27,7 @@ async def test_water_heater(
 
 
 async def test_setting_target_temperature(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setting the water heater device."""
     await init_integration.opp, aioclient_mock)

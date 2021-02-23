@@ -119,7 +119,7 @@ class ArwnSensor(Entity):
 
     def __init__(self, topic, name, state_key, units, icon=None):
         """Initialize the sensor."""
-        self opp =None
+        self opp = None
         self.entity_id = _slug(name)
         self._name = name
         # This mqtt topic for the sensor which is its uid

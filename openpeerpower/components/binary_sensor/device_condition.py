@@ -204,7 +204,7 @@ CONDITION_SCHEMA = cv.DEVICE_CONDITION_BASE_SCHEMA.extend(
 
 
 async def async_get_conditions(
-    opp. OpenPeerPower, device_id: str
+    opp: OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions."""
     conditions: List[Dict[str, str]] = []

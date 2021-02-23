@@ -94,7 +94,7 @@ async def async_reset_platform.opp: OpenPeerPowerType, integration_name: str) ->
 
 
 def _async_integration_has_notify_services(
-    opp. OpenPeerPowerType, integration_name: str
+    opp: OpenPeerPowerType, integration_name: str
 ) -> bool:
     """Determine if an integration has notify services registered."""
     if (
@@ -150,7 +150,7 @@ class BaseNotificationService:
 
     async def async_setup(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         service_name: str,
         target_service_name_prefix: str,
     ) -> None:

@@ -142,7 +142,7 @@ PLATFORM_SCHEMA = vol.All(
 
 
 async def async_setup_platform(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config: Dict[str, Union[str, bool]],
     async_add_entities: Callable,
     discovery_info: Optional[DiscoveryInfoType] = None,

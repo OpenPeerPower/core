@@ -125,7 +125,7 @@ class SetupFlow(data_entry_flow.FlowHandler):
 
 
 async def auth_mfa_module_from_config(
-    opp. OpenPeerPower, config: Dict[str, Any]
+    opp: OpenPeerPower, config: Dict[str, Any]
 ) -> MultiFactorAuthModule:
     """Initialize an auth module from a config."""
     module_name = config[CONF_TYPE]

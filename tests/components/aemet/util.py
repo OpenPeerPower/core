@@ -69,7 +69,7 @@ def aemet_requests_mock(mock):
 
 
 async def async_init_integration(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     skip_setup: bool = False,
 ):
     """Set up the AEMET OpenData integration in Open Peer Power."""

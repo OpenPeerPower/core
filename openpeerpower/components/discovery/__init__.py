@@ -30,7 +30,7 @@ SERVICE_DAIKIN = "daikin"
 SERVICE_DLNA_DMR = "dlna_dmr"
 SERVICE_ENIGMA2 = "enigma2"
 SERVICE_FREEBOX = "freebox"
-SERVICE_HASS_IOS_APP = opp_ios"
+SERVICE_OPP_IOS_APP = opp_ios"
 SERVICE_HASSIO = oppio"
 SERVICE_HEOS = "heos"
 SERVICE_KONNECTED = "konnected"
@@ -53,7 +53,7 @@ CONFIG_ENTRY_HANDLERS = {
 
 SERVICE_HANDLERS = {
     SERVICE_MOBILE_APP: ("mobile_app", None),
-    SERVICE_HASS_IOS_APP: ("ios", None),
+    SERVICE_OPP_IOS_APP: ("ios", None),
     SERVICE_NETGEAR: ("device_tracker", None),
     SERVICE_HASSIO: (.oppio", None),
     SERVICE_APPLE_TV: ("apple_tv", None),
@@ -203,7 +203,7 @@ async def async_setup(opp, config):
             logger.error("Network is unreachable")
 
         async_track_point_in_utc_time(
-            opp. scan_devices, dt_util.utcnow() + SCAN_INTERVAL
+            opp, scan_devices, dt_util.utcnow() + SCAN_INTERVAL
         )
 
     @callback

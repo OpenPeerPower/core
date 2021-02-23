@@ -40,7 +40,7 @@ OPERATION_LIST = [HVAC_MODE_OFF, HVAC_MODE_AUTO, HVAC_MODE_COOL, HVAC_MODE_HEAT]
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
 ):
     """Set up this platform for a specific ConfigEntry(==Gateway)."""
 

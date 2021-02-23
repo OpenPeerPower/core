@@ -112,7 +112,7 @@ async def try_connect.opp: OpenPeerPowerType, user_input: Dict[str, str]) -> boo
 
 
 def get_mysensors_gateway(
-    opp. OpenPeerPowerType, gateway_id: GatewayId
+    opp: OpenPeerPowerType, gateway_id: GatewayId
 ) -> Optional[BaseAsyncGateway]:
     """Return the Gateway for a given GatewayId."""
     if MYSENSORS_GATEWAYS not in.opp.data[DOMAIN]:
@@ -122,7 +122,7 @@ def get_mysensors_gateway(
 
 
 async def setup_gateway(
-    opp. OpenPeerPowerType, entry: ConfigEntry
+    opp: OpenPeerPowerType, entry: ConfigEntry
 ) -> Optional[BaseAsyncGateway]:
     """Set up the Gateway for the given ConfigEntry."""
 
@@ -144,7 +144,7 @@ async def setup_gateway(
 
 
 async def _get_gateway(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     device: str,
     version: str,
     event_callback: Callable[[Message], None],
@@ -231,7 +231,7 @@ async def _get_gateway(
 
 
 async def finish_setup(
-    opp. OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Load any persistent devices and platforms and start gateway."""
     discover_tasks = []
@@ -246,7 +246,7 @@ async def finish_setup(
 
 
 async def _discover_persistent_devices(
-    opp. OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Discover platforms for devices loaded via persistence file."""
     tasks = []
@@ -277,7 +277,7 @@ async def gw_stop.opp, entry: ConfigEntry, gateway: BaseAsyncGateway):
 
 
 async def _gw_start(
-    opp. OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Start the gateway."""
     # Don't use.opp.async_create_task to avoid holding up setup indefinitely.
@@ -312,7 +312,7 @@ async def _gw_start(
 
 
 def _gw_callback_factory(
-    opp. OpenPeerPowerType, gateway_id: GatewayId
+    opp: OpenPeerPowerType, gateway_id: GatewayId
 ) -> Callable[[Message], None]:
     """Return a new callback for the gateway."""
 

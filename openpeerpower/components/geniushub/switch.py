@@ -26,7 +26,7 @@ SET_SWITCH_OVERRIDE_SCHEMA = vol.Schema(
 
 
 async def async_setup_platform(
-    opp. OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ) -> None:
     """Set up the Genius Hub switch entities."""
     if discovery_info is None:

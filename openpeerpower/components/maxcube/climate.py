@@ -54,7 +54,7 @@ HASS_PRESET_TO_MAX_MODE = {
     PRESET_ON: MAX_DEVICE_MODE_MANUAL,
 }
 
-MAX_MODE_TO_HASS_PRESET = {
+MAX_MODE_TO_OPP_PRESET = {
     MAX_DEVICE_MODE_AUTOMATIC: PRESET_NONE,
     MAX_DEVICE_MODE_BOOST: PRESET_BOOST,
     MAX_DEVICE_MODE_MANUAL: PRESET_NONE,
@@ -243,7 +243,7 @@ class MaxCubeClimate(ClimateEntity):
                 return PRESET_ON
             return PRESET_NONE
 
-        return MAX_MODE_TO_HASS_PRESET[device.mode]
+        return MAX_MODE_TO_OPP_PRESET[device.mode]
 
     @property
     def preset_modes(self):

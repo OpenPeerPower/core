@@ -21,7 +21,7 @@ SPEED_RANGE = (1, 255)  # off is not included
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[list], None],
 ) -> bool:

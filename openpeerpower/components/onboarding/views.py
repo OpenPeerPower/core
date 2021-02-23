@@ -5,7 +5,7 @@ import voluptuous as vol
 
 from openpeerpower.auth.const import GROUP_ID_ADMIN
 from openpeerpower.components.auth import indieauth
-from openpeerpower.components.http.const import KEY_HASS_REFRESH_TOKEN_ID
+from openpeerpower.components.http.const import KEY_OPP_REFRESH_TOKEN_ID
 from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.const import HTTP_BAD_REQUEST, HTTP_FORBIDDEN
@@ -186,7 +186,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
     async def post(self, request, data):
         """Handle token creation."""
        opp = request.app[.opp"]
-        refresh_token_id = request[KEY_HASS_REFRESH_TOKEN_ID]
+        refresh_token_id = request[KEY_OPP_REFRESH_TOKEN_ID]
 
         async with self._lock:
             if self._async_is_done():

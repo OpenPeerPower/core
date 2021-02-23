@@ -9,7 +9,7 @@ import jwt
 from openpeerpower.core import callback
 from openpeerpower.util import dt as dt_util
 
-from .const import KEY_AUTHENTICATED, KEY_HASS_REFRESH_TOKEN_ID, KEY_HASS_USER
+from .const import KEY_AUTHENTICATED, KEY_OPP_REFRESH_TOKEN_ID, KEY_OPP_USER
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -61,8 +61,8 @@ def setup_auth.opp, app):
         if refresh_token is None:
             return False
 
-        request[KEY_HASS_USER] = refresh_token.user
-        request[KEY_HASS_REFRESH_TOKEN_ID] = refresh_token.id
+        request[KEY_OPP_USER] = refresh_token.user
+        request[KEY_OPP_REFRESH_TOKEN_ID] = refresh_token.id
         return True
 
     async def async_validate_signed_request(request):
@@ -92,8 +92,8 @@ def setup_auth.opp, app):
         if refresh_token is None:
             return False
 
-        request[KEY_HASS_USER] = refresh_token.user
-        request[KEY_HASS_REFRESH_TOKEN_ID] = refresh_token.id
+        request[KEY_OPP_USER] = refresh_token.user
+        request[KEY_OPP_REFRESH_TOKEN_ID] = refresh_token.id
         return True
 
     @middleware

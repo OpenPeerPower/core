@@ -76,13 +76,13 @@ TARGET_HEATER_COOLER_STATE_HOMEKIT_TO_HASS = {
 }
 
 # Map of.opp operation modes to homekit modes
-MODE_HASS_TO_HOMEKIT = {v: k for k, v in MODE_HOMEKIT_TO_HASS.items()}
+MODE_OPP_TO_HOMEKIT = {v: k for k, v in MODE_HOMEKIT_TO_HASS.items()}
 
-TARGET_HEATER_COOLER_STATE_HASS_TO_HOMEKIT = {
+TARGET_HEATER_COOLER_STATE_OPP_TO_HOMEKIT = {
     v: k for k, v in TARGET_HEATER_COOLER_STATE_HOMEKIT_TO_HASS.items()
 }
 
-SWING_MODE_HASS_TO_HOMEKIT = {v: k for k, v in SWING_MODE_HOMEKIT_TO_HASS.items()}
+SWING_MODE_OPP_TO_HOMEKIT = {v: k for k, v in SWING_MODE_HOMEKIT_TO_HASS.items()}
 
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
@@ -154,7 +154,7 @@ class HomeKitHeaterCoolerEntity(HomeKitEntity, ClimateEntity):
             )
         await self.async_put_characteristics(
             {
-                CharacteristicsTypes.TARGET_HEATER_COOLER_STATE: TARGET_HEATER_COOLER_STATE_HASS_TO_HOMEKIT[
+                CharacteristicsTypes.TARGET_HEATER_COOLER_STATE: TARGET_HEATER_COOLER_STATE_OPP_TO_HOMEKIT[
                     hvac_mode
                 ],
             }
@@ -299,7 +299,7 @@ class HomeKitHeaterCoolerEntity(HomeKitEntity, ClimateEntity):
     async def async_set_swing_mode(self, swing_mode: str) -> None:
         """Set new target swing operation."""
         await self.async_put_characteristics(
-            {CharacteristicsTypes.SWING_MODE: SWING_MODE_HASS_TO_HOMEKIT[swing_mode]}
+            {CharacteristicsTypes.SWING_MODE: SWING_MODE_OPP_TO_HOMEKIT[swing_mode]}
         )
 
     @property
@@ -373,7 +373,7 @@ class HomeKitClimateEntity(HomeKitEntity, ClimateEntity):
         """Set new target operation mode."""
         await self.async_put_characteristics(
             {
-                CharacteristicsTypes.HEATING_COOLING_TARGET: MODE_HASS_TO_HOMEKIT[
+                CharacteristicsTypes.HEATING_COOLING_TARGET: MODE_OPP_TO_HOMEKIT[
                     hvac_mode
                 ],
             }

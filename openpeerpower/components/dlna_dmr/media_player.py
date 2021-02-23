@@ -112,7 +112,7 @@ def catch_request_errors():
 
 
 async def async_start_event_handler(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     server_host: str,
     server_port: int,
     requester,
@@ -147,7 +147,7 @@ async def async_start_event_handler(
 
 
 async def async_setup_platform(
-    opp. OpenPeerPowerType, config, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config, async_add_entities, discovery_info=None
 ):
     """Set up DLNA DMR platform."""
     if config.get(CONF_URL) is not None:

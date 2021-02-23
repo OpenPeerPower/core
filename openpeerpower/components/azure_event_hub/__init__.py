@@ -94,7 +94,7 @@ class AzureEventHub:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         client_args: Dict[str, Any],
         conn_str_client: bool,
         entities_filter: vol.Schema,

@@ -14,7 +14,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_entry_not_ready(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the Roku configuration entry not ready."""
     entry = await setup_integration.opp, aioclient_mock, error=True)
@@ -23,7 +23,7 @@ async def test_config_entry_not_ready(
 
 
 async def test_unload_config_entry(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the Roku configuration entry unloading."""
     with patch(

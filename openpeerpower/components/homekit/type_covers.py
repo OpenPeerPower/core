@@ -58,7 +58,7 @@ from .const import (
     SERV_WINDOW_COVERING,
 )
 
-DOOR_CURRENT_HASS_TO_HK = {
+DOOR_CURRENT_OPP_TO_HK = {
     STATE_OPEN: HK_DOOR_OPEN,
     STATE_CLOSED: HK_DOOR_CLOSED,
     STATE_OPENING: HK_DOOR_OPENING,
@@ -71,7 +71,7 @@ DOOR_CURRENT_HASS_TO_HK = {
 #  1: Closed
 # Opening is mapped to 0 since the target is Open
 # Closing is mapped to 1 since the target is Closed
-DOOR_TARGET_HASS_TO_HK = {
+DOOR_TARGET_OPP_TO_HK = {
     STATE_OPEN: HK_DOOR_OPEN,
     STATE_CLOSED: HK_DOOR_CLOSED,
     STATE_OPENING: HK_DOOR_OPEN,
@@ -168,8 +168,8 @@ class GarageDoorOpener(HomeAccessory):
     def async_update_state(self, new_state):
         """Update cover state after state changed."""
         opp.state = new_state.state
-        target_door_state = DOOR_TARGET_HASS_TO_HK.get.opp_state)
-        current_door_state = DOOR_CURRENT_HASS_TO_HK.get.opp_state)
+        target_door_state = DOOR_TARGET_OPP_TO_HK.get.opp_state)
+        current_door_state = DOOR_CURRENT_OPP_TO_HK.get.opp_state)
 
         if ATTR_OBSTRUCTION_DETECTED in new_state.attributes:
             obstruction_detected = (

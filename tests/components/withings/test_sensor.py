@@ -301,7 +301,7 @@ def async_assert_state_equals(
 
 
 async def test_sensor_default_enabled_entities(
-    opp. OpenPeerPower, component_factory: ComponentFactory
+    opp: OpenPeerPower, component_factory: ComponentFactory
 ) -> None:
     """Test entities enabled by default."""
     entity_registry: EntityRegistry = (
@@ -344,7 +344,7 @@ async def test_sensor_default_enabled_entities(
 
 
 async def test_all_entities(
-    opp. OpenPeerPower, component_factory: ComponentFactory
+    opp: OpenPeerPower, component_factory: ComponentFactory
 ) -> None:
     """Test all entities."""
     entity_registry: EntityRegistry = (

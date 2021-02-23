@@ -29,7 +29,7 @@ class OmniLogicUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         api: str,
         name: str,
         polling_interval: int,

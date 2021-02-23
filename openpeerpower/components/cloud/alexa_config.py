@@ -34,7 +34,7 @@ class AlexaConfig(alexa_config.AbstractConfig):
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         config: dict,
         cloud_user: str,
         prefs: CloudPreferences,

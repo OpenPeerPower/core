@@ -30,7 +30,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_sensors(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the WLED sensors."""
 
@@ -181,7 +181,7 @@ async def test_sensors(
     ),
 )
 async def test_disabled_by_default_sensors(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker, entity_id: str
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, entity_id: str
 ) -> None:
     """Test the disabled by default WLED sensors."""
     await init_integration.opp, aioclient_mock)

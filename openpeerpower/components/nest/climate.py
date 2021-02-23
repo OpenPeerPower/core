@@ -9,7 +9,7 @@ from .legacy.climate import async_setup_legacy_entry
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the climate platform."""
     if DATA_SDM not in entry.data:

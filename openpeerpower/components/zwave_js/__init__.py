@@ -59,7 +59,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 
 @callback
 def register_node_in_dev_reg(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     dev_reg: device_registry.DeviceRegistry,
     client: ZwaveClient,
@@ -257,7 +257,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 
 async def client_listen(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     client: ZwaveClient,
     driver_ready: asyncio.Event,
@@ -280,7 +280,7 @@ async def client_listen(
 
 
 async def disconnect_client(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     client: ZwaveClient,
     listen_task: asyncio.Task,

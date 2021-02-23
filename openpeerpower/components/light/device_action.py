@@ -43,7 +43,7 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 
 
 async def async_call_action_from_config(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     variables: TemplateVarsType,
     context: Context,

@@ -164,7 +164,7 @@ async def async_get_trigger_capabilities.opp: OpenPeerPower, config: dict) -> di
 
 
 async def async_attach_trigger(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

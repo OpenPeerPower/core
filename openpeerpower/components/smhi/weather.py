@@ -66,7 +66,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=31)
 
 
 async def async_setup_entry(
-    opp. OpenPeerPower, config_entry: ConfigEntry, config_entries
+    opp: OpenPeerPower, config_entry: ConfigEntry, config_entries
 ) -> bool:
     """Add a weather entity from map location."""
     location = config_entry.data

@@ -138,7 +138,7 @@ async def test_call_service_child_not_found.opp, websocket_client):
 
 
 async def test_call_service_schema_validation_error(
-    opp. OpenPeerPowerType, websocket_client
+    opp: OpenPeerPowerType, websocket_client
 ):
     """Test call service command with invalid service data."""
 

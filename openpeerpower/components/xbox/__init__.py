@@ -166,7 +166,7 @@ class XboxUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         client: XboxLiveClient,
         consoles: SmartglassConsoleList,
     ) -> None:

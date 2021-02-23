@@ -52,7 +52,7 @@ STATE_AIR_QUALITY_VERY_ABNORMAL = "very_abnormal"
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

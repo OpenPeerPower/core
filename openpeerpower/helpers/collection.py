@@ -301,7 +301,7 @@ class IDLessCollection(ObservableCollection):
 
 @callback
 def sync_entity_lifecycle(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     domain: str,
     platform: str,
     entity_component: EntityComponent,
@@ -363,7 +363,7 @@ class StorageCollectionWebsocket:
     @callback
     def async_setup(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         *,
         create_list: bool = True,
         create_create: bool = True,

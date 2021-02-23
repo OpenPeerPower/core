@@ -71,7 +71,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

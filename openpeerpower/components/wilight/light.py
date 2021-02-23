@@ -43,7 +43,7 @@ def entities_from_discovered_wilight.opp, api_device):
 
 
 async def async_setup_entry(
-    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up WiLight lights from a config entry."""
     parent = opp.data[DOMAIN][entry.entry_id]

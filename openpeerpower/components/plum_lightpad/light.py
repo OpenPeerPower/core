@@ -21,7 +21,7 @@ from .const import DOMAIN
 
 
 async def async_setup_entry(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity]], None],
 ) -> None:

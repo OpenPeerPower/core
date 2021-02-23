@@ -225,7 +225,7 @@ from openpeerpower.setup import async_setup_component
     ],
 )
 async def test_import(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config: ConfigType,
     expected_calls: int,
     expected_to_succeed: bool,

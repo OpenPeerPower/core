@@ -85,7 +85,7 @@ class ComponentFactory:
 
     async def configure_component(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         controller_config: ControllerConfig = None,
         controller_configs: Tuple[ControllerConfig] = (),
     ) -> ComponentData:

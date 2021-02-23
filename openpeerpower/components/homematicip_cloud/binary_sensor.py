@@ -78,7 +78,7 @@ SAM_DEVICE_ATTRIBUTES = {
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP Cloud binary sensor from a config entry."""
     hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]

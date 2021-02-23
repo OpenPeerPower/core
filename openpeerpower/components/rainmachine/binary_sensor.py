@@ -73,7 +73,7 @@ BINARY_SENSORS = {
 
 
 async def async_setup_entry(
-    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
 ) -> None:
     """Set up RainMachine binary sensors based on a config entry."""
     controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]

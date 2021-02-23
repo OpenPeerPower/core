@@ -96,7 +96,7 @@ class IPPDataUpdateCoordinator(DataUpdateCoordinator[IPPPrinter]):
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         *,
         host: str,
         port: int,

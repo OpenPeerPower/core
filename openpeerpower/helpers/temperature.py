@@ -8,7 +8,7 @@ from openpeerpower.util.temperature import convert as convert_temperature
 
 
 def display_temp(
-    opp. OpenPeerPower, temperature: Optional[float], unit: str, precision: float
+    opp: OpenPeerPower, temperature: Optional[float], unit: str, precision: float
 ) -> Optional[float]:
     """Convert temperature into preferred units/precision for display."""
     temperature_unit = unit

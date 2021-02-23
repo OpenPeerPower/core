@@ -28,7 +28,7 @@ from tests.common import MockConfigEntry
 
 
 async def get_form(
-    opp. OpenPeerPowerType, gatway_type: ConfGatewayType, expected_step_id: str
+    opp: OpenPeerPowerType, gatway_type: ConfGatewayType, expected_step_id: str
 ):
     """Get a form for the given gateway type."""
     await setup.async_setup_component.opp, "persistent_notification", {})
@@ -343,7 +343,7 @@ async def test_fail_to_connect.opp: OpenPeerPowerType):
     ],
 )
 async def test_config_invalid(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     gateway_type: ConfGatewayType,
     expected_step_id: str,
     user_input: Dict[str, any],
@@ -708,7 +708,7 @@ async def test_import.opp: OpenPeerPowerType, user_input: Dict):
     ],
 )
 async def test_duplicate(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     first_input: Dict,
     second_input: Dict,
     expected_result: Optional[Tuple[str, str]],

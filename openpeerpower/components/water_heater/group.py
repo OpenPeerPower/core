@@ -18,7 +18,7 @@ from . import (
 
 @callback
 def async_describe_on_off_states(
-    opp. OpenPeerPowerType, registry: GroupIntegrationRegistry
+    opp: OpenPeerPowerType, registry: GroupIntegrationRegistry
 ) -> None:
     """Describe group on off states."""
     registry.on_off_states(

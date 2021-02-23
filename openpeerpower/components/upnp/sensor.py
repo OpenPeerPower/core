@@ -71,7 +71,7 @@ SENSOR_TYPES = {
 
 
 async def async_setup_platform(
-    opp. OpenPeerPowerType, config, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config, async_add_entities, discovery_info=None
 ) -> None:
     """Old way of setting up UPnP/IGD sensors."""
     _LOGGER.debug(

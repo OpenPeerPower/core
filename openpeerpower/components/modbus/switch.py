@@ -80,7 +80,7 @@ PLATFORM_SCHEMA = vol.All(
 
 
 async def async_setup_platform(
-    opp. OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Read configuration and create Modbus switches."""
     switches = []

@@ -79,7 +79,7 @@ SUPPORTED_PLATFORMS = (
 )
 
 WEBSOCKET_EVENTS_REQUIRING_SERIAL = [EVENT_LOCK_LOCKED, EVENT_LOCK_UNLOCKED]
-WEBSOCKET_EVENTS_TO_TRIGGER_HASS_EVENT = [
+WEBSOCKET_EVENTS_TO_TRIGGER_OPP_EVENT = [
     EVENT_CAMERA_MOTION_DETECTED,
     EVENT_DOORBELL_DETECTED,
     EVENT_ENTRY_DELAY,
@@ -370,7 +370,7 @@ class SimpliSafeWebsocket:
             self.opp, TOPIC_UPDATE_WEBSOCKET.format(event.system_id), event
         )
 
-        if event.event_type not in WEBSOCKET_EVENTS_TO_TRIGGER_HASS_EVENT:
+        if event.event_type not in WEBSOCKET_EVENTS_TO_TRIGGER_OPP_EVENT:
             return
 
         if event.sensor_type:

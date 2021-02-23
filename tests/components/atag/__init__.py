@@ -52,7 +52,7 @@ RECEIVE_REPLY = {
 
 
 async def init_integration(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     aioclient_mock: AiohttpClientMocker,
     rgbw: bool = False,
     skip_setup: bool = False,

@@ -102,7 +102,7 @@ async def async_create_person.opp, name, *, user_id=None, device_trackers=None):
 
 @bind.opp
 async def async_add_user_device_tracker(
-    opp. OpenPeerPower, user_id: str, device_tracker_entity_id: str
+    opp: OpenPeerPower, user_id: str, device_tracker_entity_id: str
 ):
     """Add a device tracker to a person linked to a user."""
     coll = cast(PersonStorageCollection, opp.data[DOMAIN][1])
@@ -513,7 +513,7 @@ class Person(RestoreEntity):
 
 @websocket_api.websocket_command({vol.Required(CONF_TYPE): "person/list"})
 def ws_list_person(
-    opp. OpenPeerPowerType, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPowerType, connection: websocket_api.ActiveConnection, msg
 ):
     """List persons."""
     yaml, storage = opp.data[DOMAIN]

@@ -75,7 +75,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
 
 async def async_unload_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload a config entry."""
     unload_ok = all(

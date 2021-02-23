@@ -75,7 +75,7 @@ class IcloudAccount:
 
     def __init__(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         username: str,
         password: str,
         icloud_dir: Store,

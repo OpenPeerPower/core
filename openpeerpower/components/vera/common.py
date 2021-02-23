@@ -33,14 +33,14 @@ def get_configured_platforms(controller_data: ControllerData) -> Set[str]:
 
 
 def get_controller_data(
-    opp. OpenPeerPower, config_entry: ConfigEntry
+    opp: OpenPeerPower, config_entry: ConfigEntry
 ) -> ControllerData:
     """Get controller data from.opp data."""
     return.opp.data[DOMAIN][config_entry.entry_id]
 
 
 def set_controller_data(
-    opp. OpenPeerPower, config_entry: ConfigEntry, data: ControllerData
+    opp: OpenPeerPower, config_entry: ConfigEntry, data: ControllerData
 ) -> None:
     """Set controller data in.opp data."""
     opp.data[DOMAIN][config_entry.entry_id] = data

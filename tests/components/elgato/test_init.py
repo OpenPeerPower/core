@@ -10,7 +10,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_entry_not_ready(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the Elgato Key Light configuration entry not ready."""
     aioclient_mock.get(
@@ -22,7 +22,7 @@ async def test_config_entry_not_ready(
 
 
 async def test_unload_config_entry(
-    opp. OpenPeerPower, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the Elgato Key Light configuration entry unloading."""
     entry = await init_integration.opp, aioclient_mock)

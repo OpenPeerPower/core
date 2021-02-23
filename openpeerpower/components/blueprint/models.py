@@ -178,7 +178,7 @@ class DomainBlueprints:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         domain: str,
         logger: logging.Logger,
     ) -> None:

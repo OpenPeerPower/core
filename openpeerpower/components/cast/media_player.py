@@ -65,7 +65,7 @@ from .const import (
     KNOWN_CHROMECAST_INFO_KEY,
     SIGNAL_CAST_DISCOVERED,
     SIGNAL_CAST_REMOVED,
-    SIGNAL_HASS_CAST_SHOW_VIEW,
+    SIGNAL_OPP_CAST_SHOW_VIEW,
 )
 from .discovery import setup_internal_discovery
 from .helpers import CastStatusListener, ChromecastInfo, ChromeCastZeroconf
@@ -146,7 +146,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 async def _async_setup_platform(
-    opp. OpenPeerPowerType, config: ConfigType, async_add_entities
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities
 ):
     """Set up the cast platform."""
     # Import CEC IGNORE attributes
@@ -219,7 +219,7 @@ class CastDevice(MediaPlayerEntity):
         )
 
         self._cast_view_remove_handler = async_dispatcher_connect(
-            self.opp, SIGNAL_HASS_CAST_SHOW_VIEW, self._handle_signal_show_view
+            self.opp, SIGNAL_OPP_CAST_SHOW_VIEW, self._handle_signal_show_view
         )
 
     async def async_will_remove_from.opp(self) -> None:

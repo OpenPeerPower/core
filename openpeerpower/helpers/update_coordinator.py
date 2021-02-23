@@ -33,7 +33,7 @@ class DataUpdateCoordinator(Generic[T]):
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         logger: logging.Logger,
         *,
         name: str,

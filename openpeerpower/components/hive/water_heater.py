@@ -17,7 +17,7 @@ SUPPORT_FLAGS_HEATER = SUPPORT_OPERATION_MODE
 HOTWATER_NAME = "Hot Water"
 PARALLEL_UPDATES = 0
 SCAN_INTERVAL = timedelta(seconds=15)
-HIVE_TO_HASS_STATE = {
+HIVE_TO_OPP_STATE = {
     "SCHEDULE": STATE_ECO,
     "ON": STATE_ON,
     "OFF": STATE_OFF,
@@ -82,7 +82,7 @@ class HiveWaterHeater(HiveEntity, WaterHeaterEntity):
     @property
     def current_operation(self):
         """Return current operation."""
-        return HIVE_TO_HASS_STATE[self.device["status"]["current_operation"]]
+        return HIVE_TO_OPP_STATE[self.device["status"]["current_operation"]]
 
     @property
     def operation_list(self):

@@ -8,7 +8,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def async_init_integration(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     aioclient_mock: AiohttpClientMocker,
     skip_setup: bool = False,
 ):

@@ -61,7 +61,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ):
     """Add media players for a config entry."""
     players = opp.data[HEOS_DOMAIN][DOMAIN]

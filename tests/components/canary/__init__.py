@@ -51,7 +51,7 @@ def _patch_async_setup_entry(return_value=True):
 
 
 async def init_integration(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     *,
     data: dict = ENTRY_CONFIG,
     options: dict = ENTRY_OPTIONS,

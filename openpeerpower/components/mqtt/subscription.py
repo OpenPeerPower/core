@@ -16,7 +16,7 @@ from .models import MessageCallbackType
 class EntitySubscription:
     """Class to hold data about an active entity topic subscription."""
 
-    opp. OpenPeerPowerType = attr.ib()
+    opp: OpenPeerPowerType = attr.ib()
     topic: str = attr.ib()
     message_callback: MessageCallbackType = attr.ib()
     unsubscribe_callback: Optional[Callable[[], None]] = attr.ib()
@@ -61,7 +61,7 @@ class EntitySubscription:
 
 @bind.opp
 async def async_subscribe_topics(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     new_state: Optional[Dict[str, EntitySubscription]],
     topics: Dict[str, Any],
 ):

@@ -251,7 +251,7 @@ async def update_entity.opp: OpenPeerPower, entity_id: str) -> None:
 
 
 async def test_smartswitch(
-    opp. OpenPeerPower, dimmer_switch_mock_data: SmartSwitchMockData
+    opp: OpenPeerPower, dimmer_switch_mock_data: SmartSwitchMockData
 ) -> None:
     """Test function."""
     sys_info = dimmer_switch_mock_data.sys_info
@@ -459,7 +459,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
 
 
 async def test_get_light_state_retry(
-    opp. OpenPeerPower, light_mock_data: LightMockData
+    opp: OpenPeerPower, light_mock_data: LightMockData
 ) -> None:
     """Test function."""
     # Setup test for retries for sysinfo.
@@ -528,7 +528,7 @@ async def test_get_light_state_retry(
 
 
 async def test_update_failure(
-    opp. OpenPeerPower, light_mock_data: LightMockData, caplog
+    opp: OpenPeerPower, light_mock_data: LightMockData, caplog
 ):
     """Test that update failures are logged."""
 
@@ -583,7 +583,7 @@ async def test_update_failure(
 
 
 async def test_async_setup_entry_unavailable(
-    opp. OpenPeerPower, light_mock_data: LightMockData, caplog
+    opp: OpenPeerPower, light_mock_data: LightMockData, caplog
 ):
     """Test unavailable devices trigger a later retry."""
     caplog.clear()

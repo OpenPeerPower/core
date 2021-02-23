@@ -29,7 +29,7 @@ SERVER_SOFTWARE = "OpenPeerPower/{0} aiohttp/{1} Python/{2[0]}.{2[1]}".format(
 @callback
 @bind.opp
 def async_get_clientsession(
-    opp. OpenPeerPowerType, verify_ssl: bool = True
+    opp: OpenPeerPowerType, verify_ssl: bool = True
 ) -> aiohttp.ClientSession:
     """Return default aiohttp ClientSession.
 
@@ -49,7 +49,7 @@ def async_get_clientsession(
 @callback
 @bind.opp
 def async_create_clientsession(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     verify_ssl: bool = True,
     auto_cleanup: bool = True,
     **kwargs: Any,
@@ -82,7 +82,7 @@ def async_create_clientsession(
 
 @bind.opp
 async def async_aiohttp_proxy_web(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     request: web.BaseRequest,
     web_coro: Awaitable[aiohttp.ClientResponse],
     buffer_size: int = 102400,
@@ -115,7 +115,7 @@ async def async_aiohttp_proxy_web(
 
 @bind.opp
 async def async_aiohttp_proxy_stream(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     request: web.BaseRequest,
     stream: aiohttp.StreamReader,
     content_type: Optional[str],
@@ -146,7 +146,7 @@ async def async_aiohttp_proxy_stream(
 
 @callback
 def _async_register_clientsession_shutdown(
-    opp. OpenPeerPowerType, clientsession: aiohttp.ClientSession
+    opp: OpenPeerPowerType, clientsession: aiohttp.ClientSession
 ) -> None:
     """Register ClientSession close on Open Peer Power shutdown.
 
@@ -163,7 +163,7 @@ def _async_register_clientsession_shutdown(
 
 @callback
 def _async_get_connector(
-    opp. OpenPeerPowerType, verify_ssl: bool = True
+    opp: OpenPeerPowerType, verify_ssl: bool = True
 ) -> aiohttp.BaseConnector:
     """Return the connector pool for aiohttp.
 

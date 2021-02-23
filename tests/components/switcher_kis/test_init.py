@@ -47,21 +47,21 @@ from tests.common import MockUser, async_fire_time_changed
 
 
 async def test_failed_config(
-    opp. OpenPeerPowerType, mock_failed_bridge: Generator[None, Any, None]
+    opp: OpenPeerPowerType, mock_failed_bridge: Generator[None, Any, None]
 ) -> None:
     """Test failed configuration."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION) is False
 
 
 async def test_minimal_config(
-    opp. OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
+    opp: OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
 ) -> None:
     """Test setup with configuration minimal entries."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
 
 
 async def test_discovery_data_bucket(
-    opp. OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
+    opp: OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
 ) -> None:
     """Test the event send with the updated device."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
@@ -82,7 +82,7 @@ async def test_discovery_data_bucket(
 
 
 async def test_set_auto_off_service(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     mock_bridge: Generator[None, Any, None],
     mock_api: Generator[None, Any, None],
     opp.owner_user: MockUser,
@@ -130,7 +130,7 @@ async def test_set_auto_off_service(
 
 
 async def test_turn_on_with_timer_service(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     mock_bridge: Generator[None, Any, None],
     mock_api: Generator[None, Any, None],
     opp.owner_user: MockUser,
@@ -184,7 +184,7 @@ async def test_turn_on_with_timer_service(
 
 
 async def test_signal_dispatcher(
-    opp. OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
+    opp: OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
 ) -> None:
     """Test signal dispatcher dispatching device updates every 4 seconds."""
     assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)

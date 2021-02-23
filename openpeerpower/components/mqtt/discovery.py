@@ -80,7 +80,7 @@ class MQTTConfig(dict):
 
 
 async def async_start(
-    opp. OpenPeerPowerType, discovery_topic, config_entry=None
+    opp: OpenPeerPowerType, discovery_topic, config_entry=None
 ) -> bool:
     """Start MQTT Discovery."""
     mqtt_integrations = {}

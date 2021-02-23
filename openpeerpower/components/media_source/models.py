@@ -46,7 +46,7 @@ class BrowseMediaSource(BrowseMedia):
 class MediaSourceItem:
     """A parsed media item."""
 
-    opp. OpenPeerPower
+    opp: OpenPeerPower
     domain: Optional[str]
     identifier: str
 

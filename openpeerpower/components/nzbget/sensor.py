@@ -39,7 +39,7 @@ SENSOR_TYPES = {
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:

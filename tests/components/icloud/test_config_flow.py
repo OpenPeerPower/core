@@ -176,7 +176,7 @@ async def test_user.opp: OpenPeerPowerType, service: MagicMock):
 
 
 async def test_user_with_cookie(
-    opp. OpenPeerPowerType, service_authenticated: MagicMock
+    opp: OpenPeerPowerType, service_authenticated: MagicMock
 ):
     """Test user config with presence of a cookie."""
     # test with all provided
@@ -227,7 +227,7 @@ async def test_import.opp: OpenPeerPowerType, service: MagicMock):
 
 
 async def test_import_with_cookie(
-    opp. OpenPeerPowerType, service_authenticated: MagicMock
+    opp: OpenPeerPowerType, service_authenticated: MagicMock
 ):
     """Test import step with presence of a cookie."""
     # import with required
@@ -268,7 +268,7 @@ async def test_import_with_cookie(
 
 
 async def test_two_accounts_setup(
-    opp. OpenPeerPowerType, service_authenticated: MagicMock
+    opp: OpenPeerPowerType, service_authenticated: MagicMock
 ):
     """Test to setup two accounts."""
     MockConfigEntry(
@@ -336,7 +336,7 @@ async def test_login_failed.opp: OpenPeerPowerType):
 
 
 async def test_no_device(
-    opp. OpenPeerPowerType, service_authenticated_no_device: MagicMock
+    opp: OpenPeerPowerType, service_authenticated_no_device: MagicMock
 ):
     """Test when we have no devices."""
     result = await opp.config_entries.flow.async_init(
@@ -377,7 +377,7 @@ async def test_trusted_device_success.opp: OpenPeerPowerType, service: MagicMock
 
 
 async def test_send_verification_code_failed(
-    opp. OpenPeerPowerType, service_send_verification_code_failed: MagicMock
+    opp: OpenPeerPowerType, service_send_verification_code_failed: MagicMock
 ):
     """Test when we have errors during send_verification_code."""
     result = await opp.config_entries.flow.async_init(
@@ -436,7 +436,7 @@ async def test_verification_code_success.opp: OpenPeerPowerType, service: MagicM
 
 
 async def test_validate_verification_code_failed(
-    opp. OpenPeerPowerType, service_validate_verification_code_failed: MagicMock
+    opp: OpenPeerPowerType, service_validate_verification_code_failed: MagicMock
 ):
     """Test when we have errors during validate_verification_code."""
     result = await opp.config_entries.flow.async_init(
@@ -481,7 +481,7 @@ async def test_2fa_code_success.opp: OpenPeerPowerType, service_2fa: MagicMock):
 
 
 async def test_validate_2fa_code_failed(
-    opp. OpenPeerPowerType, service_validate_2fa_code_failed: MagicMock
+    opp: OpenPeerPowerType, service_validate_2fa_code_failed: MagicMock
 ):
     """Test when we have errors during validate_verification_code."""
     result = await opp.config_entries.flow.async_init(
@@ -500,7 +500,7 @@ async def test_validate_2fa_code_failed(
 
 
 async def test_password_update(
-    opp. OpenPeerPowerType, service_authenticated: MagicMock
+    opp: OpenPeerPowerType, service_authenticated: MagicMock
 ):
     """Test that password reauthentication works successfully."""
     config_entry = MockConfigEntry(

@@ -24,7 +24,7 @@ from .helpers import convert_isy_value_to.opp, migrate_old_unique_ids
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     entry: ConfigEntry,
     async_add_entities: Callable[[list], None],
 ) -> bool:

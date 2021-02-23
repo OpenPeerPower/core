@@ -30,7 +30,7 @@ def is_internal_request.opp: OpenPeerPower) -> bool:
 
 @bind.opp
 def get_url(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     *,
     require_current_request: bool = False,
     require_ssl: bool = False,
@@ -127,7 +127,7 @@ def _get_request_host() -> Optional[str]:
 
 @bind.opp
 def _get_internal_url(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     *,
     allow_ip: bool = True,
     require_current_request: bool = False,
@@ -164,7 +164,7 @@ def _get_internal_url(
 
 @bind.opp
 def _get_external_url(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     *,
     allow_cloud: bool = True,
     allow_ip: bool = True,

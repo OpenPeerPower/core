@@ -53,7 +53,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config_entry: ConfigType,
     async_add_entities: Callable[[List[Entity], bool], None],
 ):

@@ -114,7 +114,7 @@ class Trigger:
 
     device_id: str = attr.ib()
     discovery_data: dict = attr.ib()
-    opp. OpenPeerPowerType = attr.ib()
+    opp: OpenPeerPowerType = attr.ib()
     payload: str = attr.ib()
     qos: int = attr.ib()
     remove_signal: Callable[[], None] = attr.ib()
@@ -302,7 +302,7 @@ async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_attach_trigger(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config: ConfigType,
     action: AutomationActionType,
     automation_info: dict,

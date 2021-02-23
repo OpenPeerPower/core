@@ -183,7 +183,7 @@ RESULT_TYPE_USER = "user"
 
 @bind.opp
 def create_auth_code(
-    opp. client_id: str, credential_or_user: Union[Credentials, User]
+    opp.client_id: str, credential_or_user: Union[Credentials, User]
 ) -> str:
     """Create an authorization code to fetch tokens."""
     return.opp.data[DOMAIN](client_id, credential_or_user)
@@ -393,7 +393,7 @@ class LinkUserView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({"code": str, "client_id": str}))
     async def post(self, request, data):
         """Link a user."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
         user = request[.opp_user"]
 
         credentials = self._retrieve_credentials(
@@ -455,7 +455,7 @@ def _create_auth_code_store():
 @websocket_api.ws_require_user()
 @websocket_api.async_response
 async def websocket_current_user(
-    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Return the current user."""
     user = connection.user
@@ -492,7 +492,7 @@ async def websocket_current_user(
 @websocket_api.ws_require_user()
 @websocket_api.async_response
 async def websocket_create_long_lived_access_token(
-    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Create or a long-lived access token."""
     refresh_token = await opp.auth.async_create_refresh_token(
@@ -516,7 +516,7 @@ async def websocket_create_long_lived_access_token(
 @websocket_api.ws_require_user()
 @callback
 def websocket_refresh_tokens(
-    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Return metadata of users refresh tokens."""
     current_id = connection.refresh_token_id
@@ -544,7 +544,7 @@ def websocket_refresh_tokens(
 @websocket_api.ws_require_user()
 @websocket_api.async_response
 async def websocket_delete_refresh_token(
-    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Handle a delete refresh token request."""
     refresh_token = connection.user.refresh_tokens.get(msg["refresh_token_id"])
@@ -562,7 +562,7 @@ async def websocket_delete_refresh_token(
 @websocket_api.ws_require_user()
 @callback
 def websocket_sign_path(
-    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Handle a sign path request."""
     connection.send_message(
@@ -570,7 +570,7 @@ def websocket_sign_path(
             msg["id"],
             {
                 "path": async_sign_path(
-                    opp.
+                    opp,
                     connection.refresh_token_id,
                     msg["path"],
                     timedelta(seconds=msg["expires"]),

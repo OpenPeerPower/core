@@ -57,7 +57,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
 
 async def async_unload_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload Minecraft Server config entry."""
     unique_id = config_entry.unique_id

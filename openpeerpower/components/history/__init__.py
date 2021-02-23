@@ -670,7 +670,7 @@ def _glob_to_like(glob_str):
 
 
 def _entities_may_have_state_changes_after(
-    opp. OpenPeerPowerType, entity_ids: Iterable, start_time: dt
+    opp: OpenPeerPowerType, entity_ids: Iterable, start_time: dt
 ) -> bool:
     """Check the state machine to see if entities have changed since start time."""
     for entity_id in entity_ids:

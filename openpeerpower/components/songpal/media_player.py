@@ -53,7 +53,7 @@ INITIAL_RETRY_DELAY = 10
 
 
 async def async_setup_platform(
-    opp. OpenPeerPowerType, config: dict, async_add_entities, discovery_info=None
+    opp: OpenPeerPowerType, config: dict, async_add_entities, discovery_info=None
 ) -> None:
     """Set up from legacy configuration file. Obsolete."""
     _LOGGER.error(
@@ -62,7 +62,7 @@ async def async_setup_platform(
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up songpal media player."""
     name = config_entry.data[CONF_NAME]

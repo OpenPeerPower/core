@@ -62,7 +62,7 @@ async def async_setup_opp):
 @callback
 @websocket_api.ws_require_user(allow_system_user=False)
 def websocket_setup_mfa(
-    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Return a setup flow for mfa auth module."""
 
@@ -102,7 +102,7 @@ def websocket_setup_mfa(
 @callback
 @websocket_api.ws_require_user(allow_system_user=False)
 def websocket_depose_mfa(
-    opp. OpenPeerPower, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """Remove user from mfa module."""
 

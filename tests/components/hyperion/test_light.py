@@ -55,7 +55,7 @@ COLOR_BLACK = color_util.COLORS["black"]
 
 
 def _get_config_entry_from_unique_id(
-    opp. OpenPeerPowerType, unique_id: str
+    opp: OpenPeerPowerType, unique_id: str
 ) -> Optional[ConfigEntry]:
     for entry in.opp.config_entries.async_entries(domain=DOMAIN):
         if TEST_SYSINFO_ID == entry.unique_id:
@@ -70,7 +70,7 @@ async def test_setup_config_entry.opp: OpenPeerPowerType) -> None:
 
 
 async def test_setup_config_entry_not_ready_connect_fail(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Test the component not being ready."""
     client = create_mock_client()
@@ -80,7 +80,7 @@ async def test_setup_config_entry_not_ready_connect_fail(
 
 
 async def test_setup_config_entry_not_ready_switch_instance_fail(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Test the component not being ready."""
     client = create_mock_client()
@@ -91,7 +91,7 @@ async def test_setup_config_entry_not_ready_switch_instance_fail(
 
 
 async def test_setup_config_entry_not_ready_load_state_fail(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Test the component not being ready."""
     client = create_mock_client()
@@ -574,7 +574,7 @@ async def test_light_async_turn_off.opp: OpenPeerPowerType) -> None:
 
 
 async def test_light_async_updates_from_hyperion_client(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Test receiving a variety of Hyperion client callbacks."""
     client = create_mock_client()
@@ -787,7 +787,7 @@ async def test_setup_entry_bad_token_reauth.opp: OpenPeerPowerType) -> None:
 
 
 async def test_priority_light_async_updates(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Test receiving a variety of Hyperion client callbacks to a HyperionPriorityLight."""
     priority_template = {
@@ -947,7 +947,7 @@ async def test_priority_light_async_updates(
 
 
 async def test_priority_light_async_updates_off_sets_black(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Test turning the HyperionPriorityLight off."""
     client = create_mock_client()
@@ -993,7 +993,7 @@ async def test_priority_light_async_updates_off_sets_black(
 
 
 async def test_priority_light_prior_color_preserved_after_black(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
 ) -> None:
     """Test that color is preserved in an on->off->on cycle for a HyperionPriorityLight.
 

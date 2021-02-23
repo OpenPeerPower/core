@@ -90,7 +90,7 @@ async def async_setup(opp, config):
 
 
 async def async_get_image(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     input_source: str,
     output_format: str = IMAGE_JPEG,
     extra_cmd: Optional[str] = None,

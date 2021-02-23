@@ -66,7 +66,7 @@ class ClicksendNotificationService(BaseNotificationService):
         for recipient in self.recipients:
             data["messages"].append(
                 {
-                    "source":  opp.notify",
+                    "source":  "opp.notify",
                     "from": self.sender,
                     "to": recipient,
                     "body": message,

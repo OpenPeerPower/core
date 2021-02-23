@@ -681,7 +681,7 @@ async def _async_migrate(entities: Dict[str, Any]) -> Dict[str, List[Dict[str, A
 
 @callback
 def async_setup_entity_restore(
-    opp. OpenPeerPowerType, registry: EntityRegistry
+    opp: OpenPeerPowerType, registry: EntityRegistry
 ) -> None:
     """Set up the entity restore mechanism."""
 
@@ -724,7 +724,7 @@ def async_setup_entity_restore(
 
 
 async def async_migrate_entries(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config_entry_id: str,
     entry_callback: Callable[[RegistryEntry], Optional[dict]],
 ) -> None:

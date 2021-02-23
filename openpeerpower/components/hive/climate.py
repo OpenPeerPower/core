@@ -18,7 +18,7 @@ from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
 
 from . import ATTR_AVAILABLE, DATA_HIVE, DOMAIN, HiveEntity, refresh_system
 
-HIVE_TO_HASS_STATE = {
+HIVE_TO_OPP_STATE = {
     "SCHEDULE": HVAC_MODE_AUTO,
     "MANUAL": HVAC_MODE_HEAT,
     "OFF": HVAC_MODE_OFF,
@@ -30,7 +30,7 @@ HASS_TO_HIVE_STATE = {
     HVAC_MODE_OFF: "OFF",
 }
 
-HIVE_TO_HASS_HVAC_ACTION = {
+HIVE_TO_OPP_HVAC_ACTION = {
     "UNKNOWN": CURRENT_HVAC_OFF,
     False: CURRENT_HVAC_IDLE,
     True: CURRENT_HVAC_HEAT,
@@ -112,12 +112,12 @@ class HiveClimateEntity(HiveEntity, ClimateEntity):
 
         Need to be one of HVAC_MODE_*.
         """
-        return HIVE_TO_HASS_STATE[self.device["status"]["mode"]]
+        return HIVE_TO_OPP_STATE[self.device["status"]["mode"]]
 
     @property
     def hvac_action(self):
         """Return current HVAC action."""
-        return HIVE_TO_HASS_HVAC_ACTION[self.device["status"]["action"]]
+        return HIVE_TO_OPP_HVAC_ACTION[self.device["status"]["action"]]
 
     @property
     def temperature_unit(self):

@@ -54,7 +54,7 @@ async def _process_media_source_platform.opp, domain, platform):
 
 @callback
 def _get_media_item(
-    opp. OpenPeerPower, media_content_id: Optional[str]
+    opp: OpenPeerPower, media_content_id: Optional[str]
 ) -> models.MediaSourceItem:
     """Return media item."""
     if media_content_id:
@@ -67,7 +67,7 @@ def _get_media_item(
 
 @bind.opp
 async def async_browse_media(
-    opp. OpenPeerPower, media_content_id: str
+    opp: OpenPeerPower, media_content_id: str
 ) -> models.BrowseMediaSource:
     """Return media player browse media results."""
     return await _get_media_item.opp, media_content_id).async_browse()
@@ -75,7 +75,7 @@ async def async_browse_media(
 
 @bind.opp
 async def async_resolve_media(
-    opp. OpenPeerPower, media_content_id: str
+    opp: OpenPeerPower, media_content_id: str
 ) -> models.PlayMedia:
     """Get info to play media."""
     return await _get_media_item.opp, media_content_id).async_resolve()

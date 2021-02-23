@@ -24,7 +24,7 @@ DEVICE_CLASS_MAPPING = {
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Get all sensor devices and setup them via config entry."""
     entities = []

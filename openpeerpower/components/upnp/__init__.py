@@ -150,7 +150,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
 
 async def async_unload_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload a UPnP/IGD device from a config entry."""
     _LOGGER.debug("Unloading config entry: %s", config_entry.unique_id)

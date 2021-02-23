@@ -20,7 +20,7 @@ from tests.common import MockConfigEntry, mock_registry
 
 
 async def test_init(
-    opp. OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
@@ -47,7 +47,7 @@ async def test_init(
 
 
 async def test_init_from_file(
-    opp. OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
@@ -74,7 +74,7 @@ async def test_init_from_file(
 
 
 async def test_multiple_controllers_with_legacy_one(
-    opp. OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test multiple controllers with one legacy controller."""
     vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
@@ -129,7 +129,7 @@ async def test_multiple_controllers_with_legacy_one(
 
 
 async def test_unload(
-    opp. OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
@@ -151,7 +151,7 @@ async def test_unload(
 
 
 async def test_async_setup_entry_error(
-    opp. OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
 
@@ -183,7 +183,7 @@ async def test_async_setup_entry_error(
     ],
 )
 async def test_exclude_and_light_ids(
-    opp. OpenPeerPower, vera_component_factory: ComponentFactory, options
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory, options
 ) -> None:
     """Test device exclusion, marking switches as lights and fixing the data type."""
     vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor

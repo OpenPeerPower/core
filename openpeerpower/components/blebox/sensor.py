@@ -3,7 +3,7 @@
 from openpeerpower.helpers.entity import Entity
 
 from . import BleBoxEntity, create_blebox_entities
-from .const import BLEBOX_TO_HASS_DEVICE_CLASSES, BLEBOX_TO_UNIT_MAP
+from .const import BLEBOX_TO_OPP_DEVICE_CLASSES, BLEBOX_TO_UNIT_MAP
 
 
 async def async_setup_entry.opp, config_entry, async_add_entities):
@@ -30,4 +30,4 @@ class BleBoxSensorEntity(BleBoxEntity, Entity):
     @property
     def device_class(self):
         """Return the device class."""
-        return BLEBOX_TO_HASS_DEVICE_CLASSES[self._feature.device_class]
+        return BLEBOX_TO_OPP_DEVICE_CLASSES[self._feature.device_class]

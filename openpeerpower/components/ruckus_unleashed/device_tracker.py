@@ -22,7 +22,7 @@ from .const import (
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for Ruckus Unleashed component."""
     coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]

@@ -66,7 +66,7 @@ class Store:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         version: int,
         key: str,
         private: bool = False,

@@ -98,7 +98,7 @@ def _async_find_matching_config_entry.opp):
 
 
 async def async_setup_entry(
-    opp. OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up the ISY 994 integration."""
     # As there currently is no way to import options from yaml
@@ -199,7 +199,7 @@ async def async_setup_entry(
 
 
 async def _async_update_listener(
-    opp. OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
@@ -207,7 +207,7 @@ async def _async_update_listener(
 
 @callback
 def _async_import_options_from_data_if_missing(
-    opp. OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     options = dict(entry.options)
     modified = False
@@ -225,7 +225,7 @@ def _async_import_options_from_data_if_missing(
 
 
 async def _async_get_or_create_isy_device_in_registry(
-    opp. OpenPeerPower, entry: config_entries.ConfigEntry, isy
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry, isy
 ) -> None:
     device_registry = await dr.async_get_registry.opp)
 
@@ -241,7 +241,7 @@ async def _async_get_or_create_isy_device_in_registry(
 
 
 async def async_unload_entry(
-    opp. OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry
 ) -> bool:
     """Unload a config entry."""
     unload_ok = all(

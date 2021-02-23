@@ -7,5 +7,5 @@ CONF_USE_LOCATION = "use_location"
 
 CONF_ACCOUNT = "account"
 
-DATA_HASS_CONFIG = opp_config"
+DATA_OPP_CONFIG = opp_config"
 DATA_ENTRIES = "entries"

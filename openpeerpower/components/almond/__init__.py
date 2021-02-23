@@ -149,7 +149,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
 
 
 async def _configure_almond_for_ha(
-    opp. OpenPeerPower, entry: config_entries.ConfigEntry, api: WebAlmondAPI
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry, api: WebAlmondAPI
 ):
     """Configure Almond to connect to HA."""
     try:

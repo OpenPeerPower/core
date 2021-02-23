@@ -124,7 +124,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 
 async def async_register_new_bridge(
-    opp. OpenPeerPower, bridge: dict, entry: ConfigEntry
+    opp: OpenPeerPower, bridge: dict, entry: ConfigEntry
 ):
     """Register a new bridge."""
     device_registry = await dr.async_get_registry.opp)

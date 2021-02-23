@@ -461,7 +461,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
 
 async def async_unload_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload config entry."""
 
@@ -560,14 +560,14 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
 
 async def async_signal_options_update(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Handle config entry options update."""
     async_dispatcher_send.opp, UPDATE_OPTIONS_SIGNAL, config_entry)
 
 
 async def async_migrate_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Migrate config entry to new version."""
     if config_entry.version == 1:

@@ -30,7 +30,7 @@ CONTROL4_DIMMER_VAR = "LIGHT_LEVEL"
 
 
 async def async_setup_entry(
-    opp. OpenPeerPower, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up Control4 lights from a config entry."""
     entry_data = opp.data[DOMAIN][entry.entry_id]

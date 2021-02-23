@@ -33,7 +33,7 @@ from .const import (
     CONF_READ_ONLY,
     CONF_USE_LOCATION,
     DATA_ENTRIES,
-    DATA_HASS_CONFIG,
+    DATA_OPP_CONFIG,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -77,7 +77,7 @@ UNDO_UPDATE_LISTENER = "undo_update_listener"
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the BMW Connected Drive component from configuration.yaml."""
     opp.data.setdefault(DOMAIN, {})
-    opp.data[DOMAIN][DATA_HASS_CONFIG] = config
+    opp.data[DOMAIN][DATA_OPP_CONFIG] = config
 
     if DOMAIN in config:
         for entry_config in config[DOMAIN].values():
@@ -152,7 +152,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             NOTIFY_DOMAIN,
             DOMAIN,
             {CONF_NAME: DOMAIN},
-            opp.data[DOMAIN][DATA_HASS_CONFIG],
+            opp.data[DOMAIN][DATA_OPP_CONFIG],
         )
     )
 

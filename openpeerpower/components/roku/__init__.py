@@ -100,7 +100,7 @@ class RokuDataUpdateCoordinator(DataUpdateCoordinator[Device]):
 
     def __init__(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         *,
         host: str,
     ):

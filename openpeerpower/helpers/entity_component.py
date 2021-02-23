@@ -67,7 +67,7 @@ class EntityComponent:
         self,
         logger: logging.Logger,
         domain: str,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         scan_interval: timedelta = DEFAULT_SCAN_INTERVAL,
     ):
         """Initialize an entity component."""

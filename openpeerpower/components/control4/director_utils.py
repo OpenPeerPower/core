@@ -22,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def director_update_data(
-    opp. OpenPeerPower, entry: ConfigEntry, var: str
+    opp: OpenPeerPower, entry: ConfigEntry, var: str
 ) -> dict:
     """Retrieve data from the Control4 director for update_coordinator."""
     # possibly implement usage of director_token_expiration to start

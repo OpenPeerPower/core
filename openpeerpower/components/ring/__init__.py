@@ -150,7 +150,7 @@ class GlobalDataUpdater:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         data_type: str,
         config_entry_id: str,
         ring: Ring,
@@ -223,7 +223,7 @@ class DeviceDataUpdater:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         data_type: str,
         config_entry_id: str,
         ring: Ring,

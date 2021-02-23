@@ -51,7 +51,7 @@ SERVICE_TURN_ON_WITH_TIMER_SCHEMA = {
 
 
 async def async_setup_platform(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config: Dict,
     async_add_entities: Callable,
     discovery_info: Dict,

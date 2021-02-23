@@ -108,7 +108,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
 
 
 async def _create_reauth_flow(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config_entry: ConfigEntry,
 ) -> None:
     opp.async_create_task(
@@ -120,7 +120,7 @@ async def _create_reauth_flow(
 
 @callback
 def listen_for_instance_updates(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     config_entry: ConfigEntry,
     add_func: Callable,
     remove_func: Callable,
@@ -296,14 +296,14 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
 
 async def _async_entry_updated(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Handle entry updates."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_unload_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry
+    opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> bool:
     """Unload a config entry."""
     unload_ok = all(

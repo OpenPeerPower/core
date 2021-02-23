@@ -14,7 +14,7 @@ from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.util import dt as dt_util
 
-from .const import DATA_HASS_CONFIG, DOMAIN
+from .const import DATA_OPP_CONFIG, DOMAIN
 
 PLATFORMS = [
     "sensor",
@@ -31,7 +31,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup(opp, config):
     """Set up the Tibber component."""
 
-    opp.data[DATA_HASS_CONFIG] = config
+    opp.data[DATA_OPP_CONFIG] = config
 
     if DOMAIN not in config:
         return True
@@ -82,7 +82,7 @@ async def async_setup_entry.opp, entry):
     # have to use discovery to load platform.
     opp.async_create_task(
         discovery.async_load_platform(
-            opp. "notify", DOMAIN, {CONF_NAME: DOMAIN}, opp.data[DATA_HASS_CONFIG]
+            opp. "notify", DOMAIN, {CONF_NAME: DOMAIN}, opp.data[DATA_OPP_CONFIG]
         )
     )
     return True

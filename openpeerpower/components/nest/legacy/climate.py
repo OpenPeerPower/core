@@ -47,14 +47,14 @@ NEST_MODE_HEAT = "heat"
 NEST_MODE_COOL = "cool"
 NEST_MODE_OFF = "off"
 
-MODE_HASS_TO_NEST = {
+MODE_OPP_TO_NEST = {
     HVAC_MODE_AUTO: NEST_MODE_HEAT_COOL,
     HVAC_MODE_HEAT: NEST_MODE_HEAT,
     HVAC_MODE_COOL: NEST_MODE_COOL,
     HVAC_MODE_OFF: NEST_MODE_OFF,
 }
 
-MODE_NEST_TO_HASS = {v: k for k, v in MODE_HASS_TO_NEST.items()}
+MODE_NEST_TO_HASS = {v: k for k, v in MODE_OPP_TO_NEST.items()}
 
 ACTION_NEST_TO_HASS = {
     "off": CURRENT_HVAC_IDLE,
@@ -256,7 +256,7 @@ class NestThermostat(ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode):
         """Set operation mode."""
-        self.device.mode = MODE_HASS_TO_NEST[hvac_mode]
+        self.device.mode = MODE_OPP_TO_NEST[hvac_mode]
 
     @property
     def hvac_modes(self):

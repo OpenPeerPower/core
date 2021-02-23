@@ -891,7 +891,7 @@ async def async_check_op_config_file(opp: OpenPeerPower) -> Optional[str]:
 
 @callback
 def async_notify_setup_error(
-    opp. OpenPeerPower, component: str, display_link: Optional[str] = None
+    opp: OpenPeerPower, component: str, display_link: Optional[str] = None
 ) -> None:
     """Print a persistent notification.
 

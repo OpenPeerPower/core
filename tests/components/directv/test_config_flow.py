@@ -38,7 +38,7 @@ async def test_show_user_form.opp: OpenPeerPowerType) -> None:
 
 
 async def test_show_ssdp_form(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test that the ssdp confirmation form is served."""
     mock_connection(aioclient_mock)
@@ -54,7 +54,7 @@ async def test_show_ssdp_form(
 
 
 async def test_cannot_connect(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we show user form on connection error."""
     aioclient_mock.get("http://127.0.0.1:8080/info/getVersion", exc=HTTPClientError)
@@ -72,7 +72,7 @@ async def test_cannot_connect(
 
 
 async def test_ssdp_cannot_connect(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow on connection error."""
     aioclient_mock.get("http://127.0.0.1:8080/info/getVersion", exc=HTTPClientError)
@@ -89,7 +89,7 @@ async def test_ssdp_cannot_connect(
 
 
 async def test_ssdp_confirm_cannot_connect(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow on connection error."""
     aioclient_mock.get("http://127.0.0.1:8080/info/getVersion", exc=HTTPClientError)
@@ -106,7 +106,7 @@ async def test_ssdp_confirm_cannot_connect(
 
 
 async def test_user_device_exists_abort(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort user flow if DirecTV receiver already configured."""
     await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
@@ -123,7 +123,7 @@ async def test_user_device_exists_abort(
 
 
 async def test_ssdp_device_exists_abort(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow if DirecTV receiver already configured."""
     await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
@@ -140,7 +140,7 @@ async def test_ssdp_device_exists_abort(
 
 
 async def test_ssdp_with_receiver_id_device_exists_abort(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow if DirecTV receiver already configured."""
     await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
@@ -158,7 +158,7 @@ async def test_ssdp_with_receiver_id_device_exists_abort(
 
 
 async def test_unknown_error(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we show user form on unknown error."""
     user_input = MOCK_USER_INPUT.copy()
@@ -177,7 +177,7 @@ async def test_unknown_error(
 
 
 async def test_ssdp_unknown_error(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow on unknown error."""
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
@@ -196,7 +196,7 @@ async def test_ssdp_unknown_error(
 
 
 async def test_ssdp_confirm_unknown_error(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow on unknown error."""
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
@@ -215,7 +215,7 @@ async def test_ssdp_confirm_unknown_error(
 
 
 async def test_full_user_flow_implementation(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the full manual user flow from start to finish."""
     mock_connection(aioclient_mock)
@@ -246,7 +246,7 @@ async def test_full_user_flow_implementation(
 
 
 async def test_full_ssdp_flow_implementation(
-    opp. OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the full SSDP flow from start to finish."""
     mock_connection(aioclient_mock)

@@ -34,7 +34,7 @@ ATTR_CURRENT_POWER_W = "current_power_w"
 
 
 async def async_setup_entry(
-    opp. OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP Cloud lights from a config entry."""
     hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]

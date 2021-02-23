@@ -76,7 +76,7 @@ class HomeFactory:
 
     def __init__(
         self,
-        opp. OpenPeerPowerType,
+        opp: OpenPeerPowerType,
         mock_connection,
         hmip_config_entry: config_entries.ConfigEntry,
     ):

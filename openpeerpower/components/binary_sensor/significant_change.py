@@ -6,7 +6,7 @@ from openpeerpower.core import OpenPeerPower, callback
 
 @callback
 def async_check_significant_change(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     old_state: str,
     old_attrs: dict,
     new_state: str,

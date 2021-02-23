@@ -9,7 +9,7 @@ from .common import ComponentFactory, new_simple_controller_config
 
 
 async def test_switch(
-    opp. OpenPeerPower, vera_component_factory: ComponentFactory
+    opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
     vera_device = MagicMock(spec=pv.VeraSwitch)  # type: pv.VeraSwitch

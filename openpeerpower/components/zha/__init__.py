@@ -156,7 +156,7 @@ async def async_load_entities.opp: OpenPeerPowerType) -> None:
 
 
 async def async_migrate_entry(
-    opp. OpenPeerPowerType, config_entry: config_entries.ConfigEntry
+    opp: OpenPeerPowerType, config_entry: config_entries.ConfigEntry
 ):
     """Migrate old entry."""
     _LOGGER.debug("Migrating from version %s", config_entry.version)

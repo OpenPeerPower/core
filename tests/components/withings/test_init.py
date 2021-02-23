@@ -125,7 +125,7 @@ async def test_async_setup_no_config(opp: OpenPeerPower) -> None:
     ],
 )
 async def test_auth_failure(
-    opp. OpenPeerPower, component_factory: ComponentFactory, exception: Exception
+    opp: OpenPeerPower, component_factory: ComponentFactory, exception: Exception
 ) -> None:
     """Test auth failure."""
     person0 = new_profile_config(
@@ -164,7 +164,7 @@ async def test_auth_failure(
 
 
 async def test_set_config_unique_id(
-    opp. OpenPeerPower, component_factory: ComponentFactory
+    opp: OpenPeerPower, component_factory: ComponentFactory
 ) -> None:
     """Test upgrading configs to use a unique id."""
     person0 = new_profile_config("person0", 0)

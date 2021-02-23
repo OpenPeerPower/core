@@ -79,7 +79,7 @@ async def _migrate_old_unique_ids.opp, entry_id, powerwall_data):
 
 
 async def _async_handle_api_changed_error(
-    opp. OpenPeerPower, error: MissingAttributeError
+    opp: OpenPeerPower, error: MissingAttributeError
 ):
     # The error might include some important information about what exactly changed.
     _LOGGER.error(str(error))
@@ -167,7 +167,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 
 async def _async_update_powerwall_data(
-    opp. OpenPeerPower, entry: ConfigEntry, power_wall: Powerwall
+    opp: OpenPeerPower, entry: ConfigEntry, power_wall: Powerwall
 ):
     """Fetch updated powerwall data."""
     try:

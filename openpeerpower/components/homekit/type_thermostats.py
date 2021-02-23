@@ -82,7 +82,7 @@ DEFAULT_HVAC_MODES = [
 ]
 
 HC_HOMEKIT_VALID_MODES_WATER_HEATER = {"Heat": 1}
-UNIT_HASS_TO_HOMEKIT = {TEMP_CELSIUS: 0, TEMP_FAHRENHEIT: 1}
+UNIT_OPP_TO_HOMEKIT = {TEMP_CELSIUS: 0, TEMP_FAHRENHEIT: 1}
 
 HC_HEAT_COOL_OFF = 0
 HC_HEAT_COOL_HEAT = 1
@@ -106,8 +106,8 @@ HC_HEAT_COOL_PREFER_COOL = [
 HC_MIN_TEMP = 10
 HC_MAX_TEMP = 38
 
-UNIT_HOMEKIT_TO_HASS = {c: s for s, c in UNIT_HASS_TO_HOMEKIT.items()}
-HC_HASS_TO_HOMEKIT = {
+UNIT_HOMEKIT_TO_HASS = {c: s for s, c in UNIT_OPP_TO_HOMEKIT.items()}
+HC_OPP_TO_HOMEKIT = {
     HVAC_MODE_OFF: HC_HEAT_COOL_OFF,
     HVAC_MODE_HEAT: HC_HEAT_COOL_HEAT,
     HVAC_MODE_COOL: HC_HEAT_COOL_COOL,
@@ -116,9 +116,9 @@ HC_HASS_TO_HOMEKIT = {
     HVAC_MODE_DRY: HC_HEAT_COOL_COOL,
     HVAC_MODE_FAN_ONLY: HC_HEAT_COOL_COOL,
 }
-HC_HOMEKIT_TO_HASS = {c: s for s, c in HC_HASS_TO_HOMEKIT.items()}
+HC_HOMEKIT_TO_HASS = {c: s for s, c in HC_OPP_TO_HOMEKIT.items()}
 
-HC_HASS_TO_HOMEKIT_ACTION = {
+HC_OPP_TO_HOMEKIT_ACTION = {
     CURRENT_HVAC_OFF: HC_HEAT_COOL_OFF,
     CURRENT_HVAC_IDLE: HC_HEAT_COOL_OFF,
     CURRENT_HVAC_HEAT: HC_HEAT_COOL_HEAT,
@@ -251,7 +251,7 @@ class Thermostat(HomeAccessory):
         features = state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
 
         hvac_mode = state.state
-        homekit_hvac_mode = HC_HASS_TO_HOMEKIT[hvac_mode]
+        homekit_hvac_mode = HC_OPP_TO_HOMEKIT[hvac_mode]
 
         if CHAR_TARGET_HEATING_COOLING in char_values:
             # Homekit will reset the mode when VIEWING the temp
@@ -380,7 +380,7 @@ class Thermostat(HomeAccessory):
         # HVAC_MODE_HEAT_COOL: The device supports heating/cooling to a range
         self.hc_homekit_to opp ={
             c: s
-            for s, c in HC_HASS_TO_HOMEKIT.items()
+            for s, c in HC_OPP_TO_HOMEKIT.items()
             if (
                 s in hc_modes
                 and not (
@@ -441,8 +441,8 @@ class Thermostat(HomeAccessory):
 
         # Update target operation mode FIRST
         hvac_mode = new_state.state
-        if hvac_mode and hvac_mode in HC_HASS_TO_HOMEKIT:
-            homekit_hvac_mode = HC_HASS_TO_HOMEKIT[hvac_mode]
+        if hvac_mode and hvac_mode in HC_OPP_TO_HOMEKIT:
+            homekit_hvac_mode = HC_OPP_TO_HOMEKIT[hvac_mode]
             if homekit_hvac_mode in self.hc_homekit_to.opp:
                 if self.char_target_heat_cool.value != homekit_hvac_mode:
                     self.char_target_heat_cool.set_value(homekit_hvac_mode)
@@ -456,7 +456,7 @@ class Thermostat(HomeAccessory):
         # Set current operation mode for supported thermostats
         hvac_action = new_state.attributes.get(ATTR_HVAC_ACTION)
         if hvac_action:
-            homekit_hvac_action = HC_HASS_TO_HOMEKIT_ACTION[hvac_action]
+            homekit_hvac_action = HC_OPP_TO_HOMEKIT_ACTION[hvac_action]
             if self.char_current_heat_cool.value != homekit_hvac_action:
                 self.char_current_heat_cool.set_value(homekit_hvac_action)
 
@@ -514,8 +514,8 @@ class Thermostat(HomeAccessory):
             self.char_target_temp.set_value(target_temp)
 
         # Update display units
-        if self._unit and self._unit in UNIT_HASS_TO_HOMEKIT:
-            unit = UNIT_HASS_TO_HOMEKIT[self._unit]
+        if self._unit and self._unit in UNIT_OPP_TO_HOMEKIT:
+            unit = UNIT_OPP_TO_HOMEKIT[self._unit]
             if self.char_display_units.value != unit:
                 self.char_display_units.set_value(unit)
 
@@ -606,8 +606,8 @@ class WaterHeater(HomeAccessory):
                 self.char_current_temp.set_value(current_temperature)
 
         # Update display units
-        if self._unit and self._unit in UNIT_HASS_TO_HOMEKIT:
-            unit = UNIT_HASS_TO_HOMEKIT[self._unit]
+        if self._unit and self._unit in UNIT_OPP_TO_HOMEKIT:
+            unit = UNIT_OPP_TO_HOMEKIT[self._unit]
             if self.char_display_units.value != unit:
                 self.char_display_units.set_value(unit)
 

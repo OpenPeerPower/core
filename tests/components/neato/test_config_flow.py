@@ -91,7 +91,7 @@ async def test_abort_if_already_setup_opp: OpenPeerPowerType):
 
 
 async def test_reauth(
-    opp. OpenPeerPowerType, aiohttp_client, aioclient_mock, current_request_with_host
+    opp: OpenPeerPowerType, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test initialization of the reauth flow."""
     assert await setup.async_setup_component(

@@ -76,7 +76,7 @@ def async_get_device(spec: Type[DysonPureCoolLink]) -> DysonPureCoolLink:
 
 @pytest.mark.parametrize("device", [DysonPureCoolLink], indirect=True)
 async def test_state_purecoollink(
-    opp. OpenPeerPower, device: DysonPureCoolLink
+    opp: OpenPeerPower, device: DysonPureCoolLink
 ) -> None:
     """Test the state of a PureCoolLink fan."""
     er = await entity_registry.async_get_registry.opp)
@@ -229,7 +229,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
 )
 @pytest.mark.parametrize("device", [DysonPureCoolLink], indirect=True)
 async def test_commands_purecoollink(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     device: DysonPureCoolLink,
     service: str,
     service_data: dict,
@@ -295,7 +295,7 @@ async def test_commands_purecoollink(
 )
 @pytest.mark.parametrize("device", [DysonPureCool], indirect=True)
 async def test_commands_purecool(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     device: DysonPureCool,
     service: str,
     service_data: dict,
@@ -339,7 +339,7 @@ async def test_commands_purecool(
 )
 @pytest.mark.parametrize("device", [DysonPureCoolLink], indirect=True)
 async def test_custom_services_purecoollink(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     device: DysonPureCoolLink,
     service: str,
     service_data: dict,
@@ -396,7 +396,7 @@ async def test_custom_services_purecoollink(
 )
 @pytest.mark.parametrize("device", [DysonPureCool], indirect=True)
 async def test_custom_services_purecool(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     device: DysonPureCool,
     service: str,
     service_data: dict,
@@ -426,7 +426,7 @@ async def test_custom_services_purecool(
 )
 @pytest.mark.parametrize("device", [DysonPureCool], indirect=True)
 async def test_custom_services_invalid_data(
-    opp. OpenPeerPower, device: DysonPureCool, domain: str, service: str, data: dict
+    opp: OpenPeerPower, device: DysonPureCool, domain: str, service: str, data: dict
 ) -> None:
     """Test custom services calling with invalid data."""
     with pytest.raises(ValueError):

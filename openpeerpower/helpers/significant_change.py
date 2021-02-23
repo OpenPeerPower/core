@@ -8,7 +8,7 @@ from typing import Optional
 from openpeerpower.core import OpenPeerPower
 
 async def async_check_significant_change(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     old_state: str,
     old_attrs: dict,
     new_state: str,
@@ -64,7 +64,7 @@ ExtraCheckTypeFunc = Callable[
 
 
 async def create_checker(
-    opp. OpenPeerPower,
+    opp: OpenPeerPower,
     _domain: str,
     extra_significant_check: Optional[ExtraCheckTypeFunc] = None,
 ) -> SignificantlyChangedChecker:
@@ -82,7 +82,7 @@ async def _initialize.opp: OpenPeerPower) -> None:
     functions = opp.data[DATA_FUNCTIONS] = {}
 
     async def process_platform(
-        opp. OpenPeerPower, component_name: str, platform: Any
+        opp: OpenPeerPower, component_name: str, platform: Any
     ) -> None:
         """Process a significant change platform."""
         functions[component_name] = platform.async_check_significant_change
@@ -124,7 +124,7 @@ class SignificantlyChangedChecker:
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         extra_significant_check: Optional[ExtraCheckTypeFunc] = None,
     ) -> None:
         """Test if an entity has significantly changed."""

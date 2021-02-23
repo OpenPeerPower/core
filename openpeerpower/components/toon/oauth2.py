@@ -9,7 +9,7 @@ from . import config_flow
 
 
 def register_oauth2_implementations(
-    opp. OpenPeerPower, client_id: str, client_secret: str
+    opp: OpenPeerPower, client_id: str, client_secret: str
 ) -> None:
     """Register Toon OAuth2 implementations."""
     config_flow.ToonFlowHandler.async_register_implementation(
@@ -50,7 +50,7 @@ class ToonLocalOAuth2Implementation(config_entry_oauth2_flow.LocalOAuth2Implemen
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         client_id: str,
         client_secret: str,
         name: str,

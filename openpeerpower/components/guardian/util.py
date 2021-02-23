@@ -19,7 +19,7 @@ class GuardianDataUpdateCoordinator(DataUpdateCoordinator[dict]):
 
     def __init__(
         self,
-        opp. OpenPeerPower,
+        opp: OpenPeerPower,
         *,
         client: Client,
         api_name: str,

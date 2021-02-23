@@ -16,7 +16,7 @@ async def test_service_show_view.opp, mock_zeroconf):
         {"external_url": "https://example.com"},
     )
     await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
-    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_HASS_CAST_SHOW_VIEW)
+    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
     await opp.services.async_call(
         "cast",
@@ -43,7 +43,7 @@ async def test_service_show_view_dashboard.opp, mock_zeroconf):
         {"external_url": "https://example.com"},
     )
     await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
-    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_HASS_CAST_SHOW_VIEW)
+    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
     await opp.services.async_call(
         "cast",
@@ -72,7 +72,7 @@ async def test_use_cloud_url.opp, mock_zeroconf):
     opp.config.components.add("cloud")
 
     await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
-    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_HASS_CAST_SHOW_VIEW)
+    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
     with patch(
         "openpeerpower.components.cloud.async_remote_ui_url",

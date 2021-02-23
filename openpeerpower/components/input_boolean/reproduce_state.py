@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def _async_reproduce_states(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     state: State,
     *,
     context: Optional[Context] = None,
@@ -53,7 +53,7 @@ async def _async_reproduce_states(
 
 
 async def async_reproduce_states(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     states: Iterable[State],
     *,
     context: Optional[Context] = None,

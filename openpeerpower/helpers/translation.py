@@ -146,7 +146,7 @@ def _build_resources(
 
 
 async def async_get_component_strings(
-    opp. OpenPeerPowerType, language: str, components: Set[str]
+    opp: OpenPeerPowerType, language: str, components: Set[str]
 ) -> Dict[str, Any]:
     """Load translations."""
     domains = list({loaded.split(".")[-1] for loaded in components})
@@ -280,7 +280,7 @@ class _TranslationCache:
 
 @bind.opp
 async def async_get_translations(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     language: str,
     category: str,
     integration: Optional[str] = None,

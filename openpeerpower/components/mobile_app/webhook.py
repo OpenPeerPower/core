@@ -144,7 +144,7 @@ def validate_schema(schema):
 
 
 async def handle_webhook(
-    opp. OpenPeerPowerType, webhook_id: str, request: Request
+    opp: OpenPeerPowerType, webhook_id: str, request: Request
 ) -> Response:
     """Handle webhook callback."""
     if webhook_id in.opp.data[DOMAIN][DATA_DELETED_IDS]:

@@ -1,5 +1,5 @@
 """Constants for Tibber integration."""
 
-DATA_HASS_CONFIG = "tibber.opp_config"
+DATA_OPP_CONFIG = "tibber.opp_config"
 DOMAIN = "tibber"
 MANUFACTURER = "Tibber"

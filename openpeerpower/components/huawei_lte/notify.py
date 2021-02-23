@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_get_service(
-    opp. OpenPeerPowerType,
+    opp: OpenPeerPowerType,
     config: Dict[str, Any],
     discovery_info: Optional[Dict[str, Any]] = None,
 ) -> Optional[HuaweiLteSmsNotificationService]:

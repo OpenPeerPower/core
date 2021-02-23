@@ -88,7 +88,7 @@ def async_get_purecool_device() -> DysonPureCool:
 
 
 async def async_update_device(
-    opp. OpenPeerPower, device: DysonDevice, state_type: Optional[Type] = None
+    opp: OpenPeerPower, device: DysonDevice, state_type: Optional[Type] = None
 ) -> None:
     """Update the device using callback function."""
     callbacks = [args[0][0] for args in device.add_message_listener.call_args_list]
