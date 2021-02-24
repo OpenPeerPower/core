@@ -139,10 +139,10 @@ class EnOceanSensor(EnOceanEntity, RestoreEntity):
         """Return the unit of measurement."""
         return self._unit_of_measurement
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity about to be added to.opp."""
         # If not None, we got an initial value.
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         if self._state is not None:
             return
 

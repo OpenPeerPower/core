@@ -118,7 +118,7 @@ class PvoutputSensor(Entity):
         await self.rest.async_update()
         self._async_update_from_rest_data()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Ensure the data from the initial update is reflected in the state."""
         self._async_update_from_rest_data()
 

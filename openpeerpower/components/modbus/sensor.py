@@ -194,7 +194,7 @@ class ModbusRegisterSensor(RestoreEntity):
         self._value = None
         self._available = True
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
         state = await self.async_get_last_state()
         if not state:

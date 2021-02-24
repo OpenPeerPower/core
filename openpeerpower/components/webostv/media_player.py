@@ -128,7 +128,7 @@ class LgWebOSMediaPlayerEntity(MediaPlayerEntity):
         self._current_source = None
         self._source_list = {}
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect and subscribe to dispatcher signals and state updates."""
         async_dispatcher_connect(self.opp, DOMAIN, self.async_signal_handler)
 

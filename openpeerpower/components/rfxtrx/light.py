@@ -102,9 +102,9 @@ class RfxtrxLight(RfxtrxCommandEntity, LightEntity):
 
     _brightness = 0
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore RFXtrx device state (ON/OFF)."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()

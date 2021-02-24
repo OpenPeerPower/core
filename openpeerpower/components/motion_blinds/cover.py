@@ -183,10 +183,10 @@ class MotionPositionDevice(CoordinatorEntity, CoverEntity):
         """Return if the cover is closed or not."""
         return self._blind.position == 100
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to multicast pushes and register signal handler."""
         self._blind.Register_callback(self.unique_id, self.schedule_update_op_state)
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""

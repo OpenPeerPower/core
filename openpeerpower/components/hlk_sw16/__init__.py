@@ -183,7 +183,7 @@ class SW16Device(Entity):
         """Update availability state."""
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update callback."""
         self._client.register_status_callback(
             self.handle_event_callback, self._device_port

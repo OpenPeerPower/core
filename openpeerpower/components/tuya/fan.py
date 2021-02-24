@@ -68,9 +68,9 @@ class TuyaFanDevice(TuyaDevice, FanEntity):
         self.entity_id = ENTITY_ID_FORMAT.format(tuya.object_id())
         self.speeds = []
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Create fan list when add to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.speeds.extend(self._tuya.speed_list())
 
     def set_percentage(self, percentage: int) -> None:

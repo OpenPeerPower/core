@@ -111,7 +111,7 @@ class RachioControllerOnlineBinarySensor(RachioControllerBinarySensor):
 
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self._state = self._controller.init_data[KEY_STATUS] == STATUS_ONLINE
 
@@ -157,7 +157,7 @@ class RachioRainSensor(RachioControllerBinarySensor):
 
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self._state = self._controller.init_data[KEY_RAIN_SENSOR_TRIPPED]
 

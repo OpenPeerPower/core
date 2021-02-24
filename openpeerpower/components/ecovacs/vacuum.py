@@ -65,7 +65,7 @@ class EcovacsVacuum(VacuumEntity):
         self._error = None
         _LOGGER.debug("Vacuum initialized: %s", self.name)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Set up the event listeners now that.opp is ready."""
         self.device.statusEvents.subscribe(lambda _: self.schedule_update_op_state())
         self.device.batteryEvents.subscribe(lambda _: self.schedule_update_op_state())

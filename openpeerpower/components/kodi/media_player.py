@@ -365,7 +365,7 @@ class KodiEntity(MediaPlayerEntity):
 
         return STATE_PLAYING
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect the websocket if needed."""
         if not self._connection.can_subscribe:
             return

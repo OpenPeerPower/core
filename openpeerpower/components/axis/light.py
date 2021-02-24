@@ -51,9 +51,9 @@ class AxisLight(AxisEventBase, LightEntity):
 
         self._features = SUPPORT_BRIGHTNESS
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe lights events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         current_intensity = (
             await self.device.api.vapix.light_control.get_current_intensity(

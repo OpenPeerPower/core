@@ -387,9 +387,9 @@ class Thermostat(ZhaEntity, ClimateEntity):
             return self.DEFAULT_MIN_TEMP
         return round(min(temps) / ZCL_TEMP, 1)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.async_accept_signal(
             self._thrm, SIGNAL_ATTR_UPDATED, self.async_attribute_updated
         )
@@ -538,9 +538,9 @@ class SinopeTechnologiesThermostat(Thermostat):
             )
         )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when about to be added to Opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         async_track_time_interval(
             self.opp, self._async_update_time, self.update_time_interval
         )

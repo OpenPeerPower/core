@@ -38,7 +38,7 @@ class DSMRSensor(Entity):
         self._transform = self._definition.get("transform")
         self._state = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to MQTT events."""
 
         @callback

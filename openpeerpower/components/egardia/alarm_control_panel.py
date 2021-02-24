@@ -67,7 +67,7 @@ class EgardiaAlarm(alarm.AlarmControlPanelEntity):
         self._rs_codes = rs_codes
         self._rs_port = rs_port
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Add Egardiaserver callback if enabled."""
         if self._rs_enabled:
             _LOGGER.debug("Registering callback to Egardiaserver")

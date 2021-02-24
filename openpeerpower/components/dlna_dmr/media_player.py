@@ -205,7 +205,7 @@ class DlnaDmrDevice(MediaPlayerEntity):
         self._available = False
         self._subscription_renew_time = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle addition."""
         self._device.on_event = self._on_event
 

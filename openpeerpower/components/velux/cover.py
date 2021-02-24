@@ -52,7 +52,7 @@ class VeluxCover(CoverEntity):
 
         self.node.register_device_updated_cb(after_update_callback)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Store register state change callback."""
         self.async_register_callbacks()
 

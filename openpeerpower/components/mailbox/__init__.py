@@ -108,7 +108,7 @@ class MailboxEntity(Entity):
         self.mailbox = mailbox
         self.message_count = 0
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Complete entity initialization."""
 
         @callback

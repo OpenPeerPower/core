@@ -14,7 +14,7 @@ class RingEntityMixin:
         self._config_entry_id = config_entry_id
         self._device = device
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.ring_objects["device_data"].async_add_listener(self._update_callback)
 

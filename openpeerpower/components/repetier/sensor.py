@@ -100,7 +100,7 @@ class RepetierSensor(Entity):
         """Get new data and update state."""
         self.async_schedule_update_op_state(True)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect update callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(self.opp, UPDATE_SIGNAL, self.update_callback)

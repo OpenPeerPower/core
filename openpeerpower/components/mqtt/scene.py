@@ -77,9 +77,9 @@ class MqttScene(
         MqttAvailability.__init__(self, config)
         MqttDiscoveryUpdate.__init__(self, discovery_data, self.discovery_update)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to MQTT events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def discovery_update(self, discovery_payload):
         """Handle updated discovery message."""

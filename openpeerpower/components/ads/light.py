@@ -49,7 +49,7 @@ class AdsLight(AdsEntity, LightEntity):
         self._state_dict[STATE_KEY_BRIGHTNESS] = None
         self._ads_var_brightness = ads_var_brightness
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register device notification."""
         await self.async_initialize_device(self._ads_var, self._ads_hub.PLCTYPE_BOOL)
 

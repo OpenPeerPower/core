@@ -172,7 +172,7 @@ class MediaroomDevice(MediaPlayerEntity):
         """Return True if entity is available."""
         return self._available
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Retrieve latest state."""
 
         async def async_notify_received(notify):

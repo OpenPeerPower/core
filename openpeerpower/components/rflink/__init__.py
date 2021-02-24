@@ -387,9 +387,9 @@ class RflinkDevice(Entity):
         self._available = availability
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update callback."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         # Remove temporary bogus entity_id if added
         tmp_entity = TMP_ENTITY.format(self._device_id)
         if (
@@ -563,9 +563,9 @@ class RflinkCommand(RflinkDevice):
 class SwitchableRflinkDevice(RflinkCommand, RestoreEntity):
     """Rflink entity which can switch on/off (eg: light, switch)."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore RFLink device state (ON/OFF)."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         old_state = await self.async_get_last_state()
         if old_state is not None:

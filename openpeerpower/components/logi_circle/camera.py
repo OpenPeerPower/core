@@ -57,7 +57,7 @@ class LogiCam(Camera):
         self._ffmpeg = ffmpeg
         self._listeners = []
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect camera methods to signals."""
 
         def _dispatch_proxy(method):

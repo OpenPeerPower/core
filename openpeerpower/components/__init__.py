@@ -16,7 +16,7 @@ from openpeerpower.core import split_entity_id
 _LOGGER = logging.getLogger(__name__)
 
 
-def is_on.opp, entity_id=None):
+def is_on(opp, entity_id=None):
     """Load up the module to call the is_on method.
 
     If there is no entity id given we will check all.
@@ -30,7 +30,7 @@ def is_on.opp, entity_id=None):
         domain = split_entity_id(ent_id)[0]
 
         try:
-            component = getattr.opp.components, domain)
+            component = getattr(opp.components, domain)
 
         except ImportError:
             _LOGGER.error("Failed to call %s.is_on: component not found", domain)

@@ -42,7 +42,7 @@ class HomeworksLight(HomeworksDevice, LightEntity):
         self._level = 0
         self._prev_level = 0
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         signal = f"homeworks_entity_{self._addr}"
         _LOGGER.debug("connecting %s", signal)

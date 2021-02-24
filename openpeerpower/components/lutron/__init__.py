@@ -106,7 +106,7 @@ class LutronDevice(Entity):
         self._controller = controller
         self._area_name = area_name
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.opp.async_add_executor_job(
             self._lutron_device.subscribe, self._update_callback, None

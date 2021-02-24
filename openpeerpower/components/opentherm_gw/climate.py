@@ -82,7 +82,7 @@ class OpenThermClimate(ClimateEntity):
         self.temp_precision = entry.options[CONF_PRECISION]
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect to the OpenTherm Gateway device."""
         _LOGGER.debug("Added OpenTherm Gateway climate device %s", self.friendly_name)
         self._unsub_updates = async_dispatcher_connect(

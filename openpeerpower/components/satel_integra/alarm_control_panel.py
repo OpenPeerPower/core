@@ -63,7 +63,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
         self._partition_id = partition_id
         self._satel = controller
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Update alarm status and register callbacks for future updates."""
         _LOGGER.debug("Starts listening for panel messages")
         self._update_alarm_status()

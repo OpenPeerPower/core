@@ -132,6 +132,6 @@ class W800rf32BinarySensor(BinarySensorEntity):
         self._state = state
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update callback."""
         async_dispatcher_connect(self.opp, self._signal, self.binary_sensor_update)

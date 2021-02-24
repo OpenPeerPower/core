@@ -51,7 +51,7 @@ class SpcAlarm(alarm.AlarmControlPanelEntity):
         self._area = area
         self._api = api
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call for adding new entities."""
         self.async_on_remove(
             async_dispatcher_connect(

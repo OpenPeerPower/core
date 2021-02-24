@@ -160,7 +160,7 @@ class ZhaEntity(BaseZhaEntity, RestoreEntity):
         """Return entity availability."""
         return self._zha_device.available
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Run when about to be added to.opp."""
         self.remove_future = asyncio.Future()
         self.async_accept_signal(
@@ -242,9 +242,9 @@ class ZhaGroupEntity(BaseZhaEntity):
         self._handled_group_membership = True
         await self.async_remove(force_remove=True)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self.async_accept_signal(
             None,

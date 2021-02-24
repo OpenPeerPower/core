@@ -278,7 +278,7 @@ class Plant(Entity):
                 return f"{sensor_name} high"
         return None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """After being added to.opp, load from history."""
         if ENABLE_LOAD_HISTORY and "recorder" in self.opp.config.components:
             # only use the database if it's configured

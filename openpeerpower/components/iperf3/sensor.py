@@ -70,9 +70,9 @@ class Iperf3Sensor(RestoreEntity):
         """Return the polling requirement for this sensor."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self.async_on_remove(
             async_dispatcher_connect(

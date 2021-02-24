@@ -42,7 +42,7 @@ class AdsBinarySensor(AdsEntity, BinarySensorEntity):
         super().__init__(ads_hub, name, ads_var)
         self._device_class = device_class or DEVICE_CLASS_MOVING
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register device notification."""
         await self.async_initialize_device(self._ads_var, self._ads_hub.PLCTYPE_BOOL)
 

@@ -111,9 +111,9 @@ class EcoNetEntity(Entity):
         """Initialize."""
         self._econet = econet
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to device events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
                 PUSH_UPDATE, self.on_update_received

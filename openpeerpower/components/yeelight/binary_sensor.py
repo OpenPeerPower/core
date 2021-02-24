@@ -24,7 +24,7 @@ async def async_setup_entry(
 class YeelightNightlightModeSensor(YeelightEntity, BinarySensorEntity):
     """Representation of a Yeelight nightlight mode sensor."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
         self.async_on_remove(
             async_dispatcher_connect(

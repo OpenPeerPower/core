@@ -124,7 +124,7 @@ class ThermostatEntity(ClimateEntity):
         """Return device specific attributes."""
         return self._device_info.device_info
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity is added to register update signal handler."""
         self._supported_features = self._get_supported_features()
         self.async_on_remove(

@@ -148,9 +148,9 @@ class NetatmoCamera(NetatmoBase, Camera):
         self._is_local = None
         self._light_state = None
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Entity created."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         for event_type in (EVENT_TYPE_LIGHT_MODE, EVENT_TYPE_OFF, EVENT_TYPE_ON):
             self._listeners.append(

@@ -51,7 +51,7 @@ class EnvisalinkBinarySensor(EnvisalinkDevice, BinarySensorEntity):
         _LOGGER.debug("Setting up zone: %s", zone_name)
         super().__init__(zone_name, info, controller)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         async_dispatcher_connect(self.opp, SIGNAL_ZONE_UPDATE, self._update_callback)
 

@@ -248,9 +248,9 @@ class ISYInsteonBinarySensorEntity(ISYBinarySensorEntity):
             self._computed_state = bool(self._node.status)
             self._status_was_unknown = False
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to the node and subnode event emitters."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self._node.control_events.subscribe(self._positive_node_control_handler)
 
@@ -379,9 +379,9 @@ class ISYBinarySensorHeartbeat(ISYNodeEntity, BinarySensorEntity):
         if self.state is None:
             self._computed_state = False
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to the node and subnode event emitters."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self._node.control_events.subscribe(self._heartbeat_node_control_handler)
 

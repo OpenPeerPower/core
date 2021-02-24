@@ -142,7 +142,7 @@ class TileDeviceTracker(CoordinatorEntity, TrackerEntity):
             }
         )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._update_from_latest_data()

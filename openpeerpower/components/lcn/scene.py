@@ -63,7 +63,7 @@ class LcnScene(LcnEntity, Scene):
         else:
             self.transition = pypck.lcn_defs.time_to_ramp_value(config[CONF_TRANSITION])
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added to.opp."""
 
     async def async_activate(self, **kwargs: Any) -> None:

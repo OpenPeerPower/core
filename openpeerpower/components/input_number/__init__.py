@@ -268,9 +268,9 @@ class InputNumber(RestoreEntity):
             ATTR_MODE: self._config[CONF_MODE],
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         if self._current_value is not None:
             return
 

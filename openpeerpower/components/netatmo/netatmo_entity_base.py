@@ -26,7 +26,7 @@ class NetatmoBase(Entity):
         self._name = None
         self._unique_id = None
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Entity created."""
         _LOGGER.debug("New client %s", self.entity_id)
         for data_class in self._data_classes:

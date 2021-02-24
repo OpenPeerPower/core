@@ -89,7 +89,7 @@ class FloSwitch(FloEntity, SwitchEntity):
         self._state = self._device.last_known_valve_state == "open"
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(self._device.async_add_listener(self.async_update_state))
 

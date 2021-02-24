@@ -376,7 +376,7 @@ class AirVisualEntity(CoordinatorEntity):
         """Return the unit the value is expressed in."""
         return self._unit
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         @callback

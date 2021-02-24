@@ -43,7 +43,7 @@ class LutronOccupancySensor(LutronCasetaDevice, BinarySensorEntity):
         """Return the brightness of the light."""
         return self._device["status"] == OCCUPANCY_GROUP_OCCUPIED
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self._smartbridge.add_occupancy_subscriber(
             self.device_id, self.async_write_op_state

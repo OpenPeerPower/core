@@ -136,7 +136,7 @@ class DoorBirdCamera(DoorBirdEntity, Camera):
             )
             return self._last_image
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Add callback after being added to.opp.
 
         Registers entity_id map for the logbook

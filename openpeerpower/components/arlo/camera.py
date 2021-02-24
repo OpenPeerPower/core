@@ -66,7 +66,7 @@ class ArloCam(Camera):
         """Return a still image response from the camera."""
         return self._camera.last_image_from_cache
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.async_on_remove(
             async_dispatcher_connect(

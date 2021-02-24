@@ -193,7 +193,7 @@ class HyperionComponentSwitch(SwitchEntity):
         """Update Hyperion components."""
         self.async_write_op_state()
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks when entity added to.opp."""
         assert self.opp
         self.async_on_remove(

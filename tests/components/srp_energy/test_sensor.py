@@ -94,7 +94,7 @@ async def test_srp_entity.opp):
     assert srp_entity.device_state_attributes[ATTR_ATTRIBUTION] == ATTRIBUTION
     assert srp_entity.available is not None
 
-    await srp_entity.async_added_to.opp()
+    await srp_entity.async_added_to_opp()
     assert srp_entity.state is not None
     assert fake_coordinator.async_add_listener.called
     assert not fake_coordinator.async_add_listener.data.called

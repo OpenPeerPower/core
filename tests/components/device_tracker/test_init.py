@@ -528,7 +528,7 @@ async def test_see_failures(mock_warning, opp, mock_device_tracker_conf):
     assert len(devices) == 4
 
 
-async def test_async_added_to.opp.opp):
+async def test_async_added_to_opp.opp):
     """Test restoring state."""
     attr = {
         ATTR_LONGITUDE: 18,

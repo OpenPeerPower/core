@@ -15,7 +15,7 @@ from .const import DOMAIN, LOGGER
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=90)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Abode camera devices."""
     data = opp.data[DOMAIN]
 
@@ -37,9 +37,9 @@ class AbodeCamera(AbodeDevice, Camera):
         self._event = event
         self._response = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe Abode events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self.opp.async_add_executor_job(
             self._data.abode.events.add_timeline_callback,

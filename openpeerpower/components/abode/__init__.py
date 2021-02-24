@@ -105,7 +105,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Abode integration from a config entry."""
     username = config_entry.data.get(CONF_USERNAME)
     password = config_entry.data.get(CONF_PASSWORD)
@@ -143,14 +143,14 @@ async def async_setup_entry.opp, config_entry):
             opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
-    await setup_opp_events.opp)
+    await setup_opp_events(opp)
     await opp.async_add_executor_job(setup_opp_services, opp)
     await opp.async_add_executor_job(setup_abode_events, opp)
 
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     opp.services.async_remove(DOMAIN, SERVICE_SETTINGS)
     opp.services.async_remove(DOMAIN, SERVICE_CAPTURE_IMAGE)
@@ -165,8 +165,8 @@ async def async_unload_entry.opp, config_entry):
 
     await gather(*tasks)
 
-    await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.stop)
-    await opp.async_add_executor_job.opp.data[DOMAIN].abode.logout)
+    await opp.async_add_executor_job(opp.data[DOMAIN].abode.events.stop)
+    await opp.async_add_executor_job(opp.data[DOMAIN].abode.logout)
 
     opp.data[DOMAIN].logout_listener()
     opp.data.pop(DOMAIN)
@@ -174,7 +174,7 @@ async def async_unload_entry.opp, config_entry):
     return True
 
 
-def setup_opp_services.opp):
+def setup_opp_services(opp):
     """Open Peer Power services."""
 
     def change_setting(call):
@@ -193,13 +193,13 @@ def setup_opp_services.opp):
 
         target_entities = [
             entity_id
-            for entity_id in.opp.data[DOMAIN].entity_ids
+            for entity_id in(opp.data[DOMAIN].entity_ids
             if entity_id in entity_ids
         ]
 
         for entity_id in target_entities:
             signal = f"abode_camera_capture_{entity_id}"
-            dispatcher_send.opp, signal)
+            dispatcher_send(opp, signal)
 
     def trigger_automation(call):
         """Trigger an Abode automation."""
@@ -207,13 +207,13 @@ def setup_opp_services.opp):
 
         target_entities = [
             entity_id
-            for entity_id in.opp.data[DOMAIN].entity_ids
+            for entity_id in(opp.data[DOMAIN].entity_ids
             if entity_id in entity_ids
         ]
 
         for entity_id in target_entities:
             signal = f"abode_trigger_automation_{entity_id}"
-            dispatcher_send.opp, signal)
+            dispatcher_send(opp, signal)
 
     opp.services.register(
         DOMAIN, SERVICE_SETTINGS, change_setting, schema=CHANGE_SETTING_SCHEMA
@@ -228,26 +228,26 @@ def setup_opp_services.opp):
     )
 
 
-async def setup_opp_events.opp):
+async def setup_opp_events(opp):
     """Open Peer Power start and stop callbacks."""
 
     def logout(event):
         """Logout of Abode."""
-        if not.opp.data[DOMAIN].polling:
+        if not opp.data[DOMAIN].polling:
             opp.data[DOMAIN].abode.events.stop()
 
         opp.data[DOMAIN].abode.logout()
         LOGGER.info("Logged out of Abode")
 
-    if not.opp.data[DOMAIN].polling:
-        await opp.async_add_executor_job.opp.data[DOMAIN].abode.events.start)
+    if not opp.data[DOMAIN].polling:
+        await opp.async_add_executor_job(opp.data[DOMAIN].abode.events.start)
 
     opp.data[DOMAIN].logout_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, logout
     )
 
 
-def setup_abode_events.opp):
+def setup_abode_events(opp):
     """Event callbacks."""
 
     def event_callback(event, event_json):
@@ -307,7 +307,7 @@ class AbodeEntity(Entity):
         """Return the polling state."""
         return self._data.polling
 
-    async def async_added_to.opp(self):
+    async def async_added_to(opp(self):
         """Subscribe to Abode connection status updates."""
         await self.opp.async_add_executor_job(
             self._data.abode.events.add_connection_status_callback,
@@ -317,9 +317,9 @@ class AbodeEntity(Entity):
 
         self.opp.data[DOMAIN].entity_ids.add(self.entity_id)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe from Abode connection status updates."""
-        await self.opp.async_add_executor_job(
+        await self(opp.async_add_executor_job(
             self._data.abode.events.remove_connection_status_callback, self.unique_id
         )
 
@@ -337,18 +337,18 @@ class AbodeDevice(AbodeEntity):
         super().__init__(data)
         self._device = device
 
-    async def async_added_to.opp(self):
+    async def async_added_to(opp(self):
         """Subscribe to device events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         await self.opp.async_add_executor_job(
             self._data.abode.events.add_device_callback,
             self._device.device_id,
             self._update_callback,
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe from device events."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from_opp()
         await self.opp.async_add_executor_job(
             self._data.abode.events.remove_all_device_callbacks, self._device.device_id
         )

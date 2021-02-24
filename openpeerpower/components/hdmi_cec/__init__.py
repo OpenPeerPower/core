@@ -384,7 +384,7 @@ class CecEntity(Entity):
         else:
             _LOGGER.warning("Unknown state: %d", device.power_status)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register HDMI callbacks after initialization."""
         self._device.set_update_callback(self._update)
 

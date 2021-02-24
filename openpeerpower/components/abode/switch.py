@@ -48,9 +48,9 @@ class AbodeSwitch(AbodeDevice, SwitchEntity):
 class AbodeAutomationSwitch(AbodeAutomation, SwitchEntity):
     """A switch implementation for Abode automations."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Set up trigger automation service."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         signal = f"abode_trigger_automation_{self.entity_id}"
         self.async_on_remove(async_dispatcher_connect(self.opp, signal, self.trigger))

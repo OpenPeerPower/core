@@ -56,7 +56,7 @@ class MyChevyStatus(Entity):
         """Initialize sensor with car connection."""
         self._state = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
@@ -131,7 +131,7 @@ class EVSensor(Entity):
 
         self.entity_id = f"{SENSOR_DOMAIN}.{MYCHEVY_DOMAIN}_{slugify(self._car.name)}_{slugify(self._name)}"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.opp.helpers.dispatcher.async_dispatcher_connect(
             UPDATE_TOPIC, self.async_update_callback

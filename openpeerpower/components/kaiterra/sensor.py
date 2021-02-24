@@ -86,7 +86,7 @@ class KaiterraSensor(Entity):
             return TEMP_CELSIUS
         return value
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callback."""
         self.async_on_remove(
             async_dispatcher_connect(

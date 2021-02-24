@@ -167,9 +167,9 @@ class DimmableRflinkLight(SwitchableRflinkDevice, LightEntity):
 
     _brightness = 255
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore RFLink light brightness attribute."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         old_state = await self.async_get_last_state()
         if (
@@ -223,9 +223,9 @@ class HybridRflinkLight(SwitchableRflinkDevice, LightEntity):
 
     _brightness = 255
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore RFLink light brightness attribute."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         old_state = await self.async_get_last_state()
         if (

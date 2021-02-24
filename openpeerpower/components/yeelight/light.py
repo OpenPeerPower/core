@@ -444,7 +444,7 @@ class YeelightGenericLight(YeelightEntity, LightEntity):
     def _schedule_immediate_update(self):
         self.async_schedule_update_op_state(True)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
         self.async_on_remove(
             async_dispatcher_connect(

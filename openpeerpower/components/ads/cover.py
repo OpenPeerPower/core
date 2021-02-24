@@ -107,7 +107,7 @@ class AdsCover(AdsEntity, CoverEntity):
         self._ads_var_stop = ads_var_stop
         self._device_class = device_class
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register device notification."""
         if self._ads_var is not None:
             await self.async_initialize_device(

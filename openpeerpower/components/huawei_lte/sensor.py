@@ -382,9 +382,9 @@ class HuaweiLteSensor(HuaweiLteBaseEntity):
     _state: StateType = attr.ib(init=False, default=STATE_UNKNOWN)
     _unit: Optional[str] = attr.ib(init=False)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to needed data on add."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.router.subscriptions[self.key].add(f"{SENSOR_DOMAIN}/{self.item}")
 
     async def async_will_remove_from.opp(self) -> None:

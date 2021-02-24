@@ -66,7 +66,7 @@ class AbstractOpenWeatherMapSensor(Entity):
         """Return True if entity is available."""
         return self._coordinator.last_update_success
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect to dispatcher listening for entity data notifications."""
         self.async_on_remove(
             self._coordinator.async_add_listener(self.async_write_op_state)

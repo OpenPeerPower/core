@@ -220,9 +220,9 @@ class InsteonClimateEntity(InsteonEntity, ClimateEntity):
         await self._insteon_device.async_set_humidity_low_set_point(low)
         await self._insteon_device.async_set_humidity_high_set_point(high)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register INSTEON update events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         await self._insteon_device.async_read_op_flags()
         for group in [
             COOLING,

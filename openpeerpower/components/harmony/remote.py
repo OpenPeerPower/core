@@ -124,9 +124,9 @@ class HarmonyRemote(ConnectionStateMixin, remote.RemoteEntity, RestoreEntity):
         self._activity_starting = None
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Complete the initialization."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         _LOGGER.debug("%s: Harmony Hub added", self._name)
 

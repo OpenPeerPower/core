@@ -92,9 +92,9 @@ class RingSensor(RingEntityMixin, Entity):
 class HealthDataRingSensor(RingSensor):
     """Ring sensor that relies on health data."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         await self.ring_objects["health_data"].async_track_device(
             self._device, self._health_update_callback
@@ -134,9 +134,9 @@ class HistoryRingSensor(RingSensor):
 
     _latest_event = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         await self.ring_objects["history_data"].async_track_device(
             self._device, self._history_update_callback

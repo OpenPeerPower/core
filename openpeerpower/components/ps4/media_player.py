@@ -124,7 +124,7 @@ class PS4Device(MediaPlayerEntity):
                 self._region,
             )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe PS4 events."""
         self.opp.data[PS4_DATA].devices.append(self)
         self.check_region()

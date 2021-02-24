@@ -119,7 +119,7 @@ class DysonEntity(Entity):
         self._device = device
         self._state_type = state_type
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self._device.add_message_listener(self.on_message_filter)
 

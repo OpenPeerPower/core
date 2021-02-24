@@ -74,7 +74,7 @@ class TransmissionSensor(Entity):
         """Could the device be accessed during the last update call."""
         return self._tm_client.api.available
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
 
         @callback

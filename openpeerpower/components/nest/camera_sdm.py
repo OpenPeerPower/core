@@ -163,7 +163,7 @@ class NestCamera(Camera):
         if self._event_image_cleanup_unsub is not None:
             self._event_image_cleanup_unsub()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity is added to register update signal handler."""
         self.async_on_remove(
             self._device.add_update_listener(self.async_write_op_state)

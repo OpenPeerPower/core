@@ -72,7 +72,7 @@ class WemoEntity(Entity):
         """Update the device state."""
         raise NotImplementedError()
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Wemo device added to Open Peer Power."""
         # Define inside async context so we know our event loop
         self._update_lock = asyncio.Lock()
@@ -156,9 +156,9 @@ class WemoSubscriptionEntity(WemoEntity):
             self.available and self._has_polled and registry.is_subscribed(self.wemo)
         )
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Wemo device added to Open Peer Power."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         registry = self.opp.data[WEMO_DOMAIN]["registry"]
         await self.opp.async_add_executor_job(registry.register, self.wemo)

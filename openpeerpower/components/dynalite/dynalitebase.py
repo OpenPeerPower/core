@@ -66,7 +66,7 @@ class DynaliteBase(Entity):
             "manufacturer": "Dynalite",
         }
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Added to.opp so need to register to dispatch."""
         # register for device specific update
         self._unsub_dispatchers.append(

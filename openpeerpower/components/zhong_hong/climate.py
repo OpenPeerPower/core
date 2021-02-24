@@ -131,7 +131,7 @@ class ZhongHongClimate(ClimateEntity):
         self._current_fan_mode = None
         self.is_initialized = False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self._device.register_update_callback(self._after_update)
         self.is_initialized = True

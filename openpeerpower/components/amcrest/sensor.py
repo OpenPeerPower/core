@@ -122,7 +122,7 @@ class AmcrestSensor(Entity):
         """Update state."""
         self.async_schedule_update_op_state(True)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to update signal."""
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp,

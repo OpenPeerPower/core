@@ -98,7 +98,7 @@ class OpenThermSensor(Entity):
         self._friendly_name = friendly_name_format.format(gw_dev.name)
         self._unsub_updates = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates from the component."""
         _LOGGER.debug("Added OpenTherm Gateway sensor %s", self._friendly_name)
         self._unsub_updates = async_dispatcher_connect(

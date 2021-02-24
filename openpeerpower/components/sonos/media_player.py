@@ -552,7 +552,7 @@ class SonosEntity(MediaPlayerEntity):
         self._sw_version = speaker_info["software_version"]
         self._mac_address = speaker_info["mac_address"]
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe sonos events."""
         await self.async_seen(self.soco)
 

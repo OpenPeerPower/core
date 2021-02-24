@@ -119,7 +119,7 @@ class BroadlinkSensor(Entity):
             self._state = self._coordinator.data[self._monitored_condition]
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when the sensor is added to.opp."""
         self.async_on_remove(self._coordinator.async_add_listener(self.update_data))
 

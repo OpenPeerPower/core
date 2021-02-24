@@ -53,9 +53,9 @@ class RingCam(RingEntityMixin, Camera):
         self._video_url = None
         self._expires_at = dt_util.utcnow() - FORCE_REFRESH_INTERVAL
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         await self.ring_objects["history_data"].async_track_device(
             self._device, self._history_update_callback

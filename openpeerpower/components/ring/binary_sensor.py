@@ -58,9 +58,9 @@ class RingBinarySensor(RingEntityMixin, BinarySensorEntity):
         self._unique_id = f"{device.id}-{sensor_type}"
         self._update_alert()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.ring_objects["dings_data"].async_add_listener(self._dings_update_callback)
         self._dings_update_callback()
 

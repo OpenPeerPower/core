@@ -632,7 +632,7 @@ class SynologyDSMDispatcherEntity(SynologyDSMBaseEntity, Entity):
 
         await self._api.async_update()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register state update callback."""
         self.async_on_remove(
             async_dispatcher_connect(

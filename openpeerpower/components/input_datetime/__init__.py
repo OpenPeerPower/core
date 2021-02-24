@@ -237,9 +237,9 @@ class InputDatetime(RestoreEntity):
         input_dt.editable = False
         return input_dt
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         # Priority 1: Initial value
         if self.state is not None:

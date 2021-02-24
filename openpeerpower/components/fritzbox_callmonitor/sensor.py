@@ -117,7 +117,7 @@ class FritzBoxCallSensor(Entity):
         self._port = port
         self._monitor = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect to FRITZ!Box to monitor its call state."""
         _LOGGER.debug("Starting monitor for: %s", self.entity_id)
         self._monitor = FritzBoxCallMonitor(

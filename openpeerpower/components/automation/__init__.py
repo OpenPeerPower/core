@@ -311,9 +311,9 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         self._referenced_entities = referenced
         return referenced
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Startup with initial state or previous state."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self._logger = logging.getLogger(
             f"{__name__}.{split_entity_id(self.entity_id)[1]}"

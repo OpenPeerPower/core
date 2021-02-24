@@ -211,7 +211,7 @@ class TodSensor(BinarySensorEntity):
             # Offset is already there
             self._time_before += timedelta(days=1)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity about to be added to Open Peer Power."""
         self._calculate_initial_boudary_time()
         self._calculate_next_update()

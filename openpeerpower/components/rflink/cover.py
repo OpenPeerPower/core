@@ -114,9 +114,9 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 class RflinkCover(RflinkCommand, CoverEntity, RestoreEntity):
     """Rflink entity which can switch on/stop/off (eg: cover)."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore RFLink cover state (OPEN/CLOSE)."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         old_state = await self.async_get_last_state()
         if old_state is not None:

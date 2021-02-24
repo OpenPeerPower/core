@@ -215,7 +215,7 @@ class GeniusEntity(Entity):
         """Initialize the entity."""
         self._unique_id = self._name = None
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Set up a listener when this entity is added to HA."""
         self.async_on_remove(async_dispatcher_connect(self.opp, DOMAIN, self._refresh))
 

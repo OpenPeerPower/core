@@ -61,7 +61,7 @@ class RouterOnlineBinarySensor(BinarySensorEntity):
         """Return a client description for device registry."""
         return self._router.device_info
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Client entity created."""
         self.async_on_remove(
             async_dispatcher_connect(

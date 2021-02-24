@@ -173,9 +173,9 @@ class RfxtrxBinarySensor(RfxtrxEntity, BinarySensorEntity):
         self._cmd_on = cmd_on
         self._cmd_off = cmd_off
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore device state."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()

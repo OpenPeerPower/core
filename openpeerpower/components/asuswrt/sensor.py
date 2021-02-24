@@ -226,10 +226,10 @@ class AsuswrtSensor(CoordinatorEntity):
         """Return if the entity should be enabled when first added to the entity registry."""
         return False
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """When entity is added to.opp."""
         self._handler.enable_sensor(self._type)
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def async_will_remove_from.opp(self):
         """Call when entity is removed from.opp."""

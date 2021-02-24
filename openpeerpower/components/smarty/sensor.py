@@ -73,7 +73,7 @@ class SmartySensor(Entity):
         """Return the unit this state is expressed in."""
         return self._unit_of_measurement
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call to update."""
         async_dispatcher_connect(self.opp, SIGNAL_UPDATE_SMARTY, self._update_callback)
 

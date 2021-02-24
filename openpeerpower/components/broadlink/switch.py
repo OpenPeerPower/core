@@ -192,7 +192,7 @@ class BroadlinkSwitch(SwitchEntity, RestoreEntity, ABC):
         """Update data."""
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when the switch is added to.opp."""
         if self._state is None:
             state = await self.async_get_last_state()

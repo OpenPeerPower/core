@@ -92,7 +92,7 @@ class HomematicipAlarmControlPanelEntity(AlarmControlPanelEntity):
         """Send arm away command."""
         await self._home.set_security_zones_activation(True, True)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks."""
         self._home.on_update(self._async_device_changed)
 

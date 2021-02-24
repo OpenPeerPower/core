@@ -107,7 +107,7 @@ class StatisticsSensor(Entity):
         self.change = self.average_change = self.change_rate = None
         self._update_listener = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         @callback

@@ -58,7 +58,7 @@ class EVBinarySensor(BinarySensorEntity):
         """Return the car."""
         return self._conn.get_car(self._car_vid)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(

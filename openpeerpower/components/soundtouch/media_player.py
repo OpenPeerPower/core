@@ -339,7 +339,7 @@ class SoundTouchDevice(MediaPlayerEntity):
         """Album name of current playing media."""
         return self._status.album
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Populate zone info which requires entity_id."""
 
         @callback

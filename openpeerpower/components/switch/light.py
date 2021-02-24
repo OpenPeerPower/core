@@ -128,7 +128,7 @@ class LightSwitch(LightEntity):
         self._is_on = switch_state.state == STATE_ON
         self._available = switch_state.state != STATE_UNAVAILABLE
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks."""
 
         @callback

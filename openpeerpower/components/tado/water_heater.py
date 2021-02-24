@@ -154,7 +154,7 @@ class TadoWaterHeater(TadoZoneEntity, WaterHeaterEntity):
         self._overlay_mode = CONST_MODE_SMART_SCHEDULE
         self._tado_zone_data = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(

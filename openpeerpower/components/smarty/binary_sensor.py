@@ -58,7 +58,7 @@ class SmartyBinarySensor(BinarySensorEntity):
         """Return true if the binary sensor is on."""
         return self._state
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call to update."""
         async_dispatcher_connect(self.opp, SIGNAL_UPDATE_SMARTY, self._update_callback)
 

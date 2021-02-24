@@ -146,7 +146,7 @@ class CoverGroup(GroupEntity, CoverEntity):
         if update_state:
             await self.async_defer_or_update_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register listeners."""
         for entity_id in self._entities:
             new_state = self.opp.states.get(entity_id)
@@ -165,7 +165,7 @@ class CoverGroup(GroupEntity, CoverEntity):
         if self.opp.state == CoreState.running:
             await self.async_update()
             return
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @property
     def name(self):

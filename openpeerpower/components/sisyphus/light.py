@@ -34,7 +34,7 @@ class SisyphusLight(LightEntity):
         self._name = name
         self._table = table
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Add listeners after this object has been initialized."""
         self._table.add_listener(self.async_write_op_state)
 

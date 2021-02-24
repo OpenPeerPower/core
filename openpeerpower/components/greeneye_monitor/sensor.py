@@ -111,7 +111,7 @@ class GEMSensor(Entity):
         """Return the name of the channel."""
         return self._name
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Wait for and connect to the sensor."""
         monitors = self.opp.data[DATA_GREENEYE_MONITOR]
 

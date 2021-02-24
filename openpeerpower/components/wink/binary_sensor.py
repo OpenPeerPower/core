@@ -104,7 +104,7 @@ class WinkBinarySensorEntity(WinkDevice, BinarySensorEntity):
         else:
             self.capability = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["binary_sensor"].append(self)
 

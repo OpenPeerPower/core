@@ -105,7 +105,7 @@ class KulerskyLight(LightEntity):
         self._white_value = None
         self._available = True
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Run when entity about to be added to.opp."""
         self.async_on_remove(
             self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self.disconnect)

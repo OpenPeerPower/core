@@ -109,9 +109,9 @@ class ISYLightEntity(ISYNodeEntity, LightEntity, RestoreEntity):
         """Flag supported features."""
         return SUPPORT_BRIGHTNESS
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Restore last_brightness on restart."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self._last_brightness = self.brightness or 255
         last_state = await self.async_get_last_state()

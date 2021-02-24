@@ -159,7 +159,7 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
             device_info["via_device"] = (DOMAIN, self._device.parent_device_id)
         return device_info
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self.async_on_remove(
             self.coordinator.async_add_listener(self.async_write_op_state)

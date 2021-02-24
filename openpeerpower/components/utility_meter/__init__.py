@@ -132,9 +132,9 @@ class TariffSelect(RestoreEntity):
         self._tariffs = tariffs
         self._icon = TARIFF_ICON
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         if self._current_tariff is not None:
             return
 

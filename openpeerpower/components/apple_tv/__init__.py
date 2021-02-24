@@ -100,7 +100,7 @@ class AppleTVEntity(Entity):
         self._name = name
         self._identifier = identifier
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle when an entity is about to be added to Open Peer Power."""
 
         @callback

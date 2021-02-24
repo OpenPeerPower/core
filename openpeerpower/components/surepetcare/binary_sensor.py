@@ -115,7 +115,7 @@ class SurePetcareBinarySensor(BinarySensorEntity):
         self._state = self._spc_data.get("status")
         _LOGGER.debug("%s -> self._state: %s", self._name, self._state)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks."""
 
         @callback

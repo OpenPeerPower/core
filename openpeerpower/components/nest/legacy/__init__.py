@@ -404,7 +404,7 @@ class NestSensorDevice(Entity):
         """Do not use NestSensorDevice directly."""
         raise NotImplementedError
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update signal handler."""
 
         async def async_update_state():

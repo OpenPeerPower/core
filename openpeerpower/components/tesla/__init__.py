@@ -326,7 +326,7 @@ class TeslaDevice(CoordinatorEntity):
             "sw_version": self.tesla_device.car_version,
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register state update callback."""
         self.async_on_remove(self.coordinator.async_add_listener(self.refresh))
 

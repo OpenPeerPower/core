@@ -117,7 +117,7 @@ class ResponseSwitch(SwitchEntity):
         await self._client.async_set_response(value)
         self.client_update()
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register update callback."""
         self.async_on_remove(
             async_dispatcher_connect(

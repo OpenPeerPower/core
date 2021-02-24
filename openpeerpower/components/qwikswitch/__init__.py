@@ -89,7 +89,7 @@ class QSEntity(Entity):
         """Receive update packet from QSUSB. Match dispather_send signature."""
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Listen for updates from QSUSb via dispatcher."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(

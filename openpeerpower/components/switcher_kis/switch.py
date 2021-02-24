@@ -155,7 +155,7 @@ class SwitcherControl(SwitchEntity):
         """Return True if entity is available."""
         return self._state in [SWITCHER_STATE_ON, SWITCHER_STATE_OFF]
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Run when entity about to be added to.opp."""
         self.async_on_remove(
             async_dispatcher_connect(

@@ -79,7 +79,7 @@ class TimeDateSensor(Entity):
             return "mdi:calendar"
         return "mdi:clock"
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Set up first update."""
         self.unsub = async_track_point_in_utc_time(
             self.opp, self.point_in_time_listener, self.get_next_interval()

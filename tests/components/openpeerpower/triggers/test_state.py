@@ -1033,9 +1033,9 @@ async def test_if_fires_on_change_from_with_for.opp.calls):
     await opp.async_block_till_done()
     opp.states.async_set("media_player.foo", "paused")
     await opp.async_block_till_done()
-    opp.states.async_set("media_player.foo", "stopp.")
+    opp.states.async_set("media_player.foo", "stopped")
     await opp.async_block_till_done()
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(minutes=1))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(minutes=1))
     await opp.async_block_till_done()
     assert len(calls) == 1
 

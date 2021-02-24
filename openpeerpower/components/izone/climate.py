@@ -144,7 +144,7 @@ class ControllerDevice(ClimateEntity):
         for zone in controller.zones:
             self.zones[zone] = ZoneDevice(self, zone)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call on adding to.opp."""
         # Register for connect/disconnect/update events
         @callback
@@ -465,7 +465,7 @@ class ZoneDevice(ClimateEntity):
             "model": zone.type.name.title(),
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call on adding to.opp."""
 
         @callback

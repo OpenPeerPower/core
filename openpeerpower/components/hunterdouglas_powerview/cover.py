@@ -266,7 +266,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
         self._async_update_current_cover_position()
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """When entity is added to.opp."""
         self._async_update_current_cover_position()
         self.async_on_remove(

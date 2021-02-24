@@ -283,7 +283,7 @@ class MinecraftServerEntity(Entity):
         """Fetch data from the server."""
         raise NotImplementedError()
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Connect dispatcher to signal from server."""
         self._disconnect_dispatcher = async_dispatcher_connect(
             self.opp, self._server.signal_name, self._update_callback

@@ -138,7 +138,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
         self._delay_off_raw = delay_off_raw
         self._unique_id = unique_id
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.add_template_attribute("_state", self._template, None, self._update_state)
 
@@ -158,7 +158,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
                     "_delay_off", self._delay_off_raw, cv.positive_time_period
                 )
 
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @callback
     def _update_state(self, result):

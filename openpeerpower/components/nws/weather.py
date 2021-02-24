@@ -116,7 +116,7 @@ class NWSWeather(WeatherEntity):
         self.observation = None
         self._forecast = None
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Set up a listener and load data."""
         self.async_on_remove(
             self.coordinator_observation.async_add_listener(self._update_callback)

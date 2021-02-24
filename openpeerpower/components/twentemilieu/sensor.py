@@ -114,7 +114,7 @@ class TwenteMilieuSensor(Entity):
         """Return the polling requirement of the entity."""
         return False
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Connect to dispatcher listening for entity data notifications."""
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, DATA_UPDATE, self._schedule_immediate_update

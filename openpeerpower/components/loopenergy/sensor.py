@@ -124,7 +124,7 @@ class LoopEnergyElec(LoopEnergyDevice):
         super().__init__(controller)
         self._name = "Power Usage"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self._controller.subscribe_elecricity(self._callback)
 
@@ -141,7 +141,7 @@ class LoopEnergyGas(LoopEnergyDevice):
         super().__init__(controller)
         self._name = "Gas Usage"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self._controller.subscribe_gas(self._callback)
 

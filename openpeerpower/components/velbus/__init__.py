@@ -152,7 +152,7 @@ class VelbusEntity(Entity):
         """Disable polling."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Add listener for state changes."""
         self._module.on_status_update(self._channel, self._on_update)
 

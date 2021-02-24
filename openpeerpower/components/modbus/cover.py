@@ -96,7 +96,7 @@ class ModbusCover(CoverEntity, RestoreEntity):
             self._status_register = self._register
             self._status_register_type = CALL_TYPE_REGISTER_HOLDING
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
         state = await self.async_get_last_state()
         if not state:

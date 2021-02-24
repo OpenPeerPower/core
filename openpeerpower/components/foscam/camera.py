@@ -146,7 +146,7 @@ class OppFoscamCamera(Camera):
         self._rtsp_port = config_entry.data[CONF_RTSP_PORT]
         self._motion_status = False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity addition to.opp."""
         # Get motion detection status
         ret, response = await self.opp.async_add_executor_job(

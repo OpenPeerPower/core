@@ -30,7 +30,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class AdsSwitch(AdsEntity, SwitchEntity):
     """Representation of an ADS switch device."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register device notification."""
         await self.async_initialize_device(self._ads_var, self._ads_hub.PLCTYPE_BOOL)
 

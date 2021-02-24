@@ -134,9 +134,9 @@ class ZhaFan(BaseFan, ZhaEntity):
         super().__init__(unique_id, zha_device, channels, **kwargs)
         self._fan_channel = self.cluster_channels.get(CHANNEL_FAN)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.async_accept_signal(
             self._fan_channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )
@@ -224,7 +224,7 @@ class FanGroup(BaseFan, ZhaGroupEntity):
             self._percentage = None
             self._preset_mode = None
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Run when about to be added to.opp."""
         await self.async_update()
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()

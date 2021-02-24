@@ -217,7 +217,7 @@ class SmileGateway(CoordinatorEntity):
 
         return device_information
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self._async_process_data()
         self.async_on_remove(

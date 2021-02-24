@@ -186,9 +186,9 @@ class SomfyCover(SomfyEntity, RestoreEntity, CoverEntity):
         """Stop the cover."""
         self._cover.stop()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Complete the initialization."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         if not self.optimistic:
             return
         # Restore the last state if we use optimistic

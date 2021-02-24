@@ -472,7 +472,7 @@ class TemplateFan(TemplateEntity, FanEntity):
             )
             self._state = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.add_template_attribute("_state", self._template, None, self._update_state)
         if self._preset_mode_template is not None:
@@ -515,7 +515,7 @@ class TemplateFan(TemplateEntity, FanEntity):
                 self._update_direction,
                 none_on_template_error=True,
             )
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @callback
     def _update_speed(self, speed):

@@ -453,7 +453,7 @@ class ElkEntity(Entity):
         self._element_changed(element, changeset)
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callback for ElkM1 changes and update entity state."""
         self._element.add_callback(self._element_callback)
         self._element_callback(self._element, {})

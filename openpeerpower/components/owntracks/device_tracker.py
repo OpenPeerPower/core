@@ -121,9 +121,9 @@ class OwnTracksEntity(TrackerEntity, RestoreEntity):
         """Return the device info."""
         return {"name": self.name, "identifiers": {(OT_DOMAIN, self._dev_id)}}
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         # Don't restore if we got set up with data.
         if self._data:

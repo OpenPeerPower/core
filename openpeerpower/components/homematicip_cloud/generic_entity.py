@@ -108,7 +108,7 @@ class HomematicipGenericEntity(Entity):
             }
         return None
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks."""
         self._hap.hmip_device_by_entity_id[self.entity_id] = self._device
         self._device.on_update(self._async_device_changed)

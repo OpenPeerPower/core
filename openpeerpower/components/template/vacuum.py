@@ -334,7 +334,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
                 self._fan_speed_list,
             )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         if self._template is not None:
             self.add_template_attribute(
@@ -355,7 +355,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
                 self._update_battery_level,
                 none_on_template_error=True,
             )
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @callback
     def _update_state(self, result):

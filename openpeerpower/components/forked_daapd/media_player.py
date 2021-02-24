@@ -128,7 +128,7 @@ class ForkedDaapdZone(MediaPlayerEntity):
         self._available = True
         self._entry_id = entry_id
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Use lifecycle hooks."""
         self.async_on_remove(
             async_dispatcher_connect(
@@ -260,7 +260,7 @@ class ForkedDaapdMaster(MediaPlayerEntity):
         self._source = SOURCE_NAME_DEFAULT
         self._max_playlists = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Use lifecycle hooks."""
         self.async_on_remove(
             async_dispatcher_connect(

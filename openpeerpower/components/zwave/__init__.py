@@ -1302,7 +1302,7 @@ class ZWaveDeviceEntity(ZWaveBaseEntity):
         # else for the above two ifs, update if not using update_entity
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Add device to dict."""
         async_dispatcher_connect(
             self.opp,

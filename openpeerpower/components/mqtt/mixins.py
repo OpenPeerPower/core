@@ -173,9 +173,9 @@ class MqttAttributes(Entity):
         self._attributes_sub_state = None
         self._attributes_config = config
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe MQTT events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         await self._attributes_subscribe_topics()
 
     async def attributes_discovery_update(self, config: dict):
@@ -241,9 +241,9 @@ class MqttAvailability(Entity):
         self._available_latest = False
         self._availability_setup_from_config(config)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe MQTT events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         await self._availability_subscribe_topics()
         self.async_on_remove(
             async_dispatcher_connect(self.opp, MQTT_CONNECTED, self.async_mqtt_connect)
@@ -365,9 +365,9 @@ class MqttDiscoveryUpdate(Entity):
         self._remove_signal = None
         self._removed_from opp =False
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to discovery updates."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._removed_from opp =False
         discovery_hash = (
             self._discovery_data[ATTR_DISCOVERY_HASH] if self._discovery_data else None
@@ -539,9 +539,9 @@ class MqttEntity(
         MqttDiscoveryUpdate.__init__(self, discovery_data, self.discovery_update)
         MqttEntityDeviceInfo.__init__(self, config.get(CONF_DEVICE), config_entry)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe mqtt events."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         await self._subscribe_topics()
 
     async def discovery_update(self, discovery_payload):

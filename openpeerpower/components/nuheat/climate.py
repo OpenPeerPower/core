@@ -266,9 +266,9 @@ class NuHeatThermostat(CoordinatorEntity, ClimateEntity):
         """Force a refresh."""
         await self.coordinator.async_refresh()
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """When entity is added to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._update_internal_state()
 
     @callback

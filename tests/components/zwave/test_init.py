@@ -1869,7 +1869,7 @@ async def test_refresh_entity.opp, mock_openzwave, zwave_setup_ready):
     device = get_device(node=node, values=values, node_config={})
     device.opp = opp
     device.entity_id = "binary_sensor.mock_entity_id"
-    await device.async_added_to.opp()
+    await device.async_added_to_opp()
     await opp.async_block_till_done()
 
     await opp.services.async_call(

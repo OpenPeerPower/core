@@ -145,7 +145,7 @@ class OppEzvizCamera(Camera):
         self._device_sub_category = data["device_sub_category"]
         self._local_rtsp_port = data["local_rtsp_port"]
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to ffmpeg and add camera to list."""
         self._ffmpeg = self.opp.data[DATA_FFMPEG]
 

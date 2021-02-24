@@ -31,7 +31,7 @@ class SabnzbdSensor(Entity):
         self._type = sensor_type
         self._unit_of_measurement = SENSOR_TYPES[sensor_type][1]
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity about to be added to.opp."""
         self.async_on_remove(
             async_dispatcher_connect(

@@ -131,9 +131,9 @@ class TuyaClimateEntity(TuyaDevice, ClimateEntity):
             self._min_temp = min_temp
             self._max_temp = max_temp
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Create operation list when add to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._process_config()
         self.async_on_remove(
             async_dispatcher_connect(

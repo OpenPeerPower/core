@@ -68,7 +68,7 @@ class PlumLight(LightEntity):
         self._load = load
         self._brightness = load.level
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to dimmerchange events."""
         self._load.add_event_listener("dimmerchange", self.dimmerchange)
 
@@ -146,7 +146,7 @@ class GlowRing(LightEntity):
         self._green = lightpad.glow_color["green"]
         self._blue = lightpad.glow_color["blue"]
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to configchange events."""
         self._lightpad.add_event_listener("configchange", self.configchange_event)
 

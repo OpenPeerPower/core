@@ -165,7 +165,7 @@ class UniversalMediaPlayer(MediaPlayerEntity):
         self._state_template = state_template
         self._device_class = device_class
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to children and template state changes."""
 
         @callback

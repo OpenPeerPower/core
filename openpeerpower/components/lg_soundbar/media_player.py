@@ -52,7 +52,7 @@ class LGDevice(MediaPlayerEntity):
         self._treble = 0
         self._device = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register the callback after.opp is ready for it."""
         await self.opp.async_add_executor_job(self._connect)
 

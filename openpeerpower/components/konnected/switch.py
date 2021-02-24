@@ -130,6 +130,6 @@ class KonnectedSwitch(ToggleEntity):
             state,
         )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Store entity_id."""
         self._data["entity_id"] = self.entity_id

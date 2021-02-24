@@ -139,9 +139,9 @@ def test_sensor_name(default_sensor):
     assert default_sensor.name == "Last"
 
 
-async def test_async_added_to.opp(sensor_with.opp_data, mock_dispatch):
+async def test_async_added_to_opp(sensor_with.opp_data, mock_dispatch):
     """Test dispatcher called when added."""
-    await sensor_with.opp_data.async_added_to.opp()
+    await sensor_with.opp_data.async_added_to_opp()
     assert len(mock_dispatch.mock_calls) == 1
     kall = mock_dispatch.call_args
     args, kwargs = kall

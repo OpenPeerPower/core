@@ -151,7 +151,7 @@ class FFmpegBase(Entity):
         self.ffmpeg = None
         self.initial_state = initial_state
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register dispatcher & events.
 
         This method is a coroutine.

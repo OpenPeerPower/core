@@ -146,7 +146,7 @@ class ArcamFmj(MediaPlayerEntity):
         """Flag media player features that are supported."""
         return self._support
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Once registered, add listener for events."""
         await self._state.start()
 

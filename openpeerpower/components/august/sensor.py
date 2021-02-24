@@ -188,9 +188,9 @@ class AugustOperatorSensor(AugustEntityMixin, RestoreEntity, Entity):
 
         return attributes
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore ATTR_CHANGED_BY on startup since it is likely no longer in the activity log."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         last_state = await self.async_get_last_state()
         if not last_state or last_state.state == STATE_UNAVAILABLE:

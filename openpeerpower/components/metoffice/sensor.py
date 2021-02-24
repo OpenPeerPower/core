@@ -183,7 +183,7 @@ class MetOfficeCurrentSensor(Entity):
             else None,
         }
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Set up a listener and load data."""
         self.async_on_remove(
             self._coordinator.async_add_listener(self._update_callback)

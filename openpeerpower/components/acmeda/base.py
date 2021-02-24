@@ -34,7 +34,7 @@ class AcmedaBase(entity.Entity):
 
         await self.async_remove(force_remove=True)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Entity has been added to.opp."""
         self.roller.callback_subscribe(self.notify_update)
 

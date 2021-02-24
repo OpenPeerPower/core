@@ -45,7 +45,7 @@ async def async_setup_entry(
 class FirmataSensor(FirmataPinEntity, Entity):
     """Representation of a sensor on a Firmata board."""
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Set up a sensor."""
         await self._api.start_pin(self.async_write_op_state)
 

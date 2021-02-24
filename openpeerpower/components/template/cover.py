@@ -224,7 +224,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
         self._tilt_value = None
         self._unique_id = unique_id
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         if self._template:
             self.add_template_attribute(
@@ -246,7 +246,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
                 self._update_tilt,
                 none_on_template_error=True,
             )
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @callback
     def _update_state(self, result):

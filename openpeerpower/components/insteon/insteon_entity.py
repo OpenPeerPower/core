@@ -102,7 +102,7 @@ class InsteonEntity(Entity):
         )
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register INSTEON update events."""
         _LOGGER.debug(
             "Tracking updates for device %s group %d name %s",

@@ -143,9 +143,9 @@ class RfxtrxSensor(RfxtrxEntity):
         self._device_class = DEVICE_CLASSES.get(data_type)
         self._convert_fun = CONVERT_FUNCTIONS.get(data_type, lambda x: x)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore device state."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()

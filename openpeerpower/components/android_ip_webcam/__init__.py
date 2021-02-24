@@ -296,7 +296,7 @@ class AndroidIPCamEntity(Entity):
         self._host = host
         self._ipcam = ipcam
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update dispatcher."""
 
         @callback

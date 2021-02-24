@@ -419,9 +419,9 @@ class Person(RestoreEntity):
         """Return a unique ID for the person."""
         return self._config[CONF_ID]
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register device trackers."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         state = await self.async_get_last_state()
         if state:
             self._parse_source_state(state)

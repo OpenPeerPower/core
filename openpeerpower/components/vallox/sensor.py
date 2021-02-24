@@ -147,7 +147,7 @@ class ValloxSensor(Entity):
         """Return the state."""
         return self._state
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call to update."""
         self.async_on_remove(
             async_dispatcher_connect(

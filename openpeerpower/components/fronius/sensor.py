@@ -292,7 +292,7 @@ class FroniusTemplateSensor(Entity):
         self._state = state.get("value")
         self._unit = state.get("unit")
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register at parent component for updates."""
         await self.parent.register(self)
 

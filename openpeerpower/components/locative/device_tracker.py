@@ -62,7 +62,7 @@ class LocativeEntity(TrackerEntity):
         """Return the source type, eg gps or router, of the device."""
         return SOURCE_TYPE_GPS
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register state update callback."""
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, TRACKER_UPDATE, self._async_receive_data

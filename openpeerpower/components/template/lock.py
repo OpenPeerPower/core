@@ -126,12 +126,12 @@ class TemplateLock(TemplateEntity, LockEntity):
 
         self._state = False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.add_template_attribute(
             "_state", self._state_template, None, self._update_state
         )
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def async_lock(self, **kwargs):
         """Lock the device."""

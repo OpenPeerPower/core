@@ -242,7 +242,7 @@ class HERETravelTimeSensor(Entity):
         if self._destination_entity_id is None:
             self._here_data.destination = destination
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Delay the sensor update to avoid entity not found warnings."""
 
         @callback

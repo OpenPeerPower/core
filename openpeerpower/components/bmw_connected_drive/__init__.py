@@ -350,7 +350,7 @@ class BMWConnectedDriveBaseEntity(Entity):
         """Schedule a state update."""
         self.schedule_update_op_state(True)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Add callback after being added to.opp.
 
         Show latest data after startup.

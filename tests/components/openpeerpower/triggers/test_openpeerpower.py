@@ -11,7 +11,7 @@ from tests.common import async_mock_service
 async def test_if_fires_on_opp.tart.opp.
     """Test the firing when Open Peer Power starts."""
     calls = async_mock_service.opp."test", "automation")
-    opp.tate = CoreState.not_running
+    opp.state = CoreState.not_running
     config = {
         automation.DOMAIN: {
             "alias": "hello",
@@ -44,10 +44,10 @@ async def test_if_fires_on_opp.tart.opp.
 async def test_if_fires_on_opp.hutdown.opp.
     """Test the firing when Open Peer Power shuts down."""
     calls = async_mock_service.opp."test", "automation")
-    opp.tate = CoreState.not_running
+    opp.state = CoreState.not_running
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

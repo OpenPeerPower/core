@@ -256,7 +256,7 @@ class LightTemplate(TemplateEntity, LightEntity):
         """Return true if device is on."""
         return self._state
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         if self._template:
             self.add_template_attribute(
@@ -294,7 +294,7 @@ class LightTemplate(TemplateEntity, LightEntity):
                 self._update_white_value,
                 none_on_template_error=True,
             )
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def async_turn_on(self, **kwargs):
         """Turn the light on."""

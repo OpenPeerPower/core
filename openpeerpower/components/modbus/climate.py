@@ -134,7 +134,7 @@ class ModbusThermostat(ClimateEntity):
         self._temp_step = config[CONF_STEP]
         self._available = True
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
         async_track_time_interval(
             self.opp, lambda arg: self._update(), self._scan_interval

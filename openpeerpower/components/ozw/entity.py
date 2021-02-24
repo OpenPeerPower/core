@@ -160,7 +160,7 @@ class ZWaveDeviceEntity(Entity):
         To be overridden by platforms needing this event.
         """
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added."""
         # Add dispatcher and OZW listeners callbacks.
         # Add to on_remove so they will be cleaned up on entity removal.

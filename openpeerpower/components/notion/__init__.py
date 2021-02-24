@@ -255,7 +255,7 @@ class NotionEntity(CoordinatorEntity):
 
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._async_update_from_latest_data()

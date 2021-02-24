@@ -314,9 +314,9 @@ class MqttClimate(MqttEntity, ClimateEntity):
         """Return the config schema."""
         return PLATFORM_SCHEMA
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle being added to Open Peer Power."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         await self._subscribe_topics()
 
     def _setup_from_config(self, config):

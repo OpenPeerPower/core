@@ -106,7 +106,7 @@ class SmartyFan(FanEntity):
         self._smarty_fan_speed = 0
         self.schedule_update_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call to update fan."""
         self.async_on_remove(
             async_dispatcher_connect(

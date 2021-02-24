@@ -95,7 +95,7 @@ class GdacsEvent(GeolocationEvent):
         self._remove_signal_delete = None
         self._remove_signal_update = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_delete = async_dispatcher_connect(
             self.opp, f"gdacs_delete_{self._external_id}", self._delete_callback

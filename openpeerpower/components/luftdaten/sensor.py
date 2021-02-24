@@ -114,7 +114,7 @@ class LuftdatenSensor(Entity):
             except KeyError:
                 return
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         @callback

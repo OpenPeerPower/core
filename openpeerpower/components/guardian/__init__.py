@@ -303,7 +303,7 @@ class PairedSensorEntity(GuardianEntity):
         """Return the unique ID of the entity."""
         return f"{self._paired_sensor_uid}_{self._kind}"
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Perform tasks when the entity is added."""
         self._async_update_from_latest_data()
 
@@ -362,7 +362,7 @@ class ValveControllerEntity(GuardianEntity):
             self.coordinators[api].async_add_listener(self._async_update_state_callback)
         )
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Perform tasks when the entity is added."""
         await self._async_continue_entity_setup()
         self.async_add_coordinator_update_listener(API_SYSTEM_DIAGNOSTICS)

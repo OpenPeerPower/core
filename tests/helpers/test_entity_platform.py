@@ -944,7 +944,7 @@ async def test_invalid_entity_id.opp):
 class MockBlockingEntity(MockEntity):
     """Class to mock an entity that will block adding entities."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Block for a long time."""
         await asyncio.sleep(1000)
 
@@ -1019,7 +1019,7 @@ async def test_two_platforms_add_same_entity.opp):
 class SlowEntity(MockEntity):
     """An entity that will sleep during add."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Make sure control is returned to the event loop on add."""
         await asyncio.sleep(0.1)
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()

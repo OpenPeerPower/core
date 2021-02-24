@@ -177,7 +177,7 @@ class TibberSensorElPrice(TibberSensor):
 class TibberSensorRT(TibberSensor):
     """Representation of a Tibber sensor for real time consumption."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Start listen for real time data."""
         await self._tibber_home.rt_subscribe(self.opp.loop, self._async_callback)
 

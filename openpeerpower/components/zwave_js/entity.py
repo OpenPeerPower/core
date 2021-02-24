@@ -46,7 +46,7 @@ class ZWaveBaseEntity(Entity):
         To be overridden by platforms needing this event.
         """
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Call when entity is added."""
         assert self.opp  # typing
         # Add value_changed callbacks.

@@ -255,7 +255,7 @@ class SensorFilter(Entity):
         if update_ha:
             self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         if "recorder" in self.opp.config.components:

@@ -157,9 +157,9 @@ class SomfyShade(RestoreEntity, CoverEntity):
         """Stop the cover."""
         await self.somfy_mylink.move_stop(self._target_id)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Complete the initialization."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         # Restore the last state
         last_state = await self.async_get_last_state()
 

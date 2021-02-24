@@ -838,7 +838,7 @@ class WinkDevice(Entity):
 class WinkSirenDevice(WinkDevice):
     """Representation of a Wink siren device."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["switch"].append(self)
 
@@ -898,7 +898,7 @@ class WinkNimbusDialDevice(WinkDevice):
         super().__init__(dial, opp)
         self.parent = nimbus
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["sensor"].append(self)
 

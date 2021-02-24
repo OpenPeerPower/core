@@ -178,7 +178,7 @@ class AmcrestBinarySensor(BinarySensorEntity):
         self._state = start
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to signals."""
         self._unsub_dispatcher.append(
             async_dispatcher_connect(

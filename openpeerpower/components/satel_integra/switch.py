@@ -50,7 +50,7 @@ class SatelIntegraSwitch(SwitchEntity):
         self._code = code
         self._satel = controller
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         async_dispatcher_connect(
             self.opp, SIGNAL_OUTPUTS_UPDATED, self._devices_updated

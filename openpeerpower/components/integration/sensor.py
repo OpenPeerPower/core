@@ -116,9 +116,9 @@ class IntegrationSensor(RestoreEntity):
         self._unit_prefix = UNIT_PREFIXES[unit_prefix]
         self._unit_time = UNIT_TIME[unit_time]
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         state = await self.async_get_last_state()
         if state:
             try:

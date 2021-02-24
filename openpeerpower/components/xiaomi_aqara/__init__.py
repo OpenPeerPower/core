@@ -267,7 +267,7 @@ class XiaomiDevice(Entity):
     def _add_push_data_job(self, *args):
         self.opp.add_job(self.push_data, *args)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Start unavailability tracking."""
         self._xiaomi_hub.callbacks[self._sid].append(self._add_push_data_job)
         self._async_track_unavailable()

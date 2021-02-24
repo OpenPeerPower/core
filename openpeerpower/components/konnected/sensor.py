@@ -118,7 +118,7 @@ class KonnectedSensor(Entity):
         """Return the device info."""
         return {"identifiers": {(KONNECTED_DOMAIN, self._device_id)}}
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Store entity_id and register state change callback."""
         entity_id_key = self._addr or self._type
         self._data[entity_id_key] = self.entity_id

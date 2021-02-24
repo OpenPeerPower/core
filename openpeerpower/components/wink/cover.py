@@ -26,7 +26,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 class WinkCoverEntity(WinkDevice, CoverEntity):
     """Representation of a Wink cover device."""
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["cover"].append(self)
 

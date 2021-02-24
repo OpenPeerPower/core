@@ -106,7 +106,7 @@ async def test_setup_component_test_register.opp):
 
     opp.bus.async_listen_once = MagicMock()
     ffmpeg_dev = MockFFmpegDev.opp)
-    await ffmpeg_dev.async_added_to.opp()
+    await ffmpeg_dev.async_added_to_opp()
 
     assert.opp.bus.async_listen_once.called
     assert.opp.bus.async_listen_once.call_count == 2
@@ -119,7 +119,7 @@ async def test_setup_component_test_register_no_startup.opp):
 
     opp.bus.async_listen_once = MagicMock()
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to.opp()
+    await ffmpeg_dev.async_added_to_opp()
 
     assert.opp.bus.async_listen_once.called
     assert.opp.bus.async_listen_once.call_count == 1
@@ -131,7 +131,7 @@ async def test_setup_component_test_service_start.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to.opp()
+    await ffmpeg_dev.async_added_to_opp()
 
     async_start.opp)
     await opp.async_block_till_done()
@@ -145,7 +145,7 @@ async def test_setup_component_test_service_stop.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to.opp()
+    await ffmpeg_dev.async_added_to_opp()
 
     async_stop.opp)
     await opp.async_block_till_done()
@@ -159,7 +159,7 @@ async def test_setup_component_test_service_restart.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to.opp()
+    await ffmpeg_dev.async_added_to_opp()
 
     async_restart.opp)
     await opp.async_block_till_done()
@@ -174,7 +174,7 @@ async def test_setup_component_test_service_start_with_entity.opp):
         await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     ffmpeg_dev = MockFFmpegDev.opp, False)
-    await ffmpeg_dev.async_added_to.opp()
+    await ffmpeg_dev.async_added_to_opp()
 
     async_start.opp, "test.ffmpeg_device")
     await opp.async_block_till_done()

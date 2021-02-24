@@ -28,7 +28,7 @@ class TasmotaEntity(Entity):
         self._tasmota_entity = tasmota_entity
         self._unique_id = tasmota_entity.unique_id
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to MQTT events."""
         self._tasmota_entity.set_on_state_callback(self.state_updated)
         await self._subscribe_topics()
@@ -84,13 +84,13 @@ class TasmotaAvailability(TasmotaEntity):
         self._available = False
         super().__init__(**kwds)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to MQTT events."""
         self._tasmota_entity.set_on_availability_callback(self.availability_updated)
         self.async_on_remove(
             async_subscribe_connection_status(self.opp, self.async_mqtt_connected)
         )
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @callback
     def availability_updated(self, available: bool) -> None:
@@ -122,10 +122,10 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
         self._removed_from opp =False
         super().__init__(**kwds)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to discovery updates."""
         self._removed_from opp =False
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         async def discovery_callback(config):
             """Handle discovery update."""

@@ -196,7 +196,7 @@ class OpenUvEntity(Entity):
         """Return the name of the entity."""
         return self._name
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         @callback

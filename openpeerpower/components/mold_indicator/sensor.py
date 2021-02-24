@@ -102,7 +102,7 @@ class MoldIndicator(Entity):
         self._indoor_hum = None
         self._crit_temp = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         @callback

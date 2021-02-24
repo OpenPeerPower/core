@@ -62,7 +62,7 @@ class TradfriBaseClass(Entity):
             _LOGGER.warning("Observation failed, trying again", exc_info=err)
             self._async_start_observe()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Start thread when added to.opp."""
         self._async_start_observe()
 

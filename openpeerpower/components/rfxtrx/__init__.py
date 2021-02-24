@@ -476,7 +476,7 @@ class RfxtrxEntity(RestoreEntity):
         self._device_id = device_id
         self._unique_id = "_".join(x for x in self._device_id)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore RFXtrx device state (ON/OFF)."""
         if self._event:
             self._apply_event(self._event)

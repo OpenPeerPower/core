@@ -81,7 +81,7 @@ class AlarmDecoderBinarySensor(BinarySensorEntity):
         self._relay_addr = relay_addr
         self._relay_chan = relay_chan
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(

@@ -352,7 +352,7 @@ class LTEEntity(Entity):
         """Register unique_id while we know data is valid."""
         return f"{self.sensor_type}_{self.modem_data.data.serial_number}"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callback."""
         self.async_on_remove(
             async_dispatcher_connect(

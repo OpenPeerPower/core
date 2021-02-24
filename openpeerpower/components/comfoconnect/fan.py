@@ -47,7 +47,7 @@ class ComfoConnectFan(FanEntity):
         self._ccb = ccb
         self._name = name
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register for sensor updates."""
         _LOGGER.debug("Registering for fan speed")
         self.async_on_remove(

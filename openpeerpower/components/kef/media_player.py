@@ -383,7 +383,7 @@ class KefMediaPlayer(MediaPlayerEntity):
             **mode._asdict(),
         )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to DSP updates."""
         self._update_dsp_task_remover = async_track_time_interval(
             self.opp, self.update_dsp, DSP_SCAN_INTERVAL

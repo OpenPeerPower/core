@@ -118,7 +118,7 @@ class DenonDevice(MediaPlayerEntity):
             self._sound_mode_support and SUPPORT_SELECT_SOUND_MODE
         )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register signal handler."""
         self.async_on_remove(
             async_dispatcher_connect(self.opp, DOMAIN, self.signal_handler)

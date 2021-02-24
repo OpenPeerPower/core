@@ -57,7 +57,7 @@ class HomeKitEntity(Entity):
         """Return a Service model that this entity is attached to."""
         return self.accessory.services.iid(self._iid)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Entity added to.opp."""
         self._signals.append(
             self.opp.helpers.dispatcher.async_dispatcher_connect(

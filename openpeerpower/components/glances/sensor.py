@@ -117,7 +117,7 @@ class GlancesSensor(Entity):
         """Return the polling requirement for this sensor."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
         self.unsub_update = async_dispatcher_connect(
             self.opp, DATA_UPDATED, self._schedule_immediate_update

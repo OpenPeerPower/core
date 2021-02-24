@@ -95,7 +95,7 @@ class LightGroup(GroupEntity, light.LightEntity):
         self._effect: Optional[str] = None
         self._supported_features: int = 0
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks."""
 
         async def async_state_changed_listener(event):
@@ -114,7 +114,7 @@ class LightGroup(GroupEntity, light.LightEntity):
             await self.async_update()
             return
 
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @property
     def name(self) -> str:

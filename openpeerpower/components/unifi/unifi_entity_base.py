@@ -30,7 +30,7 @@ class UniFiBase(Entity):
         """Return item key."""
         return self._item.mac
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Entity created."""
         _LOGGER.debug(
             "New %s entity %s (%s)",

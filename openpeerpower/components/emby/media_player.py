@@ -147,7 +147,7 @@ class EmbyDevice(MediaPlayerEntity):
         self.media_status_last_position = None
         self.media_status_received = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callback."""
         self.emby.add_update_callback(self.async_update_callback, self.device_id)
 

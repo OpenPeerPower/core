@@ -92,10 +92,10 @@ class MotionBatterySensor(CoordinatorEntity, Entity):
         """Return device specific state attributes."""
         return {ATTR_BATTERY_VOLTAGE: self._blind.battery_voltage}
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to multicast pushes."""
         self._blind.Register_callback(self.unique_id, self.schedule_update_op_state)
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""
@@ -196,10 +196,10 @@ class MotionSignalStrengthSensor(CoordinatorEntity, Entity):
         """Return the state of the sensor."""
         return self._device.RSSI
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to multicast pushes."""
         self._device.Register_callback(self.unique_id, self.schedule_update_op_state)
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def async_will_remove_from.opp(self):
         """Unsubscribe when removed."""

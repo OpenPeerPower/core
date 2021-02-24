@@ -115,9 +115,9 @@ class RfxtrxCover(RfxtrxCommandEntity, CoverEntity):
         super().__init__(device, device_id, signal_repetitions, event)
         self._venetian_blind_mode = venetian_blind_mode
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Restore device state."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         if self._event is None:
             old_state = await self.async_get_last_state()

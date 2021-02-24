@@ -217,13 +217,13 @@ class AlarmControlPanelTemplate(TemplateEntity, AlarmControlPanelEntity):
         )
         self._state = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         if self._template:
             self.add_template_attribute(
                 "_state", self._template, None, self._update_state
             )
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     async def _async_alarm_arm(self, state, script=None, code=None):
         """Arm the panel to specified state with supplied script."""

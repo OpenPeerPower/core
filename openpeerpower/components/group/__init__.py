@@ -393,7 +393,7 @@ class GroupEntity(Entity):
         """Disable polling for group."""
         return False
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register listeners."""
         assert self.opp is not None
 
@@ -636,7 +636,7 @@ class Group(Entity):
         self._state = None
         self._async_update_group_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle addition to Open Peer Power."""
         if self.opp.state != CoreState.running:
             self.opp.bus.async_listen_once(

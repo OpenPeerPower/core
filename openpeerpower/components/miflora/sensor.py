@@ -162,7 +162,7 @@ class MiFloraSensor(Entity):
         # Use median_count = 1 if no filtering is required.
         self.median_count = median
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Set initial state."""
 
         @callback

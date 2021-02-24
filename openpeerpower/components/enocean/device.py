@@ -15,7 +15,7 @@ class EnOceanEntity(Entity):
         self.dev_id = dev_id
         self.dev_name = dev_name
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(

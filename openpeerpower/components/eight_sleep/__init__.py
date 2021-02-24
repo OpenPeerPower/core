@@ -206,7 +206,7 @@ class EightSleepUserEntity(Entity):
         """Initialize the data object."""
         self._eight = eight
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update dispatcher."""
 
         @callback
@@ -233,7 +233,7 @@ class EightSleepHeatEntity(Entity):
         """Initialize the data object."""
         self._eight = eight
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update dispatcher."""
 
         @callback

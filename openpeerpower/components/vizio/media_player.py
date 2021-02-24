@@ -311,7 +311,7 @@ class VizioDevice(MediaPlayerEntity):
             log_api_exception=False,
         )
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register callbacks when entity is added."""
         # Register callback for when config entry is updated.
         self.async_on_remove(

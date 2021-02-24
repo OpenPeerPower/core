@@ -108,7 +108,7 @@ class HeosMediaPlayer(MediaPlayerEntity):
         """Handle sources changed."""
         await self.async_update_op_state(True)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Device added to.opp."""
         # Update state when attributes of the player change
         self._signals.append(

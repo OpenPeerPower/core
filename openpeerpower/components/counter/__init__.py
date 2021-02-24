@@ -236,9 +236,9 @@ class Counter(RestoreEntity):
 
         return state
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         # __init__ will set self._state to self._initial, only override
         # if needed.
         if self._config[CONF_RESTORE]:

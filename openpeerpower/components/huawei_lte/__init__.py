@@ -634,7 +634,7 @@ class HuaweiLteBaseEntity(Entity):
     async def async_update_options(self, config_entry: ConfigEntry) -> None:
         """Update config entry options."""
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Connect to update signals."""
         assert self.opp is not None
         self._unsub_handlers.append(

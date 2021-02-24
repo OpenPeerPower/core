@@ -87,7 +87,7 @@ class TransmissionSwitch(ToggleEntity):
             self._tm_client.api.set_alt_speed_enabled(False)
         self._tm_client.api.update()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
         self.unsub_update = async_dispatcher_connect(
             self.opp,

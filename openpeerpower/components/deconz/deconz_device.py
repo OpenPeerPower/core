@@ -68,7 +68,7 @@ class DeconzDevice(DeconzBase, Entity):
 
         return True
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to device events."""
         self._device.register_callback(self.async_update_callback)
         self.gateway.deconz_ids[self.entity_id] = self._device.deconz_id

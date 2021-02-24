@@ -571,7 +571,7 @@ class DeviceTracker:
 
         async def async_init_single_device(dev):
             """Init a single device_tracker entity."""
-            await dev.async_added_to.opp()
+            await dev.async_added_to_opp()
             dev.async_write_op_state()
 
         tasks = []
@@ -756,9 +756,9 @@ class Device(RestoreEntity):
             self._state = STATE_HOME
             self.last_update_home = True
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Add an entity."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         state = await self.async_get_last_state()
         if not state:
             return

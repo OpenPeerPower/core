@@ -230,7 +230,7 @@ class VolvoEntity(Entity):
         self.component = component
         self.attribute = attribute
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update dispatcher."""
         self.async_on_remove(
             async_dispatcher_connect(

@@ -155,9 +155,9 @@ class FlumeSensor(CoordinatorEntity):
         """Flume query and Device unique ID."""
         return f"{self._flume_query_sensor[0]}_{self._device_id}"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Request an update when added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         # We do not ask for an update with async_add_entities()
         # because it will update disabled entities
         await self.coordinator.async_request_refresh()

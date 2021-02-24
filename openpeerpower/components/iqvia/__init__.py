@@ -161,9 +161,9 @@ class IQVIAEntity(CoordinatorEntity):
         self.update_from_latest_data()
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         if self._type == TYPE_ALLERGY_FORECAST:
             self.async_on_remove(

@@ -173,7 +173,7 @@ class WiffiEntity(Entity):
         self._value = None
         self._timeout = options.get(CONF_TIMEOUT, DEFAULT_TIMEOUT)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Entity has been added to.opp."""
         self.async_on_remove(
             async_dispatcher_connect(

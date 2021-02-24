@@ -122,7 +122,7 @@ class HistoryStatsSensor(Entity):
         self.value = None
         self.count = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Create listeners when the entity is added."""
 
         @callback

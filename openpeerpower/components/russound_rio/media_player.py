@@ -108,7 +108,7 @@ class RussoundZoneDevice(MediaPlayerEntity):
         if source_id == current:
             self.schedule_update_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callback handlers."""
         self._russ.add_zone_callback(self._zone_callback_handler)
         self._russ.add_source_callback(self._source_callback_handler)

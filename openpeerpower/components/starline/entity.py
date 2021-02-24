@@ -48,9 +48,9 @@ class StarlineEntity(Entity):
         """Read new state data."""
         self.schedule_update_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity about to be added to Open Peer Power."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._unsubscribe_api = self._account.api.add_update_listener(self.update)
 
     async def async_will_remove_from.opp(self):

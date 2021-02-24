@@ -219,7 +219,7 @@ class AugustDoorbellBinarySensor(AugustEntityMixin, BinarySensorEntity):
             return
 
         # self.opp is only available after setup is completed
-        # and we will recheck in async_added_to.opp
+        # and we will recheck in async_added_to_opp
         if not self.opp:
             return
 
@@ -240,10 +240,10 @@ class AugustDoorbellBinarySensor(AugustEntityMixin, BinarySensorEntity):
             self._check_for_off_update_listener()
             self._check_for_off_update_listener = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call the mixin to subscribe and setup an async_track_point_in_utc_time to turn off the sensor if needed."""
         self._schedule_update_to_recheck_turn_off_sensor()
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
     @property
     def unique_id(self) -> str:

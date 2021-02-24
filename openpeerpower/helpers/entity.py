@@ -526,7 +526,7 @@ class Entity(ABC):
     async def add_to_platform_finish(self) -> None:
         """Finish adding an entity to a platform."""
         await self.async_internal_added_to.opp()
-        await self.async_added_to.opp()
+        await self.async_added_to_opp()
         self.async_write_op_state()
 
     async def async_remove(self, *, force_remove: bool = False) -> None:
@@ -566,7 +566,7 @@ class Entity(ABC):
         else:
             self.opp.states.async_remove(self.entity_id, context=self._context)
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Run when entity about to be added to.opp.
 
         To be extended by integrations.

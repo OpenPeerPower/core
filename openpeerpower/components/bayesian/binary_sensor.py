@@ -151,7 +151,7 @@ class BayesianBinarySensor(BinarySensorEntity):
             "state": self._process_state,
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """
         Call when entity about to be added.
 

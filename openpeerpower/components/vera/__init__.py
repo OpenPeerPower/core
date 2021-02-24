@@ -224,7 +224,7 @@ class VeraDevice(Generic[DeviceType], Entity):
         else:
             self._unique_id = f"vera_{controller_data.config_entry.unique_id}_{self.vera_device.vera_device_id}"
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to updates."""
         self.controller.register(self.vera_device, self._update_callback)
 

@@ -242,7 +242,7 @@ class XBeeDigitalIn(Entity):
         self._device = device
         self._state = False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         def handle_frame(frame):
@@ -374,7 +374,7 @@ class XBeeAnalogIn(Entity):
         self._device = device
         self._value = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         def handle_frame(frame):

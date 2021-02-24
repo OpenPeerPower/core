@@ -34,7 +34,7 @@ class OPiGPIOBinarySensor(BinarySensorEntity):
         self._invert_logic = invert_logic
         self._state = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added to.opp."""
 
         def gpio_edge_listener(port):

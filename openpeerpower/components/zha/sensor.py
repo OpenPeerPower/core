@@ -105,9 +105,9 @@ class Sensor(ZhaEntity):
         super().__init__(unique_id, zha_device, channels, **kwargs)
         self._channel: ChannelType = channels[0]
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Run when about to be added to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.async_accept_signal(
             self._channel, SIGNAL_ATTR_UPDATED, self.async_set_state
         )

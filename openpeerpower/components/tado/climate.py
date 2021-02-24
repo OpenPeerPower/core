@@ -261,7 +261,7 @@ class TadoClimate(TadoZoneEntity, ClimateEntity):
 
         self._async_update_zone_data()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(

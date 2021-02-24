@@ -204,7 +204,7 @@ class ShellyBlockEntity(entity.Entity):
         """Return unique ID of entity."""
         return f"{self.wrapper.mac}-{self.block.description}"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """When entity is added to OPP."""
         self.async_on_remove(self.wrapper.async_add_listener(self._update_callback))
 
@@ -409,9 +409,9 @@ class ShellySleepingBlockAttributeEntity(ShellyBlockAttributeEntity, RestoreEnti
             self._unique_id = entry.unique_id
             self._name = entry.original_name
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle entity which will be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         last_state = await self.async_get_last_state()
 

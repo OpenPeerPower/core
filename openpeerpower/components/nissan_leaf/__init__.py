@@ -460,7 +460,7 @@ class LeafEntity(Entity):
             "vin": self.car.leaf.vin,
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.log_registration()
         self.async_on_remove(

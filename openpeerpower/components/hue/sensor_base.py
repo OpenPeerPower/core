@@ -177,7 +177,7 @@ class GenericHueSensor(GenericHueDevice, entity.Entity):
             or self.sensor.config.get("reachable", True)
         )
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
             self.bridge.sensor_manager.coordinator.async_add_listener(

@@ -93,7 +93,7 @@ class WirelessTagBinarySensor(WirelessTagBaseSensor, BinarySensorEntity):
         self._sensor_type = sensor_type
         self._name = f"{self._tag.name} {self.event.human_readable_name}"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         tag_id = self.tag_id
         event_type = self.device_class

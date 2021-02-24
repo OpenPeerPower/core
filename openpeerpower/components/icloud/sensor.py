@@ -110,7 +110,7 @@ class IcloudDeviceBatterySensor(Entity):
         """No polling needed."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register state update callback."""
         self._unsub_dispatcher = async_dispatcher_connect(
             self.opp, self._account.signal_device_update, self.async_write_op_state

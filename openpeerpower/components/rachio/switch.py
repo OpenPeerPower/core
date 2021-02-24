@@ -237,7 +237,7 @@ class RachioStandbySwitch(RachioSwitch):
         """Resume controller functionality."""
         self._controller.rachio.device.turn_on(self._controller.controller_id)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         if KEY_ON in self._controller.init_data:
             self._state = not self._controller.init_data[KEY_ON]
@@ -310,7 +310,7 @@ class RachioRainDelay(RachioSwitch):
         self._controller.rachio.device.rain_delay(self._controller.controller_id, 0)
         _LOGGER.debug("Canceling rain delay")
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         if KEY_RAIN_DELAY in self._controller.init_data:
             self._state = self._controller.init_data[
@@ -454,7 +454,7 @@ class RachioZone(RachioSwitch):
 
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self._state = self.zone_id == self._current_schedule.get(KEY_ZONE_ID)
 
@@ -540,7 +540,7 @@ class RachioSchedule(RachioSwitch):
 
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self._state = self._schedule_id == self._current_schedule.get(KEY_SCHEDULE_ID)
 

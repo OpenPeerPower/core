@@ -424,7 +424,7 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
             ATTR_POST_PENDING_STATE: self._state,
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to MQTT events."""
         async_track_state_change_event(
             self.opp, [self.entity_id], self._async_state_changed_listener

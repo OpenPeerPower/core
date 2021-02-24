@@ -999,7 +999,7 @@ class BaseWithingsSensor(Entity):
         self._state_data = data.get(self._attribute.measurement)
         self.async_write_op_state()
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Register update dispatcher."""
         if self._attribute.update_type == UpdateType.POLL:
             self.async_on_remove(

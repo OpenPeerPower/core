@@ -93,9 +93,9 @@ class NetatmoLight(NetatmoBase, LightEntity):
         self._is_on = False
         self._unique_id = f"{self._id}-light"
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Entity created."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self._listeners.append(
             async_dispatcher_connect(

@@ -191,7 +191,7 @@ class IntesisAC(ClimateEntity):
             self._hvac_mode_list.extend(mode_list)
         self._hvac_mode_list.append(HVAC_MODE_OFF)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to event updates."""
         _LOGGER.debug("Added climate device with state: %s", repr(self._ih_device))
         await self._controller.add_update_callback(self.async_update_callback)

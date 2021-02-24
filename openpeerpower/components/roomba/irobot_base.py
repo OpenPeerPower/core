@@ -119,7 +119,7 @@ class IRobotEntity(Entity):
             state = STATE_PAUSED
         return state
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callback function."""
         self.vacuum.register_on_message_callback(self.on_message)
 

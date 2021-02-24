@@ -120,7 +120,7 @@ class WiLightDevice(Entity):
         """Synchronize state with api_device."""
         await self._client.status(self._index)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update callback."""
         self._client.register_status_callback(self.handle_event_callback, self._index)
         await self._client.status(self._index)

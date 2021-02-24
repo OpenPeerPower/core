@@ -163,7 +163,7 @@ class SensorTrend(BinarySensorEntity):
         """No polling needed."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Complete device setup after being added to.opp."""
 
         @callback

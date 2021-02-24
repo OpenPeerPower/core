@@ -118,7 +118,7 @@ class SongpalEntity(MediaPlayerEntity):
         """Return True if the device should be polled."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity is added to.opp."""
         await self.async_activate_websocket()
 

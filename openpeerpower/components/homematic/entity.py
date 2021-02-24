@@ -46,7 +46,7 @@ class HMDevice(Entity):
         if self._state:
             self._state = self._state.upper()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Load data init callbacks."""
         self._subscribe_homematic_events()
 

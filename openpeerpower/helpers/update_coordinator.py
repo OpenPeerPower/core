@@ -247,9 +247,9 @@ class CoordinatorEntity(entity.Entity):
         """Return if entity is available."""
         return self.coordinator.last_update_success
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """When entity is added to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self.async_on_remove(
             self.coordinator.async_add_listener(self._handle_coordinator_update)
         )

@@ -72,7 +72,7 @@ class KonnectedBinarySensor(BinarySensorEntity):
             "identifiers": {(KONNECTED_DOMAIN, self._device_id)},
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Store entity_id and register state change callback."""
         self._data[ATTR_ENTITY_ID] = self.entity_id
         self.async_on_remove(

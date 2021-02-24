@@ -110,7 +110,7 @@ class TadoDeviceBinarySensor(TadoDeviceEntity, BinarySensorEntity):
 
         self._state = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(
@@ -185,7 +185,7 @@ class TadoZoneBinarySensor(TadoZoneEntity, BinarySensorEntity):
         self._state = None
         self._tado_zone_data = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register for sensor updates."""
 
         self.async_on_remove(

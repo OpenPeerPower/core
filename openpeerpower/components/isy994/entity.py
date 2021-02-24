@@ -28,7 +28,7 @@ class ISYEntity(Entity):
         self._change_handler = None
         self._control_handler = None
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Subscribe to the node change events."""
         self._change_handler = self._node.status_events.subscribe(self.on_update)
 

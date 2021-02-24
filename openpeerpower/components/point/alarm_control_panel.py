@@ -46,9 +46,9 @@ class MinutPointAlarmControl(AlarmControlPanelEntity):
         self._async_unsub_hook_dispatcher_connect = None
         self._changed_by = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to Open Peer Power."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._async_unsub_hook_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_WEBHOOK, self._webhook_event
         )

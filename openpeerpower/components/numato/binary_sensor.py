@@ -81,7 +81,7 @@ class NumatoGpioBinarySensor(BinarySensorEntity):
         self._state = None
         self._api = api
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Connect state update callback."""
         self.async_on_remove(
             async_dispatcher_connect(

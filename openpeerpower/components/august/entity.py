@@ -44,7 +44,7 @@ class AugustEntityMixin(Entity):
         self._update_from_data()
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to updates."""
         self.async_on_remove(
             self._data.async_subscribe_device_id(

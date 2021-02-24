@@ -53,7 +53,7 @@ class GeonetnzQuakesSensor(Entity):
         self._removed = None
         self._remove_signal_status = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self._remove_signal_status = async_dispatcher_connect(
             self.opp,

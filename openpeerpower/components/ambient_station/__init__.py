@@ -518,7 +518,7 @@ class AmbientWeatherEntity(Entity):
         """Return a unique, unchanging string that represents this sensor."""
         return f"{self._mac_address}_{self._sensor_type}"
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
 
         @callback

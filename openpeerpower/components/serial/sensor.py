@@ -134,7 +134,7 @@ class SerialSensor(Entity):
         self._template = value_template
         self._attributes = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Handle when an entity is about to be added to Open Peer Power."""
         self._serial_loop_task = self.opp.loop.create_task(
             self.serial_read(

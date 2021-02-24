@@ -328,7 +328,7 @@ async def test_added_to.opp(player, state):
     player opp =MagicMock()
     player.opp.helpers.dispatcher.async_dispatcher_connect.side_effects = _connect
 
-    await player.async_added_to.opp()
+    await player.async_added_to_opp()
     state.start.assert_called_with()
     player.opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
         SIGNAL_CLIENT_DATA, ANY

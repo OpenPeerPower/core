@@ -41,9 +41,9 @@ class SwitchBot(SwitchEntity, RestoreEntity):
         self._mac = mac
         self._device = switchbot.Switchbot(mac=mac, password=password)
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         state = await self.async_get_last_state()
         if not state:
             return

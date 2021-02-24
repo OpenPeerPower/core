@@ -59,7 +59,7 @@ class CloudRemoteBinary(BinarySensorEntity):
         """Return True if entity has to be polled for state."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update dispatcher."""
 
         async def async_state_update(data):

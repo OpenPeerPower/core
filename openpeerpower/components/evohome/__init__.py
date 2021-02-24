@@ -578,7 +578,7 @@ class EvoDevice(Entity):
         """Get the flag of supported features of the device."""
         return self._supported_features
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Run when entity about to be added to.opp."""
         async_dispatcher_connect(self.opp, DOMAIN, self.async_refresh)
 

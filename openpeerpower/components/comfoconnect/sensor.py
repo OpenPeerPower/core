@@ -268,7 +268,7 @@ class ComfoConnectSensor(Entity):
         self._sensor_id = SENSOR_TYPES[self._sensor_type][ATTR_ID]
         self._name = name
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register for sensor updates."""
         _LOGGER.debug(
             "Registering for sensor %s (%d)", self._sensor_type, self._sensor_id

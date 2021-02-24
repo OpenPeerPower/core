@@ -53,7 +53,7 @@ class WinkSensorDevice(WinkDevice):
         else:
             self._unit_of_measurement = self.wink.unit()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Call when entity is added to.opp."""
         self.opp.data[DOMAIN]["entities"]["sensor"].append(self)
 

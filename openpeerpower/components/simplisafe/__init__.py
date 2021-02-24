@@ -706,9 +706,9 @@ class SimpliSafeEntity(CoordinatorEntity):
         self._async_internal_update_from_websocket_event(event)
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         self.async_on_remove(
             async_dispatcher_connect(

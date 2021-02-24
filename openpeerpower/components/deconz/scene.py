@@ -38,7 +38,7 @@ class DeconzScene(Scene):
         self._scene = scene
         self.gateway = gateway
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to sensors events."""
         self.gateway.deconz_ids[self.entity_id] = self._scene.deconz_id
 

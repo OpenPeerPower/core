@@ -66,7 +66,7 @@ class FirmataLight(FirmataPinEntity, LightEntity):
         # Default first turn on to max
         self._last_on_level = 255
 
-    async def async_added_to.opp(self) -> None:
+    async def async_added_to_opp(self) -> None:
         """Set up a light."""
         await self._api.start_pin()
 

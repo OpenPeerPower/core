@@ -152,9 +152,9 @@ class BondEntity(Entity):
         self._async_state_callback(state)
         self.async_write_op_state()
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to BPUP and start polling."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         self._update_lock = Lock()
         self._bpup_subs.subscribe(self._device_id, self._async_bpup_callback)
         self.async_on_remove(

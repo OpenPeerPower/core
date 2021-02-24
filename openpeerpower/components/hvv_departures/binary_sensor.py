@@ -187,7 +187,7 @@ class HvvDepartureBinarySensor(CoordinatorEntity, BinarySensorEntity):
             if v is not None
         }
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """When entity is added to.opp."""
         self.async_on_remove(
             self.coordinator.async_add_listener(self.async_write_op_state)

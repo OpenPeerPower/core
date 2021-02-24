@@ -96,7 +96,7 @@ class HaveIBeenPwnedSensor(Entity):
 
         return val
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Get initial data."""
         # To make sure we get initial data for the sensors ignoring the normal
         # throttle of 15 minutes but using an update throttle of 5 seconds

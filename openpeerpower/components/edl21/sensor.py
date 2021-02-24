@@ -213,7 +213,7 @@ class EDL21Entity(Entity):
         }
         self._async_remove_dispatcher = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added to.opp."""
 
         @callback

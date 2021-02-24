@@ -169,7 +169,7 @@ class HiveEntity(Entity):
         self.attributes = {}
         self._unique_id = f'{self.device["hiveID"]}-{self.device["hiveType"]}'
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """When entity is added to Open Peer Power."""
         self.async_on_remove(
             async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op_state)

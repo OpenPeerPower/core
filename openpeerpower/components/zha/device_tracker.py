@@ -49,9 +49,9 @@ class ZHADeviceScannerEntity(ScannerEntity, ZhaEntity):
         self._should_poll = True
         self._battery_level = None
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when about to be added to.opp."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
         if self._battery_channel:
             self.async_accept_signal(
                 self._battery_channel,

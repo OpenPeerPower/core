@@ -243,7 +243,7 @@ async def test_coordinator_entity(crd):
     with patch(
         "openpeerpower.helpers.entity.Entity.async_on_remove"
     ) as mock_async_on_remove:
-        await entity.async_added_to.opp()
+        await entity.async_added_to_opp()
 
     assert mock_async_on_remove.called
 

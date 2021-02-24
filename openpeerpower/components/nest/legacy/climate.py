@@ -144,7 +144,7 @@ class NestThermostat(ClimateEntity):
         """Do not need poll thanks using Nest streaming API."""
         return False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register update signal handler."""
 
         async def async_update_state():

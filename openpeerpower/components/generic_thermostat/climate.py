@@ -189,9 +189,9 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
         self._away_temp = away_temp
         self._is_away = False
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Run when entity about to be added."""
-        await super().async_added_to.opp()
+        await super().async_added_to_opp()
 
         # Add listener
         self.async_on_remove(

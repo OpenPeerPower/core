@@ -37,7 +37,7 @@ class MobileAppEntity(RestoreEntity):
         self.unsub_dispatcher = None
         self._name = config[CONF_NAME]
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Register callbacks."""
         self.unsub_dispatcher = async_dispatcher_connect(
             self.opp, SIGNAL_SENSOR_UPDATE, self._handle_update

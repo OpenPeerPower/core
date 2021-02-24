@@ -228,7 +228,7 @@ class KeeneticTracker(ScannerEntity):
 
         return info
 
-    async def async_added_to.opp(self):
+    async def async_added_to_opp(self):
         """Client entity created."""
         _LOGGER.debug("New network device tracker %s (%s)", self.name, self.unique_id)
 
