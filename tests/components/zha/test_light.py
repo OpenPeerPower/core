@@ -10,8 +10,8 @@ import zigpy.zcl.clusters.lighting as lighting
 import zigpy.zcl.foundation as zcl_f
 
 from openpeerpower.components.light import DOMAIN, FLASH_LONG, FLASH_SHORT
-from openpeerpower.components.zha.core.group import GroupMember
-from openpeerpower.components.zha.light import FLASH_EFFECTS
+from openpeerpower.components.zop.core.group import GroupMember
+from openpeerpower.components.zop.light import FLASH_EFFECTS
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
 import openpeerpower.util.dt as dt_util
 
@@ -34,7 +34,7 @@ IEEE_GROUPABLE_DEVICE3 = "03:2d:6f:00:0a:90:69:e7"
 
 LIGHT_ON_OFF = {
     1: {
-        "device_type": zha.DeviceType.ON_OFF_LIGHT,
+        "device_type": zop.DeviceType.ON_OFF_LIGHT,
         "in_clusters": [
             general.Basic.cluster_id,
             general.Identify.cluster_id,
@@ -46,7 +46,7 @@ LIGHT_ON_OFF = {
 
 LIGHT_LEVEL = {
     1: {
-        "device_type": zha.DeviceType.DIMMABLE_LIGHT,
+        "device_type": zop.DeviceType.DIMMABLE_LIGHT,
         "in_clusters": [
             general.Basic.cluster_id,
             general.LevelControl.cluster_id,
@@ -58,7 +58,7 @@ LIGHT_LEVEL = {
 
 LIGHT_COLOR = {
     1: {
-        "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
+        "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
         "in_clusters": [
             general.Basic.cluster_id,
             general.Identify.cluster_id,
@@ -80,7 +80,7 @@ async def coordinator.opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [general.Groups.cluster_id],
                 "out_clusters": [],
-                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee="00:15:8d:00:02:32:4f:32",
@@ -107,7 +107,7 @@ async def device_light_1.opp, zigpy_device_mock, zha_device_joined):
                     general.Identify.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE,
@@ -133,7 +133,7 @@ async def device_light_2.opp, zigpy_device_mock, zha_device_joined):
                     general.Identify.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE2,
@@ -159,7 +159,7 @@ async def device_light_3.opp, zigpy_device_mock, zha_device_joined):
                     general.Identify.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE3,

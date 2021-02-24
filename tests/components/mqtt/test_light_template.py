@@ -283,7 +283,7 @@ async def test_state_brightness_color_effect_temp_white_change_via_topic(
 
 async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     """Test the sending of command in optimistic mode."""
-    fake_state = ha.State(
+    fake_state = op.State(
         "light.test",
         "on",
         {

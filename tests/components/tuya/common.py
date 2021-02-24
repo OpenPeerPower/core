@@ -1,6 +1,6 @@
 """Test code shared between test files."""
 
-from tuyaha.devices import climate, light, switch
+from tuyaop.devices import climate, light, switch
 
 CLIMATE_ID = "1"
 CLIMATE_DATA = {

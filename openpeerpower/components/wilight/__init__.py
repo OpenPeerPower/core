@@ -112,7 +112,7 @@ class WiLightDevice(Entity):
 
     @callback
     def handle_event_callback(self, states):
-        """Propagate changes through ha."""
+        """Propagate changes through op."""
         self._status = states
         self.async_write_op_state()
 

@@ -260,7 +260,7 @@ class APISpaceApiView(OpenPeerPowerView):
             sensor_data[ATTR_UNIT] = sensor_state.attributes[ATTR_UNIT_OF_MEASUREMENT]
         return sensor_data
 
-    @ha.callback
+    @op.callback
     def get(self, request):
         """Get SpaceAPI data."""
        opp = request.app[.opp"]

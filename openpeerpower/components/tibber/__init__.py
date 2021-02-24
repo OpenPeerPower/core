@@ -51,9 +51,9 @@ async def async_setup_entry(opp, entry):
     """Set up a config entry."""
 
     tibber_connection = tibber.Tibber(
-        access_token=entry.data[CONF_ACCESS_TOKEN],
-        websession=async_get_clientsession(opp),
-        time_zone=dt_util.DEFAULT_TIME_ZONE,
+        access_token = entry.data[CONF_ACCESS_TOKEN],
+        websession = async_get_clientsession(opp),
+        time_zone = dt_util.DEFAULT_TIME_ZONE
     )
     opp.data[DOMAIN] = tibber_connection
 
@@ -82,7 +82,7 @@ async def async_setup_entry(opp, entry):
     # have to use discovery to load platform.
     opp.async_create_task(
         discovery.async_load_platform(
-            opp. "notify", DOMAIN, {CONF_NAME: DOMAIN}, opp.data[DATA_OPP_CONFIG]
+            opp, "notify", DOMAIN, {CONF_NAME: DOMAIN}, opp.data[DATA_OPP_CONFIG]
         )
     )
     return True

@@ -128,7 +128,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
 
     on_event = {"id": "test2", "command": "on"}
 
-    @ha.callback
+    @op.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)

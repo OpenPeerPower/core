@@ -7,7 +7,7 @@ import zigpy.profiles.zha
 import zigpy.zcl.clusters.general as general
 
 import openpeerpower.components.automation as automation
-import openpeerpower.components.zha.core.device as zha_core_device
+import openpeerpower.components.zop.core.device as zha_core_device
 from openpeerpower.helpers.device_registry import async_get_registry
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
@@ -60,7 +60,7 @@ async def mock_devices.opp, zigpy_device_mock, zha_device_joined_restored):
             1: {
                 "in_clusters": [general.Basic.cluster_id],
                 "out_clusters": [general.OnOff.cluster_id],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         }
     )

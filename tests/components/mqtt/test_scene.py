@@ -34,7 +34,7 @@ DEFAULT_CONFIG = {
 
 async def test_sending_mqtt_commands.opp, mqtt_mock):
     """Test the sending MQTT commands."""
-    fake_state = ha.State("scene.test", scene.STATE)
+    fake_state = op.State("scene.test", scene.STATE)
 
     with patch(
         "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",

@@ -21,7 +21,7 @@ async def test_fetching_url_and_caching(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(), text="hello world")
 
     await async_setup_component(
-        opp. "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
+        opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
     await opp.async_block_till_done()
 

@@ -2,7 +2,7 @@
 Climate on Zigbee Home Automation networks.
 
 For more details on this platform, please refer to the documentation
-at https://open-peer-power.io/components/zha.climate/
+at https://open-peer-power.io/components/zop.climate/
 """
 from datetime import datetime, timedelta
 import enum

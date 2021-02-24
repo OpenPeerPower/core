@@ -325,7 +325,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
 
 async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     """Test the sending of command in optimistic mode."""
-    fake_state = ha.State(
+    fake_state = op.State(
         "light.test",
         "on",
         {

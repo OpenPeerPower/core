@@ -123,7 +123,7 @@ async def test_login_flow_validates_mfa(opp):
     )
 
     notify_calls = async_mock_service(
-        opp. "notify", "test-notify", NOTIFY_SERVICE_SCHEMA
+        opp, "notify", "test-notify", NOTIFY_SERVICE_SCHEMA
     )
 
     await opp.auth.async_enable_user_mfa(

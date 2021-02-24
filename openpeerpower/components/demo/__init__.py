@@ -55,7 +55,7 @@ async def async_setup(opp, config):
             opp.helpers.discovery.async_load_platform(component, DOMAIN, {}, config)
         )
 
-    config.setdefault(ha.DOMAIN, {})
+    config.setdefault(op.DOMAIN, {})
     config.setdefault(DOMAIN, {})
 
     # Set up sun

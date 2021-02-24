@@ -261,7 +261,7 @@ async def test_rapid_rediscover.opp, mqtt_mock, caplog):
 
     events = []
 
-    @ha.callback
+    @op.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)
@@ -317,7 +317,7 @@ async def test_rapid_rediscover_unique.opp, mqtt_mock, caplog):
 
     events = []
 
-    @ha.callback
+    @op.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)

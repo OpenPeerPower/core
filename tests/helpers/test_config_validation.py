@@ -101,8 +101,8 @@ def test_url():
         "invalid",
         None,
         100,
-        "htp://ha.io",
-        "http//ha.io",
+        "htp://op.io",
+        "http//op.io",
         "http://??,**",
         "https://??,**",
     ):

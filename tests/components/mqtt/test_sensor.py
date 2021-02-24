@@ -222,7 +222,7 @@ async def test_force_update_disabled.opp, mqtt_mock):
 
     events = []
 
-    @ha.callback
+    @op.callback
     def callback(event):
         events.append(event)
 
@@ -256,7 +256,7 @@ async def test_force_update_enabled.opp, mqtt_mock):
 
     events = []
 
-    @ha.callback
+    @op.callback
     def callback(event):
         events.append(event)
 

@@ -73,7 +73,7 @@ async def test_discover_notify.opp, mock_demo_notify):
     assert notify.DOMAIN not in.opp.config.components
     mock_demo_notify.return_value = None
     await discovery.async_load_platform(
-        opp. "notify", "demo", {"test_key": "test_val"}, {"notify": {}}
+        opp, "notify", "demo", {"test_key": "test_val"}, {"notify": {}}
     )
     await opp.async_block_till_done()
     assert notify.DOMAIN in.opp.config.components

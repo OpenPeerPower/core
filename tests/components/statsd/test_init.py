@@ -87,7 +87,7 @@ async def test_event_listener_defaults.opp, mock_client):
 
     for invalid in ("foo", "", object):
         handler_method(
-            MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
+            MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
         )
         assert not mock_client.gauge.called
         assert mock_client.incr.called
@@ -127,7 +127,7 @@ async def test_event_listener_attr_details.opp, mock_client):
 
     for invalid in ("foo", "", object):
         handler_method(
-            MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
+            MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
         )
         assert not mock_client.gauge.called
         assert mock_client.incr.called

@@ -8,7 +8,7 @@ import pytest
 import zigpy.profiles.zha
 import zigpy.zcl.clusters.general as general
 
-import openpeerpower.components.zha.core.device as zha_core_device
+import openpeerpower.components.zop.core.device as zha_core_device
 from openpeerpower.const import STATE_OFF, STATE_UNAVAILABLE
 import openpeerpower.helpers.device_registry as ha_dev_reg
 import openpeerpower.util.dt as dt_util
@@ -31,7 +31,7 @@ def zigpy_device(zigpy_device_mock):
             3: {
                 "in_clusters": in_clusters,
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         }
         return zigpy_device_mock(endpoints)
@@ -52,7 +52,7 @@ def zigpy_device_mains(zigpy_device_mock):
             3: {
                 "in_clusters": in_clusters,
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         }
         return zigpy_device_mock(
@@ -101,7 +101,7 @@ def _send_time_changed.opp, seconds):
 
 
 @patch(
-    "openpeerpower.components.zha.core.channels.general.BasicChannel.async_initialize",
+    "openpeerpower.components.zop.core.channels.general.BasicChannel.async_initialize",
     new=mock.MagicMock(),
 )
 async def test_check_available_success(
@@ -155,7 +155,7 @@ async def test_check_available_success(
 
 
 @patch(
-    "openpeerpower.components.zha.core.channels.general.BasicChannel.async_initialize",
+    "openpeerpower.components.zop.core.channels.general.BasicChannel.async_initialize",
     new=mock.MagicMock(),
 )
 async def test_check_available_unsuccessful(
@@ -198,7 +198,7 @@ async def test_check_available_unsuccessful(
 
 
 @patch(
-    "openpeerpower.components.zha.core.channels.general.BasicChannel.async_initialize",
+    "openpeerpower.components.zop.core.channels.general.BasicChannel.async_initialize",
     new=mock.MagicMock(),
 )
 async def test_check_available_no_basic_channel(

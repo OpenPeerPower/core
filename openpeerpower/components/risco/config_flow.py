@@ -148,10 +148,10 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
 
         options = {}
         risco_to_ha = self._data[CONF_RISCO_STATES_TO_HA]
-        # we iterate over OP_STATES, instead of set(self._risco_to_ha.values())
+        # we iterate over OP_STATES, instead of set(self._risco_to_op.values())
         # to ensure a consistent order
         for op_state in OP_STATES:
-            if op_state not in risco_to_ha.values():
+            if op_state not in risco_to_op.values():
                 continue
 
             values = [

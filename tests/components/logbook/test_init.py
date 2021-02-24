@@ -58,7 +58,7 @@ def test_service_call_create_logbook_entry(opp_):
     """Test if service call create log book entry."""
     calls = []
 
-    @ha.callback
+    @op.callback
     def event_listener(event):
         """Append on event."""
         calls.append(event)
@@ -119,7 +119,7 @@ def test_service_call_create_log_book_entry_no_message(opp_):
     """Test if service call create log book entry without message."""
     calls = []
 
-    @ha.callback
+    @op.callback
     def event_listener(event):
         """Append on event."""
         calls.append(event)
@@ -180,7 +180,7 @@ def test_open_peer_power_start_stop_grouped(opp_):
 
     assert len(entries) == 1
     assert_entry(
-        entries[0], name="Open Peer Power", message="restarted", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="restarted", domain=op.DOMAIN
     )
 
 
@@ -203,7 +203,7 @@ def test_open_peer_power_start(opp_):
     )
 
     assert len(entries) == 2
-    assert_entry(entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN)
+    assert_entry(entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN)
     assert_entry(entries[1], pointA, "bla", entity_id=entity_id)
 
 
@@ -253,10 +253,10 @@ def create_state_changed_event(
     last_updated=None,
 ):
     """Create state changed event."""
-    old_state = ha.State(
+    old_state = op.State(
         entity_id, "old", attributes, last_changed, last_updated
     ).as_dict()
-    new_state = ha.State(
+    new_state = op.State(
         entity_id, state, attributes, last_changed, last_updated
     ).as_dict()
 
@@ -298,7 +298,7 @@ def create_state_changed_event_from_old_new(
     row.time_fired = event_time_fired
     row.state = new_state and new_state.get("state")
     row.entity_id = entity_id
-    row.domain = entity_id and ha.split_entity_id(entity_id)[0]
+    row.domain = entity_id and op.split_entity_id(entity_id)[0]
     row.context_id = None
     row.context_user_id = None
     row.context_parent_id = None
@@ -805,7 +805,7 @@ async def test_logbook_entity_context_id(opp, opp_client):
 
     await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    context = ha.Context(
+    context = op.Context(
         id="ac5bd62de45711eaaeb351041eec8dd9",
         user_id="b400facee45711eaa9308bfd3d19e474",
     )
@@ -866,7 +866,7 @@ async def test_logbook_entity_context_id(opp, opp_client):
     await opp.async_block_till_done()
 
     # A service call
-    light_turn_off_service_context = ha.Context(
+    light_turn_off_service_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
@@ -957,7 +957,7 @@ async def test_logbook_entity_context_parent_id(opp, opp_client):
 
     await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
 
-    context = ha.Context(
+    context = op.Context(
         id="ac5bd62de45711eaaeb351041eec8dd9",
         user_id="b400facee45711eaa9308bfd3d19e474",
     )
@@ -970,7 +970,7 @@ async def test_logbook_entity_context_parent_id(opp, opp_client):
         context=context,
     )
 
-    child_context = ha.Context(
+    child_context = op.Context(
         id="2798bfedf8234b5e9f4009c91f48f30c",
         parent_id="ac5bd62de45711eaaeb351041eec8dd9",
         user_id="b400facee45711eaa9308bfd3d19e474",
@@ -1022,7 +1022,7 @@ async def test_logbook_entity_context_parent_id(opp, opp_client):
     await opp.async_block_till_done()
 
     # A state change via service call with the script as the parent
-    light_turn_off_service_context = ha.Context(
+    light_turn_off_service_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         parent_id="2798bfedf8234b5e9f4009c91f48f30c",
         user_id="9400facee45711eaa9308bfd3d19e474",
@@ -1047,7 +1047,7 @@ async def test_logbook_entity_context_parent_id(opp, opp_client):
     await opp.async_block_till_done()
 
     # An event with a parent event, but the parent event isn't available
-    missing_parent_context = ha.Context(
+    missing_parent_context = op.Context(
         id="fc40b9a0d1f246f98c34b33c76228ee6",
         parent_id="c8ce515fe58e442f8664246c65ed964f",
         user_id="485cacf93ef84d25a99ced3126b921d2",
@@ -1168,7 +1168,7 @@ async def test_logbook_context_from_template(opp, opp_client):
     opp.states.async_set("switch.test_state", STATE_OFF)
     await opp.async_block_till_done()
 
-    switch_turn_off_context = ha.Context(
+    switch_turn_off_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
@@ -1254,7 +1254,7 @@ async def test_logbook_entity_matches_only(opp, opp_client):
     opp.states.async_set("switch.test_state", STATE_OFF)
     await opp.async_block_till_done()
 
-    switch_turn_off_context = ha.Context(
+    switch_turn_off_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
@@ -1332,7 +1332,7 @@ async def test_logbook_entity_matches_only_multiple(opp, opp_client):
 
     await opp.async_block_till_done()
 
-    switch_turn_off_context = ha.Context(
+    switch_turn_off_context = op.Context(
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
@@ -1437,7 +1437,7 @@ async def test_exclude_events_domain(opp, opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {CONF_EXCLUDE: {CONF_DOMAINS: ["switch", "alexa"]}},
         }
     )
@@ -1459,7 +1459,7 @@ async def test_exclude_events_domain(opp, opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1472,7 +1472,7 @@ async def test_exclude_events_domain_glob(opp, opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_EXCLUDE: {
                     CONF_DOMAINS: ["switch", "alexa"],
@@ -1500,7 +1500,7 @@ async def test_exclude_events_domain_glob(opp, opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1512,7 +1512,7 @@ async def test_include_events_entity(opp, opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
                     CONF_DOMAINS: ["openpeerpower"],
@@ -1538,7 +1538,7 @@ async def test_include_events_entity(opp, opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1550,7 +1550,7 @@ async def test_exclude_events_entity(opp, opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {CONF_EXCLUDE: {CONF_ENTITIES: [entity_id]}},
         }
     )
@@ -1570,7 +1570,7 @@ async def test_exclude_events_entity(opp, opp_client):
     entries = await _async_fetch_logbook(client)
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
 
@@ -1582,7 +1582,7 @@ async def test_include_events_domain(opp, opp_client):
     entity_id2 = "sensor.blu"
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {CONF_DOMAINS: ["openpeerpower", "sensor", "alexa"]}
             },
@@ -1609,7 +1609,7 @@ async def test_include_events_domain(opp, opp_client):
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="Amazon Alexa", domain="alexa")
     _assert_entry(entries[2], name="blu", entity_id=entity_id2)
@@ -1623,7 +1623,7 @@ async def test_include_events_domain_glob(opp, opp_client):
     entity_id3 = "switch.included"
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
                     CONF_DOMAINS: ["openpeerpower", "sensor", "alexa"],
@@ -1655,7 +1655,7 @@ async def test_include_events_domain_glob(opp, opp_client):
 
     assert len(entries) == 4
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="Amazon Alexa", domain="alexa")
     _assert_entry(entries[2], name="blu", entity_id=entity_id2)
@@ -1671,7 +1671,7 @@ async def test_include_exclude_events(opp, opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
                     CONF_DOMAINS: ["sensor", "openpeerpower"],
@@ -1707,7 +1707,7 @@ async def test_include_exclude_events(opp, opp_client):
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
     _assert_entry(entries[2], name="keep", entity_id=entity_id4)
@@ -1723,7 +1723,7 @@ async def test_include_exclude_events_with_glob_filters(opp, opp_client):
     entity_id6 = "sensor.excluded"
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {
                 CONF_INCLUDE: {
                     CONF_DOMAINS: ["sensor", "openpeerpower"],
@@ -1765,7 +1765,7 @@ async def test_include_exclude_events_with_glob_filters(opp, opp_client):
 
     assert len(entries) == 3
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id2)
     _assert_entry(entries[2], name="included", entity_id=entity_id4)
@@ -1777,7 +1777,7 @@ async def test_empty_config(opp, opp_client):
 
     config = logbook.CONFIG_SCHEMA(
         {
-            ha.DOMAIN: {},
+            op.DOMAIN: {},
             logbook.DOMAIN: {},
         }
     )
@@ -1796,7 +1796,7 @@ async def test_empty_config(opp, opp_client):
 
     assert len(entries) == 2
     _assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+        entries[0], name="Open Peer Power", message="started", domain=op.DOMAIN
     )
     _assert_entry(entries[1], name="blu", entity_id=entity_id)
 
@@ -1844,7 +1844,7 @@ def _assert_entry(
         assert entity_id == entry["entity_id"]
 
 
-class MockLazyEventPartialState(ha.Event):
+class MockLazyEventPartialState(op.Event):
     """Minimal mock of a Lazy event."""
 
     @property

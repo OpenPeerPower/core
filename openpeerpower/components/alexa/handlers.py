@@ -118,7 +118,7 @@ async def async_api_turn_on(opp, config, directive, context):
     entity = directive.entity
     domain = entity.domain
     if domain == group.DOMAIN:
-        domain = ha.DOMAIN
+        domain = op.DOMAIN
 
     service = SERVICE_TURN_ON
     if domain == cover.DOMAIN:
@@ -152,7 +152,7 @@ async def async_api_turn_off(opp, config, directive, context):
     entity = directive.entity
     domain = entity.domain
     if entity.domain == group.DOMAIN:
-        domain = ha.DOMAIN
+        domain = op.DOMAIN
 
     service = SERVICE_TURN_OFF
     if entity.domain == cover.DOMAIN:

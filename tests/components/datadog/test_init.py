@@ -141,7 +141,7 @@ async def test_state_changed(opp):
                 mock_statsd.gauge.assert_has_calls(
                     [
                         mock.call(
-                            f"ha.sensor.{attribute}",
+                            f"op.sensor.{attribute}",
                             value,
                             sample_rate=1,
                             tags=[f"entity:{state.entity_id}"],
@@ -150,7 +150,7 @@ async def test_state_changed(opp):
                 )
 
             assert mock_statsd.gauge.call_args == mock.call(
-                "ha.sensor",
+                "op.sensor",
                 out,
                 sample_rate=1,
                 tags=[f"entity:{state.entity_id}"],
@@ -160,6 +160,6 @@ async def test_state_changed(opp):
 
         for invalid in ("foo", "", object):
             handler_method(
-                mock.MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
+                mock.MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
             )
             assert not mock_statsd.gauge.called

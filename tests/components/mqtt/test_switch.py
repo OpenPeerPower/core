@@ -77,7 +77,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
 
 async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     """Test the sending MQTT commands in optimistic mode."""
-    fake_state = ha.State("switch.test", "on")
+    fake_state = op.State("switch.test", "on")
 
     with patch(
         "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",

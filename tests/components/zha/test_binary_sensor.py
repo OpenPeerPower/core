@@ -16,7 +16,7 @@ from .common import (
 
 DEVICE_IAS = {
     1: {
-        "device_type": zigpy.profiles.zha.DeviceType.IAS_ZONE,
+        "device_type": zigpy.profiles.zop.DeviceType.IAS_ZONE,
         "in_clusters": [security.IasZone.cluster_id],
         "out_clusters": [],
     }
@@ -25,7 +25,7 @@ DEVICE_IAS = {
 
 DEVICE_OCCUPANCY = {
     1: {
-        "device_type": zigpy.profiles.zha.DeviceType.OCCUPANCY_SENSOR,
+        "device_type": zigpy.profiles.zop.DeviceType.OCCUPANCY_SENSOR,
         "in_clusters": [measurement.OccupancySensing.cluster_id],
         "out_clusters": [],
     }

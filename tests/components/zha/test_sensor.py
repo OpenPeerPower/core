@@ -73,7 +73,7 @@ async def async_test_electrical_measurement.opp, cluster, entity_id):
     """Test electrical measurement sensor."""
     with mock.patch(
         (
-            "openpeerpower.components.zha.core.channels.homeautomation"
+            "openpeerpower.components.zop.core.channels.homeautomation"
             ".ElectricalMeasurementChannel.divisor"
         ),
         new_callable=mock.PropertyMock,
@@ -165,7 +165,7 @@ async def test_sensor(
             1: {
                 "in_clusters": [cluster_id, general.Basic.cluster_id],
                 "out_cluster": [],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         }
     )
@@ -289,7 +289,7 @@ async def test_temp_uom(
                     general.Basic.cluster_id,
                 ],
                 "out_cluster": [],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         }
     )
@@ -329,7 +329,7 @@ async def test_electrical_measurement_init(
             1: {
                 "in_clusters": [cluster_id, general.Basic.cluster_id],
                 "out_cluster": [],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         }
     )

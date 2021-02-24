@@ -103,10 +103,10 @@ class TestGraphite(unittest.TestCase):
         attrs = {"foo": 1, "bar": 2.0, "baz": True, "bat": "NaN"}
 
         expected = [
-            "ha.entity.state 0.000000 12345",
-            "ha.entity.foo 1.000000 12345",
-            "ha.entity.bar 2.000000 12345",
-            "ha.entity.baz 1.000000 12345",
+            "op.entity.state 0.000000 12345",
+            "op.entity.foo 1.000000 12345",
+            "op.entity.bar 2.000000 12345",
+            "op.entity.baz 1.000000 12345",
         ]
 
         state = mock.MagicMock(state=0, attributes=attrs)
@@ -119,7 +119,7 @@ class TestGraphite(unittest.TestCase):
     def test_report_with_string_state(self, mock_time):
         """Test the reporting with strings."""
         mock_time.return_value = 12345
-        expected = ["ha.entity.foo 1.000000 12345", "ha.entity.state 1.000000 12345"]
+        expected = ["op.entity.foo 1.000000 12345", "op.entity.state 1.000000 12345"]
 
         state = mock.MagicMock(state="above_horizon", attributes={"foo": 1.0})
         with mock.patch.object(self.gf, "_send_to_graphite") as mock_send:
@@ -131,12 +131,12 @@ class TestGraphite(unittest.TestCase):
     def test_report_with_binary_state(self, mock_time):
         """Test the reporting with binary state."""
         mock_time.return_value = 12345
-        state = ha.State("domain.entity", STATE_ON, {"foo": 1.0})
+        state = op.State("domain.entity", STATE_ON, {"foo": 1.0})
         with mock.patch.object(self.gf, "_send_to_graphite") as mock_send:
             self.gf._report_attributes("entity", state)
             expected = [
-                "ha.entity.foo 1.000000 12345",
-                "ha.entity.state 1.000000 12345",
+                "op.entity.foo 1.000000 12345",
+                "op.entity.state 1.000000 12345",
             ]
             actual = mock_send.call_args_list[0][0][0].split("\n")
             assert sorted(expected) == sorted(actual)
@@ -145,8 +145,8 @@ class TestGraphite(unittest.TestCase):
         with mock.patch.object(self.gf, "_send_to_graphite") as mock_send:
             self.gf._report_attributes("entity", state)
             expected = [
-                "ha.entity.foo 1.000000 12345",
-                "ha.entity.state 0.000000 12345",
+                "op.entity.foo 1.000000 12345",
+                "op.entity.state 0.000000 12345",
             ]
             actual = mock_send.call_args_list[0][0][0].split("\n")
             assert sorted(expected) == sorted(actual)
@@ -155,7 +155,7 @@ class TestGraphite(unittest.TestCase):
     def test_send_to_graphite_errors(self, mock_time):
         """Test the sending with errors."""
         mock_time.return_value = 12345
-        state = ha.State("domain.entity", STATE_ON, {"foo": 1.0})
+        state = op.State("domain.entity", STATE_ON, {"foo": 1.0})
         with mock.patch.object(self.gf, "_send_to_graphite") as mock_send:
             mock_send.side_effect = socket.error
             self.gf._report_attributes("entity", state)

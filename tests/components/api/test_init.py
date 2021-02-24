@@ -29,7 +29,7 @@ async def test_api_list_state_entities.opp, mock_api_client):
     assert resp.status == 200
     json = await resp.json()
 
-    remote_data = [ha.State.from_dict(item) for item in json]
+    remote_data = [op.State.from_dict(item) for item in json]
     assert remote_data == opp.states.async_all()
 
 
@@ -40,7 +40,7 @@ async def test_api_get_state.opp, mock_api_client):
     assert resp.status == 200
     json = await resp.json()
 
-    data = ha.State.from_dict(json)
+    data = op.State.from_dict(json)
 
     state = opp.states.get("hello.world")
 
@@ -113,7 +113,7 @@ async def test_api_state_change_push.opp, mock_api_client):
 
     events = []
 
-    @ha.callback
+    @op.callback
     def event_listener(event):
         """Track events."""
         events.append(event)
@@ -136,7 +136,7 @@ async def test_api_fire_event_with_no_data.opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @ha.callback
+    @op.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(1)
@@ -154,7 +154,7 @@ async def test_api_fire_event_with_data.opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @ha.callback
+    @op.callback
     def listener(event):
         """Record that our event got called.
 
@@ -177,7 +177,7 @@ async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @ha.callback
+    @op.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(1)
@@ -256,7 +256,7 @@ async def test_api_call_service_no_data.opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
-    @ha.callback
+    @op.callback
     def listener(service_call):
         """Record that our service got called."""
         test_value.append(1)
@@ -272,7 +272,7 @@ async def test_api_call_service_with_data.opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
-    @ha.callback
+    @op.callback
     def listener(service_call):
         """Record that our service got called.
 
@@ -412,7 +412,7 @@ async def test_api_fire_event_context.opp, mock_api_client, opp_access_token):
     """Test if the API sets right context if we fire an event."""
     test_value = []
 
-    @ha.callback
+    @op.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(event)
@@ -538,7 +538,7 @@ async def test_api_call_service_bad_data.opp, mock_api_client):
     """Test if the API fails 400 if unknown service."""
     test_value = []
 
-    @ha.callback
+    @op.callback
     def listener(service_call):
         """Record that our service got called."""
         test_value.append(1)

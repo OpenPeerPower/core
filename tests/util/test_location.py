@@ -19,7 +19,7 @@ COORDINATES_NEW_YORK = (40.730610, -73.935242)
 # [1]  5851            3635
 #
 # [0]: http://boulter.com/gps/distance/
-# [1]: https://www.wolframalpha.com/input/?i=from+paris+to+new+york
+# [1]: https://www.wolframalpop.com/input/?i=from+paris+to+new+york
 DISTANCE_KM = 5846.39
 DISTANCE_MILES = 3632.78
 

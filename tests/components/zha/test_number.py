@@ -27,7 +27,7 @@ def zigpy_analog_output_device(zigpy_device_mock):
 
     endpoints = {
         1: {
-            "device_type": zigpy.profiles.zha.DeviceType.LEVEL_CONTROL_SWITCH,
+            "device_type": zigpy.profiles.zop.DeviceType.LEVEL_CONTROL_SWITCH,
             "in_clusters": [general.AnalogOutput.cluster_id, general.Basic.cluster_id],
             "out_clusters": [],
         }

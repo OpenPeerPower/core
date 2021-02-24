@@ -728,7 +728,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
             "payload_off": "off",
         }
     }
-    fake_state = ha.State(
+    fake_state = op.State(
         "light.test",
         "on",
         {

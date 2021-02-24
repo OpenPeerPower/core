@@ -131,8 +131,8 @@ async def test_create_auth(opp, opp_ws_client, opp_storage):
     assert creds.auth_provider_type == "openpeerpower"
     assert creds.auth_provider_id is None
     assert creds.data == {"username": "test-user2"}
-    assert prov_ha.STORAGE_KEY in.opp_storage
-    entry = opp_storage[prov_ha.STORAGE_KEY]["data"]["users"][1]
+    assert prov_op.STORAGE_KEY in.opp_storage
+    entry = opp_storage[prov_op.STORAGE_KEY]["data"]["users"][1]
     assert entry["username"] == "test-user2"
 
 
@@ -141,7 +141,7 @@ async def test_create_auth_duplicate_username(opp, opp_ws_client, opp_storage):
     client = await opp_ws_client(opp)
     user = MockUser().add_to.opp.opp)
 
-    opp.storage[prov_ha.STORAGE_KEY] = {
+    opp.storage[prov_op.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -165,7 +165,7 @@ async def test_delete_removes_just_auth(opp_ws_client, opp, opp_storage):
     """Test deleting an auth without being connected to a user."""
     client = await opp_ws_client(opp)
 
-    opp.storage[prov_ha.STORAGE_KEY] = {
+    opp.storage[prov_op.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -180,7 +180,7 @@ async def test_delete_removes_just_auth(opp_ws_client, opp, opp_storage):
 
     result = await client.receive_json()
     assert result["success"], result
-    assert len.opp_storage[prov_ha.STORAGE_KEY]["data"]["users"]) == 0
+    assert len.opp_storage[prov_op.STORAGE_KEY]["data"]["users"]) == 0
 
 
 async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
@@ -188,7 +188,7 @@ async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
     client = await opp_ws_client(opp)
 
     user = MockUser().add_to.opp.opp)
-    opp.storage[prov_ha.STORAGE_KEY] = {
+    opp.storage[prov_op.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -209,7 +209,7 @@ async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
 
     result = await client.receive_json()
     assert result["success"], result
-    assert len.opp_storage[prov_ha.STORAGE_KEY]["data"]["users"]) == 0
+    assert len.opp_storage[prov_op.STORAGE_KEY]["data"]["users"]) == 0
 
 
 async def test_delete_requires_admin(opp, opp_ws_client, opp_read_only_access_token):
@@ -281,7 +281,7 @@ async def test_change_password_wrong_pw(
     result = await client.receive_json()
     assert not result["success"], result
     assert result["error"]["code"] == "invalid_current_password"
-    with pytest.raises(prov_ha.InvalidAuth):
+    with pytest.raises(prov_op.InvalidAuth):
         await auth_provider.async_validate_login("test-user", "new-pass")
 
 

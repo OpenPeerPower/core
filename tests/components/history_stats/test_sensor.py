@@ -130,9 +130,9 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
         fake_states = {
             "binary_sensor.test_id": [
-                ha.State("binary_sensor.test_id", "on", last_changed=t0),
-                ha.State("binary_sensor.test_id", "off", last_changed=t1),
-                ha.State("binary_sensor.test_id", "on", last_changed=t2),
+                op.State("binary_sensor.test_id", "on", last_changed=t0),
+                op.State("binary_sensor.test_id", "off", last_changed=t1),
+                op.State("binary_sensor.test_id", "on", last_changed=t2),
             ]
         }
 
@@ -186,9 +186,9 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
         fake_states = {
             "input_select.test_id": [
-                ha.State("input_select.test_id", "orange", last_changed=t0),
-                ha.State("input_select.test_id", "default", last_changed=t1),
-                ha.State("input_select.test_id", "blue", last_changed=t2),
+                op.State("input_select.test_id", "orange", last_changed=t0),
+                op.State("input_select.test_id", "default", last_changed=t1),
+                op.State("input_select.test_id", "blue", last_changed=t2),
             ]
         }
 
@@ -372,7 +372,7 @@ async def test_reload(opp):
         init_recorder_component, opp
     )  # force in memory db
 
-    opp.state = ha.CoreState.not_running
+    opp.state = op.CoreState.not_running
     opp.states.async_set("binary_sensor.test_id", "on")
 
     await async_setup_component(

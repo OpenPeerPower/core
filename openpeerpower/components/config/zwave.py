@@ -76,7 +76,7 @@ class ZWaveConfigWriteView(OpenPeerPowerView):
     url = "/api/zwave/saveconfig"
     name = "api:zwave:saveconfig"
 
-    @ha.callback
+    @op.callback
     def post(self, request):
         """Save cache configuration to zwcfg_xxxxx.xml."""
        opp = request.app[.opp"]
@@ -94,7 +94,7 @@ class ZWaveNodeValueView(OpenPeerPowerView):
     url = r"/api/zwave/values/{node_id:\d+}"
     name = "api:zwave:values"
 
-    @ha.callback
+    @op.callback
     def get(self, request, node_id):
         """Retrieve groups of node."""
         nodeid = int(node_id)
@@ -123,7 +123,7 @@ class ZWaveNodeGroupView(OpenPeerPowerView):
     url = r"/api/zwave/groups/{node_id:\d+}"
     name = "api:zwave:groups"
 
-    @ha.callback
+    @op.callback
     def get(self, request, node_id):
         """Retrieve groups of node."""
         nodeid = int(node_id)
@@ -150,7 +150,7 @@ class ZWaveNodeConfigView(OpenPeerPowerView):
     url = r"/api/zwave/config/{node_id:\d+}"
     name = "api:zwave:config"
 
-    @ha.callback
+    @op.callback
     def get(self, request, node_id):
         """Retrieve configurations of node."""
         nodeid = int(node_id)
@@ -181,7 +181,7 @@ class ZWaveUserCodeView(OpenPeerPowerView):
     url = r"/api/zwave/usercodes/{node_id:\d+}"
     name = "api:zwave:usercodes"
 
-    @ha.callback
+    @op.callback
     def get(self, request, node_id):
         """Retrieve usercodes of node."""
         nodeid = int(node_id)

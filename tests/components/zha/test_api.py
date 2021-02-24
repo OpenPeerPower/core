@@ -10,7 +10,7 @@ import zigpy.zcl.clusters.general as general
 
 from openpeerpower.components.websocket_api import const
 from openpeerpower.components.zha import DOMAIN
-from openpeerpower.components.zha.api import (
+from openpeerpower.components.zop.api import (
     ATTR_DURATION,
     ATTR_INSTALL_CODE,
     ATTR_QR_CODE,
@@ -20,7 +20,7 @@ from openpeerpower.components.zha.api import (
     TYPE,
     async_load_api,
 )
-from openpeerpower.components.zha.core.const import (
+from openpeerpower.components.zop.core.const import (
     ATTR_CLUSTER_ID,
     ATTR_CLUSTER_TYPE,
     ATTR_ENDPOINT_ID,
@@ -55,7 +55,7 @@ async def device_switch.opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [general.OnOff.cluster_id, general.Basic.cluster_id],
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         },
         ieee=IEEE_SWITCH_DEVICE,
@@ -78,7 +78,7 @@ async def device_groupable.opp, zigpy_device_mock, zha_device_joined):
                     general.Groups.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE,

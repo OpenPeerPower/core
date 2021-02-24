@@ -156,13 +156,13 @@ async def test_extract_from_service_available_device(opp):
         ]
     )
 
-    call_1 = ha.ServiceCall("test", "service", data={"entity_id": ENTITY_MATCH_ALL})
+    call_1 = op.ServiceCall("test", "service", data={"entity_id": ENTITY_MATCH_ALL})
 
     assert ["test_domain.test_1", "test_domain.test_3"] == sorted(
         ent.entity_id for ent in (await component.async_extract_from_service(call_1))
     )
 
-    call_2 = ha.ServiceCall(
+    call_2 = op.ServiceCall(
         "test",
         "service",
         data={"entity_id": ["test_domain.test_3", "test_domain.test_4"]},
@@ -220,18 +220,18 @@ async def test_extract_from_service_fails_if_no_entity_id(opp):
     )
 
     assert (
-        await component.async_extract_from_service(ha.ServiceCall("test", "service"))
+        await component.async_extract_from_service(op.ServiceCall("test", "service"))
         == []
     )
     assert (
         await component.async_extract_from_service(
-            ha.ServiceCall("test", "service", {"entity_id": ENTITY_MATCH_NONE})
+            op.ServiceCall("test", "service", {"entity_id": ENTITY_MATCH_NONE})
         )
         == []
     )
     assert (
         await component.async_extract_from_service(
-            ha.ServiceCall("test", "service", {"area_id": ENTITY_MATCH_NONE})
+            op.ServiceCall("test", "service", {"area_id": ENTITY_MATCH_NONE})
         )
         == []
     )
@@ -244,7 +244,7 @@ async def test_extract_from_service_filter_out_non_existing_entities(opp):
         [MockEntity(name="test_1"), MockEntity(name="test_2")]
     )
 
-    call = ha.ServiceCall(
+    call = op.ServiceCall(
         "test",
         "service",
         {"entity_id": ["test_domain.test_2", "test_domain.non_exist"]},
@@ -260,7 +260,7 @@ async def test_extract_from_service_no_group_expand(opp):
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     await component.async_add_entities([MockEntity(entity_id="group.test_group")])
 
-    call = ha.ServiceCall("test", "service", {"entity_id": ["group.test_group"]})
+    call = op.ServiceCall("test", "service", {"entity_id": ["group.test_group"]})
 
     extracted = await component.async_extract_from_service(call, expand_group=False)
     assert len(extracted) == 1
@@ -415,7 +415,7 @@ async def test_extract_all_omit_entity_id(opp, caplog):
         [MockEntity(name="test_1"), MockEntity(name="test_2")]
     )
 
-    call = ha.ServiceCall("test", "service")
+    call = op.ServiceCall("test", "service")
 
     assert [] == sorted(
         ent.entity_id for ent in await component.async_extract_from_service(call)
@@ -429,7 +429,7 @@ async def test_extract_all_use_match_all(opp, caplog):
         [MockEntity(name="test_1"), MockEntity(name="test_2")]
     )
 
-    call = ha.ServiceCall("test", "service", {"entity_id": "all"})
+    call = op.ServiceCall("test", "service", {"entity_id": "all"})
 
     assert ["test_domain.test_1", "test_domain.test_2"] == sorted(
         ent.entity_id for ent in await component.async_extract_from_service(call)
@@ -444,7 +444,7 @@ async def test_register_entity_service(opp):
     entity = MockEntity(entity_id=f"{DOMAIN}.entity")
     calls = []
 
-    @ha.callback
+    @op.callback
     def appender(**kwargs):
         calls.append(kwargs)
 

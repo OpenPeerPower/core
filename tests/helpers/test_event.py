@@ -222,7 +222,7 @@ async def test_track_state_change(opp):
     # This is the rare use case
     async_track_state_change(opp, "light.Bowl", specific_run_callback, "on", "off")
 
-    @ha.callback
+    @op.callback
     def wildcard_run_callback(entity_id, old_state, new_state):
         wildcard_runs.append((old_state, new_state))
 
@@ -294,21 +294,21 @@ async def test_async_track_state_change_filtered(opp):
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
 
-    @ha.callback
+    @op.callback
     def single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         single_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def multiple_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         multiple_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def callback_that_throws(event):
         raise ValueError
 
@@ -430,21 +430,21 @@ async def test_async_track_state_change_event(opp):
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
 
-    @ha.callback
+    @op.callback
     def single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         single_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def multiple_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         multiple_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def callback_that_throws(event):
         raise ValueError
 
@@ -521,10 +521,10 @@ async def test_async_track_state_change_event(opp):
 async def test_async_track_state_change_event_with_empty_list(opp):
     """Test async_track_state_change_event passing an empty list of entities."""
     unsub_single = async_track_state_change_event(
-        opp. [], ha.callback(lambda event: None)
+        opp. [], op.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_change_event(
-        opp. [], ha.callback(lambda event: None)
+        opp. [], op.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -536,21 +536,21 @@ async def test_async_track_state_added_domain(opp):
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
 
-    @ha.callback
+    @op.callback
     def single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         single_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def multiple_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         multiple_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def callback_that_throws(event):
         raise ValueError
 
@@ -616,10 +616,10 @@ async def test_async_track_state_added_domain(opp):
 async def test_async_track_state_added_domain_with_empty_list(opp):
     """Test async_track_state_added_domain passing an empty list of domains."""
     unsub_single = async_track_state_added_domain(
-        opp. [], ha.callback(lambda event: None)
+        opp. [], op.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_added_domain(
-        opp. [], ha.callback(lambda event: None)
+        opp. [], op.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -629,10 +629,10 @@ async def test_async_track_state_added_domain_with_empty_list(opp):
 async def test_async_track_state_removed_domain_with_empty_list(opp):
     """Test async_track_state_removed_domain passing an empty list of domains."""
     unsub_single = async_track_state_removed_domain(
-        opp. [], ha.callback(lambda event: None)
+        opp. [], op.callback(lambda event: None)
     )
     unsub_single2 = async_track_state_removed_domain(
-        opp. [], ha.callback(lambda event: None)
+        opp. [], op.callback(lambda event: None)
     )
 
     unsub_single2()
@@ -644,21 +644,21 @@ async def test_async_track_state_removed_domain(opp):
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
 
-    @ha.callback
+    @op.callback
     def single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         single_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def multiple_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         multiple_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def callback_that_throws(event):
         raise ValueError
 
@@ -726,14 +726,14 @@ async def test_async_track_state_removed_domain_match_all(opp):
     single_entity_id_tracker = []
     match_all_entity_id_tracker = []
 
-    @ha.callback
+    @op.callback
     def single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         single_entity_id_tracker.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def match_all_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
@@ -783,7 +783,7 @@ async def test_track_template(opp):
 
     async_track_template(opp, template_condition, specific_run_callback)
 
-    @ha.callback
+    @op.callback
     def wildcard_run_callback(entity_id, old_state, new_state):
         wildcard_runs.append((old_state, new_state))
 
@@ -834,7 +834,7 @@ async def test_track_template(opp):
     template_iterate = Template("{{ (states.switch | length) > 0 }}", opp)
     iterate_calls = []
 
-    @ha.callback
+    @op.callback
     def iterate_callback(entity_id, old_state, new_state):
         iterate_calls.append((entity_id, old_state, new_state))
 
@@ -855,7 +855,7 @@ async def test_track_template_error(opp, caplog):
     template_error = Template("{{ (states.switch | lunch) > 0 }}", opp)
     error_calls = []
 
-    @ha.callback
+    @op.callback
     def error_callback(entity_id, old_state, new_state):
         error_calls.append((entity_id, old_state, new_state))
 
@@ -889,7 +889,7 @@ async def test_track_template_error_can_recover(opp, caplog):
     )
     error_calls = []
 
-    @ha.callback
+    @op.callback
     def error_callback(entity_id, old_state, new_state):
         error_calls.append((entity_id, old_state, new_state))
 
@@ -913,7 +913,7 @@ async def test_track_template_time_change(opp, caplog):
     template_error = Template("{{ utcnow().minute % 2 == 0 }}", opp)
     calls = []
 
-    @ha.callback
+    @op.callback
     def error_callback(entity_id, old_state, new_state):
         calls.append((entity_id, old_state, new_state))
 
@@ -954,7 +954,7 @@ async def test_track_template_result(opp):
         opp. [TrackTemplate(template_condition, None)], specific_run_callback
     )
 
-    @ha.callback
+    @op.callback
     def wildcard_run_callback(event, updates):
         track_result = updates.pop()
         wildcard_runs.append(
@@ -1358,7 +1358,7 @@ async def test_track_template_result_iterator(opp):
     """Test tracking template."""
     iterator_runs = []
 
-    @ha.callback
+    @op.callback
     def iterator_callback(event, updates):
         iterator_runs.append(updates.pop().result)
 
@@ -1391,7 +1391,7 @@ async def test_track_template_result_iterator(opp):
 
     filter_runs = []
 
-    @ha.callback
+    @op.callback
     def filter_callback(event, updates):
         filter_runs.append(updates.pop().result)
 
@@ -1439,7 +1439,7 @@ async def test_track_template_result_errors(opp, caplog):
     syntax_error_runs = []
     not_exist_runs = []
 
-    @ha.callback
+    @op.callback
     def syntax_error_listener(event, updates):
         track_result = updates.pop()
         syntax_error_runs.append(
@@ -1459,7 +1459,7 @@ async def test_track_template_result_errors(opp, caplog):
     assert len(syntax_error_runs) == 0
     assert "TemplateSyntaxError" in caplog.text
 
-    @ha.callback
+    @op.callback
     def not_exist_runs_error_listener(event, updates):
         template_track = updates.pop()
         not_exist_runs.append(
@@ -1519,7 +1519,7 @@ async def test_static_string(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1539,7 +1539,7 @@ async def test_track_template_rate_limit(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1592,7 +1592,7 @@ async def test_track_template_rate_limit_suppress_listener(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1687,7 +1687,7 @@ async def test_track_template_rate_limit_five(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1721,7 +1721,7 @@ async def test_track_template_has_default_rate_limit(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1758,7 +1758,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1797,7 +1797,7 @@ async def test_specifically_referenced_entity_is_not_rate_limited(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1838,7 +1838,7 @@ async def test_track_two_templates_with_different_rate_limits(opp):
         template_five: [],
     }
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         for update in updates:
             refresh_runs[update.template].append(update.result)
@@ -1899,7 +1899,7 @@ async def test_string(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1919,7 +1919,7 @@ async def test_track_template_result_refresh_cancel(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates.pop().result)
 
@@ -1979,7 +1979,7 @@ async def test_async_track_template_result_multiple_templates(opp):
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates)
 
@@ -2036,7 +2036,7 @@ async def test_async_track_template_result_multiple_templates_mixing_domain(opp)
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates)
 
@@ -2108,7 +2108,7 @@ async def test_async_track_template_result_raise_on_template_error(opp):
                     None,
                 ),
             ],
-            ha.callback(lambda event, updates: None),
+            op.callback(lambda event, updates: None),
             raise_on_template_error=True,
         )
 
@@ -2261,7 +2261,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners(o
 
     refresh_runs = []
 
-    @ha.callback
+    @op.callback
     def refresh_listener(event, updates):
         refresh_runs.append(updates)
 
@@ -2326,7 +2326,7 @@ async def test_track_same_state_simple_no_trigger(opp):
     callback_runs = []
     period = timedelta(minutes=1)
 
-    @ha.callback
+    @op.callback
     def callback_run_callback():
         callback_runs.append(1)
 
@@ -2361,11 +2361,11 @@ async def test_track_same_state_simple_trigger_check_funct(opp):
     check_func = []
     period = timedelta(minutes=1)
 
-    @ha.callback
+    @op.callback
     def callback_run_callback():
         callback_runs.append(1)
 
-    @ha.callback
+    @op.callback
     def async_check_func(entity, from_s, to_s):
         check_func.append((entity, from_s, to_s))
         return True
@@ -3057,14 +3057,14 @@ async def test_track_state_change_event_chain_multple_entity(opp):
     chained_tracker_unsub = []
     tracker_unsub = []
 
-    @ha.callback
+    @op.callback
     def chained_single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         chained_tracker_called.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
@@ -3109,14 +3109,14 @@ async def test_track_state_change_event_chain_single_entity(opp):
     chained_tracker_unsub = []
     tracker_unsub = []
 
-    @ha.callback
+    @op.callback
     def chained_single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
 
         chained_tracker_called.append((old_state, new_state))
 
-    @ha.callback
+    @op.callback
     def single_run_callback(event):
         old_state = event.data.get("old_state")
         new_state = event.data.get("new_state")
@@ -3155,7 +3155,7 @@ async def test_track_point_in_utc_time_cancel(opp):
 
     times = []
 
-    @ha.callback
+    @op.callback
     def run_callback(utc_time):
         nonlocal times
         times.append(utc_time)
@@ -3191,7 +3191,7 @@ async def test_async_track_point_in_time_cancel(opp):
     hst_tz = dt_util.get_time_zone("US/Hawaii")
     dt_util.set_default_time_zone(hst_tz)
 
-    @ha.callback
+    @op.callback
     def run_callback(local_time):
         nonlocal times
         times.append(local_time)
@@ -3225,7 +3225,7 @@ async def test_async_track_entity_registry_updated_event(opp):
     await opp.async_block_till_done()
     event_data = []
 
-    @ha.callback
+    @op.callback
     def run_callback(event):
         event_data.append(event.data)
 
@@ -3291,11 +3291,11 @@ async def test_async_track_entity_registry_updated_event_with_a_callback_that_th
     await opp.async_block_till_done()
     event_data = []
 
-    @ha.callback
+    @op.callback
     def run_callback(event):
         event_data.append(event.data)
 
-    @ha.callback
+    @op.callback
     def failing_callback(event):
         raise ValueError
 
@@ -3318,10 +3318,10 @@ async def test_async_track_entity_registry_updated_event_with_a_callback_that_th
 async def test_async_track_entity_registry_updated_event_with_empty_list(opp):
     """Test async_track_entity_registry_updated_event passing an empty list of entities."""
     unsub_single = opp.helpers.event.async_track_entity_registry_updated_event(
-        [], ha.callback(lambda event: None)
+        [], op.callback(lambda event: None)
     )
     unsub_single2 = opp.helpers.event.async_track_entity_registry_updated_event(
-        [], ha.callback(lambda event: None)
+        [], op.callback(lambda event: None)
     )
 
     unsub_single2()

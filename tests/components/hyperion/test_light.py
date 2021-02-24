@@ -728,7 +728,7 @@ async def test_unload_entry(opp: OpenPeerPowerType) -> None:
 async def test_version_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
     """Test warning on old version."""
     client = create_mock_client()
-    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.7")
+    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpop.7")
     await setup_test_config_entry(opp, hyperion_client=client)
     assert.opp.states.get(TEST_ENTITY_ID_1) is not None
     assert "Please consider upgrading" in caplog.text
@@ -737,7 +737,7 @@ async def test_version_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # t
 async def test_version_no_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
     """Test no warning on acceptable version."""
     client = create_mock_client()
-    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.9")
+    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpop.9")
     await setup_test_config_entry(opp, hyperion_client=client)
     assert.opp.states.get(TEST_ENTITY_ID_1) is not None
     assert "Please consider upgrading" not in caplog.text

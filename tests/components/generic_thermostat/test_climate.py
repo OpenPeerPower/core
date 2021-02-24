@@ -495,8 +495,8 @@ def _setup_switch.opp, is_on):
         """Log service calls."""
         calls.append(call)
 
-    opp.services.async_register(ha.DOMAIN, SERVICE_TURN_ON, log_call)
-    opp.services.async_register(ha.DOMAIN, SERVICE_TURN_OFF, log_call)
+    opp.services.async_register(op.DOMAIN, SERVICE_TURN_ON, log_call)
+    opp.services.async_register(op.DOMAIN, SERVICE_TURN_OFF, log_call)
 
     return calls
 

@@ -158,7 +158,7 @@ class SW16Device(Entity):
 
     @callback
     def handle_event_callback(self, event):
-        """Propagate changes through ha."""
+        """Propagate changes through op."""
         _LOGGER.debug("Relay %s new state callback: %r", self.unique_id, event)
         self._is_on = event
         self.async_write_op_state()

@@ -21,7 +21,7 @@ async def async_handle_message(opp, config, request, context=None, enabled=True)
     assert request[API_DIRECTIVE][API_HEADER]["payloadVersion"] == "3"
 
     if context is None:
-        context = ha.Context()
+        context = op.Context()
 
     directive = AlexaDirective(request)
 

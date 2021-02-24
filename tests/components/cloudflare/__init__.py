@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry
 ENTRY_CONFIG = {
     CONF_API_TOKEN: "mock-api-token",
     CONF_ZONE: "mock.com",
-    CONF_RECORDS: ["ha.mock.com", "openpeerpower.mock.com"],
+    CONF_RECORDS: ["op.mock.com", "openpeerpower.mock.com"],
 }
 
 ENTRY_OPTIONS = {}
@@ -23,7 +23,7 @@ USER_INPUT = {
 
 USER_INPUT_ZONE = {CONF_ZONE: "mock.com"}
 
-USER_INPUT_RECORDS = {CONF_RECORDS: ["ha.mock.com", "openpeerpower.mock.com"]}
+USER_INPUT_RECORDS = {CONF_RECORDS: ["op.mock.com", "openpeerpower.mock.com"]}
 
 MOCK_ZONE = "mock.com"
 MOCK_ZONE_ID = "mock-zone-id"
@@ -31,7 +31,7 @@ MOCK_ZONE_RECORDS = [
     {
         "id": "zone-record-id",
         "type": "A",
-        "name": "ha.mock.com",
+        "name": "op.mock.com",
         "proxied": True,
         "content": "127.0.0.1",
     },

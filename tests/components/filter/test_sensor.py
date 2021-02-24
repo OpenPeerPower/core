@@ -31,7 +31,7 @@ def values():
     raw_values = [20, 19, 18, 21, 22, 0]
     timestamp = dt_util.utcnow()
     for val in raw_values:
-        values.append(ha.State("sensor.test_monitored", val, last_updated=timestamp))
+        values.append(op.State("sensor.test_monitored", val, last_updated=timestamp))
         timestamp += timedelta(minutes=1)
     return values
 
@@ -106,10 +106,10 @@ async def test_chain_history.opp, values, missing=False):
     else:
         fake_states = {
             "sensor.test_monitored": [
-                ha.State("sensor.test_monitored", 18.0, last_changed=t_0),
-                ha.State("sensor.test_monitored", "unknown", last_changed=t_1),
-                ha.State("sensor.test_monitored", 19.0, last_changed=t_2),
-                ha.State("sensor.test_monitored", 18.2, last_changed=t_3),
+                op.State("sensor.test_monitored", 18.0, last_changed=t_0),
+                op.State("sensor.test_monitored", "unknown", last_changed=t_1),
+                op.State("sensor.test_monitored", 19.0, last_changed=t_2),
+                op.State("sensor.test_monitored", 18.2, last_changed=t_3),
             ]
         }
 
@@ -226,9 +226,9 @@ async def test_history_time.opp):
 
     fake_states = {
         "sensor.test_monitored": [
-            ha.State("sensor.test_monitored", 18.0, last_changed=t_0),
-            ha.State("sensor.test_monitored", 19.0, last_changed=t_1),
-            ha.State("sensor.test_monitored", 18.2, last_changed=t_2),
+            op.State("sensor.test_monitored", 18.0, last_changed=t_0),
+            op.State("sensor.test_monitored", 19.0, last_changed=t_1),
+            op.State("sensor.test_monitored", 18.2, last_changed=t_2),
         ]
     }
     with patch(
@@ -337,7 +337,7 @@ def test_outlier_step(values):
 def test_initial_outlier(values):
     """Test issue #13363."""
     filt = OutlierFilter(window_size=3, precision=2, entity=None, radius=4.0)
-    out = ha.State("sensor.test_monitored", 4000)
+    out = op.State("sensor.test_monitored", 4000)
     for state in [out] + values:
         filtered = filt.filter_state(state)
     assert 21 == filtered.state
@@ -346,7 +346,7 @@ def test_initial_outlier(values):
 def test_unknown_state_outlier(values):
     """Test issue #32395."""
     filt = OutlierFilter(window_size=3, precision=2, entity=None, radius=4.0)
-    out = ha.State("sensor.test_monitored", "unknown")
+    out = op.State("sensor.test_monitored", "unknown")
     for state in [out] + values + [out]:
         try:
             filtered = filt.filter_state(state)
@@ -366,7 +366,7 @@ def test_precision_zero(values):
 def test_lowpass(values):
     """Test if lowpass filter works."""
     filt = LowPassFilter(window_size=10, precision=2, entity=None, time_constant=10)
-    out = ha.State("sensor.test_monitored", "unknown")
+    out = op.State("sensor.test_monitored", "unknown")
     for state in [out] + values + [out]:
         try:
             filtered = filt.filter_state(state)

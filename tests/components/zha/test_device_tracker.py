@@ -6,7 +6,7 @@ import pytest
 import zigpy.zcl.clusters.general as general
 
 from openpeerpower.components.device_tracker import DOMAIN, SOURCE_TYPE_ROUTER
-from openpeerpower.components.zha.core.registries import (
+from openpeerpower.components.zop.core.registries import (
     SMARTTHINGS_ARRIVAL_SENSOR_DEVICE_TYPE,
 )
 from openpeerpower.const import STATE_HOME, STATE_NOT_HOME, STATE_UNAVAILABLE

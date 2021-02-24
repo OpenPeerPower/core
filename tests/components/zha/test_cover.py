@@ -42,7 +42,7 @@ def zigpy_cover_device(zigpy_device_mock):
 
     endpoints = {
         1: {
-            "device_type": zigpy.profiles.zha.DeviceType.IAS_ZONE,
+            "device_type": zigpy.profiles.zop.DeviceType.IAS_ZONE,
             "in_clusters": [closures.WindowCovering.cluster_id],
             "out_clusters": [],
         }
@@ -56,7 +56,7 @@ def zigpy_cover_remote(zigpy_device_mock):
 
     endpoints = {
         1: {
-            "device_type": zigpy.profiles.zha.DeviceType.WINDOW_COVERING_CONTROLLER,
+            "device_type": zigpy.profiles.zop.DeviceType.WINDOW_COVERING_CONTROLLER,
             "in_clusters": [],
             "out_clusters": [closures.WindowCovering.cluster_id],
         }
@@ -70,7 +70,7 @@ def zigpy_shade_device(zigpy_device_mock):
 
     endpoints = {
         1: {
-            "device_type": zigpy.profiles.zha.DeviceType.SHADE,
+            "device_type": zigpy.profiles.zop.DeviceType.SHADE,
             "in_clusters": [
                 closures.Shade.cluster_id,
                 general.LevelControl.cluster_id,
@@ -88,7 +88,7 @@ def zigpy_keen_vent(zigpy_device_mock):
 
     endpoints = {
         1: {
-            "device_type": zigpy.profiles.zha.DeviceType.LEVEL_CONTROLLABLE_OUTPUT,
+            "device_type": zigpy.profiles.zop.DeviceType.LEVEL_CONTROLLABLE_OUTPUT,
             "in_clusters": [general.LevelControl.cluster_id, general.OnOff.cluster_id],
             "out_clusters": [],
         }
@@ -99,7 +99,7 @@ def zigpy_keen_vent(zigpy_device_mock):
 
 
 @patch(
-    "openpeerpower.components.zha.core.channels.closures.WindowCovering.async_initialize"
+    "openpeerpower.components.zop.core.channels.closures.WindowCovering.async_initialize"
 )
 async def test_cover(m1, opp, zha_device_joined_restored, zigpy_cover_device):
     """Test zha cover platform."""

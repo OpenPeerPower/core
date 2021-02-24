@@ -43,7 +43,7 @@ class TestComponentHistory(unittest.TestCase):
         """Test setup method of history."""
         config = history.CONFIG_SCHEMA(
             {
-                # ha.DOMAIN: {},
+                # op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["media_player"],
@@ -69,7 +69,7 @@ class TestComponentHistory(unittest.TestCase):
             "openpeerpower.components.recorder.dt_util.utcnow", return_value=now
         ):
             for i in range(5):
-                state = ha.State(
+                state = op.State(
                     "test.point_in_time_{}".format(i % 5),
                     f"State {i}",
                     {"attribute_test": i},
@@ -86,7 +86,7 @@ class TestComponentHistory(unittest.TestCase):
             "openpeerpower.components.recorder.dt_util.utcnow", return_value=future
         ):
             for i in range(5):
-                state = ha.State(
+                state = op.State(
                     "test.point_in_time_{}".format(i % 5),
                     f"State {i}",
                     {"attribute_test": i},
@@ -363,7 +363,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_EXCLUDE: {history.CONF_DOMAINS: ["media_player"]}
                 },
@@ -382,7 +382,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_EXCLUDE: {history.CONF_ENTITIES: ["media_player.test"]}
                 },
@@ -402,7 +402,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_EXCLUDE: {
                         history.CONF_DOMAINS: ["thermostat"],
@@ -427,7 +427,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_ENTITIES: ["media_player.test", "thermostat.test"]
@@ -451,7 +451,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["thermostat", "script"]
@@ -475,7 +475,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {history.CONF_ENTITIES: ["media_player.test"]}
                 },
@@ -496,7 +496,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["thermostat"],
@@ -523,7 +523,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {history.CONF_DOMAINS: ["media_player"]},
                     history.CONF_EXCLUDE: {history.CONF_DOMAINS: ["media_player"]},
@@ -548,7 +548,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_ENTITIES: ["media_player.test"]
@@ -574,7 +574,7 @@ class TestComponentHistory(unittest.TestCase):
 
         config = history.CONFIG_SCHEMA(
             {
-                ha.DOMAIN: {},
+                op.DOMAIN: {},
                 history.DOMAIN: {
                     history.CONF_INCLUDE: {
                         history.CONF_DOMAINS: ["media_player"],

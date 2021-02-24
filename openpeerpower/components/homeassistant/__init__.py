@@ -24,7 +24,7 @@ from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.service import async_extract_referenced_entity_ids
 
 _LOGGER = logging.getLogger(__name__)
-DOMAIN = ha.DOMAIN
+DOMAIN = op.DOMAIN
 SERVICE_RELOAD_CORE_CONFIG = "reload_core_config"
 SERVICE_CHECK_CONFIG = "check_config"
 SERVICE_UPDATE_ENTITY = "update_entity"
@@ -32,7 +32,7 @@ SERVICE_SET_LOCATION = "set_location"
 SCHEMA_UPDATE_ENTITY = vol.Schema({ATTR_ENTITY_ID: cv.entity_ids})
 
 
-async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
+async def async_setup_opp: op.OpenPeerPower, config: dict) -> bool:
     """Set up general services related to Open Peer Power."""
 
     async def async_handle_turn_service(service):
@@ -49,7 +49,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
 
         # Group entity_ids by domain. groupby requires sorted data.
         by_domain = it.groupby(
-            sorted(all_referenced), lambda item: ha.split_entity_id(item)[0]
+            sorted(all_referenced), lambda item: op.split_entity_id(item)[0]
         )
 
         tasks = []
@@ -98,13 +98,13 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
     service_schema = vol.Schema({ATTR_ENTITY_ID: cv.entity_ids}, extra=vol.ALLOW_EXTRA)
 
     opp.services.async_register(
-        ha.DOMAIN, SERVICE_TURN_OFF, async_handle_turn_service, schema=service_schema
+        op.DOMAIN, SERVICE_TURN_OFF, async_handle_turn_service, schema=service_schema
     )
     opp.services.async_register(
-        ha.DOMAIN, SERVICE_TURN_ON, async_handle_turn_service, schema=service_schema
+        op.DOMAIN, SERVICE_TURN_ON, async_handle_turn_service, schema=service_schema
     )
     opp.services.async_register(
-        ha.DOMAIN, SERVICE_TOGGLE, async_handle_turn_service, schema=service_schema
+        op.DOMAIN, SERVICE_TOGGLE, async_handle_turn_service, schema=service_schema
     )
 
     async def async_handle_core_service(call):
@@ -123,7 +123,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             opp.components.persistent_notification.async_create(
                 "Config error. See [the logs](/config/logs) for details.",
                 "Config validating",
-                f"{ha.DOMAIN}.check_config",
+                f"{op.DOMAIN}.check_config",
             )
             return
 
@@ -160,16 +160,16 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             await asyncio.wait(tasks)
 
     opp.helpers.service.async_register_admin_service(
-        ha.DOMAIN, SERVICE_OPENPEERPOWER_STOP, async_handle_core_service
+        op.DOMAIN, SERVICE_OPENPEERPOWER_STOP, async_handle_core_service
     )
     opp.helpers.service.async_register_admin_service(
-        ha.DOMAIN, SERVICE_OPENPEERPOWER_RESTART, async_handle_core_service
+        op.DOMAIN, SERVICE_OPENPEERPOWER_RESTART, async_handle_core_service
     )
     opp.helpers.service.async_register_admin_service(
-        ha.DOMAIN, SERVICE_CHECK_CONFIG, async_handle_core_service
+        op.DOMAIN, SERVICE_CHECK_CONFIG, async_handle_core_service
     )
     opp.services.async_register(
-        ha.DOMAIN,
+        op.DOMAIN,
         SERVICE_UPDATE_ENTITY,
         async_handle_update_service,
         schema=SCHEMA_UPDATE_ENTITY,
@@ -184,10 +184,10 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             return
 
         # auth only processed during startup
-        await conf_util.async_process_op_core_config(opp, conf.get(ha.DOMAIN) or {})
+        await conf_util.async_process_op_core_config(opp, conf.get(op.DOMAIN) or {})
 
     opp.helpers.service.async_register_admin_service(
-        ha.DOMAIN, SERVICE_RELOAD_CORE_CONFIG, async_handle_reload_config
+        op.DOMAIN, SERVICE_RELOAD_CORE_CONFIG, async_handle_reload_config
     )
 
     async def async_set_location(call):
@@ -197,7 +197,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
         )
 
     opp.helpers.service.async_register_admin_service(
-        ha.DOMAIN,
+        op.DOMAIN,
         SERVICE_SET_LOCATION,
         async_set_location,
         vol.Schema({ATTR_LATITUDE: cv.latitude, ATTR_LONGITUDE: cv.longitude}),

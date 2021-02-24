@@ -164,7 +164,7 @@ class HyperionConfigFlow(ConfigFlow, domain=DOMAIN):
         #   'manufacturerURL': 'https://www.hyperion-project.org',
         #   'modelDescription': 'Hyperion Open Source Ambient Light',
         #   'modelName': 'Hyperion',
-        #   'modelNumber': '2.0.0-alpha.8',
+        #   'modelNumber': '2.0.0-alpop.8',
         #   'modelURL': 'https://www.hyperion-project.org',
         #   'serialNumber': 'f9aab089-f85a-55cf-b7c1-222a72faebe9',
         #   'UDN': 'uuid:f9aab089-f85a-55cf-b7c1-222a72faebe9',
@@ -186,7 +186,7 @@ class HyperionConfigFlow(ConfigFlow, domain=DOMAIN):
         #   },
         #   'ssdp_usn': 'uuid:f9aab089-f85a-55cf-b7c1-222a72faebe9',
         #   'ssdp_ext': '',
-        #   'ssdp_server': 'Raspbian GNU/Linux 10 (buster)/10 UPnP/1.0 Hyperion/2.0.0-alpha.8'}
+        #   'ssdp_server': 'Raspbian GNU/Linux 10 (buster)/10 UPnP/1.0 Hyperion/2.0.0-alpop.8'}
 
         # SSDP requires user confirmation.
         self._require_confirm = True

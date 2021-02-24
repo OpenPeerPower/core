@@ -13,19 +13,19 @@ import zigpy.zcl.clusters.general
 import zigpy.zcl.clusters.security
 import zigpy.zcl.foundation as zcl_f
 
-import openpeerpower.components.zha.binary_sensor
-import openpeerpower.components.zha.core.channels as zha_channels
-import openpeerpower.components.zha.core.channels.base as base_channels
-import openpeerpower.components.zha.core.const as zha_const
-import openpeerpower.components.zha.core.discovery as disc
-import openpeerpower.components.zha.core.registries as zha_regs
-import openpeerpower.components.zha.cover
-import openpeerpower.components.zha.device_tracker
-import openpeerpower.components.zha.fan
-import openpeerpower.components.zha.light
-import openpeerpower.components.zha.lock
-import openpeerpower.components.zha.sensor
-import openpeerpower.components.zha.switch
+import openpeerpower.components.zop.binary_sensor
+import openpeerpower.components.zop.core.channels as zha_channels
+import openpeerpower.components.zop.core.channels.base as base_channels
+import openpeerpower.components.zop.core.const as zha_const
+import openpeerpower.components.zop.core.discovery as disc
+import openpeerpower.components.zop.core.registries as zha_regs
+import openpeerpower.components.zop.cover
+import openpeerpower.components.zop.device_tracker
+import openpeerpower.components.zop.fan
+import openpeerpower.components.zop.light
+import openpeerpower.components.zop.lock
+import openpeerpower.components.zop.sensor
+import openpeerpower.components.zop.switch
 import openpeerpower.helpers.entity_registry
 
 from .common import get_zha_gateway
@@ -146,10 +146,10 @@ def _get_first_identify_cluster(zigpy_device):
 
 
 @mock.patch(
-    "openpeerpower.components.zha.core.discovery.ProbeEndpoint.discover_by_device_type"
+    "openpeerpower.components.zop.core.discovery.ProbeEndpoint.discover_by_device_type"
 )
 @mock.patch(
-    "openpeerpower.components.zha.core.discovery.ProbeEndpoint.discover_by_cluster_id"
+    "openpeerpower.components.zop.core.discovery.ProbeEndpoint.discover_by_cluster_id"
 )
 def test_discover_entities(m1, m2):
     """Test discover endpoint class method."""
@@ -164,9 +164,9 @@ def test_discover_entities(m1, m2):
 @pytest.mark.parametrize(
     "device_type, component, hit",
     [
-        (zigpy.profiles.zha.DeviceType.ON_OFF_LIGHT, zha_const.LIGHT, True),
-        (zigpy.profiles.zha.DeviceType.ON_OFF_BALLAST, zha_const.SWITCH, True),
-        (zigpy.profiles.zha.DeviceType.SMART_PLUG, zha_const.SWITCH, True),
+        (zigpy.profiles.zop.DeviceType.ON_OFF_LIGHT, zha_const.LIGHT, True),
+        (zigpy.profiles.zop.DeviceType.ON_OFF_BALLAST, zha_const.SWITCH, True),
+        (zigpy.profiles.zop.DeviceType.SMART_PLUG, zha_const.SWITCH, True),
         (0xFFFF, None, False),
     ],
 )
@@ -183,7 +183,7 @@ def test_discover_by_device_type(device_type, component, hit):
         return_value=(mock.sentinel.entity_cls, mock.sentinel.claimed)
     )
     with mock.patch(
-        "openpeerpower.components.zha.core.registries.ZOP_ENTITIES.get_entity",
+        "openpeerpower.components.zop.core.registries.ZOP_ENTITIES.get_entity",
         get_entity_mock,
     ):
         disc.PROBE.discover_by_device_type(ep_channels)
@@ -210,7 +210,7 @@ def test_discover_by_device_type_override():
         return_value=(mock.sentinel.entity_cls, mock.sentinel.claimed)
     )
     with mock.patch(
-        "openpeerpower.components.zha.core.registries.ZOP_ENTITIES.get_entity",
+        "openpeerpower.components.zop.core.registries.ZOP_ENTITIES.get_entity",
         get_entity_mock,
     ):
         with mock.patch.dict(disc.PROBE._device_configs, overrides, clear=True):
@@ -239,7 +239,7 @@ def test_discover_probe_single_cluster():
     )
     channel_mock = mock.MagicMock(spec_set=base_channels.ZigbeeChannel)
     with mock.patch(
-        "openpeerpower.components.zha.core.registries.ZOP_ENTITIES.get_entity",
+        "openpeerpower.components.zop.core.registries.ZOP_ENTITIES.get_entity",
         get_entity_mock,
     ):
         disc.PROBE.probe_single_cluster(zha_const.SWITCH, channel_mock, ep_channels)
@@ -258,7 +258,7 @@ async def test_discover_endpoint(device_info, channels_mock, opp):
     """Test device discovery."""
 
     with mock.patch(
-        "openpeerpower.components.zha.core.channels.Channels.async_new_entity"
+        "openpeerpower.components.zop.core.channels.Channels.async_new_entity"
     ) as new_ent:
         channels = channels_mock(
             device_info["endpoints"],
@@ -296,12 +296,12 @@ def _ch_mock(cluster):
 
 
 @mock.patch(
-    "openpeerpower.components.zha.core.discovery.ProbeEndpoint"
+    "openpeerpower.components.zop.core.discovery.ProbeEndpoint"
     ".handle_on_off_output_cluster_exception",
     new=mock.MagicMock(),
 )
 @mock.patch(
-    "openpeerpower.components.zha.core.discovery.ProbeEndpoint.probe_single_cluster"
+    "openpeerpower.components.zop.core.discovery.ProbeEndpoint.probe_single_cluster"
 )
 def _test_single_input_cluster_device_class(probe_mock):
     """Test SINGLE_INPUT_CLUSTER_DEVICE_CLASS matching by cluster id or class."""
@@ -380,7 +380,7 @@ async def test_device_override(
     zigpy_device = zigpy_device_mock(
         {
             1: {
-                "device_type": zigpy.profiles.zha.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zigpy.profiles.zop.DeviceType.COLOR_DIMMABLE_LIGHT,
                 "endpoint_id": 1,
                 "in_clusters": [0, 3, 4, 5, 6, 8, 768, 2821, 64513],
                 "out_clusters": [25],

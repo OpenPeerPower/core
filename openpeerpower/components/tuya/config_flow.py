@@ -2,7 +2,7 @@
 import logging
 
 from tuyaha import TuyaApi
-from tuyaha.tuyaapi import (
+from tuyaop.tuyaapi import (
     TuyaAPIException,
     TuyaAPIRateLimitException,
     TuyaNetException,

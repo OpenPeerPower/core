@@ -81,7 +81,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
     """Test that set_value service works in optimistic mode."""
     topic = "test/number"
 
-    fake_state = ha.State("switch.test", "3")
+    fake_state = op.State("switch.test", "3")
 
     with patch(
         "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",

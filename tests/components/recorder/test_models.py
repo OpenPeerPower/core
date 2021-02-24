@@ -23,31 +23,31 @@ import openpeerpower.util.dt as dt_util
 
 def test_from_event_to_db_event():
     """Test converting event to db event."""
-    event = ha.Event("test_event", {"some_data": 15})
+    event = op.Event("test_event", {"some_data": 15})
     assert event == Events.from_event(event).to_native()
 
 
 def test_from_event_to_db_state():
     """Test converting event to db state."""
-    state = ha.State("sensor.temperature", "18")
-    event = ha.Event(
+    state = op.State("sensor.temperature", "18")
+    event = op.Event(
         EVENT_STATE_CHANGED,
         {"entity_id": "sensor.temperature", "old_state": None, "new_state": state},
         context=state.context,
     )
     # We don't restore context unless we need it by joining the
     # events table on the event_id for state_changed events
-    state.context = ha.Context(id=None)
+    state.context = op.Context(id=None)
     assert state == States.from_event(event).to_native()
 
 
 def test_from_event_to_delete_state():
     """Test converting deleting state event to db state."""
-    event = ha.Event(
+    event = op.Event(
         EVENT_STATE_CHANGED,
         {
             "entity_id": "sensor.temperature",
-            "old_state": ha.State("sensor.temperature", "18"),
+            "old_state": op.State("sensor.temperature", "18"),
             "new_state": None,
         },
     )
@@ -207,8 +207,8 @@ async def test_process_timestamp_to_utc_isoformat():
 
 async def test_event_to_db_model():
     """Test we can round trip Event conversion."""
-    event = ha.Event(
-        "state_changed", {"some": "attr"}, ha.EventOrigin.local, dt_util.utcnow()
+    event = op.Event(
+        "state_changed", {"some": "attr"}, op.EventOrigin.local, dt_util.utcnow()
     )
     native = Events.from_event(event).to_native()
     assert native == event

@@ -11,7 +11,7 @@ import zigpy.zcl.clusters.general
 import zigpy.zcl.foundation as zcl_f
 import zigpy.zdo.types
 
-import openpeerpower.components.zha.core.const as zha_const
+import openpeerpower.components.zop.core.const as zha_const
 from openpeerpower.util import slugify
 
 
@@ -29,7 +29,7 @@ class FakeEndpoint:
         self.status = 1
         self.manufacturer = manufacturer
         self.model = model
-        self.profile_id = zigpy.profiles.zha.PROFILE_ID
+        self.profile_id = zigpy.profiles.zop.PROFILE_ID
         self.device_type = None
         self.request = AsyncMock(return_value=[0])
 

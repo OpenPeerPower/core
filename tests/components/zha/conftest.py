@@ -9,8 +9,8 @@ import zigpy.group
 import zigpy.types
 
 from openpeerpower.components.zha import DOMAIN
-import openpeerpower.components.zha.core.const as zha_const
-import openpeerpower.components.zha.core.device as zha_core_device
+import openpeerpower.components.zop.core.const as zha_const
+import openpeerpower.components.zop.core.device as zha_core_device
 from openpeerpower.setup import async_setup_component
 
 from .common import FakeDevice, FakeEndpoint, get_zha_gateway
@@ -54,7 +54,7 @@ async def config_entry_fixture.opp):
 
 
 @pytest.fixture
-def setup_zha.opp, config_entry, zigpy_app_controller):
+def setup_zop.opp, config_entry, zigpy_app_controller):
     """Set up ZHA component."""
     zha_config = {zha_const.CONF_ENABLE_QUIRKS: False}
 

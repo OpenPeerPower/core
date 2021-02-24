@@ -2,8 +2,8 @@
 from unittest.mock import Mock, patch
 
 import pytest
-from tuyaha.devices.climate import STEP_HALVES
-from tuyaha.tuyaapi import TuyaAPIException, TuyaNetException
+from tuyaop.devices.climate import STEP_HALVES
+from tuyaop.tuyaapi import TuyaAPIException, TuyaNetException
 
 from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.tuya.config_flow import (

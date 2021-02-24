@@ -33,7 +33,7 @@ async def device_ias.opp, zigpy_device_mock, zha_device_joined_restored):
             1: {
                 "in_clusters": [c.cluster_id for c in clusters],
                 "out_clusters": [general.OnOff.cluster_id],
-                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
             }
         },
     )

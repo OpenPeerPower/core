@@ -242,7 +242,7 @@ async def test_off_delay.opp, mqtt_mock, setup_tasmota):
 
     events = []
 
-    @ha.callback
+    @op.callback
     def callback(event):
         """Verify event got called."""
         events.append(event.data["new_state"].state)

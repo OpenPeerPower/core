@@ -145,7 +145,7 @@ def expand_entity_ids(opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
 
         try:
             # If entity_id points at a group, expand it
-            domain, _ = ha.split_entity_id(entity_id)
+            domain, _ = op.split_entity_id(entity_id)
 
             if domain == DOMAIN:
                 child_entities = get_entity_ids(opp, entity_id)

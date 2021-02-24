@@ -98,7 +98,7 @@ async def async_setup(opp, config):
         for notify_conf in conf.get(CONF_NOTIFY, []):
             opp.async_create_task(
                 discovery.async_load_platform(
-                    opp. "notify", DOMAIN, notify_conf, config
+                    opp, "notify", DOMAIN, notify_conf, config
                 )
             )
 

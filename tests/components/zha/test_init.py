@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from zigpy.config import CONF_DEVICE, CONF_DEVICE_PATH
 
-from openpeerpower.components.zha.core.const import (
+from openpeerpower.components.zop.core.const import (
     CONF_BAUDRATE,
     CONF_RADIO_TYPE,
     CONF_USB_PATH,
@@ -31,7 +31,7 @@ def config_entry_v1.opp):
 
 
 @pytest.mark.parametrize("config", ({}, {DOMAIN: {}}))
-@patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
+@patch("openpeerpower.components.zop.async_setup_entry", AsyncMock(return_value=True))
 async def test_migration_from_v1_no_baudrate.opp, config_entry_v1, config):
     """Test migration of config entry from v1."""
     config_entry_v1.add_to.opp.opp)
@@ -45,7 +45,7 @@ async def test_migration_from_v1_no_baudrate.opp, config_entry_v1, config):
     assert config_entry_v1.version == 2
 
 
-@patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
+@patch("openpeerpower.components.zop.async_setup_entry", AsyncMock(return_value=True))
 async def test_migration_from_v1_with_baudrate.opp, config_entry_v1):
     """Test migration of config entry from v1 with baudrate in config."""
     config_entry_v1.add_to.opp.opp)
@@ -60,7 +60,7 @@ async def test_migration_from_v1_with_baudrate.opp, config_entry_v1):
     assert config_entry_v1.version == 2
 
 
-@patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
+@patch("openpeerpower.components.zop.async_setup_entry", AsyncMock(return_value=True))
 async def test_migration_from_v1_wrong_baudrate.opp, config_entry_v1):
     """Test migration of config entry from v1 with wrong baudrate."""
     config_entry_v1.add_to.opp.opp)
@@ -92,7 +92,7 @@ async def test_config_depreciation.opp, zha_config):
     await async_setup_component.opp, "persistent_notification", {})
 
     with patch(
-        "openpeerpower.components.zha.async_setup", return_value=True
+        "openpeerpower.components.zop.async_setup", return_value=True
     ) as setup_mock:
         assert await async_setup_component.opp, DOMAIN, {DOMAIN: zha_config})
         assert setup_mock.call_count == 1

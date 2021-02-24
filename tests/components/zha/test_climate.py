@@ -39,7 +39,7 @@ from openpeerpower.components.climate.const import (
     SERVICE_SET_PRESET_MODE,
     SERVICE_SET_TEMPERATURE,
 )
-from openpeerpower.components.zha.climate import (
+from openpeerpower.components.zop.climate import (
     DOMAIN,
     HVAC_MODE_2_SYSTEM,
     SEQ_OF_OPERATION,
@@ -50,7 +50,7 @@ from .common import async_enable_traffic, find_entity_id, send_attributes_report
 
 CLIMATE = {
     1: {
-        "device_type": zigpy.profiles.zha.DeviceType.THERMOSTAT,
+        "device_type": zigpy.profiles.zop.DeviceType.THERMOSTAT,
         "in_clusters": [
             zigpy.zcl.clusters.general.Basic.cluster_id,
             zigpy.zcl.clusters.general.Identify.cluster_id,
@@ -63,7 +63,7 @@ CLIMATE = {
 
 CLIMATE_FAN = {
     1: {
-        "device_type": zigpy.profiles.zha.DeviceType.THERMOSTAT,
+        "device_type": zigpy.profiles.zop.DeviceType.THERMOSTAT,
         "in_clusters": [
             zigpy.zcl.clusters.general.Basic.cluster_id,
             zigpy.zcl.clusters.general.Identify.cluster_id,
@@ -77,7 +77,7 @@ CLIMATE_FAN = {
 
 CLIMATE_SINOPE = {
     1: {
-        "device_type": zigpy.profiles.zha.DeviceType.THERMOSTAT,
+        "device_type": zigpy.profiles.zop.DeviceType.THERMOSTAT,
         "in_clusters": [
             zigpy.zcl.clusters.general.Basic.cluster_id,
             zigpy.zcl.clusters.general.Identify.cluster_id,
@@ -92,7 +92,7 @@ CLIMATE_SINOPE = {
 
 CLIMATE_ZEN = {
     1: {
-        "device_type": zigpy.profiles.zha.DeviceType.THERMOSTAT,
+        "device_type": zigpy.profiles.zop.DeviceType.THERMOSTAT,
         "in_clusters": [
             zigpy.zcl.clusters.general.Basic.cluster_id,
             zigpy.zcl.clusters.general.Identify.cluster_id,
