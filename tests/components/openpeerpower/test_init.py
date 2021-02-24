@@ -75,7 +75,7 @@ def toggle.opp.entity_id=None, **service_data):
     opp.ervices.call(op.DOMAIN, SERVICE_TOGGLE, service_data)
 
 
-def stop.opp.
+def stop.opp,
     """Stop Open Peer Power.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -83,7 +83,7 @@ def stop.opp.
     opp.ervices.call(op.DOMAIN, SERVICE_OPENPEERPOWER_STOP)
 
 
-def restart.opp.
+def restart.opp,
     """Stop Open Peer Power.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -91,7 +91,7 @@ def restart.opp.
     opp.ervices.call(op.DOMAIN, SERVICE_OPENPEERPOWER_RESTART)
 
 
-def check_config(opp.
+def check_config(opp,
     """Check the config files.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -99,7 +99,7 @@ def check_config(opp.
     opp.ervices.call(op.DOMAIN, SERVICE_CHECK_CONFIG)
 
 
-def reload_core_config(opp.
+def reload_core_config(opp,
     """Reload the core config.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -126,13 +126,13 @@ class TestComponentsCore(unittest.TestCase):
         """Test is_on method."""
         assert comps.is_on(self opp."light.Bowl")
         assert not comps.is_on(self opp."light.Ceiling")
-        assert comps.is_on(self opp.
+        assert comps.is_on(self opp,
         assert not comps.is_on(self opp."non_existing.entity")
 
     def test_turn_on_without_entities(self):
         """Test turn_on method without entities."""
         calls = mock_service(self opp."light", SERVICE_TURN_ON)
-        turn_on(self opp.
+        turn_on(self opp,
         self opp.lock_till_done()
         assert 0 == len(calls)
 
@@ -183,7 +183,7 @@ class TestComponentsCore(unittest.TestCase):
             )
         }
         with patch_yaml_files(files, True):
-            reload_core_config(self opp.
+            reload_core_config(self opp,
             self opp.lock_till_done()
 
         assert self opp.onfig.latitude == 10
@@ -204,7 +204,7 @@ class TestComponentsCore(unittest.TestCase):
         """Test reload core conf service."""
         files = {config.YAML_CONFIG_FILE: yaml.dump(["invalid", "config"])}
         with patch_yaml_files(files, True):
-            reload_core_config(self opp.
+            reload_core_config(self opp,
             self opp.lock_till_done()
 
         assert mock_error.called
@@ -213,7 +213,7 @@ class TestComponentsCore(unittest.TestCase):
     @patch("openpeerpower.core.OpenPeerPower.async_stop", return_value=None)
     def test_stop_openpeerpower(self, mock_stop):
         """Test stop service."""
-        stop(self opp.
+        stop(self opp,
         self opp.lock_till_done()
         assert mock_stop.called
 
@@ -221,7 +221,7 @@ class TestComponentsCore(unittest.TestCase):
     @patch("openpeerpower.config.async_check_op_config_file", return_value=None)
     def test_restart_openpeerpower(self, mock_check, mock_restart):
         """Test stop service."""
-        restart(self opp.
+        restart(self opp,
         self opp.lock_till_done()
         assert mock_restart.called
         assert mock_check.called
@@ -233,7 +233,7 @@ class TestComponentsCore(unittest.TestCase):
     )
     def test_restart_openpeerpower_wrong_conf(self, mock_check, mock_restart):
         """Test stop service."""
-        restart(self opp.
+        restart(self opp,
         self opp.lock_till_done()
         assert mock_check.called
         assert not mock_restart.called
@@ -242,7 +242,7 @@ class TestComponentsCore(unittest.TestCase):
     @patch("openpeerpower.config.async_check_op_config_file", return_value=None)
     def test_check_config(self, mock_check, mock_stop):
         """Test stop service."""
-        check_config(self opp.
+        check_config(self opp,
         self opp.lock_till_done()
         assert mock_check.called
         assert not mock_stop.called
@@ -287,7 +287,7 @@ async def test_turn_on_skips_domains_without_service.opp.caplog):
     )
 
 
-async def test_entity_update.opp.
+async def test_entity_update.opp,
     """Test being able to call entity update."""
     await async_setup_component.opp."openpeerpower", {})
 
@@ -306,7 +306,7 @@ async def test_entity_update.opp.
     assert mock_update.mock_calls[0][1][1] == "light.kitchen"
 
 
-async def test_setting_location.opp.
+async def test_setting_location.opp,
     """Test setting the location."""
     await async_setup_component.opp."openpeerpower", {})
     events = async_capture_events.opp.EVENT_CORE_CONFIG_UPDATE)

@@ -115,7 +115,7 @@ async def test_get_actions_not_support_open.opp, device_reg, entity_reg):
 async def test_action.opp):
     """Test for lock actions."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

@@ -48,7 +48,7 @@ SENSOR_TYPES = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up AirNow sensor entities based on a config entry."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id]
 

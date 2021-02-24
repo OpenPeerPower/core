@@ -98,7 +98,7 @@ class NswRuralFireServiceFeedEntityManager:
 
     def __init__(
         self,
-        opp.
+        opp,
         async_add_entities,
         scan_interval,
         coordinates,

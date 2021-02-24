@@ -69,7 +69,7 @@ async def test_if_fires_on_state_change.opp, calls):
     opp.states.async_set("NEW_DOMAIN.entity", STATE_OFF)
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

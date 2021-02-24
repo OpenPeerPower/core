@@ -22,7 +22,7 @@ async def test_humanify_shelly_click_event.opp, coap_wrapper):
 
     event1, event2 = list(
         logbook.humanify(
-            opp.
+            opp,
             [
                 MockLazyEventPartialState(
                     EVENT_SHELLY_CLICK,

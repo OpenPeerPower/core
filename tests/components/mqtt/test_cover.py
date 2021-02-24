@@ -65,7 +65,7 @@ DEFAULT_CONFIG = {
 async def test_state_via_state_topic.opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -100,7 +100,7 @@ async def test_state_via_state_topic.opp, mqtt_mock):
 async def test_opening_and_closing_state_via_custom_state_payload.opp, mqtt_mock):
     """Test the controlling opening and closing state via a custom payload."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -142,7 +142,7 @@ async def test_opening_and_closing_state_via_custom_state_payload.opp, mqtt_mock
 async def test_open_closed_state_from_position_optimistic.opp, mqtt_mock):
     """Test the state after setting the position using optimistic mode."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -189,7 +189,7 @@ async def test_open_closed_state_from_position_optimistic.opp, mqtt_mock):
 async def test_position_via_position_topic.opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -226,7 +226,7 @@ async def test_position_via_position_topic.opp, mqtt_mock):
 async def test_state_via_template.opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -263,7 +263,7 @@ async def test_state_via_template.opp, mqtt_mock):
 async def test_position_via_template.opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -300,7 +300,7 @@ async def test_position_via_template.opp, mqtt_mock):
 async def test_optimistic_state_change.opp, mqtt_mock):
     """Test changing state optimistically."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -356,7 +356,7 @@ async def test_optimistic_state_change.opp, mqtt_mock):
 async def test_optimistic_state_change_with_position.opp, mqtt_mock):
     """Test changing state optimistically."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -419,7 +419,7 @@ async def test_optimistic_state_change_with_position.opp, mqtt_mock):
 async def test_send_open_cover_command.opp, mqtt_mock):
     """Test the sending of open_cover."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -448,7 +448,7 @@ async def test_send_open_cover_command.opp, mqtt_mock):
 async def test_send_close_cover_command.opp, mqtt_mock):
     """Test the sending of close_cover."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -477,7 +477,7 @@ async def test_send_close_cover_command.opp, mqtt_mock):
 async def test_send_stop__cover_command.opp, mqtt_mock):
     """Test the sending of stop_cover."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -506,7 +506,7 @@ async def test_send_stop__cover_command.opp, mqtt_mock):
 async def test_current_cover_position.opp, mqtt_mock):
     """Test the current cover position."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -557,7 +557,7 @@ async def test_current_cover_position.opp, mqtt_mock):
 async def test_current_cover_position_inverted.opp, mqtt_mock):
     """Test the current cover position."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -619,7 +619,7 @@ async def test_current_cover_position_inverted.opp, mqtt_mock):
 async def test_optimistic_position.opp, mqtt_mock):
     """Test optimistic position is not supported."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -639,7 +639,7 @@ async def test_optimistic_position.opp, mqtt_mock):
 async def test_position_update.opp, mqtt_mock):
     """Test cover position update from received MQTT message."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -676,7 +676,7 @@ async def test_position_update.opp, mqtt_mock):
 async def test_set_position_templated.opp, mqtt_mock):
     """Test setting cover position via template."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -711,7 +711,7 @@ async def test_set_position_templated.opp, mqtt_mock):
 async def test_set_position_untemplated.opp, mqtt_mock):
     """Test setting cover position via template."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -741,7 +741,7 @@ async def test_set_position_untemplated.opp, mqtt_mock):
 async def test_set_position_untemplated_custom_percentage_range.opp, mqtt_mock):
     """Test setting cover position via template."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -773,7 +773,7 @@ async def test_set_position_untemplated_custom_percentage_range.opp, mqtt_mock):
 async def test_no_command_topic.opp, mqtt_mock):
     """Test with no command topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -796,7 +796,7 @@ async def test_no_command_topic.opp, mqtt_mock):
 async def test_no_payload_stop.opp, mqtt_mock):
     """Test with no stop payload."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -818,7 +818,7 @@ async def test_no_payload_stop.opp, mqtt_mock):
 async def test_with_command_topic_and_tilt.opp, mqtt_mock):
     """Test with command topic and tilt config."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -842,7 +842,7 @@ async def test_with_command_topic_and_tilt.opp, mqtt_mock):
 async def test_tilt_defaults.opp, mqtt_mock):
     """Test the defaults."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -873,7 +873,7 @@ async def test_tilt_defaults.opp, mqtt_mock):
 async def test_tilt_via_invocation_defaults.opp, mqtt_mock):
     """Test tilt defaults on close/open."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -955,7 +955,7 @@ async def test_tilt_via_invocation_defaults.opp, mqtt_mock):
 async def test_tilt_given_value.opp, mqtt_mock):
     """Test tilting to a given value."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1043,7 +1043,7 @@ async def test_tilt_given_value.opp, mqtt_mock):
 async def test_tilt_given_value_optimistic.opp, mqtt_mock):
     """Test tilting to a given value."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1119,7 +1119,7 @@ async def test_tilt_given_value_optimistic.opp, mqtt_mock):
 async def test_tilt_given_value_altered_range.opp, mqtt_mock):
     """Test tilting to a given value."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1195,7 +1195,7 @@ async def test_tilt_given_value_altered_range.opp, mqtt_mock):
 async def test_tilt_via_topic.opp, mqtt_mock):
     """Test tilt by updating status via MQTT."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1232,7 +1232,7 @@ async def test_tilt_via_topic.opp, mqtt_mock):
 async def test_tilt_via_topic_template.opp, mqtt_mock):
     """Test tilt by updating status via MQTT and template."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1272,7 +1272,7 @@ async def test_tilt_via_topic_template.opp, mqtt_mock):
 async def test_tilt_via_topic_altered_range.opp, mqtt_mock):
     """Test tilt status via MQTT with altered tilt range."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1318,7 +1318,7 @@ async def test_tilt_via_topic_altered_range.opp, mqtt_mock):
 async def test_tilt_via_topic_template_altered_range.opp, mqtt_mock):
     """Test tilt status via MQTT and template with altered tilt range."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1367,7 +1367,7 @@ async def test_tilt_via_topic_template_altered_range.opp, mqtt_mock):
 async def test_tilt_position.opp, mqtt_mock):
     """Test tilt via method invocation."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1401,7 +1401,7 @@ async def test_tilt_position.opp, mqtt_mock):
 async def test_tilt_position_templated.opp, mqtt_mock):
     """Test tilt position via template."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1436,7 +1436,7 @@ async def test_tilt_position_templated.opp, mqtt_mock):
 async def test_tilt_position_altered_range.opp, mqtt_mock):
     """Test tilt via method invocation with altered range."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1474,7 +1474,7 @@ async def test_tilt_position_altered_range.opp, mqtt_mock):
 async def test_find_percentage_in_range_defaults.opp, mqtt_mock):
     """Test find percentage in range with default range."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1518,7 +1518,7 @@ async def test_find_percentage_in_range_defaults.opp, mqtt_mock):
 async def test_find_percentage_in_range_altered.opp, mqtt_mock):
     """Test find percentage in range with altered range."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1562,7 +1562,7 @@ async def test_find_percentage_in_range_altered.opp, mqtt_mock):
 async def test_find_percentage_in_range_defaults_inverted.opp, mqtt_mock):
     """Test find percentage in range with default range but inverted."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1606,7 +1606,7 @@ async def test_find_percentage_in_range_defaults_inverted.opp, mqtt_mock):
 async def test_find_percentage_in_range_altered_inverted.opp, mqtt_mock):
     """Test find percentage in range with altered range and inverted."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1650,7 +1650,7 @@ async def test_find_percentage_in_range_altered_inverted.opp, mqtt_mock):
 async def test_find_in_range_defaults.opp, mqtt_mock):
     """Test find in range with default range."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1694,7 +1694,7 @@ async def test_find_in_range_defaults.opp, mqtt_mock):
 async def test_find_in_range_altered.opp, mqtt_mock):
     """Test find in range with altered range."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1738,7 +1738,7 @@ async def test_find_in_range_altered.opp, mqtt_mock):
 async def test_find_in_range_defaults_inverted.opp, mqtt_mock):
     """Test find in range with default range but inverted."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1782,7 +1782,7 @@ async def test_find_in_range_defaults_inverted.opp, mqtt_mock):
 async def test_find_in_range_altered_inverted.opp, mqtt_mock):
     """Test find in range with altered range and inverted."""
     mqtt_cover = MqttCover(
-        opp.
+        opp,
         {
             "name": "cover.test",
             "state_topic": "state-topic",
@@ -1854,7 +1854,7 @@ async def test_custom_availability_payload.opp, mqtt_mock):
 async def test_valid_device_class.opp, mqtt_mock):
     """Test the setting of a valid sensor class."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -1874,7 +1874,7 @@ async def test_valid_device_class.opp, mqtt_mock):
 async def test_invalid_device_class.opp, mqtt_mock):
     """Test the setting of an invalid sensor class."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2037,7 +2037,7 @@ async def test_deprecated_value_template_for_position_topic_warning(
 ):
     """Test warning when value_template is used for position_topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2062,7 +2062,7 @@ async def test_deprecated_value_template_for_position_topic_warning(
 async def test_deprecated_tilt_invert_state_warning.opp, caplog, mqtt_mock):
     """Test warning when tilt_invert_state is used."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2085,7 +2085,7 @@ async def test_deprecated_tilt_invert_state_warning.opp, caplog, mqtt_mock):
 async def test_no_deprecated_tilt_invert_state_warning.opp, caplog, mqtt_mock):
     """Test warning when tilt_invert_state is used."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2109,7 +2109,7 @@ async def test_no_deprecated_warning_for_position_topic_using_position_template(
 ):
     """Test no warning when position_template is used for position_topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2136,7 +2136,7 @@ async def test_state_and_position_topics_state_not_set_via_position_topic(
 ):
     """Test state is not set via position topic when both state and position topics are set."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2193,7 +2193,7 @@ async def test_state_and_position_topics_state_not_set_via_position_topic(
 async def test_set_state_via_position_using_stopped_state.opp, mqtt_mock):
     """Test the controlling state via position topic using stopped state."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2246,7 +2246,7 @@ async def test_set_state_via_position_using_stopped_state.opp, mqtt_mock):
 async def test_position_via_position_topic_template.opp, mqtt_mock):
     """Test position by updating status via position template."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {
@@ -2280,7 +2280,7 @@ async def test_position_via_position_topic_template.opp, mqtt_mock):
 async def test_set_state_via_stopped_state_no_position_topic.opp, mqtt_mock):
     """Test the controlling state via stopped state when no position topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         cover.DOMAIN,
         {
             cover.DOMAIN: {

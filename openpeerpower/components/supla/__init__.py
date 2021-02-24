@@ -110,7 +110,7 @@ async def discover_devices.opp, opp_config):
                 return channels
 
         coordinator = DataUpdateCoordinator(
-            opp.
+            opp,
             _LOGGER,
             name=f"{DOMAIN}-{server_name}",
             update_method=_fetch_channels,

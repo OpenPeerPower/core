@@ -297,7 +297,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test1.opp):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "proximity": {
@@ -346,7 +346,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test2.opp):
     )
     await opp.async_block_till_done()
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "proximity": {
@@ -389,7 +389,7 @@ async def test_device_tracker_test1_awayfurther_test2_in_ignored_zone.opp):
     opp.states.async_set("device_tracker.test2", "work", {"friendly_name": "test2"})
     await opp.async_block_till_done()
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "proximity": {
@@ -428,7 +428,7 @@ async def test_device_tracker_test1_awayfurther_test2_first.opp):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "proximity": {
@@ -480,7 +480,7 @@ async def test_device_tracker_test1_awayfurther_test2_first.opp):
 async def test_device_tracker_test1_awayfurther_a_bit.opp):
     """Test for tracker states."""
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "proximity": {
@@ -530,7 +530,7 @@ async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone.opp):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "proximity": {

@@ -359,21 +359,21 @@ async def test_services(
     await _test_service.opp, MP_DOMAIN, "pow_on", SERVICE_TURN_ON, None)
     await _test_service.opp, MP_DOMAIN, "pow_off", SERVICE_TURN_OFF, None)
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "mute_on",
         SERVICE_VOLUME_MUTE,
         {ATTR_MEDIA_VOLUME_MUTED: True},
     )
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "mute_off",
         SERVICE_VOLUME_MUTE,
         {ATTR_MEDIA_VOLUME_MUTED: False},
     )
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "set_input",
         SERVICE_SELECT_SOURCE,
@@ -387,7 +387,7 @@ async def test_services(
         opp. MP_DOMAIN, "vol_down", SERVICE_VOLUME_DOWN, None, num=DEFAULT_VOLUME_STEP
     )
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "vol_up",
         SERVICE_VOLUME_SET,
@@ -395,7 +395,7 @@ async def test_services(
         num=(100 - 15),
     )
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "vol_down",
         SERVICE_VOLUME_SET,
@@ -405,7 +405,7 @@ async def test_services(
     await _test_service.opp, MP_DOMAIN, "ch_up", SERVICE_MEDIA_NEXT_TRACK, None)
     await _test_service.opp, MP_DOMAIN, "ch_down", SERVICE_MEDIA_PREVIOUS_TRACK, None)
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "set_setting",
         SERVICE_SELECT_SOUND_MODE,
@@ -416,7 +416,7 @@ async def test_services(
     )
     # Test that the update_setting service does config validation/transformation correctly
     await _test_service(
-        opp.
+        opp,
         DOMAIN,
         "set_setting",
         SERVICE_UPDATE_SETTING,
@@ -426,7 +426,7 @@ async def test_services(
         0,
     )
     await _test_service(
-        opp.
+        opp,
         DOMAIN,
         "set_setting",
         SERVICE_UPDATE_SETTING,
@@ -540,7 +540,7 @@ async def test_setup_with_apps(
         assert "app_id" not in attr
 
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "launch_app",
         SERVICE_SELECT_SOURCE,
@@ -594,7 +594,7 @@ async def test_setup_with_apps_additional_apps_config(
 ) -> None:
     """Test device setup with apps and apps["additional_configs"] in config."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp.
+        opp,
         MOCK_TV_WITH_ADDITIONAL_APPS_CONFIG,
         ADDITIONAL_APP_CONFIG["config"],
     ):
@@ -620,7 +620,7 @@ async def test_setup_with_apps_additional_apps_config(
         assert "app_id" not in attr
 
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "launch_app",
         SERVICE_SELECT_SOURCE,
@@ -629,7 +629,7 @@ async def test_setup_with_apps_additional_apps_config(
         APP_LIST,
     )
     await _test_service(
-        opp.
+        opp,
         MP_DOMAIN,
         "launch_app_config",
         SERVICE_SELECT_SOURCE,

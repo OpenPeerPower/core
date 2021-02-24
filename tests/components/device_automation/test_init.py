@@ -472,7 +472,7 @@ async def test_websocket_get_no_trigger_capabilities(
 async def test_automation_with_non_existing_integration.opp, caplog):
     """Test device automation with non existing integration."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -493,7 +493,7 @@ async def test_automation_with_non_existing_integration.opp, caplog):
 async def test_automation_with_integration_without_device_action.opp, caplog):
     """Test automation with integration without device action support."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -512,7 +512,7 @@ async def test_automation_with_integration_without_device_action.opp, caplog):
 async def test_automation_with_integration_without_device_condition.opp, caplog):
     """Test automation with integration without device condition support."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -537,7 +537,7 @@ async def test_automation_with_integration_without_device_condition.opp, caplog)
 async def test_automation_with_integration_without_device_trigger.opp, caplog):
     """Test automation with integration without device trigger support."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -560,7 +560,7 @@ async def test_automation_with_integration_without_device_trigger.opp, caplog):
 async def test_automation_with_bad_action.opp, caplog):
     """Test automation with bad device action."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -577,7 +577,7 @@ async def test_automation_with_bad_action.opp, caplog):
 async def test_automation_with_bad_condition_action.opp, caplog):
     """Test automation with bad device action."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -594,7 +594,7 @@ async def test_automation_with_bad_condition_action.opp, caplog):
 async def test_automation_with_bad_condition.opp, caplog):
     """Test automation with bad device condition."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -626,7 +626,7 @@ async def test_automation_with_sub_condition.opp, calls):
     ent1, ent2, ent3 = platform.ENTITIES
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -729,7 +729,7 @@ async def test_automation_with_sub_condition.opp, calls):
 async def test_automation_with_bad_sub_condition.opp, caplog):
     """Test automation with bad device condition under and/or conditions."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -750,7 +750,7 @@ async def test_automation_with_bad_sub_condition.opp, caplog):
 async def test_automation_with_bad_trigger.opp, caplog):
     """Test automation with bad device trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

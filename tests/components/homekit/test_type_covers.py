@@ -527,7 +527,7 @@ async def test_garage_door_with_linked_obstruction_sensor.opp, hk_driver, events
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
     acc = GarageDoorOpener(
-        opp.
+        opp,
         hk_driver,
         "Garage Door",
         entity_id,

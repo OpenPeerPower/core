@@ -30,7 +30,7 @@ async def test_executing_service.opp):
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "called.txt")
         assert await async_setup_component(
-            opp.
+            opp,
             shell_command.DOMAIN,
             {shell_command.DOMAIN: {"test_service": f"date > {path}"}},
         )
@@ -44,7 +44,7 @@ async def test_executing_service.opp):
 async def test_config_not_dict.opp):
     """Test that setup fails if config is not a dict."""
     assert not await async_setup_component(
-        opp.
+        opp,
         shell_command.DOMAIN,
         {shell_command.DOMAIN: ["some", "weird", "list"]},
     )
@@ -53,7 +53,7 @@ async def test_config_not_dict.opp):
 async def test_config_not_valid_service_names.opp):
     """Test that setup fails if config contains invalid service names."""
     assert not await async_setup_component(
-        opp.
+        opp,
         shell_command.DOMAIN,
         {shell_command.DOMAIN: {"this is invalid because space": "touch bla.txt"}},
     )
@@ -68,7 +68,7 @@ async def test_template_render_no_template(mock_call, opp):
     mock_call.return_value = mock_process_creator(error=False)
 
     assert await async_setup_component(
-        opp.
+        opp,
         shell_command.DOMAIN,
         {shell_command.DOMAIN: {"test_service": "ls /bin"}},
     )
@@ -91,7 +91,7 @@ async def test_template_render(mock_call, opp):
     opp.states.async_set("sensor.test_state", "Works")
     mock_call.return_value = mock_process_creator(error=False)
     assert await async_setup_component(
-        opp.
+        opp,
         shell_command.DOMAIN,
         {
             shell_command.DOMAIN: {
@@ -120,7 +120,7 @@ async def test_subprocess_error(mock_error, mock_call, opp):
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "called.txt")
         assert await async_setup_component(
-            opp.
+            opp,
             shell_command.DOMAIN,
             {shell_command.DOMAIN: {"test_service": f"touch {path}"}},
         )
@@ -137,7 +137,7 @@ async def test_stdout_captured(mock_output, opp):
     """Test subprocess that has stdout."""
     test_phrase = "I have output"
     assert await async_setup_component(
-        opp.
+        opp,
         shell_command.DOMAIN,
         {shell_command.DOMAIN: {"test_service": f"echo {test_phrase}"}},
     )
@@ -154,7 +154,7 @@ async def test_stderr_captured(mock_output, opp):
     """Test subprocess that has stderr."""
     test_phrase = "I have error"
     assert await async_setup_component(
-        opp.
+        opp,
         shell_command.DOMAIN,
         {shell_command.DOMAIN: {"test_service": f">&2 echo {test_phrase}"}},
     )
@@ -171,7 +171,7 @@ async def test_do_no_run_forever.opp, caplog):
 
     with patch.object(shell_command, "COMMAND_TIMEOUT", 0.001):
         assert await async_setup_component(
-            opp.
+            opp,
             shell_command.DOMAIN,
             {shell_command.DOMAIN: {"test_service": "sleep 10000"}},
         )

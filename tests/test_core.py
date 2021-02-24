@@ -170,7 +170,7 @@ async def test_stage_shutdown.opp):
 
 
 async def test_shutdown_calls_block_till_done_after_shutdown_run_callback_threadsafe(
-    opp.
+    opp,
 ):
     """Ensure shutdown_run_callback_threadsafe is called before the final async_block_till_done."""
     stop_calls = []

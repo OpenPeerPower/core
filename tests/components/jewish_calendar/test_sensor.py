@@ -149,7 +149,7 @@ TEST_IDS = [
     ids=TEST_IDS,
 )
 async def test_jewish_calendar_sensor(
-    opp.
+    opp,
     legacy_patchable_time,
     now,
     tzname,
@@ -170,7 +170,7 @@ async def test_jewish_calendar_sensor(
 
     with alter_time(test_time):
         assert await async_setup_component(
-            opp.
+            opp,
             jewish_calendar.DOMAIN,
             {
                 "jewish_calendar": {
@@ -491,7 +491,7 @@ SHABBAT_TEST_IDS = [
     ids=SHABBAT_TEST_IDS,
 )
 async def test_shabbat_times_sensor(
-    opp.
+    opp,
     legacy_patchable_time,
     language,
     now,
@@ -515,7 +515,7 @@ async def test_shabbat_times_sensor(
 
     with alter_time(test_time):
         assert await async_setup_component(
-            opp.
+            opp,
             jewish_calendar.DOMAIN,
             {
                 "jewish_calendar": {

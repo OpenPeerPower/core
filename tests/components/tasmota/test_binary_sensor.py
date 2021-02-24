@@ -45,7 +45,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -104,7 +104,7 @@ async def test_controlling_state_via_mqtt_switchname.opp, mqtt_mock, setup_tasmo
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -162,7 +162,7 @@ async def test_pushon_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -212,7 +212,7 @@ async def test_friendly_names.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -234,7 +234,7 @@ async def test_off_delay.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -314,7 +314,7 @@ async def test_availability_poll_state(
     config["swn"][0] = "Test"
     poll_topic = "tasmota_49A3BC/cmnd/STATUS"
     await help_test_availability_poll_state(
-        opp.
+        opp,
         mqtt_client_mock,
         mqtt_mock,
         binary_sensor.DOMAIN,

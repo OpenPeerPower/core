@@ -430,7 +430,7 @@ async def test_invalid_webhook_aborts.opp):
     """Test flow aborts if webhook is invalid."""
     # Webhook confirmation shown
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(

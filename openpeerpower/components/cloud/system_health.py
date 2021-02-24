@@ -38,7 +38,7 @@ async def system_health_info.opp):
         opp. cloud.acme_directory_server
     )
     data["can_reach_cloud_auth"] = system_health.async_check_can_reach_url(
-        opp.
+        opp,
         f"https://cognito-idp.{cloud.region}.amazonaws.com/{cloud.user_pool_id}/.well-known/jwks.json",
     )
     data["can_reach_cloud"] = system_health.async_check_can_reach_url(

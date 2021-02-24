@@ -656,7 +656,7 @@ class MockEntityPlatform(entity_platform.EntityPlatform):
 
     def __init__(
         self,
-        opp.
+        opp,
         logger=None,
         domain="test_domain",
         platform_name="test_platform",

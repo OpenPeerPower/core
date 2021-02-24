@@ -27,7 +27,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     opp.data[
         DATA_REMOVE_DISCOVER_COMPONENT.format(switch.DOMAIN)
     ] = async_dispatcher_connect(
-        opp.
+        opp,
         TASMOTA_DISCOVERY_ENTITY_NEW.format(switch.DOMAIN),
         async_discover,
     )

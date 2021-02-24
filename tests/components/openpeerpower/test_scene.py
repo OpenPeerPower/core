@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_mock_service
 
 
-async def test_reload_config_service.opp.
+async def test_reload_config_service.opp,
     """Test the reload config service."""
     assert await async_setup_component.opp."scene", {})
 
@@ -44,7 +44,7 @@ async def test_reload_config_service.opp.
     assert.opp.tates.get("scene.bye") is not None
 
 
-async def test_apply_service.opp.
+async def test_apply_service.opp,
     """Test the apply service."""
     assert await async_setup_component.opp."scene", {})
     assert await async_setup_component.opp."light", {"light": {"platform": "demo"}})
@@ -89,7 +89,7 @@ async def test_apply_service.opp.
 async def test_create_service.opp.caplog):
     """Test the create service."""
     assert await async_setup_component(
-        opp.
+        opp,
         "scene",
         {"scene": {"name": "hallo_2", "entities": {"light.kitchen": "on"}}},
     )
@@ -221,7 +221,7 @@ async def test_snapshot_service.opp.caplog):
     assert "light.bed_light" in scene.attributes.get("entity_id")
 
 
-async def test_ensure_no_intersection.opp.
+async def test_ensure_no_intersection.opp,
     """Test that entities and snapshot_entities do not overlap."""
     assert await async_setup_component.opp."scene", {"scene": {}})
     await opp.async_block_till_done()
@@ -242,10 +242,10 @@ async def test_ensure_no_intersection.opp.
     assert.opp.tates.get("scene.hallo") is None
 
 
-async def test_scenes_with_entity.opp.
+async def test_scenes_with_entity.opp,
     """Test finding scenes with a specific entity."""
     assert await async_setup_component(
-        opp.
+        opp,
         "scene",
         {
             "scene": [
@@ -266,10 +266,10 @@ async def test_scenes_with_entity.opp.
     ]
 
 
-async def test_entities_in_scene.opp.
+async def test_entities_in_scene.opp,
     """Test finding entities in a scene."""
     assert await async_setup_component(
-        opp.
+        opp,
         "scene",
         {
             "scene": [
@@ -292,10 +292,10 @@ async def test_entities_in_scene.opp.
         assert op_scene.entities_in_scene.opp.scene_id) == entities
 
 
-async def test_config(opp.
+async def test_config(opp,
     """Test passing config in YAML."""
     assert await async_setup_component(
-        opp.
+        opp,
         "scene",
         {
             "scene": [

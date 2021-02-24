@@ -72,7 +72,7 @@ async def test_setup_missing_conf.opp):
 async def test_valid_conf.opp):
     """Test set up generic_thermostat with valid config values."""
     assert await async_setup_component(
-        opp.
+        opp,
         "climate",
         {
             "climate": {
@@ -101,7 +101,7 @@ async def test_heater_input_boolean.opp, setup_comp_1):
     )
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -136,7 +136,7 @@ async def test_heater_switch.opp, setup_comp_1):
     heater_switch = switch_1.entity_id
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -165,7 +165,7 @@ async def test_unique_id.opp, setup_comp_1):
     _setup_sensor.opp, 18)
     _setup_switch.opp, True)
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -196,7 +196,7 @@ async def setup_comp_2.opp):
     """Initialize components."""
     opp.config.units = METRIC_SYSTEM
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -218,7 +218,7 @@ async def test_setup_defaults_to_unknown.opp):
     """Test the setting of defaults to unknown."""
     opp.config.units = METRIC_SYSTEM
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -242,7 +242,7 @@ async def test_setup_gets_current_temp_from_sensor.opp):
     _setup_sensor.opp, 18)
     await opp.async_block_till_done()
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -339,7 +339,7 @@ async def test_sensor_unknown.opp):
     """Test when target sensor is Unknown."""
     opp.states.async_set("sensor.unknown", STATE_UNKNOWN)
     assert await async_setup_component(
-        opp.
+        opp,
         "climate",
         {
             "climate": {
@@ -359,7 +359,7 @@ async def test_sensor_unavailable.opp):
     """Test when target sensor is Unavailable."""
     opp.states.async_set("sensor.unavailable", STATE_UNAVAILABLE)
     assert await async_setup_component(
-        opp.
+        opp,
         "climate",
         {
             "climate": {
@@ -506,7 +506,7 @@ async def setup_comp_3.opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -651,7 +651,7 @@ async def setup_comp_4.opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -761,7 +761,7 @@ async def setup_comp_5.opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -871,7 +871,7 @@ async def setup_comp_6.opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -980,7 +980,7 @@ async def setup_comp_7.opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -1053,7 +1053,7 @@ async def setup_comp_8.opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -1124,7 +1124,7 @@ async def setup_comp_9.opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_FAHRENHEIT
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -1154,7 +1154,7 @@ async def test_precision.opp, setup_comp_9):
 async def test_custom_setup_params.opp):
     """Test the setup with custom parameters."""
     result = await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -1179,7 +1179,7 @@ async def test_custom_setup_params.opp):
 async def test_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp.
+        opp,
         (
             State(
                 "climate.test_thermostat",
@@ -1192,7 +1192,7 @@ async def test_restore_state.opp):
     opp.state = CoreState.starting
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -1217,7 +1217,7 @@ async def test_no_restore_state.opp):
     Allows for graceful reboot.
     """
     mock_restore_cache(
-        opp.
+        opp,
         (
             State(
                 "climate.test_thermostat",
@@ -1230,7 +1230,7 @@ async def test_no_restore_state.opp):
     opp.state = CoreState.starting
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -1275,7 +1275,7 @@ async def test_restore_state_uncoherence_case.opp):
 
 async def _setup_climate.opp):
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {
@@ -1294,7 +1294,7 @@ async def _setup_climate.opp):
 
 def _mock_restore_cache.opp, temperature=20, hvac_mode=HVAC_MODE_OFF):
     mock_restore_cache(
-        opp.
+        opp,
         (
             State(
                 ENTITY,
@@ -1309,7 +1309,7 @@ async def test_reload.opp):
     """Test we can reload."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             "climate": {

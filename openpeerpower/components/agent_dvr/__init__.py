@@ -21,13 +21,13 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the Agent component."""
     opp.data.setdefault(AGENT_DOMAIN, {})
 
     server_origin = config_entry.data[SERVER_URL]
 
-    agent_client = Agent(server_origin, async_get_clientsession.opp))
+    agent_client = Agent(server_origin, async_get_clientsession(opp))
     try:
         await agent_client.update()
     except AgentError as err:
@@ -41,7 +41,7 @@ async def async_setup_entry.opp, config_entry):
 
     opp.data[AGENT_DOMAIN][config_entry.entry_id] = {CONNECTION: agent_client}
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
 
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -60,7 +60,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

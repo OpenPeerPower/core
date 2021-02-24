@@ -17,13 +17,13 @@ from tests.common import MockConfigEntry
 async def setup_component.opp):
     """Set up Toon component."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
 
     with patch("os.path.isfile", return_value=False):
         assert await async_setup_component(
-            opp.
+            opp,
             DOMAIN,
             {DOMAIN: {CONF_CLIENT_ID: "client", CONF_CLIENT_SECRET: "secret"}},
         )
@@ -55,7 +55,7 @@ async def test_full_flow_implementation(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -115,7 +115,7 @@ async def test_no_agreements(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -155,7 +155,7 @@ async def test_multiple_agreements(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -206,7 +206,7 @@ async def test_agreement_already_set_up(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -245,7 +245,7 @@ async def test_toon_abort(
     )
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -307,7 +307,7 @@ async def test_import_migration(
 
     # pylint: disable=protected-access
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": flows[0]["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

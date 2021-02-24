@@ -65,7 +65,7 @@ MELACOP_TEST_IDS = [
     ids=MELACOP_TEST_IDS,
 )
 async def test_issur_melacha_sensor(
-    opp.
+    opp,
     legacy_patchable_time,
     now,
     candle_lighting,
@@ -88,7 +88,7 @@ async def test_issur_melacha_sensor(
 
     with alter_time(test_time):
         assert await async_setup_component(
-            opp.
+            opp,
             jewish_calendar.DOMAIN,
             {
                 "jewish_calendar": {

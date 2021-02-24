@@ -205,7 +205,7 @@ def numeric_state(
     return run_callback_threadsafe(
         opp.loop,
         async_numeric_state,
-        opp.
+        opp,
         entity,
         below,
         above,

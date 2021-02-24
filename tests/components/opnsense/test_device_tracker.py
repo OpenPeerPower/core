@@ -44,7 +44,7 @@ async def test_get_scanner.opp, mocked_opnsense, mock_device_tracker_conf):
     network_insight_client.get_interfaces.return_value = {"igb0": "WAN", "igb1": "LAN"}
 
     result = await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {

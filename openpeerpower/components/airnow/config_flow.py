@@ -15,13 +15,13 @@ from .const import DOMAIN  # pylint:disable=unused-import
 _LOGGER = logging.getLogger(__name__)
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """
     Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     client = WebServiceAPI(data[CONF_API_KEY], session=session)
 
     lat = data[CONF_LATITUDE]

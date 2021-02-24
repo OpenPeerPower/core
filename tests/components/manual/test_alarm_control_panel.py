@@ -35,7 +35,7 @@ async def test_setup_demo_platform.opp):
 async def test_arm_home_no_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -61,7 +61,7 @@ async def test_arm_home_no_pending.opp):
 async def test_arm_home_no_pending_when_code_not_req.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -88,7 +88,7 @@ async def test_arm_home_no_pending_when_code_not_req.opp):
 async def test_arm_home_with_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -128,7 +128,7 @@ async def test_arm_home_with_pending.opp):
 async def test_arm_home_with_invalid_code.opp):
     """Attempt to arm home without a valid code."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -154,7 +154,7 @@ async def test_arm_home_with_invalid_code.opp):
 async def test_arm_away_no_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -180,7 +180,7 @@ async def test_arm_away_no_pending.opp):
 async def test_arm_away_no_pending_when_code_not_req.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -207,7 +207,7 @@ async def test_arm_away_no_pending_when_code_not_req.opp):
 async def test_arm_home_with_template_code.opp):
     """Attempt to arm with a template-based code."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -234,7 +234,7 @@ async def test_arm_home_with_template_code.opp):
 async def test_arm_away_with_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -274,7 +274,7 @@ async def test_arm_away_with_pending.opp):
 async def test_arm_away_with_invalid_code.opp):
     """Attempt to arm away without a valid code."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -300,7 +300,7 @@ async def test_arm_away_with_invalid_code.opp):
 async def test_arm_night_no_pending.opp):
     """Test arm night method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -326,7 +326,7 @@ async def test_arm_night_no_pending.opp):
 async def test_arm_night_no_pending_when_code_not_req.opp):
     """Test arm night method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -353,7 +353,7 @@ async def test_arm_night_no_pending_when_code_not_req.opp):
 async def test_arm_night_with_pending.opp):
     """Test arm night method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -398,7 +398,7 @@ async def test_arm_night_with_pending.opp):
 async def test_arm_night_with_invalid_code.opp):
     """Attempt to night home without a valid code."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -424,7 +424,7 @@ async def test_arm_night_with_invalid_code.opp):
 async def test_trigger_no_pending.opp):
     """Test triggering when no pending submitted method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -459,7 +459,7 @@ async def test_trigger_no_pending.opp):
 async def test_trigger_with_delay.opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -503,7 +503,7 @@ async def test_trigger_with_delay.opp):
 async def test_trigger_zero_trigger_time.opp):
     """Test disabled trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -529,7 +529,7 @@ async def test_trigger_zero_trigger_time.opp):
 async def test_trigger_zero_trigger_time_with_pending.opp):
     """Test disabled trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -555,7 +555,7 @@ async def test_trigger_zero_trigger_time_with_pending.opp):
 async def test_trigger_with_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -606,7 +606,7 @@ async def test_trigger_with_pending.opp):
 async def test_trigger_with_unused_specific_delay.opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -651,7 +651,7 @@ async def test_trigger_with_unused_specific_delay.opp):
 async def test_trigger_with_specific_delay.opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -696,7 +696,7 @@ async def test_trigger_with_specific_delay.opp):
 async def test_trigger_with_pending_and_delay.opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -752,7 +752,7 @@ async def test_trigger_with_pending_and_delay.opp):
 async def test_trigger_with_pending_and_specific_delay.opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -809,7 +809,7 @@ async def test_trigger_with_pending_and_specific_delay.opp):
 async def test_armed_home_with_specific_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -842,7 +842,7 @@ async def test_armed_home_with_specific_pending.opp):
 async def test_armed_away_with_specific_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -875,7 +875,7 @@ async def test_armed_away_with_specific_pending.opp):
 async def test_armed_night_with_specific_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -908,7 +908,7 @@ async def test_armed_night_with_specific_pending.opp):
 async def test_trigger_with_specific_pending.opp):
     """Test arm home method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -953,7 +953,7 @@ async def test_trigger_with_specific_pending.opp):
 async def test_trigger_with_disarm_after_trigger.opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -989,7 +989,7 @@ async def test_trigger_with_disarm_after_trigger.opp):
 async def test_trigger_with_zero_specific_trigger_time.opp):
     """Test trigger method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1016,7 +1016,7 @@ async def test_trigger_with_zero_specific_trigger_time.opp):
 async def test_trigger_with_unused_zero_specific_trigger_time.opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1053,7 +1053,7 @@ async def test_trigger_with_unused_zero_specific_trigger_time.opp):
 async def test_trigger_with_specific_trigger_time.opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1089,7 +1089,7 @@ async def test_trigger_with_specific_trigger_time.opp):
 async def test_trigger_with_no_disarm_after_trigger.opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1130,7 +1130,7 @@ async def test_trigger_with_no_disarm_after_trigger.opp):
 async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1185,7 +1185,7 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
 async def test_disarm_while_pending_trigger.opp):
     """Test disarming while pending state."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1224,7 +1224,7 @@ async def test_disarm_while_pending_trigger.opp):
 async def test_disarm_during_trigger_with_invalid_code.opp):
     """Test disarming while code is invalid."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1264,7 +1264,7 @@ async def test_disarm_during_trigger_with_invalid_code.opp):
 async def test_disarm_with_template_code.opp):
     """Attempt to disarm with a valid or invalid template-based code."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1301,7 +1301,7 @@ async def test_disarm_with_template_code.opp):
 async def test_arm_custom_bypass_no_pending.opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1327,7 +1327,7 @@ async def test_arm_custom_bypass_no_pending.opp):
 async def test_arm_custom_bypass_no_pending_when_code_not_req.opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1354,7 +1354,7 @@ async def test_arm_custom_bypass_no_pending_when_code_not_req.opp):
 async def test_arm_custom_bypass_with_pending.opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1394,7 +1394,7 @@ async def test_arm_custom_bypass_with_pending.opp):
 async def test_arm_custom_bypass_with_invalid_code.opp):
     """Attempt to custom bypass without a valid code."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1420,7 +1420,7 @@ async def test_arm_custom_bypass_with_invalid_code.opp):
 async def test_armed_custom_bypass_with_specific_pending.opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1453,7 +1453,7 @@ async def test_armed_custom_bypass_with_specific_pending.opp):
 async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time):
     """Test pending state with and without zero trigger time."""
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1528,7 +1528,7 @@ async def test_restore_armed_state.opp):
     mock_component.opp, "recorder")
 
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {
@@ -1555,7 +1555,7 @@ async def test_restore_disarmed_state.opp):
     mock_component.opp, "recorder")
 
     assert await async_setup_component(
-        opp.
+        opp,
         alarm_control_panel.DOMAIN,
         {
             "alarm_control_panel": {

@@ -59,7 +59,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Connect with serial port and return Acer Projector."""
     serial_port = config[CONF_FILENAME]
     name = config[CONF_NAME]

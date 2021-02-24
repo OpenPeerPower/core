@@ -143,7 +143,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "ECO")
     await async_manipulate_test_data(
-        opp.
+        opp,
         mock_hap.home.get_functionalHome(IndoorClimateHome),
         "absenceType",
         AbsenceType.VACATION,
@@ -154,7 +154,7 @@ async def test_hmip_heating_group_heat.opp, default_mock_hap_factory):
 
     await async_manipulate_test_data.opp, hmip_device, "controlMode", "ECO")
     await async_manipulate_test_data(
-        opp.
+        opp,
         mock_hap.home.get_functionalHome(IndoorClimateHome),
         "absenceType",
         AbsenceType.PERIOD,

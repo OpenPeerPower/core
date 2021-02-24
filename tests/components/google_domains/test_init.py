@@ -23,7 +23,7 @@ def setup_google_domains.opp, aioclient_mock):
 
     opp.loop.run_until_complete(
         async_setup_component(
-            opp.
+            opp,
             google_domains.DOMAIN,
             {
                 "google_domains": {
@@ -41,7 +41,7 @@ async def test_setup_opp, aioclient_mock):
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="nochg 0.0.0.0")
 
     result = await async_setup_component(
-        opp.
+        opp,
         google_domains.DOMAIN,
         {
             "google_domains": {
@@ -64,7 +64,7 @@ async def test_setup_fails_if_update_fails.opp, aioclient_mock):
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="nohost")
 
     result = await async_setup_component(
-        opp.
+        opp,
         google_domains.DOMAIN,
         {
             "google_domains": {

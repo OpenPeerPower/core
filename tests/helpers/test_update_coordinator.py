@@ -29,7 +29,7 @@ def get_crd.opp, update_interval):
         return calls
 
     crd = update_coordinator.DataUpdateCoordinator[int](
-        opp.
+        opp,
         _LOGGER,
         name="test",
         update_method=refresh,

@@ -28,7 +28,7 @@ class MockRequest:
 def init_config_flow.opp):
     """Init a configuration flow."""
     config_flow.register_flow_implementation(
-        opp.
+        opp,
         DOMAIN,
         client_id="id",
         client_secret="secret",
@@ -74,7 +74,7 @@ async def test_full_flow_implementation(
 ):
     """Test registering an implementation and finishing flow works."""
     config_flow.register_flow_implementation(
-        opp.
+        opp,
         "test-other",
         client_id=None,
         client_secret=None,
@@ -179,7 +179,7 @@ async def test_gen_auth_url(
 ):  # pylint: disable=redefined-outer-name
     """Test generating authorize URL from Logi Circle API."""
     config_flow.register_flow_implementation(
-        opp.
+        opp,
         "test-auth-url",
         client_id="id",
         client_secret="secret",

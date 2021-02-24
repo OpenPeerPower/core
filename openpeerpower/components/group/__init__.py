@@ -267,7 +267,7 @@ async def async_setup(opp, config):
             }
 
             await Group.async_create_group(
-                opp.
+                opp,
                 service.data.get(ATTR_NAME, object_id),
                 object_id=object_id,
                 entity_ids=entity_ids,
@@ -367,7 +367,7 @@ async def _async_process_config(opp, config, component):
         # the problem with concurrently creating the groups
         tasks.append(
             Group.async_create_group(
-                opp.
+                opp,
                 name,
                 entity_ids,
                 icon=icon,
@@ -423,7 +423,7 @@ class Group(Entity):
 
     def __init__(
         self,
-        opp.
+        opp,
         name,
         order=None,
         icon=None,
@@ -453,7 +453,7 @@ class Group(Entity):
 
     @staticmethod
     def create_group(
-        opp.
+        opp,
         name,
         entity_ids=None,
         user_defined=True,
@@ -472,7 +472,7 @@ class Group(Entity):
 
     @staticmethod
     async def async_create_group(
-        opp.
+        opp,
         name,
         entity_ids=None,
         user_defined=True,
@@ -494,7 +494,7 @@ class Group(Entity):
             opp.data[GROUP_ORDER] += 1
 
         group = Group(
-            opp.
+            opp,
             name,
             order=order,
             icon=icon,

@@ -63,7 +63,7 @@ async def async_setup_camera.opp, devices=None):
 async def setup_automation.opp, device_id, trigger_type):
     """Set up an automation trigger for testing triggering."""
     return await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

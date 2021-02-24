@@ -88,7 +88,7 @@ async def test_missing_url_and_path.opp):
     """Test that nothing happens when url and path are missing."""
     # Load our color_extractor component
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {},
     )
@@ -119,7 +119,7 @@ async def test_missing_url_and_path.opp):
 async def _async_load_color_extractor_url.opp, service_data):
     # Load our color_extractor component
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {},
     )

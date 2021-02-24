@@ -98,13 +98,13 @@ async def test_get_integration_with_requirements.opp):
         opp. MockModule("test_component_dep", requirements=["test-comp-dep==1.0.0"])
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             "test_component_after_dep", requirements=["test-comp-after-dep==1.0.0"]
         ),
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             "test_component",
             requirements=["test-comp==1.0.0"],
@@ -233,7 +233,7 @@ async def test_discovery_requirements_zeroconf.opp, partial_manifest):
     zeroconf = await loader.async_get_integration.opp, "zeroconf")
 
     mock_integration(
-        opp.
+        opp,
         MockModule("comp", partial_manifest=partial_manifest),
     )
 
@@ -252,7 +252,7 @@ async def test_discovery_requirements_dhcp.opp):
     dhcp = await loader.async_get_integration.opp, "dhcp")
 
     mock_integration(
-        opp.
+        opp,
         MockModule(
             "comp",
             partial_manifest={

@@ -121,7 +121,7 @@ async def test_set_value.opp):
 async def test_mode.opp):
     """Test mode settings."""
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -158,7 +158,7 @@ async def test_mode.opp):
 async def test_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp.
+        opp,
         (State("input_text.b1", "test"), State("input_text.b2", "testing too long")),
     )
 
@@ -180,14 +180,14 @@ async def test_restore_state.opp):
 async def test_initial_state_overrules_restore_state.opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp.
+        opp,
         (State("input_text.b1", "testing"), State("input_text.b2", "testing too long")),
     )
 
     opp.state = CoreState.starting
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -259,7 +259,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     count_start = len.opp.states.async_entity_ids())
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {DOMAIN: {"test_1": {"initial": "test 1"}, "test_2": {"initial": "test 2"}}},
     )

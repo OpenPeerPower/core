@@ -100,7 +100,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
 
     async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_START,
         _async_run_profile,
@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_MEMORY,
         _async_run_memory_profile,
@@ -120,7 +120,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_START_LOG_OBJECTS,
         _async_start_log_objects,
@@ -134,7 +134,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_STOP_LOG_OBJECTS,
         _async_stop_log_objects,
@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_DUMP_LOG_OBJECTS,
         _dump_log_objects,

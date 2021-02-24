@@ -148,7 +148,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # have to use discovery to load platform.
     opp.async_create_task(
         discovery.async_load_platform(
-            opp.
+            opp,
             NOTIFY_DOMAIN,
             DOMAIN,
             {CONF_NAME: DOMAIN},
@@ -245,7 +245,7 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
     # this should even out the load on the servers
     now = dt_util.utcnow()
     track_utc_time_change(
-        opp.
+        opp,
         cd_account.update,
         minute=range(now.minute % UPDATE_INTERVAL, 60, UPDATE_INTERVAL),
         second=now.second,
@@ -351,7 +351,7 @@ class BMWConnectedDriveBaseEntity(Entity):
         self.schedule_update_op_state(True)
 
     async def async_added_to_opp(self):
-        """Add callback after being added to.opp.
+        """Add callback after being added to.opp,
 
         Show latest data after startup.
         """

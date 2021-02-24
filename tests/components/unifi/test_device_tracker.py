@@ -221,7 +221,7 @@ async def test_tracked_clients.opp, aioclient_mock):
     client_4_copy["last_seen"] = dt_util.as_timestamp(dt_util.utcnow())
 
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_SSID_FILTER: ["ssid"]},
         clients_response=[CLIENT_1, CLIENT_2, CLIENT_3, CLIENT_5, client_4_copy],
@@ -265,7 +265,7 @@ async def test_tracked_clients.opp, aioclient_mock):
 async def test_tracked_devices.opp, aioclient_mock):
     """Test the update_items function with some devices."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         devices_response=[DEVICE_1, DEVICE_2],
     )
@@ -367,7 +367,7 @@ async def test_remove_clients.opp, aioclient_mock):
 async def test_controller_state_change.opp, aioclient_mock):
     """Verify entities state reflect on controller becoming unavailable."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         clients_response=[CLIENT_1],
         devices_response=[DEVICE_1],
@@ -407,7 +407,7 @@ async def test_controller_state_change.opp, aioclient_mock):
 async def test_option_track_clients.opp, aioclient_mock):
     """Test the tracking of clients can be turned off."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         clients_response=[CLIENT_1, CLIENT_2],
         devices_response=[DEVICE_1],
@@ -457,7 +457,7 @@ async def test_option_track_clients.opp, aioclient_mock):
 async def test_option_track_wired_clients.opp, aioclient_mock):
     """Test the tracking of wired clients can be turned off."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         clients_response=[CLIENT_1, CLIENT_2],
         devices_response=[DEVICE_1],
@@ -507,7 +507,7 @@ async def test_option_track_wired_clients.opp, aioclient_mock):
 async def test_option_track_devices.opp, aioclient_mock):
     """Test the tracking of devices can be turned off."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         clients_response=[CLIENT_1, CLIENT_2],
         devices_response=[DEVICE_1],
@@ -729,7 +729,7 @@ async def test_option_ignore_wired_bug.opp, aioclient_mock):
     client_1_client["last_seen"] = dt_util.as_timestamp(dt_util.utcnow())
 
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_IGNORE_WIRED_BUG: True},
         clients_response=[client_1_client],
@@ -818,7 +818,7 @@ async def test_restoring_client.opp, aioclient_mock):
     )
 
     await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_BLOCK_CLIENT: True},
         clients_response=[CLIENT_2],
@@ -833,7 +833,7 @@ async def test_restoring_client.opp, aioclient_mock):
 async def test_dont_track_clients.opp, aioclient_mock):
     """Test don't track clients config works."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_TRACK_CLIENTS: False},
         clients_response=[CLIENT_1],
@@ -865,7 +865,7 @@ async def test_dont_track_clients.opp, aioclient_mock):
 async def test_dont_track_devices.opp, aioclient_mock):
     """Test don't track devices config works."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_TRACK_DEVICES: False},
         clients_response=[CLIENT_1],
@@ -897,7 +897,7 @@ async def test_dont_track_devices.opp, aioclient_mock):
 async def test_dont_track_wired_clients.opp, aioclient_mock):
     """Test don't track wired clients config works."""
     config_entry = await setup_unifi_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_TRACK_WIRED_CLIENTS: False},
         clients_response=[CLIENT_1, CLIENT_2],

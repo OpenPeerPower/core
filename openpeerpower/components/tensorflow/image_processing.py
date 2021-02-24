@@ -189,7 +189,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     for camera in config[CONF_SOURCE]:
         entities.append(
             TensorFlowImageProcessor(
-                opp.
+                opp,
                 camera[CONF_ENTITY_ID],
                 camera.get(CONF_NAME),
                 category_index,
@@ -205,7 +205,7 @@ class TensorFlowImageProcessor(ImageProcessingEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         camera_entity,
         name,
         category_index,

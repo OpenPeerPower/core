@@ -529,7 +529,7 @@ async def test_error_rendering_template(
     indirect=["mock_client"],
 )
 async def test_connection_error_at_startup(
-    opp.
+    opp,
     caplog,
     mock_client,
     config_ext,
@@ -582,7 +582,7 @@ async def test_connection_error_at_startup(
     indirect=["mock_client"],
 )
 async def test_data_repository_not_found(
-    opp.
+    opp,
     caplog,
     mock_client,
     config_ext,

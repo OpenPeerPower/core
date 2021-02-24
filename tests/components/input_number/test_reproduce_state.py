@@ -10,7 +10,7 @@ async def test_reproducing_states.opp, caplog):
     """Test reproducing Input number states."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         "input_number",
         {
             "input_number": {

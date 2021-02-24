@@ -47,7 +47,7 @@ from tests.common import MockConfigEntry
 async def test_bad_credentials.opp):
     """Test when provided credentials are rejected."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -80,7 +80,7 @@ async def test_bad_credentials.opp):
 async def test_bad_hostname.opp, mock_plex_calls):
     """Test when an invalid address is provided."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -114,7 +114,7 @@ async def test_bad_hostname.opp, mock_plex_calls):
 async def test_unknown_exception.opp):
     """Test when an unknown exception is encountered."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -145,7 +145,7 @@ async def test_no_servers_found.opp, mock_plex_calls, requests_mock, empty_paylo
     requests_mock.get("https://plex.tv/api/resources", text=empty_payload)
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -176,7 +176,7 @@ async def test_single_available_server.opp, mock_plex_calls):
     """Test creating an entry with one server available."""
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -221,7 +221,7 @@ async def test_multiple_servers_with_selection(
     """Test creating an entry with multiple servers available."""
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -277,7 +277,7 @@ async def test_adding_last_unconfigured_server(
     """Test automatically adding last unconfigured server when multiple servers on account."""
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -335,7 +335,7 @@ async def test_all_available_servers_configured(
     """Test when all available servers are already configured."""
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -473,7 +473,7 @@ async def test_external_timed_out.opp):
     """Test when external flow times out."""
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -503,7 +503,7 @@ async def test_callback_view.opp, aiohttp_client):
     """Test callback view."""
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -531,7 +531,7 @@ async def test_callback_view.opp, aiohttp_client):
 async def test_manual_config(opp, mock_plex_calls):
     """Test creating via manual configuration."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -743,7 +743,7 @@ async def test_trigger_reauth.opp, entry, mock_plex_server, mock_websocket):
     """Test setup and reauthorization of a Plex token."""
     await async_setup_component.opp, "persistent_notification", {})
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 

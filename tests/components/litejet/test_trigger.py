@@ -110,7 +110,7 @@ async def simulate_time.opp, mock_lj, delta):
 async def setup_automation.opp, trigger):
     """Test setting up the automation."""
     assert await setup.async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -140,7 +140,7 @@ async def test_simple.opp, calls, mock_lj):
 async def test_held_more_than_short.opp, calls, mock_lj):
     """Test a too short hold."""
     await setup_automation(
-        opp.
+        opp,
         {
             "platform": "litejet",
             "number": ENTITY_OTHER_SWITCH_NUMBER,
@@ -157,7 +157,7 @@ async def test_held_more_than_short.opp, calls, mock_lj):
 async def test_held_more_than_long.opp, calls, mock_lj):
     """Test a hold that is long enough."""
     await setup_automation(
-        opp.
+        opp,
         {
             "platform": "litejet",
             "number": ENTITY_OTHER_SWITCH_NUMBER,
@@ -176,7 +176,7 @@ async def test_held_more_than_long.opp, calls, mock_lj):
 async def test_held_less_than_short.opp, calls, mock_lj):
     """Test a hold that is short enough."""
     await setup_automation(
-        opp.
+        opp,
         {
             "platform": "litejet",
             "number": ENTITY_OTHER_SWITCH_NUMBER,
@@ -194,7 +194,7 @@ async def test_held_less_than_short.opp, calls, mock_lj):
 async def test_held_less_than_long.opp, calls, mock_lj):
     """Test a hold that is too long."""
     await setup_automation(
-        opp.
+        opp,
         {
             "platform": "litejet",
             "number": ENTITY_OTHER_SWITCH_NUMBER,
@@ -213,7 +213,7 @@ async def test_held_less_than_long.opp, calls, mock_lj):
 async def test_held_in_range_short.opp, calls, mock_lj):
     """Test an in-range trigger with a too short hold."""
     await setup_automation(
-        opp.
+        opp,
         {
             "platform": "litejet",
             "number": ENTITY_OTHER_SWITCH_NUMBER,
@@ -231,7 +231,7 @@ async def test_held_in_range_short.opp, calls, mock_lj):
 async def test_held_in_range_just_right.opp, calls, mock_lj):
     """Test an in-range trigger with a just right hold."""
     await setup_automation(
-        opp.
+        opp,
         {
             "platform": "litejet",
             "number": ENTITY_OTHER_SWITCH_NUMBER,
@@ -251,7 +251,7 @@ async def test_held_in_range_just_right.opp, calls, mock_lj):
 async def test_held_in_range_long.opp, calls, mock_lj):
     """Test an in-range trigger with a too long hold."""
     await setup_automation(
-        opp.
+        opp,
         {
             "platform": "litejet",
             "number": ENTITY_OTHER_SWITCH_NUMBER,

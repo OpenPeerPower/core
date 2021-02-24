@@ -111,7 +111,7 @@ async def async_setup_entry(
         assert server_id
         for light_type in LIGHT_TYPES:
             async_dispatcher_send(
-                opp.
+                opp,
                 SIGNAL_ENTITY_REMOVE.format(
                     get_hyperion_unique_id(server_id, instance_num, light_type)
                 ),

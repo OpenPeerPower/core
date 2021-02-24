@@ -75,7 +75,7 @@ async def test_brightness_light.opp):
     assert trait.BrightnessTrait.supported(light.DOMAIN, light.SUPPORT_BRIGHTNESS, None)
 
     trt = trait.BrightnessTrait(
-        opp.
+        opp,
         State("light.bla", light.STATE_ON, {light.ATTR_BRIGHTNESS: 243}),
         BASIC_CONFIG,
     )
@@ -107,7 +107,7 @@ async def test_brightness_light.opp):
 async def test_camera_stream.opp):
     """Test camera stream trait support for camera domain."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
     assert helpers.get_google_type(camera.DOMAIN, None) is not None
@@ -350,7 +350,7 @@ async def test_startstop_vacuum.opp):
     assert trait.StartStopTrait.supported(vacuum.DOMAIN, 0, None)
 
     trt = trait.StartStopTrait(
-        opp.
+        opp,
         State(
             "vacuum.bla",
             vacuum.STATE_PAUSED,
@@ -396,7 +396,7 @@ async def test_startstop_cover.opp):
     )
 
     trt = trait.StartStopTrait(
-        opp.
+        opp,
         state,
         BASIC_CONFIG,
     )
@@ -432,7 +432,7 @@ async def test_startstop_cover.opp):
 async def test_startstop_cover_assumed.opp):
     """Test startStop trait support for cover domain of assumed state."""
     trt = trait.StartStopTrait(
-        opp.
+        opp,
         State(
             "cover.bla",
             cover.STATE_CLOSED,
@@ -454,7 +454,7 @@ async def test_color_setting_color_light.opp):
     assert trait.ColorSettingTrait.supported(light.DOMAIN, light.SUPPORT_COLOR, None)
 
     trt = trait.ColorSettingTrait(
-        opp.
+        opp,
         State(
             "light.bla",
             STATE_ON,
@@ -513,7 +513,7 @@ async def test_color_setting_temperature_light.opp):
     )
 
     trt = trait.ColorSettingTrait(
-        opp.
+        opp,
         State(
             "light.bla",
             STATE_ON,
@@ -566,7 +566,7 @@ async def test_color_light_temperature_light_bad_temp.opp):
     )
 
     trt = trait.ColorSettingTrait(
-        opp.
+        opp,
         State(
             "light.bla",
             STATE_ON,
@@ -588,7 +588,7 @@ async def test_light_modes.opp):
     assert trait.ModesTrait.supported(light.DOMAIN, light.SUPPORT_EFFECT, None)
 
     trt = trait.ModesTrait(
-        opp.
+        opp,
         State(
             "light.living_room",
             light.STATE_ON,
@@ -694,7 +694,7 @@ async def test_temperature_setting_climate_onoff.opp):
     opp.config.units.temperature_unit = TEMP_FAHRENHEIT
 
     trt = trait.TemperatureSettingTrait(
-        opp.
+        opp,
         State(
             "climate.bla",
             climate.HVAC_MODE_AUTO,
@@ -739,7 +739,7 @@ async def test_temperature_setting_climate_no_modes.opp):
     opp.config.units.temperature_unit = TEMP_CELSIUS
 
     trt = trait.TemperatureSettingTrait(
-        opp.
+        opp,
         State(
             "climate.bla",
             climate.HVAC_MODE_AUTO,
@@ -765,7 +765,7 @@ async def test_temperature_setting_climate_range.opp):
     opp.config.units.temperature_unit = TEMP_FAHRENHEIT
 
     trt = trait.TemperatureSettingTrait(
-        opp.
+        opp,
         State(
             "climate.bla",
             climate.HVAC_MODE_AUTO,
@@ -847,7 +847,7 @@ async def test_temperature_setting_climate_setpoint.opp):
     opp.config.units.temperature_unit = TEMP_CELSIUS
 
     trt = trait.TemperatureSettingTrait(
-        opp.
+        opp,
         State(
             "climate.bla",
             climate.HVAC_MODE_COOL,
@@ -902,7 +902,7 @@ async def test_temperature_setting_climate_setpoint_auto.opp):
     opp.config.units.temperature_unit = TEMP_CELSIUS
 
     trt = trait.TemperatureSettingTrait(
-        opp.
+        opp,
         State(
             "climate.bla",
             climate.HVAC_MODE_HEAT_COOL,
@@ -950,7 +950,7 @@ async def test_humidity_setting_humidifier_setpoint.opp):
     assert trait.HumiditySettingTrait.supported(humidifier.DOMAIN, 0, None)
 
     trt = trait.HumiditySettingTrait(
-        opp.
+        opp,
         State(
             "humidifier.bla",
             STATE_ON,
@@ -1071,7 +1071,7 @@ async def test_arm_disarm_arm_away.opp):
     assert trait.ArmDisArmTrait.might_2fa(alarm_control_panel.DOMAIN, 0, None)
 
     trt = trait.ArmDisArmTrait(
-        opp.
+        opp,
         State(
             "alarm_control_panel.alarm",
             STATE_ALARM_ARMED_AWAY,
@@ -1120,7 +1120,7 @@ async def test_arm_disarm_arm_away.opp):
 
     with pytest.raises(error.SmartHomeError) as err:
         trt = trait.ArmDisArmTrait(
-            opp.
+            opp,
             State(
                 "alarm_control_panel.alarm",
                 STATE_ALARM_DISARMED,
@@ -1138,7 +1138,7 @@ async def test_arm_disarm_arm_away.opp):
     assert err.value.code == const.ERR_CHALLENGE_NOT_SETUP
 
     trt = trait.ArmDisArmTrait(
-        opp.
+        opp,
         State(
             "alarm_control_panel.alarm",
             STATE_ALARM_DISARMED,
@@ -1183,7 +1183,7 @@ async def test_arm_disarm_arm_away.opp):
     # Test already armed
     with pytest.raises(error.SmartHomeError) as err:
         trt = trait.ArmDisArmTrait(
-            opp.
+            opp,
             State(
                 "alarm_control_panel.alarm",
                 STATE_ALARM_ARMED_AWAY,
@@ -1202,7 +1202,7 @@ async def test_arm_disarm_arm_away.opp):
 
     # Test with code_arm_required False
     trt = trait.ArmDisArmTrait(
-        opp.
+        opp,
         State(
             "alarm_control_panel.alarm",
             STATE_ALARM_DISARMED,
@@ -1234,7 +1234,7 @@ async def test_arm_disarm_disarm.opp):
     assert trait.ArmDisArmTrait.might_2fa(alarm_control_panel.DOMAIN, 0, None)
 
     trt = trait.ArmDisArmTrait(
-        opp.
+        opp,
         State(
             "alarm_control_panel.alarm",
             STATE_ALARM_DISARMED,
@@ -1278,7 +1278,7 @@ async def test_arm_disarm_disarm.opp):
     # Test without secure_pin configured
     with pytest.raises(error.SmartHomeError) as err:
         trt = trait.ArmDisArmTrait(
-            opp.
+            opp,
             State(
                 "alarm_control_panel.alarm",
                 STATE_ALARM_ARMED_AWAY,
@@ -1292,7 +1292,7 @@ async def test_arm_disarm_disarm.opp):
     assert err.value.code == const.ERR_CHALLENGE_NOT_SETUP
 
     trt = trait.ArmDisArmTrait(
-        opp.
+        opp,
         State(
             "alarm_control_panel.alarm",
             STATE_ALARM_ARMED_AWAY,
@@ -1327,7 +1327,7 @@ async def test_arm_disarm_disarm.opp):
     # Test already disarmed
     with pytest.raises(error.SmartHomeError) as err:
         trt = trait.ArmDisArmTrait(
-            opp.
+            opp,
             State(
                 "alarm_control_panel.alarm",
                 STATE_ALARM_DISARMED,
@@ -1342,7 +1342,7 @@ async def test_arm_disarm_disarm.opp):
     # Cancel arming after already armed will require pin
     with pytest.raises(error.SmartHomeError) as err:
         trt = trait.ArmDisArmTrait(
-            opp.
+            opp,
             State(
                 "alarm_control_panel.alarm",
                 STATE_ALARM_ARMED_AWAY,
@@ -1359,7 +1359,7 @@ async def test_arm_disarm_disarm.opp):
 
     # Cancel arming while pending to arm doesn't require pin
     trt = trait.ArmDisArmTrait(
-        opp.
+        opp,
         State(
             "alarm_control_panel.alarm",
             STATE_ALARM_PENDING,
@@ -1379,7 +1379,7 @@ async def test_fan_speed.opp):
     assert trait.FanSpeedTrait.supported(fan.DOMAIN, fan.SUPPORT_SET_SPEED, None)
 
     trt = trait.FanSpeedTrait(
-        opp.
+        opp,
         State(
             "fan.living_room_fan",
             fan.SPEED_HIGH,
@@ -1471,7 +1471,7 @@ async def test_climate_fan_speed.opp):
     assert trait.FanSpeedTrait.supported(climate.DOMAIN, climate.SUPPORT_FAN_MODE, None)
 
     trt = trait.FanSpeedTrait(
-        opp.
+        opp,
         State(
             "climate.living_room_ac",
             "on",
@@ -1533,7 +1533,7 @@ async def test_inputselector.opp):
     )
 
     trt = trait.InputSelectorTrait(
-        opp.
+        opp,
         State(
             "media_player.living_room",
             media_player.STATE_PLAYING,
@@ -1598,7 +1598,7 @@ async def test_inputselector.opp):
 async def test_inputselector_nextprev.opp, sources, source, source_next, source_prev):
     """Test input selector trait."""
     trt = trait.InputSelectorTrait(
-        opp.
+        opp,
         State(
             "media_player.living_room",
             media_player.STATE_PLAYING,
@@ -1646,7 +1646,7 @@ async def test_inputselector_nextprev.opp, sources, source, source_next, source_
 async def test_inputselector_nextprev_invalid.opp, sources, source):
     """Test input selector trait."""
     trt = trait.InputSelectorTrait(
-        opp.
+        opp,
         State(
             "media_player.living_room",
             media_player.STATE_PLAYING,
@@ -1689,14 +1689,14 @@ async def test_modes_input_select.opp):
     assert trait.ModesTrait.supported(input_select.DOMAIN, None, None)
 
     trt = trait.ModesTrait(
-        opp.
+        opp,
         State("input_select.bla", "unavailable"),
         BASIC_CONFIG,
     )
     assert trt.sync_attributes() == {"availableModes": []}
 
     trt = trait.ModesTrait(
-        opp.
+        opp,
         State(
             "input_select.bla",
             "abc",
@@ -1765,7 +1765,7 @@ async def test_modes_humidifier.opp):
     assert trait.ModesTrait.supported(humidifier.DOMAIN, humidifier.SUPPORT_MODES, None)
 
     trt = trait.ModesTrait(
-        opp.
+        opp,
         State(
             "humidifier.humidifier",
             STATE_OFF,
@@ -1844,7 +1844,7 @@ async def test_sound_modes.opp):
     )
 
     trt = trait.ModesTrait(
-        opp.
+        opp,
         State(
             "media_player.living_room",
             media_player.STATE_PLAYING,
@@ -1918,7 +1918,7 @@ async def test_openclose_cover.opp):
     )
 
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         State(
             "cover.bla",
             cover.STATE_OPEN,
@@ -1956,7 +1956,7 @@ async def test_openclose_cover_unknown_state.opp):
 
     # No state
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         State(
             "cover.bla", STATE_UNKNOWN, {ATTR_SUPPORTED_FEATURES: cover.SUPPORT_OPEN}
         ),
@@ -1985,7 +1985,7 @@ async def test_openclose_cover_assumed_state.opp):
     )
 
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         State(
             "cover.bla",
             cover.STATE_OPEN,
@@ -2018,7 +2018,7 @@ async def test_openclose_cover_query_only.opp):
     )
 
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         state,
         BASIC_CONFIG,
     )
@@ -2046,7 +2046,7 @@ async def test_openclose_cover_no_position.opp):
     )
 
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         state,
         BASIC_CONFIG,
     )
@@ -2098,7 +2098,7 @@ async def test_openclose_cover_secure.opp, device_class):
     )
 
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         State(
             "cover.bla",
             cover.STATE_OPEN,
@@ -2161,7 +2161,7 @@ async def test_openclose_binary_sensor.opp, device_class):
     assert trait.OpenCloseTrait.supported(binary_sensor.DOMAIN, 0, device_class)
 
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         State("binary_sensor.test", STATE_ON, {ATTR_DEVICE_CLASS: device_class}),
         BASIC_CONFIG,
     )
@@ -2174,7 +2174,7 @@ async def test_openclose_binary_sensor.opp, device_class):
     assert trt.query_attributes() == {"openPercent": 100}
 
     trt = trait.OpenCloseTrait(
-        opp.
+        opp,
         State("binary_sensor.test", STATE_OFF, {ATTR_DEVICE_CLASS: device_class}),
         BASIC_CONFIG,
     )
@@ -2197,7 +2197,7 @@ async def test_volume_media_player.opp):
     )
 
     trt = trait.VolumeTrait(
-        opp.
+        opp,
         State(
             "media_player.bla",
             media_player.STATE_PLAYING,
@@ -2249,7 +2249,7 @@ async def test_volume_media_player_relative.opp):
         None,
     )
     trt = trait.VolumeTrait(
-        opp.
+        opp,
         State(
             "media_player.bla",
             media_player.STATE_PLAYING,
@@ -2316,7 +2316,7 @@ async def test_media_player_mute.opp):
         None,
     )
     trt = trait.VolumeTrait(
-        opp.
+        opp,
         State(
             "media_player.bla",
             media_player.STATE_PLAYING,
@@ -2397,7 +2397,7 @@ async def test_temperature_setting_sensor_data.opp, unit_in, unit_out, state, am
     opp.config.units.temperature_unit = unit_in
 
     trt = trait.TemperatureSettingTrait(
-        opp.
+        opp,
         State(
             "sensor.test", state, {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TEMPERATURE}
         ),
@@ -2435,7 +2435,7 @@ async def test_humidity_setting_sensor.opp):
 async def test_humidity_setting_sensor_data.opp, state, ambient):
     """Test HumiditySetting trait support for humidity sensor."""
     trt = trait.HumiditySettingTrait(
-        opp.
+        opp,
         State("sensor.test", state, {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_HUMIDITY}),
         BASIC_CONFIG,
     )
@@ -2461,7 +2461,7 @@ async def test_transport_control.opp):
     now = datetime(2020, 1, 1)
 
     trt = trait.TransportControlTrait(
-        opp.
+        opp,
         State(
             "media_player.bla",
             media_player.STATE_PLAYING,
@@ -2590,7 +2590,7 @@ async def test_media_state.opp, state):
     )
 
     trt = trait.MediaStateTrait(
-        opp.
+        opp,
         State(
             "media_player.bla",
             state,

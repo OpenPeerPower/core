@@ -18,7 +18,7 @@ async def test_template_state.opp):
     """Test template."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {
                 "lock": {
@@ -58,7 +58,7 @@ async def test_template_state_boolean_on.opp):
     """Test the setting of the state with boolean on."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {
                 "lock": {
@@ -88,7 +88,7 @@ async def test_template_state_boolean_off.opp):
     """Test the setting of the state with off."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {
                 "lock": {
@@ -118,7 +118,7 @@ async def test_template_syntax_error(opp):
     """Test templating syntax error."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {
                 "lock": {
@@ -147,7 +147,7 @@ async def test_invalid_name_does_not_create.opp):
     """Test invalid name."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {
                 "switch": {
@@ -177,7 +177,7 @@ async def test_invalid_lock_does_not_create.opp):
     """Test invalid lock."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {"lock": {"platform": "template", "value_template": "Invalid"}},
         )
@@ -193,7 +193,7 @@ async def test_missing_template_does_not_create.opp):
     """Test missing template."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {
                 "lock": {
@@ -222,7 +222,7 @@ async def test_template_static.opp, caplog):
     """Test that we allow static templates."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             lock.DOMAIN,
             {
                 "lock": {
@@ -256,7 +256,7 @@ async def test_template_static.opp, caplog):
 async def test_lock_action.opp, calls):
     """Test lock action."""
     assert await setup.async_setup_component(
-        opp.
+        opp,
         lock.DOMAIN,
         {
             "lock": {
@@ -292,7 +292,7 @@ async def test_lock_action.opp, calls):
 async def test_unlock_action.opp, calls):
     """Test unlock action."""
     assert await setup.async_setup_component(
-        opp.
+        opp,
         lock.DOMAIN,
         {
             "lock": {
@@ -329,7 +329,7 @@ async def test_available_template_with_entities.opp):
     """Test availability templates with values from other entities."""
 
     await setup.async_setup_component(
-        opp.
+        opp,
         lock.DOMAIN,
         {
             "lock": {
@@ -367,7 +367,7 @@ async def test_available_template_with_entities.opp):
 async def test_invalid_availability_template_keeps_component_available.opp, caplog):
     """Test that an invalid availability keeps the device available."""
     await setup.async_setup_component(
-        opp.
+        opp,
         lock.DOMAIN,
         {
             "lock": {
@@ -394,7 +394,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 async def test_unique_id.opp):
     """Test unique_id option only creates one lock per id."""
     await setup.async_setup_component(
-        opp.
+        opp,
         lock.DOMAIN,
         {
             "lock": {
@@ -412,7 +412,7 @@ async def test_unique_id.opp):
     )
 
     await setup.async_setup_component(
-        opp.
+        opp,
         lock.DOMAIN,
         {
             "lock": {

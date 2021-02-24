@@ -126,7 +126,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         )
 
     openpeerpower.helpers.service.async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_RELOAD,
         reload_service_handler,

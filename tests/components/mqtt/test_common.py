@@ -57,7 +57,7 @@ async def help_test_availability_without_topic.opp, mqtt_mock, domain, config):
 
 
 async def help_test_default_availability_payload(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -73,7 +73,7 @@ async def help_test_default_availability_payload(
     config = copy.deepcopy(config)
     config[domain]["availability_topic"] = "availability-topic"
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -107,7 +107,7 @@ async def help_test_default_availability_payload(
 
 
 async def help_test_default_availability_list_payload(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -126,7 +126,7 @@ async def help_test_default_availability_list_payload(
         {"topic": "availability-topic2"},
     ]
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -172,7 +172,7 @@ async def help_test_default_availability_list_payload(
 
 
 async def help_test_default_availability_list_payload_all(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -192,7 +192,7 @@ async def help_test_default_availability_list_payload_all(
         {"topic": "availability-topic2"},
     ]
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -239,7 +239,7 @@ async def help_test_default_availability_list_payload_all(
 
 
 async def help_test_default_availability_list_payload_any(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -259,7 +259,7 @@ async def help_test_default_availability_list_payload_any(
         {"topic": "availability-topic2"},
     ]
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -301,7 +301,7 @@ async def help_test_default_availability_list_payload_any(
 
 
 async def help_test_default_availability_list_single(
-    opp.
+    opp,
     mqtt_mock,
     caplog,
     domain,
@@ -321,7 +321,7 @@ async def help_test_default_availability_list_single(
     ]
     config[domain]["availability_topic"] = "availability-topic"
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -336,7 +336,7 @@ async def help_test_default_availability_list_single(
 
 
 async def help_test_custom_availability_payload(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -354,7 +354,7 @@ async def help_test_custom_availability_payload(
     config[domain]["payload_available"] = "good"
     config[domain]["payload_not_available"] = "nogood"
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -388,7 +388,7 @@ async def help_test_custom_availability_payload(
 
 
 async def help_test_discovery_update_availability(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -478,7 +478,7 @@ async def help_test_setting_attribute_via_mqtt_json_message(
     config = copy.deepcopy(config)
     config[domain]["json_attributes_topic"] = "attr-topic"
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -500,7 +500,7 @@ async def help_test_setting_attribute_with_template.opp, mqtt_mock, domain, conf
     config[domain]["json_attributes_topic"] = "attr-topic"
     config[domain]["json_attributes_template"] = "{{ value_json['Timer1'] | tojson }}"
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -526,7 +526,7 @@ async def help_test_update_with_json_attrs_not_dict(
     config = copy.deepcopy(config)
     config[domain]["json_attributes_topic"] = "attr-topic"
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -550,7 +550,7 @@ async def help_test_update_with_json_attrs_bad_JSON(
     config = copy.deepcopy(config)
     config[domain]["json_attributes_topic"] = "attr-topic"
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )
@@ -624,7 +624,7 @@ async def help_test_discovery_removal.opp, mqtt_mock, caplog, domain, data):
 
 
 async def help_test_discovery_update(
-    opp.
+    opp,
     mqtt_mock,
     caplog,
     domain,
@@ -837,7 +837,7 @@ async def help_test_entity_id_update_subscriptions(
     assert len(topics) > 0
     registry = mock_registry.opp, {})
     assert await async_setup_component(
-        opp.
+        opp,
         domain,
         config,
     )

@@ -36,7 +36,7 @@ LABEL_PM_10_PERCENT = f"{ATTR_PM_10}_percent_of_limit"
 PARALLEL_UPDATES = 1
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Airly air_quality entity based on a config entry."""
     name = config_entry.data[CONF_NAME]
 

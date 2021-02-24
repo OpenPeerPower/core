@@ -287,7 +287,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
     data["groups"] = deepcopy(GROUPS)
     data["lights"] = deepcopy(LIGHTS)
     config_entry = await setup_deconz_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_ALLOW_DECONZ_GROUPS: False},
         get_state_response=data,

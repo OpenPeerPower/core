@@ -289,7 +289,7 @@ async def test_start_addon_failure(
 
 
 async def test_addon_not_installed(
-    opp.
+    opp,
     supervisor,
     addon_installed,
     install_addon,

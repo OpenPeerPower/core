@@ -165,7 +165,7 @@ async def test_discover.opp, rfxtrx_automatic):
 async def test_off_delay_restore.opp, rfxtrx):
     """Make sure binary sensor restore as off, if off delay is active."""
     mock_restore_cache(
-        opp.
+        opp,
         [
             State(
                 "binary_sensor.ac_118cdea_2",

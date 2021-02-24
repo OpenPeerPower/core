@@ -57,7 +57,7 @@ SENSOR_TYPES = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Airly sensor entities based on a config entry."""
     name = config_entry.data[CONF_NAME]
 

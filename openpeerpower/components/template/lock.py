@@ -46,7 +46,7 @@ async def _async_create_entities.opp, config):
 
     return [
         TemplateLock(
-            opp.
+            opp,
             device,
             value_template,
             availability_template,
@@ -69,7 +69,7 @@ class TemplateLock(TemplateEntity, LockEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         name,
         value_template,
         availability_template,

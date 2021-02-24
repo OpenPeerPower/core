@@ -52,7 +52,7 @@ RAW_DHCP_REQUEST = (
 async def test_dhcp_match_hostname_and_macaddress.opp):
     """Test matching based on hostname and macaddress."""
     dhcp_watcher = dhcp.DHCPWatcher(
-        opp.
+        opp,
         {},
         [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
     )
@@ -274,7 +274,7 @@ async def test_setup_and_stop.opp):
     """Test we can setup and stop."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         dhcp.DOMAIN,
         {},
     )
@@ -298,7 +298,7 @@ async def test_setup_fails_as_root.opp, caplog):
     """Test we handle sniff setup failing as root."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         dhcp.DOMAIN,
         {},
     )
@@ -323,7 +323,7 @@ async def test_setup_fails_non_root.opp, caplog):
     """Test we handle sniff setup failing as non-root."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         dhcp.DOMAIN,
         {},
     )
@@ -345,7 +345,7 @@ async def test_setup_fails_with_broken_libpcap.opp, caplog):
     """Test we abort if libpcap is missing or broken."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         dhcp.DOMAIN,
         {},
     )
@@ -389,7 +389,7 @@ async def test_device_tracker_hostname_and_macaddress_exists_before_start.opp):
         opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp.
+            opp,
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
@@ -415,7 +415,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start.opp):
         opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp.
+            opp,
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
@@ -452,7 +452,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_home.opp):
         opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp.
+            opp,
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
@@ -482,7 +482,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_router.opp
         opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp.
+            opp,
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
@@ -506,7 +506,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_router.opp
 
 
 async def test_device_tracker_hostname_and_macaddress_after_start_hostname_missing(
-    opp.
+    opp,
 ):
     """Test matching based on hostname and macaddress after start but missing hostname."""
 
@@ -514,7 +514,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_hostname_missi
         opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp.
+            opp,
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )
@@ -553,7 +553,7 @@ async def test_device_tracker_ignore_self_assigned_ips_before_start.opp):
         opp.config_entries.flow, "async_init", return_value=mock_coro()
     ) as mock_init:
         device_tracker_watcher = dhcp.DeviceTrackerWatcher(
-            opp.
+            opp,
             {},
             [{"domain": "mock-domain", "hostname": "connect", "macaddress": "B8B7F1*"}],
         )

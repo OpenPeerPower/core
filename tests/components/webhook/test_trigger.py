@@ -29,7 +29,7 @@ async def test_webhook_json.opp, aiohttp_client):
     opp.bus.async_listen("test_success", store_event)
 
     assert await async_setup_component(
-        opp.
+        opp,
         "automation",
         {
             "automation": {
@@ -64,7 +64,7 @@ async def test_webhook_post.opp, aiohttp_client):
     opp.bus.async_listen("test_success", store_event)
 
     assert await async_setup_component(
-        opp.
+        opp,
         "automation",
         {
             "automation": {
@@ -99,7 +99,7 @@ async def test_webhook_query.opp, aiohttp_client):
     opp.bus.async_listen("test_success", store_event)
 
     assert await async_setup_component(
-        opp.
+        opp,
         "automation",
         {
             "automation": {
@@ -134,7 +134,7 @@ async def test_webhook_reload.opp, aiohttp_client):
     opp.bus.async_listen("test_success", store_event)
 
     assert await async_setup_component(
-        opp.
+        opp,
         "automation",
         {
             "automation": {

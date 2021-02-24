@@ -109,7 +109,7 @@ async def test_setup_with_photo_session.opp, entry, setup_plex_server):
 
 
 async def test_setup_when_certificate_changed(
-    opp.
+    opp,
     requests_mock,
     empty_payload,
     plex_server_accounts,

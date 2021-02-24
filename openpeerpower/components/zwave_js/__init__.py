@@ -317,7 +317,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     if DATA_CLIENT_LISTEN_TASK in info:
         await disconnect_client(
-            opp.
+            opp,
             entry,
             info[DATA_CLIENT],
             info[DATA_CLIENT_LISTEN_TASK],

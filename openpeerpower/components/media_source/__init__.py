@@ -118,7 +118,7 @@ async def websocket_resolve_media.opp, connection, msg):
     else:
         if url[0] == "/":
             url = async_sign_path(
-                opp.
+                opp,
                 connection.refresh_token_id,
                 url,
                 timedelta(seconds=msg["expires"]),

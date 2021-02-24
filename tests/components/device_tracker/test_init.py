@@ -98,7 +98,7 @@ async def test_reading_yaml_config(opp, yaml_devices):
     """Test the rendering of the YAML configuration."""
     dev_id = "test"
     device = legacy.Device(
-        opp.
+        opp,
         timedelta(seconds=180),
         True,
         dev_id,
@@ -170,7 +170,7 @@ async def test_gravatar.opp):
     """Test the Gravatar generation."""
     dev_id = "test"
     device = legacy.Device(
-        opp.
+        opp,
         timedelta(seconds=180),
         True,
         dev_id,
@@ -189,7 +189,7 @@ async def test_gravatar_and_picture.opp):
     """Test that Gravatar overrides picture."""
     dev_id = "test"
     device = legacy.Device(
-        opp.
+        opp,
         timedelta(seconds=180),
         True,
         dev_id,
@@ -216,7 +216,7 @@ async def test_discover_platform(mock_demo_setup_scanner, mock_see, opp):
     assert device_tracker.DOMAIN in.opp.config.components
     assert mock_demo_setup_scanner.called
     assert mock_demo_setup_scanner.call_args[0] == (
-        opp.
+        opp,
         {},
         mock_see,
         {"test_key": "test_val"},
@@ -240,7 +240,7 @@ async def test_update_stale.opp, mock_device_tracker_conf):
     ):
         with assert_setup_component(1, device_tracker.DOMAIN):
             assert await async_setup_component(
-                opp.
+                opp,
                 device_tracker.DOMAIN,
                 {
                     device_tracker.DOMAIN: {
@@ -275,7 +275,7 @@ async def test_entity_attributes.opp, mock_device_tracker_conf):
     icon = "mdi:kettle"
 
     device = legacy.Device(
-        opp.
+        opp,
         timedelta(seconds=180),
         True,
         dev_id,
@@ -461,7 +461,7 @@ async def test_see_passive_zone_state.opp, mock_device_tracker_conf):
     ):
         with assert_setup_component(1, device_tracker.DOMAIN):
             assert await async_setup_component(
-                opp.
+                opp,
                 device_tracker.DOMAIN,
                 {
                     device_tracker.DOMAIN: {

@@ -298,7 +298,7 @@ def async_track_state_change_event(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-            opp.
+            opp,
             TRACK_STATE_CHANGE_CALLBACKS,
             TRACK_STATE_CHANGE_LISTENER,
             entity_ids,
@@ -390,7 +390,7 @@ def async_track_entity_registry_updated_event(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-            opp.
+            opp,
             TRACK_ENTITY_REGISTRY_UPDATED_CALLBACKS,
             TRACK_ENTITY_REGISTRY_UPDATED_LISTENER,
             entity_ids,
@@ -463,7 +463,7 @@ def async_track_state_added_domain(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-            opp.
+            opp,
             TRACK_STATE_ADDED_DOMAIN_CALLBACKS,
             TRACK_STATE_ADDED_DOMAIN_LISTENER,
             domains,
@@ -516,7 +516,7 @@ def async_track_state_removed_domain(
     def remove_listener() -> None:
         """Remove state change listener."""
         _async_remove_indexed_listeners(
-            opp.
+            opp,
             TRACK_STATE_REMOVED_DOMAIN_CALLBACKS,
             TRACK_STATE_REMOVED_DOMAIN_LISTENER,
             domains,
@@ -1129,7 +1129,7 @@ def async_track_same_state(
         )
     else:
         async_remove_state_for_cancel = async_track_state_change_event(
-            opp.
+            opp,
             [entity_ids] if isinstance(entity_ids, str) else entity_ids,
             state_for_cancel_listener,
         )
@@ -1405,7 +1405,7 @@ def async_track_utc_time_change(
         opp.async_run.opp_job(job, dt_util.as_local(now) if local else now)
 
         time_listener = async_track_point_in_utc_time(
-            opp.
+            opp,
             pattern_time_change_listener,
             calculate_next(now + timedelta(seconds=1)),
         )

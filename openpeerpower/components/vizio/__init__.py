@@ -108,7 +108,7 @@ class VizioAppsDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize."""
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=timedelta(days=1),

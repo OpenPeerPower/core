@@ -223,7 +223,7 @@ def create_all_turn_on_cases():
 
 @pytest.mark.parametrize(*create_all_turn_on_cases())
 async def test_turn_on(
-    opp.
+    opp,
     mock_gateway,
     api_factory,
     test_features,

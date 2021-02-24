@@ -23,7 +23,7 @@ def setup_freedns.opp, aioclient_mock):
 
     opp.loop.run_until_complete(
         async_setup_component(
-            opp.
+            opp,
             freedns.DOMAIN,
             {
                 freedns.DOMAIN: {
@@ -44,7 +44,7 @@ async def test_setup_opp, aioclient_mock):
     )
 
     result = await async_setup_component(
-        opp.
+        opp,
         freedns.DOMAIN,
         {
             freedns.DOMAIN: {
@@ -68,7 +68,7 @@ async def test_setup_fails_if_wrong_token.opp, aioclient_mock):
     aioclient_mock.get(UPDATE_URL, params=params, text="ERROR: Invalid update URL (2)")
 
     result = await async_setup_component(
-        opp.
+        opp,
         freedns.DOMAIN,
         {
             freedns.DOMAIN: {

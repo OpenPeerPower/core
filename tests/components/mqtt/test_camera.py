@@ -42,7 +42,7 @@ async def test_run_camera_setup_opp, aiohttp_client, mqtt_mock):
     """Test that it fetches the given payload."""
     topic = "test/camera"
     await async_setup_component(
-        opp.
+        opp,
         "camera",
         {"camera": {"platform": "mqtt", "topic": topic, "name": "Test Camera"}},
     )

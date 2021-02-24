@@ -28,7 +28,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: http://example.local:8123
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -69,7 +69,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: https://example.local:8123
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "https://example.local:8123"},
     )
 
@@ -83,7 +83,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: http://example.local:80/
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:80/"},
     )
 
@@ -97,7 +97,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: https://example.local:443
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "https://example.local:443"},
     )
 
@@ -111,7 +111,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: https://192.168.0.1
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "https://192.168.0.1"},
     )
 
@@ -125,7 +125,7 @@ async def test_get_url_internal.opp: OpenPeerPower):
 
     # Test with internal URL: http://192.168.0.1:8123
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://192.168.0.1:8123"},
     )
 
@@ -226,7 +226,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: http://example.com:8123
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "http://example.com:8123"},
     )
 
@@ -269,7 +269,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: http://example.com:80/
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "http://example.com:80/"},
     )
 
@@ -285,7 +285,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external url: https://example.com:443/
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com:443/"},
     )
     assert.opp.config.external_url == "https://example.com:443/"
@@ -298,7 +298,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: https://example.com:80
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com:80"},
     )
     assert.opp.config.external_url == "https://example.com:80"
@@ -313,7 +313,7 @@ async def test_get_url_external.opp: OpenPeerPower):
 
     # Test with external URL: https://192.168.0.1
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://192.168.0.1"},
     )
     assert.opp.config.external_url == "https://192.168.0.1"
@@ -388,7 +388,7 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
 
     # Test with external URL: http://1.1.1.1:8123
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "http://1.1.1.1:8123"},
     )
 
@@ -414,7 +414,7 @@ async def test_get_external_url_cloud_fallback.opp: OpenPeerPower):
 
     # Test with external URL: https://example.com
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
 
@@ -460,7 +460,7 @@ async def test_get_url.opp: OpenPeerPower):
     # Test only external
     opp.config.api = None
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
     assert.opp.config.external_url == "https://example.com"
@@ -469,7 +469,7 @@ async def test_get_url.opp: OpenPeerPower):
 
     # Test preference or allowance
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local", "external_url": "https://example.com"},
     )
     assert.opp.config.external_url == "https://example.com"
@@ -596,7 +596,7 @@ async def test_is_internal_request.opp: OpenPeerPower):
     """Test if accessing an instance on its internal URL."""
     # Test with internal URL: http://example.local:8123
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -616,7 +616,7 @@ async def test_is_internal_request.opp: OpenPeerPower):
 
     # Test with internal URL: http://192.168.0.1:8123
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://192.168.0.1:8123"},
     )
 

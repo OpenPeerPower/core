@@ -40,7 +40,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def get_service.opp, config, discovery_info=None):
     """Get the Twitter notification service."""
     return TwitterNotificationService(
-        opp.
+        opp,
         config[CONF_CONSUMER_KEY],
         config[CONF_CONSUMER_SECRET],
         config[CONF_ACCESS_TOKEN],
@@ -54,7 +54,7 @@ class TwitterNotificationService(BaseNotificationService):
 
     def __init__(
         self,
-        opp.
+        opp,
         consumer_key,
         consumer_secret,
         access_token_key,

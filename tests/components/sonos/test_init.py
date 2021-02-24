@@ -35,7 +35,7 @@ async def test_configuring_sonos_creates_entry.opp):
         "openpeerpower.components.sonos.async_setup_entry", return_value=mock_coro(True)
     ) as mock_setup, patch("pysonos.discover", return_value=True):
         await async_setup_component(
-            opp.
+            opp,
             sonos.DOMAIN,
             {"sonos": {"media_player": {"interface_addr": "127.0.0.1"}}},
         )

@@ -18,7 +18,7 @@ from tests.common import async_fire_time_changed
 def mock_conf.opp, cloud_prefs):
     """Mock Google conf."""
     return CloudGoogleConfig(
-        opp.
+        opp,
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -44,7 +44,7 @@ async def test_google_update_report_state(mock_conf, opp, cloud_prefs):
 async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
     """Test sync devices."""
     config = CloudGoogleConfig(
-        opp.
+        opp,
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,
@@ -64,7 +64,7 @@ async def test_google_update_expose_trigger_sync(
 ):
     """Test Google config responds to updating exposed entities."""
     config = CloudGoogleConfig(
-        opp.
+        opp,
         GACTIONS_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,

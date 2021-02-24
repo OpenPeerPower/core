@@ -182,7 +182,7 @@ async def async_attach_trigger(
             return cur_value == new_value
 
         unsub_track_same[entity] = async_track_same_state(
-            opp.
+            opp,
             period[entity],
             call_action,
             _check_same_state,

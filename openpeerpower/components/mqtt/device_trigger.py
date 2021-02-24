@@ -271,7 +271,7 @@ async def async_device_removed.opp: OpenPeerPower, device_id: str):
             clear_discovery_hash.opp, discovery_hash)
             device_trigger.remove_signal()
             mqtt.publish(
-                opp.
+                opp,
                 discovery_topic,
                 "",
                 retain=True,

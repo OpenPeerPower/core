@@ -16,7 +16,7 @@ ATTR_SENSOR_LIFE = "{0}_sensor_life"
 ATTR_VOC = "voc"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up AirVisual air quality entities based on a config entry."""
     # Geography-based AirVisual integrations don't utilize this platform:
     if config_entry.data[CONF_INTEGRATION_TYPE] != INTEGRATION_TYPE_NODE_PRO:

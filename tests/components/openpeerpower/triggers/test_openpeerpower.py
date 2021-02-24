@@ -8,7 +8,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_mock_service
 
 
-async def test_if_fires_on_opp.tart.opp.
+async def test_if_fires_on_opp.tart.opp,
     """Test the firing when Open Peer Power starts."""
     calls = async_mock_service.opp."test", "automation")
     opp.state = CoreState.not_running
@@ -41,7 +41,7 @@ async def test_if_fires_on_opp.tart.opp.
     assert len(calls) == 1
 
 
-async def test_if_fires_on_opp.hutdown.opp.
+async def test_if_fires_on_opp.hutdown.opp,
     """Test the firing when Open Peer Power shuts down."""
     calls = async_mock_service.opp."test", "automation")
     opp.state = CoreState.not_running

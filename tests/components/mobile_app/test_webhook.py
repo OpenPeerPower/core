@@ -153,7 +153,7 @@ async def test_webhook_update_registration(webhook_client, authed_api_client):
 async def test_webhook_handle_get_zones.opp, create_registrations, webhook_client):
     """Test that we can get zones properly."""
     await async_setup_component(
-        opp.
+        opp,
         ZONE_DOMAIN,
         {ZONE_DOMAIN: {}},
     )

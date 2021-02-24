@@ -26,7 +26,7 @@ def setup_comp.opp, mqtt_mock):
 async def test_if_fires_on_topic_match.opp, calls):
     """Test if message is fired on topic match."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -62,7 +62,7 @@ async def test_if_fires_on_topic_match.opp, calls):
 async def test_if_fires_on_topic_and_payload_match.opp, calls):
     """Test if message is fired on topic and payload match."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -84,7 +84,7 @@ async def test_if_fires_on_topic_and_payload_match.opp, calls):
 async def test_if_fires_on_templated_topic_and_payload_match.opp, calls):
     """Test if message is fired on templated topic and payload match."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -114,7 +114,7 @@ async def test_if_fires_on_templated_topic_and_payload_match.opp, calls):
 async def test_non_allowed_templates.opp, calls, caplog):
     """Test non allowed function in template."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -136,7 +136,7 @@ async def test_non_allowed_templates.opp, calls, caplog):
 async def test_if_not_fires_on_topic_but_no_payload_match.opp, calls):
     """Test if message is not fired on topic but no payload."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -158,7 +158,7 @@ async def test_if_not_fires_on_topic_but_no_payload_match.opp, calls):
 async def test_encoding_default.opp, calls, mqtt_mock):
     """Test default encoding."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -174,7 +174,7 @@ async def test_encoding_default.opp, calls, mqtt_mock):
 async def test_encoding_custom.opp, calls, mqtt_mock):
     """Test default encoding."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

@@ -64,7 +64,7 @@ async def turn_fan_on(
 async def test_entity_registry.opp: core.OpenPeerPower):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(
-        opp.
+        opp,
         FAN_DOMAIN,
         ceiling_fan("name-1"),
         bond_version={"bondid": "test-hub-id"},
@@ -79,7 +79,7 @@ async def test_entity_registry.opp: core.OpenPeerPower):
 async def test_non_standard_speed_list.opp: core.OpenPeerPower):
     """Tests that the device is registered with custom speed list if number of supported speeds differs form 3."""
     await setup_platform(
-        opp.
+        opp,
         FAN_DOMAIN,
         ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -117,7 +117,7 @@ async def test_non_standard_speed_list.opp: core.OpenPeerPower):
 async def test_fan_speed_with_no_max_seed.opp: core.OpenPeerPower):
     """Tests that fans without max speed (increase/decrease controls) map speed to HA standard."""
     await setup_platform(
-        opp.
+        opp,
         FAN_DOMAIN,
         ceiling_fan("name-1"),
         bond_device_id="test-device-id",
@@ -167,7 +167,7 @@ async def test_turn_on_fan_with_percentage_3_speeds.opp: core.OpenPeerPower):
 async def test_turn_on_fan_with_percentage_6_speeds.opp: core.OpenPeerPower):
     """Tests that turn on command delegates to set speed API."""
     await setup_platform(
-        opp.
+        opp,
         FAN_DOMAIN,
         ceiling_fan("name-1"),
         bond_device_id="test-device-id",

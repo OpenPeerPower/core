@@ -150,7 +150,7 @@ async def async_test_powerconfiguration.opp, cluster, entity_id):
     ),
 )
 async def test_sensor(
-    opp.
+    opp,
     zigpy_device_mock,
     zha_device_joined_restored,
     cluster_id,
@@ -317,7 +317,7 @@ async def test_temp_uom(
 
 
 async def test_electrical_measurement_init(
-    opp.
+    opp,
     zigpy_device_mock,
     zha_device_joined,
 ):

@@ -81,7 +81,7 @@ async def async_setup_entry.opp, entry):
     mqtt_topic = config.get(CONF_MQTT_TOPIC)
 
     context = OwnTracksContext(
-        opp.
+        opp,
         secret,
         max_gps_accuracy,
         waypoint_import,
@@ -218,7 +218,7 @@ class OwnTracksContext:
 
     def __init__(
         self,
-        opp.
+        opp,
         secret,
         max_gps_accuracy,
         import_waypoints,

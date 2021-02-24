@@ -253,7 +253,7 @@ async def test_play_stream_service_no_source.opp, mock_camera, mock_stream):
 async def test_handle_play_stream_service.opp, mock_camera, mock_stream):
     """Test camera play_stream service."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
     await async_setup_component.opp, "media_player", {})

@@ -41,7 +41,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock):
         return_value=fake_state,
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             scene.DOMAIN,
             {
                 scene.DOMAIN: {
@@ -150,7 +150,7 @@ async def test_discovery_update_payload.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         scene.DOMAIN,

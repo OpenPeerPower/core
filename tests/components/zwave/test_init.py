@@ -83,7 +83,7 @@ def test_config_access_error():
 async def test_network_options.opp, mock_openzwave):
     """Test network options."""
     result = await async_setup_component(
-        opp.
+        opp,
         "zwave",
         {"zwave": {"usb_path": "mock_usb_path", "config_path": "mock_config_path"}},
     )
@@ -368,7 +368,7 @@ async def test_node_ignored.opp, mock_openzwave):
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
         await async_setup_component(
-            opp.
+            opp,
             "zwave",
             {"zwave": {"device_config": {"zwave.mock_node": {"ignored": True}}}},
         )

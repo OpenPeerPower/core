@@ -548,7 +548,7 @@ async def _async_process_config(
             initial_state = config_block.get(CONF_INITIAL_STATE)
 
             action_script = Script(
-                opp.
+                opp,
                 config_block[CONF_ACTION],
                 name,
                 DOMAIN,

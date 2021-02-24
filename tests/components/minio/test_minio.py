@@ -57,7 +57,7 @@ async def test_minio_services.opp, caplog, minio_client):
     opp.config.allowlist_external_dirs = {"/test"}
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -119,7 +119,7 @@ async def test_minio_listen.opp, caplog, minio_client_event):
     opp.bus.async_listen("minio", event_callback)
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {

@@ -26,7 +26,7 @@ SLOW_SETUP_MAX_WAIT = 300
 
 
 @core.callback
-def async_set_domains_to_be_loaded.opp: core.OpenPeerPower, domains: Set[str]) -> None:
+def async_set_domains_to_be_loaded(opp: core.OpenPeerPower, domains: Set[str]) -> None:
     """Set domains that are going to be loaded from the config.
 
     This will allow us to properly handle after_dependencies.
@@ -34,10 +34,10 @@ def async_set_domains_to_be_loaded.opp: core.OpenPeerPower, domains: Set[str]) -
     opp.data[DATA_SETUP_DONE] = {domain: asyncio.Event() for domain in domains}
 
 
-def setup_component.opp: core.OpenPeerPower, domain: str, config: ConfigType) -> bool:
+def setup_component(opp: core.OpenPeerPower, domain: str, config: ConfigType) -> bool:
     """Set up a component and all its dependencies."""
     return asyncio.run_coroutine_threadsafe(
-        async_setup_component.opp, domain, config), opp.loop
+        async_setup_component(opp, domain, config), opp.loop
     ).result()
 
 
@@ -57,7 +57,7 @@ async def async_setup_component(
         return await setup_tasks[domain]  # type: ignore
 
     task = setup_tasks[domain] = opp.async_create_task(
-        _async_setup_component.opp, domain, config)
+        _async_setup_component(opp, domain, config)
     )
 
     try:
@@ -72,7 +72,7 @@ async def _async_process_dependencies(
 ) -> bool:
     """Ensure all dependencies are set up."""
     dependencies_tasks = {
-        dep:.opp.loop.create_task(async_setup_component.opp, dep, config))
+        dep:.opp.loop.create_task(async_setup_component(opp, dep, config))
         for dep in integration.dependencies
         if dep not in.opp.config.components
     }
@@ -139,7 +139,7 @@ async def _async_setup_component(
         async_notify_setup_error(opp, domain, link)
 
     try:
-        integration = await loader.async_get_integration.opp, domain)
+        integration = await loader.async_get_integration(opp, domain)
     except loader.IntegrationNotFound:
         log_error("Integration not found.")
         return False
@@ -155,7 +155,7 @@ async def _async_setup_component(
     # Process requirements as soon as possible, so we can import the component
     # without requiring imports to be in functions.
     try:
-        await async_process_deps_reqs.opp, config, integration)
+        await async_process_deps_reqs(opp, config, integration)
     except OpenPeerPowerError as err:
         log_error(str(err), integration.documentation)
         return False
@@ -281,7 +281,7 @@ async def async_prepare_setup_platform(
         async_notify_setup_error(opp, platform_path)
 
     try:
-        integration = await loader.async_get_integration.opp, platform_name)
+        integration = await loader.async_get_integration(opp, platform_name)
     except loader.IntegrationNotFound:
         log_error("Integration not found")
         return None
@@ -289,7 +289,7 @@ async def async_prepare_setup_platform(
     # Process deps and reqs as soon as possible, so that requirements are
     # available when we import the platform.
     try:
-        await async_process_deps_reqs.opp, opp_config, integration)
+        await async_process_deps_reqs(opp, opp_config, integration)
     except OpenPeerPowerError as err:
         log_error(str(err))
         return None
@@ -314,7 +314,7 @@ async def async_prepare_setup_platform(
             return None
 
         if hasattr(component, "setup") or hasattr(component, "async_setup"):
-            if not await async_setup_component.opp, integration.domain, opp_config):
+            if not await async_setup_component(opp, integration.domain, opp_config):
                 log_error("Unable to set up component.")
                 return None
 
@@ -335,7 +335,7 @@ async def async_process_deps_reqs(
     elif integration.domain in processed:
         return
 
-    if not await _async_process_dependencies.opp, config, integration):
+    if not await _async_process_dependencies(opp, config, integration):
         raise OpenPeerPowerError("Could not set up all dependencies.")
 
     if not.opp.config.skip_pip and integration.requirements:
@@ -358,7 +358,7 @@ def async_when_setup(
     async def when_setup() -> None:
         """Call the callback."""
         try:
-            await when_setup_cb.opp, component)
+            await when_setup_cb(opp, component)
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception("Error handling when_setup callback for %s", component)
 

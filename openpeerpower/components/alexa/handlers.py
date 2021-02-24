@@ -1499,7 +1499,7 @@ async def async_api_initialize_camera_stream.opp, config, directive, context):
 
     try:
         external_url = network.get_url(
-            opp.
+            opp,
             allow_internal=False,
             allow_ip=False,
             require_ssl=True,

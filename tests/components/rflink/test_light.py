@@ -486,7 +486,7 @@ async def test_restore_state.opp, monkeypatch):
     }
 
     mock_restore_cache(
-        opp.
+        opp,
         (
             State(f"{DOMAIN}.l1", STATE_ON, {ATTR_BRIGHTNESS: "123"}),
             State(f"{DOMAIN}.l2", STATE_ON, {ATTR_BRIGHTNESS: "321"}),

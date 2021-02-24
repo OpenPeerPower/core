@@ -69,7 +69,7 @@ def _discover.opp, config, component_name, found_tellcore_devices):
     signal_repetitions = config[DOMAIN].get(CONF_SIGNAL_REPETITIONS)
 
     discovery.load_platform(
-        opp.
+        opp,
         component_name,
         DOMAIN,
         {
@@ -116,7 +116,7 @@ def setup(opp, config):
 
     # Discover the lights
     _discover(
-        opp.
+        opp,
         config,
         "light",
         [device.id for device in tellcore_devices if device.methods(TELLSTICK_DIM)],
@@ -124,7 +124,7 @@ def setup(opp, config):
 
     # Discover the cover
     _discover(
-        opp.
+        opp,
         config,
         "cover",
         [device.id for device in tellcore_devices if device.methods(TELLSTICK_UP)],
@@ -132,7 +132,7 @@ def setup(opp, config):
 
     # Discover the switches
     _discover(
-        opp.
+        opp,
         config,
         "switch",
         [

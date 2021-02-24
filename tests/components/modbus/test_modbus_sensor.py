@@ -45,7 +45,7 @@ async def test_config_sensor.opp, do_options):
             }
         )
     await base_config_test(
-        opp.
+        opp,
         config_sensor,
         sensor_name,
         SENSOR_DOMAIN,
@@ -269,7 +269,7 @@ async def test_all_sensor.opp, cfg, regs, expected):
     """Run test for sensor."""
     sensor_name = "modbus_test_sensor"
     state = await base_test(
-        opp.
+        opp,
         {CONF_NAME: sensor_name, CONF_REGISTER: 1234, **cfg},
         sensor_name,
         SENSOR_DOMAIN,

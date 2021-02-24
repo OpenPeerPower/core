@@ -197,7 +197,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             reproduce_options[ATTR_TRANSITION] = call.data.get(ATTR_TRANSITION)
 
         await async_reproduce_state(
-            opp.
+            opp,
             call.data[CONF_ENTITIES].values(),
             context=call.context,
             reproduce_options=reproduce_options,
@@ -261,7 +261,7 @@ def _process_scenes_config(opp, async_add_entities, config):
 
     async_add_entities(
         OpenPeerPowerScene(
-            opp.
+            opp,
             SCENECONFIG(
                 scene.get(CONF_ID),
                 scene[CONF_NAME],

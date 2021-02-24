@@ -19,7 +19,7 @@ async def setup_component.opp):
     with patch.object(hue, "async_setup_entry", return_value=True):
         assert (
             await async_setup_component(
-                opp.
+                opp,
                 hue.DOMAIN,
                 {},
             )

@@ -40,7 +40,7 @@ async def test_import_from_yaml_ffmpeg.opp, canary) -> None:
         return_value=True,
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             DOMAIN,
             {
                 DOMAIN: YAML_CONFIG,

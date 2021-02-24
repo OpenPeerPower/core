@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             return await client.get_daily_usage(datetime.utcnow().strftime("%Y-%m"))
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         # Name of the data. For logging purposes.
         name="sensor",

@@ -163,7 +163,7 @@ def setup(opp, config):
 
         sensors = printer[CONF_SENSORS][CONF_MONITORED_CONDITIONS]
         load_platform(
-            opp.
+            opp,
             "sensor",
             DOMAIN,
             {"name": name, "base_url": base_url, "sensors": sensors},
@@ -171,7 +171,7 @@ def setup(opp, config):
         )
         b_sensors = printer[CONF_BINARY_SENSORS][CONF_MONITORED_CONDITIONS]
         load_platform(
-            opp.
+            opp,
             "binary_sensor",
             DOMAIN,
             {"name": name, "base_url": base_url, "sensors": b_sensors},

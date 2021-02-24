@@ -10,7 +10,7 @@ from .const import (
 from .entity import AdvantageAirEntity
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up AdvantageAir toggle platform."""
 
     instance = opp.data[ADVANTAGE_AIR_DOMAIN][config_entry.entry_id]

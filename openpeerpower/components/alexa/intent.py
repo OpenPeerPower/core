@@ -157,7 +157,7 @@ async def async_handle_intent.opp, message):
         intent_name = alexa_intent_info["name"]
 
     intent_response = await intent.async_handle(
-        opp.
+        opp,
         DOMAIN,
         intent_name,
         {key: {"value": value} for key, value in alexa_response.variables.items()},

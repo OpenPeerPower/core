@@ -97,7 +97,7 @@ async def async_setup(opp, config):
     conf = config[DOMAIN]
 
     config_flow.register_flow_implementation(
-        opp.
+        opp,
         DOMAIN,
         client_id=conf[CONF_CLIENT_ID],
         client_secret=conf[CONF_CLIENT_SECRET],

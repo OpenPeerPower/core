@@ -29,7 +29,7 @@ class GuardianDataUpdateCoordinator(DataUpdateCoordinator[dict]):
     ):
         """Initialize."""
         super().__init__(
-            opp.
+            opp,
             LOGGER,
             name=f"{valve_controller_uid}_{api_name}",
             update_interval=DEFAULT_UPDATE_INTERVAL,

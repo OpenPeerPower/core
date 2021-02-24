@@ -75,7 +75,7 @@ def set_aux_heat.opp, aux_heat, entity_id=ENTITY_MATCH_ALL):
 
 
 async def async_set_temperature(
-    opp.
+    opp,
     temperature=None,
     entity_id=ENTITY_MATCH_ALL,
     target_temp_high=None,
@@ -102,7 +102,7 @@ async def async_set_temperature(
 
 @bind.opp
 def set_temperature(
-    opp.
+    opp,
     temperature=None,
     entity_id=ENTITY_MATCH_ALL,
     target_temp_high=None,

@@ -68,7 +68,7 @@ async def test_setup_import.opp: OpenPeerPower):
         f"{MODULE_CONFIG_FLOW}.yeelight.Bulb", return_value=mocked_bulb
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             DOMAIN,
             {
                 DOMAIN: {

@@ -28,7 +28,7 @@ async def test_template.opp):
     """Test template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -59,7 +59,7 @@ async def test_icon_template.opp):
     """Test icon template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -94,7 +94,7 @@ async def test_entity_picture_template.opp):
     """Test entity_picture template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -129,7 +129,7 @@ async def test_friendly_name_template.opp):
     """Test friendly_name template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -161,7 +161,7 @@ async def test_friendly_name_template_with_unknown_state.opp):
     """Test friendly_name template with an unknown value_template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -193,7 +193,7 @@ async def test_attribute_templates.opp):
     """Test attribute_templates template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -227,7 +227,7 @@ async def test_template_syntax_error(opp):
     """Test templating syntax error."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -249,7 +249,7 @@ async def test_template_attribute_missing.opp):
     """Test missing attribute template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -276,7 +276,7 @@ async def test_invalid_name_does_not_create.opp):
     """Test invalid name."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -301,7 +301,7 @@ async def test_invalid_sensor_does_not_create.opp):
     """Test invalid sensor."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -335,7 +335,7 @@ async def test_missing_template_does_not_create.opp):
     """Test missing template."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -360,7 +360,7 @@ async def test_setup_invalid_device_class.opp):
     """Test setup with invalid device_class."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -380,7 +380,7 @@ async def test_setup_valid_device_class.opp):
     """Test setup with valid device_class."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -451,7 +451,7 @@ async def test_available_template_with_entities.opp):
     opp.states.async_set("sensor.availability_sensor", STATE_OFF)
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {
@@ -490,7 +490,7 @@ async def test_invalid_attribute_template.opp, caplog):
     opp.states.async_set("sensor.test_sensor", "startup")
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -521,7 +521,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     """Test that an invalid availability keeps the device available."""
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -551,7 +551,7 @@ async def test_no_template_match_all.opp, caplog):
     opp.state = CoreState.not_running
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -633,7 +633,7 @@ async def test_no_template_match_all.opp, caplog):
 async def test_unique_id.opp):
     """Test unique_id option only creates one sensor per id."""
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -668,7 +668,7 @@ async def test_sun_renders_once_per_sensor.opp):
     )
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -724,7 +724,7 @@ async def test_self_referencing_sensor_loop.opp, caplog):
     """Test a self referencing sensor does not loop forever."""
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -759,7 +759,7 @@ async def test_self_referencing_sensor_with_icon_loop.opp, caplog):
     """Test a self referencing sensor loops forever with a valid self referencing icon."""
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -797,7 +797,7 @@ async def test_self_referencing_sensor_with_icon_and_picture_entity_loop.opp, ca
     """Test a self referencing sensor loop forevers with a valid self referencing icon."""
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -837,7 +837,7 @@ async def test_self_referencing_entity_picture_loop.opp, caplog):
     """Test a self referencing sensor does not loop forever with a looping self referencing entity picture."""
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -913,7 +913,7 @@ async def test_self_referencing_icon_with_no_loop.opp, caplog):
           {% endif %}"""
 
     await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             "sensor": {
@@ -957,7 +957,7 @@ async def test_duplicate_templates.opp):
 
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             sensor.DOMAIN,
             {
                 "sensor": {

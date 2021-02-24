@@ -74,7 +74,7 @@ async def async_setup_entry.opp, entry):
             opp. "device", entry.entry_id, ring, "update_devices", timedelta(minutes=1)
         ),
         "dings_data": GlobalDataUpdater(
-            opp.
+            opp,
             "active dings",
             entry.entry_id,
             ring,
@@ -82,7 +82,7 @@ async def async_setup_entry.opp, entry):
             timedelta(seconds=5),
         ),
         "history_data": DeviceDataUpdater(
-            opp.
+            opp,
             "history",
             entry.entry_id,
             ring,
@@ -90,7 +90,7 @@ async def async_setup_entry.opp, entry):
             timedelta(minutes=1),
         ),
         "health_data": DeviceDataUpdater(
-            opp.
+            opp,
             "health",
             entry.entry_id,
             ring,

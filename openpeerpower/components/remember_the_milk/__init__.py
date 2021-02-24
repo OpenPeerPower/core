@@ -61,7 +61,7 @@ def setup(opp, config):
         if token:
             _LOGGER.debug("found token for account %s", account_name)
             _create_instance(
-                opp.
+                opp,
                 account_name,
                 api_key,
                 shared_secret,
@@ -123,7 +123,7 @@ def _register_new_account(
         _LOGGER.debug("Retrieved new token from server")
 
         _create_instance(
-            opp.
+            opp,
             account_name,
             api_key,
             shared_secret,

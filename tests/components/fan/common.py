@@ -28,7 +28,7 @@ from openpeerpower.const import (
 
 
 async def async_turn_on(
-    opp.
+    opp,
     entity_id=ENTITY_MATCH_ALL,
     speed: str = None,
     percentage: int = None,

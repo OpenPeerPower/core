@@ -95,13 +95,13 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
@@ -125,7 +125,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
 
     # Test polled state update
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"DHT11":{"Temperature":20.0}}}',
     )
@@ -140,13 +140,13 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
@@ -170,7 +170,7 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
 
     # Test polled state update
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"TX23":{"Speed":{"Act":"23.4"}}}}',
     )
@@ -185,13 +185,13 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
@@ -215,7 +215,7 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
 
     # Test polled state update
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS10",
         '{"StatusSNS":{"ENERGY":{"TotalTariff":[5.6,7.8]}}}',
     )
@@ -241,7 +241,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -267,7 +267,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
 
     # Test polled state update
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS11",
         '{"StatusSTS":{"Wifi":{"Signal":20.0}}}',
     )
@@ -294,7 +294,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -312,7 +312,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
 
     # Test polled state update
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Some reason"}}',
     )
@@ -322,7 +322,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
 
     # Test polled state update is ignored
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Another reason"}}',
     )
@@ -338,7 +338,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
 
     # Test polled state update
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Another reason"}}',
     )
@@ -348,7 +348,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
 
     # Test polled state update is ignored
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS1",
         '{"StatusPRM":{"RestartReason":"Third reason"}}',
     )
@@ -378,7 +378,7 @@ async def test_restart_time_status_sensor_state_via_mqtt(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -398,7 +398,7 @@ async def test_restart_time_status_sensor_state_via_mqtt(
     utc_now = datetime.datetime(2020, 11, 11, 8, 0, 0, tzinfo=dt.UTC)
     hatasmota.status_sensor.datetime.now.return_value = utc_now
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/stat/STATUS11",
         '{"StatusSTS":{"UptimeSec":"3600"}}',
     )
@@ -420,13 +420,13 @@ async def test_attributes.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
@@ -452,13 +452,13 @@ async def test_nested_sensor_attributes.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
@@ -490,13 +490,13 @@ async def test_indexed_sensor_attributes.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/sensors",
         json.dumps(sensor_config),
     )
@@ -524,7 +524,7 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -546,14 +546,14 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
     await opp.async_block_till_done()
 
     async_fire_time_changed(
-        opp.
+        opp,
         dt.utcnow() + timedelta(seconds=config_entries.RELOAD_AFTER_UPDATE_DELAY + 1),
     )
     await opp.async_block_till_done()
 
     # Fake re-send of retained discovery message
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -576,7 +576,7 @@ async def test_availability_when_connection_lost(
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
     await help_test_availability_when_connection_lost(
-        opp.
+        opp,
         mqtt_client_mock,
         mqtt_mock,
         sensor.DOMAIN,
@@ -591,7 +591,7 @@ async def test_availability.opp, mqtt_mock, setup_tasmota):
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
     await help_test_availability(
-        opp.
+        opp,
         mqtt_mock,
         sensor.DOMAIN,
         config,
@@ -605,7 +605,7 @@ async def test_availability_discovery_update.opp, mqtt_mock, setup_tasmota):
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
     await help_test_availability_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         sensor.DOMAIN,
         config,
@@ -622,7 +622,7 @@ async def test_availability_poll_state(
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
     poll_topic = "tasmota_49A3BC/cmnd/STATUS"
     await help_test_availability_poll_state(
-        opp.
+        opp,
         mqtt_client_mock,
         mqtt_mock,
         sensor.DOMAIN,
@@ -639,7 +639,7 @@ async def test_discovery_removal_sensor.opp, mqtt_mock, caplog, setup_tasmota):
     sensor_config1 = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
 
     await help_test_discovery_removal(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         sensor.DOMAIN,
@@ -662,7 +662,7 @@ async def test_discovery_update_unchanged_sensor(
         "openpeerpower.components.tasmota.sensor.TasmotaSensor.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-            opp.
+            opp,
             mqtt_mock,
             caplog,
             sensor.DOMAIN,
@@ -694,7 +694,7 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
         get_topic_tele_will(config),
     ]
     await help_test_entity_id_update_subscriptions(
-        opp.
+        opp,
         mqtt_mock,
         sensor.DOMAIN,
         config,
@@ -709,7 +709,7 @@ async def test_entity_id_update_discovery_update.opp, mqtt_mock, setup_tasmota):
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
     await help_test_entity_id_update_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         sensor.DOMAIN,
         config,

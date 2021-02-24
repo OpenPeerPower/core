@@ -155,7 +155,7 @@ async def test_data_manager_webhook_subscription(
 
     api: ConfigEntryWithingsApi = MagicMock(spec=ConfigEntryWithingsApi)
     data_manager = DataManager(
-        opp.
+        opp,
         "person0",
         api,
         0,

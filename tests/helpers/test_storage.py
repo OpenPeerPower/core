@@ -265,7 +265,7 @@ async def test_migrator_transforming_config(opp, store, opp_storage):
 
     with patch("os.path.isfile", return_value=True), patch("os.remove") as mock_remove:
         data = await storage.async_migrator(
-            opp.
+            opp,
             "old-path",
             store,
             old_conf_migrate_func=old_conf_migrate_func,

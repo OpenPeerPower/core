@@ -156,7 +156,7 @@ class ShellyDeviceWrapper(update_coordinator.DataUpdateCoordinator):
 
         device_name = get_device_name(device) if device.initialized else entry.title
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=device_name,
             update_interval=timedelta(seconds=update_interval),
@@ -283,7 +283,7 @@ class ShellyDeviceRestWrapper(update_coordinator.DataUpdateCoordinator):
             update_interval = REST_SENSORS_UPDATE_INTERVAL
 
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=get_device_name(device),
             update_interval=timedelta(seconds=update_interval),

@@ -95,7 +95,7 @@ async def _async_create_entities.opp, config):
 
         alarm_control_panels.append(
             AlarmControlPanelTemplate(
-                opp.
+                opp,
                 device,
                 name,
                 state_template,
@@ -122,7 +122,7 @@ class AlarmControlPanelTemplate(TemplateEntity, AlarmControlPanelEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         device_id,
         name,
         state_template,

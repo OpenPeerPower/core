@@ -50,7 +50,7 @@ async def test_ensure_device_tracker_platform_validation.opp):
         dev_id = "paulus"
         topic = "location/paulus"
         assert await async_setup_component(
-            opp.
+            opp,
             DT_DOMAIN,
             {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: topic}}},
         )
@@ -64,7 +64,7 @@ async def test_json_message.opp):
     location = json.dumps(LOCATION_MESSAGE)
 
     assert await async_setup_component(
-        opp.
+        opp,
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: topic}}},
     )
@@ -82,7 +82,7 @@ async def test_non_json_message.opp, caplog):
     location = "home"
 
     assert await async_setup_component(
-        opp.
+        opp,
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: topic}}},
     )
@@ -101,7 +101,7 @@ async def test_incomplete_message.opp, caplog):
     location = json.dumps(LOCATION_MESSAGE_INCOMPLETE)
 
     assert await async_setup_component(
-        opp.
+        opp,
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: topic}}},
     )
@@ -124,7 +124,7 @@ async def test_single_level_wildcard_topic.opp):
     location = json.dumps(LOCATION_MESSAGE)
 
     assert await async_setup_component(
-        opp.
+        opp,
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
@@ -143,7 +143,7 @@ async def test_multi_level_wildcard_topic.opp):
     location = json.dumps(LOCATION_MESSAGE)
 
     assert await async_setup_component(
-        opp.
+        opp,
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
@@ -163,7 +163,7 @@ async def test_single_level_wildcard_topic_not_matching.opp):
     location = json.dumps(LOCATION_MESSAGE)
 
     assert await async_setup_component(
-        opp.
+        opp,
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
@@ -181,7 +181,7 @@ async def test_multi_level_wildcard_topic_not_matching.opp):
     location = json.dumps(LOCATION_MESSAGE)
 
     assert await async_setup_component(
-        opp.
+        opp,
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )

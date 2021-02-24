@@ -262,7 +262,7 @@ def setup(opp, config):
 
         if binary_sensors:
             discovery.load_platform(
-                opp.
+                opp,
                 BINARY_SENSOR,
                 DOMAIN,
                 {CONF_NAME: name, CONF_BINARY_SENSORS: binary_sensors},

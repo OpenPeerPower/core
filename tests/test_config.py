@@ -459,7 +459,7 @@ async def test_override_stored_configuration.opp, opp_storage):
 async def test_loading_configuration.opp):
     """Test loading core config onto opp object."""
     await config_util.async_process_op_core_config(
-        opp.
+        opp,
         {
             "latitude": 60,
             "longitude": 50,
@@ -494,7 +494,7 @@ async def test_loading_configuration.opp):
 async def test_loading_configuration_temperature_unit.opp):
     """Test backward compatibility when loading core config."""
     await config_util.async_process_op_core_config(
-        opp.
+        opp,
         {
             "latitude": 60,
             "longitude": 50,
@@ -522,7 +522,7 @@ async def test_loading_configuration_default_media_dirs_docker.opp):
     """Test loading core config onto opp object."""
     with patch("openpeerpower.config.is_docker_env", return_value=True):
         await config_util.async_process_op_core_config(
-            opp.
+            opp,
             {
                 "name": "Huis",
             },
@@ -537,7 +537,7 @@ async def test_loading_configuration_default_media_dirs_docker.opp):
 async def test_loading_configuration_from_packages.opp):
     """Test loading packages config onto opp object config."""
     await config_util.async_process_op_core_config(
-        opp.
+        opp,
         {
             "latitude": 39,
             "longitude": -1,
@@ -561,7 +561,7 @@ async def test_loading_configuration_from_packages.opp):
     # Empty packages not allowed
     with pytest.raises(MultipleInvalid):
         await config_util.async_process_op_core_config(
-            opp.
+            opp,
             {
                 "latitude": 39,
                 "longitude": -1,
@@ -578,7 +578,7 @@ async def test_loading_configuration_from_packages.opp):
 async def test_check_op_config_file_correct(mock_check, opp):
     """Check that restart propagates to stop."""
     mock_check.return_value = check_config.OpenPeerPowerConfig()
-    assert await config_util.async_check_op_config_file.opp) is None
+    assert await config_util.async_check_op_config_file(opp) is None
 
 
 @patch("openpeerpower.helpers.check_config.async_check_op_config_file")
@@ -587,7 +587,7 @@ async def test_check_op_config_file_wrong(mock_check, opp):
     mock_check.return_value = check_config.OpenPeerPowerConfig()
     mock_check.return_value.add_error("bad")
 
-    assert await config_util.async_check_op_config_file.opp) == "bad"
+    assert await config_util.async_check_op_config_file(opp) == "bad"
 
 
 @patch("openpeerpower.config.os.path.isfile", mock.Mock(return_value=True))
@@ -968,7 +968,7 @@ async def test_component_config_exceptions.opp, caplog):
     # Config validator
     assert (
         await config_util.async_process_component_config(
-            opp.
+            opp,
             {},
             integration=Mock(
                 domain="test_domain",
@@ -990,7 +990,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp.
+            opp,
             {},
             integration=Mock(
                 domain="test_domain",
@@ -1011,7 +1011,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp.
+            opp,
             {"test_domain": {"platform": "test_platform"}},
             integration=Mock(
                 domain="test_domain",
@@ -1046,7 +1046,7 @@ async def test_component_config_exceptions.opp, caplog):
     ):
         assert (
             await config_util.async_process_component_config(
-                opp.
+                opp,
                 {"test_domain": {"platform": "test_platform"}},
                 integration=Mock(
                     domain="test_domain",
@@ -1068,7 +1068,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp.
+            opp,
             {"test_domain": {}},
             integration=Mock(
                 pkg_path="openpeerpower.components.test_domain",
@@ -1092,7 +1092,7 @@ async def test_component_config_exceptions.opp, caplog):
     caplog.clear()
     assert (
         await config_util.async_process_component_config(
-            opp.
+            opp,
             {"test_domain": {}},
             integration=Mock(
                 pkg_path="openpeerpower.components.test_domain",

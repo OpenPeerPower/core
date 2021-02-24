@@ -209,7 +209,7 @@ async def test_fail_setup_if_no_command_topic.opp, mqtt_mock):
 async def test_no_color_brightness_color_temp_hs_white_xy_if_no_topics.opp, mqtt_mock):
     """Test if there is no color and brightness if no topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -465,7 +465,7 @@ async def test_brightness_controlling_scale.opp, mqtt_mock):
     """Test the brightness controlling scale."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -512,7 +512,7 @@ async def test_brightness_from_rgb_controlling_scale.opp, mqtt_mock):
     """Test the brightness controlling scale."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -551,7 +551,7 @@ async def test_white_value_controlling_scale.opp, mqtt_mock):
     """Test the white_value controlling scale."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -1617,7 +1617,7 @@ async def test_discovery_update_light_topic_and_template.opp, mqtt_mock, caplog)
     ]
 
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         light.DOMAIN,
@@ -1840,7 +1840,7 @@ async def test_discovery_update_light_template.opp, mqtt_mock, caplog):
     ]
 
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         light.DOMAIN,

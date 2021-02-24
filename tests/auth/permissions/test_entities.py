@@ -152,7 +152,7 @@ def test_entities_all_control():
 def test_entities_device_id_boolean.opp):
     """Test entity ID policy applying control on device id."""
     entity_registry = mock_registry(
-        opp.
+        opp,
         {
             "test_domain.allowed": RegistryEntry(
                 entity_id="test_domain.allowed",
@@ -192,7 +192,7 @@ def test_entities_areas_true():
 def test_entities_areas_area_true.opp):
     """Test entity ID policy for areas with specific area."""
     entity_registry = mock_registry(
-        opp.
+        opp,
         {
             "light.kitchen": RegistryEntry(
                 entity_id="light.kitchen",

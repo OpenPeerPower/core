@@ -212,7 +212,7 @@ async def test_expand_entity_ids_recursive.opp):
     assert await async_setup_component.opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp.
+        opp,
         "init_group",
         ["light.Bowl", "light.Ceiling", "group.init_group"],
         False,
@@ -415,7 +415,7 @@ async def test_is_on.opp):
 async def test_reloading_groups.opp):
     """Test reloading the group config."""
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -508,7 +508,7 @@ async def test_setup_opp):
         opp. "init_group", ["light.Bowl", "light.Ceiling"], False
     )
     await group.Group.async_create_group(
-        opp.
+        opp,
         "created_group",
         ["light.Bowl", f"{test_group.entity_id}"],
         True,
@@ -566,7 +566,7 @@ async def test_service_group_set_group_remove_group.opp):
     assert list(group_state.attributes["entity_id"]) == ["test.entity_bla1"]
 
     common.async_set_group(
-        opp.
+        opp,
         "user_test_group",
         icon="mdi:camera",
         name="Test2",
@@ -596,7 +596,7 @@ async def test_group_order.opp):
 
     assert await async_setup_component.opp, "light", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -619,7 +619,7 @@ async def test_group_order_with_dynamic_creation.opp):
 
     assert await async_setup_component.opp, "light", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -673,7 +673,7 @@ async def test_group_persons.opp):
 
     assert await async_setup_component.opp, "person", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -696,7 +696,7 @@ async def test_group_persons_and_device_trackers.opp):
     assert await async_setup_component.opp, "person", {})
     assert await async_setup_component.opp, "device_tracker", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -720,7 +720,7 @@ async def test_group_mixed_domains_on.opp):
     for domain in ["lock", "binary_sensor", "cover"]:
         assert await async_setup_component.opp, domain, {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -745,7 +745,7 @@ async def test_group_mixed_domains_off.opp):
     for domain in ["lock", "binary_sensor", "cover"]:
         assert await async_setup_component.opp, domain, {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -769,7 +769,7 @@ async def test_group_locks.opp):
 
     assert await async_setup_component.opp, "lock", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -790,7 +790,7 @@ async def test_group_sensors.opp):
 
     assert await async_setup_component.opp, "sensor", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -811,7 +811,7 @@ async def test_group_climate_mixed.opp):
 
     assert await async_setup_component.opp, "climate", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -832,7 +832,7 @@ async def test_group_climate_all_cool.opp):
 
     assert await async_setup_component.opp, "climate", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -853,7 +853,7 @@ async def test_group_climate_all_off.opp):
 
     assert await async_setup_component.opp, "climate", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -874,7 +874,7 @@ async def test_group_alarm.opp):
     opp.state = CoreState.stopped
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -899,7 +899,7 @@ async def test_group_alarm_disarmed.opp):
 
     assert await async_setup_component.opp, "alarm_control_panel", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -922,7 +922,7 @@ async def test_group_vacuum_off.opp):
     opp.state = CoreState.stopped
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -946,7 +946,7 @@ async def test_group_vacuum_on.opp):
 
     assert await async_setup_component.opp, "vacuum", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -966,7 +966,7 @@ async def test_device_tracker_not_home.opp):
     opp.states.async_set("device_tracker.three", "not_home")
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -988,7 +988,7 @@ async def test_light_removed.opp):
     opp.states.async_set("light.three", "on")
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1014,7 +1014,7 @@ async def test_switch_removed.opp):
 
     opp.state = CoreState.stopped
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1051,7 +1051,7 @@ async def test_lights_added_after_group.opp):
     ]
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1087,7 +1087,7 @@ async def test_lights_added_before_group.opp):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1110,7 +1110,7 @@ async def test_cover_added_after_group.opp):
 
     assert await async_setup_component.opp, "cover", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1148,7 +1148,7 @@ async def test_group_that_references_a_group_of_lights.opp):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1182,7 +1182,7 @@ async def test_group_that_references_a_group_of_covers.opp):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1219,7 +1219,7 @@ async def test_group_that_references_two_groups_of_covers.opp):
 
     assert await async_setup_component.opp, "cover", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1265,7 +1265,7 @@ async def test_group_that_references_two_types_of_groups.opp):
 
     assert await async_setup_component.opp, "device_tracker", {})
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -1297,7 +1297,7 @@ async def test_plant_group.opp):
     ]
 
     assert await async_setup_component(
-        opp.
+        opp,
         "plant",
         {
             "plant": {
@@ -1320,7 +1320,7 @@ async def test_plant_group.opp):
         },
     )
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {

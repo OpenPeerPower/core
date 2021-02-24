@@ -63,7 +63,7 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
     ):
         """Initialize NWS coordinator."""
         super().__init__(
-            opp.
+            opp,
             logger,
             name=name,
             update_interval=update_interval,
@@ -110,7 +110,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     await nws_data.set_station(station)
 
     coordinator_observation = NwsDataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=f"NWS observation station {station}",
         update_method=nws_data.update_observation,
@@ -122,7 +122,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     coordinator_forecast = NwsDataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=f"NWS forecast station {station}",
         update_method=nws_data.update_forecast,
@@ -134,7 +134,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     coordinator_forecast_hourly = NwsDataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=f"NWS forecast hourly station {station}",
         update_method=nws_data.update_forecast_hourly,

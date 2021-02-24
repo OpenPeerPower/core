@@ -161,7 +161,7 @@ async def test_lovelace_from_yaml.opp, opp_ws_client):
 async def test_dashboard_from_yaml.opp, opp_ws_client, url_path):
     """Test we load lovelace dashboard config from yaml."""
     assert await async_setup_component(
-        opp.
+        opp,
         "lovelace",
         {
             "lovelace": {
@@ -267,7 +267,7 @@ async def test_wrong_key_dashboard_from_yaml.opp):
     """Test we don't load lovelace dashboard without hyphen config from yaml."""
     with assert_setup_component(0):
         assert not await async_setup_component(
-            opp.
+            opp,
             "lovelace",
             {
                 "lovelace": {
@@ -483,7 +483,7 @@ async def test_storage_dashboard_migrate.opp, opp_ws_client, opp_storage):
 async def test_websocket_list_dashboards.opp, opp_ws_client):
     """Test listing dashboards both storage + YAML."""
     assert await async_setup_component(
-        opp.
+        opp,
         "lovelace",
         {
             "lovelace": {

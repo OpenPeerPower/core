@@ -296,7 +296,7 @@ class ZHADevice(LogMixin):
         zha_dev.channels = channels.Channels.new(zha_dev)
         zha_dev.unsubs.append(
             async_dispatcher_connect(
-                opp.
+                opp,
                 SIGNAL_UPDATE_DEVICE.format(zha_dev.channels.unique_id),
                 zha_dev.async_update_sw_build_id,
             )

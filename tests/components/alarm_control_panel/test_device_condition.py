@@ -153,7 +153,7 @@ async def test_get_maximum_conditions.opp, device_reg, entity_reg):
 async def test_if_state.opp, calls):
     """Test for all conditions."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

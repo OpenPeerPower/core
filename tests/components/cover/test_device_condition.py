@@ -342,7 +342,7 @@ async def test_if_state.opp, calls):
     opp.states.async_set("cover.entity", STATE_OPEN)
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -458,7 +458,7 @@ async def test_if_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -562,7 +562,7 @@ async def test_if_tilt_position.opp, calls):
     await opp.async_block_till_done()
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

@@ -228,7 +228,7 @@ async def async_setup(opp, config):
     )
 
     async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_KNX_EVENT_REGISTER,
         opp.data[DOMAIN].service_event_register_modify,

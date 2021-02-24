@@ -74,7 +74,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     elif ".local" in entry.unique_id:
         opp.config_entries.async_update_entry(entry, unique_id=conf[KEY_MAC])
     daikin_api = await daikin_api_setup(
-        opp.
+        opp,
         conf[CONF_HOST],
         conf.get(CONF_API_KEY),
         conf.get(CONF_UUID),

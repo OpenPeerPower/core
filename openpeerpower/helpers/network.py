@@ -56,7 +56,7 @@ def get_url(
         if allow_internal and url_type == TYPE_URL_INTERNAL:
             try:
                 return _get_internal_url(
-                    opp.
+                    opp,
                     allow_ip=allow_ip,
                     require_current_request=require_current_request,
                     require_ssl=require_ssl,
@@ -68,7 +68,7 @@ def get_url(
         if allow_external and url_type == TYPE_URL_EXTERNAL:
             try:
                 return _get_external_url(
-                    opp.
+                    opp,
                     allow_cloud=allow_cloud,
                     allow_ip=allow_ip,
                     prefer_cloud=prefer_cloud,

@@ -192,7 +192,7 @@ async def test_manual.opp):
     ],
 )
 async def test_manual_errors(
-    opp.
+    opp,
     url,
     error,
 ):
@@ -479,7 +479,7 @@ async def test_not_addon.opp, supervisor):
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_running(
-    opp.
+    opp,
     supervisor,
     addon_running,
     addon_options,
@@ -556,7 +556,7 @@ async def test_addon_running(
     ],
 )
 async def test_addon_running_failures(
-    opp.
+    opp,
     supervisor,
     addon_running,
     get_addon_discovery_info,
@@ -606,7 +606,7 @@ async def test_addon_running_already_configured(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_installed(
-    opp.
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -660,7 +660,7 @@ async def test_addon_installed(
     [({"config": ADDON_DISCOVERY_INFO}, OppioAPIError())],
 )
 async def test_addon_installed_start_failure(
-    opp.
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -721,7 +721,7 @@ async def test_addon_installed_start_failure(
     ],
 )
 async def test_addon_installed_failures(
-    opp.
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -757,7 +757,7 @@ async def test_addon_installed_failures(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_installed_already_configured(
-    opp.
+    opp,
     supervisor,
     addon_installed,
     addon_options,
@@ -794,7 +794,7 @@ async def test_addon_installed_already_configured(
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_addon_not_installed(
-    opp.
+    opp,
     supervisor,
     addon_installed,
     install_addon,

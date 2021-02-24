@@ -319,7 +319,7 @@ class AbodeEntity(Entity):
 
     async def async_will_remove_from(opp(self):
         """Unsubscribe from Abode connection status updates."""
-        await self(opp.async_add_executor_job(
+        await self.opp.async_add_executor_job(
             self._data.abode.events.remove_connection_status_callback, self.unique_id
         )
 

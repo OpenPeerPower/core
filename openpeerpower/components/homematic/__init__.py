@@ -461,7 +461,7 @@ def _system_callback_handler.opp, config, src, *args):
                 # they are setup in Open Peer Power and a discovery event is fired
                 if found_devices:
                     discovery.load_platform(
-                        opp.
+                        opp,
                         component_name,
                         DOMAIN,
                         {

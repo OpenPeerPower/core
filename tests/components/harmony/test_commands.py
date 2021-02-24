@@ -49,7 +49,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
 
     # Tell the TV to play by id
     await _send_commands_and_wait(
-        opp.
+        opp,
         {
             ATTR_ENTITY_ID: ENTITY_REMOTE,
             ATTR_COMMAND: PLAY_COMMAND,
@@ -71,7 +71,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
 
     # Tell the TV to play by name
     await _send_commands_and_wait(
-        opp.
+        opp,
         {
             ATTR_ENTITY_ID: ENTITY_REMOTE,
             ATTR_COMMAND: PLAY_COMMAND,
@@ -93,7 +93,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
 
     # Tell the TV to play and stop by name
     await _send_commands_and_wait(
-        opp.
+        opp,
         {
             ATTR_ENTITY_ID: ENTITY_REMOTE,
             ATTR_COMMAND: [PLAY_COMMAND, STOP_COMMAND],
@@ -121,7 +121,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
 
     # Tell the TV to play by name multiple times
     await _send_commands_and_wait(
-        opp.
+        opp,
         {
             ATTR_ENTITY_ID: ENTITY_REMOTE,
             ATTR_COMMAND: PLAY_COMMAND,
@@ -150,7 +150,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
 
     # Send commands to an unknown device
     await _send_commands_and_wait(
-        opp.
+        opp,
         {
             ATTR_ENTITY_ID: ENTITY_REMOTE,
             ATTR_COMMAND: PLAY_COMMAND,
@@ -181,7 +181,7 @@ async def test_async_send_command_custom_delay(mock_hc, opp, mock_write_config):
 
     # Tell the TV to play by id
     await _send_commands_and_wait(
-        opp.
+        opp,
         {
             ATTR_ENTITY_ID: ENTITY_REMOTE,
             ATTR_COMMAND: PLAY_COMMAND,

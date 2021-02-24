@@ -119,7 +119,7 @@ async def async_process_requirements(
     if pip_lock is None:
         pip_lock = opp.data[DATA_PIP_LOCK] = asyncio.Lock()
 
-    kwargs = pip_kwargs.opp.config.config_dir)
+    kwargs = pip_kwargs(opp.config.config_dir)
 
     async with pip_lock:
         for req in requirements:

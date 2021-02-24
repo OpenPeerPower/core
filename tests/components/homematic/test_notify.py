@@ -9,13 +9,13 @@ from tests.common import assert_setup_component
 async def test_setup_full.opp):
     """Test valid configuration."""
     await async_setup_component(
-        opp.
+        opp,
         "homematic",
         {"homematic": {"hosts": {"ccu2": {"host": "127.0.0.1"}}}},
     )
     with assert_setup_component(1) as handle_config:
         assert await async_setup_component(
-            opp.
+            opp,
             "notify",
             {
                 "notify": {
@@ -35,13 +35,13 @@ async def test_setup_full.opp):
 async def test_setup_without_optional.opp):
     """Test valid configuration without optional."""
     await async_setup_component(
-        opp.
+        opp,
         "homematic",
         {"homematic": {"hosts": {"ccu2": {"host": "127.0.0.1"}}}},
     )
     with assert_setup_component(1) as handle_config:
         assert await async_setup_component(
-            opp.
+            opp,
             "notify",
             {
                 "notify": {

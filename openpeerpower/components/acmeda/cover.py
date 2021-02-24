@@ -19,7 +19,7 @@ from .const import ACMEDA_HUB_UPDATE, DOMAIN
 from .helpers import async_add_acmeda_entities
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Acmeda Rollers from a config entry."""
     hub = opp.data[DOMAIN][config_entry.entry_id]
 
@@ -33,7 +33,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     hub.cleanup_callbacks.append(
         async_dispatcher_connect(
-            opp.
+            opp,
             ACMEDA_HUB_UPDATE.format(config_entry.entry_id),
             async_add_acmeda_covers,
         )

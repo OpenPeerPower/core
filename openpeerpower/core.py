@@ -354,10 +354,10 @@ class OpenPeerPower:
         if asyncio.iscoroutine(target):
             return self.async_create_task(cast(Coroutine, target))
 
-        return self.async_add.opp_job(OppJob(target), *args)
+        return self.async_add(opp_job(OppJob(target), *args)
 
     @callback
-    def async_add.opp_job(
+    def async_add(opp_job(
         self, oppjob: OppJob, *args: Any
     ) -> Optional[asyncio.Future]:
         """Add a OppJob from within the event loop.
@@ -367,9 +367,9 @@ class OpenPeerPower:
         args: parameters for method to call.
         """
         if oppjob.job_type == OppJobType.Coroutinefunction:
-            task = self.loop.create_task.oppjob.target(*args))
+            task = self.loop.create_task(oppjob.target(*args))
         elif oppjob.job_type == OppJobType.Callback:
-            self.loop.call_soon.oppjob.target, *args)
+            self.loop.call_soon(oppjob.target, *args)
             return None
         else:
             task = self.loop.run_in_executor(  # type: ignore
@@ -421,7 +421,7 @@ class OpenPeerPower:
         self._track_task = False
 
     @callback
-    def async_run.opp_job(
+    def async_run(opp_job(
         self, oppjob: OppJob, *args: Any
     ) -> Optional[asyncio.Future]:
         """Run a OppJob from within the event loop.
@@ -435,7 +435,7 @@ class OpenPeerPower:
             oppjob.target(*args)
             return None
 
-        return self.async_add.opp_job.oppjob, *args)
+        return self.async_add(opp_job(oppjob, *args)
 
     @callback
     def async_run_job(
@@ -451,7 +451,7 @@ class OpenPeerPower:
         if asyncio.iscoroutine(target):
             return self.async_create_task(cast(Coroutine, target))
 
-        return self.async_run.opp_job(OppJob(target), *args)
+        return self.async_run(opp_job(OppJob(target), *args)
 
     def block_till_done(self) -> None:
         """Block until all pending work is done."""
@@ -726,7 +726,7 @@ class EventBus:
                 except Exception:  # pylint: disable=broad-except
                     _LOGGER.exception("Error in event filter")
                     continue
-            self.opp.async_add.opp_job(job, event)
+            self.opp.async_add(opp_job(job, event)
 
     def listen(self, event_type: str, listener: Callable) -> CALLBACK_TYPE:
         """Listen for all events or events of a specific type.
@@ -1749,7 +1749,7 @@ class Config:
         await store.async_save(data)
 
 
-def _async_create_timer.opp: OpenPeerPower) -> None:
+def _async_create_timer(opp: OpenPeerPower) -> None:
     """Create a timer that will start on OPENPEERPOWER_START."""
     handle = None
     timer_context = Context()

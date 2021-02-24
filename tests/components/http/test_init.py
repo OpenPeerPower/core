@@ -80,7 +80,7 @@ async def test_proxy_config(opp):
     """Test use_x_forwarded_for must config together with trusted_proxies."""
     assert (
         await async_setup_component(
-            opp.
+            opp,
             "http",
             {
                 "http": {

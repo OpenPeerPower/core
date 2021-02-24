@@ -88,7 +88,7 @@ async def async_setup_gateway_entry(
 
     # Create update coordinator
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         # Name of the data. For logging purposes.
         name=name,

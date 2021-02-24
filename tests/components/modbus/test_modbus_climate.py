@@ -31,7 +31,7 @@ async def test_config_climate.opp, do_options):
             }
         )
     await base_config_test(
-        opp.
+        opp,
         device_config,
         device_name,
         CLIMATE_DOMAIN,
@@ -55,7 +55,7 @@ async def test_temperature_climate.opp, regs, expected):
     climate_name = "modbus_test_climate"
     return
     state = await base_test(
-        opp.
+        opp,
         {
             CONF_NAME: climate_name,
             CONF_SLAVE: 1,

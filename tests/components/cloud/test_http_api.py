@@ -50,7 +50,7 @@ def setup_api_fixture.opp, aioclient_mock):
     """Initialize HTTP API."""
     opp.loop.run_until_complete(
         mock_cloud(
-            opp.
+            opp,
             {
                 "mode": "development",
                 "cognito_client_id": "cognito_client_id",
@@ -612,7 +612,7 @@ async def test_enabling_remote_trusted_networks_local4(
     opp.auth._providers[
         ("trusted_networks", None)
     ] = tn_auth.TrustedNetworksAuthProvider(
-        opp.
+        opp,
         None,
         tn_auth.CONFIG_SCHEMA(
             {"type": "trusted_networks", "trusted_networks": ["127.0.0.1"]}
@@ -645,7 +645,7 @@ async def test_enabling_remote_trusted_networks_local6(
     opp.auth._providers[
         ("trusted_networks", None)
     ] = tn_auth.TrustedNetworksAuthProvider(
-        opp.
+        opp,
         None,
         tn_auth.CONFIG_SCHEMA(
             {"type": "trusted_networks", "trusted_networks": ["::1"]}
@@ -678,7 +678,7 @@ async def test_enabling_remote_trusted_networks_other(
     opp.auth._providers[
         ("trusted_networks", None)
     ] = tn_auth.TrustedNetworksAuthProvider(
-        opp.
+        opp,
         None,
         tn_auth.CONFIG_SCHEMA(
             {"type": "trusted_networks", "trusted_networks": ["192.168.0.0/24"]}
@@ -705,7 +705,7 @@ async def test_list_google_entities.opp, opp_ws_client, setup_api, mock_cloud_lo
         opp. MockConfig(should_expose=lambda *_: False), State("light.kitchen", "on")
     )
     entity2 = GoogleEntity(
-        opp.
+        opp,
         MockConfig(should_expose=lambda *_: True, should_2fa=lambda *_: False),
         State("cover.garage", "open", {"device_class": "garage"}),
     )

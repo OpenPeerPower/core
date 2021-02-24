@@ -134,7 +134,7 @@ async def _async_create_entities.opp, config):
 
         fans.append(
             TemplateFan(
-                opp.
+                opp,
                 device,
                 friendly_name,
                 state_template,
@@ -172,7 +172,7 @@ class TemplateFan(TemplateEntity, FanEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         device_id,
         friendly_name,
         state_template,

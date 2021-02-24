@@ -172,7 +172,7 @@ async def test_states.opp, two_part_alarm):
     assert.opp.states.get(FIRST_ENTITY_ID).state == STATE_UNKNOWN
     for partition_id, entity_id in {0: FIRST_ENTITY_ID, 1: SECOND_ENTITY_ID}.items():
         await _check_state(
-            opp.
+            opp,
             two_part_alarm,
             "triggered",
             STATE_ALARM_TRIGGERED,
@@ -183,7 +183,7 @@ async def test_states.opp, two_part_alarm):
             opp. two_part_alarm, "arming", STATE_ALARM_ARMING, entity_id, partition_id
         )
         await _check_state(
-            opp.
+            opp,
             two_part_alarm,
             "armed",
             STATE_ALARM_ARMED_AWAY,
@@ -191,7 +191,7 @@ async def test_states.opp, two_part_alarm):
             partition_id,
         )
         await _check_state(
-            opp.
+            opp,
             two_part_alarm,
             "partially_armed",
             STATE_ALARM_ARMED_HOME,
@@ -199,7 +199,7 @@ async def test_states.opp, two_part_alarm):
             partition_id,
         )
         await _check_state(
-            opp.
+            opp,
             two_part_alarm,
             "disarmed",
             STATE_ALARM_DISARMED,
@@ -214,7 +214,7 @@ async def test_states.opp, two_part_alarm):
             new_callable=PropertyMock(return_value=groups),
         ):
             await _check_state(
-                opp.
+                opp,
                 two_part_alarm,
                 "partially_armed",
                 STATE_ALARM_ARMED_NIGHT,
@@ -340,7 +340,7 @@ async def test_sets_with_correct_code.opp, two_part_alarm):
         opp. SERVICE_ALARM_ARM_CUSTOM_BYPASS, "partial_arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp.
+        opp,
         SERVICE_ALARM_ARM_CUSTOM_BYPASS,
         "partial_arm",
         SECOND_ENTITY_ID,
@@ -382,7 +382,7 @@ async def test_sets_with_incorrect_code.opp, two_part_alarm):
         opp. SERVICE_ALARM_ARM_CUSTOM_BYPASS, "partial_arm", FIRST_ENTITY_ID, 0, **code
     )
     await _test_no_service_call(
-        opp.
+        opp,
         SERVICE_ALARM_ARM_CUSTOM_BYPASS,
         "partial_arm",
         SECOND_ENTITY_ID,

@@ -14,7 +14,7 @@ from openpeerpower.util import aiohttp
 async def init_config_flow.opp):
     """Init a configuration flow."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
     await async_setup_component.opp, "http", {})

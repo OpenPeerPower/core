@@ -81,7 +81,7 @@ async def get_coordinator.opp):
             }
 
     opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator(
-        opp.
+        opp,
         logging.getLogger(__name__),
         name=DOMAIN,
         update_method=async_get_cases,

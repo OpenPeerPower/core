@@ -15,7 +15,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([TelldusLiveCover(client, device_id)])
 
     async_dispatcher_connect(
-        opp.
+        opp,
         tellduslive.TELLDUS_DISCOVERY_NEW.format(cover.DOMAIN, tellduslive.DOMAIN),
         async_discover_cover,
     )

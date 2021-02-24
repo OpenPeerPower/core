@@ -83,7 +83,7 @@ async def test_setup_fails.opp, mqtt_mock):
     """Test that setup fails with missing required configuration items."""
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {light.DOMAIN: {"platform": "mqtt", "schema": "template", "name": "test"}},
         )
@@ -92,7 +92,7 @@ async def test_setup_fails.opp, mqtt_mock):
 
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -108,7 +108,7 @@ async def test_setup_fails.opp, mqtt_mock):
 
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -125,7 +125,7 @@ async def test_setup_fails.opp, mqtt_mock):
 
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -145,7 +145,7 @@ async def test_state_change_via_topic.opp, mqtt_mock):
     """Test state change via topic."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -192,7 +192,7 @@ async def test_state_brightness_color_effect_temp_white_change_via_topic(
     """Test state, bri, color, effect, color temp, white val change."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -301,7 +301,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     ):
         with assert_setup_component(1, light.DOMAIN):
             assert await async_setup_component(
-                opp.
+                opp,
                 light.DOMAIN,
                 {
                     light.DOMAIN: {
@@ -440,7 +440,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     """Test the sending of command in optimistic mode."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -568,7 +568,7 @@ async def test_effect.opp, mqtt_mock):
     """Test effect sent over MQTT in optimistic mode."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -620,7 +620,7 @@ async def test_flash.opp, mqtt_mock):
     """Test flash sent over MQTT in optimistic mode."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -668,7 +668,7 @@ async def test_transition.opp, mqtt_mock):
     """Test for transition time being sent when included."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -709,7 +709,7 @@ async def test_invalid_values.opp, mqtt_mock):
     """Test that invalid values are ignored."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {

@@ -26,7 +26,7 @@ async def test_action.opp, push_registration):
     webhook_id = push_registration["webhook_id"]
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

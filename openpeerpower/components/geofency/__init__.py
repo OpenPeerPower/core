@@ -119,7 +119,7 @@ def _set_location.opp, data, location_name):
     device = _device_name(data)
 
     async_dispatcher_send(
-        opp.
+        opp,
         TRACKER_UPDATE,
         device,
         (data[ATTR_LATITUDE], data[ATTR_LONGITUDE]),

@@ -30,7 +30,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             return await board_api.get_switches()
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="switch",
         update_method=async_update_data,

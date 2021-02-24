@@ -64,7 +64,7 @@ async def test_humanifying_deconz_event.opp, aioclient_mock):
 
     events = list(
         logbook.humanify(
-            opp.
+            opp,
             [
                 # Event without matching device trigger
                 MockLazyEventPartialState(

@@ -81,7 +81,7 @@ async def test_sync_message.opp):
     opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         config,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -196,7 +196,7 @@ async def test_sync_in_area(area_on_device, opp, registries):
     opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         config,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -299,7 +299,7 @@ async def test_query_message.opp):
     opp.bus.async_listen(EVENT_QUERY_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {
@@ -394,7 +394,7 @@ async def test_execute.opp):
     opp.bus.async_listen(EVENT_CALL_SERVICE, service_events.append)
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         None,
         {
@@ -575,7 +575,7 @@ async def test_raising_error_trait.opp):
     await opp.async_block_till_done()
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {
@@ -664,7 +664,7 @@ async def test_unavailable_state_does_sync.opp):
     opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -754,7 +754,7 @@ async def test_device_class_switch.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -799,7 +799,7 @@ async def test_device_class_binary_sensor.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -843,7 +843,7 @@ async def test_device_class_cover.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -888,7 +888,7 @@ async def test_device_media_player.opp, device_class, google_type):
     await sensor.async_update_op_state()
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -926,7 +926,7 @@ async def test_query_disconnect.opp):
     assert config._unsub_report_state is not None
     with patch.object(config, "async_disconnect_agent_user") as mock_disconnect:
         result = await sh.async_handle_message(
-            opp.
+            opp,
             config,
             "test-agent",
             {"inputs": [{"intent": "action.devices.DISCONNECT"}], "requestId": REQ_ID},
@@ -939,7 +939,7 @@ async def test_query_disconnect.opp):
 async def test_trait_execute_adding_query_data.opp):
     """Test a trait execute influencing query data."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
     opp.states.async_set(
@@ -951,7 +951,7 @@ async def test_trait_execute_adding_query_data.opp):
         return_value="/api/streams/bla",
     ):
         result = await sh.async_handle_message(
-            opp.
+            opp,
             BASIC_CONFIG,
             None,
             {
@@ -1009,7 +1009,7 @@ async def test_identify.opp):
     user_agent_id = "mock-user-id"
     proxy_device_id = user_agent_id
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         user_agent_id,
         {
@@ -1097,7 +1097,7 @@ async def test_reachable_devices.opp):
     proxy_device_id = user_agent_id
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         config,
         user_agent_id,
         {
@@ -1179,7 +1179,7 @@ async def test_sync_message_recovery.opp, caplog):
     )
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {"requestId": REQ_ID, "inputs": [{"intent": "action.devices.SYNC"}]},
@@ -1237,7 +1237,7 @@ async def test_query_recover.opp, caplog):
     )
 
     result = await sh.async_handle_message(
-        opp.
+        opp,
         BASIC_CONFIG,
         "test-agent",
         {

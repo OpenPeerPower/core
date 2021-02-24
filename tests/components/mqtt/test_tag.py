@@ -349,7 +349,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt_without_device(
 
 
 async def test_not_fires_on_mqtt_message_after_remove_from_registry(
-    opp.
+    opp,
     device_reg,
     mqtt_mock,
     tag_mock,

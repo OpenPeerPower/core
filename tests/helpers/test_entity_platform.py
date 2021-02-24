@@ -465,7 +465,7 @@ async def test_overriding_name_from_registry.opp):
     """Test that we can override a name via the Entity Registry."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -497,7 +497,7 @@ async def test_registry_respect_entity_namespace.opp):
 async def test_registry_respect_entity_disabled.opp):
     """Test that the registry respects entity disabled."""
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -518,7 +518,7 @@ async def test_registry_respect_entity_disabled.opp):
 async def test_entity_registry_updates_name.opp):
     """Test that updates on the entity registry update platform entities."""
     registry = mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -622,7 +622,7 @@ async def test_not_fails_with_adding_empty_entities_.opp):
 async def test_entity_registry_updates_entity_id.opp):
     """Test that updates on the entity registry update platform entities."""
     registry = mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -654,7 +654,7 @@ async def test_entity_registry_updates_entity_id.opp):
 async def test_entity_registry_updates_invalid_entity_id.opp):
     """Test that we can't update to an invalid entity id."""
     registry = mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": entity_registry.RegistryEntry(
                 entity_id="test_domain.world",
@@ -903,7 +903,7 @@ async def test_platforms_sharing_services.opp):
     await entity_platform2.async_add_entities([entity2])
 
     entity_platform3 = MockEntityPlatform(
-        opp.
+        opp,
         domain="different_integration",
         platform_name="mock_platform",
         platform=None,

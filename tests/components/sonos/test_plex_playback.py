@@ -18,7 +18,7 @@ from .test_media_player import setup_platform
 
 
 async def test_plex_play_media(
-    opp.
+    opp,
     config_entry,
     config,
 ):

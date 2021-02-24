@@ -833,7 +833,7 @@ async def test_entity_play_media_sign_URL.opp: OpenPeerPowerType):
     entity_id = "media_player.speaker"
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "http://example.com:8123"},
     )
 
@@ -1223,7 +1223,7 @@ async def test_failed_cast_other_url.opp, caplog):
     """Test warning when casting from internal_url fails."""
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             tts.DOMAIN,
             {tts.DOMAIN: {"platform": "demo", "base_url": "http://example.local:8123"}},
         )
@@ -1243,7 +1243,7 @@ async def test_failed_cast_other_url.opp, caplog):
 async def test_failed_cast_internal_url.opp, caplog):
     """Test warning when casting from internal_url fails."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
     with assert_setup_component(1, tts.DOMAIN):
@@ -1269,12 +1269,12 @@ async def test_failed_cast_internal_url.opp, caplog):
 async def test_failed_cast_external_url.opp, caplog):
     """Test warning when casting from external_url fails."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "http://example.com:8123"},
     )
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             tts.DOMAIN,
             {tts.DOMAIN: {"platform": "demo", "base_url": "http://example.com:8123"}},
         )
@@ -1298,7 +1298,7 @@ async def test_failed_cast_tts_base_url.opp, caplog):
     """Test warning when casting from tts.base_url fails."""
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-            opp.
+            opp,
             tts.DOMAIN,
             {tts.DOMAIN: {"platform": "demo", "base_url": "http://example.local:8123"}},
         )

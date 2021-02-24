@@ -79,7 +79,7 @@ async def test_if_fires_on_state_change.opp, calls):
     trigger_types = {"turned_on", "turned_off", "idle", "paused", "playing"}
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

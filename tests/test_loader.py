@@ -143,7 +143,7 @@ async def test_custom_integration_missing_version.opp, caplog):
         opp. "custom_components.test1", None, {"domain": "test1"}
     )
     test_integration_2 = loader.Integration(
-        opp.
+        opp,
         "custom_components.test2",
         None,
         loader.manifest_from_legacy_module("test2", "custom_components.test2"),
@@ -217,7 +217,7 @@ async def test_get_integration_custom_component.opp, enable_custom_integrations)
 def test_integration_properties.opp):
     """Test integration properties."""
     integration = loader.Integration(
-        opp.
+        opp,
         "openpeerpower.components.hue",
         None,
         {
@@ -274,7 +274,7 @@ def test_integration_properties.opp):
     assert integration.version == "1.0.0"
 
     integration = loader.Integration(
-        opp.
+        opp,
         "custom_components.hue",
         None,
         {
@@ -293,7 +293,7 @@ def test_integration_properties.opp):
     assert integration.version is None
 
     integration = loader.Integration(
-        opp.
+        opp,
         "custom_components.hue",
         None,
         {
@@ -322,14 +322,14 @@ async def test_integrations_only_once.opp):
 async def test_get_custom_components_internal.opp):
     """Test that we can a list of custom components."""
     # pylint: disable=protected-access
-    integrations = await loader._async_get_custom_components.opp)
+    integrations = await loader._async_get_custom_components(opp)
     assert integrations == {"test": ANY, "test_package": ANY}
 
 
 def _get_test_integration.opp, name, config_flow):
     """Return a generated test integration."""
     return loader.Integration(
-        opp.
+        opp,
         f"openpeerpower.components.{name}",
         None,
         {
@@ -349,7 +349,7 @@ def _get_test_integration.opp, name, config_flow):
 def _get_test_integration_with_zeroconf_matcher.opp, name, config_flow):
     """Return a generated test integration with a zeroconf matcher."""
     return loader.Integration(
-        opp.
+        opp,
         f"openpeerpower.components.{name}",
         None,
         {
@@ -368,7 +368,7 @@ def _get_test_integration_with_zeroconf_matcher.opp, name, config_flow):
 def _get_test_integration_with_dhcp_matcher.opp, name, config_flow):
     """Return a generated test integration with a dhcp matcher."""
     return loader.Integration(
-        opp.
+        opp,
         f"openpeerpower.components.{name}",
         None,
         {
@@ -400,14 +400,14 @@ async def test_get_custom_components.opp, enable_custom_integrations):
             "test_1": test_1_integration,
             "test_2": test_2_integration,
         }
-        integrations = await loader.async_get_custom_components.opp)
+        integrations = await loader.async_get_custom_components(opp)
         assert integrations == mock_get.return_value
-        integrations = await loader.async_get_custom_components.opp)
+        integrations = await loader.async_get_custom_components(opp)
         assert integrations == mock_get.return_value
         mock_get.assert_called_once_with.opp)
 
 
-async def test_get_config_flows.opp):
+async def test_get_config_flows(opp):
     """Verify that custom components with config_flow are available."""
     test_1_integration = _get_test_integration.opp, "test_1", False)
     test_2_integration = _get_test_integration.opp, "test_2", True)
@@ -417,7 +417,7 @@ async def test_get_config_flows.opp):
             "test_1": test_1_integration,
             "test_2": test_2_integration,
         }
-        flows = await loader.async_get_config_flows.opp)
+        flows = await loader.async_get_config_flows(opp)
         assert "test_2" in flows
         assert "test_1" not in flows
 
@@ -426,7 +426,7 @@ async def test_get_zeroconf.opp):
     """Verify that custom components with zeroconf are found."""
     test_1_integration = _get_test_integration.opp, "test_1", True)
     test_2_integration = _get_test_integration_with_zeroconf_matcher(
-        opp. "test_2", True
+        opp, "test_2", True
     )
 
     with patch("openpeerpower.loader.async_get_custom_components") as mock_get:
@@ -506,4 +506,4 @@ async def test_get_mqtt.opp):
 async def test_get_custom_components_safe_mode.opp):
     """Test that we get empty custom components in safe mode."""
     opp.config.safe_mode = True
-    assert await loader.async_get_custom_components.opp) == {}
+    assert await loader.async_get_custom_components(opp) == {}

@@ -46,7 +46,7 @@ def _perform_async_update.opp, wemo_entity):
 
 
 async def _async_multiple_call_helper(
-    opp.
+    opp,
     pywemo_registry,
     wemo_entity,
     pywemo_device,

@@ -292,7 +292,7 @@ async def test_setup_entry.opp):
     """Test setup entry calls async_setup_entry on platform."""
     mock_setup_entry = AsyncMock(return_value=True)
     mock_entity_platform(
-        opp.
+        opp,
         "test_domain.entry_domain",
         MockPlatform(
             async_setup_entry=mock_setup_entry, scan_interval=timedelta(seconds=5)
@@ -323,7 +323,7 @@ async def test_setup_entry_fails_duplicate.opp):
     """Test we don't allow setting up a config entry twice."""
     mock_setup_entry = AsyncMock(return_value=True)
     mock_entity_platform(
-        opp.
+        opp,
         "test_domain.entry_domain",
         MockPlatform(async_setup_entry=mock_setup_entry),
     )
@@ -341,7 +341,7 @@ async def test_unload_entry_resets_platform.opp):
     """Test unloading an entry removes all entities."""
     mock_setup_entry = AsyncMock(return_value=True)
     mock_entity_platform(
-        opp.
+        opp,
         "test_domain.entry_domain",
         MockPlatform(async_setup_entry=mock_setup_entry),
     )

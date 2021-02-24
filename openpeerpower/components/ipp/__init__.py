@@ -52,7 +52,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if not coordinator:
         # Create IPP instance for this entry
         coordinator = IPPDataUpdateCoordinator(
-            opp.
+            opp,
             host=entry.data[CONF_HOST],
             port=entry.data[CONF_PORT],
             base_path=entry.data[CONF_BASE_PATH],
@@ -115,7 +115,7 @@ class IPPDataUpdateCoordinator(DataUpdateCoordinator[IPPPrinter]):
         )
 
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

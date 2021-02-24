@@ -66,7 +66,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     # This avoids Open Peer Power from complaining about the component taking
     # too long to update.
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="Smart Meter Texas",
         update_method=async_update_data,

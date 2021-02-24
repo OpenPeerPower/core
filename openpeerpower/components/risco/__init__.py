@@ -105,7 +105,7 @@ class RiscoDataUpdateCoordinator(DataUpdateCoordinator):
         self.risco = risco
         interval = timedelta(seconds=scan_interval)
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=interval,
@@ -130,7 +130,7 @@ class RiscoEventsDataUpdateCoordinator(DataUpdateCoordinator):
         )
         interval = timedelta(seconds=scan_interval)
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=f"{DOMAIN}_events",
             update_interval=interval,

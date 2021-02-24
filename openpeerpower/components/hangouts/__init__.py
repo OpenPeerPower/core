@@ -100,7 +100,7 @@ async def async_setup_entry.opp, config):
     """Set up a config entry."""
     try:
         bot = HangoutsBot(
-            opp.
+            opp,
             config.data.get(CONF_REFRESH_TOKEN),
             opp.data[DOMAIN][CONF_INTENTS],
             opp.data[DOMAIN][CONF_DEFAULT_CONVERSATIONS],
@@ -120,7 +120,7 @@ async def async_setup_entry.opp, config):
     )
 
     dispatcher.async_dispatcher_connect(
-        opp.
+        opp,
         EVENT_HANGOUTS_CONVERSATIONS_RESOLVED,
         bot.async_update_conversation_commands,
     )

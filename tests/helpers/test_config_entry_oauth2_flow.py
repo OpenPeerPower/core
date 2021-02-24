@@ -146,7 +146,7 @@ async def test_abort_if_no_url_available.opp, flow_handler, local_impl):
 
 
 async def test_abort_if_oauth_error(
-    opp.
+    opp,
     flow_handler,
     local_impl,
     aiohttp_client,
@@ -172,7 +172,7 @@ async def test_abort_if_oauth_error(
     )
 
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -266,7 +266,7 @@ async def test_abort_discovered_existing_entries.opp, flow_handler, local_impl):
 
 
 async def test_full_flow(
-    opp.
+    opp,
     flow_handler,
     local_impl,
     aiohttp_client,
@@ -292,7 +292,7 @@ async def test_full_flow(
     )
 
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

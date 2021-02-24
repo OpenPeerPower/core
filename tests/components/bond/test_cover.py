@@ -32,7 +32,7 @@ def shades(name: str):
 async def test_entity_registry.opp: core.OpenPeerPower):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(
-        opp.
+        opp,
         COVER_DOMAIN,
         shades("name-1"),
         bond_version={"bondid": "test-hub-id"},

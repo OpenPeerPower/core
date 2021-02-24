@@ -205,7 +205,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
                 if update:
                     async_dispatcher_send(
-                        opp.
+                        opp,
                         f"netatmo-config-{area.area_name}",
                         area,
                     )

@@ -79,7 +79,7 @@ async def setup_component.opp, config_file, opp_storage):
     """Load the SmartThing component."""
     opp.storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://test.local"},
     )
     await async_setup_component.opp, "smartthings", {})

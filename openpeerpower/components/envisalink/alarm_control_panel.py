@@ -61,7 +61,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     for part_num in configured_partitions:
         device_config_data = PARTITION_SCHEMA(configured_partitions[part_num])
         device = EnvisalinkAlarm(
-            opp.
+            opp,
             part_num,
             device_config_data[CONF_PARTITIONNAME],
             code,

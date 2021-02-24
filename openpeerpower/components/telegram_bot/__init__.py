@@ -240,7 +240,7 @@ SERVICE_MAP = {
 
 
 def load_data(
-    opp.
+    opp,
     url=None,
     filepath=None,
     username=None,

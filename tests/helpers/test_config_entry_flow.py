@@ -260,7 +260,7 @@ async def test_webhook_config_flow_registers_webhook.opp, webhook_flow_conf):
     flow.opp = opp
 
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "https://example.com"},
     )
     result = await flow.async_step_user(user_input={})
@@ -277,7 +277,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
     async_unload_entry = Mock(return_value=True)
 
     mock_integration(
-        opp.
+        opp,
         MockModule(
             "test_single",
             async_setup_entry=async_setup_entry,

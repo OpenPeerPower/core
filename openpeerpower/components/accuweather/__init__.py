@@ -32,7 +32,7 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry) -> bool:
+async def async_setup_entry(opp, config_entry) -> bool:
     """Set up AccuWeather as config entry."""
     api_key = config_entry.data[CONF_API_KEY]
     location_key = config_entry.unique_id
@@ -40,7 +40,7 @@ async def async_setup_entry.opp, config_entry) -> bool:
 
     _LOGGER.debug("Using location_key: %s, get forecast: %s", location_key, forecast)
 
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
 
     coordinator = AccuWeatherDataUpdateCoordinator(
         opp. websession, api_key, location_key, forecast
@@ -65,7 +65,7 @@ async def async_setup_entry.opp, config_entry) -> bool:
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -84,7 +84,7 @@ async def async_unload_entry.opp, config_entry):
     return unload_ok
 
 
-async def update_listener.opp, config_entry):
+async def update_listener(opp, config_entry):
     """Update listener."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 

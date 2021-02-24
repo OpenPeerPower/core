@@ -97,7 +97,7 @@ async def test_home_accessory.opp, hk_driver):
     assert serv.get_characteristic(CHAR_SERIAL_NUMBER).value == "light.accessory"
 
     acc3 = HomeAccessory(
-        opp.
+        opp,
         hk_driver,
         "Home Accessory",
         entity_id2,
@@ -241,7 +241,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-        opp.
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -288,7 +288,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-        opp.
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -328,7 +328,7 @@ async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-        opp.
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -390,7 +390,7 @@ async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-        opp.
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -434,7 +434,7 @@ async def test_missing_linked_battery_charging_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-        opp.
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,
@@ -470,7 +470,7 @@ async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
     await opp.async_block_till_done()
 
     acc = HomeAccessory(
-        opp.
+        opp,
         hk_driver,
         "Battery Service",
         entity_id,

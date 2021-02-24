@@ -473,19 +473,19 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
     await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_OFF)
     await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TOGGLE)
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_VOLUME_MUTE,
         {ATTR_MEDIA_VOLUME_MUTED: True},
     )
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_VOLUME_MUTE,
         {ATTR_MEDIA_VOLUME_MUTED: False},
     )
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_VOLUME_SET,
         {ATTR_MEDIA_VOLUME_LEVEL: 0.5},
@@ -496,7 +496,7 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
     await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PREVIOUS_TRACK)
     await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_NEXT_TRACK)
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_MEDIA_SEEK,
         {ATTR_MEDIA_SEEK_POSITION: 35},
@@ -516,7 +516,7 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
     state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_VOLUME_MUTE,
         {ATTR_MEDIA_VOLUME_MUTED: True},
@@ -554,7 +554,7 @@ async def test_async_play_media_from_paused.opp, mock_api_object):
     """Test async play media from paused."""
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_PLAY_MEDIA,
         {
@@ -578,7 +578,7 @@ async def test_async_play_media_from_stopped(
     await opp.async_block_till_done()
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_PLAY_MEDIA,
         {
@@ -595,7 +595,7 @@ async def test_async_play_media_unsupported.opp, mock_api_object):
     """Test async play media on unsupported media type."""
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_PLAY_MEDIA,
         {
@@ -613,7 +613,7 @@ async def test_async_play_media_tts_timeout.opp, mock_api_object):
     with patch("openpeerpower.components.forked_daapd.media_player.TTS_TIMEOUT", 0):
         initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
         await _service_call(
-            opp.
+            opp,
             TEST_MASTER_ENTITY_NAME,
             SERVICE_PLAY_MEDIA,
             {
@@ -629,7 +629,7 @@ async def test_async_play_media_tts_timeout.opp, mock_api_object):
 async def test_use_pipe_control_with_no_api.opp, mock_api_object):
     """Test using pipe control with no api set."""
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_SELECT_SOURCE,
         {ATTR_INPUT_SOURCE: "librespot-java (pipe)"},
@@ -641,7 +641,7 @@ async def test_use_pipe_control_with_no_api.opp, mock_api_object):
 async def test_clear_source.opp, mock_api_object):
     """Test changing source to clear."""
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_SELECT_SOURCE,
         {ATTR_INPUT_SOURCE: SOURCE_NAME_CLEAR},
@@ -673,7 +673,7 @@ async def pipe_control_api_object_fixture(
 
     await updater_update(["database"])  # load in sources
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_SELECT_SOURCE,
         {ATTR_INPUT_SOURCE: "librespot-java (pipe)"},
@@ -699,7 +699,7 @@ async def test_librespot_java_stuff(
     pipe_control_api_object.player_resume.assert_called_once()
     # switch away
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_SELECT_SOURCE,
         {ATTR_INPUT_SOURCE: SOURCE_NAME_DEFAULT},
@@ -722,7 +722,7 @@ async def test_librespot_java_play_media.opp, pipe_control_api_object):
     """Test play media with librespot-java pipe."""
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
-        opp.
+        opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_PLAY_MEDIA,
         {
@@ -744,7 +744,7 @@ async def test_librespot_java_play_media_pause_timeout.opp, pipe_control_api_obj
     ):
         initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
         await _service_call(
-            opp.
+            opp,
             TEST_MASTER_ENTITY_NAME,
             SERVICE_PLAY_MEDIA,
             {

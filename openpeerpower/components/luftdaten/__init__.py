@@ -164,7 +164,7 @@ async def async_setup_entry.opp, config_entry):
     opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER][
         config_entry.entry_id
     ] = async_track_time_interval(
-        opp.
+        opp,
         refresh_sensors,
         opp.data[DOMAIN].get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
     )

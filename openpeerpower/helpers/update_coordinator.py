@@ -58,7 +58,7 @@ class DataUpdateCoordinator(Generic[T]):
 
         if request_refresh_debouncer is None:
             request_refresh_debouncer = Debouncer(
-                opp.
+                opp,
                 logger,
                 cooldown=REQUEST_REFRESH_DEFAULT_COOLDOWN,
                 immediate=REQUEST_REFRESH_DEFAULT_IMMEDIATE,

@@ -77,7 +77,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         return True
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="JuiceNet",
         update_method=async_update_data,

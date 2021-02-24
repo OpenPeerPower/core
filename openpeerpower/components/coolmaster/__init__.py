@@ -61,7 +61,7 @@ class CoolmasterDataUpdateCoordinator(DataUpdateCoordinator):
         self._coolmaster = coolmaster
 
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

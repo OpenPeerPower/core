@@ -171,7 +171,7 @@ async def test_media_player_is_setup_correctly_with_entry.opp):
     # Assert status updated callback is added to protocol.
     assert len.opp.data[PS4_DATA].protocol.callbacks) == 1
 
-    # Test that entity is added to.opp.
+    # Test that entity is added to.opp,
     assert.opp.data[PS4_DATA].protocol is not None
     assert mock_entity_id == f"media_player.{MOCK_NAME}"
     assert mock_state == STATE_UNKNOWN

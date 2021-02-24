@@ -57,7 +57,7 @@ async def test_notify_leaving_zone.opp):
         BUILTIN_BLUEPRINT_FOLDER / "notify_leaving_zone.yaml",
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             "automation",
             {
                 "automation": {
@@ -134,7 +134,7 @@ async def test_motion_light.opp):
         BUILTIN_BLUEPRINT_FOLDER / "motion_light.yaml",
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             "automation",
             {
                 "automation": {

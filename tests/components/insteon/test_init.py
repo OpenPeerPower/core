@@ -65,7 +65,7 @@ async def test_setup_entry.opp: OpenPeerPowerType):
         insteon, "devices", new=MockDevices()
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             insteon.DOMAIN,
             {},
         )
@@ -90,7 +90,7 @@ async def test_import_plm.opp: OpenPeerPowerType):
         PATCH_CONNECTION, new=mock_successful_connection
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             insteon.DOMAIN,
             config,
         )
@@ -115,7 +115,7 @@ async def test_import_hub1.opp: OpenPeerPowerType):
         PATCH_CONNECTION, new=mock_successful_connection
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             insteon.DOMAIN,
             config,
         )
@@ -142,7 +142,7 @@ async def test_import_hub2.opp: OpenPeerPowerType):
         PATCH_CONNECTION, new=mock_successful_connection
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             insteon.DOMAIN,
             config,
         )
@@ -169,7 +169,7 @@ async def test_import_options.opp: OpenPeerPowerType):
         PATCH_CONNECTION, new=mock_successful_connection
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             insteon.DOMAIN,
             config,
         )
@@ -200,7 +200,7 @@ async def test_import_failed_connection.opp: OpenPeerPowerType):
         insteon, "devices", new=MockDevices(connected=False)
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             insteon.DOMAIN,
             config,
         )
@@ -217,7 +217,7 @@ async def test_setup_entry_failed_connection.opp: OpenPeerPowerType, caplog):
         insteon, "async_connect", new=mock_failed_connection
     ), patch.object(insteon, "devices", new=MockDevices(connected=False)):
         assert await async_setup_component(
-            opp.
+            opp,
             insteon.DOMAIN,
             {},
         )

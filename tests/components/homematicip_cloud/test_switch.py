@@ -223,7 +223,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     assert op_state.state == STATE_OFF
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp.
+        opp,
         mock_hap,
         "switch.schaltaktor_verteiler_channel3",
         "Schaltaktor Verteiler Channel3",

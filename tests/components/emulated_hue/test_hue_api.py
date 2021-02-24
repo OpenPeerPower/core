@@ -110,7 +110,7 @@ def.opp_hue(loop, opp):
     with patch("openpeerpower.components.emulated_hue.create_upnp_datagram_endpoint"):
         loop.run_until_complete(
             setup.async_setup_component(
-                opp.
+                opp,
                 emulated_hue.DOMAIN,
                 {
                     emulated_hue.DOMAIN: {
@@ -129,7 +129,7 @@ def.opp_hue(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp.
+            opp,
             script.DOMAIN,
             {
                 "script": {
@@ -180,7 +180,7 @@ def.opp_hue(loop, opp):
     # setup a dummy scene
     loop.run_until_complete(
         setup.async_setup_component(
-            opp.
+            opp,
             "scene",
             {
                 "scene": [
@@ -310,7 +310,7 @@ async def test_lights_all_dimmable.opp, aiohttp_client):
     }
     with patch("openpeerpower.components.emulated_hue.create_upnp_datagram_endpoint"):
         await setup.async_setup_component(
-            opp.
+            opp,
             emulated_hue.DOMAIN,
             {emulated_hue.DOMAIN: hue_config},
         )

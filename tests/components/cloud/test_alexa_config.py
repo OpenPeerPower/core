@@ -70,7 +70,7 @@ async def test_alexa_config_invalidate_token.opp, cloud_prefs, aioclient_mock):
         },
     )
     conf = alexa_config.AlexaConfig(
-        opp.
+        opp,
         ALEXA_SCHEMA({}),
         "mock-user-id",
         cloud_prefs,

@@ -77,7 +77,7 @@ class IgnSismologiaFeedEntityManager:
 
     def __init__(
         self,
-        opp.
+        opp,
         add_entities,
         scan_interval,
         coordinates,

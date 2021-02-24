@@ -104,13 +104,13 @@ async def test_track_point_in_time_drift_rearm.opp):
     )
 
     async_track_point_in_utc_time(
-        opp.
+        opp,
         callback(lambda x: specific_runs.append(x)),
         time_that_will_not_match_right_away,
     )
 
     async_fire_time_changed(
-        opp.
+        opp,
         datetime(now.year + 1, 5, 24, 21, 59, 00, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -118,7 +118,7 @@ async def test_track_point_in_time_drift_rearm.opp):
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp.
+        opp,
         datetime(now.year + 1, 5, 24, 21, 59, 55, tzinfo=dt_util.UTC),
     )
     await opp.async_block_till_done()
@@ -972,7 +972,7 @@ async def test_track_template_result.opp):
         )
 
     async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_condition_var, {"test": 5})],
         wildercard_run_callback,
     )
@@ -1045,7 +1045,7 @@ async def test_track_template_result_complex.opp):
     opp.states.async_set("lock.one", "locked")
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_complex, None, timedelta(seconds=0))],
         specific_run_callback,
     )
@@ -1226,7 +1226,7 @@ async def test_track_template_result_with_group.opp):
     opp.states.async_set("sensor.power_4", 800.8)
 
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {"group": {"power_sensors": "sensor.power_1,sensor.power_2,sensor.power_3"}},
     )
@@ -1363,7 +1363,7 @@ async def test_track_template_result_iterator.opp):
         iterator_runs.append(updates.pop().result)
 
     async_track_template_result(
-        opp.
+        opp,
         [
             TrackTemplate(
                 Template(
@@ -1374,7 +1374,7 @@ async def test_track_template_result_iterator.opp):
                 {% endif %}
             {% endfor %}
             """,
-                    opp.
+                    opp,
                 ),
                 None,
                 timedelta(seconds=0),
@@ -1396,13 +1396,13 @@ async def test_track_template_result_iterator.opp):
         filter_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [
             TrackTemplate(
                 Template(
                     """{{ states.sensor|selectattr("state","equalto","on")
                 |join(",", attribute="entity_id") }}""",
-                    opp.
+                    opp,
                 ),
                 None,
                 timedelta(seconds=0),
@@ -1472,7 +1472,7 @@ async def test_track_template_result_errors.opp, caplog):
         )
 
     async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_not_exist, None)],
         not_exist_runs_error_listener,
     )
@@ -1544,7 +1544,7 @@ async def test_track_template_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=0.1))],
         refresh_listener,
     )
@@ -1597,7 +1597,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=0.1))],
         refresh_listener,
     )
@@ -1692,7 +1692,7 @@ async def test_track_template_rate_limit_five.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=5))],
         refresh_listener,
     )
@@ -1726,7 +1726,7 @@ async def test_track_template_has_default_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_refresh, None)],
         refresh_listener,
     )
@@ -1753,7 +1753,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
     opp.states.async_set("sensor.zero", "unknown")
     template_refresh = Template(
         "{{ states | selectattr('state', 'in', ['unavailable', 'unknown', 'none']) | list | count }}",
-        opp.
+        opp,
     )
 
     refresh_runs = []
@@ -1763,7 +1763,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_refresh, None)],
         refresh_listener,
     )
@@ -1802,7 +1802,7 @@ async def test_specifically_referenced_entity_is_not_rate_limited.opp):
         refresh_runs.append(updates.pop().result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_refresh, None, timedelta(seconds=5))],
         refresh_listener,
     )
@@ -1844,7 +1844,7 @@ async def test_track_two_templates_with_different_rate_limits.opp):
             refresh_runs[update.template].append(update.result)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [
             TrackTemplate(template_one, None, timedelta(seconds=0.1)),
             TrackTemplate(template_five, None, timedelta(seconds=5)),
@@ -1952,7 +1952,7 @@ async def test_track_template_result_refresh_cancel.opp):
     refresh_runs = []
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(template_refresh, {"value": "duck"})],
         refresh_listener,
     )
@@ -1984,7 +1984,7 @@ async def test_async_track_template_result_multiple_templates.opp):
         refresh_runs.append(updates)
 
     async_track_template_result(
-        opp.
+        opp,
         [
             TrackTemplate(template_1, None),
             TrackTemplate(template_2, None),
@@ -2041,7 +2041,7 @@ async def test_async_track_template_result_multiple_templates_mixing_domain.opp)
         refresh_runs.append(updates)
 
     async_track_template_result(
-        opp.
+        opp,
         [
             TrackTemplate(template_1, None),
             TrackTemplate(template_2, None),
@@ -2099,7 +2099,7 @@ async def test_async_track_template_result_raise_on_template_error(opp):
 
     with pytest.raises(TemplateError):
         async_track_template_result(
-            opp.
+            opp,
             [
                 TrackTemplate(
                     Template(
@@ -2196,7 +2196,7 @@ async def test_track_template_with_time_that_leaves_scope.opp):
                 {{ states.binary_sensor.washing_machine.last_updated }}
             {% endif %}
         """,
-            opp.
+            opp,
         )
 
         def specific_run_callback(event, updates):
@@ -2275,7 +2275,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners.o
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         info = async_track_template_result(
-            opp.
+            opp,
             [
                 TrackTemplate(template_1, None),
                 TrackTemplate(template_2, None),
@@ -2331,7 +2331,7 @@ async def test_track_same_state_simple_no_trigger.opp):
         callback_runs.append(1)
 
     async_track_same_state(
-        opp.
+        opp,
         period,
         callback_run_callback,
         callback(lambda _, _2, to_s: to_s.state == "on"),
@@ -2371,7 +2371,7 @@ async def test_track_same_state_simple_trigger_check_funct.opp):
         return True
 
     async_track_same_state(
-        opp.
+        opp,
         period,
         callback_run_callback,
         entity_ids="light.Bowl",
@@ -2718,7 +2718,7 @@ async def test_periodic_task_hour.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-            opp.
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2796,7 +2796,7 @@ async def test_periodic_task_clock_rollback.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-            opp.
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2816,7 +2816,7 @@ async def test_periodic_task_clock_rollback.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp.
+        opp,
         datetime(now.year + 1, 5, 24, 22, 0, 0, 999999, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -2824,7 +2824,7 @@ async def test_periodic_task_clock_rollback.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp.
+        opp,
         datetime(now.year + 1, 5, 24, 0, 0, 0, 999999, tzinfo=dt_util.UTC),
         fire_all=True,
     )
@@ -2860,7 +2860,7 @@ async def test_periodic_task_duplicate_time.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_utc_time_change(
-            opp.
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour="/2",
             minute=0,
@@ -2903,7 +2903,7 @@ async def test_periodic_task_entering_dst.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-            opp.
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour=2,
             minute=30,
@@ -2953,7 +2953,7 @@ async def test_periodic_task_leaving_dst.opp):
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
         unsub = async_track_time_change(
-            opp.
+            opp,
             callback(lambda x: specific_runs.append(x)),
             hour=2,
             minute=30,
@@ -2961,7 +2961,7 @@ async def test_periodic_task_leaving_dst.opp):
         )
 
     async_fire_time_changed(
-        opp.
+        opp,
         timezone.localize(
             datetime(now.year + 1, 10, 28, 2, 5, 0, 999999), is_dst=False
         ),
@@ -2970,7 +2970,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp.
+        opp,
         timezone.localize(
             datetime(now.year + 1, 10, 28, 2, 55, 0, 999999), is_dst=False
         ),
@@ -2979,7 +2979,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
-        opp.
+        opp,
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 45, 0, 999999), is_dst=True
         ),
@@ -2988,7 +2988,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-        opp.
+        opp,
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
         ),
@@ -2997,7 +2997,7 @@ async def test_periodic_task_leaving_dst.opp):
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-        opp.
+        opp,
         timezone.localize(
             datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
         ),
@@ -3281,7 +3281,7 @@ async def test_async_track_entity_registry_updated_event.opp):
 
 
 async def test_async_track_entity_registry_updated_event_with_a_callback_that_throws(
-    opp.
+    opp,
 ):
     """Test tracking entity registry updates for an entity_id when one callback throws."""
 

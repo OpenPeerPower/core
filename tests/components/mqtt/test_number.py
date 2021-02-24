@@ -49,7 +49,7 @@ async def test_run_number_setup_opp, mqtt_mock):
     """Test that it fetches the given payload."""
     topic = "test/number"
     await async_setup_component(
-        opp.
+        opp,
         "number",
         {
             "number": {
@@ -88,7 +88,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
         return_value=fake_state,
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             number.DOMAIN,
             {
                 "number": {
@@ -150,7 +150,7 @@ async def test_run_number_service.opp, mqtt_mock):
     state_topic = "test/number"
 
     assert await async_setup_component(
-        opp.
+        opp,
         number.DOMAIN,
         {
             "number": {

@@ -214,7 +214,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
         await yaml_collection.async_load(conf[DOMAIN])
 
     service.async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_RELOAD,
         reload_service_handler,

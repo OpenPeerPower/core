@@ -27,7 +27,7 @@ def generic_device(name: str):
 async def test_entity_registry.opp: core.OpenPeerPower):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(
-        opp.
+        opp,
         SWITCH_DOMAIN,
         generic_device("name-1"),
         bond_version={"bondid": "test-hub-id"},

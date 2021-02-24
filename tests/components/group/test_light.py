@@ -38,7 +38,7 @@ async def test_default_state.opp):
     """Test light group default state."""
     opp.states.async_set("light.kitchen", "on")
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -68,7 +68,7 @@ async def test_default_state.opp):
 async def test_state_reporting.opp):
     """Test the state reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -105,7 +105,7 @@ async def test_state_reporting.opp):
 async def test_brightness.opp):
     """Test brightness reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -148,7 +148,7 @@ async def test_brightness.opp):
 async def test_color.opp):
     """Test RGB reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -188,7 +188,7 @@ async def test_color.opp):
 async def test_white_value.opp):
     """Test white value reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -226,7 +226,7 @@ async def test_white_value.opp):
 async def test_color_temp.opp):
     """Test color temp reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -264,7 +264,7 @@ async def test_color_temp.opp):
 async def test_emulated_color_temp_group.opp):
     """Test emulated color temperature in a group."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -318,7 +318,7 @@ async def test_emulated_color_temp_group.opp):
 async def test_min_max_mireds.opp):
     """Test min/max mireds reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -365,7 +365,7 @@ async def test_min_max_mireds.opp):
 async def test_effect_list.opp):
     """Test effect_list reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -420,7 +420,7 @@ async def test_effect_list.opp):
 async def test_effect.opp):
     """Test effect reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -468,7 +468,7 @@ async def test_effect.opp):
 async def test_supported_features.opp):
     """Test supported features reporting."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: {
@@ -505,7 +505,7 @@ async def test_supported_features.opp):
 async def test_service_calls.opp):
     """Test service calls."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -639,7 +639,7 @@ async def test_invalid_service_calls.opp):
 async def test_reload.opp):
     """Test the ability to reload lights."""
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -686,7 +686,7 @@ async def test_reload_with_platform_not_setup_opp):
     """Test the ability to reload lights."""
     opp.states.async_set("light.bowl", STATE_ON)
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [
@@ -695,7 +695,7 @@ async def test_reload_with_platform_not_setup_opp):
         },
     )
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -727,7 +727,7 @@ async def test_reload_with_platform_not_setup_opp):
 async def test_reload_with_base_integration_platform_not_setup_opp):
     """Test the ability to reload lights."""
     assert await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -767,7 +767,7 @@ async def test_nested_group.opp):
     """Test nested light group."""
     opp.states.async_set("light.kitchen", "on")
     await async_setup_component(
-        opp.
+        opp,
         LIGHT_DOMAIN,
         {
             LIGHT_DOMAIN: [

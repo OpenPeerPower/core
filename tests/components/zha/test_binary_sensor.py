@@ -64,7 +64,7 @@ async def async_test_iaszone_on_off.opp, cluster, entity_id):
     ],
 )
 async def test_binary_sensor(
-    opp.
+    opp,
     zigpy_device_mock,
     zha_device_joined_restored,
     device,

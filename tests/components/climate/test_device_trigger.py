@@ -96,7 +96,7 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -192,7 +192,7 @@ async def test_if_fires_on_state_change.opp, calls):
 async def test_get_trigger_capabilities_hvac_mode.opp):
     """Test we get the expected capabilities from a climate trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": "climate",
@@ -214,7 +214,7 @@ async def test_get_trigger_capabilities_hvac_mode.opp):
 async def test_get_trigger_capabilities_temp_humid.opp, type):
     """Test we get the expected capabilities from a climate trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": "climate",

@@ -61,7 +61,7 @@ async def test_reading_measures_not_list.opp, mock_get_station):
     E.g. https://environment.data.gov.uk/flood-monitoring/id/stations/751110
     """
     _ = await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -87,7 +87,7 @@ async def test_reading_no_unit.opp, mock_get_station):
     E.g. https://environment.data.gov.uk/flood-monitoring/id/stations/L0410
     """
     _ = await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -115,7 +115,7 @@ async def test_ignore_invalid_latest_reading.opp, mock_get_station):
     E.g. https://environment.data.gov.uk/flood-monitoring/id/stations/L0410
     """
     _ = await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -151,7 +151,7 @@ async def test_ignore_invalid_latest_reading.opp, mock_get_station):
 async def test_reading_unavailable.opp, mock_get_station, exception):
     """Test that a sensor is marked as unavailable if there is a connection error."""
     _, poll = await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -181,7 +181,7 @@ async def test_reading_unavailable.opp, mock_get_station, exception):
 async def test_recover_from_failure.opp, mock_get_station, exception):
     """Test that a sensor recovers from failures."""
     _, poll = await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -230,7 +230,7 @@ async def test_recover_from_failure.opp, mock_get_station, exception):
 async def test_reading_is_sampled.opp, mock_get_station):
     """Test that a sensor is added and polled."""
     await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -257,7 +257,7 @@ async def test_reading_is_sampled.opp, mock_get_station):
 async def test_multiple_readings_are_sampled.opp, mock_get_station):
     """Test that multiple sensors are added and polled."""
     await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -298,7 +298,7 @@ async def test_multiple_readings_are_sampled.opp, mock_get_station):
 async def test_ignore_no_latest_reading.opp, mock_get_station):
     """Test that a measure is ignored if it has no latest reading."""
     await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -337,7 +337,7 @@ async def test_ignore_no_latest_reading.opp, mock_get_station):
 async def test_mark_existing_as_unavailable_if_no_latest.opp, mock_get_station):
     """Test that a measure is marked as unavailable if it has no latest reading."""
     _, poll = await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",
@@ -403,7 +403,7 @@ async def test_mark_existing_as_unavailable_if_no_latest.opp, mock_get_station):
 async def test_unload_entry.opp, mock_get_station):
     """Test being able to unload an entry."""
     entry, _ = await async_setup_test_fixture(
-        opp.
+        opp,
         mock_get_station,
         {
             "label": "My station",

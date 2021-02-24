@@ -171,7 +171,7 @@ async def test_temperature(
     ), patch(f"{BASE_PATH}.DYSON_PLATFORMS", [PLATFORM_DOMAIN]):
         # DYSON_PLATFORMS is patched so that only the platform being tested is set up
         await async_setup_component(
-            opp.
+            opp,
             DOMAIN,
             CONFIG,
         )

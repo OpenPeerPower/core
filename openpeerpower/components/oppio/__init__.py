@@ -220,7 +220,7 @@ async def async_get_addon_discovery_info(
 
 @callback
 @bind_opp
-def get_info.opp.
+def get_info.opp,
     """Return generic information from Supervisor.
 
     Async friendly.
@@ -230,7 +230,7 @@ def get_info.opp.
 
 @callback
 @bind_opp
-def get_host_info.opp.
+def get_host_info.opp,
     """Return generic host information.
 
     Async friendly.
@@ -240,7 +240,7 @@ def get_host_info.opp.
 
 @callback
 @bind_opp
-def get_supervisor_info.opp.
+def get_supervisor_info.opp,
     """Return Supervisor information.
 
     Async friendly.
@@ -250,7 +250,7 @@ def get_supervisor_info.opp.
 
 @callback
 @bind_opp
-def get_os_info.opp.
+def get_os_info.opp,
     """Return OS information.
 
     Async friendly.
@@ -260,7 +260,7 @@ def get_os_info.opp.
 
 @callback
 @bind_opp
-def get_core_info.opp.
+def get_core_info.opp,
     """Return Open Peer Power Core information from Supervisor.
 
     Async friendly.
@@ -270,7 +270,7 @@ def get_core_info.opp.
 
 @callback
 @bind_opp
-def is_opp.opp.
+def is_opp.opp,
     """Return true if Opp.io is loaded.
 
     Async friendly.
@@ -419,7 +419,7 @@ async def async_setup_opp.config):
             return
 
         try:
-            errors = await conf_util.async_check_op_config_file.opp)
+            errors = await conf_util.async_check_op_config_file(opp)
         except OpenPeerPowerError:
             return
 

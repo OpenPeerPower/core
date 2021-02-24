@@ -18,7 +18,7 @@ async def test_import.opp):
     """Test that we can import a config entry."""
     with patch("pyalmond.WebAlmondAPI.async_list_apps"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             DOMAIN,
             {DOMAIN: {"type": "local", "host": "http://localhost:3000"}},
         )
@@ -36,7 +36,7 @@ async def test_import_cannot_connect.opp):
         "pyalmond.WebAlmondAPI.async_list_apps", side_effect=asyncio.TimeoutError
     ):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             DOMAIN,
             {DOMAIN: {"type": "local", "host": "http://localhost:3000"}},
         )
@@ -96,7 +96,7 @@ async def test_full_flow(
 ):
     """Check full flow."""
     assert await setup.async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -112,7 +112,7 @@ async def test_full_flow(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

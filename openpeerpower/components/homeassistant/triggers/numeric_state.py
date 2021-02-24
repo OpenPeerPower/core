@@ -180,7 +180,7 @@ async def async_attach_trigger(
                     return
 
                 unsub_track_same[entity_id] = async_track_same_state(
-                    opp.
+                    opp,
                     period[entity_id],
                     call_action,
                     entity_ids=entity_id,

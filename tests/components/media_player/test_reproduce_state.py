@@ -176,7 +176,7 @@ async def test_play_media.opp):
     value_3 = "dummy_3"
 
     await async_reproduce_states(
-        opp.
+        opp,
         [
             State(
                 ENTITY_1,
@@ -187,7 +187,7 @@ async def test_play_media.opp):
     )
 
     await async_reproduce_states(
-        opp.
+        opp,
         [
             State(
                 ENTITY_1,

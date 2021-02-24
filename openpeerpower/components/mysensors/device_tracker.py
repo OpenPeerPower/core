@@ -13,7 +13,7 @@ async def async_setup_scanner(
 ):
     """Set up the MySensors device scanner."""
     new_devices = mysensors.setup_mysensors_platform(
-        opp.
+        opp,
         DOMAIN,
         discovery_info,
         MySensorsDeviceScanner,
@@ -26,19 +26,19 @@ async def async_setup_scanner(
         gateway_id: GatewayId = discovery_info[ATTR_GATEWAY_ID]
         dev_id: DevId = (gateway_id, device.node_id, device.child_id, device.value_type)
         await on_unload(
-            opp.
+            opp,
             gateway_id,
             async_dispatcher_connect(
-                opp.
+                opp,
                 mysensors.const.CHILD_CALLBACK.format(*dev_id),
                 device.async_update_callback,
             ),
         )
         await on_unload(
-            opp.
+            opp,
             gateway_id,
             async_dispatcher_connect(
-                opp.
+                opp,
                 mysensors.const.NODE_CALLBACK.format(gateway_id, device.node_id),
                 device.async_update_callback,
             ),

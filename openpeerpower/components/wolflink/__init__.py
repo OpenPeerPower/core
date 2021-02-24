@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             raise UpdateFailed("Invalid authentication during update.") from exception
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="wolflink",
         update_method=async_update_data,

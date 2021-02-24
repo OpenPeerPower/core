@@ -720,7 +720,7 @@ async def test_add_user_device_tracker.opp, storage_setup, opp_read_only_user):
 async def test_reload.opp, opp_admin_user):
     """Test reloading the YAML config."""
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: [

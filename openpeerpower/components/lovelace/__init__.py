@@ -96,7 +96,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         resource_collection = await create_yaml_resource_col.opp, yaml_resources)
 
         async_register_admin_service(
-            opp.
+            opp,
             DOMAIN,
             SERVICE_RELOAD_RESOURCES,
             reload_resources_service_handler,

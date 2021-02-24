@@ -322,7 +322,7 @@ async def test_restore_state.opp, zha_device_restored, zigpy_shade_device):
     """Ensure states are restored on startup."""
 
     mock_restore_cache(
-        opp.
+        opp,
         (
             State(
                 "cover.fakemanufacturer_fakemodel_e769900a_level_on_off_shade",

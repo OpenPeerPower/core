@@ -57,9 +57,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     opp.data[DOMAIN][CONF_CLIENT_ID] = config[DOMAIN][CONF_CLIENT_ID]
 
     OAuth2FlowHandler.async_register_implementation(
-        opp.
+        opp,
         LyricLocalOAuth2Implementation(
-            opp.
+            opp,
             DOMAIN,
             config[DOMAIN][CONF_CLIENT_ID],
             config[DOMAIN][CONF_CLIENT_SECRET],
@@ -97,7 +97,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             raise UpdateFailed(exception) from exception
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         # Name of the data. For logging purposes.
         name="lyric_coordinator",

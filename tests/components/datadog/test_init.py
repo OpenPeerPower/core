@@ -49,7 +49,7 @@ async def test_datadog_setup_defaults.opp):
         "openpeerpower.components.datadog.statsd"
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             datadog.DOMAIN,
             {
                 datadog.DOMAIN: {
@@ -73,7 +73,7 @@ async def test_logbook_entry.opp):
         "openpeerpower.components.datadog.statsd"
     ) as mock_statsd:
         assert await async_setup_component(
-            opp.
+            opp,
             datadog.DOMAIN,
             {datadog.DOMAIN: {"host": "host", "rate": datadog.DEFAULT_RATE}},
         )
@@ -107,7 +107,7 @@ async def test_state_changed.opp):
         "openpeerpower.components.datadog.statsd"
     ) as mock_statsd:
         assert await async_setup_component(
-            opp.
+            opp,
             datadog.DOMAIN,
             {
                 datadog.DOMAIN: {

@@ -682,7 +682,7 @@ async def test_next_previous_track(
     mocked_previous_track,
     mocked_status,
     mocked_volume,
-    opp.
+    opp,
     one_device,
 ):
     """Test next/previous track."""
@@ -817,7 +817,7 @@ async def test_select_source_invalid_source(
     mocked_select_source_bluetooth,
     mocked_status,
     mocked_volume,
-    opp.
+    opp,
     one_device,
 ):
     """Test select unsupported source."""
@@ -976,7 +976,7 @@ async def test_add_zone_slave(
     mocked_add_zone_slave,
     mocked_status,
     mocked_volume,
-    opp.
+    opp,
     two_zones,
 ):
     """Test removing a slave from a zone."""
@@ -1023,7 +1023,7 @@ async def test_zone_attributes(
     mocked_create_zone,
     mocked_status,
     mocked_volume,
-    opp.
+    opp,
     two_zones,
 ):
     """Test play everywhere."""

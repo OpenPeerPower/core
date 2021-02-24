@@ -122,7 +122,7 @@ async def _async_create_entities.opp, config):
 
         vacuums.append(
             TemplateVacuum(
-                opp.
+                opp,
                 device,
                 friendly_name,
                 state_template,
@@ -156,7 +156,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         device_id,
         friendly_name,
         state_template,

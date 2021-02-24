@@ -94,7 +94,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     bridge = opp.data[HUE_DOMAIN][config_entry.entry_id]
 
     light_coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="light",
         update_method=partial(async_safe_fetch, bridge, bridge.api.lights.update),
@@ -135,7 +135,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         return
 
     group_coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="group",
         update_method=partial(async_safe_fetch, bridge, bridge.api.groups.update),

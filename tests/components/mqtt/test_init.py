@@ -1520,7 +1520,7 @@ async def test_publish_json_from_template.opp, mqtt_mock):
     test_str_tpl = "{'valid': '{{ \"python\" }}', 'invalid': 'json'}"
 
     await async_setup_component(
-        opp.
+        opp,
         "script",
         {
             "script": {

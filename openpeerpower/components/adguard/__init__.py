@@ -49,9 +49,9 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up AdGuard Home from a config entry."""
-    session = async_get_clientsession.opp, entry.data[CONF_VERIFY_SSL])
+    session = async_get_clientsession(opp, entry.data[CONF_VERIFY_SSL])
     adguard = AdGuardHome(
         entry.data[CONF_HOST],
         port=entry.data[CONF_PORT],
@@ -115,7 +115,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     """Unload AdGuard Home config entry."""
     opp.services.async_remove(DOMAIN, SERVICE_ADD_URL)
     opp.services.async_remove(DOMAIN, SERVICE_REMOVE_URL)

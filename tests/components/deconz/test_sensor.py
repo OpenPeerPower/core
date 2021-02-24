@@ -167,7 +167,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
-        opp.
+        opp,
         aioclient_mock,
         options={CONF_ALLOW_CLIP_SENSOR: True},
         get_state_response=data,

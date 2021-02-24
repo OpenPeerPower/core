@@ -70,7 +70,7 @@ def app2.opp):
 def trusted_networks_auth.opp):
     """Load trusted networks auth provider."""
     prv = trusted_networks.TrustedNetworksAuthProvider(
-        opp.
+        opp,
         opp.auth._store,
         {"type": "trusted_networks", "trusted_networks": TRUSTED_NETWORKS},
     )

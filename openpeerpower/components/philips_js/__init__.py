@@ -111,7 +111,7 @@ class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
         self.turn_on = PluggableAction(_update_listeners)
 
         super().__init__(
-            opp.
+            opp,
             LOGGER,
             name=DOMAIN,
             update_interval=timedelta(seconds=30),

@@ -93,7 +93,7 @@ async def async_setup(opp, config):
 
         entities.append(
             Alert(
-                opp.
+                opp,
                 object_id,
                 name,
                 watched_entity_id,
@@ -154,7 +154,7 @@ class Alert(ToggleEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         entity_id,
         name,
         watched_entity_id,

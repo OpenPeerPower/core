@@ -183,7 +183,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     async def _initialize(host: str, capabilities: Optional[dict] = None) -> None:
         remove_dispatcher = async_dispatcher_connect(
-            opp.
+            opp,
             DEVICE_INITIALIZED.format(host),
             _load_platforms,
         )

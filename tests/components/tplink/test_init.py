@@ -131,7 +131,7 @@ async def test_configuring_devices_from_multiple_sources.opp):
         }
 
         await async_setup_component(
-            opp.
+            opp,
             tplink.DOMAIN,
             {
                 tplink.DOMAIN: {

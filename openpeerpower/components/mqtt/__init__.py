@@ -443,7 +443,7 @@ async def async_setup_entry.opp, entry):
     conf = _merge_config(entry, conf)
 
     opp.data[DATA_MQTT] = MQTT(
-        opp.
+        opp,
         entry,
         conf,
     )

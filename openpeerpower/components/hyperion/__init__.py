@@ -130,12 +130,12 @@ def listen_for_instance_updates(
     opp.data[DOMAIN][config_entry.entry_id][CONF_ON_UNLOAD].extend(
         [
             async_dispatcher_connect(
-                opp.
+                opp,
                 SIGNAL_INSTANCE_ADD.format(config_entry.entry_id),
                 add_func,
             ),
             async_dispatcher_connect(
-                opp.
+                opp,
                 SIGNAL_INSTANCE_REMOVE.format(config_entry.entry_id),
                 remove_func,
             ),
@@ -249,7 +249,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
             existing_instances[instance_num] = hyperion_client
             instance_name = instance.get(hyperion_const.KEY_FRIENDLY_NAME, DEFAULT_NAME)
             async_dispatcher_send(
-                opp.
+                opp,
                 SIGNAL_INSTANCE_ADD.format(config_entry.entry_id),
                 instance_num,
                 instance_name,

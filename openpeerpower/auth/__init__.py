@@ -44,7 +44,7 @@ async def auth_manager_from_config(
     CORE_CONFIG_SCHEMA will make sure do duplicated auth providers or
     mfa modules exist in configs.
     """
-    store = auth_store.AuthStore.opp)
+    store = auth_store.AuthStore(opp)
     if provider_configs:
         providers = await asyncio.gather(
             *(
@@ -71,7 +71,7 @@ async def auth_manager_from_config(
     for module in modules:
         module_hash[module.id] = module
 
-    manager = AuthManager.opp, store, provider_hash, module_hash)
+    manager = AuthManager(opp, store, provider_hash, module_hash)
     return manager
 
 
@@ -80,7 +80,7 @@ class AuthManagerFlowManager(data_entry_flow.FlowManager):
 
     def __init__(self, opp: OpenPeerPower, auth_manager: AuthManager):
         """Init auth manager flows."""
-        super().__init__.opp)
+        super().__init__(opp)
         self.auth_manager = auth_manager
 
     async def async_create_flow(
@@ -154,7 +154,7 @@ class AuthManager:
         self._store = store
         self._providers = providers
         self._mfa_modules = mfa_modules
-        self.login_flow = AuthManagerFlowManager.opp, self)
+        self.login_flow = AuthManagerFlowManager(opp, self)
 
     @property
     def auth_providers(self) -> List[AuthProvider]:

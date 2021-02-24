@@ -86,7 +86,7 @@ async def test_doorbell_chime_event.opp):
     """Test a pubsub message for a doorbell event."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.DoorbellChime"),
     )
@@ -123,7 +123,7 @@ async def test_camera_motion_event.opp):
     """Test a pubsub message for a camera motion event."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.CAMERA",
         create_device_traits("sdm.devices.traits.CameraMotion"),
     )
@@ -150,7 +150,7 @@ async def test_camera_sound_event.opp):
     """Test a pubsub message for a camera sound event."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.CAMERA",
         create_device_traits("sdm.devices.traits.CameraSound"),
     )
@@ -177,7 +177,7 @@ async def test_camera_person_event.opp):
     """Test a pubsub message for a camera person event."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.CameraEventImage"),
     )
@@ -204,7 +204,7 @@ async def test_camera_multiple_event.opp):
     """Test a pubsub message for a camera person event."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.CameraEventImage"),
     )
@@ -245,7 +245,7 @@ async def test_unknown_event.opp):
     """Test a pubsub message for an unknown event type."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.DoorbellChime"),
     )
@@ -259,7 +259,7 @@ async def test_unknown_device_id.opp):
     """Test a pubsub message for an unknown event type."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.DoorbellChime"),
     )
@@ -275,7 +275,7 @@ async def test_event_message_without_device_event.opp):
     """Test a pubsub message for an unknown event type."""
     events = async_capture_events.opp, NEST_EVENT)
     subscriber = await async_setup_devices(
-        opp.
+        opp,
         "sdm.devices.types.DOORBELL",
         create_device_traits("sdm.devices.traits.DoorbellChime"),
     )

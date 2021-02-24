@@ -236,7 +236,7 @@ class LogbookView(OpenPeerPowerView):
             """Fetch events and generate JSON."""
             return self.json(
                 _get_events(
-                    opp.
+                    opp,
                     start_day,
                     end_day,
                     entity_ids,
@@ -406,7 +406,7 @@ def humanify.opp, events, entity_attr_cache, context_lookup):
 
 
 def _get_events(
-    opp.
+    opp,
     start_day,
     end_day,
     entity_ids=None,

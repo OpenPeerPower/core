@@ -79,7 +79,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Poll for updates in the background
     update_track = async_track_time_interval(
-        opp.
+        opp,
         lambda now: tadoconnector.update(),
         SCAN_INTERVAL,
     )

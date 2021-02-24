@@ -247,7 +247,7 @@ async def test_setup_defined_hosts_known_auth.opp, mock_panel):
 
     assert (
         await async_setup_component(
-            opp.
+            opp,
             konnected.DOMAIN,
             {
                 konnected.DOMAIN: {
@@ -276,7 +276,7 @@ async def test_setup_defined_hosts_no_known_auth.opp):
     """Test we initiate config entry if config panel is not known."""
     assert (
         await async_setup_component(
-            opp.
+            opp,
             konnected.DOMAIN,
             {
                 konnected.DOMAIN: {
@@ -296,7 +296,7 @@ async def test_setup_multiple.opp):
     """Test we initiate config entry for multiple panels."""
     assert (
         await async_setup_component(
-            opp.
+            opp,
             konnected.DOMAIN,
             {
                 konnected.DOMAIN: {
@@ -366,7 +366,7 @@ async def test_config_passed_to_config_entry.opp):
     with patch.object(konnected, "AlarmPanel", autospec=True) as mock_int:
         assert (
             await async_setup_component(
-                opp.
+                opp,
                 konnected.DOMAIN,
                 {
                     konnected.DOMAIN: {
@@ -388,7 +388,7 @@ async def test_config_passed_to_config_entry.opp):
 async def test_unload_entry.opp, mock_panel):
     """Test being able to unload an entry."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
     entry = MockConfigEntry(
@@ -463,7 +463,7 @@ async def test_api.opp, aiohttp_client, mock_panel):
 
     assert (
         await async_setup_component(
-            opp.
+            opp,
             konnected.DOMAIN,
             {konnected.DOMAIN: {konnected.CONF_ACCESS_TOKEN: "globaltoken"}},
         )
@@ -572,7 +572,7 @@ async def test_api.opp, aiohttp_client, mock_panel):
 async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
     """Test callback view."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -635,7 +635,7 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
 
     assert (
         await async_setup_component(
-            opp.
+            opp,
             konnected.DOMAIN,
             {konnected.DOMAIN: {konnected.CONF_ACCESS_TOKEN: "1122334455"}},
         )
@@ -723,7 +723,7 @@ async def test_state_updates_zone.opp, aiohttp_client, mock_panel):
 async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
     """Test callback view."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 
@@ -790,7 +790,7 @@ async def test_state_updates_pin.opp, aiohttp_client, mock_panel):
 
     assert (
         await async_setup_component(
-            opp.
+            opp,
             konnected.DOMAIN,
             {konnected.DOMAIN: {konnected.CONF_ACCESS_TOKEN: "1122334455"}},
         )

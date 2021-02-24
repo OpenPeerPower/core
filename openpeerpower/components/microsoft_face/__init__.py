@@ -70,7 +70,7 @@ async def async_setup(opp, config):
     """Set up Microsoft Face."""
     entities = {}
     face = MicrosoftFace(
-        opp.
+        opp,
         config[DOMAIN].get(CONF_AZURE_REGION),
         config[DOMAIN].get(CONF_API_KEY),
         config[DOMAIN].get(CONF_TIMEOUT),

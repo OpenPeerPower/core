@@ -238,7 +238,7 @@ class DeviceTrackerPlatform:
             elif hasattr(self.platform, "setup_scanner"):
                 setup = await opp.async_add_executor_job(
                     self.platform.setup_scanner,
-                    opp.
+                    opp,
                     self.config,
                     tracker.see,
                     discovery_info,

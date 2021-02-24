@@ -104,7 +104,7 @@ async def async_setup(opp, config):
         return Updater(update_available, newest, release_notes)
 
     coordinator = opp.data[DOMAIN] = update_coordinator.DataUpdateCoordinator[Updater](
-        opp.
+        opp,
         _LOGGER,
         name="Open Peer Power update",
         update_method=check_new_version,

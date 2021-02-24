@@ -247,7 +247,7 @@ async def async_setup_entry(
 
     opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
         async_dispatcher_connect(
-            opp.
+            opp,
             f"{DOMAIN}_{config_entry.entry_id}_add_{BINARY_SENSOR_DOMAIN}",
             async_add_binary_sensor,
         )

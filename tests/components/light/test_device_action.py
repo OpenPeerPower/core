@@ -212,7 +212,7 @@ async def test_action.opp, calls):
     ent1, ent2, ent3 = platform.ENTITIES
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

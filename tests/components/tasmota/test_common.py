@@ -97,7 +97,7 @@ DEFAULT_CONFIG_9_0_0_3 = {
 
 
 async def help_test_availability_when_connection_lost(
-    opp.
+    opp,
     mqtt_client_mock,
     mqtt_mock,
     domain,
@@ -110,14 +110,14 @@ async def help_test_availability_when_connection_lost(
     This is a test helper for the TasmotaAvailability mixin.
     """
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -125,7 +125,7 @@ async def help_test_availability_when_connection_lost(
 
     # Device online
     async_fire_mqtt_message(
-        opp.
+        opp,
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
@@ -153,7 +153,7 @@ async def help_test_availability_when_connection_lost(
 
     # Receive LWT again
     async_fire_mqtt_message(
-        opp.
+        opp,
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
@@ -162,7 +162,7 @@ async def help_test_availability_when_connection_lost(
 
 
 async def help_test_availability(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -174,14 +174,14 @@ async def help_test_availability(
     This is a test helper for the TasmotaAvailability mixin.
     """
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -191,7 +191,7 @@ async def help_test_availability(
     assert state.state == STATE_UNAVAILABLE
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
@@ -200,7 +200,7 @@ async def help_test_availability(
     assert state.state != STATE_UNAVAILABLE
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         get_topic_tele_will(config),
         config_get_state_offline(config),
     )
@@ -210,7 +210,7 @@ async def help_test_availability(
 
 
 async def help_test_availability_discovery_update(
-    opp.
+    opp,
     mqtt_mock,
     domain,
     config,
@@ -247,7 +247,7 @@ async def help_test_availability_discovery_update(
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -282,7 +282,7 @@ async def help_test_availability_discovery_update(
 
 
 async def help_test_availability_poll_state(
-    opp.
+    opp,
     mqtt_client_mock,
     mqtt_mock,
     domain,
@@ -296,14 +296,14 @@ async def help_test_availability_poll_state(
     This is a test helper for the TasmotaAvailability mixin.
     """
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config",
         json.dumps(config),
     )
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -312,7 +312,7 @@ async def help_test_availability_poll_state(
 
     # Device online, verify poll for state
     async_fire_mqtt_message(
-        opp.
+        opp,
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
@@ -340,7 +340,7 @@ async def help_test_availability_poll_state(
 
     # Device online, verify poll for state
     async_fire_mqtt_message(
-        opp.
+        opp,
         get_topic_tele_will(config),
         config_get_state_online(config),
     )
@@ -351,7 +351,7 @@ async def help_test_availability_poll_state(
 
 
 async def help_test_discovery_removal(
-    opp.
+    opp,
     mqtt_mock,
     caplog,
     domain,
@@ -374,7 +374,7 @@ async def help_test_discovery_removal(
     await opp.async_block_till_done()
     if sensor_config1:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config1[CONF_MAC]}/sensors",
             json.dumps(sensor_config1),
         )
@@ -395,7 +395,7 @@ async def help_test_discovery_removal(
     await opp.async_block_till_done()
     if sensor_config1:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config2[CONF_MAC]}/sensors",
             json.dumps(sensor_config2),
         )
@@ -413,7 +413,7 @@ async def help_test_discovery_removal(
 
 
 async def help_test_discovery_update_unchanged(
-    opp.
+    opp,
     mqtt_mock,
     caplog,
     domain,
@@ -438,7 +438,7 @@ async def help_test_discovery_update_unchanged(
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -452,7 +452,7 @@ async def help_test_discovery_update_unchanged(
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -480,7 +480,7 @@ async def help_test_discovery_device_remove(
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -513,7 +513,7 @@ async def help_test_entity_id_update_subscriptions(
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )
@@ -559,7 +559,7 @@ async def help_test_entity_id_update_discovery_update(
     await opp.async_block_till_done()
     if sensor_config:
         async_fire_mqtt_message(
-            opp.
+            opp,
             f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/sensors",
             json.dumps(sensor_config),
         )

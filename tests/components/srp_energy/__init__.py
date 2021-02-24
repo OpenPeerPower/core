@@ -19,7 +19,7 @@ ENTRY_CONFIG = {
 
 
 async def init_integration(
-    opp.
+    opp,
     config=None,
     options=None,
     entry_id="1",

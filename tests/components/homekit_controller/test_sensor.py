@@ -209,7 +209,7 @@ async def test_switch_with_sensor.opp, utcnow):
 
     # Helper will be for the primary entity, which is the outlet. Make a helper for the sensor.
     energy_helper = Helper(
-        opp.
+        opp,
         "sensor.testdevice_real_time_energy",
         helper.pairing,
         helper.accessory,

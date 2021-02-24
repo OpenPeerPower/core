@@ -92,7 +92,7 @@ async def test_scan_not_all_present.opp, aioclient_mock):
     """,
     )
     scanner = ssdp.Scanner(
-        opp.
+        opp,
         {
             "mock-domain": [
                 {
@@ -133,7 +133,7 @@ async def test_scan_not_all_match.opp, aioclient_mock):
     """,
     )
     scanner = ssdp.Scanner(
-        opp.
+        opp,
         {
             "mock-domain": [
                 {
@@ -214,7 +214,7 @@ async def test_invalid_characters.opp, aioclient_mock):
     """,
     )
     scanner = ssdp.Scanner(
-        opp.
+        opp,
         {
             "mock-domain": [
                 {

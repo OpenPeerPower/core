@@ -22,7 +22,7 @@ async def test_wrong_config(opp, config_to_try):
 async def test_correct_config(opp):
     """Test correct config."""
     assert await async_setup_component(
-        opp.
+        opp,
         "panel_iframe",
         {
             "panel_iframe": {

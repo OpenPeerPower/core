@@ -64,7 +64,7 @@ async def test_async_resolve_media.opp):
     await opp.async_block_till_done()
 
     media = await media_source.async_resolve_media(
-        opp.
+        opp,
         media_source.generate_media_source_id(const.DOMAIN, "local/test.mp3"),
     )
     assert isinstance(media, media_source.models.PlayMedia)

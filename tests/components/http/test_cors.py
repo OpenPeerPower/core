@@ -34,7 +34,7 @@ async def test_cors_middleware_loaded_from_config(opp):
     """Test accessing to server from banned IP when feature is off."""
     with patch("openpeerpower.components.http.setup_cors") as mock_setup:
         await async_setup_component(
-            opp.
+            opp,
             "http",
             {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}},
         )
@@ -133,7 +133,7 @@ async def test_cors_middleware_with_cors_allowed_view.opp):
 async def test_cors_works_with_frontend.opp, opp_client):
     """Test CORS works with the frontend."""
     assert await async_setup_component(
-        opp.
+        opp,
         "frontend",
         {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}},
     )

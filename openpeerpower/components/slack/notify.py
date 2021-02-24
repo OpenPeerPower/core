@@ -131,7 +131,7 @@ async def async_get_service(
         )
 
     return SlackNotificationService(
-        opp.
+        opp,
         client,
         config[CONF_DEFAULT_CHANNEL],
         username=config.get(CONF_USERNAME),

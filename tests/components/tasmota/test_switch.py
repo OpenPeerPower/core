@@ -37,7 +37,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -80,7 +80,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -122,7 +122,7 @@ async def test_relay_as_light.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )

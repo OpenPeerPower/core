@@ -118,7 +118,7 @@ async def test_setup_after_deps_all_present.opp):
         opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="first_dep",
             async_setup=gen_domain_setup("first_dep"),
@@ -126,7 +126,7 @@ async def test_setup_after_deps_all_present.opp):
         ),
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="second_dep",
             async_setup=gen_domain_setup("second_dep"),
@@ -162,7 +162,7 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
         return async_setup
 
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="normal_integration",
             async_setup=gen_domain_setup("normal_integration"),
@@ -170,14 +170,14 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
         ),
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="an_after_dep",
             async_setup=gen_domain_setup("an_after_dep"),
         ),
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="cloud",
             async_setup=gen_domain_setup("cloud"),
@@ -211,14 +211,14 @@ async def test_setup_after_deps_via_platform.opp):
         return async_setup
 
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="after_dep_of_platform_int",
             async_setup=gen_domain_setup("after_dep_of_platform_int"),
         ),
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="platform_int",
             async_setup=gen_domain_setup("platform_int"),
@@ -260,7 +260,7 @@ async def test_setup_after_deps_not_trigger_load.opp):
         opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="first_dep",
             async_setup=gen_domain_setup("first_dep"),
@@ -268,7 +268,7 @@ async def test_setup_after_deps_not_trigger_load.opp):
         ),
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="second_dep",
             async_setup=gen_domain_setup("second_dep"),
@@ -299,7 +299,7 @@ async def test_setup_after_deps_not_present.opp):
         opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
-        opp.
+        opp,
         MockModule(
             domain="second_dep",
             async_setup=gen_domain_setup("second_dep"),
@@ -398,7 +398,7 @@ async def test_setup_opp(
 
     assert len(mock_enable_logging.mock_calls) == 1
     assert mock_enable_logging.mock_calls[0][1] == (
-        opp.
+        opp,
         verbose,
         log_rotate_days,
         log_file,

@@ -77,7 +77,7 @@ async def async_setup(opp, yaml_config):
         conn_str_client = False
 
     instance = opp.data[DOMAIN] = AzureEventHub(
-        opp.
+        opp,
         client_args,
         conn_str_client,
         config[CONF_FILTER],

@@ -40,7 +40,7 @@ async def test_config_yaml_alias_anchor.opp, entities):
     entity_state = {"state": "on", "brightness": 100}
 
     assert await async_setup_component(
-        opp.
+        opp,
         scene.DOMAIN,
         {
             "scene": [
@@ -96,7 +96,7 @@ async def test_activate_scene.opp, entities):
     light_1, light_2 = await setup_lights.opp, entities)
 
     assert await async_setup_component(
-        opp.
+        opp,
         scene.DOMAIN,
         {
             "scene": [

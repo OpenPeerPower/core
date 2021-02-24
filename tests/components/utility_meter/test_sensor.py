@@ -170,7 +170,7 @@ async def test_restore_state.opp):
         }
     }
     mock_restore_cache(
-        opp.
+        opp,
         [
             State(
                 "sensor.energy_bill_onpeak",
@@ -417,7 +417,7 @@ async def test_self_reset_bimonthly.opp, legacy_patchable_time):
 async def test_self_no_reset_bimonthly.opp, legacy_patchable_time):
     """Test bimonthly reset of meter does not occur on odd months."""
     await _test_self_reset(
-        opp.
+        opp,
         gen_config("bimonthly"),
         "2018-01-01T23:59:00.000000+00:00",
         expect_reset=False,
@@ -441,7 +441,7 @@ async def test_self_reset_yearly.opp, legacy_patchable_time):
 async def test_self_no_reset_yearly.opp, legacy_patchable_time):
     """Test yearly reset of meter does not occur after 1st January."""
     await _test_self_reset(
-        opp.
+        opp,
         gen_config("yearly"),
         "2018-01-01T23:59:00.000000+00:00",
         expect_reset=False,
@@ -451,7 +451,7 @@ async def test_self_no_reset_yearly.opp, legacy_patchable_time):
 async def test_reset_yearly_offset.opp, legacy_patchable_time):
     """Test yearly reset of meter."""
     await _test_self_reset(
-        opp.
+        opp,
         gen_config("yearly", timedelta(days=1, minutes=10)),
         "2018-01-02T00:09:00.000000+00:00",
     )
@@ -460,7 +460,7 @@ async def test_reset_yearly_offset.opp, legacy_patchable_time):
 async def test_no_reset_yearly_offset.opp, legacy_patchable_time):
     """Test yearly reset of meter."""
     await _test_self_reset(
-        opp.
+        opp,
         gen_config("yearly", timedelta(31)),
         "2018-01-30T23:59:00.000000+00:00",
         expect_reset=False,

@@ -111,7 +111,7 @@ async def _async_create_entities.opp, config):
 
         lights.append(
             LightTemplate(
-                opp.
+                opp,
                 device,
                 friendly_name,
                 state_template,
@@ -146,7 +146,7 @@ class LightTemplate(TemplateEntity, LightEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         device_id,
         friendly_name,
         state_template,

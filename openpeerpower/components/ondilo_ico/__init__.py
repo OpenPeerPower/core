@@ -23,7 +23,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Ondilo ICO from a config entry."""
 
     config_flow.OAuth2FlowHandler.async_register_implementation(
-        opp.
+        opp,
         OndiloOauth2Implementation.opp),
     )
 

@@ -103,7 +103,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             raise UpdateFailed(ex) from ex
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=DOMAIN,
         update_method=async_update_data,

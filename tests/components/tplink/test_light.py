@@ -260,7 +260,7 @@ async def test_smartswitch(
     await opp.async_block_till_done()
 
     await async_setup_component(
-        opp.
+        opp,
         tplink.DOMAIN,
         {
             tplink.DOMAIN: {
@@ -352,7 +352,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     await opp.async_block_till_done()
 
     await async_setup_component(
-        opp.
+        opp,
         tplink.DOMAIN,
         {
             tplink.DOMAIN: {
@@ -498,7 +498,7 @@ async def test_get_light_state_retry(
     await opp.async_block_till_done()
 
     await async_setup_component(
-        opp.
+        opp,
         tplink.DOMAIN,
         {
             tplink.DOMAIN: {
@@ -536,7 +536,7 @@ async def test_update_failure(
     await opp.async_block_till_done()
 
     await async_setup_component(
-        opp.
+        opp,
         tplink.DOMAIN,
         {
             tplink.DOMAIN: {
@@ -597,7 +597,7 @@ async def test_async_setup_entry_unavailable(
         await opp.async_block_till_done()
 
         await async_setup_component(
-            opp.
+            opp,
             tplink.DOMAIN,
             {
                 tplink.DOMAIN: {

@@ -129,7 +129,7 @@ async def auth_mfa_module_from_config(
 ) -> MultiFactorAuthModule:
     """Initialize an auth module from a config."""
     module_name = config[CONF_TYPE]
-    module = await _load_mfa_module.opp, module_name)
+    module = await _load_mfa_module(opp, module_name)
 
     try:
         config = module.CONFIG_SCHEMA(config)  # type: ignore
@@ -144,7 +144,7 @@ async def auth_mfa_module_from_config(
     return MULTI_FACTOR_AUTH_MODULES[module_name].opp, config)  # type: ignore
 
 
-async def _load_mfa_module.opp: OpenPeerPower, module_name: str) -> types.ModuleType:
+async def _load_mfa_module(opp: OpenPeerPower, module_name: str) -> types.ModuleType:
     """Load an mfa auth module."""
     module_path = f"openpeerpower.auth.mfa_modules.{module_name}"
 

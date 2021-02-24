@@ -99,7 +99,7 @@ async def test_cancel_inclusion_exclusion.opp, integration, client, opp_ws_clien
 
 
 async def test_remove_node(
-    opp.
+    opp,
     integration,
     client,
     opp.ws_client,

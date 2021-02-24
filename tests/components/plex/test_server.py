@@ -49,7 +49,7 @@ async def test_new_users_available.opp, entry, setup_plex_server):
 
 
 async def test_new_ignored_users_available(
-    opp.
+    opp,
     caplog,
     entry,
     mock_websocket,

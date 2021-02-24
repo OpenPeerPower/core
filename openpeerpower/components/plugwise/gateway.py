@@ -96,7 +96,7 @@ async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             raise UpdateFailed("Smile update failed") from err
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=f"Smile {api.smile_name}",
         update_method=async_update_data,

@@ -144,7 +144,7 @@ async def test_create_new_user.opp):
     opp.bus.async_listen("user_added", user_added)
 
     manager = await auth.auth_manager_from_config(
-        opp.
+        opp,
         [
             {
                 "type": "insecure_example",
@@ -249,7 +249,7 @@ async def test_login_as_existing_user(mock.opp):
 async def test_linking_user_to_two_auth_providers.opp, opp_storage):
     """Test linking user to two auth providers."""
     manager = await auth.auth_manager_from_config(
-        opp.
+        opp,
         [
             {
                 "type": "insecure_example",
@@ -289,7 +289,7 @@ async def test_saving_loading.opp, opp_storage):
     Creates one of each type that we store to test we restore correctly.
     """
     manager = await auth.auth_manager_from_config(
-        opp.
+        opp,
         [
             {
                 "type": "insecure_example",
@@ -826,7 +826,7 @@ async def test_auth_module_expired_session(mock.opp):
 async def test_enable_mfa_for_user.opp, opp_storage):
     """Test enable mfa module for user."""
     manager = await auth.auth_manager_from_config(
-        opp.
+        opp,
         [
             {
                 "type": "insecure_example",
@@ -905,7 +905,7 @@ async def test_async_remove_user.opp):
     opp.bus.async_listen("user_removed", user_removed)
 
     manager = await auth.auth_manager_from_config(
-        opp.
+        opp,
         [
             {
                 "type": "insecure_example",

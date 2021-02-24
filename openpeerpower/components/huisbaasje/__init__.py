@@ -54,7 +54,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
 
     # Create a coordinator for polling updates
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="sensor",
         update_method=async_update_data,

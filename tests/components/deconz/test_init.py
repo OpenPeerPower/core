@@ -74,7 +74,7 @@ async def test_setup_entry_multiple_gateways.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["config"]["bridgeid"] = "01234E56789B"
     config_entry2 = await setup_deconz_integration(
-        opp.
+        opp,
         aioclient_mock,
         get_state_response=data,
         entry_id="2",
@@ -103,7 +103,7 @@ async def test_unload_entry_multiple_gateways.opp, aioclient_mock):
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["config"]["bridgeid"] = "01234E56789B"
     config_entry2 = await setup_deconz_integration(
-        opp.
+        opp,
         aioclient_mock,
         get_state_response=data,
         entry_id="2",

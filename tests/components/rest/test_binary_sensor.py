@@ -32,7 +32,7 @@ async def test_setup_missing_basic_config(opp):
 async def test_setup_missing_config(opp):
     """Test setup with configuration missing required entries."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -51,7 +51,7 @@ async def test_setup_failed_connect.opp):
     """Test setup when connection error occurs."""
     respx.get("http://localhost").mock(side_effect=httpx.RequestError)
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -70,7 +70,7 @@ async def test_setup_timeout.opp):
     """Test setup when connection timeout occurs."""
     respx.get("http://localhost").mock(side_effect=asyncio.TimeoutError())
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -89,7 +89,7 @@ async def test_setup_minimum.opp):
     """Test setup with minimum configuration."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -108,7 +108,7 @@ async def test_setup_minimum_resource_template.opp):
     """Test setup with minimum configuration (resource_template)."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -126,7 +126,7 @@ async def test_setup_duplicate_resource_template.opp):
     """Test setup with duplicate resources."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {
@@ -145,7 +145,7 @@ async def test_setup_get.opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -173,7 +173,7 @@ async def test_setup_get_digest_auth.opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -201,7 +201,7 @@ async def test_setup_post.opp):
     """Test setup with valid configuration."""
     respx.post("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -233,7 +233,7 @@ async def test_setup_get_off.opp):
         json={"dog": False},
     )
     assert await async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -263,7 +263,7 @@ async def test_setup_get_on.opp):
         json={"dog": True},
     )
     assert await async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -289,7 +289,7 @@ async def test_setup_with_exception.opp):
     """Test setup with exception."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -333,7 +333,7 @@ async def test_reload.opp):
     respx.get("http://localhost") % 200
 
     await async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {
@@ -375,7 +375,7 @@ async def test_setup_query_params.opp):
     """Test setup with query params."""
     respx.get("http://localhost", params={"search": "something"}) % 200
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             "binary_sensor": {

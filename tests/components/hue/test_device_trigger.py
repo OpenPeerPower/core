@@ -100,7 +100,7 @@ async def test_if_fires_on_state_change.opp, mock_bridge, device_reg, calls):
         {(hue.DOMAIN, "00:00:00:00:00:44:23:08")}
     )
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

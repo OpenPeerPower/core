@@ -28,7 +28,7 @@ async def test_reload_notify.opp):
         "openpeerpower.components.smtp.notify.MailNotificationService.connection_is_valid"
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             notify.DOMAIN,
             {
                 notify.DOMAIN: [

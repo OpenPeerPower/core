@@ -297,7 +297,7 @@ def.opp_read_only_access_token.opp, opp_read_only_user, local_auth):
 def legacy_auth.opp):
     """Load legacy API password provider."""
     prv = legacy_api_password.LegacyApiPasswordAuthProvider(
-        opp.
+        opp,
         opp.auth._store,
         {"type": "legacy_api_password", "api_password": "test-password"},
     )

@@ -48,7 +48,7 @@ async def test_full_flow(
 ):
     """Check full flow."""
     assert await setup.async_setup_component(
-        opp.
+        opp,
         "netatmo",
         {
             "netatmo": {CONF_CLIENT_ID: CLIENT_ID, CONF_CLIENT_SECRET: CLIENT_SECRET},
@@ -60,7 +60,7 @@ async def test_full_flow(
         "netatmo", context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

@@ -24,7 +24,7 @@ async def test_humanify_homekit_changed_event.opp, hk_driver):
 
     event1, event2 = list(
         logbook.humanify(
-            opp.
+            opp,
             [
                 MockLazyEventPartialState(
                     EVENT_HOMEKIT_CHANGED,

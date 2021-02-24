@@ -57,9 +57,9 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     opp.data[NEATO_CONFIG] = config[NEATO_DOMAIN]
     vendor = Neato()
     config_flow.OAuth2FlowHandler.async_register_implementation(
-        opp.
+        opp,
         api.NeatoImplementation(
-            opp.
+            opp,
             NEATO_DOMAIN,
             config[NEATO_DOMAIN][CONF_CLIENT_ID],
             config[NEATO_DOMAIN][CONF_CLIENT_SECRET],

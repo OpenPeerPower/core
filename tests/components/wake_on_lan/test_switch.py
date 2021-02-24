@@ -28,7 +28,7 @@ def mock_send_magic_packet():
 async def test_valid_hostname.opp):
     """Test with valid hostname."""
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             "switch": {
@@ -69,7 +69,7 @@ async def test_valid_hostname.opp):
 async def test_valid_hostname_windows.opp):
     """Test with valid hostname on windows."""
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             "switch": {
@@ -105,7 +105,7 @@ async def test_broadcast_config_ip_and_port.opp, mock_send_magic_packet):
     port = 999
 
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             "switch": {
@@ -142,7 +142,7 @@ async def test_broadcast_config_ip.opp, mock_send_magic_packet):
     broadcast_address = "255.255.255.255"
 
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             "switch": {
@@ -176,7 +176,7 @@ async def test_broadcast_config_port.opp, mock_send_magic_packet):
     port = 999
 
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {"switch": {"platform": "wake_on_lan", "mac": mac, "broadcast_port": port}},
     )
@@ -201,7 +201,7 @@ async def test_off_script.opp):
     """Test with turn off script."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             "switch": {
@@ -249,7 +249,7 @@ async def test_invalid_hostname_windows.opp):
     """Test with invalid hostname on windows."""
 
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             "switch": {

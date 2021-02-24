@@ -142,7 +142,7 @@ def mock_default_unifi_requests(
 
 
 async def setup_unifi_integration(
-    opp.
+    opp,
     aioclient_mock=None,
     *,
     config=ENTRY_CONFIG,

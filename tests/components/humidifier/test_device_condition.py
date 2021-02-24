@@ -132,7 +132,7 @@ async def test_if_state.opp, calls):
     )
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -246,7 +246,7 @@ async def test_capabilities.opp):
 
     # Test mode
     capabilities = await device_condition.async_get_condition_capabilities(
-        opp.
+        opp,
         {
             "condition": "device",
             "domain": DOMAIN,
@@ -274,7 +274,7 @@ async def test_capabilities_no_state.opp):
     """Test capabilities while state not available."""
     # Test mode
     capabilities = await device_condition.async_get_condition_capabilities(
-        opp.
+        opp,
         {
             "condition": "device",
             "domain": DOMAIN,

@@ -16,7 +16,7 @@ from tests.common import async_fire_mqtt_message, async_mock_intent, async_mock_
 async def test_snips_config(opp, mqtt_mock):
     """Test Snips Config."""
     result = await async_setup_component(
-        opp.
+        opp,
         "snips",
         {
             "snips": {
@@ -32,7 +32,7 @@ async def test_snips_config(opp, mqtt_mock):
 async def test_snips_bad_config(opp, mqtt_mock):
     """Test Snips bad config."""
     result = await async_setup_component(
-        opp.
+        opp,
         "snips",
         {
             "snips": {
@@ -236,7 +236,7 @@ async def test_intent_speech_response.opp, mqtt_mock):
     result = await async_setup_component.opp, "snips", {"snips": {}})
     assert result
     result = await async_setup_component(
-        opp.
+        opp,
         "intent_script",
         {
             "intent_script": {
@@ -368,7 +368,7 @@ async def test_intent_special_slots.opp, mqtt_mock):
     result = await async_setup_component.opp, "snips", {"snips": {}})
     assert result
     result = await async_setup_component(
-        opp.
+        opp,
         "intent_script",
         {
             "intent_script": {

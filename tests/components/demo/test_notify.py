@@ -79,7 +79,7 @@ async def test_discover_notify.opp, mock_demo_notify):
     assert notify.DOMAIN in.opp.config.components
     assert mock_demo_notify.called
     assert mock_demo_notify.mock_calls[0][1] == (
-        opp.
+        opp,
         {},
         {"test_key": "test_val"},
     )

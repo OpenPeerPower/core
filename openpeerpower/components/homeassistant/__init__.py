@@ -114,7 +114,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             return
 
         try:
-            errors = await conf_util.async_check_op_config_file.opp)
+            errors = await conf_util.async_check_op_config_file(opp)
         except OpenPeerPowerError:
             return
 

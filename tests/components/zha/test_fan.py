@@ -421,7 +421,7 @@ async def test_zha_group_fan_entity_failure_state(
     ),
 )
 async def test_fan_init(
-    opp.
+    opp,
     zha_device_joined_restored,
     zigpy_device,
     plug_read,
@@ -444,7 +444,7 @@ async def test_fan_init(
 
 
 async def test_fan_update_entity(
-    opp.
+    opp,
     zha_device_joined_restored,
     zigpy_device,
 ):

@@ -522,7 +522,7 @@ async def setup_component.opp, entity_name):
     entity_id = f"{DOMAIN}.{entity_name}"
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {

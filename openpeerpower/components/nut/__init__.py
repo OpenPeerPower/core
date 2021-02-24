@@ -66,7 +66,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 raise UpdateFailed("Error fetching UPS state")
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="NUT resource status",
         update_method=async_update_data,

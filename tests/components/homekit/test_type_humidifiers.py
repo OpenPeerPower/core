@@ -323,7 +323,7 @@ async def test_humidifier_with_linked_humidity_sensor.opp, hk_driver):
     opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
-        opp.
+        opp,
         hk_driver,
         "HumidifierDehumidifier",
         entity_id,
@@ -375,7 +375,7 @@ async def test_humidifier_with_a_missing_linked_humidity_sensor.opp, hk_driver):
     opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
-        opp.
+        opp,
         hk_driver,
         "HumidifierDehumidifier",
         entity_id,

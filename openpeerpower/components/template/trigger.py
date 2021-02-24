@@ -129,7 +129,7 @@ async def async_attach_trigger(
         delay_cancel = async_call_later.opp, period.seconds, call_action)
 
     info = async_track_template_result(
-        opp.
+        opp,
         [TrackTemplate(value_template, automation_info["variables"])],
         template_listener,
     )

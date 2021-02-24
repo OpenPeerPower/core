@@ -23,7 +23,7 @@ class DeviceDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize the data update coordinator."""
         DataUpdateCoordinator.__init__(
             self,
-            opp.
+            opp,
             _LOGGER,
             name=f"{DOMAIN}-{device.device_info.name}",
             update_interval=timedelta(seconds=60),

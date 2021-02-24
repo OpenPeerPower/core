@@ -75,7 +75,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             OpenSkySensor(
-                opp.
+                opp,
                 config.get(CONF_NAME, DOMAIN),
                 latitude,
                 longitude,

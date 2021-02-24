@@ -246,7 +246,7 @@ def setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
         )
 
         discovery.load_platform(
-            opp.
+            opp,
             "calendar",
             DOMAIN,
             opp.data[DATA_INDEX][calendar[CONF_CAL_ID]],

@@ -34,7 +34,7 @@ async def async_setup_entry.opp, config_entry):
     opp.data[
         DATA_REMOVE_DISCOVER_COMPONENT.format("device_automation")
     ] = async_dispatcher_connect(
-        opp.
+        opp,
         TASMOTA_DISCOVERY_ENTITY_NEW.format("device_automation"),
         async_discover,
     )

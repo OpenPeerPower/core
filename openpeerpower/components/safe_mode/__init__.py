@@ -8,7 +8,7 @@ DOMAIN = "safe_mode"
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Safe Mode component."""
     persistent_notification.async_create(
-        opp.
+        opp,
         "Open Peer Power is running in safe mode. Check [the error log](/config/logs) to see what went wrong.",
         "Safe Mode",
     )

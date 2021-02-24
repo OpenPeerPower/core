@@ -42,7 +42,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             errors=errors or {},
         )
 
-    async def _show.oppio_form(self, errors=None):
+    async def _show(oppio_form(self, errors=None):
         """Show the Opp.io confirmation form to the user."""
         return self.async_show_form(
             step_id = "oppio_confirm",
@@ -91,7 +91,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             },
         )
 
-    async def async_step.oppio(self, discovery_info):
+    async def async_step(oppio(self, discovery_info):
         """Prepare configuration for a Opp.io AdGuard Home add-on.
 
         This flow is triggered by the discovery component.
@@ -100,7 +100,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
 
         if not entries:
             self.oppio_discovery = discovery_info
-            return await self.async_step.oppio_confirm()
+            return await self.async_step(oppio_confirm()
 
         cur_entry = entries[0]
 
@@ -129,10 +129,10 @@ class AdGuardHomeFlowHandler(ConfigFlow):
 
         return self.async_abort(reason="existing_instance_updated")
 
-    async def async_step.oppio_confirm(self, user_input=None):
+    async def async_step(oppio_confirm(self, user_input=None):
         """Confirm Opp.io discovery."""
         if user_input is None:
-            return await self._show.oppio_form()
+            return await self._show(oppio_form()
 
         errors = {}
 
@@ -149,7 +149,7 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             await adguard.version()
         except AdGuardHomeConnectionError:
             errors["base"] = "cannot_connect"
-            return await self._show.oppio_form(errors)
+            return await self._show(oppio_form(errors)
 
         return self.async_create_entry(
             title=self.oppio_discovery["addon"],

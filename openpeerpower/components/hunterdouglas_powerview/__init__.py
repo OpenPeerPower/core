@@ -115,7 +115,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         return _async_map_data_by_id(shade_entries[SHADE_DATA])
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="powerview hub",
         update_method=async_update_data,

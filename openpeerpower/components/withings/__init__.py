@@ -73,9 +73,9 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
 
     # Setup the oauth2 config flow.
     config_flow.WithingsFlowHandler.async_register_implementation(
-        opp.
+        opp,
         WithingsLocalOAuth2Implementation(
-            opp.
+            opp,
             const.DOMAIN,
             conf[CONF_CLIENT_ID],
             conf[CONF_CLIENT_SECRET],
@@ -125,7 +125,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady()
 
     webhook.async_register(
-        opp.
+        opp,
         const.DOMAIN,
         "Withings notify",
         data_manager.webhook_config.id,

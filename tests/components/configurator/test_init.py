@@ -35,7 +35,7 @@ async def test_request_all_info.opp):
         configurator.ATTR_FIELDS: [],
         configurator.ATTR_ENTITY_PICTURE: "config entity picture",
         configurator.ATTR_CONFIGURE_ID: configurator.async_request_config(
-            opp.
+            opp,
             name="Test Request",
             callback=lambda _: None,
             description="config description",

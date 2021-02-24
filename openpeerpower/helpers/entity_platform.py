@@ -137,7 +137,7 @@ class EntityPlatform:
             """Get task to set up platform."""
             if getattr(platform, "async_setup_platform", None):
                 return platform.async_setup_platform(  # type: ignore
-                    opp.
+                    opp,
                     platform_config,
                     self._async_schedule_add_entities,
                     discovery_info,
@@ -148,7 +148,7 @@ class EntityPlatform:
             return.opp.loop.run_in_executor(  # type: ignore[return-value]
                 None,
                 platform.setup_platform,  # type: ignore
-                opp.
+                opp,
                 platform_config,
                 self._schedule_add_entities,
                 discovery_info,

@@ -47,7 +47,7 @@ async def test_attributes_on_off.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -71,7 +71,7 @@ async def test_attributes_dimmer_tuya.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -94,7 +94,7 @@ async def test_attributes_dimmer.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -120,7 +120,7 @@ async def test_attributes_ct.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -147,7 +147,7 @@ async def test_attributes_ct_reduced.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -173,7 +173,7 @@ async def test_attributes_rgb.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -205,7 +205,7 @@ async def test_attributes_rgbw.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -241,7 +241,7 @@ async def test_attributes_rgbww.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -279,7 +279,7 @@ async def test_attributes_rgbww_reduced.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -316,7 +316,7 @@ async def test_controlling_state_via_mqtt_on_off.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -358,7 +358,7 @@ async def test_controlling_state_via_mqtt_ct.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -413,7 +413,7 @@ async def test_controlling_state_via_mqtt_rgbww.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -502,7 +502,7 @@ async def test_controlling_state_via_mqtt_rgbww_hex.opp, mqtt_mock, setup_tasmot
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -598,7 +598,7 @@ async def test_controlling_state_via_mqtt_rgbww_tuya.opp, mqtt_mock, setup_tasmo
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -686,7 +686,7 @@ async def test_sending_mqtt_commands_on_off.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -727,7 +727,7 @@ async def test_sending_mqtt_commands_rgbww_tuya.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -773,7 +773,7 @@ async def test_sending_mqtt_commands_rgbww.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -857,7 +857,7 @@ async def test_sending_mqtt_commands_power_unlinked.opp, mqtt_mock, setup_tasmot
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -907,7 +907,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -998,7 +998,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
 
     # Fake state update from the light
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/tele/STATE",
         '{"POWER":"ON","Dimmer":50, "Color":"0,255,0"}',
     )
@@ -1019,7 +1019,7 @@ async def test_transition.opp, mqtt_mock, setup_tasmota):
 
     # Fake state update from the light
     async_fire_mqtt_message(
-        opp.
+        opp,
         "tasmota_49A3BC/tele/STATE",
         '{"POWER":"ON","Dimmer":100, "Color":"0,255,0"}',
     )
@@ -1086,7 +1086,7 @@ async def test_transition_fixed.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -1158,7 +1158,7 @@ async def test_relay_as_light.opp, mqtt_mock, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -1175,7 +1175,7 @@ async def _test_split_light.opp, mqtt_mock, config, num_lights, num_switches):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -1247,7 +1247,7 @@ async def _test_unlinked_light.opp, mqtt_mock, config, num_switches):
     num_lights = 2
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )

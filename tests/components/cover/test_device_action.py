@@ -326,7 +326,7 @@ async def test_action.opp):
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -392,7 +392,7 @@ async def test_action_tilt.opp):
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -445,7 +445,7 @@ async def test_action_set_position.opp):
     assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

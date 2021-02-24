@@ -78,7 +78,7 @@ async def test_climate_devices.opp):
 async def test_thermostat_off.opp):
     """Test a thermostat that is not running."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -115,7 +115,7 @@ async def test_thermostat_off.opp):
 async def test_thermostat_heat.opp):
     """Test a thermostat that is heating."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {
                 "status": "HEATING",
@@ -155,7 +155,7 @@ async def test_thermostat_heat.opp):
 async def test_thermostat_cool.opp):
     """Test a thermostat that is cooling."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {
                 "status": "COOLING",
@@ -195,7 +195,7 @@ async def test_thermostat_cool.opp):
 async def test_thermostat_heatcool.opp):
     """Test a thermostat that is cooling in heatcool mode."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {
                 "status": "COOLING",
@@ -236,7 +236,7 @@ async def test_thermostat_heatcool.opp):
 async def test_thermostat_eco_off.opp):
     """Test a thermostat cooling with eco off."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {
                 "status": "COOLING",
@@ -283,7 +283,7 @@ async def test_thermostat_eco_off.opp):
 async def test_thermostat_eco_on.opp):
     """Test a thermostat in eco mode."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {
                 "status": "COOLING",
@@ -330,7 +330,7 @@ async def test_thermostat_eco_on.opp):
 async def test_thermostat_eco_heat_only.opp):
     """Test a thermostat in eco mode that only supports heat."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {
                 "status": "OFF",
@@ -372,7 +372,7 @@ async def test_thermostat_eco_heat_only.opp):
 async def test_thermostat_set_hvac_mode.opp, auth):
     """Test a thermostat changing hvac modes."""
     subscriber = await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -458,7 +458,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
 async def test_thermostat_invalid_hvac_mode.opp, auth):
     """Test setting an hvac_mode that is not supported."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -486,7 +486,7 @@ async def test_thermostat_invalid_hvac_mode.opp, auth):
 async def test_thermostat_set_eco_preset.opp, auth):
     """Test a thermostat put into eco mode."""
     subscriber = await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatEco": {
@@ -571,7 +571,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
 async def test_thermostat_set_cool.opp, auth):
     """Test a thermostat in cool mode with a temperature change."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -604,7 +604,7 @@ async def test_thermostat_set_cool.opp, auth):
 async def test_thermostat_set_heat.opp, auth):
     """Test a thermostat heating mode with a temperature change."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -637,7 +637,7 @@ async def test_thermostat_set_heat.opp, auth):
 async def test_thermostat_set_heat_cool.opp, auth):
     """Test a thermostat in heatcool mode with a temperature change."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -673,7 +673,7 @@ async def test_thermostat_set_heat_cool.opp, auth):
 async def test_thermostat_fan_off.opp):
     """Test a thermostat with the fan not running."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.Fan": {
                 "timerMode": "OFF",
@@ -710,7 +710,7 @@ async def test_thermostat_fan_off.opp):
 async def test_thermostat_fan_on.opp):
     """Test a thermostat with the fan running."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.Fan": {
                 "timerMode": "ON",
@@ -749,7 +749,7 @@ async def test_thermostat_fan_on.opp):
 async def test_thermostat_cool_with_fan.opp):
     """Test a thermostat cooling while the fan is on."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.Fan": {
                 "timerMode": "ON",
@@ -784,7 +784,7 @@ async def test_thermostat_cool_with_fan.opp):
 async def test_thermostat_set_fan.opp, auth):
     """Test a thermostat enabling the fan."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.Fan": {
                 "timerMode": "ON",
@@ -823,7 +823,7 @@ async def test_thermostat_set_fan.opp, auth):
 async def test_thermostat_fan_empty.opp):
     """Test a fan trait with an empty response."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.Fan": {},
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
@@ -863,7 +863,7 @@ async def test_thermostat_fan_empty.opp):
 async def test_thermostat_invalid_fan_mode.opp):
     """Test setting a fan mode that is not supported."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.Fan": {
                 "timerMode": "ON",
@@ -904,7 +904,7 @@ async def test_thermostat_invalid_fan_mode.opp):
 async def test_thermostat_set_hvac_fan_only.opp, auth):
     """Test a thermostat enabling the fan via hvac_mode."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.Fan": {
                 "timerMode": "OFF",
@@ -952,7 +952,7 @@ async def test_thermostat_set_hvac_fan_only.opp, auth):
 async def test_thermostat_target_temp.opp, auth):
     """Test a thermostat changing hvac modes and affected on target temps."""
     subscriber = await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {
                 "status": "HEATING",
@@ -1014,7 +1014,7 @@ async def test_thermostat_target_temp.opp, auth):
 async def test_thermostat_missing_mode_traits.opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
         },
@@ -1047,7 +1047,7 @@ async def test_thermostat_missing_mode_traits.opp):
 async def test_thermostat_missing_temperature_trait.opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -1085,7 +1085,7 @@ async def test_thermostat_missing_temperature_trait.opp):
 async def test_thermostat_unexpected_hvac_status.opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "UNEXPECTED"},
         },
@@ -1115,7 +1115,7 @@ async def test_thermostat_unexpected_hvac_status.opp):
 async def test_thermostat_missing_set_point.opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -1149,7 +1149,7 @@ async def test_thermostat_missing_set_point.opp):
 async def test_thermostat_unexepected_hvac_mode.opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatMode": {
@@ -1183,7 +1183,7 @@ async def test_thermostat_unexepected_hvac_mode.opp):
 async def test_thermostat_invalid_set_preset_mode.opp, auth):
     """Test a thermostat set with an invalid preset mode."""
     await setup_climate(
-        opp.
+        opp,
         {
             "sdm.devices.traits.ThermostatHvac": {"status": "OFF"},
             "sdm.devices.traits.ThermostatEco": {

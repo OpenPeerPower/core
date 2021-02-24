@@ -46,7 +46,7 @@ async def test_expire_delta(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(), text="hello world")
 
     await async_setup_component(
-        opp.
+        opp,
         "camera",
         {
             "camera": {
@@ -100,7 +100,7 @@ async def test_dimension(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(700), text="hello world")
 
     await async_setup_component(
-        opp.
+        opp,
         "camera",
         {"camera": {"name": "config_test", "platform": "buienradar", "dimension": 700}},
     )
@@ -118,7 +118,7 @@ async def test_belgium_country(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(country_code="BE"), text="hello world")
 
     await async_setup_component(
-        opp.
+        opp,
         "camera",
         {
             "camera": {
@@ -168,7 +168,7 @@ async def test_last_modified_updates(aioclient_mock, opp, opp_client):
     )
 
     await async_setup_component(
-        opp.
+        opp,
         "camera",
         {
             "camera": {

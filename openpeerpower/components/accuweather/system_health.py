@@ -15,13 +15,13 @@ def async_register(
     register.async_register_info(system_health_info)
 
 
-async def system_health_info.opp):
+async def system_health_info(opp):
     """Get info for the info page."""
     remaining_requests = list.opp.data[DOMAIN].values())[0][
         COORDINATOR
     ].accuweather.requests_remaining
 
     return {
-        "can_reach_server": system_health.async_check_can_reach_url.opp, ENDPOINT),
+        "can_reach_server": system_health.async_check_can_reach_url(opp, ENDPOINT),
         "remaining_requests": remaining_requests,
     }

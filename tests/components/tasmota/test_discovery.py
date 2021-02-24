@@ -109,7 +109,7 @@ async def test_correct_config_discovery(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -136,7 +136,7 @@ async def test_device_discover(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -159,7 +159,7 @@ async def test_device_discover_deprecated(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -185,7 +185,7 @@ async def test_device_update(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -201,7 +201,7 @@ async def test_device_update(
     config["sw"] = "v6.6.6"
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -223,7 +223,7 @@ async def test_device_remove(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -234,7 +234,7 @@ async def test_device_remove(
     assert device_entry is not None
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         "",
     )
@@ -277,7 +277,7 @@ async def test_device_rediscover(
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -288,7 +288,7 @@ async def test_device_rediscover(
     assert device_entry1 is not None
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         "",
     )
@@ -299,7 +299,7 @@ async def test_device_rediscover(
     assert device_entry is None
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -318,12 +318,12 @@ async def test_entity_duplicate_discovery.opp, mqtt_mock, caplog, setup_tasmota)
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )
@@ -348,7 +348,7 @@ async def test_entity_duplicate_removal.opp, mqtt_mock, caplog, setup_tasmota):
     mac = config["mac"]
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         f"{DEFAULT_PREFIX}/{mac}/config",
         json.dumps(config),
     )

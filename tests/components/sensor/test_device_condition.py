@@ -169,7 +169,7 @@ async def test_if_state_not_above_below.opp, calls, caplog):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -203,7 +203,7 @@ async def test_if_state_above.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -261,7 +261,7 @@ async def test_if_state_below.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -319,7 +319,7 @@ async def test_if_state_between.opp, calls):
     sensor1 = platform.ENTITIES["battery"]
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

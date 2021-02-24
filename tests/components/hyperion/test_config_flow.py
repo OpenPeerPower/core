@@ -652,7 +652,7 @@ async def test_reauth_success.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.async_setup_entry", return_value=True
     ):
         result = await _init_flow(
-            opp.
+            opp,
             source=SOURCE_REAUTH,
             data=config_data,
         )
@@ -684,7 +684,7 @@ async def test_reauth_cannot_connect.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
         result = await _init_flow(
-            opp.
+            opp,
             source=SOURCE_REAUTH,
             data=config_data,
         )

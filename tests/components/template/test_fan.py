@@ -49,7 +49,7 @@ async def test_missing_optional_config(opp, calls):
     """Test: missing optional template is ok."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -76,7 +76,7 @@ async def test_missing_value_template_config(opp, calls):
     """Test: missing 'value_template' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -102,7 +102,7 @@ async def test_missing_turn_on_config(opp, calls):
     """Test: missing 'turn_on' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -128,7 +128,7 @@ async def test_missing_turn_off_config(opp, calls):
     """Test: missing 'turn_off' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -154,7 +154,7 @@ async def test_invalid_config(opp, calls):
     """Test: missing 'turn_off' will fail."""
     with assert_setup_component(0, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "platform": "template",
@@ -190,7 +190,7 @@ async def test_templates_with_entities.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -253,7 +253,7 @@ async def test_templates_with_entities_and_invalid_percentage.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -308,7 +308,7 @@ async def test_templates_with_entities_and_preset_modes.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -357,7 +357,7 @@ async def test_template_with_unavailable_entities.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -384,7 +384,7 @@ async def test_template_with_unavailable_parameters.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -415,7 +415,7 @@ async def test_availability_template_with_entities.opp, calls):
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -458,7 +458,7 @@ async def test_templates_with_valid_values.opp, calls):
     """Test templates with valid values."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -488,7 +488,7 @@ async def test_templates_invalid_values.opp, calls):
     """Test templates with invalid values."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -519,7 +519,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {
                 "fan": {
@@ -903,7 +903,7 @@ async def test_set_invalid_direction.opp, calls):
 
 
 def _verify(
-    opp.
+    opp,
     expected_state,
     expected_speed,
     expected_percentage,
@@ -931,7 +931,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
 
     with assert_setup_component(1, "input_number"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "input_number",
             {
                 "input_number": {
@@ -948,7 +948,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
 
     with assert_setup_component(4, "input_select"):
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "input_select",
             {
                 "input_select": {
@@ -1048,7 +1048,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
             test_fan_config["preset_modes"] = preset_modes
 
         assert await setup.async_setup_component(
-            opp.
+            opp,
             "fan",
             {"fan": {"platform": "template", "fans": {"test_fan": test_fan_config}}},
         )
@@ -1061,7 +1061,7 @@ async def _register_components.opp, speed_list=None, preset_modes=None):
 async def test_unique_id.opp):
     """Test unique_id option only creates one fan per id."""
     await setup.async_setup_component(
-        opp.
+        opp,
         "fan",
         {
             "fan": {

@@ -28,7 +28,7 @@ async def test_openpeerpower_bridge_fan_setup_opp):
     assert fan.unique_id == "homekit-fan.living_room_fan-8"
 
     fan_helper = Helper(
-        opp.
+        opp,
         "fan.living_room_fan",
         pairing,
         accessories[0],

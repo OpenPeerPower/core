@@ -73,7 +73,7 @@ def async_get_geography_id(geography_dict):
 
 
 @callback
-def async_get_cloud_api_update_interval.opp, api_key, num_consumers):
+def async_get_cloud_api_update_interval(opp, api_key, num_consumers):
     """Get a leveled scan interval for a particular cloud API key.
 
     This will shift based on the number of active consumers, thus keeping the user
@@ -94,7 +94,7 @@ def async_get_cloud_api_update_interval.opp, api_key, num_consumers):
 
 
 @callback
-def async_get_cloud_coordinators_by_api_key.opp, api_key):
+def async_get_cloud_coordinators_by_api_key(opp, api_key):
     """Get all DataUpdateCoordinator objects related to a particular API key."""
     coordinators = []
     for entry_id, coordinator in.opp.data[DOMAIN][DATA_COORDINATOR].items():
@@ -105,9 +105,9 @@ def async_get_cloud_coordinators_by_api_key.opp, api_key):
 
 
 @callback
-def async_sync_geo_coordinator_update_intervals.opp, api_key):
+def async_sync_geo_coordinator_update_intervals(opp, api_key):
     """Sync the update interval for geography-based data coordinators (by API key)."""
-    coordinators = async_get_cloud_coordinators_by_api_key.opp, api_key)
+    coordinators = async_get_cloud_coordinators_by_api_key(opp, api_key)
 
     if not coordinators:
         return
@@ -132,7 +132,7 @@ async def async_setup(opp, config):
 
 
 @callback
-def _standardize_geography_config_entry.opp, config_entry):
+def _standardize_geography_config_entry(opp, config_entry):
     """Ensure that geography config entries have appropriate properties."""
     entry_updates = {}
 
@@ -156,7 +156,7 @@ def _standardize_geography_config_entry.opp, config_entry):
 
 
 @callback
-def _standardize_node_pro_config_entry.opp, config_entry):
+def _standardize_node_pro_config_entry(opp, config_entry):
     """Ensure that Node/Pro config entries have appropriate properties."""
     entry_updates = {}
 
@@ -173,12 +173,12 @@ def _standardize_node_pro_config_entry.opp, config_entry):
     opp.config_entries.async_update_entry(config_entry, **entry_updates)
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up AirVisual as config entry."""
     if CONF_API_KEY in config_entry.data:
-        _standardize_geography_config_entry.opp, config_entry)
+        _standardize_geography_config_entry(opp, config_entry)
 
-        websession = aiohttp_client.async_get_clientsession.opp)
+        websession = aiohttp_client.async_get_clientsession(opp)
         cloud_api = CloudAPI(config_entry.data[CONF_API_KEY], session=websession)
 
         async def async_update_data():
@@ -222,7 +222,7 @@ async def async_setup_entry.opp, config_entry):
                 raise UpdateFailed(f"Error while retrieving data: {err}") from err
 
         coordinator = DataUpdateCoordinator(
-            opp.
+            opp,
             LOGGER,
             name=async_get_geography_id(config_entry.data),
             # We give a placeholder update interval in order to create the coordinator;
@@ -242,7 +242,7 @@ async def async_setup_entry.opp, config_entry):
             config_entry.entry_id
         ] = config_entry.add_update_listener(async_reload_entry)
     else:
-        _standardize_node_pro_config_entry.opp, config_entry)
+        _standardize_node_pro_config_entry(opp, config_entry)
 
         async def async_update_data():
             """Get new data from the API."""
@@ -255,7 +255,7 @@ async def async_setup_entry.opp, config_entry):
                 raise UpdateFailed(f"Error while retrieving data: {err}") from err
 
         coordinator = DataUpdateCoordinator(
-            opp.
+            opp,
             LOGGER,
             name="Node/Pro data",
             update_interval=DEFAULT_NODE_PRO_UPDATE_INTERVAL,
@@ -276,7 +276,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_migrate_entry.opp, config_entry):
+async def async_migrate_entry(opp, config_entry):
     """Migrate an old config entry."""
     version = config_entry.version
 
@@ -318,7 +318,7 @@ async def async_migrate_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an AirVisual config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -346,7 +346,7 @@ async def async_unload_entry.opp, config_entry):
     return unload_ok
 
 
-async def async_reload_entry.opp, config_entry):
+async def async_reload_entry(opp, config_entry):
     """Handle an options update."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 

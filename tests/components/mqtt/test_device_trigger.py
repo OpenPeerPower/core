@@ -79,7 +79,7 @@ async def test_get_unknown_triggers.opp, device_reg, entity_reg, mqtt_mock):
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -241,7 +241,7 @@ async def test_if_fires_on_mqtt_message.opp, device_reg, calls, mqtt_mock):
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -320,7 +320,7 @@ async def test_if_fires_on_mqtt_message_late_discover(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -396,7 +396,7 @@ async def test_if_fires_on_mqtt_message_after_update(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -462,7 +462,7 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock):
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -506,7 +506,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -566,7 +566,7 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -622,7 +622,7 @@ async def test_attach_remove.opp, device_reg, mqtt_mock):
         calls.append(trigger["trigger"]["payload"])
 
     remove = await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,
@@ -676,7 +676,7 @@ async def test_attach_remove_late.opp, device_reg, mqtt_mock):
         calls.append(trigger["trigger"]["payload"])
 
     remove = await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,
@@ -733,7 +733,7 @@ async def test_attach_remove_late2.opp, device_reg, mqtt_mock):
         calls.append(trigger["trigger"]["payload"])
 
     remove = await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,

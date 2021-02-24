@@ -99,7 +99,7 @@ async def test_setup_depose_user.opp):
 async def test_login_flow_validates_mfa.opp):
     """Test login flow with mfa enabled."""
     opp.auth = await auth_manager_from_config(
-        opp.
+        opp,
         [
             {
                 "type": "insecure_example",
@@ -309,7 +309,7 @@ async def test_include_exclude_config(opp):
 
     # exclude has high priority than include
     notify_auth_module = await auth_mfa_module_from_config(
-        opp.
+        opp,
         {
             "type": "notify",
             "include": ["include1", "include2", "include3"],
@@ -339,7 +339,7 @@ async def test_setup_user_no_notify_service.opp):
 async def test_not_raise_exception_when_service_not_exist.opp):
     """Test login flow will not raise exception when notify service error."""
     opp.auth = await auth_manager_from_config(
-        opp.
+        opp,
         [
             {
                 "type": "insecure_example",

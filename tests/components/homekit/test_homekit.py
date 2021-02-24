@@ -98,7 +98,7 @@ async def test_setup_min.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp.
+        opp,
         BRIDGE_NAME,
         DEFAULT_PORT,
         None,
@@ -134,7 +134,7 @@ async def test_setup_auto_start_disabled.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp.
+        opp,
         "Test Name",
         11111,
         "172.0.0.0",
@@ -180,7 +180,7 @@ async def test_homekit_setup_opp, hk_driver, mock_zeroconf):
         source=SOURCE_IMPORT,
     )
     homekit = HomeKit(
-        opp.
+        opp,
         BRIDGE_NAME,
         DEFAULT_PORT,
         None,
@@ -202,7 +202,7 @@ async def test_homekit_setup_opp, hk_driver, mock_zeroconf):
 
     path = get_persist_fullpath_for_entry_id.opp, entry.entry_id)
     mock_driver.assert_called_with(
-        opp.
+        opp,
         entry.entry_id,
         BRIDGE_NAME,
         loop.opp.loop,
@@ -226,7 +226,7 @@ async def test_homekit_setup_ip_address.opp, hk_driver, mock_zeroconf):
         source=SOURCE_IMPORT,
     )
     homekit = HomeKit(
-        opp.
+        opp,
         BRIDGE_NAME,
         DEFAULT_PORT,
         "172.0.0.0",
@@ -242,7 +242,7 @@ async def test_homekit_setup_ip_address.opp, hk_driver, mock_zeroconf):
     with patch(f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver) as mock_driver:
         await opp.async_add_executor_job(homekit.setup, mock_zeroconf)
     mock_driver.assert_called_with(
-        opp.
+        opp,
         entry.entry_id,
         BRIDGE_NAME,
         loop.opp.loop,
@@ -262,7 +262,7 @@ async def test_homekit_setup_advertise_ip.opp, hk_driver, mock_zeroconf):
         source=SOURCE_IMPORT,
     )
     homekit = HomeKit(
-        opp.
+        opp,
         BRIDGE_NAME,
         DEFAULT_PORT,
         "0.0.0.0",
@@ -278,7 +278,7 @@ async def test_homekit_setup_advertise_ip.opp, hk_driver, mock_zeroconf):
     with patch(f"{PATH_HOMEKIT}.HomeDriver", return_value=hk_driver) as mock_driver:
         await opp.async_add_executor_job(homekit.setup, zeroconf_instance)
     mock_driver.assert_called_with(
-        opp.
+        opp,
         entry.entry_id,
         BRIDGE_NAME,
         loop.opp.loop,
@@ -295,7 +295,7 @@ async def test_homekit_add_accessory.opp, mock_zeroconf):
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -336,7 +336,7 @@ async def test_homekit_warn_add_accessory_bridge(
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -372,7 +372,7 @@ async def test_homekit_remove_accessory.opp, mock_zeroconf):
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -397,7 +397,7 @@ async def test_homekit_entity_filter.opp, mock_zeroconf):
 
     entity_filter = generate_filter(["cover"], ["demo.test"], [], [])
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -433,7 +433,7 @@ async def test_homekit_entity_glob_filter.opp, mock_zeroconf):
         ["cover"], ["demo.test"], [], [], ["*.included_*"], ["*.excluded_*"]
     )
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -472,7 +472,7 @@ async def test_homekit_start.opp, hk_driver, device_reg):
 
     pin = b"123-45-678"
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -564,7 +564,7 @@ async def test_homekit_start_with_a_broken_accessory.opp, hk_driver, mock_zeroco
 
     await async_init_entry.opp, entry)
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -610,7 +610,7 @@ async def test_homekit_stop.opp):
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -650,7 +650,7 @@ async def test_homekit_reset_accessories.opp, mock_zeroconf):
     )
     entity_id = "light.demo"
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -698,7 +698,7 @@ async def test_homekit_too_many_accessories.opp, hk_driver, caplog, mock_zerocon
     entity_filter = generate_filter(["cover", "light"], ["demo.test"], [], [])
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -739,7 +739,7 @@ async def test_homekit_finds_linked_batteries(
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -804,7 +804,7 @@ async def test_homekit_finds_linked_batteries(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp.
+        opp,
         hk_driver,
         ANY,
         ANY,
@@ -825,7 +825,7 @@ async def test_homekit_async_get_integration_fails(
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -889,7 +889,7 @@ async def test_homekit_async_get_integration_fails(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp.
+        opp,
         hk_driver,
         ANY,
         ANY,
@@ -922,7 +922,7 @@ async def test_yaml_updates_update_config_entry_for_name.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp.
+        opp,
         BRIDGE_NAME,
         12345,
         None,
@@ -991,7 +991,7 @@ async def test_homekit_ignored_missing_devices(
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -1053,7 +1053,7 @@ async def test_homekit_ignored_missing_devices(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_any_call(
-        opp.
+        opp,
         hk_driver,
         ANY,
         ANY,
@@ -1072,7 +1072,7 @@ async def test_homekit_finds_linked_motion_sensors(
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -1127,7 +1127,7 @@ async def test_homekit_finds_linked_motion_sensors(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp.
+        opp,
         hk_driver,
         ANY,
         ANY,
@@ -1147,7 +1147,7 @@ async def test_homekit_finds_linked_humidity_sensors(
     entry = await async_init_integration.opp)
 
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,
@@ -1204,7 +1204,7 @@ async def test_homekit_finds_linked_humidity_sensors(
     await opp.async_block_till_done()
 
     mock_get_acc.assert_called_with(
-        opp.
+        opp,
         hk_driver,
         ANY,
         ANY,
@@ -1236,7 +1236,7 @@ async def test_reload.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit.assert_any_call(
-        opp.
+        opp,
         "reloadable",
         12345,
         None,
@@ -1272,7 +1272,7 @@ async def test_reload.opp, mock_zeroconf):
         await opp.async_block_till_done()
 
     mock_homekit2.assert_any_call(
-        opp.
+        opp,
         "reloadable",
         45678,
         None,
@@ -1295,7 +1295,7 @@ async def test_homekit_start_in_accessory_mode.opp, hk_driver, device_reg):
 
     pin = b"123-45-678"
     homekit = HomeKit(
-        opp.
+        opp,
         None,
         None,
         None,

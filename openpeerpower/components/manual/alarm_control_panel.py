@@ -152,7 +152,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             ManualAlarm(
-                opp.
+                opp,
                 config[CONF_NAME],
                 config.get(CONF_CODE),
                 config.get(CONF_CODE_TEMPLATE),
@@ -177,7 +177,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
 
     def __init__(
         self,
-        opp.
+        opp,
         name,
         code,
         code_template,

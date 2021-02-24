@@ -71,7 +71,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         await opp.async_add_executor_job(thermostat.get_data)
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=f"nuheat {serial_number}",
         update_method=_async_update_data,

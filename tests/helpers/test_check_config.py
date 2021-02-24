@@ -41,7 +41,7 @@ async def test_bad_core_config(opp):
     """Test a bad core config setup."""
     files = {YAML_CONFIG_FILE: BAD_CORE_CONFIG}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         log_op_config(res)
 
         assert isinstance(res.errors[0].message, str)
@@ -57,7 +57,7 @@ async def test_config_platform_valid.opp):
     """Test a valid platform setup."""
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "light:\n  platform: demo"}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         log_op_config(res)
 
         assert res.keys() == {"openpeerpower", "light"}
@@ -70,7 +70,7 @@ async def test_component_platform_not_found.opp):
     # Make sure they don't exist
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "beer:"}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         log_op_config(res)
 
         assert res.keys() == {"openpeerpower"}
@@ -88,7 +88,7 @@ async def test_component_platform_not_found_2.opp):
     # Make sure they don't exist
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "light:\n  platform: beer"}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         log_op_config(res)
 
         assert res.keys() == {"openpeerpower", "light"}
@@ -109,7 +109,7 @@ async def test_package_invalid.opp):
         YAML_CONFIG_FILE: BASE_CONFIG + ("  packages:\n    p1:\n" '      group: ["a"]')
     }
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         log_op_config(res)
 
         assert res.errors[0].domain == "openpeerpower.packages.p1.group"
@@ -125,7 +125,7 @@ async def test_bootstrap_error(opp):
     """Test a valid platform setup."""
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "automation: !include no.yaml"}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         log_op_config(res)
 
         assert res.errors[0].domain is None
@@ -165,7 +165,7 @@ action:
 """,
     }
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         assert len(res.get("automation", [])) == 1
         assert len(res.errors) == 0
         assert "input_datetime" in res
@@ -174,7 +174,7 @@ action:
 async def test_config_platform_raise.opp):
     """Test bad config validation platform."""
     mock_platform(
-        opp.
+        opp,
         "bla.config",
         Mock(async_validate_config=Mock(side_effect=Exception("Broken"))),
     )
@@ -186,7 +186,7 @@ bla:
 """,
     }
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
-        res = await async_check_op_config_file.opp)
+        res = await async_check_op_config_file(opp)
         assert len(res.errors) == 1
         err = res.errors[0]
         assert err.domain == "bla"

@@ -37,7 +37,7 @@ _LOGGER = logging.getLogger(__name__)
 
 ERROR_LOG_FILENAME = "open-peer-power.log"
 
-# opp.data key for logging information.
+# opp data key for logging information.
 DATA_LOGGING = "logging"
 
 LOG_SLOW_STARTUP_INTERVAL = 60

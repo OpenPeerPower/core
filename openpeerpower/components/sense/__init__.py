@@ -120,7 +120,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from err
 
     trends_coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=f"Sense Trends {email}",
         update_method=gateway.update_trend_data,

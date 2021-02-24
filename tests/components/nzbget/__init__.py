@@ -69,7 +69,7 @@ MOCK_HISTORY = [
 
 
 async def init_integration(
-    opp.
+    opp,
     *,
     data: dict = ENTRY_CONFIG,
     options: dict = ENTRY_OPTIONS,

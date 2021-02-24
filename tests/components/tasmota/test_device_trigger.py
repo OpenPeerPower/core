@@ -95,7 +95,7 @@ async def test_get_unknown_triggers(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -290,7 +290,7 @@ async def test_if_fires_on_mqtt_message_btn(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -360,7 +360,7 @@ async def test_if_fires_on_mqtt_message_swc(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -456,7 +456,7 @@ async def test_if_fires_on_mqtt_message_late_discover(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -530,7 +530,7 @@ async def test_if_fires_on_mqtt_message_after_update(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -607,7 +607,7 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock, setup_tasmo
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -653,7 +653,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -722,7 +722,7 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -782,7 +782,7 @@ async def test_attach_remove.opp, device_reg, mqtt_mock, setup_tasmota):
         calls.append(trigger["trigger"]["description"])
 
     remove = await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,
@@ -837,7 +837,7 @@ async def test_attach_remove_late.opp, device_reg, mqtt_mock, setup_tasmota):
         calls.append(trigger["trigger"]["description"])
 
     remove = await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,
@@ -902,7 +902,7 @@ async def test_attach_remove_late2.opp, device_reg, mqtt_mock, setup_tasmota):
         calls.append(trigger["trigger"]["description"])
 
     remove = await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,
@@ -943,7 +943,7 @@ async def test_attach_remove_unknown1.opp, device_reg, mqtt_mock, setup_tasmota)
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     remove = await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,
@@ -985,7 +985,7 @@ async def test_attach_unknown_remove_device_from_registry(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
     await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,
@@ -1023,7 +1023,7 @@ async def test_attach_remove_config_entry.opp, device_reg, mqtt_mock, setup_tasm
         calls.append(trigger["trigger"]["description"])
 
     await async_attach_trigger(
-        opp.
+        opp,
         {
             "platform": "device",
             "domain": DOMAIN,

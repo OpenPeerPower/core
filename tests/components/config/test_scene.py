@@ -117,7 +117,7 @@ async def test_delete_scene.opp, opp_client):
     ent_reg = await opp.helpers.entity_registry.async_get_registry()
 
     assert await async_setup_component(
-        opp.
+        opp,
         "scene",
         {
             "scene": [

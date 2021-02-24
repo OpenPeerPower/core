@@ -541,7 +541,7 @@ async def test_device_types.opp: OpenPeerPower):
 async def test_effects.opp: OpenPeerPower):
     """Test effects."""
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {

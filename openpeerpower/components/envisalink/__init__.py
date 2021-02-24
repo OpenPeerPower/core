@@ -208,7 +208,7 @@ async def async_setup(opp, config):
     if partitions:
         opp.async_create_task(
             async_load_platform(
-                opp.
+                opp,
                 "alarm_control_panel",
                 "envisalink",
                 {CONF_PARTITIONS: partitions, CONF_CODE: code, CONF_PANIC: panic_type},
@@ -217,7 +217,7 @@ async def async_setup(opp, config):
         )
         opp.async_create_task(
             async_load_platform(
-                opp.
+                opp,
                 "sensor",
                 "envisalink",
                 {CONF_PARTITIONS: partitions, CONF_CODE: code},

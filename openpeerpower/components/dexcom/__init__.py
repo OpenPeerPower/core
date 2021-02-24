@@ -59,7 +59,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: DataUpdateCoordinator(
-            opp.
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_method=async_update_data,

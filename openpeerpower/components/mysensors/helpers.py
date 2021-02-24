@@ -38,7 +38,7 @@ def discover_mysensors_platform(
     """Discover a MySensors platform."""
     _LOGGER.debug("Discovering platform %s with devIds: %s", platform, new_devices)
     async_dispatcher_send(
-        opp.
+        opp,
         MYSENSORS_DISCOVERY.format(gateway_id, platform),
         {
             ATTR_DEVICES: new_devices,

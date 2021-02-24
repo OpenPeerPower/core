@@ -82,7 +82,7 @@ def setup_internal_discovery.opp: OpenPeerPower) -> None:
         host = addresses[0] if addresses else service_info.server
 
         discover_chromecast(
-            opp.
+            opp,
             ChromecastInfo(
                 services=service[0],
                 uuid=service[1],
@@ -96,7 +96,7 @@ def setup_internal_discovery.opp: OpenPeerPower) -> None:
     def internal_remove_callback(uuid, service_name, service):
         """Handle zeroconf discovery of a removed chromecast."""
         _remove_chromecast(
-            opp.
+            opp,
             ChromecastInfo(
                 services=service[0],
                 uuid=service[1],

@@ -118,7 +118,7 @@ async def test_base_url_no_longer_https_does_not_load(
 ):
     """Test base_url no longer valid creates a new flow."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"external_url": "http://example.local:8123"},
     )
     config_entry.add_to.opp.opp)
@@ -144,7 +144,7 @@ async def test_unauthorized_installed_app_raises_not_ready(
 
 
 async def test_scenes_unauthorized_loads_platforms(
-    opp.
+    opp,
     config_entry,
     app,
     installed_app,
@@ -178,7 +178,7 @@ async def test_scenes_unauthorized_loads_platforms(
 
 
 async def test_config_entry_loads_platforms(
-    opp.
+    opp,
     config_entry,
     app,
     installed_app,
@@ -210,7 +210,7 @@ async def test_config_entry_loads_platforms(
 
 
 async def test_config_entry_loads_unconnected_cloud(
-    opp.
+    opp,
     config_entry,
     app,
     installed_app,

@@ -13,9 +13,9 @@ def register_oauth2_implementations(
 ) -> None:
     """Register Toon OAuth2 implementations."""
     config_flow.ToonFlowHandler.async_register_implementation(
-        opp.
+        opp,
         ToonLocalOAuth2Implementation(
-            opp.
+            opp,
             client_id=client_id,
             client_secret=client_secret,
             name="Eneco Toon",
@@ -24,9 +24,9 @@ def register_oauth2_implementations(
         ),
     )
     config_flow.ToonFlowHandler.async_register_implementation(
-        opp.
+        opp,
         ToonLocalOAuth2Implementation(
-            opp.
+            opp,
             client_id=client_id,
             client_secret=client_secret,
             name="Engie Electrabel Boxx",
@@ -34,9 +34,9 @@ def register_oauth2_implementations(
         ),
     )
     config_flow.ToonFlowHandler.async_register_implementation(
-        opp.
+        opp,
         ToonLocalOAuth2Implementation(
-            opp.
+            opp,
             client_id=client_id,
             client_secret=client_secret,
             name="Viesgo",

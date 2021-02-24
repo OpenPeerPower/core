@@ -43,7 +43,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up AirNow from a config entry."""
     api_key = entry.data[CONF_API_KEY]
     latitude = entry.data[CONF_LATITUDE]
@@ -54,7 +54,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     update_interval = datetime.timedelta(minutes=30)
 
     # Setup the Coordinator
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     coordinator = AirNowDataUpdateCoordinator(
         opp. session, api_key, latitude, longitude, distance, update_interval
     )
@@ -76,7 +76,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

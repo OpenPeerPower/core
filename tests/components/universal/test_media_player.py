@@ -851,7 +851,7 @@ async def test_state_template.opp):
     opp.states.async_set("sensor.test_sensor", STATE_ON)
 
     await async_setup_component(
-        opp.
+        opp,
         "media_player",
         {
             "media_player": {
@@ -877,7 +877,7 @@ async def test_device_class.opp):
     opp.states.async_set("sensor.test_sensor", "on")
 
     await async_setup_component(
-        opp.
+        opp,
         "media_player",
         {
             "media_player": {
@@ -896,7 +896,7 @@ async def test_invalid_state_template.opp):
     opp.states.async_set("sensor.test_sensor", "on")
 
     await async_setup_component(
-        opp.
+        opp,
         "media_player",
         {
             "media_player": {
@@ -928,7 +928,7 @@ async def test_master_state_with_template.opp):
     )
 
     await async_setup_component(
-        opp.
+        opp,
         "media_player",
         {
             "media_player": {
@@ -971,7 +971,7 @@ async def test_reload.opp):
     )
 
     await async_setup_component(
-        opp.
+        opp,
         "media_player",
         {
             "media_player": {

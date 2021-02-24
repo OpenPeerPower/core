@@ -55,7 +55,7 @@ DEFAULT_CONFIG = {
 async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -85,7 +85,7 @@ async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, c
 async def test_setting_sensor_value_expires.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -240,7 +240,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
 async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -270,7 +270,7 @@ async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
 async def test_invalid_sensor_value_via_mqtt_message.opp, mqtt_mock, caplog):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -308,7 +308,7 @@ async def test_invalid_sensor_value_via_mqtt_message.opp, mqtt_mock, caplog):
 async def test_setting_sensor_value_via_mqtt_message_and_template.opp, mqtt_mock):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -341,7 +341,7 @@ async def test_setting_sensor_value_via_mqtt_message_and_template2(
 ):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -378,7 +378,7 @@ async def test_setting_sensor_value_via_mqtt_message_empty_template(
 ):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -409,7 +409,7 @@ async def test_setting_sensor_value_via_mqtt_message_empty_template(
 async def test_valid_device_class.opp, mqtt_mock):
     """Test the setting of a valid sensor class."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -429,7 +429,7 @@ async def test_valid_device_class.opp, mqtt_mock):
 async def test_invalid_device_class.opp, mqtt_mock):
     """Test the setting of an invalid sensor class."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -477,7 +477,7 @@ async def test_custom_availability_payload.opp, mqtt_mock):
 async def test_force_update_disabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -512,7 +512,7 @@ async def test_force_update_disabled.opp, mqtt_mock):
 async def test_force_update_enabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -548,7 +548,7 @@ async def test_force_update_enabled.opp, mqtt_mock):
 async def test_off_delay.opp, mqtt_mock):
     """Test off_delay option."""
     assert await async_setup_component(
-        opp.
+        opp,
         binary_sensor.DOMAIN,
         {
             binary_sensor.DOMAIN: {
@@ -682,7 +682,7 @@ async def test_discovery_update_binary_sensor_topic_template.opp, mqtt_mock, cap
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         binary_sensor.DOMAIN,
@@ -717,7 +717,7 @@ async def test_discovery_update_binary_sensor_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         binary_sensor.DOMAIN,

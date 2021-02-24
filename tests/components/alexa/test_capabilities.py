@@ -207,7 +207,7 @@ async def test_api_select_input.opp, domain, payload, source_list, idx):
             "SelectInput",
             "media_player#test",
             "media_player.select_source",
-            opp.
+            opp,
             payload={"input": payload},
         )
         return
@@ -217,7 +217,7 @@ async def test_api_select_input.opp, domain, payload, source_list, idx):
         "SelectInput",
         "media_player#test",
         "media_player.select_source",
-        opp.
+        opp,
         payload={"input": payload},
     )
     assert call.data["source"] == source_list[idx]

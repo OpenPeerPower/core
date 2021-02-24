@@ -78,7 +78,7 @@ async def try_connect.opp: OpenPeerPowerType, user_input: Dict[str, str]) -> boo
             gateway_ready.set_result(True)
 
         gateway: Optional[BaseAsyncGateway] = await _get_gateway(
-            opp.
+            opp,
             device=user_input[CONF_DEVICE],
             version=user_input[CONF_VERSION],
             event_callback=gateway_ready_callback,
@@ -127,7 +127,7 @@ async def setup_gateway(
     """Set up the Gateway for the given ConfigEntry."""
 
     ready_gateway = await _get_gateway(
-        opp.
+        opp,
         device=entry.data[CONF_DEVICE],
         version=entry.data[CONF_VERSION],
         event_callback=_gw_callback_factory.opp, entry.entry_id),

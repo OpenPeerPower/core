@@ -35,7 +35,7 @@ async def locative_client(loop, opp, opp_client):
 async def webhook_id.opp, locative_client):
     """Initialize the Geofency component and get the webhook_id."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(

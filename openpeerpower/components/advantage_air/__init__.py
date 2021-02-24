@@ -25,14 +25,14 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Advantage Air config."""
     ip_address = entry.data[CONF_IP_ADDRESS]
     port = entry.data[CONF_PORT]
     api = advantage_air(
         ip_address,
         port=port,
-        session=async_get_clientsession.opp),
+        session=async_get_clientsession(opp),
         retry=ADVANTAGE_AIR_RETRY,
     )
 
@@ -43,7 +43,7 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(err) from err
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="Advantage Air",
         update_method=async_get,
@@ -75,7 +75,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload Advantage Air Config."""
     unload_ok = all(
         await asyncio.gather(

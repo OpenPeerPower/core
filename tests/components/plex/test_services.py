@@ -23,7 +23,7 @@ from tests.common import MockConfigEntry
 
 
 async def test_refresh_library(
-    opp.
+    opp,
     mock_plex_server,
     setup_plex_server,
     requests_mock,
@@ -108,7 +108,7 @@ async def test_scan_clients.opp, mock_plex_server):
 
 
 async def test_sonos_play_media(
-    opp.
+    opp,
     entry,
     setup_plex_server,
     requests_mock,

@@ -61,7 +61,7 @@ async def test_fail_setup_if_no_command_topic.opp, mqtt_mock):
 async def test_controlling_state_via_topic.opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: {
@@ -129,7 +129,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
 async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
     """Test the controlling state via topic and JSON message."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: {
@@ -192,7 +192,7 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
 async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     """Test optimistic mode without state topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: {
@@ -296,7 +296,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
 async def test_on_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     """Test on with speed."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: {
@@ -345,7 +345,7 @@ async def test_on_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
 async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
     """Test optimistic mode with state topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: {
@@ -442,7 +442,7 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
 async def test_attributes.opp, mqtt_mock):
     """Test attributes."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: {
@@ -523,7 +523,7 @@ async def test_attributes.opp, mqtt_mock):
 async def test_custom_speed_list.opp, mqtt_mock):
     """Test optimistic mode without state topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: {
@@ -548,7 +548,7 @@ async def test_custom_speed_list.opp, mqtt_mock):
 async def test_supported_features.opp, mqtt_mock):
     """Test optimistic mode without state topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         fan.DOMAIN,
         {
             fan.DOMAIN: [

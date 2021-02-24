@@ -56,7 +56,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             raise UpdateFailed from err
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=DEFAULT_DEVICE_NAME,
         update_method=async_update_data,

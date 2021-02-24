@@ -204,7 +204,7 @@ async def test_action.opp):
     platform.init()
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

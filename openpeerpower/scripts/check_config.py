@@ -229,7 +229,7 @@ async def async_check_config(config_dir):
     """Check the HA config."""
    opp = core.OpenPeerPower()
     opp.config.config_dir = config_dir
-    components = await async_check_op_config_file.opp)
+    components = await async_check_op_config_file(opp)
     await opp.async_stop(force=True)
     return components
 

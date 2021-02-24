@@ -88,7 +88,7 @@ def mutagen_mock():
 async def internal_url_mock.opp):
     """Mock internal URL of the instance."""
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "http://example.local:8123"},
     )
 

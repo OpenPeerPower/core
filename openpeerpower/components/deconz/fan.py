@@ -20,7 +20,7 @@ SUPPORTED_ON_SPEEDS = {1: SPEED_LOW, 2: SPEED_MEDIUM, 4: SPEED_HIGH}
 
 
 def convert_speed(speed: int) -> str:
-    """Convert speed from deCONZ to OPP.
+    """Convert speed from deCONZ to opp,
 
     Fallback to medium speed if unsupported by OPP fan platform.
     """

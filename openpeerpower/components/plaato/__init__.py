@@ -231,7 +231,7 @@ class PlaatoCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp.
+        opp,
         auth_token,
         device_type: PlaatoDeviceType,
         update_interval: timedelta,
@@ -243,7 +243,7 @@ class PlaatoCoordinator(DataUpdateCoordinator):
         self.platforms = []
 
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=update_interval,

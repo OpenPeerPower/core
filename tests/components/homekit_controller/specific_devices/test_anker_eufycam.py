@@ -20,7 +20,7 @@ async def test_eufycam_setup_opp):
     assert camera.unique_id == "homekit-A0000A000000000D-aid:4"
 
     camera_helper = Helper(
-        opp.
+        opp,
         "camera.eufycam2_0000",
         pairing,
         accessories[0],

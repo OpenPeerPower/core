@@ -80,7 +80,7 @@ async def test_action.opp, device_ias):
         return_value=mock_coro([0x00, zcl_f.Status.SUCCESS]),
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: [

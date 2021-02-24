@@ -63,7 +63,7 @@ async def test_single_level_wildcard_topic.opp, mock_device_tracker_conf):
 
     opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -82,7 +82,7 @@ async def test_multi_level_wildcard_topic.opp, mock_device_tracker_conf):
 
     opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -101,7 +101,7 @@ async def test_single_level_wildcard_topic_not_matching.opp, mock_device_tracker
 
     opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -120,7 +120,7 @@ async def test_multi_level_wildcard_topic_not_matching.opp, mock_device_tracker_
 
     opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
@@ -141,7 +141,7 @@ async def test_matching_custom_payload_for_home_and_not_home(
 
     opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -174,7 +174,7 @@ async def test_not_matching_custom_payload_for_home_and_not_home(
 
     opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -201,7 +201,7 @@ async def test_matching_source_type.opp, mock_device_tracker_conf):
 
     opp.config.components = {"mqtt", "zone"}
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {

@@ -45,7 +45,7 @@ DEFAULT_CONFIG = {
 async def test_controlling_state_via_topic.opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             switch.DOMAIN: {
@@ -84,7 +84,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         return_value=fake_state,
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             switch.DOMAIN,
             {
                 switch.DOMAIN: {
@@ -124,7 +124,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
 async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
     """Test the controlling state via topic and JSON message."""
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             switch.DOMAIN: {
@@ -207,7 +207,7 @@ async def test_custom_availability_payload.opp, mqtt_mock):
 async def test_custom_state_payload.opp, mqtt_mock):
     """Test the state payload."""
     assert await async_setup_component(
-        opp.
+        opp,
         switch.DOMAIN,
         {
             switch.DOMAIN: {
@@ -333,7 +333,7 @@ async def test_discovery_update_switch_topic_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         switch.DOMAIN,
@@ -368,7 +368,7 @@ async def test_discovery_update_switch_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         switch.DOMAIN,

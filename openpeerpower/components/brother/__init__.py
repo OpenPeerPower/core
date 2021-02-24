@@ -81,7 +81,7 @@ class BrotherDataUpdateCoordinator(DataUpdateCoordinator):
         self.brother = Brother(host, kind=kind, snmp_engine=snmp_engine)
 
         super().__init__(
-            opp.
+            opp,
             _LOGGER,
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,

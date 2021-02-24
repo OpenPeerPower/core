@@ -32,7 +32,7 @@ class ReadResult:
 
 
 async def base_test(
-    opp.
+    opp,
     config_device,
     device_name,
     entity_domain,
@@ -124,7 +124,7 @@ async def base_test(
 
 
 async def base_config_test(
-    opp.
+    opp,
     config_device,
     device_name,
     entity_domain,
@@ -136,7 +136,7 @@ async def base_config_test(
     """Check config of device for given config."""
 
     await base_test(
-        opp.
+        opp,
         config_device,
         device_name,
         entity_domain,

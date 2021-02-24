@@ -169,7 +169,7 @@ class ConfigManagerAvailableFlowView(OpenPeerPowerView):
     async def get(self, request):
         """List available flow handlers."""
        opp = request.app[.opp"]
-        return self.json(await async_get_config_flows.opp))
+        return self.json(await async_get_config_flows(opp))
 
 
 class OptionManagerFlowIndexView(FlowManagerIndexView):

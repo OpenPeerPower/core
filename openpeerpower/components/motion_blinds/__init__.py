@@ -79,7 +79,7 @@ async def async_setup_entry(
             pass
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         # Name of the data. For logging purposes.
         name=entry.title,

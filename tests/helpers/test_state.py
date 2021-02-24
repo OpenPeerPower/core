@@ -68,7 +68,7 @@ async def test_call_to_component.opp):
             context = "dummy_context"
 
             await state.async_reproduce_state(
-                opp.
+                opp,
                 [state_media_player, state_climate],
                 context=context,
             )

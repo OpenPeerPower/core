@@ -62,7 +62,7 @@ async def async_setup(opp, config):
     gdm = opp.data[PLEX_DOMAIN][GDM_SCANNER] = GDM()
 
     opp.data[PLEX_DOMAIN][GDM_DEBOUNCER] = Debouncer(
-        opp.
+        opp,
         _LOGGER,
         cooldown=10,
         immediate=True,
@@ -87,7 +87,7 @@ async def async_setup_entry.opp, entry):
         opp.config_entries.async_update_entry(entry, options=options)
 
     plex_server = PlexServer(
-        opp.
+        opp,
         server_config,
         entry.data[CONF_SERVER_IDENTIFIER],
         entry.options,
@@ -150,7 +150,7 @@ async def async_setup_entry.opp, entry):
         await plex_server.async_update_platforms()
 
     unsub = async_dispatcher_connect(
-        opp.
+        opp,
         PLEX_UPDATE_PLATFORMS_SIGNAL.format(server_id),
         async_update_plex,
     )

@@ -46,7 +46,7 @@ async def test_setup_platform.opp):
     mocked_device = _create_mocked_device(throw_exception=True)
     with _patch_media_player_device(mocked_device):
         await async_setup_component(
-            opp.
+            opp,
             media_player.DOMAIN,
             {
                 media_player.DOMAIN: [

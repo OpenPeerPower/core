@@ -72,7 +72,7 @@ async def test_if_fires_on_click_event.opp, calls, coap_wrapper):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -111,7 +111,7 @@ async def test_validate_trigger_config_no_device.opp, calls, coap_wrapper):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -145,7 +145,7 @@ async def test_validate_trigger_invalid_triggers.opp, coap_wrapper):
     notification_calls = async_mock_service.opp, "persistent_notification", "create")
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

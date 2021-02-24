@@ -376,7 +376,7 @@ async def test_reload.opp):
     opp.states.async_set("binary_sensor.test_id", "on")
 
     await async_setup_component(
-        opp.
+        opp,
         "sensor",
         {
             "sensor": {

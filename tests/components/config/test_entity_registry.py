@@ -74,7 +74,7 @@ async def test_list_entities.opp, client):
 async def test_get_entity.opp, client):
     """Test get entry."""
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.name": RegistryEntry(
                 entity_id="test_domain.name",
@@ -138,7 +138,7 @@ async def test_get_entity.opp, client):
 async def test_update_entity.opp, client):
     """Test updating entity."""
     registry = mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 entity_id="test_domain.world",
@@ -245,7 +245,7 @@ async def test_update_entity_require_restart.opp, client):
     config_entry = MockConfigEntry(domain="test_platform")
     config_entry.add_to.opp.opp)
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 config_entry_id=config_entry.entry_id,
@@ -309,7 +309,7 @@ async def test_enable_entity_disabled_device.opp, client, device_registry):
     )
 
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 config_entry_id=config_entry.entry_id,
@@ -346,7 +346,7 @@ async def test_enable_entity_disabled_device.opp, client, device_registry):
 async def test_update_entity_no_changes.opp, client):
     """Test update entity with no changes."""
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 entity_id="test_domain.world",
@@ -429,7 +429,7 @@ async def test_update_nonexisting_entity(client):
 async def test_update_entity_id.opp, client):
     """Test update entity id."""
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 entity_id="test_domain.world",
@@ -480,7 +480,7 @@ async def test_update_entity_id.opp, client):
 async def test_update_existing_entity_id.opp, client):
     """Test update entity id to an already registered entity id."""
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 entity_id="test_domain.world",
@@ -517,7 +517,7 @@ async def test_update_existing_entity_id.opp, client):
 async def test_update_invalid_entity_id.opp, client):
     """Test update entity id to an invalid entity id."""
     mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 entity_id="test_domain.world",
@@ -548,7 +548,7 @@ async def test_update_invalid_entity_id.opp, client):
 async def test_remove_entity.opp, client):
     """Test removing entity."""
     registry = mock_registry(
-        opp.
+        opp,
         {
             "test_domain.world": RegistryEntry(
                 entity_id="test_domain.world",

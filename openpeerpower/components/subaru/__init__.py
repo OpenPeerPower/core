@@ -79,7 +79,7 @@ async def async_setup_entry.opp, entry):
             raise UpdateFailed(err.message) from err
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name=COORDINATOR_NAME,
         update_method=async_update_data,

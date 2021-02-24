@@ -77,9 +77,9 @@ async def async_setup(opp, config):
 
     if conf[CONF_TYPE] == TYPE_OAUTH2:
         config_flow.AlmondFlowHandler.async_register_implementation(
-            opp.
+            opp,
             config_entry_oauth2_flow.LocalOAuth2Implementation(
-                opp.
+                opp,
                 DOMAIN,
                 conf[CONF_CLIENT_ID],
                 conf[CONF_CLIENT_SECRET],

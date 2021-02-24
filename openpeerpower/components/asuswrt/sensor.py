@@ -99,7 +99,7 @@ async def async_setup_entry(
 
     data_handler = AsuswrtDataHandler(sensors, api)
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="sensor",
         update_method=data_handler.update_data,

@@ -154,7 +154,7 @@ class JsonValidator:
 async def test_fail_setup_if_no_command_topic.opp, mqtt_mock):
     """Test if setup fails with no command topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {light.DOMAIN: {"platform": "mqtt", "schema": "json", "name": "test"}},
     )
@@ -165,7 +165,7 @@ async def test_fail_setup_if_no_command_topic.opp, mqtt_mock):
 async def test_no_color_brightness_color_temp_white_val_if_no_topics.opp, mqtt_mock):
     """Test for no RGB, brightness, color temp, effect, white val or XY."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -206,7 +206,7 @@ async def test_no_color_brightness_color_temp_white_val_if_no_topics.opp, mqtt_m
 async def test_controlling_state_via_topic.opp, mqtt_mock):
     """Test the controlling of the state via topic."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -242,7 +242,7 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
 
     # Turn on the light, full white
     async_fire_mqtt_message(
-        opp.
+        opp,
         "test_light_rgb",
         '{"state":"ON",'
         '"color":{"r":255,"g":255,"b":255},'
@@ -342,7 +342,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
         return_value=fake_state,
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             light.DOMAIN,
             {
                 light.DOMAIN: {
@@ -460,7 +460,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
 async def test_sending_hs_color.opp, mqtt_mock):
     """Test light.turn_on with hs color sends hs color parameters."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -524,7 +524,7 @@ async def test_sending_hs_color.opp, mqtt_mock):
 async def test_sending_rgb_color_no_brightness.opp, mqtt_mock):
     """Test light.turn_on with hs color sends rgb color parameters."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -577,7 +577,7 @@ async def test_sending_rgb_color_no_brightness.opp, mqtt_mock):
 async def test_sending_rgb_color_with_brightness.opp, mqtt_mock):
     """Test light.turn_on with hs color sends rgb color parameters."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -646,7 +646,7 @@ async def test_sending_rgb_color_with_brightness.opp, mqtt_mock):
 async def test_sending_rgb_color_with_scaled_brightness.opp, mqtt_mock):
     """Test light.turn_on with hs color sends rgb color parameters."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -716,7 +716,7 @@ async def test_sending_rgb_color_with_scaled_brightness.opp, mqtt_mock):
 async def test_sending_xy_color.opp, mqtt_mock):
     """Test light.turn_on with hs color sends xy color parameters."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -779,7 +779,7 @@ async def test_sending_xy_color.opp, mqtt_mock):
 async def test_effect.opp, mqtt_mock):
     """Test for effect being sent when included."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -838,7 +838,7 @@ async def test_effect.opp, mqtt_mock):
 async def test_flash_short_and_long.opp, mqtt_mock):
     """Test for flash length being sent when included."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -880,7 +880,7 @@ async def test_flash_short_and_long.opp, mqtt_mock):
 async def test_transition.opp, mqtt_mock):
     """Test for transition time being sent when included."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -926,7 +926,7 @@ async def test_transition.opp, mqtt_mock):
 async def test_brightness_scale.opp, mqtt_mock):
     """Test for brightness scaling."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -967,7 +967,7 @@ async def test_brightness_scale.opp, mqtt_mock):
 async def test_invalid_values.opp, mqtt_mock):
     """Test that invalid color/brightness/white/etc. values are ignored."""
     assert await async_setup_component(
-        opp.
+        opp,
         light.DOMAIN,
         {
             light.DOMAIN: {
@@ -997,7 +997,7 @@ async def test_invalid_values.opp, mqtt_mock):
 
     # Turn on the light
     async_fire_mqtt_message(
-        opp.
+        opp,
         "test_light_rgb",
         '{"state":"ON",'
         '"color":{"r":255,"g":255,"b":255},'
@@ -1016,7 +1016,7 @@ async def test_invalid_values.opp, mqtt_mock):
 
     # Empty color value
     async_fire_mqtt_message(
-        opp.
+        opp,
         "test_light_rgb",
         '{"state":"ON",' '"color":{}}',
     )
@@ -1028,7 +1028,7 @@ async def test_invalid_values.opp, mqtt_mock):
 
     # Bad HS color values
     async_fire_mqtt_message(
-        opp.
+        opp,
         "test_light_rgb",
         '{"state":"ON",' '"color":{"h":"bad","s":"val"}}',
     )
@@ -1040,7 +1040,7 @@ async def test_invalid_values.opp, mqtt_mock):
 
     # Bad RGB color values
     async_fire_mqtt_message(
-        opp.
+        opp,
         "test_light_rgb",
         '{"state":"ON",' '"color":{"r":"bad","g":"val","b":"test"}}',
     )
@@ -1052,7 +1052,7 @@ async def test_invalid_values.opp, mqtt_mock):
 
     # Bad XY color values
     async_fire_mqtt_message(
-        opp.
+        opp,
         "test_light_rgb",
         '{"state":"ON",' '"color":{"x":"bad","y":"val"}}',
     )

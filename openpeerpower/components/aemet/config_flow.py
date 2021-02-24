@@ -51,7 +51,7 @@ class AemetConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(step_id="user", data_schema=schema, errors=errors)
 
 
-async def _is_aemet_api_online.opp, api_key):
+async def _is_aemet_api_online(opp, api_key):
     aemet = AEMET(api_key)
     return await opp.async_add_executor_job(
         aemet.get_conventional_observation_stations, False

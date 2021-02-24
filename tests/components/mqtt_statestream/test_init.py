@@ -9,7 +9,7 @@ from tests.common import mock_state_change_event
 
 
 async def add_statestream(
-    opp.
+    opp,
     base_topic=None,
     publish_attributes=None,
     publish_timestamps=None,

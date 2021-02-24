@@ -144,7 +144,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     transition = config.get(ATTR_TRANSITION)
     flux = FluxSwitch(
         name,
-        opp.
+        opp,
         lights,
         start_time,
         stop_time,
@@ -173,7 +173,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
     def __init__(
         self,
         name,
-        opp.
+        opp,
         lights,
         start_time,
         stop_time,

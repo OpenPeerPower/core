@@ -397,7 +397,7 @@ async def test_select_source.opp):
     await _setup_monoprice.opp, monoprice)
 
     await _call_media_player_service(
-        opp.
+        opp,
         SERVICE_SELECT_SOURCE,
         {"entity_id": ZONE_1_ID, ATTR_INPUT_SOURCE: "three"},
     )
@@ -405,7 +405,7 @@ async def test_select_source.opp):
 
     # Trying to set unknown source
     await _call_media_player_service(
-        opp.
+        opp,
         SERVICE_SELECT_SOURCE,
         {"entity_id": ZONE_1_ID, ATTR_INPUT_SOURCE: "no name"},
     )

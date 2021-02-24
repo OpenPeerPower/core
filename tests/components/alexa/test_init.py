@@ -16,7 +16,7 @@ async def test_humanify_alexa_event.opp):
 
     results = list(
         logbook.humanify(
-            opp.
+            opp,
             [
                 MockLazyEventPartialState(
                     EVENT_ALEXA_SMART_HOME,

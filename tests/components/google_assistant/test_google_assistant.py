@@ -40,7 +40,7 @@ def assistant_client(loop, opp, aiohttp_client):
     """Create web client for the Google Assistant API."""
     loop.run_until_complete(
         setup.async_setup_component(
-            opp.
+            opp,
             "google_assistant",
             {
                 "google_assistant": {
@@ -109,7 +109,7 @@ def.opp_fixture(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp.
+            opp,
             alarm_control_panel.DOMAIN,
             {"alarm_control_panel": [{"platform": "demo"}]},
         )

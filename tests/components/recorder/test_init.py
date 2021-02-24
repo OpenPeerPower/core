@@ -347,7 +347,7 @@ def test_recorder_setup_failure():
     ):
         setup.side_effect = ImportError("driver not found")
         rec = Recorder(
-            opp.
+            opp,
             auto_purge=True,
             keep_days=7,
             commit_interval=1,

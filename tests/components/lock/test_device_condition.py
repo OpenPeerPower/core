@@ -70,7 +70,7 @@ async def test_if_state.opp, calls):
     opp.states.async_set("lock.entity", STATE_LOCKED)
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

@@ -56,12 +56,12 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the AfterShip sensor platform."""
     apikey = config[CONF_API_KEY]
     name = config[CONF_NAME]
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     aftership = Tracking.opp.loop, session, apikey)
 
     await aftership.get_trackings()
@@ -83,7 +83,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         tracking_number = call.data[CONF_TRACKING_NUMBER]
 
         await aftership.add_package_tracking(tracking_number, title, slug)
-        async_dispatcher_send.opp, UPDATE_TOPIC)
+        async_dispatcher_send(opp, UPDATE_TOPIC)
 
     opp.services.async_register(
         DOMAIN,
@@ -98,7 +98,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         tracking_number = call.data[CONF_TRACKING_NUMBER]
 
         await aftership.remove_package_tracking(slug, tracking_number)
-        async_dispatcher_send.opp, UPDATE_TOPIC)
+        async_dispatcher_send(opp, UPDATE_TOPIC)
 
     opp.services.async_register(
         DOMAIN,

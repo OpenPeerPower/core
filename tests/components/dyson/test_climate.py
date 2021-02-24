@@ -116,7 +116,7 @@ async def test_state_common.opp: OpenPeerPower, device: DysonDevice) -> None:
     device.environmental_state.temperature = 0
     device.environmental_state.humidity = 0
     await async_update_device(
-        opp.
+        opp,
         device,
         DysonPureHotCoolState
         if isinstance(device, DysonPureHotCoolLink)

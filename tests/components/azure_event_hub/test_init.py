@@ -122,7 +122,7 @@ async def _run_filter_tests.opp, tests, process_queue, mock_batch):
 async def test_allowlist.opp, mock_batch, mock_call_later):
     """Test an allowlist only config."""
     process_queue = await _setup(
-        opp.
+        opp,
         mock_call_later,
         {
             "include_domains": ["light"],
@@ -146,7 +146,7 @@ async def test_allowlist.opp, mock_batch, mock_call_later):
 async def test_denylist.opp, mock_batch, mock_call_later):
     """Test a denylist only config."""
     process_queue = await _setup(
-        opp.
+        opp,
         mock_call_later,
         {
             "exclude_domains": ["climate"],
@@ -170,7 +170,7 @@ async def test_denylist.opp, mock_batch, mock_call_later):
 async def test_filtered_allowlist.opp, mock_batch, mock_call_later):
     """Test an allowlist config with a filtering denylist."""
     process_queue = await _setup(
-        opp.
+        opp,
         mock_call_later,
         {
             "include_domains": ["light"],
@@ -195,7 +195,7 @@ async def test_filtered_allowlist.opp, mock_batch, mock_call_later):
 async def test_filtered_denylist.opp, mock_batch, mock_call_later):
     """Test a denylist config with a filtering allowlist."""
     process_queue = await _setup(
-        opp.
+        opp,
         mock_call_later,
         {
             "include_entities": ["climate.included", "sensor.excluded_test"],

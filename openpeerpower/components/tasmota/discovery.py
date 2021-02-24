@@ -63,7 +63,7 @@ async def async_start(
                 discovery_hash,
             )
             async_dispatcher_send(
-                opp.
+                opp,
                 TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash),
                 tasmota_entity_config,
             )
@@ -79,7 +79,7 @@ async def async_start(
             opp.data[ALREADY_DISCOVERED][discovery_hash] = None
 
             async_dispatcher_send(
-                opp.
+                opp,
                 TASMOTA_DISCOVERY_ENTITY_NEW.format(platform),
                 tasmota_entity,
                 discovery_hash,
@@ -108,7 +108,7 @@ async def async_start(
                     discovery_hash,
                 )
                 async_dispatcher_send(
-                    opp.
+                    opp,
                     TASMOTA_DISCOVERY_ENTITY_UPDATED.format(*discovery_hash),
                     trigger_config,
                 )
@@ -119,7 +119,7 @@ async def async_start(
                 tasmota_trigger = tasmota_get_trigger(trigger_config, tasmota_mqtt)
 
                 async_dispatcher_send(
-                    opp.
+                    opp,
                     TASMOTA_DISCOVERY_ENTITY_NEW.format("device_automation"),
                     tasmota_trigger,
                     discovery_hash,

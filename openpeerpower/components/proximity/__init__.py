@@ -76,7 +76,7 @@ def setup_proximity_component.opp, name, config):
     zone_id = f"zone.{config.get(CONF_ZONE)}"
 
     proximity = Proximity(
-        opp.
+        opp,
         proximity_zone,
         DEFAULT_DIST_TO_ZONE,
         DEFAULT_DIR_OF_TRAVEL,
@@ -109,7 +109,7 @@ class Proximity(Entity):
 
     def __init__(
         self,
-        opp.
+        opp,
         zone_friendly_name,
         dist_to,
         dir_of_travel,

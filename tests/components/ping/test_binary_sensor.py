@@ -11,7 +11,7 @@ async def test_reload.opp):
     """Verify we can reload trend sensors."""
 
     await setup.async_setup_component(
-        opp.
+        opp,
         "binary_sensor",
         {
             "binary_sensor": {

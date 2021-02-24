@@ -110,7 +110,7 @@ def zwave_migration_data_fixture.opp):
     }
 
     mock_device_registry(
-        opp.
+        opp,
         {
             zwave_source_node_device.id: zwave_source_node_device,
             zwave_battery_device.id: zwave_battery_device,
@@ -118,7 +118,7 @@ def zwave_migration_data_fixture.opp):
         },
     )
     mock_registry(
-        opp.
+        opp,
         {
             ZWAVE_SOURCE_ENTITY: zwave_source_node_entry,
             ZWAVE_BATTERY_ENTITY: zwave_battery_entry,

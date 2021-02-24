@@ -31,7 +31,7 @@ PLATFORMS = ["air_quality", "sensor"]
 _LOGGER = logging.getLogger(__name__)
 
 
-def set_update_interval.opp, instances):
+def set_update_interval(opp, instances):
     """Set update_interval to another configured Airly instances."""
     # We check how many Airly configured instances are and calculate interval to not
     # exceed allowed numbers of requests.
@@ -49,7 +49,7 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Airly as config entry."""
     api_key = config_entry.data[CONF_API_KEY]
     latitude = config_entry.data[CONF_LATITUDE]
@@ -62,7 +62,7 @@ async def async_setup_entry.opp, config_entry):
             config_entry, unique_id=f"{latitude}-{longitude}"
         )
 
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
     # Change update_interval for other Airly instances
     update_interval = set_update_interval(
         opp. len.opp.config_entries.async_entries(DOMAIN))
@@ -87,7 +87,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -101,7 +101,7 @@ async def async_unload_entry.opp, config_entry):
         opp.data[DOMAIN].pop(config_entry.entry_id)
 
     # Change update_interval for other Airly instances
-    set_update_interval.opp, len.opp.data[DOMAIN]))
+    set_update_interval(opp, len.opp.data[DOMAIN]))
 
     return unload_ok
 
@@ -111,7 +111,7 @@ class AirlyDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp.
+        opp,
         session,
         api_key,
         latitude,

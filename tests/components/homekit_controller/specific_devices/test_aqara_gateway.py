@@ -26,7 +26,7 @@ async def test_aqara_gateway_setup_opp):
     assert alarm.unique_id == "homekit-0000000123456789-66304"
 
     alarm_helper = Helper(
-        opp.
+        opp,
         "alarm_control_panel.aqara_hub_1563",
         pairing,
         accessories[0],

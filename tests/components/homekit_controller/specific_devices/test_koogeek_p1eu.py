@@ -38,7 +38,7 @@ async def test_koogeek_p1eu_setup_opp):
     assert entry.unique_id == "homekit-EUCP03190xxxxx48-aid:1-sid:21-cid:21"
 
     helper = Helper(
-        opp.
+        opp,
         "sensor.koogeek_p1_a00aa0_real_time_energy",
         pairing,
         accessories[0],

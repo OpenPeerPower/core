@@ -75,7 +75,7 @@ async def test_search.opp):
     )
 
     await async_setup_component(
-        opp.
+        opp,
         "group",
         {
             "group": {
@@ -107,7 +107,7 @@ async def test_search.opp):
     )
 
     await async_setup_component(
-        opp.
+        opp,
         "scene",
         {
             "scene": [
@@ -133,7 +133,7 @@ async def test_search.opp):
     )
 
     await async_setup_component(
-        opp.
+        opp,
         "script",
         {
             "script": {
@@ -158,7 +158,7 @@ async def test_search.opp):
     )
 
     assert await async_setup_component(
-        opp.
+        opp,
         "automation",
         {
             "automation": [

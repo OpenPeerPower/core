@@ -53,7 +53,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             return
         entities = await opp.async_add_executor_job(
             _setup_entities,
-            opp.
+            opp,
             dev_ids,
             platform,
         )

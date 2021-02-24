@@ -169,7 +169,7 @@ class Panel:
 @bind.opp
 @callback
 def async_register_built_in_panel(
-    opp.
+    opp,
     component_name,
     sidebar_title=None,
     sidebar_icon=None,
@@ -295,7 +295,7 @@ async def async_setup(opp, config):
         opp.http.register_redirect(f"/developer-tools/{panel}", f"/config/{panel}")
 
     async_register_built_in_panel(
-        opp.
+        opp,
         "developer-tools",
         require_admin=True,
         sidebar_title="developer_tools",
@@ -400,7 +400,7 @@ async def _async_setup_themes.opp, themes):
         update_theme_and_fire_event()
 
     service.async_register_admin_service(
-        opp.
+        opp,
         DOMAIN,
         SERVICE_SET_THEME,
         set_theme,
@@ -592,7 +592,7 @@ def websocket_get_themes.opp, connection, msg):
 async def websocket_get_translations.opp, connection, msg):
     """Handle get translations command."""
     resources = await async_get_translations(
-        opp.
+        opp,
         msg["language"],
         msg["category"],
         msg.get("integration"),

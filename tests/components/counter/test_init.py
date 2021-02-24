@@ -203,7 +203,7 @@ async def test_initial_state_overrules_restore_state.opp):
     opp.state = CoreState.starting
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -228,7 +228,7 @@ async def test_restore_state_overrules_initial_state.opp):
     attr = {"initial": 6, "minimum": 1, "maximum": 8, "step": 2}
 
     mock_restore_cache(
-        opp.
+        opp,
         (
             State("counter.test1", "11"),
             State("counter.test2", "-22"),

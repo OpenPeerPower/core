@@ -49,7 +49,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             raise UpdateFailed(str(err)) from err
 
     coordinator = DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="myq devices",
         update_method=async_update_data,

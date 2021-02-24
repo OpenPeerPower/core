@@ -293,7 +293,7 @@ async def test_stop_no_wait.opp, count):
 
     sequence = cv.SCRIPT_SCHEMA([{"service": "test.script"}, {"event": event}])
     script_obj = script.Script(
-        opp.
+        opp,
         sequence,
         "Test Name",
         "test_domain",
@@ -996,7 +996,7 @@ async def test_wait_variables_out.opp, mode, action_type):
 async def test_wait_for_trigger_bad.opp, caplog):
     """Test bad wait_for_trigger."""
     script_obj = script.Script(
-        opp.
+        opp,
         cv.SCRIPT_SCHEMA(
             {"wait_for_trigger": {"platform": "state", "entity_id": "sensor.abc"}}
         ),
@@ -1020,7 +1020,7 @@ async def test_wait_for_trigger_bad.opp, caplog):
 async def test_wait_for_trigger_generated_exception.opp, caplog):
     """Test bad wait_for_trigger."""
     script_obj = script.Script(
-        opp.
+        opp,
         cv.SCRIPT_SCHEMA(
             {"wait_for_trigger": {"platform": "state", "entity_id": "sensor.abc"}}
         ),
@@ -1553,7 +1553,7 @@ async def test_multiple_runs_repeat_choose.opp, caplog, action):
     """Test parallel runs with repeat & choose actions & max_runs > default."""
     max_runs = script.DEFAULT_MAX + 1
     script_obj = script.Script(
-        opp.
+        opp,
         cv.SCRIPT_SCHEMA(action),
         "Test Name",
         "test_domain",
@@ -1644,7 +1644,7 @@ async def test_propagate_error_service_exception.opp):
 async def test_referenced_entities.opp):
     """Test referenced entities."""
     script_obj = script.Script(
-        opp.
+        opp,
         cv.SCRIPT_SCHEMA(
             [
                 {
@@ -1701,7 +1701,7 @@ async def test_referenced_entities.opp):
 async def test_referenced_devices.opp):
     """Test referenced entities."""
     script_obj = script.Script(
-        opp.
+        opp,
         cv.SCRIPT_SCHEMA(
             [
                 {"domain": "light", "device_id": "script-dev-id"},
@@ -1802,7 +1802,7 @@ async def test_max_exceeded.opp, caplog, max_exceeded, script_mode, max_runs):
     )
     if max_exceeded is None:
         script_obj = script.Script(
-            opp.
+            opp,
             sequence,
             "Test Name",
             "test_domain",
@@ -1811,7 +1811,7 @@ async def test_max_exceeded.opp, caplog, max_exceeded, script_mode, max_runs):
         )
     else:
         script_obj = script.Script(
-            opp.
+            opp,
             sequence,
             "Test Name",
             "test_domain",
@@ -1863,7 +1863,7 @@ async def test_script_mode_2.opp, caplog, script_mode, messages, last_events):
     logger = logging.getLogger("TEST")
     max_runs = 1 if script_mode == "restart" else 2
     script_obj = script.Script(
-        opp.
+        opp,
         sequence,
         "Test Name",
         "test_domain",
@@ -1933,7 +1933,7 @@ async def test_script_mode_queued.opp):
     )
     logger = logging.getLogger("TEST")
     script_obj = script.Script(
-        opp.
+        opp,
         sequence,
         "Test Name",
         "test_domain",
@@ -2013,7 +2013,7 @@ async def test_script_mode_queued.opp):
 async def test_script_mode_queued_cancel.opp):
     """Test canceling with a queued run."""
     script_obj = script.Script(
-        opp.
+        opp,
         cv.SCRIPT_SCHEMA({"wait_template": "{{ false }}"}),
         "Test Name",
         "test_domain",
@@ -2254,7 +2254,7 @@ async def test_validate_action_config(opp):
 async def test_embedded_wait_for_trigger_in_automation.opp):
     """Test an embedded wait for trigger."""
     assert await async_setup_component(
-        opp.
+        opp,
         "automation",
         {
             "automation": {

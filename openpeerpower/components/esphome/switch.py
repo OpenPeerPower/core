@@ -15,7 +15,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up ESPHome switches based on a config entry."""
     await platform_async_setup_entry(
-        opp.
+        opp,
         entry,
         async_add_entities,
         component_key="switch",

@@ -95,7 +95,7 @@ async def _async_process_config(opp, config) -> bool:
                 opp.data[DOMAIN][platform_domain][platform_idx] = platform_conf
 
                 load = discovery.async_load_platform(
-                    opp.
+                    opp,
                     platform_domain,
                     DOMAIN,
                     {REST_IDX: rest_idx, PLATFORM_IDX: platform_idx},
@@ -136,7 +136,7 @@ def _wrap_rest_in_coordinator.opp, rest, resource_template, update_interval):
         update_method = rest.async_update
 
     return DataUpdateCoordinator(
-        opp.
+        opp,
         _LOGGER,
         name="rest data",
         update_method=update_method,

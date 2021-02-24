@@ -94,7 +94,7 @@ async def test_setup_discovery.opp, device, main_zone):
 async def test_setup_zone_ignore.opp, device, main_zone):
     """Test set up integration without host."""
     assert await async_setup_component(
-        opp.
+        opp,
         mp.DOMAIN,
         {
             "media_player": {

@@ -200,7 +200,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         update_interval = DEFAULT_SCAN_INTERVAL
 
     coordinator = UpCloudDataUpdateCoordinator(
-        opp.
+        opp,
         update_interval=update_interval,
         cloud_manager=manager,
         username=config_entry.data[CONF_USERNAME],
@@ -217,7 +217,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     )
     coordinator.unsub_handlers.append(
         async_dispatcher_connect(
-            opp.
+            opp,
             _config_entry_update_signal_name(config_entry),
             coordinator.async_update_config,
         )

@@ -70,7 +70,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     channel = get_channel(current_version)
     huuid = await opp.helpers.instance_id.async_get()
     system_info = await opp.helpers.system_info.async_get_system_info()
-    custom_components = await async_get_custom_components.opp)
+    custom_components = await async_get_custom_components(opp)
 
     tracing = {}
     if entry.options.get(CONF_TRACING):
@@ -86,7 +86,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         integrations=[sentry_logging, AioHttpIntegration(), SqlalchemyIntegration()],
         release=current_version,
         before_send=lambda event, hint: process_before_send(
-            opp.
+            opp,
             entry.options,
             channel,
             huuid,

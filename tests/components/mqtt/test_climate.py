@@ -751,7 +751,7 @@ async def test_get_with_templates.opp, mqtt_mock, caplog):
 
     # Hold Mode
     async_fire_mqtt_message(
-        opp.
+        opp,
         "hold-state",
         """
         { "attribute": "somemode" }

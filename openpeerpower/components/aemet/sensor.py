@@ -15,7 +15,7 @@ from .const import (
 from .weather_update_coordinator import WeatherUpdateCoordinator
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up AEMET OpenData sensor entities based on a config entry."""
     domain_data = opp.data[DOMAIN][config_entry.entry_id]
     name = domain_data[ENTRY_NAME]

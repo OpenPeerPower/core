@@ -109,7 +109,7 @@ async def test_only_valid_components.opp, mqtt_mock, caplog):
 async def test_correct_config_discovery.opp, mqtt_mock, caplog):
     """Test sending in correct JSON."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -125,7 +125,7 @@ async def test_correct_config_discovery.opp, mqtt_mock, caplog):
 async def test_discover_fan.opp, mqtt_mock, caplog):
     """Test discovering an MQTT fan."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/fan/bla/config",
         ('{ "name": "Beer",' '  "command_topic": "test_topic" }'),
     )
@@ -177,7 +177,7 @@ async def test_discover_alarm_control_panel.opp, mqtt_mock, caplog):
 async def test_discovery_incl_nodeid.opp, mqtt_mock, caplog):
     """Test sending in correct JSON with optional node_id included."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/my_node_id/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -193,12 +193,12 @@ async def test_discovery_incl_nodeid.opp, mqtt_mock, caplog):
 async def test_non_duplicate_discovery.opp, mqtt_mock, caplog):
     """Test for a non duplicate component."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -216,7 +216,7 @@ async def test_non_duplicate_discovery.opp, mqtt_mock, caplog):
 async def test_removal.opp, mqtt_mock, caplog):
     """Test removal of component through empty discovery message."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -233,7 +233,7 @@ async def test_removal.opp, mqtt_mock, caplog):
 async def test_rediscover.opp, mqtt_mock, caplog):
     """Test rediscover of removed component."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -247,7 +247,7 @@ async def test_rediscover.opp, mqtt_mock, caplog):
     assert state is None
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -269,7 +269,7 @@ async def test_rapid_rediscover.opp, mqtt_mock, caplog):
     opp.bus.async_listen(EVENT_STATE_CHANGED, callback)
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -281,13 +281,13 @@ async def test_rapid_rediscover.opp, mqtt_mock, caplog):
     # Removal immediately followed by rediscover
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla/config", "")
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla/config", "")
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Milk", "state_topic": "test-topic" }',
     )
@@ -325,7 +325,7 @@ async def test_rapid_rediscover_unique.opp, mqtt_mock, caplog):
     opp.bus.async_listen(EVENT_STATE_CHANGED, callback)
 
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla2/config",
         '{ "name": "Ale", "state_topic": "test-topic", "unique_id": "very_unique" }',
     )
@@ -336,18 +336,18 @@ async def test_rapid_rediscover_unique.opp, mqtt_mock, caplog):
 
     # Duplicate unique_id, immediately followed by correct unique_id
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic", "unique_id": "very_unique" }',
     )
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic", "unique_id": "even_uniquer" }',
     )
     async_fire_mqtt_message.opp, "openpeerpower/binary_sensor/bla/config", "")
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Milk", "state_topic": "test-topic", "unique_id": "even_uniquer" }',
     )
@@ -374,7 +374,7 @@ async def test_rapid_rediscover_unique.opp, mqtt_mock, caplog):
 async def test_duplicate_removal.opp, mqtt_mock, caplog):
     """Test for a non duplicate component."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         "openpeerpower/binary_sensor/bla/config",
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
@@ -551,7 +551,7 @@ async def test_no_implicit_state_topic_switch.opp, mqtt_mock, caplog):
 async def test_complex_discovery_topic_prefix.opp, mqtt_mock, caplog):
     """Tests handling of discovery topic prefix with multiple slashes."""
     async_fire_mqtt_message(
-        opp.
+        opp,
         ("my_home/openpeerpower/register/binary_sensor/node1/object1/config"),
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )

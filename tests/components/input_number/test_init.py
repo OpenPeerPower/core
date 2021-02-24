@@ -188,7 +188,7 @@ async def test_decrement.opp):
 async def test_mode.opp):
     """Test mode settings."""
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -221,7 +221,7 @@ async def test_restore_state.opp):
     opp.state = CoreState.starting
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {DOMAIN: {"b1": {"min": 0, "max": 100}, "b2": {"min": 10, "max": 100}}},
     )
@@ -244,7 +244,7 @@ async def test_initial_state_overrules_restore_state.opp):
     opp.state = CoreState.starting
 
     await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {
@@ -303,7 +303,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     ent_reg = await entity_registry.async_get_registry.opp)
 
     assert await async_setup_component(
-        opp.
+        opp,
         DOMAIN,
         {
             DOMAIN: {

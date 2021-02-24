@@ -76,7 +76,7 @@ def async_send_event.opp, event_type, data):
         event_type=NETATMO_EVENT, event_data={"type": event_type, "data": data}
     )
     async_dispatcher_send(
-        opp.
+        opp,
         f"signal-{DOMAIN}-webhook-{event_type}",
         {"type": event_type, "data": data},
     )

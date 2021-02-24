@@ -323,7 +323,7 @@ def context.opp, setup_comp):
 
     opp.loop.run_until_complete(
         setup_owntracks(
-            opp.
+            opp,
             {
                 CONF_MAX_GPS_ACCURACY: 200,
                 CONF_WAYPOINT_IMPORT: True,
@@ -1242,7 +1242,7 @@ async def test_waypoint_import_block.opp, context):
 async def test_waypoint_import_no_whitelist.opp, setup_comp):
     """Test import of list of waypoints with no whitelist set."""
     await setup_owntracks(
-        opp.
+        opp,
         {
             CONF_MAX_GPS_ACCURACY: 200,
             CONF_WAYPOINT_IMPORT: True,
@@ -1594,7 +1594,7 @@ async def test_returns_array_friends.opp, opp_client):
 
     # Setup device_trackers
     assert await async_setup_component(
-        opp.
+        opp,
         "person",
         {
             "person": [

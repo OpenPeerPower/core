@@ -17,7 +17,7 @@ async def test_calling_intent.opp):
     assert result
 
     result = await async_setup_component(
-        opp.
+        opp,
         "conversation",
         {"conversation": {"intents": {"OrderBeer": ["I would like the {type} beer"]}}},
     )
@@ -49,7 +49,7 @@ async def test_register_before_setup_opp):
     opp.components.conversation.async_register("OrderBeer", ["A {type} beer, please"])
 
     result = await async_setup_component(
-        opp.
+        opp,
         "conversation",
         {"conversation": {"intents": {"OrderBeer": ["I would like the {type} beer"]}}},
     )
@@ -105,7 +105,7 @@ async def test_http_processing_intent.opp, opp_client, opp_admin_user):
     intent.async_register.opp, TestIntentHandler())
 
     result = await async_setup_component(
-        opp.
+        opp,
         "conversation",
         {"conversation": {"intents": {"OrderBeer": ["I would like the {type} beer"]}}},
     )

@@ -31,7 +31,7 @@ from .helper import async_manipulate_test_data, get_and_check_entity_basics
 async def test_manually_configured_platform.opp):
     """Test that we do not set up an access point."""
     assert await async_setup_component(
-        opp.
+        opp,
         BINARY_SENSOR_DOMAIN,
         {BINARY_SENSOR_DOMAIN: {"platform": HMIPC_DOMAIN}},
     )
@@ -304,7 +304,7 @@ async def test_hmip_smoke_detector.opp, default_mock_hap_factory):
 
     assert op_state.state == STATE_OFF
     await async_manipulate_test_data(
-        opp.
+        opp,
         hmip_device,
         "smokeDetectorAlarmType",
         SmokeDetectorAlarmType.PRIMARY_ALARM,
@@ -312,7 +312,7 @@ async def test_hmip_smoke_detector.opp, default_mock_hap_factory):
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
     await async_manipulate_test_data(
-        opp.
+        opp,
         hmip_device,
         "smokeDetectorAlarmType",
         None,
@@ -480,7 +480,7 @@ async def test_hmip_security_sensor_group.opp, default_mock_hap_factory):
     )
 
     await async_manipulate_test_data(
-        opp.
+        opp,
         hmip_device,
         "smokeDetectorAlarmType",
         SmokeDetectorAlarmType.PRIMARY_ALARM,
@@ -531,7 +531,7 @@ async def test_hmip_security_sensor_group.opp, default_mock_hap_factory):
     assert op_state.attributes[ATTR_WINDOW_STATE] == WindowState.OPEN
 
     await async_manipulate_test_data(
-        opp.
+        opp,
         hmip_device,
         "smokeDetectorAlarmType",
         SmokeDetectorAlarmType.INTRUSION_ALARM,
@@ -565,7 +565,7 @@ async def test_hmip_multi_contact_interface.opp, default_mock_hap_factory):
     assert op_state.state == STATE_OFF
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp.
+        opp,
         mock_hap,
         "binary_sensor.licht_flur_5",
         "Licht Flur 5",

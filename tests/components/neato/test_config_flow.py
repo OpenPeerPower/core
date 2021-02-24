@@ -23,7 +23,7 @@ async def test_full_flow(
 ):
     """Check full flow."""
     assert await setup.async_setup_component(
-        opp.
+        opp,
         "neato",
         {
             "neato": {"client_id": CLIENT_ID, "client_secret": CLIENT_SECRET},
@@ -35,7 +35,7 @@ async def test_full_flow(
         "neato", context={"source": config_entries.SOURCE_USER}
     )
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",
@@ -95,7 +95,7 @@ async def test_reauth(
 ):
     """Test initialization of the reauth flow."""
     assert await setup.async_setup_component(
-        opp.
+        opp,
         "neato",
         {
             "neato": {"client_id": CLIENT_ID, "client_secret": CLIENT_SECRET},
@@ -120,7 +120,7 @@ async def test_reauth(
     result2 = await opp.config_entries.flow.async_configure(result["flow_id"], {})
 
     state = config_entry_oauth2_flow._encode_jwt(
-        opp.
+        opp,
         {
             "flow_id": result["flow_id"],
             "redirect_uri": "https://example.com/auth/external/callback",

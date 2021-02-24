@@ -28,7 +28,7 @@ async def test_setup_missing_config(opp):
 async def test_setup_failed_connect(mock_co2, opp):
     """Test setup when connection error occurs."""
     assert not mhz19.setup_platform(
-        opp.
+        opp,
         {"platform": "mhz19", mhz19.CONF_SERIAL_DEVICE: "test.serial"},
         None,
     )
@@ -44,7 +44,7 @@ async def test_setup_connected.opp):
         read_mh_z19_with_temperature.return_value = None
         mock_add = Mock()
         assert mhz19.setup_platform(
-            opp.
+            opp,
             {
                 "platform": "mhz19",
                 "monitored_conditions": ["co2", "temperature"],

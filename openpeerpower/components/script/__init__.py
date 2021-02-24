@@ -258,7 +258,7 @@ class ScriptEntity(ToggleEntity):
         self.icon = cfg.get(CONF_ICON)
         self.entity_id = ENTITY_ID_FORMAT.format(object_id)
         self.script = Script(
-            opp.
+            opp,
             cfg[CONF_SEQUENCE],
             cfg.get(CONF_ALIAS, object_id),
             DOMAIN,

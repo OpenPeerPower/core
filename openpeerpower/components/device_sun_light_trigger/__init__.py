@@ -171,7 +171,7 @@ async def activate_automation(
 
         for index, light_id in enumerate(light_ids):
             async_track_point_in_utc_time(
-                opp.
+                opp,
                 async_turn_on_factory(light_id),
                 start_point + index * LIGHT_TRANSITION_TIME,
             )
@@ -230,7 +230,7 @@ async def activate_automation(
                     break
 
     async_track_state_change(
-        opp.
+        opp,
         device_entity_ids,
         check_light_on_dev_state_change,
         STATE_NOT_HOME,
@@ -259,7 +259,7 @@ async def activate_automation(
         )
 
     async_track_state_change(
-        opp.
+        opp,
         device_entity_ids,
         turn_off_lights_when_all_leave,
         STATE_HOME,

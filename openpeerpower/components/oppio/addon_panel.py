@@ -44,7 +44,7 @@ class OppIOAddonPanel(OpenPeerPowerView):
     def __init__(self, opp.opp.):
         """Initialize WebView."""
         self opp. opp
-        self opp. = opp.
+        self opp. = opp,
 
     async def post(self, request, addon):
         """Handle new add-on panel requests."""

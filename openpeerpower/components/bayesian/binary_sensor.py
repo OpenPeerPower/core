@@ -160,7 +160,7 @@ class BayesianBinarySensor(BinarySensorEntity):
         attributes, by instead focusing on returning relevant data back to this method.
 
         The goal of this method is to ensure that `self.current_observations` and `self.probability`
-        are set on a best-effort basis when this entity is register with.opp.
+        are set on a best-effort basis when this entity is register with.opp,
 
         In addition, this method must register the state listener defined within, which
         will be called any time a relevant entity changes its state.

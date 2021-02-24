@@ -160,7 +160,7 @@ async def test_send_code_delay(mock_pilight_error, opp):
     """Try to send proper data with delay afterwards."""
     with assert_setup_component(4):
         assert await async_setup_component(
-            opp.
+            opp,
             pilight.DOMAIN,
             {pilight.DOMAIN: {pilight.CONF_SEND_DELAY: 5.0}},
         )

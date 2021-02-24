@@ -37,7 +37,7 @@ async def test_allowed_sender.opp):
     test_message.set_payload("Test Message")
 
     sensor = imap_email_content.EmailContentSensor(
-        opp.
+        opp,
         FakeEMailReader(deque([test_message])),
         "test_emails_sensor",
         ["sender@test.com"],
@@ -73,7 +73,7 @@ async def test_multi_part_with_text.opp):
     msg.attach(htmlPart)
 
     sensor = imap_email_content.EmailContentSensor(
-        opp.
+        opp,
         FakeEMailReader(deque([msg])),
         "test_emails_sensor",
         ["sender@test.com"],
@@ -100,7 +100,7 @@ async def test_multi_part_only_html.opp):
     msg.attach(htmlPart)
 
     sensor = imap_email_content.EmailContentSensor(
-        opp.
+        opp,
         FakeEMailReader(deque([msg])),
         "test_emails_sensor",
         ["sender@test.com"],
@@ -130,7 +130,7 @@ async def test_multi_part_only_other_text.opp):
     msg.attach(htmlPart)
 
     sensor = imap_email_content.EmailContentSensor(
-        opp.
+        opp,
         FakeEMailReader(deque([msg])),
         "test_emails_sensor",
         ["sender@test.com"],
@@ -166,7 +166,7 @@ async def test_multiple_emails.opp):
     async_track_state_change.opp, ["sensor.emailtest"], state_changed_listener)
 
     sensor = imap_email_content.EmailContentSensor(
-        opp.
+        opp,
         FakeEMailReader(deque([test_message1, test_message2])),
         "test_emails_sensor",
         ["sender@test.com"],
@@ -195,7 +195,7 @@ async def test_sender_not_allowed.opp):
     test_message.set_payload("Test Message")
 
     sensor = imap_email_content.EmailContentSensor(
-        opp.
+        opp,
         FakeEMailReader(deque([test_message])),
         "test_emails_sensor",
         ["other@test.com"],
@@ -217,7 +217,7 @@ async def test_template.opp):
     test_message.set_payload("Test Message")
 
     sensor = imap_email_content.EmailContentSensor(
-        opp.
+        opp,
         FakeEMailReader(deque([test_message])),
         "test_emails_sensor",
         ["sender@test.com"],

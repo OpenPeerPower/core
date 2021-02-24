@@ -133,7 +133,7 @@ class Remote:
 
     def __init__(
         self,
-        opp.
+        opp,
         host,
         port,
         on_action=None,

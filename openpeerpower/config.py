@@ -825,7 +825,7 @@ async def async_process_component_config(
             continue
 
         try:
-            p_integration = await async_get_integration_with_requirements.opp, p_name)
+            p_integration = await async_get_integration_with_requirements(opp, p_name)
         except (RequirementsNotFound, IntegrationNotFound) as ex:
             _LOGGER.error("Platform error: %s - %s", domain, ex)
             continue
@@ -845,7 +845,7 @@ async def async_process_component_config(
                     ex,
                     f"{domain}.{p_name}",
                     p_config,
-                    opp.
+                    opp,
                     p_integration.documentation,
                 )
                 continue
@@ -882,7 +882,7 @@ async def async_check_op_config_file(opp: OpenPeerPower) -> Optional[str]:
     # pylint: disable=import-outside-toplevel
     import openpeerpower.helpers.check_config as check_config
 
-    res = await check_config.async_check_op_config_file.opp)
+    res = await check_config.async_check_op_config_file(opp)
 
     if not res.errors:
         return None

@@ -18,7 +18,7 @@ EMPTY_CONFIG = []
 
 
 async def async_setup_auth(
-    opp.
+    opp,
     aiohttp_client,
     provider_configs=BASE_CONFIG,
     module_configs=EMPTY_CONFIG,

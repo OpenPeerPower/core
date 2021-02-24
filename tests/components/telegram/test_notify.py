@@ -14,7 +14,7 @@ async def test_reload_notify.opp):
 
     with patch("openpeerpower.components.telegram_bot.async_setup", return_value=True):
         assert await async_setup_component(
-            opp.
+            opp,
             notify.DOMAIN,
             {
                 notify.DOMAIN: [

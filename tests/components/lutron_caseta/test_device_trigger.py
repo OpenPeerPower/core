@@ -192,7 +192,7 @@ async def test_if_fires_on_button_event.opp, calls, device_reg):
     device_id = list(dr_button_devices)[0]
     device = dr_button_devices[device_id]
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -233,7 +233,7 @@ async def test_validate_trigger_config_no_device.opp, calls, device_reg):
     await setup.async_setup_component.opp, "persistent_notification", {})
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -277,7 +277,7 @@ async def test_validate_trigger_config_unknown_device.opp, calls, device_reg):
     device["type"] = "unknown"
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [
@@ -318,7 +318,7 @@ async def test_validate_trigger_invalid_triggers.opp, device_reg):
     dr_button_devices = opp.data[DOMAIN][config_entry_id][BUTTON_DEVICES]
     device_id = list(dr_button_devices)[0]
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: [

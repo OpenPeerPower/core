@@ -55,7 +55,7 @@ DEFAULT_CONFIG = {
 async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
     """Test the setting of the value via MQTT."""
     assert await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -78,7 +78,7 @@ async def test_setting_sensor_value_via_mqtt_message.opp, mqtt_mock):
 async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -108,7 +108,7 @@ async def test_setting_sensor_value_expires_availability_topic.opp, mqtt_mock, c
 async def test_setting_sensor_value_expires.opp, mqtt_mock, caplog):
     """Test the expiration of the value."""
     assert await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -184,7 +184,7 @@ async def expires_helper.opp, mqtt_mock, caplog):
 async def test_setting_sensor_value_via_mqtt_json_message.opp, mqtt_mock):
     """Test the setting of the value via MQTT with JSON payload."""
     assert await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -207,7 +207,7 @@ async def test_setting_sensor_value_via_mqtt_json_message.opp, mqtt_mock):
 async def test_force_update_disabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -240,7 +240,7 @@ async def test_force_update_disabled.opp, mqtt_mock):
 async def test_force_update_enabled.opp, mqtt_mock):
     """Test force update option."""
     assert await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -337,7 +337,7 @@ async def test_discovery_update_availability.opp, mqtt_mock):
 async def test_invalid_device_class.opp, mqtt_mock):
     """Test device_class option with invalid value."""
     assert await async_setup_component(
-        opp.
+        opp,
         sensor.DOMAIN,
         {
             sensor.DOMAIN: {
@@ -357,7 +357,7 @@ async def test_invalid_device_class.opp, mqtt_mock):
 async def test_valid_device_class.opp, mqtt_mock):
     """Test device_class option with valid values."""
     assert await async_setup_component(
-        opp.
+        opp,
         "sensor",
         {
             "sensor": [
@@ -465,7 +465,7 @@ async def test_discovery_update_sensor_topic_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         sensor.DOMAIN,
@@ -498,7 +498,7 @@ async def test_discovery_update_sensor_template.opp, mqtt_mock, caplog):
     data1 = json.dumps(config1)
     data2 = json.dumps(config2)
     await help_test_discovery_update(
-        opp.
+        opp,
         mqtt_mock,
         caplog,
         sensor.DOMAIN,

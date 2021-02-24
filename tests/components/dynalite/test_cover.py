@@ -37,7 +37,7 @@ async def test_cover_setup_opp, mock_device):
     )
     assert entity_state.attributes[ATTR_DEVICE_CLASS] == mock_device.device_class
     await run_service_tests(
-        opp.
+        opp,
         mock_device,
         "cover",
         [

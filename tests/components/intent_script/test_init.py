@@ -10,7 +10,7 @@ async def test_intent_script.opp):
     calls = async_mock_service.opp, "test", "service")
 
     await async_setup_component(
-        opp.
+        opp,
         "intent_script",
         {
             "intent_script": {

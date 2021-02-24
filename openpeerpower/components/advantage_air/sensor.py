@@ -14,7 +14,7 @@ ADVANTAGE_AIR_SERVICE_SET_TIME_TO = "set_time_to"
 PARALLEL_UPDATES = 0
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up AdvantageAir sensor platform."""
 
     instance = opp.data[ADVANTAGE_AIR_DOMAIN][config_entry.entry_id]

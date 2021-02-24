@@ -99,7 +99,7 @@ async def test_set_up_local.opp, aioclient_mock):
 
     # Set up an internal URL, as Almond won't be set up if there is no URL available
     await async_process_op_core_config(
-        opp.
+        opp,
         {"internal_url": "https://192.168.0.1"},
     )
 

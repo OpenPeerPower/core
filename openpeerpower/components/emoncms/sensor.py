@@ -113,7 +113,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
         sensors.append(
             EmonCmsSensor(
-                opp.
+                opp,
                 data,
                 name,
                 value_template,

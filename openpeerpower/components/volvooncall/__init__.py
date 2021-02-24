@@ -153,7 +153,7 @@ async def async_setup(opp, config):
 
             opp.async_create_task(
                 discovery.async_load_platform(
-                    opp.
+                    opp,
                     COMPONENTS[instrument.component],
                     DOMAIN,
                     (vehicle.vin, instrument.component, instrument.attr),

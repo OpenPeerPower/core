@@ -20,13 +20,13 @@ from tests.common import (
 
 
 @pytest.fixture
-def calls.opp.
+def calls.opp,
     """Track calls to a mock service."""
     return async_mock_service.opp."test", "automation")
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp.
+def setup_comp.opp,
     """Initialize components."""
     mock_component.opp."group")
 
@@ -43,7 +43,7 @@ async def test_if_fires_using_at.opp.calls):
         return_value=dt_util.as_utc(time_that_will_not_match_right_away),
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -72,7 +72,7 @@ async def test_if_fires_using_at.opp.calls):
 async def test_if_fires_using_at_input_datetime.opp.calls, has_date, has_time):
     """Test for firing at input_datetime."""
     await async_setup_component(
-        opp.
+        opp,
         "input_datetime",
         {"input_datetime": {"trigger": {"has_date": op._date, "has_time": op._time}}},
     )
@@ -100,7 +100,7 @@ async def test_if_fires_using_at_input_datetime.opp.calls, has_date, has_time):
         return_value=dt_util.as_utc(time_that_will_not_match_right_away),
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -161,7 +161,7 @@ async def test_if_fires_using_multiple_at.opp.calls):
         return_value=dt_util.as_utc(time_that_will_not_match_right_away),
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -206,7 +206,7 @@ async def test_if_not_fires_using_wrong_at.opp.calls):
     ):
         with assert_setup_component(0, automation.DOMAIN):
             assert await async_setup_component(
-                opp.
+                opp,
                 automation.DOMAIN,
                 {
                     automation.DOMAIN: {
@@ -232,7 +232,7 @@ async def test_if_not_fires_using_wrong_at.opp.calls):
 async def test_if_action_before.opp.calls):
     """Test for if action before."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -263,7 +263,7 @@ async def test_if_action_before.opp.calls):
 async def test_if_action_after.opp.calls):
     """Test for if action after."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -294,7 +294,7 @@ async def test_if_action_after.opp.calls):
 async def test_if_action_one_weekday.opp.calls):
     """Test for if action with one weekday."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -326,7 +326,7 @@ async def test_if_action_one_weekday.opp.calls):
 async def test_if_action_list_weekday.opp.calls):
     """Test for action with a list of weekdays."""
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {
@@ -362,7 +362,7 @@ async def test_if_action_list_weekday.opp.calls):
     assert len(calls) == 2
 
 
-async def test_untrack_time_change.opp.
+async def test_untrack_time_change.opp,
     """Test for removing tracked time changes."""
     mock_track_time_change = Mock()
     with patch(
@@ -370,7 +370,7 @@ async def test_untrack_time_change.opp.
         return_value=mock_track_time_change,
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -415,7 +415,7 @@ async def test_if_fires_using_at_sensor.opp.calls):
         return_value=dt_util.as_utc(time_that_will_not_match_right_away),
     ):
         assert await async_setup_component(
-            opp.
+            opp,
             automation.DOMAIN,
             {
                 automation.DOMAIN: {
@@ -526,7 +526,7 @@ def test_schema_invalid(conf):
 async def test_datetime_in_past_on_load.opp.calls):
     """Test time trigger works if input_datetime is in past."""
     await async_setup_component(
-        opp.
+        opp,
         "input_datetime",
         {"input_datetime": {"my_trigger": {"has_date": True, "has_time": True}}},
     )
@@ -546,7 +546,7 @@ async def test_datetime_in_past_on_load.opp.calls):
     )
 
     assert await async_setup_component(
-        opp.
+        opp,
         automation.DOMAIN,
         {
             automation.DOMAIN: {

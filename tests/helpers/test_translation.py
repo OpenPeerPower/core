@@ -36,7 +36,7 @@ def test_recursive_flatten():
 async def test_component_translation_path.opp):
     """Test the component translation file function."""
     assert await async_setup_component(
-        opp.
+        opp,
         "switch",
         {"switch": [{"platform": "test"}, {"platform": "test_embedded"}]},
     )
