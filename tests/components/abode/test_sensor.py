@@ -13,18 +13,18 @@ from openpeerpower.const import (
 from .common import setup_platform
 
 
-async def test_entity_registry.opp):
+async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
-    await setup_platform.opp, SENSOR_DOMAIN)
+    await setup_platform(opp, SENSOR_DOMAIN)
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get("sensor.environment_sensor_humidity")
     assert entry.unique_id == "13545b21f4bdcd33d9abd461f8443e65-humidity"
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test the sensor attributes are correct."""
-    await setup_platform.opp, SENSOR_DOMAIN)
+    await setup_platform(opp, SENSOR_DOMAIN)
 
     state = opp.states.get("sensor.environment_sensor_humidity")
     assert state.state == "32.0"

@@ -8,7 +8,7 @@ from .const import DOMAIN
 from .entity import StarlineEntity
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up StarLine entry."""
     account: StarlineAccount = opp.data[DOMAIN][entry.entry_id]
     entities = []

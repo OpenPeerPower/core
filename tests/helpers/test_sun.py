@@ -8,7 +8,7 @@ import openpeerpower.helpers.sun as sun
 import openpeerpower.util.dt as dt_util
 
 
-def test_next_events.opp):
+def test_next_events(opp):
     """Test retrieving next sun events."""
     utc_now = datetime(2016, 11, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     from astral import Astral
@@ -72,15 +72,15 @@ def test_next_events.opp):
         mod += 1
 
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
-        assert next_dawn == sun.get_astral_event_next.opp, "dawn")
-        assert next_dusk == sun.get_astral_event_next.opp, "dusk")
-        assert next_midnight == sun.get_astral_event_next.opp, "solar_midnight")
-        assert next_noon == sun.get_astral_event_next.opp, "solar_noon")
-        assert next_rising == sun.get_astral_event_next.opp, SUN_EVENT_SUNRISE)
-        assert next_setting == sun.get_astral_event_next.opp, SUN_EVENT_SUNSET)
+        assert next_dawn == sun.get_astral_event_next(opp, "dawn")
+        assert next_dusk == sun.get_astral_event_next(opp, "dusk")
+        assert next_midnight == sun.get_astral_event_next(opp, "solar_midnight")
+        assert next_noon == sun.get_astral_event_next(opp, "solar_noon")
+        assert next_rising == sun.get_astral_event_next(opp, SUN_EVENT_SUNRISE)
+        assert next_setting == sun.get_astral_event_next(opp, SUN_EVENT_SUNSET)
 
 
-def test_date_events.opp):
+def test_date_events(opp):
     """Test retrieving next sun events."""
     utc_now = datetime(2016, 11, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     from astral import Astral
@@ -98,15 +98,15 @@ def test_date_events.opp):
     sunrise = astral.sunrise_utc(utc_today, latitude, longitude)
     sunset = astral.sunset_utc(utc_today, latitude, longitude)
 
-    assert dawn == sun.get_astral_event_date.opp, "dawn", utc_today)
-    assert dusk == sun.get_astral_event_date.opp, "dusk", utc_today)
-    assert midnight == sun.get_astral_event_date.opp, "solar_midnight", utc_today)
-    assert noon == sun.get_astral_event_date.opp, "solar_noon", utc_today)
-    assert sunrise == sun.get_astral_event_date.opp, SUN_EVENT_SUNRISE, utc_today)
-    assert sunset == sun.get_astral_event_date.opp, SUN_EVENT_SUNSET, utc_today)
+    assert dawn == sun.get_astral_event_date(opp, "dawn", utc_today)
+    assert dusk == sun.get_astral_event_date(opp, "dusk", utc_today)
+    assert midnight == sun.get_astral_event_date(opp, "solar_midnight", utc_today)
+    assert noon == sun.get_astral_event_date(opp, "solar_noon", utc_today)
+    assert sunrise == sun.get_astral_event_date(opp, SUN_EVENT_SUNRISE, utc_today)
+    assert sunset == sun.get_astral_event_date(opp, SUN_EVENT_SUNSET, utc_today)
 
 
-def test_date_events_default_date.opp):
+def test_date_events_default_date(opp):
     """Test retrieving next sun events."""
     utc_now = datetime(2016, 11, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     from astral import Astral
@@ -125,15 +125,15 @@ def test_date_events_default_date.opp):
     sunset = astral.sunset_utc(utc_today, latitude, longitude)
 
     with patch("openpeerpower.util.dt.now", return_value=utc_now):
-        assert dawn == sun.get_astral_event_date.opp, "dawn", utc_today)
-        assert dusk == sun.get_astral_event_date.opp, "dusk", utc_today)
-        assert midnight == sun.get_astral_event_date.opp, "solar_midnight", utc_today)
-        assert noon == sun.get_astral_event_date.opp, "solar_noon", utc_today)
-        assert sunrise == sun.get_astral_event_date.opp, SUN_EVENT_SUNRISE, utc_today)
-        assert sunset == sun.get_astral_event_date.opp, SUN_EVENT_SUNSET, utc_today)
+        assert dawn == sun.get_astral_event_date(opp, "dawn", utc_today)
+        assert dusk == sun.get_astral_event_date(opp, "dusk", utc_today)
+        assert midnight == sun.get_astral_event_date(opp, "solar_midnight", utc_today)
+        assert noon == sun.get_astral_event_date(opp, "solar_noon", utc_today)
+        assert sunrise == sun.get_astral_event_date(opp, SUN_EVENT_SUNRISE, utc_today)
+        assert sunset == sun.get_astral_event_date(opp, SUN_EVENT_SUNSET, utc_today)
 
 
-def test_date_events_accepts_datetime.opp):
+def test_date_events_accepts_datetime(opp):
     """Test retrieving next sun events."""
     utc_now = datetime(2016, 11, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     from astral import Astral
@@ -151,43 +151,43 @@ def test_date_events_accepts_datetime.opp):
     sunrise = astral.sunrise_utc(utc_today, latitude, longitude)
     sunset = astral.sunset_utc(utc_today, latitude, longitude)
 
-    assert dawn == sun.get_astral_event_date.opp, "dawn", utc_now)
-    assert dusk == sun.get_astral_event_date.opp, "dusk", utc_now)
-    assert midnight == sun.get_astral_event_date.opp, "solar_midnight", utc_now)
-    assert noon == sun.get_astral_event_date.opp, "solar_noon", utc_now)
-    assert sunrise == sun.get_astral_event_date.opp, SUN_EVENT_SUNRISE, utc_now)
-    assert sunset == sun.get_astral_event_date.opp, SUN_EVENT_SUNSET, utc_now)
+    assert dawn == sun.get_astral_event_date(opp, "dawn", utc_now)
+    assert dusk == sun.get_astral_event_date(opp, "dusk", utc_now)
+    assert midnight == sun.get_astral_event_date(opp, "solar_midnight", utc_now)
+    assert noon == sun.get_astral_event_date(opp, "solar_noon", utc_now)
+    assert sunrise == sun.get_astral_event_date(opp, SUN_EVENT_SUNRISE, utc_now)
+    assert sunset == sun.get_astral_event_date(opp, SUN_EVENT_SUNSET, utc_now)
 
 
-def test_is_up.opp):
+def test_is_up(opp):
     """Test retrieving next sun events."""
     utc_now = datetime(2016, 11, 1, 12, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
-        assert not sun.is_up.opp)
+        assert not sun.is_up(opp)
 
     utc_now = datetime(2016, 11, 1, 18, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
-        assert sun.is_up.opp)
+        assert sun.is_up(opp)
 
 
-def test_norway_in_june.opp):
+def test_norway_in_june(opp):
     """Test location in Norway where the sun doesn't set in summer."""
     opp.config.latitude = 69.6
     opp.config.longitude = 18.8
 
     june = datetime(2016, 6, 1, tzinfo=dt_util.UTC)
 
-    print(sun.get_astral_event_date.opp, SUN_EVENT_SUNRISE, datetime(2017, 7, 25)))
-    print(sun.get_astral_event_date.opp, SUN_EVENT_SUNSET, datetime(2017, 7, 25)))
+    print(sun.get_astral_event_date(opp, SUN_EVENT_SUNRISE, datetime(2017, 7, 25)))
+    print(sun.get_astral_event_date(opp, SUN_EVENT_SUNSET, datetime(2017, 7, 25)))
 
-    print(sun.get_astral_event_date.opp, SUN_EVENT_SUNRISE, datetime(2017, 7, 26)))
-    print(sun.get_astral_event_date.opp, SUN_EVENT_SUNSET, datetime(2017, 7, 26)))
+    print(sun.get_astral_event_date(opp, SUN_EVENT_SUNRISE, datetime(2017, 7, 26)))
+    print(sun.get_astral_event_date(opp, SUN_EVENT_SUNSET, datetime(2017, 7, 26)))
 
-    assert sun.get_astral_event_next.opp, SUN_EVENT_SUNRISE, june) == datetime(
+    assert sun.get_astral_event_next(opp, SUN_EVENT_SUNRISE, june) == datetime(
         2016, 7, 25, 23, 23, 39, tzinfo=dt_util.UTC
     )
-    assert sun.get_astral_event_next.opp, SUN_EVENT_SUNSET, june) == datetime(
+    assert sun.get_astral_event_next(opp, SUN_EVENT_SUNSET, june) == datetime(
         2016, 7, 26, 22, 19, 1, tzinfo=dt_util.UTC
     )
-    assert sun.get_astral_event_date.opp, SUN_EVENT_SUNRISE, june) is None
-    assert sun.get_astral_event_date.opp, SUN_EVENT_SUNSET, june) is None
+    assert sun.get_astral_event_date(opp, SUN_EVENT_SUNRISE, june) is None
+    assert sun.get_astral_event_date(opp, SUN_EVENT_SUNSET, june) is None

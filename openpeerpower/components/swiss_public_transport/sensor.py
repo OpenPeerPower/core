@@ -46,14 +46,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Swiss public transport sensor."""
 
     name = config.get(CONF_NAME)
     start = config.get(CONF_START)
     destination = config.get(CONF_DESTINATION)
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     opendata = OpendataTransport(start, destination, opp.loop, session)
 
     try:

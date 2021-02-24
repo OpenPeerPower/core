@@ -37,7 +37,7 @@ DEFAULT_GOOGLE_SEARCH_PARAMS = {
 MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=15)
 
 
-def setup_platform.opp, config, add_entities, disc_info=None):
+def setup_platform(opp, config, add_entities, disc_info=None):
     """Set up the calendar platform for event devices."""
     if disc_info is None:
         return
@@ -96,7 +96,7 @@ class GoogleCalendarEventDevice(CalendarEventDevice):
 
     async def async_get_events(self, opp, start_date, end_date):
         """Get all events in a specific time frame."""
-        return await self.data.async_get_events.opp, start_date, end_date)
+        return await self.data.async_get_events(opp, start_date, end_date)
 
     def update(self):
         """Update event data."""

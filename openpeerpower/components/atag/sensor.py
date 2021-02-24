@@ -23,7 +23,7 @@ SENSORS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Initialize sensor platform from config entry."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id]
     entities = []

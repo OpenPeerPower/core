@@ -29,10 +29,10 @@ async def async_setup_opp: OpenPeerPower, _config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up the component."""
 
-    async_add_defaults.opp, config_entry)
+    async_add_defaults(opp, config_entry)
 
     router = KeeneticRouter.opp, config_entry)
     await router.async_setup()
@@ -52,7 +52,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
@@ -68,12 +68,12 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
     return True
 
 
-async def update_listener.opp, config_entry):
+async def update_listener(opp, config_entry):
     """Handle options update."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
-def async_add_defaults.opp: OpenPeerPower, config_entry: ConfigEntry):
+def async_add_defaults(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Populate default options."""
     host: str = config_entry.data[CONF_HOST]
     imported_options: dict = opp.data[DOMAIN].get(f"imported_options_{host}", {})

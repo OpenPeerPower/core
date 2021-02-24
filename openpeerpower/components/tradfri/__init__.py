@@ -100,7 +100,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Create a gateway."""
     # host, identity, key, allow_tradfri_groups
     tradfri_data = opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {}
@@ -163,13 +163,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
             _LOGGER.error("Keep-alive failed")
 
     listeners.append(
-        async_track_time_interval.opp, async_keep_alive, timedelta(seconds=60))
+        async_track_time_interval(opp, async_keep_alive, timedelta(seconds=60))
     )
 
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

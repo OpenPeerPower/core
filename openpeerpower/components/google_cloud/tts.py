@@ -141,7 +141,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_get_engine.opp, config, discovery_info=None):
+async def async_get_engine(opp, config, discovery_info=None):
     """Set up Google Cloud TTS component."""
     key_file = config.get(CONF_KEY_FILE)
     if key_file:

@@ -36,7 +36,7 @@ async def test_setup_opp, requests_mock):
         assert sleepiq.setup_opp, CONFIG)
 
 
-async def test_setup_login_failed.opp, requests_mock):
+async def test_setup_login_failed(opp, requests_mock):
     """Test the setup if a bad username or password is given."""
     mock_responses(requests_mock)
     requests_mock.put(
@@ -49,16 +49,16 @@ async def test_setup_login_failed.opp, requests_mock):
     assert not response
 
 
-async def test_setup_component_no_login.opp):
+async def test_setup_component_no_login(opp):
     """Test the setup when no login is configured."""
     conf = CONFIG.copy()
     del conf["sleepiq"]["username"]
-    assert not await setup.async_setup_component.opp, sleepiq.DOMAIN, conf)
+    assert not await setup.async_setup_component(opp, sleepiq.DOMAIN, conf)
 
 
-async def test_setup_component_no_password.opp):
+async def test_setup_component_no_password(opp):
     """Test the setup when no password is configured."""
     conf = CONFIG.copy()
     del conf["sleepiq"]["password"]
 
-    assert not await setup.async_setup_component.opp, sleepiq.DOMAIN, conf)
+    assert not await setup.async_setup_component(opp, sleepiq.DOMAIN, conf)

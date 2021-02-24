@@ -8,7 +8,7 @@ from . import DOMAIN
 from .entity import RingEntityMixin
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a sensor for a Ring device."""
     devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
 
@@ -100,9 +100,9 @@ class HealthDataRingSensor(RingSensor):
             self._device, self._health_update_callback
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
         self.ring_objects["health_data"].async_untrack_device(
             self._device, self._health_update_callback
@@ -142,9 +142,9 @@ class HistoryRingSensor(RingSensor):
             self._device, self._history_update_callback
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
         self.ring_objects["history_data"].async_untrack_device(
             self._device, self._history_update_callback

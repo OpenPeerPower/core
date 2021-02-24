@@ -48,7 +48,7 @@ SENSORS = [
 ]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Waterfurnace sensor."""
     if discovery_info is None:
         return

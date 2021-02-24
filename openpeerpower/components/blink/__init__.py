@@ -29,7 +29,7 @@ SERVICE_SAVE_VIDEO_SCHEMA = vol.Schema(
 SERVICE_SEND_PIN_SCHEMA = vol.Schema({vol.Optional(CONF_PIN): cv.string})
 
 
-def _blink_startup_wrapper.opp, entry):
+def _blink_startup_wrapper(opp, entry):
     """Startup wrapper for blink."""
     blink = Blink()
     auth_data = deepcopy(dict(entry.data))
@@ -40,12 +40,12 @@ def _blink_startup_wrapper.opp, entry):
         blink.setup_post_verify()
     elif blink.auth.check_key_required():
         _LOGGER.debug("Attempting a reauth flow")
-        _reauth_flow_wrapper.opp, auth_data)
+        _reauth_flow_wrapper(opp, auth_data)
 
     return blink
 
 
-def _reauth_flow_wrapper.opp, data):
+def _reauth_flow_wrapper(opp, data):
     """Reauth flow wrapper."""
     opp.add_job(
         opp.config_entries.flow.async_init(
@@ -65,7 +65,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_migrate_entry.opp, entry):
+async def async_migrate_entry(opp, entry):
     """Handle migration of a previous version config entry."""
     data = {**entry.data}
     if entry.version == 1:
@@ -75,9 +75,9 @@ async def async_migrate_entry.opp, entry):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Blink via config entry."""
-    _async_import_options_from_data_if_missing.opp, entry)
+    _async_import_options_from_data_if_missing(opp, entry)
 
     opp.data[DOMAIN][entry.entry_id] = await opp.async_add_executor_job(
         _blink_startup_wrapper, opp, entry
@@ -97,7 +97,7 @@ async def async_setup_entry.opp, entry):
 
     async def async_save_video(call):
         """Call save video service handler."""
-        await async_handle_save_video_service.opp, entry, call)
+        await async_handle_save_video_service(opp, entry, call)
 
     def send_pin(call):
         """Call blink to send new pin."""
@@ -119,7 +119,7 @@ async def async_setup_entry.opp, entry):
 
 
 @callback
-def _async_import_options_from_data_if_missing.opp, entry):
+def _async_import_options_from_data_if_missing(opp, entry):
     options = dict(entry.options)
     if CONF_SCAN_INTERVAL not in entry.options:
         options[CONF_SCAN_INTERVAL] = entry.data.get(
@@ -128,7 +128,7 @@ def _async_import_options_from_data_if_missing.opp, entry):
         opp.config_entries.async_update_entry(entry, options=options)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload Blink entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -154,7 +154,7 @@ async def async_unload_entry.opp, entry):
     return True
 
 
-async def async_handle_save_video_service.opp, entry, call):
+async def async_handle_save_video_service(opp, entry, call):
     """Handle save video service calls."""
     camera_name = call.data[CONF_NAME]
     video_path = call.data[CONF_FILENAME]

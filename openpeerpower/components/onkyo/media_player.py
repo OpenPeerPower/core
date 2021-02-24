@@ -164,7 +164,7 @@ def determine_zones(receiver):
     return out
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Onkyo platform."""
     host = config.get(CONF_HOST)
     hosts = []

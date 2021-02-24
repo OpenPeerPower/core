@@ -80,7 +80,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def _update_discovery_interval.opp, interval):
+def _update_discovery_interval(opp, interval):
     tuya = opp.data[DOMAIN].get(TUYA_DATA)
     if not tuya:
         return
@@ -92,7 +92,7 @@ def _update_discovery_interval.opp, interval):
         _LOGGER.warning(ex)
 
 
-def _update_query_interval.opp, interval):
+def _update_query_interval(opp, interval):
     tuya = opp.data[DOMAIN].get(TUYA_DATA)
     if not tuya:
         return
@@ -118,7 +118,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Tuya platform."""
 
     tuya = TuyaApi()
@@ -191,7 +191,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 )
                 opp.data[DOMAIN][ENTRY_IS_SETUP].add(config_entries_key)
             else:
-                async_dispatcher_send.opp, TUYA_DISCOVERY_NEW.format(op_type), dev_ids)
+                async_dispatcher_send(opp, TUYA_DISCOVERY_NEW.format(op_type), dev_ids)
 
     await async_load_devices(tuya.get_all_devices())
 
@@ -214,7 +214,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             newlist_ids.append(device.object_id())
         for dev_id in list.opp.data[DOMAIN]["entities"]):
             if dev_id not in newlist_ids:
-                async_dispatcher_send.opp, SIGNAL_DELETE_ENTITY, dev_id)
+                async_dispatcher_send(opp, SIGNAL_DELETE_ENTITY, dev_id)
                 opp.data[DOMAIN]["entities"].pop(dev_id)
 
     opp.data[DOMAIN][TUYA_TRACKER] = async_track_time_interval(
@@ -227,14 +227,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def async_force_update(call):
         """Force all devices to pull data."""
-        async_dispatcher_send.opp, SIGNAL_UPDATE_ENTITY)
+        async_dispatcher_send(opp, SIGNAL_UPDATE_ENTITY)
 
     opp.services.async_register(DOMAIN, SERVICE_FORCE_UPDATE, async_force_update)
 
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unloading the Tuya platforms."""
     unload_ok = all(
         await asyncio.gather(
@@ -256,7 +256,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Update when config_entry options update."""
     opp.data[DOMAIN][TUYA_DEVICES_CONF] = entry.options.copy()
     _update_discovery_interval(
@@ -265,10 +265,10 @@ async def update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     _update_query_interval(
         opp. entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
     )
-    async_dispatcher_send.opp, SIGNAL_CONFIG_ENTITY)
+    async_dispatcher_send(opp, SIGNAL_CONFIG_ENTITY)
 
 
-async def cleanup_device_registry.opp: OpenPeerPower, device_id):
+async def cleanup_device_registry(opp: OpenPeerPower, device_id):
     """Remove device registry entry if there are no remaining entities."""
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
@@ -333,7 +333,7 @@ class TuyaDevice(Entity):
         )
         self._inc_device_count()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Call when entity is removed from.opp."""
         self._dec_device_count()
 

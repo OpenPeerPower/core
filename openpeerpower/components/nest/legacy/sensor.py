@@ -69,14 +69,14 @@ _SENSOR_TYPES_DEPRECATED = SENSOR_TYPES_DEPRECATED + DEPRECATED_WEATHER_VARS
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Nest Sensor.
 
     No longer used.
     """
 
 
-async def async_setup_legacy_entry.opp, entry, async_add_entities):
+async def async_setup_legacy_entry(opp, entry, async_add_entities):
     """Set up a Nest sensor based on a config entry."""
     nest = opp.data[DATA_NEST]
 

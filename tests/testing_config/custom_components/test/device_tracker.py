@@ -5,7 +5,7 @@ from openpeerpower.components.device_tracker.config_entry import ScannerEntity
 from openpeerpower.components.device_tracker.const import SOURCE_TYPE_ROUTER
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Return a mock scanner."""
     return SCANNER
 
@@ -59,7 +59,7 @@ class MockScannerEntity(ScannerEntity):
         self.async_schedule_update_op_state()
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the config entry."""
     entity = MockScannerEntity()
     async_add_entities([entity])

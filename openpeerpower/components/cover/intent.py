@@ -8,7 +8,7 @@ INTENT_OPEN_COVER = " OppOpenCover"
 INTENT_CLOSE_COVER = " OppCloseCover"
 
 
-async def async_setup_intents.opp: OpenPeerPower) -> None:
+async def async_setup_intents(opp: OpenPeerPower) -> None:
     """Set up the cover intents."""
     opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(

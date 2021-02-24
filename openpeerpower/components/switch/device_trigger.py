@@ -28,11 +28,11 @@ async def async_attach_trigger(
     )
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers."""
-    return await toggle_entity.async_get_triggers.opp, device_id, DOMAIN)
+    return await toggle_entity.async_get_triggers(opp, device_id, DOMAIN)
 
 
-async def async_get_trigger_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_trigger_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List trigger capabilities."""
-    return await toggle_entity.async_get_trigger_capabilities.opp, config)
+    return await toggle_entity.async_get_trigger_capabilities(opp, config)

@@ -16,7 +16,7 @@ from openpeerpower.components.stt.const import (
 SUPPORT_LANGUAGES = ["en", "de"]
 
 
-async def async_get_engine.opp, config, discovery_info=None):
+async def async_get_engine(opp, config, discovery_info=None):
     """Set up Demo speech component."""
     return DemoProvider()
 

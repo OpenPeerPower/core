@@ -49,10 +49,10 @@ def manager.opp):
     return manager
 
 
-async def test_call_setup_entry.opp):
+async def test_call_setup_entry(opp):
     """Test we call <component>.setup_entry."""
     entry = MockConfigEntry(domain="comp")
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
     assert not entry.supports_unload
 
     mock_setup_entry = AsyncMock(return_value=True)
@@ -66,10 +66,10 @@ async def test_call_setup_entry.opp):
             async_migrate_entry=mock_migrate_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     with patch("openpeerpower.config_entries.support_entry_unload", return_value=True):
-        result = await async_setup_component.opp, "comp", {})
+        result = await async_setup_component(opp, "comp", {})
         await opp.async_block_till_done()
     assert result
     assert len(mock_migrate_entry.mock_calls) == 0
@@ -78,10 +78,10 @@ async def test_call_setup_entry.opp):
     assert entry.supports_unload
 
 
-async def test_call_setup_entry_without_reload_support.opp):
+async def test_call_setup_entry_without_reload_support(opp):
     """Test we call <component>.setup_entry and the <component> does not support unloading."""
     entry = MockConfigEntry(domain="comp")
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
     assert not entry.supports_unload
 
     mock_setup_entry = AsyncMock(return_value=True)
@@ -95,10 +95,10 @@ async def test_call_setup_entry_without_reload_support.opp):
             async_migrate_entry=mock_migrate_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     with patch("openpeerpower.config_entries.support_entry_unload", return_value=False):
-        result = await async_setup_component.opp, "comp", {})
+        result = await async_setup_component(opp, "comp", {})
         await opp.async_block_till_done()
     assert result
     assert len(mock_migrate_entry.mock_calls) == 0
@@ -107,12 +107,12 @@ async def test_call_setup_entry_without_reload_support.opp):
     assert not entry.supports_unload
 
 
-async def test_call_async_migrate_entry.opp):
+async def test_call_async_migrate_entry(opp):
     """Test we call <component>.async_migrate_entry when version mismatch."""
     entry = MockConfigEntry(domain="comp")
     assert not entry.supports_unload
     entry.version = 2
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_migrate_entry = AsyncMock(return_value=True)
     mock_setup_entry = AsyncMock(return_value=True)
@@ -125,10 +125,10 @@ async def test_call_async_migrate_entry.opp):
             async_migrate_entry=mock_migrate_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     with patch("openpeerpower.config_entries.support_entry_unload", return_value=True):
-        result = await async_setup_component.opp, "comp", {})
+        result = await async_setup_component(opp, "comp", {})
         await opp.async_block_till_done()
     assert result
     assert len(mock_migrate_entry.mock_calls) == 1
@@ -137,11 +137,11 @@ async def test_call_async_migrate_entry.opp):
     assert entry.supports_unload
 
 
-async def test_call_async_migrate_entry_failure_false.opp):
+async def test_call_async_migrate_entry_failure_false(opp):
     """Test migration fails if returns false."""
     entry = MockConfigEntry(domain="comp")
     entry.version = 2
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
     assert not entry.supports_unload
 
     mock_migrate_entry = AsyncMock(return_value=False)
@@ -155,9 +155,9 @@ async def test_call_async_migrate_entry_failure_false.opp):
             async_migrate_entry=mock_migrate_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
-    result = await async_setup_component.opp, "comp", {})
+    result = await async_setup_component(opp, "comp", {})
     assert result
     assert len(mock_migrate_entry.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 0
@@ -165,11 +165,11 @@ async def test_call_async_migrate_entry_failure_false.opp):
     assert not entry.supports_unload
 
 
-async def test_call_async_migrate_entry_failure_exception.opp):
+async def test_call_async_migrate_entry_failure_exception(opp):
     """Test migration fails if exception raised."""
     entry = MockConfigEntry(domain="comp")
     entry.version = 2
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
     assert not entry.supports_unload
 
     mock_migrate_entry = AsyncMock(side_effect=Exception)
@@ -183,9 +183,9 @@ async def test_call_async_migrate_entry_failure_exception.opp):
             async_migrate_entry=mock_migrate_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
-    result = await async_setup_component.opp, "comp", {})
+    result = await async_setup_component(opp, "comp", {})
     assert result
     assert len(mock_migrate_entry.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 0
@@ -193,11 +193,11 @@ async def test_call_async_migrate_entry_failure_exception.opp):
     assert not entry.supports_unload
 
 
-async def test_call_async_migrate_entry_failure_not_bool.opp):
+async def test_call_async_migrate_entry_failure_not_bool(opp):
     """Test migration fails if boolean not returned."""
     entry = MockConfigEntry(domain="comp")
     entry.version = 2
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
     assert not entry.supports_unload
 
     mock_migrate_entry = AsyncMock(return_value=None)
@@ -211,9 +211,9 @@ async def test_call_async_migrate_entry_failure_not_bool.opp):
             async_migrate_entry=mock_migrate_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
-    result = await async_setup_component.opp, "comp", {})
+    result = await async_setup_component(opp, "comp", {})
     assert result
     assert len(mock_migrate_entry.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 0
@@ -221,36 +221,36 @@ async def test_call_async_migrate_entry_failure_not_bool.opp):
     assert not entry.supports_unload
 
 
-async def test_call_async_migrate_entry_failure_not_supported.opp):
+async def test_call_async_migrate_entry_failure_not_supported(opp):
     """Test migration fails if async_migrate_entry not implemented."""
     entry = MockConfigEntry(domain="comp")
     entry.version = 2
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
     assert not entry.supports_unload
 
     mock_setup_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_setup_entry=mock_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=mock_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
-    result = await async_setup_component.opp, "comp", {})
+    result = await async_setup_component(opp, "comp", {})
     assert result
     assert len(mock_setup_entry.mock_calls) == 0
     assert entry.state == config_entries.ENTRY_STATE_MIGRATION_ERROR
     assert not entry.supports_unload
 
 
-async def test_remove_entry.opp, manager):
+async def test_remove_entry(opp, manager):
     """Test that we can remove an entry."""
 
-    async def mock_setup_entry.opp, entry):
+    async def mock_setup_entry(opp, entry):
         """Mock setting up entry."""
         opp.async_create_task(
             opp.config_entries.async_forward_entry_setup(entry, "light")
         )
         return True
 
-    async def mock_unload_entry.opp, entry):
+    async def mock_unload_entry(opp, entry):
         """Mock unloading an entry."""
         result = await opp.config_entries.async_forward_entry_unload(entry, "light")
         assert result
@@ -260,7 +260,7 @@ async def test_remove_entry.opp, manager):
 
     entity = MockEntity(unique_id="1234", name="Test Entity")
 
-    async def mock_setup_entry_platform.opp, entry, async_add_entities):
+    async def mock_setup_entry_platform(opp, entry, async_add_entities):
         """Mock setting up platform."""
         async_add_entities([entity])
 
@@ -276,7 +276,7 @@ async def test_remove_entry.opp, manager):
     mock_entity_platform(
         opp. "light.test", MockPlatform(async_setup_entry=mock_setup_entry_platform)
     )
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_entity_platform(opp, "config_flow.test", None)
 
     MockConfigEntry(domain="test_other", entry_id="test1").add_to_manager(manager)
     entry = MockConfigEntry(domain="test", entry_id="test2")
@@ -359,14 +359,14 @@ async def test_remove_entry_handles_callback_error(opp, manager):
     assert [item.entry_id for item in manager.async_entries()] == []
 
 
-async def test_remove_entry_raises.opp, manager):
+async def test_remove_entry_raises(opp, manager):
     """Test if a component raises while removing entry."""
 
-    async def mock_unload_entry.opp, entry):
+    async def mock_unload_entry(opp, entry):
         """Mock unload entry function."""
         raise Exception("BROKEN")
 
-    mock_integration.opp, MockModule("comp", async_unload_entry=mock_unload_entry))
+    mock_integration(opp, MockModule("comp", async_unload_entry=mock_unload_entry))
 
     MockConfigEntry(domain="test", entry_id="test1").add_to_manager(manager)
     MockConfigEntry(
@@ -386,11 +386,11 @@ async def test_remove_entry_raises.opp, manager):
     assert [item.entry_id for item in manager.async_entries()] == ["test1", "test3"]
 
 
-async def test_remove_entry_if_not_loaded.opp, manager):
+async def test_remove_entry_if_not_loaded(opp, manager):
     """Test that we can remove an entry that is not loaded."""
     mock_unload_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_unload_entry=mock_unload_entry))
+    mock_integration(opp, MockModule("comp", async_unload_entry=mock_unload_entry))
 
     MockConfigEntry(domain="test", entry_id="test1").add_to_manager(manager)
     MockConfigEntry(domain="comp", entry_id="test2").add_to_manager(manager)
@@ -410,7 +410,7 @@ async def test_remove_entry_if_not_loaded.opp, manager):
     assert len(mock_unload_entry.mock_calls) == 0
 
 
-async def test_remove_entry_if_integration_deleted.opp, manager):
+async def test_remove_entry_if_integration_deleted(opp, manager):
     """Test that we can remove an entry when the integration is deleted."""
     mock_unload_entry = AsyncMock(return_value=True)
 
@@ -432,12 +432,12 @@ async def test_remove_entry_if_integration_deleted.opp, manager):
     assert len(mock_unload_entry.mock_calls) == 0
 
 
-async def test_add_entry_calls_setup_entry.opp, manager):
+async def test_add_entry_calls_setup_entry(opp, manager):
     """Test we call setup_config_entry."""
     mock_setup_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_setup_entry=mock_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=mock_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -483,12 +483,12 @@ async def test_domains_gets_uniques(manager):
     assert manager.async_domains() == ["test", "test2", "test3"]
 
 
-async def test_saving_and_loading.opp):
+async def test_saving_and_loading(opp):
     """Test that we're saving and loading correctly."""
     mock_integration(
         opp. MockModule("test", async_setup_entry=lambda *args: mock_coro(True))
     )
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_entity_platform(opp, "config_flow.test", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -526,7 +526,7 @@ async def test_saving_and_loading.opp):
     assert len.opp.config_entries.async_entries()) == 2
 
     # To trigger the call_later
-    async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=1))
+    async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=1))
     # To execute the save
     await opp.async_block_till_done()
 
@@ -549,7 +549,7 @@ async def test_saving_and_loading.opp):
         assert orig.unique_id == loaded.unique_id
 
 
-async def test_forward_entry_sets_up_component.opp):
+async def test_forward_entry_sets_up_component(opp):
     """Test we setup the component entry is forwarded to."""
     entry = MockConfigEntry(domain="original")
 
@@ -568,7 +568,7 @@ async def test_forward_entry_sets_up_component.opp):
     assert len(mock_forwarded_setup_entry.mock_calls) == 1
 
 
-async def test_forward_entry_does_not_setup_entry_if_setup_fails.opp):
+async def test_forward_entry_does_not_setup_entry_if_setup_fails(opp):
     """Test we do not set up entry if component setup fails."""
     entry = MockConfigEntry(domain="original")
 
@@ -586,11 +586,11 @@ async def test_forward_entry_does_not_setup_entry_if_setup_fails.opp):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_discovery_notification.opp):
+async def test_discovery_notification(opp):
     """Test that we create/dismiss a notification when source is discovery."""
-    mock_integration.opp, MockModule("test"))
-    mock_entity_platform.opp, "config_flow.test", None)
-    await async_setup_component.opp, "persistent_notification", {})
+    mock_integration(opp, MockModule("test"))
+    mock_entity_platform(opp, "config_flow.test", None)
+    await async_setup_component(opp, "persistent_notification", {})
 
     with patch.dict(config_entries.HANDLERS):
 
@@ -639,11 +639,11 @@ async def test_discovery_notification.opp):
         assert state is None
 
 
-async def test_reauth_notification.opp):
+async def test_reauth_notification(opp):
     """Test that we create/dismiss a notification when source is reauth."""
-    mock_integration.opp, MockModule("test"))
-    mock_entity_platform.opp, "config_flow.test", None)
-    await async_setup_component.opp, "persistent_notification", {})
+    mock_integration(opp, MockModule("test"))
+    mock_entity_platform(opp, "config_flow.test", None)
+    await async_setup_component(opp, "persistent_notification", {})
 
     with patch.dict(config_entries.HANDLERS):
 
@@ -707,11 +707,11 @@ async def test_reauth_notification.opp):
         assert state is None
 
 
-async def test_discovery_notification_not_created.opp):
+async def test_discovery_notification_not_created(opp):
     """Test that we not create a notification when discovery is aborted."""
-    mock_integration.opp, MockModule("test"))
-    mock_entity_platform.opp, "config_flow.test", None)
-    await async_setup_component.opp, "persistent_notification", {})
+    mock_integration(opp, MockModule("test"))
+    mock_entity_platform(opp, "config_flow.test", None)
+    await async_setup_component(opp, "persistent_notification", {})
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -774,12 +774,12 @@ async def test_updating_entry_system_options(manager):
     assert not entry.system_options.disable_new_entities
 
 
-async def test_update_entry_options_and_trigger_listener.opp, manager):
+async def test_update_entry_options_and_trigger_listener(opp, manager):
     """Test that we can update entry options and trigger listener."""
     entry = MockConfigEntry(domain="test", options={"first": True})
     entry.add_to_manager(manager)
 
-    async def update_listener.opp, entry):
+    async def update_listener(opp, entry):
         """Test function."""
         assert entry.options == {"second": True}
 
@@ -790,13 +790,13 @@ async def test_update_entry_options_and_trigger_listener.opp, manager):
     assert entry.options == {"second": True}
 
 
-async def test_setup_raise_not_ready.opp, caplog):
+async def test_setup_raise_not_ready(opp, caplog):
     """Test a setup raising not ready."""
     entry = MockConfigEntry(title="test_title", domain="test")
 
     mock_setup_entry = AsyncMock(side_effect=ConfigEntryNotReady)
-    mock_integration.opp, MockModule("test", async_setup_entry=mock_setup_entry))
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_integration(opp, MockModule("test", async_setup_entry=mock_setup_entry))
+    mock_entity_platform(opp, "config_flow.test", None)
 
     with patch("openpeerpower.helpers.event.async_call_later") as mock_call:
         await entry.async_setup_opp)
@@ -816,13 +816,13 @@ async def test_setup_raise_not_ready.opp, caplog):
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
 
-async def test_setup_retrying_during_unload.opp):
+async def test_setup_retrying_during_unload(opp):
     """Test if we unload an entry that is in retry mode."""
     entry = MockConfigEntry(domain="test")
 
     mock_setup_entry = AsyncMock(side_effect=ConfigEntryNotReady)
-    mock_integration.opp, MockModule("test", async_setup_entry=mock_setup_entry))
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_integration(opp, MockModule("test", async_setup_entry=mock_setup_entry))
+    mock_entity_platform(opp, "config_flow.test", None)
 
     with patch("openpeerpower.helpers.event.async_call_later") as mock_call:
         await entry.async_setup_opp)
@@ -830,13 +830,13 @@ async def test_setup_retrying_during_unload.opp):
     assert entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
     assert len(mock_call.return_value.mock_calls) == 0
 
-    await entry.async_unload.opp)
+    await entry.async_unload(opp)
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
     assert len(mock_call.return_value.mock_calls) == 1
 
 
-async def test_entry_options.opp, manager):
+async def test_entry_options(opp, manager):
     """Test that we can set options on an entry."""
     entry = MockConfigEntry(domain="test", data={"first": True}, options=None)
     entry.add_to_manager(manager)
@@ -870,7 +870,7 @@ async def test_entry_options.opp, manager):
     assert entry.options == {"second": True}
 
 
-async def test_entry_options_abort.opp, manager):
+async def test_entry_options_abort(opp, manager):
     """Test that we can abort options flow."""
     entry = MockConfigEntry(domain="test", data={"first": True}, options=None)
     entry.add_to_manager(manager)
@@ -900,10 +900,10 @@ async def test_entry_options_abort.opp, manager):
     )
 
 
-async def test_entry_setup_succeed.opp, manager):
+async def test_entry_setup_succeed(opp, manager):
     """Test that we can setup an entry."""
     entry = MockConfigEntry(domain="comp", state=config_entries.ENTRY_STATE_NOT_LOADED)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_setup = AsyncMock(return_value=True)
     mock_setup_entry = AsyncMock(return_value=True)
@@ -912,7 +912,7 @@ async def test_entry_setup_succeed.opp, manager):
         opp,
         MockModule("comp", async_setup=mock_setup, async_setup_entry=mock_setup_entry),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     assert await manager.async_setup(entry.entry_id)
     assert len(mock_setup.mock_calls) == 1
@@ -930,10 +930,10 @@ async def test_entry_setup_succeed.opp, manager):
         config_entries.ENTRY_STATE_FAILED_UNLOAD,
     ),
 )
-async def test_entry_setup_invalid_state.opp, manager, state):
+async def test_entry_setup_invalid_state(opp, manager, state):
     """Test that we cannot setup an entry with invalid state."""
     entry = MockConfigEntry(domain="comp", state=state)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_setup = AsyncMock(return_value=True)
     mock_setup_entry = AsyncMock(return_value=True)
@@ -951,14 +951,14 @@ async def test_entry_setup_invalid_state.opp, manager, state):
     assert entry.state == state
 
 
-async def test_entry_unload_succeed.opp, manager):
+async def test_entry_unload_succeed(opp, manager):
     """Test that we can unload an entry."""
     entry = MockConfigEntry(domain="comp", state=config_entries.ENTRY_STATE_LOADED)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     async_unload_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_unload_entry=async_unload_entry))
+    mock_integration(opp, MockModule("comp", async_unload_entry=async_unload_entry))
 
     assert await manager.async_unload(entry.entry_id)
     assert len(async_unload_entry.mock_calls) == 1
@@ -973,14 +973,14 @@ async def test_entry_unload_succeed.opp, manager):
         config_entries.ENTRY_STATE_SETUP_RETRY,
     ),
 )
-async def test_entry_unload_failed_to_load.opp, manager, state):
+async def test_entry_unload_failed_to_load(opp, manager, state):
     """Test that we can unload an entry."""
     entry = MockConfigEntry(domain="comp", state=state)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     async_unload_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_unload_entry=async_unload_entry))
+    mock_integration(opp, MockModule("comp", async_unload_entry=async_unload_entry))
 
     assert await manager.async_unload(entry.entry_id)
     assert len(async_unload_entry.mock_calls) == 0
@@ -994,14 +994,14 @@ async def test_entry_unload_failed_to_load.opp, manager, state):
         config_entries.ENTRY_STATE_FAILED_UNLOAD,
     ),
 )
-async def test_entry_unload_invalid_state.opp, manager, state):
+async def test_entry_unload_invalid_state(opp, manager, state):
     """Test that we cannot unload an entry with invalid state."""
     entry = MockConfigEntry(domain="comp", state=state)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     async_unload_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_unload_entry=async_unload_entry))
+    mock_integration(opp, MockModule("comp", async_unload_entry=async_unload_entry))
 
     with pytest.raises(config_entries.OperationNotAllowed):
         assert await manager.async_unload(entry.entry_id)
@@ -1010,10 +1010,10 @@ async def test_entry_unload_invalid_state.opp, manager, state):
     assert entry.state == state
 
 
-async def test_entry_reload_succeed.opp, manager):
+async def test_entry_reload_succeed(opp, manager):
     """Test that we can reload an entry."""
     entry = MockConfigEntry(domain="comp", state=config_entries.ENTRY_STATE_LOADED)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1028,7 +1028,7 @@ async def test_entry_reload_succeed.opp, manager):
             async_unload_entry=async_unload_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     assert await manager.async_reload(entry.entry_id)
     assert len(async_unload_entry.mock_calls) == 1
@@ -1045,10 +1045,10 @@ async def test_entry_reload_succeed.opp, manager):
         config_entries.ENTRY_STATE_SETUP_RETRY,
     ),
 )
-async def test_entry_reload_not_loaded.opp, manager, state):
+async def test_entry_reload_not_loaded(opp, manager, state):
     """Test that we can reload an entry."""
     entry = MockConfigEntry(domain="comp", state=state)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1063,7 +1063,7 @@ async def test_entry_reload_not_loaded.opp, manager, state):
             async_unload_entry=async_unload_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     assert await manager.async_reload(entry.entry_id)
     assert len(async_unload_entry.mock_calls) == 0
@@ -1082,7 +1082,7 @@ async def test_entry_reload_not_loaded.opp, manager, state):
 async def test_entry_reload_error(opp, manager, state):
     """Test that we can reload an entry."""
     entry = MockConfigEntry(domain="comp", state=state)
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1108,10 +1108,10 @@ async def test_entry_reload_error(opp, manager, state):
     assert entry.state == state
 
 
-async def test_entry_disable_succeed.opp, manager):
+async def test_entry_disable_succeed(opp, manager):
     """Test that we can disable an entry."""
     entry = MockConfigEntry(domain="comp", state=config_entries.ENTRY_STATE_LOADED)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1126,7 +1126,7 @@ async def test_entry_disable_succeed.opp, manager):
             async_unload_entry=async_unload_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     # Disable
     assert await manager.async_set_disabled_by(
@@ -1145,10 +1145,10 @@ async def test_entry_disable_succeed.opp, manager):
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
 
-async def test_entry_disable_without_reload_support.opp, manager):
+async def test_entry_disable_without_reload_support(opp, manager):
     """Test that we can disable an entry without reload support."""
     entry = MockConfigEntry(domain="comp", state=config_entries.ENTRY_STATE_LOADED)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1161,7 +1161,7 @@ async def test_entry_disable_without_reload_support.opp, manager):
             async_setup_entry=async_setup_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     # Disable
     assert not await manager.async_set_disabled_by(
@@ -1179,10 +1179,10 @@ async def test_entry_disable_without_reload_support.opp, manager):
     assert entry.state == config_entries.ENTRY_STATE_FAILED_UNLOAD
 
 
-async def test_entry_enable_without_reload_support.opp, manager):
+async def test_entry_enable_without_reload_support(opp, manager):
     """Test that we can disable an entry without reload support."""
     entry = MockConfigEntry(domain="comp", disabled_by=config_entries.DISABLED_USER)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1195,7 +1195,7 @@ async def test_entry_enable_without_reload_support.opp, manager):
             async_setup_entry=async_setup_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     # Enable
     assert await manager.async_set_disabled_by(entry.entry_id, None)
@@ -1212,7 +1212,7 @@ async def test_entry_enable_without_reload_support.opp, manager):
     assert entry.state == config_entries.ENTRY_STATE_FAILED_UNLOAD
 
 
-async def test_init_custom_integration.opp):
+async def test_init_custom_integration(opp):
     """Test initializing flow for custom integration."""
     integration = loader.Integration(
         opp,
@@ -1228,16 +1228,16 @@ async def test_init_custom_integration.opp):
             await opp.config_entries.flow.async_init("bla")
 
 
-async def test_support_entry_unload.opp):
+async def test_support_entry_unload(opp):
     """Test unloading entry."""
-    assert await config_entries.support_entry_unload.opp, "light")
-    assert not await config_entries.support_entry_unload.opp, "auth")
+    assert await config_entries.support_entry_unload(opp, "light")
+    assert not await config_entries.support_entry_unload(opp, "auth")
 
 
-async def test_reload_entry_entity_registry_ignores_no_entry.opp):
+async def test_reload_entry_entity_registry_ignores_no_entry(opp):
     """Test reloading entry in entity registry skips if no config entry linked."""
     handler = config_entries.EntityRegistryDisabledHandler.opp)
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     # Test we ignore entities without config entry
     entry = registry.async_get_or_create("light", "hue", "123")
@@ -1247,17 +1247,17 @@ async def test_reload_entry_entity_registry_ignores_no_entry.opp):
     assert handler._remove_call_later is None
 
 
-async def test_reload_entry_entity_registry_works.opp):
+async def test_reload_entry_entity_registry_works(opp):
     """Test we schedule an entry to be reloaded if disabled_by is updated."""
     handler = config_entries.EntityRegistryDisabledHandler.opp)
     handler.async_setup()
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     config_entry = MockConfigEntry(
         domain="comp", state=config_entries.ENTRY_STATE_LOADED
     )
     config_entry.supports_unload = True
-    config_entry.add_to_opp.opp)
+    config_entry.add_to_opp(opp)
     mock_setup_entry = AsyncMock(return_value=True)
     mock_unload_entry = AsyncMock(return_value=True)
     mock_integration(
@@ -1268,7 +1268,7 @@ async def test_reload_entry_entity_registry_works.opp):
             async_unload_entry=mock_unload_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     # Only changing disabled_by should update trigger
     entity_entry = registry.async_get_or_create(
@@ -1300,12 +1300,12 @@ async def test_reload_entry_entity_registry_works.opp):
     assert len(mock_unload_entry.mock_calls) == 1
 
 
-async def test_unqiue_id_persisted.opp, manager):
+async def test_unqiue_id_persisted(opp, manager):
     """Test that a unique ID is stored in the config entry."""
     mock_setup_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_setup_entry=mock_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=mock_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1329,14 +1329,14 @@ async def test_unqiue_id_persisted.opp, manager):
     assert p_entry.unique_id == "mock-unique-id"
 
 
-async def test_unique_id_existing_entry.opp, manager):
+async def test_unique_id_existing_entry(opp, manager):
     """Test that we remove an entry if there already is an entry with unique ID."""
     opp.config.components.add("comp")
     MockConfigEntry(
         domain="comp",
         state=config_entries.ENTRY_STATE_LOADED,
         unique_id="mock-unique-id",
-    ).add_to_opp.opp)
+    ).add_to_opp(opp)
 
     async_setup_entry = AsyncMock(return_value=True)
     async_unload_entry = AsyncMock(return_value=True)
@@ -1351,7 +1351,7 @@ async def test_unique_id_existing_entry.opp, manager):
             async_remove_entry=async_remove_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1382,7 +1382,7 @@ async def test_unique_id_existing_entry.opp, manager):
     assert len(async_remove_entry.mock_calls) == 1
 
 
-async def test_unique_id_update_existing_entry_without_reload.opp, manager):
+async def test_unique_id_update_existing_entry_without_reload(opp, manager):
     """Test that we update an entry if there already is an entry with unique ID."""
     opp.config.components.add("comp")
     entry = MockConfigEntry(
@@ -1391,13 +1391,13 @@ async def test_unique_id_update_existing_entry_without_reload.opp, manager):
         unique_id="mock-unique-id",
         state=config_entries.ENTRY_STATE_LOADED,
     )
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_integration(
         opp,
         MockModule("comp"),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1426,7 +1426,7 @@ async def test_unique_id_update_existing_entry_without_reload.opp, manager):
     assert len(async_reload.mock_calls) == 0
 
 
-async def test_unique_id_update_existing_entry_with_reload.opp, manager):
+async def test_unique_id_update_existing_entry_with_reload(opp, manager):
     """Test that we update an entry if there already is an entry with unique ID and we reload on changes."""
     opp.config.components.add("comp")
     entry = MockConfigEntry(
@@ -1435,13 +1435,13 @@ async def test_unique_id_update_existing_entry_with_reload.opp, manager):
         unique_id="mock-unique-id",
         state=config_entries.ENTRY_STATE_LOADED,
     )
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_integration(
         opp,
         MockModule("comp"),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
     updates = {"host": "1.1.1.1"}
 
     class TestFlow(config_entries.ConfigFlow):
@@ -1488,7 +1488,7 @@ async def test_unique_id_update_existing_entry_with_reload.opp, manager):
     assert len(async_reload.mock_calls) == 0
 
 
-async def test_unique_id_not_update_existing_entry.opp, manager):
+async def test_unique_id_not_update_existing_entry(opp, manager):
     """Test that we do not update an entry if existing entry has the data."""
     opp.config.components.add("comp")
     entry = MockConfigEntry(
@@ -1496,13 +1496,13 @@ async def test_unique_id_not_update_existing_entry.opp, manager):
         data={"additional": "data", "host": "0.0.0.0"},
         unique_id="mock-unique-id",
     )
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_integration(
         opp,
         MockModule("comp"),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1531,10 +1531,10 @@ async def test_unique_id_not_update_existing_entry.opp, manager):
     assert len(async_reload.mock_calls) == 0
 
 
-async def test_unique_id_in_progress.opp, manager):
+async def test_unique_id_in_progress(opp, manager):
     """Test that we abort if there is already a flow in progress with same unique id."""
-    mock_integration.opp, MockModule("comp"))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp"))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1562,13 +1562,13 @@ async def test_unique_id_in_progress.opp, manager):
     assert result2["reason"] == "already_in_progress"
 
 
-async def test_finish_flow_aborts_progress.opp, manager):
+async def test_finish_flow_aborts_progress(opp, manager):
     """Test that when finishing a flow, we abort other flows in progress with unique ID."""
     mock_integration(
         opp,
         MockModule("comp", async_setup_entry=AsyncMock(return_value=True)),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1601,11 +1601,11 @@ async def test_finish_flow_aborts_progress.opp, manager):
     assert len.opp.config_entries.flow.async_progress()) == 0
 
 
-async def test_unique_id_ignore.opp, manager):
+async def test_unique_id_ignore(opp, manager):
     """Test that we can ignore flows that are in progress and have a unique ID."""
     async_setup_entry = AsyncMock(return_value=False)
-    mock_integration.opp, MockModule("comp", async_setup_entry=async_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=async_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1644,7 +1644,7 @@ async def test_unique_id_ignore.opp, manager):
     assert entry.title == "Ignored Title"
 
 
-async def test_manual_add_overrides_ignored_entry.opp, manager):
+async def test_manual_add_overrides_ignored_entry(opp, manager):
     """Test that we can ignore manually add entry, overriding ignored entry."""
     opp.config.components.add("comp")
     entry = MockConfigEntry(
@@ -1654,13 +1654,13 @@ async def test_manual_add_overrides_ignored_entry.opp, manager):
         state=config_entries.ENTRY_STATE_LOADED,
         source=config_entries.SOURCE_IGNORE,
     )
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_integration(
         opp,
         MockModule("comp"),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1689,7 +1689,7 @@ async def test_manual_add_overrides_ignored_entry.opp, manager):
     assert len(async_reload.mock_calls) == 0
 
 
-async def test_manual_add_overrides_ignored_entry_singleton.opp, manager):
+async def test_manual_add_overrides_ignored_entry_singleton(opp, manager):
     """Test that we can ignore manually add entry, overriding ignored entry."""
     opp.config.components.add("comp")
     entry = MockConfigEntry(
@@ -1697,12 +1697,12 @@ async def test_manual_add_overrides_ignored_entry_singleton.opp, manager):
         state=config_entries.ENTRY_STATE_LOADED,
         source=config_entries.SOURCE_IGNORE,
     )
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     mock_setup_entry = AsyncMock(return_value=True)
 
-    mock_integration.opp, MockModule("comp", async_setup_entry=mock_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=mock_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1728,11 +1728,11 @@ async def test_manual_add_overrides_ignored_entry_singleton.opp, manager):
     assert p_entry.data == {"token": "supersecret"}
 
 
-async def test_unignore_step_form.opp, manager):
+async def test_unignore_step_form(opp, manager):
     """Test that we can ignore flows that are in progress and have a unique ID, then rediscover them."""
     async_setup_entry = AsyncMock(return_value=True)
-    mock_integration.opp, MockModule("comp", async_setup_entry=async_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=async_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1773,11 +1773,11 @@ async def test_unignore_step_form.opp, manager):
         assert len.opp.config_entries.async_entries("comp")) == 0
 
 
-async def test_unignore_create_entry.opp, manager):
+async def test_unignore_create_entry(opp, manager):
     """Test that we can ignore flows that are in progress and have a unique ID, then rediscover them."""
     async_setup_entry = AsyncMock(return_value=True)
-    mock_integration.opp, MockModule("comp", async_setup_entry=async_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=async_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1821,11 +1821,11 @@ async def test_unignore_create_entry.opp, manager):
         assert len.opp.config_entries.flow.async_progress()) == 0
 
 
-async def test_unignore_default_impl.opp, manager):
+async def test_unignore_default_impl(opp, manager):
     """Test that resdicovery is a no-op by default."""
     async_setup_entry = AsyncMock(return_value=True)
-    mock_integration.opp, MockModule("comp", async_setup_entry=async_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp", async_setup_entry=async_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1853,12 +1853,12 @@ async def test_unignore_default_impl.opp, manager):
         assert len.opp.config_entries.flow.async_progress()) == 0
 
 
-async def test_partial_flows_hidden.opp, manager):
+async def test_partial_flows_hidden(opp, manager):
     """Test that flows that don't have a cur_step and haven't finished initing are hidden."""
     async_setup_entry = AsyncMock(return_value=True)
-    mock_integration.opp, MockModule("comp", async_setup_entry=async_setup_entry))
-    mock_entity_platform.opp, "config_flow.comp", None)
-    await async_setup_component.opp, "persistent_notification", {})
+    mock_integration(opp, MockModule("comp", async_setup_entry=async_setup_entry))
+    mock_entity_platform(opp, "config_flow.comp", None)
+    await async_setup_component(opp, "persistent_notification", {})
 
     # A flag to test our assertion that `async_step_discovery` was called and is in its blocked state
     # This simulates if the step was e.g. doing network i/o
@@ -1912,7 +1912,7 @@ async def test_partial_flows_hidden.opp, manager):
         assert state is not None
 
 
-async def test_async_setup_init_entry.opp):
+async def test_async_setup_init_entry(opp):
     """Test a config entry being initialized during integration setup."""
 
     async def mock_async_setup_opp, config):
@@ -1933,8 +1933,8 @@ async def test_async_setup_init_entry.opp):
             "comp", async_setup=mock_async_setup, async_setup_entry=async_setup_entry
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
-    await async_setup_component.opp, "persistent_notification", {})
+    mock_entity_platform(opp, "config_flow.comp", None)
+    await async_setup_component(opp, "persistent_notification", {})
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -1946,7 +1946,7 @@ async def test_async_setup_init_entry.opp):
             return self.async_create_entry(title="title", data={})
 
     with patch.dict(config_entries.HANDLERS, {"comp": TestFlow}):
-        assert await async_setup_component.opp, "comp", {})
+        assert await async_setup_component(opp, "comp", {})
 
         await opp.async_block_till_done()
 
@@ -1957,10 +1957,10 @@ async def test_async_setup_init_entry.opp):
         assert entries[0].state == config_entries.ENTRY_STATE_LOADED
 
 
-async def test_async_setup_update_entry.opp):
+async def test_async_setup_update_entry(opp):
     """Test a config entry being updated during integration setup."""
     entry = MockConfigEntry(domain="comp", data={"value": "initial"})
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
     async def mock_async_setup_opp, config):
         """Mock setup."""
@@ -1973,7 +1973,7 @@ async def test_async_setup_update_entry.opp):
         )
         return True
 
-    async def mock_async_setup_entry.opp, entry):
+    async def mock_async_setup_entry(opp, entry):
         """Mock setting up an entry."""
         assert entry.data["value"] == "updated"
         return True
@@ -1986,8 +1986,8 @@ async def test_async_setup_update_entry.opp):
             async_setup_entry=mock_async_setup_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
-    await async_setup_component.opp, "persistent_notification", {})
+    mock_entity_platform(opp, "config_flow.comp", None)
+    await async_setup_component(opp, "persistent_notification", {})
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -2005,7 +2005,7 @@ async def test_async_setup_update_entry.opp):
             return self.async_abort(reason="yo")
 
     with patch.dict(config_entries.HANDLERS, {"comp": TestFlow}):
-        assert await async_setup_component.opp, "comp", {})
+        assert await async_setup_component(opp, "comp", {})
 
         entries = opp.config_entries.async_entries("comp")
         assert len(entries) == 1
@@ -2023,13 +2023,13 @@ async def test_async_setup_update_entry.opp):
         config_entries.SOURCE_OPPIO,
     ),
 )
-async def test_flow_with_default_discovery.opp, manager, discovery_source):
+async def test_flow_with_default_discovery(opp, manager, discovery_source):
     """Test that finishing a default discovery flow removes the unique ID in the entry."""
     mock_integration(
         opp,
         MockModule("comp", async_setup_entry=AsyncMock(return_value=True)),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -2071,10 +2071,10 @@ async def test_flow_with_default_discovery.opp, manager, discovery_source):
     assert entry.unique_id is None
 
 
-async def test_flow_with_default_discovery_with_unique_id.opp, manager):
+async def test_flow_with_default_discovery_with_unique_id(opp, manager):
     """Test discovery flow using the default discovery is ignored when unique ID is set."""
-    mock_integration.opp, MockModule("comp"))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp"))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -2099,14 +2099,14 @@ async def test_flow_with_default_discovery_with_unique_id.opp, manager):
     assert flows[0]["context"]["unique_id"] == "mock-unique-id"
 
 
-async def test_default_discovery_abort_existing_entries.opp, manager):
+async def test_default_discovery_abort_existing_entries(opp, manager):
     """Test that a flow without discovery implementation aborts when a config entry exists."""
     opp.config.components.add("comp")
     entry = MockConfigEntry(domain="comp", data={}, unique_id="mock-unique-id")
-    entry.add_to_opp.opp)
+    entry.add_to_opp(opp)
 
-    mock_integration.opp, MockModule("comp"))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp"))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -2121,10 +2121,10 @@ async def test_default_discovery_abort_existing_entries.opp, manager):
         assert result["reason"] == "already_configured"
 
 
-async def test_default_discovery_in_progress.opp, manager):
+async def test_default_discovery_in_progress(opp, manager):
     """Test that a flow using default discovery can only be triggered once."""
-    mock_integration.opp, MockModule("comp"))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp"))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""
@@ -2156,10 +2156,10 @@ async def test_default_discovery_in_progress.opp, manager):
     assert flows[0]["context"]["unique_id"] == "mock-unique-id"
 
 
-async def test_default_discovery_abort_on_new_unique_flow.opp, manager):
+async def test_default_discovery_abort_on_new_unique_flow(opp, manager):
     """Test that a flow using default discovery is aborted when a second flow with unique ID is created."""
-    mock_integration.opp, MockModule("comp"))
-    mock_entity_platform.opp, "config_flow.comp", None)
+    mock_integration(opp, MockModule("comp"))
+    mock_entity_platform(opp, "config_flow.comp", None)
 
     class TestFlow(config_entries.ConfigFlow):
         """Test flow."""

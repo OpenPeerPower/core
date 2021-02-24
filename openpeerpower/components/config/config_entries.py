@@ -216,7 +216,7 @@ class OptionManagerFlowResourceView(FlowManagerResourceView):
 
 @websocket_api.require_admin
 @websocket_api.websocket_command({"type": "config_entries/flow/progress"})
-def config_entries_progress.opp, connection, msg):
+def config_entries_progress(opp, connection, msg):
     """List flows that are in progress but not started by a user.
 
     Example of a non-user initiated flow is a discovered Hue hub that
@@ -237,7 +237,7 @@ def config_entries_progress.opp, connection, msg):
 @websocket_api.websocket_command(
     {"type": "config_entries/system_options/list", "entry_id": str}
 )
-async def system_options_list.opp, connection, msg):
+async def system_options_list(opp, connection, msg):
     """List all system options for a config entry."""
     entry_id = msg["entry_id"]
     entry = opp.config_entries.async_get_entry(entry_id)
@@ -253,7 +253,7 @@ def send_entry_not_found(connection, msg_id):
     )
 
 
-def get_entry.opp, connection, entry_id, msg_id):
+def get_entry(opp, connection, entry_id, msg_id):
     """Get entry, send error message if it doesn't exist."""
     entry = opp.config_entries.async_get_entry(entry_id)
     if entry is None:
@@ -270,14 +270,14 @@ def get_entry.opp, connection, entry_id, msg_id):
         vol.Optional("disable_new_entities"): bool,
     }
 )
-async def system_options_update.opp, connection, msg):
+async def system_options_update(opp, connection, msg):
     """Update config entry system options."""
     changes = dict(msg)
     changes.pop("id")
     changes.pop("type")
     changes.pop("entry_id")
 
-    entry = get_entry.opp, connection, msg["entry_id"], msg["id"])
+    entry = get_entry(opp, connection, msg["entry_id"], msg["id"])
     if entry is None:
         return
 
@@ -290,14 +290,14 @@ async def system_options_update.opp, connection, msg):
 @websocket_api.websocket_command(
     {"type": "config_entries/update", "entry_id": str, vol.Optional("title"): str}
 )
-async def config_entry_update.opp, connection, msg):
+async def config_entry_update(opp, connection, msg):
     """Update config entry."""
     changes = dict(msg)
     changes.pop("id")
     changes.pop("type")
     changes.pop("entry_id")
 
-    entry = get_entry.opp, connection, msg["entry_id"], msg["id"])
+    entry = get_entry(opp, connection, msg["entry_id"], msg["id"])
     if entry is None:
         return
 
@@ -315,7 +315,7 @@ async def config_entry_update.opp, connection, msg):
         "disabled_by": vol.Any("user", None),
     }
 )
-async def config_entry_disable.opp, connection, msg):
+async def config_entry_disable(opp, connection, msg):
     """Disable config entry."""
     disabled_by = msg["disabled_by"]
 
@@ -341,7 +341,7 @@ async def config_entry_disable.opp, connection, msg):
 @websocket_api.websocket_command(
     {"type": "config_entries/ignore_flow", "flow_id": str, "title": str}
 )
-async def ignore_config_flow.opp, connection, msg):
+async def ignore_config_flow(opp, connection, msg):
     """Ignore a config flow."""
     flow = next(
         (

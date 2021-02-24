@@ -184,7 +184,7 @@ class APIDiscoveryView(OpenPeerPowerView):
         """Get discovery information."""
        opp = request.app[.opp"]
         uuid = await opp.helpers.instance_id.async_get()
-        system_info = await async_get_system_info.opp)
+        system_info = await async_get_system_info(opp)
 
         data = {
             ATTR_UUID: uuid,
@@ -199,12 +199,12 @@ class APIDiscoveryView(OpenPeerPowerView):
         }
 
         try:
-            data["external_url"] = get_url.opp, allow_internal=False)
+            data["external_url"] = get_url(opp, allow_internal=False)
         except NoURLAvailableError:
             pass
 
         try:
-            data["internal_url"] = get_url.opp, allow_external=False)
+            data["internal_url"] = get_url(opp, allow_external=False)
         except NoURLAvailableError:
             pass
 
@@ -431,14 +431,14 @@ class APIErrorLog(OpenPeerPowerView):
         return web.FileResponse(request.app[.opp"].data[DATA_LOGGING])
 
 
-async def async_services_json.opp):
+async def async_services_json(opp):
     """Generate services data to JSONify."""
-    descriptions = await async_get_all_descriptions.opp)
+    descriptions = await async_get_all_descriptions(opp)
     return [{"domain": key, "services": value} for key, value in descriptions.items()]
 
 
 @ha.callback
-def async_events_json.opp):
+def async_events_json(opp):
     """Generate event data to JSONify."""
     return [
         {"event": key, "listener_count": value}

@@ -42,7 +42,7 @@ BRIGHTNESS_MODES = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up tuya sensors dynamically through tuya discovery."""
 
     platform = config_entry.data[CONF_PLATFORM]
@@ -67,7 +67,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     await async_discover_sensor(devices_ids)
 
 
-def _setup_entities.opp, dev_ids, platform):
+def _setup_entities(opp, dev_ids, platform):
     """Set up Tuya Light device."""
     tuya = opp.data[DOMAIN][TUYA_DATA]
     entities = []

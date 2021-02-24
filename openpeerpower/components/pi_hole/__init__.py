@@ -75,7 +75,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Pi-hole entry."""
     name = entry.data[CONF_NAME]
     host = entry.data[CONF_HOST]
@@ -93,7 +93,7 @@ async def async_setup_entry.opp, entry):
     _LOGGER.debug("Setting up %s integration with host %s", DOMAIN, host)
 
     try:
-        session = async_get_clientsession.opp, verify_tls)
+        session = async_get_clientsession(opp, verify_tls)
         api = Hole(
             host,
             opp.loop,
@@ -134,7 +134,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload Pi-hole entry."""
     unload_ok = all(
         await asyncio.gather(

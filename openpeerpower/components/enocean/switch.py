@@ -20,7 +20,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the EnOcean switch platform."""
     channel = config.get(CONF_CHANNEL)
     dev_id = config.get(CONF_ID)

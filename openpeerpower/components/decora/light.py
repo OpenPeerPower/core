@@ -73,7 +73,7 @@ def retry(method):
     return wrapper_retry
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up an Decora switch."""
     lights = []
     for address, device_config in config[CONF_DEVICES].items():

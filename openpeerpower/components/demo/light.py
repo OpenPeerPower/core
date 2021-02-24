@@ -28,7 +28,7 @@ SUPPORT_DEMO = (
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the demo light platform."""
     async_add_entities(
         [
@@ -59,9 +59,9 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Demo config entry."""
-    await async_setup_platform.opp, {}, async_add_entities)
+    await async_setup_platform(opp, {}, async_add_entities)
 
 
 class DemoLight(LightEntity):

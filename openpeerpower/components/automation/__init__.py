@@ -89,7 +89,7 @@ AutomationActionType = Callable[[OpenPeerPower, TemplateVarsType], Awaitable[Non
 
 
 @bind.opp
-def is_on.opp, entity_id):
+def is_on(opp, entity_id):
     """
     Return true if specified automation entity_id is on.
 
@@ -99,7 +99,7 @@ def is_on.opp, entity_id):
 
 
 @callback
-def automations_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def automations_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all automations that reference the entity."""
     if DOMAIN not in.opp.data:
         return []
@@ -114,7 +114,7 @@ def automations_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 
 @callback
-def entities_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def entities_in_automation(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all entities in a scene."""
     if DOMAIN not in.opp.data:
         return []
@@ -130,7 +130,7 @@ def entities_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 
 @callback
-def automations_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
+def automations_with_device(opp: OpenPeerPower, device_id: str) -> List[str]:
     """Return all automations that reference the device."""
     if DOMAIN not in.opp.data:
         return []
@@ -145,7 +145,7 @@ def automations_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
 
 
 @callback
-def devices_in_automation.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def devices_in_automation(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all devices in a scene."""
     if DOMAIN not in.opp.data:
         return []
@@ -165,10 +165,10 @@ async def async_setup(opp, config):
     opp.data[DOMAIN] = component = EntityComponent(LOGGER, DOMAIN, opp)
 
     # To register the automation blueprints
-    async_get_blueprints.opp)
+    async_get_blueprints(opp)
 
     if not await _async_process_config(opp, config, component):
-        await async_get_blueprints.opp).async_populate()
+        await async_get_blueprints(opp).async_populate()
 
     async def trigger_service_handler(entity, service_call):
         """Handle automation triggers."""
@@ -199,7 +199,7 @@ async def async_setup(opp, config):
         conf = await component.async_prepare_reload()
         if conf is None:
             return
-        async_get_blueprints.opp).async_reset_cache()
+        async_get_blueprints(opp).async_reset_cache()
         await _async_process_config(opp, conf, component)
         opp.bus.async_fire(EVENT_AUTOMATION_RELOADED, context=service_call.context)
 
@@ -416,9 +416,9 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         except Exception:  # pylint: disable=broad-except
             self._logger.exception("While executing automation %s", self.entity_id)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Remove listeners when removing automation from Open Peer Power."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         await self.async_disable()
 
     async def async_enable(self):

@@ -31,9 +31,9 @@ def convert_speed(speed: int) -> str:
     return SPEED_MEDIUM
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities) -> None:
+async def async_setup_entry(opp, config_entry, async_add_entities) -> None:
     """Set up fans for deCONZ component."""
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     gateway.entities[DOMAIN] = set()
 
     @callback

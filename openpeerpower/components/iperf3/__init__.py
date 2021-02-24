@@ -87,7 +87,7 @@ async def async_setup(opp, config):
         data = opp.data[DOMAIN][host[CONF_HOST]] = Iperf3Data.opp, host)
 
         if not conf[CONF_MANUAL]:
-            async_track_time_interval.opp, data.update, conf[CONF_SCAN_INTERVAL])
+            async_track_time_interval(opp, data.update, conf[CONF_SCAN_INTERVAL])
 
     def update(call):
         """Service call to manually update the data."""

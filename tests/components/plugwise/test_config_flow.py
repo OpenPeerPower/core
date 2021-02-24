@@ -59,9 +59,9 @@ def mock_smile():
         yield smile_mock.return_value
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
@@ -97,9 +97,9 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_zeroconf_form.opp):
+async def test_zeroconf_form(opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_ZEROCONF},
@@ -137,7 +137,7 @@ async def test_zeroconf_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_username.opp):
+async def test_form_username(opp):
     """Test we get the username data back."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -206,7 +206,7 @@ async def test_form_username.opp):
     assert result4["reason"] == "already_configured"
 
 
-async def test_form_invalid_auth.opp, mock_smile):
+async def test_form_invalid_auth(opp, mock_smile):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -224,7 +224,7 @@ async def test_form_invalid_auth.opp, mock_smile):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp, mock_smile):
+async def test_form_cannot_connect(opp, mock_smile):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -242,7 +242,7 @@ async def test_form_cannot_connect.opp, mock_smile):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_cannot_connect_port.opp, mock_smile):
+async def test_form_cannot_connect_port(opp, mock_smile):
     """Test we handle cannot connect to port error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -260,7 +260,7 @@ async def test_form_cannot_connect_port.opp, mock_smile):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_other_problem.opp, mock_smile):
+async def test_form_other_problem(opp, mock_smile):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -278,7 +278,7 @@ async def test_form_other_problem.opp, mock_smile):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_options_flow_power.opp, mock_smile) -> None:
+async def test_options_flow_power(opp, mock_smile) -> None:
     """Test config flow options DSMR environments."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -288,7 +288,7 @@ async def test_options_flow_power.opp, mock_smile) -> None:
     )
 
     opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="power")}}
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True
@@ -310,7 +310,7 @@ async def test_options_flow_power.opp, mock_smile) -> None:
         }
 
 
-async def test_options_flow_thermo.opp, mock_smile) -> None:
+async def test_options_flow_thermo(opp, mock_smile) -> None:
     """Test config flow options for thermostatic environments."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -320,7 +320,7 @@ async def test_options_flow_thermo.opp, mock_smile) -> None:
     )
 
     opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="thermostat")}}
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True

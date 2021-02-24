@@ -29,12 +29,12 @@ _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=60)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up a Logi Circle Camera. Obsolete."""
     _LOGGER.warning("Logi Circle no longer works with camera platform configuration")
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up a Logi Circle Camera based on a config entry."""
     devices = await opp.data[LOGI_CIRCLE_DOMAIN].cameras
     ffmpeg = opp.data[DATA_FFMPEG]
@@ -93,7 +93,7 @@ class LogiCam(Camera):
             ]
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect dispatcher listeners when removed."""
         for detach in self._listeners:
             detach()

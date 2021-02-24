@@ -75,7 +75,7 @@ def setup(opp, config):
     }
 
     for component in STREAMLABSWATER_COMPONENTS:
-        discovery.load_platform.opp, component, DOMAIN, {}, config)
+        discovery.load_platform(opp, component, DOMAIN, {}, config)
 
     def set_away_mode(service):
         """Set the StreamLabsWater Away Mode."""

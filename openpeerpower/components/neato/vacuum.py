@@ -72,7 +72,7 @@ ATTR_CATEGORY = "category"
 ATTR_ZONE = "zone"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Neato vacuum with config entry."""
     dev = []
     neato = opp.data.get(NEATO_LOGIN)

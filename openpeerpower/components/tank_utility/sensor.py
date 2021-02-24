@@ -38,7 +38,7 @@ SENSOR_ATTRS = [
 ]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Tank Utility sensor."""
 
     email = config.get(CONF_EMAIL)

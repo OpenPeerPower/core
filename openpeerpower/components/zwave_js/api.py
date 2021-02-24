@@ -23,14 +23,14 @@ TYPE = "type"
 
 
 @callback
-def async_register_api.opp: OpenPeerPower) -> None:
+def async_register_api(opp: OpenPeerPower) -> None:
     """Register all of our api endpoints."""
-    websocket_api.async_register_command.opp, websocket_network_status)
-    websocket_api.async_register_command.opp, websocket_node_status)
-    websocket_api.async_register_command.opp, websocket_add_node)
-    websocket_api.async_register_command.opp, websocket_stop_inclusion)
-    websocket_api.async_register_command.opp, websocket_remove_node)
-    websocket_api.async_register_command.opp, websocket_stop_exclusion)
+    websocket_api.async_register_command(opp, websocket_network_status)
+    websocket_api.async_register_command(opp, websocket_node_status)
+    websocket_api.async_register_command(opp, websocket_add_node)
+    websocket_api.async_register_command(opp, websocket_stop_inclusion)
+    websocket_api.async_register_command(opp, websocket_remove_node)
+    websocket_api.async_register_command(opp, websocket_stop_exclusion)
     opp.http.register_view(DumpView)  # type: ignore
 
 
@@ -278,7 +278,7 @@ class DumpView(OpenPeerPowerView):
 
         entry = opp.config_entries.async_get_entry(config_entry_id)
 
-        msgs = await dump.dump_msgs(entry.data[CONF_URL], async_get_clientsession.opp))
+        msgs = await dump.dump_msgs(entry.data[CONF_URL], async_get_clientsession(opp))
 
         return web.Response(
             body=json.dumps(msgs, indent=2) + "\n",

@@ -32,23 +32,23 @@ async def director_update_data(
         data = await director.getAllItemVariableValue(var)
     except BadToken:
         _LOGGER.info("Updating Control4 director token")
-        await refresh_tokens.opp, entry)
+        await refresh_tokens(opp, entry)
         director = opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR]
         data = await director.getAllItemVariableValue(var)
     return {key["id"]: key for key in data}
 
 
-async def refresh_tokens.opp: OpenPeerPower, entry: ConfigEntry):
+async def refresh_tokens(opp: OpenPeerPower, entry: ConfigEntry):
     """Store updated authentication and director tokens in.opp.data."""
     config = entry.data
-    account_session = aiohttp_client.async_get_clientsession.opp)
+    account_session = aiohttp_client.async_get_clientsession(opp)
 
     account = C4Account(config[CONF_USERNAME], config[CONF_PASSWORD], account_session)
     await account.getAccountBearerToken()
 
     controller_unique_id = config[CONF_CONTROLLER_UNIQUE_ID]
     director_token_dict = await account.getDirectorBearerToken(controller_unique_id)
-    director_session = aiohttp_client.async_get_clientsession.opp, verify_ssl=False)
+    director_session = aiohttp_client.async_get_clientsession(opp, verify_ssl=False)
 
     director = C4Director(
         config[CONF_HOST], director_token_dict[CONF_TOKEN], director_session

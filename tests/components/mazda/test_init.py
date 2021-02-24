@@ -22,10 +22,10 @@ FIXTURE_USER_INPUT = {
 }
 
 
-async def test_config_entry_not_ready.opp: OpenPeerPower) -> None:
+async def test_config_entry_not_ready(opp: OpenPeerPower) -> None:
     """Test the Mazda configuration entry not ready."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.mazda.MazdaAPI.validate_credentials",
@@ -37,14 +37,14 @@ async def test_config_entry_not_ready.opp: OpenPeerPower) -> None:
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_init_auth_failure.opp: OpenPeerPower):
+async def test_init_auth_failure(opp: OpenPeerPower):
     """Test auth failure during setup."""
     with patch(
         "openpeerpower.components.mazda.MazdaAPI.validate_credentials",
         side_effect=MazdaAuthenticationException("Login failed"),
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to(opp.opp)
 
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -58,14 +58,14 @@ async def test_init_auth_failure.opp: OpenPeerPower):
     assert flows[0]["step_id"] == "reauth"
 
 
-async def test_update_auth_failure.opp: OpenPeerPower):
+async def test_update_auth_failure(opp: OpenPeerPower):
     """Test auth failure during data update."""
     with patch(
         "openpeerpower.components.mazda.MazdaAPI.validate_credentials",
         return_value=True,
     ), patch("openpeerpower.components.mazda.MazdaAPI.get_vehicles", return_value={}):
         config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to(opp.opp)
 
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -90,9 +90,9 @@ async def test_update_auth_failure.opp: OpenPeerPower):
     assert flows[0]["step_id"] == "reauth"
 
 
-async def test_unload_config_entry.opp: OpenPeerPower) -> None:
+async def test_unload_config_entry(opp: OpenPeerPower) -> None:
     """Test the Mazda configuration entry unloading."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
     assert.opp.data[DOMAIN]
 
     await opp.config_entries.async_unload(entry.entry_id)

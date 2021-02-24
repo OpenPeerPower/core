@@ -21,12 +21,12 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the OpenTherm Gateway binary sensors."""
     sensors = []
     deprecated_sensors = []
     gw_dev = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]]
-    ent_reg = await async_get_registry.opp)
+    ent_reg = await async_get_registry(opp)
     for var, info in BINARY_SENSOR_INFO.items():
         device_class = info[0]
         friendly_name_format = info[1]
@@ -44,7 +44,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             )
 
         old_style_entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp=gw_dev.opp
+            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp=gw_dev(opp
         )
         old_ent = ent_reg.async_get(old_style_entity_id)
         if old_ent and old_ent.config_entry_id == config_entry.entry_id:
@@ -80,7 +80,7 @@ class OpenThermBinarySensor(BinarySensorEntity):
     def __init__(self, gw_dev, var, source, device_class, friendly_name_format):
         """Initialize the binary sensor."""
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, f"{var}_{source}_{gw_dev.gw_id}", opp=gw_dev.opp
+            ENTITY_ID_FORMAT, f"{var}_{source}_{gw_dev.gw_id}", opp=gw_dev(opp
         )
         self._gateway = gw_dev
         self._var = var
@@ -101,7 +101,7 @@ class OpenThermBinarySensor(BinarySensorEntity):
             self.opp, self._gateway.update_signal, self.receive_report
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe from updates from the component."""
         _LOGGER.debug(
             "Removing OpenTherm Gateway binary sensor %s", self._friendly_name
@@ -169,7 +169,7 @@ class DeprecatedOpenThermBinarySensor(OpenThermBinarySensor):
     def __init__(self, gw_dev, var, device_class, friendly_name_format):
         """Initialize the binary sensor."""
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp=gw_dev.opp
+            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp=gw_dev(opp
         )
         self._gateway = gw_dev
         self._var = var

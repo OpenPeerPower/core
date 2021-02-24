@@ -49,7 +49,7 @@ class MobileAppEntity(RestoreEntity):
 
         self.async_restore_last_state(state)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect dispatcher listener when removed."""
         if self.unsub_dispatcher is not None:
             self.unsub_dispatcher()

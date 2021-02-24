@@ -40,7 +40,7 @@ async def connect_light(light: pyzerproc.Light) -> Optional[pyzerproc.Light]:
     return light
 
 
-async def discover_entities.opp: OpenPeerPower) -> List[Entity]:
+async def discover_entities(opp: OpenPeerPower) -> List[Entity]:
     """Attempt to discover new lights."""
     lights = await pyzerproc.discover()
 
@@ -79,7 +79,7 @@ async def async_setup_entry(
         """Wrap discovery to include params."""
         nonlocal warned
         try:
-            entities = await discover_entities.opp)
+            entities = await discover_entities(opp)
             async_add_entities(entities, update_before_add=True)
             warned = False
         except pyzerproc.ZerprocException:
@@ -91,7 +91,7 @@ async def async_setup_entry(
     opp.async_create_task(discover())
 
     # Perform recurring discovery of new devices
-    async_track_time_interval.opp, discover, DISCOVERY_INTERVAL)
+    async_track_time_interval(opp, discover, DISCOVERY_INTERVAL)
 
 
 class ZerprocLight(LightEntity):
@@ -110,11 +110,11 @@ class ZerprocLight(LightEntity):
         """Run when entity about to be added to.opp."""
         self.async_on_remove(
             self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from.opp
+                EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from(opp
             )
         )
 
-    async def async_will_remove_from.opp(self, *args) -> None:
+    async def async_will_remove_from(opp(self, *args) -> None:
         """Run when entity will be removed from.opp."""
         try:
             await self._light.disconnect()

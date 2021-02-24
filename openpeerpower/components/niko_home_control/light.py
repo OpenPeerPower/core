@@ -19,7 +19,7 @@ SCAN_INTERVAL = timedelta(seconds=30)
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_HOST): cv.string})
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Niko Home Control light platform."""
     host = config[CONF_HOST]
 

@@ -30,7 +30,7 @@ SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 HVAC_MODES = [HVAC_MODE_AUTO, HVAC_MODE_HEAT]
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Load a config entry."""
     coordinator = opp.data[DOMAIN][entry.entry_id]
     async_add_entities([AtagThermostat(coordinator, CLIMATE)])

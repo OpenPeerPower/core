@@ -130,7 +130,7 @@ ADD_EVENT_SERVICE_SCHEMA = vol.Schema(
 )
 
 
-def do_authentication.opp, opp_config, config):
+def do_authentication(opp, opp_config, config):
     """Notify user of actions and authenticate.
 
     Notify user of user_code and verification_url then poll
@@ -211,10 +211,10 @@ def setup(opp, config):
 
     token_file = opp.config.path(TOKEN_FILE)
     if not os.path.isfile(token_file):
-        do_authentication.opp, config, conf)
+        do_authentication(opp, config, conf)
     else:
         if not check_correct_scopes(token_file):
-            do_authentication.opp, config, conf)
+            do_authentication(opp, config, conf)
         else:
             do_setup_opp, config, conf)
 
@@ -230,12 +230,12 @@ def check_correct_scopes(token_file):
     return True
 
 
-def setup_services.opp, opp_config, track_new_found_calendars, calendar_service):
+def setup_services(opp, opp_config, track_new_found_calendars, calendar_service):
     """Set up the service listeners."""
 
     def _found_calendar(call):
         """Check if we know about a calendar and generate PLATFORM_DISCOVER."""
-        calendar = get_calendar_info.opp, call.data)
+        calendar = get_calendar_info(opp, call.data)
         if opp.data[DATA_INDEX].get(calendar[CONF_CAL_ID]) is not None:
             return
 
@@ -327,10 +327,10 @@ def do_setup_opp, opp_config, config):
     track_new_found_calendars = convert(
         config.get(CONF_TRACK_NEW), bool, DEFAULT_CONF_TRACK_NEW
     )
-    setup_services.opp, opp_config, track_new_found_calendars, calendar_service)
+    setup_services(opp, opp_config, track_new_found_calendars, calendar_service)
 
     for calendar in.opp.data[DATA_INDEX].values():
-        discovery.load_platform.opp, "calendar", DOMAIN, calendar, opp_config)
+        discovery.load_platform(opp, "calendar", DOMAIN, calendar, opp_config)
 
     # Look for any new calendars
     opp.services.call(DOMAIN, SERVICE_SCAN_CALENDARS, None)
@@ -354,7 +354,7 @@ class GoogleCalendarService:
         return service
 
 
-def get_calendar_info.opp, calendar):
+def get_calendar_info(opp, calendar):
     """Convert data from Google into DEVICE_SCHEMA."""
     calendar_info = DEVICE_SCHEMA(
         {

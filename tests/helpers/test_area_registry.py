@@ -10,11 +10,11 @@ from tests.common import flush_store, mock_area_registry
 @pytest.fixture
 def registry.opp):
     """Return an empty, loaded, registry."""
-    return mock_area_registry.opp)
+    return mock_area_registry(opp)
 
 
 @pytest.fixture
-def update_events.opp):
+def update_events(opp):
     """Capture update events."""
     events = []
 
@@ -36,7 +36,7 @@ async def test_list_areas(registry):
     assert len(areas) == len(registry.areas)
 
 
-async def test_create_area.opp, registry, update_events):
+async def test_create_area(opp, registry, update_events):
     """Make sure that we can create an area."""
     area = registry.async_create("mock")
 
@@ -51,7 +51,7 @@ async def test_create_area.opp, registry, update_events):
     assert update_events[0]["area_id"] == area.id
 
 
-async def test_create_area_with_name_already_in_use.opp, registry, update_events):
+async def test_create_area_with_name_already_in_use(opp, registry, update_events):
     """Make sure that we can't create an area with a name already in use."""
     area1 = registry.async_create("mock")
 
@@ -77,7 +77,7 @@ async def test_create_area_with_id_already_in_use(registry):
     assert area2.id == "mock_2"
 
 
-async def test_delete_area.opp, registry, update_events):
+async def test_delete_area(opp, registry, update_events):
     """Make sure that we can delete an area."""
     area = registry.async_create("mock")
 
@@ -104,7 +104,7 @@ async def test_delete_non_existing_area(registry):
     assert len(registry.areas) == 1
 
 
-async def test_update_area.opp, registry, update_events):
+async def test_update_area(opp, registry, update_events):
     """Make sure that we can read areas."""
     area = registry.async_create("mock")
 
@@ -173,7 +173,7 @@ async def test_update_area_with_normalized_name_already_in_use(registry):
     assert len(registry.areas) == 2
 
 
-async def test_load_area.opp, registry):
+async def test_load_area(opp, registry):
     """Make sure that we can load/save data correctly."""
     area1 = registry.async_create("mock1")
     area2 = registry.async_create("mock2")
@@ -193,20 +193,20 @@ async def test_load_area.opp, registry):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_loading_area_from_storage.opp, opp_storage):
+async def test_loading_area_from_storage(opp, opp_storage):
     """Test loading stored areas on start."""
     opp.storage[area_registry.STORAGE_KEY] = {
         "version": area_registry.STORAGE_VERSION,
         "data": {"areas": [{"id": "12345A", "name": "mock"}]},
     }
 
-    await area_registry.async_load.opp)
-    registry = area_registry.async_get.opp)
+    await area_registry.async_load(opp)
+    registry = area_registry.async_get(opp)
 
     assert len(registry.areas) == 1
 
 
-async def test_async_get_or_create.opp, registry):
+async def test_async_get_or_create(opp, registry):
     """Make sure we can get the area by name."""
     area = registry.async_get_or_create("Mock1")
     area2 = registry.async_get_or_create("mock1")
@@ -217,7 +217,7 @@ async def test_async_get_or_create.opp, registry):
     assert area2 == area3
 
 
-async def test_async_get_area_by_name.opp, registry):
+async def test_async_get_area_by_name(opp, registry):
     """Make sure we can get the area by name."""
     registry.async_create("Mock1")
 
@@ -226,7 +226,7 @@ async def test_async_get_area_by_name.opp, registry):
     assert registry.async_get_area_by_name("M o c k 1").normalized_name == "mock1"
 
 
-async def test_async_get_area_by_name_not_found.opp, registry):
+async def test_async_get_area_by_name_not_found(opp, registry):
     """Make sure we return None for non-existent areas."""
     registry.async_create("Mock1")
 
@@ -235,7 +235,7 @@ async def test_async_get_area_by_name_not_found.opp, registry):
     assert registry.async_get_area_by_name("non_exist") is None
 
 
-async def test_async_get_area.opp, registry):
+async def test_async_get_area(opp, registry):
     """Make sure we can get the area by id."""
     area = registry.async_create("Mock1")
 

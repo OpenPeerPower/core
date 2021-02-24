@@ -57,7 +57,7 @@ async def async_setup(opp, config):
         {SERVERS: {}, DISPATCHERS: {}, WEBSOCKETS: {}, PLATFORMS_COMPLETED: {}},
     )
 
-    await async_setup_services.opp)
+    await async_setup_services(opp)
 
     gdm = opp.data[PLEX_DOMAIN][GDM_SCANNER] = GDM()
 
@@ -72,7 +72,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Plex from a config entry."""
     server_config = entry.data[PLEX_SERVER_CONFIG]
 
@@ -176,12 +176,12 @@ async def async_setup_entry.opp, entry):
                     entry.data[CONF_SERVER],
                     error,
                 )
-                opp.async_create_task.opp.config_entries.async_reload(entry.entry_id))
+                opp.async_create_task(opp.config_entries.async_reload(entry.entry_id))
 
         elif signal == SIGNAL_DATA:
             opp.async_create_task(plex_server.async_update_session(data))
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     verify_ssl = server_config.get(CONF_VERIFY_SSL)
     websocket = PlexWebsocket(
         plex_server.plex_server,
@@ -221,7 +221,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     server_id = entry.data[CONF_SERVER_IDENTIFIER]
 
@@ -243,7 +243,7 @@ async def async_unload_entry.opp, entry):
     return True
 
 
-async def async_options_updated.opp, entry):
+async def async_options_updated(opp, entry):
     """Triggered by config entry options updates."""
     server_id = entry.data[CONF_SERVER_IDENTIFIER]
 

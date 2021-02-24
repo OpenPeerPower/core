@@ -23,10 +23,10 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up config entry."""
 
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
     printer = opp.data[DOMAIN][entry.entry_id] = SyncThru(
         entry.data[CONF_URL], session
     )
@@ -43,7 +43,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         if printer.is_unknown_state():
             raise ConfigEntryNotReady
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections=device_connections(printer),
@@ -58,7 +58,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload the config entry."""
     await opp.config_entries.async_forward_entry_unload(entry, SENSOR_DOMAIN)
     opp.data[DOMAIN].pop(entry.entry_id, None)

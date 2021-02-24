@@ -33,7 +33,7 @@ DATA_SCHEMA_MOUNTDIR = vol.Schema(
 )
 
 
-async def validate_input_owserver.opp: OpenPeerPowerType, data):
+async def validate_input_owserver(opp: OpenPeerPowerType, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA_OWSERVER with values provided by the user.
@@ -50,7 +50,7 @@ async def validate_input_owserver.opp: OpenPeerPowerType, data):
     return {"title": host}
 
 
-def is_duplicate_owserver_entry.opp: OpenPeerPowerType, user_input):
+def is_duplicate_owserver_entry(opp: OpenPeerPowerType, user_input):
     """Check existing entries for matching host and port."""
     for config_entry in.opp.config_entries.async_entries(DOMAIN):
         if (
@@ -62,7 +62,7 @@ def is_duplicate_owserver_entry.opp: OpenPeerPowerType, user_input):
     return False
 
 
-async def validate_input_mount_dir.opp: OpenPeerPowerType, data):
+async def validate_input_mount_dir(opp: OpenPeerPowerType, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA_MOUNTDIR with values provided by the user.

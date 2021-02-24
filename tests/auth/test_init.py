@@ -133,7 +133,7 @@ async def test_auth_manager_from_config_auth_modules(mock.opp):
     ]
 
 
-async def test_create_new_user.opp):
+async def test_create_new_user(opp):
     """Test creating new user."""
     events = []
 
@@ -246,7 +246,7 @@ async def test_login_as_existing_user(mock.opp):
     assert user.name == "Paulus"
 
 
-async def test_linking_user_to_two_auth_providers.opp, opp_storage):
+async def test_linking_user_to_two_auth_providers(opp, opp_storage):
     """Test linking user to two auth providers."""
     manager = await auth.auth_manager_from_config(
         opp,
@@ -283,7 +283,7 @@ async def test_linking_user_to_two_auth_providers.opp, opp_storage):
     assert len(user.credentials) == 2
 
 
-async def test_saving_loading.opp, opp_storage):
+async def test_saving_loading(opp, opp_storage):
     """Test storing and saving data.
 
     Creates one of each type that we store to test we restore correctly.
@@ -338,7 +338,7 @@ async def test_saving_loading.opp, opp_storage):
             assert False, "Unknown client_id: %s" % r_token.client_id
 
 
-async def test_cannot_retrieve_expired_access_token.opp):
+async def test_cannot_retrieve_expired_access_token(opp):
     """Test that we cannot retrieve expired access tokens."""
     manager = await auth.auth_manager_from_config(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -360,7 +360,7 @@ async def test_cannot_retrieve_expired_access_token.opp):
     assert await manager.async_validate_access_token(access_token) is None
 
 
-async def test_generating_system_user.opp):
+async def test_generating_system_user(opp):
     """Test that we can add a system user."""
     events = []
 
@@ -382,7 +382,7 @@ async def test_generating_system_user.opp):
     assert events[0].data["user_id"] == user.id
 
 
-async def test_refresh_token_requires_client_for_user.opp):
+async def test_refresh_token_requires_client_for_user(opp):
     """Test create refresh token for a user with client_id."""
     manager = await auth.auth_manager_from_config(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -399,7 +399,7 @@ async def test_refresh_token_requires_client_for_user.opp):
     assert token.access_token_expiration == auth_const.ACCESS_TOKEN_EXPIRATION
 
 
-async def test_refresh_token_not_requires_client_for_system_user.opp):
+async def test_refresh_token_not_requires_client_for_system_user(opp):
     """Test create refresh token for a system user w/o client_id."""
     manager = await auth.auth_manager_from_config(opp, [], [])
     user = await manager.async_create_system_user("Opp.io")
@@ -414,7 +414,7 @@ async def test_refresh_token_not_requires_client_for_system_user.opp):
     assert token.token_type == auth_models.TOKEN_TYPE_SYSTEM
 
 
-async def test_refresh_token_with_specific_access_token_expiration.opp):
+async def test_refresh_token_with_specific_access_token_expiration(opp):
     """Test create a refresh token with specific access token expiration."""
     manager = await auth.auth_manager_from_config(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -427,7 +427,7 @@ async def test_refresh_token_with_specific_access_token_expiration.opp):
     assert token.access_token_expiration == timedelta(days=100)
 
 
-async def test_refresh_token_type.opp):
+async def test_refresh_token_type(opp):
     """Test create a refresh token with token type."""
     manager = await auth.auth_manager_from_config(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -445,7 +445,7 @@ async def test_refresh_token_type.opp):
     assert token.token_type == auth_models.TOKEN_TYPE_NORMAL
 
 
-async def test_refresh_token_type_long_lived_access_token.opp):
+async def test_refresh_token_type_long_lived_access_token(opp):
     """Test create a refresh token has long-lived access token type."""
     manager = await auth.auth_manager_from_config(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -823,7 +823,7 @@ async def test_auth_module_expired_session(mock.opp):
         assert step["reason"] == "login_expired"
 
 
-async def test_enable_mfa_for_user.opp, opp_storage):
+async def test_enable_mfa_for_user(opp, opp_storage):
     """Test enable mfa module for user."""
     manager = await auth.auth_manager_from_config(
         opp,
@@ -894,7 +894,7 @@ async def test_enable_mfa_for_user.opp, opp_storage):
     await manager.async_disable_user_mfa(user, "insecure_example")
 
 
-async def test_async_remove_user.opp):
+async def test_async_remove_user(opp):
     """Test removing a user."""
     events = []
 

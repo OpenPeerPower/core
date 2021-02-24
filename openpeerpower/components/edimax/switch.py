@@ -22,7 +22,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Find and return Edimax Smart Plugs."""
     host = config.get(CONF_HOST)
     auth = (config.get(CONF_USERNAME), config.get(CONF_PASSWORD))

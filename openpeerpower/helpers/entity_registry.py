@@ -616,12 +616,12 @@ class EntityRegistry:
 
 
 @callback
-def async_get.opp: OpenPeerPowerType) -> EntityRegistry:
+def async_get(opp: OpenPeerPowerType) -> EntityRegistry:
     """Get entity registry."""
     return cast(EntityRegistry, opp.data[DATA_REGISTRY])
 
 
-async def async_load.opp: OpenPeerPowerType) -> None:
+async def async_load(opp: OpenPeerPowerType) -> None:
     """Load entity registry."""
     assert DATA_REGISTRY not in.opp.data
     opp.data[DATA_REGISTRY] = EntityRegistry.opp)
@@ -629,12 +629,12 @@ async def async_load.opp: OpenPeerPowerType) -> None:
 
 
 @bind.opp
-async def async_get_registry.opp: OpenPeerPowerType) -> EntityRegistry:
+async def async_get_registry(opp: OpenPeerPowerType) -> EntityRegistry:
     """Get entity registry.
 
     This is deprecated and will be removed in the future. Use async_get instead.
     """
-    return async_get.opp)
+    return async_get(opp)
 
 
 @callback
@@ -718,7 +718,7 @@ def async_setup_entity_restore(
             if entry.entity_id in existing or entry.disabled:
                 continue
 
-            entry.write_unavailable_state.opp)
+            entry.write_unavailable_state(opp)
 
     opp.bus.async_listen(EVENT_OPENPEERPOWER_START, _write_unavailable_states)
 
@@ -729,7 +729,7 @@ async def async_migrate_entries(
     entry_callback: Callable[[RegistryEntry], Optional[dict]],
 ) -> None:
     """Migrator of unique IDs."""
-    ent_reg = await async_get_registry.opp)
+    ent_reg = await async_get_registry(opp)
 
     for entry in ent_reg.entities.values():
         if entry.config_entry_id != config_entry_id:

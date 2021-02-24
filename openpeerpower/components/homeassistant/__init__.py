@@ -37,7 +37,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
 
     async def async_handle_turn_service(service):
         """Handle calls to openpeerpower.turn_on/off."""
-        referenced = await async_extract_referenced_entity_ids.opp, service)
+        referenced = await async_extract_referenced_entity_ids(opp, service)
         all_referenced = referenced.referenced | referenced.indirectly_referenced
 
         # Generic turn on/off method requires entity id
@@ -110,7 +110,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
     async def async_handle_core_service(call):
         """Service handler for handling core services."""
         if call.service == SERVICE_OPENPEERPOWER_STOP:
-            opp.async_create_task.opp.async_stop())
+            opp.async_create_task(opp.async_stop())
             return
 
         try:
@@ -128,7 +128,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
             return
 
         if call.service == SERVICE_OPENPEERPOWER_RESTART:
-            opp.async_create_task.opp.async_stop(RESTART_EXIT_CODE))
+            opp.async_create_task(opp.async_stop(RESTART_EXIT_CODE))
 
     async def async_handle_update_service(call):
         """Service handler for updating an entity."""
@@ -178,7 +178,7 @@ async def async_setup_opp: ha.OpenPeerPower, config: dict) -> bool:
     async def async_handle_reload_config(call):
         """Service handler for reloading core config."""
         try:
-            conf = await conf_util.async.opp_config_yaml.opp)
+            conf = await conf_util.async.opp_config_yaml(opp)
         except OpenPeerPowerError as err:
             _LOGGER.error(err)
             return

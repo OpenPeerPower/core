@@ -170,12 +170,12 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up an instance of the MySensors integration.
 
     Every instance has a connection to exactly one Gateway.
     """
-    gateway = await setup_gateway.opp, entry)
+    gateway = await setup_gateway(opp, entry)
 
     if not gateway:
         _LOGGER.error("Gateway setup failed for %s", entry.data)
@@ -202,10 +202,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Remove an instance of the MySensors integration."""
 
-    gateway = get_mysensors_gateway.opp, entry.entry_id)
+    gateway = get_mysensors_gateway(opp, entry.entry_id)
 
     unload_ok = all(
         await asyncio.gather(
@@ -225,7 +225,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
     del.opp.data[DOMAIN][MYSENSORS_GATEWAYS][entry.entry_id]
 
-    await gw_stop.opp, entry, gateway)
+    await gw_stop(opp, entry, gateway)
     return True
 
 
@@ -274,7 +274,7 @@ def setup_mysensors_platform(
     new_devices: List[MySensorsDevice] = []
     new_dev_ids: List[DevId] = discovery_info[ATTR_DEVICES]
     for dev_id in new_dev_ids:
-        devices: Dict[DevId, MySensorsDevice] = get_mysensors_devices.opp, domain)
+        devices: Dict[DevId, MySensorsDevice] = get_mysensors_devices(opp, domain)
         if dev_id in devices:
             _LOGGER.debug(
                 "Skipping setup of %s for platform %s as it already exists",
@@ -283,7 +283,7 @@ def setup_mysensors_platform(
             )
             continue
         gateway_id, node_id, child_id, value_type = dev_id
-        gateway: Optional[BaseAsyncGateway] = get_mysensors_gateway.opp, gateway_id)
+        gateway: Optional[BaseAsyncGateway] = get_mysensors_gateway(opp, gateway_id)
         if not gateway:
             _LOGGER.warning("Skipping setup of %s, no gateway found", dev_id)
             continue

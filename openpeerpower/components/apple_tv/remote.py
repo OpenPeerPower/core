@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 PARALLEL_UPDATES = 0
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Load Apple TV remote based on a config entry."""
     name = config_entry.data[CONF_NAME]
     manager = opp.data[DOMAIN][config_entry.unique_id]

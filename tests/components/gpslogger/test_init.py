@@ -32,14 +32,14 @@ def mock_dev_track(mock_device_tracker_conf):
 @pytest.fixture
 async def gpslogger_client(loop, opp, aiohttp_client):
     """Mock client for GPSLogger (unauthenticated)."""
-    assert await async_setup_component.opp, "persistent_notification", {})
+    assert await async_setup_component(opp, "persistent_notification", {})
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     await opp.async_block_till_done()
 
     with patch("openpeerpower.components.device_tracker.legacy.update_config"):
-        return await aiohttp_client.opp.http.app)
+        return await aiohttp_client(opp.http.app)
 
 
 @pytest.fixture(autouse=True)
@@ -61,7 +61,7 @@ async def setup_zones(loop, opp):
 
 
 @pytest.fixture
-async def webhook_id.opp, gpslogger_client):
+async def webhook_id(opp, gpslogger_client):
     """Initialize the GPSLogger component and get the webhook_id."""
     await async_process_op_core_config(
         opp,
@@ -79,7 +79,7 @@ async def webhook_id.opp, gpslogger_client):
     return result["result"].data["webhook_id"]
 
 
-async def test_missing_data.opp, gpslogger_client, webhook_id):
+async def test_missing_data(opp, gpslogger_client, webhook_id):
     """Test missing data."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -105,7 +105,7 @@ async def test_missing_data.opp, gpslogger_client, webhook_id):
     assert req.status == HTTP_UNPROCESSABLE_ENTITY
 
 
-async def test_enter_and_exit.opp, gpslogger_client, webhook_id):
+async def test_enter_and_exit(opp, gpslogger_client, webhook_id):
     """Test when there is a known zone."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -142,7 +142,7 @@ async def test_enter_and_exit.opp, gpslogger_client, webhook_id):
     assert len(ent_reg.entities) == 1
 
 
-async def test_enter_with_attrs.opp, gpslogger_client, webhook_id):
+async def test_enter_with_attrs(opp, gpslogger_client, webhook_id):
     """Test when additional attributes are present."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -202,7 +202,7 @@ async def test_enter_with_attrs.opp, gpslogger_client, webhook_id):
 @pytest.mark.xfail(
     reason="The device_tracker component does not support unloading yet."
 )
-async def test_load_unload_entry.opp, gpslogger_client, webhook_id):
+async def test_load_unload_entry(opp, gpslogger_client, webhook_id):
     """Test that the appropriate dispatch signals are added and removed."""
     url = f"/api/webhook/{webhook_id}"
     data = {"latitude": HOME_LATITUDE, "longitude": HOME_LONGITUDE, "device": "123"}
@@ -217,6 +217,6 @@ async def test_load_unload_entry.opp, gpslogger_client, webhook_id):
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 
-    assert await gpslogger.async_unload_entry.opp, entry)
+    assert await gpslogger.async_unload_entry(opp, entry)
     await opp.async_block_till_done()
     assert not.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]

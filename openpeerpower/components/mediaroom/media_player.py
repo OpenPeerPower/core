@@ -73,7 +73,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Mediaroom platform."""
     known_hosts = opp.data.get(DATA_MEDIAROOM)
     if known_hosts is None:
@@ -97,7 +97,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     def callback_notify(notify):
         """Process NOTIFY message from STB."""
         if notify.ip_address in.opp.data[DATA_MEDIAROOM]:
-            dispatcher_send.opp, SIGNAL_STB_NOTIFY, notify)
+            dispatcher_send(opp, SIGNAL_STB_NOTIFY, notify)
             return
 
         _LOGGER.debug("Discovered new stb %s", notify.ip_address)

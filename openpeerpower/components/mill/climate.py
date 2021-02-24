@@ -46,12 +46,12 @@ SET_ROOM_TEMP_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Mill climate."""
     mill_data_connection = Mill(
         entry.data[CONF_USERNAME],
         entry.data[CONF_PASSWORD],
-        websession=async_get_clientsession.opp),
+        websession=async_get_clientsession(opp),
     )
     if not await mill_data_connection.connect():
         raise ConfigEntryNotReady

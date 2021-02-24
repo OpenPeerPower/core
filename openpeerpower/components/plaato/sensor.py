@@ -24,11 +24,11 @@ from .const import (
 from .entity import PlaatoEntity
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Plaato sensor."""
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Plaato from a config entry."""
     entry_data = opp.data[DOMAIN][entry.entry_id]
 
@@ -47,10 +47,10 @@ async def async_setup_entry.opp, entry, async_add_entities):
             )
         else:
             for sensor_type in sensor_data.sensors:
-                async_dispatcher_send.opp, SENSOR_SIGNAL % (device_id, sensor_type))
+                async_dispatcher_send(opp, SENSOR_SIGNAL % (device_id, sensor_type))
 
     if entry.data[CONF_USE_WEBHOOK]:
-        async_dispatcher_connect.opp, SENSOR_UPDATE, _async_update_from_webhook)
+        async_dispatcher_connect(opp, SENSOR_UPDATE, _async_update_from_webhook)
     else:
         coordinator = entry_data[COORDINATOR]
         async_add_entities(

@@ -320,7 +320,7 @@ def sync_entity_lifecycle(
             return
 
         if change_type == CHANGE_REMOVED:
-            ent_reg = await entity_registry.async_get_registry.opp)
+            ent_reg = await entity_registry.async_get_registry(opp)
             ent_to_remove = ent_reg.async_get_entity_id(domain, platform, item_id)
             if ent_to_remove is not None:
                 ent_reg.async_remove(ent_to_remove)

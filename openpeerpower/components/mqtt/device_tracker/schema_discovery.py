@@ -54,7 +54,7 @@ PLATFORM_SCHEMA_DISCOVERY = (
 )
 
 
-async def async_setup_entry_from_discovery.opp, config_entry, async_add_entities):
+async def async_setup_entry_from_discovery(opp, config_entry, async_add_entities):
     """Set up MQTT device tracker dynamically through MQTT discovery."""
     setup = functools.partial(
         _async_setup_entity, opp, async_add_entities, config_entry=config_entry

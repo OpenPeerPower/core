@@ -49,7 +49,7 @@ async def async_setup_entry(
     async def new_lightpad(device):
         setup_entities(device)
 
-    device_web_session = async_get_clientsession.opp, verify_ssl=False)
+    device_web_session = async_get_clientsession(opp, verify_ssl=False)
     asyncio.create_task(
         plum.discover(
             opp.loop,

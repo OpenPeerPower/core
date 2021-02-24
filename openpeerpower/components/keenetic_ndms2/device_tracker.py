@@ -53,7 +53,7 @@ PLATFORM_SCHEMA = DEVICE_TRACKER_SCHEMA.extend(
 )
 
 
-async def async_get_scanner.opp: OpenPeerPower, config):
+async def async_get_scanner(opp: OpenPeerPower, config):
     """Import legacy configuration from YAML."""
 
     scanner_config = config[DEVICE_TRACKER_DOMAIN]
@@ -108,7 +108,7 @@ async def async_setup_entry(
 
     update_from_router()
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     # Restore devices that are not a part of active clients list.
     restored = []
     for entity_entry in registry.entities.values():
@@ -135,7 +135,7 @@ async def async_setup_entry(
     if restored:
         async_add_entities(restored)
 
-    async_dispatcher_connect.opp, router.signal_update, update_from_router)
+    async_dispatcher_connect(opp, router.signal_update, update_from_router)
 
 
 @callback

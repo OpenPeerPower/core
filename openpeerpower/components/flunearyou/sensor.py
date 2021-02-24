@@ -52,7 +52,7 @@ EXTENDED_SENSOR_TYPE_MAPPING = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Flu Near You sensors based on a config entry."""
     coordinators = opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id]
 

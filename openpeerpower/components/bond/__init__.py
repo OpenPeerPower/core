@@ -25,7 +25,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Bond from a config entry."""
     host = entry.data[CONF_HOST]
     token = entry.data[CONF_ACCESS_TOKEN]
@@ -51,7 +51,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         opp.config_entries.async_update_entry(entry, unique_id=hub.bond_id)
 
     hub_name = hub.name or hub.bond_id
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=config_entry_id,
         identifiers={(DOMAIN, hub.bond_id)},
@@ -72,7 +72,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

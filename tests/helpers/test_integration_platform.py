@@ -6,18 +6,18 @@ from openpeerpower.setup import ATTR_COMPONENT, EVENT_COMPONENT_LOADED
 from tests.common import mock_platform
 
 
-async def test_process_integration_platforms.opp):
+async def test_process_integration_platforms(opp):
     """Test processing integrations."""
     loaded_platform = Mock()
-    mock_platform.opp, "loaded.platform_to_check", loaded_platform)
+    mock_platform(opp, "loaded.platform_to_check", loaded_platform)
     opp.config.components.add("loaded")
 
     event_platform = Mock()
-    mock_platform.opp, "event.platform_to_check", event_platform)
+    mock_platform(opp, "event.platform_to_check", event_platform)
 
     processed = []
 
-    async def _process_platform.opp, domain, platform):
+    async def _process_platform(opp, domain, platform):
         """Process platform."""
         processed.append((domain, platform))
 

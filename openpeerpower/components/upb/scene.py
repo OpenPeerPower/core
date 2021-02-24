@@ -14,7 +14,7 @@ SERVICE_LINK_FADE_START = "link_fade_start"
 SERVICE_LINK_BLINK = "link_blink"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the UPB link based on a config entry."""
     upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
     unique_id = config_entry.entry_id

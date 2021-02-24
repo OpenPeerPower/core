@@ -15,7 +15,7 @@ from .entity import NexiaThermostatEntity, NexiaThermostatZoneEntity
 from .util import percent_conv
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up sensors for a Nexia device."""
 
     nexia_data = opp.data[DOMAIN][config_entry.entry_id]

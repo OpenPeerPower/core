@@ -57,7 +57,7 @@ SERVICE_ALARM_BYPASS = "alarm_bypass"
 SERVICE_ALARM_CLEAR_BYPASS = "alarm_clear_bypass"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the ElkM1 alarm platform."""
     elk_data = opp.data[DOMAIN][config_entry.entry_id]
     elk = elk_data["elk"]
@@ -197,7 +197,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
         return self._changed_by
 
     def _element_changed(self, element, changeset):
-        elk_state_to.opp_state = {
+        elk_state_to(opp_state = {
             ArmedStatus.DISARMED.value: STATE_ALARM_DISARMED,
             ArmedStatus.ARMED_AWAY.value: STATE_ALARM_ARMED_AWAY,
             ArmedStatus.ARMED_STAY.value: STATE_ALARM_ARMED_HOME,
@@ -216,7 +216,7 @@ class ElkArea(ElkAttachedEntity, AlarmControlPanelEntity, RestoreEntity):
                 STATE_ALARM_ARMING if self._element.is_exit else STATE_ALARM_PENDING
             )
         else:
-            self._state = elk_state_to.opp_state[self._element.armed_status]
+            self._state = elk_state_to(opp_state[self._element.armed_status]
 
     def _entry_exit_timer_is_running(self):
         return self._element.timer1 > 0 or self._element.timer2 > 0

@@ -12,7 +12,7 @@ from .entity import DoorBirdEntity
 IR_RELAY = "__ir_light__"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the DoorBird switch platform."""
     entities = []
     config_entry_id = config_entry.entry_id

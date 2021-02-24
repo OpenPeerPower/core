@@ -13,7 +13,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Pi-hole sensor."""
     name = entry.data[CONF_NAME]
     hole_data = opp.data[PIHOLE_DOMAIN][entry.entry_id]

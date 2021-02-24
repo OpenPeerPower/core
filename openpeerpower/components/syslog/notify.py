@@ -63,7 +63,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the syslog notification service."""
 
     facility = getattr(syslog, SYSLOG_FACILITY[config.get(CONF_FACILITY)])

@@ -47,7 +47,7 @@ ON_REPORT_SET_TEMPERATURE = 30.0
 OFF_REPORT_SET_TEMPERATURE = 0.0
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Fritzbox smarthome thermostat from config_entry."""
     entities = []
     devices = opp.data[FRITZBOX_DOMAIN][CONF_DEVICES]

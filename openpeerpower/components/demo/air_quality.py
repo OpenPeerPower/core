@@ -2,16 +2,16 @@
 from openpeerpower.components.air_quality import AirQualityEntity
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Air Quality."""
     async_add_entities(
         [DemoAirQuality("Home", 14, 23, 100), DemoAirQuality("Office", 4, 16, None)]
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Demo config entry."""
-    await async_setup_platform.opp, {}, async_add_entities)
+    await async_setup_platform(opp, {}, async_add_entities)
 
 
 class DemoAirQuality(AirQualityEntity):

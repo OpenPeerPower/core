@@ -45,21 +45,21 @@ def test_closest_returns_closest():
     assert state == location.closest(123.45, 123.45, [state, state2])
 
 
-async def test_coordinates_function_as_attributes.opp):
+async def test_coordinates_function_as_attributes(opp):
     """Test coordinates function."""
     opp.states.async_set(
         "test.object", "happy", {"latitude": 32.87336, "longitude": -117.22943}
     )
-    assert location.find_coordinates.opp, "test.object") == "32.87336,-117.22943"
+    assert location.find_coordinates(opp, "test.object") == "32.87336,-117.22943"
 
 
-async def test_coordinates_function_as_state.opp):
+async def test_coordinates_function_as_state(opp):
     """Test coordinates function."""
     opp.states.async_set("test.object", "32.87336,-117.22943")
-    assert location.find_coordinates.opp, "test.object") == "32.87336,-117.22943"
+    assert location.find_coordinates(opp, "test.object") == "32.87336,-117.22943"
 
 
-async def test_coordinates_function_device_tracker_in_zone.opp):
+async def test_coordinates_function_device_tracker_in_zone(opp):
     """Test coordinates function."""
     opp.states.async_set(
         "zone.home",
@@ -68,12 +68,12 @@ async def test_coordinates_function_device_tracker_in_zone.opp):
     )
     opp.states.async_set("device_tracker.device", "home")
     assert (
-        location.find_coordinates.opp, "device_tracker.device")
+        location.find_coordinates(opp, "device_tracker.device")
         == "32.87336,-117.22943"
     )
 
 
-async def test_coordinates_function_device_tracker_from_input_select.opp):
+async def test_coordinates_function_device_tracker_from_input_select(opp):
     """Test coordinates function."""
     opp.states.async_set(
         "input_select.select",
@@ -82,29 +82,29 @@ async def test_coordinates_function_device_tracker_from_input_select.opp):
     )
     opp.states.async_set("device_tracker.device", "32.87336,-117.22943")
     assert (
-        location.find_coordinates.opp, "input_select.select") == "32.87336,-117.22943"
+        location.find_coordinates(opp, "input_select.select") == "32.87336,-117.22943"
     )
 
 
-def test_coordinates_function_returns_none_on_recursion.opp):
+def test_coordinates_function_returns_none_on_recursion(opp):
     """Test coordinates function."""
     opp.states.async_set(
         "test.first",
         "test.second",
     )
     opp.states.async_set("test.second", "test.first")
-    assert location.find_coordinates.opp, "test.first") is None
+    assert location.find_coordinates(opp, "test.first") is None
 
 
-async def test_coordinates_function_returns_none_if_invalid_coord.opp):
+async def test_coordinates_function_returns_none_if_invalid_coord(opp):
     """Test test_coordinates function."""
     opp.states.async_set(
         "test.object",
         "abc",
     )
-    assert location.find_coordinates.opp, "test.object") is None
+    assert location.find_coordinates(opp, "test.object") is None
 
 
-def test_coordinates_function_returns_none_if_invalid_input.opp):
+def test_coordinates_function_returns_none_if_invalid_input(opp):
     """Test test_coordinates function."""
-    assert location.find_coordinates.opp, "test.abc") is None
+    assert location.find_coordinates(opp, "test.abc") is None

@@ -189,7 +189,7 @@ def mocked_requests_get(*args, **kwargs):
     return MockResponse({"error": "Unauthorized"}, 401)
 
 
-async def test_diskspace_no_paths.opp):
+async def test_diskspace_no_paths(opp):
     """Test getting all disk space."""
     config = {
         "sensor": {
@@ -206,7 +206,7 @@ async def test_diskspace_no_paths.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_disk_space")
@@ -218,7 +218,7 @@ async def test_diskspace_no_paths.opp):
         assert "263.10/465.42GB (56.53%)" == entity.attributes["/data"]
 
 
-async def test_diskspace_paths.opp):
+async def test_diskspace_paths(opp):
     """Test getting diskspace for included paths."""
     config = {
         "sensor": {
@@ -235,7 +235,7 @@ async def test_diskspace_paths.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_disk_space")
@@ -247,7 +247,7 @@ async def test_diskspace_paths.opp):
         assert "263.10/465.42GB (56.53%)" == entity.attributes["/data"]
 
 
-async def test_commands.opp):
+async def test_commands(opp):
     """Test getting running commands."""
     config = {
         "sensor": {
@@ -264,7 +264,7 @@ async def test_commands.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_commands")
@@ -276,7 +276,7 @@ async def test_commands.opp):
         assert "pending" == entity.attributes["RescanMovie"]
 
 
-async def test_movies.opp):
+async def test_movies(opp):
     """Test getting the number of movies."""
     config = {
         "sensor": {
@@ -293,7 +293,7 @@ async def test_movies.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_movies")
@@ -305,7 +305,7 @@ async def test_movies.opp):
         assert "false" == entity.attributes["Assassin's Creed (2016)"]
 
 
-async def test_upcoming_multiple_days.opp):
+async def test_upcoming_multiple_days(opp):
     """Test the upcoming movies for multiple days."""
     config = {
         "sensor": {
@@ -322,7 +322,7 @@ async def test_upcoming_multiple_days.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         entity = opp.states.get("sensor.radarr_upcoming")
@@ -335,7 +335,7 @@ async def test_upcoming_multiple_days.opp):
 
 
 @pytest.mark.skip
-async def test_upcoming_today.opp):
+async def test_upcoming_today(opp):
     """Test filtering for a single day.
 
     Radarr needs to respond with at least 2 days.
@@ -354,7 +354,7 @@ async def test_upcoming_today.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
         entity = opp.states.get("sensor.radarr_upcoming")
         assert 1 == int(entity.state)
@@ -364,7 +364,7 @@ async def test_upcoming_today.opp):
         assert "2017-01-27T00:00:00Z" == entity.attributes["Resident Evil (2017)"]
 
 
-async def test_system_status.opp):
+async def test_system_status(opp):
     """Test the getting of the system status."""
     config = {
         "sensor": {
@@ -380,7 +380,7 @@ async def test_system_status.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
         entity = opp.states.get("sensor.radarr_status")
         assert entity is not None
@@ -390,7 +390,7 @@ async def test_system_status.opp):
         assert "4.8.13.1" == entity.attributes["osVersion"]
 
 
-async def test_ssl.opp):
+async def test_ssl(opp):
     """Test SSL being enabled."""
     config = {
         "sensor": {
@@ -407,7 +407,7 @@ async def test_ssl.opp):
         "requests.get",
         side_effect=mocked_requests_get,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
         entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None
@@ -418,7 +418,7 @@ async def test_ssl.opp):
         assert "2017-01-27T00:00:00Z" == entity.attributes["Resident Evil (2017)"]
 
 
-async def test_exception_handling.opp):
+async def test_exception_handling(opp):
     """Test exception being handled."""
     config = {
         "sensor": {
@@ -434,7 +434,7 @@ async def test_exception_handling.opp):
         "requests.get",
         side_effect=mocked_exception,
     ):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
         entity = opp.states.get("sensor.radarr_upcoming")
         assert entity is not None

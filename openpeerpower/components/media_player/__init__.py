@@ -178,7 +178,7 @@ ATTR_TO_PROPERTY = [
 
 
 @bind.opp
-def is_on.opp, entity_id=None):
+def is_on(opp, entity_id=None):
     """
     Return true if specified media player entity_id is on.
 
@@ -342,12 +342,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 
@@ -986,7 +986,7 @@ class MediaPlayerImageView(OpenPeerPowerView):
     }
 )
 @websocket_api.async_response
-async def websocket_handle_thumbnail.opp, connection, msg):
+async def websocket_handle_thumbnail(opp, connection, msg):
     """Handle get media player cover command.
 
     Async friendly.
@@ -1040,7 +1040,7 @@ async def websocket_handle_thumbnail.opp, connection, msg):
     }
 )
 @websocket_api.async_response
-async def websocket_browse_media.opp, connection, msg):
+async def websocket_browse_media(opp, connection, msg):
     """
     Browse media available to the media_player entity.
 

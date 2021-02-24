@@ -22,7 +22,7 @@ SENSOR_ICON = "mdi:counter"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_METER_NUMBER): cv.string})
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the sensor platform."""
 
     meter_number = config[CONF_METER_NUMBER]

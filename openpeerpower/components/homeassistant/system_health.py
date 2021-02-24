@@ -12,9 +12,9 @@ def async_register(
     register.async_register_info(system_health_info)
 
 
-async def system_health_info.opp):
+async def system_health_info(opp):
     """Get info for the info page."""
-    info = await system_info.async_get_system_info.opp)
+    info = await system_info.async_get_system_info(opp)
 
     return {
         "version": f"core-{info.get('version')}",

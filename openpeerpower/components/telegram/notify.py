@@ -31,10 +31,10 @@ CONF_CHAT_ID = "chat_id"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_CHAT_ID): vol.Coerce(int)})
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Telegram notification service."""
 
-    setup_reload_service.opp, TELEGRAM_DOMAIN, PLATFORMS)
+    setup_reload_service(opp, TELEGRAM_DOMAIN, PLATFORMS)
     chat_id = config.get(CONF_CHAT_ID)
     return TelegramNotificationService.opp, chat_id)
 

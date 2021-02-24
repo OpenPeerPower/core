@@ -66,7 +66,7 @@ ATTR_RECHARGE_RESUME = "recharge_and_resume"
 ATTR_RSSI = "rssi"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Shark IQ vacuum cleaner."""
     coordinator: SharkIqUpdateCoordinator = opp.data[DOMAIN][config_entry.entry_id]
     devices: Iterable["SharkIqVacuum"] = coordinator.shark_vacs.values()

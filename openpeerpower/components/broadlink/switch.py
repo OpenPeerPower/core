@@ -69,7 +69,7 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Import the device and set up custom switches.
 
     This is for backward compatibility.
@@ -102,10 +102,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         )
 
     if host:
-        import_device.opp, host)
+        import_device(opp, host)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Broadlink switch."""
     device = opp.data[DOMAIN].devices[config_entry.entry_id]
 

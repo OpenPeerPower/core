@@ -443,7 +443,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             if parsed[STATE_ON]:
                 if entity_features & SUPPORT_BRIGHTNESS:
                     if parsed[STATE_BRIGHTNESS] is not None:
-                        data[ATTR_BRIGHTNESS] = hue_brightness_to.opp(
+                        data[ATTR_BRIGHTNESS] = hue_brightness_to(opp(
                             parsed[STATE_BRIGHTNESS]
                         )
 
@@ -844,14 +844,14 @@ def create_list_of_entities(config, request):
    opp = request.app[.opp"]
     json_response = {}
 
-    for entity in config.filter_exposed_entities.opp.states.async_all()):
+    for entity in config.filter_exposed_entities(opp.states.async_all()):
         number = config.entity_id_to_number(entity.entity_id)
         json_response[number] = entity_to_json(config, entity)
 
     return json_response
 
 
-def hue_brightness_to.opp(value):
+def hue_brightness_to(opp(value):
     """Convert hue brightness 1..254 to.opp format 0..255."""
     return min(255, round((value / HUE_API_STATE_BRI_MAX) * 255))
 
@@ -861,7 +861,7 @@ def.opp_to_hue_brightness(value):
     return max(1, round((value / 255) * HUE_API_STATE_BRI_MAX))
 
 
-async def wait_for_state_change_or_timeout.opp, entity_id, timeout):
+async def wait_for_state_change_or_timeout(opp, entity_id, timeout):
     """Wait for an entity to change state."""
     ev = asyncio.Event()
 
@@ -869,7 +869,7 @@ async def wait_for_state_change_or_timeout.opp, entity_id, timeout):
     def _async_event_changed(_):
         ev.set()
 
-    unsub = async_track_state_change_event.opp, [entity_id], _async_event_changed)
+    unsub = async_track_state_change_event(opp, [entity_id], _async_event_changed)
 
     try:
         await asyncio.wait_for(ev.wait(), timeout=STATE_CHANGE_WAIT_TIMEOUT)

@@ -41,9 +41,9 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions for Alarm control panel devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     actions = []
 
     # Get all the integrations entities for this device
@@ -134,7 +134,7 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_action_capabilities.opp, config):
+async def async_get_action_capabilities(opp, config):
     """List action capabilities."""
     state = opp.states.get(config[CONF_ENTITY_ID])
     code_required = state.attributes.get(ATTR_CODE_ARM_REQUIRED) if state else False

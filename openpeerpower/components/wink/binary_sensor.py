@@ -35,7 +35,7 @@ SENSOR_TYPES = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink binary sensor platform."""
 
     for sensor in pywink.get_sensors():

@@ -6,9 +6,9 @@ from openpeerpower.setup import async_setup_component
 from .common import TEST_PASSWORD, TEST_USER_ID
 
 
-async def test_setup_entry.opp, config_entry, aioclient_mock_fixture):
+async def test_setup_entry(opp, config_entry, aioclient_mock_fixture):
     """Test migration of config entry from v1."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     assert await async_setup_component(
         opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )

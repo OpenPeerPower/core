@@ -18,9 +18,9 @@ from tests.common import MockConfigEntry
 MINIMAL_STATUS = {OTGW: {OTGW_ABOUT: "OpenTherm Gateway 4.2.5"}}
 
 
-async def test_form_user.opp):
+async def test_form_user(opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -56,9 +56,9 @@ async def test_form_user.opp):
     assert len(mock_pyotgw_disconnect.mock_calls) == 1
 
 
-async def test_form_import.opp):
+async def test_form_import(opp):
     """Test import from existing config."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "openpeerpower.components.opentherm_gw.async_setup",
         return_value=True,
@@ -89,7 +89,7 @@ async def test_form_import.opp):
     assert len(mock_pyotgw_disconnect.mock_calls) == 1
 
 
-async def test_form_duplicate_entries.opp):
+async def test_form_duplicate_entries(opp):
     """Test duplicate device or id errors."""
     flow1 = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -132,7 +132,7 @@ async def test_form_duplicate_entries.opp):
     assert len(mock_pyotgw_disconnect.mock_calls) == 1
 
 
-async def test_form_connection_timeout.opp):
+async def test_form_connection_timeout(opp):
     """Test we handle connection timeout."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -167,7 +167,7 @@ async def test_form_connection_error(opp):
     assert len(mock_connect.mock_calls) == 1
 
 
-async def test_options_form.opp):
+async def test_options_form(opp):
     """Test the options form."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -179,7 +179,7 @@ async def test_options_form.opp):
         },
         options={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None

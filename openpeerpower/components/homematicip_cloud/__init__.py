@@ -66,7 +66,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up an access point from a config entry."""
 
     # 0.104 introduced config entry unique id, this makes upgrading possible
@@ -83,8 +83,8 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     if not await hap.async_setup():
         return False
 
-    await async_setup_services.opp)
-    await async_remove_obsolete_entities.opp, entry, hap)
+    await async_setup_services(opp)
+    await async_remove_obsolete_entities(opp, entry, hap)
 
     # Register on HA stop event to gracefully shutdown HomematicIP Cloud connection
     hap.reset_connection_listener = opp.bus.async_listen_once(
@@ -92,7 +92,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     )
 
     # Register hap as device in registry.
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
 
     home = hap.home
     hapname = home.label if home.label != entry.unique_id else f"Home-{home.label}"
@@ -107,12 +107,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     hap = opp.data[DOMAIN].pop(entry.unique_id)
     hap.reset_connection_listener()
 
-    await async_unload_services.opp)
+    await async_unload_services(opp)
 
     return await hap.async_reset()
 
@@ -125,7 +125,7 @@ async def async_remove_obsolete_entities(
     if hap.home.currentAPVersion < "2.2.12":
         return
 
-    entity_registry = await er.async_get_registry.opp)
+    entity_registry = await er.async_get_registry(opp)
     er_entries = async_entries_for_config_entry(entity_registry, entry.entry_id)
     for er_entry in er_entries:
         if er_entry.unique_id.startswith("HomematicipAccesspointStatus"):

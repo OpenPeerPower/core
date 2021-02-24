@@ -68,7 +68,7 @@ ATTR_UNJOIN = "unjoin_ids"
 ATTR_TRANSFER = "transfer_id"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Roon MediaPlayer from Config Entry."""
     roon_server = opp.data[DOMAIN][config_entry.entry_id]
     media_players = set()
@@ -107,7 +107,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             )
 
     # start listening for players to be added or changed by the server component
-    async_dispatcher_connect.opp, "roon_media_player", async_update_media_player)
+    async_dispatcher_connect(opp, "roon_media_player", async_update_media_player)
 
 
 class RoonDevice(MediaPlayerEntity):

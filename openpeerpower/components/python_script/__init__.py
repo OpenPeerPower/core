@@ -84,18 +84,18 @@ def setup(opp, config):
         _LOGGER.warning("Folder %s not found in configuration folder", FOLDER)
         return False
 
-    discover_scripts.opp)
+    discover_scripts(opp)
 
     def reload_scripts_handler(call):
         """Handle reload service calls."""
-        discover_scripts.opp)
+        discover_scripts(opp)
 
     opp.services.register(DOMAIN, SERVICE_RELOAD, reload_scripts_handler)
 
     return True
 
 
-def discover_scripts.opp):
+def discover_scripts(opp):
     """Discover python scripts in folder."""
     path = opp.config.path(FOLDER)
 
@@ -105,7 +105,7 @@ def discover_scripts.opp):
 
     def python_script_service_handler(call):
         """Handle python script service calls."""
-        execute_script.opp, call.service, call.data)
+        execute_script(opp, call.service, call.data)
 
     existing = opp.services.services.get(DOMAIN, {}).keys()
     for existing_service in existing:
@@ -128,11 +128,11 @@ def discover_scripts.opp):
             "description": services_dict.get(name, {}).get("description", ""),
             "fields": services_dict.get(name, {}).get("fields", {}),
         }
-        async_set_service_schema.opp, DOMAIN, name, service_desc)
+        async_set_service_schema(opp, DOMAIN, name, service_desc)
 
 
 @bind.opp
-def execute_script.opp, name, data=None):
+def execute_script(opp, name, data=None):
     """Execute a script."""
     filename = f"{name}.py"
     raise_if_invalid_filename(filename)

@@ -336,7 +336,7 @@ class AbstractOAuth2FlowHandler(config_entries.ConfigFlow, metaclass=ABCMeta):
         cls, opp: OpenPeerPower, local_impl: LocalOAuth2Implementation
     ) -> None:
         """Register a local implementation."""
-        async_register_implementation.opp, cls.DOMAIN, local_impl)
+        async_register_implementation(opp, cls.DOMAIN, local_impl)
 
 
 @callback
@@ -369,7 +369,7 @@ async def async_get_implementations(
     registered = dict(registered)
 
     for provider_domain, get_impl in.opp.data[DATA_PROVIDERS].items():
-        implementation = await get_impl.opp, domain)
+        implementation = await get_impl(opp, domain)
         if implementation is not None:
             registered[provider_domain] = implementation
 
@@ -380,7 +380,7 @@ async def async_get_config_entry_implementation(
     opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> AbstractOAuth2Implementation:
     """Return the implementation for this config entry."""
-    implementations = await async_get_implementations.opp, config_entry.domain)
+    implementations = await async_get_implementations(opp, config_entry.domain)
     implementation = implementations.get(config_entry.data["auth_implementation"])
 
     if implementation is None:
@@ -422,7 +422,7 @@ class OAuth2AuthorizeCallbackView(http.OpenPeerPowerView):
 
        opp = request.app[.opp"]
 
-        state = _decode_jwt.opp, request.query["state"])
+        state = _decode_jwt(opp, request.query["state"])
 
         if state is None:
             return web.Response(text="Invalid state")
@@ -493,7 +493,7 @@ async def async_oauth2_request(
 
     This method will not refresh tokens. Use OAuth2 session for that.
     """
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     return await session.request(
         method,
@@ -507,7 +507,7 @@ async def async_oauth2_request(
 
 
 @callback
-def _encode_jwt.opp: OpenPeerPower, data: dict) -> str:
+def _encode_jwt(opp: OpenPeerPower, data: dict) -> str:
     """JWT encode data."""
     secret = opp.data.get(DATA_JWT_SECRET)
 
@@ -518,7 +518,7 @@ def _encode_jwt.opp: OpenPeerPower, data: dict) -> str:
 
 
 @callback
-def _decode_jwt.opp: OpenPeerPower, encoded: str) -> Optional[dict]:
+def _decode_jwt(opp: OpenPeerPower, encoded: str) -> Optional[dict]:
     """JWT encode data."""
     secret = cast(str, opp.data.get(DATA_JWT_SECRET))
 

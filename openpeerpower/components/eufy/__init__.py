@@ -62,7 +62,7 @@ def setup(opp, config):
             kind = device["type"]
             if kind not in EUFY_DISPATCH:
                 continue
-            discovery.load_platform.opp, EUFY_DISPATCH[kind], DOMAIN, device, config)
+            discovery.load_platform(opp, EUFY_DISPATCH[kind], DOMAIN, device, config)
 
     for device_info in config[DOMAIN][CONF_DEVICES]:
         kind = device_info["type"]
@@ -73,6 +73,6 @@ def setup(opp, config):
         device["code"] = device_info["access_token"]
         device["type"] = device_info["type"]
         device["name"] = device_info["name"]
-        discovery.load_platform.opp, EUFY_DISPATCH[kind], DOMAIN, device, config)
+        discovery.load_platform(opp, EUFY_DISPATCH[kind], DOMAIN, device, config)
 
     return True

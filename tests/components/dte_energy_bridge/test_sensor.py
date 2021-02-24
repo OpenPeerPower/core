@@ -14,7 +14,7 @@ async def test_setup_with_config(opp):
     await opp.async_block_till_done()
 
 
-async def test_setup_correct_reading.opp):
+async def test_setup_correct_reading(opp):
     """Test DTE Energy bridge returns a correct value."""
     with requests_mock.Mocker() as mock_req:
         mock_req.get(
@@ -28,7 +28,7 @@ async def test_setup_correct_reading.opp):
     assert.opp.states.get("sensor.current_energy_usage").state == "0.411"
 
 
-async def test_setup_incorrect_units_reading.opp):
+async def test_setup_incorrect_units_reading(opp):
     """Test DTE Energy bridge handles a value with incorrect units."""
     with requests_mock.Mocker() as mock_req:
         mock_req.get(
@@ -42,7 +42,7 @@ async def test_setup_incorrect_units_reading.opp):
     assert.opp.states.get("sensor.current_energy_usage").state == "0.411"
 
 
-async def test_setup_bad_format_reading.opp):
+async def test_setup_bad_format_reading(opp):
     """Test DTE Energy bridge handles an invalid value."""
     with requests_mock.Mocker() as mock_req:
         mock_req.get(

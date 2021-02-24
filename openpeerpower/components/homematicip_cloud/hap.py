@@ -56,7 +56,7 @@ class HomematicipAuth:
 
     async def get_auth(self, opp: OpenPeerPowerType, hapid, pin):
         """Create a HomematicIP access point object."""
-        auth = AsyncAuth.opp.loop, async_get_clientsession.opp))
+        auth = AsyncAuth.opp.loop, async_get_clientsession(opp))
         try:
             await auth.init(hapid)
             if pin:
@@ -237,7 +237,7 @@ class HomematicipHAP:
         self, opp: OpenPeerPowerType, hapid: str, authtoken: str, name: str
     ) -> AsyncHome:
         """Create a HomematicIP access point object."""
-        home = AsyncHome.opp.loop, async_get_clientsession.opp))
+        home = AsyncHome.opp.loop, async_get_clientsession(opp))
 
         home.name = name
         # Use the title of the config entry as title for the home.

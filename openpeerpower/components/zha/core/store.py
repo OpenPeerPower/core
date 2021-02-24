@@ -128,7 +128,7 @@ class ZhaStorage:
 
 
 @bind.opp
-async def async_get_registry.opp: OpenPeerPowerType) -> ZhaStorage:
+async def async_get_registry(opp: OpenPeerPowerType) -> ZhaStorage:
     """Return zha device storage instance."""
     task = opp.data.get(DATA_REGISTRY)
 

@@ -33,7 +33,7 @@ FIXTURE_USER_INPUT_OPTIONS = {
 }
 
 
-async def test_show_set_form.opp):
+async def test_show_set_form(opp):
     """Test that the setup form is served."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=None
@@ -43,7 +43,7 @@ async def test_show_set_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_urlize_plain_host.opp, requests_mock):
+async def test_urlize_plain_host(opp, requests_mock):
     """Test that plain host or IP gets converted to a URL."""
     requests_mock.request(ANY, ANY, exc=ConnectionError())
     host = "192.168.100.1"
@@ -57,11 +57,11 @@ async def test_urlize_plain_host.opp, requests_mock):
     assert user_input[CONF_URL] == f"http://{host}/"
 
 
-async def test_already_configured.opp):
+async def test_already_configured(opp):
     """Test we reject already configured devices."""
     MockConfigEntry(
         domain=DOMAIN, data=FIXTURE_USER_INPUT, title="Already configured"
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -135,7 +135,7 @@ async def test_login_error(opp, login_requests_mock, code, errors):
     assert result["errors"] == errors
 
 
-async def test_success.opp, login_requests_mock):
+async def test_success(opp, login_requests_mock):
     """Test successful flow provides entry creation data."""
     login_requests_mock.request(
         ANY,
@@ -158,7 +158,7 @@ async def test_success.opp, login_requests_mock):
     assert result["data"][CONF_PASSWORD] == FIXTURE_USER_INPUT[CONF_PASSWORD]
 
 
-async def test_ssdp.opp):
+async def test_ssdp(opp):
     """Test SSDP discovery initiates config properly."""
     url = "http://192.168.100.1/"
     context = {"source": config_entries.SOURCE_SSDP}
@@ -185,13 +185,13 @@ async def test_ssdp.opp):
     assert context[CONF_URL] == url
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test options produce expected data."""
 
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=FIXTURE_USER_INPUT, options=FIXTURE_USER_INPUT_OPTIONS
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

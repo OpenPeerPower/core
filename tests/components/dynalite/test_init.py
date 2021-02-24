@@ -15,7 +15,7 @@ from tests.common import MockConfigEntry
 
 async def test_empty_config(opp):
     """Test with an empty config."""
-    assert await async_setup_component.opp, dynalite.DOMAIN, {}) is True
+    assert await async_setup_component(opp, dynalite.DOMAIN, {}) is True
     assert len.opp.config_entries.flow.async_progress()) == 0
     assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
 
@@ -83,7 +83,7 @@ async def test_async_setup_opp):
     assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
 
 
-async def test_service_request_area_preset.opp):
+async def test_service_request_area_preset(opp):
     """Test requesting and area preset via service call."""
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
@@ -155,7 +155,7 @@ async def test_service_request_area_preset.opp):
         mock_req_area_pres.assert_called_once_with(7, 1)
 
 
-async def test_service_request_channel_level.opp):
+async def test_service_request_channel_level(opp):
     """Test requesting the level of a channel via service call."""
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
@@ -260,11 +260,11 @@ async def test_async_setup_bad_config2.opp):
     assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test being able to unload an entry."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={CONF_HOST: host})
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,

@@ -32,7 +32,7 @@ async def async_attach_trigger(
 ):
     """Listen for state changes based on configuration."""
     value_template = config.get(CONF_VALUE_TEMPLATE)
-    value_template.opp = opp
+    value_template(opp = opp
     time_delta = config.get(CONF_FOR)
     template.attach.opp, time_delta)
     delay_cancel = None
@@ -104,7 +104,7 @@ async def async_attach_trigger(
         def call_action(*_):
             """Call action with right context."""
             nonlocal trigger_variables
-            opp.async_run.opp_job(
+            opp.async_run(opp_job(
                 job,
                 {"trigger": {**template_variables, **trigger_variables}},
                 (to_s.context if to_s else None),
@@ -126,7 +126,7 @@ async def async_attach_trigger(
 
         trigger_variables["for"] = period
 
-        delay_cancel = async_call_later.opp, period.seconds, call_action)
+        delay_cancel = async_call_later(opp, period.seconds, call_action)
 
     info = async_track_template_result(
         opp,

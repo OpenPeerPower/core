@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry, load_fixture
 
 
 @pytest.fixture
-def config_entry.opp):
+def config_entry(opp):
     """Config entry version 1 fixture."""
     return MockConfigEntry(
         domain=FLO_DOMAIN,

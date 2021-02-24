@@ -12,7 +12,7 @@ from .entity import HMDevice
 HM_GARAGE = ("IPGarage",)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the platform."""
     if discovery_info is None:
         return

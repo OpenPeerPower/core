@@ -22,7 +22,7 @@ from openpeerpower.core import callback
 _LOGGER = logging.getLogger(__name__)
 
 
-def validate_input.opp: core.OpenPeerPower, auth):
+def validate_input(opp: core.OpenPeerPower, auth):
     """Validate the user input allows us to connect."""
     try:
         auth.startup()

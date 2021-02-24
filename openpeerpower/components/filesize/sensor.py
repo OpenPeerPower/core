@@ -24,10 +24,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the file size sensor."""
 
-    setup_reload_service.opp, DOMAIN, PLATFORMS)
+    setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     sensors = []
     for path in config.get(CONF_FILE_PATHS):

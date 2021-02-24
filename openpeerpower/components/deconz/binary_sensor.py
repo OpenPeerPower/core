@@ -33,9 +33,9 @@ DEVICE_CLASS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the deCONZ binary sensor."""
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     gateway.entities[DOMAIN] = set()
 
     @callback

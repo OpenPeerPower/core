@@ -19,7 +19,7 @@ DATA_LOCATION_CACHE = "astral_location_cache"
 
 @callback
 @bind.opp
-def get_astral_location.opp: OpenPeerPowerType) -> astral.Location:
+def get_astral_location(opp: OpenPeerPowerType) -> astral.Location:
     """Get an astral location for the current Open Peer Power configuration."""
     from astral import Location  # pylint: disable=import-outside-toplevel
 
@@ -48,7 +48,7 @@ def get_astral_event_next(
     offset: Optional[datetime.timedelta] = None,
 ) -> datetime.datetime:
     """Calculate the next specified solar event."""
-    location = get_astral_location.opp)
+    location = get_astral_location(opp)
     return get_location_astral_event_next(location, event, utc_point_in_time, offset)
 
 
@@ -96,7 +96,7 @@ def get_astral_event_date(
     """Calculate the astral event time for the specified date."""
     from astral import AstralError  # pylint: disable=import-outside-toplevel
 
-    location = get_astral_location.opp)
+    location = get_astral_location(opp)
 
     if date is None:
         date = dt_util.now().date()
@@ -120,7 +120,7 @@ def is_up(
     if utc_point_in_time is None:
         utc_point_in_time = dt_util.utcnow()
 
-    next_sunrise = get_astral_event_next.opp, SUN_EVENT_SUNRISE, utc_point_in_time)
-    next_sunset = get_astral_event_next.opp, SUN_EVENT_SUNSET, utc_point_in_time)
+    next_sunrise = get_astral_event_next(opp, SUN_EVENT_SUNRISE, utc_point_in_time)
+    next_sunset = get_astral_event_next(opp, SUN_EVENT_SUNSET, utc_point_in_time)
 
     return next_sunrise > next_sunset

@@ -50,7 +50,7 @@ def teardown():
     dt_util.set_default_time_zone(DEFAULT_TIME_ZONE)
 
 
-async def test_track_point_in_time.opp):
+async def test_track_point_in_time(opp):
     """Test track point in time."""
     before_birthday = datetime(1985, 7, 9, 12, 0, 0, tzinfo=dt_util.UTC)
     birthday_paulus = datetime(1986, 7, 9, 12, 0, 0, tzinfo=dt_util.UTC)
@@ -62,16 +62,16 @@ async def test_track_point_in_time.opp):
         opp. callback(lambda x: runs.append(x)), birthday_paulus
     )
 
-    async_fire_time_changed.opp, before_birthday)
+    async_fire_time_changed(opp, before_birthday)
     await opp.async_block_till_done()
     assert len(runs) == 0
 
-    async_fire_time_changed.opp, birthday_paulus)
+    async_fire_time_changed(opp, birthday_paulus)
     await opp.async_block_till_done()
     assert len(runs) == 1
 
     # A point in time tracker will only fire once, this should do nothing
-    async_fire_time_changed.opp, birthday_paulus)
+    async_fire_time_changed(opp, birthday_paulus)
     await opp.async_block_till_done()
     assert len(runs) == 1
 
@@ -79,7 +79,7 @@ async def test_track_point_in_time.opp):
         opp. callback(lambda x: runs.append(x)), birthday_paulus
     )
 
-    async_fire_time_changed.opp, after_birthday)
+    async_fire_time_changed(opp, after_birthday)
     await opp.async_block_till_done()
     assert len(runs) == 2
 
@@ -88,12 +88,12 @@ async def test_track_point_in_time.opp):
     )
     unsub()
 
-    async_fire_time_changed.opp, after_birthday)
+    async_fire_time_changed(opp, after_birthday)
     await opp.async_block_till_done()
     assert len(runs) == 2
 
 
-async def test_track_point_in_time_drift_rearm.opp):
+async def test_track_point_in_time_drift_rearm(opp):
     """Test tasks with the time rolling backwards."""
     specific_runs = []
 
@@ -125,7 +125,7 @@ async def test_track_point_in_time_drift_rearm.opp):
     assert len(specific_runs) == 1
 
 
-async def test_track_state_change_from_to_state_match.opp):
+async def test_track_state_change_from_to_state_match(opp):
     """Test track_state_change with from and to state matchers."""
     from_and_to_state_runs = []
     only_from_runs = []
@@ -151,14 +151,14 @@ async def test_track_state_change_from_to_state_match.opp):
     async_track_state_change(
         opp. "light.Bowl", from_and_to_state_callback, "on", "off"
     )
-    async_track_state_change.opp, "light.Bowl", only_from_state_callback, "on", None)
+    async_track_state_change(opp, "light.Bowl", only_from_state_callback, "on", None)
     async_track_state_change(
         opp. "light.Bowl", only_to_state_callback, None, ["off", "standby"]
     )
     async_track_state_change(
         opp. "light.Bowl", match_all_callback, MATCH_ALL, MATCH_ALL
     )
-    async_track_state_change.opp, "light.Bowl", no_to_from_specified_callback)
+    async_track_state_change(opp, "light.Bowl", no_to_from_specified_callback)
 
     opp.states.async_set("light.Bowl", "on")
     await opp.async_block_till_done()
@@ -209,7 +209,7 @@ async def test_track_state_change_from_to_state_match.opp):
     assert len(no_to_from_specified_runs) == 4
 
 
-async def test_track_state_change.opp):
+async def test_track_state_change(opp):
     """Test track_state_change."""
     # 2 lists to track how often our callbacks get called
     specific_runs = []
@@ -220,19 +220,19 @@ async def test_track_state_change.opp):
         specific_runs.append(1)
 
     # This is the rare use case
-    async_track_state_change.opp, "light.Bowl", specific_run_callback, "on", "off")
+    async_track_state_change(opp, "light.Bowl", specific_run_callback, "on", "off")
 
     @ha.callback
     def wildcard_run_callback(entity_id, old_state, new_state):
         wildcard_runs.append((old_state, new_state))
 
     # This is the most common use case
-    async_track_state_change.opp, "light.Bowl", wildcard_run_callback)
+    async_track_state_change(opp, "light.Bowl", wildcard_run_callback)
 
     async def wildercard_run_callback(entity_id, old_state, new_state):
         wildercard_runs.append((old_state, new_state))
 
-    async_track_state_change.opp, MATCH_ALL, wildercard_run_callback)
+    async_track_state_change(opp, MATCH_ALL, wildercard_run_callback)
 
     # Adding state to state machine
     opp.states.async_set("light.Bowl", "on")
@@ -289,7 +289,7 @@ async def test_track_state_change.opp):
     assert len(wildercard_runs) == 6
 
 
-async def test_async_track_state_change_filtered.opp):
+async def test_async_track_state_change_filtered(opp):
     """Test async_track_state_change_filtered."""
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
@@ -425,7 +425,7 @@ async def test_async_track_state_change_filtered.opp):
     track_throws.async_remove()
 
 
-async def test_async_track_state_change_event.opp):
+async def test_async_track_state_change_event(opp):
     """Test async_track_state_change_event."""
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
@@ -518,7 +518,7 @@ async def test_async_track_state_change_event.opp):
     unsub_throws()
 
 
-async def test_async_track_state_change_event_with_empty_list.opp):
+async def test_async_track_state_change_event_with_empty_list(opp):
     """Test async_track_state_change_event passing an empty list of entities."""
     unsub_single = async_track_state_change_event(
         opp. [], ha.callback(lambda event: None)
@@ -531,7 +531,7 @@ async def test_async_track_state_change_event_with_empty_list.opp):
     unsub_single()
 
 
-async def test_async_track_state_added_domain.opp):
+async def test_async_track_state_added_domain(opp):
     """Test async_track_state_added_domain."""
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
@@ -554,7 +554,7 @@ async def test_async_track_state_added_domain.opp):
     def callback_that_throws(event):
         raise ValueError
 
-    unsub_single = async_track_state_added_domain.opp, "light", single_run_callback)
+    unsub_single = async_track_state_added_domain(opp, "light", single_run_callback)
     unsub_multi = async_track_state_added_domain(
         opp. ["light", "switch"], multiple_run_callback
     )
@@ -613,7 +613,7 @@ async def test_async_track_state_added_domain.opp):
     unsub_throws()
 
 
-async def test_async_track_state_added_domain_with_empty_list.opp):
+async def test_async_track_state_added_domain_with_empty_list(opp):
     """Test async_track_state_added_domain passing an empty list of domains."""
     unsub_single = async_track_state_added_domain(
         opp. [], ha.callback(lambda event: None)
@@ -626,7 +626,7 @@ async def test_async_track_state_added_domain_with_empty_list.opp):
     unsub_single()
 
 
-async def test_async_track_state_removed_domain_with_empty_list.opp):
+async def test_async_track_state_removed_domain_with_empty_list(opp):
     """Test async_track_state_removed_domain passing an empty list of domains."""
     unsub_single = async_track_state_removed_domain(
         opp. [], ha.callback(lambda event: None)
@@ -639,7 +639,7 @@ async def test_async_track_state_removed_domain_with_empty_list.opp):
     unsub_single()
 
 
-async def test_async_track_state_removed_domain.opp):
+async def test_async_track_state_removed_domain(opp):
     """Test async_track_state_removed_domain."""
     single_entity_id_tracker = []
     multiple_entity_id_tracker = []
@@ -662,7 +662,7 @@ async def test_async_track_state_removed_domain.opp):
     def callback_that_throws(event):
         raise ValueError
 
-    unsub_single = async_track_state_removed_domain.opp, "light", single_run_callback)
+    unsub_single = async_track_state_removed_domain(opp, "light", single_run_callback)
     unsub_multi = async_track_state_removed_domain(
         opp. ["light", "switch"], multiple_run_callback
     )
@@ -721,7 +721,7 @@ async def test_async_track_state_removed_domain.opp):
     unsub_throws()
 
 
-async def test_async_track_state_removed_domain_match_all.opp):
+async def test_async_track_state_removed_domain_match_all(opp):
     """Test async_track_state_removed_domain with a match_all."""
     single_entity_id_tracker = []
     match_all_entity_id_tracker = []
@@ -740,7 +740,7 @@ async def test_async_track_state_removed_domain_match_all.opp):
 
         match_all_entity_id_tracker.append((old_state, new_state))
 
-    unsub_single = async_track_state_removed_domain.opp, "light", single_run_callback)
+    unsub_single = async_track_state_removed_domain(opp, "light", single_run_callback)
     unsub_match_all = async_track_state_removed_domain(
         opp. MATCH_ALL, match_all_run_callback
     )
@@ -765,7 +765,7 @@ async def test_async_track_state_removed_domain_match_all.opp):
     assert len(match_all_entity_id_tracker) == 2
 
 
-async def test_track_template.opp):
+async def test_track_template(opp):
     """Test tracking template."""
     specific_runs = []
     wildcard_runs = []
@@ -781,13 +781,13 @@ async def test_track_template.opp):
     def specific_run_callback(entity_id, old_state, new_state):
         specific_runs.append(1)
 
-    async_track_template.opp, template_condition, specific_run_callback)
+    async_track_template(opp, template_condition, specific_run_callback)
 
     @ha.callback
     def wildcard_run_callback(entity_id, old_state, new_state):
         wildcard_runs.append((old_state, new_state))
 
-    async_track_template.opp, template_condition, wildcard_run_callback)
+    async_track_template(opp, template_condition, wildcard_run_callback)
 
     async def wildercard_run_callback(entity_id, old_state, new_state):
         wildercard_runs.append((old_state, new_state))
@@ -838,7 +838,7 @@ async def test_track_template.opp):
     def iterate_callback(entity_id, old_state, new_state):
         iterate_calls.append((entity_id, old_state, new_state))
 
-    async_track_template.opp, template_iterate, iterate_callback)
+    async_track_template(opp, template_iterate, iterate_callback)
     await opp.async_block_till_done()
 
     opp.states.async_set("switch.new", "on")
@@ -859,7 +859,7 @@ async def test_track_template_error(opp, caplog):
     def error_callback(entity_id, old_state, new_state):
         error_calls.append((entity_id, old_state, new_state))
 
-    async_track_template.opp, template_error, error_callback)
+    async_track_template(opp, template_error, error_callback)
     await opp.async_block_till_done()
 
     opp.states.async_set("switch.new", "on")
@@ -881,7 +881,7 @@ async def test_track_template_error(opp, caplog):
     assert "TemplateAssertionError" not in caplog.text
 
 
-async def test_track_template_error_can_recover.opp, caplog):
+async def test_track_template_error_can_recover(opp, caplog):
     """Test tracking template with error."""
     opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
     template_error = Template(
@@ -893,7 +893,7 @@ async def test_track_template_error_can_recover.opp, caplog):
     def error_callback(entity_id, old_state, new_state):
         error_calls.append((entity_id, old_state, new_state))
 
-    async_track_template.opp, template_error, error_callback)
+    async_track_template(opp, template_error, error_callback)
     await opp.async_block_till_done()
     assert not error_calls
 
@@ -908,7 +908,7 @@ async def test_track_template_error_can_recover.opp, caplog):
     assert "UndefinedError" not in caplog.text
 
 
-async def test_track_template_time_change.opp, caplog):
+async def test_track_template_time_change(opp, caplog):
     """Test tracking template with time change."""
     template_error = Template("{{ utcnow().minute % 2 == 0 }}", opp)
     calls = []
@@ -922,20 +922,20 @@ async def test_track_template_time_change.opp, caplog):
     with patch(
         "openpeerpower.util.dt.utcnow", return_value=time_that_will_not_match_right_away
     ):
-        async_track_template.opp, template_error, error_callback)
+        async_track_template(opp, template_error, error_callback)
         await opp.async_block_till_done()
         assert not calls
 
     first_time = start_time.replace(minute=2, second=0)
     with patch("openpeerpower.util.dt.utcnow", return_value=first_time):
-        async_fire_time_changed.opp, first_time)
+        async_fire_time_changed(opp, first_time)
         await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0] == (None, None, None)
 
 
-async def test_track_template_result.opp):
+async def test_track_template_result(opp):
     """Test tracking template."""
     specific_runs = []
     wildcard_runs = []
@@ -1021,7 +1021,7 @@ async def test_track_template_result.opp):
     assert len(wildercard_runs) == 4
 
 
-async def test_track_template_result_complex.opp):
+async def test_track_template_result_complex(opp):
     """Test tracking template."""
     specific_runs = []
     template_complex_str = """
@@ -1177,7 +1177,7 @@ async def test_track_template_result_complex.opp):
     }
 
 
-async def test_track_template_result_with_wildcard.opp):
+async def test_track_template_result_with_wildcard(opp):
     """Test tracking template with a wildcard."""
     specific_runs = []
     template_complex_str = r"""
@@ -1218,7 +1218,7 @@ async def test_track_template_result_with_wildcard.opp):
     assert "cover.office_skylight=open" in specific_runs[0]
 
 
-async def test_track_template_result_with_group.opp):
+async def test_track_template_result_with_group(opp):
     """Test tracking template with a group."""
     opp.states.async_set("sensor.power_1", 0)
     opp.states.async_set("sensor.power_2", 200.2)
@@ -1291,7 +1291,7 @@ async def test_track_template_result_with_group.opp):
     assert specific_runs[-1] == 100.1 + 200.2 + 0 + 800.8
 
 
-async def test_track_template_result_and_conditional.opp):
+async def test_track_template_result_and_conditional(opp):
     """Test tracking template with an and conditional."""
     specific_runs = []
     opp.states.async_set("light.a", "off")
@@ -1354,7 +1354,7 @@ async def test_track_template_result_and_conditional.opp):
     assert specific_runs[2] == "on"
 
 
-async def test_track_template_result_iterator.opp):
+async def test_track_template_result_iterator(opp):
     """Test tracking template."""
     iterator_runs = []
 
@@ -1430,7 +1430,7 @@ async def test_track_template_result_iterator.opp):
     assert filter_runs == ["", "sensor.new"]
 
 
-async def test_track_template_result_errors.opp, caplog):
+async def test_track_template_result_errors(opp, caplog):
     """Test tracking template with errors in the template."""
     template_syntax_error = Template("{{states.switch", opp)
 
@@ -1513,7 +1513,7 @@ async def test_track_template_result_errors.opp, caplog):
         assert isinstance(not_exist_runs[2][3], TemplateError)
 
 
-async def test_static_string.opp):
+async def test_static_string(opp):
     """Test a static string."""
     template_refresh = Template("{{ 'static' }}", opp)
 
@@ -1533,7 +1533,7 @@ async def test_static_string.opp):
     assert refresh_runs == ["static"]
 
 
-async def test_track_template_rate_limit.opp):
+async def test_track_template_rate_limit(opp):
     """Test template rate limit."""
     template_refresh = Template("{{ states | count }}", opp)
 
@@ -1565,7 +1565,7 @@ async def test_track_template_rate_limit.opp):
     with patch(
         "openpeerpower.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2]
     opp.states.async_set("sensor.three", "any")
@@ -1578,7 +1578,7 @@ async def test_track_template_rate_limit.opp):
     with patch(
         "openpeerpower.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
     assert refresh_runs == [0, 1, 2, 4]
     opp.states.async_set("sensor.five", "any")
@@ -1586,7 +1586,7 @@ async def test_track_template_rate_limit.opp):
     assert refresh_runs == [0, 1, 2, 4]
 
 
-async def test_track_template_rate_limit_suppress_listener.opp):
+async def test_track_template_rate_limit_suppress_listener(opp):
     """Test template rate limit will suppress the listener during the rate limit."""
     template_refresh = Template("{{ states | count }}", opp)
 
@@ -1632,7 +1632,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
     with patch(
         "openpeerpower.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
     # Rate limit released and the all listener returns
     assert info.listeners == {
@@ -1659,7 +1659,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
     with patch(
         "openpeerpower.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
     # Rate limit released and the all listener returns
     assert info.listeners == {
@@ -1681,7 +1681,7 @@ async def test_track_template_rate_limit_suppress_listener.opp):
     assert refresh_runs == [0, 1, 2, 4]
 
 
-async def test_track_template_rate_limit_five.opp):
+async def test_track_template_rate_limit_five(opp):
     """Test template rate limit of 5 seconds."""
     template_refresh = Template("{{ states | count }}", opp)
 
@@ -1714,7 +1714,7 @@ async def test_track_template_rate_limit_five.opp):
     assert refresh_runs == [0, 1]
 
 
-async def test_track_template_has_default_rate_limit.opp):
+async def test_track_template_has_default_rate_limit(opp):
     """Test template has a rate limit by default."""
     opp.states.async_set("sensor.zero", "any")
     template_refresh = Template("{{ states | list | count }}", opp)
@@ -1748,7 +1748,7 @@ async def test_track_template_has_default_rate_limit.opp):
     assert refresh_runs == [1, 2]
 
 
-async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
+async def test_track_template_unavailable_sates_has_default_rate_limit(opp):
     """Test template watching for unavailable states has a rate limit by default."""
     opp.states.async_set("sensor.zero", "unknown")
     template_refresh = Template(
@@ -1789,7 +1789,7 @@ async def test_track_template_unavailable_sates_has_default_rate_limit.opp):
     info.async_remove()
 
 
-async def test_specifically_referenced_entity_is_not_rate_limited.opp):
+async def test_specifically_referenced_entity_is_not_rate_limited(opp):
     """Test template rate limit of 5 seconds."""
     opp.states.async_set("sensor.one", "none")
 
@@ -1828,7 +1828,7 @@ async def test_specifically_referenced_entity_is_not_rate_limited.opp):
     info.async_remove()
 
 
-async def test_track_two_templates_with_different_rate_limits.opp):
+async def test_track_two_templates_with_different_rate_limits(opp):
     """Test two templates with different rate limits."""
     template_one = Template("{{ (states | count) + 0 }}", opp)
     template_five = Template("{{ states | count }}", opp)
@@ -1873,7 +1873,7 @@ async def test_track_two_templates_with_different_rate_limits.opp):
     with patch(
         "openpeerpower.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
     await opp.async_block_till_done()
     assert refresh_runs[template_one] == [0, 1, 2]
@@ -1893,7 +1893,7 @@ async def test_track_two_templates_with_different_rate_limits.opp):
     info.async_remove()
 
 
-async def test_string.opp):
+async def test_string(opp):
     """Test a string."""
     template_refresh = Template("no_template", opp)
 
@@ -1913,7 +1913,7 @@ async def test_string.opp):
     assert refresh_runs == ["no_template"]
 
 
-async def test_track_template_result_refresh_cancel.opp):
+async def test_track_template_result_refresh_cancel(opp):
     """Test cancelling and refreshing result."""
     template_refresh = Template("{{states.switch.test.state == 'on' and now() }}", opp)
 
@@ -1967,7 +1967,7 @@ async def test_track_template_result_refresh_cancel.opp):
     assert refresh_runs == ["duck"]
 
 
-async def test_async_track_template_result_multiple_templates.opp):
+async def test_async_track_template_result_multiple_templates(opp):
     """Test tracking multiple templates."""
 
     template_1 = Template("{{ states.switch.test.state == 'on' }}")
@@ -2026,7 +2026,7 @@ async def test_async_track_template_result_multiple_templates.opp):
     ]
 
 
-async def test_async_track_template_result_multiple_templates_mixing_domain.opp):
+async def test_async_track_template_result_multiple_templates_mixing_domain(opp):
     """Test tracking multiple templates when tracking entities and an entire domain."""
 
     template_1 = Template("{{ states.switch.test.state == 'on' }}")
@@ -2113,7 +2113,7 @@ async def test_async_track_template_result_raise_on_template_error(opp):
         )
 
 
-async def test_track_template_with_time.opp):
+async def test_track_template_with_time(opp):
     """Test tracking template with time."""
 
     opp.states.async_set("switch.test", "on")
@@ -2137,14 +2137,14 @@ async def test_track_template_with_time.opp):
 
     await opp.async_block_till_done()
     now = dt_util.utcnow()
-    async_fire_time_changed.opp, now + timedelta(seconds=61))
-    async_fire_time_changed.opp, now + timedelta(seconds=61 * 2))
+    async_fire_time_changed(opp, now + timedelta(seconds=61))
+    async_fire_time_changed(opp, now + timedelta(seconds=61 * 2))
     await opp.async_block_till_done()
     assert specific_runs[-1] != specific_runs[0]
     info.async_remove()
 
 
-async def test_track_template_with_time_default.opp):
+async def test_track_template_with_time_default(opp):
     """Test tracking template with time."""
 
     specific_runs = []
@@ -2167,20 +2167,20 @@ async def test_track_template_with_time_default.opp):
 
     await opp.async_block_till_done()
     now = dt_util.utcnow()
-    async_fire_time_changed.opp, now + timedelta(seconds=2))
-    async_fire_time_changed.opp, now + timedelta(seconds=4))
+    async_fire_time_changed(opp, now + timedelta(seconds=2))
+    async_fire_time_changed(opp, now + timedelta(seconds=4))
     await opp.async_block_till_done()
     assert len(specific_runs) < 2
-    async_fire_time_changed.opp, now + timedelta(minutes=2))
+    async_fire_time_changed(opp, now + timedelta(minutes=2))
     await opp.async_block_till_done()
-    async_fire_time_changed.opp, now + timedelta(minutes=4))
+    async_fire_time_changed(opp, now + timedelta(minutes=4))
     await opp.async_block_till_done()
     assert len(specific_runs) >= 2
     assert specific_runs[-1] != specific_runs[0]
     info.async_remove()
 
 
-async def test_track_template_with_time_that_leaves_scope.opp):
+async def test_track_template_with_time_that_leaves_scope(opp):
     """Test tracking template with time."""
     now = dt_util.utcnow()
     test_time = datetime(now.year + 1, 5, 24, 11, 59, 1, 500000, tzinfo=dt_util.UTC)
@@ -2236,16 +2236,16 @@ async def test_track_template_with_time_that_leaves_scope.opp):
 
         # Verify we do not update before the minute rolls over
         callback_count_before_time_change = len(specific_runs)
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
         assert len(specific_runs) == callback_count_before_time_change
 
-        async_fire_time_changed.opp, test_time + timedelta(seconds=58))
+        async_fire_time_changed(opp, test_time + timedelta(seconds=58))
         await opp.async_block_till_done()
         assert len(specific_runs) == callback_count_before_time_change
 
         # Verify we do update on the next change of minute
-        async_fire_time_changed.opp, test_time + timedelta(seconds=59))
+        async_fire_time_changed(opp, test_time + timedelta(seconds=59))
 
         await opp.async_block_till_done()
         assert len(specific_runs) == callback_count_before_time_change + 1
@@ -2253,7 +2253,7 @@ async def test_track_template_with_time_that_leaves_scope.opp):
     info.async_remove()
 
 
-async def test_async_track_template_result_multiple_templates_mixing_listeners.opp):
+async def test_async_track_template_result_multiple_templates_mixing_listeners(opp):
     """Test tracking multiple templates with mixing listener types."""
 
     template_1 = Template("{{ states.switch.test.state == 'on' }}")
@@ -2311,7 +2311,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners.o
     refresh_runs = []
     next_time = time_that_will_not_match_right_away + timedelta(hours=25)
     with patch("openpeerpower.util.dt.utcnow", return_value=next_time):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
 
     assert refresh_runs == [
@@ -2321,7 +2321,7 @@ async def test_async_track_template_result_multiple_templates_mixing_listeners.o
     ]
 
 
-async def test_track_same_state_simple_no_trigger.opp):
+async def test_track_same_state_simple_no_trigger(opp):
     """Test track_same_change with no trigger."""
     callback_runs = []
     period = timedelta(minutes=1)
@@ -2350,12 +2350,12 @@ async def test_track_same_state_simple_no_trigger.opp):
 
     # change time to track and see if they trigger
     future = dt_util.utcnow() + period
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
     assert len(callback_runs) == 0
 
 
-async def test_track_same_state_simple_trigger_check_funct.opp):
+async def test_track_same_state_simple_trigger_check_funct(opp):
     """Test track_same_change with trigger and check funct."""
     callback_runs = []
     check_func = []
@@ -2388,12 +2388,12 @@ async def test_track_same_state_simple_trigger_check_funct.opp):
 
     # change time to track and see if they trigger
     future = dt_util.utcnow() + period
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
     assert len(callback_runs) == 1
 
 
-async def test_track_time_interval.opp):
+async def test_track_time_interval(opp):
     """Test tracking time interval."""
     specific_runs = []
 
@@ -2402,26 +2402,26 @@ async def test_track_time_interval.opp):
         opp. callback(lambda x: specific_runs.append(x)), timedelta(seconds=10)
     )
 
-    async_fire_time_changed.opp, utc_now + timedelta(seconds=5))
+    async_fire_time_changed(opp, utc_now + timedelta(seconds=5))
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
-    async_fire_time_changed.opp, utc_now + timedelta(seconds=13))
+    async_fire_time_changed(opp, utc_now + timedelta(seconds=13))
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
-    async_fire_time_changed.opp, utc_now + timedelta(minutes=20))
+    async_fire_time_changed(opp, utc_now + timedelta(minutes=20))
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
     unsub()
 
-    async_fire_time_changed.opp, utc_now + timedelta(seconds=30))
+    async_fire_time_changed(opp, utc_now + timedelta(seconds=30))
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
 
-async def test_track_sunrise.opp, legacy_patchable_time):
+async def test_track_sunrise(opp, legacy_patchable_time):
     """Test track the sunrise."""
     latitude = 32.87336
     longitude = 117.22743
@@ -2450,7 +2450,7 @@ async def test_track_sunrise.opp, legacy_patchable_time):
     # Track sunrise
     runs = []
     with patch("openpeerpower.util.dt.utcnow", return_value=utc_now):
-        unsub = async_track_sunrise.opp, callback(lambda: runs.append(1)))
+        unsub = async_track_sunrise(opp, callback(lambda: runs.append(1)))
 
     offset_runs = []
     offset = timedelta(minutes=30)
@@ -2460,17 +2460,17 @@ async def test_track_sunrise.opp, legacy_patchable_time):
         )
 
     # run tests
-    async_fire_time_changed.opp, next_rising - offset)
+    async_fire_time_changed(opp, next_rising - offset)
     await opp.async_block_till_done()
     assert len(runs) == 0
     assert len(offset_runs) == 0
 
-    async_fire_time_changed.opp, next_rising)
+    async_fire_time_changed(opp, next_rising)
     await opp.async_block_till_done()
     assert len(runs) == 1
     assert len(offset_runs) == 0
 
-    async_fire_time_changed.opp, next_rising + offset)
+    async_fire_time_changed(opp, next_rising + offset)
     await opp.async_block_till_done()
     assert len(runs) == 1
     assert len(offset_runs) == 1
@@ -2478,13 +2478,13 @@ async def test_track_sunrise.opp, legacy_patchable_time):
     unsub()
     unsub2()
 
-    async_fire_time_changed.opp, next_rising + offset)
+    async_fire_time_changed(opp, next_rising + offset)
     await opp.async_block_till_done()
     assert len(runs) == 1
     assert len(offset_runs) == 1
 
 
-async def test_track_sunrise_update_location.opp, legacy_patchable_time):
+async def test_track_sunrise_update_location(opp, legacy_patchable_time):
     """Test track the sunrise."""
     # Setup sun component
     opp.config.latitude = 32.87336
@@ -2510,10 +2510,10 @@ async def test_track_sunrise_update_location.opp, legacy_patchable_time):
     # Track sunrise
     runs = []
     with patch("openpeerpower.util.dt.utcnow", return_value=utc_now):
-        async_track_sunrise.opp, callback(lambda: runs.append(1)))
+        async_track_sunrise(opp, callback(lambda: runs.append(1)))
 
     # Mimic sunrise
-    async_fire_time_changed.opp, next_rising)
+    async_fire_time_changed(opp, next_rising)
     await opp.async_block_till_done()
     assert len(runs) == 1
 
@@ -2523,7 +2523,7 @@ async def test_track_sunrise_update_location.opp, legacy_patchable_time):
         await opp.async_block_till_done()
 
     # Mimic sunrise
-    async_fire_time_changed.opp, next_rising)
+    async_fire_time_changed(opp, next_rising)
     await opp.async_block_till_done()
     # Did not increase
     assert len(runs) == 1
@@ -2539,12 +2539,12 @@ async def test_track_sunrise_update_location.opp, legacy_patchable_time):
         mod += 1
 
     # Mimic sunrise at new location
-    async_fire_time_changed.opp, next_rising)
+    async_fire_time_changed(opp, next_rising)
     await opp.async_block_till_done()
     assert len(runs) == 2
 
 
-async def test_track_sunset.opp, legacy_patchable_time):
+async def test_track_sunset(opp, legacy_patchable_time):
     """Test track the sunset."""
     latitude = 32.87336
     longitude = 117.22743
@@ -2573,7 +2573,7 @@ async def test_track_sunset.opp, legacy_patchable_time):
     # Track sunset
     runs = []
     with patch("openpeerpower.util.dt.utcnow", return_value=utc_now):
-        unsub = async_track_sunset.opp, callback(lambda: runs.append(1)))
+        unsub = async_track_sunset(opp, callback(lambda: runs.append(1)))
 
     offset_runs = []
     offset = timedelta(minutes=30)
@@ -2583,17 +2583,17 @@ async def test_track_sunset.opp, legacy_patchable_time):
         )
 
     # Run tests
-    async_fire_time_changed.opp, next_setting - offset)
+    async_fire_time_changed(opp, next_setting - offset)
     await opp.async_block_till_done()
     assert len(runs) == 0
     assert len(offset_runs) == 0
 
-    async_fire_time_changed.opp, next_setting)
+    async_fire_time_changed(opp, next_setting)
     await opp.async_block_till_done()
     assert len(runs) == 1
     assert len(offset_runs) == 0
 
-    async_fire_time_changed.opp, next_setting + offset)
+    async_fire_time_changed(opp, next_setting + offset)
     await opp.async_block_till_done()
     assert len(runs) == 1
     assert len(offset_runs) == 1
@@ -2601,13 +2601,13 @@ async def test_track_sunset.opp, legacy_patchable_time):
     unsub()
     unsub2()
 
-    async_fire_time_changed.opp, next_setting + offset)
+    async_fire_time_changed(opp, next_setting + offset)
     await opp.async_block_till_done()
     assert len(runs) == 1
     assert len(offset_runs) == 1
 
 
-async def test_async_track_time_change.opp):
+async def test_async_track_time_change(opp):
     """Test tracking time change."""
     wildcard_runs = []
     specific_runs = []
@@ -2660,7 +2660,7 @@ async def test_async_track_time_change.opp):
     assert len(wildcard_runs) == 3
 
 
-async def test_periodic_task_minute.opp):
+async def test_periodic_task_minute(opp):
     """Test periodic tasks per minute."""
     specific_runs = []
 
@@ -2704,7 +2704,7 @@ async def test_periodic_task_minute.opp):
     assert len(specific_runs) == 2
 
 
-async def test_periodic_task_hour.opp):
+async def test_periodic_task_hour(opp):
     """Test periodic tasks per hour."""
     specific_runs = []
 
@@ -2764,7 +2764,7 @@ async def test_periodic_task_hour.opp):
     assert len(specific_runs) == 3
 
 
-async def test_periodic_task_wrong_input.opp):
+async def test_periodic_task_wrong_input(opp):
     """Test periodic tasks with wrong input."""
     specific_runs = []
 
@@ -2782,7 +2782,7 @@ async def test_periodic_task_wrong_input.opp):
     assert len(specific_runs) == 0
 
 
-async def test_periodic_task_clock_rollback.opp):
+async def test_periodic_task_clock_rollback(opp):
     """Test periodic tasks with the time rolling backwards."""
     specific_runs = []
 
@@ -2846,7 +2846,7 @@ async def test_periodic_task_clock_rollback.opp):
     assert len(specific_runs) == 2
 
 
-async def test_periodic_task_duplicate_time.opp):
+async def test_periodic_task_duplicate_time(opp):
     """Test periodic tasks not triggering on duplicate time."""
     specific_runs = []
 
@@ -2888,7 +2888,7 @@ async def test_periodic_task_duplicate_time.opp):
     unsub()
 
 
-async def test_periodic_task_entering_dst.opp):
+async def test_periodic_task_entering_dst(opp):
     """Test periodic task behavior when entering dst."""
     timezone = dt_util.get_time_zone("Europe/Vienna")
     dt_util.set_default_time_zone(timezone)
@@ -2937,7 +2937,7 @@ async def test_periodic_task_entering_dst.opp):
     unsub()
 
 
-async def test_periodic_task_leaving_dst.opp):
+async def test_periodic_task_leaving_dst(opp):
     """Test periodic task behavior when leaving dst."""
     timezone = dt_util.get_time_zone("Europe/Vienna")
     dt_util.set_default_time_zone(timezone)
@@ -3008,7 +3008,7 @@ async def test_periodic_task_leaving_dst.opp):
     unsub()
 
 
-async def test_call_later.opp):
+async def test_call_later(opp):
     """Test calling an action later."""
 
     def action():
@@ -3019,7 +3019,7 @@ async def test_call_later.opp):
     with patch(
         "openpeerpower.helpers.event.async_track_point_in_utc_time"
     ) as mock, patch("openpeerpower.util.dt.utcnow", return_value=now):
-        async_call_later.opp, 3, action)
+        async_call_later(opp, 3, action)
 
     assert len(mock.mock_calls) == 1
     p.opp, p_action, p_point = mock.mock_calls[0][1]
@@ -3028,7 +3028,7 @@ async def test_call_later.opp):
     assert p_point == now + timedelta(seconds=3)
 
 
-async def test_async_call_later.opp):
+async def test_async_call_later(opp):
     """Test calling an action later."""
 
     def action():
@@ -3039,7 +3039,7 @@ async def test_async_call_later.opp):
     with patch(
         "openpeerpower.helpers.event.async_track_point_in_utc_time"
     ) as mock, patch("openpeerpower.util.dt.utcnow", return_value=now):
-        remove = async_call_later.opp, 3, action)
+        remove = async_call_later(opp, 3, action)
 
     assert len(mock.mock_calls) == 1
     p.opp, p_action, p_point = mock.mock_calls[0][1]
@@ -3049,7 +3049,7 @@ async def test_async_call_later.opp):
     assert remove is mock()
 
 
-async def test_track_state_change_event_chain_multple_entity.opp):
+async def test_track_state_change_event_chain_multple_entity(opp):
     """Test that adding a new state tracker inside a tracker does not fire right away."""
     tracker_called = []
     chained_tracker_called = []
@@ -3101,7 +3101,7 @@ async def test_track_state_change_event_chain_multple_entity.opp):
     assert len(chained_tracker_unsub) == 3
 
 
-async def test_track_state_change_event_chain_single_entity.opp):
+async def test_track_state_change_event_chain_single_entity(opp):
     """Test that adding a new state tracker inside a tracker does not fire right away."""
     tracker_called = []
     chained_tracker_called = []
@@ -3130,7 +3130,7 @@ async def test_track_state_change_event_chain_single_entity.opp):
         )
 
     tracker_unsub.append(
-        async_track_state_change_event.opp, "light.bowl", single_run_callback)
+        async_track_state_change_event(opp, "light.bowl", single_run_callback)
     )
 
     opp.states.async_set("light.bowl", "on")
@@ -3150,7 +3150,7 @@ async def test_track_state_change_event_chain_single_entity.opp):
     assert len(chained_tracker_unsub) == 2
 
 
-async def test_track_point_in_utc_time_cancel.opp):
+async def test_track_point_in_utc_time_cancel(opp):
     """Test cancel of async track point in time."""
 
     times = []
@@ -3184,7 +3184,7 @@ async def test_track_point_in_utc_time_cancel.opp):
     assert times[0].tzinfo == dt_util.UTC
 
 
-async def test_async_track_point_in_time_cancel.opp):
+async def test_async_track_point_in_time_cancel(opp):
     """Test cancel of async track point in time."""
 
     times = []
@@ -3214,7 +3214,7 @@ async def test_async_track_point_in_time_cancel.opp):
     assert times[0].tzinfo.zone == "US/Hawaii"
 
 
-async def test_async_track_entity_registry_updated_event.opp):
+async def test_async_track_entity_registry_updated_event(opp):
     """Test tracking entity registry updates for an entity_id."""
 
     entity_id = "switch.puppy_feeder"
@@ -3315,7 +3315,7 @@ async def test_async_track_entity_registry_updated_event_with_a_callback_that_th
     assert event_data[0] == {"action": "create", "entity_id": "switch.puppy_feeder"}
 
 
-async def test_async_track_entity_registry_updated_event_with_empty_list.opp):
+async def test_async_track_entity_registry_updated_event_with_empty_list(opp):
     """Test async_track_entity_registry_updated_event passing an empty list of entities."""
     unsub_single = opp.helpers.event.async_track_entity_registry_updated_event(
         [], ha.callback(lambda event: None)

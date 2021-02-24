@@ -20,7 +20,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up foscam from a config entry."""
     for component in PLATFORMS:
         opp.async_create_task(
@@ -32,7 +32,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -53,7 +53,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def async_migrate_entry.opp, config_entry: ConfigEntry):
+async def async_migrate_entry(opp, config_entry: ConfigEntry):
     """Migrate old entry."""
     LOGGER.debug("Migrating from version %s", config_entry.version)
 
@@ -63,7 +63,7 @@ async def async_migrate_entry.opp, config_entry: ConfigEntry):
         def update_unique_id(entry):
             return {"new_unique_id": config_entry.entry_id}
 
-        await async_migrate_entries.opp, config_entry.entry_id, update_unique_id)
+        await async_migrate_entries(opp, config_entry.entry_id, update_unique_id)
 
         config_entry.unique_id = None
 

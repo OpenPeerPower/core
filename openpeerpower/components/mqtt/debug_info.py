@@ -12,7 +12,7 @@ DATA_MQTT_DEBUG_INFO = "mqtt_debug_info"
 STORED_MESSAGES = 10
 
 
-def log_messages.opp: OpenPeerPowerType, entity_id: str) -> MessageCallbackType:
+def log_messages(opp: OpenPeerPowerType, entity_id: str) -> MessageCallbackType:
     """Wrap an MQTT message callback to support message logging."""
 
     def _log_message(msg):
@@ -37,7 +37,7 @@ def log_messages.opp: OpenPeerPowerType, entity_id: str) -> MessageCallbackType:
     return _decorator
 
 
-def add_subscription.opp, message_callback, subscription):
+def add_subscription(opp, message_callback, subscription):
     """Prepare debug data for subscription."""
     entity_id = getattr(message_callback, "__entity_id", None)
     if entity_id:
@@ -55,7 +55,7 @@ def add_subscription.opp, message_callback, subscription):
         entity_info["subscriptions"][subscription]["count"] += 1
 
 
-def remove_subscription.opp, message_callback, subscription):
+def remove_subscription(opp, message_callback, subscription):
     """Remove debug data for subscription if it exists."""
     entity_id = getattr(message_callback, "__entity_id", None)
     if entity_id and entity_id in.opp.data[DATA_MQTT_DEBUG_INFO]["entities"]:
@@ -70,7 +70,7 @@ def remove_subscription.opp, message_callback, subscription):
             )
 
 
-def add_entity_discovery_data.opp, discovery_data, entity_id):
+def add_entity_discovery_data(opp, discovery_data, entity_id):
     """Add discovery data."""
     debug_info = opp.data.setdefault(
         DATA_MQTT_DEBUG_INFO, {"entities": {}, "triggers": {}}
@@ -81,18 +81,18 @@ def add_entity_discovery_data.opp, discovery_data, entity_id):
     entity_info["discovery_data"] = discovery_data
 
 
-def update_entity_discovery_data.opp, discovery_payload, entity_id):
+def update_entity_discovery_data(opp, discovery_payload, entity_id):
     """Update discovery data."""
     entity_info = opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]
     entity_info["discovery_data"][ATTR_DISCOVERY_PAYLOAD] = discovery_payload
 
 
-def remove_entity_data.opp, entity_id):
+def remove_entity_data(opp, entity_id):
     """Remove discovery data."""
     opp.data[DATA_MQTT_DEBUG_INFO]["entities"].pop(entity_id)
 
 
-def add_trigger_discovery_data.opp, discovery_hash, discovery_data, device_id):
+def add_trigger_discovery_data(opp, discovery_hash, discovery_data, device_id):
     """Add discovery data."""
     debug_info = opp.data.setdefault(
         DATA_MQTT_DEBUG_INFO, {"entities": {}, "triggers": {}}
@@ -103,18 +103,18 @@ def add_trigger_discovery_data.opp, discovery_hash, discovery_data, device_id):
     }
 
 
-def update_trigger_discovery_data.opp, discovery_hash, discovery_payload):
+def update_trigger_discovery_data(opp, discovery_hash, discovery_payload):
     """Update discovery data."""
     trigger_info = opp.data[DATA_MQTT_DEBUG_INFO]["triggers"][discovery_hash]
     trigger_info["discovery_data"][ATTR_DISCOVERY_PAYLOAD] = discovery_payload
 
 
-def remove_trigger_discovery_data.opp, discovery_hash):
+def remove_trigger_discovery_data(opp, discovery_hash):
     """Remove discovery data."""
     opp.data[DATA_MQTT_DEBUG_INFO]["triggers"][discovery_hash]["discovery_data"] = None
 
 
-async def info_for_device.opp, device_id):
+async def info_for_device(opp, device_id):
     """Get debug info for a device."""
     mqtt_info = {"entities": [], "triggers": []}
     entity_registry = await opp.helpers.entity_registry.async_get_registry()

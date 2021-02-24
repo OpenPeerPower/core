@@ -43,7 +43,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle incoming webhook with Mailgun inbound messages."""
     body = await request.text()
     try:
@@ -52,7 +52,7 @@ async def handle_webhook.opp, webhook_id, request):
         return None
 
     if isinstance(data, dict) and "signature" in data:
-        if await verify_webhook.opp, **data["signature"]):
+        if await verify_webhook(opp, **data["signature"]):
             data["webhook_id"] = webhook_id
             opp.bus.async_fire(MESSAGE_RECEIVED, data)
             return
@@ -63,7 +63,7 @@ async def handle_webhook.opp, webhook_id, request):
     )
 
 
-async def verify_webhook.opp, token=None, timestamp=None, signature=None):
+async def verify_webhook(opp, token=None, timestamp=None, signature=None):
     """Verify webhook was signed by Mailgun."""
     if DOMAIN not in.opp.data:
         _LOGGER.warning("Cannot validate Mailgun webhook, missing API Key")
@@ -81,7 +81,7 @@ async def verify_webhook.opp, token=None, timestamp=None, signature=None):
     return hmac.compare_digest(signature, hmac_digest)
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Configure based on config entry."""
     opp.components.webhook.async_register(
         DOMAIN, "Mailgun", entry.data[CONF_WEBHOOK_ID], handle_webhook
@@ -89,7 +89,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     return True

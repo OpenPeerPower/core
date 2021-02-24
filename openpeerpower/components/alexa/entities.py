@@ -353,7 +353,7 @@ class AlexaEntity:
 
 
 @callback
-def async_get_entities.opp, config) -> List[AlexaEntity]:
+def async_get_entities(opp, config) -> List[AlexaEntity]:
     """Return all entities that are supported by Alexa."""
     entities = []
     for state in.opp.states.async_all():

@@ -4,7 +4,7 @@ import random
 from .const import DOMAIN, SERVICE_RANDOMIZE_DEVICE_TRACKER_DATA
 
 
-def setup_scanner.opp, config, see, discovery_info=None):
+def setup_scanner(opp, config, see, discovery_info=None):
     """Set up the demo tracker."""
 
     def offset():

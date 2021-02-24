@@ -16,7 +16,7 @@ TRIGGER_SCHEMA = vol.Schema(
 )
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for tag_scanned events based on configuration."""
     tag_ids = set(config[TAG_ID])
     device_ids = set(config[DEVICE_ID]) if DEVICE_ID in config else None
@@ -30,7 +30,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
         ):
             return
 
-        task = opp.async_run.opp_job(
+        task = opp.async_run(opp_job(
             job,
             {
                 "trigger": {

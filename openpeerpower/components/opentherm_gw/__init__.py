@@ -80,13 +80,13 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def options_updated.opp, entry):
+async def options_updated(opp, entry):
     """Handle options update."""
     gateway = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][entry.data[CONF_ID]]
-    async_dispatcher_send.opp, gateway.options_update_signal, entry)
+    async_dispatcher_send(opp, gateway.options_update_signal, entry)
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the OpenTherm Gateway component."""
     if DATA_OPENTHERM_GW not in.opp.data:
         opp.data[DATA_OPENTHERM_GW] = {DATA_GATEWAYS: {}}
@@ -104,7 +104,7 @@ async def async_setup_entry.opp, config_entry):
             opp.config_entries.async_forward_entry_setup(config_entry, comp)
         )
 
-    register_services.opp)
+    register_services(opp)
     return True
 
 
@@ -123,7 +123,7 @@ async def async_setup(opp, config):
     return True
 
 
-def register_services.opp):
+def register_services(opp):
     """Register services for the component."""
     service_reset_schema = vol.Schema(
         {
@@ -242,7 +242,7 @@ def register_services.opp):
         mode_rst = gw_vars.OTGW_MODE_RESET
         status = await gw_dev.gateway.set_mode(mode_rst)
         gw_dev.status = status
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN, SERVICE_RESET_GATEWAY, reset_gateway, service_reset_schema
@@ -266,7 +266,7 @@ def register_services.opp):
         gw_var = gw_vars.DATA_CONTROL_SETPOINT
         value = await gw_dev.gateway.set_control_setpoint(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN,
@@ -281,7 +281,7 @@ def register_services.opp):
         gw_var = gw_vars.OTGW_DHW_OVRD
         value = await gw_dev.gateway.set_hot_water_ovrd(call.data[ATTR_DHW_OVRD])
         gw_dev.status.update({gw_var: value})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN,
@@ -296,7 +296,7 @@ def register_services.opp):
         gw_var = gw_vars.DATA_DHW_SETPOINT
         value = await gw_dev.gateway.set_dhw_setpoint(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN,
@@ -324,7 +324,7 @@ def register_services.opp):
         mode = await gw_dev.gateway.set_gpio_mode(gpio_id, gpio_mode)
         gpio_var = getattr(gw_vars, f"OTGW_GPIO_{gpio_id}")
         gw_dev.status.update({gpio_var: mode})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN, SERVICE_SET_GPIO_MODE, set_gpio_mode, service_set_gpio_mode_schema
@@ -338,7 +338,7 @@ def register_services.opp):
         mode = await gw_dev.gateway.set_led_mode(led_id, led_mode)
         led_var = getattr(gw_vars, f"OTGW_LED_{led_id}")
         gw_dev.status.update({led_var: mode})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN, SERVICE_SET_LED_MODE, set_led_mode, service_set_led_mode_schema
@@ -354,7 +354,7 @@ def register_services.opp):
             level = "-"
         value = await gw_dev.gateway.set_max_relative_mod(level)
         gw_dev.status.update({gw_var: value})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN, SERVICE_SET_MAX_MOD, set_max_mod, service_set_max_mod_schema
@@ -366,7 +366,7 @@ def register_services.opp):
         gw_var = gw_vars.DATA_OUTSIDE_TEMP
         value = await gw_dev.gateway.set_outside_temp(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN, SERVICE_SET_OAT, set_outside_temp, service_set_oat_schema
@@ -378,14 +378,14 @@ def register_services.opp):
         gw_var = gw_vars.OTGW_SB_TEMP
         value = await gw_dev.gateway.set_setback_temp(call.data[ATTR_TEMPERATURE])
         gw_dev.status.update({gw_var: value})
-        async_dispatcher_send.opp, gw_dev.update_signal, gw_dev.status)
+        async_dispatcher_send(opp, gw_dev.update_signal, gw_dev.status)
 
     opp.services.async_register(
         DOMAIN, SERVICE_SET_SB_TEMP, set_setback_temp, service_set_sb_temp_schema
     )
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Cleanup and disconnect from gateway."""
     await asyncio.gather(
         opp.config_entries.async_forward_entry_unload(entry, COMP_BINARY_SENSOR),

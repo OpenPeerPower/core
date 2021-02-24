@@ -31,7 +31,7 @@ ATTR_LAST_UPDATE = "feed_last_update"
 ATTR_LAST_UPDATE_SUCCESSFUL = "feed_last_update_successful"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the GeoNet NZ Volcano Feed platform."""
     manager = opp.data[DOMAIN][FEED][entry.entry_id]
 
@@ -82,7 +82,7 @@ class GeonetnzVolcanoSensor(Entity):
             self._update_callback,
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Call when entity will be removed from.opp."""
         if self._remove_signal_update:
             self._remove_signal_update()

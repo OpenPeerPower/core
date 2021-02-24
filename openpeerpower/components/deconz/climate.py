@@ -69,12 +69,12 @@ PRESET_MODE_TO_DECONZ = {
 DECONZ_TO_PRESET_MODE = {value: key for key, value in PRESET_MODE_TO_DECONZ.items()}
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the deCONZ climate devices.
 
     Thermostats are based on the same device class as sensors in deCONZ.
     """
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     gateway.entities[DOMAIN] = set()
 
     @callback

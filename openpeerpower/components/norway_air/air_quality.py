@@ -36,7 +36,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 SCAN_INTERVAL = timedelta(minutes=5)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the air_quality norway sensor."""
     forecast = config.get(CONF_FORECAST)
     latitude = config.get(CONF_LATITUDE, opp.config.latitude)
@@ -50,7 +50,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     coordinates = {"lat": str(latitude), "lon": str(longitude)}
 
     async_add_entities(
-        [AirSensor(name, coordinates, forecast, async_get_clientsession.opp))], True
+        [AirSensor(name, coordinates, forecast, async_get_clientsession(opp))], True
     )
 
 

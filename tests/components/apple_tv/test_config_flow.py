@@ -30,7 +30,7 @@ def mock_setup_entry():
 # User Flows
 
 
-async def test_user_input_device_not_found.opp, mrp_device):
+async def test_user_input_device_not_found(opp, mrp_device):
     """Test when user specifies a non-existing device."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -64,7 +64,7 @@ async def test_user_input_unexpected_error(opp, mock_scan):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_user_adds_full_device.opp, full_device, pairing):
+async def test_user_adds_full_device(opp, full_device, pairing):
     """Test adding device with all services."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -109,7 +109,7 @@ async def test_user_adds_full_device.opp, full_device, pairing):
     }
 
 
-async def test_user_adds_dmap_device.opp, dmap_device, dmap_pin, pairing):
+async def test_user_adds_dmap_device(opp, dmap_device, dmap_pin, pairing):
     """Test adding device with only DMAP service."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -138,7 +138,7 @@ async def test_user_adds_dmap_device.opp, dmap_device, dmap_pin, pairing):
     }
 
 
-async def test_user_adds_dmap_device_failed.opp, dmap_device, dmap_pin, pairing):
+async def test_user_adds_dmap_device_failed(opp, dmap_device, dmap_pin, pairing):
     """Test adding DMAP device where remote device did not attempt to pair."""
     pairing.always_fail = True
 
@@ -158,7 +158,7 @@ async def test_user_adds_dmap_device_failed.opp, dmap_device, dmap_pin, pairing)
     assert result2["reason"] == "device_did_not_pair"
 
 
-async def test_user_adds_device_with_credentials.opp, dmap_device_with_credentials):
+async def test_user_adds_device_with_credentials(opp, dmap_device_with_credentials):
     """Test adding DMAP device with existing credentials (home sharing)."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -206,7 +206,7 @@ async def test_user_adds_device_with_ip_filter(
     }
 
 
-async def test_user_adds_device_by_ip_uses_unicast_scan.opp, mock_scan):
+async def test_user_adds_device_by_ip_uses_unicast_scan(opp, mock_scan):
     """Test add device by IP-address, verify unicast scan is used."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -220,9 +220,9 @@ async def test_user_adds_device_by_ip_uses_unicast_scan.opp, mock_scan):
     assert str(mock_scan.hosts[0]) == "127.0.0.1"
 
 
-async def test_user_adds_existing_device.opp, mrp_device):
+async def test_user_adds_existing_device(opp, mrp_device):
     """Test that it is not possible to add existing device."""
-    MockConfigEntry(domain="apple_tv", unique_id="mrpid").add_to.opp.opp)
+    MockConfigEntry(domain="apple_tv", unique_id="mrpid").add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -236,7 +236,7 @@ async def test_user_adds_existing_device.opp, mrp_device):
     assert result2["errors"] == {"base": "already_configured"}
 
 
-async def test_user_adds_unusable_device.opp, airplay_device):
+async def test_user_adds_unusable_device(opp, airplay_device):
     """Test that it is not possible to add pure AirPlay device."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -250,7 +250,7 @@ async def test_user_adds_unusable_device.opp, airplay_device):
     assert result2["errors"] == {"base": "no_usable_service"}
 
 
-async def test_user_connection_failed.opp, mrp_device, pairing_mock):
+async def test_user_connection_failed(opp, mrp_device, pairing_mock):
     """Test error message when connection to device fails."""
     pairing_mock.begin.side_effect = exceptions.ConnectionFailedError
 
@@ -276,7 +276,7 @@ async def test_user_connection_failed.opp, mrp_device, pairing_mock):
     assert result2["reason"] == "invalid_config"
 
 
-async def test_user_start_pair_error_failed.opp, mrp_device, pairing_mock):
+async def test_user_start_pair_error_failed(opp, mrp_device, pairing_mock):
     """Test initiating pairing fails."""
     pairing_mock.begin.side_effect = exceptions.PairingError
 
@@ -297,7 +297,7 @@ async def test_user_start_pair_error_failed.opp, mrp_device, pairing_mock):
     assert result2["reason"] == "invalid_auth"
 
 
-async def test_user_pair_invalid_pin.opp, mrp_device, pairing_mock):
+async def test_user_pair_invalid_pin(opp, mrp_device, pairing_mock):
     """Test pairing with invalid pin."""
     pairing_mock.finish.side_effect = exceptions.PairingError
 
@@ -394,7 +394,7 @@ async def test_user_pair_begin_unexpected_error(opp, mrp_device, pairing_mock):
 # Zeroconf
 
 
-async def test_zeroconf_unsupported_service_aborts.opp):
+async def test_zeroconf_unsupported_service_aborts(opp):
     """Test discovering unsupported zeroconf service."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -408,7 +408,7 @@ async def test_zeroconf_unsupported_service_aborts.opp):
     assert result["reason"] == "unknown"
 
 
-async def test_zeroconf_add_mrp_device.opp, mrp_device, pairing):
+async def test_zeroconf_add_mrp_device(opp, mrp_device, pairing):
     """Test add MRP device discovered by zeroconf."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -440,7 +440,7 @@ async def test_zeroconf_add_mrp_device.opp, mrp_device, pairing):
     }
 
 
-async def test_zeroconf_add_dmap_device.opp, dmap_device, dmap_pin, pairing):
+async def test_zeroconf_add_dmap_device(opp, dmap_device, dmap_pin, pairing):
     """Test add DMAP device discovered by zeroconf."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
@@ -465,7 +465,7 @@ async def test_zeroconf_add_dmap_device.opp, dmap_device, dmap_pin, pairing):
     }
 
 
-async def test_zeroconf_add_existing_aborts.opp, dmap_device):
+async def test_zeroconf_add_existing_aborts(opp, dmap_device):
     """Test start new zeroconf flow while existing flow is active aborts."""
     await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
@@ -478,7 +478,7 @@ async def test_zeroconf_add_existing_aborts.opp, dmap_device):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_zeroconf_add_but_device_not_found.opp, mock_scan):
+async def test_zeroconf_add_but_device_not_found(opp, mock_scan):
     """Test add device which is not found with another scan."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
@@ -487,9 +487,9 @@ async def test_zeroconf_add_but_device_not_found.opp, mock_scan):
     assert result["reason"] == "no_devices_found"
 
 
-async def test_zeroconf_add_existing_device.opp, dmap_device):
+async def test_zeroconf_add_existing_device(opp, dmap_device):
     """Test add already existing device from zeroconf."""
-    MockConfigEntry(domain="apple_tv", unique_id="dmapid").add_to.opp.opp)
+    MockConfigEntry(domain="apple_tv", unique_id="dmapid").add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
@@ -512,10 +512,10 @@ async def test_zeroconf_unexpected_error(opp, mock_scan):
 # Re-configuration
 
 
-async def test_reconfigure_update_credentials.opp, mrp_device, pairing):
+async def test_reconfigure_update_credentials(opp, mrp_device, pairing):
     """Test that reconfigure flow updates config entry."""
     config_entry = MockConfigEntry(domain="apple_tv", unique_id="mrpid")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -544,7 +544,7 @@ async def test_reconfigure_update_credentials.opp, mrp_device, pairing):
     }
 
 
-async def test_reconfigure_ongoing_aborts.opp, mrp_device):
+async def test_reconfigure_ongoing_aborts(opp, mrp_device):
     """Test start additional reconfigure flow aborts."""
     data = {
         "identifier": "mrpid",
@@ -565,12 +565,12 @@ async def test_reconfigure_ongoing_aborts.opp, mrp_device):
 # Options
 
 
-async def test_option_start_off.opp):
+async def test_option_start_off(opp):
     """Test start off-option flag."""
     config_entry = MockConfigEntry(
         domain=DOMAIN, unique_id="dmapid", options={"start_off": False}
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

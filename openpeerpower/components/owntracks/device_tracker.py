@@ -18,10 +18,10 @@ from openpeerpower.helpers.restore_state import RestoreEntity
 from . import DOMAIN as OT_DOMAIN
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up OwnTracks based off an entry."""
     # Restore previously loaded devices
-    dev_reg = await device_registry.async_get_registry.opp)
+    dev_reg = await device_registry.async_get_registry(opp)
     dev_ids = {
         identifier[1]
         for device in dev_reg.devices.values()

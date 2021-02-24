@@ -51,14 +51,14 @@ async def async_setup(opp, config):
 
     async def update_domain_interval(now):
         """Update the Google Domains entry."""
-        await _update_google_domains.opp, session, domain, user, password, timeout)
+        await _update_google_domains(opp, session, domain, user, password, timeout)
 
     opp.helpers.event.async_track_time_interval(update_domain_interval, INTERVAL)
 
     return True
 
 
-async def _update_google_domains.opp, session, domain, user, password, timeout):
+async def _update_google_domains(opp, session, domain, user, password, timeout):
     """Update Google Domains."""
     url = f"https://{user}:{password}@domains.google.com/nic/update"
 

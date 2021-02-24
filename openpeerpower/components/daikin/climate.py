@@ -80,7 +80,7 @@ OP_ATTR_TO_DAIKIN = {
 DAIKIN_ATTR_ADVANCED = "adv"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Old way of setting up the Daikin HVAC platform.
 
     Can only be called when a user accidentally mentions the platform in their
@@ -88,7 +88,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     """
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Daikin climate based on config_entry."""
     daikin_api = opp.data[DAIKIN_DOMAIN].get(entry.entry_id)
     async_add_entities([DaikinClimate(daikin_api)], update_before_add=True)

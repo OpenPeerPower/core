@@ -443,7 +443,7 @@ class ONVIFDevice:
                 LOGGER.error("Error trying to perform PTZ action: %s", err)
 
 
-def get_device.opp, host, port, username, password) -> ONVIFCamera:
+def get_device(opp, host, port, username, password) -> ONVIFCamera:
     """Get ONVIFCamera instance."""
     return ONVIFCamera(
         host,

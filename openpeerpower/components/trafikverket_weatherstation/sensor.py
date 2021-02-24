@@ -122,14 +122,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Trafikverket sensor platform."""
 
     sensor_name = config[CONF_NAME]
     sensor_api = config[CONF_API_KEY]
     sensor_station = config[CONF_STATION]
 
-    web_session = async_get_clientsession.opp)
+    web_session = async_get_clientsession(opp)
 
     weather_api = TrafikverketWeather(web_session, sensor_api)
 

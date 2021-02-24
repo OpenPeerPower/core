@@ -14,7 +14,7 @@ NOTIFICATION_ID = "octoprint_notification"
 NOTIFICATION_TITLE = "OctoPrint sensor setup error"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the available OctoPrint sensors."""
     if discovery_info is None:
         return

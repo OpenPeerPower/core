@@ -38,7 +38,7 @@ TEST_SWITCH_COMPONENT_BASE_ENTITY_ID = "switch.test_instance_1_component"
 TEST_SWITCH_COMPONENT_ALL_ENTITY_ID = f"{TEST_SWITCH_COMPONENT_BASE_ENTITY_ID}_all"
 
 
-async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
+async def test_switch_turn_on_off(opp: OpenPeerPowerType) -> None:
     """Test turning the light on."""
     client = create_mock_client()
     client.async_send_set_component = AsyncMock(return_value=True)
@@ -49,7 +49,7 @@ async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.switch.HyperionComponentSwitch.entity_registry_enabled_default"
     ) as enabled_by_default_mock:
         enabled_by_default_mock.return_value = True
-        await setup_test_config_entry.opp, hyperion_client=client)
+        await setup_test_config_entry(opp, hyperion_client=client)
 
     # Verify switch is on (as per TEST_COMPONENTS above).
     entity_state = opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
@@ -105,7 +105,7 @@ async def test_switch_turn_on_off.opp: OpenPeerPowerType) -> None:
     assert entity_state.state == "on"
 
 
-async def test_switch_has_correct_entities.opp: OpenPeerPowerType) -> None:
+async def test_switch_has_correct_entities(opp: OpenPeerPowerType) -> None:
     """Test that the correct switch entities are created."""
     client = create_mock_client()
     client.components = TEST_COMPONENTS
@@ -115,7 +115,7 @@ async def test_switch_has_correct_entities.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.switch.HyperionComponentSwitch.entity_registry_enabled_default"
     ) as enabled_by_default_mock:
         enabled_by_default_mock.return_value = True
-        await setup_test_config_entry.opp, hyperion_client=client)
+        await setup_test_config_entry(opp, hyperion_client=client)
 
     entity_state = opp.states.get(TEST_SWITCH_COMPONENT_ALL_ENTITY_ID)
 

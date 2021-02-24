@@ -7,7 +7,7 @@ from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from . import ZWaveDeviceEntity, const
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Sensor from Config Entry."""
 
     @callback
@@ -15,7 +15,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Add Z-Wave Sensor."""
         async_add_entities([sensor])
 
-    async_dispatcher_connect.opp, "zwave_new_sensor", async_add_sensor)
+    async_dispatcher_connect(opp, "zwave_new_sensor", async_add_sensor)
 
 
 def get_device(node, values, **kwargs):

@@ -3,12 +3,12 @@ from openpeerpower.components.remote import RemoteEntity
 from openpeerpower.const import DEVICE_DEFAULT_NAME
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Demo config entry."""
-    setup_platform.opp, {}, async_add_entities)
+    setup_platform(opp, {}, async_add_entities)
 
 
-def setup_platform.opp, config, add_entities_callback, discovery_info=None):
+def setup_platform(opp, config, add_entities_callback, discovery_info=None):
     """Set up the demo remotes."""
     add_entities_callback(
         [

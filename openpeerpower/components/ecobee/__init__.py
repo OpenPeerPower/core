@@ -48,7 +48,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up ecobee via a config entry."""
     api_key = entry.data[CONF_API_KEY]
     refresh_token = entry.data[CONF_REFRESH_TOKEN]
@@ -115,7 +115,7 @@ class EcobeeData:
         return False
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload the config entry and platforms."""
     opp.data.pop(DOMAIN)
 

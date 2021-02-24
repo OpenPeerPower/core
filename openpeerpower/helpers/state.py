@@ -84,7 +84,7 @@ async def async_reproduce_state(
 
     async def worker(domain: str, states_by_domain: List[State]) -> None:
         try:
-            integration = await async_get_integration.opp, domain)
+            integration = await async_get_integration(opp, domain)
         except IntegrationNotFound:
             _LOGGER.warning(
                 "Trying to reproduce state for unknown integration: %s", domain

@@ -26,7 +26,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Return a BT Smart Hub scanner if successful."""
     info = config[DOMAIN]
     smarthub_client = BTSmartHub(

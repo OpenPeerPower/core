@@ -118,7 +118,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def scenes_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def scenes_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all scenes that reference the entity."""
     if DATA_PLATFORM not in.opp.data:
         return []
@@ -133,7 +133,7 @@ def scenes_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 
 @callback
-def entities_in_scene.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def entities_in_scene(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all entities in a scene."""
     if DATA_PLATFORM not in.opp.data:
         return []
@@ -148,7 +148,7 @@ def entities_in_scene.opp: OpenPeerPower, entity_id: str) -> List[str]:
     return list(entity.scene_config.states)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up Open Peer Power scene entries."""
     _process_scenes_config(opp, async_add_entities, config)
 
@@ -162,12 +162,12 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     async def reload_config(call):
         """Reload the scene config."""
         try:
-            conf = await conf_util.async.opp_config_yaml.opp)
+            conf = await conf_util.async.opp_config_yaml(opp)
         except OpenPeerPowerError as err:
             _LOGGER.error(err)
             return
 
-        integration = await async_get_integration.opp, SCENE_DOMAIN)
+        integration = await async_get_integration(opp, SCENE_DOMAIN)
 
         conf = await conf_util.async_process_component_config(opp, conf, integration)
 

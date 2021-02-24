@@ -25,9 +25,9 @@ def async_setup_opp: OpenPeerPower):
     )
 
 
-async def async_provide_implementation.opp: OpenPeerPower, domain: str):
+async def async_provide_implementation(opp: OpenPeerPower, domain: str):
     """Provide an implementation for a domain."""
-    services = await _get_services.opp)
+    services = await _get_services(opp)
 
     for service in services:
         if service["service"] == domain and _is_older(service["min_version"]):
@@ -67,7 +67,7 @@ def _is_older(version: str) -> bool:
     return version_parts <= cur_version_parts
 
 
-async def _get_services.opp):
+async def _get_services(opp):
     """Get the available services."""
     services = opp.data.get(DATA_SERVICES)
 
@@ -75,7 +75,7 @@ async def _get_services.opp):
         return services
 
     try:
-        services = await account_link.async_fetch_available_services.opp.data[DOMAIN])
+        services = await account_link.async_fetch_available_services(opp.data[DOMAIN])
     except (aiohttp.ClientError, asyncio.TimeoutError):
         return []
 
@@ -86,7 +86,7 @@ async def _get_services.opp):
         """Clear services cache."""
         opp.data.pop(DATA_SERVICES, None)
 
-    event.async_call_later.opp, CACHE_TIMEOUT, clear_services)
+    event.async_call_later(opp, CACHE_TIMEOUT, clear_services)
 
     return services
 

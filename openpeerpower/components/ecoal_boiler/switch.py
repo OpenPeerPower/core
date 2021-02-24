@@ -6,7 +6,7 @@ from openpeerpower.components.switch import SwitchEntity
 from . import AVAILABLE_PUMPS, DATA_ECOAL_BOILER
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up switches based on ecoal interface."""
     if discovery_info is None:
         return

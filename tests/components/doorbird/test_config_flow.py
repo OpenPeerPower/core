@@ -33,13 +33,13 @@ def _get_mock_doorbirdapi_side_effects(ready=None, info=None):
     return doorbirdapi_mock
 
 
-async def test_user_form.opp):
+async def test_user_form(opp):
     """Test we get the user form."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
     )  # force in memory db
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -76,13 +76,13 @@ async def test_user_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_import.opp):
+async def test_form_import(opp):
     """Test we get the form with import source."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
     )  # force in memory db
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     import_config = VALID_CONFIG.copy()
     import_config[CONF_EVENTS] = ["event1", "event2", "event3"]
@@ -129,13 +129,13 @@ async def test_form_import.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_import_with_zeroconf_already_discovered.opp):
+async def test_form_import_with_zeroconf_already_discovered(opp):
     """Test we get the form with import source."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
     )  # force in memory db
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     # Running the zeroconf init will make the unique id
     # in progress
@@ -197,13 +197,13 @@ async def test_form_import_with_zeroconf_already_discovered.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_zeroconf_wrong_oui.opp):
+async def test_form_zeroconf_wrong_oui(opp):
     """Test we abort when we get the wrong OUI via zeroconf."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
     )  # force in memory db
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -218,13 +218,13 @@ async def test_form_zeroconf_wrong_oui.opp):
     assert result["reason"] == "not_doorbird_device"
 
 
-async def test_form_zeroconf_link_local_ignored.opp):
+async def test_form_zeroconf_link_local_ignored(opp):
     """Test we abort when we get a link local address via zeroconf."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
     )  # force in memory db
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -239,13 +239,13 @@ async def test_form_zeroconf_link_local_ignored.opp):
     assert result["reason"] == "link_local_address"
 
 
-async def test_form_zeroconf_correct_oui.opp):
+async def test_form_zeroconf_correct_oui(opp):
     """Test we can setup from zeroconf with the correct OUI source."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
     )  # force in memory db
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -288,7 +288,7 @@ async def test_form_zeroconf_correct_oui.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_cannot_connect.opp):
+async def test_form_user_cannot_connect(opp):
     """Test we handle cannot connect error."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
@@ -312,7 +312,7 @@ async def test_form_user_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_user_invalid_auth.opp):
+async def test_form_user_invalid_auth(opp):
     """Test we handle cannot invalid auth error."""
     await opp.async_add_executor_job(
         init_recorder_component, opp
@@ -339,7 +339,7 @@ async def test_form_user_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
 
     config_entry = MockConfigEntry(
@@ -348,7 +348,7 @@ async def test_options_flow.opp):
         data=VALID_CONFIG,
         options={CONF_EVENTS: ["event1", "event2", "event3"]},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.doorbird.async_setup_entry", return_value=True

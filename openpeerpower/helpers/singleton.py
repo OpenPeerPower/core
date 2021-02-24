@@ -33,7 +33,7 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
 
         @bind.opp
         @functools.wraps(func)
-        async def async_wrapped.opp: OpenPeerPower) -> T:
+        async def async_wrapped(opp: OpenPeerPower) -> T:
             obj_or_evt = opp.data.get(data_key)
 
             if not obj_or_evt:

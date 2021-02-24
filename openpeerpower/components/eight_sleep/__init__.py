@@ -125,7 +125,7 @@ async def async_setup(opp, config):
     async def async_update_heat_data(now):
         """Update heat data from eight in HEAT_SCAN_INTERVAL."""
         await eight.update_device_data()
-        async_dispatcher_send.opp, SIGNAL_UPDATE_HEAT)
+        async_dispatcher_send(opp, SIGNAL_UPDATE_HEAT)
 
         async_track_point_in_utc_time(
             opp. async_update_heat_data, utcnow() + HEAT_SCAN_INTERVAL
@@ -134,7 +134,7 @@ async def async_setup(opp, config):
     async def async_update_user_data(now):
         """Update user data from eight in USER_SCAN_INTERVAL."""
         await eight.update_user_data()
-        async_dispatcher_send.opp, SIGNAL_UPDATE_USER)
+        async_dispatcher_send(opp, SIGNAL_UPDATE_USER)
 
         async_track_point_in_utc_time(
             opp. async_update_user_data, utcnow() + USER_SCAN_INTERVAL
@@ -183,7 +183,7 @@ async def async_setup(opp, config):
             usrobj = eight.users[userid]
             await usrobj.set_heating_level(target, duration)
 
-        async_dispatcher_send.opp, SIGNAL_UPDATE_HEAT)
+        async_dispatcher_send(opp, SIGNAL_UPDATE_HEAT)
 
     # Register services
     opp.services.async_register(

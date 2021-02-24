@@ -22,9 +22,9 @@ from .deconz_device import DeconzDevice
 from .gateway import get_gateway_from_config_entry
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up covers for deCONZ component."""
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     gateway.entities[DOMAIN] = set()
 
     @callback

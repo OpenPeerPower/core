@@ -28,7 +28,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Flick Electric from a config entry."""
     auth = OppFlickAuth.opp, entry)
 
@@ -41,7 +41,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if await opp.config_entries.async_forward_entry_unload(entry, "sensor"):
         opp.data[DOMAIN].pop(entry.entry_id)
@@ -55,7 +55,7 @@ class OppFlickAuth(AbstractFlickAuth):
 
     def __init__(self, opp: OpenPeerPower, entry: ConfigEntry):
         """Flick authention based on a Open Peer Power entity config."""
-        super().__init__(aiohttp_client.async_get_clientsession.opp))
+        super().__init__(aiohttp_client.async_get_clientsession(opp))
         self._entry = entry
         self.opp = opp
 

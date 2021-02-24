@@ -43,20 +43,20 @@ PLATFORM_SCHEMA = mqtt.MQTT_BASE_PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up MQTT tag scan dynamically through MQTT discovery."""
     setup = functools.partial(async_setup_tag, opp, config_entry=config_entry)
-    await async_setup_entry_helper.opp, "tag", setup, PLATFORM_SCHEMA)
+    await async_setup_entry_helper(opp, "tag", setup, PLATFORM_SCHEMA)
 
 
-async def async_setup_tag.opp, config, config_entry, discovery_data):
+async def async_setup_tag(opp, config, config_entry, discovery_data):
     """Set up the MQTT tag scanner."""
     discovery_hash = discovery_data[ATTR_DISCOVERY_HASH]
     discovery_id = discovery_hash[1]
 
     device_id = None
     if CONF_DEVICE in config:
-        await _update_device.opp, config_entry, config)
+        await _update_device(opp, config_entry, config)
 
         device_registry = await opp.helpers.device_registry.async_get_registry()
         device = device_registry.async_get_device(
@@ -87,7 +87,7 @@ async def async_setup_tag.opp, config, config_entry, discovery_data):
         opp.data[TAGS][device_id][discovery_id] = tag_scanner
 
 
-def async_has_tags.opp, device_id):
+def async_has_tags(opp, device_id):
     """Device has tag scanners."""
     if TAGS not in.opp.data or device_id not in.opp.data[TAGS]:
         return False
@@ -211,7 +211,7 @@ class MQTTTagScanner:
             self.opp.data[TAGS][self.device_id].pop(discovery_id)
 
 
-async def _update_device.opp, config_entry, config):
+async def _update_device(opp, config_entry, config):
     """Update device registry."""
     device_registry = await opp.helpers.device_registry.async_get_registry()
     config_entry_id = config_entry.entry_id

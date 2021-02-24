@@ -25,7 +25,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Mastodon notification service."""
     client_id = config.get(CONF_CLIENT_ID)
     client_secret = config.get(CONF_CLIENT_SECRET)

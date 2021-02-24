@@ -42,7 +42,7 @@ PLATFORM_SCHEMA = vol.Schema(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the ClickSend notification service."""
     if not _authenticate(config):
         _LOGGER.error("You are not authorized to access ClickSend")

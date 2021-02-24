@@ -12,7 +12,7 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up IPMA station as config entry."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(config_entry, "weather")
@@ -20,7 +20,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     await opp.config_entries.async_forward_entry_unload(config_entry, "weather")
     return True

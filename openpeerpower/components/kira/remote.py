@@ -11,7 +11,7 @@ from . import CONF_REMOTE, DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Kira platform."""
     if discovery_info:
         name = discovery_info.get(CONF_NAME)

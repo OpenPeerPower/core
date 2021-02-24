@@ -39,7 +39,7 @@ _LOGGER = logging.getLogger(__name__)
 DEFAULT_QUALITY = "high"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Netatmo camera platform."""
     if "access_camera" not in entry.data["token"]["scope"]:
         _LOGGER.info(

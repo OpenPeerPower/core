@@ -68,7 +68,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigType):
     """Set up TPLink from a config entry."""
     config_data = opp.data[DOMAIN].get(ATTR_CONFIG)
 
@@ -86,7 +86,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
 
     # Add discovered devices
     if config_data is None or config_data[CONF_DISCOVERY]:
-        discovered_devices = await async_discover_devices.opp, static_devices)
+        discovered_devices = await async_discover_devices(opp, static_devices)
 
         lights.extend(discovered_devices.lights)
         switches.extend(discovered_devices.switches)
@@ -106,7 +106,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigType):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     forward_unload = opp.config_entries.async_forward_entry_unload
     remove_lights = remove_switches = False

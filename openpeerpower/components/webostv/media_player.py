@@ -63,7 +63,7 @@ MIN_TIME_BETWEEN_FORCED_SCANS = timedelta(seconds=1)
 SCAN_INTERVAL = timedelta(seconds=10)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the LG webOS Smart TV platform."""
 
     if discovery_info is None:
@@ -136,7 +136,7 @@ class LgWebOSMediaPlayerEntity(MediaPlayerEntity):
             self.async_handle_state_update
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Call disconnect on removal."""
         self._client.unregister_state_update_callback(self.async_handle_state_update)
 

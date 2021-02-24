@@ -127,16 +127,16 @@ class Image:
 
 
 @bind.opp
-async def async_request_stream.opp, entity_id, fmt):
+async def async_request_stream(opp, entity_id, fmt):
     """Request a stream for a camera entity."""
-    camera = _get_camera_from_entity_id.opp, entity_id)
-    return await _async_stream_endpoint_url.opp, camera, fmt)
+    camera = _get_camera_from_entity_id(opp, entity_id)
+    return await _async_stream_endpoint_url(opp, camera, fmt)
 
 
 @bind.opp
-async def async_get_image.opp, entity_id, timeout=10):
+async def async_get_image(opp, entity_id, timeout=10):
     """Fetch an image from a camera entity."""
-    camera = _get_camera_from_entity_id.opp, entity_id)
+    camera = _get_camera_from_entity_id(opp, entity_id)
 
     with suppress(asyncio.CancelledError, asyncio.TimeoutError):
         async with async_timeout.timeout(timeout):
@@ -149,17 +149,17 @@ async def async_get_image.opp, entity_id, timeout=10):
 
 
 @bind.opp
-async def async_get_stream_source.opp, entity_id):
+async def async_get_stream_source(opp, entity_id):
     """Fetch the stream source for a camera entity."""
-    camera = _get_camera_from_entity_id.opp, entity_id)
+    camera = _get_camera_from_entity_id(opp, entity_id)
 
     return await camera.stream_source()
 
 
 @bind.opp
-async def async_get_mjpeg_stream.opp, request, entity_id):
+async def async_get_mjpeg_stream(opp, request, entity_id):
     """Fetch an mjpeg stream from a camera entity."""
-    camera = _get_camera_from_entity_id.opp, entity_id)
+    camera = _get_camera_from_entity_id(opp, entity_id)
 
     return await camera.handle_async_mjpeg_stream(request)
 
@@ -207,7 +207,7 @@ async def async_get_still_stream(request, image_cb, content_type, interval):
     return response
 
 
-def _get_camera_from_entity_id.opp, entity_id):
+def _get_camera_from_entity_id(opp, entity_id):
     """Get camera component from entity_id."""
     component = opp.data.get(DOMAIN)
 
@@ -296,12 +296,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 
@@ -541,14 +541,14 @@ class CameraMjpegStream(CameraView):
 
 
 @websocket_api.async_response
-async def websocket_camera_thumbnail.opp, connection, msg):
+async def websocket_camera_thumbnail(opp, connection, msg):
     """Handle get camera thumbnail websocket command.
 
     Async friendly.
     """
     _LOGGER.warning("The websocket command 'camera_thumbnail' has been deprecated")
     try:
-        image = await async_get_image.opp, msg["entity_id"])
+        image = await async_get_image(opp, msg["entity_id"])
         await connection.send_big_result(
             msg["id"],
             {
@@ -572,15 +572,15 @@ async def websocket_camera_thumbnail.opp, connection, msg):
         vol.Optional("format", default="hls"): vol.In(OUTPUT_FORMATS),
     }
 )
-async def ws_camera_stream.opp, connection, msg):
+async def ws_camera_stream(opp, connection, msg):
     """Handle get camera stream websocket command.
 
     Async friendly.
     """
     try:
         entity_id = msg["entity_id"]
-        camera = _get_camera_from_entity_id.opp, entity_id)
-        url = await _async_stream_endpoint_url.opp, camera, fmt=msg["format"])
+        camera = _get_camera_from_entity_id(opp, entity_id)
+        url = await _async_stream_endpoint_url(opp, camera, fmt=msg["format"])
         connection.send_result(msg["id"], {"url": url})
     except OpenPeerPowerError as ex:
         _LOGGER.error("Error requesting stream: %s", ex)
@@ -596,7 +596,7 @@ async def ws_camera_stream.opp, connection, msg):
 @websocket_api.websocket_command(
     {vol.Required("type"): "camera/get_prefs", vol.Required("entity_id"): cv.entity_id}
 )
-async def websocket_get_prefs.opp, connection, msg):
+async def websocket_get_prefs(opp, connection, msg):
     """Handle request for account info."""
     prefs = opp.data[DATA_CAMERA_PREFS].get(msg["entity_id"])
     connection.send_result(msg["id"], prefs.as_dict())
@@ -610,7 +610,7 @@ async def websocket_get_prefs.opp, connection, msg):
         vol.Optional("preload_stream"): bool,
     }
 )
-async def websocket_update_prefs.opp, connection, msg):
+async def websocket_update_prefs(opp, connection, msg):
     """Handle request for account info."""
     prefs = opp.data[DATA_CAMERA_PREFS]
 
@@ -658,7 +658,7 @@ async def async_handle_play_stream_service(camera, service_call):
 
    opp = camera.opp
     data = {
-        ATTR_MEDIA_CONTENT_ID: f"{get_url.opp)}{url}",
+        ATTR_MEDIA_CONTENT_ID: f"{get_url(opp)}{url}",
         ATTR_MEDIA_CONTENT_TYPE: FORMAT_CONTENT_TYPE[fmt],
     }
 
@@ -666,7 +666,7 @@ async def async_handle_play_stream_service(camera, service_call):
     entity_ids = service_call.data[ATTR_MEDIA_PLAYER]
     cast_entity_ids = [
         entity
-        for entity, source in entity_sources.opp).items()
+        for entity, source in entity_sources(opp).items()
         if entity in entity_ids and source["domain"] == "cast"
     ]
     other_entity_ids = list(set(entity_ids) - set(cast_entity_ids))
@@ -702,7 +702,7 @@ async def async_handle_play_stream_service(camera, service_call):
         )
 
 
-async def _async_stream_endpoint_url.opp, camera, fmt):
+async def _async_stream_endpoint_url(opp, camera, fmt):
     stream = await camera.create_stream()
     if not stream:
         raise OpenPeerPowerError(

@@ -28,9 +28,9 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for Arcam FMJ Receiver control devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     triggers = []
 
     # Get all the integrations entities for this device
@@ -65,7 +65,7 @@ async def async_attach_trigger(
         @callback
         def _handle_event(event: Event):
             if event.data[ATTR_ENTITY_ID] == entity_id:
-                opp.async_run.opp_job(
+                opp.async_run(opp_job(
                     job,
                     {"trigger": {**config, "description": f"{DOMAIN} - {entity_id}"}},
                     event.context,

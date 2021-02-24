@@ -23,13 +23,13 @@ DATA_SCHEMA = vol.Schema(
 )
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
 
-    client_session = aiohttp_client.async_get_clientsession.opp)
+    client_session = aiohttp_client.async_get_clientsession(opp)
     account = Account(data["username"], data["password"])
     client = Client(client_session, account)
 

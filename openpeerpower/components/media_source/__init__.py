@@ -47,9 +47,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def _process_media_source_platform.opp, domain, platform):
+async def _process_media_source_platform(opp, domain, platform):
     """Process a media source platform."""
-    opp.data[DOMAIN][domain] = await platform.async_get_media_source.opp)
+    opp.data[DOMAIN][domain] = await platform.async_get_media_source(opp)
 
 
 @callback
@@ -58,7 +58,7 @@ def _get_media_item(
 ) -> models.MediaSourceItem:
     """Return media item."""
     if media_content_id:
-        return models.MediaSourceItem.from_uri.opp, media_content_id)
+        return models.MediaSourceItem.from_uri(opp, media_content_id)
 
     # We default to our own domain if its only one registered
     domain = None if len.opp.data[DOMAIN]) > 1 else DOMAIN
@@ -70,7 +70,7 @@ async def async_browse_media(
     opp: OpenPeerPower, media_content_id: str
 ) -> models.BrowseMediaSource:
     """Return media player browse media results."""
-    return await _get_media_item.opp, media_content_id).async_browse()
+    return await _get_media_item(opp, media_content_id).async_browse()
 
 
 @bind.opp
@@ -78,7 +78,7 @@ async def async_resolve_media(
     opp: OpenPeerPower, media_content_id: str
 ) -> models.PlayMedia:
     """Get info to play media."""
-    return await _get_media_item.opp, media_content_id).async_resolve()
+    return await _get_media_item(opp, media_content_id).async_resolve()
 
 
 @websocket_api.websocket_command(
@@ -88,10 +88,10 @@ async def async_resolve_media(
     }
 )
 @websocket_api.async_response
-async def websocket_browse_media.opp, connection, msg):
+async def websocket_browse_media(opp, connection, msg):
     """Browse available media."""
     try:
-        media = await async_browse_media.opp, msg.get("media_content_id"))
+        media = await async_browse_media(opp, msg.get("media_content_id"))
         connection.send_result(
             msg["id"],
             media.as_dict(),
@@ -108,10 +108,10 @@ async def websocket_browse_media.opp, connection, msg):
     }
 )
 @websocket_api.async_response
-async def websocket_resolve_media.opp, connection, msg):
+async def websocket_resolve_media(opp, connection, msg):
     """Resolve media."""
     try:
-        media = await async_resolve_media.opp, msg["media_content_id"])
+        media = await async_resolve_media(opp, msg["media_content_id"])
         url = media.url
     except Unresolvable as err:
         connection.send_error(msg["id"], "resolve_media_failed", str(err))

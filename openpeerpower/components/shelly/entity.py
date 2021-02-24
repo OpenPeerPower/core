@@ -62,7 +62,7 @@ async def async_setup_block_attribute_entities(
             ):
                 domain = sensor_class.__module__.split(".")[-1]
                 unique_id = f"{wrapper.mac}-{block.description}-{sensor_id}"
-                await async_remove_shelly_entity.opp, domain, unique_id)
+                await async_remove_shelly_entity(opp, domain, unique_id)
             else:
                 blocks.append((block, sensor_id, description))
 
@@ -83,7 +83,7 @@ async def async_restore_block_attribute_entities(
     """Restore block attributes entities."""
     entities = []
 
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
     entries = entity_registry.async_entries_for_config_entry(
         ent_reg, config_entry.entry_id
     )

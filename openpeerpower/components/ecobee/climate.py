@@ -170,7 +170,7 @@ SUPPORT_FLAGS = (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the ecobee thermostat."""
 
     data = opp.data[DOMAIN]

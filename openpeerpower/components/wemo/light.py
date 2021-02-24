@@ -35,7 +35,7 @@ WEMO_ON = 1
 WEMO_OFF = 0
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up WeMo lights."""
 
     async def _discovered_wemo(device):
@@ -47,7 +47,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 setup_bridge, opp, device, async_add_entities
             )
 
-    async_dispatcher_connect.opp, f"{WEMO_DOMAIN}.light", _discovered_wemo)
+    async_dispatcher_connect(opp, f"{WEMO_DOMAIN}.light", _discovered_wemo)
 
     await asyncio.gather(
         *[
@@ -57,7 +57,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     )
 
 
-def setup_bridge.opp, bridge, async_add_entities):
+def setup_bridge(opp, bridge, async_add_entities):
     """Set up a WeMo link."""
     lights = {}
 

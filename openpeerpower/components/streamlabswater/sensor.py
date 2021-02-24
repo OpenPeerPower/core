@@ -17,7 +17,7 @@ NAME_MONTHLY_USAGE = "Monthly Water"
 NAME_YEARLY_USAGE = "Yearly Water"
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Set up water usage sensors."""
     client = opp.data[STREAMLABSWATER_DOMAIN]["client"]
     location_id = opp.data[STREAMLABSWATER_DOMAIN]["location_id"]

@@ -86,7 +86,7 @@ async def async_setup(opp, config):
         method = SERVICE_TO_METHOD.get(service.service)
         data = service.data.copy()
         data["method"] = method["method"]
-        async_dispatcher_send.opp, DOMAIN, data)
+        async_dispatcher_send(opp, DOMAIN, data)
 
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
@@ -94,14 +94,14 @@ async def async_setup(opp, config):
             DOMAIN, service, async_service_handler, schema=schema
         )
 
-    tasks = [async_setup_tv.opp, config, conf) for conf in config[DOMAIN]]
+    tasks = [async_setup_tv(opp, config, conf) for conf in config[DOMAIN]]
     if tasks:
         await asyncio.gather(*tasks)
 
     return True
 
 
-async def async_setup_tv.opp, config, conf):
+async def async_setup_tv(opp, config, conf):
     """Set up a LG WebOS TV based on host parameter."""
 
     host = conf[CONF_HOST]
@@ -111,10 +111,10 @@ async def async_setup_tv.opp, config, conf):
     opp.data[DOMAIN][host] = {"client": client}
 
     if client.is_registered():
-        await async_setup_tv_finalize.opp, config, conf, client)
+        await async_setup_tv_finalize(opp, config, conf, client)
     else:
         _LOGGER.warning("LG webOS TV %s needs to be paired", host)
-        await async_request_configuration.opp, config, conf, client)
+        await async_request_configuration(opp, config, conf, client)
 
 
 async def async_connect(client):
@@ -133,7 +133,7 @@ async def async_connect(client):
         pass
 
 
-async def async_setup_tv_finalize.opp, config, conf, client):
+async def async_setup_tv_finalize(opp, config, conf, client):
     """Make initial connection attempt and call platform setup."""
 
     async def async_on_stop(event):
@@ -152,7 +152,7 @@ async def async_setup_tv_finalize.opp, config, conf, client):
     )
 
 
-async def async_request_configuration.opp, config, conf, client):
+async def async_request_configuration(opp, config, conf, client):
     """Request configuration steps from the user."""
     host = conf.get(CONF_HOST)
     name = conf.get(CONF_NAME)
@@ -176,7 +176,7 @@ async def async_request_configuration.opp, config, conf, client):
             _LOGGER.error("Unable to connect to host %s", host)
             return
 
-        await async_setup_tv_finalize.opp, config, conf, client)
+        await async_setup_tv_finalize(opp, config, conf, client)
         configurator.async_request_done(request_id)
 
     request_id = configurator.async_request_config(

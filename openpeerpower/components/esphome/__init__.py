@@ -59,7 +59,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up the esphome component."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     password = entry.data[CONF_PASSWORD]
     device_id = None
 
-    zeroconf_instance = await zeroconf.async_get_instance.opp)
+    zeroconf_instance = await zeroconf.async_get_instance(opp)
 
     cli = APIClient(
         opp.loop,
@@ -89,7 +89,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     async def on_stop(event: Event) -> None:
         """Cleanup the socket client on HA stop."""
-        await _cleanup_instance.opp, entry)
+        await _cleanup_instance(opp, entry)
 
     # Use async_listen instead of async_listen_once so that we don't deregister
     # the callback twice when shutting down Open Peer Power.
@@ -101,7 +101,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     @callback
     def async_on_state(state: EntityState) -> None:
         """Send dispatcher updates when a new state is received."""
-        entry_data.async_update_state.opp, state)
+        entry_data.async_update_state(opp, state)
 
     @callback
     def async_on_service_call(service:  OpenPeerPowerServiceCall) -> None:
@@ -183,11 +183,11 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             device_id = await _async_setup_device_registry(
                 opp. entry, entry_data.device_info
             )
-            entry_data.async_update_device_state.opp)
+            entry_data.async_update_device_state(opp)
 
             entity_infos, services = await cli.list_entities_services()
-            await entry_data.async_update_static_infos.opp, entry, entity_infos)
-            await _setup_services.opp, entry_data, services)
+            await entry_data.async_update_static_infos(opp, entry, entity_infos)
+            await _setup_services(opp, entry_data, services)
             await cli.subscribe_states(async_on_state)
             await cli.subscribe_service_calls(async_on_service_call)
             await cli.subscribe_open_peer_power_states(async_on_state_subscription)
@@ -198,13 +198,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             # Re-connection logic will trigger after this
             await cli.disconnect()
 
-    try_connect = await _setup_auto_reconnect_logic.opp, cli, entry, host, on_login)
+    try_connect = await _setup_auto_reconnect_logic(opp, cli, entry, host, on_login)
 
     async def complete_setup() -> None:
         """Complete the config entry setup."""
         infos, services = await entry_data.async_load_from_store()
-        await entry_data.async_update_static_infos.opp, entry, infos)
-        await _setup_services.opp, entry_data, services)
+        await entry_data.async_update_static_infos(opp, entry, infos)
+        await _setup_services(opp, entry_data, services)
 
         # Create connection attempt outside of HA's tracked task in order
         # not to delay startup.
@@ -238,7 +238,7 @@ async def _setup_auto_reconnect_logic(
             disconnect_cb()
         data.disconnect_callbacks = []
         data.available = False
-        data.async_update_device_state.opp)
+        data.async_update_device_state(opp)
 
         if is_disconnect:
             # This can happen often depending on WiFi signal strength.
@@ -290,7 +290,7 @@ async def _async_setup_device_registry(
     sw_version = device_info.esphome_version
     if device_info.compilation_time:
         sw_version += f" ({device_info.compilation_time})"
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     entry = device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections={(dr.CONNECTION_NETWORK_MAC, device_info.mac_address)},
@@ -355,7 +355,7 @@ async def _setup_services(
         opp.services.async_remove(DOMAIN, service_name)
 
     for service in to_register:
-        await _register_service.opp, entry_data, service)
+        await _register_service(opp, entry_data, service)
 
 
 async def _cleanup_instance(
@@ -373,9 +373,9 @@ async def _cleanup_instance(
     return data
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload an esphome config entry."""
-    entry_data = await _cleanup_instance.opp, entry)
+    entry_data = await _cleanup_instance(opp, entry)
     tasks = []
     for platform in entry_data.loaded_platforms:
         tasks.append.opp.config_entries.async_forward_entry_unload(entry, platform))
@@ -426,7 +426,7 @@ async def platform_async_setup_entry(
 
         # Remove old entities
         for info in old_infos.values():
-            entry_data.async_remove_entity.opp, component_key, info.key)
+            entry_data.async_remove_entity(opp, component_key, info.key)
 
         # First copy the now-old info into the backup object
         entry_data.old_info[component_key] = entry_data.info[component_key]
@@ -438,7 +438,7 @@ async def platform_async_setup_entry(
 
     signal = f"esphome_{entry.entry_id}_on_list"
     entry_data.cleanup_callbacks.append(
-        async_dispatcher_connect.opp, signal, async_list_entities)
+        async_dispatcher_connect(opp, signal, async_list_entities)
     )
 
     @callback
@@ -447,11 +447,11 @@ async def platform_async_setup_entry(
         if not isinstance(state, state_type):
             return
         entry_data.state[component_key][state.key] = state
-        entry_data.async_update_entity.opp, component_key, state.key)
+        entry_data.async_update_entity(opp, component_key, state.key)
 
     signal = f"esphome_{entry.entry_id}_on_state"
     entry_data.cleanup_callbacks.append(
-        async_dispatcher_connect.opp, signal, async_entity_state)
+        async_dispatcher_connect(opp, signal, async_entity_state)
     )
 
 

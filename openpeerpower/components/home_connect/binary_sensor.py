@@ -19,7 +19,7 @@ from .entity import HomeConnectEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Home Connect binary sensor."""
 
     def get_entities():

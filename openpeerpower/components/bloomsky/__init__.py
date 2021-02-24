@@ -43,7 +43,7 @@ def setup(opp, config):
     opp.data[DOMAIN] = bloomsky
 
     for component in BLOOMSKY_TYPE:
-        discovery.load_platform.opp, component, DOMAIN, {}, config)
+        discovery.load_platform(opp, component, DOMAIN, {}, config)
 
     return True
 

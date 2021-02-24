@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = vol.All(
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the notification service."""
     connection_string = config[CONF_CONNECTION_STRING]
     queue_name = config.get(CONF_QUEUE_NAME)

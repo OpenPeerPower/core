@@ -84,10 +84,10 @@ SENSIBO_TO_HA = {
 OP_TO_SENSIBO = {value: key for key, value in SENSIBO_TO_HA.items()}
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up Sensibo devices."""
     client = pysensibo.SensiboClient(
-        config[CONF_API_KEY], session=async_get_clientsession.opp), timeout=TIMEOUT
+        config[CONF_API_KEY], session=async_get_clientsession(opp), timeout=TIMEOUT
     )
     devices = []
     try:

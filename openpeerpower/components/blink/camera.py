@@ -18,7 +18,7 @@ ATTR_IMAGE = "image"
 SERVICE_TRIGGER_SCHEMA = vol.Schema({vol.Optional(ATTR_ENTITY_ID): cv.comp_entity_ids})
 
 
-async def async_setup_entry.opp, config, async_add_entities):
+async def async_setup_entry(opp, config, async_add_entities):
     """Set up a Blink Camera."""
     data = opp.data[DOMAIN][config.entry_id]
     entities = []

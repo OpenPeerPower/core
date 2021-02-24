@@ -224,13 +224,13 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     if component.get_entity("zone.home"):
         return True
 
-    home_zone = Zone(_home_conf.opp))
+    home_zone = Zone(_home_conf(opp))
     home_zone.entity_id = ENTITY_ID_HOME
     await component.async_add_entities([home_zone])
 
     async def core_config_updated(_: Event) -> None:
         """Handle core config updated."""
-        await home_zone.async_update_config(_home_conf.opp))
+        await home_zone.async_update_config(_home_conf(opp))
 
     opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, core_config_updated)
 
@@ -240,7 +240,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
 
 
 @callback
-def _home_conf.opp: OpenPeerPower) -> Dict:
+def _home_conf(opp: OpenPeerPower) -> Dict:
     """Return the home zone config."""
     return {
         CONF_NAME:.opp.config.location_name,
@@ -264,7 +264,7 @@ async def async_setup_entry(
 
     await storage_collection.async_create_item(data)
 
-    opp.async_create_task.opp.config_entries.async_remove(config_entry.entry_id))
+    opp.async_create_task(opp.config_entries.async_remove(config_entry.entry_id))
 
     return True
 

@@ -84,7 +84,7 @@ HM_DEVICE_CLASS_OP_CAST = {
 HM_ICON_OP_CAST = {"WIND_SPEED": "mdi:weather-windy", "BRIGHTNESS": "mdi:invert-colors"}
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the HomeMatic sensor platform."""
     if discovery_info is None:
         return

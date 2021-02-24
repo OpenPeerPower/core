@@ -44,7 +44,7 @@ async def async_setup_entry(
 ):
     """Set up the configuration entry."""
 
-    client = get_entry_client.opp, config_entry)
+    client = get_entry_client(opp, config_entry)
 
     async_add_entities(
         [

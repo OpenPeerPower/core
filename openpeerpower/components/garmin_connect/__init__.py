@@ -30,7 +30,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Garmin Connect from a config entry."""
     username = entry.data[CONF_USERNAME]
     password = entry.data[CONF_PASSWORD]
@@ -65,7 +65,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

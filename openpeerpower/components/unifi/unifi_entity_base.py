@@ -46,7 +46,7 @@ class UniFiBase(Entity):
             self.async_on_remove(async_dispatcher_connect(self.opp, signal, method))
         self._item.register_callback(self.async_update_callback)
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect object when removed."""
         _LOGGER.debug(
             "Removing %s entity %s (%s)",

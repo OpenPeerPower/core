@@ -38,7 +38,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Set up wiffi from a config entry, config_entry contains data from config entry database."""
     if not config_entry.update_listeners:
         config_entry.add_update_listener(async_update_options)
@@ -67,12 +67,12 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     return True
 
 
-async def async_update_options.opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_update_options(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Update options."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
-async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Unload a config entry."""
     api: "WiffiIntegrationApi" = opp.data[DOMAIN][config_entry.entry_id]
     await api.server.close_server()

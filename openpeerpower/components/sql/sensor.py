@@ -42,11 +42,11 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the SQL sensor platform."""
     db_url = config.get(CONF_DB_URL)
     if not db_url:
-        db_url = DEFAULT_URL.format.opp_config_path.opp.config.path(DEFAULT_DB_FILE))
+        db_url = DEFAULT_URL.format.opp_config_path(opp.config.path(DEFAULT_DB_FILE))
 
     try:
         engine = sqlalchemy.create_engine(db_url)
@@ -72,7 +72,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         column_name = query.get(CONF_COLUMN_NAME)
 
         if value_template is not None:
-            value_template.opp = opp
+            value_template(opp = opp
 
         # MSSQL uses TOP and not LIMIT
         if not ("LIMIT" in query_str or "SELECT TOP" in query_str):

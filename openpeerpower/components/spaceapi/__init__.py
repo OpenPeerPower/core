@@ -245,7 +245,7 @@ class APISpaceApiView(OpenPeerPowerView):
     name = "api:spaceapi"
 
     @staticmethod
-    def get_sensor_data.opp, spaceapi, sensor):
+    def get_sensor_data(opp, spaceapi, sensor):
         """Get data from a sensor."""
         sensor_state = opp.states.get(sensor)
         if not sensor_state:
@@ -346,7 +346,7 @@ class APISpaceApiView(OpenPeerPowerView):
             for sensor_type in is_sensors:
                 sensors[sensor_type] = []
                 for sensor in spaceapi["sensors"][sensor_type]:
-                    sensor_data = self.get_sensor_data.opp, spaceapi, sensor)
+                    sensor_data = self.get_sensor_data(opp, spaceapi, sensor)
                     sensors[sensor_type].append(sensor_data)
             data[ATTR_SENSORS] = sensors
 

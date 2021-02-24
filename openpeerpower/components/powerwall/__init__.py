@@ -50,7 +50,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def _migrate_old_unique_ids.opp, entry_id, powerwall_data):
+async def _migrate_old_unique_ids(opp, entry_id, powerwall_data):
     serial_numbers = powerwall_data[POWERWALL_API_SERIAL_NUMBERS]
     site_info = powerwall_data[POWERWALL_API_SITE_INFO]
 
@@ -75,7 +75,7 @@ async def _migrate_old_unique_ids.opp, entry_id, powerwall_data):
             return {"new_unique_id": new_unique_id}
         return None
 
-    await entity_registry.async_migrate_entries.opp, entry_id, _async_migrator)
+    await entity_registry.async_migrate_entries(opp, entry_id, _async_migrator)
 
 
 async def _async_handle_api_changed_error(
@@ -91,7 +91,7 @@ async def _async_handle_api_changed_error(
     )
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Tesla Powerwall from a config entry."""
 
     entry_id = entry.entry_id
@@ -115,10 +115,10 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     except AccessDeniedError as err:
         _LOGGER.debug("Authentication failed", exc_info=err)
         http_session.close()
-        _async_start_reauth.opp, entry)
+        _async_start_reauth(opp, entry)
         return False
 
-    await _migrate_old_unique_ids.opp, entry_id, powerwall_data)
+    await _migrate_old_unique_ids(opp, entry_id, powerwall_data)
 
     async def async_update_data():
         """Fetch data from API endpoint."""
@@ -129,14 +129,14 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
         _LOGGER.debug("Updating data")
         try:
-            return await _async_update_powerwall_data.opp, entry, power_wall)
+            return await _async_update_powerwall_data(opp, entry, power_wall)
         except AccessDeniedError:
             if password is None:
                 raise
 
             # If the session expired, relogin, and try again
             await opp.async_add_executor_job(power_wall.login, "", password)
-            return await _async_update_powerwall_data.opp, entry, power_wall)
+            return await _async_update_powerwall_data(opp, entry, power_wall)
 
     coordinator = DataUpdateCoordinator(
         opp,
@@ -181,7 +181,7 @@ async def _async_update_powerwall_data(
         return.opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
 
 
-def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
+def _async_start_reauth(opp: OpenPeerPower, entry: ConfigEntry):
     opp.async_create_task(
         opp.config_entries.flow.async_init(
             DOMAIN,
@@ -223,7 +223,7 @@ def _fetch_powerwall_data(power_wall):
     }
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -46,9 +46,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the RPi cover platform."""
-    setup_reload_service.opp, DOMAIN, PLATFORMS)
+    setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     relay_time = config.get(CONF_RELAY_TIME)
     state_pull_mode = config.get(CONF_STATE_PULL_MODE)

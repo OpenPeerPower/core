@@ -96,14 +96,14 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
         )
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up a National Weather Service entry."""
     latitude = entry.data[CONF_LATITUDE]
     longitude = entry.data[CONF_LONGITUDE]
     api_key = entry.data[CONF_API_KEY]
     station = entry.data[CONF_STATION]
 
-    client_session = async_get_clientsession.opp)
+    client_session = async_get_clientsession(opp)
 
     # set_station only does IO when station is None
     nws_data = SimpleNWS(latitude, longitude, api_key, client_session)
@@ -164,7 +164,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

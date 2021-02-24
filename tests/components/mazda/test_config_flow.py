@@ -26,7 +26,7 @@ FIXTURE_USER_INPUT_REAUTH = {
 }
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test the entire flow."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -57,7 +57,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp: OpenPeerPower) -> None:
+async def test_form_invalid_auth(opp: OpenPeerPower) -> None:
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -82,7 +82,7 @@ async def test_form_invalid_auth.opp: OpenPeerPower) -> None:
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_account_locked.opp: OpenPeerPower) -> None:
+async def test_form_account_locked(opp: OpenPeerPower) -> None:
     """Test we handle account locked error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -107,7 +107,7 @@ async def test_form_account_locked.opp: OpenPeerPower) -> None:
     assert result2["errors"] == {"base": "account_locked"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -145,9 +145,9 @@ async def test_form_unknown_error(opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_reauth_flow.opp: OpenPeerPower) -> None:
+async def test_reauth_flow(opp: OpenPeerPower) -> None:
     """Test reauth works."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
@@ -158,7 +158,7 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
             unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
             data=FIXTURE_USER_INPUT,
         )
-        mock_config.add_to.opp.opp)
+        mock_config.add_to(opp.opp)
 
         await opp.config_entries.async_setup(mock_config.entry_id)
         await opp.async_block_till_done()
@@ -210,7 +210,7 @@ async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_reauth_account_locked.opp: OpenPeerPower) -> None:
+async def test_reauth_account_locked(opp: OpenPeerPower) -> None:
     """Test we show user form on account_locked error."""
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
@@ -282,7 +282,7 @@ async def test_reauth_unknown_error(opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_reauth_unique_id_not_found.opp: OpenPeerPower) -> None:
+async def test_reauth_unique_id_not_found(opp: OpenPeerPower) -> None:
     """Test we show user form when unique id not found during reauth."""
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",

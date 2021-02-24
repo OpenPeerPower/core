@@ -39,10 +39,10 @@ ONOFF_SCHEMA = toggle_entity.ACTION_SCHEMA.extend({vol.Required(CONF_DOMAIN): DO
 ACTION_SCHEMA = vol.Any(SET_HUMIDITY_SCHEMA, SET_MODE_SCHEMA, ONOFF_SCHEMA)
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions for Humidifier devices."""
-    registry = await entity_registry.async_get_registry.opp)
-    actions = await toggle_entity.async_get_actions.opp, device_id, DOMAIN)
+    registry = await entity_registry.async_get_registry(opp)
+    actions = await toggle_entity.async_get_actions(opp, device_id, DOMAIN)
 
     # Get all the integrations entities for this device
     for entry in entity_registry.async_entries_for_device(registry, device_id):
@@ -101,7 +101,7 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_action_capabilities.opp, config):
+async def async_get_action_capabilities(opp, config):
     """List action capabilities."""
     state = opp.states.get(config[CONF_ENTITY_ID])
     action_type = config[CONF_TYPE]

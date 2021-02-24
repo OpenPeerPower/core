@@ -20,7 +20,7 @@ SERVICE_SCHEMA_IRRIGATION = vol.Schema(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up Rain Bird switches over a Rain Bird controller."""
 
     if discovery_info is None:

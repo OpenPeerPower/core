@@ -233,7 +233,7 @@ def _request_app_setup_opp, config):
         _configurator = opp.data[DOMAIN]["configuring"][DOMAIN]
         configurator.notify_errors(_configurator, error_msg)
 
-    start_url = f"{get_url.opp)}{WINK_AUTH_CALLBACK_PATH}"
+    start_url = f"{get_url(opp)}{WINK_AUTH_CALLBACK_PATH}"
 
     description = f"""Please create a Wink developer app at
                      https://developer.wink.com.
@@ -256,7 +256,7 @@ def _request_app_setup_opp, config):
     )
 
 
-def _request_oauth_completion.opp, config):
+def _request_oauth_completion(opp, config):
     """Request user complete Wink OAuth2 flow."""
     opp.data[DOMAIN]["configurator"] = True
     configurator = opp.components.configurator
@@ -271,7 +271,7 @@ def _request_oauth_completion.opp, config):
         """Call setup again."""
         setup_opp, config)
 
-    start_url = f"{get_url.opp)}{WINK_AUTH_START}"
+    start_url = f"{get_url(opp)}{WINK_AUTH_START}"
 
     description = f"Please authorize Wink by visiting {start_url}"
 
@@ -351,7 +351,7 @@ def setup(opp, config):
         # Home .
         else:
 
-            redirect_uri = f"{get_url.opp)}{WINK_AUTH_CALLBACK_PATH}"
+            redirect_uri = f"{get_url(opp)}{WINK_AUTH_CALLBACK_PATH}"
 
             wink_auth_start_url = pywink.get_authorization_url(
                 config_file.get(CONF_CLIENT_ID), redirect_uri
@@ -360,7 +360,7 @@ def setup(opp, config):
             opp.http.register_view(
                 WinkAuthCallbackView(config, config_file, pywink.request_token)
             )
-            _request_oauth_completion.opp, config)
+            _request_oauth_completion(opp, config)
             return True
 
     pywink.set_user_agent(USER_AGENT)
@@ -393,7 +393,7 @@ def setup(opp, config):
         _LOGGER.debug("%s", _temp_response)
 
     # Call the Wink API every hour to keep PubNub updates flowing
-    track_time_interval.opp, keep_alive_call, timedelta(minutes=60))
+    track_time_interval(opp, keep_alive_call, timedelta(minutes=60))
 
     def start_subscription(event):
         """Start the PubNub subscription."""
@@ -419,7 +419,7 @@ def setup(opp, config):
 
     # Save the users potentially updated oauth credentials at a regular
     # interval to prevent them from being expired after a HA reboot.
-    track_time_interval.opp, save_credentials, timedelta(minutes=60))
+    track_time_interval(opp, save_credentials, timedelta(minutes=60))
 
     def force_update(call):
         """Force all devices to poll the Wink API."""
@@ -436,7 +436,7 @@ def setup(opp, config):
         """Pull new devices added to users Wink account since startup."""
         _LOGGER.info("Getting new devices from Wink API")
         for _component in WINK_COMPONENTS:
-            discovery.load_platform.opp, _component, DOMAIN, {}, config)
+            discovery.load_platform(opp, _component, DOMAIN, {}, config)
 
     opp.services.register(DOMAIN, SERVICE_ADD_NEW_DEVICES, pull_new_devices)
 
@@ -560,7 +560,7 @@ def setup(opp, config):
     # Load components for the devices in Wink that we support
     for wink_component in WINK_COMPONENTS:
         opp.data[DOMAIN]["entities"][wink_component] = []
-        discovery.load_platform.opp, wink_component, DOMAIN, {}, config)
+        discovery.load_platform(opp, wink_component, DOMAIN, {}, config)
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
@@ -708,7 +708,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
                 CONF_CLIENT_ID: self.config_file[CONF_CLIENT_ID],
                 CONF_CLIENT_SECRET: self.config_file[CONF_CLIENT_SECRET],
             }
-            save_json.opp.config.path(WINK_CONFIG_FILE), config_contents)
+            save_json(opp.config.path(WINK_CONFIG_FILE), config_contents)
 
             opp.async_add_job(setup, opp, self.config)
 

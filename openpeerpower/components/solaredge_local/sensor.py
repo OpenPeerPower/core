@@ -141,7 +141,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Create the SolarEdge Monitoring API sensor."""
     ip_address = config[CONF_IP_ADDRESS]
     platform_name = config[CONF_NAME]

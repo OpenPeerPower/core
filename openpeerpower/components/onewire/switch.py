@@ -140,7 +140,7 @@ DEVICE_SWITCHES = {
 LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up 1-Wire platform."""
     # Only OWServer implementation works with switches
     if config_entry.data[CONF_TYPE] == CONF_TYPE_OWSERVER:

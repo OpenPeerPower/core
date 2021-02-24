@@ -28,9 +28,9 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up RainMachine as config entry."""
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
     client = Client(
         entry.data[CONF_PLACE_ID], entry.data[CONF_SERVICE_ID], session=session
     )
@@ -73,12 +73,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_reload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_reload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle an options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload an RainMachine config entry."""
     unload_ok = all(
         await asyncio.gather(

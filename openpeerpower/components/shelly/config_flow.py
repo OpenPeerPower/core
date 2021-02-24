@@ -27,7 +27,7 @@ HOST_SCHEMA = vol.Schema({vol.Required(CONF_HOST): str})
 HTTP_CONNECT_ERRORS = (asyncio.TimeoutError, aiohttp.ClientError)
 
 
-async def validate_input.opp: core.OpenPeerPower, host, data):
+async def validate_input(opp: core.OpenPeerPower, host, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
@@ -36,11 +36,11 @@ async def validate_input.opp: core.OpenPeerPower, host, data):
     options = aioshelly.ConnectionOptions(
         host, data.get(CONF_USERNAME), data.get(CONF_PASSWORD)
     )
-    coap_context = await get_coap_context.opp)
+    coap_context = await get_coap_context(opp)
 
     async with async_timeout.timeout(AIOSHELLY_DEVICE_TIMEOUT_SEC):
         device = await aioshelly.Device.create(
-            aiohttp_client.async_get_clientsession.opp),
+            aiohttp_client.async_get_clientsession(opp),
             coap_context,
             options,
         )

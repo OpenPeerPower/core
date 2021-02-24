@@ -92,7 +92,7 @@ def _get_default_classifier(dest_path):
                 fil.write(chunk)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the OpenCV image processing platform."""
     if not CV2_IMPORTED:
         _LOGGER.error(

@@ -108,7 +108,7 @@ class BaseZhaEntity(LogMixin, entity.Entity):
     def async_set_state(self, attr_id: int, attr_name: str, value: Any) -> None:
         """Set the entity state."""
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect entity object when removed."""
         for unsub in self._unsubs[:]:
             unsub()
@@ -191,9 +191,9 @@ class ZhaEntity(BaseZhaEntity, RestoreEntity):
             self.remove_future,
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect entity object when removed."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         self.zha_device.gateway.remove_entity_reference(self)
         self.remove_future.set_result(True)
 
@@ -269,9 +269,9 @@ class ZhaGroupEntity(BaseZhaEntity):
         """Handle child updates."""
         self.async_schedule_update_op_state(True)
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Handle removal from Open Peer Power."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         if self._async_unsub_state_changed is not None:
             self._async_unsub_state_changed()
             self._async_unsub_state_changed = None

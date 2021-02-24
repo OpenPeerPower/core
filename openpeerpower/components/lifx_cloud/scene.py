@@ -32,7 +32,7 @@ PLATFORM_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the scenes stored in the LIFX Cloud."""
     token = config.get(CONF_TOKEN)
     timeout = config.get(CONF_TIMEOUT)
@@ -42,7 +42,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     url = "https://api.lifx.com/v1/scenes"
 
     try:
-        httpsession = async_get_clientsession.opp)
+        httpsession = async_get_clientsession(opp)
         with async_timeout.timeout(timeout):
             scenes_resp = await httpsession.get(url, headers=headers)
 

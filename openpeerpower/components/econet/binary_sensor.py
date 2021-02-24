@@ -15,7 +15,7 @@ SENSOR_NAME_SHUTOFF_VALVE = "shutoff_valve"
 SENSOR_NAME_VACATION = "vacation"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up EcoNet binary sensor based on a config entry."""
     equipment = opp.data[DOMAIN][EQUIPMENT][entry.entry_id]
     binary_sensors = []

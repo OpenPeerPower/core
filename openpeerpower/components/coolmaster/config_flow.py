@@ -14,7 +14,7 @@ MODES_SCHEMA = {vol.Required(mode, default=True): bool for mode in AVAILABLE_MOD
 DATA_SCHEMA = vol.Schema({vol.Required(CONF_HOST): str, **MODES_SCHEMA})
 
 
-async def _validate_connection.opp: core.OpenPeerPower, host):
+async def _validate_connection(opp: core.OpenPeerPower, host):
     cool = CoolMasterNet(host, DEFAULT_PORT)
     units = await cool.status()
     return bool(units)

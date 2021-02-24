@@ -100,7 +100,7 @@ class UserOnboardingView(_BaseOnboardingView):
             if self._async_is_done():
                 return self.json_message("User step already done", HTTP_FORBIDDEN)
 
-            provider = _async_get.opp_provider.opp)
+            provider = _async_get(opp_provider(opp)
             await provider.async_initialize()
 
             user = await opp.auth.async_create_user(data["name"], [GROUP_ID_ADMIN])
@@ -129,7 +129,7 @@ class UserOnboardingView(_BaseOnboardingView):
                     translations[f"component.onboarding.area.{area}"]
                 )
 
-            await self._async_mark_done.opp)
+            await self._async_mark_done(opp)
 
             # Return authorization code for fetching tokens and connect
             # during onboarding.
@@ -156,7 +156,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
                     "Core config step already done", HTTP_FORBIDDEN
                 )
 
-            await self._async_mark_done.opp)
+            await self._async_mark_done(opp)
 
             await opp.config_entries.flow.async_init(
                 "met", context={"source": "onboarding"}
@@ -194,7 +194,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
                     "Integration step already done", HTTP_FORBIDDEN
                 )
 
-            await self._async_mark_done.opp)
+            await self._async_mark_done(opp)
 
             # Validate client ID and redirect uri
             if not await indieauth.verify_redirect_uri(
@@ -218,7 +218,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
 
 
 @callback
-def _async_get.opp_provider.opp):
+def _async_get(opp_provider(opp):
     """Get the Open Peer Power auth provider."""
     for prv in.opp.auth.auth_providers:
         if prv.type == "openpeerpower":

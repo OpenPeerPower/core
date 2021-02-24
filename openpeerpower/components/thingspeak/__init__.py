@@ -71,6 +71,6 @@ def setup(opp, config):
         except RequestException:
             _LOGGER.error("Error while sending value '%s' to Thingspeak", _state)
 
-    event.track_state_change.opp, entity, thingspeak_listener)
+    event.track_state_change(opp, entity, thingspeak_listener)
 
     return True

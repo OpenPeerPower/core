@@ -12,9 +12,9 @@ from .common import TEST_PASSWORD, TEST_USER_ID
 from tests.common import async_fire_time_changed
 
 
-async def test_device.opp, config_entry, aioclient_mock_fixture, aioclient_mock):
+async def test_device(opp, config_entry, aioclient_mock_fixture, aioclient_mock):
     """Test Flo by Moen device."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     assert await async_setup_component(
         opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
@@ -52,7 +52,7 @@ async def test_device.opp, config_entry, aioclient_mock_fixture, aioclient_mock)
 
     call_count = aioclient_mock.call_count
 
-    async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=90))
+    async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=90))
     await opp.async_block_till_done()
 
     assert aioclient_mock.call_count == call_count + 2

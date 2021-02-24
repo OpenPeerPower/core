@@ -32,7 +32,7 @@ async def remove_devices(bridge, api_ids, current):
         del current[item_id]
 
 
-def create_config_flow.opp, host):
+def create_config_flow(opp, host):
     """Start a config flow."""
     opp.async_create_task(
         opp.config_entries.flow.async_init(

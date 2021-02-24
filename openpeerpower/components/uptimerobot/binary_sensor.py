@@ -21,7 +21,7 @@ ATTRIBUTION = "Data provided by Uptime Robot"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_API_KEY): cv.string})
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Uptime Robot binary_sensors."""
 
     up_robot = UptimeRobot()

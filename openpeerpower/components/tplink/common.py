@@ -55,7 +55,7 @@ class SmartDevices:
         return False
 
 
-async def async_get_discoverable_devices.opp):
+async def async_get_discoverable_devices(opp):
     """Return if there are devices that can be discovered."""
 
     def discover():
@@ -70,7 +70,7 @@ async def async_discover_devices(
 ) -> SmartDevices:
     """Get devices through discovery."""
     _LOGGER.debug("Discovering devices")
-    devices = await async_get_discoverable_devices.opp)
+    devices = await async_get_discoverable_devices(opp)
     _LOGGER.info("Discovered %s TP-Link smart home device(s)", len(devices))
 
     lights = []
@@ -131,7 +131,7 @@ def get_static_devices(config_data) -> SmartDevices:
     return SmartDevices(lights, switches)
 
 
-def add_available_devices.opp, device_type, device_class):
+def add_available_devices(opp, device_type, device_class):
     """Get sysinfo for all devices."""
 
     devices = opp.data[TPLINK_DOMAIN][device_type]

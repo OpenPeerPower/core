@@ -32,9 +32,9 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for Device Tracker devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     triggers = []
 
     # Get all the integrations entities for this device
@@ -90,7 +90,7 @@ async def async_attach_trigger(
     )
 
 
-async def async_get_trigger_capabilities.opp: OpenPeerPower, config: ConfigType):
+async def async_get_trigger_capabilities(opp: OpenPeerPower, config: ConfigType):
     """List trigger capabilities."""
     zones = {
         ent.entity_id: ent.name

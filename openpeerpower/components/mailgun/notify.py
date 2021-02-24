@@ -33,7 +33,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Mailgun notification service."""
     data = opp.data[MAILGUN_DOMAIN]
     mailgun_service = MailgunNotificationService(

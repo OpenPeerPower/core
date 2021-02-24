@@ -9,9 +9,9 @@ from .const import NEW_SCENE
 from .gateway import get_gateway_from_config_entry
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up scenes for deCONZ component."""
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     @callback
     def async_add_scene(scenes=gateway.api.scenes.values()):
@@ -42,7 +42,7 @@ class DeconzScene(Scene):
         """Subscribe to sensors events."""
         self.gateway.deconz_ids[self.entity_id] = self._scene.deconz_id
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect scene object when removed."""
         del self.gateway.deconz_ids[self.entity_id]
         self._scene = None

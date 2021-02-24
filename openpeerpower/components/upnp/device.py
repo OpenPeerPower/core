@@ -69,7 +69,7 @@ class Device:
     ) -> Mapping:
         """Get additional data from device and supplement discovery."""
         location = discovery[DISCOVERY_LOCATION]
-        device = await Device.async_create_device.opp, location)
+        device = await Device.async_create_device(opp, location)
         discovery[DISCOVERY_NAME] = device.name
         discovery[DISCOVERY_HOSTNAME] = device.hostname
         discovery[DISCOVERY_UNIQUE_ID] = discovery[DISCOVERY_USN]
@@ -82,7 +82,7 @@ class Device:
     ) -> Device:
         """Create UPnP/IGD device."""
         # build async_upnp_client requester
-        session = async_get_clientsession.opp)
+        session = async_get_clientsession(opp)
         requester = AiohttpSessionRequester(session, True, 10)
 
         # create async_upnp_client device

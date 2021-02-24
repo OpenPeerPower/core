@@ -27,7 +27,7 @@ async def async_setup_entry(
         add_entities(router, async_add_entities, tracked)
 
     router.listeners.append(
-        async_dispatcher_connect.opp, router.signal_device_new, update_router)
+        async_dispatcher_connect(opp, router.signal_device_new, update_router)
     )
 
     update_router()

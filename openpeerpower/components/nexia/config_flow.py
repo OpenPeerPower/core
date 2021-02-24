@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 DATA_SCHEMA = vol.Schema({CONF_USERNAME: str, CONF_PASSWORD: str})
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
@@ -29,7 +29,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
             password=data[CONF_PASSWORD],
             auto_login=False,
             auto_update=False,
-            device_name.opp.config.location_name,
+            device_name(opp.config.location_name,
             state_file=state_file,
         )
         await opp.async_add_executor_job(nexia_home.login)

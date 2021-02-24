@@ -846,7 +846,7 @@ class TestMediaPlayer(unittest.TestCase):
         assert 1 == len(service)
 
 
-async def test_state_template.opp):
+async def test_state_template(opp):
     """Test with a simple valid state template."""
     opp.states.async_set("sensor.test_sensor", STATE_ON)
 
@@ -872,7 +872,7 @@ async def test_state_template.opp):
     assert.opp.states.get("media_player.tv").state == STATE_OFF
 
 
-async def test_device_class.opp):
+async def test_device_class(opp):
     """Test device_class property."""
     opp.states.async_set("sensor.test_sensor", "on")
 
@@ -891,7 +891,7 @@ async def test_device_class.opp):
     assert.opp.states.get("media_player.tv").attributes["device_class"] == "tv"
 
 
-async def test_invalid_state_template.opp):
+async def test_invalid_state_template(opp):
     """Test invalid state template sets state to None."""
     opp.states.async_set("sensor.test_sensor", "on")
 
@@ -917,7 +917,7 @@ async def test_invalid_state_template.opp):
     assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
 
 
-async def test_master_state_with_template.opp):
+async def test_master_state_with_template(opp):
     """Test the state_template option."""
     opp.states.async_set("input_boolean.test", STATE_OFF)
     opp.states.async_set("media_player.mock1", STATE_OFF)
@@ -960,7 +960,7 @@ async def test_master_state_with_template.opp):
     assert events[0].context == context
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Test reloading the media player from yaml."""
     opp.states.async_set("input_boolean.test", STATE_OFF)
     opp.states.async_set("media_player.mock1", STATE_OFF)

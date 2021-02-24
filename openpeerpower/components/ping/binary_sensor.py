@@ -60,9 +60,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None) -> None:
+def setup_platform(opp, config, add_entities, discovery_info=None) -> None:
     """Set up the Ping Binary sensor."""
-    setup_reload_service.opp, DOMAIN, PLATFORMS)
+    setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     host = config[CONF_HOST]
     count = config[CONF_PING_COUNT]
@@ -76,7 +76,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None) -> None:
     except SocketPermissionError:
         ping_cls = PingDataSubProcess
 
-    ping_data = ping_cls.opp, host, count)
+    ping_data = ping_cls(opp, host, count)
 
     add_entities([PingBinarySensor(name, ping_data)], True)
 

@@ -166,7 +166,7 @@ HTML5_SHOWNOTIFICATION_PARAMETERS = (
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the HTML5 push notification service."""
     json_path = opp.config.path(REGISTRATIONS_FILE)
 
@@ -179,7 +179,7 @@ def get_service.opp, config, discovery_info=None):
     vapid_prv_key = config.get(ATTR_VAPID_PRV_KEY)
     vapid_email = config.get(ATTR_VAPID_EMAIL)
 
-    def websocket_appkey.opp, connection, msg):
+    def websocket_appkey(opp, connection, msg):
         connection.send_message(websocket_api.result_message(msg["id"], vapid_pub_key))
 
     opp.components.websocket_api.async_register_command(

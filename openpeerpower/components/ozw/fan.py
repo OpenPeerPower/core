@@ -21,7 +21,7 @@ SUPPORTED_FEATURES = SUPPORT_SET_SPEED
 SPEED_RANGE = (1, 99)  # off is not included
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Fan from Config Entry."""
 
     @callback
@@ -31,7 +31,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([fan])
 
     opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
-        async_dispatcher_connect.opp, f"{DOMAIN}_new_{FAN_DOMAIN}", async_add_fan)
+        async_dispatcher_connect(opp, f"{DOMAIN}_new_{FAN_DOMAIN}", async_add_fan)
     )
 
 

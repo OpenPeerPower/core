@@ -57,7 +57,7 @@ async def async_setup(opp, config):
     scan_interval = conf[CONF_SCAN_INTERVAL]
 
     identifier = f"{latitude}, {longitude}"
-    if identifier in configured_instances.opp):
+    if identifier in configured_instances(opp):
         return True
 
     opp.async_create_task(
@@ -76,7 +76,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the GeoNet NZ Volcano component as config entry."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN].setdefault(FEED, {})
@@ -93,7 +93,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an GeoNet NZ Volcano component config entry."""
     manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
@@ -114,7 +114,7 @@ class GeonetnzVolcanoFeedEntityManager:
             config_entry.data[CONF_LATITUDE],
             config_entry.data[CONF_LONGITUDE],
         )
-        websession = aiohttp_client.async_get_clientsession.opp)
+        websession = aiohttp_client.async_get_clientsession(opp)
         self._feed_manager = GeonetnzVolcanoFeedManager(
             websession,
             self._generate_entity,

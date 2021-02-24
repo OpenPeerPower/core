@@ -25,7 +25,7 @@ from .const import CONF_CONTEXT, CONF_CREDENTIAL_NAME, CONF_REGION, DATA_SESSION
 _LOGGER = logging.getLogger(__name__)
 
 
-async def get_available_regions.opp, service):
+async def get_available_regions(opp, service):
     """Get available regions for a service."""
     session = aiobotocore.get_session()
     # get_available_regions is not a coroutine since it does not perform
@@ -34,7 +34,7 @@ async def get_available_regions.opp, service):
     return await opp.async_add_executor_job(session.get_available_regions, service)
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Get the AWS notification service."""
     if discovery_info is None:
         _LOGGER.error("Please config aws notify platform in aws component")
@@ -47,7 +47,7 @@ async def async_get_service.opp, config, discovery_info=None):
     service = conf[CONF_SERVICE]
     region_name = conf[CONF_REGION]
 
-    available_regions = await get_available_regions.opp, service)
+    available_regions = await get_available_regions(opp, service)
     if region_name not in available_regions:
         _LOGGER.error(
             "Region %s is not available for %s service, must in %s",

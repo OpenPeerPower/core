@@ -39,7 +39,7 @@ async def async_generator(items):
         yield item
 
 
-async def test_show_form_no_hubs.opp, mock_hub_discover):
+async def test_show_form_no_hubs(opp, mock_hub_discover):
     """Test that flow aborts if no hubs are discovered."""
     mock_hub_discover.return_value = async_generator([])
 
@@ -54,7 +54,7 @@ async def test_show_form_no_hubs.opp, mock_hub_discover):
     assert len(mock_hub_discover.mock_calls) == 1
 
 
-async def test_show_form_one_hub.opp, mock_hub_discover, mock_hub_run):
+async def test_show_form_one_hub(opp, mock_hub_discover, mock_hub_run):
     """Test that a config is created when one hub discovered."""
 
     dummy_hub_1 = aiopulse.Hub(DUMMY_HOST1)
@@ -76,7 +76,7 @@ async def test_show_form_one_hub.opp, mock_hub_discover, mock_hub_run):
     assert len(mock_hub_discover.mock_calls) == 1
 
 
-async def test_show_form_two_hubs.opp, mock_hub_discover):
+async def test_show_form_two_hubs(opp, mock_hub_discover):
     """Test that the form is served when more than one hub discovered."""
 
     dummy_hub_1 = aiopulse.Hub(DUMMY_HOST1)
@@ -98,7 +98,7 @@ async def test_show_form_two_hubs.opp, mock_hub_discover):
     assert len(mock_hub_discover.mock_calls) == 1
 
 
-async def test_create_second_entry.opp, mock_hub_run, mock_hub_discover):
+async def test_create_second_entry(opp, mock_hub_run, mock_hub_discover):
     """Test that a config is created when a second hub is discovered."""
 
     dummy_hub_1 = aiopulse.Hub(DUMMY_HOST1)
@@ -109,7 +109,7 @@ async def test_create_second_entry.opp, mock_hub_run, mock_hub_discover):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1, dummy_hub_2])
 
-    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to.opp(
+    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to(opp(
         opp
     )
 
@@ -124,7 +124,7 @@ async def test_create_second_entry.opp, mock_hub_run, mock_hub_discover):
     }
 
 
-async def test_already_configured.opp, mock_hub_discover):
+async def test_already_configured(opp, mock_hub_discover):
     """Test that flow aborts when all hubs are configured."""
 
     dummy_hub_1 = aiopulse.Hub(DUMMY_HOST1)
@@ -132,7 +132,7 @@ async def test_already_configured.opp, mock_hub_discover):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1])
 
-    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to.opp(
+    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to(opp(
         opp
     )
 

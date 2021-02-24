@@ -110,7 +110,7 @@ async def async_setup_entry(
                 ),
             )
 
-    listen_for_instance_updates.opp, config_entry, instance_add, instance_remove)
+    listen_for_instance_updates(opp, config_entry, instance_add, instance_remove)
     return True
 
 
@@ -206,6 +206,6 @@ class HyperionComponentSwitch(SwitchEntity):
 
         self._client.add_callbacks(self._client_callbacks)
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Cleanup prior to.opp removal."""
         self._client.remove_callbacks(self._client_callbacks)

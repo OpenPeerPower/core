@@ -22,7 +22,7 @@ from openpeerpower.exceptions import OpenPeerPowerError
 from .const import DOMAIN
 
 
-async def async_setup_entry.opp, entry, async_add_entities) -> None:
+async def async_setup_entry(opp, entry, async_add_entities) -> None:
     """Set up TotalConnect alarm panels based on a config entry."""
     alarms = []
 

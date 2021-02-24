@@ -23,7 +23,7 @@ from . import ConsoleData, XboxUpdateCoordinator
 from .const import DOMAIN
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Xbox media_player from a config entry."""
     client: XboxLiveClient = opp.data[DOMAIN][entry.entry_id]["client"]
     consoles: SmartglassConsoleList = opp.data[DOMAIN][entry.entry_id]["consoles"]

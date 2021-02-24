@@ -9,9 +9,9 @@ from openpeerpower.components.habitica.const import DEFAULT_URL, DOMAIN
 from tests.common import MockConfigEntry
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -47,7 +47,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_credentials.opp):
+async def test_form_invalid_credentials(opp):
     """Test we handle invalid credentials error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -73,7 +73,7 @@ async def test_form_invalid_credentials.opp):
     assert result2["errors"] == {"base": "invalid_credentials"}
 
 
-async def test_form_unexpected_exception.opp):
+async def test_form_unexpected_exception(opp):
     """Test we handle unexpected exception error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -99,13 +99,13 @@ async def test_form_unexpected_exception.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_manual_flow_config_exist.opp):
+async def test_manual_flow_config_exist(opp):
     """Test config flow discovers only already configured config."""
     MockConfigEntry(
         domain=DOMAIN,
         unique_id="test-api-user",
         data={"api_user": "test-api-user", "api_key": "test-api-key"},
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}

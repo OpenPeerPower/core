@@ -95,7 +95,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 SCAN_INTERVAL = timedelta(minutes=15)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Todoist platform."""
     token = config.get(CONF_TOKEN)
 
@@ -282,7 +282,7 @@ class TodoistProjectDevice(CalendarEventDevice):
 
     async def async_get_events(self, opp, start_date, end_date):
         """Get all events in a specific time frame."""
-        return await self.data.async_get_events.opp, start_date, end_date)
+        return await self.data.async_get_events(opp, start_date, end_date)
 
     @property
     def device_state_attributes(self):

@@ -19,7 +19,7 @@ FIXTURE_USER_INPUT = {
 }
 
 
-async def init_integration.opp: OpenPeerPower, use_nickname=True) -> MockConfigEntry:
+async def init_integration(opp: OpenPeerPower, use_nickname=True) -> MockConfigEntry:
     """Set up the Mazda Connected Services integration in Open Peer Power."""
     get_vehicles_fixture = json.loads(load_fixture("mazda/get_vehicles.json"))
     if not use_nickname:
@@ -30,14 +30,14 @@ async def init_integration.opp: OpenPeerPower, use_nickname=True) -> MockConfigE
     )
 
     config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     client_mock = MagicMock(
         MazdaAPI(
             FIXTURE_USER_INPUT[CONF_EMAIL],
             FIXTURE_USER_INPUT[CONF_PASSWORD],
             FIXTURE_USER_INPUT[CONF_REGION],
-            aiohttp_client.async_get_clientsession.opp),
+            aiohttp_client.async_get_clientsession(opp),
         )
     )
     client_mock.get_vehicles = AsyncMock(return_value=get_vehicles_fixture)

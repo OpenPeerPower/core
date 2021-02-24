@@ -91,10 +91,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the generic thermostat platform."""
 
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     name = config.get(CONF_NAME)
     heater_entity_id = config.get(CONF_HEATER)

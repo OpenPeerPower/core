@@ -43,7 +43,7 @@ def update(input_dict, update_source):
     return input_dict
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Get the Group notification service."""
     return GroupNotifyPlatform.opp, config.get(CONF_SERVICES))
 

@@ -20,7 +20,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up the devolo account from a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -41,7 +41,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         opp.config_entries.async_update_entry(entry, unique_id=uuid)
 
     try:
-        zeroconf_instance = await zeroconf.async_get_instance.opp)
+        zeroconf_instance = await zeroconf.async_get_instance(opp)
         opp.data[DOMAIN][entry.entry_id] = {"gateways": [], "listener": None}
         for gateway_id in gateway_ids:
             opp.data[DOMAIN][entry.entry_id]["gateways"].append(
@@ -76,7 +76,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload = all(
         await asyncio.gather(

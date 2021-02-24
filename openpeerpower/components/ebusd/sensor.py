@@ -19,7 +19,7 @@ MIN_TIME_BETWEEN_UPDATES = datetime.timedelta(seconds=15)
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Ebus sensor."""
     ebusd_api = opp.data[DOMAIN]
     monitored_conditions = discovery_info["monitored_conditions"]

@@ -60,7 +60,7 @@ PAUSED = "paused"
 COLLECTING = "collecting"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the utility meter sensor."""
     if discovery_info is None:
         _LOGGER.error("This platform is only available through discovery")

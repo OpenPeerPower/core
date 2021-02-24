@@ -180,7 +180,7 @@ async def async_setup(opp, config):
             # Propagate event to every entity matching the device id
             for entity in entity_ids:
                 _LOGGER.debug("passing event to %s", entity)
-                async_dispatcher_send.opp, SIGNAL_HANDLE_EVENT.format(entity), event)
+                async_dispatcher_send(opp, SIGNAL_HANDLE_EVENT.format(entity), event)
         elif not is_group_event:
             # If device is not yet known, register with platform (if loaded)
             if event_type in.opp.data[DATA_DEVICE_REGISTER]:
@@ -229,7 +229,7 @@ async def async_setup(opp, config):
         # Reset protocol binding before starting reconnect
         RflinkCommand.set_rflink_protocol(None)
 
-        async_dispatcher_send.opp, SIGNAL_AVAILABILITY, False)
+        async_dispatcher_send(opp, SIGNAL_AVAILABILITY, False)
 
         # If HA is not stopping, initiate new connection
         if opp.state != CoreState.stopping:
@@ -270,14 +270,14 @@ async def async_setup(opp, config):
                 "Error connecting to Rflink, reconnecting in %s", reconnect_interval
             )
             # Connection to Rflink device is lost, make entities unavailable
-            async_dispatcher_send.opp, SIGNAL_AVAILABILITY, False)
+            async_dispatcher_send(opp, SIGNAL_AVAILABILITY, False)
 
             opp.loop.call_later(reconnect_interval, reconnect, exc)
             return
 
         # There is a valid connection to a Rflink device now so
         # mark entities as available
-        async_dispatcher_send.opp, SIGNAL_AVAILABILITY, True)
+        async_dispatcher_send(opp, SIGNAL_AVAILABILITY, True)
 
         # Bind protocol to command class to allow entities to send commands
         RflinkCommand.set_rflink_protocol(protocol, config[DOMAIN][CONF_WAIT_FOR_ACK])

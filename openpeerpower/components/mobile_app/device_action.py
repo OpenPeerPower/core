@@ -22,11 +22,11 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions for Mobile App devices."""
-    webhook_id = webhook_id_from_device_id.opp, device_id)
+    webhook_id = webhook_id_from_device_id(opp, device_id)
 
-    if webhook_id is None or not supports_push.opp, webhook_id):
+    if webhook_id is None or not supports_push(opp, webhook_id):
         return []
 
     return [{CONF_DEVICE_ID: device_id, CONF_DOMAIN: DOMAIN, CONF_TYPE: "notify"}]
@@ -36,14 +36,14 @@ async def async_call_action_from_config(
     opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
 ) -> None:
     """Execute a device action."""
-    webhook_id = webhook_id_from_device_id.opp, config[CONF_DEVICE_ID])
+    webhook_id = webhook_id_from_device_id(opp, config[CONF_DEVICE_ID])
 
     if webhook_id is None:
         raise InvalidDeviceAutomationConfig(
             "Unable to resolve webhook ID from the device ID"
         )
 
-    service_name = get_notify_service.opp, webhook_id)
+    service_name = get_notify_service(opp, webhook_id)
 
     if service_name is None:
         raise InvalidDeviceAutomationConfig(
@@ -72,7 +72,7 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_action_capabilities.opp, config):
+async def async_get_action_capabilities(opp, config):
     """List action capabilities."""
     if config[CONF_TYPE] != "notify":
         return {}

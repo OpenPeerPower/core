@@ -12,7 +12,7 @@ from .const import DISPATCHER_REMOTE_UPDATE, DOMAIN
 WAIT_UNTIL_CHANGE = 3
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the cloud binary sensors."""
     if discovery_info is None:
         return
@@ -71,7 +71,7 @@ class CloudRemoteBinary(BinarySensorEntity):
             self.opp, DISPATCHER_REMOTE_UPDATE, async_state_update
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Register update dispatcher."""
         if self._unsub_dispatcher is not None:
             self._unsub_dispatcher()

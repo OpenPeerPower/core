@@ -33,7 +33,7 @@ TRIGGER_SCHEMA = vol.Schema(
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     topic = config[CONF_TOPIC]
     payload = config.get(CONF_PAYLOAD)
@@ -70,7 +70,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
             except ValueError:
                 pass
 
-            opp.async_run.opp_job(job, {"trigger": data})
+            opp.async_run(opp_job(job, {"trigger": data})
 
     _LOGGER.debug(
         "Attaching MQTT trigger for topic: '%s', payload: '%s'", topic, payload

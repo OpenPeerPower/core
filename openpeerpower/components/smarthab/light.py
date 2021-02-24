@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=60)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up SmartHab lights from a config entry."""
     hub = opp.data[DOMAIN][config_entry.entry_id][DATA_HUB]
 

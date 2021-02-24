@@ -21,7 +21,7 @@ SIGN_QUERY_PARAM = "authSig"
 
 
 @callback
-def async_sign_path.opp, refresh_token_id, path, expiration):
+def async_sign_path(opp, refresh_token_id, path, expiration):
     """Sign a path for temporary access without auth header."""
     secret = opp.data.get(DATA_SIGN_SECRET)
 
@@ -38,7 +38,7 @@ def async_sign_path.opp, refresh_token_id, path, expiration):
 
 
 @callback
-def setup_auth.opp, app):
+def setup_auth(opp, app):
     """Create auth middleware for the app."""
 
     async def async_validate_auth_header(request):

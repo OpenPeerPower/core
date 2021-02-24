@@ -44,7 +44,7 @@ ERROR_STATE = [
 ]
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Worx Landroid sensors."""
     for typ in ("battery", "state"):
         async_add_entities([WorxLandroidSensor(typ, config)])

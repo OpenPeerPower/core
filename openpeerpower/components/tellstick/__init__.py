@@ -57,7 +57,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def _discover.opp, config, component_name, found_tellcore_devices):
+def _discover(opp, config, component_name, found_tellcore_devices):
     """Set up and send the discovery event."""
     if not found_tellcore_devices:
         return

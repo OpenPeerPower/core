@@ -46,7 +46,7 @@ def setup(opp, config):
     iota_config = config[DOMAIN]
 
     for platform in IOTA_PLATFORMS:
-        load_platform.opp, platform, DOMAIN, iota_config, config)
+        load_platform(opp, platform, DOMAIN, iota_config, config)
 
     return True
 

@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 _TIMEOUT = 15  # seconds
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the DoorBird camera platform."""
     config_entry_id = config_entry.entry_id
     config_data = opp.data[DOMAIN][config_entry_id]
@@ -147,7 +147,7 @@ class DoorBirdCamera(DoorBirdEntity, Camera):
         for event in self._doorstation_events:
             event_to_entity_id[event] = self.entity_id
 
-    async def will_remove_from.opp(self):
+    async def will_remove_from(opp(self):
         """Unregister entity_id map for the logbook."""
         event_to_entity_id = self.opp.data[DOMAIN][DOOR_STATION_EVENT_ENTITY_IDS]
         for event in self._doorstation_events:

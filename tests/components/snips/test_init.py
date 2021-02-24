@@ -45,9 +45,9 @@ async def test_snips_bad_config(opp, mqtt_mock):
     assert not result
 
 
-async def test_snips_config_feedback_on.opp, mqtt_mock):
+async def test_snips_config_feedback_on(opp, mqtt_mock):
     """Test Snips Config."""
-    calls = async_mock_service.opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
+    calls = async_mock_service(opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
     result = await async_setup_component(
         opp. "snips", {"snips": {"feedback_sounds": True}}
     )
@@ -63,9 +63,9 @@ async def test_snips_config_feedback_on.opp, mqtt_mock):
     assert calls[1].data["retain"]
 
 
-async def test_snips_config_feedback_off.opp, mqtt_mock):
+async def test_snips_config_feedback_off(opp, mqtt_mock):
     """Test Snips Config."""
-    calls = async_mock_service.opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
+    calls = async_mock_service(opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
     result = await async_setup_component(
         opp. "snips", {"snips": {"feedback_sounds": False}}
     )
@@ -81,18 +81,18 @@ async def test_snips_config_feedback_off.opp, mqtt_mock):
     assert not calls[1].data["retain"]
 
 
-async def test_snips_config_no_feedback.opp, mqtt_mock):
+async def test_snips_config_no_feedback(opp, mqtt_mock):
     """Test Snips Config."""
-    calls = async_mock_service.opp, "snips", "say")
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    calls = async_mock_service(opp, "snips", "say")
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
-async def test_snips_intent.opp, mqtt_mock):
+async def test_snips_intent(opp, mqtt_mock):
     """Test intent via Snips."""
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     payload = """
     {
@@ -116,9 +116,9 @@ async def test_snips_intent.opp, mqtt_mock):
     }
     """
 
-    intents = async_mock_intent.opp, "Lights")
+    intents = async_mock_intent(opp, "Lights")
 
-    async_fire_mqtt_message.opp, "hermes/intent/Lights", payload)
+    async_fire_mqtt_message(opp, "hermes/intent/Lights", payload)
     await opp.async_block_till_done()
     assert len(intents) == 1
     intent = intents[0]
@@ -135,11 +135,11 @@ async def test_snips_intent.opp, mqtt_mock):
     assert intent.text_input == "turn the lights green"
 
 
-async def test_snips_service_intent.opp, mqtt_mock):
+async def test_snips_service_intent(opp, mqtt_mock):
     """Test ServiceIntentHandler via Snips."""
     opp.states.async_set("light.kitchen", "off")
-    calls = async_mock_service.opp, "light", "turn_on")
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    calls = async_mock_service(opp, "light", "turn_on")
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     payload = """
     {
@@ -166,7 +166,7 @@ async def test_snips_service_intent.opp, mqtt_mock):
         opp. ServiceIntentHandler("Lights", "light", "turn_on", "Turned {} on")
     )
 
-    async_fire_mqtt_message.opp, "hermes/intent/Lights", payload)
+    async_fire_mqtt_message(opp, "hermes/intent/Lights", payload)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -177,9 +177,9 @@ async def test_snips_service_intent.opp, mqtt_mock):
     assert "site_id" not in calls[0].data
 
 
-async def test_snips_intent_with_duration.opp, mqtt_mock):
+async def test_snips_intent_with_duration(opp, mqtt_mock):
     """Test intent with Snips duration."""
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     payload = """
     {
@@ -213,9 +213,9 @@ async def test_snips_intent_with_duration.opp, mqtt_mock):
       ]
     }
     """
-    intents = async_mock_intent.opp, "SetTimer")
+    intents = async_mock_intent(opp, "SetTimer")
 
-    async_fire_mqtt_message.opp, "hermes/intent/SetTimer", payload)
+    async_fire_mqtt_message(opp, "hermes/intent/SetTimer", payload)
     await opp.async_block_till_done()
     assert len(intents) == 1
     intent = intents[0]
@@ -230,10 +230,10 @@ async def test_snips_intent_with_duration.opp, mqtt_mock):
     }
 
 
-async def test_intent_speech_response.opp, mqtt_mock):
+async def test_intent_speech_response(opp, mqtt_mock):
     """Test intent speech response via Snips."""
-    calls = async_mock_service.opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    calls = async_mock_service(opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     result = await async_setup_component(
         opp,
@@ -258,7 +258,7 @@ async def test_intent_speech_response.opp, mqtt_mock):
         "slots": []
     }
     """
-    async_fire_mqtt_message.opp, "hermes/intent/spokenIntent", payload)
+    async_fire_mqtt_message(opp, "hermes/intent/spokenIntent", payload)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -269,10 +269,10 @@ async def test_intent_speech_response.opp, mqtt_mock):
     assert topic == "hermes/dialogueManager/endSession"
 
 
-async def test_unknown_intent.opp, caplog, mqtt_mock):
+async def test_unknown_intent(opp, caplog, mqtt_mock):
     """Test unknown intent."""
     caplog.set_level(logging.WARNING)
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     payload = """
     {
@@ -285,14 +285,14 @@ async def test_unknown_intent.opp, caplog, mqtt_mock):
         "slots": []
     }
     """
-    async_fire_mqtt_message.opp, "hermes/intent/unknownIntent", payload)
+    async_fire_mqtt_message(opp, "hermes/intent/unknownIntent", payload)
     await opp.async_block_till_done()
     assert "Received unknown intent unknownIntent" in caplog.text
 
 
-async def test_snips_intent_user.opp, mqtt_mock):
+async def test_snips_intent_user(opp, mqtt_mock):
     """Test intentName format user_XXX__intentName."""
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     payload = """
     {
@@ -304,8 +304,8 @@ async def test_snips_intent_user.opp, mqtt_mock):
         "slots": []
     }
     """
-    intents = async_mock_intent.opp, "Lights")
-    async_fire_mqtt_message.opp, "hermes/intent/user_ABCDEF123__Lights", payload)
+    intents = async_mock_intent(opp, "Lights")
+    async_fire_mqtt_message(opp, "hermes/intent/user_ABCDEF123__Lights", payload)
     await opp.async_block_till_done()
 
     assert len(intents) == 1
@@ -314,9 +314,9 @@ async def test_snips_intent_user.opp, mqtt_mock):
     assert intent.intent_type == "Lights"
 
 
-async def test_snips_intent_username.opp, mqtt_mock):
+async def test_snips_intent_username(opp, mqtt_mock):
     """Test intentName format username:intentName."""
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     payload = """
     {
@@ -328,8 +328,8 @@ async def test_snips_intent_username.opp, mqtt_mock):
         "slots": []
     }
     """
-    intents = async_mock_intent.opp, "Lights")
-    async_fire_mqtt_message.opp, "hermes/intent/username:Lights", payload)
+    intents = async_mock_intent(opp, "Lights")
+    async_fire_mqtt_message(opp, "hermes/intent/username:Lights", payload)
     await opp.async_block_till_done()
 
     assert len(intents) == 1
@@ -338,7 +338,7 @@ async def test_snips_intent_username.opp, mqtt_mock):
     assert intent.intent_type == "Lights"
 
 
-async def test_snips_low_probability.opp, caplog, mqtt_mock):
+async def test_snips_low_probability(opp, caplog, mqtt_mock):
     """Test intent via Snips."""
     caplog.set_level(logging.WARNING)
     result = await async_setup_component(
@@ -356,16 +356,16 @@ async def test_snips_low_probability.opp, caplog, mqtt_mock):
     }
     """
 
-    async_mock_intent.opp, "LightsMaybe")
-    async_fire_mqtt_message.opp, "hermes/intent/LightsMaybe", payload)
+    async_mock_intent(opp, "LightsMaybe")
+    async_fire_mqtt_message(opp, "hermes/intent/LightsMaybe", payload)
     await opp.async_block_till_done()
     assert "Intent below probaility threshold 0.49 < 0.5" in caplog.text
 
 
-async def test_intent_special_slots.opp, mqtt_mock):
+async def test_intent_special_slots(opp, mqtt_mock):
     """Test intent special slot values via Snips."""
-    calls = async_mock_service.opp, "light", "turn_on")
-    result = await async_setup_component.opp, "snips", {"snips": {}})
+    calls = async_mock_service(opp, "light", "turn_on")
+    result = await async_setup_component(opp, "snips", {"snips": {}})
     assert result
     result = await async_setup_component(
         opp,
@@ -396,7 +396,7 @@ async def test_intent_special_slots.opp, mqtt_mock):
         "slots": []
     }
     """
-    async_fire_mqtt_message.opp, "hermes/intent/Lights", payload)
+    async_fire_mqtt_message(opp, "hermes/intent/Lights", payload)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -406,9 +406,9 @@ async def test_intent_special_slots.opp, mqtt_mock):
     assert calls[0].data["site_id"] == "default"
 
 
-async def test_snips_say.opp):
+async def test_snips_say(opp):
     """Test snips say with invalid config."""
-    calls = async_mock_service.opp, "snips", "say", snips.SERVICE_SCHEMA_SAY)
+    calls = async_mock_service(opp, "snips", "say", snips.SERVICE_SCHEMA_SAY)
     data = {"text": "Hello"}
     await opp.services.async_call("snips", "say", data)
     await opp.async_block_till_done()
@@ -419,7 +419,7 @@ async def test_snips_say.opp):
     assert calls[0].data["text"] == "Hello"
 
 
-async def test_snips_say_action.opp):
+async def test_snips_say_action(opp):
     """Test snips say_action with invalid config."""
     calls = async_mock_service(
         opp. "snips", "say_action", snips.SERVICE_SCHEMA_SAY_ACTION
@@ -438,7 +438,7 @@ async def test_snips_say_action.opp):
 
 async def test_snips_say_invalid_config(opp):
     """Test snips say with invalid config."""
-    calls = async_mock_service.opp, "snips", "say", snips.SERVICE_SCHEMA_SAY)
+    calls = async_mock_service(opp, "snips", "say", snips.SERVICE_SCHEMA_SAY)
 
     data = {"text": "Hello", "badKey": "boo"}
     with pytest.raises(vol.Invalid):
@@ -448,7 +448,7 @@ async def test_snips_say_invalid_config(opp):
     assert len(calls) == 0
 
 
-async def test_snips_say_action_invalid.opp):
+async def test_snips_say_action_invalid(opp):
     """Test snips say_action with invalid config."""
     calls = async_mock_service(
         opp. "snips", "say_action", snips.SERVICE_SCHEMA_SAY_ACTION
@@ -463,7 +463,7 @@ async def test_snips_say_action_invalid.opp):
     assert len(calls) == 0
 
 
-async def test_snips_feedback_on.opp):
+async def test_snips_feedback_on(opp):
     """Test snips say with invalid config."""
     calls = async_mock_service(
         opp. "snips", "feedback_on", snips.SERVICE_SCHEMA_FEEDBACK
@@ -479,7 +479,7 @@ async def test_snips_feedback_on.opp):
     assert calls[0].data["site_id"] == "remote"
 
 
-async def test_snips_feedback_off.opp):
+async def test_snips_feedback_off(opp):
     """Test snips say with invalid config."""
     calls = async_mock_service(
         opp. "snips", "feedback_off", snips.SERVICE_SCHEMA_FEEDBACK

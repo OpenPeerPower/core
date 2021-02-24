@@ -84,7 +84,7 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up SMA WebConnect sensor."""
     # Check config again during load - dependency available
     config = _check_sensor_schema(config)
@@ -124,10 +124,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             opp.sensors.append(SMAsensor(sensor_def[sensor], []))
 
     used_sensors = [sensor_def[s] for s in set(used_sensors)]
-    async_add_entities.opp_sensors)
+    async_add_entities(opp_sensors)
 
     # Init the SMA interface
-    session = async_get_clientsession.opp, verify_ssl=config[CONF_VERIFY_SSL])
+    session = async_get_clientsession(opp, verify_ssl=config[CONF_VERIFY_SSL])
     grp = config[CONF_GROUP]
 
     protocol = "https" if config[CONF_SSL] else "http"
@@ -166,7 +166,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             sensor.async_update_values()
 
     interval = config.get(CONF_SCAN_INTERVAL) or timedelta(seconds=5)
-    async_track_time_interval.opp, async_sma, interval)
+    async_track_time_interval(opp, async_sma, interval)
 
 
 class SMAsensor(Entity):

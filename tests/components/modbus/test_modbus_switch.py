@@ -22,7 +22,7 @@ from .conftest import base_config_test, base_test
 
 @pytest.mark.parametrize("do_options", [False, True])
 @pytest.mark.parametrize("read_type", [CALL_TYPE_COIL, CONF_REGISTER])
-async def test_config_switch.opp, do_options, read_type):
+async def test_config_switch(opp, do_options, read_type):
     """Run test for switch."""
     device_name = "test_switch"
 
@@ -81,7 +81,7 @@ async def test_config_switch.opp, do_options, read_type):
         ),
     ],
 )
-async def test_coil_switch.opp, regs, expected):
+async def test_coil_switch(opp, regs, expected):
     """Run test for given config."""
     switch_name = "modbus_test_switch"
     state = await base_test(
@@ -128,7 +128,7 @@ async def test_coil_switch.opp, regs, expected):
         ),
     ],
 )
-async def test_register_switch.opp, regs, expected):
+async def test_register_switch(opp, regs, expected):
     """Run test for given config."""
     switch_name = "modbus_test_switch"
     state = await base_test(
@@ -169,7 +169,7 @@ async def test_register_switch.opp, regs, expected):
         ),
     ],
 )
-async def test_register_state_switch.opp, regs, expected):
+async def test_register_state_switch(opp, regs, expected):
     """Run test for given config."""
     switch_name = "modbus_test_switch"
     state = await base_test(

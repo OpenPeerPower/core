@@ -93,7 +93,7 @@ TEST_SSDP_SERVICE_INFO = {
 }
 
 
-async def _create_mock_entry.opp: OpenPeerPowerType) -> MockConfigEntry:
+async def _create_mock_entry(opp: OpenPeerPowerType) -> MockConfigEntry:
     """Add a test Hyperion entity to.opp."""
     entry: MockConfigEntry = MockConfigEntry(  # type: ignore[no-untyped-call]
         entry_id=TEST_CONFIG_ENTRY_ID,
@@ -106,7 +106,7 @@ async def _create_mock_entry.opp: OpenPeerPowerType) -> MockConfigEntry:
             "instance": TEST_INSTANCE,
         },
     )
-    entry.add_to.opp.opp)  # type: ignore[no-untyped-call]
+    entry.add_to(opp.opp)  # type: ignore[no-untyped-call]
 
     # Setup
     client = create_mock_client()
@@ -151,32 +151,32 @@ async def _configure_flow(
     return result
 
 
-async def test_user_if_no_configuration.opp: OpenPeerPowerType) -> None:
+async def test_user_if_no_configuration(opp: OpenPeerPowerType) -> None:
     """Check flow behavior when no configuration is present."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
     assert result["handler"] == DOMAIN
 
 
-async def test_user_existing_id_abort.opp: OpenPeerPowerType) -> None:
+async def test_user_existing_id_abort(opp: OpenPeerPowerType) -> None:
     """Verify a duplicate ID results in an abort."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
-    await _create_mock_entry.opp)
+    await _create_mock_entry(opp)
     client = create_mock_client()
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
 
 
-async def test_user_client_errors.opp: OpenPeerPowerType) -> None:
+async def test_user_client_errors(opp: OpenPeerPowerType) -> None:
     """Verify correct behaviour with client errors."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
 
@@ -185,7 +185,7 @@ async def test_user_client_errors.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["errors"]["base"] == "cannot_connect"
 
@@ -195,15 +195,15 @@ async def test_user_client_errors.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "auth_required_error"
 
 
-async def test_user_confirm_cannot_connect.opp: OpenPeerPowerType) -> None:
+async def test_user_confirm_cannot_connect(opp: OpenPeerPowerType) -> None:
     """Test a failure to connect during confirmation."""
 
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     good_client = create_mock_client()
     bad_client = create_mock_client()
@@ -214,14 +214,14 @@ async def test_user_confirm_cannot_connect.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.client.HyperionClient",
         side_effect=[good_client, bad_client],
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "cannot_connect"
 
 
 async def test_user_confirm_id_error(opp: OpenPeerPowerType) -> None:
     """Test a failure fetching the server id during confirmation."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
     client.async_sysinfo_id = AsyncMock(return_value=None)
@@ -230,20 +230,20 @@ async def test_user_confirm_id_error(opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "no_id"
 
 
-async def test_user_noauth_flow_success.opp: OpenPeerPowerType) -> None:
+async def test_user_noauth_flow_success(opp: OpenPeerPowerType) -> None:
     """Check a full flow without auth."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["handler"] == DOMAIN
@@ -253,9 +253,9 @@ async def test_user_noauth_flow_success.opp: OpenPeerPowerType) -> None:
     }
 
 
-async def test_user_auth_required.opp: OpenPeerPowerType) -> None:
+async def test_user_auth_required(opp: OpenPeerPowerType) -> None:
     """Verify correct behaviour when auth is required."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
     client.async_is_auth_required = AsyncMock(return_value=TEST_AUTH_REQUIRED_RESP)
@@ -263,28 +263,28 @@ async def test_user_auth_required.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "auth"
 
 
-async def test_auth_static_token_auth_required_fail.opp: OpenPeerPowerType) -> None:
+async def test_auth_static_token_auth_required_fail(opp: OpenPeerPowerType) -> None:
     """Verify correct behaviour with a failed auth required call."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
     client.async_is_auth_required = AsyncMock(return_value=None)
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "auth_required_error"
 
 
-async def test_auth_static_token_success.opp: OpenPeerPowerType) -> None:
+async def test_auth_static_token_success(opp: OpenPeerPowerType) -> None:
     """Test a successful flow with a static token."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
     assert result["step_id"] == "user"
 
     client = create_mock_client()
@@ -293,7 +293,7 @@ async def test_auth_static_token_success.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         result = await _configure_flow(
             opp. result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
         )
@@ -307,9 +307,9 @@ async def test_auth_static_token_success.opp: OpenPeerPowerType) -> None:
     }
 
 
-async def test_auth_static_token_login_fail.opp: OpenPeerPowerType) -> None:
+async def test_auth_static_token_login_fail(opp: OpenPeerPowerType) -> None:
     """Test correct behavior with a bad static token."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
     assert result["step_id"] == "user"
 
     client = create_mock_client()
@@ -323,7 +323,7 @@ async def test_auth_static_token_login_fail.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         result = await _configure_flow(
             opp. result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
         )
@@ -332,9 +332,9 @@ async def test_auth_static_token_login_fail.opp: OpenPeerPowerType) -> None:
     assert result["errors"]["base"] == "invalid_access_token"
 
 
-async def test_auth_create_token_approval_declined.opp: OpenPeerPowerType) -> None:
+async def test_auth_create_token_approval_declined(opp: OpenPeerPowerType) -> None:
     """Verify correct behaviour when a token request is declined."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
     client.async_is_auth_required = AsyncMock(return_value=TEST_AUTH_REQUIRED_RESP)
@@ -342,7 +342,7 @@ async def test_auth_create_token_approval_declined.opp: OpenPeerPowerType) -> No
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "auth"
 
@@ -363,14 +363,14 @@ async def test_auth_create_token_approval_declined.opp: OpenPeerPowerType) -> No
             CONF_AUTH_ID: TEST_AUTH_ID,
         }
 
-        result = await _configure_flow.opp, result)
+        result = await _configure_flow(opp, result)
         await opp.async_block_till_done()
         assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
         assert result["step_id"] == "create_token_external"
 
         # The flow will be automatically advanced by the auth token response.
 
-        result = await _configure_flow.opp, result)
+        result = await _configure_flow(opp, result)
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "auth_new_token_not_granted_error"
 
@@ -379,7 +379,7 @@ async def test_auth_create_token_when_issued_token_fails(
     opp: OpenPeerPowerType,
 ) -> None:
     """Verify correct behaviour when a token is granted by fails to authenticate."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
     client.async_is_auth_required = AsyncMock(return_value=TEST_AUTH_REQUIRED_RESP)
@@ -387,7 +387,7 @@ async def test_auth_create_token_when_issued_token_fails(
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "auth"
 
@@ -407,7 +407,7 @@ async def test_auth_create_token_when_issued_token_fails(
             CONF_AUTH_ID: TEST_AUTH_ID,
         }
 
-        result = await _configure_flow.opp, result)
+        result = await _configure_flow(opp, result)
         assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
         assert result["step_id"] == "create_token_external"
 
@@ -416,14 +416,14 @@ async def test_auth_create_token_when_issued_token_fails(
         # Make the last verification fail.
         client.async_client_connect = AsyncMock(return_value=False)
 
-        result = await _configure_flow.opp, result)
+        result = await _configure_flow(opp, result)
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "cannot_connect"
 
 
-async def test_auth_create_token_success.opp: OpenPeerPowerType) -> None:
+async def test_auth_create_token_success(opp: OpenPeerPowerType) -> None:
     """Verify correct behaviour when a token is successfully created."""
-    result = await _init_flow.opp)
+    result = await _init_flow(opp)
 
     client = create_mock_client()
     client.async_is_auth_required = AsyncMock(return_value=TEST_AUTH_REQUIRED_RESP)
@@ -431,7 +431,7 @@ async def test_auth_create_token_success.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result, user_input=TEST_HOST_PORT)
+        result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "auth"
 
@@ -451,12 +451,12 @@ async def test_auth_create_token_success.opp: OpenPeerPowerType) -> None:
             CONF_AUTH_ID: TEST_AUTH_ID,
         }
 
-        result = await _configure_flow.opp, result)
+        result = await _configure_flow(opp, result)
         assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
         assert result["step_id"] == "create_token_external"
 
         # The flow will be automatically advanced by the auth token response.
-        result = await _configure_flow.opp, result)
+        result = await _configure_flow(opp, result)
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["handler"] == DOMAIN
         assert result["title"] == TEST_TITLE
@@ -466,21 +466,21 @@ async def test_auth_create_token_success.opp: OpenPeerPowerType) -> None:
         }
 
 
-async def test_ssdp_success.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_success(opp: OpenPeerPowerType) -> None:
     """Check an SSDP flow."""
 
     client = create_mock_client()
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _init_flow.opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO)
+        result = await _init_flow(opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO)
         await opp.async_block_till_done()
 
     # Accept the confirmation.
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _configure_flow.opp, result)
+        result = await _configure_flow(opp, result)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["handler"] == DOMAIN
@@ -491,7 +491,7 @@ async def test_ssdp_success.opp: OpenPeerPowerType) -> None:
     }
 
 
-async def test_ssdp_cannot_connect.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_cannot_connect(opp: OpenPeerPowerType) -> None:
     """Check an SSDP flow that cannot connect."""
 
     client = create_mock_client()
@@ -500,14 +500,14 @@ async def test_ssdp_cannot_connect.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _init_flow.opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO)
+        result = await _init_flow(opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO)
         await opp.async_block_till_done()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "cannot_connect"
 
 
-async def test_ssdp_missing_serial.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_missing_serial(opp: OpenPeerPowerType) -> None:
     """Check an SSDP flow where no id is provided."""
 
     client = create_mock_client()
@@ -517,14 +517,14 @@ async def test_ssdp_missing_serial.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _init_flow.opp, source=SOURCE_SSDP, data=bad_data)
+        result = await _init_flow(opp, source=SOURCE_SSDP, data=bad_data)
         await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "no_id"
 
 
-async def test_ssdp_failure_bad_port_json.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_failure_bad_port_json(opp: OpenPeerPowerType) -> None:
     """Check an SSDP flow with bad json port."""
 
     client = create_mock_client()
@@ -534,15 +534,15 @@ async def test_ssdp_failure_bad_port_json.opp: OpenPeerPowerType) -> None:
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
-        result = await _init_flow.opp, source=SOURCE_SSDP, data=bad_data)
-        result = await _configure_flow.opp, result)
+        result = await _init_flow(opp, source=SOURCE_SSDP, data=bad_data)
+        result = await _configure_flow(opp, result)
         await opp.async_block_till_done()
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["data"][CONF_PORT] == const.DEFAULT_PORT_JSON
 
 
-async def test_ssdp_failure_bad_port_ui.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_failure_bad_port_ui(opp: OpenPeerPowerType) -> None:
     """Check an SSDP flow with bad ui port."""
 
     client = create_mock_client()
@@ -557,7 +557,7 @@ async def test_ssdp_failure_bad_port_ui.opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.config_flow.client.generate_random_auth_id",
         return_value=TEST_AUTH_ID,
     ):
-        result = await _init_flow.opp, source=SOURCE_SSDP, data=bad_data)
+        result = await _init_flow(opp, source=SOURCE_SSDP, data=bad_data)
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "auth"
@@ -577,7 +577,7 @@ async def test_ssdp_failure_bad_port_ui.opp: OpenPeerPowerType) -> None:
         }
 
 
-async def test_ssdp_abort_duplicates.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_abort_duplicates(opp: OpenPeerPowerType) -> None:
     """Check an SSDP flow where no id is provided."""
 
     client = create_mock_client()
@@ -597,10 +597,10 @@ async def test_ssdp_abort_duplicates.opp: OpenPeerPowerType) -> None:
     assert result_2["reason"] == "already_in_progress"
 
 
-async def test_options.opp: OpenPeerPowerType) -> None:
+async def test_options(opp: OpenPeerPowerType) -> None:
     """Check an options flow."""
 
-    config_entry = add_test_config_entry.opp)
+    config_entry = add_test_config_entry(opp)
 
     client = create_mock_client()
     with patch(
@@ -634,7 +634,7 @@ async def test_options.opp: OpenPeerPowerType) -> None:
         assert client.async_send_set_color.call_args[1][CONF_PRIORITY] == new_priority
 
 
-async def test_reauth_success.opp: OpenPeerPowerType) -> None:
+async def test_reauth_success(opp: OpenPeerPowerType) -> None:
     """Check a reauth flow that succeeds."""
 
     config_data = {
@@ -642,7 +642,7 @@ async def test_reauth_success.opp: OpenPeerPowerType) -> None:
         CONF_PORT: TEST_PORT,
     }
 
-    config_entry = add_test_config_entry.opp, data=config_data)
+    config_entry = add_test_config_entry(opp, data=config_data)
     client = create_mock_client()
     client.async_is_auth_required = AsyncMock(return_value=TEST_AUTH_REQUIRED_RESP)
 
@@ -668,7 +668,7 @@ async def test_reauth_success.opp: OpenPeerPowerType) -> None:
         assert CONF_TOKEN in config_entry.data
 
 
-async def test_reauth_cannot_connect.opp: OpenPeerPowerType) -> None:
+async def test_reauth_cannot_connect(opp: OpenPeerPowerType) -> None:
     """Check a reauth flow that fails to connect."""
 
     config_data = {
@@ -676,7 +676,7 @@ async def test_reauth_cannot_connect.opp: OpenPeerPowerType) -> None:
         CONF_PORT: TEST_PORT,
     }
 
-    add_test_config_entry.opp, data=config_data)
+    add_test_config_entry(opp, data=config_data)
     client = create_mock_client()
     client.async_client_connect = AsyncMock(return_value=False)
 

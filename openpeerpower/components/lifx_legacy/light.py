@@ -51,7 +51,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the LIFX platform."""
     server_addr = config.get(CONF_SERVER)
     broadcast_addr = config.get(CONF_BROADCAST)
@@ -59,7 +59,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     lifx_library = LIFX(add_entities, server_addr, broadcast_addr)
 
     # Register our poll service
-    track_time_change.opp, lifx_library.poll, second=[10, 40])
+    track_time_change(opp, lifx_library.poll, second=[10, 40])
 
     lifx_library.probe()
 

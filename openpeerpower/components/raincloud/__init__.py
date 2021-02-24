@@ -117,10 +117,10 @@ def setup(opp, config):
         """Call Raincloud hub to refresh information."""
         _LOGGER.debug("Updating RainCloud Hub component")
         opp.data[DATA_RAINCLOUD].data.update()
-        dispatcher_send.opp, SIGNAL_UPDATE_RAINCLOUD)
+        dispatcher_send(opp, SIGNAL_UPDATE_RAINCLOUD)
 
     # Call the Raincloud API to refresh updates
-    track_time_interval.opp, hub_refresh, scan_interval)
+    track_time_interval(opp, hub_refresh, scan_interval)
 
     return True
 

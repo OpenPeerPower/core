@@ -62,21 +62,21 @@ async def async_setup(opp, config):
 
     session = opp.helpers.aiohttp_client.async_get_clientsession()
 
-    result = await _update_no_ip.opp, session, domain, auth_str, timeout)
+    result = await _update_no_ip(opp, session, domain, auth_str, timeout)
 
     if not result:
         return False
 
     async def update_domain_interval(now):
         """Update the NO-IP entry."""
-        await _update_no_ip.opp, session, domain, auth_str, timeout)
+        await _update_no_ip(opp, session, domain, auth_str, timeout)
 
     opp.helpers.event.async_track_time_interval(update_domain_interval, INTERVAL)
 
     return True
 
 
-async def _update_no_ip.opp, session, domain, auth_str, timeout):
+async def _update_no_ip(opp, session, domain, auth_str, timeout):
     """Update NO-IP."""
     url = UPDATE_URL
 

@@ -128,7 +128,7 @@ MOCK_CONFIG = MockConfigEntry(domain=DOMAIN, data=MOCK_DATA, entry_id=MOCK_ENTRY
 MOCK_LOAD = "openpeerpower.components.ps4.media_player.load_games"
 
 
-async def setup_mock_component.opp, entry=None):
+async def setup_mock_component(opp, entry=None):
     """Set up Mock Media Player."""
     if entry is None:
         mock_entry = MockConfigEntry(
@@ -137,9 +137,9 @@ async def setup_mock_component.opp, entry=None):
     else:
         mock_entry = entry
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to(opp.opp)
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     await opp.async_block_till_done()
 
@@ -150,7 +150,7 @@ async def setup_mock_component.opp, entry=None):
     return mock_entity_id
 
 
-async def mock_ddp_response.opp, mock_status_data):
+async def mock_ddp_response(opp, mock_status_data):
     """Mock raw UDP response from device."""
     mock_protocol = opp.data[PS4_DATA].protocol
     assert mock_protocol.local_port == DEFAULT_UDP_PORT
@@ -163,9 +163,9 @@ async def mock_ddp_response.opp, mock_status_data):
     await opp.async_block_till_done()
 
 
-async def test_media_player_is_setup_correctly_with_entry.opp):
+async def test_media_player_is_setup_correctly_with_entry(opp):
     """Test entity is setup correctly with entry correctly."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_state = opp.states.get(mock_entity_id).state
 
     # Assert status updated callback is added to protocol.
@@ -177,48 +177,48 @@ async def test_media_player_is_setup_correctly_with_entry.opp):
     assert mock_state == STATE_UNKNOWN
 
 
-async def test_state_standby_is_set.opp):
+async def test_state_standby_is_set(opp):
     """Test that state is set to standby."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
 
-    await mock_ddp_response.opp, MOCK_STATUS_STANDBY)
+    await mock_ddp_response(opp, MOCK_STATUS_STANDBY)
 
     assert.opp.states.get(mock_entity_id).state == STATE_STANDBY
 
 
-async def test_state_playing_is_set.opp):
+async def test_state_playing_is_set(opp):
     """Test that state is set to playing."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4.media_player.",
         "pyps4.Ps4Async.async_get_ps_store_data",
     )
 
     with patch(mock_func, return_value=None):
-        await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
+        await mock_ddp_response(opp, MOCK_STATUS_PLAYING)
 
     assert.opp.states.get(mock_entity_id).state == STATE_PLAYING
 
 
-async def test_state_idle_is_set.opp):
+async def test_state_idle_is_set(opp):
     """Test that state is set to idle."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
 
-    await mock_ddp_response.opp, MOCK_STATUS_IDLE)
+    await mock_ddp_response(opp, MOCK_STATUS_IDLE)
 
     assert.opp.states.get(mock_entity_id).state == STATE_IDLE
 
 
-async def test_state_none_is_set.opp):
+async def test_state_none_is_set(opp):
     """Test that state is set to None."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
 
     assert.opp.states.get(mock_entity_id).state == STATE_UNKNOWN
 
 
-async def test_media_attributes_are_fetched.opp):
+async def test_media_attributes_are_fetched(opp):
     """Test that media attributes are fetched."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4.media_player.",
         "pyps4.Ps4Async.async_get_ps_store_data",
@@ -231,7 +231,7 @@ async def test_media_attributes_are_fetched.opp):
     mock_result.game_type = "not_an_app"
 
     with patch(mock_func, return_value=mock_result) as mock_fetch:
-        await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
+        await mock_ddp_response(opp, MOCK_STATUS_PLAYING)
 
     mock_state = opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
@@ -246,13 +246,13 @@ async def test_media_attributes_are_fetched.opp):
     assert mock_attrs.get(ATTR_MEDIA_CONTENT_TYPE) == MOCK_TITLE_TYPE
 
     # Change state so that the next fetch is called.
-    await mock_ddp_response.opp, MOCK_STATUS_STANDBY)
+    await mock_ddp_response(opp, MOCK_STATUS_STANDBY)
 
     # Test that content type of app is set.
     mock_result.game_type = PS_TYPE_APP
 
     with patch(mock_func, return_value=mock_result) as mock_fetch_app:
-        await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
+        await mock_ddp_response(opp, MOCK_STATUS_PLAYING)
 
     mock_state = opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
@@ -261,9 +261,9 @@ async def test_media_attributes_are_fetched.opp):
     assert mock_attrs.get(ATTR_MEDIA_CONTENT_TYPE) == MEDIA_TYPE_APP
 
 
-async def test_media_attributes_are_loaded.opp, patch_load_json):
+async def test_media_attributes_are_loaded(opp, patch_load_json):
     """Test that media attributes are loaded."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     patch_load_json.return_value = {MOCK_TITLE_ID: MOCK_GAMES_DATA_LOCKED}
 
     with patch(
@@ -271,7 +271,7 @@ async def test_media_attributes_are_loaded.opp, patch_load_json):
         "pyps4.Ps4Async.async_get_ps_store_data",
         return_value=None,
     ) as mock_fetch:
-        await mock_ddp_response.opp, MOCK_STATUS_PLAYING)
+        await mock_ddp_response(opp, MOCK_STATUS_PLAYING)
 
     mock_state = opp.states.get(mock_entity_id)
     mock_attrs = dict(mock_state.attributes)
@@ -288,11 +288,11 @@ async def test_media_attributes_are_loaded.opp, patch_load_json):
     assert mock_attrs.get(ATTR_MEDIA_CONTENT_TYPE) == MOCK_TITLE_TYPE
 
 
-async def test_device_info_is_set_from_status_correctly.opp, patch_get_status):
+async def test_device_info_is_set_from_status_correctly(opp, patch_get_status):
     """Test that device info is set correctly from status update."""
-    mock_d_registry = mock_device_registry.opp)
+    mock_d_registry = mock_device_registry(opp)
     patch_get_status.return_value = MOCK_STATUS_STANDBY
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
 
     await opp.async_block_till_done()
 
@@ -314,10 +314,10 @@ async def test_device_info_is_set_from_status_correctly.opp, patch_get_status):
     assert mock_entry.identifiers == {(DOMAIN, MOCK_HOST_ID)}
 
 
-async def test_device_info_is_assummed.opp):
+async def test_device_info_is_assummed(opp):
     """Test that device info is assumed if device is unavailable."""
     # Create a device registry entry with device info.
-    mock_d_registry = mock_device_registry.opp)
+    mock_d_registry = mock_device_registry(opp)
     mock_d_registry.async_get_or_create(
         config_entry_id=MOCK_ENTRY_ID,
         name=MOCK_HOST_NAME,
@@ -330,7 +330,7 @@ async def test_device_info_is_assummed.opp):
 
     # Create a entity_registry entry which is using identifiers from device.
     mock_unique_id = ps4.format_unique_id(MOCK_CREDS, MOCK_HOST_ID)
-    mock_e_registry = mock_registry.opp)
+    mock_e_registry = mock_registry(opp)
     mock_e_registry.async_get_or_create(
         "media_player", DOMAIN, mock_unique_id, config_entry=MOCK_CONFIG
     )
@@ -338,7 +338,7 @@ async def test_device_info_is_assummed.opp):
         "media_player", DOMAIN, mock_unique_id
     )
 
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_state = opp.states.get(mock_entity_id).state
 
     # Ensure that state is not set.
@@ -350,10 +350,10 @@ async def test_device_info_is_assummed.opp):
     assert mock_entities[0] == mock_entity_id
 
 
-async def test_device_info_assummed_works.opp):
+async def test_device_info_assummed_works(opp):
     """Reverse test that device info assumption works."""
-    mock_d_registry = mock_device_registry.opp)
-    mock_entity_id = await setup_mock_component.opp)
+    mock_d_registry = mock_device_registry(opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_state = opp.states.get(mock_entity_id).state
     mock_d_entries = mock_d_registry.devices
 
@@ -364,9 +364,9 @@ async def test_device_info_assummed_works.opp):
     assert not mock_d_entries
 
 
-async def test_turn_on.opp):
+async def test_turn_on(opp):
     """Test that turn on service calls function."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4.media_player.", "pyps4.Ps4Async.wakeup"
     )
@@ -380,9 +380,9 @@ async def test_turn_on.opp):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_turn_off.opp):
+async def test_turn_off(opp):
     """Test that turn off service calls function."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4.media_player.", "pyps4.Ps4Async.standby"
     )
@@ -396,9 +396,9 @@ async def test_turn_off.opp):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_toggle.opp):
+async def test_toggle(opp):
     """Test that toggle service calls function."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4.media_player.", "pyps4.Ps4Async.toggle"
     )
@@ -412,9 +412,9 @@ async def test_toggle.opp):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_media_pause.opp):
+async def test_media_pause(opp):
     """Test that media pause service calls function."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4.media_player.", "pyps4.Ps4Async.remote_control"
     )
@@ -428,9 +428,9 @@ async def test_media_pause.opp):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_media_stop.opp):
+async def test_media_stop(opp):
     """Test that media stop service calls function."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4.media_player.", "pyps4.Ps4Async.remote_control"
     )
@@ -444,11 +444,11 @@ async def test_media_stop.opp):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_select_source.opp, patch_load_json):
+async def test_select_source(opp, patch_load_json):
     """Test that select source service calls function with title."""
     patch_load_json.return_value = {MOCK_TITLE_ID: MOCK_GAMES_DATA}
     with patch("pyps4_2ndscreen.ps4.get_status", return_value=MOCK_STATUS_IDLE):
-        mock_entity_id = await setup_mock_component.opp)
+        mock_entity_id = await setup_mock_component(opp)
 
     with patch("pyps4_2ndscreen.ps4.Ps4Async.start_title") as mock_call, patch(
         "openpeerpower.components.ps4.media_player.PS4Device.async_update"
@@ -464,11 +464,11 @@ async def test_select_source.opp, patch_load_json):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_select_source_caps.opp, patch_load_json):
+async def test_select_source_caps(opp, patch_load_json):
     """Test that select source service calls function with upper case title."""
     patch_load_json.return_value = {MOCK_TITLE_ID: MOCK_GAMES_DATA}
     with patch("pyps4_2ndscreen.ps4.get_status", return_value=MOCK_STATUS_IDLE):
-        mock_entity_id = await setup_mock_component.opp)
+        mock_entity_id = await setup_mock_component(opp)
 
     with patch("pyps4_2ndscreen.ps4.Ps4Async.start_title") as mock_call, patch(
         "openpeerpower.components.ps4.media_player.PS4Device.async_update"
@@ -487,11 +487,11 @@ async def test_select_source_caps.opp, patch_load_json):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_select_source_id.opp, patch_load_json):
+async def test_select_source_id(opp, patch_load_json):
     """Test that select source service calls function with Title ID."""
     patch_load_json.return_value = {MOCK_TITLE_ID: MOCK_GAMES_DATA}
     with patch("pyps4_2ndscreen.ps4.get_status", return_value=MOCK_STATUS_IDLE):
-        mock_entity_id = await setup_mock_component.opp)
+        mock_entity_id = await setup_mock_component(opp)
 
     with patch("pyps4_2ndscreen.ps4.Ps4Async.start_title") as mock_call, patch(
         "openpeerpower.components.ps4.media_player.PS4Device.async_update"
@@ -507,9 +507,9 @@ async def test_select_source_id.opp, patch_load_json):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_ps4_send_command.opp):
+async def test_ps4_send_command(opp):
     """Test that ps4 send command service calls function."""
-    mock_entity_id = await setup_mock_component.opp)
+    mock_entity_id = await setup_mock_component(opp)
 
     with patch("pyps4_2ndscreen.ps4.Ps4Async.remote_control") as mock_call:
         await opp.services.async_call(
@@ -522,13 +522,13 @@ async def test_ps4_send_command.opp):
     assert len(mock_call.mock_calls) == 1
 
 
-async def test_entry_is_unloaded.opp):
+async def test_entry_is_unloaded(opp):
     """Test that entry is unloaded."""
     mock_entry = MockConfigEntry(
         domain=ps4.DOMAIN, data=MOCK_DATA, version=VERSION, entry_id=MOCK_ENTRY_ID
     )
-    mock_entity_id = await setup_mock_component.opp, mock_entry)
-    mock_unload = await ps4.async_unload_entry.opp, mock_entry)
+    mock_entity_id = await setup_mock_component(opp, mock_entry)
+    mock_unload = await ps4.async_unload_entry(opp, mock_entry)
 
     assert mock_unload is True
     assert not.opp.data[PS4_DATA].devices

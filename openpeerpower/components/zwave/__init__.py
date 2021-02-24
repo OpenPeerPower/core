@@ -252,7 +252,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_get_ozw_migration_data.opp):
+async def async_get_ozw_migration_data(opp):
     """Return dict with info for migration to ozw integration."""
     data_to_migrate = {}
 
@@ -270,10 +270,10 @@ async def async_get_ozw_migration_data.opp):
         )
 
     config_entry = zwave_config_entries[0]  # zwave only has a single config entry
-    ent_reg = await async_get_entity_registry.opp)
+    ent_reg = await async_get_entity_registry(opp)
     entity_entries = async_entries_for_config_entry(ent_reg, config_entry.entry_id)
     unique_entries = {entry.unique_id: entry for entry in entity_entries}
-    dev_reg = await async_get_device_registry.opp)
+    dev_reg = await async_get_device_registry(opp)
 
     for entity_values in.opp.data[DATA_ENTITY_VALUES]:
         node = entity_values.primary.node
@@ -299,7 +299,7 @@ async def async_get_ozw_migration_data.opp):
 
 
 @callback
-def async_is_ozw_migrated.opp):
+def async_is_ozw_migrated(opp):
     """Return True if migration to ozw is done."""
     ozw_config_entries = opp.config_entries.async_entries("ozw")
     if not ozw_config_entries:
@@ -352,7 +352,7 @@ def get_config_value(node, value_index, tries=5):
     return None
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Z-Wave platform (generic part)."""
     if discovery_info is None or DATA_NETWORK not in.opp.data:
         return False
@@ -391,7 +391,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Z-Wave from a config entry.
 
     Will automatically load components to support devices found on the network.
@@ -404,7 +404,7 @@ async def async_setup_entry.opp, config_entry):
     # pylint: enable=import-error
     from pydispatch import dispatcher
 
-    if async_is_ozw_migrated.opp):
+    if async_is_ozw_migrated(opp):
         _LOGGER.error(
             "Migration to ozw has been done. Please remove the zwave integration"
         )
@@ -434,7 +434,7 @@ async def async_setup_entry.opp, config_entry):
     # Setup options
     options = ZWaveOption(
         usb_path,
-        user_path.opp.config.config_dir,
+        user_path(opp.config.config_dir,
         config_path=config.get(CONF_CONFIG_PATH),
     )
 
@@ -448,9 +448,9 @@ async def async_setup_entry.opp, config_entry):
     opp.data[DATA_DEVICES] = {}
     opp.data[DATA_ENTITY_VALUES] = []
 
-    registry = await async_get_entity_registry.opp)
+    registry = await async_get_entity_registry(opp)
 
-    wsapi.async_load_websocket_api.opp)
+    wsapi.async_load_websocket_api(opp)
 
     if use_debug:  # pragma: no cover
 
@@ -570,7 +570,7 @@ async def async_setup_entry.opp, config_entry):
         opp.add_job(_remove_device(node))
 
     async def _remove_device(node):
-        dev_reg = await async_get_device_registry.opp)
+        dev_reg = await async_get_device_registry(opp)
         identifier, name = node_device_id_and_name(node)
         device = dev_reg.async_get_device(identifiers={identifier})
         if device is not None:
@@ -869,7 +869,7 @@ async def async_setup_entry.opp, config_entry):
     async def async_refresh_entity(service):
         """Refresh values that specific entity depends on."""
         entity_id = service.data.get(ATTR_ENTITY_ID)
-        async_dispatcher_send.opp, SIGNAL_REFRESH_ENTITY_FORMAT.format(entity_id))
+        async_dispatcher_send(opp, SIGNAL_REFRESH_ENTITY_FORMAT.format(entity_id))
 
     def refresh_node(service):
         """Refresh all node info."""
@@ -1055,7 +1055,7 @@ async def async_setup_entry.opp, config_entry):
     # Setup autoheal
     if autoheal:
         _LOGGER.info("Z-Wave network autoheal is enabled")
-        async_track_time_change.opp, heal_network, hour=0, minute=0, second=0)
+        async_track_time_change(opp, heal_network, hour=0, minute=0, second=0)
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_zwave)
 

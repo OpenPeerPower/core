@@ -18,7 +18,7 @@ SUPPORT_LG = (
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the LG platform."""
     if discovery_info is not None:
         add_entities([LGDevice(discovery_info)])

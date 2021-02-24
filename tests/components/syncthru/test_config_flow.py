@@ -35,7 +35,7 @@ def mock_connection(aioclient_mock):
     )
 
 
-async def test_show_setup_form.opp):
+async def test_show_setup_form(opp):
     """Test that the setup form is served."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=None
@@ -45,16 +45,16 @@ async def test_show_setup_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_already_configured_by_url.opp, aioclient_mock):
+async def test_already_configured_by_url(opp, aioclient_mock):
     """Test we match and update already configured devices by URL."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     udn = "uuid:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
     MockConfigEntry(
         domain=DOMAIN,
         data={**FIXTURE_USER_INPUT, CONF_NAME: "Already configured"},
         title="Already configured",
         unique_id=udn,
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
     mock_connection(aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
@@ -69,7 +69,7 @@ async def test_already_configured_by_url.opp, aioclient_mock):
     assert result["result"].unique_id == udn
 
 
-async def test_syncthru_not_supported.opp):
+async def test_syncthru_not_supported(opp):
     """Test we show user form on unsupported device."""
     with patch.object(SyncThru, "update", side_effect=ValueError):
         result = await opp.config_entries.flow.async_init(
@@ -83,7 +83,7 @@ async def test_syncthru_not_supported.opp):
     assert result["errors"] == {CONF_URL: "syncthru_not_supported"}
 
 
-async def test_unknown_state.opp):
+async def test_unknown_state(opp):
     """Test we show user form on unsupported device."""
     with patch.object(SyncThru, "update", return_value=mock_coro()), patch.object(
         SyncThru, "is_unknown_state", return_value=True
@@ -99,9 +99,9 @@ async def test_unknown_state.opp):
     assert result["errors"] == {CONF_URL: "unknown_state"}
 
 
-async def test_success.opp, aioclient_mock):
+async def test_success(opp, aioclient_mock):
     """Test successful flow provides entry creation data."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     mock_connection(aioclient_mock)
 
     with patch(
@@ -119,9 +119,9 @@ async def test_success.opp, aioclient_mock):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_ssdp.opp, aioclient_mock):
+async def test_ssdp(opp, aioclient_mock):
     """Test SSDP discovery initiates config properly."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     mock_connection(aioclient_mock)
 
     url = "http://192.168.1.2/"

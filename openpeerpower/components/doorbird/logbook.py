@@ -7,7 +7,7 @@ from .const import DOMAIN, DOOR_STATION, DOOR_STATION_EVENT_ENTITY_IDS
 
 
 @callback
-def async_describe_events.opp, async_describe_event):
+def async_describe_events(opp, async_describe_event):
     """Describe logbook events."""
 
     @callback

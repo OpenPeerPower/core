@@ -12,7 +12,7 @@ def _flow_data():
     return options
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -45,7 +45,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_timeout.opp):
+async def test_form_timeout(opp):
     """Test we handle a connection timeout."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -63,7 +63,7 @@ async def test_form_timeout.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_connection_refused.opp):
+async def test_form_connection_refused(opp):
     """Test we handle a connection error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -81,7 +81,7 @@ async def test_form_connection_refused.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_no_units.opp):
+async def test_form_no_units(opp):
     """Test we handle no units found."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

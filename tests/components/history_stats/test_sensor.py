@@ -366,7 +366,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
         self.opp.start()
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload history_stats sensors."""
     await opp.async_add_executor_job(
         init_recorder_component, opp

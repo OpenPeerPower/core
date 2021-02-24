@@ -13,7 +13,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Fritzbox smarthome sensor from config_entry."""
     entities = []
     devices = opp.data[FRITZBOX_DOMAIN][CONF_DEVICES]

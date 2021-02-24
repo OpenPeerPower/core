@@ -26,13 +26,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the openSenseMap air quality platform."""
 
     name = config.get(CONF_NAME)
     station_id = config[CONF_STATION_ID]
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     osm_api = OpenSenseMapData(OpenSenseMap(station_id, opp.loop, session))
 
     await osm_api.async_update()

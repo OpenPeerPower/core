@@ -23,7 +23,7 @@ SERVICE_CLEAR_USERCODE = "clear_usercode"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave lock from config entry."""
 
     @callback
@@ -34,7 +34,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([lock])
 
     opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
-        async_dispatcher_connect.opp, f"{DOMAIN}_new_{LOCK_DOMAIN}", async_add_lock)
+        async_dispatcher_connect(opp, f"{DOMAIN}_new_{LOCK_DOMAIN}", async_add_lock)
     )
 
     platform = entity_platform.current_platform.get()

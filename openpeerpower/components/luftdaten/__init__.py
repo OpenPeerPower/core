@@ -85,7 +85,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 @callback
-def _async_fixup_sensor_id.opp, config_entry, sensor_id):
+def _async_fixup_sensor_id(opp, config_entry, sensor_id):
     opp.config_entries.async_update_entry(
         config_entry, data={**config_entry.data, CONF_SENSOR_ID: int(sensor_id)}
     )
@@ -103,7 +103,7 @@ async def async_setup(opp, config):
     conf = config[DOMAIN]
     station_id = conf[CONF_SENSOR_ID]
 
-    if station_id not in configured_sensors.opp):
+    if station_id not in configured_sensors(opp):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN,
@@ -121,24 +121,24 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Luftdaten as config entry."""
 
     if not isinstance(config_entry.data[CONF_SENSOR_ID], int):
-        _async_fixup_sensor_id.opp, config_entry, config_entry.data[CONF_SENSOR_ID])
+        _async_fixup_sensor_id(opp, config_entry, config_entry.data[CONF_SENSOR_ID])
 
     if (
-        config_entry.data[CONF_SENSOR_ID] in duplicate_stations.opp)
+        config_entry.data[CONF_SENSOR_ID] in duplicate_stations(opp)
         and config_entry.source == SOURCE_IMPORT
     ):
         _LOGGER.warning(
             "Removing duplicate sensors for station %s",
             config_entry.data[CONF_SENSOR_ID],
         )
-        opp.async_create_task.opp.config_entries.async_remove(config_entry.entry_id))
+        opp.async_create_task(opp.config_entries.async_remove(config_entry.entry_id))
         return False
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     try:
         luftdaten = LuftDatenData(
@@ -159,7 +159,7 @@ async def async_setup_entry.opp, config_entry):
     async def refresh_sensors(event_time):
         """Refresh Luftdaten data."""
         await luftdaten.async_update()
-        async_dispatcher_send.opp, TOPIC_UPDATE)
+        async_dispatcher_send(opp, TOPIC_UPDATE)
 
     opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER][
         config_entry.entry_id
@@ -172,7 +172,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an Luftdaten config entry."""
     remove_listener = opp.data[DOMAIN][DATA_LUFTDATEN_LISTENER].pop(
         config_entry.entry_id

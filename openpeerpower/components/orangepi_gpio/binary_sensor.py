@@ -8,7 +8,7 @@ from .const import CONF_INVERT_LOGIC, CONF_PIN_MODE, CONF_PORTS, PORT_SCHEMA
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(PORT_SCHEMA)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Orange Pi GPIO platform."""
     binary_sensors = []
     invert_logic = config[CONF_INVERT_LOGIC]

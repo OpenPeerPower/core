@@ -47,7 +47,7 @@ SERVICE_REMOVE_ORPHANED_ENTRIES = "remove_orphaned_entries"
 SELECT_GATEWAY_SCHEMA = vol.All(vol.Schema({vol.Optional(CONF_BRIDGE_ID): str}))
 
 
-async def async_setup_services.opp):
+async def async_setup_services(opp):
     """Set up services for deCONZ integration."""
     if opp.data.get(DECONZ_SERVICES, False):
         return
@@ -60,13 +60,13 @@ async def async_setup_services.opp):
         service_data = service_call.data
 
         if service == SERVICE_CONFIGURE_DEVICE:
-            await async_configure_service.opp, service_data)
+            await async_configure_service(opp, service_data)
 
         elif service == SERVICE_DEVICE_REFRESH:
-            await async_refresh_devices_service.opp, service_data)
+            await async_refresh_devices_service(opp, service_data)
 
         elif service == SERVICE_REMOVE_ORPHANED_ENTRIES:
-            await async_remove_orphaned_entries_service.opp, service_data)
+            await async_remove_orphaned_entries_service(opp, service_data)
 
     opp.services.async_register(
         DOMAIN,
@@ -90,7 +90,7 @@ async def async_setup_services.opp):
     )
 
 
-async def async_unload_services.opp):
+async def async_unload_services(opp):
     """Unload deCONZ services."""
     if not.opp.data.get(DECONZ_SERVICES):
         return
@@ -102,7 +102,7 @@ async def async_unload_services.opp):
     opp.services.async_remove(DOMAIN, SERVICE_REMOVE_ORPHANED_ENTRIES)
 
 
-async def async_configure_service.opp, data):
+async def async_configure_service(opp, data):
     """Set attribute of device in deCONZ.
 
     Entity is used to resolve to a device path (e.g. '/lights/1').
@@ -118,7 +118,7 @@ async def async_configure_service.opp, data):
     See Dresden Elektroniks REST API documentation for details:
     http://dresden-elektronik.github.io/deconz-rest-doc/rest/
     """
-    gateway = get_master_gateway.opp)
+    gateway = get_master_gateway(opp)
     if CONF_BRIDGE_ID in data:
         gateway = opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
 
@@ -136,9 +136,9 @@ async def async_configure_service.opp, data):
     await gateway.api.request("put", field, json=data)
 
 
-async def async_refresh_devices_service.opp, data):
+async def async_refresh_devices_service(opp, data):
     """Refresh available devices from deCONZ."""
-    gateway = get_master_gateway.opp)
+    gateway = get_master_gateway(opp)
     if CONF_BRIDGE_ID in data:
         gateway = opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
 
@@ -152,9 +152,9 @@ async def async_refresh_devices_service.opp, data):
     gateway.async_add_device_callback(NEW_SENSOR, force=True)
 
 
-async def async_remove_orphaned_entries_service.opp, data):
+async def async_remove_orphaned_entries_service(opp, data):
     """Remove orphaned deCONZ entries from device and entity registries."""
-    gateway = get_master_gateway.opp)
+    gateway = get_master_gateway(opp)
     if CONF_BRIDGE_ID in data:
         gateway = opp.data[DOMAIN][normalize_bridge_id(data[CONF_BRIDGE_ID])]
 

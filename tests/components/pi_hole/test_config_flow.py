@@ -22,7 +22,7 @@ from . import (
 )
 
 
-def _flow_next.opp, flow_id):
+def _flow_next(opp, flow_id):
     return next(
         flow
         for flow in.opp.config_entries.flow.async_progress()
@@ -37,7 +37,7 @@ def _patch_setup():
     )
 
 
-async def test_flow_import.opp, caplog):
+async def test_flow_import(opp, caplog):
     """Test import flow."""
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_setup():
@@ -56,7 +56,7 @@ async def test_flow_import.opp, caplog):
         assert result["reason"] == "already_configured"
 
 
-async def test_flow_import_invalid.opp, caplog):
+async def test_flow_import_invalid(opp, caplog):
     """Test import flow with invalid server."""
     mocked_hole = _create_mocked_hole(True)
     with _patch_config_flow_hole(mocked_hole), _patch_setup():
@@ -68,7 +68,7 @@ async def test_flow_import_invalid.opp, caplog):
         assert len([x for x in caplog.records if x.levelno == logging.ERROR]) == 1
 
 
-async def test_flow_user.opp):
+async def test_flow_user(opp):
     """Test user initialized flow."""
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_setup():
@@ -79,7 +79,7 @@ async def test_flow_user.opp):
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == "user"
         assert result["errors"] == {}
-        _flow_next.opp, result["flow_id"])
+        _flow_next(opp, result["flow_id"])
 
         result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -88,7 +88,7 @@ async def test_flow_user.opp):
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == "api_key"
         assert result["errors"] is None
-        _flow_next.opp, result["flow_id"])
+        _flow_next(opp, result["flow_id"])
 
         result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -108,7 +108,7 @@ async def test_flow_user.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_flow_statistics_only.opp):
+async def test_flow_statistics_only(opp):
     """Test user initialized flow with statistics only."""
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_setup():
@@ -119,7 +119,7 @@ async def test_flow_statistics_only.opp):
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == "user"
         assert result["errors"] == {}
-        _flow_next.opp, result["flow_id"])
+        _flow_next(opp, result["flow_id"])
 
         user_input = {**CONF_CONFIG_FLOW_USER}
         user_input[CONF_STATISTICS_ONLY] = True
@@ -135,7 +135,7 @@ async def test_flow_statistics_only.opp):
         assert result["data"] == config_entry_data
 
 
-async def test_flow_user_invalid.opp):
+async def test_flow_user_invalid(opp):
     """Test user initialized flow with invalid server."""
     mocked_hole = _create_mocked_hole(True)
     with _patch_config_flow_hole(mocked_hole), _patch_setup():

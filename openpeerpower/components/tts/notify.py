@@ -27,7 +27,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Return the notify service."""
 
     return TTSNotificationService(config)

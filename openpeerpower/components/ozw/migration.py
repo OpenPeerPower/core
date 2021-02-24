@@ -43,16 +43,16 @@ CC_ID_LABELS = {
 }
 
 
-async def async_get_migration_data.opp):
+async def async_get_migration_data(opp):
     """Return dict with ozw side migration info."""
     data = {}
     nodes_values = opp.data[DOMAIN][NODES_VALUES]
     ozw_config_entries = opp.config_entries.async_entries(DOMAIN)
     config_entry = ozw_config_entries[0]  # ozw only has a single config entry
-    ent_reg = await async_get_entity_registry.opp)
+    ent_reg = await async_get_entity_registry(opp)
     entity_entries = async_entries_for_config_entry(ent_reg, config_entry.entry_id)
     unique_entries = {entry.unique_id: entry for entry in entity_entries}
-    dev_reg = await async_get_device_registry.opp)
+    dev_reg = await async_get_device_registry(opp)
 
     for node_id, node_values in nodes_values.items():
         for entity_values in node_values:
@@ -135,9 +135,9 @@ def map_node_values(zwave_data, ozw_data):
     return migration_map
 
 
-async def async_migrate.opp, migration_map):
+async def async_migrate(opp, migration_map):
     """Perform zwave to ozw migration."""
-    dev_reg = await async_get_device_registry.opp)
+    dev_reg = await async_get_device_registry(opp)
     for ozw_device_id, zwave_device_id in migration_map["device_entries"].items():
         zwave_device_entry = dev_reg.async_get(zwave_device_id)
         dev_reg.async_update_device(
@@ -146,7 +146,7 @@ async def async_migrate.opp, migration_map):
             name_by_user=zwave_device_entry.name_by_user,
         )
 
-    ent_reg = await async_get_entity_registry.opp)
+    ent_reg = await async_get_entity_registry(opp)
     for zwave_entry in migration_map["entity_entries"].values():
         zwave_entity_id = zwave_entry["entity_entry"].entity_id
         ent_reg.async_remove(zwave_entity_id)

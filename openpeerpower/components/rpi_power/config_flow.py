@@ -10,7 +10,7 @@ from openpeerpower.helpers.config_entry_flow import DiscoveryFlowHandler
 from .const import DOMAIN
 
 
-async def _async_supported.opp: OpenPeerPower) -> bool:
+async def _async_supported(opp: OpenPeerPower) -> bool:
     """Return if the system supports under voltage detection."""
     under_voltage = await opp.async_add_executor_job(new_under_voltage)
     return under_voltage is not None

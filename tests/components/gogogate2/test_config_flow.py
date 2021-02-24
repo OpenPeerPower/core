@@ -79,7 +79,7 @@ async def test_auth_fail(
 
 async def test_form_homekit_unique_id_already_setup_opp):
     """Test that we abort from homekit if gogogate2 is already setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -99,7 +99,7 @@ async def test_form_homekit_unique_id_already_setup_opp):
         domain=DOMAIN,
         data={CONF_IP_ADDRESS: "1.2.3.4", CONF_USERNAME: "mock", CONF_PASSWORD: "mock"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -111,13 +111,13 @@ async def test_form_homekit_unique_id_already_setup_opp):
 
 async def test_form_homekit_ip_address_already_setup_opp):
     """Test that we abort from homekit if gogogate2 is already setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_IP_ADDRESS: "1.2.3.4", CONF_USERNAME: "mock", CONF_PASSWORD: "mock"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -127,9 +127,9 @@ async def test_form_homekit_ip_address_already_setup_opp):
     assert result["type"] == RESULT_TYPE_ABORT
 
 
-async def test_form_homekit_ip_address.opp):
+async def test_form_homekit_ip_address(opp):
     """Test homekit includes the defaults ip address."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

@@ -171,7 +171,7 @@ def setup(opp, config):
         opp.data[DATA_LEAF][leaf.vin] = data_store
 
         for component in LEAF_COMPONENTS:
-            load_platform.opp, component, DOMAIN, {}, car_config)
+            load_platform(opp, component, DOMAIN, {}, car_config)
 
         async_track_point_in_utc_time(
             opp. data_store.async_update_data, utcnow() + INITIAL_UPDATE

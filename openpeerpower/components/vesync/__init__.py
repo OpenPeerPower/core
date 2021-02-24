@@ -46,7 +46,7 @@ async def async_setup(opp, config):
     if conf is None:
         return True
 
-    if not configured_instances.opp):
+    if not configured_instances(opp):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN,
@@ -61,7 +61,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Vesync as config entry."""
     username = config_entry.data[CONF_USERNAME]
     password = config_entry.data[CONF_PASSWORD]
@@ -76,7 +76,7 @@ async def async_setup_entry.opp, config_entry):
         _LOGGER.error("Unable to login to the VeSync server")
         return False
 
-    device_dict = await async_process_devices.opp, manager)
+    device_dict = await async_process_devices(opp, manager)
 
     forward_setup = opp.config_entries.async_forward_entry_setup
 
@@ -102,7 +102,7 @@ async def async_setup_entry.opp, config_entry):
         switches = opp.data[DOMAIN][VS_SWITCHES]
         fans = opp.data[DOMAIN][VS_FANS]
 
-        dev_dict = await async_process_devices.opp, manager)
+        dev_dict = await async_process_devices(opp, manager)
         switch_devs = dev_dict.get(VS_SWITCHES, [])
         fan_devs = dev_dict.get(VS_FANS, [])
 
@@ -110,7 +110,7 @@ async def async_setup_entry.opp, config_entry):
         new_switches = list(switch_set.difference(switches))
         if new_switches and switches:
             switches.extend(new_switches)
-            async_dispatcher_send.opp, VS_DISCOVERY.format(VS_SWITCHES), new_switches)
+            async_dispatcher_send(opp, VS_DISCOVERY.format(VS_SWITCHES), new_switches)
             return
         if new_switches and not switches:
             switches.extend(new_switches)
@@ -120,7 +120,7 @@ async def async_setup_entry.opp, config_entry):
         new_fans = list(fan_set.difference(fans))
         if new_fans and fans:
             fans.extend(new_fans)
-            async_dispatcher_send.opp, VS_DISCOVERY.format(VS_FANS), new_fans)
+            async_dispatcher_send(opp, VS_DISCOVERY.format(VS_FANS), new_fans)
             return
         if new_fans and not fans:
             fans.extend(new_fans)
@@ -133,7 +133,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

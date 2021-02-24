@@ -460,7 +460,7 @@ class HERETravelTimeData:
             # pylint: disable=no-member
             source_attribution = response.response.get("sourceAttribution")
             if source_attribution is not None:
-                self.attribution = self._build.opp_attribution(source_attribution)
+                self.attribution = self._build(opp_attribution(source_attribution)
             # pylint: disable=no-member
             route = response.response["route"]
             summary = route[0]["summary"]
@@ -483,7 +483,7 @@ class HERETravelTimeData:
             self.destination_name = waypoint[1]["mappedRoadName"]
 
     @staticmethod
-    def _build.opp_attribution(source_attribution: Dict) -> Optional[str]:
+    def _build(opp_attribution(source_attribution: Dict) -> Optional[str]:
         """Build a.opp frontend ready string out of the sourceAttribution."""
         suppliers = source_attribution.get("supplier")
         if suppliers is not None:

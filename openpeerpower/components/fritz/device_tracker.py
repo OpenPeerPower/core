@@ -27,7 +27,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Validate the configuration and return FritzBoxScanner."""
     scanner = FritzBoxScanner(config[DOMAIN])
     return scanner if scanner.success_init else None

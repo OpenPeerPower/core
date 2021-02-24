@@ -19,7 +19,7 @@ async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 
-    MockConfigEntry(domain=DOMAIN, unique_id="12345, 12345", data=conf).add_to.opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="12345, 12345", data=conf).add_to(opp(
         opp
     )
 
@@ -31,7 +31,7 @@ async def test_duplicate_error(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_place_or_service_id.opp):
+async def test_invalid_place_or_service_id(opp):
     """Test that an invalid Place or Service ID throws an error."""
     conf = {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 
@@ -47,12 +47,12 @@ async def test_invalid_place_or_service_id.opp):
         assert result["errors"] == {"base": "invalid_place_or_service_id"}
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     conf = {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 
     config_entry = MockConfigEntry(domain=DOMAIN, unique_id="12345, 12345", data=conf)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.recollect_waste.async_setup_entry", return_value=True
@@ -71,7 +71,7 @@ async def test_options_flow.opp):
         assert config_entry.options == {CONF_FRIENDLY_NAME: True}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -81,7 +81,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_import.opp):
+async def test_step_import(opp):
     """Test that the user step works."""
     conf = {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 
@@ -99,7 +99,7 @@ async def test_step_import.opp):
         assert result["data"] == {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     conf = {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 

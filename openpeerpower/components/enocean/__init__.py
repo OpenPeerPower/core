@@ -47,7 +47,7 @@ async def async_setup_entry(
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload ENOcean config entry."""
 
     enocean_dongle = opp.data[DATA_ENOCEAN][ENOCEAN_DONGLE]

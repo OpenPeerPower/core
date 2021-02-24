@@ -95,7 +95,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         if token is None:
             return
 
-        doorstation = get_doorstation_by_token.opp, token)
+        doorstation = get_doorstation_by_token(opp, token)
 
         if doorstation is None:
             _LOGGER.error("Device not found for provided token")
@@ -113,10 +113,10 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up DoorBird from a config entry."""
 
-    _async_import_options_from_data_if_missing.opp, entry)
+    _async_import_options_from_data_if_missing(opp, entry)
 
     doorstation_config = entry.data
     doorstation_options = entry.options
@@ -156,7 +156,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     events = doorstation_options.get(CONF_EVENTS, [])
     doorstation = ConfiguredDoorBird(device, name, events, custom_url, token)
     # Subscribe to doorbell or motion events
-    if not await _async_register_events.opp, doorstation):
+    if not await _async_register_events(opp, doorstation):
         raise ConfigEntryNotReady
 
     opp.data[DOMAIN][config_entry_id] = {
@@ -174,7 +174,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
 
     unload_ok = all(
@@ -191,7 +191,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def _async_register_events.opp, doorstation):
+async def _async_register_events(opp, doorstation):
     try:
         await opp.async_add_executor_job(doorstation.register_events, opp)
     except HTTPError:
@@ -208,18 +208,18 @@ async def _async_register_events.opp, doorstation):
     return True
 
 
-async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     config_entry_id = entry.entry_id
     doorstation = opp.data[DOMAIN][config_entry_id][DOOR_STATION]
 
     doorstation.events = entry.options[CONF_EVENTS]
     # Subscribe to doorbell or motion events
-    await _async_register_events.opp, doorstation)
+    await _async_register_events(opp, doorstation)
 
 
 @callback
-def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: ConfigEntry):
+def _async_import_options_from_data_if_missing(opp: OpenPeerPower, entry: ConfigEntry):
     options = dict(entry.options)
     modified = False
     for importable_option in [CONF_EVENTS]:
@@ -266,14 +266,14 @@ class ConfiguredDoorBird:
     def register_events(self, opp):
         """Register events on device."""
         # Get the URL of this server
-        opp.url = get_url.opp)
+        opp.url = get_url(opp)
 
         # Override url if another is specified in the configuration
         if self.custom_url is not None:
             opp.url = self.custom_url
 
         for event in self.doorstation_events:
-            self._register_event.opp_url, event)
+            self._register_event(opp_url, event)
 
             _LOGGER.info("Successfully registered URL for %s on %s", event, self.name)
 
@@ -358,7 +358,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
         token = request.query.get("token")
 
-        device = get_doorstation_by_token.opp, token)
+        device = get_doorstation_by_token(opp, token)
 
         if device is None:
             return web.Response(

@@ -54,7 +54,7 @@ def _get_homegraph_jwt(time, iss, key):
     return jwt.encode(jwt_raw, key, algorithm="RS256").decode("utf-8")
 
 
-async def _get_homegraph_token.opp, jwt_signed):
+async def _get_homegraph_token(opp, jwt_signed):
     headers = {
         "Authorization": f"Bearer {jwt_signed}",
         "Content-Type": "application/x-www-form-urlencoded",
@@ -64,7 +64,7 @@ async def _get_homegraph_token.opp, jwt_signed):
         "assertion": jwt_signed,
     }
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     async with session.post(HOMEGRAPH_TOKEN_URL, headers=headers, data=data) as res:
         res.raise_for_status()
         return await res.json()

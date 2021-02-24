@@ -24,7 +24,7 @@ async def async_setup_opp):
         if action != ACTION_DELETE:
             return
 
-        ent_reg = await entity_registry.async_get_registry.opp)
+        ent_reg = await entity_registry.async_get_registry(opp)
 
         entity_id = ent_reg.async_get_entity_id(DOMAIN, DOMAIN, config_key)
 

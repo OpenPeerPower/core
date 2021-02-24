@@ -8,7 +8,7 @@ from .const import VS_FANS, VS_SWITCHES
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_process_devices.opp, manager):
+async def async_process_devices(opp, manager):
     """Assign devices to proper component."""
     devices = {}
     devices[VS_SWITCHES] = []

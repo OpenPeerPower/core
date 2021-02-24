@@ -9,7 +9,7 @@ from openpeerpower.core import callback
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up myStrom Binary Sensor."""
     opp.http.register_view(MyStromView(async_add_entities))
 

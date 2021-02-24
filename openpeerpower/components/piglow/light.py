@@ -28,7 +28,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Piglow Light platform."""
     if subprocess.getoutput("i2cdetect  -q -y 1 | grep -o 54") != "54":
         _LOGGER.error("A Piglow device was not found")

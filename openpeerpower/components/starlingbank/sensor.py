@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Set up the Sterling Bank sensor platform."""
 
     sensors = []

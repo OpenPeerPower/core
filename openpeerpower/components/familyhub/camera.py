@@ -17,13 +17,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Family Hub Camera."""
 
     address = config.get(CONF_IP_ADDRESS)
     name = config.get(CONF_NAME)
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     family_hub_cam = FamilyHubCam(address, opp.loop, session)
 
     async_add_entities([FamilyHubCamera(name, family_hub_cam)], True)

@@ -88,7 +88,7 @@ from .schemas import (
 _LOGGER = logging.getLogger(__name__)
 
 
-def add_on_off_event_device.opp, device):
+def add_on_off_event_device(opp, device):
     """Register an Insteon device as an on/off event device."""
 
     @callback
@@ -133,7 +133,7 @@ def add_on_off_event_device.opp, device):
                     )
 
 
-def register_new_device_callback.opp):
+def register_new_device_callback(opp):
     """Register callback for new Insteon device."""
 
     @callback
@@ -151,17 +151,17 @@ def register_new_device_callback.opp):
         platforms = get_device_platforms(device)
         for platform in platforms:
             if platform == ON_OFF_EVENTS:
-                add_on_off_event_device.opp, device)
+                add_on_off_event_device(opp, device)
 
             else:
                 signal = f"{SIGNAL_ADD_ENTITIES}_{platform}"
-                dispatcher_send.opp, signal, {"address": device.address})
+                dispatcher_send(opp, signal, {"address": device.address})
 
     devices.subscribe(async_new_insteon_device, force_strong_ref=True)
 
 
 @callback
-def async_register_services.opp):
+def async_register_services(opp):
     """Register services used by insteon component."""
 
     save_lock = asyncio.Lock()
@@ -186,7 +186,7 @@ def async_register_services.opp):
             await async_srv_load_aldb_all(reload)
         else:
             signal = f"{entity_id}_{SIGNAL_LOAD_ALDB}"
-            async_dispatcher_send.opp, signal, reload)
+            async_dispatcher_send(opp, signal, reload)
 
     async def async_srv_load_aldb_all(reload):
         """Load the All-Link database for all devices."""
@@ -202,7 +202,7 @@ def async_register_services.opp):
         """Write the Insteon device configuration to file."""
         async with save_lock:
             _LOGGER.debug("Saving Insteon devices")
-            await devices.async_save.opp.config.config_dir)
+            await devices.async_save(opp.config.config_dir)
 
     def print_aldb(service):
         """Print the All-Link Database for a device."""
@@ -210,7 +210,7 @@ def async_register_services.opp):
         # Future direction is to create an INSTEON control panel.
         entity_id = service.data[CONF_ENTITY_ID]
         signal = f"{entity_id}_{SIGNAL_PRINT_ALDB}"
-        dispatcher_send.opp, signal)
+        dispatcher_send(opp, signal)
 
     def print_im_aldb(service):
         """Print the All-Link Database for a device."""
@@ -248,7 +248,7 @@ def async_register_services.opp):
         """Add the default All-Link entries to a device."""
         entity_id = service.data[CONF_ENTITY_ID]
         signal = f"{entity_id}_{SIGNAL_ADD_DEFAULT_LINKS}"
-        async_dispatcher_send.opp, signal)
+        async_dispatcher_send(opp, signal)
 
     async def async_add_device_override(override):
         """Remove an Insten device and associated entities."""
@@ -292,7 +292,7 @@ def async_register_services.opp):
     async def async_remove_device(address):
         """Remove the device and all entities from.opp."""
         signal = f"{address.id}_{SIGNAL_REMOVE_ENTITY}"
-        async_dispatcher_send.opp, signal)
+        async_dispatcher_send(opp, signal)
         dev_registry = await opp.helpers.device_registry.async_get_registry()
         device = dev_registry.async_get_device(identifiers={(DOMAIN, str(address))})
         if device:
@@ -342,15 +342,15 @@ def async_register_services.opp):
         async_add_default_links,
         schema=ADD_DEFAULT_LINKS_SCHEMA,
     )
-    async_dispatcher_connect.opp, SIGNAL_SAVE_DEVICES, async_srv_save_devices)
+    async_dispatcher_connect(opp, SIGNAL_SAVE_DEVICES, async_srv_save_devices)
     async_dispatcher_connect(
         opp. SIGNAL_ADD_DEVICE_OVERRIDE, async_add_device_override
     )
     async_dispatcher_connect(
         opp. SIGNAL_REMOVE_DEVICE_OVERRIDE, async_remove_device_override
     )
-    async_dispatcher_connect.opp, SIGNAL_ADD_X10_DEVICE, async_add_x10_device)
-    async_dispatcher_connect.opp, SIGNAL_REMOVE_X10_DEVICE, async_remove_x10_device)
+    async_dispatcher_connect(opp, SIGNAL_ADD_X10_DEVICE, async_add_x10_device)
+    async_dispatcher_connect(opp, SIGNAL_REMOVE_X10_DEVICE, async_remove_x10_device)
     _LOGGER.debug("Insteon Services registered")
 
 

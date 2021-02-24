@@ -159,7 +159,7 @@ async def test_yaml_collection_skipping_duplicate_ids():
     )
 
 
-async def test_storage_collection.opp):
+async def test_storage_collection(opp):
     """Test storage collection."""
     store = storage.Store.opp, 1, "test-data")
     await store.async_save(
@@ -222,11 +222,11 @@ async def test_storage_collection.opp):
     }
 
 
-async def test_attach_entity_component_collection.opp):
+async def test_attach_entity_component_collection(opp):
     """Test attaching collection to entity component."""
     ent_comp = entity_component.EntityComponent(_LOGGER, "test", opp)
     coll = collection.ObservableCollection(_LOGGER)
-    collection.sync_entity_lifecycle.opp, "test", "test", ent_comp, coll, MockEntity)
+    collection.sync_entity_lifecycle(opp, "test", "test", ent_comp, coll, MockEntity)
 
     await coll.notify_changes(
         [
@@ -261,7 +261,7 @@ async def test_attach_entity_component_collection.opp):
     assert.opp.states.get("test.mock_1") is None
 
 
-async def test_storage_collection_websocket.opp, opp_ws_client):
+async def test_storage_collection_websocket(opp, opp_ws_client):
     """Test exposing a storage collection via websockets."""
     store = storage.Store.opp, 1, "test-data")
     coll = MockStorageCollection(store, _LOGGER)
@@ -274,7 +274,7 @@ async def test_storage_collection_websocket.opp, opp_ws_client):
         {vol.Optional("name"): str},
     ).async_setup_opp)
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     # Create invalid
     await client.send_json(

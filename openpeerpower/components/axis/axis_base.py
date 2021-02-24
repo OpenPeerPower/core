@@ -51,7 +51,7 @@ class AxisEventBase(AxisEntityBase):
         self.event.register_callback(self.update_callback)
         await super().async_added_to_opp()
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect device object when removed."""
         self.event.remove_callback(self.update_callback)
 

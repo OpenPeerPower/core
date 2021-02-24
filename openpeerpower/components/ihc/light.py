@@ -11,7 +11,7 @@ from .ihcdevice import IHCDevice
 from .util import async_pulse, async_set_bool, async_set_int
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the IHC lights platform."""
     if discovery_info is None:
         return

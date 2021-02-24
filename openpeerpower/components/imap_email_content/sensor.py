@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Email sensor platform."""
     reader = EmailReader(
         config.get(CONF_USERNAME),
@@ -58,7 +58,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
-        value_template.opp = opp
+        value_template(opp = opp
     sensor = EmailContentSensor(
         opp,
         reader,

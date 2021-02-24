@@ -5,7 +5,7 @@ from openpeerpower.const import CONF_NAME
 from . import LIGHTWAVE_LINK
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Find and return LightWave switches."""
     if not discovery_info:
         return

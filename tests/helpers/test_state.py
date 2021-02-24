@@ -25,7 +25,7 @@ from openpeerpower.util import dt as dt_util
 from tests.common import async_mock_service
 
 
-async def test_async_track_states.opp):
+async def test_async_track_states(opp):
     """Test AsyncTrackStates context manager."""
     point1 = dt_util.utcnow()
     point2 = point1 + timedelta(seconds=5)
@@ -49,7 +49,7 @@ async def test_async_track_states.opp):
     assert [state2, state3] == sorted(states, key=lambda state: state.entity_id)
 
 
-async def test_call_to_component.opp):
+async def test_call_to_component(opp):
     """Test calls to components state reproduction functions."""
     with patch(
         "openpeerpower.components.media_player.reproduce_state.async_reproduce_states"
@@ -82,7 +82,7 @@ async def test_call_to_component.opp):
             )
 
 
-async def test_get_changed_since.opp):
+async def test_get_changed_since(opp):
     """Test get_changed_since."""
     point1 = dt_util.utcnow()
     point2 = point1 + timedelta(seconds=5)
@@ -103,11 +103,11 @@ async def test_get_changed_since.opp):
     assert [state2, state3] == state.get_changed_since([state1, state2, state3], point2)
 
 
-async def test_reproduce_with_no_entity.opp):
+async def test_reproduce_with_no_entity(opp):
     """Test reproduce_state with no entity."""
-    calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_ON)
 
-    await state.async_reproduce_state.opp, ha.State("light.test", "on"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "on"))
 
     await opp.async_block_till_done()
 
@@ -115,13 +115,13 @@ async def test_reproduce_with_no_entity.opp):
     assert.opp.states.get("light.test") is None
 
 
-async def test_reproduce_turn_on.opp):
+async def test_reproduce_turn_on(opp):
     """Test reproduce_state with SERVICE_TURN_ON."""
-    calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_ON)
 
     opp.states.async_set("light.test", "off")
 
-    await state.async_reproduce_state.opp, ha.State("light.test", "on"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "on"))
 
     await opp.async_block_till_done()
 
@@ -132,13 +132,13 @@ async def test_reproduce_turn_on.opp):
     assert last_call.data.get("entity_id") == "light.test"
 
 
-async def test_reproduce_turn_off.opp):
+async def test_reproduce_turn_off(opp):
     """Test reproduce_state with SERVICE_TURN_OFF."""
-    calls = async_mock_service.opp, "light", SERVICE_TURN_OFF)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_OFF)
 
     opp.states.async_set("light.test", "on")
 
-    await state.async_reproduce_state.opp, ha.State("light.test", "off"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "off"))
 
     await opp.async_block_till_done()
 
@@ -149,9 +149,9 @@ async def test_reproduce_turn_off.opp):
     assert last_call.data.get("entity_id") == "light.test"
 
 
-async def test_reproduce_complex_data.opp):
+async def test_reproduce_complex_data(opp):
     """Test reproduce_state with complex service data."""
-    calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_ON)
 
     opp.states.async_set("light.test", "off")
 
@@ -170,13 +170,13 @@ async def test_reproduce_complex_data.opp):
     assert last_call.data.get("rgb_color") == complex_data
 
 
-async def test_reproduce_bad_state.opp):
+async def test_reproduce_bad_state(opp):
     """Test reproduce_state with bad state."""
-    calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_ON)
 
     opp.states.async_set("light.test", "off")
 
-    await state.async_reproduce_state.opp, ha.State("light.test", "bad"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "bad"))
 
     await opp.async_block_till_done()
 
@@ -184,7 +184,7 @@ async def test_reproduce_bad_state.opp):
     assert.opp.states.get("light.test").state == "off"
 
 
-async def test_as_number_states.opp):
+async def test_as_number_states(opp):
     """Test state_as_number with states."""
     zero_states = (
         STATE_OFF,
@@ -200,7 +200,7 @@ async def test_as_number_states.opp):
         assert state.state_as_number(ha.State("domain.test", _state, {})) == 1
 
 
-async def test_as_number_coercion.opp):
+async def test_as_number_coercion(opp):
     """Test state_as_number with number."""
     for _state in ("0", "0.0", 0, 0.0):
         assert state.state_as_number(ha.State("domain.test", _state, {})) == 0.0
@@ -208,7 +208,7 @@ async def test_as_number_coercion.opp):
         assert state.state_as_number(ha.State("domain.test", _state, {})) == 1.0
 
 
-async def test_as_number_invalid_cases.opp):
+async def test_as_number_invalid_cases(opp):
     """Test state_as_number with invalid cases."""
     for _state in ("", "foo", "foo.bar", None, False, True, object, object()):
         with pytest.raises(ValueError):

@@ -17,7 +17,7 @@ from .conftest import base_config_test, base_test
 
 @pytest.mark.parametrize("do_options", [False, True])
 @pytest.mark.parametrize("read_type", [CALL_TYPE_COIL, CONF_REGISTER])
-async def test_config_cover.opp, do_options, read_type):
+async def test_config_cover(opp, do_options, read_type):
     """Run test for cover."""
     device_name = "test_cover"
     device_config = {
@@ -67,7 +67,7 @@ async def test_config_cover.opp, do_options, read_type):
         ),
     ],
 )
-async def test_coil_cover.opp, regs, expected):
+async def test_coil_cover(opp, regs, expected):
     """Run test for given config."""
     cover_name = "modbus_test_cover"
     state = await base_test(

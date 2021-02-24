@@ -21,7 +21,7 @@ ATTR_FILE_URL = "image_url"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_URL): cv.url})
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Microsoft Teams notification service."""
     webhook_url = config.get(CONF_URL)
 

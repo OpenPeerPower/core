@@ -61,7 +61,7 @@ def _get_sources(config_entry):
     return _get_sources_from_dict(data)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Monoprice 6-zone amplifier platform."""
     port = config_entry.data[CONF_PORT]
 
@@ -91,7 +91,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             elif service_call.service == SERVICE_RESTORE:
                 entity.restore()
 
-    @service.verify_domain_control.opp, DOMAIN)
+    @service.verify_domain_control(opp, DOMAIN)
     async def async_service_handle(service_call):
         """Handle for services."""
         entities = await platform.async_extract_from_service(service_call)

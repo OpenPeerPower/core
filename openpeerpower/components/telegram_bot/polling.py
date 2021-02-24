@@ -13,7 +13,7 @@ from . import CONF_ALLOWED_CHAT_IDS, BaseTelegramBotEntity, initialize_bot
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config):
+async def async_setup_platform(opp, config):
     """Set up the Telegram polling platform."""
     bot = initialize_bot(config)
     pol = TelegramPoll(bot, opp, config[CONF_ALLOWED_CHAT_IDS])

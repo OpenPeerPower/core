@@ -244,17 +244,17 @@ def ihc_setup_opp, config, conf, controller_id):
     ):
         return False
     # Manual configuration
-    get_manual_configuration.opp, config, conf, ihc_controller, controller_id)
+    get_manual_configuration(opp, config, conf, ihc_controller, controller_id)
     # Store controller configuration
     ihc_key = f"ihc{controller_id}"
     opp.data[ihc_key] = {IHC_CONTROLLER: ihc_controller, IHC_INFO: conf[CONF_INFO]}
     # We only want to register the service functions once for the first controller
     if controller_id == 0:
-        setup_service_functions.opp)
+        setup_service_functions(opp)
     return True
 
 
-def get_manual_configuration.opp, config, conf, ihc_controller, controller_id):
+def get_manual_configuration(opp, config, conf, ihc_controller, controller_id):
     """Get manual configuration for IHC devices."""
     for component in IHC_PLATFORMS:
         discovery_info = {}
@@ -281,7 +281,7 @@ def get_manual_configuration.opp, config, conf, ihc_controller, controller_id):
                 }
                 discovery_info[name] = device
         if discovery_info:
-            discovery.load_platform.opp, component, DOMAIN, discovery_info, config)
+            discovery.load_platform(opp, component, DOMAIN, discovery_info, config)
 
 
 def autosetup_ihc_products(
@@ -309,7 +309,7 @@ def autosetup_ihc_products(
         component_setup = auto_setup_conf[component]
         discovery_info = get_discovery_info(component_setup, groups, controller_id)
         if discovery_info:
-            discovery.load_platform.opp, component, DOMAIN, discovery_info, config)
+            discovery.load_platform(opp, component, DOMAIN, discovery_info, config)
     return True
 
 
@@ -341,7 +341,7 @@ def get_discovery_info(component_setup, groups, controller_id):
     return discovery_data
 
 
-def setup_service_functions.opp: OpenPeerPowerType):
+def setup_service_functions(opp: OpenPeerPowerType):
     """Set up the IHC service functions."""
 
     def _get_controller(call):
@@ -374,7 +374,7 @@ def setup_service_functions.opp: OpenPeerPowerType):
         """Pulse a IHC controller input function."""
         ihc_id = call.data[ATTR_IHC_ID]
         ihc_controller = _get_controller(call)
-        await async_pulse.opp, ihc_controller, ihc_id)
+        await async_pulse(opp, ihc_controller, ihc_id)
 
     opp.services.register(
         DOMAIN,

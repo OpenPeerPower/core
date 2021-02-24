@@ -23,7 +23,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
+async def async_setup_entry(opp: OpenPeerPowerType, entry, async_add_entities):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback
@@ -38,10 +38,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
 
     opp.data[GPL_DOMAIN]["unsub_device_tracker"][
         entry.entry_id
-    ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
+    ] = async_dispatcher_connect(opp, TRACKER_UPDATE, _receive_data)
 
     # Restore previously loaded devices
-    dev_reg = await device_registry.async_get_registry.opp)
+    dev_reg = await device_registry.async_get_registry(opp)
     dev_ids = {
         identifier[1]
         for device in dev_reg.devices.values()
@@ -155,9 +155,9 @@ class GPSLoggerEntity(TrackerEntity, RestoreEntity):
         }
         self._battery = attr.get(ATTR_BATTERY_LEVEL)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Clean up after entity before removal."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         self._unsub_dispatcher()
 
     @callback

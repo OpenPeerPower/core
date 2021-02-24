@@ -17,9 +17,9 @@ from .common import TEST_PASSWORD, TEST_USER_ID
 SWITCH_ENTITY_ID = "switch.shutoff_valve"
 
 
-async def test_services.opp, config_entry, aioclient_mock_fixture, aioclient_mock):
+async def test_services(opp, config_entry, aioclient_mock_fixture, aioclient_mock):
     """Test Flo services."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     assert await async_setup_component(
         opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )

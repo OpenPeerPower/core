@@ -69,7 +69,7 @@ def send_request(payload, session):
         return request.json()
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Logitech UE Smart Radio platform."""
     email = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)

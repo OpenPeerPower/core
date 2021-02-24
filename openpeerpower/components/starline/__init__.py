@@ -24,7 +24,7 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up the StarLine device from a config entry."""
     account = StarlineAccount.opp, config_entry)
     await account.update()
@@ -91,12 +91,12 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     )
 
     config_entry.add_update_listener(async_options_updated)
-    await async_options_updated.opp, config_entry)
+    await async_options_updated(opp, config_entry)
 
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     for domain in PLATFORMS:
         await opp.config_entries.async_forward_entry_unload(config_entry, domain)
@@ -106,7 +106,7 @@ async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> b
     return True
 
 
-async def async_options_updated.opp: OpenPeerPower, config_entry: ConfigEntry) -> None:
+async def async_options_updated(opp: OpenPeerPower, config_entry: ConfigEntry) -> None:
     """Triggered by config entry options updates."""
     account: StarlineAccount = opp.data[DOMAIN][config_entry.entry_id]
     scan_interval = config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)

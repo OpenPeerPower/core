@@ -96,7 +96,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config):
+async def async_setup_entry(opp, config):
     """Set up a config entry."""
     try:
         bot = HangoutsBot(
@@ -125,7 +125,7 @@ async def async_setup_entry.opp, config):
         bot.async_update_conversation_commands,
     )
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_handle.opp_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_handle(opp_stop)
 
     await bot.async_connect()
 
@@ -146,12 +146,12 @@ async def async_setup_entry.opp, config):
         DOMAIN, SERVICE_RECONNECT, bot.async_handle_reconnect, schema=vol.Schema({})
     )
 
-    intent.async_register.opp, HelpIntent.opp))
+    intent.async_register(opp, HelpIntent.opp))
 
     return True
 
 
-async def async_unload_entry.opp, _):
+async def async_unload_entry(opp, _):
     """Unload a config entry."""
     bot = opp.data[DOMAIN].pop(CONF_BOT)
     await bot.async_disconnect()

@@ -8,7 +8,7 @@ from . import DOMAIN as TESLA_DOMAIN, TeslaDevice
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Tesla binary_sensors by config_entry."""
     coordinator = opp.data[TESLA_DOMAIN][config_entry.entry_id]["coordinator"]
     entities = []

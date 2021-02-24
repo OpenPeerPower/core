@@ -201,7 +201,7 @@ def async_register_built_in_panel(
 
 @bind.opp
 @callback
-def async_remove_panel.opp, frontend_url_path):
+def async_remove_panel(opp, frontend_url_path):
     """Remove a built-in panel."""
     panel = opp.data.get(DATA_PANELS, {}).pop(frontend_url_path, None)
 
@@ -211,7 +211,7 @@ def async_remove_panel.opp, frontend_url_path):
     opp.bus.async_fire(EVENT_PANELS_UPDATED)
 
 
-def add_extra_js_url.opp, url, es5=False):
+def add_extra_js_url(opp, url, es5=False):
     """Register extra js or module url to load."""
     key = DATA_EXTRA_JS_URL_ES5 if es5 else DATA_EXTRA_MODULE_URL
     url_set = opp.data.get(key)
@@ -238,7 +238,7 @@ def _frontend_root(dev_repo_path):
 
 async def async_setup(opp, config):
     """Set up the serving of the frontend."""
-    await async_setup_frontend_storage.opp)
+    await async_setup_frontend_storage(opp)
     opp.components.websocket_api.async_register_command(websocket_get_panels)
     opp.components.websocket_api.async_register_command(websocket_get_themes)
     opp.components.websocket_api.async_register_command(websocket_get_translations)
@@ -282,7 +282,7 @@ async def async_setup(opp, config):
 
     opp.http.app.router.register_resource(IndexView(repo_path, opp))
 
-    async_register_built_in_panel.opp, "profile")
+    async_register_built_in_panel(opp, "profile")
 
     # To smooth transition to new urls, add redirects to new urls of dev tools
     # Added June 27, 2019. Can be removed in 2021.
@@ -306,20 +306,20 @@ async def async_setup(opp, config):
         opp.data[DATA_EXTRA_MODULE_URL] = set()
 
     for url in conf.get(CONF_EXTRA_MODULE_URL, []):
-        add_extra_js_url.opp, url)
+        add_extra_js_url(opp, url)
 
     if DATA_EXTRA_JS_URL_ES5 not in.opp.data:
         opp.data[DATA_EXTRA_JS_URL_ES5] = set()
 
     for url in conf.get(CONF_EXTRA_JS_URL_ES5, []):
-        add_extra_js_url.opp, url, True)
+        add_extra_js_url(opp, url, True)
 
-    await _async_setup_themes.opp, conf.get(CONF_THEMES))
+    await _async_setup_themes(opp, conf.get(CONF_THEMES))
 
     return True
 
 
-async def _async_setup_themes.opp, themes):
+async def _async_setup_themes(opp, themes):
     """Set up themes data and services."""
     opp.data[DATA_THEMES] = themes or {}
 
@@ -387,7 +387,7 @@ async def _async_setup_themes.opp, themes):
 
     async def reload_themes(_):
         """Reload themes."""
-        config = await async.opp_config_yaml.opp)
+        config = await async.opp_config_yaml(opp)
         new_themes = config[DOMAIN].get(CONF_THEMES, {})
         opp.data[DATA_THEMES] = new_themes
         if opp.data[DATA_DEFAULT_THEME] not in new_themes:
@@ -503,7 +503,7 @@ class IndexView(web_urldispatcher.AbstractResource):
         return web.Response(
             text=template.render(
                 theme_color=MANIFEST_JSON["theme_color"],
-                extra_modules.opp.data[DATA_EXTRA_MODULE_URL],
+                extra_modules(opp.data[DATA_EXTRA_MODULE_URL],
                 extra_js_es5.opp.data[DATA_EXTRA_JS_URL_ES5],
             ),
             content_type="text/html",
@@ -534,7 +534,7 @@ class ManifestJSONView(OpenPeerPowerView):
 
 @callback
 @websocket_api.websocket_command({"type": "get_panels"})
-def websocket_get_panels.opp, connection, msg):
+def websocket_get_panels(opp, connection, msg):
     """Handle get panels command."""
     user_is_admin = connection.user.is_admin
     panels = {
@@ -548,7 +548,7 @@ def websocket_get_panels.opp, connection, msg):
 
 @callback
 @websocket_api.websocket_command({"type": "frontend/get_themes"})
-def websocket_get_themes.opp, connection, msg):
+def websocket_get_themes(opp, connection, msg):
     """Handle get themes command."""
     if opp.config.safe_mode:
         connection.send_message(
@@ -589,7 +589,7 @@ def websocket_get_themes.opp, connection, msg):
     }
 )
 @websocket_api.async_response
-async def websocket_get_translations.opp, connection, msg):
+async def websocket_get_translations(opp, connection, msg):
     """Handle get translations command."""
     resources = await async_get_translations(
         opp,
@@ -605,9 +605,9 @@ async def websocket_get_translations.opp, connection, msg):
 
 @websocket_api.websocket_command({"type": "frontend/get_version"})
 @websocket_api.async_response
-async def websocket_get_version.opp, connection, msg):
+async def websocket_get_version(opp, connection, msg):
     """Handle get version command."""
-    integration = await async_get_integration.opp, "frontend")
+    integration = await async_get_integration(opp, "frontend")
 
     frontend = None
 

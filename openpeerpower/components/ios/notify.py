@@ -21,7 +21,7 @@ PUSH_URL = "https://ios-push.open-peer-power.io/push"
 
 
 # pylint: disable=invalid-name
-def log_rate_limits.opp, target, resp, level=20):
+def log_rate_limits(opp, target, resp, level=20):
     """Output rate limit log line at given level."""
     rate_limits = resp["rateLimits"]
     resetsAt = dt_util.parse_datetime(rate_limits["resetsAt"])
@@ -34,7 +34,7 @@ def log_rate_limits.opp, target, resp, level=20):
     _LOGGER.log(
         level,
         rate_limit_msg,
-        ios.device_name_for_push_id.opp, target),
+        ios.device_name_for_push_id(opp, target),
         rate_limits["successful"],
         rate_limits["maximum"],
         rate_limits["errors"],
@@ -42,13 +42,13 @@ def log_rate_limits.opp, target, resp, level=20):
     )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the iOS notification service."""
     if "notify.ios" not in.opp.config.components:
         # Need this to enable requirements checking in the app.
         opp.config.components.add("notify.ios")
 
-    if not ios.devices_with_push.opp):
+    if not ios.devices_with_push(opp):
         return None
 
     return iOSNotificationService()

@@ -69,13 +69,13 @@ async def async_setup_opp: OpenPeerPower, opp_config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Hunter Douglas PowerView from a config entry."""
 
     config = entry.data
 
     hub_address = config.get(CONF_HOST)
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
 
     pv_request = AioRequest(hub_address, loop.opp.loop, websession=websession)
 
@@ -175,7 +175,7 @@ def _async_map_data_by_id(data):
     return {entry[ATTR_ID]: entry for entry in data}
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

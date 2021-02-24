@@ -55,7 +55,7 @@ TRIGGER_SCHEMA = vol.All(
 )
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     hours = config.get(CONF_HOURS)
     minutes = config.get(CONF_MINUTES)
@@ -71,7 +71,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def time_automation_listener(now):
         """Listen for time changes and calls action."""
-        opp.async_run.opp_job(
+        opp.async_run(opp_job(
             job,
             {
                 "trigger": {

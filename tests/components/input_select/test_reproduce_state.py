@@ -14,7 +14,7 @@ VALID_OPTION_SET2 = [VALID_OPTION4, VALID_OPTION5, VALID_OPTION6]
 ENTITY = "input_select.test_select"
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Input select states."""
 
     # Setup entity

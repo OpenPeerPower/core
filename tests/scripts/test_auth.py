@@ -13,19 +13,19 @@ from tests.common import register_auth_provider
 def provider.opp):
     """Open Peer Power auth provider."""
     provider = opp.loop.run_until_complete(
-        register_auth_provider.opp, {"type": "openpeerpower"})
+        register_auth_provider(opp, {"type": "openpeerpower"})
     )
     opp.loop.run_until_complete(provider.async_initialize())
     return provider
 
 
-async def test_list_user.opp, provider, capsys):
+async def test_list_user(opp, provider, capsys):
     """Test we can list users."""
     data = provider.data
     data.add_auth("test-user", "test-pass")
     data.add_auth("second-user", "second-pass")
 
-    await script_auth.list_users.opp, provider, None)
+    await script_auth.list_users(opp, provider, None)
 
     captured = capsys.readouterr()
 
@@ -34,14 +34,14 @@ async def test_list_user.opp, provider, capsys):
     )
 
 
-async def test_add_user.opp, provider, capsys, opp_storage):
+async def test_add_user(opp, provider, capsys, opp_storage):
     """Test we can add a user."""
     data = provider.data
     await script_auth.add_user(
         opp. provider, Mock(username="paulus", password="test-pass")
     )
 
-    assert len.opp_storage.opp_auth.STORAGE_KEY]["data"]["users"]) == 1
+    assert len.opp_storage(opp_auth.STORAGE_KEY]["data"]["users"]) == 1
 
     captured = capsys.readouterr()
     assert captured.out == "Auth created\n"
@@ -50,7 +50,7 @@ async def test_add_user.opp, provider, capsys, opp_storage):
     data.validate_login("paulus", "test-pass")
 
 
-async def test_validate_login.opp, provider, capsys):
+async def test_validate_login(opp, provider, capsys):
     """Test we can validate a user login."""
     data = provider.data
     data.add_auth("test-user", "test-pass")
@@ -74,7 +74,7 @@ async def test_validate_login.opp, provider, capsys):
     assert captured.out == "Auth invalid\n"
 
 
-async def test_change_password.opp, provider, capsys, opp_storage):
+async def test_change_password(opp, provider, capsys, opp_storage):
     """Test we can change a password."""
     data = provider.data
     data.add_auth("test-user", "test-pass")
@@ -83,7 +83,7 @@ async def test_change_password.opp, provider, capsys, opp_storage):
         opp. provider, Mock(username="test-user", new_password="new-pass")
     )
 
-    assert len.opp_storage.opp_auth.STORAGE_KEY]["data"]["users"]) == 1
+    assert len.opp_storage(opp_auth.STORAGE_KEY]["data"]["users"]) == 1
     captured = capsys.readouterr()
     assert captured.out == "Password changed\n"
     data.validate_login("test-user", "new-pass")
@@ -91,7 +91,7 @@ async def test_change_password.opp, provider, capsys, opp_storage):
         data.validate_login("test-user", "test-pass")
 
 
-async def test_change_password_invalid_user.opp, provider, capsys, opp_storage):
+async def test_change_password_invalid_user(opp, provider, capsys, opp_storage):
     """Test changing password of non-existing user."""
     data = provider.data
     data.add_auth("test-user", "test-pass")
@@ -112,7 +112,7 @@ def test_parsing_args(loop):
     """Test we parse args correctly."""
     called = False
 
-    async def mock_func.opp, provider, args2):
+    async def mock_func(opp, provider, args2):
         """Mock function to be called."""
         nonlocal called
         called = True

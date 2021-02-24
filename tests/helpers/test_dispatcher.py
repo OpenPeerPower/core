@@ -10,7 +10,7 @@ from openpeerpower.helpers.dispatcher import (
 )
 
 
-async def test_simple_function.opp):
+async def test_simple_function(opp):
     """Test simple function (executor)."""
     calls = []
 
@@ -18,19 +18,19 @@ async def test_simple_function.opp):
         """Test function."""
         calls.append(data)
 
-    async_dispatcher_connect.opp, "test", test_funct)
-    async_dispatcher_send.opp, "test", 3)
+    async_dispatcher_connect(opp, "test", test_funct)
+    async_dispatcher_send(opp, "test", 3)
     await opp.async_block_till_done()
 
     assert calls == [3]
 
-    async_dispatcher_send.opp, "test", "bla")
+    async_dispatcher_send(opp, "test", "bla")
     await opp.async_block_till_done()
 
     assert calls == [3, "bla"]
 
 
-async def test_simple_function_unsub.opp):
+async def test_simple_function_unsub(opp):
     """Test simple function (executor) and unsub."""
     calls1 = []
     calls2 = []
@@ -43,10 +43,10 @@ async def test_simple_function_unsub.opp):
         """Test function."""
         calls2.append(data)
 
-    async_dispatcher_connect.opp, "test1", test_funct1)
-    unsub = async_dispatcher_connect.opp, "test2", test_funct2)
-    async_dispatcher_send.opp, "test1", 3)
-    async_dispatcher_send.opp, "test2", 4)
+    async_dispatcher_connect(opp, "test1", test_funct1)
+    unsub = async_dispatcher_connect(opp, "test2", test_funct2)
+    async_dispatcher_send(opp, "test1", 3)
+    async_dispatcher_send(opp, "test2", 4)
     await opp.async_block_till_done()
 
     assert calls1 == [3]
@@ -54,8 +54,8 @@ async def test_simple_function_unsub.opp):
 
     unsub()
 
-    async_dispatcher_send.opp, "test1", 5)
-    async_dispatcher_send.opp, "test2", 6)
+    async_dispatcher_send(opp, "test1", 5)
+    async_dispatcher_send(opp, "test2", 6)
     await opp.async_block_till_done()
 
     assert calls1 == [3, 5]
@@ -64,15 +64,15 @@ async def test_simple_function_unsub.opp):
     # check don't kill the flow
     unsub()
 
-    async_dispatcher_send.opp, "test1", 7)
-    async_dispatcher_send.opp, "test2", 8)
+    async_dispatcher_send(opp, "test1", 7)
+    async_dispatcher_send(opp, "test2", 8)
     await opp.async_block_till_done()
 
     assert calls1 == [3, 5, 7]
     assert calls2 == [4]
 
 
-async def test_simple_callback.opp):
+async def test_simple_callback(opp):
     """Test simple callback (async)."""
     calls = []
 
@@ -81,19 +81,19 @@ async def test_simple_callback.opp):
         """Test function."""
         calls.append(data)
 
-    async_dispatcher_connect.opp, "test", test_funct)
-    async_dispatcher_send.opp, "test", 3)
+    async_dispatcher_connect(opp, "test", test_funct)
+    async_dispatcher_send(opp, "test", 3)
     await opp.async_block_till_done()
 
     assert calls == [3]
 
-    async_dispatcher_send.opp, "test", "bla")
+    async_dispatcher_send(opp, "test", "bla")
     await opp.async_block_till_done()
 
     assert calls == [3, "bla"]
 
 
-async def test_simple_coro.opp):
+async def test_simple_coro(opp):
     """Test simple coro (async)."""
     calls = []
 
@@ -101,19 +101,19 @@ async def test_simple_coro.opp):
         """Test function."""
         calls.append(data)
 
-    async_dispatcher_connect.opp, "test", async_test_funct)
-    async_dispatcher_send.opp, "test", 3)
+    async_dispatcher_connect(opp, "test", async_test_funct)
+    async_dispatcher_send(opp, "test", 3)
     await opp.async_block_till_done()
 
     assert calls == [3]
 
-    async_dispatcher_send.opp, "test", "bla")
+    async_dispatcher_send(opp, "test", "bla")
     await opp.async_block_till_done()
 
     assert calls == [3, "bla"]
 
 
-async def test_simple_function_multiargs.opp):
+async def test_simple_function_multiargs(opp):
     """Test simple function (executor)."""
     calls = []
 
@@ -123,15 +123,15 @@ async def test_simple_function_multiargs.opp):
         calls.append(data2)
         calls.append(data3)
 
-    async_dispatcher_connect.opp, "test", test_funct)
-    async_dispatcher_send.opp, "test", 3, 2, "bla")
+    async_dispatcher_connect(opp, "test", test_funct)
+    async_dispatcher_send(opp, "test", 3, 2, "bla")
     await opp.async_block_till_done()
 
     assert calls == [3, 2, "bla"]
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_callback_exception_gets_logged.opp, caplog):
+async def test_callback_exception_gets_logged(opp, caplog):
     """Test exception raised by signal handler."""
 
     @callback
@@ -140,8 +140,8 @@ async def test_callback_exception_gets_logged.opp, caplog):
         raise Exception("This is a bad message callback")
 
     # wrap in partial to test message logging.
-    async_dispatcher_connect.opp, "test", partial(bad_handler))
-    async_dispatcher_send.opp, "test", "bad")
+    async_dispatcher_connect(opp, "test", partial(bad_handler))
+    async_dispatcher_send(opp, "test", "bad")
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 

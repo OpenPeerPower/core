@@ -102,7 +102,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Load a config entry.
 
     Validate and save sessions per aws credential.
@@ -113,7 +113,7 @@ async def async_setup_entry.opp, entry):
     if entry.source == config_entries.SOURCE_IMPORT:
         if conf is None:
             # user removed config from configuration.yaml, abort setup
-            opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+            opp.async_create_task(opp.config_entries.async_remove(entry.entry_id))
             return False
 
         if conf != entry.data:
@@ -127,7 +127,7 @@ async def async_setup_entry.opp, entry):
     validation = True
     tasks = []
     for cred in conf[ATTR_CREDENTIALS]:
-        tasks.append(_validate_aws_credentials.opp, cred))
+        tasks.append(_validate_aws_credentials(opp, cred))
     if tasks:
         results = await asyncio.gather(*tasks, return_exceptions=True)
         for index, result in enumerate(results):
@@ -147,13 +147,13 @@ async def async_setup_entry.opp, entry):
     # have to use discovery to load platform.
     for notify_config in conf[CONF_NOTIFY]:
         opp.async_create_task(
-            discovery.async_load_platform.opp, "notify", DOMAIN, notify_config, config)
+            discovery.async_load_platform(opp, "notify", DOMAIN, notify_config, config)
         )
 
     return validation
 
 
-async def _validate_aws_credentials.opp, credential):
+async def _validate_aws_credentials(opp, credential):
     """Validate AWS credential config."""
     aws_config = credential.copy()
     del aws_config[CONF_NAME]

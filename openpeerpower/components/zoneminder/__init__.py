@@ -92,7 +92,7 @@ def setup(opp, config):
     )
 
     opp.async_create_task(
-        async_load_platform.opp, "binary_sensor", DOMAIN, {}, config)
+        async_load_platform(opp, "binary_sensor", DOMAIN, {}, config)
     )
 
     return success

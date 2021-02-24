@@ -47,7 +47,7 @@ def wsdiscovery() -> List[Service]:
     return services
 
 
-async def async_discovery.opp) -> bool:
+async def async_discovery(opp) -> bool:
     """Return if there are devices that can be discovered."""
     LOGGER.debug("Starting ONVIF discovery...")
     services = await opp.async_add_executor_job(wsdiscovery)

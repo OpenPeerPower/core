@@ -16,7 +16,7 @@ from . import (
 SUPPORT_TELLSTICK = SUPPORT_BRIGHTNESS
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Tellstick lights."""
     if discovery_info is None or discovery_info[ATTR_DISCOVER_DEVICES] is None:
         return

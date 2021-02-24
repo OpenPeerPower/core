@@ -27,9 +27,9 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions for Number."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     actions: List[Dict[str, Any]] = []
 
     # Get all the integrations entities for this device
@@ -70,7 +70,7 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_action_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_action_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List action capabilities."""
     action_type = config[CONF_TYPE]
 

@@ -33,15 +33,15 @@ def setup(opp, config):
     opp.data["litejet_system"] = LiteJet(url)
     opp.data["litejet_config"] = config[DOMAIN]
 
-    discovery.load_platform.opp, "light", DOMAIN, {}, config)
+    discovery.load_platform(opp, "light", DOMAIN, {}, config)
     if config[DOMAIN].get(CONF_INCLUDE_SWITCHES):
-        discovery.load_platform.opp, "switch", DOMAIN, {}, config)
-    discovery.load_platform.opp, "scene", DOMAIN, {}, config)
+        discovery.load_platform(opp, "switch", DOMAIN, {}, config)
+    discovery.load_platform(opp, "scene", DOMAIN, {}, config)
 
     return True
 
 
-def is_ignored.opp, name):
+def is_ignored(opp, name):
     """Determine if a load, switch, or scene should be ignored."""
     for prefix in.opp.data["litejet_config"].get(CONF_EXCLUDE_NAMES, []):
         if name.startswith(prefix):

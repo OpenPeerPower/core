@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 DATA_SCHEMA = vol.Schema({vol.Required(CONF_API_KEY): str}, extra=vol.ALLOW_EXTRA)
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.

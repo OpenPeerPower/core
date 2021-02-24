@@ -12,4 +12,4 @@ async def async_setup_entry(
 ) -> None:
     """Set up the binary sensors."""
     assert DATA_SDM not in entry.data
-    await async_setup_legacy_entry.opp, entry, async_add_entities)
+    await async_setup_legacy_entry(opp, entry, async_add_entities)

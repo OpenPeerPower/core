@@ -21,7 +21,7 @@ ENERGY_CONSUMED = "energy_consumed"
 IN_USE = "inuse"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
     gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]

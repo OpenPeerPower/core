@@ -35,14 +35,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Nuki lock platform."""
     _LOGGER.warning(
         "Loading Nuki by lock platform configuration is deprecated and will be removed in the future"
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Nuki lock platform."""
     config = config_entry.data
 

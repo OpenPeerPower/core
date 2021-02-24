@@ -220,7 +220,7 @@ async def async_setup(opp, config):
     netgear_lte_config = config[DOMAIN]
 
     # Set up each modem
-    tasks = [_setup_lte.opp, lte_conf) for lte_conf in netgear_lte_config]
+    tasks = [_setup_lte(opp, lte_conf) for lte_conf in netgear_lte_config]
     await asyncio.wait(tasks)
 
     # Load platforms for each modem
@@ -262,7 +262,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def _setup_lte.opp, lte_config):
+async def _setup_lte(opp, lte_config):
     """Set up a Netgear LTE modem."""
 
     host = lte_config[CONF_HOST]
@@ -274,9 +274,9 @@ async def _setup_lte.opp, lte_config):
     modem_data = ModemData.opp, host, modem)
 
     try:
-        await _login.opp, modem_data, password)
+        await _login(opp, modem_data, password)
     except eternalegypt.Error:
-        retry_task = opp.loop.create_task(_retry_login.opp, modem_data, password))
+        retry_task = opp.loop.create_task(_retry_login(opp, modem_data, password))
 
         @callback
         def cleanup_retry(event):
@@ -287,7 +287,7 @@ async def _setup_lte.opp, lte_config):
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_retry)
 
 
-async def _login.opp, modem_data, password):
+async def _login(opp, modem_data, password):
     """Log in and complete setup."""
     await modem_data.modem.login(password=password)
 
@@ -310,7 +310,7 @@ async def _login.opp, modem_data, password):
         """Periodic update."""
         await modem_data.async_update()
 
-    update_unsub = async_track_time_interval.opp, _update, SCAN_INTERVAL)
+    update_unsub = async_track_time_interval(opp, _update, SCAN_INTERVAL)
 
     async def cleanup(event):
         """Clean up resources."""
@@ -321,7 +321,7 @@ async def _login.opp, modem_data, password):
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
 
 
-async def _retry_login.opp, modem_data, password):
+async def _retry_login(opp, modem_data, password):
     """Sleep and retry setup."""
 
     _LOGGER.warning("Could not connect to %s. Will keep trying", modem_data.host)
@@ -333,7 +333,7 @@ async def _retry_login.opp, modem_data, password):
         await asyncio.sleep(delay)
 
         try:
-            await _login.opp, modem_data, password)
+            await _login(opp, modem_data, password)
         except eternalegypt.Error:
             delay = min(2 * delay, 300)
 

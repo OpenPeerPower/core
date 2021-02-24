@@ -4,7 +4,7 @@ import lakeside
 from openpeerpower.components.switch import SwitchEntity
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up Eufy switches."""
     if discovery_info is None:
         return

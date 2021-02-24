@@ -11,7 +11,7 @@ _LOGGER = logging.getLogger(__name__)
 ENTITY_ID_FORMAT = DOMAIN + ".{}"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Find and return HDMI devices as switches."""
     if ATTR_NEW in discovery_info:
         _LOGGER.info("Setting up HDMI devices %s", discovery_info[ATTR_NEW])

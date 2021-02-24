@@ -30,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the file sensor."""
     file_path = config.get(CONF_FILE_PATH)
     name = config.get(CONF_NAME)
@@ -38,7 +38,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     value_template = config.get(CONF_VALUE_TEMPLATE)
 
     if value_template is not None:
-        value_template.opp = opp
+        value_template(opp = opp
 
     if opp.config.is_allowed_path(file_path):
         async_add_entities([FileSensor(name, file_path, unit, value_template)], True)

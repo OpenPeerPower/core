@@ -35,7 +35,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up FireServiceRota from a config entry."""
 
     opp.data.setdefault(DOMAIN, {})
@@ -72,7 +72,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload FireServiceRota config entry."""
 
     await opp.async_add_executor_job(

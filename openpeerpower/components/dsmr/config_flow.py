@@ -95,11 +95,11 @@ class DSMRConnection:
         return True
 
 
-async def _validate_dsmr_connection.opp: core.OpenPeerPower, data):
+async def _validate_dsmr_connection(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect."""
     conn = DSMRConnection(data.get(CONF_HOST), data[CONF_PORT], data[CONF_DSMR_VERSION])
 
-    if not await conn.validate_connect.opp):
+    if not await conn.validate_connect(opp):
         raise CannotConnect
 
     equipment_identifier = conn.equipment_identifier()

@@ -11,7 +11,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Ecobee notification service."""
     data = opp.data[DOMAIN]
     index = config.get(CONF_INDEX)

@@ -50,7 +50,7 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Modbus binary sensors."""
     sensors = []
     for entry in config[CONF_INPUTS]:

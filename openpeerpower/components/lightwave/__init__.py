@@ -67,13 +67,13 @@ async def async_setup(opp, config):
     lights = config[DOMAIN][CONF_LIGHTS]
     if lights:
         opp.async_create_task(
-            async_load_platform.opp, "light", DOMAIN, lights, config)
+            async_load_platform(opp, "light", DOMAIN, lights, config)
         )
 
     switches = config[DOMAIN][CONF_SWITCHES]
     if switches:
         opp.async_create_task(
-            async_load_platform.opp, "switch", DOMAIN, switches, config)
+            async_load_platform(opp, "switch", DOMAIN, switches, config)
         )
 
     trv = config[DOMAIN][CONF_TRV]
@@ -86,7 +86,7 @@ async def async_setup(opp, config):
         platforms = [CLIMATE_DOMAIN, SENSOR_DOMAIN]
         for platform in platforms:
             opp.async_create_task(
-                async_load_platform.opp, platform, DOMAIN, trvs, config)
+                async_load_platform(opp, platform, DOMAIN, trvs, config)
             )
 
     return True

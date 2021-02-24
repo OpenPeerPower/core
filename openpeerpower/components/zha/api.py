@@ -191,7 +191,7 @@ ClusterBinding = collections.namedtuple("ClusterBinding", "id endpoint_id type n
 @websocket_api.websocket_command(
     {vol.Required("type"): "zha/devices/permit", **SERVICE_PERMIT_PARAMS}
 )
-async def websocket_permit_devices.opp, connection, msg):
+async def websocket_permit_devices(opp, connection, msg):
     """Permit ZHA zigbee devices."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     duration = msg.get(ATTR_DURATION)
@@ -234,7 +234,7 @@ async def websocket_permit_devices.opp, connection, msg):
 @websocket_api.require_admin
 @websocket_api.async_response
 @websocket_api.websocket_command({vol.Required(TYPE): "zha/devices"})
-async def websocket_get_devices.opp, connection, msg):
+async def websocket_get_devices(opp, connection, msg):
     """Get ZHA devices."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
 
@@ -246,7 +246,7 @@ async def websocket_get_devices.opp, connection, msg):
 @websocket_api.require_admin
 @websocket_api.async_response
 @websocket_api.websocket_command({vol.Required(TYPE): "zha/devices/groupable"})
-async def websocket_get_groupable_devices.opp, connection, msg):
+async def websocket_get_groupable_devices(opp, connection, msg):
     """Get ZHA devices that can be grouped."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
 
@@ -284,7 +284,7 @@ async def websocket_get_groupable_devices.opp, connection, msg):
 @websocket_api.require_admin
 @websocket_api.async_response
 @websocket_api.websocket_command({vol.Required(TYPE): "zha/groups"})
-async def websocket_get_groups.opp, connection, msg):
+async def websocket_get_groups(opp, connection, msg):
     """Get ZHA groups."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     groups = [group.group_info for group in zha_gateway.groups.values()]
@@ -296,7 +296,7 @@ async def websocket_get_groups.opp, connection, msg):
 @websocket_api.websocket_command(
     {vol.Required(TYPE): "zha/device", vol.Required(ATTR_IEEE): EUI64.convert}
 )
-async def websocket_get_device.opp, connection, msg):
+async def websocket_get_device(opp, connection, msg):
     """Get ZHA devices."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     ieee = msg[ATTR_IEEE]
@@ -318,7 +318,7 @@ async def websocket_get_device.opp, connection, msg):
 @websocket_api.websocket_command(
     {vol.Required(TYPE): "zha/group", vol.Required(GROUP_ID): cv.positive_int}
 )
-async def websocket_get_group.opp, connection, msg):
+async def websocket_get_group(opp, connection, msg):
     """Get ZHA group."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     group_id = msg[GROUP_ID]
@@ -359,7 +359,7 @@ def cv_group_member(value: Any) -> GroupMember:
         vol.Optional(ATTR_MEMBERS): vol.All(cv.ensure_list, [cv_group_member]),
     }
 )
-async def websocket_add_group.opp, connection, msg):
+async def websocket_add_group(opp, connection, msg):
     """Add a new ZHA group."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     group_name = msg[GROUP_NAME]
@@ -376,7 +376,7 @@ async def websocket_add_group.opp, connection, msg):
         vol.Required(GROUP_IDS): vol.All(cv.ensure_list, [cv.positive_int]),
     }
 )
-async def websocket_remove_groups.opp, connection, msg):
+async def websocket_remove_groups(opp, connection, msg):
     """Remove the specified ZHA groups."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     group_ids = msg[GROUP_IDS]
@@ -401,7 +401,7 @@ async def websocket_remove_groups.opp, connection, msg):
         vol.Required(ATTR_MEMBERS): vol.All(cv.ensure_list, [cv_group_member]),
     }
 )
-async def websocket_add_group_members.opp, connection, msg):
+async def websocket_add_group_members(opp, connection, msg):
     """Add members to a ZHA group."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     group_id = msg[GROUP_ID]
@@ -431,7 +431,7 @@ async def websocket_add_group_members.opp, connection, msg):
         vol.Required(ATTR_MEMBERS): vol.All(cv.ensure_list, [cv_group_member]),
     }
 )
-async def websocket_remove_group_members.opp, connection, msg):
+async def websocket_remove_group_members(opp, connection, msg):
     """Remove members from a ZHA group."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     group_id = msg[GROUP_ID]
@@ -460,7 +460,7 @@ async def websocket_remove_group_members.opp, connection, msg):
         vol.Required(ATTR_IEEE): EUI64.convert,
     }
 )
-async def websocket_reconfigure_node.opp, connection, msg):
+async def websocket_reconfigure_node(opp, connection, msg):
     """Reconfigure a ZHA nodes entities by its ieee address."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     ieee = msg[ATTR_IEEE]
@@ -476,7 +476,7 @@ async def websocket_reconfigure_node.opp, connection, msg):
         vol.Required(TYPE): "zha/topology/update",
     }
 )
-async def websocket_update_topology.opp, connection, msg):
+async def websocket_update_topology(opp, connection, msg):
     """Update the ZHA network topology."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     opp.async_create_task(zha_gateway.application_controller.topology.scan())
@@ -487,7 +487,7 @@ async def websocket_update_topology.opp, connection, msg):
 @websocket_api.websocket_command(
     {vol.Required(TYPE): "zha/devices/clusters", vol.Required(ATTR_IEEE): EUI64.convert}
 )
-async def websocket_device_clusters.opp, connection, msg):
+async def websocket_device_clusters(opp, connection, msg):
     """Return a list of device clusters."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     ieee = msg[ATTR_IEEE]
@@ -529,7 +529,7 @@ async def websocket_device_clusters.opp, connection, msg):
         vol.Required(ATTR_CLUSTER_TYPE): str,
     }
 )
-async def websocket_device_cluster_attributes.opp, connection, msg):
+async def websocket_device_cluster_attributes(opp, connection, msg):
     """Return a list of cluster attributes."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     ieee = msg[ATTR_IEEE]
@@ -574,7 +574,7 @@ async def websocket_device_cluster_attributes.opp, connection, msg):
         vol.Required(ATTR_CLUSTER_TYPE): str,
     }
 )
-async def websocket_device_cluster_commands.opp, connection, msg):
+async def websocket_device_cluster_commands(opp, connection, msg):
     """Return a list of cluster commands."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     cluster_id = msg[ATTR_CLUSTER_ID]
@@ -634,7 +634,7 @@ async def websocket_device_cluster_commands.opp, connection, msg):
         vol.Optional(ATTR_MANUFACTURER): object,
     }
 )
-async def websocket_read_zigbee_cluster_attributes.opp, connection, msg):
+async def websocket_read_zigbee_cluster_attributes(opp, connection, msg):
     """Read zigbee attribute for cluster on zha entity."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     ieee = msg[ATTR_IEEE]
@@ -679,7 +679,7 @@ async def websocket_read_zigbee_cluster_attributes.opp, connection, msg):
 @websocket_api.websocket_command(
     {vol.Required(TYPE): "zha/devices/bindable", vol.Required(ATTR_IEEE): EUI64.convert}
 )
-async def websocket_get_bindable_devices.opp, connection, msg):
+async def websocket_get_bindable_devices(opp, connection, msg):
     """Directly bind devices."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     source_ieee = msg[ATTR_IEEE]
@@ -711,7 +711,7 @@ async def websocket_get_bindable_devices.opp, connection, msg):
         vol.Required(ATTR_TARGET_IEEE): EUI64.convert,
     }
 )
-async def websocket_bind_devices.opp, connection, msg):
+async def websocket_bind_devices(opp, connection, msg):
     """Directly bind devices."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
@@ -737,7 +737,7 @@ async def websocket_bind_devices.opp, connection, msg):
         vol.Required(ATTR_TARGET_IEEE): EUI64.convert,
     }
 )
-async def websocket_unbind_devices.opp, connection, msg):
+async def websocket_unbind_devices(opp, connection, msg):
     """Remove a direct binding between devices."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
@@ -781,7 +781,7 @@ def is_cluster_binding(value: Any) -> ClusterBinding:
         vol.Required(BINDINGS): vol.All(cv.ensure_list, [is_cluster_binding]),
     }
 )
-async def websocket_bind_group.opp, connection, msg):
+async def websocket_bind_group(opp, connection, msg):
     """Directly bind a device to a group."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
@@ -802,7 +802,7 @@ async def websocket_bind_group.opp, connection, msg):
         vol.Required(BINDINGS): vol.All(cv.ensure_list, [is_cluster_binding]),
     }
 )
-async def websocket_unbind_group.opp, connection, msg):
+async def websocket_unbind_group(opp, connection, msg):
     """Unbind a device from a group."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     source_ieee = msg[ATTR_SOURCE_IEEE]
@@ -854,7 +854,7 @@ async def async_binding_operation(zha_gateway, source_ieee, target_ieee, operati
 
 
 @callback
-def async_load_api.opp):
+def async_load_api(opp):
     """Set up the web socket API."""
     zha_gateway = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY]
     application_controller = zha_gateway.application_controller
@@ -1136,31 +1136,31 @@ def async_load_api.opp):
         schema=SERVICE_SCHEMAS[SERVICE_WARNING_DEVICE_WARN],
     )
 
-    websocket_api.async_register_command.opp, websocket_permit_devices)
-    websocket_api.async_register_command.opp, websocket_get_devices)
-    websocket_api.async_register_command.opp, websocket_get_groupable_devices)
-    websocket_api.async_register_command.opp, websocket_get_groups)
-    websocket_api.async_register_command.opp, websocket_get_device)
-    websocket_api.async_register_command.opp, websocket_get_group)
-    websocket_api.async_register_command.opp, websocket_add_group)
-    websocket_api.async_register_command.opp, websocket_remove_groups)
-    websocket_api.async_register_command.opp, websocket_add_group_members)
-    websocket_api.async_register_command.opp, websocket_remove_group_members)
-    websocket_api.async_register_command.opp, websocket_bind_group)
-    websocket_api.async_register_command.opp, websocket_unbind_group)
-    websocket_api.async_register_command.opp, websocket_reconfigure_node)
-    websocket_api.async_register_command.opp, websocket_device_clusters)
-    websocket_api.async_register_command.opp, websocket_device_cluster_attributes)
-    websocket_api.async_register_command.opp, websocket_device_cluster_commands)
-    websocket_api.async_register_command.opp, websocket_read_zigbee_cluster_attributes)
-    websocket_api.async_register_command.opp, websocket_get_bindable_devices)
-    websocket_api.async_register_command.opp, websocket_bind_devices)
-    websocket_api.async_register_command.opp, websocket_unbind_devices)
-    websocket_api.async_register_command.opp, websocket_update_topology)
+    websocket_api.async_register_command(opp, websocket_permit_devices)
+    websocket_api.async_register_command(opp, websocket_get_devices)
+    websocket_api.async_register_command(opp, websocket_get_groupable_devices)
+    websocket_api.async_register_command(opp, websocket_get_groups)
+    websocket_api.async_register_command(opp, websocket_get_device)
+    websocket_api.async_register_command(opp, websocket_get_group)
+    websocket_api.async_register_command(opp, websocket_add_group)
+    websocket_api.async_register_command(opp, websocket_remove_groups)
+    websocket_api.async_register_command(opp, websocket_add_group_members)
+    websocket_api.async_register_command(opp, websocket_remove_group_members)
+    websocket_api.async_register_command(opp, websocket_bind_group)
+    websocket_api.async_register_command(opp, websocket_unbind_group)
+    websocket_api.async_register_command(opp, websocket_reconfigure_node)
+    websocket_api.async_register_command(opp, websocket_device_clusters)
+    websocket_api.async_register_command(opp, websocket_device_cluster_attributes)
+    websocket_api.async_register_command(opp, websocket_device_cluster_commands)
+    websocket_api.async_register_command(opp, websocket_read_zigbee_cluster_attributes)
+    websocket_api.async_register_command(opp, websocket_get_bindable_devices)
+    websocket_api.async_register_command(opp, websocket_bind_devices)
+    websocket_api.async_register_command(opp, websocket_unbind_devices)
+    websocket_api.async_register_command(opp, websocket_update_topology)
 
 
 @callback
-def async_unload_api.opp):
+def async_unload_api(opp):
     """Unload the ZHA API."""
     opp.services.async_remove(DOMAIN, SERVICE_PERMIT)
     opp.services.async_remove(DOMAIN, SERVICE_REMOVE)

@@ -25,7 +25,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Synology Chat notification service."""
     resource = config.get(CONF_RESOURCE)
     verify_ssl = config.get(CONF_VERIFY_SSL)

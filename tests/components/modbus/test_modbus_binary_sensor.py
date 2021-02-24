@@ -14,7 +14,7 @@ from .conftest import base_config_test, base_test
 
 
 @pytest.mark.parametrize("do_options", [False, True])
-async def test_config_binary_sensor.opp, do_options):
+async def test_config_binary_sensor(opp, do_options):
     """Run test for binary sensor."""
     sensor_name = "test_sensor"
     config_sensor = {
@@ -65,7 +65,7 @@ async def test_config_binary_sensor.opp, do_options):
         ),
     ],
 )
-async def test_all_binary_sensor.opp, do_type, regs, expected):
+async def test_all_binary_sensor(opp, do_type, regs, expected):
     """Run test for given config."""
     sensor_name = "modbus_test_binary_sensor"
     state = await base_test(

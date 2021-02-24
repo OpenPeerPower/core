@@ -122,7 +122,7 @@ class BaseEditConfigView(OpenPeerPowerView):
        opp = request.app[.opp"]
         async with self.mutation_lock:
             current = await self.read_config(opp)
-            value = self._get_value.opp, current, config_key)
+            value = self._get_value(opp, current, config_key)
 
         if value is None:
             return self.json_message("Resource not found", HTTP_NOT_FOUND)
@@ -147,7 +147,7 @@ class BaseEditConfigView(OpenPeerPowerView):
             # We just validate, we don't store that data because
             # we don't want to store the defaults.
             if self.data_validator:
-                await self.data_validator.opp, data)
+                await self.data_validator(opp, data)
             else:
                 self.data_schema(data)
         except (vol.Invalid, OpenPeerPowerError) as err:
@@ -157,7 +157,7 @@ class BaseEditConfigView(OpenPeerPowerView):
 
         async with self.mutation_lock:
             current = await self.read_config(opp)
-            self._write_value.opp, current, config_key, data)
+            self._write_value(opp, current, config_key, data)
 
             await opp.async_add_executor_job(_write, path, current)
 
@@ -173,13 +173,13 @@ class BaseEditConfigView(OpenPeerPowerView):
        opp = request.app[.opp"]
         async with self.mutation_lock:
             current = await self.read_config(opp)
-            value = self._get_value.opp, current, config_key)
+            value = self._get_value(opp, current, config_key)
             path = opp.config.path(self.path)
 
             if value is None:
                 return self.json_message("Resource not found", HTTP_NOT_FOUND)
 
-            self._delete_value.opp, current, config_key)
+            self._delete_value(opp, current, config_key)
             await opp.async_add_executor_job(_write, path, current)
 
         if self.post_write_hook is not None:
@@ -228,7 +228,7 @@ class EditIdBasedConfigView(BaseEditConfigView):
 
     def _write_value(self, opp, data, config_key, new_value):
         """Set value."""
-        value = self._get_value.opp, data, config_key)
+        value = self._get_value(opp, data, config_key)
 
         if value is None:
             value = {CONF_ID: config_key}

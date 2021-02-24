@@ -26,7 +26,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the fritzbox_callmonitor platforms."""
     fritzbox_phonebook = FritzBoxPhonebook(
         host=config_entry.data[CONF_HOST],
@@ -67,7 +67,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unloading the fritzbox_callmonitor platforms."""
 
     unload_ok = all(
@@ -87,6 +87,6 @@ async def async_unload_entry.opp, config_entry):
     return unload_ok
 
 
-async def update_listener.opp, config_entry):
+async def update_listener(opp, config_entry):
     """Update listener to reload after option has changed."""
     await opp.config_entries.async_reload(config_entry.entry_id)

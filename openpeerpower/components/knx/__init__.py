@@ -204,7 +204,7 @@ async def async_setup(opp, config):
     # We need to wait until all entities are loaded into the device list since they could also be created from other platforms
     for platform in SupportedPlatforms:
         opp.async_create_task(
-            discovery.async_load_platform.opp, platform.value, DOMAIN, {}, config)
+            discovery.async_load_platform(opp, platform.value, DOMAIN, {}, config)
         )
 
     if not.opp.data[DOMAIN].xknx.devices:
@@ -248,7 +248,7 @@ async def async_setup(opp, config):
         await opp.data[DOMAIN].xknx.stop()
 
         await asyncio.gather(
-            *[platform.async_reset() for platform in async_get_platforms.opp, DOMAIN)]
+            *[platform.async_reset() for platform in async_get_platforms(opp, DOMAIN)]
         )
 
         await async_setup_opp, config)

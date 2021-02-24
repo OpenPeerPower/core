@@ -48,7 +48,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Plum Lightpad from a config entry."""
     _LOGGER.debug("Setting up config entry with ID = %s", entry.unique_id)
 

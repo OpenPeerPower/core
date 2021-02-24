@@ -38,7 +38,7 @@ async def test_default_setup_opp, aioclient_mock):
     aioclient_mock.get(
         re.compile("api.foobot.io/v2/device/.*"), text=load_fixture("foobot_data.json")
     )
-    assert await async_setup_component.opp, sensor.DOMAIN, {"sensor": VALID_CONFIG})
+    assert await async_setup_component(opp, sensor.DOMAIN, {"sensor": VALID_CONFIG})
     await opp.async_block_till_done()
 
     metrics = {

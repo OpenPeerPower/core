@@ -181,11 +181,11 @@ def request_app_setup_opp, config, add_entities, config_path, discovery_info=Non
                 )
                 configurator.notify_errors(_CONFIGURING["fitbit"], error_msg)
             else:
-                setup_platform.opp, config, add_entities, discovery_info)
+                setup_platform(opp, config, add_entities, discovery_info)
         else:
-            setup_platform.opp, config, add_entities, discovery_info)
+            setup_platform(opp, config, add_entities, discovery_info)
 
-    start_url = f"{get_url.opp)}{FITBIT_AUTH_CALLBACK_PATH}"
+    start_url = f"{get_url(opp)}{FITBIT_AUTH_CALLBACK_PATH}"
 
     description = f"""Please create a Fitbit developer app at
                        https://dev.fitbit.com/apps/new.
@@ -207,7 +207,7 @@ def request_app_setup_opp, config, add_entities, config_path, discovery_info=Non
     )
 
 
-def request_oauth_completion.opp):
+def request_oauth_completion(opp):
     """Request user complete Fitbit OAuth2 flow."""
     configurator = opp.components.configurator
     if "fitbit" in _CONFIGURING:
@@ -220,7 +220,7 @@ def request_oauth_completion.opp):
     def fitbit_configuration_callback(callback_data):
         """Handle configuration updates."""
 
-    start_url = f"{get_url.opp)}{FITBIT_AUTH_START}"
+    start_url = f"{get_url(opp)}{FITBIT_AUTH_START}"
 
     description = f"Please authorize Fitbit by visiting {start_url}"
 
@@ -232,7 +232,7 @@ def request_oauth_completion.opp):
     )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Fitbit sensor."""
     config_path = opp.config.path(FITBIT_CONFIG_FILE)
     if os.path.isfile(config_path):
@@ -312,7 +312,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
             config_file.get(CONF_CLIENT_ID), config_file.get(CONF_CLIENT_SECRET)
         )
 
-        redirect_uri = f"{get_url.opp)}{FITBIT_AUTH_CALLBACK_PATH}"
+        redirect_uri = f"{get_url(opp)}{FITBIT_AUTH_CALLBACK_PATH}"
 
         fitbit_auth_start_url, _ = oauth.authorize_token_url(
             redirect_uri=redirect_uri,
@@ -330,7 +330,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         opp.http.register_redirect(FITBIT_AUTH_START, fitbit_auth_start_url)
         opp.http.register_view(FitbitAuthCallbackView(config, add_entities, oauth))
 
-        request_oauth_completion.opp)
+        request_oauth_completion(opp)
 
 
 class FitbitAuthCallbackView(OpenPeerPowerView):
@@ -357,7 +357,7 @@ class FitbitAuthCallbackView(OpenPeerPowerView):
 
         result = None
         if data.get("code") is not None:
-            redirect_uri = f"{get_url.opp, require_current_request=True)}{FITBIT_AUTH_CALLBACK_PATH}"
+            redirect_uri = f"{get_url(opp, require_current_request=True)}{FITBIT_AUTH_CALLBACK_PATH}"
 
             try:
                 result = self.oauth.fetch_access_token(data.get("code"), redirect_uri)
@@ -396,7 +396,7 @@ class FitbitAuthCallbackView(OpenPeerPowerView):
                 CONF_CLIENT_SECRET: self.oauth.client_secret,
                 ATTR_LAST_SAVED_AT: int(time.time()),
             }
-        save_json.opp.config.path(FITBIT_CONFIG_FILE), config_contents)
+        save_json(opp.config.path(FITBIT_CONFIG_FILE), config_contents)
 
         opp.async_add_job(setup_platform, opp, self.config, self.add_entities)
 

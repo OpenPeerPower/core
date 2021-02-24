@@ -66,7 +66,7 @@ SENSORS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Defer sensor setup to the shared sensor module."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id]
 

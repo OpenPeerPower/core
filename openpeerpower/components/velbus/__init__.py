@@ -44,7 +44,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Establish connection with velbus."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -63,7 +63,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         opp.data[DOMAIN][entry.entry_id] = discovery_info
 
         for category in COMPONENT_TYPES:
-            opp.add_job.opp.config_entries.async_forward_entry_setup(entry, category))
+            opp.add_job(opp.config_entries.async_forward_entry_setup(entry, category))
 
     try:
         controller = velbus.Controller(entry.data[CONF_PORT])
@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         """Handle Memo Text service call."""
         module_address = service.data[CONF_ADDRESS]
         memo_text = service.data[CONF_MEMO_TEXT]
-        memo_text.opp = opp
+        memo_text(opp = opp
         try:
             controller.get_module(module_address).set_memo_text(
                 memo_text.async_render()
@@ -109,7 +109,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Remove the velbus connection."""
     await asyncio.wait(
         [

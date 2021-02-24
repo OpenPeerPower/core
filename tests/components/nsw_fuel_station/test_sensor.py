@@ -94,9 +94,9 @@ async def test_setup_opp):
     "openpeerpower.components.nsw_fuel_station.sensor.FuelCheckClient",
     new=FuelCheckClientMock,
 )
-async def test_sensor_values.opp):
+async def test_sensor_values(opp):
     """Test retrieval of sensor values."""
-    assert await async_setup_component.opp, sensor.DOMAIN, {"sensor": VALID_CONFIG})
+    assert await async_setup_component(opp, sensor.DOMAIN, {"sensor": VALID_CONFIG})
     await opp.async_block_till_done()
 
     assert "140.0" == opp.states.get("sensor.my_fake_station_e10").state

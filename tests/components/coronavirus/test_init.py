@@ -6,14 +6,14 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry, mock_registry
 
 
-async def test_migration.opp):
+async def test_migration(opp):
     """Test that we can migrate coronavirus to stable unique ID."""
     nl_entry = MockConfigEntry(domain=DOMAIN, title="Netherlands", data={"country": 34})
-    nl_entry.add_to.opp.opp)
+    nl_entry.add_to(opp.opp)
     worldwide_entry = MockConfigEntry(
         domain=DOMAIN, title="Worldwide", data={"country": OPTION_WORLDWIDE}
     )
-    worldwide_entry.add_to.opp.opp)
+    worldwide_entry.add_to(opp.opp)
     mock_registry(
         opp,
         {
@@ -31,10 +31,10 @@ async def test_migration.opp):
             ),
         },
     )
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
 
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     sensor_nl = ent_reg.async_get("sensor.netherlands_confirmed")
     assert sensor_nl.unique_id == "Netherlands-confirmed"

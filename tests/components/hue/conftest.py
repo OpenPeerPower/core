@@ -22,7 +22,7 @@ def no_request_delay():
         yield
 
 
-def create_mock_bridge.opp):
+def create_mock_bridge(opp):
     """Create a mock Hue bridge."""
     bridge = Mock(
         opp.opp,
@@ -68,7 +68,7 @@ def create_mock_bridge.opp):
 
 
 @pytest.fixture
-def mock_api.opp):
+def mock_api(opp):
     """Mock the Hue api."""
     api = Mock(initialize=AsyncMock())
     api.mock_requests = []
@@ -101,12 +101,12 @@ def mock_api.opp):
 
 
 @pytest.fixture
-def mock_bridge.opp):
+def mock_bridge(opp):
     """Mock a Hue bridge."""
-    return create_mock_bridge.opp)
+    return create_mock_bridge(opp)
 
 
-async def setup_bridge_for_sensors.opp, mock_bridge, hostname=None):
+async def setup_bridge_for_sensors(opp, mock_bridge, hostname=None):
     """Load the Hue platform with the provided bridge for sensor-related platforms."""
     if hostname is None:
         hostname = "mock-host"

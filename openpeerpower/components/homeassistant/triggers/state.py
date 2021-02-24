@@ -127,7 +127,7 @@ async def async_attach_trigger(
         @callback
         def call_action():
             """Call action with right context."""
-            opp.async_run.opp_job(
+            opp.async_run(opp_job(
                 job,
                 {
                     "trigger": {
@@ -189,7 +189,7 @@ async def async_attach_trigger(
             entity_ids=entity,
         )
 
-    unsub = async_track_state_change_event.opp, entity_id, state_automation_listener)
+    unsub = async_track_state_change_event(opp, entity_id, state_automation_listener)
 
     @callback
     def async_remove():

@@ -135,7 +135,7 @@ EV_SENSORS = [
 ]
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Subaru sensors by config_entry."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id][ENTRY_COORDINATOR]
     vehicle_info = opp.data[DOMAIN][config_entry.entry_id][ENTRY_VEHICLES]

@@ -36,7 +36,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up a wake on lan switch."""
     broadcast_address = config.get(CONF_BROADCAST_ADDRESS)
     broadcast_port = config.get(CONF_BROADCAST_PORT)

@@ -30,7 +30,7 @@ def setup(opp, config):
     opp.data[DOMAIN] = DanfossAir(conf[CONF_HOST])
 
     for platform in DANFOSS_AIR_PLATFORMS:
-        discovery.load_platform.opp, platform, DOMAIN, {}, config)
+        discovery.load_platform(opp, platform, DOMAIN, {}, config)
 
     return True
 

@@ -46,14 +46,14 @@ SET_TEMPERATURE_MODE_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Ambicliamte device."""
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Ambicliamte device from config entry."""
     config = entry.data
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
     store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     token_info = await store.async_load()
 

@@ -190,7 +190,7 @@ async def async_setup(opp, config):
         return False
 
     opp.async_create_task(
-        async_load_platform.opp, "sensor", DOMAIN, all_sensors, config)
+        async_load_platform(opp, "sensor", DOMAIN, all_sensors, config)
     )
 
     return True

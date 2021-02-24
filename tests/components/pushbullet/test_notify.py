@@ -32,21 +32,21 @@ async def test_pushbullet_config(opp, mock_pushbullet):
         }
     }
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert handle_config[notify.DOMAIN]
 
 
-async def test_pushbullet_config_bad.opp):
+async def test_pushbullet_config_bad(opp):
     """Test set up the platform with bad/missing configuration."""
     config = {notify.DOMAIN: {"platform": "pushbullet"}}
     with assert_setup_component(0) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert not handle_config[notify.DOMAIN]
 
 
-async def test_pushbullet_push_default.opp, requests_mock, mock_pushbullet):
+async def test_pushbullet_push_default(opp, requests_mock, mock_pushbullet):
     """Test pushbullet push to default target."""
     config = {
         notify.DOMAIN: {
@@ -56,7 +56,7 @@ async def test_pushbullet_push_default.opp, requests_mock, mock_pushbullet):
         }
     }
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert handle_config[notify.DOMAIN]
     requests_mock.register_uri(
@@ -75,7 +75,7 @@ async def test_pushbullet_push_default.opp, requests_mock, mock_pushbullet):
     assert requests_mock.last_request.json() == expected_body
 
 
-async def test_pushbullet_push_device.opp, requests_mock, mock_pushbullet):
+async def test_pushbullet_push_device(opp, requests_mock, mock_pushbullet):
     """Test pushbullet push to default target."""
     config = {
         notify.DOMAIN: {
@@ -85,7 +85,7 @@ async def test_pushbullet_push_device.opp, requests_mock, mock_pushbullet):
         }
     }
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert handle_config[notify.DOMAIN]
     requests_mock.register_uri(
@@ -113,7 +113,7 @@ async def test_pushbullet_push_device.opp, requests_mock, mock_pushbullet):
     assert requests_mock.last_request.json() == expected_body
 
 
-async def test_pushbullet_push_devices.opp, requests_mock, mock_pushbullet):
+async def test_pushbullet_push_devices(opp, requests_mock, mock_pushbullet):
     """Test pushbullet push to default target."""
     config = {
         notify.DOMAIN: {
@@ -123,7 +123,7 @@ async def test_pushbullet_push_devices.opp, requests_mock, mock_pushbullet):
         }
     }
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert handle_config[notify.DOMAIN]
     requests_mock.register_uri(
@@ -159,7 +159,7 @@ async def test_pushbullet_push_devices.opp, requests_mock, mock_pushbullet):
     assert requests_mock.request_history[1].json() == expected_body
 
 
-async def test_pushbullet_push_email.opp, requests_mock, mock_pushbullet):
+async def test_pushbullet_push_email(opp, requests_mock, mock_pushbullet):
     """Test pushbullet push to default target."""
     config = {
         notify.DOMAIN: {
@@ -169,7 +169,7 @@ async def test_pushbullet_push_email.opp, requests_mock, mock_pushbullet):
         }
     }
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert handle_config[notify.DOMAIN]
     requests_mock.register_uri(
@@ -198,7 +198,7 @@ async def test_pushbullet_push_email.opp, requests_mock, mock_pushbullet):
     assert requests_mock.request_history[0].json() == expected_body
 
 
-async def test_pushbullet_push_mixed.opp, requests_mock, mock_pushbullet):
+async def test_pushbullet_push_mixed(opp, requests_mock, mock_pushbullet):
     """Test pushbullet push to default target."""
     config = {
         notify.DOMAIN: {
@@ -208,7 +208,7 @@ async def test_pushbullet_push_mixed.opp, requests_mock, mock_pushbullet):
         }
     }
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert handle_config[notify.DOMAIN]
     requests_mock.register_uri(
@@ -244,7 +244,7 @@ async def test_pushbullet_push_mixed.opp, requests_mock, mock_pushbullet):
     assert requests_mock.request_history[1].json() == expected_body
 
 
-async def test_pushbullet_push_no_file.opp, requests_mock, mock_pushbullet):
+async def test_pushbullet_push_no_file(opp, requests_mock, mock_pushbullet):
     """Test pushbullet push to default target."""
     config = {
         notify.DOMAIN: {
@@ -254,7 +254,7 @@ async def test_pushbullet_push_no_file.opp, requests_mock, mock_pushbullet):
         }
     }
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
     assert handle_config[notify.DOMAIN]
     requests_mock.register_uri(

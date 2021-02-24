@@ -111,7 +111,7 @@ async def async_setup_entry(
         name,
         auth_token=token,
         device_type=VIZIO_DEVICE_CLASSES[device_class],
-        session=async_get_clientsession.opp, False),
+        session=async_get_clientsession(opp, False),
         timeout=DEFAULT_TIMEOUT,
     )
 
@@ -292,7 +292,7 @@ class VizioDevice(MediaPlayerEntity):
         """Send update event when Vizio config entry is updated."""
         # Move this method to component level if another entity ever gets added for a single config entry.
         # See here: https://github.com/open-peer-power/core/pull/30653#discussion_r366426121
-        async_dispatcher_send.opp, config_entry.entry_id, config_entry)
+        async_dispatcher_send(opp, config_entry.entry_id, config_entry)
 
     async def _async_update_options(self, config_entry: ConfigEntry) -> None:
         """Update options if the update signal comes from this entity."""

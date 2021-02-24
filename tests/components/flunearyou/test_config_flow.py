@@ -17,7 +17,7 @@ async def test_duplicate_error(opp):
 
     MockConfigEntry(
         domain=DOMAIN, unique_id="51.528308, -0.3817765", data=conf
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
@@ -41,7 +41,7 @@ async def test_general_error(opp):
         assert result["errors"] == {"base": "unknown"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -51,7 +51,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     conf = {CONF_LATITUDE: "51.528308", CONF_LONGITUDE: "-0.3817765"}
 

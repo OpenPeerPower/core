@@ -50,7 +50,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup(opp, config):
     """Set up the logger component."""
     opp.data[DOMAIN] = {}
-    logging.setLoggerClass(_get_logger_class.opp.data[DOMAIN]))
+    logging.setLoggerClass(_get_logger_class(opp.data[DOMAIN]))
 
     @callback
     def set_default_log_level(level):
@@ -103,7 +103,7 @@ def _set_log_level(logger, level):
     getattr(logger, "orig_setLevel", logger.setLevel)(LOGSEVERITY[level])
 
 
-def _get_logger_class.opp_overrides):
+def _get_logger_class(opp_overrides):
     """Create a logger subclass.
 
     logging.setLoggerClass checks if it is a subclass of Logger and

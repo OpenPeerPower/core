@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def register_flow_implementation.opp, domain, name, gen_authorize_url, convert_code):
+def register_flow_implementation(opp, domain, name, gen_authorize_url, convert_code):
     """Register a flow implementation for legacy api.
 
     domain: Domain of the component responsible for the implementation.

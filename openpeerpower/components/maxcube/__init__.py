@@ -74,8 +74,8 @@ def setup(opp, config):
     if connection_failed >= len(gateways):
         return False
 
-    load_platform.opp, "climate", DOMAIN, {}, config)
-    load_platform.opp, "binary_sensor", DOMAIN, {}, config)
+    load_platform(opp, "climate", DOMAIN, {}, config)
+    load_platform(opp, "binary_sensor", DOMAIN, {}, config)
 
     return True
 

@@ -26,12 +26,12 @@ async def async_setup_opp: OpenPeerPower, config: Config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Brother from a config entry."""
     host = entry.data[CONF_HOST]
     kind = entry.data[CONF_TYPE]
 
-    snmp_engine = get_snmp_engine.opp)
+    snmp_engine = get_snmp_engine(opp)
 
     coordinator = BrotherDataUpdateCoordinator(
         opp. host=host, kind=kind, snmp_engine=snmp_engine
@@ -54,7 +54,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

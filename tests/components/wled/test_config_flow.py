@@ -16,7 +16,7 @@ from tests.common import load_fixture
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 
-async def test_show_user_form.opp: OpenPeerPower) -> None:
+async def test_show_user_form(opp: OpenPeerPower) -> None:
     """Test that the user set up form is served."""
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
@@ -27,7 +27,7 @@ async def test_show_user_form.opp: OpenPeerPower) -> None:
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
 
-async def test_show_zeroconf_confirm_form.opp: OpenPeerPower) -> None:
+async def test_show_zeroconf_confirm_form(opp: OpenPeerPower) -> None:
     """Test that the zeroconf confirmation form is served."""
     flow = config_flow.WLEDFlowHandler()
     flow.opp = opp
@@ -136,7 +136,7 @@ async def test_user_device_exists_abort(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if WLED device already configured."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
@@ -152,7 +152,7 @@ async def test_zeroconf_device_exists_abort(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if WLED device already configured."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,
@@ -168,7 +168,7 @@ async def test_zeroconf_with_mac_device_exists_abort(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if WLED device already configured."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,

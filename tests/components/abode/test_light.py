@@ -22,18 +22,18 @@ from .common import setup_platform
 DEVICE_ID = "light.living_room_lamp"
 
 
-async def test_entity_registry.opp):
+async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
-    await setup_platform.opp, LIGHT_DOMAIN)
+    await setup_platform(opp, LIGHT_DOMAIN)
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(DEVICE_ID)
     assert entry.unique_id == "741385f4388b2637df4c6b398fe50581"
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test the light attributes are correct."""
-    await setup_platform.opp, LIGHT_DOMAIN)
+    await setup_platform(opp, LIGHT_DOMAIN)
 
     state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_ON
@@ -48,9 +48,9 @@ async def test_attributes.opp):
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 19
 
 
-async def test_switch_off.opp):
+async def test_switch_off(opp):
     """Test the light can be turned off."""
-    await setup_platform.opp, LIGHT_DOMAIN)
+    await setup_platform(opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.switch_off") as mock_switch_off:
         assert await opp.services.async_call(
@@ -60,9 +60,9 @@ async def test_switch_off.opp):
         mock_switch_off.assert_called_once()
 
 
-async def test_switch_on.opp):
+async def test_switch_on(opp):
     """Test the light can be turned on."""
-    await setup_platform.opp, LIGHT_DOMAIN)
+    await setup_platform(opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.switch_on") as mock_switch_on:
         await opp.services.async_call(
@@ -72,9 +72,9 @@ async def test_switch_on.opp):
         mock_switch_on.assert_called_once()
 
 
-async def test_set_brightness.opp):
+async def test_set_brightness(opp):
     """Test the brightness can be set."""
-    await setup_platform.opp, LIGHT_DOMAIN)
+    await setup_platform(opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.set_level") as mock_set_level:
         await opp.services.async_call(
@@ -88,9 +88,9 @@ async def test_set_brightness.opp):
         mock_set_level.assert_called_once_with(39)
 
 
-async def test_set_color.opp):
+async def test_set_color(opp):
     """Test the color can be set."""
-    await setup_platform.opp, LIGHT_DOMAIN)
+    await setup_platform(opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.set_color") as mock_set_color:
         await opp.services.async_call(
@@ -103,9 +103,9 @@ async def test_set_color.opp):
         mock_set_color.assert_called_once_with((240.0, 100.0))
 
 
-async def test_set_color_temp.opp):
+async def test_set_color_temp(opp):
     """Test the color temp can be set."""
-    await setup_platform.opp, LIGHT_DOMAIN)
+    await setup_platform(opp, LIGHT_DOMAIN)
 
     with patch("abodepy.AbodeLight.set_color_temp") as mock_set_color_temp:
         await opp.services.async_call(

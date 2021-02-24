@@ -40,7 +40,7 @@ async def async_setup_entry(
     for name, status, actions in.opp_isy_data[ISY994_PROGRAMS][COVER]:
         devices.append(ISYCoverProgramEntity(name, status, actions))
 
-    await migrate_old_unique_ids.opp, COVER, devices)
+    await migrate_old_unique_ids(opp, COVER, devices)
     async_add_entities(devices)
 
 

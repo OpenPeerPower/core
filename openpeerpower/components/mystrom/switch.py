@@ -22,7 +22,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the myStrom switch/plug integration."""
     name = config.get(CONF_NAME)
     host = config.get(CONF_HOST)

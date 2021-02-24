@@ -48,7 +48,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Spider via config entry."""
     try:
         api = await opp.async_add_executor_job(
@@ -74,7 +74,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload Spider entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -26,7 +26,7 @@ TASMOTA_DISCOVERY_ENTITY_UPDATED = "tasmota_discovery_entity_updated_{}_{}_{}_{}
 TASMOTA_DISCOVERY_INSTANCE = "tasmota_discovery_instance"
 
 
-def clear_discovery_hash.opp, discovery_hash):
+def clear_discovery_hash(opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
     if ALREADY_DISCOVERED not in.opp.data:
         # Discovery is shutting down
@@ -34,7 +34,7 @@ def clear_discovery_hash.opp, discovery_hash):
     del.opp.data[ALREADY_DISCOVERED][discovery_hash]
 
 
-def set_discovery_hash.opp, discovery_hash):
+def set_discovery_hash(opp, discovery_hash):
     """Set entry in ALREADY_DISCOVERED list."""
     opp.data[ALREADY_DISCOVERED][discovery_hash] = {}
 
@@ -168,7 +168,7 @@ async def async_start(
     opp.data[TASMOTA_DISCOVERY_INSTANCE] = tasmota_discovery
 
 
-async def async_stop.opp: OpenPeerPowerType) -> bool:
+async def async_stop(opp: OpenPeerPowerType) -> bool:
     """Stop Tasmota device discovery."""
     opp.data.pop(ALREADY_DISCOVERED)
     tasmota_discovery = opp.data.pop(TASMOTA_DISCOVERY_INSTANCE)

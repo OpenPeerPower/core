@@ -38,16 +38,16 @@ async def async_setup_platform(
     opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT scene through configuration.yaml."""
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
     await _async_setup_entity(async_add_entities, config)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up MQTT scene dynamically through MQTT discovery."""
     setup = functools.partial(
         _async_setup_entity, async_add_entities, config_entry=config_entry
     )
-    await async_setup_entry_helper.opp, scene.DOMAIN, setup, PLATFORM_SCHEMA)
+    await async_setup_entry_helper(opp, scene.DOMAIN, setup, PLATFORM_SCHEMA)
 
 
 async def _async_setup_entity(
@@ -92,10 +92,10 @@ class MqttScene(
         """(Re)Setup the entity."""
         self._config = config
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe when removed."""
-        await MqttAvailability.async_will_remove_from.opp(self)
-        await MqttDiscoveryUpdate.async_will_remove_from.opp(self)
+        await MqttAvailability.async_will_remove_from(opp(self)
+        await MqttDiscoveryUpdate.async_will_remove_from(opp(self)
 
     @property
     def name(self):

@@ -91,7 +91,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 
 @callback
-def _async_migrate_options_from_data_if_missing.opp, entry):
+def _async_migrate_options_from_data_if_missing(opp, entry):
     data = dict(entry.data)
     options = dict(entry.options)
 
@@ -102,12 +102,12 @@ def _async_migrate_options_from_data_if_missing.opp, entry):
         opp.config_entries.async_update_entry(entry, data=data, options=options)
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up BMW Connected Drive from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN].setdefault(DATA_ENTRIES, {})
 
-    _async_migrate_options_from_data_if_missing.opp, entry)
+    _async_migrate_options_from_data_if_missing(opp, entry)
 
     try:
         account = await opp.async_add_executor_job(
@@ -159,7 +159,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -192,7 +192,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def update_listener.opp, config_entry):
+async def update_listener(opp, config_entry):
     """Handle options update."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 

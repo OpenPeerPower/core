@@ -23,9 +23,9 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry) -> bool:
+async def async_setup_entry(opp, config_entry) -> bool:
     """Set up Awair integration from a config entry."""
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     coordinator = AwairDataUpdateCoordinator.opp, config_entry, session)
 
     await coordinator.async_refresh()
@@ -44,7 +44,7 @@ async def async_setup_entry.opp, config_entry) -> bool:
     return True
 
 
-async def async_unload_entry.opp, config_entry) -> bool:
+async def async_unload_entry(opp, config_entry) -> bool:
     """Unload Awair configuration."""
     tasks = []
     for platform in PLATFORMS:

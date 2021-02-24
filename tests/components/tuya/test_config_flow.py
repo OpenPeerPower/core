@@ -73,7 +73,7 @@ def tuya_setup_fixture():
         yield
 
 
-async def test_user.opp, tuya):
+async def test_user(opp, tuya):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -96,7 +96,7 @@ async def test_user.opp, tuya):
     assert not result["result"].unique_id
 
 
-async def test_import.opp, tuya):
+async def test_import(opp, tuya):
     """Test import step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -116,7 +116,7 @@ async def test_import.opp, tuya):
 
 async def test_abort_if_already_setup_opp, tuya):
     """Test we abort if Tuya is already setup."""
-    MockConfigEntry(domain=DOMAIN, data=TUYA_USER_DATA).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, data=TUYA_USER_DATA).add_to(opp.opp)
 
     # Should fail, config exist (import)
     result = await opp.config_entries.flow.async_init(
@@ -135,7 +135,7 @@ async def test_abort_if_already_setup_opp, tuya):
     assert result["reason"] == RESULT_SINGLE_INSTANCE
 
 
-async def test_abort_on_invalid_credentials.opp, tuya):
+async def test_abort_on_invalid_credentials(opp, tuya):
     """Test when we have invalid credentials."""
     tuya().init.side_effect = TuyaAPIException("Boom")
 
@@ -173,13 +173,13 @@ async def test_abort_on_connection_error(opp, tuya):
     assert result["reason"] == RESULT_CONN_ERROR
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data=TUYA_USER_DATA,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     # Set up the integration to make sure the config flow module is loaded.
     assert await opp.config_entries.async_setup(config_entry.entry_id)

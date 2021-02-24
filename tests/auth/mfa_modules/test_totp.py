@@ -11,7 +11,7 @@ from tests.common import MockUser
 MOCK_CODE = "123456"
 
 
-async def test_validating_mfa.opp):
+async def test_validating_mfa(opp):
     """Test validating mfa code."""
     totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     await totp_auth_module.async_setup_user("test-user", {})
@@ -20,7 +20,7 @@ async def test_validating_mfa.opp):
         assert await totp_auth_module.async_validate("test-user", {"code": MOCK_CODE})
 
 
-async def test_validating_mfa_invalid_code.opp):
+async def test_validating_mfa_invalid_code(opp):
     """Test validating an invalid mfa code."""
     totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     await totp_auth_module.async_setup_user("test-user", {})
@@ -32,7 +32,7 @@ async def test_validating_mfa_invalid_code.opp):
         )
 
 
-async def test_validating_mfa_invalid_user.opp):
+async def test_validating_mfa_invalid_user(opp):
     """Test validating an mfa code with invalid user."""
     totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     await totp_auth_module.async_setup_user("test-user", {})
@@ -43,7 +43,7 @@ async def test_validating_mfa_invalid_user.opp):
     )
 
 
-async def test_setup_depose_user.opp):
+async def test_setup_depose_user(opp):
     """Test despose user."""
     totp_auth_module = await auth_mfa_module_from_config(opp, {"type": "totp"})
     result = await totp_auth_module.async_setup_user("test-user", {})
@@ -62,7 +62,7 @@ async def test_setup_depose_user.opp):
     assert len(totp_auth_module._users) == 1
 
 
-async def test_login_flow_validates_mfa.opp):
+async def test_login_flow_validates_mfa(opp):
     """Test login flow with mfa enabled."""
     opp.auth = await auth_manager_from_config(
         opp,
@@ -76,7 +76,7 @@ async def test_login_flow_validates_mfa.opp):
     )
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
-    ).add_to_auth_manager.opp.auth)
+    ).add_to_auth_manager(opp.auth)
     await opp.auth.async_link_user(
         user,
         auth_models.Credentials(
@@ -130,7 +130,7 @@ async def test_login_flow_validates_mfa.opp):
         assert result["data"].id == "mock-id"
 
 
-async def test_race_condition_in_data_loading.opp):
+async def test_race_condition_in_data_loading(opp):
     """Test race condition in the data loading."""
     counter = 0
 

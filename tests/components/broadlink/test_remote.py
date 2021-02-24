@@ -23,12 +23,12 @@ IR_PACKET = (
 )
 
 
-async def test_remote_setup_works.opp):
+async def test_remote_setup_works(opp):
     """Test a successful setup with all remotes."""
     for device in map(get_device, REMOTE_DEVICES):
-        device_registry = mock_device_registry.opp)
-        entity_registry = mock_registry.opp)
-        mock_api, mock_entry = await device.setup_entry.opp)
+        device_registry = mock_device_registry(opp)
+        entity_registry = mock_registry(opp)
+        mock_api, mock_entry = await device.setup_entry(opp)
 
         device_entry = device_registry.async_get_device(
             {(DOMAIN, mock_entry.unique_id)}
@@ -43,12 +43,12 @@ async def test_remote_setup_works.opp):
         assert mock_api.auth.call_count == 1
 
 
-async def test_remote_send_command.opp):
+async def test_remote_send_command(opp):
     """Test sending a command with all remotes."""
     for device in map(get_device, REMOTE_DEVICES):
-        device_registry = mock_device_registry.opp)
-        entity_registry = mock_registry.opp)
-        mock_api, mock_entry = await device.setup_entry.opp)
+        device_registry = mock_device_registry(opp)
+        entity_registry = mock_registry(opp)
+        mock_api, mock_entry = await device.setup_entry(opp)
 
         device_entry = device_registry.async_get_device(
             {(DOMAIN, mock_entry.unique_id)}
@@ -70,12 +70,12 @@ async def test_remote_send_command.opp):
         assert mock_api.auth.call_count == 1
 
 
-async def test_remote_turn_off_turn_on.opp):
+async def test_remote_turn_off_turn_on(opp):
     """Test we do not send commands if the remotes are off."""
     for device in map(get_device, REMOTE_DEVICES):
-        device_registry = mock_device_registry.opp)
-        entity_registry = mock_registry.opp)
-        mock_api, mock_entry = await device.setup_entry.opp)
+        device_registry = mock_device_registry(opp)
+        entity_registry = mock_registry(opp)
+        mock_api, mock_entry = await device.setup_entry(opp)
 
         device_entry = device_registry.async_get_device(
             {(DOMAIN, mock_entry.unique_id)}

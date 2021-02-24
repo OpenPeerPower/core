@@ -69,7 +69,7 @@ async def async_attach_trigger(
             and not to_match
         ):
             description = f"{entity} {_EVENT_DESCRIPTION[event]} {zone_state.attributes[ATTR_FRIENDLY_NAME]}"
-            opp.async_run.opp_job(
+            opp.async_run(opp_job(
                 job,
                 {
                     "trigger": {
@@ -85,4 +85,4 @@ async def async_attach_trigger(
                 to_s.context,
             )
 
-    return async_track_state_change_event.opp, entity_id, zone_automation_listener)
+    return async_track_state_change_event(opp, entity_id, zone_automation_listener)

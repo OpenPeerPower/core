@@ -15,7 +15,7 @@ CURRENT_STATE_MAP = {0: STATE_UNLOCKED, 1: STATE_LOCKED, 2: STATE_JAMMED, 3: Non
 TARGET_STATE_MAP = {STATE_UNLOCKED: 0, STATE_LOCKED: 1}
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Homekit lock."""
     hkid = config_entry.data["AccessoryPairingID"]
     conn = opp.data[KNOWN_DEVICES][hkid]

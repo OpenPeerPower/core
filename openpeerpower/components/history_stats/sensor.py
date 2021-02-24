@@ -75,9 +75,9 @@ PLATFORM_SCHEMA = vol.All(
 
 
 # noinspection PyUnusedLocal
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the History Stats sensor."""
-    setup_reload_service.opp, DOMAIN, PLATFORMS)
+    setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     entity_id = config.get(CONF_ENTITY_ID)
     entity_states = config.get(CONF_STATE)

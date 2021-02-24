@@ -311,7 +311,7 @@ def async_numeric_state_from_config(
     ) -> bool:
         """Test numeric state condition."""
         if value_template is not None:
-            value_template.opp = opp
+            value_template(opp = opp
 
         return all(
             async_numeric_state(
@@ -396,7 +396,7 @@ def state_from_config(
     if not isinstance(req_states, list):
         req_states = [req_states]
 
-    def if_state.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+    def if_state(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test if condition."""
         return all(
             state.opp, entity_id, req_states, for_period, attribute)
@@ -419,8 +419,8 @@ def sun(
     before_offset = before_offset or timedelta(0)
     after_offset = after_offset or timedelta(0)
 
-    sunrise_today = get_astral_event_date.opp, SUN_EVENT_SUNRISE, today)
-    sunset_today = get_astral_event_date.opp, SUN_EVENT_SUNSET, today)
+    sunrise_today = get_astral_event_date(opp, SUN_EVENT_SUNRISE, today)
+    sunset_today = get_astral_event_date(opp, SUN_EVENT_SUNSET, today)
 
     sunrise = sunrise_today
     sunset = sunset_today
@@ -428,14 +428,14 @@ def sun(
         cast(datetime, sunrise_today)
     ).date() and SUN_EVENT_SUNRISE in (before, after):
         tomorrow = dt_util.as_local(utcnow + timedelta(days=1)).date()
-        sunrise_tomorrow = get_astral_event_date.opp, SUN_EVENT_SUNRISE, tomorrow)
+        sunrise_tomorrow = get_astral_event_date(opp, SUN_EVENT_SUNRISE, tomorrow)
         sunrise = sunrise_tomorrow
 
     if today > dt_util.as_local(
         cast(datetime, sunset_today)
     ).date() and SUN_EVENT_SUNSET in (before, after):
         tomorrow = dt_util.as_local(utcnow + timedelta(days=1)).date()
-        sunset_tomorrow = get_astral_event_date.opp, SUN_EVENT_SUNSET, tomorrow)
+        sunset_tomorrow = get_astral_event_date(opp, SUN_EVENT_SUNSET, tomorrow)
         sunset = sunset_tomorrow
 
     if sunrise is None and SUN_EVENT_SUNRISE in (before, after):
@@ -510,9 +510,9 @@ def async_template_from_config(
 
     def template_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
-        value_template.opp = opp
+        value_template(opp = opp
 
-        return async_template.opp, value_template, variables)
+        return async_template(opp, value_template, variables)
 
     return template_if
 
@@ -653,7 +653,7 @@ def zone_from_config(
     entity_ids = config.get(CONF_ENTITY_ID, [])
     zone_entity_ids = config.get(CONF_ZONE, [])
 
-    def if_in_zone.opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+    def if_in_zone(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test if condition."""
         errors = []
 

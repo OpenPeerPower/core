@@ -40,9 +40,9 @@ async def async_setup_entry(
     for node in.opp_isy_data[ISY994_NODES][LIGHT]:
         devices.append(ISYLightEntity(node, restore_light_state))
 
-    await migrate_old_unique_ids.opp, LIGHT, devices)
+    await migrate_old_unique_ids(opp, LIGHT, devices)
     async_add_entities(devices)
-    async_setup_light_services.opp)
+    async_setup_light_services(opp)
 
 
 class ISYLightEntity(ISYNodeEntity, LightEntity, RestoreEntity):

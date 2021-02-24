@@ -99,7 +99,7 @@ TRIGGER_SCHEMA = vol.All(
 )
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     numeric_state_config = {
         numeric_state_trigger.CONF_PLATFORM: "numeric_state",
@@ -118,7 +118,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     )
 
 
-async def async_get_triggers.opp, device_id):
+async def async_get_triggers(opp, device_id):
     """List device triggers."""
     triggers = []
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
@@ -160,7 +160,7 @@ async def async_get_triggers.opp, device_id):
     return triggers
 
 
-async def async_get_trigger_capabilities.opp, config):
+async def async_get_trigger_capabilities(opp, config):
     """List trigger capabilities."""
     state = opp.states.get(config[CONF_ENTITY_ID])
     unit_of_measurement = (

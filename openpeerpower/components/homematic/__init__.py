@@ -267,7 +267,7 @@ def setup(opp, config):
         param = service.data.get(ATTR_PARAM)
 
         # Device not found
-        hmdevice = _device_from_servicecall.opp, service)
+        hmdevice = _device_from_servicecall(opp, service)
         if hmdevice is None:
             _LOGGER.error("%s not found for service virtualkey!", address)
             return
@@ -354,7 +354,7 @@ def setup(opp, config):
                 value = str(value)
 
         # Device not found
-        hmdevice = _device_from_servicecall.opp, service)
+        hmdevice = _device_from_servicecall(opp, service)
         if hmdevice is None:
             _LOGGER.error("%s not found!", address)
             return
@@ -415,7 +415,7 @@ def setup(opp, config):
     return True
 
 
-def _system_callback_handler.opp, config, src, *args):
+def _system_callback_handler(opp, config, src, *args):
     """System callback handler."""
     # New devices available at hub
     if src == "newDevices":
@@ -455,7 +455,7 @@ def _system_callback_handler.opp, config, src, *args):
                 ("binary_sensor", DISCOVER_BATTERY),
             ):
                 # Get all devices of a specific type
-                found_devices = _get_devices.opp, discovery_type, addresses, interface)
+                found_devices = _get_devices(opp, discovery_type, addresses, interface)
 
                 # When devices of this type are found
                 # they are setup in Open Peer Power and a discovery event is fired
@@ -478,7 +478,7 @@ def _system_callback_handler.opp, config, src, *args):
         opp.bus.fire(EVENT_ERROR, {ATTR_ERRORCODE: errorcode, ATTR_MESSAGE: message})
 
 
-def _get_devices.opp, discovery_type, keys, interface):
+def _get_devices(opp, discovery_type, keys, interface):
     """Get the HomeMatic devices for given discovery_type."""
     device_arr = []
 
@@ -573,7 +573,7 @@ def _create_op_id(name, channel, param, count):
         return f"{name} {channel} {param}"
 
 
-def _hm_event_handler.opp, interface, device, caller, attribute, value):
+def _hm_event_handler(opp, interface, device, caller, attribute, value):
     """Handle all pyhomematic device events."""
     try:
         channel = int(device.split(":")[1])
@@ -605,7 +605,7 @@ def _hm_event_handler.opp, interface, device, caller, attribute, value):
     _LOGGER.warning("Event is unknown and not forwarded")
 
 
-def _device_from_servicecall.opp, service):
+def _device_from_servicecall(opp, service):
     """Extract HomeMatic device from service call."""
     address = service.data.get(ATTR_ADDRESS)
     interface = service.data.get(ATTR_INTERFACE)

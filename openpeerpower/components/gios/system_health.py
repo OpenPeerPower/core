@@ -13,8 +13,8 @@ def async_register(
     register.async_register_info(system_health_info)
 
 
-async def system_health_info.opp):
+async def system_health_info(opp):
     """Get info for the info page."""
     return {
-        "can_reach_server": system_health.async_check_can_reach_url.opp, API_ENDPOINT)
+        "can_reach_server": system_health.async_check_can_reach_url(opp, API_ENDPOINT)
     }

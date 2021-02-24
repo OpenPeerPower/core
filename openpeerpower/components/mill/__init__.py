@@ -6,7 +6,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up the Mill heater."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, "climate")
@@ -14,7 +14,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = await opp.config_entries.async_forward_entry_unload(
         config_entry, "climate"

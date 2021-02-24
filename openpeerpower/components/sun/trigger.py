@@ -24,7 +24,7 @@ TRIGGER_SCHEMA = vol.Schema(
 )
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for events based on configuration."""
     event = config.get(CONF_EVENT)
     offset = config.get(CONF_OFFSET)
@@ -36,7 +36,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def call_action():
         """Call action with right context."""
-        opp.async_run.opp_job(
+        opp.async_run(opp_job(
             job,
             {
                 "trigger": {
@@ -49,5 +49,5 @@ async def async_attach_trigger.opp, config, action, automation_info):
         )
 
     if event == SUN_EVENT_SUNRISE:
-        return async_track_sunrise.opp, call_action, offset)
-    return async_track_sunset.opp, call_action, offset)
+        return async_track_sunrise(opp, call_action, offset)
+    return async_track_sunset(opp, call_action, offset)

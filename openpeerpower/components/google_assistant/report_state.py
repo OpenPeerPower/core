@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_enable_report_state.opp: OpenPeerPower, google_config: AbstractConfig):
+def async_enable_report_state(opp: OpenPeerPower, google_config: AbstractConfig):
     """Enable state reporting."""
     checker = None
 
@@ -71,9 +71,9 @@ def async_enable_report_state.opp: OpenPeerPower, google_config: AbstractConfig)
         nonlocal unsub, checker
         entities = {}
 
-        checker = await create_checker.opp, DOMAIN, extra_significant_check)
+        checker = await create_checker(opp, DOMAIN, extra_significant_check)
 
-        for entity in async_get_entities.opp, google_config):
+        for entity in async_get_entities(opp, google_config):
             if not entity.should_expose():
                 continue
 
@@ -100,7 +100,7 @@ def async_enable_report_state.opp: OpenPeerPower, google_config: AbstractConfig)
             MATCH_ALL, async_entity_state_listener
         )
 
-    unsub = async_call_later.opp, INITIAL_REPORT_DELAY, inital_report)
+    unsub = async_call_later(opp, INITIAL_REPORT_DELAY, inital_report)
 
     # pylint: disable=unnecessary-lambda
     return lambda: unsub()

@@ -18,13 +18,13 @@ DATA_SCHEMA = vol.Schema(
 )
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
 
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
 
     try:
         await pymyq.login(data[CONF_USERNAME], data[CONF_PASSWORD], websession)

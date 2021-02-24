@@ -13,7 +13,7 @@ from openpeerpower.components.image_processing import (
 from openpeerpower.core import split_entity_id
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the QR code image processing platform."""
     # pylint: disable=unused-argument
     entities = []

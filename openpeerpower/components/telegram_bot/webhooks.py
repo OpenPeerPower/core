@@ -27,14 +27,14 @@ TELEGRAM_HANDLER_URL = "/api/telegram_webhooks"
 REMOVE_HANDLER_URL = ""
 
 
-async def async_setup_platform.opp, config):
+async def async_setup_platform(opp, config):
     """Set up the Telegram webhooks platform."""
 
     bot = initialize_bot(config)
 
     current_status = await opp.async_add_executor_job(bot.getWebhookInfo)
     base_url = config.get(
-        CONF_URL, get_url.opp, require_ssl=True, allow_internal=False)
+        CONF_URL, get_url(opp, require_ssl=True, allow_internal=False)
     )
 
     # Some logging of Bot current status:

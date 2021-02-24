@@ -18,11 +18,11 @@ PLATFORMS = ["sensor"]
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Coronavirus component."""
     # Make sure coordinator is initialized.
-    await get_coordinator.opp)
+    await get_coordinator(opp)
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Coronavirus from a config entry."""
     if isinstance(entry.data["country"], int):
         opp.config_entries.async_update_entry(
@@ -52,7 +52,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -66,7 +66,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def get_coordinator.opp):
+async def get_coordinator(opp):
     """Get the data update coordinator."""
     if DOMAIN in.opp.data:
         return.opp.data[DOMAIN]
@@ -76,7 +76,7 @@ async def get_coordinator.opp):
             return {
                 case.country: case
                 for case in await coronavirus.get_cases(
-                    aiohttp_client.async_get_clientsession.opp)
+                    aiohttp_client.async_get_clientsession(opp)
                 )
             }
 

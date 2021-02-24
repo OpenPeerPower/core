@@ -38,7 +38,7 @@ SUB_ACTIVE = Subscription({"created_at": "2020-01-20T21:22:42", "is_gift": False
 FOLLOW_ACTIVE = Follow({"created_at": "2020-01-20T21:22:42"})
 
 
-async def test_init.opp):
+async def test_init(opp):
     """Test initial config."""
 
     channels = MagicMock()
@@ -54,7 +54,7 @@ async def test_init.opp):
     with patch(
         "openpeerpower.components.twitch.sensor.TwitchClient", return_value=twitch_mock
     ):
-        assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
+        assert await async_setup_component(opp, sensor.DOMAIN, CONFIG) is True
         await opp.async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
@@ -66,7 +66,7 @@ async def test_init.opp):
     assert sensor_state.attributes["followers"] == 42
 
 
-async def test_offline.opp):
+async def test_offline(opp):
     """Test offline state."""
 
     twitch_mock = MagicMock()
@@ -78,7 +78,7 @@ async def test_offline.opp):
         "openpeerpower.components.twitch.sensor.TwitchClient",
         return_value=twitch_mock,
     ):
-        assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
+        assert await async_setup_component(opp, sensor.DOMAIN, CONFIG) is True
         await opp.async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
@@ -86,7 +86,7 @@ async def test_offline.opp):
     assert sensor_state.attributes["entity_picture"] == "logo.png"
 
 
-async def test_streaming.opp):
+async def test_streaming(opp):
     """Test streaming state."""
 
     twitch_mock = MagicMock()
@@ -98,7 +98,7 @@ async def test_streaming.opp):
         "openpeerpower.components.twitch.sensor.TwitchClient",
         return_value=twitch_mock,
     ):
-        assert await async_setup_component.opp, sensor.DOMAIN, CONFIG) is True
+        assert await async_setup_component(opp, sensor.DOMAIN, CONFIG) is True
         await opp.async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
@@ -108,7 +108,7 @@ async def test_streaming.opp):
     assert sensor_state.attributes["title"] == "Title"
 
 
-async def test_oauth_without_sub_and_follow.opp):
+async def test_oauth_without_sub_and_follow(opp):
     """Test state with oauth."""
 
     twitch_mock = MagicMock()
@@ -123,7 +123,7 @@ async def test_oauth_without_sub_and_follow.opp):
         "openpeerpower.components.twitch.sensor.TwitchClient",
         return_value=twitch_mock,
     ):
-        assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
+        assert await async_setup_component(opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
         await opp.async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
@@ -131,7 +131,7 @@ async def test_oauth_without_sub_and_follow.opp):
     assert sensor_state.attributes["following"] is False
 
 
-async def test_oauth_with_sub.opp):
+async def test_oauth_with_sub(opp):
     """Test state with oauth and sub."""
 
     twitch_mock = MagicMock()
@@ -146,7 +146,7 @@ async def test_oauth_with_sub.opp):
         "openpeerpower.components.twitch.sensor.TwitchClient",
         return_value=twitch_mock,
     ):
-        assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
+        assert await async_setup_component(opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
         await opp.async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)
@@ -156,7 +156,7 @@ async def test_oauth_with_sub.opp):
     assert sensor_state.attributes["following"] is False
 
 
-async def test_oauth_with_follow.opp):
+async def test_oauth_with_follow(opp):
     """Test state with oauth and follow."""
 
     twitch_mock = MagicMock()
@@ -171,7 +171,7 @@ async def test_oauth_with_follow.opp):
         "openpeerpower.components.twitch.sensor.TwitchClient",
         return_value=twitch_mock,
     ):
-        assert await async_setup_component.opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
+        assert await async_setup_component(opp, sensor.DOMAIN, CONFIG_WITH_OAUTH)
         await opp.async_block_till_done()
 
     sensor_state = opp.states.get(ENTITY_ID)

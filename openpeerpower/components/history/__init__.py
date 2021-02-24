@@ -87,10 +87,10 @@ QUERY_STATES = [
 HISTORY_BAKERY = "history_bakery"
 
 
-def get_significant_states.opp, *args, **kwargs):
+def get_significant_states(opp, *args, **kwargs):
     """Wrap _get_significant_states with a sql session."""
-    with session_scope.opp.opp) as session:
-        return _get_significant_states.opp, session, *args, **kwargs)
+    with session_scope(opp.opp) as session:
+        return _get_significant_states(opp, session, *args, **kwargs)
 
 
 def _get_significant_states(
@@ -164,9 +164,9 @@ def _get_significant_states(
     )
 
 
-def state_changes_during_period.opp, start_time, end_time=None, entity_id=None):
+def state_changes_during_period(opp, start_time, end_time=None, entity_id=None):
     """Return states changes during UTC period start_time - end_time."""
-    with session_scope.opp.opp) as session:
+    with session_scope(opp.opp) as session:
         baked_query = opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
@@ -195,14 +195,14 @@ def state_changes_during_period.opp, start_time, end_time=None, entity_id=None):
 
         entity_ids = [entity_id] if entity_id is not None else None
 
-        return _sorted_states_to_json.opp, session, states, start_time, entity_ids)
+        return _sorted_states_to_json(opp, session, states, start_time, entity_ids)
 
 
-def get_last_state_changes.opp, number_of_states, entity_id):
+def get_last_state_changes(opp, number_of_states, entity_id):
     """Return the last number_of_states."""
     start_time = dt_util.utcnow()
 
-    with session_scope.opp.opp) as session:
+    with session_scope(opp.opp) as session:
         baked_query = opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
@@ -236,16 +236,16 @@ def get_last_state_changes.opp, number_of_states, entity_id):
         )
 
 
-def get_states.opp, utc_point_in_time, entity_ids=None, run=None, filters=None):
+def get_states(opp, utc_point_in_time, entity_ids=None, run=None, filters=None):
     """Return the states at a specific point in time."""
     if run is None:
-        run = recorder.run_information_from_instance.opp, utc_point_in_time)
+        run = recorder.run_information_from_instance(opp, utc_point_in_time)
 
         # History did not run before utc_point_in_time
         if run is None:
             return []
 
-    with session_scope.opp.opp) as session:
+    with session_scope(opp.opp) as session:
         return _get_states_with_session(
             opp. session, utc_point_in_time, entity_ids, run, filters
         )
@@ -315,7 +315,7 @@ def _get_states_with_session(
     return [LazyState(row) for row in execute(query)]
 
 
-def _get_single_entity_states_with_session.opp, session, utc_point_in_time, entity_id):
+def _get_single_entity_states_with_session(opp, session, utc_point_in_time, entity_id):
     # Use an entirely different (and extremely fast) query if we only
     # have a single entity id
     baked_query = opp.data[HISTORY_BAKERY](
@@ -365,7 +365,7 @@ def _sorted_states_to_json(
     # Get the states at the start time
     timer_start = time.perf_counter()
     if include_start_time_state:
-        run = recorder.run_information_from_instance.opp, start_time)
+        run = recorder.run_information_from_instance(opp, start_time)
         for state in _get_states_with_session(
             opp. session, start_time, entity_ids, run=run, filters=filters
         ):
@@ -424,9 +424,9 @@ def _sorted_states_to_json(
     return {key: val for key, val in result.items() if val}
 
 
-def get_state.opp, utc_point_in_time, entity_id, run=None):
+def get_state(opp, utc_point_in_time, entity_id, run=None):
     """Return a state at a specific point in time."""
-    states = get_states.opp, utc_point_in_time, (entity_id,), run)
+    states = get_states(opp, utc_point_in_time, (entity_id,), run)
     return states[0] if states else None
 
 
@@ -507,7 +507,7 @@ class HistoryPeriodView(OpenPeerPowerView):
         if (
             not include_start_time_state
             and entity_ids
-            and not _entities_may_have_state_changes_after.opp, entity_ids, start_time)
+            and not _entities_may_have_state_changes_after(opp, entity_ids, start_time)
         ):
             return self.json([])
 
@@ -538,7 +538,7 @@ class HistoryPeriodView(OpenPeerPowerView):
         """Fetch significant stats from the database as json."""
         timer_start = time.perf_counter()
 
-        with session_scope.opp.opp) as session:
+        with session_scope(opp.opp) as session:
             result = _get_significant_states(
                 opp,
                 session,

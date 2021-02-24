@@ -25,7 +25,7 @@ from .helpers import device_info
 ATTR_KEYS = (ATTR_ALTITUDE, ATTR_COURSE, ATTR_SPEED, ATTR_VERTICAL_ACCURACY)
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up OwnTracks based off an entry."""
     entity = MobileAppEntity(entry)
     async_add_entities([entity])
@@ -133,9 +133,9 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
         data.update({key: attr[key] for key in attr if key in ATTR_KEYS})
         self._data = data
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Call when entity is being removed from.opp."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
         if self._dispatch_unsub:
             self._dispatch_unsub()

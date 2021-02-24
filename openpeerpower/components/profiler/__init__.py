@@ -49,7 +49,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Profiler from a config entry."""
 
     lock = asyncio.Lock()
@@ -57,11 +57,11 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     async def _async_run_profile(call: ServiceCall):
         async with lock:
-            await _async_generate_profile.opp, call)
+            await _async_generate_profile(opp, call)
 
     async def _async_run_memory_profile(call: ServiceCall):
         async with lock:
-            await _async_generate_memory_profile.opp, call)
+            await _async_generate_memory_profile(opp, call)
 
     async def _async_start_log_objects(call: ServiceCall):
         if LOG_INTERVAL_SUB in domain_data:
@@ -152,7 +152,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     for service in SERVICES:
         opp.services.async_remove(domain=DOMAIN, service=service)
@@ -162,7 +162,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def _async_generate_profile.opp: OpenPeerPower, call: ServiceCall):
+async def _async_generate_profile(opp: OpenPeerPower, call: ServiceCall):
     start_time = int(time.time() * 1000000)
     opp.components.persistent_notification.async_create(
         "The profile has started. This notification will be updated when it is complete.",
@@ -186,7 +186,7 @@ async def _async_generate_profile.opp: OpenPeerPower, call: ServiceCall):
     )
 
 
-async def _async_generate_memory_profile.opp: OpenPeerPower, call: ServiceCall):
+async def _async_generate_memory_profile(opp: OpenPeerPower, call: ServiceCall):
     start_time = int(time.time() * 1000000)
     opp.components.persistent_notification.async_create(
         "The memory profile has started. This notification will be updated when it is complete.",

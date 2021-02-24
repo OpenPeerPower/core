@@ -80,7 +80,7 @@ def _ups_schema(ups_list):
     return vol.Schema({vol.Required(CONF_ALIAS): vol.In(ups_list)})
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from _base_schema with values provided by the user.

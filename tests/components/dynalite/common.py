@@ -21,20 +21,20 @@ def create_mock_device(platform, spec):
     return device
 
 
-async def get_entry_id_from.opp.opp):
+async def get_entry_id_from(opp.opp):
     """Get the config entry id from.opp."""
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
     assert ent_reg
     conf_entries = opp.config_entries.async_entries(dynalite.DOMAIN)
     assert len(conf_entries) == 1
     return conf_entries[0].entry_id
 
 
-async def create_entity_from_device.opp, device):
+async def create_entity_from_device(opp, device):
     """Set up the component and platform and create a light based on the device provided."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -47,7 +47,7 @@ async def create_entity_from_device.opp, device):
     return mock_dyn_dev.mock_calls[1][2]["update_device_func"]
 
 
-async def run_service_tests.opp, device, platform, services):
+async def run_service_tests(opp, device, platform, services):
     """Run a series of service calls and check that the entity and device behave correctly."""
     for cur_item in services:
         service = cur_item[ATTR_SERVICE]

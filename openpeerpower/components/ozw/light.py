@@ -32,7 +32,7 @@ COLOR_CHANNEL_GREEN = 0x08
 COLOR_CHANNEL_BLUE = 0x10
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Light from Config Entry."""
 
     @callback
@@ -43,7 +43,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([light])
 
     opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
-        async_dispatcher_connect.opp, f"{DOMAIN}_new_{LIGHT_DOMAIN}", async_add_light)
+        async_dispatcher_connect(opp, f"{DOMAIN}_new_{LIGHT_DOMAIN}", async_add_light)
     )
 
 

@@ -100,9 +100,9 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up Almond config entry."""
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
 
     if entry.data["type"] == TYPE_LOCAL:
         auth = AlmondLocalAuth(entry.data["host"], websession)
@@ -125,7 +125,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
     if not entry.data.get("is.oppio"):
         # If we're not starting or local, set up Almond right away
         if opp.state != CoreState.not_running or entry.data["type"] == TYPE_LOCAL:
-            await _configure_almond_for_ha.opp, entry, api)
+            await _configure_almond_for_ha(opp, entry, api)
 
         else:
             # OAuth2 implementations can potentially rely on the HA Cloud url.
@@ -133,18 +133,18 @@ async def async_setup_entry.opp: OpenPeerPower, entry: config_entries.ConfigEntr
 
             async def configure_almond(_now):
                 try:
-                    await _configure_almond_for_ha.opp, entry, api)
+                    await _configure_almond_for_ha(opp, entry, api)
                 except ConfigEntryNotReady:
                     _LOGGER.warning(
                         "Unable to configure Almond to connect to Open Peer Power"
                     )
 
             async def almond.opp_start(_event):
-                event.async_call_later.opp, ALMOND_SETUP_DELAY, configure_almond)
+                event.async_call_later(opp, ALMOND_SETUP_DELAY, configure_almond)
 
             opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, almond.opp_start)
 
-    conversation.async_set_agent.opp, agent)
+    conversation.async_set_agent(opp, agent)
     return True
 
 
@@ -156,9 +156,9 @@ async def _configure_almond_for_ha(
         if entry.data["type"] == TYPE_OAUTH2:
             # If we're connecting over OAuth2, we will only set up connection
             # with Open Peer Power if we're remotely accessible.
-            opp.url = network.get_url.opp, allow_internal=False, prefer_cloud=True)
+            opp.url = network.get_url(opp, allow_internal=False, prefer_cloud=True)
         else:
-            opp.url = network.get_url.opp)
+            opp.url = network.get_url(opp)
     except network.NoURLAvailableError:
         # If no URL is available, we're not going to configure Almond to connect to HA.
         return
@@ -216,9 +216,9 @@ async def _configure_almond_for_ha(
             await opp.auth.async_remove_refresh_token(token)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload Almond."""
-    conversation.async_set_agent.opp, None)
+    conversation.async_set_agent(opp, None)
     return True
 
 

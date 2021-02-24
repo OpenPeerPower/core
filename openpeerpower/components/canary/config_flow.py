@@ -17,7 +17,7 @@ from .const import DOMAIN  # pylint: disable=unused-import
 _LOGGER = logging.getLogger(__name__)
 
 
-def validate_input.opp: OpenPeerPowerType, data: dict) -> Dict[str, Any]:
+def validate_input(opp: OpenPeerPowerType, data: dict) -> Dict[str, Any]:
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.

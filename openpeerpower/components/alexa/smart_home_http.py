@@ -89,7 +89,7 @@ async def async_setup(opp, config):
     opp.http.register_view(SmartHomeView(smart_home_config))
 
     if smart_home_config.should_report_state:
-        await async_enable_proactive_mode.opp, smart_home_config)
+        await async_enable_proactive_mode(opp, smart_home_config)
 
 
 class SmartHomeView(OpenPeerPowerView):

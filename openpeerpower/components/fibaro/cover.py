@@ -9,7 +9,7 @@ from openpeerpower.components.cover import (
 from . import FIBARO_DEVICES, FibaroDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Fibaro covers."""
     if discovery_info is None:
         return

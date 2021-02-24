@@ -49,7 +49,7 @@ async def async_setup(opp, config):
     if conf is None:
         return True
 
-    existing_servers = configured_servers.opp)
+    existing_servers = configured_servers(opp)
 
     for entry in conf[CONF_SERVERS]:
         if entry[CONF_NAME] not in existing_servers:
@@ -62,7 +62,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up an emulated roku server from a config entry."""
     config = config_entry.data
 
@@ -91,7 +91,7 @@ async def async_setup_entry.opp, config_entry):
     return await server.setup()
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     name = entry.data[CONF_NAME]
     server = opp.data[DOMAIN].pop(name)

@@ -31,12 +31,12 @@ async def async_setup_opp: OpenPeerPower, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Goal Zero Yeti from a config entry."""
     name = entry.data[CONF_NAME]
     host = entry.data[CONF_HOST]
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     api = Yeti(host, opp.loop, session)
     try:
         await api.get_state()
@@ -71,7 +71,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -22,7 +22,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Return the Arris device scanner."""
     conf = config[DOMAIN]
     url = f"http://{conf[CONF_HOST]}"

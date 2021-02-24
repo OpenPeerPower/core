@@ -14,4 +14,4 @@ async def async_setup(opp, config):
     if av is None:
         return True
 
-    return await async_setup_component.opp, "stream", config)
+    return await async_setup_component(opp, "stream", config)

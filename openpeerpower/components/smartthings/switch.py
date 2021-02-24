@@ -9,7 +9,7 @@ from . import SmartThingsEntity
 from .const import DATA_BROKERS, DOMAIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add switches for a config entry."""
     broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     async_add_entities(

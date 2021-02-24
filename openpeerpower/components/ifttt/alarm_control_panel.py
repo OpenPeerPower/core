@@ -72,7 +72,7 @@ PUSH_ALARM_STATE_SERVICE_SCHEMA = vol.Schema(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up a control panel managed through IFTTT."""
     if DATA_IFTTT_ALARM not in.opp.data:
         opp.data[DATA_IFTTT_ALARM] = []

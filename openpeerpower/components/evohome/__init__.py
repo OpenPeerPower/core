@@ -201,7 +201,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         config[DOMAIN][CONF_USERNAME],
         config[DOMAIN][CONF_PASSWORD],
         **tokens,
-        session=async_get_clientsession.opp),
+        session=async_get_clientsession(opp),
     )
 
     try:
@@ -235,7 +235,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         client_v2.username,
         client_v2.password,
         user_data=user_data,
-        session=async_get_clientsession.opp),
+        session=async_get_clientsession(opp),
     )
 
     opp.data[DOMAIN] = {}
@@ -246,23 +246,23 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     await broker.save_auth_tokens()
     await broker.async_update()  # get initial state
 
-    opp.async_create_task(async_load_platform.opp, "climate", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, "climate", DOMAIN, {}, config))
     if broker.tcs.hotwater:
         opp.async_create_task(
-            async_load_platform.opp, "water_heater", DOMAIN, {}, config)
+            async_load_platform(opp, "water_heater", DOMAIN, {}, config)
         )
 
     opp.helpers.event.async_track_time_interval(
         broker.async_update, config[DOMAIN][CONF_SCAN_INTERVAL]
     )
 
-    setup_service_functions.opp, broker)
+    setup_service_functions(opp, broker)
 
     return True
 
 
 @callback
-def setup_service_functions.opp: OpenPeerPowerType, broker):
+def setup_service_functions(opp: OpenPeerPowerType, broker):
     """Set up the service handlers for the system/zone operating modes.
 
     Not all Honeywell TCC-compatible systems support all operating modes. In addition,
@@ -272,12 +272,12 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
     It appears that all TCC-compatible systems support the same three zones modes.
     """
 
-    @verify_domain_control.opp, DOMAIN)
+    @verify_domain_control(opp, DOMAIN)
     async def force_refresh(call) -> None:
         """Obtain the latest state data via the vendor's RESTful API."""
         await broker.async_update()
 
-    @verify_domain_control.opp, DOMAIN)
+    @verify_domain_control(opp, DOMAIN)
     async def set_system_mode(call) -> None:
         """Set the system mode."""
         payload = {
@@ -285,9 +285,9 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
             "service": call.service,
             "data": call.data,
         }
-        async_dispatcher_send.opp, DOMAIN, payload)
+        async_dispatcher_send(opp, DOMAIN, payload)
 
-    @verify_domain_control.opp, DOMAIN)
+    @verify_domain_control(opp, DOMAIN)
     async def set_zone_override(call) -> None:
         """Set the zone override (setpoint)."""
         entity_id = call.data[ATTR_ENTITY_ID]
@@ -307,7 +307,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
             "data": call.data,
         }
 
-        async_dispatcher_send.opp, DOMAIN, payload)
+        async_dispatcher_send(opp, DOMAIN, payload)
 
     opp.services.async_register(DOMAIN, SVC_REFRESH_SYSTEM, force_refresh)
 

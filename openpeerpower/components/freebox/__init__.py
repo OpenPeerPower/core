@@ -42,7 +42,7 @@ async def async_setup(opp, config):
                 )
             )
 
-    discovery.async_listen.opp, SERVICE_FREEBOX, discovery_dispatch)
+    discovery.async_listen(opp, SERVICE_FREEBOX, discovery_dispatch)
 
     if conf is None:
         return True
@@ -59,7 +59,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Freebox component."""
     router = FreeboxRouter.opp, entry)
     await router.setup()
@@ -88,7 +88,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

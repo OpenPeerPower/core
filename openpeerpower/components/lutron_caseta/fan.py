@@ -18,7 +18,7 @@ DEFAULT_ON_PERCENTAGE = 50
 ORDERED_NAMED_FAN_SPEEDS = [FAN_LOW, FAN_MEDIUM, FAN_MEDIUM_HIGH, FAN_HIGH]
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Lutron Caseta fan platform.
 
     Adds fan controllers from the Caseta bridge associated with the config_entry

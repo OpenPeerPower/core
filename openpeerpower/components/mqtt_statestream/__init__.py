@@ -72,5 +72,5 @@ async def async_setup(opp, config):
                 encoded_val = json.dumps(val, cls=JSONEncoder)
                 opp.components.mqtt.async_publish(mybase + key, encoded_val, 1, True)
 
-    async_track_state_change.opp, MATCH_ALL, _state_publisher)
+    async_track_state_change(opp, MATCH_ALL, _state_publisher)
     return True

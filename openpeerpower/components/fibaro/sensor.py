@@ -38,7 +38,7 @@ SENSOR_TYPES = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Fibaro controller devices."""
     if discovery_info is None:
         return

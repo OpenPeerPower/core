@@ -92,7 +92,7 @@ async def test_multiple_controllers_with_legacy_one(
     entity2_id = "binary_sensor.second_dev_2"
 
     # Add existing entity registry entry from previous setup.
-    entity_registry = mock_registry.opp)
+    entity_registry = mock_registry(opp)
     entity_registry.async_get_or_create(
         domain="switch", platform=DOMAIN, unique_id="12"
     )
@@ -170,7 +170,7 @@ async def test_async_setup_entry_error(
         options={},
         unique_id="12345",
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     assert not await opp.config_entries.async_setup(entry.entry_id)
 

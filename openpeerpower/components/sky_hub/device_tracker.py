@@ -18,10 +18,10 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Optional(CONF_HOST): cv.string})
 
 
-async def async_get_scanner.opp, config):
+async def async_get_scanner(opp, config):
     """Return a Sky Hub scanner if successful."""
     host = config[DOMAIN].get(CONF_HOST, "192.168.1.254")
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
     hub = SkyQHub(websession, host)
 
     _LOGGER.debug("Initialising Sky Hub")

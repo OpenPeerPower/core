@@ -20,7 +20,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Sense binary sensor."""
     data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
     sense_devices_data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]
@@ -35,13 +35,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if device["tags"]["DeviceListAllowed"] == "true"
     ]
 
-    await _migrate_old_unique_ids.opp, devices)
+    await _migrate_old_unique_ids(opp, devices)
 
     async_add_entities(devices)
 
 
-async def _migrate_old_unique_ids.opp, devices):
-    registry = await async_get_registry.opp)
+async def _migrate_old_unique_ids(opp, devices):
+    registry = await async_get_registry(opp)
     for device in devices:
         # Migration of old not so unique ids
         old_entity_id = registry.async_get_entity_id(

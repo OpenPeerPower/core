@@ -309,7 +309,7 @@ def validate_media_player_features(state, feature_list):
     return True
 
 
-def show_setup_message.opp, entry_id, bridge_name, pincode, uri):
+def show_setup_message(opp, entry_id, bridge_name, pincode, uri):
     """Display persistent notification with setup information."""
     pin = pincode.decode()
     _LOGGER.info("Pincode: %s", pin)
@@ -333,7 +333,7 @@ def show_setup_message.opp, entry_id, bridge_name, pincode, uri):
     )
 
 
-def dismiss_setup_message.opp, entry_id):
+def dismiss_setup_message(opp, entry_id):
     """Dismiss persistent notification and remove QR code."""
     opp.components.persistent_notification.dismiss(entry_id)
 
@@ -389,12 +389,12 @@ def get_aid_storage_filename_for_entry_id(entry_id: str):
     return f"{DOMAIN}.{entry_id}.aids"
 
 
-def get_persist_fullpath_for_entry_id.opp: OpenPeerPower, entry_id: str):
+def get_persist_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
     """Determine the path to the homekit state file."""
     return.opp.config.path(STORAGE_DIR, get_persist_filename_for_entry_id(entry_id))
 
 
-def get_aid_storage_fullpath_for_entry_id.opp: OpenPeerPower, entry_id: str):
+def get_aid_storage_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
     """Determine the path to the homekit aid storage file."""
     return.opp.config.path(
         STORAGE_DIR, get_aid_storage_filename_for_entry_id(entry_id)
@@ -409,10 +409,10 @@ def format_sw_version(version):
     return None
 
 
-def remove_state_files_for_entry_id.opp: OpenPeerPower, entry_id: str):
+def remove_state_files_for_entry_id(opp: OpenPeerPower, entry_id: str):
     """Remove the state files from disk."""
-    persist_file_path = get_persist_fullpath_for_entry_id.opp, entry_id)
-    aid_storage_path = get_aid_storage_fullpath_for_entry_id.opp, entry_id)
+    persist_file_path = get_persist_fullpath_for_entry_id(opp, entry_id)
+    aid_storage_path = get_aid_storage_fullpath_for_entry_id(opp, entry_id)
     os.unlink(persist_file_path)
     if os.path.exists(aid_storage_path):
         os.unlink(aid_storage_path)
@@ -438,7 +438,7 @@ def port_is_available(port: int) -> bool:
     return True
 
 
-async def async_find_next_available_port.opp: OpenPeerPower, start_port: int) -> int:
+async def async_find_next_available_port(opp: OpenPeerPower, start_port: int) -> int:
     """Find the next available port not assigned to a config entry."""
     exclude_ports = set()
     for entry in.opp.config_entries.async_entries(DOMAIN):

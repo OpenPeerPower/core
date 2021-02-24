@@ -38,7 +38,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the ToD sensors."""
     if opp.config.time_zone is None:
         _LOGGER.error("Timezone is not set in Open Peer Power configuration")

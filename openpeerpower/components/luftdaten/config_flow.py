@@ -20,7 +20,7 @@ from .const import CONF_SENSOR_ID, DEFAULT_SCAN_INTERVAL, DOMAIN
 
 
 @callback
-def configured_sensors.opp):
+def configured_sensors(opp):
     """Return a set of configured Luftdaten sensors."""
     return {
         entry.data[CONF_SENSOR_ID]
@@ -29,7 +29,7 @@ def configured_sensors.opp):
 
 
 @callback
-def duplicate_stations.opp):
+def duplicate_stations(opp):
     """Return a set of duplicate configured Luftdaten stations."""
     stations = [
         int(entry.data[CONF_SENSOR_ID])

@@ -28,7 +28,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up OVO Energy from a config entry."""
 
     client = OVOEnergy()
@@ -94,7 +94,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     """Unload OVO Energy config entry."""
     # Unload sensors
     await opp.config_entries.async_forward_entry_unload(entry, "sensor")

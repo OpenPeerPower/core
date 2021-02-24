@@ -115,13 +115,13 @@ async def async_setup(opp, config):
     asyncio.create_task(coordinator.async_refresh())
 
     opp.async_create_task(
-        discovery.async_load_platform.opp, "binary_sensor", DOMAIN, {}, config)
+        discovery.async_load_platform(opp, "binary_sensor", DOMAIN, {}, config)
     )
 
     return True
 
 
-async def get_newest_version.opp, huuid, include_components):
+async def get_newest_version(opp, huuid, include_components):
     """Get the newest Open Peer Power version."""
     if huuid:
         info_object = await opp.helpers.system_info.async_get_system_info()
@@ -137,7 +137,7 @@ async def get_newest_version.opp, huuid, include_components):
     else:
         info_object = {}
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     with async_timeout.timeout(30):
         req = await session.post(UPDATER_URL, json=info_object)

@@ -5,7 +5,7 @@ from openpeerpower.helpers.entity import Entity
 from . import CONF_SERIAL, LIGHTWAVE_LINK
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Find and return battery."""
     if discovery_info is None:
         return

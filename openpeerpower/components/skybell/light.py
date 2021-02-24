@@ -11,7 +11,7 @@ import openpeerpower.util.color as color_util
 from . import DOMAIN as SKYBELL_DOMAIN, SkybellDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the platform for a Skybell device."""
     skybell = opp.data.get(SKYBELL_DOMAIN)
 
@@ -27,7 +27,7 @@ def _to_skybell_level(level):
     return int((level * 100) / 255)
 
 
-def _to.opp_level(level):
+def _to(opp_level(level):
     """Convert the given Skybell (0-100) light level to Open Peer Power (0-255)."""
     return int((level * 255) / 100)
 
@@ -67,7 +67,7 @@ class SkybellLight(SkybellDevice, LightEntity):
     @property
     def brightness(self):
         """Return the brightness of the light."""
-        return _to.opp_level(self._device.led_intensity)
+        return _to(opp_level(self._device.led_intensity)
 
     @property
     def hs_color(self):

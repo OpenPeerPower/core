@@ -22,9 +22,9 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_full_user_flow_implementation.opp):
+async def test_full_user_flow_implementation(opp):
     """Test we get the form."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
@@ -55,7 +55,7 @@ async def test_full_user_flow_implementation.opp):
 
 async def test_integration_already_exists(opp):
     """Test we only allow a single config flow."""
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -64,7 +64,7 @@ async def test_integration_already_exists(opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_user_flow_bad_dsn.opp):
+async def test_user_flow_bad_dsn(opp):
     """Test we handle bad dsn error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -83,7 +83,7 @@ async def test_user_flow_bad_dsn.opp):
     assert result2["errors"] == {"base": "bad_dsn"}
 
 
-async def test_user_flow_unkown_exception.opp):
+async def test_user_flow_unkown_exception(opp):
     """Test we handle any unknown exception error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -102,13 +102,13 @@ async def test_user_flow_unkown_exception.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test options config flow."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={"dsn": "http://public@sentry.local/1"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch("openpeerpower.components.sentry.async_setup_entry", return_value=True):
         assert await opp.config_entries.async_setup(entry.entry_id)

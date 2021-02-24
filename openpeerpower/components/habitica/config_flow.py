@@ -29,7 +29,7 @@ async def validate_input(
 ) -> Dict[str, str]:
     """Validate the user input allows us to connect."""
 
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
     api = HabitipyAsync(
         conf={
             "login": data[CONF_API_USER],

@@ -91,7 +91,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Netatmo from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
@@ -125,7 +125,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             f"signal-{DOMAIN}-webhook-None",
             {"type": "None", "data": {"push_type": "webhook_deactivation"}},
         )
-        webhook_unregister.opp, entry.data[CONF_WEBHOOK_ID])
+        webhook_unregister(opp, entry.data[CONF_WEBHOOK_ID])
 
     async def register_webhook(event):
         if CONF_WEBHOOK_ID not in entry.data:
@@ -177,7 +177,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 handle_event,
             )
 
-            activation_timeout = async_call_later.opp, 10, unregister_webhook)
+            activation_timeout = async_call_later(opp, 10, unregister_webhook)
 
             await opp.async_add_executor_job(
                 opp.data[DOMAIN][entry.entry_id][AUTH].addwebhook, webhook_url
@@ -199,7 +199,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if CONF_WEBHOOK_ID in entry.data:
         await opp.async_add_executor_job(
@@ -224,7 +224,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_remove_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Cleanup when entry is removed."""
     if (
         CONF_WEBHOOK_ID in entry.data
@@ -234,6 +234,6 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry):
             _LOGGER.debug(
                 "Removing Netatmo cloudhook (%s)", entry.data[CONF_WEBHOOK_ID]
             )
-            await cloud.async_delete_cloudhook.opp, entry.data[CONF_WEBHOOK_ID])
+            await cloud.async_delete_cloudhook(opp, entry.data[CONF_WEBHOOK_ID])
         except cloud.CloudNotAvailable:
             pass

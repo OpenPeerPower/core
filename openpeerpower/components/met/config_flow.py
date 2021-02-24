@@ -12,7 +12,7 @@ from .const import CONF_TRACK_HOME, DOMAIN, HOME_LOCATION_NAME
 
 
 @callback
-def configured_instances.opp):
+def configured_instances(opp):
     """Return a set of configured SimpliSafe instances."""
     entries = []
     for entry in.opp.config_entries.async_entries(DOMAIN):

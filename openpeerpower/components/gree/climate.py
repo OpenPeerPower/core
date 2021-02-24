@@ -94,7 +94,7 @@ SUPPORTED_FEATURES = (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Gree HVAC device from a config entry."""
     async_add_entities(
         [

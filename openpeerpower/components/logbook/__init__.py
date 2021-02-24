@@ -107,13 +107,13 @@ LOG_MESSAGE_SCHEMA = vol.Schema(
 
 
 @bind.opp
-def log_entry.opp, name, message, domain=None, entity_id=None, context=None):
+def log_entry(opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
     opp.add_job(async_log_entry, opp, name, message, domain, entity_id, context)
 
 
 @bind.opp
-def async_log_entry.opp, name, message, domain=None, entity_id=None, context=None):
+def async_log_entry(opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
     data = {ATTR_NAME: name, ATTR_MESSAGE: message}
 
@@ -144,7 +144,7 @@ async def async_setup(opp, config):
 
         message.opp = opp
         message = message.async_render(parse_result=False)
-        async_log_entry.opp, name, message, domain, entity_id)
+        async_log_entry(opp, name, message, domain, entity_id)
 
     opp.components.frontend.async_register_built_in_panel(
         "logbook", "logbook",  opp.format-list-bulleted-type"
@@ -163,12 +163,12 @@ async def async_setup(opp, config):
 
     opp.services.async_register(DOMAIN, "log", log_message, schema=LOG_MESSAGE_SCHEMA)
 
-    await async_process_integration_platforms.opp, DOMAIN, _process_logbook_platform)
+    await async_process_integration_platforms(opp, DOMAIN, _process_logbook_platform)
 
     return True
 
 
-async def _process_logbook_platform.opp, domain, platform):
+async def _process_logbook_platform(opp, domain, platform):
     """Process a logbook platform."""
 
     @callback
@@ -176,7 +176,7 @@ async def _process_logbook_platform.opp, domain, platform):
         """Teach logbook how to describe a new event."""
         opp.data[DOMAIN][event_name] = (domain, describe_callback)
 
-    platform.async_describe_events.opp, _async_describe_event)
+    platform.async_describe_events(opp, _async_describe_event)
 
 
 class LogbookView(OpenPeerPowerView):
@@ -433,7 +433,7 @@ def _get_events(
     if entity_ids is not None:
         entities_filter = generate_filter([], entity_ids, [], [])
 
-    with session_scope.opp.opp) as session:
+    with session_scope(opp.opp) as session:
         old_state = aliased(States, name="old_state")
 
         if entity_ids is not None:
@@ -508,7 +508,7 @@ def _generate_states_query(session, start_day, end_day, old_state, entity_ids):
     )
 
 
-def _apply_events_types_and_states_filter.opp, query, old_state):
+def _apply_events_types_and_states_filter(opp, query, old_state):
     events_query = (
         query.outerjoin(States, (Events.event_id == States.event_id))
         .outerjoin(old_state, (States.old_state_id == old_state.state_id))
@@ -520,7 +520,7 @@ def _apply_events_types_and_states_filter.opp, query, old_state):
             (Events.event_type != EVENT_STATE_CHANGED) | _continuous_entity_matcher()
         )
     )
-    return _apply_event_types_filter.opp, events_query, ALL_EVENT_TYPES)
+    return _apply_event_types_filter(opp, events_query, ALL_EVENT_TYPES)
 
 
 def _missing_state_matcher(old_state):
@@ -551,7 +551,7 @@ def _apply_event_time_filter(events_query, start_day, end_day):
     )
 
 
-def _apply_event_types_filter.opp, query, event_types):
+def _apply_event_types_filter(opp, query, event_types):
     return query.filter(
         Events.event_type.in_(event_types + list.opp.data.get(DOMAIN, {})))
     )
@@ -568,7 +568,7 @@ def _apply_event_entity_id_matchers(events_query, entity_ids):
     )
 
 
-def _keep_event.opp, event, entities_filter):
+def _keep_event(opp, event, entities_filter):
     if event.event_type in OPENPEERPOWER_EVENTS:
         return entities_filter is None or entities_filter(OP_DOMAIN_ENTITY_ID)
 

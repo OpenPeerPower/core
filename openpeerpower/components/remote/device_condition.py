@@ -30,9 +30,9 @@ async def async_get_conditions(
     opp: OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions."""
-    return await toggle_entity.async_get_conditions.opp, device_id, DOMAIN)
+    return await toggle_entity.async_get_conditions(opp, device_id, DOMAIN)
 
 
-async def async_get_condition_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_condition_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List condition capabilities."""
-    return await toggle_entity.async_get_condition_capabilities.opp, config)
+    return await toggle_entity.async_get_condition_capabilities(opp, config)

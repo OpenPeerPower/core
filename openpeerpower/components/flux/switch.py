@@ -87,10 +87,10 @@ PLATFORM_SCHEMA = vol.Schema(
 )
 
 
-async def async_set_lights_xy.opp, lights, x_val, y_val, brightness, transition):
+async def async_set_lights_xy(opp, lights, x_val, y_val, brightness, transition):
     """Set color of array of lights."""
     for light in lights:
-        if is_on.opp, light):
+        if is_on(opp, light):
             service_data = {ATTR_ENTITY_ID: light}
             if x_val is not None and y_val is not None:
                 service_data[ATTR_XY_COLOR] = [x_val, y_val]
@@ -102,10 +102,10 @@ async def async_set_lights_xy.opp, lights, x_val, y_val, brightness, transition)
             await opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
-async def async_set_lights_temp.opp, lights, mired, brightness, transition):
+async def async_set_lights_temp(opp, lights, mired, brightness, transition):
     """Set color of array of lights."""
     for light in lights:
-        if is_on.opp, light):
+        if is_on(opp, light):
             service_data = {ATTR_ENTITY_ID: light}
             if mired is not None:
                 service_data[ATTR_COLOR_TEMP] = int(mired)
@@ -116,10 +116,10 @@ async def async_set_lights_temp.opp, lights, mired, brightness, transition):
             await opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
-async def async_set_lights_rgb.opp, lights, rgb, transition):
+async def async_set_lights_rgb(opp, lights, rgb, transition):
     """Set color of array of lights."""
     for light in lights:
-        if is_on.opp, light):
+        if is_on(opp, light):
             service_data = {ATTR_ENTITY_ID: light}
             if rgb is not None:
                 service_data[ATTR_RGB_COLOR] = rgb
@@ -128,7 +128,7 @@ async def async_set_lights_rgb.opp, lights, rgb, transition):
             await opp.services.async_call(LIGHT_DOMAIN, SERVICE_TURN_ON, service_data)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Flux switches."""
     name = config.get(CONF_NAME)
     lights = config.get(CONF_LIGHTS)

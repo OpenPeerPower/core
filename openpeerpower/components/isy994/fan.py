@@ -35,7 +35,7 @@ async def async_setup_entry(
     for name, status, actions in.opp_isy_data[ISY994_PROGRAMS][FAN]:
         devices.append(ISYFanProgramEntity(name, status, actions))
 
-    await migrate_old_unique_ids.opp, FAN, devices)
+    await migrate_old_unique_ids(opp, FAN, devices)
     async_add_entities(devices)
 
 

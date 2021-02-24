@@ -69,12 +69,12 @@ async def create_checker(
     extra_significant_check: Optional[ExtraCheckTypeFunc] = None,
 ) -> SignificantlyChangedChecker:
     """Create a significantly changed checker for a domain."""
-    await _initialize.opp)
+    await _initialize(opp)
     return SignificantlyChangedChecker.opp, extra_significant_check)
 
 
 # Marked as singleton so multiple calls all wait for same output.
-async def _initialize.opp: OpenPeerPower) -> None:
+async def _initialize(opp: OpenPeerPower) -> None:
     """Initialize the functions."""
     if DATA_FUNCTIONS in.opp.data:
         return
@@ -87,7 +87,7 @@ async def _initialize.opp: OpenPeerPower) -> None:
         """Process a significant change platform."""
         functions[component_name] = platform.async_check_significant_change
 
-    await async_process_integration_platforms.opp, PLATFORM, process_platform)
+    await async_process_integration_platforms(opp, PLATFORM, process_platform)
 
 
 def either_one_none(val1: Optional[Any], val2: Optional[Any]) -> bool:

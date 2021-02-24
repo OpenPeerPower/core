@@ -50,7 +50,7 @@ async def async_setup(opp, config) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up config entry for SmartHab integration."""
 
     # Assign configuration variables
@@ -77,7 +77,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload config entry from SmartHab integration."""
 
     result = all(

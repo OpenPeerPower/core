@@ -248,7 +248,7 @@ SENSORS_BY_HEATINGTYPE = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Create the ViCare sensor devices."""
     if discovery_info is None:
         return

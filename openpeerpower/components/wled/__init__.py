@@ -40,7 +40,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up WLED from a config entry."""
 
     # Create WLED instance for this entry
@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload WLED config entry."""
 
     # Unload entities for this entry/device.
@@ -123,7 +123,7 @@ class WLEDDataUpdateCoordinator(DataUpdateCoordinator[WLEDDevice]):
         host: str,
     ):
         """Initialize global WLED data updater."""
-        self.wled = WLED(host, session=async_get_clientsession.opp))
+        self.wled = WLED(host, session=async_get_clientsession(opp))
 
         super().__init__(
             opp,

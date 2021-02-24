@@ -51,7 +51,7 @@ MQTT_PAYLOAD = vol.Schema(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up MQTT room Sensor."""
     async_add_entities(
         [

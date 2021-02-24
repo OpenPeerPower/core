@@ -49,7 +49,7 @@ ATTR_PICTURE1_AUTH = "auth"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_DEVICE_KEY): cv.string})
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Pushsafer.com notification service."""
     return PushsaferNotificationService(
         config.get(CONF_DEVICE_KEY), opp.config.is_allowed_path

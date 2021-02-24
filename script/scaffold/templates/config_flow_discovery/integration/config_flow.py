@@ -7,7 +7,7 @@ from openpeerpower.helpers import config_entry_flow
 from .const import DOMAIN
 
 
-async def _async_has_devices.opp) -> bool:
+async def _async_has_devices(opp) -> bool:
     """Return if there are devices that can be discovered."""
     # TODO Check if there are any devices that can be discovered in the network.
     devices = await opp.async_add_executor_job(my_pypi_dependency.discover)

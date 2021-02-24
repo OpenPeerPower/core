@@ -10,6 +10,6 @@ DATA_BLUEPRINTS = "automation_blueprints"
 
 @singleton(DATA_BLUEPRINTS)
 @callback
-def async_get_blueprints.opp: OpenPeerPower) -> blueprint.DomainBlueprints:  # type: ignore
+def async_get_blueprints(opp: OpenPeerPower) -> blueprint.DomainBlueprints:  # type: ignore
     """Get automation blueprints."""
     return blueprint.DomainBlueprints.opp, DOMAIN, LOGGER)  # type: ignore

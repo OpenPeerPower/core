@@ -158,7 +158,7 @@ CPU_SENSOR_PREFIXES = [
 ]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the system monitor sensors."""
     dev = []
     for resource in config[CONF_RESOURCES]:

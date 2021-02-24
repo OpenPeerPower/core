@@ -58,7 +58,7 @@ def sense_to_mdi(sense_icon):
     return "mdi:{}".format(MDI_ICONS.get(sense_icon, "power-plug"))
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Sense sensor."""
     data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DATA]
     sense_devices_data = opp.data[DOMAIN][config_entry.entry_id][SENSE_DEVICES_DATA]

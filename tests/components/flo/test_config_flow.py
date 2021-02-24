@@ -10,9 +10,9 @@ from openpeerpower.const import CONTENT_TYPE_JSON
 from .common import TEST_EMAIL_ADDRESS, TEST_PASSWORD, TEST_TOKEN, TEST_USER_ID
 
 
-async def test_form.opp, aioclient_mock_fixture):
+async def test_form(opp, aioclient_mock_fixture):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -36,7 +36,7 @@ async def test_form.opp, aioclient_mock_fixture):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_cannot_connect.opp, aioclient_mock):
+async def test_form_cannot_connect(opp, aioclient_mock):
     """Test we handle cannot connect error."""
     now = round(time.time())
     # Mocks a failed login response for flo.

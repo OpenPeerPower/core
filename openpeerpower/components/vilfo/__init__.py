@@ -28,7 +28,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Vilfo Router from a config entry."""
     host = entry.data[CONF_HOST]
     access_token = entry.data[CONF_ACCESS_TOKEN]
@@ -50,7 +50,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -40,10 +40,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Find and return switches controlled by shell commands."""
 
-    setup_reload_service.opp, DOMAIN, PLATFORMS)
+    setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     devices = config.get(CONF_SWITCHES, {})
     switches = []
@@ -52,7 +52,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         value_template = device_config.get(CONF_VALUE_TEMPLATE)
 
         if value_template is not None:
-            value_template.opp = opp
+            value_template(opp = opp
 
         switches.append(
             CommandSwitch(

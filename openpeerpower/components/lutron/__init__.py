@@ -93,7 +93,7 @@ def setup(opp, base_config):
             )
 
     for component in ("light", "cover", "switch", "scene", "binary_sensor"):
-        discovery.load_platform.opp, component, DOMAIN, {}, base_config)
+        discovery.load_platform(opp, component, DOMAIN, {}, base_config)
     return True
 
 

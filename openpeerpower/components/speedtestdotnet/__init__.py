@@ -69,7 +69,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the Speedtest.net component."""
     coordinator = SpeedTestDataCoordinator.opp, config_entry)
     await coordinator.async_setup()
@@ -103,7 +103,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload SpeedTest Entry from config_entry."""
     opp.services.async_remove(DOMAIN, SPEED_TEST_SERVICE)
 
@@ -218,7 +218,7 @@ class SpeedTestDataCoordinator(DataUpdateCoordinator):
         self._unsub_update_listener = None
 
 
-async def options_updated_listener.opp, entry):
+async def options_updated_listener(opp, entry):
     """Handle options update."""
     if entry.options[CONF_MANUAL]:
         opp.data[DOMAIN].update_interval = None

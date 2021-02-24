@@ -11,12 +11,12 @@ from tests.common import assert_setup_component, mock_component
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp):
+def setup_comp(opp):
     """Initialize components."""
-    mock_component.opp, "pilight")
+    mock_component(opp, "pilight")
 
 
-def fire_pilight_message.opp, protocol, data):
+def fire_pilight_message(opp, protocol, data):
     """Fire the fake Pilight message."""
     message = {pilight.CONF_PROTOCOL: protocol}
     message.update(data)
@@ -24,7 +24,7 @@ def fire_pilight_message.opp, protocol, data):
     opp.bus.async_fire(pilight.EVENT, message)
 
 
-async def test_sensor_value_from_code.opp):
+async def test_sensor_value_from_code(opp):
     """Test the setting of value via pilight."""
     with assert_setup_component(1):
         assert await async_setup_component(
@@ -49,13 +49,13 @@ async def test_sensor_value_from_code.opp):
         assert unit_of_measurement == "fav unit"
 
         # Set value from data with correct payload
-        fire_pilight_message.opp, protocol="test-protocol", data={"test": 42})
+        fire_pilight_message(opp, protocol="test-protocol", data={"test": 42})
         await opp.async_block_till_done()
         state = opp.states.get("sensor.test")
         assert state.state == "42"
 
 
-async def test_disregard_wrong_payload.opp):
+async def test_disregard_wrong_payload(opp):
     """Test omitting setting of value with wrong payload."""
     with assert_setup_component(1):
         assert await async_setup_component(
@@ -99,7 +99,7 @@ async def test_disregard_wrong_payload.opp):
         assert state.state == "data"
 
 
-async def test_variable_missing.opp, caplog):
+async def test_variable_missing(opp, caplog):
     """Check if error message when variable missing."""
     caplog.set_level(logging.ERROR)
     with assert_setup_component(1):

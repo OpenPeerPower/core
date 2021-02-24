@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_HOST): cv.string})
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Validate the configuration and return a Linksys AP scanner."""
     try:
         return LinksysSmartWifiDeviceScanner(config[DOMAIN])

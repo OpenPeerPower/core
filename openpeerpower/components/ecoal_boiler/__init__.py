@@ -100,8 +100,8 @@ def setup(opp, opp_config):
     opp.data[DATA_ECOAL_BOILER] = ecoal_contr
     # Setup switches
     switches = conf[CONF_SWITCHES][CONF_MONITORED_CONDITIONS]
-    load_platform.opp, "switch", DOMAIN, switches, opp_config)
+    load_platform(opp, "switch", DOMAIN, switches, opp_config)
     # Setup temp sensors
     sensors = conf[CONF_SENSORS][CONF_MONITORED_CONDITIONS]
-    load_platform.opp, "sensor", DOMAIN, sensors, opp_config)
+    load_platform(opp, "sensor", DOMAIN, sensors, opp_config)
     return True

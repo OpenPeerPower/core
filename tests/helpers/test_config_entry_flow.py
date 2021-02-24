@@ -16,11 +16,11 @@ from tests.common import (
 
 
 @pytest.fixture
-def discovery_flow_conf.opp):
+def discovery_flow_conf(opp):
     """Register a handler."""
     handler_conf = {"discovered": False}
 
-    async def has_discovered_devices.opp):
+    async def has_discovered_devices(opp):
         """Mock if we have discovered devices."""
         return handler_conf["discovered"]
 
@@ -32,7 +32,7 @@ def discovery_flow_conf.opp):
 
 
 @pytest.fixture
-def webhook_flow_conf.opp):
+def webhook_flow_conf(opp):
     """Register a handler."""
     with patch.dict(config_entries.HANDLERS):
         config_entry_flow.register_webhook_flow("test_single", "Test Single", {}, False)
@@ -42,20 +42,20 @@ def webhook_flow_conf.opp):
         yield {}
 
 
-async def test_single_entry_allowed.opp, discovery_flow_conf):
+async def test_single_entry_allowed(opp, discovery_flow_conf):
     """Test only a single entry is allowed."""
     flow = config_entries.HANDLERS["test"]()
     flow.opp = opp
     flow.context = {}
 
-    MockConfigEntry(domain="test").add_to.opp.opp)
+    MockConfigEntry(domain="test").add_to(opp.opp)
     result = await flow.async_step_user()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_user_no_devices_found.opp, discovery_flow_conf):
+async def test_user_no_devices_found(opp, discovery_flow_conf):
     """Test if no devices found."""
     flow = config_entries.HANDLERS["test"]()
     flow.opp = opp
@@ -66,10 +66,10 @@ async def test_user_no_devices_found.opp, discovery_flow_conf):
     assert result["reason"] == "no_devices_found"
 
 
-async def test_user_has_confirmation.opp, discovery_flow_conf):
+async def test_user_has_confirmation(opp, discovery_flow_conf):
     """Test user requires confirmation to setup."""
     discovery_flow_conf["discovered"] = True
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_entity_platform(opp, "config_flow.test", None)
 
     result = await opp.config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_USER}, data={}
@@ -83,13 +83,13 @@ async def test_user_has_confirmation.opp, discovery_flow_conf):
 
 
 @pytest.mark.parametrize("source", ["discovery", "mqtt", "ssdp", "zeroconf", "dhcp"])
-async def test_discovery_single_instance.opp, discovery_flow_conf, source):
+async def test_discovery_single_instance(opp, discovery_flow_conf, source):
     """Test we not allow duplicates."""
     flow = config_entries.HANDLERS["test"]()
     flow.opp = opp
     flow.context = {}
 
-    MockConfigEntry(domain="test").add_to.opp.opp)
+    MockConfigEntry(domain="test").add_to(opp.opp)
     result = await getattr(flow, f"async_step_{source}")({})
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -97,7 +97,7 @@ async def test_discovery_single_instance.opp, discovery_flow_conf, source):
 
 
 @pytest.mark.parametrize("source", ["discovery", "mqtt", "ssdp", "zeroconf", "dhcp"])
-async def test_discovery_confirmation.opp, discovery_flow_conf, source):
+async def test_discovery_confirmation(opp, discovery_flow_conf, source):
     """Test we ask for confirmation via discovery."""
     flow = config_entries.HANDLERS["test"]()
     flow.opp = opp
@@ -112,9 +112,9 @@ async def test_discovery_confirmation.opp, discovery_flow_conf, source):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_multiple_discoveries.opp, discovery_flow_conf):
+async def test_multiple_discoveries(opp, discovery_flow_conf):
     """Test we only create one instance for multiple discoveries."""
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_entity_platform(opp, "config_flow.test", None)
 
     result = await opp.config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
@@ -128,9 +128,9 @@ async def test_multiple_discoveries.opp, discovery_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_only_one_in_progress.opp, discovery_flow_conf):
+async def test_only_one_in_progress(opp, discovery_flow_conf):
     """Test a user initialized one will finish and cancel discovered one."""
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_entity_platform(opp, "config_flow.test", None)
 
     # Discovery starts flow
     result = await opp.config_entries.flow.async_init(
@@ -154,9 +154,9 @@ async def test_only_one_in_progress.opp, discovery_flow_conf):
     assert len.opp.config_entries.flow.async_progress()) == 0
 
 
-async def test_import_abort_discovery.opp, discovery_flow_conf):
+async def test_import_abort_discovery(opp, discovery_flow_conf):
     """Test import will finish and cancel discovered one."""
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_entity_platform(opp, "config_flow.test", None)
 
     # Discovery starts flow
     result = await opp.config_entries.flow.async_init(
@@ -175,7 +175,7 @@ async def test_import_abort_discovery.opp, discovery_flow_conf):
     assert len.opp.config_entries.flow.async_progress()) == 0
 
 
-async def test_import_no_confirmation.opp, discovery_flow_conf):
+async def test_import_no_confirmation(opp, discovery_flow_conf):
     """Test import requires no confirmation to set up."""
     flow = config_entries.HANDLERS["test"]()
     flow.opp = opp
@@ -186,21 +186,21 @@ async def test_import_no_confirmation.opp, discovery_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_import_single_instance.opp, discovery_flow_conf):
+async def test_import_single_instance(opp, discovery_flow_conf):
     """Test import doesn't create second instance."""
     flow = config_entries.HANDLERS["test"]()
     flow.opp = opp
     flow.context = {}
     discovery_flow_conf["discovered"] = True
-    MockConfigEntry(domain="test").add_to.opp.opp)
+    MockConfigEntry(domain="test").add_to(opp.opp)
 
     result = await flow.async_step_import(None)
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_ignored_discoveries.opp, discovery_flow_conf):
+async def test_ignored_discoveries(opp, discovery_flow_conf):
     """Test we can ignore discovered entries."""
-    mock_entity_platform.opp, "config_flow.test", None)
+    mock_entity_platform(opp, "config_flow.test", None)
 
     result = await opp.config_entries.flow.async_init(
         "test", context={"source": config_entries.SOURCE_DISCOVERY}, data={}
@@ -230,31 +230,31 @@ async def test_ignored_discoveries.opp, discovery_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_webhook_single_entry_allowed.opp, webhook_flow_conf):
+async def test_webhook_single_entry_allowed(opp, webhook_flow_conf):
     """Test only a single entry is allowed."""
     flow = config_entries.HANDLERS["test_single"]()
     flow.opp = opp
 
-    MockConfigEntry(domain="test_single").add_to.opp.opp)
+    MockConfigEntry(domain="test_single").add_to(opp.opp)
     result = await flow.async_step_user()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_webhook_multiple_entries_allowed.opp, webhook_flow_conf):
+async def test_webhook_multiple_entries_allowed(opp, webhook_flow_conf):
     """Test multiple entries are allowed when specified."""
     flow = config_entries.HANDLERS["test_multiple"]()
     flow.opp = opp
 
-    MockConfigEntry(domain="test_multiple").add_to.opp.opp)
+    MockConfigEntry(domain="test_multiple").add_to(opp.opp)
     opp.config.api = Mock(base_url="http://example.com")
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
 
-async def test_webhook_config_flow_registers_webhook.opp, webhook_flow_conf):
+async def test_webhook_config_flow_registers_webhook(opp, webhook_flow_conf):
     """Test setting up an entry creates a webhook."""
     flow = config_entries.HANDLERS["test_single"]()
     flow.opp = opp
@@ -269,9 +269,9 @@ async def test_webhook_config_flow_registers_webhook.opp, webhook_flow_conf):
     assert result["data"]["webhook_id"] is not None
 
 
-async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
+async def test_webhook_create_cloudhook(opp, webhook_flow_conf):
     """Test only a single entry is allowed."""
-    assert await setup.async_setup_component.opp, "cloud", {})
+    assert await setup.async_setup_component(opp, "cloud", {})
 
     async_setup_entry = Mock(return_value=True)
     async_unload_entry = Mock(return_value=True)
@@ -285,7 +285,7 @@ async def test_webhook_create_cloudhook.opp, webhook_flow_conf):
             async_remove_entry=config_entry_flow.webhook_async_remove_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.test_single", None)
+    mock_entity_platform(opp, "config_flow.test_single", None)
 
     result = await opp.config_entries.flow.async_init(
         "test_single", context={"source": config_entries.SOURCE_USER}

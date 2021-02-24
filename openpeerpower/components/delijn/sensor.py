@@ -34,11 +34,11 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Create the sensor."""
     api_key = config[CONF_API_KEY]
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     sensors = []
     for nextpassage in config[CONF_NEXT_DEPARTURE]:

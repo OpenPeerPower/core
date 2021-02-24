@@ -56,7 +56,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discover_info=None):
+def setup_platform(opp, config, add_entities, discover_info=None):
     """Set up the CMUS platform."""
 
     host = config.get(CONF_HOST)

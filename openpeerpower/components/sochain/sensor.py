@@ -27,14 +27,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the sochain sensors."""
 
     address = config.get(CONF_ADDRESS)
     network = config.get(CONF_NETWORK)
     name = config.get(CONF_NAME)
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     chainso = ChainSo(network, address, opp.loop, session)
 
     async_add_entities([SochainSensor(name, network.upper(), chainso)], True)

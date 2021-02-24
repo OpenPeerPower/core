@@ -44,14 +44,14 @@ async def async_setup(opp, config):
 
     session = opp.helpers.aiohttp_client.async_get_clientsession()
 
-    result = await _update_freedns.opp, session, url, auth_token)
+    result = await _update_freedns(opp, session, url, auth_token)
 
     if result is False:
         return False
 
     async def update_domain_callback(now):
         """Update the FreeDNS entry."""
-        await _update_freedns.opp, session, url, auth_token)
+        await _update_freedns(opp, session, url, auth_token)
 
     opp.helpers.event.async_track_time_interval(
         update_domain_callback, update_interval
@@ -60,7 +60,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def _update_freedns.opp, session, url, auth_token):
+async def _update_freedns(opp, session, url, auth_token):
     """Update FreeDNS."""
     params = None
 

@@ -41,9 +41,9 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up from a config entry."""
-    await async_start_discovery_service.opp)
+    await async_start_discovery_service(opp)
 
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, "climate")
@@ -51,8 +51,8 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload the config entry and stop discovery process."""
-    await async_stop_discovery_service.opp)
+    await async_stop_discovery_service(opp)
     await opp.config_entries.async_forward_entry_unload(entry, "climate")
     return True

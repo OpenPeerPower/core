@@ -6,9 +6,9 @@ from openpeerpower.setup import async_setup_component
 from .common import TEST_PASSWORD, TEST_USER_ID
 
 
-async def test_sensors.opp, config_entry, aioclient_mock_fixture):
+async def test_sensors(opp, config_entry, aioclient_mock_fixture):
     """Test Flo by Moen sensors."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     assert await async_setup_component(
         opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
@@ -28,7 +28,7 @@ async def test_manual_update_entity(
     opp. config_entry, aioclient_mock_fixture, aioclient_mock
 ):
     """Test manual update entity via service homeasasistant/update_entity."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     assert await async_setup_component(
         opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
@@ -36,7 +36,7 @@ async def test_manual_update_entity(
 
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
 
     call_count = aioclient_mock.call_count
     await opp.services.async_call(

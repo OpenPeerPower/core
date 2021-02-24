@@ -90,7 +90,7 @@ SWITCH_TYPES = {
 TYPES = Registry()
 
 
-def get_accessory.opp, driver, state, aid, config):
+def get_accessory(opp, driver, state, aid, config):
     """Take state and return an accessory object if supported."""
     if not aid:
         _LOGGER.warning(

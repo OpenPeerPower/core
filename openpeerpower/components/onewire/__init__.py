@@ -14,7 +14,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry):
     """Set up a 1-Wire proxy for a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -33,7 +33,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

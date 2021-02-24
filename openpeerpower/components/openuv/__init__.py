@@ -48,12 +48,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up OpenUV as config entry."""
-    _verify_domain_control = verify_domain_control.opp, DOMAIN)
+    _verify_domain_control = verify_domain_control(opp, DOMAIN)
 
     try:
-        websession = aiohttp_client.async_get_clientsession.opp)
+        websession = aiohttp_client.async_get_clientsession(opp)
         openuv = OpenUV(
             Client(
                 config_entry.data[CONF_API_KEY],
@@ -79,21 +79,21 @@ async def async_setup_entry.opp, config_entry):
         """Refresh all OpenUV data."""
         LOGGER.debug("Refreshing all OpenUV data")
         await openuv.async_update()
-        async_dispatcher_send.opp, TOPIC_UPDATE)
+        async_dispatcher_send(opp, TOPIC_UPDATE)
 
     @_verify_domain_control
     async def update_uv_index_data(service):
         """Refresh OpenUV UV index data."""
         LOGGER.debug("Refreshing OpenUV UV index data")
         await openuv.async_update_uv_index_data()
-        async_dispatcher_send.opp, TOPIC_UPDATE)
+        async_dispatcher_send(opp, TOPIC_UPDATE)
 
     @_verify_domain_control
     async def update_protection_data(service):
         """Refresh OpenUV protection window data."""
         LOGGER.debug("Refreshing OpenUV protection window data")
         await openuv.async_update_protection_data()
-        async_dispatcher_send.opp, TOPIC_UPDATE)
+        async_dispatcher_send(opp, TOPIC_UPDATE)
 
     for service, method in [
         ("update_data", update_data),
@@ -105,7 +105,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an OpenUV config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -121,7 +121,7 @@ async def async_unload_entry.opp, config_entry):
     return unload_ok
 
 
-async def async_migrate_entry.opp, config_entry):
+async def async_migrate_entry(opp, config_entry):
     """Migrate the config entry upon new versions."""
     version = config_entry.version
     data = {**config_entry.data}

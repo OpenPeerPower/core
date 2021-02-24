@@ -112,7 +112,7 @@ def setup(opp, config):
         opp.data[DOMAIN]["scenes"].append(scene)
 
     for component in TAHOMA_COMPONENTS:
-        discovery.load_platform.opp, component, DOMAIN, {}, config)
+        discovery.load_platform(opp, component, DOMAIN, {}, config)
 
     return True
 

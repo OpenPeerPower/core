@@ -12,7 +12,7 @@ from .const import CONF_SITE_ID, DEFAULT_NAME, DOMAIN
 
 
 @callback
-def solaredge_entries.opp: OpenPeerPower):
+def solaredge_entries(opp: OpenPeerPower):
     """Return the site_ids for the domain."""
     return {
         (entry.data[CONF_SITE_ID])

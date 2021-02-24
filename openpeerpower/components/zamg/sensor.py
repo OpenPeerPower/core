@@ -99,7 +99,7 @@ PLATFORM_SCHEMA = cv.PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the ZAMG sensor platform."""
     name = config.get(CONF_NAME)
     latitude = config.get(CONF_LATITUDE, opp.config.latitude)
@@ -108,7 +108,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     station_id = config.get(CONF_STATION_ID) or closest_station(
         latitude, longitude, opp.config.config_dir
     )
-    if station_id not in zamg_stations.opp.config.config_dir):
+    if station_id not in zamg_stations(opp.config.config_dir):
         _LOGGER.error(
             "Configured ZAMG %s (%s) is not a known station",
             CONF_STATION_ID,

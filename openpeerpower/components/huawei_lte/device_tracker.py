@@ -47,7 +47,7 @@ async def async_setup_entry(
 
     # Initialize already tracked entities
     tracked: Set[str] = set()
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     known_entities: List[Entity] = []
     for entity in registry.entities.values():
         if (
@@ -66,7 +66,7 @@ async def async_setup_entry(
     async def _async_maybe_add_new_entities(url: str) -> None:
         """Add new entities if the update signal comes from our router."""
         if url == router.url:
-            async_add_new_entities.opp, url, async_add_entities, tracked)
+            async_add_new_entities(opp, url, async_add_entities, tracked)
 
     # Register to handle router data updates
     disconnect_dispatcher = async_dispatcher_connect(
@@ -75,7 +75,7 @@ async def async_setup_entry(
     router.unload_handlers.append(disconnect_dispatcher)
 
     # Add new entities from initial scan
-    async_add_new_entities.opp, router.url, async_add_entities, tracked)
+    async_add_new_entities(opp, router.url, async_add_entities, tracked)
 
 
 @callback

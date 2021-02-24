@@ -63,7 +63,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Bbox sensor."""
     # Create a data fetcher to support all of the configured sensors. Then make
     # the first call to init the data.

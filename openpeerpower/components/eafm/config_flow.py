@@ -32,7 +32,7 @@ class UKFloodsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 data={"station": station},
             )
 
-        session = async_get_clientsession.opp=self.opp)
+        session = async_get_clientsession(opp=self.opp)
         stations = await get_stations(session)
 
         self.stations = {}

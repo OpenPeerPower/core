@@ -24,7 +24,7 @@ PLATFORM_SCHEMA_YAML = PLATFORM_SCHEMA.extend(mqtt.SCHEMA_BASE).extend(
 )
 
 
-async def async_setup_scanner_from_yaml.opp, config, async_see, discovery_info=None):
+async def async_setup_scanner_from_yaml(opp, config, async_see, discovery_info=None):
     """Set up the MQTT tracker."""
     devices = config[CONF_DEVICES]
     qos = config[CONF_QOS]
@@ -50,6 +50,6 @@ async def async_setup_scanner_from_yaml.opp, config, async_see, discovery_info=N
 
             opp.async_create_task(async_see(**see_args))
 
-        await mqtt.async_subscribe.opp, topic, async_message_received, qos)
+        await mqtt.async_subscribe(opp, topic, async_message_received, qos)
 
     return True

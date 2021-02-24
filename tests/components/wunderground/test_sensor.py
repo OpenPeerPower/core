@@ -65,31 +65,31 @@ async def test_setup_opp, aioclient_mock):
     aioclient_mock.get(URL, text=load_fixture("wunderground-valid.json"))
 
     with assert_setup_component(1, "sensor"):
-        await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
+        await async_setup_component(opp, "sensor", {"sensor": VALID_CONFIG})
         await opp.async_block_till_done()
 
 
-async def test_setup_pws.opp, aioclient_mock):
+async def test_setup_pws(opp, aioclient_mock):
     """Test that the component is loaded with PWS id."""
     aioclient_mock.get(PWS_URL, text=load_fixture("wunderground-valid.json"))
 
     with assert_setup_component(1, "sensor"):
-        await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG_PWS})
+        await async_setup_component(opp, "sensor", {"sensor": VALID_CONFIG_PWS})
 
 
-async def test_setup_invalid.opp, aioclient_mock):
+async def test_setup_invalid(opp, aioclient_mock):
     """Test that the component is not loaded with invalid config."""
     aioclient_mock.get(INVALID_URL, text=load_fixture("wunderground-error.json"))
 
     with assert_setup_component(0, "sensor"):
-        await async_setup_component.opp, "sensor", {"sensor": INVALID_CONFIG})
+        await async_setup_component(opp, "sensor", {"sensor": INVALID_CONFIG})
 
 
-async def test_sensor.opp, aioclient_mock):
+async def test_sensor(opp, aioclient_mock):
     """Test the WUnderground sensor class and methods."""
     aioclient_mock.get(URL, text=load_fixture("wunderground-valid.json"))
 
-    await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
+    await async_setup_component(opp, "sensor", {"sensor": VALID_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.pws_weather")
@@ -131,18 +131,18 @@ async def test_sensor.opp, aioclient_mock):
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == LENGTH_INCHES
 
 
-async def test_connect_failed.opp, aioclient_mock):
+async def test_connect_failed(opp, aioclient_mock):
     """Test the WUnderground connection error."""
     aioclient_mock.get(URL, exc=aiohttp.ClientError())
     with raises(PlatformNotReady):
-        await wunderground.async_setup_platform.opp, VALID_CONFIG, lambda _: None)
+        await wunderground.async_setup_platform(opp, VALID_CONFIG, lambda _: None)
 
 
-async def test_invalid_data.opp, aioclient_mock):
+async def test_invalid_data(opp, aioclient_mock):
     """Test the WUnderground invalid data."""
     aioclient_mock.get(URL, text=load_fixture("wunderground-invalid.json"))
 
-    await async_setup_component.opp, "sensor", {"sensor": VALID_CONFIG})
+    await async_setup_component(opp, "sensor", {"sensor": VALID_CONFIG})
     await opp.async_block_till_done()
 
     for condition in VALID_CONFIG["monitored_conditions"]:
@@ -150,13 +150,13 @@ async def test_invalid_data.opp, aioclient_mock):
         assert state.state == STATE_UNKNOWN
 
 
-async def test_entity_id_with_multiple_stations.opp, aioclient_mock):
+async def test_entity_id_with_multiple_stations(opp, aioclient_mock):
     """Test not generating duplicate entity ids with multiple stations."""
     aioclient_mock.get(URL, text=load_fixture("wunderground-valid.json"))
     aioclient_mock.get(PWS_URL, text=load_fixture("wunderground-valid.json"))
 
     config = [VALID_CONFIG, {**VALID_CONFIG_PWS, "entity_namespace": "hi"}]
-    await async_setup_component.opp, "sensor", {"sensor": config})
+    await async_setup_component(opp, "sensor", {"sensor": config})
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.pws_weather")
@@ -168,7 +168,7 @@ async def test_entity_id_with_multiple_stations.opp, aioclient_mock):
     assert state.state == "Clear"
 
 
-async def test_fails_because_of_unique_id.opp, aioclient_mock):
+async def test_fails_because_of_unique_id(opp, aioclient_mock):
     """Test same config twice fails because of unique_id."""
     aioclient_mock.get(URL, text=load_fixture("wunderground-valid.json"))
     aioclient_mock.get(PWS_URL, text=load_fixture("wunderground-valid.json"))
@@ -178,7 +178,7 @@ async def test_fails_because_of_unique_id.opp, aioclient_mock):
         {**VALID_CONFIG, "entity_namespace": "hi"},
         VALID_CONFIG_PWS,
     ]
-    await async_setup_component.opp, "sensor", {"sensor": config})
+    await async_setup_component(opp, "sensor", {"sensor": config})
     await opp.async_block_till_done()
 
     states = opp.states.async_all()

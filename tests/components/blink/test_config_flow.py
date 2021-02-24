@@ -10,9 +10,9 @@ from openpeerpower.components.blink import DOMAIN
 from tests.common import MockConfigEntry
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -53,7 +53,7 @@ async def test_form.opp):
 
 async def test_form_2fa.opp):
     """Test we get the 2fa form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -100,7 +100,7 @@ async def test_form_2fa.opp):
 
 async def test_form_2fa_connect_error(opp):
     """Test we report a connect error during 2fa setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -139,9 +139,9 @@ async def test_form_2fa_connect_error(opp):
     assert result3["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_2fa_invalid_key.opp):
+async def test_form_2fa_invalid_key(opp):
     """Test we report an error if key is invalid."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -182,7 +182,7 @@ async def test_form_2fa_invalid_key.opp):
 
 async def test_form_2fa_unknown_error(opp):
     """Test we report an unknown error during 2fa setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -221,7 +221,7 @@ async def test_form_2fa_unknown_error(opp):
     assert result3["errors"] == {"base": "unknown"}
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -257,7 +257,7 @@ async def test_form_unknown_error(opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_reauth_shows_user_step.opp):
+async def test_reauth_shows_user_step(opp):
     """Test reauth shows the user form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}
@@ -266,7 +266,7 @@ async def test_reauth_shows_user_step.opp):
     assert result["step_id"] == "user"
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -275,7 +275,7 @@ async def test_options_flow.opp):
         entry_id=1,
         version=2,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mock_auth = Mock(
         startup=Mock(return_value=True), check_key_required=Mock(return_value=False)

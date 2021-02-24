@@ -158,7 +158,7 @@ SERVICE_RUN_NETWORK_RESOURCE_SCHEMA = vol.All(
 
 
 @callback
-def async_setup_services.opp: OpenPeerPowerType):
+def async_setup_services(opp: OpenPeerPowerType):
     """Create and register services for the ISY integration."""
     existing_services = opp.services.async_services().get(DOMAIN)
     if existing_services and any(
@@ -261,7 +261,7 @@ def async_setup_services.opp: OpenPeerPowerType):
 
     async def async_cleanup_registry_entries(service) -> None:
         """Remove extra entities that are no longer part of the integration."""
-        entity_registry = await er.async_get_registry.opp)
+        entity_registry = await er.async_get_registry(opp)
         config_ids = []
         current_unique_ids = []
 
@@ -314,7 +314,7 @@ def async_setup_services.opp: OpenPeerPowerType):
     async def async_reload_config_entries(service) -> None:
         """Trigger a reload of all ISY994 config entries."""
         for config_entry_id in.opp.data[DOMAIN]:
-            opp.async_create_task.opp.config_entries.async_reload(config_entry_id))
+            opp.async_create_task(opp.config_entries.async_reload(config_entry_id))
 
     opp.services.async_register(
         domain=DOMAIN,
@@ -356,7 +356,7 @@ def async_setup_services.opp: OpenPeerPowerType):
 
     async def _async_send_raw_node_command(call: ServiceCall):
         await opp.helpers.service.entity_service_call(
-            async_get_platforms.opp, DOMAIN), SERVICE_SEND_RAW_NODE_COMMAND, call
+            async_get_platforms(opp, DOMAIN), SERVICE_SEND_RAW_NODE_COMMAND, call
         )
 
     opp.services.async_register(
@@ -368,7 +368,7 @@ def async_setup_services.opp: OpenPeerPowerType):
 
     async def _async_send_node_command(call: ServiceCall):
         await opp.helpers.service.entity_service_call(
-            async_get_platforms.opp, DOMAIN), SERVICE_SEND_NODE_COMMAND, call
+            async_get_platforms(opp, DOMAIN), SERVICE_SEND_NODE_COMMAND, call
         )
 
     opp.services.async_register(
@@ -380,7 +380,7 @@ def async_setup_services.opp: OpenPeerPowerType):
 
 
 @callback
-def async_unload_services.opp: OpenPeerPowerType):
+def async_unload_services(opp: OpenPeerPowerType):
     """Unload services for the ISY integration."""
     if opp.data[DOMAIN]:
         # There is still another config entry for this domain, don't remove services.
@@ -404,7 +404,7 @@ def async_unload_services.opp: OpenPeerPowerType):
 
 
 @callback
-def async_setup_light_services.opp: OpenPeerPowerType):
+def async_setup_light_services(opp: OpenPeerPowerType):
     """Create device-specific services for the ISY Integration."""
     platform = entity_platform.current_platform.get()
 

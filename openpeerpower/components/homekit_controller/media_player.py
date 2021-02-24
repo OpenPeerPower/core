@@ -38,7 +38,7 @@ HK_TO_OP_STATE = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Homekit television."""
     hkid = config_entry.data["AccessoryPairingID"]
     conn = opp.data[KNOWN_DEVICES][hkid]

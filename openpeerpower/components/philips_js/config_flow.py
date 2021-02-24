@@ -20,7 +20,7 @@ class FlowUserDict(TypedDict):
     api_version: int
 
 
-async def validate_input.opp: core.OpenPeerPower, data: FlowUserDict):
+async def validate_input(opp: core.OpenPeerPower, data: FlowUserDict):
     """Validate the user input allows us to connect."""
     hub = PhilipsTV(data[CONF_HOST], data[CONF_API_VERSION])
 

@@ -71,7 +71,7 @@ def setup(opp, base_config):
         _LOGGER.debug("callback: %s, %s", msg_type, values)
         addr = values[0]
         signal = f"homeworks_entity_{addr}"
-        dispatcher_send.opp, signal, msg_type, values)
+        dispatcher_send(opp, signal, msg_type, values)
 
     config = base_config.get(DOMAIN)
     controller = Homeworks(config[CONF_HOST], config[CONF_PORT], hw_callback)
@@ -83,7 +83,7 @@ def setup(opp, base_config):
     opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
 
     dimmers = config[CONF_DIMMERS]
-    load_platform.opp, "light", DOMAIN, {CONF_DIMMERS: dimmers}, base_config)
+    load_platform(opp, "light", DOMAIN, {CONF_DIMMERS: dimmers}, base_config)
 
     for key_config in config[CONF_KEYPADS]:
         addr = key_config[CONF_ADDR]

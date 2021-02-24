@@ -8,7 +8,7 @@ from . import DOMAIN as DOVADO_DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Dovado Router SMS notification service."""
     return DovadoSMSNotificationService.opp.data[DOVADO_DOMAIN].client)
 

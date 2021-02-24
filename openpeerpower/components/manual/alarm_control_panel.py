@@ -147,7 +147,7 @@ PLATFORM_SCHEMA = vol.Schema(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the manual alarm platform."""
     add_entities(
         [
@@ -191,7 +191,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
         self._name = name
         if code_template:
             self._code = code_template
-            self._code.opp = opp
+            self._code(opp = opp
         else:
             self._code = code or None
         self._code_arm_required = code_arm_required

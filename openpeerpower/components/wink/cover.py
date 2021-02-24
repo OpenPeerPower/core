@@ -6,7 +6,7 @@ from openpeerpower.components.cover import ATTR_POSITION, CoverEntity
 from . import DOMAIN, WinkDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink cover platform."""
 
     for shade in pywink.get_shades():

@@ -79,7 +79,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         return True
 
     if CONF_PROJECT_ID not in config[DOMAIN]:
-        return await async_setup_legacy.opp, config)
+        return await async_setup_legacy(opp, config)
 
     if CONF_SUBSCRIBER_ID not in config[DOMAIN]:
         _LOGGER.error("Configuration option '{CONF_SUBSCRIBER_ID}' required")
@@ -88,7 +88,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     # For setup of ConfigEntry below
     opp.data[DOMAIN][DATA_NEST_CONFIG] = config[DOMAIN]
     project_id = config[DOMAIN][CONF_PROJECT_ID]
-    config_flow.NestFlowHandler.register_sdm_api.opp)
+    config_flow.NestFlowHandler.register_sdm_api(opp)
     config_flow.NestFlowHandler.async_register_implementation(
         opp,
         config_entry_oauth2_flow.LocalOAuth2Implementation(
@@ -136,11 +136,11 @@ class SignalUpdateCallback:
             self.opp.bus.async_fire(NEST_EVENT, message)
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Nest from a config entry with dispatch between old/new flows."""
 
     if DATA_SDM not in entry.data:
-        return await async_setup_legacy_entry.opp, entry)
+        return await async_setup_legacy_entry(opp, entry)
 
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
@@ -152,7 +152,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
     auth = api.AsyncConfigEntryAuth(
-        aiohttp_client.async_get_clientsession.opp),
+        aiohttp_client.async_get_clientsession(opp),
         session,
         config[CONF_CLIENT_ID],
         config[CONF_CLIENT_SECRET],
@@ -206,7 +206,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if DATA_SDM not in entry.data:
         # Legacy API

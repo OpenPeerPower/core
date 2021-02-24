@@ -8,7 +8,7 @@ from openpeerpower.const import CONF_HOST, CONF_TYPE
 from tests.common import MockConfigEntry, load_fixture
 
 
-async def init_integration.opp, skip_setup=False) -> MockConfigEntry:
+async def init_integration(opp, skip_setup=False) -> MockConfigEntry:
     """Set up the Brother integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -17,7 +17,7 @@ async def init_integration.opp, skip_setup=False) -> MockConfigEntry:
         data={CONF_HOST: "localhost", CONF_TYPE: "laser"},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     if not skip_setup:
         with patch(

@@ -73,7 +73,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Doods client."""
     url = config[CONF_URL]
     auth_key = config[CONF_AUTH_KEY]

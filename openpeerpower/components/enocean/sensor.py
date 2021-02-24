@@ -72,7 +72,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up an EnOcean sensor device."""
     dev_id = config.get(CONF_ID)
     dev_name = config.get(CONF_NAME)

@@ -65,7 +65,7 @@ def mock_config_entry() -> MockConfigEntry:
     )
 
 
-async def init_integration.opp) -> MockConfigEntry:
+async def init_integration(opp) -> MockConfigEntry:
     """Set up the Ruckus Unleashed integration in Open Peer Power."""
     entry = mock_config_entry()
     with patch(
@@ -86,7 +86,7 @@ async def init_integration.opp) -> MockConfigEntry:
             TEST_CLIENT[API_MAC]: TEST_CLIENT,
         },
     ):
-        entry.add_to.opp.opp)
+        entry.add_to(opp.opp)
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 

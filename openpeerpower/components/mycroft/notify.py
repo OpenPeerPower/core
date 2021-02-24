@@ -8,7 +8,7 @@ from openpeerpower.components.notify import BaseNotificationService
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Mycroft notification service."""
     return MycroftNotificationService.opp.data["mycroft"])
 

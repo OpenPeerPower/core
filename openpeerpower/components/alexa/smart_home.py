@@ -11,7 +11,7 @@ from .messages import AlexaDirective
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_handle_message.opp, config, request, context=None, enabled=True):
+async def async_handle_message(opp, config, request, context=None, enabled=True):
     """Handle incoming API messages.
 
     If enabled is False, the response to all messagess will be a
@@ -32,11 +32,11 @@ async def async_handle_message.opp, config, request, context=None, enabled=True)
             )
 
         if directive.has_endpoint:
-            directive.load_entity.opp, config)
+            directive.load_entity(opp, config)
 
         funct_ref = HANDLERS.get((directive.namespace, directive.name))
         if funct_ref:
-            response = await funct_ref.opp, config, directive, context)
+            response = await funct_ref(opp, config, directive, context)
             if directive.has_endpoint:
                 response.merge_context_properties(directive.endpoint)
         else:

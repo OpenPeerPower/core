@@ -8,7 +8,7 @@ from .const import BINARY_SENSOR_DICT, DATA_KEY_API, DATA_KEY_COORDINATOR, DOMAI
 PARALLEL_UPDATES = 0
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Goal Zero Yeti sensor."""
     name = entry.data[CONF_NAME]
     goalzero_data = opp.data[DOMAIN][entry.entry_id]

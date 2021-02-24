@@ -4,7 +4,7 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Counter states."""
     opp.states.async_set("counter.entity", "5", {})
     opp.states.async_set(
@@ -13,7 +13,7 @@ async def test_reproducing_states.opp, caplog):
         {"initial": 12, "minimum": 5, "maximum": 15, "step": 3},
     )
 
-    configure_calls = async_mock_service.opp, "counter", "configure")
+    configure_calls = async_mock_service(opp, "counter", "configure")
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(

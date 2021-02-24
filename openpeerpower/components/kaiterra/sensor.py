@@ -11,7 +11,7 @@ SENSORS = [
 ]
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the kaiterra temperature and humidity sensor."""
     if discovery_info is None:
         return

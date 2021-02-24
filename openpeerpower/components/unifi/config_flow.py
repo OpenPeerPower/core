@@ -417,7 +417,7 @@ class UnifiOptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_create_entry(title="", data=self.options)
 
 
-async def async_discover_unifi.opp):
+async def async_discover_unifi(opp):
     """Discover UniFi address."""
     try:
         return await opp.async_add_executor_job(socket.gethostbyname, "unifi")

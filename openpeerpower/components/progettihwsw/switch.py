@@ -18,7 +18,7 @@ from .const import DEFAULT_POLLING_INTERVAL_SEC, DOMAIN
 _LOGGER = logging.getLogger(DOMAIN)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the switches from a config entry."""
     board_api = opp.data[DOMAIN][config_entry.entry_id]
     relay_count = config_entry.data["relay_count"]

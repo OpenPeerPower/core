@@ -19,7 +19,7 @@ from .const import (
 from .entity import ShadeEntity
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the hunter douglas shades sensors."""
 
     pv_data = opp.data[DOMAIN][entry.entry_id]

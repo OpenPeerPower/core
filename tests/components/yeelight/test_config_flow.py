@@ -42,7 +42,7 @@ DEFAULT_CONFIG = {
 }
 
 
-async def test_discovery.opp: OpenPeerPower):
+async def test_discovery(opp: OpenPeerPower):
     """Test setting up discovery."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -91,7 +91,7 @@ async def test_discovery.opp: OpenPeerPower):
     assert result2["reason"] == "no_devices_found"
 
 
-async def test_discovery_no_device.opp: OpenPeerPower):
+async def test_discovery_no_device(opp: OpenPeerPower):
     """Test discovery without device."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -107,7 +107,7 @@ async def test_discovery_no_device.opp: OpenPeerPower):
     assert result2["reason"] == "no_devices_found"
 
 
-async def test_import.opp: OpenPeerPower):
+async def test_import(opp: OpenPeerPower):
     """Test import from yaml."""
     config = {
         CONF_NAME: DEFAULT_NAME,
@@ -165,7 +165,7 @@ async def test_import.opp: OpenPeerPower):
     assert result["reason"] == "already_configured"
 
 
-async def test_manual.opp: OpenPeerPower):
+async def test_manual(opp: OpenPeerPower):
     """Test manually setup."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -221,12 +221,12 @@ async def test_manual.opp: OpenPeerPower):
     assert result2["reason"] == "already_configured"
 
 
-async def test_options.opp: OpenPeerPower):
+async def test_options(opp: OpenPeerPower):
     """Test options flow."""
     config_entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: IP_ADDRESS, CONF_NAME: NAME}
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mocked_bulb = _mocked_bulb()
     with patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
@@ -262,7 +262,7 @@ async def test_options.opp: OpenPeerPower):
     assert.opp.states.get(f"light.{NAME}_nightlight") is not None
 
 
-async def test_manual_no_capabilities.opp: OpenPeerPower):
+async def test_manual_no_capabilities(opp: OpenPeerPower):
     """Test manually setup without successful get_capabilities."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

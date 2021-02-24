@@ -87,18 +87,18 @@ class HueBridge:
         bridge = aiohue.Bridge(
             host,
             username=self.config_entry.data["username"],
-            websession=aiohttp_client.async_get_clientsession.opp),
+            websession=aiohttp_client.async_get_clientsession(opp),
         )
 
         try:
-            await authenticate_bridge.opp, bridge)
+            await authenticate_bridge(opp, bridge)
 
         except AuthenticationRequired:
             # Usernames can become invalid if hub is reset or user removed.
             # We are going to fail the config entry setup and initiate a new
             # linking procedure. When linking succeeds, it will remove the
             # old config entry.
-            create_config_flow.opp, host)
+            create_config_flow(opp, host)
             return False
 
         except CannotConnect as err:
@@ -261,7 +261,7 @@ class HueBridge:
         create_config_flow(self.opp, self.host)
 
 
-async def authenticate_bridge.opp: core.OpenPeerPower, bridge: aiohue.Bridge):
+async def authenticate_bridge(opp: core.OpenPeerPower, bridge: aiohue.Bridge):
     """Create a bridge object and verify authentication."""
     try:
         with async_timeout.timeout(10):
@@ -289,6 +289,6 @@ async def authenticate_bridge.opp: core.OpenPeerPower, bridge: aiohue.Bridge):
         raise AuthenticationRequired from err
 
 
-async def _update_listener.opp, entry):
+async def _update_listener(opp, entry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)

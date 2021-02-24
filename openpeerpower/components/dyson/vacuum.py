@@ -39,7 +39,7 @@ SUPPORT_DYSON = (
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Dyson 360 Eye robot vacuum platform."""
     _LOGGER.debug("Creating new Dyson 360 Eye robot vacuum")
     if DYSON_360_EYE_DEVICES not in.opp.data:
@@ -50,7 +50,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         dyson_entity = Dyson360EyeDevice(device)
         opp.data[DYSON_360_EYE_DEVICES].append(dyson_entity)
 
-    add_entities.opp.data[DYSON_360_EYE_DEVICES])
+    add_entities(opp.data[DYSON_360_EYE_DEVICES])
     return True
 
 

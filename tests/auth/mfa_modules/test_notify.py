@@ -13,7 +13,7 @@ MOCK_CODE = "123456"
 MOCK_CODE_2 = "654321"
 
 
-async def test_validating_mfa.opp):
+async def test_validating_mfa(opp):
     """Test validating mfa code."""
     notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {"notify_service": "dummy"})
@@ -22,7 +22,7 @@ async def test_validating_mfa.opp):
         assert await notify_auth_module.async_validate("test-user", {"code": MOCK_CODE})
 
 
-async def test_validating_mfa_invalid_code.opp):
+async def test_validating_mfa_invalid_code(opp):
     """Test validating an invalid mfa code."""
     notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {"notify_service": "dummy"})
@@ -34,7 +34,7 @@ async def test_validating_mfa_invalid_code.opp):
         )
 
 
-async def test_validating_mfa_invalid_user.opp):
+async def test_validating_mfa_invalid_user(opp):
     """Test validating an mfa code with invalid user."""
     notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {"notify_service": "dummy"})
@@ -45,13 +45,13 @@ async def test_validating_mfa_invalid_user.opp):
     )
 
 
-async def test_validating_mfa_counter.opp):
+async def test_validating_mfa_counter(opp):
     """Test counter will move only after generate code."""
     notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user(
         "test-user", {"counter": 0, "notify_service": "dummy"}
     )
-    async_mock_service.opp, "notify", "dummy")
+    async_mock_service(opp, "notify", "dummy")
 
     assert notify_auth_module._user_settings
     notify_setting = list(notify_auth_module._user_settings.values())[0]
@@ -81,7 +81,7 @@ async def test_validating_mfa_counter.opp):
     assert after_generate_count == notify_setting.counter
 
 
-async def test_setup_depose_user.opp):
+async def test_setup_depose_user(opp):
     """Test set up and despose user."""
     notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
     await notify_auth_module.async_setup_user("test-user", {})
@@ -96,7 +96,7 @@ async def test_setup_depose_user.opp):
     assert len(notify_auth_module._user_settings) == 1
 
 
-async def test_login_flow_validates_mfa.opp):
+async def test_login_flow_validates_mfa(opp):
     """Test login flow with mfa enabled."""
     opp.auth = await auth_manager_from_config(
         opp,
@@ -110,7 +110,7 @@ async def test_login_flow_validates_mfa.opp):
     )
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
-    ).add_to_auth_manager.opp.auth)
+    ).add_to_auth_manager(opp.auth)
     await opp.auth.async_link_user(
         user,
         auth_models.Credentials(
@@ -232,10 +232,10 @@ async def test_login_flow_validates_mfa.opp):
         assert result["data"].id == "mock-id"
 
 
-async def test_setup_user_notify_service.opp):
+async def test_setup_user_notify_service(opp):
     """Test allow select notify service during mfa setup."""
-    notify_calls = async_mock_service.opp, "notify", "test1", NOTIFY_SERVICE_SCHEMA)
-    async_mock_service.opp, "notify", "test2", NOTIFY_SERVICE_SCHEMA)
+    notify_calls = async_mock_service(opp, "notify", "test1", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "notify", "test2", NOTIFY_SERVICE_SCHEMA)
     notify_auth_module = await auth_mfa_module_from_config(opp, {"type": "notify"})
 
     services = notify_auth_module.aync_get_available_notify_services()
@@ -288,12 +288,12 @@ async def test_setup_user_notify_service.opp):
 
 async def test_include_exclude_config(opp):
     """Test allow include exclude config."""
-    async_mock_service.opp, "notify", "include1", NOTIFY_SERVICE_SCHEMA)
-    async_mock_service.opp, "notify", "include2", NOTIFY_SERVICE_SCHEMA)
-    async_mock_service.opp, "notify", "exclude1", NOTIFY_SERVICE_SCHEMA)
-    async_mock_service.opp, "notify", "exclude2", NOTIFY_SERVICE_SCHEMA)
-    async_mock_service.opp, "other", "include3", NOTIFY_SERVICE_SCHEMA)
-    async_mock_service.opp, "other", "exclude3", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "notify", "include1", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "notify", "include2", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "notify", "exclude1", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "notify", "exclude2", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "other", "include3", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "other", "exclude3", NOTIFY_SERVICE_SCHEMA)
 
     notify_auth_module = await auth_mfa_module_from_config(
         opp. {"type": "notify", "exclude": ["exclude1", "exclude2", "exclude3"]}
@@ -320,9 +320,9 @@ async def test_include_exclude_config(opp):
     assert services == ["include1"]
 
 
-async def test_setup_user_no_notify_service.opp):
+async def test_setup_user_no_notify_service(opp):
     """Test setup flow abort if there is no available notify service."""
-    async_mock_service.opp, "notify", "test1", NOTIFY_SERVICE_SCHEMA)
+    async_mock_service(opp, "notify", "test1", NOTIFY_SERVICE_SCHEMA)
     notify_auth_module = await auth_mfa_module_from_config(
         opp. {"type": "notify", "exclude": "test1"}
     )
@@ -336,7 +336,7 @@ async def test_setup_user_no_notify_service.opp):
     assert step["reason"] == "no_available_service"
 
 
-async def test_not_raise_exception_when_service_not_exist.opp):
+async def test_not_raise_exception_when_service_not_exist(opp):
     """Test login flow will not raise exception when notify service error."""
     opp.auth = await auth_manager_from_config(
         opp,
@@ -350,7 +350,7 @@ async def test_not_raise_exception_when_service_not_exist.opp):
     )
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
-    ).add_to_auth_manager.opp.auth)
+    ).add_to_auth_manager(opp.auth)
     await opp.auth.async_link_user(
         user,
         auth_models.Credentials(
@@ -382,7 +382,7 @@ async def test_not_raise_exception_when_service_not_exist.opp):
     await opp.async_block_till_done()
 
 
-async def test_race_condition_in_data_loading.opp):
+async def test_race_condition_in_data_loading(opp):
     """Test race condition in the data loading."""
     counter = 0
 

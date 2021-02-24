@@ -27,7 +27,7 @@ PLATFORM_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Import platform from yaml."""
 
     opp.async_create_task(
@@ -39,7 +39,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up powerview scene entries."""
 
     pv_data = opp.data[DOMAIN][entry.entry_id]

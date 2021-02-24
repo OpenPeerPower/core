@@ -14,7 +14,7 @@ import openpeerpower.util.color as color_util
 SUPPORT_AVEA = SUPPORT_BRIGHTNESS | SUPPORT_COLOR
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Avea platform."""
     try:
         nearby_bulbs = avea.discover_avea_bulbs()

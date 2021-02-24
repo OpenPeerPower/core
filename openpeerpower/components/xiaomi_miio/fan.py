@@ -552,7 +552,7 @@ SERVICE_TO_METHOD = {
 }
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the miio fan device from config."""
     if DATA_KEY not in.opp.data:
         opp.data[DATA_KEY] = {}

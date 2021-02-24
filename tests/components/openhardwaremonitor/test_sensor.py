@@ -19,7 +19,7 @@ async def test_setup_opp, requests_mock):
         text=load_fixture("openhardwaremonitor.json"),
     )
 
-    await async_setup_component.opp, "sensor", config)
+    await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entities = opp.states.async_entity_ids("sensor")

@@ -29,7 +29,7 @@ async def test_switch_state(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the WLED switches."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -70,7 +70,7 @@ async def test_switch_change_state(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the change of state of the WLED switches."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     # Nightlight
     with patch("wled.WLED.nightlight") as nightlight_mock:
@@ -141,7 +141,7 @@ async def test_switch_error(
 ) -> None:
     """Test error handling of the WLED switches."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
         await opp.services.async_call(
@@ -161,7 +161,7 @@ async def test_switch_connection_error(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test error handling of the WLED switches."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"), patch(
         "openpeerpower.components.wled.WLED.nightlight", side_effect=WLEDConnectionError

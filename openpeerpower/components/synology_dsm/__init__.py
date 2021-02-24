@@ -121,7 +121,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Synology DSM sensors."""
 
     # Migrate old unique_id
@@ -180,7 +180,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
         return {"new_unique_id": new_unique_id}
 
-    await entity_registry.async_migrate_entries.opp, entry.entry_id, _async_migrator)
+    await entity_registry.async_migrate_entries(opp, entry.entry_id, _async_migrator)
 
     # Migrate existing entry configuration
     if entry.data.get(CONF_VERIFY_SSL) is None:
@@ -205,7 +205,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     }
 
     # Services
-    await _async_setup_services.opp)
+    await _async_setup_services(opp)
 
     # For SSDP compat
     if not entry.data.get(CONF_MAC):
@@ -251,7 +251,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload Synology DSM sensors."""
     unload_ok = all(
         await asyncio.gather(
@@ -271,12 +271,12 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return unload_ok
 
 
-async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def _async_setup_services.opp: OpenPeerPowerType):
+async def _async_setup_services(opp: OpenPeerPowerType):
     """Service handler setup."""
 
     async def service_handler(call: ServiceCall):

@@ -16,7 +16,7 @@ def async_register(
     register.async_register_info(system_health_info, "/opp.")
 
 
-async def system_health_info.opp.OpenPeerPower):
+async def system_health_info(opp.OpenPeerPower):
     """Get info for the info page."""
     info = opp.omponents.opp.get_info()
     host_info = opp.omponents.opp.get_host_info()

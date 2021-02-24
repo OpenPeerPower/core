@@ -18,7 +18,7 @@ from .const import DOMAIN, GATEWAYS_KEY
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
     gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]

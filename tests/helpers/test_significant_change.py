@@ -8,9 +8,9 @@ from openpeerpower.helpers import significant_change
 
 
 @pytest.fixture(name="checker")
-async def checker_fixture.opp):
+async def checker_fixture(opp):
     """Checker fixture."""
-    checker = await significant_change.create_checker.opp, "test")
+    checker = await significant_change.create_checker(opp, "test")
 
     def async_check_significant_change(
          opp. old_state, _old_attrs, new_state, _new_attrs, **kwargs
@@ -23,7 +23,7 @@ async def checker_fixture.opp):
     return checker
 
 
-async def test_signicant_change.opp, checker):
+async def test_signicant_change(opp, checker):
     """Test initialize helper works."""
     ent_id = "test_domain.test_entity"
     attrs = {ATTR_DEVICE_CLASS: DEVICE_CLASS_BATTERY}
@@ -47,7 +47,7 @@ async def test_signicant_change.opp, checker):
     assert checker.async_is_significant_change(State(ent_id, STATE_UNAVAILABLE, attrs))
 
 
-async def test_significant_change_extra.opp, checker):
+async def test_significant_change_extra(opp, checker):
     """Test extra significant checker works."""
     ent_id = "test_domain.test_entity"
     attrs = {ATTR_DEVICE_CLASS: DEVICE_CLASS_BATTERY}

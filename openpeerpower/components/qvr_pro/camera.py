@@ -11,7 +11,7 @@ from .const import DOMAIN, SHORT_NAME
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the QVR Pro camera platform."""
     if discovery_info is None:
         return

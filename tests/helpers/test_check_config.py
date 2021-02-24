@@ -53,7 +53,7 @@ async def test_bad_core_config(opp):
         assert not res.errors
 
 
-async def test_config_platform_valid.opp):
+async def test_config_platform_valid(opp):
     """Test a valid platform setup."""
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "light:\n  platform: demo"}
     with patch("os.path.isfile", return_value=True), patch_yaml_files(files):
@@ -65,7 +65,7 @@ async def test_config_platform_valid.opp):
         assert not res.errors
 
 
-async def test_component_platform_not_found.opp):
+async def test_component_platform_not_found(opp):
     """Test errors if component or platform not found."""
     # Make sure they don't exist
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "beer:"}
@@ -103,7 +103,7 @@ async def test_component_platform_not_found_2.opp):
         assert not res.errors
 
 
-async def test_package_invalid.opp):
+async def test_package_invalid(opp):
     """Test a valid platform setup."""
     files = {
         YAML_CONFIG_FILE: BASE_CONFIG + ("  packages:\n    p1:\n" '      group: ["a"]')
@@ -135,7 +135,7 @@ async def test_bootstrap_error(opp):
         assert not res.errors
 
 
-async def test_automation_config_platform.opp):
+async def test_automation_config_platform(opp):
     """Test automation async config."""
     files = {
         YAML_CONFIG_FILE: BASE_CONFIG
@@ -171,7 +171,7 @@ action:
         assert "input_datetime" in res
 
 
-async def test_config_platform_raise.opp):
+async def test_config_platform_raise(opp):
     """Test bad config validation platform."""
     mock_platform(
         opp,

@@ -22,7 +22,7 @@ ID = "id"
 
 @websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required(TYPE): "zwave/network_status"})
-def websocket_network_status.opp, connection, msg):
+def websocket_network_status(opp, connection, msg):
     """Get Z-Wave network status."""
     network = opp.data[DATA_NETWORK]
     connection.send_result(msg[ID], {"state": network.state})
@@ -61,7 +61,7 @@ def websocket_get_migration_config(opp, connection, msg):
 @websocket_api.require_admin
 @websocket_api.async_response
 @websocket_api.websocket_command({vol.Required(TYPE): "zwave/start_ozw_config_flow"})
-async def websocket_start_ozw_config_flow.opp, connection, msg):
+async def websocket_start_ozw_config_flow(opp, connection, msg):
     """Start the ozw integration config flow (for migration wizard).
 
     Return data with the flow id of the started ozw config flow.
@@ -81,9 +81,9 @@ async def websocket_start_ozw_config_flow.opp, connection, msg):
 
 
 @callback
-def async_load_websocket_api.opp):
+def async_load_websocket_api(opp):
     """Set up the web socket API."""
-    websocket_api.async_register_command.opp, websocket_network_status)
-    websocket_api.async_register_command.opp, websocket_get_config)
-    websocket_api.async_register_command.opp, websocket_get_migration_config)
-    websocket_api.async_register_command.opp, websocket_start_ozw_config_flow)
+    websocket_api.async_register_command(opp, websocket_network_status)
+    websocket_api.async_register_command(opp, websocket_get_config)
+    websocket_api.async_register_command(opp, websocket_get_migration_config)
+    websocket_api.async_register_command(opp, websocket_start_ozw_config_flow)

@@ -59,7 +59,7 @@ def is_socket_address(value):
         raise vol.Invalid("Device is not a valid domain name or ip address") from err
 
 
-async def try_connect.opp: OpenPeerPowerType, user_input: Dict[str, str]) -> bool:
+async def try_connect(opp: OpenPeerPowerType, user_input: Dict[str, str]) -> bool:
     """Try to connect to a gateway and report if it worked."""
     if user_input[CONF_DEVICE] == MQTT_COMPONENT:
         return True  # dont validate mqtt. mqtt gateways dont send ready messages :(
@@ -130,7 +130,7 @@ async def setup_gateway(
         opp,
         device=entry.data[CONF_DEVICE],
         version=entry.data[CONF_VERSION],
-        event_callback=_gw_callback_factory.opp, entry.entry_id),
+        event_callback=_gw_callback_factory(opp, entry.entry_id),
         persistence_file=entry.data.get(
             CONF_PERSISTENCE_FILE, f"mysensors_{entry.entry_id}.json"
         ),
@@ -164,7 +164,7 @@ async def _get_gateway(
 
     if device == MQTT_COMPONENT:
         # what is the purpose of this?
-        # if not await async_setup_component.opp, MQTT_COMPONENT, entry):
+        # if not await async_setup_component(opp, MQTT_COMPONENT, entry):
         #    return None
         mqtt = opp.components.mqtt
 
@@ -236,8 +236,8 @@ async def finish_setup(
     """Load any persistent devices and platforms and start gateway."""
     discover_tasks = []
     start_tasks = []
-    discover_tasks.append(_discover_persistent_devices.opp, entry, gateway))
-    start_tasks.append(_gw_start.opp, entry, gateway))
+    discover_tasks.append(_discover_persistent_devices(opp, entry, gateway))
+    start_tasks.append(_gw_start(opp, entry, gateway))
     if discover_tasks:
         # Make sure all devices and platforms are loaded before gateway start.
         await asyncio.wait(discover_tasks)
@@ -261,12 +261,12 @@ async def _discover_persistent_devices(
                 new_devices[platform].extend(dev_ids)
     _LOGGER.debug("discovering persistent devices: %s", new_devices)
     for platform, dev_ids in new_devices.items():
-        discover_mysensors_platform.opp, entry.entry_id, platform, dev_ids)
+        discover_mysensors_platform(opp, entry.entry_id, platform, dev_ids)
     if tasks:
         await asyncio.wait(tasks)
 
 
-async def gw_stop.opp, entry: ConfigEntry, gateway: BaseAsyncGateway):
+async def gw_stop(opp, entry: ConfigEntry, gateway: BaseAsyncGateway):
     """Stop the gateway."""
     connect_task = opp.data[DOMAIN].get(
         MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id)
@@ -288,7 +288,7 @@ async def _gw_start(
     )  # store the connect task so it can be cancelled in gw_stop
 
     async def stop_this_gw(_: Event):
-        await gw_stop.opp, entry, gateway)
+        await gw_stop(opp, entry, gateway)
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_this_gw)
     if entry.data[CONF_DEVICE] == MQTT_COMPONENT:
@@ -333,6 +333,6 @@ def _gw_callback_factory(
         if msg_handler is None:
             return
 
-        opp.async_create_task(msg_handler.opp, gateway_id, msg))
+        opp.async_create_task(msg_handler(opp, gateway_id, msg))
 
     return mysensors_callback

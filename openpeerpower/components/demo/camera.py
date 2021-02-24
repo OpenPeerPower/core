@@ -4,14 +4,14 @@ from pathlib import Path
 from openpeerpower.components.camera import SUPPORT_ON_OFF, Camera
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Demo camera platform."""
     async_add_entities([DemoCamera("Demo camera")])
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Demo config entry."""
-    await async_setup_platform.opp, {}, async_add_entities)
+    await async_setup_platform(opp, {}, async_add_entities)
 
 
 class DemoCamera(Camera):

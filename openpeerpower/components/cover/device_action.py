@@ -58,9 +58,9 @@ POSITION_ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 ACTION_SCHEMA = vol.Any(CMD_ACTION_SCHEMA, POSITION_ACTION_SCHEMA)
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions for Cover devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     actions = []
 
     # Get all the integrations entities for this device
@@ -145,7 +145,7 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
     return actions
 
 
-async def async_get_action_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_action_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List action capabilities."""
     if config[CONF_TYPE] not in POSITION_ACTION_TYPES:
         return {}

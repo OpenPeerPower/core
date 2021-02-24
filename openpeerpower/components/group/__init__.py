@@ -113,7 +113,7 @@ class GroupIntegrationRegistry:
 
 
 @bind.opp
-def is_on.opp, entity_id):
+def is_on(opp, entity_id):
     """Test if the group state is in its ON-state."""
     if REG_KEY not in.opp.data:
         # Integration not setup yet, it cannot be on
@@ -128,7 +128,7 @@ def is_on.opp, entity_id):
 
 
 @bind.opp
-def expand_entity_ids.opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List[str]:
+def expand_entity_ids(opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List[str]:
     """Return entity_ids with group entity ids replaced by their members.
 
     Async friendly.
@@ -148,13 +148,13 @@ def expand_entity_ids.opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
             domain, _ = ha.split_entity_id(entity_id)
 
             if domain == DOMAIN:
-                child_entities = get_entity_ids.opp, entity_id)
+                child_entities = get_entity_ids(opp, entity_id)
                 if entity_id in child_entities:
                     child_entities = list(child_entities)
                     child_entities.remove(entity_id)
                 found_ids.extend(
                     ent_id
-                    for ent_id in expand_entity_ids.opp, child_entities)
+                    for ent_id in expand_entity_ids(opp, child_entities)
                     if ent_id not in found_ids
                 )
 
@@ -192,7 +192,7 @@ def get_entity_ids(
 
 
 @bind.opp
-def groups_with_entity.opp: OpenPeerPowerType, entity_id: str) -> List[str]:
+def groups_with_entity(opp: OpenPeerPowerType, entity_id: str) -> List[str]:
     """Get all groups that contain this entity.
 
     Async friendly.
@@ -218,7 +218,7 @@ async def async_setup(opp, config):
 
     opp.data[REG_KEY] = GroupIntegrationRegistry()
 
-    await async_process_integration_platforms.opp, DOMAIN, _process_group_platform)
+    await async_process_integration_platforms(opp, DOMAIN, _process_group_platform)
 
     await _async_process_config(opp, config, component)
 
@@ -233,7 +233,7 @@ async def async_setup(opp, config):
 
         await component.async_add_entities(auto)
 
-        await async_reload_integration_platforms.opp, DOMAIN, PLATFORMS)
+        await async_reload_integration_platforms(opp, DOMAIN, PLATFORMS)
 
     opp.services.async_register(
         DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
@@ -343,10 +343,10 @@ async def async_setup(opp, config):
     return True
 
 
-async def _process_group_platform.opp, domain, platform):
+async def _process_group_platform(opp, domain, platform):
     """Process a group platform."""
     current_domain.set(domain)
-    platform.async_describe_on_off_states.opp, opp.data[REG_KEY])
+    platform.async_describe_on_off_states(opp, opp.data[REG_KEY])
 
 
 async def _async_process_config(opp, config, component):
@@ -648,7 +648,7 @@ class Group(Entity):
             self._reset_tracked_state()
         self._async_start_tracking()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Handle removal from Open Peer Power."""
         self._async_stop()
 

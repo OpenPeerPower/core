@@ -63,7 +63,7 @@ REMOTE_SERVICE_ACTIVITY_SCHEMA = make_entity_service_schema(
 
 
 @bind.opp
-def is_on.opp: OpenPeerPowerType, entity_id: str) -> bool:
+def is_on(opp: OpenPeerPowerType, entity_id: str) -> bool:
     """Return if the remote is on based on the statemachine."""
     return.opp.states.is_state(entity_id, STATE_ON)
 
@@ -125,12 +125,12 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
     return await cast(EntityComponent, opp.data[DOMAIN]).async_setup_entry(entry)
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     return await cast(EntityComponent, opp.data[DOMAIN]).async_unload_entry(entry)
 

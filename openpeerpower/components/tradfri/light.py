@@ -28,7 +28,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Load Tradfri lights based on a config entry."""
     gateway_id = config_entry.data[CONF_GATEWAY_ID]
     tradfri_data = opp.data[DOMAIN][config_entry.entry_id]

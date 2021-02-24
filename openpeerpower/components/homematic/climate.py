@@ -31,7 +31,7 @@ HMIP_CONTROL_MODE = "SET_POINT_MODE"
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Homematic thermostat platform."""
     if discovery_info is None:
         return

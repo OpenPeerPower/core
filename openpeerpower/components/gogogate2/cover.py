@@ -64,7 +64,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], Optional[bool]], None],
 ) -> None:
     """Set up the config entry."""
-    data_update_coordinator = get_data_update_coordinator.opp, config_entry)
+    data_update_coordinator = get_data_update_coordinator(opp, config_entry)
 
     async_add_entities(
         [

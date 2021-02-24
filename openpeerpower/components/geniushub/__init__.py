@@ -105,7 +105,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         args = (kwargs.pop(CONF_TOKEN),)
     hub_uid = kwargs.pop(CONF_MAC, None)
 
-    client = GeniusHub(*args, **kwargs, session=async_get_clientsession.opp))
+    client = GeniusHub(*args, **kwargs, session=async_get_clientsession(opp))
 
     broker = opp.data[DOMAIN]["broker"] = GeniusBroker.opp, client, hub_uid)
 
@@ -116,21 +116,21 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         return False
     broker.make_debug_log_entries()
 
-    async_track_time_interval.opp, broker.async_update, SCAN_INTERVAL)
+    async_track_time_interval(opp, broker.async_update, SCAN_INTERVAL)
 
     for platform in ["climate", "water_heater", "sensor", "binary_sensor", "switch"]:
-        opp.async_create_task(async_load_platform.opp, platform, DOMAIN, {}, config))
+        opp.async_create_task(async_load_platform(opp, platform, DOMAIN, {}, config))
 
-    setup_service_functions.opp, broker)
+    setup_service_functions(opp, broker)
 
     return True
 
 
 @callback
-def setup_service_functions.opp: OpenPeerPowerType, broker):
+def setup_service_functions(opp: OpenPeerPowerType, broker):
     """Set up the service functions."""
 
-    @verify_domain_control.opp, DOMAIN)
+    @verify_domain_control(opp, DOMAIN)
     async def set_zone_mode(call) -> None:
         """Set the system mode."""
         entity_id = call.data[ATTR_ENTITY_ID]
@@ -150,7 +150,7 @@ def setup_service_functions.opp: OpenPeerPowerType, broker):
             "data": call.data,
         }
 
-        async_dispatcher_send.opp, DOMAIN, payload)
+        async_dispatcher_send(opp, DOMAIN, payload)
 
     opp.services.async_register(
         DOMAIN, SVC_SET_ZONE_MODE, set_zone_mode, schema=SET_ZONE_MODE_SCHEMA

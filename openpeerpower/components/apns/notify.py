@@ -43,7 +43,7 @@ REGISTER_SERVICE_SCHEMA = vol.Schema(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Return push service."""
     name = config[CONF_NAME]
     cert_file = config[CONF_CERTFILE]
@@ -173,7 +173,7 @@ class ApnsNotificationService(BaseNotificationService):
             for (key, device) in self.devices.items()
             if device.tracking_device_id is not None
         ]
-        track_state_change.opp, tracking_ids, self.device_state_changed_listener)
+        track_state_change(opp, tracking_ids, self.device_state_changed_listener)
 
     def device_state_changed_listener(self, entity_id, from_s, to_s):
         """

@@ -28,7 +28,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Initialize Scanner."""
 
     data = {

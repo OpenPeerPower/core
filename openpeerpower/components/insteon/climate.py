@@ -62,7 +62,7 @@ SUPPORTED_FEATURES = (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Insteon climate entities from a config entry."""
 
     @callback
@@ -77,7 +77,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         )
 
     signal = f"{SIGNAL_ADD_ENTITIES}_{CLIMATE_DOMAIN}"
-    async_dispatcher_connect.opp, signal, async_add_insteon_climate_entities)
+    async_dispatcher_connect(opp, signal, async_add_insteon_climate_entities)
     async_add_insteon_climate_entities()
 
 

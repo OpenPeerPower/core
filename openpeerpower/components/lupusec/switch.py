@@ -10,7 +10,7 @@ from . import DOMAIN as LUPUSEC_DOMAIN, LupusecDevice
 SCAN_INTERVAL = timedelta(seconds=2)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up Lupusec switch devices."""
     if discovery_info is None:
         return

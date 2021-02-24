@@ -8,7 +8,7 @@ from . import DATA_CHARGING, DATA_LEAF, DATA_PLUGGED_IN, LeafEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up of a Nissan Leaf binary sensor."""
     if discovery_info is None:
         return

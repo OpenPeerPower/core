@@ -43,23 +43,23 @@ async def async_setup_opp: OpenPeerPowerType, config: dict):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Tasmota from a config entry."""
-    websocket_api.async_register_command.opp, websocket_remove_device)
+    websocket_api.async_register_command(opp, websocket_remove_device)
     opp.data[DATA_UNSUB] = []
 
     def _publish(*args, **kwds):
-        mqtt.async_publish.opp, *args, **kwds)
+        mqtt.async_publish(opp, *args, **kwds)
 
     async def _subscribe_topics(sub_state, topics):
         # Optionally mark message handlers as callback
         for topic in topics.values():
             if "msg_callback" in topic and "event_loop_safe" in topic:
                 topic["msg_callback"] = callback(topic["msg_callback"])
-        return await async_subscribe_topics.opp, sub_state, topics)
+        return await async_subscribe_topics(opp, sub_state, topics)
 
     async def _unsubscribe_topics(sub_state):
-        return await async_unsubscribe_topics.opp, sub_state)
+        return await async_unsubscribe_topics(opp, sub_state)
 
     tasmota_mqtt = TasmotaMQTTClient(_publish, _subscribe_topics, _unsubscribe_topics)
 
@@ -67,7 +67,7 @@ async def async_setup_entry.opp, entry):
 
     def async_discover_device(config, mac):
         """Discover and add a Tasmota device."""
-        async_setup_device.opp, mac, config, entry, tasmota_mqtt, device_registry)
+        async_setup_device(opp, mac, config, entry, tasmota_mqtt, device_registry)
 
     async def async_device_removed(event):
         """Handle the removal of a device."""
@@ -89,7 +89,7 @@ async def async_setup_entry.opp, entry):
     )
 
     async def start_platforms():
-        await device_automation.async_setup_entry.opp, entry)
+        await device_automation.async_setup_entry(opp, entry)
         await asyncio.gather(
             *[
                 opp.config_entries.async_forward_entry_setup(entry, component)
@@ -106,7 +106,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
 
     # cleanup platforms
@@ -122,7 +122,7 @@ async def async_unload_entry.opp, entry):
         return False
 
     # disable discovery
-    await discovery.async_stop.opp)
+    await discovery.async_stop(opp)
 
     # cleanup subscriptions
     for unsub in.opp.data[DATA_UNSUB]:
@@ -135,12 +135,12 @@ async def async_unload_entry.opp, entry):
     device_registry = await opp.helpers.device_registry.async_get_registry()
     devices = async_entries_for_config_entry(device_registry, entry.entry_id)
     for device in devices:
-        await device_automation.async_remove_automations.opp, device.id)
+        await device_automation.async_remove_automations(opp, device.id)
 
     return True
 
 
-def _remove_device.opp, config_entry, mac, tasmota_mqtt, device_registry):
+def _remove_device(opp, config_entry, mac, tasmota_mqtt, device_registry):
     """Remove device from device registry."""
     device = device_registry.async_get_device(set(), {(CONNECTION_NETWORK_MAC, mac)})
 
@@ -152,7 +152,7 @@ def _remove_device.opp, config_entry, mac, tasmota_mqtt, device_registry):
     clear_discovery_topic(mac, config_entry.data[CONF_DISCOVERY_PREFIX], tasmota_mqtt)
 
 
-def _update_device.opp, config_entry, config, device_registry):
+def _update_device(opp, config_entry, config, device_registry):
     """Add or update device registry."""
     config_entry_id = config_entry.entry_id
     device_info = {
@@ -167,19 +167,19 @@ def _update_device.opp, config_entry, config, device_registry):
     device_registry.async_get_or_create(**device_info)
 
 
-def async_setup_device.opp, mac, config, config_entry, tasmota_mqtt, device_registry):
+def async_setup_device(opp, mac, config, config_entry, tasmota_mqtt, device_registry):
     """Set up the Tasmota device."""
     if not config:
-        _remove_device.opp, config_entry, mac, tasmota_mqtt, device_registry)
+        _remove_device(opp, config_entry, mac, tasmota_mqtt, device_registry)
     else:
-        _update_device.opp, config_entry, config, device_registry)
+        _update_device(opp, config_entry, config, device_registry)
 
 
 @websocket_api.websocket_command(
     {vol.Required("type"): "tasmota/device/remove", vol.Required("device_id"): str}
 )
 @websocket_api.async_response
-async def websocket_remove_device.opp, connection, msg):
+async def websocket_remove_device(opp, connection, msg):
     """Delete device."""
     device_id = msg["device_id"]
     dev_registry = await opp.helpers.device_registry.async_get_registry()

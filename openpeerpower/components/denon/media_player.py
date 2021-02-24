@@ -78,7 +78,7 @@ MEDIA_MODES = {
 #  'Favorites': 'FVP'}
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Denon platform."""
     denon = DenonDevice(config[CONF_NAME], config[CONF_HOST])
 

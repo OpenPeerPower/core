@@ -27,7 +27,7 @@ SENSOR_MAP = {
 PARALLEL_UPDATES = 1
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add a GIOS entities from a config_entry."""
     name = config_entry.data[CONF_NAME]
 

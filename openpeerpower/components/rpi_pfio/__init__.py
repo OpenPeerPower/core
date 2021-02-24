@@ -37,13 +37,13 @@ def read_input(port):
     return PFIO.digital_read(port)
 
 
-def edge_detect.opp, port, event_callback, settle):
+def edge_detect(opp, port, event_callback, settle):
     """Add detection for RISING and FALLING events."""
     opp.data[DATA_PFIO_LISTENER].register(
         port, PFIO.IODIR_BOTH, event_callback, settle_time=settle
     )
 
 
-def activate_listener.opp):
+def activate_listener(opp):
     """Activate the registered listener events."""
     opp.data[DATA_PFIO_LISTENER].activate()

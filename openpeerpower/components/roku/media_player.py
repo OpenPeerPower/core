@@ -59,7 +59,7 @@ SUPPORT_ROKU = (
 SEARCH_SCHEMA = {vol.Required(ATTR_KEYWORD): str}
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Roku config entry."""
     coordinator = opp.data[DOMAIN][entry.entry_id]
     unique_id = coordinator.data.info.serial_number

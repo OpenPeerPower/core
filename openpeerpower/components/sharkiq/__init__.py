@@ -44,7 +44,7 @@ async def async_connect_or_timeout(ayla_api: AylaApi) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Initialize the sharkiq platform via config entry."""
     ayla_api = get_ayla_api(
         username=config_entry.data[CONF_USERNAME],
@@ -88,12 +88,12 @@ async def async_disconnect_or_timeout(coordinator: SharkIqUpdateCoordinator):
             pass
 
 
-async def async_update_options.opp, config_entry):
+async def async_update_options(opp, config_entry):
     """Update options."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

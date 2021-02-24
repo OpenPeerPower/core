@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_auth_view.opp.OpenPeerPowerType, user: User):
+def async_setup_auth_view(opp.OpenPeerPowerType, user: User):
     """Auth setup."""
     opp._auth = OppIOAuth.opp.user)
     opp._password_reset = OppIOPasswordReset.opp.user)

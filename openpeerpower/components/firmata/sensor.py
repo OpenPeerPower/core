@@ -49,7 +49,7 @@ class FirmataSensor(FirmataPinEntity, Entity):
         """Set up a sensor."""
         await self._api.start_pin(self.async_write_op_state)
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Stop reporting a sensor."""
         await self._api.stop_pin()
 

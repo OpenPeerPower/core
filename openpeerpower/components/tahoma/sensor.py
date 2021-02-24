@@ -14,7 +14,7 @@ SCAN_INTERVAL = timedelta(seconds=60)
 ATTR_RSSI_LEVEL = "rssi_level"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up Tahoma controller devices."""
     if discovery_info is None:
         return

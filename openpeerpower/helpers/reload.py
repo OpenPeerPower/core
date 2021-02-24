@@ -30,7 +30,7 @@ async def async_reload_integration_platforms(
     Examples are template, stats, derivative, utility meter.
     """
     try:
-        unprocessed_conf = await conf_util.async.opp_config_yaml.opp)
+        unprocessed_conf = await conf_util.async.opp_config_yaml(opp)
     except OpenPeerPowerError as err:
         _LOGGER.error(err)
         return
@@ -52,7 +52,7 @@ async def _resetup_platform(
     unprocessed_conf: ConfigType,
 ) -> None:
     """Resetup a platform."""
-    integration = await async_get_integration.opp, integration_platform)
+    integration = await async_get_integration(opp, integration_platform)
 
     conf = await conf_util.async_process_component_config(
         opp. unprocessed_conf, integration
@@ -74,7 +74,7 @@ async def _resetup_platform(
     if hasattr(component, "async_reset_platform"):
         # If the integration has its own way to reset
         # use this method.
-        await component.async_reset_platform.opp, integration_name)  # type: ignore
+        await component.async_reset_platform(opp, integration_name)  # type: ignore
         await component.async_setup_opp, root_config)  # type: ignore
         return
 
@@ -131,10 +131,10 @@ async def async_integration_yaml_config(
     opp: OpenPeerPowerType, integration_name: str
 ) -> Optional[ConfigType]:
     """Fetch the latest yaml configuration for an integration."""
-    integration = await async_get_integration.opp, integration_name)
+    integration = await async_get_integration(opp, integration_name)
 
     return await conf_util.async_process_component_config(
-        opp. await conf_util.async.opp_config_yaml.opp), integration
+        opp. await conf_util.async.opp_config_yaml(opp), integration
     )
 
 
@@ -143,7 +143,7 @@ def async_get_platform_without_config_entry(
     opp: OpenPeerPowerType, integration_name: str, integration_platform_name: str
 ) -> Optional[EntityPlatform]:
     """Find an existing platform that is not a config entry."""
-    for integration_platform in async_get_platforms.opp, integration_name):
+    for integration_platform in async_get_platforms(opp, integration_name):
         if integration_platform.config_entry is not None:
             continue
         if integration_platform.domain == integration_platform_name:
@@ -162,7 +162,7 @@ async def async_setup_reload_service(
 
     async def _reload_config(call: Event) -> None:
         """Reload the platforms."""
-        await async_reload_integration_platforms.opp, domain, platforms)
+        await async_reload_integration_platforms(opp, domain, platforms)
         opp.bus.async_fire(f"event_{domain}_reloaded", context=call.context)
 
     opp.helpers.service.async_register_admin_service(
@@ -175,6 +175,6 @@ def setup_reload_service(
 ) -> None:
     """Sync version of async_setup_reload_service."""
     asyncio.run_coroutine_threadsafe(
-        async_setup_reload_service.opp, domain, platforms),
+        async_setup_reload_service(opp, domain, platforms),
         opp.loop,
     ).result()

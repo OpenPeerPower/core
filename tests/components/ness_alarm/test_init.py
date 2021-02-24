@@ -44,9 +44,9 @@ VALID_CONFIG = {
 }
 
 
-async def test_setup_platform.opp, mock_nessclient):
+async def test_setup_platform(opp, mock_nessclient):
     """Test platform setup."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     assert.opp.services.has_service(DOMAIN, "panic")
     assert.opp.services.has_service(DOMAIN, "aux")
 
@@ -59,27 +59,27 @@ async def test_setup_platform.opp, mock_nessclient):
     assert mock_nessclient.update.call_count == 1
 
 
-async def test_panic_service.opp, mock_nessclient):
+async def test_panic_service(opp, mock_nessclient):
     """Test calling panic service."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.services.async_call(
         DOMAIN, SERVICE_PANIC, blocking=True, service_data={ATTR_CODE: "1234"}
     )
     mock_nessclient.panic.assert_awaited_once_with("1234")
 
 
-async def test_aux_service.opp, mock_nessclient):
+async def test_aux_service(opp, mock_nessclient):
     """Test calling aux service."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.services.async_call(
         DOMAIN, SERVICE_AUX, blocking=True, service_data={ATTR_OUTPUT_ID: 1}
     )
     mock_nessclient.aux.assert_awaited_once_with(1, True)
 
 
-async def test_dispatch_state_change.opp, mock_nessclient):
+async def test_dispatch_state_change(opp, mock_nessclient):
     """Test calling aux service."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
 
     on_state_change = mock_nessclient.on_state_change.call_args[0][0]
@@ -89,9 +89,9 @@ async def test_dispatch_state_change.opp, mock_nessclient):
     assert.opp.states.is_state("alarm_control_panel.alarm_panel", STATE_ALARM_ARMING)
 
 
-async def test_alarm_disarm.opp, mock_nessclient):
+async def test_alarm_disarm(opp, mock_nessclient):
     """Test disarm."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
 
     await opp.services.async_call(
@@ -106,9 +106,9 @@ async def test_alarm_disarm.opp, mock_nessclient):
     mock_nessclient.disarm.assert_called_once_with("1234")
 
 
-async def test_alarm_arm_away.opp, mock_nessclient):
+async def test_alarm_arm_away(opp, mock_nessclient):
     """Test disarm."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
 
     await opp.services.async_call(
@@ -123,9 +123,9 @@ async def test_alarm_arm_away.opp, mock_nessclient):
     mock_nessclient.arm_away.assert_called_once_with("1234")
 
 
-async def test_alarm_arm_home.opp, mock_nessclient):
+async def test_alarm_arm_home(opp, mock_nessclient):
     """Test disarm."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
 
     await opp.services.async_call(
@@ -140,9 +140,9 @@ async def test_alarm_arm_home.opp, mock_nessclient):
     mock_nessclient.arm_home.assert_called_once_with("1234")
 
 
-async def test_alarm_trigger.opp, mock_nessclient):
+async def test_alarm_trigger(opp, mock_nessclient):
     """Test disarm."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
 
     await opp.services.async_call(
@@ -157,9 +157,9 @@ async def test_alarm_trigger.opp, mock_nessclient):
     mock_nessclient.panic.assert_called_once_with("1234")
 
 
-async def test_dispatch_zone_change.opp, mock_nessclient):
+async def test_dispatch_zone_change(opp, mock_nessclient):
     """Test zone change events dispatch a signal to subscribers."""
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
 
     on_zone_change = mock_nessclient.on_zone_change.call_args[0][0]
@@ -170,7 +170,7 @@ async def test_dispatch_zone_change.opp, mock_nessclient):
     assert.opp.states.is_state("binary_sensor.zone_2", "off")
 
 
-async def test_arming_state_change.opp, mock_nessclient):
+async def test_arming_state_change(opp, mock_nessclient):
     """Test arming state change handing."""
     states = [
         (MockArmingState.UNKNOWN, STATE_UNKNOWN),
@@ -182,7 +182,7 @@ async def test_arming_state_change.opp, mock_nessclient):
         (MockArmingState.TRIGGERED, STATE_ALARM_TRIGGERED),
     ]
 
-    await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
     assert.opp.states.is_state("alarm_control_panel.alarm_panel", STATE_UNKNOWN)
     on_state_change = mock_nessclient.on_state_change.call_args[0][0]

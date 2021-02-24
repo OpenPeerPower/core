@@ -100,7 +100,7 @@ def setup(opp, config):
     if not (sensors or remotes):
         sensors.append({})
 
-    codes = load_codes.opp.config.path(CODES_YAML))
+    codes = load_codes(opp.config.path(CODES_YAML))
 
     opp.data[DOMAIN] = {CONF_SENSOR: {}, CONF_REMOTE: {}}
 

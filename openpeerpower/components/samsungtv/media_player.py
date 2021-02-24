@@ -59,7 +59,7 @@ SUPPORT_SAMSUNGTV = (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Samsung TV from a config entry."""
     ip_address = config_entry.data[CONF_IP_ADDRESS]
     on_script = None

@@ -5,7 +5,7 @@ from .const import DOMAIN, JUICENET_API, JUICENET_COORDINATOR
 from .entity import JuiceNetDevice
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the JuiceNet switches."""
     entities = []
     juicenet_data = opp.data[DOMAIN][config_entry.entry_id]

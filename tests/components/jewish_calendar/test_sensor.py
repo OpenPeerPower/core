@@ -26,7 +26,7 @@ async def test_jewish_calendar_min_config(opp):
     assert.opp.states.get("sensor.jewish_calendar_date") is not None
 
 
-async def test_jewish_calendar_hebrew.opp):
+async def test_jewish_calendar_hebrew(opp):
     """Test jewish calendar sensor with language set to hebrew."""
     assert await async_setup_component(
         opp. jewish_calendar.DOMAIN, {"jewish_calendar": {"language": "hebrew"}}
@@ -183,7 +183,7 @@ async def test_jewish_calendar_sensor(
         await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     result = (
@@ -530,7 +530,7 @@ async def test_shabbat_times_sensor(
         await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     for sensor_type, result_value in result.items():
@@ -590,7 +590,7 @@ OMER_TEST_IDS = [
 
 
 @pytest.mark.parametrize(["test_time", "result"], OMER_PARAMS, ids=OMER_TEST_IDS)
-async def test_omer_sensor.opp, legacy_patchable_time, test_time, result):
+async def test_omer_sensor(opp, legacy_patchable_time, test_time, result):
     """Test Omer Count sensor output."""
     test_time = opp.config.time_zone.localize(test_time)
 
@@ -601,7 +601,7 @@ async def test_omer_sensor.opp, legacy_patchable_time, test_time, result):
         await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test_day_of_the_omer").state == result
@@ -624,7 +624,7 @@ DAFYOMI_TEST_IDS = [
 
 
 @pytest.mark.parametrize(["test_time", "result"], DAFYOMI_PARAMS, ids=DAFYOMI_TEST_IDS)
-async def test_dafyomi_sensor.opp, legacy_patchable_time, test_time, result):
+async def test_dafyomi_sensor(opp, legacy_patchable_time, test_time, result):
     """Test Daf Yomi sensor output."""
     test_time = opp.config.time_zone.localize(test_time)
 
@@ -635,7 +635,7 @@ async def test_dafyomi_sensor.opp, legacy_patchable_time, test_time, result):
         await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert.opp.states.get("sensor.test_daf_yomi").state == result

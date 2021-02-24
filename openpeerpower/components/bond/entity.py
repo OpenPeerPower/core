@@ -163,7 +163,7 @@ class BondEntity(Entity):
             )
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Unsubscribe from BPUP data on remove."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         self._bpup_subs.unsubscribe(self._device_id, self._async_bpup_callback)

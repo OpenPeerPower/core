@@ -16,7 +16,7 @@ from .const import COAP, DATA_CONFIG_ENTRY, DOMAIN
 from .entity import ShellyBlockEntity
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up cover for device."""
     wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
     blocks = [block for block in wrapper.device.blocks if block.type == "roller"]

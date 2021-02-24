@@ -13,7 +13,7 @@ from openpeerpower.const import ATTR_TEMPERATURE, CONF_NAME, TEMP_CELSIUS
 from . import CONF_SERIAL, LIGHTWAVE_LINK
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Find and return LightWave lights."""
     if discovery_info is None:
         return

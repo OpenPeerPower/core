@@ -11,7 +11,7 @@ MAX_PING_ID = 65534
 
 
 @callback
-def async_get_next_ping_id.opp):
+def async_get_next_ping_id(opp):
     """Find the next id to use in the outbound ping.
 
     Must be called in async

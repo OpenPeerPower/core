@@ -48,7 +48,7 @@ EVENTS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a Point's binary sensors based on a config entry."""
 
     async def async_discover_sensor(device_id):
@@ -85,9 +85,9 @@ class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
             self.opp, SIGNAL_WEBHOOK, self._webhook_event
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect dispatcher listener when removed."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         if self._async_unsub_hook_dispatcher_connect:
             self._async_unsub_hook_dispatcher_connect()
 

@@ -64,7 +64,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Epson projector from a config entry."""
     unique_id = config_entry.entry_id
     projector = opp.data[DOMAIN][unique_id]
@@ -80,7 +80,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Epson projector."""
     opp.async_create_task(
         opp.config_entries.flow.async_init(

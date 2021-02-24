@@ -274,18 +274,18 @@ SENSOR_RESPONSE = {
 }
 
 
-async def test_no_sensors.opp, mock_bridge):
+async def test_no_sensors(opp, mock_bridge):
     """Test the update_items function when no sensors are found."""
     mock_bridge.allow_groups = True
     mock_bridge.mock_sensor_responses.append({})
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     assert len.opp.states.async_all()) == 0
 
 
-async def test_sensors_with_multiple_bridges.opp, mock_bridge):
+async def test_sensors_with_multiple_bridges(opp, mock_bridge):
     """Test the update_items function with some sensors."""
-    mock_bridge_2 = create_mock_bridge.opp)
+    mock_bridge_2 = create_mock_bridge(opp)
     mock_bridge_2.mock_sensor_responses.append(
         {
             "1": PRESENCE_SENSOR_3_PRESENT,
@@ -294,8 +294,8 @@ async def test_sensors_with_multiple_bridges.opp, mock_bridge):
         }
     )
     mock_bridge.mock_sensor_responses.append(SENSOR_RESPONSE)
-    await setup_bridge.opp, mock_bridge)
-    await setup_bridge.opp, mock_bridge_2, hostname="mock-bridge-2")
+    await setup_bridge(opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge_2, hostname="mock-bridge-2")
 
     assert len(mock_bridge.mock_requests) == 1
     assert len(mock_bridge_2.mock_requests) == 1
@@ -303,10 +303,10 @@ async def test_sensors_with_multiple_bridges.opp, mock_bridge):
     assert len.opp.states.async_all()) == 10
 
 
-async def test_sensors.opp, mock_bridge):
+async def test_sensors(opp, mock_bridge):
     """Test the update_items function with some sensors."""
     mock_bridge.mock_sensor_responses.append(SENSOR_RESPONSE)
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     # 2 "physical" sensors with 3 virtual sensors each
     assert len.opp.states.async_all()) == 7
@@ -341,22 +341,22 @@ async def test_sensors.opp, mock_bridge):
     assert battery_remote_1.name == "Hue dimmer switch 1 battery level"
 
 
-async def test_unsupported_sensors.opp, mock_bridge):
+async def test_unsupported_sensors(opp, mock_bridge):
     """Test that unsupported sensors don't get added and don't fail."""
     response_with_unsupported = dict(SENSOR_RESPONSE)
     response_with_unsupported["7"] = UNSUPPORTED_SENSOR
     mock_bridge.mock_sensor_responses.append(response_with_unsupported)
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     # 2 "physical" sensors with 3 virtual sensors each + 1 battery sensor
     assert len.opp.states.async_all()) == 7
 
 
-async def test_new_sensor_discovered.opp, mock_bridge):
+async def test_new_sensor_discovered(opp, mock_bridge):
     """Test if 2nd update has a new sensor."""
     mock_bridge.mock_sensor_responses.append(SENSOR_RESPONSE)
 
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     assert len.opp.states.async_all()) == 7
 
@@ -386,11 +386,11 @@ async def test_new_sensor_discovered.opp, mock_bridge):
     assert temperature.state == "17.75"
 
 
-async def test_sensor_removed.opp, mock_bridge):
+async def test_sensor_removed(opp, mock_bridge):
     """Test if 2nd update has removed sensor."""
     mock_bridge.mock_sensor_responses.append(SENSOR_RESPONSE)
 
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     assert len.opp.states.async_all()) == 7
 
@@ -414,31 +414,31 @@ async def test_sensor_removed.opp, mock_bridge):
     assert removed_sensor is None
 
 
-async def test_update_timeout.opp, mock_bridge):
+async def test_update_timeout(opp, mock_bridge):
     """Test bridge marked as not available if timeout error during update."""
     mock_bridge.api.sensors.update = Mock(side_effect=asyncio.TimeoutError)
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 0
     assert len.opp.states.async_all()) == 0
 
 
-async def test_update_unauthorized.opp, mock_bridge):
+async def test_update_unauthorized(opp, mock_bridge):
     """Test bridge marked as not authorized if unauthorized during update."""
     mock_bridge.api.sensors.update = Mock(side_effect=aiohue.Unauthorized)
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 0
     assert len.opp.states.async_all()) == 0
     assert len(mock_bridge.handle_unauthorized_error.mock_calls) == 1
 
 
-async def test_hue_events.opp, mock_bridge):
+async def test_hue_events(opp, mock_bridge):
     """Test that hue remotes fire events when pressed."""
     mock_bridge.mock_sensor_responses.append(SENSOR_RESPONSE)
 
     mock_listener = Mock()
     unsub = opp.bus.async_listen(CONF_HUE_EVENT, mock_listener)
 
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     assert len.opp.states.async_all()) == 7
     assert len(mock_listener.mock_calls) == 0

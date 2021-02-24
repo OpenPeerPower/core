@@ -73,7 +73,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Somfy from a config entry."""
     # Backwards compat
     if "auth_implementation" not in entry.data:
@@ -117,7 +117,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         )
         coordinator.update_interval = SCAN_INTERVAL_ALL_ASSUMED_STATE
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
 
     hubs = [
         device
@@ -142,7 +142,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     opp.data[DOMAIN].pop(API, None)
     await asyncio.gather(

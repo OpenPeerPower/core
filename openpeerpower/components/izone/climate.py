@@ -81,7 +81,7 @@ async def async_setup_entry(
         init_controller(controller)
 
     # connect to register any further components
-    async_dispatcher_connect.opp, DISPATCH_CONTROLLER_DISCOVERED, init_controller)
+    async_dispatcher_connect(opp, DISPATCH_CONTROLLER_DISCOVERED, init_controller)
 
     return True
 

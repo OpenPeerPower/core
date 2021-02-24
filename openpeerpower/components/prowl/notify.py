@@ -22,7 +22,7 @@ _RESOURCE = "https://api.prowlapp.com/publicapi/"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_API_KEY): cv.string})
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Get the Prowl notification service."""
     return ProwlNotificationService.opp, config[CONF_API_KEY])
 

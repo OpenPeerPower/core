@@ -92,7 +92,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-def _get_hue_event_from_device_id.opp, device_id):
+def _get_hue_event_from_device_id(opp, device_id):
     """Resolve hue event from device id."""
     for bridge in.opp.data.get(DOMAIN, {}).values():
         for hue_event in bridge.sensor_manager.current_events.values():
@@ -121,12 +121,12 @@ async def async_validate_trigger_config(opp, config):
     return config
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(config[CONF_DEVICE_ID])
 
-    hue_event = _get_hue_event_from_device_id.opp, device.id)
+    hue_event = _get_hue_event_from_device_id(opp, device.id)
     if hue_event is None:
         raise InvalidDeviceAutomationConfig
 
@@ -146,7 +146,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     )
 
 
-async def async_get_triggers.opp, device_id):
+async def async_get_triggers(opp, device_id):
     """List device triggers.
 
     Make sure device is a supported remote model.

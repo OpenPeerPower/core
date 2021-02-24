@@ -33,7 +33,7 @@ class AugustGateway:
 
     def __init__(self, opp):
         """Init the connection."""
-        self._aiohttp_session = aiohttp_client.async_get_clientsession.opp)
+        self._aiohttp_session = aiohttp_client.async_get_clientsession(opp)
         self._token_refresh_lock = asyncio.Lock()
         self._access_token_cache_file = None
         self.opp = opp

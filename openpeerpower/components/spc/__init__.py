@@ -40,11 +40,11 @@ async def async_setup(opp, config):
     async def async_upate_callback(spc_object):
 
         if isinstance(spc_object, Area):
-            async_dispatcher_send.opp, SIGNAL_UPDATE_ALARM.format(spc_object.id))
+            async_dispatcher_send(opp, SIGNAL_UPDATE_ALARM.format(spc_object.id))
         elif isinstance(spc_object, Zone):
-            async_dispatcher_send.opp, SIGNAL_UPDATE_SENSOR.format(spc_object.id))
+            async_dispatcher_send(opp, SIGNAL_UPDATE_SENSOR.format(spc_object.id))
 
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     spc = SpcWebGateway(
         loop.opp.loop,
@@ -62,12 +62,12 @@ async def async_setup(opp, config):
 
     # add sensor devices for each zone (typically motion/fire/door sensors)
     opp.async_create_task(
-        discovery.async_load_platform.opp, "binary_sensor", DOMAIN, {}, config)
+        discovery.async_load_platform(opp, "binary_sensor", DOMAIN, {}, config)
     )
 
     # create a separate alarm panel for each area
     opp.async_create_task(
-        discovery.async_load_platform.opp, "alarm_control_panel", DOMAIN, {}, config)
+        discovery.async_load_platform(opp, "alarm_control_panel", DOMAIN, {}, config)
     )
 
     # start listening for incoming events over websocket

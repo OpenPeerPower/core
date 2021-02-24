@@ -68,7 +68,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the HP iLO sensors."""
     hostname = config.get(CONF_HOST)
     port = config.get(CONF_PORT)
@@ -120,7 +120,7 @@ class HpIloSensor(Entity):
         self.hp_ilo_data = hp_ilo_data
 
         if sensor_value_template is not None:
-            sensor_value_template.opp = opp
+            sensor_value_template(opp = opp
         self._sensor_value_template = sensor_value_template
 
         self._state = None

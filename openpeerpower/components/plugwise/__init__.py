@@ -12,17 +12,17 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Plugwise components from a config entry."""
     if entry.data.get(CONF_HOST):
-        return await async_setup_entry_gw.opp, entry)
+        return await async_setup_entry_gw(opp, entry)
     # PLACEHOLDER USB entry setup
     return False
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload the Plugwise components."""
     if entry.data.get(CONF_HOST):
-        return await async_unload_entry_gw.opp, entry)
+        return await async_unload_entry_gw(opp, entry)
     # PLACEHOLDER USB entry setup
     return False

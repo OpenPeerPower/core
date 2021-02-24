@@ -79,7 +79,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up ZHA.
 
     Will automatically load components to support devices found on the network.
@@ -115,7 +115,7 @@ async def async_setup_entry.opp, config_entry):
         model=zha_gateway.radio_description,
     )
 
-    api.async_load_api.opp)
+    api.async_load_api(opp)
 
     async def async_zha_shutdown(event):
         """Handle shutdown tasks."""
@@ -123,16 +123,16 @@ async def async_setup_entry.opp, config_entry):
         await zha_data[DATA_ZOP_GATEWAY].async_update_device_storage()
 
     opp.bus.async_listen_once(op_const.EVENT_OPENPEERPOWER_STOP, async_zha_shutdown)
-    asyncio.create_task(async_load_entities.opp))
+    asyncio.create_task(async_load_entities(opp))
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload ZHA config entry."""
     await opp.data[DATA_ZHA][DATA_ZOP_GATEWAY].shutdown()
 
     GROUP_PROBE.cleanup()
-    api.async_unload_api.opp)
+    api.async_unload_api(opp)
 
     dispatchers = opp.data[DATA_ZHA].get(DATA_ZOP_DISPATCHERS, [])
     for unsub_dispatcher in dispatchers:
@@ -144,7 +144,7 @@ async def async_unload_entry.opp, config_entry):
     return True
 
 
-async def async_load_entities.opp: OpenPeerPowerType) -> None:
+async def async_load_entities(opp: OpenPeerPowerType) -> None:
     """Load entities after integration was setup."""
     await opp.data[DATA_ZHA][DATA_ZOP_GATEWAY].async_initialize_devices_and_entities()
     to_setup = opp.data[DATA_ZHA][DATA_ZOP_PLATFORM_LOADED]
@@ -152,7 +152,7 @@ async def async_load_entities.opp: OpenPeerPowerType) -> None:
     for res in results:
         if isinstance(res, Exception):
             _LOGGER.warning("Couldn't setup zha platform: %s", res)
-    async_dispatcher_send.opp, SIGNAL_ADD_ENTITIES)
+    async_dispatcher_send(opp, SIGNAL_ADD_ENTITIES)
 
 
 async def async_migrate_entry(

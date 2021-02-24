@@ -55,7 +55,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the flic platform."""
 
     # Initialize flic client responsible for
@@ -72,7 +72,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
 
     def new_button_callback(address):
         """Set up newly verified button as device in Open Peer Power."""
-        setup_button.opp, config, add_entities, client, address)
+        setup_button(opp, config, add_entities, client, address)
 
     client.on_new_verified_button = new_button_callback
     if discovery:
@@ -87,7 +87,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         """Add entities for already verified buttons."""
         addresses = items["bd_addr_of_verified_buttons"] or []
         for address in addresses:
-            setup_button.opp, config, add_entities, client, address)
+            setup_button(opp, config, add_entities, client, address)
 
     # Get addresses of already verified buttons
     client.get_info(get_info_callback)
@@ -113,7 +113,7 @@ def start_scanning(config, add_entities, client):
     client.add_scan_wizard(scan_wizard)
 
 
-def setup_button.opp, config, add_entities, client, address):
+def setup_button(opp, config, add_entities, client, address):
     """Set up a single button device."""
     timeout = config.get(CONF_TIMEOUT)
     ignored_click_types = config.get(CONF_IGNORED_CLICK_TYPES)

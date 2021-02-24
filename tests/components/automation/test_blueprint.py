@@ -38,7 +38,7 @@ def patch_blueprint(blueprint_path: str, data_path):
         yield
 
 
-async def test_notify_leaving_zone.opp):
+async def test_notify_leaving_zone(opp):
     """Test notifying leaving a zone blueprint."""
 
     def set_person_state(state, extra={}):
@@ -88,7 +88,7 @@ async def test_notify_leaving_zone.opp):
             "type": "notify",
             "device_id": "abcdefgh",
         }
-        message_tpl.opp = opp
+        message_tpl(opp = opp
         assert message_tpl.async_render(variables) == "Paulus has left School"
 
         # Should not increase when we go to another zone
@@ -125,7 +125,7 @@ async def test_notify_leaving_zone.opp):
         assert len(mock_call_action.mock_calls) == 3
 
 
-async def test_motion_light.opp):
+async def test_motion_light(opp):
     """Test motion light blueprint."""
     opp.states.async_set("binary_sensor.kitchen", "off")
 
@@ -149,8 +149,8 @@ async def test_motion_light.opp):
             },
         )
 
-    turn_on_calls = async_mock_service.opp, "light", "turn_on")
-    turn_off_calls = async_mock_service.opp, "light", "turn_off")
+    turn_on_calls = async_mock_service(opp, "light", "turn_on")
+    turn_off_calls = async_mock_service(opp, "light", "turn_off")
 
     # Turn on motion
     opp.states.async_set("binary_sensor.kitchen", "on")
@@ -162,7 +162,7 @@ async def test_motion_light.opp):
     assert len(turn_on_calls) == 1
 
     # Test light doesn't turn off if motion stays
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=200))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=200))
 
     for _ in range(5):
         await asyncio.sleep(0)
@@ -175,7 +175,7 @@ async def test_motion_light.opp):
     for _ in range(5):
         await asyncio.sleep(0)
 
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=120))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=120))
     await opp.async_block_till_done()
 
     assert len(turn_off_calls) == 1

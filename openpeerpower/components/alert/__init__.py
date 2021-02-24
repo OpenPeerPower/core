@@ -66,7 +66,7 @@ CONFIG_SCHEMA = vol.Schema(
 ALERT_SERVICE_SCHEMA = vol.Schema({vol.Required(ATTR_ENTITY_ID): cv.entity_ids})
 
 
-def is_on.opp, entity_id):
+def is_on(opp, entity_id):
     """Return if the alert is firing and not acknowledged."""
     return.opp.states.is_state(entity_id, STATE_ON)
 
@@ -114,7 +114,7 @@ async def async_setup(opp, config):
 
     async def async_handle_alert_service(service_call):
         """Handle calls to alert services."""
-        alert_ids = await service.async_extract_entity_ids.opp, service_call)
+        alert_ids = await service.async_extract_entity_ids(opp, service_call)
 
         for alert_id in alert_ids:
             for alert in entities:
@@ -177,15 +177,15 @@ class Alert(ToggleEntity):
 
         self._message_template = message_template
         if self._message_template is not None:
-            self._message_template.opp = opp
+            self._message_template(opp = opp
 
         self._done_message_template = done_message_template
         if self._done_message_template is not None:
-            self._done_message_template.opp = opp
+            self._done_message_template(opp = opp
 
         self._title_template = title_template
         if self._title_template is not None:
-            self._title_template.opp = opp
+            self._title_template(opp = opp
 
         self._notifiers = notifiers
         self._can_ack = can_ack

@@ -44,12 +44,12 @@ from .util import supports_push
 _LOGGER = logging.getLogger(__name__)
 
 
-def push_registrations.opp):
+def push_registrations(opp):
     """Return a dictionary of push enabled registrations."""
     targets = {}
 
     for webhook_id, entry in.opp.data[DOMAIN][DATA_CONFIG_ENTRIES].items():
-        if not supports_push.opp, webhook_id):
+        if not supports_push(opp, webhook_id):
             continue
 
         targets[entry.data[ATTR_DEVICE_NAME]] = webhook_id
@@ -58,7 +58,7 @@ def push_registrations.opp):
 
 
 # pylint: disable=invalid-name
-def log_rate_limits.opp, device_name, resp, level=logging.INFO):
+def log_rate_limits(opp, device_name, resp, level=logging.INFO):
     """Output rate limit log line at given level."""
     if ATTR_PUSH_RATE_LIMITS not in resp:
         return
@@ -82,9 +82,9 @@ def log_rate_limits.opp, device_name, resp, level=logging.INFO):
     )
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Get the mobile_app notification service."""
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     service = opp.data[DOMAIN][DATA_NOTIFY] = MobileAppNotificationService(session)
     return service
 

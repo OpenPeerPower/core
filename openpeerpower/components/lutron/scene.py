@@ -6,7 +6,7 @@ from openpeerpower.components.scene import Scene
 from . import LUTRON_CONTROLLER, LUTRON_DEVICES, LutronDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Lutron scenes."""
     devs = []
     for scene_data in.opp.data[LUTRON_DEVICES]["scene"]:

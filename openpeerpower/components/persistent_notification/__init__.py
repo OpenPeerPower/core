@@ -84,16 +84,16 @@ def async_create(
         if value is not None
     }
 
-    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_CREATE, data))
+    opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_CREATE, data))
 
 
 @callback
 @bind.opp
-def async_dismiss.opp: OpenPeerPower, notification_id: str) -> None:
+def async_dismiss(opp: OpenPeerPower, notification_id: str) -> None:
     """Remove a notification."""
     data = {ATTR_NOTIFICATION_ID: notification_id}
 
-    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_DISMISS, data))
+    opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_DISMISS, data))
 
 
 async def async_setup_opp: OpenPeerPower, config: dict) -> bool:

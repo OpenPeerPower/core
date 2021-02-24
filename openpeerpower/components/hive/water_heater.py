@@ -32,7 +32,7 @@ OPP_TO_HIVE_STATE = {
 SUPPORT_WATER_HEATER = [STATE_ECO, STATE_ON, STATE_OFF]
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Hive Hotwater."""
     if discovery_info is None:
         return

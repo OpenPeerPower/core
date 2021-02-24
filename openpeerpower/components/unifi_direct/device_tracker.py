@@ -30,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Validate the configuration and return a Unifi direct scanner."""
     scanner = UnifiDeviceScanner(config[DOMAIN])
     if not scanner.connected:

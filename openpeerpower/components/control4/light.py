@@ -43,14 +43,14 @@ async def async_setup_entry(
     async def async_update_data_non_dimmer():
         """Fetch data from Control4 director for non-dimmer lights."""
         try:
-            return await director_update_data.opp, entry, CONTROL4_NON_DIMMER_VAR)
+            return await director_update_data(opp, entry, CONTROL4_NON_DIMMER_VAR)
         except C4Exception as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err
 
     async def async_update_data_dimmer():
         """Fetch data from Control4 director for dimmer lights."""
         try:
-            return await director_update_data.opp, entry, CONTROL4_DIMMER_VAR)
+            return await director_update_data(opp, entry, CONTROL4_DIMMER_VAR)
         except C4Exception as err:
             raise UpdateFailed(f"Error communicating with API: {err}") from err
 
@@ -73,7 +73,7 @@ async def async_setup_entry(
     await non_dimmer_coordinator.async_refresh()
     await dimmer_coordinator.async_refresh()
 
-    items_of_category = await get_items_of_category.opp, entry, CONTROL4_CATEGORY)
+    items_of_category = await get_items_of_category(opp, entry, CONTROL4_CATEGORY)
 
     entity_list = []
     for item in items_of_category:

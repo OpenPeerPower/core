@@ -90,7 +90,7 @@ async def async_setup(opp, config):
 
     domain_config = config.get(DOMAIN, [])
 
-    tasks = [_setup_lte.opp, conf) for conf in domain_config]
+    tasks = [_setup_lte(opp, conf) for conf in domain_config]
     if tasks:
         await asyncio.wait(tasks)
 
@@ -105,7 +105,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def _setup_lte.opp, lte_config, delay=0):
+async def _setup_lte(opp, lte_config, delay=0):
     """Set up a TP-Link LTE modem."""
 
     host = lte_config[CONF_HOST]
@@ -117,9 +117,9 @@ async def _setup_lte.opp, lte_config, delay=0):
     modem_data = ModemData(host, modem)
 
     try:
-        await _login.opp, modem_data, password)
+        await _login(opp, modem_data, password)
     except tp_connected.Error:
-        retry_task = opp.loop.create_task(_retry_login.opp, modem_data, password))
+        retry_task = opp.loop.create_task(_retry_login(opp, modem_data, password))
 
         @callback
         def cleanup_retry(event):
@@ -130,7 +130,7 @@ async def _setup_lte.opp, lte_config, delay=0):
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_retry)
 
 
-async def _login.opp, modem_data, password):
+async def _login(opp, modem_data, password):
     """Log in and complete setup."""
     await modem_data.modem.login(password=password)
     modem_data.connected = True
@@ -143,7 +143,7 @@ async def _login.opp, modem_data, password):
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
 
 
-async def _retry_login.opp, modem_data, password):
+async def _retry_login(opp, modem_data, password):
     """Sleep and retry setup."""
 
     _LOGGER.warning("Could not connect to %s. Will keep trying", modem_data.host)
@@ -155,7 +155,7 @@ async def _retry_login.opp, modem_data, password):
         await asyncio.sleep(delay)
 
         try:
-            await _login.opp, modem_data, password)
+            await _login(opp, modem_data, password)
             _LOGGER.warning("Connected to %s", modem_data.host)
         except tp_connected.Error:
             delay = min(2 * delay, 300)

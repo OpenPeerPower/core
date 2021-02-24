@@ -5,7 +5,7 @@ from .const import DOMAIN, EVENT_ALEXA_SMART_HOME
 
 
 @callback
-def async_describe_events.opp, async_describe_event):
+def async_describe_events(opp, async_describe_event):
     """Describe logbook events."""
 
     @callback

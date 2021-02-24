@@ -166,7 +166,7 @@ def _ws_handle_cloud_errors(handler):
     """Websocket decorator to handle auth errors."""
 
     @wraps(handler)
-    async def error_handler.opp, connection, msg):
+    async def error_handler(opp, connection, msg):
         """Handle exceptions that raise from the wrapped handler."""
         try:
             return await handler.opp, connection, msg)
@@ -311,7 +311,7 @@ class CloudForgotPasswordView(OpenPeerPowerView):
 
 
 @callback
-def websocket_cloud_status.opp, connection, msg):
+def websocket_cloud_status(opp, connection, msg):
     """Handle request for account info.
 
     Async friendly.
@@ -326,7 +326,7 @@ def _require_cloud_login(handler):
     """Websocket decorator that requires cloud to be logged in."""
 
     @wraps(handler)
-    def with_cloud_auth.opp, connection, msg):
+    def with_cloud_auth(opp, connection, msg):
         """Require to be logged into the cloud."""
         cloud = opp.data[DOMAIN]
         if not cloud.is_logged_in:
@@ -344,7 +344,7 @@ def _require_cloud_login(handler):
 
 @_require_cloud_login
 @websocket_api.async_response
-async def websocket_subscription.opp, connection, msg):
+async def websocket_subscription(opp, connection, msg):
     """Handle request for account info."""
 
     cloud = opp.data[DOMAIN]
@@ -393,7 +393,7 @@ async def websocket_subscription.opp, connection, msg):
         ),
     }
 )
-async def websocket_update_prefs.opp, connection, msg):
+async def websocket_update_prefs(opp, connection, msg):
     """Handle request for account info."""
     cloud = opp.data[DOMAIN]
 
@@ -429,7 +429,7 @@ async def websocket_update_prefs.opp, connection, msg):
 @_require_cloud_login
 @websocket_api.async_response
 @_ws_handle_cloud_errors
-async def websocket_hook_create.opp, connection, msg):
+async def websocket_hook_create(opp, connection, msg):
     """Handle request for account info."""
     cloud = opp.data[DOMAIN]
     hook = await cloud.cloudhooks.async_create(msg["webhook_id"], False)
@@ -439,7 +439,7 @@ async def websocket_hook_create.opp, connection, msg):
 @_require_cloud_login
 @websocket_api.async_response
 @_ws_handle_cloud_errors
-async def websocket_hook_delete.opp, connection, msg):
+async def websocket_hook_delete(opp, connection, msg):
     """Handle request for account info."""
     cloud = opp.data[DOMAIN]
     await cloud.cloudhooks.async_delete(msg["webhook_id"])
@@ -480,7 +480,7 @@ def _account_data(cloud):
 @websocket_api.async_response
 @_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/remote/connect"})
-async def websocket_remote_connect.opp, connection, msg):
+async def websocket_remote_connect(opp, connection, msg):
     """Handle request for connect remote."""
     cloud = opp.data[DOMAIN]
     await cloud.client.prefs.async_update(remote_enabled=True)
@@ -493,7 +493,7 @@ async def websocket_remote_connect.opp, connection, msg):
 @websocket_api.async_response
 @_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/remote/disconnect"})
-async def websocket_remote_disconnect.opp, connection, msg):
+async def websocket_remote_disconnect(opp, connection, msg):
     """Handle request for disconnect remote."""
     cloud = opp.data[DOMAIN]
     await cloud.client.prefs.async_update(remote_enabled=False)
@@ -506,11 +506,11 @@ async def websocket_remote_disconnect.opp, connection, msg):
 @websocket_api.async_response
 @_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/google_assistant/entities"})
-async def google_assistant_list.opp, connection, msg):
+async def google_assistant_list(opp, connection, msg):
     """List all google assistant entities."""
     cloud = opp.data[DOMAIN]
     gconf = await cloud.client.get_google_config()
-    entities = google_helpers.async_get_entities.opp, gconf)
+    entities = google_helpers.async_get_entities(opp, gconf)
 
     result = []
 
@@ -540,7 +540,7 @@ async def google_assistant_list.opp, connection, msg):
         vol.Optional("disable_2fa"): bool,
     }
 )
-async def google_assistant_update.opp, connection, msg):
+async def google_assistant_update(opp, connection, msg):
     """Update google assistant config."""
     cloud = opp.data[DOMAIN]
     changes = dict(msg)
@@ -559,11 +559,11 @@ async def google_assistant_update.opp, connection, msg):
 @websocket_api.async_response
 @_ws_handle_cloud_errors
 @websocket_api.websocket_command({"type": "cloud/alexa/entities"})
-async def alexa_list.opp, connection, msg):
+async def alexa_list(opp, connection, msg):
     """List all alexa entities."""
     cloud = opp.data[DOMAIN]
     alexa_config = await cloud.client.get_alexa_config()
-    entities = alexa_entities.async_get_entities.opp, alexa_config)
+    entities = alexa_entities.async_get_entities(opp, alexa_config)
 
     result = []
 
@@ -590,7 +590,7 @@ async def alexa_list.opp, connection, msg):
         vol.Optional("should_expose"): vol.Any(None, bool),
     }
 )
-async def alexa_update.opp, connection, msg):
+async def alexa_update(opp, connection, msg):
     """Update alexa entity config."""
     cloud = opp.data[DOMAIN]
     changes = dict(msg)
@@ -608,7 +608,7 @@ async def alexa_update.opp, connection, msg):
 @_require_cloud_login
 @websocket_api.async_response
 @websocket_api.websocket_command({"type": "cloud/alexa/sync"})
-async def alexa_sync.opp, connection, msg):
+async def alexa_sync(opp, connection, msg):
     """Sync with Alexa."""
     cloud = opp.data[DOMAIN]
     alexa_config = await cloud.client.get_alexa_config()
@@ -632,7 +632,7 @@ async def alexa_sync.opp, connection, msg):
 
 @websocket_api.async_response
 @websocket_api.websocket_command({"type": "cloud/thingtalk/convert", "query": str})
-async def thingtalk_convert.opp, connection, msg):
+async def thingtalk_convert(opp, connection, msg):
     """Convert a query."""
     cloud = opp.data[DOMAIN]
 
@@ -646,7 +646,7 @@ async def thingtalk_convert.opp, connection, msg):
 
 
 @websocket_api.websocket_command({"type": "cloud/tts/info"})
-def tts_info.opp, connection, msg):
+def tts_info(opp, connection, msg):
     """Fetch available tts info."""
     connection.send_result(
         msg["id"], {"languages": [(lang, gender.value) for lang, gender in MAP_VOICE]}

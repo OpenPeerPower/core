@@ -30,7 +30,7 @@ from .const import DOMAIN  # pylint:disable=unused-import
 _LOGGER = logging.getLogger(__name__)
 
 
-async def validate_http.opp: core.OpenPeerPower, data):
+async def validate_http(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect over HTTP."""
 
     host = data[CONF_HOST]
@@ -38,7 +38,7 @@ async def validate_http.opp: core.OpenPeerPower, data):
     username = data.get(CONF_USERNAME)
     password = data.get(CONF_PASSWORD)
     ssl = data.get(CONF_SSL)
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     _LOGGER.debug("Connecting to %s:%s over HTTP", host, port)
     khc = get_kodi_connection(
@@ -53,7 +53,7 @@ async def validate_http.opp: core.OpenPeerPower, data):
         raise InvalidAuth from error
 
 
-async def validate_ws.opp: core.OpenPeerPower, data):
+async def validate_ws(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect over WS."""
     ws_port = data.get(CONF_WS_PORT)
     if not ws_port:
@@ -65,7 +65,7 @@ async def validate_ws.opp: core.OpenPeerPower, data):
     password = data.get(CONF_PASSWORD)
     ssl = data.get(CONF_SSL)
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     _LOGGER.debug("Connecting to %s:%s over WebSocket", host, ws_port)
     kwc = get_kodi_connection(

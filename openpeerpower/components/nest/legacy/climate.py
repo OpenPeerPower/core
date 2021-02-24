@@ -67,18 +67,18 @@ PRESET_AWAY_AND_ECO = "Away and Eco"
 PRESET_MODES = [PRESET_NONE, PRESET_AWAY, PRESET_ECO, PRESET_AWAY_AND_ECO]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Nest thermostat.
 
     No longer in use.
     """
 
 
-async def async_setup_legacy_entry.opp, entry, async_add_entities):
+async def async_setup_legacy_entry(opp, entry, async_add_entities):
     """Set up the Nest climate device based on a config entry."""
     temp_unit = opp.config.units.temperature_unit
 
-    thermostats = await opp.async_add_executor_job.opp.data[DATA_NEST].thermostats)
+    thermostats = await opp.async_add_executor_job(opp.data[DATA_NEST].thermostats)
 
     all_devices = [
         NestThermostat(structure, device, temp_unit)

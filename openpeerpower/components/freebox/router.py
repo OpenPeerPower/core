@@ -190,7 +190,7 @@ class FreeboxRouter:
         return self._api.wifi
 
 
-async def get_api.opp: OpenPeerPowerType, host: str) -> Freepybox:
+async def get_api(opp: OpenPeerPowerType, host: str) -> Freepybox:
     """Get the Freebox API."""
     freebox_path = Path.opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY).path)
     freebox_path.mkdir(exist_ok=True)

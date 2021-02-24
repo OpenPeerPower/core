@@ -21,9 +21,9 @@ DATA_SCHEMA = vol.Schema(
 )
 
 
-async def validate_input.opp, host, port):
+async def validate_input(opp, host, port):
     """Validate the user input allows us to connect."""
-    volumio = Volumio(host, port, async_get_clientsession.opp))
+    volumio = Volumio(host, port, async_get_clientsession(opp))
 
     try:
         return await volumio.get_system_info()

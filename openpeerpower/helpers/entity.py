@@ -42,7 +42,7 @@ SOURCE_PLATFORM_CONFIG = "platform_config"
 
 @callback
 @bind.opp
-def entity_sources.opp: OpenPeerPower) -> Dict[str, Dict[str, str]]:
+def entity_sources(opp: OpenPeerPower) -> Dict[str, Dict[str, str]]:
     """Get the entity sources."""
     return.opp.data.get(DATA_ENTITY_SOURCE, {})
 
@@ -525,7 +525,7 @@ class Entity(ABC):
 
     async def add_to_platform_finish(self) -> None:
         """Finish adding an entity to a platform."""
-        await self.async_internal_added_to.opp()
+        await self.async_internal_added_to(opp()
         await self.async_added_to_opp()
         self.async_write_op_state()
 
@@ -552,8 +552,8 @@ class Entity(ABC):
             while self._on_remove:
                 self._on_remove.pop()()
 
-        await self.async_internal_will_remove_from.opp()
-        await self.async_will_remove_from.opp()
+        await self.async_internal_will_remove_from(opp()
+        await self.async_will_remove_from(opp()
 
         # Check if entry still exists in entity registry (e.g. unloading config entry)
         if (
@@ -572,13 +572,13 @@ class Entity(ABC):
         To be extended by integrations.
         """
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Run when entity will be removed from.opp,
 
         To be extended by integrations.
         """
 
-    async def async_internal_added_to.opp(self) -> None:
+    async def async_internal_added_to(opp(self) -> None:
         """Run when entity about to be added to.opp,
 
         Not to be extended by integrations.
@@ -608,7 +608,7 @@ class Entity(ABC):
                 )
             )
 
-    async def async_internal_will_remove_from.opp(self) -> None:
+    async def async_internal_will_remove_from(opp(self) -> None:
         """Run when entity will be removed from.opp,
 
         Not to be extended by integrations.

@@ -5,7 +5,7 @@ from openpeerpower.components.calendar import CalendarEventDevice, get_date
 import openpeerpower.util.dt as dt_util
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Demo Calendar platform."""
     calendar_data_future = DemoGoogleCalendarDataFuture()
     calendar_data_current = DemoGoogleCalendarDataCurrent()
@@ -85,4 +85,4 @@ class DemoGoogleCalendar(CalendarEventDevice):
 
     async def async_get_events(self, opp, start_date, end_date):
         """Return calendar events within a datetime range."""
-        return await self.data.async_get_events.opp, start_date, end_date)
+        return await self.data.async_get_events(opp, start_date, end_date)

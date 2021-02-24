@@ -29,7 +29,7 @@ DOMAIN = "test_domain"
 PLATFORM = "test_platform"
 
 
-async def test_reload_platform.opp):
+async def test_reload_platform(opp):
     """Test the polling of only updated entities."""
     component_setup = Mock(return_value=True)
 
@@ -38,11 +38,11 @@ async def test_reload_platform.opp):
     async def setup_platform(*args):
         setup_called.append(args)
 
-    mock_integration.opp, MockModule(DOMAIN, setup=component_setup))
-    mock_integration.opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
+    mock_integration(opp, MockModule(DOMAIN, setup=component_setup))
+    mock_integration(opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
 
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
-    mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
+    mock_entity_platform(opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
@@ -53,7 +53,7 @@ async def test_reload_platform.opp):
     assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
     assert len(setup_called) == 1
 
-    platform = async_get_platform_without_config_entry.opp, PLATFORM, DOMAIN)
+    platform = async_get_platform_without_config_entry(opp, PLATFORM, DOMAIN)
     assert platform.platform_name == PLATFORM
     assert platform.domain == DOMAIN
 
@@ -63,17 +63,17 @@ async def test_reload_platform.opp):
         "helpers/reload_configuration.yaml",
     )
     with patch.object(config, "YAML_CONFIG_FILE", yaml_path):
-        await async_reload_integration_platforms.opp, PLATFORM, [DOMAIN])
+        await async_reload_integration_platforms(opp, PLATFORM, [DOMAIN])
 
     assert len(setup_called) == 2
 
-    existing_platforms = async_get_platforms.opp, PLATFORM)
+    existing_platforms = async_get_platforms(opp, PLATFORM)
     for existing_platform in existing_platforms:
         existing_platform.config_entry = "abc"
-    assert not async_get_platform_without_config_entry.opp, PLATFORM, DOMAIN)
+    assert not async_get_platform_without_config_entry(opp, PLATFORM, DOMAIN)
 
 
-async def test_setup_reload_service.opp):
+async def test_setup_reload_service(opp):
     """Test setting up a reload service."""
     component_setup = Mock(return_value=True)
 
@@ -82,11 +82,11 @@ async def test_setup_reload_service.opp):
     async def setup_platform(*args):
         setup_called.append(args)
 
-    mock_integration.opp, MockModule(DOMAIN, setup=component_setup))
-    mock_integration.opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
+    mock_integration(opp, MockModule(DOMAIN, setup=component_setup))
+    mock_integration(opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
 
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
-    mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
+    mock_entity_platform(opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
@@ -97,7 +97,7 @@ async def test_setup_reload_service.opp):
     assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
     assert len(setup_called) == 1
 
-    await async_setup_reload_service.opp, PLATFORM, [DOMAIN])
+    await async_setup_reload_service(opp, PLATFORM, [DOMAIN])
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -116,7 +116,7 @@ async def test_setup_reload_service.opp):
     assert len(setup_called) == 2
 
 
-async def test_setup_reload_service_when_async_process_component_config_fails.opp):
+async def test_setup_reload_service_when_async_process_component_config_fails(opp):
     """Test setting up a reload service with the config processing failing."""
     component_setup = Mock(return_value=True)
 
@@ -125,11 +125,11 @@ async def test_setup_reload_service_when_async_process_component_config_fails.op
     async def setup_platform(*args):
         setup_called.append(args)
 
-    mock_integration.opp, MockModule(DOMAIN, setup=component_setup))
-    mock_integration.opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
+    mock_integration(opp, MockModule(DOMAIN, setup=component_setup))
+    mock_integration(opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
 
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
-    mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
+    mock_entity_platform(opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
@@ -140,7 +140,7 @@ async def test_setup_reload_service_when_async_process_component_config_fails.op
     assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
     assert len(setup_called) == 1
 
-    await async_setup_reload_service.opp, PLATFORM, [DOMAIN])
+    await async_setup_reload_service(opp, PLATFORM, [DOMAIN])
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -176,14 +176,14 @@ async def test_setup_reload_service_with_platform_that_provides_async_reset_plat
     async def async_reset_platform(*args):
         async_reset_platform_called.append(args)
 
-    mock_integration.opp, MockModule(DOMAIN, async_setup=component_setup))
-    integration = await async_get_integration.opp, DOMAIN)
+    mock_integration(opp, MockModule(DOMAIN, async_setup=component_setup))
+    integration = await async_get_integration(opp, DOMAIN)
     integration.get_component().async_reset_platform = async_reset_platform
 
-    mock_integration.opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
+    mock_integration(opp, MockModule(PLATFORM, dependencies=[DOMAIN]))
 
     mock_platform = MockPlatform(async_setup_platform=setup_platform)
-    mock_entity_platform.opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
+    mock_entity_platform(opp, f"{DOMAIN}.{PLATFORM}", mock_platform)
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
@@ -194,7 +194,7 @@ async def test_setup_reload_service_with_platform_that_provides_async_reset_plat
     assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
     assert len(setup_called) == 1
 
-    await async_setup_reload_service.opp, PLATFORM, [DOMAIN])
+    await async_setup_reload_service(opp, PLATFORM, [DOMAIN])
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -216,7 +216,7 @@ async def test_setup_reload_service_with_platform_that_provides_async_reset_plat
 
 async def test_async_integration_yaml_config(opp):
     """Test loading yaml config for an integration."""
-    mock_integration.opp, MockModule(DOMAIN))
+    mock_integration(opp, MockModule(DOMAIN))
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -231,7 +231,7 @@ async def test_async_integration_yaml_config(opp):
 
 async def test_async_integration_missing_yaml_config(opp):
     """Test loading missing yaml config for an integration."""
-    mock_integration.opp, MockModule(DOMAIN))
+    mock_integration(opp, MockModule(DOMAIN))
 
     yaml_path = path.join(
         _get_fixtures_base_path(),

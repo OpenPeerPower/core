@@ -73,7 +73,7 @@ def due_in_minutes(timestamp):
     return int(diff.total_seconds() // 60)
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Set up the Rejseplanen transport sensor."""
     name = config[CONF_NAME]
     stop_id = config[CONF_STOP_ID]

@@ -169,7 +169,7 @@ async def async_setup_entry(
     for name, status, _ in.opp_isy_data[ISY994_PROGRAMS][BINARY_SENSOR]:
         devices.append(ISYBinarySensorProgramEntity(name, status))
 
-    await migrate_old_unique_ids.opp, BINARY_SENSOR, devices)
+    await migrate_old_unique_ids(opp, BINARY_SENSOR, devices)
     async_add_entities(devices)
 
 

@@ -13,7 +13,7 @@ from . import REPETIER_API, SENSOR_TYPES, UPDATE_SIGNAL
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the available Repetier Server sensors."""
     if discovery_info is None:
         return

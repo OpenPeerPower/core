@@ -13,12 +13,12 @@ from openpeerpower.helpers.frame import (
 _LOGGER = logging.getLogger(__name__)
 
 
-def install_multiple_zeroconf_catcher.opp_zc) -> None:
+def install_multiple_zeroconf_catcher(opp_zc) -> None:
     """Wrap the Zeroconf class to return the shared instance if multiple instances are detected."""
 
     def new_zeroconf_new(self, *k, **kw):
         _report(
-            "attempted to create another Zeroconf instance. Please use the shared Zeroconf via await openpeerpower.components.zeroconf.async_get_instance.opp)",
+            "attempted to create another Zeroconf instance. Please use the shared Zeroconf via await openpeerpower.components.zeroconf.async_get_instance(opp)",
         )
         return.opp_zc
 

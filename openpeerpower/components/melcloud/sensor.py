@@ -83,7 +83,7 @@ ATW_ZONE_SENSORS = {
 }
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up MELCloud device sensors based on config_entry."""
     mel_devices = opp.data[DOMAIN].get(entry.entry_id)
     async_add_entities(

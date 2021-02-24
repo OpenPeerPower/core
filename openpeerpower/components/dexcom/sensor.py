@@ -5,7 +5,7 @@ from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 from .const import COORDINATOR, DOMAIN, GLUCOSE_TREND_ICON, GLUCOSE_VALUE_ICON, MG_DL
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Dexcom sensors."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]
     username = config_entry.data[CONF_USERNAME]

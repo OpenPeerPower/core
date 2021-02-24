@@ -35,10 +35,10 @@ from . import (
 from tests.common import MockConfigEntry
 
 
-async def test_setup_discovery.opp: OpenPeerPower):
+async def test_setup_discovery(opp: OpenPeerPower):
     """Test setting up Yeelight by discovery."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=CONFIG_ENTRY_DATA)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
@@ -60,7 +60,7 @@ async def test_setup_discovery.opp: OpenPeerPower):
     assert.opp.states.get(ENTITY_LIGHT) is None
 
 
-async def test_setup_import.opp: OpenPeerPower):
+async def test_setup_import(opp: OpenPeerPower):
     """Test import from yaml."""
     mocked_bulb = _mocked_bulb()
     name = "yeelight"
@@ -88,7 +88,7 @@ async def test_setup_import.opp: OpenPeerPower):
     assert.opp.states.get(f"light.{name}_nightlight") is not None
 
 
-async def test_unique_ids_device.opp: OpenPeerPower):
+async def test_unique_ids_device(opp: OpenPeerPower):
     """Test Yeelight unique IDs from yeelight device IDs."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -98,7 +98,7 @@ async def test_unique_ids_device.opp: OpenPeerPower):
         },
         unique_id=ID,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mocked_bulb = _mocked_bulb()
     mocked_bulb.bulb_type = BulbType.WhiteTempMood
@@ -106,14 +106,14 @@ async def test_unique_ids_device.opp: OpenPeerPower):
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    er = await entity_registry.async_get_registry.opp)
+    er = await entity_registry.async_get_registry(opp)
     assert er.async_get(ENTITY_BINARY_SENSOR).unique_id == f"{ID}-nightlight_sensor"
     assert er.async_get(ENTITY_LIGHT).unique_id == ID
     assert er.async_get(ENTITY_NIGHTLIGHT).unique_id == f"{ID}-nightlight"
     assert er.async_get(ENTITY_AMBILIGHT).unique_id == f"{ID}-ambilight"
 
 
-async def test_unique_ids_entry.opp: OpenPeerPower):
+async def test_unique_ids_entry(opp: OpenPeerPower):
     """Test Yeelight unique IDs from entry IDs."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -122,7 +122,7 @@ async def test_unique_ids_entry.opp: OpenPeerPower):
             CONF_NIGHTLIGHT_SWITCH: True,
         },
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mocked_bulb = _mocked_bulb()
     mocked_bulb.bulb_type = BulbType.WhiteTempMood
@@ -131,7 +131,7 @@ async def test_unique_ids_entry.opp: OpenPeerPower):
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    er = await entity_registry.async_get_registry.opp)
+    er = await entity_registry.async_get_registry(opp)
     assert (
         er.async_get(ENTITY_BINARY_SENSOR).unique_id
         == f"{config_entry.entry_id}-nightlight_sensor"
@@ -146,7 +146,7 @@ async def test_unique_ids_entry.opp: OpenPeerPower):
     )
 
 
-async def test_bulb_off_while_adding_in_ha.opp: OpenPeerPower):
+async def test_bulb_off_while_adding_in_ha(opp: OpenPeerPower):
     """Test Yeelight off while adding to ha, for example on HA start."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -156,7 +156,7 @@ async def test_bulb_off_while_adding_in_ha.opp: OpenPeerPower):
         },
         unique_id=ID,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mocked_bulb = _mocked_bulb(True)
     mocked_bulb.bulb_type = BulbType.WhiteTempMood
@@ -170,7 +170,7 @@ async def test_bulb_off_while_adding_in_ha.opp: OpenPeerPower):
     binary_sensor_entity_id = ENTITY_BINARY_SENSOR_TEMPLATE.format(
         IP_ADDRESS.replace(".", "_")
     )
-    er = await entity_registry.async_get_registry.opp)
+    er = await entity_registry.async_get_registry(opp)
     assert er.async_get(binary_sensor_entity_id) is None
 
     type(mocked_bulb).get_capabilities = MagicMock(CAPABILITIES)
@@ -179,5 +179,5 @@ async def test_bulb_off_while_adding_in_ha.opp: OpenPeerPower):
     opp.data[DOMAIN][DATA_CONFIG_ENTRIES][config_entry.entry_id][DATA_DEVICE].update()
     await opp.async_block_till_done()
 
-    er = await entity_registry.async_get_registry.opp)
+    er = await entity_registry.async_get_registry(opp)
     assert er.async_get(binary_sensor_entity_id) is not None

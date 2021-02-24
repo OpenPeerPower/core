@@ -20,7 +20,7 @@ ATTR_PROTECTION_WINDOW_STARTING_UV = "start_uv"
 BINARY_SENSORS = {TYPE_PROTECTION_WINDOW: ("Protection Window", "mdi:sunglasses")}
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up an OpenUV sensor based on a config entry."""
     openuv = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
 

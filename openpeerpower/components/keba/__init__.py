@@ -93,7 +93,7 @@ async def async_setup(opp, config):
     # Load components
     for domain in SUPPORTED_COMPONENTS:
         opp.async_create_task(
-            discovery.async_load_platform.opp, domain, DOMAIN, {}, config)
+            discovery.async_load_platform(opp, domain, DOMAIN, {}, config)
         )
 
     # Start periodic polling of charging station data

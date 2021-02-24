@@ -1059,7 +1059,7 @@ def get_data_manager_by_webhook_id(
         iter(
             [
                 data_manager
-                for data_manager in get_all_data_managers.opp)
+                for data_manager in get_all_data_managers(opp)
                 if data_manager.webhook_config.id == webhook_id
             ]
         ),
@@ -1067,7 +1067,7 @@ def get_data_manager_by_webhook_id(
     )
 
 
-def get_all_data_managers.opp: OpenPeerPower) -> Tuple[DataManager, ...]:
+def get_all_data_managers(opp: OpenPeerPower) -> Tuple[DataManager, ...]:
     """Get all configured data managers."""
     return tuple(
         [
@@ -1078,7 +1078,7 @@ def get_all_data_managers.opp: OpenPeerPower) -> Tuple[DataManager, ...]:
     )
 
 
-def async_remove_data_manager.opp: OpenPeerPower, config_entry: ConfigEntry) -> None:
+def async_remove_data_manager(opp: OpenPeerPower, config_entry: ConfigEntry) -> None:
     """Remove a data manager for a config entry."""
     del.opp.data[const.DOMAIN][config_entry.entry_id][const.DATA_MANAGER]
 
@@ -1090,7 +1090,7 @@ async def async_create_entities(
     platform: str,
 ) -> List[Entity]:
     """Create withings entities from config entry."""
-    data_manager = await async_get_data_manager.opp, entry)
+    data_manager = await async_get_data_manager(opp, entry)
 
     return [
         create_func(data_manager, attribute)

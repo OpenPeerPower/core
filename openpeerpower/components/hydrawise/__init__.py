@@ -99,10 +99,10 @@ def setup(opp, config):
         """Call Hydrawise hub to refresh information."""
         _LOGGER.debug("Updating Hydrawise Hub component")
         opp.data[DATA_HYDRAWISE].data.update_controller_info()
-        dispatcher_send.opp, SIGNAL_UPDATE_HYDRAWISE)
+        dispatcher_send(opp, SIGNAL_UPDATE_HYDRAWISE)
 
     # Call the Hydrawise API to refresh updates
-    track_time_interval.opp, hub_refresh, scan_interval)
+    track_time_interval(opp, hub_refresh, scan_interval)
 
     return True
 

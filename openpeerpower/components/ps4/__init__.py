@@ -56,11 +56,11 @@ async def async_setup(opp, config):
     transport, protocol = await async_create_ddp_endpoint()
     opp.data[PS4_DATA].protocol = protocol
     _LOGGER.debug("PS4 DDP endpoint created: %s, %s", transport, protocol)
-    service_handle.opp)
+    service_handle(opp)
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up PS4 from a config entry."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(config_entry, "media_player")
@@ -68,13 +68,13 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a PS4 config entry."""
     await opp.config_entries.async_forward_entry_unload(entry, "media_player")
     return True
 
 
-async def async_migrate_entry.opp, entry):
+async def async_migrate_entry(opp, entry):
     """Migrate old entry."""
     config_entries = opp.config_entries
     data = entry.data
@@ -108,7 +108,7 @@ async def async_migrate_entry.opp, entry):
     # Migrate Version 2 -> Version 3: Update identifier format.
     if version == 2:
         # Prevent changing entity_id. Updates entity registry.
-        registry = await entity_registry.async_get_registry.opp)
+        registry = await entity_registry.async_get_registry(opp)
 
         for entity_id, e_entry in registry.entities.items():
             if e_entry.config_entry_id == entry.entry_id:
@@ -157,7 +157,7 @@ def format_unique_id(creds, mac_address):
     return f"{mac_address}_{suffix}"
 
 
-def load_games.opp: OpenPeerPowerType, unique_id: str) -> dict:
+def load_games(opp: OpenPeerPowerType, unique_id: str) -> dict:
     """Load games for sources."""
     g_file = opp.config.path(GAMES_FILE.format(unique_id))
     try:
@@ -172,11 +172,11 @@ def load_games.opp: OpenPeerPowerType, unique_id: str) -> dict:
 
     # If file exists
     if os.path.isfile(g_file):
-        games = _reformat_data.opp, games, unique_id)
+        games = _reformat_data(opp, games, unique_id)
     return games
 
 
-def save_games.opp: OpenPeerPowerType, games: dict, unique_id: str):
+def save_games(opp: OpenPeerPowerType, games: dict, unique_id: str):
     """Save games to file."""
     g_file = opp.config.path(GAMES_FILE.format(unique_id))
     try:
@@ -185,7 +185,7 @@ def save_games.opp: OpenPeerPowerType, games: dict, unique_id: str):
         _LOGGER.error("Could not save game list, %s", error)
 
 
-def _reformat_data.opp: OpenPeerPowerType, games: dict, unique_id: str) -> dict:
+def _reformat_data(opp: OpenPeerPowerType, games: dict, unique_id: str) -> dict:
     """Reformat data to correct format."""
     data_reformatted = False
 
@@ -204,11 +204,11 @@ def _reformat_data.opp: OpenPeerPowerType, games: dict, unique_id: str) -> dict:
             _LOGGER.debug("Reformatting media data for item: %s, %s", game, data)
 
     if data_reformatted:
-        save_games.opp, games, unique_id)
+        save_games(opp, games, unique_id)
     return games
 
 
-def service_handle.opp: OpenPeerPowerType):
+def service_handle(opp: OpenPeerPowerType):
     """Handle for services."""
 
     async def async_service_command(call):

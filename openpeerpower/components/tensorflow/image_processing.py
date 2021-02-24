@@ -96,7 +96,7 @@ def get_model_detection_function(model):
     return detect_fn
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the TensorFlow image processing platform."""
     model_config = config[CONF_MODEL]
     model_dir = model_config.get(CONF_MODEL_DIR) or.opp.config.path("tensorflow")

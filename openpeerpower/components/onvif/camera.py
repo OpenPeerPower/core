@@ -41,7 +41,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the ONVIF camera video stream."""
     platform = entity_platform.current_platform.get()
 

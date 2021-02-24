@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up MoldIndicator sensor."""
     name = config.get(CONF_NAME, DEFAULT_NAME)
     indoor_temp_sensor = config.get(CONF_INDOOR_TEMP)

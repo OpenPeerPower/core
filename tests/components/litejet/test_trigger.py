@@ -24,7 +24,7 @@ ENTITY_OTHER_SWITCH_NUMBER = 2
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 def get_switch_name(number):
@@ -33,7 +33,7 @@ def get_switch_name(number):
 
 
 @pytest.fixture
-def mock_lj.opp):
+def mock_lj(opp):
     """Initialize components."""
     with mock.patch("openpeerpower.components.litejet.LiteJet") as mock_pylitejet:
         mock_lj = mock_pylitejet.return_value
@@ -57,7 +57,7 @@ def mock_lj.opp):
 
         config = {"litejet": {"port": "/dev/serial/by-id/mock-litejet"}}
         assert.opp.loop.run_until_complete(
-            setup.async_setup_component.opp, litejet.DOMAIN, config)
+            setup.async_setup_component(opp, litejet.DOMAIN, config)
         )
 
         mock_lj.start_time = dt_util.utcnow()
@@ -65,7 +65,7 @@ def mock_lj.opp):
         return mock_lj
 
 
-async def simulate_press.opp, mock_lj, number):
+async def simulate_press(opp, mock_lj, number):
     """Test to simulate a press."""
     _LOGGER.info("*** simulate press of %d", number)
     callback = mock_lj.switch_pressed_callbacks.get(number)
@@ -78,7 +78,7 @@ async def simulate_press.opp, mock_lj, number):
         await opp.async_block_till_done()
 
 
-async def simulate_release.opp, mock_lj, number):
+async def simulate_release(opp, mock_lj, number):
     """Test to simulate releasing."""
     _LOGGER.info("*** simulate release of %d", number)
     callback = mock_lj.switch_released_callbacks.get(number)
@@ -91,7 +91,7 @@ async def simulate_release.opp, mock_lj, number):
         await opp.async_block_till_done()
 
 
-async def simulate_time.opp, mock_lj, delta):
+async def simulate_time(opp, mock_lj, delta):
     """Test to simulate time."""
     _LOGGER.info(
         "*** simulate time change by %s: %s", delta, mock_lj.start_time + delta
@@ -102,12 +102,12 @@ async def simulate_time.opp, mock_lj, delta):
         return_value=mock_lj.start_time + delta,
     ):
         _LOGGER.info("now=%s", dt_util.utcnow())
-        async_fire_time_changed.opp, mock_lj.start_time + delta)
+        async_fire_time_changed(opp, mock_lj.start_time + delta)
         await opp.async_block_till_done()
         _LOGGER.info("done with now=%s", dt_util.utcnow())
 
 
-async def setup_automation.opp, trigger):
+async def setup_automation(opp, trigger):
     """Test setting up the automation."""
     assert await setup.async_setup_component(
         opp,
@@ -125,19 +125,19 @@ async def setup_automation.opp, trigger):
     await opp.async_block_till_done()
 
 
-async def test_simple.opp, calls, mock_lj):
+async def test_simple(opp, calls, mock_lj):
     """Test the simplest form of a LiteJet trigger."""
     await setup_automation(
         opp. {"platform": "litejet", "number": ENTITY_OTHER_SWITCH_NUMBER}
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
 
     assert len(calls) == 1
 
 
-async def test_held_more_than_short.opp, calls, mock_lj):
+async def test_held_more_than_short(opp, calls, mock_lj):
     """Test a too short hold."""
     await setup_automation(
         opp,
@@ -148,13 +148,13 @@ async def test_held_more_than_short.opp, calls, mock_lj):
         },
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
-    await simulate_time.opp, mock_lj, timedelta(seconds=0.1))
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_time(opp, mock_lj, timedelta(seconds=0.1))
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0
 
 
-async def test_held_more_than_long.opp, calls, mock_lj):
+async def test_held_more_than_long(opp, calls, mock_lj):
     """Test a hold that is long enough."""
     await setup_automation(
         opp,
@@ -165,15 +165,15 @@ async def test_held_more_than_long.opp, calls, mock_lj):
         },
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0
-    await simulate_time.opp, mock_lj, timedelta(seconds=0.3))
+    await simulate_time(opp, mock_lj, timedelta(seconds=0.3))
     assert len(calls) == 1
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 1
 
 
-async def test_held_less_than_short.opp, calls, mock_lj):
+async def test_held_less_than_short(opp, calls, mock_lj):
     """Test a hold that is short enough."""
     await setup_automation(
         opp,
@@ -184,14 +184,14 @@ async def test_held_less_than_short.opp, calls, mock_lj):
         },
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
-    await simulate_time.opp, mock_lj, timedelta(seconds=0.1))
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_time(opp, mock_lj, timedelta(seconds=0.1))
     assert len(calls) == 0
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 1
 
 
-async def test_held_less_than_long.opp, calls, mock_lj):
+async def test_held_less_than_long(opp, calls, mock_lj):
     """Test a hold that is too long."""
     await setup_automation(
         opp,
@@ -202,15 +202,15 @@ async def test_held_less_than_long.opp, calls, mock_lj):
         },
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0
-    await simulate_time.opp, mock_lj, timedelta(seconds=0.3))
+    await simulate_time(opp, mock_lj, timedelta(seconds=0.3))
     assert len(calls) == 0
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0
 
 
-async def test_held_in_range_short.opp, calls, mock_lj):
+async def test_held_in_range_short(opp, calls, mock_lj):
     """Test an in-range trigger with a too short hold."""
     await setup_automation(
         opp,
@@ -222,13 +222,13 @@ async def test_held_in_range_short.opp, calls, mock_lj):
         },
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
-    await simulate_time.opp, mock_lj, timedelta(seconds=0.05))
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_time(opp, mock_lj, timedelta(seconds=0.05))
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0
 
 
-async def test_held_in_range_just_right.opp, calls, mock_lj):
+async def test_held_in_range_just_right(opp, calls, mock_lj):
     """Test an in-range trigger with a just right hold."""
     await setup_automation(
         opp,
@@ -240,15 +240,15 @@ async def test_held_in_range_just_right.opp, calls, mock_lj):
         },
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0
-    await simulate_time.opp, mock_lj, timedelta(seconds=0.2))
+    await simulate_time(opp, mock_lj, timedelta(seconds=0.2))
     assert len(calls) == 0
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 1
 
 
-async def test_held_in_range_long.opp, calls, mock_lj):
+async def test_held_in_range_long(opp, calls, mock_lj):
     """Test an in-range trigger with a too long hold."""
     await setup_automation(
         opp,
@@ -260,9 +260,9 @@ async def test_held_in_range_long.opp, calls, mock_lj):
         },
     )
 
-    await simulate_press.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0
-    await simulate_time.opp, mock_lj, timedelta(seconds=0.4))
+    await simulate_time(opp, mock_lj, timedelta(seconds=0.4))
     assert len(calls) == 0
-    await simulate_release.opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
+    await simulate_release(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 0

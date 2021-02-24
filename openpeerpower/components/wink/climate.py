@@ -68,7 +68,7 @@ SUPPORT_FAN_AC = [FAN_HIGH, FAN_LOW, FAN_MEDIUM]
 SUPPORT_PRESET_AC = [PRESET_NONE, PRESET_ECO]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink climate devices."""
     for climate in pywink.get_thermostats():
         _id = climate.object_id() + climate.name()

@@ -5,7 +5,7 @@ from openpeerpower.helpers.entity import Entity
 from . import DATA_SABNZBD, SENSOR_TYPES, SIGNAL_SABNZBD_UPDATED
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the SABnzbd sensors."""
     if discovery_info is None:
         return

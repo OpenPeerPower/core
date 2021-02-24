@@ -24,7 +24,7 @@ SENSORS = {
 }
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up a sensor for an Amcrest IP Camera."""
     if discovery_info is None:
         return
@@ -130,6 +130,6 @@ class AmcrestSensor(Entity):
             self.async_on_demand_update,
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect from update signal."""
         self._unsub_dispatcher()

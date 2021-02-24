@@ -6,7 +6,7 @@ from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.util import dt as dt_util
 
 
-def test_json_encoder.opp):
+def test_json_encoder(opp):
     """Test the JSON Encoder."""
     op_json_enc = JSONEncoder()
     state = core.State("test.test", "hello")

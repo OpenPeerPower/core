@@ -46,15 +46,15 @@ COORDINATOR_AWARE_PLATFORMS = [SENSOR_DOMAIN, BINARY_SENSOR_DOMAIN]
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the rest platforms."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
-    _async_setup_shared_data.opp)
+    _async_setup_shared_data(opp)
 
     async def reload_service_handler(service):
         """Remove all user-defined groups and load new ones from config."""
         conf = await component.async_prepare_reload()
         if conf is None:
             return
-        await async_reload_integration_platforms.opp, DOMAIN, PLATFORMS)
-        _async_setup_shared_data.opp)
+        await async_reload_integration_platforms(opp, DOMAIN, PLATFORMS)
+        _async_setup_shared_data(opp)
         await _async_process_config(opp, conf)
 
     opp.services.async_register(
@@ -65,7 +65,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 
 @callback
-def _async_setup_shared_data.opp: OpenPeerPower):
+def _async_setup_shared_data(opp: OpenPeerPower):
     """Create shared data for platform config and rest coordinators."""
     opp.data[DOMAIN] = {platform: {} for platform in COORDINATOR_AWARE_PLATFORMS}
 
@@ -112,7 +112,7 @@ async def _async_process_config(opp, config) -> bool:
     return True
 
 
-async def async_get_config_and_coordinator.opp, platform_domain, discovery_info):
+async def async_get_config_and_coordinator(opp, platform_domain, discovery_info):
     """Get the config and coordinator for the platform from discovery."""
     shared_data = opp.data[DOMAIN][discovery_info[REST_IDX]]
     conf = opp.data[DOMAIN][platform_domain][discovery_info[PLATFORM_IDX]]
@@ -123,7 +123,7 @@ async def async_get_config_and_coordinator.opp, platform_domain, discovery_info)
     return conf, coordinator, rest
 
 
-def _wrap_rest_in_coordinator.opp, rest, resource_template, update_interval):
+def _wrap_rest_in_coordinator(opp, rest, resource_template, update_interval):
     """Wrap a DataUpdateCoordinator around the rest object."""
     if resource_template:
 
@@ -158,7 +158,7 @@ def create_rest_data_from_config(opp, config):
     timeout = config.get(CONF_TIMEOUT)
 
     if resource_template is not None:
-        resource_template.opp = opp
+        resource_template(opp = opp
         resource = resource_template.async_render(parse_result=False)
 
     if username and password:

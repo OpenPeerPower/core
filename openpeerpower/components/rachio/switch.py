@@ -88,7 +88,7 @@ START_MULTIPLE_ZONES_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Rachio switches."""
     zone_entities = []
     has_flex_sched = False
@@ -148,7 +148,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         )
 
 
-def _create_entities.opp, config_entry):
+def _create_entities(opp, config_entry):
     entities = []
     person = opp.data[DOMAIN_RACHIO][config_entry.entry_id]
     # Fetch the schedule once at startup

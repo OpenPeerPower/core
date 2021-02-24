@@ -82,18 +82,18 @@ CONFIG_ATTRIBUTES = {
 
 
 @pytest.fixture
-async def setup_comp.opp, config_count):
+async def setup_comp(opp, config_count):
     """Set up group cover component."""
     config, count = config_count
     with assert_setup_component(count, DOMAIN):
-        await async_setup_component.opp, DOMAIN, config)
+        await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
     await opp.async_start()
     await opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ATTRIBUTES, 1)])
-async def test_attributes.opp, setup_comp):
+async def test_attributes(opp, setup_comp):
     """Test handling of state attributes."""
     state = opp.states.get(COVER_GROUP)
     assert state.state == STATE_CLOSED
@@ -222,7 +222,7 @@ async def test_attributes.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_TILT_ONLY, 2)])
-async def test_cover_that_only_supports_tilt_removed.opp, setup_comp):
+async def test_cover_that_only_supports_tilt_removed(opp, setup_comp):
     """Test removing a cover that support tilt."""
     opp.states.async_set(
         DEMO_COVER_TILT,
@@ -250,7 +250,7 @@ async def test_cover_that_only_supports_tilt_removed.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_open_covers.opp, setup_comp):
+async def test_open_covers(opp, setup_comp):
     """Test open cover function."""
     await opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
@@ -258,7 +258,7 @@ async def test_open_covers.opp, setup_comp):
 
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -271,7 +271,7 @@ async def test_open_covers.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_close_covers.opp, setup_comp):
+async def test_close_covers(opp, setup_comp):
     """Test close cover function."""
     await opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
@@ -279,7 +279,7 @@ async def test_close_covers.opp, setup_comp):
 
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -292,7 +292,7 @@ async def test_close_covers.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_toggle_covers.opp, setup_comp):
+async def test_toggle_covers(opp, setup_comp):
     """Test toggle cover function."""
     # Start covers in open state
     await opp.services.async_call(
@@ -300,7 +300,7 @@ async def test_toggle_covers.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -312,7 +312,7 @@ async def test_toggle_covers.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -329,7 +329,7 @@ async def test_toggle_covers.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -342,20 +342,20 @@ async def test_toggle_covers.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_stop_covers.opp, setup_comp):
+async def test_stop_covers(opp, setup_comp):
     """Test stop cover function."""
     await opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     await opp.services.async_call(
         DOMAIN, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -368,7 +368,7 @@ async def test_stop_covers.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_set_cover_position.opp, setup_comp):
+async def test_set_cover_position(opp, setup_comp):
     """Test set cover position function."""
     await opp.services.async_call(
         DOMAIN,
@@ -378,7 +378,7 @@ async def test_set_cover_position.opp, setup_comp):
     )
     for _ in range(4):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -391,14 +391,14 @@ async def test_set_cover_position.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_open_tilts.opp, setup_comp):
+async def test_open_tilts(opp, setup_comp):
     """Test open tilt function."""
     await opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(5):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -411,14 +411,14 @@ async def test_open_tilts.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_close_tilts.opp, setup_comp):
+async def test_close_tilts(opp, setup_comp):
     """Test close tilt function."""
     await opp.services.async_call(
         DOMAIN, SERVICE_CLOSE_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     for _ in range(5):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -429,7 +429,7 @@ async def test_close_tilts.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_toggle_tilts.opp, setup_comp):
+async def test_toggle_tilts(opp, setup_comp):
     """Test toggle tilt function."""
     # Start tilted open
     await opp.services.async_call(
@@ -437,7 +437,7 @@ async def test_toggle_tilts.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -454,7 +454,7 @@ async def test_toggle_tilts.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -469,7 +469,7 @@ async def test_toggle_tilts.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -482,20 +482,20 @@ async def test_toggle_tilts.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_stop_tilts.opp, setup_comp):
+async def test_stop_tilts(opp, setup_comp):
     """Test stop tilts function."""
     await opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     await opp.services.async_call(
         DOMAIN, SERVICE_STOP_COVER_TILT, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -506,7 +506,7 @@ async def test_stop_tilts.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
-async def test_set_tilt_positions.opp, setup_comp):
+async def test_set_tilt_positions(opp, setup_comp):
     """Test set tilt position function."""
     await opp.services.async_call(
         DOMAIN,
@@ -516,7 +516,7 @@ async def test_set_tilt_positions.opp, setup_comp):
     )
     for _ in range(3):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(COVER_GROUP)
@@ -527,7 +527,7 @@ async def test_set_tilt_positions.opp, setup_comp):
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_POS, 2)])
-async def test_is_opening_closing.opp, setup_comp):
+async def test_is_opening_closing(opp, setup_comp):
     """Test is_opening property."""
     await opp.services.async_call(
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
@@ -540,7 +540,7 @@ async def test_is_opening_closing.opp, setup_comp):
 
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     await opp.services.async_call(

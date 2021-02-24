@@ -11,9 +11,9 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_config_yaml_host_not_imported.opp):
+async def test_config_yaml_host_not_imported(opp):
     """Test that we don't import a configured host."""
-    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to.opp.opp)
+    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.tradfri.load_json", return_value={}
@@ -26,7 +26,7 @@ async def test_config_yaml_host_not_imported.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_config_yaml_host_imported.opp):
+async def test_config_yaml_host_imported(opp):
     """Test that we import a configured host."""
     with patch("openpeerpower.components.tradfri.load_json", return_value={}):
         assert await async_setup_component(
@@ -40,15 +40,15 @@ async def test_config_yaml_host_imported.opp):
     assert progress[0]["context"] == {"source": "import"}
 
 
-async def test_config_json_host_not_imported.opp):
+async def test_config_json_host_not_imported(opp):
     """Test that we don't import a configured host."""
-    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to.opp.opp)
+    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.tradfri.load_json",
         return_value={"mock-host": {"key": "some-info"}},
     ), patch.object.opp.config_entries.flow, "async_init") as mock_init:
-        assert await async_setup_component.opp, "tradfri", {"tradfri": {}})
+        assert await async_setup_component(opp, "tradfri", {"tradfri": {}})
         await opp.async_block_till_done()
 
     assert len(mock_init.mock_calls) == 0
@@ -69,7 +69,7 @@ async def test_config_json_host_imported(
         "openpeerpower.components.tradfri.load_json",
         return_value={"mock-host": {"key": "some-info"}},
     ):
-        assert await async_setup_component.opp, "tradfri", {"tradfri": {}})
+        assert await async_setup_component(opp, "tradfri", {"tradfri": {}})
         await opp.async_block_till_done()
 
     config_entry = mock_entry_setup.mock_calls[0][1][1]
@@ -78,7 +78,7 @@ async def test_config_json_host_imported(
     assert config_entry.title == "mock-host"
 
 
-async def test_entry_setup_unload.opp, api_factory, gateway_id):
+async def test_entry_setup_unload(opp, api_factory, gateway_id):
     """Test config entry setup and unload."""
     entry = MockConfigEntry(
         domain=tradfri.DOMAIN,
@@ -91,7 +91,7 @@ async def test_entry_setup_unload.opp, api_factory, gateway_id):
         },
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch.object(
         opp.config_entries, "async_forward_entry_setup", return_value=True
     ) as setup:
@@ -99,7 +99,7 @@ async def test_entry_setup_unload.opp, api_factory, gateway_id):
         await opp.async_block_till_done()
         assert setup.call_count == len(tradfri.PLATFORMS)
 
-    dev_reg = await async_get_device_registry.opp)
+    dev_reg = await async_get_device_registry(opp)
     dev_entries = async_entries_for_config_entry(dev_reg, entry.entry_id)
 
     assert dev_entries

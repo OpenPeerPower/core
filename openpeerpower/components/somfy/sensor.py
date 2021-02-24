@@ -11,7 +11,7 @@ from .const import API, COORDINATOR, DOMAIN
 SUPPORTED_CATEGORIES = {Category.HVAC.value}
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Somfy sensor platform."""
     domain_data = opp.data[DOMAIN]
     coordinator = domain_data[COORDINATOR]

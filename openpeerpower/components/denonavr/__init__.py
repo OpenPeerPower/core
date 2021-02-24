@@ -44,7 +44,7 @@ def setup_opp: core.OpenPeerPower, config: dict):
         method = SERVICE_TO_METHOD.get(service.service)
         data = service.data.copy()
         data["method"] = method["method"]
-        dispatcher_send.opp, DOMAIN, data)
+        dispatcher_send(opp, DOMAIN, data)
 
     for service in SERVICE_TO_METHOD:
         schema = SERVICE_TO_METHOD[service]["schema"]
@@ -97,7 +97,7 @@ async def async_unload_entry(
     opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     # Remove zone2 and zone3 entities if needed
-    entity_registry = await er.async_get_registry.opp)
+    entity_registry = await er.async_get_registry(opp)
     entries = er.async_entries_for_config_entry(entity_registry, config_entry.entry_id)
     zone2_id = f"{config_entry.unique_id}-Zone2"
     zone3_id = f"{config_entry.unique_id}-Zone3"

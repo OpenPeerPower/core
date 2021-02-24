@@ -208,7 +208,7 @@ async def async_get_conditions(
 ) -> List[Dict[str, str]]:
     """List device conditions."""
     conditions: List[Dict[str, str]] = []
-    entity_registry = await async_get_registry.opp)
+    entity_registry = await async_get_registry(opp)
     entries = [
         entry
         for entry in async_entries_for_device(entity_registry, device_id)
@@ -262,7 +262,7 @@ def async_condition_from_config(
     return condition.state_from_config(state_config)
 
 
-async def async_get_condition_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_condition_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List condition capabilities."""
     return {
         "extra_fields": vol.Schema(

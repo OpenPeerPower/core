@@ -186,7 +186,7 @@ class Itunes:
         return self._request("PUT", path, {"level": level})
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the iTunes platform."""
     add_entities(
         [

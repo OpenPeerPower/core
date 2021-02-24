@@ -21,7 +21,7 @@ from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 from .const import COORDINATOR, DEVICE_ID, DOMAIN, PARAMETERS, STATES
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up all entries for Wolf Platform."""
 
     coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]

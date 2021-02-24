@@ -58,13 +58,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the devices associated with the account."""
     token = config.get(CONF_TOKEN)
     username = config.get(CONF_USERNAME)
 
     client = FoobotClient(
-        token, username, async_get_clientsession.opp), timeout=TIMEOUT
+        token, username, async_get_clientsession(opp), timeout=TIMEOUT
     )
     dev = []
     try:

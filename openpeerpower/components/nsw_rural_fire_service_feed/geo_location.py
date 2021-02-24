@@ -107,7 +107,7 @@ class NswRuralFireServiceFeedEntityManager:
     ):
         """Initialize the Feed Entity Manager."""
         self.opp = opp
-        websession = aiohttp_client.async_get_clientsession.opp)
+        websession = aiohttp_client.async_get_clientsession(opp)
         self._feed_manager = NswRuralFireServiceIncidentsFeedManager(
             websession,
             self._generate_entity,
@@ -202,7 +202,7 @@ class NswRuralFireServiceLocationEvent(GeolocationEvent):
             self._update_callback,
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Call when entity will be removed from.opp."""
         self._remove_signal_delete()
         self._remove_signal_update()

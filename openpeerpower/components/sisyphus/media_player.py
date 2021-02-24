@@ -40,7 +40,7 @@ SUPPORTED_FEATURES = (
 )
 
 
-async def async_setup_platform.opp, config, add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up a media player entity for a Sisyphus table."""
     host = discovery_info[CONF_HOST]
     try:

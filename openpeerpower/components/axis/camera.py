@@ -22,7 +22,7 @@ from .axis_base import AxisEntityBase
 from .const import DEFAULT_STREAM_PROFILE, DEFAULT_VIDEO_SOURCE, DOMAIN as AXIS_DOMAIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Axis camera video stream."""
     filter_urllib3_logging()
 

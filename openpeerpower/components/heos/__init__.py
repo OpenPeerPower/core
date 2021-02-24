@@ -59,7 +59,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Initialize config entry which represents the HEOS controller."""
     # For backwards compat
     if entry.unique_id is None:
@@ -105,7 +105,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     await controller_manager.connect_listeners()
 
     source_manager = SourceManager(favorites, inputs)
-    source_manager.connect_update.opp, controller)
+    source_manager.connect_update(opp, controller)
 
     opp.data[DOMAIN] = {
         DATA_CONTROLLER_MANAGER: controller_manager,
@@ -121,7 +121,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     controller_manager = opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
     await controller_manager.disconnect()

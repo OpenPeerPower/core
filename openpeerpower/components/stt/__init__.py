@@ -43,12 +43,12 @@ async def async_setup_opp: OpenPeerPowerType, config):
         if p_config is None:
             p_config = {}
 
-        platform = await async_prepare_setup_platform.opp, config, DOMAIN, p_type)
+        platform = await async_prepare_setup_platform(opp, config, DOMAIN, p_type)
         if platform is None:
             return
 
         try:
-            provider = await platform.async_get_engine.opp, p_config, discovery_info)
+            provider = await platform.async_get_engine(opp, p_config, discovery_info)
             if provider is None:
                 _LOGGER.error("Error setting up platform %s", p_type)
                 return
@@ -74,7 +74,7 @@ async def async_setup_opp: OpenPeerPowerType, config):
         """Handle for discovered platform."""
         await async_setup_platform(platform, discovery_info=info)
 
-    discovery.async_listen_platform.opp, DOMAIN, async_platform_discovered)
+    discovery.async_listen_platform(opp, DOMAIN, async_platform_discovered)
 
     opp.http.register_view(SpeechToTextView(providers))
     return True

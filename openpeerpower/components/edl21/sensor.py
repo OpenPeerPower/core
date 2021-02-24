@@ -36,7 +36,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the EDL21 sensor."""
     opp.data[DOMAIN] = EDL21.opp, config, async_add_entities)
     await opp.data[DOMAIN].connect()
@@ -238,7 +238,7 @@ class EDL21Entity(Entity):
             self.opp, SIGNAL_EDL21_TELEGRAM, handle_telegram
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Run when entity will be removed from.opp."""
         if self._async_remove_dispatcher:
             self._async_remove_dispatcher()

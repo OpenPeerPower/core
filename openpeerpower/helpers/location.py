@@ -85,7 +85,7 @@ def find_coordinates(
     nested_entity = opp.states.get(entity_state.state)
     if nested_entity is not None:
         _LOGGER.debug("Resolving nested entity_id: %s", entity_state.state)
-        return find_coordinates.opp, entity_state.state, recursion_history)
+        return find_coordinates(opp, entity_state.state, recursion_history)
 
     # Check if state is valid coordinate set
     try:

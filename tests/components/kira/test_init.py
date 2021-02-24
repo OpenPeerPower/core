@@ -52,13 +52,13 @@ def work_dir():
 
 async def test_kira_empty_config(opp):
     """Kira component should load a default sensor."""
-    await async_setup_component.opp, kira.DOMAIN, {kira.DOMAIN: {}})
+    await async_setup_component(opp, kira.DOMAIN, {kira.DOMAIN: {}})
     assert len.opp.data[kira.DOMAIN]["sensor"]) == 1
 
 
 async def test_kira_setup_opp):
     """Ensure platforms are loaded correctly."""
-    await async_setup_component.opp, kira.DOMAIN, TEST_CONFIG)
+    await async_setup_component(opp, kira.DOMAIN, TEST_CONFIG)
     assert len.opp.data[kira.DOMAIN]["sensor"]) == 2
     assert sorted.opp.data[kira.DOMAIN]["sensor"].keys()) == [
         "kira",

@@ -80,7 +80,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the ipma platform.
 
     Deprecated.
@@ -94,20 +94,20 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         _LOGGER.error("Latitude or longitude not set in Open Peer Power config")
         return
 
-    api = await async_get_api.opp)
-    location = await async_get_location.opp, api, latitude, longitude)
+    api = await async_get_api(opp)
+    location = await async_get_location(opp, api, latitude, longitude)
 
     async_add_entities([IPMAWeather(location, api, config)], True)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add a weather entity from a config_entry."""
     latitude = config_entry.data[CONF_LATITUDE]
     longitude = config_entry.data[CONF_LONGITUDE]
     mode = config_entry.data[CONF_MODE]
 
-    api = await async_get_api.opp)
-    location = await async_get_location.opp, api, latitude, longitude)
+    api = await async_get_api(opp)
+    location = await async_get_location(opp, api, latitude, longitude)
 
     # Migrate old unique_id
     @callback
@@ -134,13 +134,13 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     async_add_entities([IPMAWeather(location, api, config_entry.data)], True)
 
 
-async def async_get_api.opp):
+async def async_get_api(opp):
     """Get the pyipma api object."""
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
     return IPMA_API(websession)
 
 
-async def async_get_location.opp, api, latitude, longitude):
+async def async_get_location(opp, api, latitude, longitude):
     """Retrieve pyipma location, location name to be used as the entity name."""
     with async_timeout.timeout(30):
         location = await Location.get(api, float(latitude), float(longitude))

@@ -52,9 +52,9 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType):
     return True
 
 
-async def _register_system_health_platform.opp, integration_domain, platform):
+async def _register_system_health_platform(opp, integration_domain, platform):
     """Register a system health platform."""
-    platform.async_register.opp, SystemHealthRegistration.opp, integration_domain))
+    platform.async_register(opp, SystemHealthRegistration.opp, integration_domain))
 
 
 async def get_integration_info(
@@ -63,7 +63,7 @@ async def get_integration_info(
     """Get integration system health."""
     try:
         with async_timeout.timeout(INFO_CALLBACK_TIMEOUT):
-            data = await registration.info_callback.opp)
+            data = await registration.info_callback(opp)
     except asyncio.TimeoutError:
         data = {"error": {"type": "failed", "error": "timeout"}}
     except Exception:  # pylint: disable=broad-except
@@ -100,7 +100,7 @@ async def handle_info(
         registrations,
         await asyncio.gather(
             *(
-                get_integration_info.opp, registration)
+                get_integration_info(opp, registration)
                 for registration in registrations.values()
             )
         ),
@@ -206,7 +206,7 @@ async def async_check_can_reach_url(
     opp: OpenPeerPower, url: str, more_info: Optional[str] = None
 ) -> str:
     """Test if the url can be reached."""
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     try:
         await session.get(url, timeout=5)

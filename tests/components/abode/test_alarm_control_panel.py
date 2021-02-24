@@ -22,9 +22,9 @@ from .common import setup_platform
 DEVICE_ID = "alarm_control_panel.abode_alarm"
 
 
-async def test_entity_registry.opp):
+async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
-    await setup_platform.opp, ALARM_DOMAIN)
+    await setup_platform(opp, ALARM_DOMAIN)
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(DEVICE_ID)
@@ -32,9 +32,9 @@ async def test_entity_registry.opp):
     assert entry.unique_id == "001122334455"
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test the alarm control panel attributes are correct."""
-    await setup_platform.opp, ALARM_DOMAIN)
+    await setup_platform(opp, ALARM_DOMAIN)
 
     state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_ALARM_DISARMED
@@ -45,11 +45,11 @@ async def test_attributes.opp):
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 3
 
 
-async def test_set_alarm_away.opp):
+async def test_set_alarm_away(opp):
     """Test the alarm control panel can be set to away."""
     with patch("abodepy.AbodeEventController.add_device_callback") as mock_callback:
         with patch("abodepy.ALARM.AbodeAlarm.set_away") as mock_set_away:
-            await setup_platform.opp, ALARM_DOMAIN)
+            await setup_platform(opp, ALARM_DOMAIN)
 
             await opp.services.async_call(
                 ALARM_DOMAIN,
@@ -74,11 +74,11 @@ async def test_set_alarm_away.opp):
             assert state.state == STATE_ALARM_ARMED_AWAY
 
 
-async def test_set_alarm_home.opp):
+async def test_set_alarm_home(opp):
     """Test the alarm control panel can be set to home."""
     with patch("abodepy.AbodeEventController.add_device_callback") as mock_callback:
         with patch("abodepy.ALARM.AbodeAlarm.set_home") as mock_set_home:
-            await setup_platform.opp, ALARM_DOMAIN)
+            await setup_platform(opp, ALARM_DOMAIN)
 
             await opp.services.async_call(
                 ALARM_DOMAIN,
@@ -102,11 +102,11 @@ async def test_set_alarm_home.opp):
             assert state.state == STATE_ALARM_ARMED_HOME
 
 
-async def test_set_alarm_standby.opp):
+async def test_set_alarm_standby(opp):
     """Test the alarm control panel can be set to standby."""
     with patch("abodepy.AbodeEventController.add_device_callback") as mock_callback:
         with patch("abodepy.ALARM.AbodeAlarm.set_standby") as mock_set_standby:
-            await setup_platform.opp, ALARM_DOMAIN)
+            await setup_platform(opp, ALARM_DOMAIN)
             await opp.services.async_call(
                 ALARM_DOMAIN,
                 SERVICE_ALARM_DISARM,
@@ -129,10 +129,10 @@ async def test_set_alarm_standby.opp):
             assert state.state == STATE_ALARM_DISARMED
 
 
-async def test_state_unknown.opp):
+async def test_state_unknown(opp):
     """Test an unknown alarm control panel state."""
     with patch("abodepy.ALARM.AbodeAlarm.mode", new_callable=PropertyMock) as mock_mode:
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         await opp.async_block_till_done()
 
         mock_mode.return_value = None

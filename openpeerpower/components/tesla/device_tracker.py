@@ -7,7 +7,7 @@ from openpeerpower.components.device_tracker.config_entry import TrackerEntity
 from . import DOMAIN as TESLA_DOMAIN, TeslaDevice
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Tesla binary_sensors by config_entry."""
     entities = [
         TeslaDeviceEntity(

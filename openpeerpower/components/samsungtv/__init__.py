@@ -60,7 +60,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up the Samsung TV platform."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, MP_DOMAIN)

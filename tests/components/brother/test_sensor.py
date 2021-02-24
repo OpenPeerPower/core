@@ -24,9 +24,9 @@ ATTR_REMAINING_PAGES = "remaining_pages"
 ATTR_COUNTER = "counter"
 
 
-async def test_sensors.opp):
+async def test_sensors(opp):
     """Test states of the sensors."""
-    entry = await init_integration.opp, skip_setup=True)
+    entry = await init_integration(opp, skip_setup=True)
 
     registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -237,9 +237,9 @@ async def test_sensors.opp):
     assert entry.unique_id == "0123456789_uptime"
 
 
-async def test_disabled_by_default_sensors.opp):
+async def test_disabled_by_default_sensors(opp):
     """Test the disabled by default Brother sensors."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     registry = await opp.helpers.entity_registry.async_get_registry()
     state = opp.states.get("sensor.hl_l2340dw_uptime")
@@ -252,9 +252,9 @@ async def test_disabled_by_default_sensors.opp):
     assert entry.disabled_by == "integration"
 
 
-async def test_availability.opp):
+async def test_availability(opp):
     """Ensure that we mark the entities unavailable correctly when device is offline."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     state = opp.states.get("sensor.hl_l2340dw_status")
     assert state
@@ -263,7 +263,7 @@ async def test_availability.opp):
 
     future = utcnow() + timedelta(minutes=5)
     with patch("brother.Brother._get_data", side_effect=ConnectionError()):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         state = opp.states.get("sensor.hl_l2340dw_status")
@@ -275,7 +275,7 @@ async def test_availability.opp):
         "brother.Brother._get_data",
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         state = opp.states.get("sensor.hl_l2340dw_status")
@@ -284,11 +284,11 @@ async def test_availability.opp):
         assert state.state == "waiting"
 
 
-async def test_manual_update_entity.opp):
+async def test_manual_update_entity(opp):
     """Test manual update entity via service homeasasistant/update_entity."""
-    await init_integration.opp)
+    await init_integration(opp)
 
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
     with patch("openpeerpower.components.brother.Brother.async_update") as mock_update:
         await opp.services.async_call(
             "openpeerpower",

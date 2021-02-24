@@ -25,7 +25,7 @@ CONF_GROUP = "group"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_GROUP): cv.slugify})
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Microsoft Face identify platform."""
     api = opp.data[DATA_MICROSOFT_FACE]
     face_group = config[CONF_GROUP]

@@ -51,7 +51,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
 
     async def _initialize(_):
         address_data = {}
-        integration_matchers = await async_get_dhcp.opp)
+        integration_matchers = await async_get_dhcp(opp)
         watchers = []
 
         for cls in (DHCPWatcher, DeviceTrackerWatcher):
@@ -297,7 +297,7 @@ def _verify_l2socket_creation_permission():
     conf.L2socket()
 
 
-async def _async_verify_working_pcap.opp, cap_filter):
+async def _async_verify_working_pcap(opp, cap_filter):
     """Verify we can create a packet filter.
 
     If we cannot create a filter we will be listening for

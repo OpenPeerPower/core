@@ -51,7 +51,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Volkszaehler sensors."""
 
     host = config[CONF_HOST]
@@ -60,7 +60,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     uuid = config[CONF_UUID]
     conditions = config[CONF_MONITORED_CONDITIONS]
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     vz_api = VolkszaehlerData(
         Volkszaehler.opp.loop, session, uuid, host=host, port=port)
     )

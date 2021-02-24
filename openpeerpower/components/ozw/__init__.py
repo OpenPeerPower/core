@@ -61,7 +61,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ozw from a config entry."""
     ozw_data = opp.data[DOMAIN][entry.entry_id] = {}
     ozw_data[DATA_UNSUBSCRIBE] = []
@@ -108,7 +108,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 _LOGGER.error("MQTT integration is not set up")
                 return
 
-            mqtt.async_publish.opp, topic, json.dumps(payload))
+            mqtt.async_publish(opp, topic, json.dumps(payload))
 
         manager_options["send_message"] = send_message
 
@@ -131,7 +131,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         data_nodes[node.id] = node
         # notify devices about the node change
         if node.id not in removed_nodes:
-            opp.async_create_task(async_handle_node_update.opp, node))
+            opp.async_create_task(async_handle_node_update(opp, node))
 
     @callback
     def async_node_removed(node):
@@ -141,7 +141,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         # cleanup device/entity registry if we know this node is permanently deleted
         # entities itself are removed by the values logic
         if node.id in removed_nodes:
-            opp.async_create_task(async_handle_remove_node.opp, node))
+            opp.async_create_task(async_handle_remove_node(opp, node))
             removed_nodes.remove(node.id)
 
     @callback
@@ -219,7 +219,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             CommandClass.SCENE_ACTIVATION,
             CommandClass.CENTRAL_SCENE,
         ]:
-            async_handle_scene_activated.opp, value)
+            async_handle_scene_activated(opp, value)
             return
 
     @callback
@@ -234,7 +234,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         )
         # signal all entities using this value for removal
         value_unique_id = create_value_id(value)
-        async_dispatcher_send.opp, const.SIGNAL_DELETE_ENTITY, value_unique_id)
+        async_dispatcher_send(opp, const.SIGNAL_DELETE_ENTITY, value_unique_id)
         # remove value from our local list
         node_data_values = data_values[value.node.id]
         node_data_values[:] = [
@@ -258,7 +258,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     services.async_register()
 
     # Register WebSocket API
-    async_register_api.opp)
+    async_register_api(opp)
 
     @callback
     def async_receive_message(msg):
@@ -304,7 +304,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     # cleanup platforms
     unload_ok = all(
@@ -333,7 +333,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
+async def async_remove_entry(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Remove a config entry."""
     if not entry.data.get(CONF_INTEGRATION_CREATED_ADDON):
         return
@@ -349,9 +349,9 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
         _LOGGER.error("Failed to uninstall the OpenZWave add-on: %s", err)
 
 
-async def async_handle_remove_node.opp: OpenPeerPower, node: OZWNode):
+async def async_handle_remove_node(opp: OpenPeerPower, node: OZWNode):
     """Handle the removal of a Z-Wave node, removing all traces in device/entity registry."""
-    dev_registry = await get_dev_reg.opp)
+    dev_registry = await get_dev_reg(opp)
     # grab device in device registry attached to this node
     dev_id = create_device_id(node)
     device = dev_registry.async_get_device({(DOMAIN, dev_id)})
@@ -368,14 +368,14 @@ async def async_handle_remove_node.opp: OpenPeerPower, node: OZWNode):
         dev_registry.async_remove_device(dev_id)
 
 
-async def async_handle_node_update.opp: OpenPeerPower, node: OZWNode):
+async def async_handle_node_update(opp: OpenPeerPower, node: OZWNode):
     """
     Handle a node updated event from OZW.
 
     Meaning some of the basic info like name/model is updated.
     We want these changes to be pushed to the device registry.
     """
-    dev_registry = await get_dev_reg.opp)
+    dev_registry = await get_dev_reg(opp)
     # grab device in device registry attached to this node
     dev_id = create_device_id(node)
     device = dev_registry.async_get_device({(DOMAIN, dev_id)})
@@ -395,7 +395,7 @@ async def async_handle_node_update.opp: OpenPeerPower, node: OZWNode):
 
 
 @callback
-def async_handle_scene_activated.opp: OpenPeerPower, scene_value: OZWValue):
+def async_handle_scene_activated(opp: OpenPeerPower, scene_value: OZWValue):
     """Handle a (central) scene activation message."""
     node_id = scene_value.node.id
     ozw_instance_id = scene_value.ozw_instance.id

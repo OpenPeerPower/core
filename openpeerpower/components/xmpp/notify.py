@@ -64,7 +64,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Get the Jabber (XMPP) notification service."""
     return XmppNotificationService(
         config.get(CONF_SENDER),

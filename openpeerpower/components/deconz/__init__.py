@@ -25,7 +25,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up a deCONZ bridge for a config entry.
 
     Load config, group, light and sensor data for server information.
@@ -34,10 +34,10 @@ async def async_setup_entry.opp, config_entry):
     if DOMAIN not in.opp.data:
         opp.data[DOMAIN] = {}
 
-    await async_update_group_unique_id.opp, config_entry)
+    await async_update_group_unique_id(opp, config_entry)
 
     if not config_entry.options:
-        await async_update_master_gateway.opp, config_entry)
+        await async_update_master_gateway(opp, config_entry)
 
     gateway = DeconzGateway.opp, config_entry)
 
@@ -48,41 +48,41 @@ async def async_setup_entry.opp, config_entry):
 
     await gateway.async_update_device_registry()
 
-    await async_setup_services.opp)
+    await async_setup_services(opp)
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, gateway.shutdown)
 
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload deCONZ config entry."""
     gateway = opp.data[DOMAIN].pop(config_entry.unique_id)
 
     if not.opp.data[DOMAIN]:
-        await async_unload_services.opp)
+        await async_unload_services(opp)
 
     elif gateway.master:
-        await async_update_master_gateway.opp, config_entry)
+        await async_update_master_gateway(opp, config_entry)
         new_master_gateway = next(iter.opp.data[DOMAIN].values()))
-        await async_update_master_gateway.opp, new_master_gateway.config_entry)
+        await async_update_master_gateway(opp, new_master_gateway.config_entry)
 
     return await gateway.async_reset()
 
 
-async def async_update_master_gateway.opp, config_entry):
+async def async_update_master_gateway(opp, config_entry):
     """Update master gateway boolean.
 
     Called by setup_entry and unload_entry.
     Makes sure there is always one master available.
     """
-    master = not get_master_gateway.opp)
+    master = not get_master_gateway(opp)
     options = {**config_entry.options, CONF_MASTER_GATEWAY: master}
 
     opp.config_entries.async_update_entry(config_entry, options=options)
 
 
-async def async_update_group_unique_id.opp, config_entry) -> None:
+async def async_update_group_unique_id(opp, config_entry) -> None:
     """Update unique ID entities based on deCONZ groups."""
     if not (old_unique_id := config_entry.data.get(CONF_GROUP_ID_BASE)):
         return
@@ -100,7 +100,7 @@ async def async_update_group_unique_id.opp, config_entry) -> None:
             )
         }
 
-    await async_migrate_entries.opp, config_entry.entry_id, update_unique_id)
+    await async_migrate_entries(opp, config_entry.entry_id, update_unique_id)
     data = {
         CONF_API_KEY: config_entry.data[CONF_API_KEY],
         CONF_HOST: config_entry.data[CONF_HOST],

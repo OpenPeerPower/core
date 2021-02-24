@@ -64,7 +64,7 @@ SUPPORT_MEDIA_MODES = (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the DenonAVR receiver from a config entry."""
     entities = []
     receiver = opp.data[DOMAIN][config_entry.entry_id][CONF_RECEIVER]

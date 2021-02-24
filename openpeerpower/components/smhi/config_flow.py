@@ -13,7 +13,7 @@ from .const import DOMAIN, HOME_LOCATION_NAME
 
 
 @callback
-def smhi_locations.opp: OpenPeerPower):
+def smhi_locations(opp: OpenPeerPower):
     """Return configurations of SMHI component."""
     return {
         (slugify(entry.data[CONF_NAME]))

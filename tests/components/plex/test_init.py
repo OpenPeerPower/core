@@ -24,7 +24,7 @@ from .helpers import trigger_plex_update, wait_for_debouncer
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def test_set_config_entry_unique_id.opp, entry, mock_plex_server):
+async def test_set_config_entry_unique_id(opp, entry, mock_plex_server):
     """Test updating missing unique_id from config entry."""
     assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
@@ -41,7 +41,7 @@ async def test_setup_config_entry_with_error(opp, entry):
         "openpeerpower.components.plex.PlexServer.connect",
         side_effect=requests.exceptions.ConnectionError,
     ):
-        entry.add_to.opp.opp)
+        entry.add_to(opp.opp)
         assert await opp.config_entries.async_setup(entry.entry_id) is False
         await opp.async_block_till_done()
 
@@ -53,14 +53,14 @@ async def test_setup_config_entry_with_error(opp, entry):
         side_effect=plexapi.exceptions.BadRequest,
     ):
         next_update = dt_util.utcnow() + timedelta(seconds=30)
-        async_fire_time_changed.opp, next_update)
+        async_fire_time_changed(opp, next_update)
         await opp.async_block_till_done()
 
     assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_SETUP_ERROR
 
 
-async def test_setup_with_insecure_config_entry.opp, entry, setup_plex_server):
+async def test_setup_with_insecure_config_entry(opp, entry, setup_plex_server):
     """Test setup component with config."""
     INSECURE_DATA = copy.deepcopy(DEFAULT_DATA)
     INSECURE_DATA[const.PLEX_SERVER_CONFIG][CONF_VERIFY_SSL] = False
@@ -72,7 +72,7 @@ async def test_setup_with_insecure_config_entry.opp, entry, setup_plex_server):
     assert entry.state == ENTRY_STATE_LOADED
 
 
-async def test_unload_config_entry.opp, entry, mock_plex_server):
+async def test_unload_config_entry(opp, entry, mock_plex_server):
     """Test unloading a config entry."""
     config_entries = opp.config_entries.async_entries(const.DOMAIN)
     assert len(config_entries) == 1
@@ -89,7 +89,7 @@ async def test_unload_config_entry.opp, entry, mock_plex_server):
     assert entry.state == ENTRY_STATE_NOT_LOADED
 
 
-async def test_setup_with_photo_session.opp, entry, setup_plex_server):
+async def test_setup_with_photo_session(opp, entry, setup_plex_server):
     """Test setup component with config."""
     await setup_plex_server(session_type="photo")
 
@@ -102,7 +102,7 @@ async def test_setup_with_photo_session.opp, entry, setup_plex_server):
     )
     assert media_player.state == STATE_IDLE
 
-    await wait_for_debouncer.opp)
+    await wait_for_debouncer(opp)
 
     sensor = opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == "0"
@@ -118,7 +118,7 @@ async def test_setup_when_certificate_changed(
     plextv_resources,
 ):
     """Test setup component when the Plex certificate has changed."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     class WrongCertHostnameException(requests.exceptions.SSLError):
         """Mock the exception showing a mismatched hostname."""
@@ -147,7 +147,7 @@ async def test_setup_when_certificate_changed(
 
     # Test with account failure
     requests_mock.get(f"{old_url}/accounts", status_code=401)
-    old_entry.add_to.opp.opp)
+    old_entry.add_to(opp.opp)
     assert await opp.config_entries.async_setup(old_entry.entry_id) is False
     await opp.async_block_till_done()
 

@@ -37,9 +37,9 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def _async_process_intent.opp: OpenPeerPower, domain: str, platform):
+async def _async_process_intent(opp: OpenPeerPower, domain: str, platform):
     """Process the intents of an integration."""
-    await platform.async_setup_intents.opp)
+    await platform.async_setup_intents(opp)
 
 
 class IntentHandleView(http.OpenPeerPowerView):

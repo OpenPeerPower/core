@@ -19,10 +19,10 @@ async def test_a1_sensor_setup_opp):
         "noise": 1,
     }
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_api.check_sensors_raw.call_count == 1
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
@@ -43,7 +43,7 @@ async def test_a1_sensor_setup_opp):
     }
 
 
-async def test_a1_sensor_update.opp):
+async def test_a1_sensor_update(opp):
     """Test a successful e-Sensor update."""
     device = get_device("Bedroom")
     mock_api = device.get_mock_api()
@@ -55,10 +55,10 @@ async def test_a1_sensor_update.opp):
         "noise": 1,
     }
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
     entries = async_entries_for_device(entity_registry, device_entry.id)
@@ -96,10 +96,10 @@ async def test_rm_pro_sensor_setup_opp):
     mock_api = device.get_mock_api()
     mock_api.check_sensors.return_value = {"temperature": 18.2}
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_api.check_sensors.call_count == 1
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
@@ -114,16 +114,16 @@ async def test_rm_pro_sensor_setup_opp):
     assert sensors_and_states == {(f"{device.name} Temperature", "18.2")}
 
 
-async def test_rm_pro_sensor_update.opp):
+async def test_rm_pro_sensor_update(opp):
     """Test a successful RM pro sensor update."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
     mock_api.check_sensors.return_value = {"temperature": 25.7}
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
     entries = async_entries_for_device(entity_registry, device_entry.id)
@@ -143,16 +143,16 @@ async def test_rm_pro_sensor_update.opp):
     assert sensors_and_states == {(f"{device.name} Temperature", "25.8")}
 
 
-async def test_rm_mini3_no_sensor.opp):
+async def test_rm_mini3_no_sensor(opp):
     """Test we do not set up sensors for RM mini 3."""
     device = get_device("Entrance")
     mock_api = device.get_mock_api()
     mock_api.check_sensors.return_value = {"temperature": 0}
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_api.check_sensors.call_count <= 1
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
@@ -167,10 +167,10 @@ async def test_rm4_pro_hts2_sensor_setup_opp):
     mock_api = device.get_mock_api()
     mock_api.check_sensors.return_value = {"temperature": 22.5, "humidity": 43.7}
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_api.check_sensors.call_count == 1
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
@@ -188,16 +188,16 @@ async def test_rm4_pro_hts2_sensor_setup_opp):
     }
 
 
-async def test_rm4_pro_hts2_sensor_update.opp):
+async def test_rm4_pro_hts2_sensor_update(opp):
     """Test a successful RM4 pro sensor update with HTS2 cable."""
     device = get_device("Garage")
     mock_api = device.get_mock_api()
     mock_api.check_sensors.return_value = {"temperature": 16.7, "humidity": 34.1}
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})
     entries = async_entries_for_device(entity_registry, device_entry.id)
@@ -220,16 +220,16 @@ async def test_rm4_pro_hts2_sensor_update.opp):
     }
 
 
-async def test_rm4_pro_no_sensor.opp):
+async def test_rm4_pro_no_sensor(opp):
     """Test we do not set up sensors for RM4 pro without HTS2 cable."""
     device = get_device("Garage")
     mock_api = device.get_mock_api()
     mock_api.check_sensors.return_value = {"temperature": 0, "humidity": 0}
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+    mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_api.check_sensors.call_count <= 1
     device_entry = device_registry.async_get_device({(DOMAIN, mock_entry.unique_id)})

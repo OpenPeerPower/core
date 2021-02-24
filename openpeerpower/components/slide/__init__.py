@@ -155,7 +155,7 @@ async def async_setup(opp, config):
             err,
             DEFAULT_RETRY,
         )
-        async_call_later.opp, DEFAULT_RETRY, retry_setup)
+        async_call_later(opp, DEFAULT_RETRY, retry_setup)
         return True
 
     if not result:
@@ -166,8 +166,8 @@ async def async_setup(opp, config):
 
     await update_slides()
 
-    opp.async_create_task(async_load_platform.opp, COMPONENT, DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, COMPONENT, DOMAIN, {}, config))
 
-    async_track_time_interval.opp, update_slides, scaninterval)
+    async_track_time_interval(opp, update_slides, scaninterval)
 
     return True

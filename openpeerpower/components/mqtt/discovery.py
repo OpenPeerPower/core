@@ -65,12 +65,12 @@ LAST_DISCOVERY = "mqtt_last_discovery"
 TOPIC_BASE = "~"
 
 
-def clear_discovery_hash.opp, discovery_hash):
+def clear_discovery_hash(opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
     del.opp.data[ALREADY_DISCOVERED][discovery_hash]
 
 
-def set_discovery_hash.opp, discovery_hash):
+def set_discovery_hash(opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
     opp.data[ALREADY_DISCOVERED][discovery_hash] = {}
 
@@ -211,13 +211,13 @@ async def async_start(
                         # pylint: disable=import-outside-toplevel
                         from . import device_automation
 
-                        await device_automation.async_setup_entry.opp, config_entry)
+                        await device_automation.async_setup_entry(opp, config_entry)
                     elif component == "tag":
                         # Local import to avoid circular dependencies
                         # pylint: disable=import-outside-toplevel
                         from . import tag
 
-                        await tag.async_setup_entry.opp, config_entry)
+                        await tag.async_setup_entry(opp, config_entry)
                     else:
                         await opp.config_entries.async_forward_entry_setup(
                             config_entry, component
@@ -246,13 +246,13 @@ async def async_start(
     ]
     opp.data[DISCOVERY_UNSUBSCRIBE] = await asyncio.gather(
         *(
-            mqtt.async_subscribe.opp, topic, async_discovery_message_received, 0)
+            mqtt.async_subscribe(opp, topic, async_discovery_message_received, 0)
             for topic in discovery_topics
         )
     )
 
     opp.data[LAST_DISCOVERY] = time.time()
-    mqtt_integrations = await async_get_mqtt.opp)
+    mqtt_integrations = await async_get_mqtt(opp)
 
     opp.data[INTEGRATION_UNSUBSCRIBE] = {}
 
@@ -295,7 +295,7 @@ async def async_start(
     return True
 
 
-async def async_stop.opp: OpenPeerPowerType) -> bool:
+async def async_stop(opp: OpenPeerPowerType) -> bool:
     """Stop MQTT Discovery."""
     if DISCOVERY_UNSUBSCRIBE in.opp.data:
         for unsub in.opp.data[DISCOVERY_UNSUBSCRIBE]:

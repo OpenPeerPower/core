@@ -17,7 +17,7 @@ TX_SENSOR = "tx"
 UPTIME_SENSOR = "uptime"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up sensors for UniFi integration."""
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.entities[DOMAIN] = {
@@ -38,7 +38,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             add_uptime_entities(controller, async_add_entities, clients)
 
     for signal in (controller.signal_update, controller.signal_options_update):
-        controller.listeners.append(async_dispatcher_connect.opp, signal, items_added))
+        controller.listeners.append(async_dispatcher_connect(opp, signal, items_added))
 
     items_added()
 

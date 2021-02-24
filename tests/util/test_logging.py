@@ -60,17 +60,17 @@ async def test_logging_with_queue_handler():
     assert simple_queue.empty()
 
 
-async def test_migrate_log_handler.opp):
+async def test_migrate_log_handler(opp):
     """Test migrating log handlers."""
 
-    logging_util.async_activate_log_queue_handler.opp)
+    logging_util.async_activate_log_queue_handler(opp)
 
     assert len(logging.root.handlers) == 1
     assert isinstance(logging.root.handlers[0], logging_util.OpenPeerPowerQueueHandler)
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_async_create_catching_coro.opp, caplog):
+async def test_async_create_catching_coro(opp, caplog):
     """Test exception logging of wrapped coroutine."""
 
     async def job():

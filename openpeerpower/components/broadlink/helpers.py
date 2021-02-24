@@ -34,7 +34,7 @@ def format_mac(mac):
     return ":".join([format(octet, "02x") for octet in mac])
 
 
-def import_device.opp, host):
+def import_device(opp, host):
     """Create a config flow for a device."""
     configured_hosts = {
         entry.data.get(CONF_HOST) for entry in.opp.config_entries.async_entries(DOMAIN)

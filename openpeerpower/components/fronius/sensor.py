@@ -76,9 +76,9 @@ PLATFORM_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up of Fronius platform."""
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     fronius = Fronius(session, config[CONF_RESOURCE])
 
     scan_interval = config.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
@@ -119,7 +119,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         fetch = adapter_data_fetcher(adapter)
         # fetch data once at set-up
         await fetch()
-        async_track_time_interval.opp, fetch, scan_interval)
+        async_track_time_interval(opp, fetch, scan_interval)
 
 
 class FroniusAdapter:

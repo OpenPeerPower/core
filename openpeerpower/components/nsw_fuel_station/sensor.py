@@ -51,7 +51,7 @@ NOTIFICATION_ID = "nsw_fuel_station_notification"
 NOTIFICATION_TITLE = "NSW Fuel Station Sensor Setup"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the NSW Fuel Station sensor."""
 
     station_id = config[CONF_STATION_ID]

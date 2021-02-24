@@ -6,7 +6,7 @@ from . import ATTR_SOURCE, DOMAIN, EVENT_AUTOMATION_TRIGGERED
 
 
 @callback
-def async_describe_events.opp, async_describe_event):  # type: ignore
+def async_describe_events(opp, async_describe_event):  # type: ignore
     """Describe logbook events."""
 
     @callback

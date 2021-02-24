@@ -9,7 +9,7 @@ from . import HUB as hub
 from .const import CONF_SMARTCAM, LOGGER
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Verisure Camera."""
     if not int(hub.config.get(CONF_SMARTCAM, 1)):
         return False

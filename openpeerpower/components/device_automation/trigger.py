@@ -23,9 +23,9 @@ async def async_validate_trigger_config(opp, config):
     return platform.TRIGGER_SCHEMA(config)
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for trigger."""
     platform = await async_get_device_automation_platform(
         opp. config[CONF_DOMAIN], "trigger"
     )
-    return await platform.async_attach_trigger.opp, config, action, automation_info)
+    return await platform.async_attach_trigger(opp, config, action, automation_info)

@@ -47,12 +47,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry."""
 
     tibber_connection = tibber.Tibber(
         access_token=entry.data[CONF_ACCESS_TOKEN],
-        websession=async_get_clientsession.opp),
+        websession=async_get_clientsession(opp),
         time_zone=dt_util.DEFAULT_TIME_ZONE,
     )
     opp.data[DOMAIN] = tibber_connection
@@ -88,7 +88,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

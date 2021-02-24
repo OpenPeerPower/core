@@ -30,10 +30,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Create the launch sensor."""
     name = config[CONF_NAME]
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     launches = PyLaunches(session)
 
     async_add_entities([LaunchLibrarySensor(launches, name)], True)

@@ -78,7 +78,7 @@ def gps_accuracy(gps, posambiguity: int) -> int:
     return accuracy
 
 
-def setup_scanner.opp, config, see, discovery_info=None):
+def setup_scanner(opp, config, see, discovery_info=None):
     """Set up the APRS tracker."""
     callsigns = config.get(CONF_CALLSIGNS)
     server_filter = make_filter(callsigns)

@@ -26,7 +26,7 @@ SEVERITIES = ["other", "info", "warning", "error"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Smile binary_sensors from a config entry."""
     api = opp.data[DOMAIN][config_entry.entry_id]["api"]
     coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]

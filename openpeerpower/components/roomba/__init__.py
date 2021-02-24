@@ -19,7 +19,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set the config entry up."""
     # Set up roomba platforms with config entry
 
@@ -41,7 +41,7 @@ async def async_setup_entry.opp, config_entry):
     )
 
     try:
-        if not await async_connect_or_timeout.opp, roomba):
+        if not await async_connect_or_timeout(opp, roomba):
             return False
     except CannotConnect as err:
         raise exceptions.ConfigEntryNotReady from err
@@ -62,7 +62,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_connect_or_timeout.opp, roomba):
+async def async_connect_or_timeout(opp, roomba):
     """Connect to vacuum."""
     try:
         name = None
@@ -80,14 +80,14 @@ async def async_connect_or_timeout.opp, roomba):
         raise CannotConnect from err
     except asyncio.TimeoutError as err:
         # api looping if user or password incorrect and roomba exist
-        await async_disconnect_or_timeout.opp, roomba)
+        await async_disconnect_or_timeout(opp, roomba)
         _LOGGER.error("Timeout expired")
         raise CannotConnect from err
 
     return {ROOMBA_SESSION: roomba, CONF_NAME: name}
 
 
-async def async_disconnect_or_timeout.opp, roomba):
+async def async_disconnect_or_timeout(opp, roomba):
     """Disconnect to vacuum."""
     _LOGGER.debug("Disconnect vacuum")
     with async_timeout.timeout(3):
@@ -95,12 +95,12 @@ async def async_disconnect_or_timeout.opp, roomba):
     return True
 
 
-async def async_update_options.opp, config_entry):
+async def async_update_options(opp, config_entry):
     """Update options."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -112,7 +112,7 @@ async def async_unload_entry.opp, config_entry):
     )
     if unload_ok:
         domain_data = opp.data[DOMAIN][config_entry.entry_id]
-        await async_disconnect_or_timeout.opp, roomba=domain_data[ROOMBA_SESSION])
+        await async_disconnect_or_timeout(opp, roomba=domain_data[ROOMBA_SESSION])
         opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok

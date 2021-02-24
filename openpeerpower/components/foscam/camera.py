@@ -65,7 +65,7 @@ ATTR_PRESET_NAME = "preset_name"
 PTZ_GOTO_PRESET_COMMAND = "ptz_goto_preset"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up a Foscam IP Camera."""
     LOGGER.warning(
         "Loading foscam via platform config is deprecated, it will be automatically imported. Please remove it afterwards."
@@ -88,7 +88,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add a Foscam IP camera from a config entry."""
     platform = entity_platform.current_platform.get()
     platform.async_register_entity_service(

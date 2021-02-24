@@ -197,7 +197,7 @@ class AmcrestChecker(Http):
             pass
 
 
-def _monitor_events.opp, name, api, event_codes):
+def _monitor_events(opp, name, api, event_codes):
     event_codes = ",".join(event_codes)
     while True:
         api.available_flag.wait()
@@ -205,14 +205,14 @@ def _monitor_events.opp, name, api, event_codes):
             for code, start in api.event_actions(event_codes, retries=5):
                 signal = service_signal(SERVICE_EVENT, name, code)
                 _LOGGER.debug("Sending signal: '%s': %s", signal, start)
-                dispatcher_send.opp, signal, start)
+                dispatcher_send(opp, signal, start)
         except AmcrestError as error:
             _LOGGER.warning(
                 "Error while processing events from %s camera: %r", name, error
             )
 
 
-def _start_event_monitor.opp, name, api, event_codes):
+def _start_event_monitor(opp, name, api, event_codes):
     thread = threading.Thread(
         target=_monitor_events,
         name=f"Amcrest {name}",
@@ -258,7 +258,7 @@ def setup(opp, config):
             control_light,
         )
 
-        discovery.load_platform.opp, CAMERA, DOMAIN, {CONF_NAME: name}, config)
+        discovery.load_platform(opp, CAMERA, DOMAIN, {CONF_NAME: name}, config)
 
         if binary_sensors:
             discovery.load_platform(
@@ -274,7 +274,7 @@ def setup(opp, config):
                 if sensor_type not in BINARY_POLLED_SENSORS
             ]
             if event_codes:
-                _start_event_monitor.opp, name, api, event_codes)
+                _start_event_monitor(opp, name, api, event_codes)
 
         if sensors:
             discovery.load_platform(
@@ -306,7 +306,7 @@ def setup(opp, config):
         if call.data.get(ATTR_ENTITY_ID) == ENTITY_MATCH_NONE:
             return []
 
-        call_ids = await async_extract_entity_ids.opp, call)
+        call_ids = await async_extract_entity_ids(opp, call)
         entity_ids = []
         for entity_id in.opp.data[DATA_AMCREST][CAMERAS]:
             if entity_id not in call_ids:
@@ -323,7 +323,7 @@ def setup(opp, config):
         for arg in CAMERA_SERVICES[call.service][2]:
             args.append(call.data[arg])
         for entity_id in await async_extract_from_service(call):
-            async_dispatcher_send.opp, service_signal(call.service, entity_id), *args)
+            async_dispatcher_send(opp, service_signal(call.service, entity_id), *args)
 
     for service, params in CAMERA_SERVICES.items():
         opp.services.register(DOMAIN, service, async_service_handler, params[0])

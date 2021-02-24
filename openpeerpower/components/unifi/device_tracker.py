@@ -68,7 +68,7 @@ WIRELESS_CONNECTION = (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up device tracker for UniFi component."""
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.entities[DOMAIN] = {CLIENT_TRACKER: set(), DEVICE_TRACKER: set()}
@@ -85,7 +85,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             add_device_entities(controller, async_add_entities, devices)
 
     for signal in (controller.signal_update, controller.signal_options_update):
-        controller.listeners.append(async_dispatcher_connect.opp, signal, items_added))
+        controller.listeners.append(async_dispatcher_connect(opp, signal, items_added))
 
     items_added()
 
@@ -168,10 +168,10 @@ class UniFiClientTracker(UniFiClient, ScannerEntity):
         )
         await super().async_added_to_opp()
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect object when removed."""
         self.controller.async_heartbeat(self.unique_id)
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
     @callback
     def async_signal_reachable_callback(self) -> None:
@@ -321,10 +321,10 @@ class UniFiDeviceTracker(UniFiBase, ScannerEntity):
         )
         await super().async_added_to_opp()
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect object when removed."""
         self.controller.async_heartbeat(self.unique_id)
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
     @callback
     def async_signal_reachable_callback(self) -> None:

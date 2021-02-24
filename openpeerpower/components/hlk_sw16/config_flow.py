@@ -25,7 +25,7 @@ DATA_SCHEMA = vol.Schema(
 )
 
 
-async def connect_client.opp, user_input):
+async def connect_client(opp, user_input):
     """Connect the HLK-SW16 client."""
     client_aw = create_hlk_sw16_connection(
         host=user_input[CONF_HOST],
@@ -38,7 +38,7 @@ async def connect_client.opp, user_input):
     return await asyncio.wait_for(client_aw, timeout=CONNECTION_TIMEOUT)
 
 
-async def validate_input.opp: OpenPeerPower, user_input):
+async def validate_input(opp: OpenPeerPower, user_input):
     """Validate the user input allows us to connect."""
     for entry in.opp.config_entries.async_entries(DOMAIN):
         if (
@@ -48,7 +48,7 @@ async def validate_input.opp: OpenPeerPower, user_input):
             raise AlreadyConfigured
 
     try:
-        client = await connect_client.opp, user_input)
+        client = await connect_client(opp, user_input)
     except asyncio.TimeoutError as err:
         raise CannotConnect from err
     try:

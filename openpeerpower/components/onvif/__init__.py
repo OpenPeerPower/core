@@ -61,13 +61,13 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ONVIF from a config entry."""
     if DOMAIN not in.opp.data:
         opp.data[DOMAIN] = {}
 
     if not entry.options:
-        await async_populate_options.opp, entry)
+        await async_populate_options(opp, entry)
 
     device = ONVIFDevice.opp, entry)
 
@@ -79,7 +79,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady()
 
     if not entry.data.get(CONF_SNAPSHOT_AUTH):
-        await async_populate_snapshot_auth.opp, device, entry)
+        await async_populate_snapshot_auth(opp, device, entry)
 
     opp.data[DOMAIN][entry.unique_id] = device
 
@@ -98,7 +98,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
 
     device = opp.data[DOMAIN][entry.unique_id]
@@ -135,14 +135,14 @@ async def _get_snapshot_auth(device):
         return HTTP_DIGEST_AUTHENTICATION
 
 
-async def async_populate_snapshot_auth.opp, device, entry):
+async def async_populate_snapshot_auth(opp, device, entry):
     """Check if digest auth for snapshots is possible."""
     auth = await _get_snapshot_auth(device)
     new_data = {**entry.data, CONF_SNAPSHOT_AUTH: auth}
     opp.config_entries.async_update_entry(entry, data=new_data)
 
 
-async def async_populate_options.opp, entry):
+async def async_populate_options(opp, entry):
     """Populate default options for device."""
     options = {
         CONF_EXTRA_ARGUMENTS: DEFAULT_ARGUMENTS,

@@ -210,7 +210,7 @@ TRIGGER_SCHEMA = vol.Any(
 async def async_validate_trigger_config(opp: OpenPeerPower, config: ConfigType):
     """Validate config."""
     # if device is available verify parameters against device capabilities
-    device = get_button_device_by_dr_id.opp, config[CONF_DEVICE_ID])
+    device = get_button_device_by_dr_id(opp, config[CONF_DEVICE_ID])
 
     if not device:
         return config
@@ -225,11 +225,11 @@ async def async_validate_trigger_config(opp: OpenPeerPower, config: ConfigType):
     return schema(config)
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for lutron caseta devices."""
     triggers = []
 
-    device = get_button_device_by_dr_id.opp, device_id)
+    device = get_button_device_by_dr_id(opp, device_id)
     if not device:
         raise InvalidDeviceAutomationConfig(f"Device not found: {device_id}")
 
@@ -257,7 +257,7 @@ async def async_attach_trigger(
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
-    device = get_button_device_by_dr_id.opp, config[CONF_DEVICE_ID])
+    device = get_button_device_by_dr_id(opp, config[CONF_DEVICE_ID])
     schema = DEVICE_TYPE_SCHEMA_MAP.get(device["type"])
     valid_buttons = DEVICE_TYPE_SUBTYPE_MAP.get(device["type"])
     config = schema(config)
@@ -276,7 +276,7 @@ async def async_attach_trigger(
     )
 
 
-def get_button_device_by_dr_id.opp: OpenPeerPower, device_id: str):
+def get_button_device_by_dr_id(opp: OpenPeerPower, device_id: str):
     """Get a lutron device for the given device id."""
     if DOMAIN not in.opp.data:
         return None

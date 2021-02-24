@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Create the Tautulli sensor."""
 
     name = config.get(CONF_NAME)
@@ -59,7 +59,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     use_ssl = config[CONF_SSL]
     verify_ssl = config.get(CONF_VERIFY_SSL)
 
-    session = async_get_clientsession.opp, verify_ssl)
+    session = async_get_clientsession(opp, verify_ssl)
     tautulli = TautulliData(
         Tautulli(host, port, api_key, opp.loop, session, use_ssl, path)
     )

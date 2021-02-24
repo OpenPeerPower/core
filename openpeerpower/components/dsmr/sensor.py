@@ -62,7 +62,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Import the platform into a config entry."""
     opp.async_create_task(
         opp.config_entries.flow.async_init(

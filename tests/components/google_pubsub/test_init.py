@@ -61,7 +61,7 @@ def mock_os_fixture():
 
 
 @pytest.fixture(autouse=True)
-def mock_bus_and_json.opp, monkeypatch):
+def mock_bus_and_json(opp, monkeypatch):
     """Mock the event bus listener and os component."""
     opp.bus.listen = mock.MagicMock()
     monkeypatch.setattr(
@@ -79,7 +79,7 @@ async def test_minimal_config(opp, mock_client):
             "filter": {},
         }
     }
-    assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
+    assert await async_setup_component(opp, google_pubsub.DOMAIN, config)
     await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
@@ -106,7 +106,7 @@ async def test_full_config(opp, mock_client):
             },
         }
     }
-    assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
+    assert await async_setup_component(opp, google_pubsub.DOMAIN, config)
     await opp.async_block_till_done()
     assert.opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
@@ -139,12 +139,12 @@ async def _setup_opp, filter_config):
             "filter": filter_config,
         }
     }
-    assert await async_setup_component.opp, google_pubsub.DOMAIN, config)
+    assert await async_setup_component(opp, google_pubsub.DOMAIN, config)
     await opp.async_block_till_done()
     return.opp.bus.listen.call_args_list[0][0][1]
 
 
-async def test_allowlist.opp, mock_client):
+async def test_allowlist(opp, mock_client):
     """Test an allowlist only config."""
     handler_method = await _setup(
         opp,
@@ -174,7 +174,7 @@ async def test_allowlist.opp, mock_client):
         publish_client.publish.reset_mock()
 
 
-async def test_denylist.opp, mock_client):
+async def test_denylist(opp, mock_client):
     """Test a denylist only config."""
     handler_method = await _setup(
         opp,
@@ -204,7 +204,7 @@ async def test_denylist.opp, mock_client):
         publish_client.publish.reset_mock()
 
 
-async def test_filtered_allowlist.opp, mock_client):
+async def test_filtered_allowlist(opp, mock_client):
     """Test an allowlist config with a filtering denylist."""
     handler_method = await _setup(
         opp,
@@ -235,7 +235,7 @@ async def test_filtered_allowlist.opp, mock_client):
         publish_client.publish.reset_mock()
 
 
-async def test_filtered_denylist.opp, mock_client):
+async def test_filtered_denylist(opp, mock_client):
     """Test a denylist config with a filtering allowlist."""
     handler_method = await _setup(
         opp,

@@ -36,7 +36,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up X10 dimmers over a mochad controller."""
     mochad_controller = opp.data[DOMAIN]
     devs = config.get(CONF_DEVICES)

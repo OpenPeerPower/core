@@ -30,14 +30,14 @@ WEMO_OFF = 0
 WEMO_STANDBY = 8
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up WeMo switches."""
 
     async def _discovered_wemo(device):
         """Handle a discovered Wemo device."""
         async_add_entities([WemoSwitch(device)])
 
-    async_dispatcher_connect.opp, f"{WEMO_DOMAIN}.switch", _discovered_wemo)
+    async_dispatcher_connect(opp, f"{WEMO_DOMAIN}.switch", _discovered_wemo)
 
     await asyncio.gather(
         *[

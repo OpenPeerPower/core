@@ -58,9 +58,9 @@ CURRENT_TRIGGER_SCHEMA = vol.All(
 TRIGGER_SCHEMA = vol.Any(HVAC_MODE_TRIGGER_SCHEMA, CURRENT_TRIGGER_SCHEMA)
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for Climate devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     triggers = []
 
     # Get all the integrations entities for this device
@@ -161,7 +161,7 @@ async def async_attach_trigger(
     )
 
 
-async def async_get_trigger_capabilities.opp: OpenPeerPower, config):
+async def async_get_trigger_capabilities(opp: OpenPeerPower, config):
     """List trigger capabilities."""
     trigger_type = config[CONF_TYPE]
 

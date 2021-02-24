@@ -46,7 +46,7 @@ APP_LIST_KEY = "steam_online.app_list"
 BASE_INTERVAL = timedelta(minutes=1)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Steam platform."""
 
     steam.api.key.set(config.get(CONF_API_KEY))
@@ -68,7 +68,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         entities[entity_next].async_schedule_update_op_state(True)
         entity_next = (entity_next + 1) % len(entities)
 
-    track_time_interval.opp, do_update, BASE_INTERVAL)
+    track_time_interval(opp, do_update, BASE_INTERVAL)
 
 
 class SteamSensor(Entity):

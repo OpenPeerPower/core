@@ -5,10 +5,10 @@ from openpeerpower.const import STATE_CLOSED
 from .util import async_init_integration
 
 
-async def test_create_covers.opp):
+async def test_create_covers(opp):
     """Test creation of covers."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("cover.large_garage_door")
     assert state.state == STATE_CLOSED

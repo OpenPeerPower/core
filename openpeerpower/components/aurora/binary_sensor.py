@@ -5,7 +5,7 @@ from . import AuroraEntity
 from .const import COORDINATOR, DOMAIN
 
 
-async def async_setup_entry.opp, entry, async_add_entries):
+async def async_setup_entry(opp, entry, async_add_entries):
     """Set up the binary_sensor platform."""
     coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
     name = f"{coordinator.name} Aurora Visibility Alert"

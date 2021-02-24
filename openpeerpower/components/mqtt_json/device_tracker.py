@@ -34,7 +34,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(mqtt.SCHEMA_BASE).extend(
 )
 
 
-async def async_setup_scanner.opp, config, async_see, discovery_info=None):
+async def async_setup_scanner(opp, config, async_see, discovery_info=None):
     """Set up the MQTT JSON tracker."""
     devices = config[CONF_DEVICES]
     qos = config[CONF_QOS]
@@ -60,7 +60,7 @@ async def async_setup_scanner.opp, config, async_see, discovery_info=None):
             kwargs = _parse_see_args(dev_id, data)
             opp.async_create_task(async_see(**kwargs))
 
-        await mqtt.async_subscribe.opp, topic, async_message_received, qos)
+        await mqtt.async_subscribe(opp, topic, async_message_received, qos)
 
     return True
 

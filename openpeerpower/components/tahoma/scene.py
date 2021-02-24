@@ -6,7 +6,7 @@ from openpeerpower.components.scene import Scene
 from . import DOMAIN as TAHOMA_DOMAIN
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Tahoma scenes."""
     if discovery_info is None:
         return

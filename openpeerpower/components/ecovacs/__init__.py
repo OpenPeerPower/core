@@ -86,6 +86,6 @@ def setup(opp, config):
 
     if opp.data[ECOVACS_DEVICES]:
         _LOGGER.debug("Starting vacuum components")
-        discovery.load_platform.opp, "vacuum", DOMAIN, {}, config)
+        discovery.load_platform(opp, "vacuum", DOMAIN, {}, config)
 
     return True

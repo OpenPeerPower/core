@@ -11,7 +11,7 @@ from . import DOMAIN as MYCHEVY_DOMAIN, UPDATE_TOPIC, EVBinarySensorConfig
 SENSORS = [EVBinarySensorConfig("Plugged In", "plugged_in", "plug")]
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the MyChevy sensors."""
     if discovery_info is None:
         return

@@ -38,9 +38,9 @@ SET_PRESET_MODE_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 ACTION_SCHEMA = vol.Any(SET_HVAC_MODE_SCHEMA, SET_PRESET_MODE_SCHEMA)
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions for Climate devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     actions = []
 
     # Get all the integrations entities for this device
@@ -95,7 +95,7 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_action_capabilities.opp, config):
+async def async_get_action_capabilities(opp, config):
     """List action capabilities."""
     state = opp.states.get(config[CONF_ENTITY_ID])
     action_type = config[CONF_TYPE]

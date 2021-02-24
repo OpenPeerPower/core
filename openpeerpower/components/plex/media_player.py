@@ -59,14 +59,14 @@ def needs_session(func):
     return get_session_attribute
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Plex media_player from a config entry."""
     server_id = config_entry.data[CONF_SERVER_IDENTIFIER]
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
 
     @callback
     def async_new_media_players(new_entities):
-        _async_add_entities.opp, registry, async_add_entities, server_id, new_entities)
+        _async_add_entities(opp, registry, async_add_entities, server_id, new_entities)
 
     unsub = async_dispatcher_connect(
         opp. PLEX_NEW_MP_SIGNAL.format(server_id), async_new_media_players
@@ -76,7 +76,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
 
 @callback
-def _async_add_entities.opp, registry, async_add_entities, server_id, new_entities):
+def _async_add_entities(opp, registry, async_add_entities, server_id, new_entities):
     """Set up Plex media_player entities."""
     _LOGGER.debug("New entities: %s", new_entities)
     entities = []

@@ -13,7 +13,7 @@ DYSON_AIQ_DEVICES = "dyson_aiq_devices"
 ATTR_VOC = "volatile_organic_compounds"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Dyson Sensors."""
 
     if discovery_info is None:
@@ -32,7 +32,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         return
 
     opp.data[DYSON_AIQ_DEVICES].extend(new_entities)
-    add_entities.opp.data[DYSON_AIQ_DEVICES])
+    add_entities(opp.data[DYSON_AIQ_DEVICES])
 
 
 class DysonAirSensor(DysonEntity, AirQualityEntity):

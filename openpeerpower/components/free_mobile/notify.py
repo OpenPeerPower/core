@@ -21,7 +21,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Free Mobile SMS notification service."""
     return FreeSMSNotificationService(config[CONF_USERNAME], config[CONF_ACCESS_TOKEN])
 

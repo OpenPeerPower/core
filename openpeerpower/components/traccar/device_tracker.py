@@ -114,7 +114,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
+async def async_setup_entry(opp: OpenPeerPowerType, entry, async_add_entities):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback
@@ -131,10 +131,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
 
     opp.data[DOMAIN]["unsub_device_tracker"][
         entry.entry_id
-    ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
+    ] = async_dispatcher_connect(opp, TRACKER_UPDATE, _receive_data)
 
     # Restore previously loaded devices
-    dev_reg = await device_registry.async_get_registry.opp)
+    dev_reg = await device_registry.async_get_registry(opp)
     dev_ids = {
         identifier[1]
         for device in dev_reg.devices.values()
@@ -153,10 +153,10 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry, async_add_entities):
     async_add_entities(entities)
 
 
-async def async_setup_scanner.opp, config, async_see, discovery_info=None):
+async def async_setup_scanner(opp, config, async_see, discovery_info=None):
     """Validate the configuration and return a Traccar scanner."""
 
-    session = async_get_clientsession.opp, config[CONF_VERIFY_SSL])
+    session = async_get_clientsession(opp, config[CONF_VERIFY_SSL])
 
     api = API(
         opp.loop,
@@ -419,9 +419,9 @@ class TraccarEntity(TrackerEntity, RestoreEntity):
         }
         self._battery = attr.get(ATTR_BATTERY)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Clean up after entity before removal."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         self._unsub_dispatcher()
 
     @callback

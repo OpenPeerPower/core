@@ -45,7 +45,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up IPP from a config entry."""
 
     coordinator = opp.data[DOMAIN].get(entry.entry_id)
@@ -74,7 +74,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -111,7 +111,7 @@ class IPPDataUpdateCoordinator(DataUpdateCoordinator[IPPPrinter]):
             base_path=base_path,
             tls=tls,
             verify_ssl=verify_ssl,
-            session=async_get_clientsession.opp, verify_ssl),
+            session=async_get_clientsession(opp, verify_ssl),
         )
 
         super().__init__(

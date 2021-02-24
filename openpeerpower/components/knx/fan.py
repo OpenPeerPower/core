@@ -18,7 +18,7 @@ from .knx_entity import KnxEntity
 DEFAULT_PERCENTAGE = 50
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up fans for KNX platform."""
     entities = []
     for device in.opp.data[DOMAIN].xknx.devices:

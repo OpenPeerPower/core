@@ -7,7 +7,7 @@ from .const import DOMAIN
 PARALLEL_UPDATES = 0
 
 
-def devices_from_entities.opp, entry):
+def devices_from_entities(opp, entry):
     """Parse configuration and add HLK-SW16 switch devices."""
     device_client = opp.data[DOMAIN][entry.entry_id][DATA_DEVICE_REGISTER]
     devices = []
@@ -18,9 +18,9 @@ def devices_from_entities.opp, entry):
     return devices
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the HLK-SW16 platform."""
-    async_add_entities(devices_from_entities.opp, entry))
+    async_add_entities(devices_from_entities(opp, entry))
 
 
 class SW16Switch(SW16Device, ToggleEntity):

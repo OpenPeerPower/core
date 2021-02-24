@@ -16,7 +16,7 @@ async def test_bad_config(opp):
     """Test set up the platform with bad/missing config."""
     config = {notify.DOMAIN: {"name": "test", "platform": "file"}}
     with assert_setup_component(0) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
     assert not handle_config[notify.DOMAIN]
 
 
@@ -27,7 +27,7 @@ async def test_bad_config(opp):
         True,
     ],
 )
-async def test_notify_file.opp, timestamp):
+async def test_notify_file(opp, timestamp):
     """Test the notify file output."""
     filename = "mock_file"
     message = "one, two, testing, testing"

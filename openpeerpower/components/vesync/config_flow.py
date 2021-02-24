@@ -12,7 +12,7 @@ from .const import DOMAIN
 
 
 @callback
-def configured_instances.opp):
+def configured_instances(opp):
     """Return already configured instances."""
     return.opp.config_entries.async_entries(DOMAIN)
 

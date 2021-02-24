@@ -22,7 +22,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the SRP Energy Usage sensor."""
     # API object stored here by __init__.py
     is_time_of_use = False

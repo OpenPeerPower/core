@@ -80,7 +80,7 @@ async def see_device(
     )
 
 
-async def get_tracking_devices.opp: OpenPeerPowerType) -> Tuple[Set[str], Set[str]]:
+async def get_tracking_devices(opp: OpenPeerPowerType) -> Tuple[Set[str], Set[str]]:
     """
     Load all known devices.
 
@@ -120,7 +120,7 @@ async def async_setup_scanner(
     track_new: bool = config.get(CONF_TRACK_NEW, DEFAULT_TRACK_NEW)
     _LOGGER.debug("Tracking new devices is set to %s", track_new)
 
-    devices_to_track, devices_to_not_track = await get_tracking_devices.opp)
+    devices_to_track, devices_to_not_track = await get_tracking_devices(opp)
 
     if not devices_to_track and not track_new:
         _LOGGER.debug("No Bluetooth devices to track and not tracking new devices")
@@ -152,7 +152,7 @@ async def async_setup_scanner(
                     rssi = await opp.async_add_executor_job(client.request_rssi)
                     client.close()
 
-                tasks.append(see_device.opp, async_see, mac, device_name, rssi))
+                tasks.append(see_device(opp, async_see, mac, device_name, rssi))
 
             if tasks:
                 await asyncio.wait(tasks)
@@ -178,7 +178,7 @@ async def async_setup_scanner(
         await update_bluetooth()
 
     opp.async_create_task(update_bluetooth())
-    async_track_time_interval.opp, update_bluetooth, interval)
+    async_track_time_interval(opp, update_bluetooth, interval)
 
     opp.services.async_register(DOMAIN, SERVICE_UPDATE, handle_manual_update_bluetooth)
 

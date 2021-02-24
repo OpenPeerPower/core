@@ -34,7 +34,7 @@ async def test_setup_failed_connect(mock_co2, opp):
     )
 
 
-async def test_setup_connected.opp):
+async def test_setup_connected(opp):
     """Test setup when connection succeeds."""
     with patch.multiple(
         "pmsensor.co2sensor",

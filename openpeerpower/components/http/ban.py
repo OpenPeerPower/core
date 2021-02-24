@@ -37,7 +37,7 @@ SCHEMA_IP_BAN_ENTRY = vol.Schema(
 
 
 @callback
-def setup_bans.opp, app, login_threshold):
+def setup_bans(opp, app, login_threshold):
     """Create IP Ban middleware for the app."""
     app.middlewares.append(ban_middleware)
     app[KEY_FAILED_LOGIN_ATTEMPTS] = defaultdict(int)

@@ -42,7 +42,7 @@ async def async_setup(opp, config):
     host = config[DOMAIN][CONF_HOST]
     update_interval = config[DOMAIN][CONF_SCAN_INTERVAL]
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     result = await mbddns.update(domain, password, host, session=session)
 
@@ -53,6 +53,6 @@ async def async_setup(opp, config):
         """Update the DNS entry."""
         await mbddns.update(domain, password, host, session=session)
 
-    async_track_time_interval.opp, update_domain_interval, update_interval)
+    async_track_time_interval(opp, update_domain_interval, update_interval)
 
     return True

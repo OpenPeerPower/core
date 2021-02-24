@@ -283,14 +283,14 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the Ambient PWS as config entry."""
     if not config_entry.unique_id:
         opp.config_entries.async_update_entry(
             config_entry, unique_id=config_entry.data[CONF_APP_KEY]
         )
 
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     try:
         ambient = AmbientStation(
@@ -316,7 +316,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an Ambient PWS config entry."""
     ambient = opp.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
     opp.async_create_task(ambient.ws_disconnect())
@@ -331,7 +331,7 @@ async def async_unload_entry.opp, config_entry):
     return True
 
 
-async def async_migrate_entry.opp, config_entry):
+async def async_migrate_entry(opp, config_entry):
     """Migrate old entry."""
     version = config_entry.version
 

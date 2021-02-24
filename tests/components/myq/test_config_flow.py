@@ -10,9 +10,9 @@ from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 from tests.common import MockConfigEntry
 
 
-async def test_form_user.opp):
+async def test_form_user(opp):
     """Test we get the user form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -44,7 +44,7 @@ async def test_form_user.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -63,7 +63,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -82,9 +82,9 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_homekit.opp):
+async def test_form_homekit(opp):
     """Test that we abort from homekit if myq is already setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -103,7 +103,7 @@ async def test_form_homekit.opp):
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_USERNAME: "mock", CONF_PASSWORD: "mock"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

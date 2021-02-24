@@ -11,7 +11,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Create and add an entity based on the configuration."""
     zigbee_device = opp.data[DOMAIN]
     add_entities([XBeeLight(XBeeDigitalOutConfig(config), zigbee_device)])

@@ -63,7 +63,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Import the platform into a config entry."""
     opp.async_create_task(
         opp.config_entries.flow.async_init(
@@ -72,7 +72,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the fritzbox_callmonitor sensor from config_entry."""
     fritzbox_phonebook = opp.data[DOMAIN][config_entry.entry_id][FRITZBOX_PHONEBOOK]
 
@@ -96,7 +96,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     )
 
     opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STOP, sensor.async_will_remove_from.opp()
+        EVENT_OPENPEERPOWER_STOP, sensor.async_will_remove_from(opp()
     )
 
     async_add_entities([sensor])
@@ -127,7 +127,7 @@ class FritzBoxCallSensor(Entity):
         )
         self._monitor.connect()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect from FRITZ!Box by stopping monitor."""
         if (
             self._monitor

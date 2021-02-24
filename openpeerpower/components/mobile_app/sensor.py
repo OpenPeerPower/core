@@ -23,13 +23,13 @@ from .const import (
 from .entity import MobileAppEntity, unique_id
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up mobile app sensor from a config entry."""
     entities = []
 
     webhook_id = config_entry.data[CONF_WEBHOOK_ID]
 
-    entity_registry = await er.async_get_registry.opp)
+    entity_registry = await er.async_get_registry(opp)
     entries = er.async_entries_for_config_entry(entity_registry, config_entry.entry_id)
     for entry in entries:
         if entry.domain != ENTITY_TYPE or entry.disabled_by:

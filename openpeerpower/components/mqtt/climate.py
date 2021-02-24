@@ -268,16 +268,16 @@ async def async_setup_platform(
     opp: OpenPeerPowerType, async_add_entities, config: ConfigType, discovery_info=None
 ):
     """Set up MQTT climate device through configuration.yaml."""
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
-    await _async_setup_entity.opp, config, async_add_entities)
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
+    await _async_setup_entity(opp, config, async_add_entities)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up MQTT climate device dynamically through MQTT discovery."""
     setup = functools.partial(
         _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
-    await async_setup_entry_helper.opp, climate.DOMAIN, setup, PLATFORM_SCHEMA)
+    await async_setup_entry_helper(opp, climate.DOMAIN, setup, PLATFORM_SCHEMA)
 
 
 async def _async_setup_entity(

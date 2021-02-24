@@ -7,7 +7,7 @@ from . import ElkAttachedEntity, create_elk_entities
 from .const import DOMAIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Create the Elk-M1 scene platform."""
     elk_data = opp.data[DOMAIN][config_entry.entry_id]
     entities = []

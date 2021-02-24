@@ -120,20 +120,20 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def run_information.opp, point_in_time: Optional[datetime] = None):
+def run_information(opp, point_in_time: Optional[datetime] = None):
     """Return information about current run.
 
     There is also the run that covers point_in_time.
     """
-    run_info = run_information_from_instance.opp, point_in_time)
+    run_info = run_information_from_instance(opp, point_in_time)
     if run_info:
         return run_info
 
-    with session_scope.opp.opp) as session:
+    with session_scope(opp.opp) as session:
         return run_information_with_session(session, point_in_time)
 
 
-def run_information_from_instance.opp, point_in_time: Optional[datetime] = None):
+def run_information_from_instance(opp, point_in_time: Optional[datetime] = None):
     """Return information about current run from the existing instance.
 
     Does not query the database for older runs.
@@ -173,7 +173,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
 
     db_url = conf.get(CONF_DB_URL)
     if not db_url:
-        db_url = DEFAULT_URL.format.opp_config_path.opp.config.path(DEFAULT_DB_FILE))
+        db_url = DEFAULT_URL.format.opp_config_path(opp.config.path(DEFAULT_DB_FILE))
     exclude = conf[CONF_EXCLUDE]
     exclude_t = exclude.get(CONF_EVENT_TYPES, [])
     instance = opp.data[DATA_INSTANCE] = Recorder(

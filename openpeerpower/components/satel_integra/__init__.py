@@ -123,7 +123,7 @@ async def async_setup(opp, config):
     _LOGGER.debug("Arm home config: %s, mode: %s ", conf, conf.get(CONF_ARM_HOME_MODE))
 
     opp.async_create_task(
-        async_load_platform.opp, "alarm_control_panel", DOMAIN, conf, config)
+        async_load_platform(opp, "alarm_control_panel", DOMAIN, conf, config)
     )
 
     opp.async_create_task(
@@ -153,19 +153,19 @@ async def async_setup(opp, config):
     def alarm_status_update_callback():
         """Send status update received from alarm to Open Peer Power."""
         _LOGGER.debug("Sending request to update panel state")
-        async_dispatcher_send.opp, SIGNAL_PANEL_MESSAGE)
+        async_dispatcher_send(opp, SIGNAL_PANEL_MESSAGE)
 
     @callback
     def zones_update_callback(status):
         """Update zone objects as per notification from the alarm."""
         _LOGGER.debug("Zones callback, status: %s", status)
-        async_dispatcher_send.opp, SIGNAL_ZONES_UPDATED, status[ZONES])
+        async_dispatcher_send(opp, SIGNAL_ZONES_UPDATED, status[ZONES])
 
     @callback
     def outputs_update_callback(status):
         """Update zone objects as per notification from the alarm."""
         _LOGGER.debug("Outputs updated callback , status: %s", status)
-        async_dispatcher_send.opp, SIGNAL_OUTPUTS_UPDATED, status["outputs"])
+        async_dispatcher_send(opp, SIGNAL_OUTPUTS_UPDATED, status["outputs"])
 
     # Create a task instead of adding a tracking job, since this task will
     # run until the connection to satel_integra is closed.

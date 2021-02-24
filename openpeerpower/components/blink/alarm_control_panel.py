@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 ICON = "mdi:security"
 
 
-async def async_setup_entry.opp, config, async_add_entities):
+async def async_setup_entry(opp, config, async_add_entities):
     """Set up the Blink Alarm Control Panels."""
     data = opp.data[DOMAIN][config.entry_id]
 

@@ -29,7 +29,7 @@ DEMO_USER_INPUT = {
 }
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test config entry configured successfully."""
 
     result = await opp.config_entries.flow.async_init(
@@ -51,7 +51,7 @@ async def test_form.opp):
     assert result["data"] == DEMO_USER_INPUT
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test to return error if we cannot connect."""
 
     with patch("glances_api.Glances"):
@@ -66,7 +66,7 @@ async def test_form_cannot_connect.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_wrong_version.opp):
+async def test_form_wrong_version(opp):
     """Test to check if wrong version is entered."""
 
     user_input = DEMO_USER_INPUT.copy()
@@ -82,12 +82,12 @@ async def test_form_wrong_version.opp):
     assert result["errors"] == {"version": "wrong_version"}
 
 
-async def test_form_already_configured.opp):
+async def test_form_already_configured(opp):
     """Test host is already configured."""
     entry = MockConfigEntry(
         domain=glances.DOMAIN, data=DEMO_USER_INPUT, options={CONF_SCAN_INTERVAL: 60}
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         glances.DOMAIN, context={"source": "user"}
@@ -99,12 +99,12 @@ async def test_form_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test options for Glances."""
     entry = MockConfigEntry(
         domain=glances.DOMAIN, data=DEMO_USER_INPUT, options={CONF_SCAN_INTERVAL: 60}
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

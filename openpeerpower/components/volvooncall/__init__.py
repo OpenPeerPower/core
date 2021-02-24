@@ -116,7 +116,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(opp, config):
     """Set up the Volvo On Call component."""
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     connection = Connection(
         session=session,
@@ -172,11 +172,11 @@ async def async_setup(opp, config):
                 if vehicle.vin not in data.vehicles:
                     discover_vehicle(vehicle)
 
-            async_dispatcher_send.opp, SIGNAL_STATE_UPDATED)
+            async_dispatcher_send(opp, SIGNAL_STATE_UPDATED)
 
             return True
         finally:
-            async_track_point_in_utc_time.opp, update, utcnow() + interval)
+            async_track_point_in_utc_time(opp, update, utcnow() + interval)
 
     _LOGGER.info("Logging in to service")
     return await update(utcnow())

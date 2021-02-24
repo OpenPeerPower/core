@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_ingress_view.opp.OpenPeerPowerType, host: str):
+def async_setup_ingress_view(opp.OpenPeerPowerType, host: str):
     """Auth setup."""
     websession = opp.elpers.aiohttp_client.async_get_clientsession()
 

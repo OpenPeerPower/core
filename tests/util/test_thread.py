@@ -8,13 +8,13 @@ from openpeerpower.util.async_ import run_callback_threadsafe
 from openpeerpower.util.thread import ThreadWithException
 
 
-async def test_thread_with_exception_invalid.opp):
+async def test_thread_with_exception_invalid(opp):
     """Test throwing an invalid thread exception."""
 
     finish_event = asyncio.Event()
 
     def _do_nothing(*_):
-        run_callback_threadsafe.opp.loop, finish_event.set)
+        run_callback_threadsafe(opp.loop, finish_event.set)
 
     test_thread = ThreadWithException(target=_do_nothing)
     test_thread.start()
@@ -25,7 +25,7 @@ async def test_thread_with_exception_invalid.opp):
     test_thread.join()
 
 
-async def test_thread_not_started.opp):
+async def test_thread_not_started(opp):
     """Test throwing when the thread is not started."""
 
     test_thread = ThreadWithException(target=lambda *_: None)
@@ -34,13 +34,13 @@ async def test_thread_not_started.opp):
         test_thread.raise_exc(TimeoutError)
 
 
-async def test_thread_fails_raise.opp):
+async def test_thread_fails_raise(opp):
     """Test throwing after already ended."""
 
     finish_event = asyncio.Event()
 
     def _do_nothing(*_):
-        run_callback_threadsafe.opp.loop, finish_event.set)
+        run_callback_threadsafe(opp.loop, finish_event.set)
 
     test_thread = ThreadWithException(target=_do_nothing)
     test_thread.start()

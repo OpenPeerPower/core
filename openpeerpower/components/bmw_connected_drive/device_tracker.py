@@ -10,7 +10,7 @@ from .const import CONF_ACCOUNT, DATA_ENTRIES
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the BMW ConnectedDrive tracker from config entry."""
     account = opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
     entities = []

@@ -18,7 +18,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the Axis component."""
     opp.data.setdefault(AXIS_DOMAIN, {})
 
@@ -36,13 +36,13 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload Axis device config entry."""
     device = opp.data[AXIS_DOMAIN].pop(config_entry.unique_id)
     return await device.async_reset()
 
 
-async def async_migrate_entry.opp, config_entry):
+async def async_migrate_entry(opp, config_entry):
     """Migrate old entry."""
     _LOGGER.debug("Migrating from version %s", config_entry.version)
 
@@ -70,7 +70,7 @@ async def async_migrate_entry.opp, config_entry):
             }
 
         if old_unique_id != new_unique_id:
-            await async_migrate_entries.opp, config_entry.entry_id, update_unique_id)
+            await async_migrate_entries(opp, config_entry.entry_id, update_unique_id)
 
             opp.config_entries.async_update_entry(
                 config_entry, unique_id=new_unique_id

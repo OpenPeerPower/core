@@ -79,7 +79,7 @@ async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up NZBGet from a config entry."""
     if not entry.options:
         options = {
@@ -112,12 +112,12 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             opp.config_entries.async_forward_entry_setup(entry, component)
         )
 
-    _async_register_services.opp, coordinator)
+    _async_register_services(opp, coordinator)
 
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -160,7 +160,7 @@ def _async_register_services(
     )
 
 
-async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 

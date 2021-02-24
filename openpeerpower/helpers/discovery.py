@@ -30,7 +30,7 @@ def listen(
 
     Service can be a string or a list/tuple.
     """
-    run_callback_threadsafe.opp.loop, async_listen, opp, service, callback).result()
+    run_callback_threadsafe(opp.loop, async_listen, opp, service, callback).result()
 
 
 @core.callback
@@ -54,7 +54,7 @@ def async_listen(
     async def discovery_event_listener(event: core.Event) -> None:
         """Listen for discovery events."""
         if ATTR_SERVICE in event.data and event.data[ATTR_SERVICE] in service:
-            task = opp.async_run.opp_job(
+            task = opp.async_run(opp_job(
                 job, event.data[ATTR_SERVICE], event.data.get(ATTR_DISCOVERED)
             )
             if task:
@@ -89,7 +89,7 @@ async def async_discover(
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
     if component is not None and component not in.opp.config.components:
-        await setup.async_setup_component.opp, component, opp_config)
+        await setup.async_setup_component(opp, component, opp_config)
 
     data: Dict[str, Any] = {ATTR_SERVICE: service}
 
@@ -132,7 +132,7 @@ def async_listen_platform(
         if not platform:
             return
 
-        task = opp.async_run.opp_job(job, platform, event.data.get(ATTR_DISCOVERED))
+        task = opp.async_run(opp_job(job, platform, event.data.get(ATTR_DISCOVERED))
         if task:
             await task
 
@@ -192,7 +192,7 @@ async def async_load_platform(
     setup_success = True
 
     if component not in.opp.config.components:
-        setup_success = await setup.async_setup_component.opp, component, opp_config)
+        setup_success = await setup.async_setup_component(opp, component, opp_config)
 
     # No need to fire event if we could not set up component
     if not setup_success:

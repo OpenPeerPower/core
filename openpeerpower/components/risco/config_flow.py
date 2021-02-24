@@ -39,7 +39,7 @@ OP_STATES = [
 ]
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
@@ -47,7 +47,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     risco = RiscoAPI(data[CONF_USERNAME], data[CONF_PASSWORD], data[CONF_PIN])
 
     try:
-        await risco.login(async_get_clientsession.opp))
+        await risco.login(async_get_clientsession(opp))
     finally:
         await risco.close()
 

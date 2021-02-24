@@ -50,21 +50,21 @@ async def test_failed_config(
     opp: OpenPeerPowerType, mock_failed_bridge: Generator[None, Any, None]
 ) -> None:
     """Test failed configuration."""
-    assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION) is False
+    assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION) is False
 
 
 async def test_minimal_config(
     opp: OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
 ) -> None:
     """Test setup with configuration minimal entries."""
-    assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
+    assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION)
 
 
 async def test_discovery_data_bucket(
     opp: OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
 ) -> None:
     """Test the event send with the updated device."""
-    assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
+    assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION)
 
     await opp.async_block_till_done()
 
@@ -88,7 +88,7 @@ async def test_set_auto_off_service(
     opp.owner_user: MockUser,
 ) -> None:
     """Test the set_auto_off service."""
-    assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
+    assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION)
 
     await opp.async_block_till_done()
 
@@ -99,7 +99,7 @@ async def test_set_auto_off_service(
         SERVICE_SET_AUTO_OFF_NAME,
         {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_AUTO_OFF: DUMMY_AUTO_OFF_SET},
         blocking=True,
-        context=Context(user_id.opp_owner_user.id),
+        context=Context(user_id(opp_owner_user.id),
     )
 
     with raises(UnknownUser) as unknown_user_exc:
@@ -136,7 +136,7 @@ async def test_turn_on_with_timer_service(
     opp.owner_user: MockUser,
 ) -> None:
     """Test the set_auto_off service."""
-    assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
+    assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION)
 
     await opp.async_block_till_done()
 
@@ -147,7 +147,7 @@ async def test_turn_on_with_timer_service(
         SERVICE_TURN_ON_WITH_TIMER_NAME,
         {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_TIMER_MINUTES: DUMMY_TIMER_MINUTES_SET},
         blocking=True,
-        context=Context(user_id.opp_owner_user.id),
+        context=Context(user_id(opp_owner_user.id),
     )
 
     with raises(UnknownUser) as unknown_user_exc:
@@ -187,7 +187,7 @@ async def test_signal_dispatcher(
     opp: OpenPeerPowerType, mock_bridge: Generator[None, Any, None]
 ) -> None:
     """Test signal dispatcher dispatching device updates every 4 seconds."""
-    assert await async_setup_component.opp, DOMAIN, MANDATORY_CONFIGURATION)
+    assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION)
 
     await opp.async_block_till_done()
 
@@ -196,6 +196,6 @@ async def test_signal_dispatcher(
         """Use as callback for signal dispatcher."""
         pass
 
-    async_dispatcher_connect.opp, SIGNAL_SWITCHER_DEVICE_UPDATE, verify_update_data)
+    async_dispatcher_connect(opp, SIGNAL_SWITCHER_DEVICE_UPDATE, verify_update_data)
 
-    async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=5))
+    async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=5))

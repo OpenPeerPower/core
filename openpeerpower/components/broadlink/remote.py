@@ -88,19 +88,19 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Import the device and discontinue platform.
 
     This is for backward compatibility.
     Do not use this method.
     """
-    import_device.opp, config[CONF_HOST])
+    import_device(opp, config[CONF_HOST])
     _LOGGER.warning(
         "The remote platform is deprecated, please remove it from your configuration"
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a Broadlink remote."""
     device = opp.data[DOMAIN].devices[config_entry.entry_id]
     remote = BroadlinkRemote(

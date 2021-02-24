@@ -145,7 +145,7 @@ async def async_setup(opp, config):
                 platform,
             )
 
-    zeroconf_instance = await zeroconf.async_get_instance.opp)
+    zeroconf_instance = await zeroconf.async_get_instance(opp)
 
     async def new_service_found(service, info):
         """Handle a new service if one is found."""
@@ -186,9 +186,9 @@ async def async_setup(opp, config):
         component, platform = comp_plat
 
         if platform is None:
-            await async_discover.opp, service, info, component, config)
+            await async_discover(opp, service, info, component, config)
         else:
-            await async_load_platform.opp, component, platform, info, config)
+            await async_load_platform(opp, component, platform, info, config)
 
     async def scan_devices(now):
         """Scan for devices."""
@@ -209,7 +209,7 @@ async def async_setup(opp, config):
     @callback
     def schedule_first(event):
         """Schedule the first discovery when Open Peer Power starts up."""
-        async_track_point_in_utc_time.opp, scan_devices, dt_util.utcnow())
+        async_track_point_in_utc_time(opp, scan_devices, dt_util.utcnow())
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, schedule_first)
 

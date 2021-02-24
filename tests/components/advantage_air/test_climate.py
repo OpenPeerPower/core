@@ -32,7 +32,7 @@ from tests.components.advantage_air import (
 )
 
 
-async def test_climate_async_setup_entry.opp, aioclient_mock):
+async def test_climate_async_setup_entry(opp, aioclient_mock):
     """Test climate setup."""
 
     aioclient_mock.get(
@@ -170,7 +170,7 @@ async def test_climate_async_setup_entry.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 
 
-async def test_climate_async_failed_update.opp, aioclient_mock):
+async def test_climate_async_failed_update(opp, aioclient_mock):
     """Test climate change failure."""
 
     aioclient_mock.get(

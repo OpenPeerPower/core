@@ -23,11 +23,11 @@ from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from tests.common import MockConfigEntry
 
 
-async def test_update_device.opp):
+async def test_update_device(opp):
     """Test that update works."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -38,7 +38,7 @@ async def test_update_device.opp):
     device = Mock()
     device.unique_id = "abcdef"
     wide_func = Mock()
-    async_dispatcher_connect.opp, f"dynalite-update-{host}", wide_func)
+    async_dispatcher_connect(opp, f"dynalite-update-{host}", wide_func)
     specific_func = Mock()
     async_dispatcher_connect(
         opp. f"dynalite-update-{host}-{device.unique_id}", specific_func
@@ -53,11 +53,11 @@ async def test_update_device.opp):
     specific_func.assert_called_once()
 
 
-async def test_add_devices_then_register.opp):
+async def test_add_devices_then_register(opp):
     """Test that add_devices work."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -86,11 +86,11 @@ async def test_add_devices_then_register.opp):
     assert.opp.states.get("switch.name3")
 
 
-async def test_register_then_add_devices.opp):
+async def test_register_then_add_devices(opp):
     """Test that add_devices work after register_add_entities."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -113,11 +113,11 @@ async def test_register_then_add_devices.opp):
     assert.opp.states.get("switch.name2")
 
 
-async def test_notifications.opp):
+async def test_notifications(opp):
     """Test that update works."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:

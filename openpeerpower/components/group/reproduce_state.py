@@ -18,7 +18,7 @@ async def async_reproduce_states(
     """Reproduce component states."""
     states_copy = []
     for state in states:
-        members = get_entity_ids.opp, state.entity_id)
+        members = get_entity_ids(opp, state.entity_id)
         for member in members:
             states_copy.append(
                 State(

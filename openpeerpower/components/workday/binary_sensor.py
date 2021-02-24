@@ -66,7 +66,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Workday sensor."""
     add_holidays = config.get(CONF_ADD_HOLIDAYS)
     remove_holidays = config.get(CONF_REMOVE_HOLIDAYS)

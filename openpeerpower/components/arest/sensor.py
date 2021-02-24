@@ -50,7 +50,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the aREST sensor."""
     resource = config[CONF_RESOURCE]
     var_conf = config[CONF_MONITORED_VARIABLES]
@@ -74,7 +74,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         if value_template is None:
             return lambda value: value
 
-        value_template.opp = opp
+        value_template(opp = opp
 
         def _render(value):
             try:

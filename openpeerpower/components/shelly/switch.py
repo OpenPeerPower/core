@@ -10,7 +10,7 @@ from .entity import ShellyBlockEntity
 from .utils import async_remove_shelly_entity
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up switches for device."""
     wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
 

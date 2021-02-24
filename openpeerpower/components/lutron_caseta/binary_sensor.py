@@ -10,7 +10,7 @@ from . import DOMAIN as CASETA_DOMAIN, LutronCasetaDevice
 from .const import BRIDGE_DEVICE, BRIDGE_LEAP
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Lutron Caseta binary_sensor platform.
 
     Adds occupancy groups from the Caseta bridge associated with the

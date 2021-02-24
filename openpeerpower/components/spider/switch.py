@@ -4,7 +4,7 @@ from openpeerpower.components.switch import SwitchEntity
 from .const import DOMAIN
 
 
-async def async_setup_entry.opp, config, async_add_entities):
+async def async_setup_entry(opp, config, async_add_entities):
     """Initialize a Spider Power Plug."""
     api = opp.data[DOMAIN][config.entry_id]
     async_add_entities(

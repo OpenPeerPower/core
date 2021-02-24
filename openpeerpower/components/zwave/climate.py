@@ -128,7 +128,7 @@ DEFAULT_HVAC_MODES = [
 ]
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Climate device from Config Entry."""
 
     @callback
@@ -136,10 +136,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Add Z-Wave Climate Device."""
         async_add_entities([climate])
 
-    async_dispatcher_connect.opp, "zwave_new_climate", async_add_climate)
+    async_dispatcher_connect(opp, "zwave_new_climate", async_add_climate)
 
 
-def get_device.opp, values, **kwargs):
+def get_device(opp, values, **kwargs):
     """Create Z-Wave entity device."""
     temp_unit = opp.config.units.temperature_unit
     if values.primary.command_class == const.COMMAND_CLASS_THERMOSTAT_SETPOINT:

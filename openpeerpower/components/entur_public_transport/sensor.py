@@ -84,7 +84,7 @@ def due_in_minutes(timestamp: datetime) -> int:
     return int(diff.total_seconds() / 60)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Entur public transport sensor."""
 
     expand = config.get(CONF_EXPAND_PLATFORMS)
@@ -105,7 +105,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         line_whitelist=line_whitelist,
         omit_non_boarding=omit_non_boarding,
         number_of_departures=number_of_departures,
-        web_session=async_get_clientsession.opp),
+        web_session=async_get_clientsession(opp),
     )
 
     if expand:

@@ -56,7 +56,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the ViaggiaTreno platform."""
     train_id = config.get(CONF_TRAIN_ID)
     station_id = config.get(CONF_STATION_ID)
@@ -66,10 +66,10 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     async_add_entities([ViaggiaTrenoSensor(train_id, station_id, name)])
 
 
-async def async_http_request.opp, uri):
+async def async_http_request(opp, uri):
     """Perform actual request."""
     try:
-        session = opp.helpers.aiohttp_client.async_get_clientsession.opp)
+        session = opp.helpers.aiohttp_client.async_get_clientsession(opp)
         with async_timeout.timeout(REQUEST_TIMEOUT):
             req = await session.get(uri)
         if req.status != HTTP_OK:

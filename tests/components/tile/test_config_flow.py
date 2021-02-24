@@ -18,7 +18,7 @@ async def test_duplicate_error(opp):
         CONF_PASSWORD: "123abc",
     }
 
-    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to.opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to(opp(
         opp
     )
 
@@ -30,7 +30,7 @@ async def test_duplicate_error(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test that invalid credentials key throws an error."""
     conf = {
         CONF_USERNAME: "user@host.com",
@@ -48,7 +48,7 @@ async def test_invalid_credentials.opp):
         assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_step_import.opp):
+async def test_step_import(opp):
     """Test that the import step works."""
     conf = {
         CONF_USERNAME: "user@host.com",
@@ -69,7 +69,7 @@ async def test_step_import.opp):
         }
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     conf = {
         CONF_USERNAME: "user@host.com",

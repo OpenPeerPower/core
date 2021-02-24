@@ -31,7 +31,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Social Blade sensor."""
     social_blade = SocialBladeSensor(config[CHANNEL_ID], config[CONF_NAME])
 

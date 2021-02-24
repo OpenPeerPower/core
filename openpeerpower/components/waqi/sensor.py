@@ -59,14 +59,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the requested World Air Quality Index locations."""
 
     token = config.get(CONF_TOKEN)
     station_filter = config.get(CONF_STATIONS)
     locations = config.get(CONF_LOCATIONS)
 
-    client = WaqiClient(token, async_get_clientsession.opp), timeout=TIMEOUT)
+    client = WaqiClient(token, async_get_clientsession(opp), timeout=TIMEOUT)
     dev = []
     try:
         for location_name in locations:

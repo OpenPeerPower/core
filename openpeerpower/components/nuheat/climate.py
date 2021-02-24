@@ -63,7 +63,7 @@ SCHEDULE_MODE_TO_PRESET_MODE_MAP = {
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the NuHeat thermostat(s)."""
     thermostat, coordinator = opp.data[DOMAIN][config_entry.entry_id]
 

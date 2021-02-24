@@ -248,11 +248,11 @@ def _check_for_states_in_uom(
     return False
 
 
-def _is_sensor_a_binary_sensor.opp_isy_data: dict, node: Union[Group, Node]) -> bool:
+def _is_sensor_a_binary_sensor(opp_isy_data: dict, node: Union[Group, Node]) -> bool:
     """Determine if the given sensor node should be a binary_sensor."""
-    if _check_for_node_def.opp_isy_data, node, single_platform=BINARY_SENSOR):
+    if _check_for_node_def(opp_isy_data, node, single_platform=BINARY_SENSOR):
         return True
-    if _check_for_insteon_type.opp_isy_data, node, single_platform=BINARY_SENSOR):
+    if _check_for_insteon_type(opp_isy_data, node, single_platform=BINARY_SENSOR):
         return True
 
     # For the next two checks, we're providing our own set of uoms that
@@ -291,7 +291,7 @@ def _categorize_nodes(
         if sensor_identifier in path or sensor_identifier in node.name:
             # User has specified to treat this as a sensor. First we need to
             # determine if it should be a binary_sensor.
-            if _is_sensor_a_binary_sensor.opp_isy_data, node):
+            if _is_sensor_a_binary_sensor(opp_isy_data, node):
                 continue
             opp.isy_data[ISY994_NODES][SENSOR].append(node)
             continue
@@ -299,22 +299,22 @@ def _categorize_nodes(
         # We have a bunch of different methods for determining the device type,
         # each of which works with different ISY firmware versions or device
         # family. The order here is important, from most reliable to least.
-        if _check_for_node_def.opp_isy_data, node):
+        if _check_for_node_def(opp_isy_data, node):
             continue
-        if _check_for_insteon_type.opp_isy_data, node):
+        if _check_for_insteon_type(opp_isy_data, node):
             continue
-        if _check_for_zwave_cat.opp_isy_data, node):
+        if _check_for_zwave_cat(opp_isy_data, node):
             continue
-        if _check_for_uom_id.opp_isy_data, node):
+        if _check_for_uom_id(opp_isy_data, node):
             continue
-        if _check_for_states_in_uom.opp_isy_data, node):
+        if _check_for_states_in_uom(opp_isy_data, node):
             continue
 
         # Fallback as as sensor, e.g. for un-sortable items like NodeServer nodes.
         opp.isy_data[ISY994_NODES][SENSOR].append(node)
 
 
-def _categorize_programs.opp_isy_data: dict, programs: Programs) -> None:
+def _categorize_programs(opp_isy_data: dict, programs: Programs) -> None:
     """Categorize the ISY994 programs."""
     for platform in SUPPORTED_PROGRAM_PLATFORMS:
         folder = programs.get_by_name(f"{DEFAULT_PROGRAM_STRING}{platform}")
@@ -371,7 +371,7 @@ async def migrate_old_unique_ids(
     opp: OpenPeerPowerType, platform: str, devices: Optional[List[Any]]
 ) -> None:
     """Migrate to new controller-specific unique ids."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
 
     for device in devices:
         old_entity_id = registry.async_get_entity_id(
@@ -399,7 +399,7 @@ async def migrate_old_unique_ids(
             )
 
 
-def convert_isy_value_to.opp(
+def convert_isy_value_to(opp(
     value: Union[int, float, None],
     uom: str,
     precision: Union[int, str],

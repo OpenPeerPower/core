@@ -12,7 +12,7 @@ from openpeerpower.data_entry_flow import RESULT_TYPE_CREATE_ENTRY, RESULT_TYPE_
 from tests.common import MockConfigEntry, mock_registry
 
 
-async def test_async_step_user_success.opp: OpenPeerPower) -> None:
+async def test_async_step_user_success(opp: OpenPeerPower) -> None:
     """Test user step success."""
     with patch("pyvera.VeraController") as vera_controller_class_mock:
         controller = MagicMock()
@@ -49,7 +49,7 @@ async def test_async_step_user_success.opp: OpenPeerPower) -> None:
     assert entries
 
 
-async def test_async_step_import_success.opp: OpenPeerPower) -> None:
+async def test_async_step_import_success(opp: OpenPeerPower) -> None:
     """Test import step success."""
     with patch("pyvera.VeraController") as vera_controller_class_mock:
         controller = MagicMock()
@@ -77,7 +77,7 @@ async def test_async_step_import_success_with_legacy_unique_id(
     opp: OpenPeerPower,
 ) -> None:
     """Test import step success with legacy unique id."""
-    entity_registry = mock_registry.opp)
+    entity_registry = mock_registry(opp)
     entity_registry.async_get_or_create(
         domain="switch", platform=DOMAIN, unique_id="12"
     )
@@ -124,7 +124,7 @@ async def test_async_step_finish_error(opp: OpenPeerPower) -> None:
         }
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test updating options."""
     base_url = "http://127.0.0.1/"
     entry = MockConfigEntry(
@@ -133,7 +133,7 @@ async def test_options.opp):
         data={CONF_CONTROLLER: "http://127.0.0.1/"},
         options={CONF_LIGHTS: [1, 2, 3]},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None

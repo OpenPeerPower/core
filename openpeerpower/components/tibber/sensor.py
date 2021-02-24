@@ -22,7 +22,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=5)
 PARALLEL_UPDATES = 0
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Tibber sensor."""
 
     tibber_connection = opp.data.get(TIBBER_DOMAIN)

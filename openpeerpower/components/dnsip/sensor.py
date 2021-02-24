@@ -37,7 +37,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_devices, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_devices, discovery_info=None):
     """Set up the DNS IP sensor."""
     hostname = config[CONF_HOSTNAME]
     name = config.get(CONF_NAME)

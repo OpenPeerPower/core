@@ -7,7 +7,7 @@ from .base import ONVIFBaseEntity
 from .const import DOMAIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a ONVIF binary sensor."""
     device = opp.data[DOMAIN][config_entry.unique_id]
 

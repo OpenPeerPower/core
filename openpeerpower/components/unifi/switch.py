@@ -34,7 +34,7 @@ CLIENT_BLOCKED = (WIRED_CLIENT_BLOCKED, WIRELESS_CLIENT_BLOCKED)
 CLIENT_UNBLOCKED = (WIRED_CLIENT_UNBLOCKED, WIRELESS_CLIENT_UNBLOCKED)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up switches for UniFi component.
 
     Switches are controlling network access and switch ports with POE.
@@ -88,7 +88,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             add_dpi_entities(controller, async_add_entities, dpi_groups)
 
     for signal in (controller.signal_update, controller.signal_options_update):
-        controller.listeners.append(async_dispatcher_connect.opp, signal, items_added))
+        controller.listeners.append(async_dispatcher_connect(opp, signal, items_added))
 
     items_added()
     previously_known_poe_clients.clear()

@@ -44,7 +44,7 @@ ETHERNET_SCHEMA = PLATFORM_SCHEMA.extend(
 PLATFORM_SCHEMA = vol.Schema(vol.Any(SERIAL_SCHEMA, ETHERNET_SCHEMA))
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the KWB component."""
     host = config.get(CONF_HOST)
     port = config.get(CONF_PORT)

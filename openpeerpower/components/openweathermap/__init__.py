@@ -38,7 +38,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Set up OpenWeatherMap as config entry."""
     name = config_entry.data[CONF_NAME]
     api_key = config_entry.data[CONF_API_KEY]
@@ -76,7 +76,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
     return True
 
 
-async def async_migrate_entry.opp, entry):
+async def async_migrate_entry(opp, entry):
     """Migrate old entry."""
     config_entries = opp.config_entries
     data = entry.data
@@ -98,12 +98,12 @@ async def async_migrate_entry.opp, entry):
     return True
 
 
-async def async_update_options.opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_update_options(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Update options."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
-async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

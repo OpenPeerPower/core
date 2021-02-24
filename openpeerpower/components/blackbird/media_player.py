@@ -66,7 +66,7 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Monoprice Blackbird 4k 8x8 HDBaseT Matrix platform."""
     if DATA_BLACKBIRD not in.opp.data:
         opp.data[DATA_BLACKBIRD] = {}

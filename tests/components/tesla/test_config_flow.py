@@ -23,9 +23,9 @@ from openpeerpower.const import (
 from tests.common import MockConfigEntry
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -57,7 +57,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -76,7 +76,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -95,7 +95,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_repeat_identifier.opp):
+async def test_form_repeat_identifier(opp):
     """Test we handle repeat identifiers."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -103,7 +103,7 @@ async def test_form_repeat_identifier.opp):
         data={"username": "test-username", "password": "test-password"},
         options=None,
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -121,7 +121,7 @@ async def test_form_repeat_identifier.opp):
     assert result2["reason"] == "already_configured"
 
 
-async def test_form_reauth.opp):
+async def test_form_reauth(opp):
     """Test we handle reauth."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -129,7 +129,7 @@ async def test_form_reauth.opp):
         data={"username": "test-username", "password": "same"},
         options=None,
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -149,7 +149,7 @@ async def test_form_reauth.opp):
     assert result2["reason"] == "reauth_successful"
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test import step."""
 
     with patch(
@@ -168,10 +168,10 @@ async def test_import.opp):
     assert result["description_placeholders"] is None
 
 
-async def test_option_flow.opp):
+async def test_option_flow(opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -186,10 +186,10 @@ async def test_option_flow.opp):
     assert result["data"] == {CONF_SCAN_INTERVAL: 350, CONF_WAKE_ON_START: True}
 
 
-async def test_option_flow_defaults.opp):
+async def test_option_flow_defaults(opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -206,10 +206,10 @@ async def test_option_flow_defaults.opp):
     }
 
 
-async def test_option_flow_input_floor.opp):
+async def test_option_flow_input_floor(opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

@@ -29,7 +29,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 SCAN_INTERVAL = timedelta(minutes=60)
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Set up the cartridge sensor."""
     host = config.get(CONF_HOST)
 

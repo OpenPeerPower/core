@@ -6,7 +6,7 @@ from openpeerpower.components.scene import Scene
 from .const import BRIDGE_LEAP, DOMAIN as CASETA_DOMAIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Lutron Caseta scene platform.
 
     Adds scenes from the Caseta bridge associated with the config_entry as

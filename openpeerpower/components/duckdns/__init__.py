@@ -44,7 +44,7 @@ async def async_setup(opp, config):
     """Initialize the DuckDNS component."""
     domain = config[DOMAIN][CONF_DOMAIN]
     token = config[DOMAIN][CONF_ACCESS_TOKEN]
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     async def update_domain_interval(_now):
         """Update the DuckDNS entry."""
@@ -57,7 +57,7 @@ async def async_setup(opp, config):
         timedelta(minutes=15),
         timedelta(minutes=30),
     )
-    async_track_time_interval_backoff.opp, update_domain_interval, intervals)
+    async_track_time_interval_backoff(opp, update_domain_interval, intervals)
 
     async def update_domain_service(call):
         """Update the DuckDNS entry."""
@@ -100,7 +100,7 @@ async def _update_duckdns(session, domain, token, *, txt=_SENTINEL, clear=False)
 
 @callback
 @bind.opp
-def async_track_time_interval_backoff.opp, action, intervals) -> CALLBACK_TYPE:
+def async_track_time_interval_backoff(opp, action, intervals) -> CALLBACK_TYPE:
     """Add a listener that fires repetitively at every timedelta interval."""
     if not iscoroutinefunction:
         _LOGGER.error("action needs to be a coroutine and return True/False")
@@ -120,7 +120,7 @@ def async_track_time_interval_backoff.opp, action, intervals) -> CALLBACK_TYPE:
                 failed = 0
         finally:
             delay = intervals[failed] if failed < len(intervals) else intervals[-1]
-            remove = async_call_later.opp, delay.total_seconds(), interval_listener)
+            remove = async_call_later(opp, delay.total_seconds(), interval_listener)
 
     opp.async_run_job(interval_listener, dt_util.utcnow())
 

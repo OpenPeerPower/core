@@ -25,7 +25,7 @@ VERSION_PATH = os.path.join(get_test_config_dir(), config_util.VERSION_FILE)
 
 
 @pytest.fixture(autouse=True)
-def apply_mock_storage.opp_storage):
+def apply_mock_storage(opp_storage):
     """Apply the storage mock."""
 
 
@@ -44,7 +44,7 @@ def mock_http_start_stop():
 
 
 @patch("openpeerpower.bootstrap.async_enable_logging", Mock())
-async def test_open_peer_power_core_config_validation.opp):
+async def test_open_peer_power_core_config_validation(opp):
     """Test if we pass in wrong information for HA conf."""
     # Extensive HA conf validation testing is done
     result = await bootstrap.async_from_config_dict(
@@ -53,22 +53,22 @@ async def test_open_peer_power_core_config_validation.opp):
     assert result is None
 
 
-async def test_async_enable_logging.opp):
+async def test_async_enable_logging(opp):
     """Test to ensure logging is migrated to the queue handlers."""
     with patch("logging.getLogger"), patch(
         "openpeerpower.bootstrap.async_activate_log_queue_handler"
     ) as mock_async_activate_log_queue_handler:
-        bootstrap.async_enable_logging.opp)
+        bootstrap.async_enable_logging(opp)
         mock_async_activate_log_queue_handler.assert_called_once()
 
 
-async def test_load_oppio.opp):
+async def test_load_oppio(opp):
     """Test that we load Opp.io component."""
     with patch.dict(os.environ, {}, clear=True):
-        assert bootstrap._get_domains.opp, {}) == set()
+        assert bootstrap._get_domains(opp, {}) == set()
 
     with patch.dict(os.environ, {"OPPIO": "1"}):
-        assert bootstrap._get_domains.opp, {}) == {"oppio"}
+        assert bootstrap._get_domains(opp, {}) == {"oppio"}
 
 
 @pytest.mark.parametrize("load_registries", [False])
@@ -79,7 +79,7 @@ async def test_empty_setup_opp):
         assert domain in.opp.config.components, domain
 
 
-async def test_core_failure_loads_safe_mode.opp, caplog):
+async def test_core_failure_loads_safe_mode(opp, caplog):
     """Test failing core setup aborts further setup."""
     with patch(
         "openpeerpower.components.openpeerpower.async_setup",
@@ -103,7 +103,7 @@ async def test_setting_up_config(opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_setup_after_deps_all_present.opp):
+async def test_setup_after_deps_all_present(opp):
     """Test after_dependencies when all present."""
     order = []
 
@@ -148,7 +148,7 @@ async def test_setup_after_deps_all_present.opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_setup_after_deps_in_stage_1_ignored.opp):
+async def test_setup_after_deps_in_stage_1_ignored(opp):
     """Test after_dependencies are ignored in stage 1."""
     # This test relies on this
     assert "cloud" in bootstrap.STAGE_1_INTEGRATIONS
@@ -195,7 +195,7 @@ async def test_setup_after_deps_in_stage_1_ignored.opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_setup_after_deps_via_platform.opp):
+async def test_setup_after_deps_via_platform(opp):
     """Test after_dependencies set up via platform."""
     order = []
     after_dep_event = asyncio.Event()
@@ -225,7 +225,7 @@ async def test_setup_after_deps_via_platform.opp):
             partial_manifest={"after_dependencies": ["after_dep_of_platform_int"]},
         ),
     )
-    mock_entity_platform.opp, "light.platform_int", MockPlatform())
+    mock_entity_platform(opp, "light.platform_int", MockPlatform())
 
     @core.callback
     def continue_loading(_):
@@ -245,7 +245,7 @@ async def test_setup_after_deps_via_platform.opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_setup_after_deps_not_trigger_load.opp):
+async def test_setup_after_deps_not_trigger_load(opp):
     """Test after_dependencies does not trigger loading it."""
     order = []
 
@@ -276,7 +276,7 @@ async def test_setup_after_deps_not_trigger_load.opp):
         ),
     )
 
-    await bootstrap._async_set_up_integrations.opp, {"root": {}, "second_dep": {}})
+    await bootstrap._async_set_up_integrations(opp, {"root": {}, "second_dep": {}})
 
     assert "root" in.opp.config.components
     assert "first_dep" not in.opp.config.components
@@ -284,7 +284,7 @@ async def test_setup_after_deps_not_trigger_load.opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_setup_after_deps_not_present.opp):
+async def test_setup_after_deps_not_present(opp):
     """Test after_dependencies when referenced integration doesn't exist."""
     order = []
 

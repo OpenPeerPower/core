@@ -12,7 +12,7 @@ from .device import FloDeviceDataUpdateCoordinator
 from .entity import FloEntity
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Flo sensors from config entry."""
     devices: List[FloDeviceDataUpdateCoordinator] = opp.data[FLO_DOMAIN][
         config_entry.entry_id

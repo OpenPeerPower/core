@@ -14,7 +14,7 @@ from .axis_base import AxisEventBase
 from .const import DOMAIN as AXIS_DOMAIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a Axis light."""
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
@@ -33,7 +33,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             async_add_entities([AxisLight(event, device)])
 
     device.listeners.append(
-        async_dispatcher_connect.opp, device.signal_new_event, async_add_sensor)
+        async_dispatcher_connect(opp, device.signal_new_event, async_add_sensor)
     )
 
 

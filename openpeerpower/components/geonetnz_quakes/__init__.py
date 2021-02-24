@@ -88,7 +88,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the GeoNet NZ Quakes component as config entry."""
     opp.data.setdefault(DOMAIN, {})
     feeds = opp.data[DOMAIN].setdefault(FEED, {})
@@ -104,7 +104,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an GeoNet NZ Quakes component config entry."""
     manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
@@ -128,7 +128,7 @@ class GeonetnzQuakesFeedEntityManager:
             config_entry.data[CONF_LATITUDE],
             config_entry.data[CONF_LONGITUDE],
         )
-        websession = aiohttp_client.async_get_clientsession.opp)
+        websession = aiohttp_client.async_get_clientsession(opp)
         self._feed_manager = GeonetnzQuakesFeedManager(
             websession,
             self._generate_entity,

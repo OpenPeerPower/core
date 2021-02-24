@@ -150,7 +150,7 @@ async def async_setup(opp, config):
             kwargs["module_url"] = panel[CONF_MODULE_URL]
 
         try:
-            await async_register_panel.opp, **kwargs)
+            await async_register_panel(opp, **kwargs)
         except ValueError as err:
             _LOGGER.error(
                 "Unable to register panel %s: %s",

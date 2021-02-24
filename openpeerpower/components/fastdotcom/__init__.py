@@ -41,7 +41,7 @@ async def async_setup(opp, config):
     data = opp.data[DOMAIN] = SpeedtestData.opp)
 
     if not conf[CONF_MANUAL]:
-        async_track_time_interval.opp, data.update, conf[CONF_SCAN_INTERVAL])
+        async_track_time_interval(opp, data.update, conf[CONF_SCAN_INTERVAL])
 
     def update(call=None):
         """Service call to manually update the data."""
@@ -49,7 +49,7 @@ async def async_setup(opp, config):
 
     opp.services.async_register(DOMAIN, "speedtest", update)
 
-    opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, "sensor", DOMAIN, {}, config))
 
     return True
 

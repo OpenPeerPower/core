@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 MYLINK_COVER_TYPE_TO_DEVICE_CLASS = {0: DEVICE_CLASS_BLIND, 1: DEVICE_CLASS_SHUTTER}
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Discover and configure Somfy covers."""
     reversed_target_ids = config_entry.options.get(CONF_REVERSED_TARGET_IDS, {})
 

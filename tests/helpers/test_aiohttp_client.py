@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(name="camera_client")
-def camera_client_fixture.opp, opp_client):
+def camera_client_fixture(opp, opp_client):
     """Fixture to fetch camera streams."""
     assert.opp.loop.run_until_complete(
         async_setup_component(
@@ -26,22 +26,22 @@ def camera_client_fixture.opp, opp_client):
             },
         )
     )
-    opp.loop.run_until_complete.opp.async_block_till_done())
+    opp.loop.run_until_complete(opp.async_block_till_done())
 
-    yield.opp.loop.run_until_complete.opp_client())
+    yield.opp.loop.run_until_complete(opp_client())
 
 
-async def test_get_clientsession_with_ssl.opp):
+async def test_get_clientsession_with_ssl(opp):
     """Test init clientsession with ssl."""
-    client.async_get_clientsession.opp)
+    client.async_get_clientsession(opp)
 
     assert isinstance.opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
     assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
 
-async def test_get_clientsession_without_ssl.opp):
+async def test_get_clientsession_without_ssl(opp):
     """Test init clientsession without ssl."""
-    client.async_get_clientsession.opp, verify_ssl=False)
+    client.async_get_clientsession(opp, verify_ssl=False)
 
     assert isinstance(
         opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
@@ -49,23 +49,23 @@ async def test_get_clientsession_without_ssl.opp):
     assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
 
-async def test_create_clientsession_with_ssl_and_cookies.opp):
+async def test_create_clientsession_with_ssl_and_cookies(opp):
     """Test create clientsession with ssl."""
-    session = client.async_create_clientsession.opp, cookies={"bla": True})
+    session = client.async_create_clientsession(opp, cookies={"bla": True})
     assert isinstance(session, aiohttp.ClientSession)
     assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
 
-async def test_create_clientsession_without_ssl_and_cookies.opp):
+async def test_create_clientsession_without_ssl_and_cookies(opp):
     """Test create clientsession without ssl."""
-    session = client.async_create_clientsession.opp, False, cookies={"bla": True})
+    session = client.async_create_clientsession(opp, False, cookies={"bla": True})
     assert isinstance(session, aiohttp.ClientSession)
     assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
 
-async def test_get_clientsession_cleanup.opp):
+async def test_get_clientsession_cleanup(opp):
     """Test init clientsession with ssl."""
-    client.async_get_clientsession.opp)
+    client.async_get_clientsession(opp)
 
     assert isinstance.opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
     assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
@@ -77,9 +77,9 @@ async def test_get_clientsession_cleanup.opp):
     assert.opp.data[client.DATA_CONNECTOR].closed
 
 
-async def test_get_clientsession_cleanup_without_ssl.opp):
+async def test_get_clientsession_cleanup_without_ssl(opp):
     """Test init clientsession with ssl."""
-    client.async_get_clientsession.opp, verify_ssl=False)
+    client.async_get_clientsession(opp, verify_ssl=False)
 
     assert isinstance(
         opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
@@ -93,10 +93,10 @@ async def test_get_clientsession_cleanup_without_ssl.opp):
     assert.opp.data[client.DATA_CONNECTOR_NOTVERIFY].closed
 
 
-async def test_get_clientsession_patched_close.opp):
+async def test_get_clientsession_patched_close(opp):
     """Test closing clientsession does not work."""
     with patch("aiohttp.ClientSession.close") as mock_close:
-        session = client.async_get_clientsession.opp)
+        session = client.async_get_clientsession(opp)
 
         assert isinstance.opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
         assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
@@ -107,7 +107,7 @@ async def test_get_clientsession_patched_close.opp):
         assert mock_close.call_count == 0
 
 
-async def test_warning_close_session_integration.opp, caplog):
+async def test_warning_close_session_integration(opp, caplog):
     """Test log warning message when closing the session from integration context."""
     with patch(
         "openpeerpower.helpers.frame.extract_stack",
@@ -129,7 +129,7 @@ async def test_warning_close_session_integration.opp, caplog):
             ),
         ],
     ):
-        session = client.async_get_clientsession.opp)
+        session = client.async_get_clientsession(opp)
         await session.close()
     assert (
         "Detected integration that closes the Open Peer Power aiohttp session. "
@@ -138,7 +138,7 @@ async def test_warning_close_session_integration.opp, caplog):
     ) in caplog.text
 
 
-async def test_warning_close_session_custom.opp, caplog):
+async def test_warning_close_session_custom(opp, caplog):
     """Test log warning message when closing the session from custom context."""
     with patch(
         "openpeerpower.helpers.frame.extract_stack",
@@ -160,7 +160,7 @@ async def test_warning_close_session_custom.opp, caplog):
             ),
         ],
     ):
-        session = client.async_get_clientsession.opp)
+        session = client.async_get_clientsession(opp)
         await session.close()
     assert (
         "Detected integration that closes the Open Peer Power aiohttp session. "

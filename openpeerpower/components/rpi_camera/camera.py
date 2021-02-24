@@ -31,7 +31,7 @@ def kill_raspistill(*args):
     )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Raspberry Camera."""
     # We only want this platform to be set up via discovery.
     # prevent initializing by erroneous platform config section in yaml conf

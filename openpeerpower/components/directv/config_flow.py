@@ -25,12 +25,12 @@ ERROR_CANNOT_CONNECT = "cannot_connect"
 ERROR_UNKNOWN = "unknown"
 
 
-async def validate_input.opp: OpenPeerPowerType, data: dict) -> Dict[str, Any]:
+async def validate_input(opp: OpenPeerPowerType, data: dict) -> Dict[str, Any]:
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     directv = DIRECTV(data[CONF_HOST], session=session)
     device = await directv.update()
 

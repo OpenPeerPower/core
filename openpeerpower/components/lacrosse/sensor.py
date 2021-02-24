@@ -62,7 +62,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the LaCrosse sensors."""
 
     usb_device = config.get(CONF_DEVICE)
@@ -102,7 +102,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         name = device_config.get(CONF_NAME, device)
 
         sensors.append(
-            sensor_class.opp, lacrosse, device, name, expire_after, device_config)
+            sensor_class(opp, lacrosse, device, name, expire_after, device_config)
         )
 
     add_entities(sensors)

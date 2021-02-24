@@ -77,7 +77,7 @@ DEVICE_BINARY_SENSORS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up 1-Wire platform."""
     # Only OWServer implementation works with binary sensors
     if config_entry.data[CONF_TYPE] == CONF_TYPE_OWSERVER:

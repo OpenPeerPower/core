@@ -187,12 +187,12 @@ class AreaRegistry:
 
 
 @callback
-def async_get.opp: OpenPeerPowerType) -> AreaRegistry:
+def async_get(opp: OpenPeerPowerType) -> AreaRegistry:
     """Get area registry."""
     return cast(AreaRegistry, opp.data[DATA_REGISTRY])
 
 
-async def async_load.opp: OpenPeerPowerType) -> None:
+async def async_load(opp: OpenPeerPowerType) -> None:
     """Load area registry."""
     assert DATA_REGISTRY not in.opp.data
     opp.data[DATA_REGISTRY] = AreaRegistry.opp)
@@ -200,12 +200,12 @@ async def async_load.opp: OpenPeerPowerType) -> None:
 
 
 @bind.opp
-async def async_get_registry.opp: OpenPeerPowerType) -> AreaRegistry:
+async def async_get_registry(opp: OpenPeerPowerType) -> AreaRegistry:
     """Get area registry.
 
     This is deprecated and will be removed in the future. Use async_get instead.
     """
-    return async_get.opp)
+    return async_get(opp)
 
 
 def normalize_area_name(area_name: str) -> str:

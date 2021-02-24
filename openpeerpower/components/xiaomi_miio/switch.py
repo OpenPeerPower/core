@@ -111,7 +111,7 @@ SERVICE_TO_METHOD = {
 }
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Import Miio configuration from YAML."""
     _LOGGER.warning(
         "Loading Xiaomi Miio Switch via platform setup is deprecated. Please remove it from your configuration."
@@ -125,7 +125,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the switch from a config entry."""
     entities = []
 

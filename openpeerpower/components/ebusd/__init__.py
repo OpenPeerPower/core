@@ -72,7 +72,7 @@ def setup(opp, config):
             "client_name": name,
             "sensor_types": SENSOR_TYPES[circuit],
         }
-        load_platform.opp, "sensor", DOMAIN, sensor_config, config)
+        load_platform(opp, "sensor", DOMAIN, sensor_config, config)
 
         opp.services.register(DOMAIN, SERVICE_EBUSD_WRITE, opp.data[DOMAIN].write)
 

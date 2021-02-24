@@ -27,7 +27,7 @@ def async_response(
 
     @callback
     @wraps(func)
-    def schedule_handler.opp, connection, msg):
+    def schedule_handler(opp, connection, msg):
         """Schedule the handler."""
         # As the webserver is now started before the start
         # event we do not want to block for websocket responders
@@ -40,7 +40,7 @@ def require_admin(func: const.WebSocketCommandHandler) -> const.WebSocketCommand
     """Websocket decorator to require user to be an admin."""
 
     @wraps(func)
-    def with_admin.opp, connection, msg):
+    def with_admin(opp, connection, msg):
         """Check admin and call function."""
         user = connection.user
 
@@ -68,7 +68,7 @@ def ws_require_user(
         """Decorate func."""
 
         @wraps(func)
-        def check_current_user.opp, connection, msg):
+        def check_current_user(opp, connection, msg):
             """Check current user."""
 
             def output_error(message_id, message):

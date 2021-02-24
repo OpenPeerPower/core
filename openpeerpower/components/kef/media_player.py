@@ -95,7 +95,7 @@ def get_ip_mode(host):
         return "hostname"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the KEF platform."""
     if DOMAIN not in.opp.data:
         opp.data[DOMAIN] = {}
@@ -389,7 +389,7 @@ class KefMediaPlayer(MediaPlayerEntity):
             self.opp, self.update_dsp, DSP_SCAN_INTERVAL
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe to DSP updates."""
         self._update_dsp_task_remover()
         self._update_dsp_task_remover = None

@@ -15,7 +15,7 @@ from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 from .const import DOMAIN, MYQ_COORDINATOR, MYQ_GATEWAY
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up mysq covers."""
     data = opp.data[DOMAIN][config_entry.entry_id]
     myq = data[MYQ_GATEWAY]

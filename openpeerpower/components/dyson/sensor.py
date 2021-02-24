@@ -57,7 +57,7 @@ SENSOR_NAMES = {
 DYSON_SENSOR_DEVICES = "dyson_sensor_devices"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Dyson Sensors."""
 
     if discovery_info is None:

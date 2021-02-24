@@ -80,7 +80,7 @@ def setup(opp, config):
     opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, _shutdown)
 
     # Load platforms
-    discovery.load_platform.opp, "fan", DOMAIN, {}, config)
+    discovery.load_platform(opp, "fan", DOMAIN, {}, config)
 
     return True
 

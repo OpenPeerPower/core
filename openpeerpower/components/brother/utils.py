@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @singleton.singleton("snmp_engine")
-def get_snmp_engine.opp):
+def get_snmp_engine(opp):
     """Get SNMP engine."""
     _LOGGER.debug("Creating SNMP engine")
     snmp_engine = hlapi.SnmpEngine()

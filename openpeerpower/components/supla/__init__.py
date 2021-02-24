@@ -57,7 +57,7 @@ async def async_setup(opp, base_config):
 
     opp.data[DOMAIN] = {SUPLA_SERVERS: {}, SUPLA_COORDINATORS: {}}
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     for server_conf in server_confs:
 
@@ -84,12 +84,12 @@ async def async_setup(opp, base_config):
             )
             return False
 
-    await discover_devices.opp, base_config)
+    await discover_devices(opp, base_config)
 
     return True
 
 
-async def discover_devices.opp, opp_config):
+async def discover_devices(opp, opp_config):
     """
     Run periodically to discover new devices.
 
@@ -153,7 +153,7 @@ async def discover_devices.opp, opp_config):
 
     # Load discovered devices
     for component_name, config in component_configs.items():
-        await async_load_platform.opp, component_name, DOMAIN, config, opp_config)
+        await async_load_platform(opp, component_name, DOMAIN, config, opp_config)
 
 
 class SuplaChannel(CoordinatorEntity):

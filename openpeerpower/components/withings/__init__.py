@@ -87,7 +87,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Withings from a config entry."""
     config_updates = {}
 
@@ -109,7 +109,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
                 CONF_WEBHOOK_ID: webhook_id,
                 const.CONF_WEBHOOK_URL: entry.data.get(
                     const.CONF_WEBHOOK_URL,
-                    webhook.async_generate_url.opp, webhook_id),
+                    webhook.async_generate_url(opp, webhook_id),
                 ),
             },
         }
@@ -117,7 +117,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if config_updates:
         opp.config_entries.async_update_entry(entry, **config_updates)
 
-    data_manager = await async_get_data_manager.opp, entry)
+    data_manager = await async_get_data_manager(opp, entry)
 
     _LOGGER.debug("Confirming %s is authenticated to withings", data_manager.profile)
     await data_manager.poll_data_update_coordinator.async_refresh()
@@ -143,7 +143,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             )
 
         # Start subscription check in the background, outside this component's setup.
-        async_call_later.opp, 1, async_call_later_callback)
+        async_call_later(opp, 1, async_call_later_callback)
 
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, BINARY_SENSOR_DOMAIN)
@@ -155,12 +155,12 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Withings config entry."""
-    data_manager = await async_get_data_manager.opp, entry)
+    data_manager = await async_get_data_manager(opp, entry)
     data_manager.async_stop_polling_webhook_subscriptions()
 
-    async_unregister_webhook.opp, data_manager.webhook_config.id)
+    async_unregister_webhook(opp, data_manager.webhook_config.id)
 
     await asyncio.gather(
         data_manager.async_unsubscribe_webhook(),
@@ -168,7 +168,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         opp.config_entries.async_forward_entry_unload(entry, SENSOR_DOMAIN),
     )
 
-    async_remove_data_manager.opp, entry)
+    async_remove_data_manager(opp, entry)
 
     return True
 
@@ -201,7 +201,7 @@ async def async_webhook_handler(
     except ValueError:
         return json_message_response("Invalid appli provided", message_code=21)
 
-    data_manager = get_data_manager_by_webhook_id.opp, webhook_id)
+    data_manager = get_data_manager_by_webhook_id(opp, webhook_id)
     if not data_manager:
         _LOGGER.error(
             "Webhook id %s not handled by data manager. This is a bug and should be reported",

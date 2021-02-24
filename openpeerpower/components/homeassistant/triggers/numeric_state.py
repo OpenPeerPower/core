@@ -83,7 +83,7 @@ async def async_attach_trigger(
         _variables = automation_info.get("variables") or {}
 
     if value_template is not None:
-        value_template.opp = opp
+        value_template(opp = opp
 
     def variables(entity_id):
         """Return a dict with trigger variables."""
@@ -127,7 +127,7 @@ async def async_attach_trigger(
         @callback
         def call_action():
             """Call action with right context."""
-            opp.async_run.opp_job(
+            opp.async_run(opp_job(
                 job,
                 {
                     "trigger": {
@@ -189,7 +189,7 @@ async def async_attach_trigger(
             else:
                 call_action()
 
-    unsub = async_track_state_change_event.opp, entity_ids, state_automation_listener)
+    unsub = async_track_state_change_event(opp, entity_ids, state_automation_listener)
 
     @callback
     def async_remove():

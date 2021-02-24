@@ -5,7 +5,7 @@ from . import VelbusEntity
 from .const import DOMAIN
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Velbus binary sensor based on config_entry."""
     cntrl = opp.data[DOMAIN][entry.entry_id]["cntrl"]
     modules_data = opp.data[DOMAIN][entry.entry_id]["binary_sensor"]

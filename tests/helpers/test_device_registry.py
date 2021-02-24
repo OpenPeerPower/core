@@ -19,17 +19,17 @@ from tests.common import (
 @pytest.fixture
 def registry.opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def area_registry.opp):
+def area_registry(opp):
     """Return an empty, loaded, registry."""
-    return mock_area_registry.opp)
+    return mock_area_registry(opp)
 
 
 @pytest.fixture
-def update_events.opp):
+def update_events(opp):
     """Capture update events."""
     events = []
 
@@ -159,7 +159,7 @@ async def test_multiple_config_entries(registry):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_loading_from_storage.opp, opp_storage):
+async def test_loading_from_storage(opp, opp_storage):
     """Test loading stored devices on start."""
     opp.storage[device_registry.STORAGE_KEY] = {
         "version": device_registry.STORAGE_VERSION,
@@ -192,8 +192,8 @@ async def test_loading_from_storage.opp, opp_storage):
         },
     }
 
-    await device_registry.async_load.opp)
-    registry = device_registry.async_get.opp)
+    await device_registry.async_load(opp)
+    registry = device_registry.async_get(opp)
     assert len(registry.devices) == 1
     assert len(registry.deleted_devices) == 1
 
@@ -226,7 +226,7 @@ async def test_loading_from_storage.opp, opp_storage):
     assert isinstance(entry.identifiers, set)
 
 
-async def test_removing_config_entries.opp, registry, update_events):
+async def test_removing_config_entries(opp, registry, update_events):
     """Make sure we do not get duplicate entries."""
     entry = registry.async_get_or_create(
         config_entry_id="123",
@@ -277,7 +277,7 @@ async def test_removing_config_entries.opp, registry, update_events):
     assert update_events[4]["device_id"] == entry3.id
 
 
-async def test_deleted_device_removing_config_entries.opp, registry, update_events):
+async def test_deleted_device_removing_config_entries(opp, registry, update_events):
     """Make sure we do not get duplicate entries."""
     entry = registry.async_get_or_create(
         config_entry_id="123",
@@ -469,7 +469,7 @@ async def test_specifying_via_device_update(registry):
     assert light.via_device_id == via.id
 
 
-async def test_loading_saving_data.opp, registry, area_registry):
+async def test_loading_saving_data(opp, registry, area_registry):
     """Test that we load/save data correctly."""
     orig_via = registry.async_get_or_create(
         config_entry_id="123",
@@ -676,7 +676,7 @@ async def test_update(registry):
     assert registry.async_get(updated_entry.id) is not None
 
 
-async def test_update_remove_config_entries.opp, registry, update_events):
+async def test_update_remove_config_entries(opp, registry, update_events):
     """Make sure we do not get duplicate entries."""
     entry = registry.async_get_or_create(
         config_entry_id="123",
@@ -779,10 +779,10 @@ async def test_update_suggested_area(registry, area_registry):
     assert len(area_registry.areas) == 1
 
 
-async def test_cleanup_device_registry.opp, registry):
+async def test_cleanup_device_registry(opp, registry):
     """Test cleanup works."""
     config_entry = MockConfigEntry(domain="hue")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     d1 = registry.async_get_or_create(
         identifiers={("hue", "d1")}, config_entry_id=config_entry.entry_id
@@ -797,12 +797,12 @@ async def test_cleanup_device_registry.opp, registry):
         identifiers={("something", "d4")}, config_entry_id="non_existing"
     )
 
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
     ent_reg.async_get_or_create("light", "hue", "e1", device_id=d1.id)
     ent_reg.async_get_or_create("light", "hue", "e2", device_id=d1.id)
     ent_reg.async_get_or_create("light", "hue", "e3", device_id=d3.id)
 
-    device_registry.async_cleanup.opp, registry, ent_reg)
+    device_registry.async_cleanup(opp, registry, ent_reg)
 
     assert registry.async_get_device({("hue", "d1")}) is not None
     assert registry.async_get_device({("hue", "d2")}) is not None
@@ -810,10 +810,10 @@ async def test_cleanup_device_registry.opp, registry):
     assert registry.async_get_device({("something", "d4")}) is None
 
 
-async def test_cleanup_device_registry_removes_expired_orphaned_devices.opp, registry):
+async def test_cleanup_device_registry_removes_expired_orphaned_devices(opp, registry):
     """Test cleanup removes expired orphaned devices."""
     config_entry = MockConfigEntry(domain="hue")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     registry.async_get_or_create(
         identifiers={("hue", "d1")}, config_entry_id=config_entry.entry_id
@@ -829,8 +829,8 @@ async def test_cleanup_device_registry_removes_expired_orphaned_devices.opp, reg
     assert len(registry.devices) == 0
     assert len(registry.deleted_devices) == 3
 
-    ent_reg = await entity_registry.async_get_registry.opp)
-    device_registry.async_cleanup.opp, registry, ent_reg)
+    ent_reg = await entity_registry.async_get_registry(opp)
+    device_registry.async_cleanup(opp, registry, ent_reg)
 
     assert len(registry.devices) == 0
     assert len(registry.deleted_devices) == 3
@@ -838,16 +838,16 @@ async def test_cleanup_device_registry_removes_expired_orphaned_devices.opp, reg
     future_time = time.time() + device_registry.ORPHANED_DEVICE_KEEP_SECONDS + 1
 
     with patch("time.time", return_value=future_time):
-        device_registry.async_cleanup.opp, registry, ent_reg)
+        device_registry.async_cleanup(opp, registry, ent_reg)
 
     assert len(registry.devices) == 0
     assert len(registry.deleted_devices) == 0
 
 
-async def test_cleanup_startup.opp):
+async def test_cleanup_startup(opp):
     """Test we run a cleanup on startup."""
     opp.state = CoreState.not_running
-    await device_registry.async_get_registry.opp)
+    await device_registry.async_get_registry(opp)
 
     with patch(
         "openpeerpower.helpers.device_registry.Debouncer.async_call"
@@ -859,15 +859,15 @@ async def test_cleanup_startup.opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_cleanup_entity_registry_change.opp):
+async def test_cleanup_entity_registry_change(opp):
     """Test we run a cleanup when entity registry changes.
 
     Don't pre-load the registries as the debouncer will then not be waiting for
     EVENT_ENTITY_REGISTRY_UPDATED events.
     """
-    await device_registry.async_load.opp)
-    await entity_registry.async_load.opp)
-    ent_reg = entity_registry.async_get.opp)
+    await device_registry.async_load(opp)
+    await entity_registry.async_load(opp)
+    ent_reg = entity_registry.async_get(opp)
 
     with patch(
         "openpeerpower.helpers.device_registry.Debouncer.async_call"
@@ -892,7 +892,7 @@ async def test_cleanup_entity_registry_change.opp):
         assert len(mock_call.mock_calls) == 2
 
 
-async def test_restore_device.opp, registry, update_events):
+async def test_restore_device(opp, registry, update_events):
     """Make sure device id is stable."""
     entry = registry.async_get_or_create(
         config_entry_id="123",
@@ -947,7 +947,7 @@ async def test_restore_device.opp, registry, update_events):
     assert update_events[3]["device_id"] == entry3.id
 
 
-async def test_restore_simple_device.opp, registry, update_events):
+async def test_restore_simple_device(opp, registry, update_events):
     """Make sure device id is stable."""
     entry = registry.async_get_or_create(
         config_entry_id="123",
@@ -992,7 +992,7 @@ async def test_restore_simple_device.opp, registry, update_events):
     assert update_events[3]["device_id"] == entry3.id
 
 
-async def test_restore_shared_device.opp, registry, update_events):
+async def test_restore_shared_device(opp, registry, update_events):
     """Make sure device id is stable for shared devices."""
     entry = registry.async_get_or_create(
         config_entry_id="123",
@@ -1090,7 +1090,7 @@ async def test_restore_shared_device.opp, registry, update_events):
     assert update_events[1]["device_id"] == entry.id
 
 
-async def test_get_or_create_empty_then_set_default_values.opp, registry):
+async def test_get_or_create_empty_then_set_default_values(opp, registry):
     """Test creating an entry, then setting default name, model, manufacturer."""
     entry = registry.async_get_or_create(
         identifiers={("bridgeid", "0123")}, config_entry_id="1234"
@@ -1122,7 +1122,7 @@ async def test_get_or_create_empty_then_set_default_values.opp, registry):
     assert entry.manufacturer == "default manufacturer 1"
 
 
-async def test_get_or_create_empty_then_update.opp, registry):
+async def test_get_or_create_empty_then_update(opp, registry):
     """Test creating an entry, then setting name, model, manufacturer."""
     entry = registry.async_get_or_create(
         identifiers={("bridgeid", "0123")}, config_entry_id="1234"
@@ -1154,7 +1154,7 @@ async def test_get_or_create_empty_then_update.opp, registry):
     assert entry.manufacturer == "manufacturer 1"
 
 
-async def test_get_or_create_sets_default_values.opp, registry):
+async def test_get_or_create_sets_default_values(opp, registry):
     """Test creating an entry, then setting default name, model, manufacturer."""
     entry = registry.async_get_or_create(
         config_entry_id="1234",
@@ -1211,10 +1211,10 @@ async def test_verify_suggested_area_does_not_overwrite_area_id(
     assert entry2.area_id == game_room_area.id
 
 
-async def test_disable_config_entry_disables_devices.opp, registry):
+async def test_disable_config_entry_disables_devices(opp, registry):
     """Test that we disable entities tied to a config entry."""
     config_entry = MockConfigEntry(domain="light")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     entry1 = registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,

@@ -21,7 +21,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up the SRP Energy component from a config entry."""
     # Store an SrpEnergyClient object for your srp_energy to access
     try:
@@ -42,7 +42,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Unload a config entry."""
     # unload srp client
     opp.data[SRP_ENERGY_DOMAIN] = None

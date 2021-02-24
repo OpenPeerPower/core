@@ -36,13 +36,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Yandex transport sensor."""
     stop_id = config[CONF_STOP_ID]
     name = config[CONF_NAME]
     routes = config[CONF_ROUTE]
 
-    client_session = async_create_clientsession.opp, requote_redirect_url=False)
+    client_session = async_create_clientsession(opp, requote_redirect_url=False)
     data = YandexMapsRequester(user_agent=USER_AGENT, client_session=client_session)
     async_add_entities([DiscoverYandexTransport(data, stop_id, routes, name)], True)
 

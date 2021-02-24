@@ -36,7 +36,7 @@ async def async_setup_opp: OpenPeerPowerType, config: OrderedDict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up songpal media player."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, "media_player")
@@ -44,6 +44,6 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload songpal media player."""
     return await opp.config_entries.async_forward_entry_unload(entry, "media_player")

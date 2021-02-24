@@ -72,17 +72,17 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     mode = config[DOMAIN][CONF_MODE]
     yaml_resources = config[DOMAIN].get(CONF_RESOURCES)
 
-    frontend.async_register_built_in_panel.opp, DOMAIN, config={"mode": mode})
+    frontend.async_register_built_in_panel(opp, DOMAIN, config={"mode": mode})
 
     async def reload_resources_service_handler(service_call: ServiceCallType) -> None:
         """Reload yaml resources."""
         try:
-            conf = await async.opp_config_yaml.opp)
+            conf = await async.opp_config_yaml(opp)
         except OpenPeerPowerError as err:
             _LOGGER.error(err)
             return
 
-        integration = await async_get_integration.opp, DOMAIN)
+        integration = await async_get_integration(opp, DOMAIN)
 
         config = await async_process_component_config(opp, conf, integration)
 
@@ -93,7 +93,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
 
     if mode == MODE_YAML:
         default_config = dashboard.LovelaceYAML.opp, None, None)
-        resource_collection = await create_yaml_resource_col.opp, yaml_resources)
+        resource_collection = await create_yaml_resource_col(opp, yaml_resources)
 
         async_register_admin_service(
             opp,
@@ -153,7 +153,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         url_path = item[CONF_URL_PATH]
 
         if change_type == collection.CHANGE_REMOVED:
-            frontend.async_remove_panel.opp, url_path)
+            frontend.async_remove_panel(opp, url_path)
             await opp.data[DOMAIN]["dashboards"].pop(url_path).async_delete()
             return
 
@@ -179,7 +179,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
             update = True
 
         try:
-            _register_panel.opp, url_path, MODE_STORAGE, item, update)
+            _register_panel(opp, url_path, MODE_STORAGE, item, update)
         except ValueError:
             _LOGGER.warning("Failed to %s panel %s from storage", change_type, url_path)
 
@@ -190,7 +190,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         opp.data[DOMAIN]["dashboards"][url_path] = config
 
         try:
-            _register_panel.opp, url_path, MODE_YAML, dashboard_conf, False)
+            _register_panel(opp, url_path, MODE_YAML, dashboard_conf, False)
         except ValueError:
             _LOGGER.warning("Panel url path %s is not unique", url_path)
 
@@ -211,7 +211,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def create_yaml_resource_col.opp, yaml_resources):
+async def create_yaml_resource_col(opp, yaml_resources):
     """Create yaml resources collection."""
     if yaml_resources is None:
         default_config = dashboard.LovelaceYAML.opp, None, None)
@@ -230,7 +230,7 @@ async def create_yaml_resource_col.opp, yaml_resources):
 
 
 @callback
-def _register_panel.opp, url_path, mode, config, update):
+def _register_panel(opp, url_path, mode, config, update):
     """Register a panel."""
     kwargs = {
         "frontend_url_path": url_path,
@@ -243,4 +243,4 @@ def _register_panel.opp, url_path, mode, config, update):
         kwargs["sidebar_title"] = config[CONF_TITLE]
         kwargs["sidebar_icon"] = config.get(CONF_ICON, DEFAULT_ICON)
 
-    frontend.async_register_built_in_panel.opp, DOMAIN, **kwargs)
+    frontend.async_register_built_in_panel(opp, DOMAIN, **kwargs)

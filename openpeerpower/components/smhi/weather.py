@@ -72,7 +72,7 @@ async def async_setup_entry(
     location = config_entry.data
     name = slugify(location[CONF_NAME])
 
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     entity = SmhiWeather(
         location[CONF_NAME],

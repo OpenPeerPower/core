@@ -12,7 +12,7 @@ async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_ZIP_CODE: "12345"}
 
-    MockConfigEntry(domain=DOMAIN, unique_id="12345", data=conf).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, unique_id="12345", data=conf).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
@@ -22,7 +22,7 @@ async def test_duplicate_error(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_zip_code.opp):
+async def test_invalid_zip_code(opp):
     """Test that an invalid ZIP code key throws an error."""
     conf = {CONF_ZIP_CODE: "abcde"}
 
@@ -34,7 +34,7 @@ async def test_invalid_zip_code.opp):
     assert result["errors"] == {CONF_ZIP_CODE: "invalid_zip_code"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -44,7 +44,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works (without MFA)."""
     conf = {CONF_ZIP_CODE: "12345"}
 

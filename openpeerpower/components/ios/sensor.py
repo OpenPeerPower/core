@@ -17,12 +17,12 @@ DEFAULT_ICON_LEVEL = "mdi:battery"
 DEFAULT_ICON_STATE = "mdi:power-plug"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the iOS sensor."""
     # Leave here for if someone accidentally adds platform: ios to config
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up iOS from a config entry."""
     dev = []
     for device_name, device in ios.devices.opp).items():

@@ -40,7 +40,7 @@ PROP_TO_ATTR = {
 }
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the sensor from config."""
 
     host = config[CONF_HOST]

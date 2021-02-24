@@ -21,7 +21,7 @@ DEV_TYPE_TO_HA = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up switches."""
 
     async def async_discover(devices):
@@ -33,7 +33,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     )
     opp.data[DOMAIN][VS_DISPATCHERS].append(disp)
 
-    _async_setup_entities.opp.data[DOMAIN][VS_SWITCHES], async_add_entities)
+    _async_setup_entities(opp.data[DOMAIN][VS_SWITCHES], async_add_entities)
     return True
 
 

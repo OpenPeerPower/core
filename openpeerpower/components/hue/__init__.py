@@ -136,10 +136,10 @@ async def async_setup_entry(
             opp.config_entries.async_update_entry(entry, unique_id=unique_id)
         else:
             # There is another entry that already has the right unique ID. Delete this entry
-            opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+            opp.async_create_task(opp.config_entries.async_remove(entry.entry_id))
             return False
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections={(dr.CONNECTION_NETWORK_MAC, config.mac)},
@@ -169,7 +169,7 @@ async def async_setup_entry(
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     bridge = opp.data[DOMAIN].pop(entry.entry_id)
     opp.services.async_remove(DOMAIN, SERVICE_HUE_SCENE)

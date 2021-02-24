@@ -30,7 +30,7 @@ STRICT_MATCH = functools.partial(ZOP_ENTITIES.strict_match, DOMAIN)
 VALUE_TO_STATE = dict(enumerate(STATE_LIST))
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation Door Lock from config entry."""
     entities_to_create = opp.data[DATA_ZHA][DOMAIN]
 

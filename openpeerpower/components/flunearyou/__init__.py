@@ -31,11 +31,11 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Flu Near You as config entry."""
     opp.data[DOMAIN][DATA_COORDINATOR][config_entry.entry_id] = {}
 
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
     client = Client(websession)
 
     latitude = config_entry.data.get(CONF_LATITUDE, opp.config.latitude)
@@ -75,7 +75,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an Flu Near You config entry."""
     unload_ok = all(
         await asyncio.gather(

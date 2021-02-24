@@ -17,12 +17,12 @@ _LOGGER = logging.getLogger(__name__)
 DATA_SCHEMA = vol.Schema({vol.Required(CONF_LOADZONE): vol.In(LOAD_ZONES)})
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
-    client_session = aiohttp_client.async_get_clientsession.opp)
+    client_session = aiohttp_client.async_get_clientsession(opp)
 
     try:
         await AsyncGriddy(

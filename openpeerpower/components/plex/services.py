@@ -23,7 +23,7 @@ REFRESH_LIBRARY_SCHEMA = vol.Schema(
 _LOGGER = logging.getLogger(__package__)
 
 
-async def async_setup_services.opp):
+async def async_setup_services(opp):
     """Set up services for the Plex component."""
 
     async def async_refresh_library_service(service_call):
@@ -32,7 +32,7 @@ async def async_setup_services.opp):
     async def async_scan_clients_service(_):
         _LOGGER.debug("Scanning for new Plex clients")
         for server_id in.opp.data[DOMAIN][SERVERS]:
-            async_dispatcher_send.opp, PLEX_UPDATE_PLATFORMS_SIGNAL.format(server_id))
+            async_dispatcher_send(opp, PLEX_UPDATE_PLATFORMS_SIGNAL.format(server_id))
 
     opp.services.async_register(
         DOMAIN,
@@ -47,12 +47,12 @@ async def async_setup_services.opp):
     return True
 
 
-def refresh_library.opp, service_call):
+def refresh_library(opp, service_call):
     """Scan a Plex library for new and updated media."""
     plex_server_name = service_call.data.get("server_name")
     library_name = service_call.data["library_name"]
 
-    plex_server = get_plex_server.opp, plex_server_name)
+    plex_server = get_plex_server(opp, plex_server_name)
 
     try:
         library = plex_server.library.section(title=library_name)
@@ -68,7 +68,7 @@ def refresh_library.opp, service_call):
     library.update()
 
 
-def get_plex_server.opp, plex_server_name=None):
+def get_plex_server(opp, plex_server_name=None):
     """Retrieve a configured Plex server by name."""
     if DOMAIN not in.opp.data:
         raise OpenPeerPowerError("Plex integration not configured")
@@ -96,7 +96,7 @@ def get_plex_server.opp, plex_server_name=None):
     )
 
 
-def lookup_plex_media.opp, content_type, content_id):
+def lookup_plex_media(opp, content_type, content_id):
     """Look up Plex media for other integrations using media_player.play_media service payloads."""
     content = json.loads(content_id)
 
@@ -105,7 +105,7 @@ def lookup_plex_media.opp, content_type, content_id):
         content_type = DOMAIN
 
     plex_server_name = content.pop("plex_server", None)
-    plex_server = get_plex_server.opp, plex_server_name)
+    plex_server = get_plex_server(opp, plex_server_name)
 
     playqueue_id = content.pop("playqueue_id", None)
     if playqueue_id:
@@ -127,12 +127,12 @@ def lookup_plex_media.opp, content_type, content_id):
     return (playqueue, plex_server)
 
 
-def play_on_sonos.opp, content_type, content_id, speaker_name):
+def play_on_sonos(opp, content_type, content_id, speaker_name):
     """Play music on a connected Sonos speaker using Plex APIs.
 
     Called by Sonos 'media_player.play_media' service.
     """
-    media, plex_server = lookup_plex_media.opp, content_type, content_id)
+    media, plex_server = lookup_plex_media(opp, content_type, content_id)
     sonos_speaker = plex_server.account.sonos_speaker(speaker_name)
     if sonos_speaker is None:
         message = f"Sonos speaker '{speaker_name}' is not associated with '{plex_server.friendly_name}'"

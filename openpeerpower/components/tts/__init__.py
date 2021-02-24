@@ -132,7 +132,7 @@ async def async_setup(opp, config):
         if p_config is None:
             p_config = {}
 
-        platform = await async_prepare_setup_platform.opp, config, DOMAIN, p_type)
+        platform = await async_prepare_setup_platform(opp, config, DOMAIN, p_type)
         if platform is None:
             return
 
@@ -171,7 +171,7 @@ async def async_setup(opp, config):
                 _LOGGER.error("Error on init TTS: %s", err)
                 return
 
-            base = tts.base_url or get_url.opp)
+            base = tts.base_url or get_url(opp)
             url = base + url
 
             data = {
@@ -205,7 +205,7 @@ async def async_setup(opp, config):
         """Handle for discovered platform."""
         await async_setup_platform(platform, discovery_info=info)
 
-    discovery.async_listen_platform.opp, DOMAIN, async_platform_discovered)
+    discovery.async_listen_platform(opp, DOMAIN, async_platform_discovered)
 
     async def async_clear_cache_handle(service):
         """Handle clear cache service call."""
@@ -527,7 +527,7 @@ class Provider:
         )
 
 
-def _init_tts_cache_dir.opp, cache_dir):
+def _init_tts_cache_dir(opp, cache_dir):
     """Init cache folder."""
     if not os.path.isabs(cache_dir):
         cache_dir = opp.config.path(cache_dir)
@@ -616,6 +616,6 @@ class TextToSpeechView(OpenPeerPowerView):
         return web.Response(body=data, content_type=content)
 
 
-def get_base_url.opp):
+def get_base_url(opp):
     """Get base URL."""
-    return.opp.data[BASE_URL_KEY] or get_url.opp)
+    return.opp.data[BASE_URL_KEY] or get_url(opp)

@@ -29,7 +29,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_scanner.opp, config: dict, see, discovery_info=None):
+def setup_scanner(opp, config: dict, see, discovery_info=None):
     """Set up the DeviceScanner and check if login is valid."""
     scanner = FleetGoDeviceScanner(config, see)
     if not scanner.login.opp):

@@ -81,7 +81,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the GDACS component as config entry."""
     opp.data.setdefault(DOMAIN, {})
     feeds = opp.data[DOMAIN].setdefault(FEED, {})
@@ -97,7 +97,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload an GDACS component config entry."""
     manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
     await manager.async_stop()
@@ -122,7 +122,7 @@ class GdacsFeedEntityManager:
             config_entry.data[CONF_LONGITUDE],
         )
         categories = config_entry.data[CONF_CATEGORIES]
-        websession = aiohttp_client.async_get_clientsession.opp)
+        websession = aiohttp_client.async_get_clientsession(opp)
         self._feed_manager = GdacsFeedManager(
             websession,
             self._generate_entity,

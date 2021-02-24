@@ -126,10 +126,10 @@ class CityBikesRequestError(Exception):
     """Error to indicate a CityBikes API request has failed."""
 
 
-async def async_citybikes_request.opp, uri, schema):
+async def async_citybikes_request(opp, uri, schema):
     """Perform a request to CityBikes API endpoint, and parse the response."""
     try:
-        session = async_get_clientsession.opp)
+        session = async_get_clientsession(opp)
 
         with async_timeout.timeout(REQUEST_TIMEOUT):
             req = await session.get(DEFAULT_ENDPOINT.format(uri=uri))
@@ -145,7 +145,7 @@ async def async_citybikes_request.opp, uri, schema):
     raise CityBikesRequestError
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the CityBikes platform."""
     if PLATFORM not in.opp.data:
         opp.data[PLATFORM] = {MONITORED_NETWORKS: {}}
@@ -169,7 +169,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         network = CityBikesNetwork.opp, network_id)
         opp.data[PLATFORM][MONITORED_NETWORKS][network_id] = network
         opp.async_create_task(network.async_refresh())
-        async_track_time_interval.opp, network.async_refresh, SCAN_INTERVAL)
+        async_track_time_interval(opp, network.async_refresh, SCAN_INTERVAL)
     else:
         network = opp.data[PLATFORM][MONITORED_NETWORKS][network_id]
 

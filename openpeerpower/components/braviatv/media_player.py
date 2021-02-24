@@ -63,7 +63,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Bravia TV platform."""
     host = config[CONF_HOST]
 
@@ -93,7 +93,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             return
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add BraviaTV entities from a config_entry."""
     ignored_sources = []
     pin = config_entry.data[CONF_PIN]

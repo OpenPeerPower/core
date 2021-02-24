@@ -157,7 +157,7 @@ CLEAR_USERCODE_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Lock from Config Entry."""
 
     @callback
@@ -165,7 +165,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Add Z-Wave Lock."""
         async_add_entities([lock])
 
-    async_dispatcher_connect.opp, "zwave_new_lock", async_add_lock)
+    async_dispatcher_connect(opp, "zwave_new_lock", async_add_lock)
 
     network = opp.data[const.DATA_NETWORK]
 

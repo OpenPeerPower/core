@@ -21,7 +21,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Hangouts notification service."""
     return HangoutsNotificationService(config.get(CONF_DEFAULT_CONVERSATIONS))
 

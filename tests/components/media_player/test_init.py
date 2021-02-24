@@ -7,14 +7,14 @@ from openpeerpower.components.websocket_api.const import TYPE_RESULT
 from openpeerpower.setup import async_setup_component
 
 
-async def test_get_image.opp, opp_ws_client, caplog):
+async def test_get_image(opp, opp_ws_client, caplog):
     """Test get image via WS command."""
     await async_setup_component(
         opp. "media_player", {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     with patch(
         "openpeerpower.components.media_player.MediaPlayerEntity."
@@ -40,7 +40,7 @@ async def test_get_image.opp, opp_ws_client, caplog):
     assert "media_player_thumbnail is deprecated" in caplog.text
 
 
-async def test_get_image_http.opp, aiohttp_client):
+async def test_get_image_http(opp, aiohttp_client):
     """Test get image via http command."""
     await async_setup_component(
         opp. "media_player", {"media_player": {"platform": "demo"}}
@@ -50,7 +50,7 @@ async def test_get_image_http.opp, aiohttp_client):
     state = opp.states.get("media_player.bedroom")
     assert "entity_picture_local" not in state.attributes
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     with patch(
         "openpeerpower.components.media_player.MediaPlayerEntity."
@@ -63,7 +63,7 @@ async def test_get_image_http.opp, aiohttp_client):
     assert content == b"image"
 
 
-async def test_get_image_http_remote.opp, aiohttp_client):
+async def test_get_image_http_remote(opp, aiohttp_client):
     """Test get image url via http command."""
     with patch(
         "openpeerpower.components.media_player.MediaPlayerEntity."
@@ -78,7 +78,7 @@ async def test_get_image_http_remote.opp, aiohttp_client):
         state = opp.states.get("media_player.bedroom")
         assert "entity_picture_local" in state.attributes
 
-        client = await aiohttp_client.opp.http.app)
+        client = await aiohttp_client(opp.http.app)
 
         with patch(
             "openpeerpower.components.media_player.MediaPlayerEntity."
@@ -91,7 +91,7 @@ async def test_get_image_http_remote.opp, aiohttp_client):
         assert content == b"image"
 
 
-async def test_get_async_get_browse_image.opp, aiohttp_client, opp_ws_client):
+async def test_get_async_get_browse_image(opp, aiohttp_client, opp_ws_client):
     """Test get browse image."""
     await async_setup_component(
         opp. "media_player", {"media_player": {"platform": "demo"}}
@@ -104,7 +104,7 @@ async def test_get_async_get_browse_image.opp, aiohttp_client, opp_ws_client):
     player = entity_comp.get_entity("media_player.bedroom")
     assert player
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     with patch(
         "openpeerpower.components.media_player.MediaPlayerEntity."
@@ -128,14 +128,14 @@ def test_deprecated_base_class(caplog):
     assert "MediaPlayerDevice is deprecated, modify CustomMediaPlayer" in caplog.text
 
 
-async def test_media_browse.opp, opp_ws_client):
+async def test_media_browse(opp, opp_ws_client):
     """Test browsing media."""
     await async_setup_component(
         opp. "media_player", {"media_player": {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     with patch(
         "openpeerpower.components.demo.media_player.YOUTUBE_PLAYER_SUPPORT",

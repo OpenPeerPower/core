@@ -109,7 +109,7 @@ class HostICMPLib:
         )
 
 
-def setup_scanner.opp, config, see, discovery_info=None):
+def setup_scanner(opp, config, see, discovery_info=None):
     """Set up the Host objects and return the update function."""
 
     try:

@@ -14,13 +14,13 @@ from .utils import get_device_name, get_device_wrapper
 
 
 @callback
-def async_describe_events.opp, async_describe_event):
+def async_describe_events(opp, async_describe_event):
     """Describe logbook events."""
 
     @callback
     def async_describe_shelly_click_event(event):
         """Describe shelly.click logbook event."""
-        wrapper = get_device_wrapper.opp, event.data[ATTR_DEVICE_ID])
+        wrapper = get_device_wrapper(opp, event.data[ATTR_DEVICE_ID])
         if wrapper:
             device_name = get_device_name(wrapper.device)
         else:

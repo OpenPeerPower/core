@@ -106,7 +106,7 @@ def setup(opp, config):
     if opp.data[DYSON_DEVICES]:
         _LOGGER.debug("Starting sensor/fan components")
         for platform in DYSON_PLATFORMS:
-            discovery.load_platform.opp, platform, DOMAIN, {}, config)
+            discovery.load_platform(opp, platform, DOMAIN, {}, config)
 
     return True
 

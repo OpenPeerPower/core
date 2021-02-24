@@ -87,7 +87,7 @@ def validate_tags(client, agency, route, stop):
     return True
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Load values from configuration and initialize the platform."""
     agency = config[CONF_AGENCY]
     route = config[CONF_ROUTE]

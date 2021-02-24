@@ -11,7 +11,7 @@ from .typing import OpenPeerPowerType
 
 
 @bind.opp
-async def async_get_system_info.opp: OpenPeerPowerType) -> Dict[str, Any]:
+async def async_get_system_info(opp: OpenPeerPowerType) -> Dict[str, Any]:
     """Return info about the system."""
     info_object = {
         "installation_type": "Unknown",

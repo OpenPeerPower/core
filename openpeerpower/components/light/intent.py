@@ -19,7 +19,7 @@ from . import (
 INTENT_SET = " OppLightSet"
 
 
-async def async_setup_intents.opp: OpenPeerPower) -> None:
+async def async_setup_intents(opp: OpenPeerPower) -> None:
     """Set up the light intents."""
     opp.helpers.intent.async_register(SetIntentHandler())
 
@@ -36,7 +36,7 @@ class SetIntentHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the.opp intent."""
-       opp = intent_obj.opp
+       opp = intent_obj(opp
         slots = self.async_validate_slots(intent_obj.slots)
         state = opp.helpers.intent.async_match_state(
             slots["name"]["value"], opp.states.async_all(DOMAIN)

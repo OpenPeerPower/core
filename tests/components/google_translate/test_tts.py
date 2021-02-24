@@ -20,7 +20,7 @@ from tests.components.tts.test_init import mutagen_mock  # noqa: F401
 
 
 @pytest.fixture(autouse=True)
-def cleanup_cache.opp):
+def cleanup_cache(opp):
     """Clean up TTS cache."""
     yield
     default_tts = opp.config.path(tts.DEFAULT_CACHE_DIR)
@@ -31,11 +31,11 @@ def cleanup_cache.opp):
 @pytest.fixture
 async def calls.opp):
     """Mock media player calls."""
-    return async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    return async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
 
 @pytest.fixture(autouse=True)
-async def setup_internal_url.opp):
+async def setup_internal_url(opp):
     """Set up internal url."""
     await async_process_op_core_config(
         opp. {"internal_url": "http://example.local:8123"}
@@ -49,7 +49,7 @@ def mock_gtts():
         yield mock_gtts
 
 
-async def test_service_say.opp, mock_gtts, calls):
+async def test_service_say(opp, mock_gtts, calls):
     """Test service call say."""
 
     await async_setup_component(
@@ -103,14 +103,14 @@ async def test_service_say_german_config(opp, mock_gtts, calls):
     }
 
 
-async def test_service_say_german_service.opp, mock_gtts, calls):
+async def test_service_say_german_service(opp, mock_gtts, calls):
     """Test service call say with german code in the service."""
 
     config = {
         tts.DOMAIN: {"platform": "google_translate", "service_name": "google_say"}
     }
 
-    await async_setup_component.opp, tts.DOMAIN, config)
+    await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,

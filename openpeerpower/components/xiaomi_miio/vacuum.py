@@ -115,7 +115,7 @@ STATE_CODE_TO_STATE = {
 }
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Xiaomi vacuum cleaner robot platform."""
     if DATA_KEY not in.opp.data:
         opp.data[DATA_KEY] = {}

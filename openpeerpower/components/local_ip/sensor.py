@@ -7,7 +7,7 @@ from openpeerpower.util import get_local_ip
 from .const import DOMAIN, SENSOR
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the platform from config_entry."""
     name = config_entry.data.get(CONF_NAME) or DOMAIN
     async_add_entities([IPSensor(name)], True)

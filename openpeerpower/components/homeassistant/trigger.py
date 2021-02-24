@@ -17,7 +17,7 @@ async def async_validate_trigger_config(opp, config):
     return platform.TRIGGER_SCHEMA(config)
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Attach trigger of specified platform."""
     platform = _get_trigger_platform(config)
-    return await platform.async_attach_trigger.opp, config, action, automation_info)
+    return await platform.async_attach_trigger(opp, config, action, automation_info)

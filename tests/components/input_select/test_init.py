@@ -60,13 +60,13 @@ def storage_setup_opp, opp_storage):
             }
         if config is None:
             config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
 
 @bind.opp
-def select_option.opp, entity_id, option):
+def select_option(opp, entity_id, option):
     """Set value of input_select.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -81,7 +81,7 @@ def select_option.opp, entity_id, option):
 
 
 @bind.opp
-def select_next.opp, entity_id):
+def select_next(opp, entity_id):
     """Set next value of input_select.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -94,7 +94,7 @@ def select_next.opp, entity_id):
 
 
 @bind.opp
-def select_previous.opp, entity_id):
+def select_previous(opp, entity_id):
     """Set previous value of input_select.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -107,7 +107,7 @@ def select_previous.opp, entity_id):
 
 
 @bind.opp
-def select_first.opp, entity_id):
+def select_first(opp, entity_id):
     """Set first value of input_select.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -120,7 +120,7 @@ def select_first.opp, entity_id):
 
 
 @bind.opp
-def select_last.opp, entity_id):
+def select_last(opp, entity_id):
     """Set last value of input_select.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -143,10 +143,10 @@ async def test_config(opp):
     ]
 
     for cfg in invalid_configs:
-        assert not await async_setup_component.opp, DOMAIN, {DOMAIN: cfg})
+        assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
-async def test_select_option.opp):
+async def test_select_option(opp):
     """Test select_option methods."""
     assert await async_setup_component(
         opp,
@@ -158,20 +158,20 @@ async def test_select_option.opp):
     state = opp.states.get(entity_id)
     assert "some option" == state.state
 
-    select_option.opp, entity_id, "another option")
+    select_option(opp, entity_id, "another option")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "another option" == state.state
 
-    select_option.opp, entity_id, "non existing option")
+    select_option(opp, entity_id, "non existing option")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "another option" == state.state
 
 
-async def test_select_next.opp):
+async def test_select_next(opp):
     """Test select_next methods."""
     assert await async_setup_component(
         opp,
@@ -190,20 +190,20 @@ async def test_select_next.opp):
     state = opp.states.get(entity_id)
     assert "middle option" == state.state
 
-    select_next.opp, entity_id)
+    select_next(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
 
-    select_next.opp, entity_id)
+    select_next(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
 
 
-async def test_select_previous.opp):
+async def test_select_previous(opp):
     """Test select_previous methods."""
     assert await async_setup_component(
         opp,
@@ -222,20 +222,20 @@ async def test_select_previous.opp):
     state = opp.states.get(entity_id)
     assert "middle option" == state.state
 
-    select_previous.opp, entity_id)
+    select_previous(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
 
-    select_previous.opp, entity_id)
+    select_previous(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
 
 
-async def test_select_first_last.opp):
+async def test_select_first_last(opp):
     """Test select_first and _last methods."""
     assert await async_setup_component(
         opp,
@@ -254,20 +254,20 @@ async def test_select_first_last.opp):
     state = opp.states.get(entity_id)
     assert "middle option" == state.state
 
-    select_first.opp, entity_id)
+    select_first(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "first option" == state.state
 
-    select_last.opp, entity_id)
+    select_last(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert "last option" == state.state
 
 
-async def test_config_options.opp):
+async def test_config_options(opp):
     """Test configuration options."""
     count_start = len.opp.states.async_entity_ids())
 
@@ -307,7 +307,7 @@ async def test_config_options.opp):
     assert "mdi:work" == state_2.attributes.get(ATTR_ICON)
 
 
-async def test_set_options_service.opp):
+async def test_set_options_service(opp):
     """Test set_options service."""
     assert await async_setup_component(
         opp,
@@ -333,18 +333,18 @@ async def test_set_options_service.opp):
     state = opp.states.get(entity_id)
     assert "test1" == state.state
 
-    select_option.opp, entity_id, "first option")
+    select_option(opp, entity_id, "first option")
     await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert "test1" == state.state
 
-    select_option.opp, entity_id, "test2")
+    select_option(opp, entity_id, "test2")
     await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert "test2" == state.state
 
 
-async def test_restore_state.opp):
+async def test_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp,
@@ -356,7 +356,7 @@ async def test_restore_state.opp):
 
     options = {"options": ["first option", "middle option", "last option"]}
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"s1": options, "s2": options}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"s1": options, "s2": options}})
 
     state = opp.states.get("input_select.s1")
     assert state
@@ -367,7 +367,7 @@ async def test_restore_state.opp):
     assert state.state == "first option"
 
 
-async def test_initial_state_overrules_restore_state.opp):
+async def test_initial_state_overrules_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp,
@@ -382,7 +382,7 @@ async def test_initial_state_overrules_restore_state.opp):
         "initial": "middle option",
     }
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"s1": options, "s2": options}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"s1": options, "s2": options}})
 
     state = opp.states.get("input_select.s1")
     assert state
@@ -393,7 +393,7 @@ async def test_initial_state_overrules_restore_state.opp):
     assert state.state == "middle option"
 
 
-async def test_input_select_context.opp, opp_admin_user):
+async def test_input_select_context(opp, opp_admin_user):
     """Test that input_select context works."""
     assert await async_setup_component(
         opp,
@@ -413,7 +413,7 @@ async def test_input_select_context.opp, opp_admin_user):
         "select_next",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state2 = opp.states.get("input_select.s1")
@@ -422,10 +422,10 @@ async def test_input_select_context.opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_reload.opp, opp_admin_user, opp_read_only_user):
+async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     assert await async_setup_component(
         opp,
@@ -480,13 +480,13 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
-                context=Context(user_id.opp_read_only_user.id),
+                context=Context(user_id(opp_read_only_user.id),
             )
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id(opp_admin_user.id),
         )
         await opp.async_block_till_done()
 
@@ -506,7 +506,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_3") is not None
 
 
-async def test_load_from_storage.opp, storage_setup):
+async def test_load_from_storage(opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
     state = opp.states.get(f"{DOMAIN}.from_storage")
@@ -515,7 +515,7 @@ async def test_load_from_storage.opp, storage_setup):
     assert state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_editable_state_attribute.opp, storage_setup):
+async def test_editable_state_attribute(opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(
         config={DOMAIN: {"from_yaml": {"options": ["yaml option", "other option"]}}}
@@ -531,13 +531,13 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert not state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(
         config={DOMAIN: {"from_yaml": {"options": ["yaml option"]}}}
     )
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -553,19 +553,19 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -578,7 +578,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update.opp, opp_ws_client, storage_setup):
+async def test_update(opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     items = [
@@ -592,13 +592,13 @@ async def test_update.opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes[ATTR_OPTIONS] == ["yaml update 1", "yaml update 2"]
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -627,19 +627,19 @@ async def test_update.opp, opp_ws_client, storage_setup):
     assert not resp["success"]
 
 
-async def test_ws_create.opp, opp_ws_client, storage_setup):
+async def test_ws_create(opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 
     input_id = "new_input"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -660,7 +660,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup):
 async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}
@@ -669,7 +669,7 @@ async def test_setup_no_config(opp, opp_admin_user):
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id(opp_admin_user.id),
         )
         await opp.async_block_till_done()
 

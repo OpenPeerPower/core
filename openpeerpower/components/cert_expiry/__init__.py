@@ -23,7 +23,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Load the saved entities."""
     host = entry.data[CONF_HOST]
     port = entry.data[CONF_PORT]
@@ -46,7 +46,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     return await opp.config_entries.async_forward_entry_unload(entry, "sensor")
 

@@ -11,7 +11,7 @@ from .entity import NexiaEntity
 SCENE_ACTIVATION_TIME = 5
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up automations for a Nexia device."""
 
     nexia_data = opp.data[DOMAIN][config_entry.entry_id]

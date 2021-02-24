@@ -69,7 +69,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up shopping list from config flow."""
 
     async def add_item_service(call):
@@ -128,7 +128,7 @@ async def async_setup_entry.opp, config_entry):
         SCHEMA_WEBSOCKET_CLEAR_ITEMS,
     )
 
-    websocket_api.async_register_command.opp, websocket_handle_reorder)
+    websocket_api.async_register_command(opp, websocket_handle_reorder)
 
     return True
 
@@ -265,7 +265,7 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
 
 
 @callback
-def websocket_handle_items.opp, connection, msg):
+def websocket_handle_items(opp, connection, msg):
     """Handle get shopping_list items."""
     connection.send_message(
         websocket_api.result_message(msg["id"], opp.data[DOMAIN].items)
@@ -273,7 +273,7 @@ def websocket_handle_items.opp, connection, msg):
 
 
 @websocket_api.async_response
-async def websocket_handle_add.opp, connection, msg):
+async def websocket_handle_add(opp, connection, msg):
     """Handle add item to shopping_list."""
     item = await opp.data[DOMAIN].async_add(msg["name"])
     opp.bus.async_fire(EVENT, {"action": "add", "item": item})
@@ -281,7 +281,7 @@ async def websocket_handle_add.opp, connection, msg):
 
 
 @websocket_api.async_response
-async def websocket_handle_update.opp, connection, msg):
+async def websocket_handle_update(opp, connection, msg):
     """Handle update shopping_list item."""
     msg_id = msg.pop("id")
     item_id = msg.pop("item_id")
@@ -299,7 +299,7 @@ async def websocket_handle_update.opp, connection, msg):
 
 
 @websocket_api.async_response
-async def websocket_handle_clear.opp, connection, msg):
+async def websocket_handle_clear(opp, connection, msg):
     """Handle clearing shopping_list items."""
     await opp.data[DOMAIN].async_clear_completed()
     opp.bus.async_fire(EVENT, {"action": "clear"})
@@ -312,7 +312,7 @@ async def websocket_handle_clear.opp, connection, msg):
         vol.Required("item_ids"): [str],
     }
 )
-def websocket_handle_reorder.opp, connection, msg):
+def websocket_handle_reorder(opp, connection, msg):
     """Handle reordering shopping_list items."""
     msg_id = msg.pop("id")
     try:

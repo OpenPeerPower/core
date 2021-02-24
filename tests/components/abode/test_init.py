@@ -15,9 +15,9 @@ from openpeerpower.const import CONF_USERNAME, HTTP_BAD_REQUEST
 from .common import setup_platform
 
 
-async def test_change_settings.opp):
+async def test_change_settings(opp):
     """Test change_setting service."""
-    await setup_platform.opp, ALARM_DOMAIN)
+    await setup_platform(opp, ALARM_DOMAIN)
 
     with patch("abodepy.Abode.set_setting") as mock_set_setting:
         await opp.services.async_call(
@@ -30,9 +30,9 @@ async def test_change_settings.opp):
         mock_set_setting.assert_called_once()
 
 
-async def test_add_unique_id.opp):
+async def test_add_unique_id(opp):
     """Test unique_id is set to Abode username."""
-    mock_entry = await setup_platform.opp, ALARM_DOMAIN)
+    mock_entry = await setup_platform(opp, ALARM_DOMAIN)
     # Set unique_id to None to match previous config entries
     opp.config_entries.async_update_entry(entry=mock_entry, unique_id=None)
     await opp.async_block_till_done()
@@ -46,9 +46,9 @@ async def test_add_unique_id.opp):
     assert mock_entry.unique_id == mock_entry.data[CONF_USERNAME]
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test unloading the Abode entry."""
-    mock_entry = await setup_platform.opp, ALARM_DOMAIN)
+    mock_entry = await setup_platform(opp, ALARM_DOMAIN)
 
     with patch("abodepy.Abode.logout") as mock_logout, patch(
         "abodepy.event_controller.AbodeEventController.stop"
@@ -62,7 +62,7 @@ async def test_unload_entry.opp):
         assert not.opp.services.has_service(ABODE_DOMAIN, SERVICE_TRIGGER_AUTOMATION)
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test Abode credentials changing."""
     with patch(
         "openpeerpower.components.abode.Abode",
@@ -70,6 +70,6 @@ async def test_invalid_credentials.opp):
     ), patch(
         "openpeerpower.components.abode.config_flow.AbodeFlowHandler.async_step_reauth"
     ) as mock_async_step_reauth:
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
 
         mock_async_step_reauth.assert_called_once()

@@ -18,7 +18,7 @@ def mock_auth():
         yield mock_auth
 
 
-async def test_user_connection_successful.opp, mock_auth, mock_entry_setup):
+async def test_user_connection_successful(opp, mock_auth, mock_entry_setup):
     """Test a successful connection."""
     mock_auth.side_effect = lambda.opp, host, code: {"host": host, "gateway_id": "bla"}
 
@@ -40,7 +40,7 @@ async def test_user_connection_successful.opp, mock_auth, mock_entry_setup):
     }
 
 
-async def test_user_connection_timeout.opp, mock_auth, mock_entry_setup):
+async def test_user_connection_timeout(opp, mock_auth, mock_entry_setup):
     """Test a connection timeout."""
     mock_auth.side_effect = config_flow.AuthError("timeout")
 
@@ -58,7 +58,7 @@ async def test_user_connection_timeout.opp, mock_auth, mock_entry_setup):
     assert result["errors"] == {"base": "timeout"}
 
 
-async def test_user_connection_bad_key.opp, mock_auth, mock_entry_setup):
+async def test_user_connection_bad_key(opp, mock_auth, mock_entry_setup):
     """Test a connection with bad key."""
     mock_auth.side_effect = config_flow.AuthError("invalid_security_code")
 
@@ -76,7 +76,7 @@ async def test_user_connection_bad_key.opp, mock_auth, mock_entry_setup):
     assert result["errors"] == {"security_code": "invalid_security_code"}
 
 
-async def test_discovery_connection.opp, mock_auth, mock_entry_setup):
+async def test_discovery_connection(opp, mock_auth, mock_entry_setup):
     """Test a connection via discovery."""
     mock_auth.side_effect = lambda.opp, host, code: {"host": host, "gateway_id": "bla"}
 
@@ -101,7 +101,7 @@ async def test_discovery_connection.opp, mock_auth, mock_entry_setup):
     }
 
 
-async def test_import_connection.opp, mock_auth, mock_entry_setup):
+async def test_import_connection(opp, mock_auth, mock_entry_setup):
     """Test a connection via import."""
     mock_auth.side_effect = lambda.opp, host, code: {
         "host": host,
@@ -132,7 +132,7 @@ async def test_import_connection.opp, mock_auth, mock_entry_setup):
     assert len(mock_entry_setup.mock_calls) == 1
 
 
-async def test_import_connection_no_groups.opp, mock_auth, mock_entry_setup):
+async def test_import_connection_no_groups(opp, mock_auth, mock_entry_setup):
     """Test a connection via import and no groups allowed."""
     mock_auth.side_effect = lambda.opp, host, code: {
         "host": host,
@@ -163,7 +163,7 @@ async def test_import_connection_no_groups.opp, mock_auth, mock_entry_setup):
     assert len(mock_entry_setup.mock_calls) == 1
 
 
-async def test_import_connection_legacy.opp, mock_gateway_info, mock_entry_setup):
+async def test_import_connection_legacy(opp, mock_gateway_info, mock_entry_setup):
     """Test a connection via import."""
     mock_gateway_info.side_effect = lambda.opp, host, identity, key: {
         "host": host,
@@ -221,12 +221,12 @@ async def test_import_connection_legacy_no_groups(
     assert len(mock_entry_setup.mock_calls) == 1
 
 
-async def test_discovery_duplicate_aborted.opp):
+async def test_discovery_duplicate_aborted(opp):
     """Test a duplicate discovery host aborts and updates existing entry."""
     entry = MockConfigEntry(
         domain="tradfri", data={"host": "some-host"}, unique_id="homekit-id"
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri",
@@ -240,9 +240,9 @@ async def test_discovery_duplicate_aborted.opp):
     assert entry.data["host"] == "new-host"
 
 
-async def test_import_duplicate_aborted.opp):
+async def test_import_duplicate_aborted(opp):
     """Test a duplicate import host is ignored."""
-    MockConfigEntry(domain="tradfri", data={"host": "some-host"}).add_to.opp.opp)
+    MockConfigEntry(domain="tradfri", data={"host": "some-host"}).add_to(opp.opp)
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri", context={"source": "import"}, data={"host": "some-host"}
@@ -252,7 +252,7 @@ async def test_import_duplicate_aborted.opp):
     assert flow["reason"] == "already_configured"
 
 
-async def test_duplicate_discovery.opp, mock_auth, mock_entry_setup):
+async def test_duplicate_discovery(opp, mock_auth, mock_entry_setup):
     """Test a duplicate discovery in progress is ignored."""
     result = await opp.config_entries.flow.async_init(
         "tradfri",
@@ -271,13 +271,13 @@ async def test_duplicate_discovery.opp, mock_auth, mock_entry_setup):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_discovery_updates_unique_id.opp):
+async def test_discovery_updates_unique_id(opp):
     """Test a duplicate discovery host aborts and updates existing entry."""
     entry = MockConfigEntry(
         domain="tradfri",
         data={"host": "some-host"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri",

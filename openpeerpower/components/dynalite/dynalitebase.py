@@ -85,7 +85,7 @@ class DynaliteBase(Entity):
             )
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Unregister signal dispatch listeners when being removed."""
         for unsub in self._unsub_dispatchers:
             unsub()

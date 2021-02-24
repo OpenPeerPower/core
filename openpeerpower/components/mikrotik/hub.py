@@ -394,7 +394,7 @@ class MikrotikHub:
         return True
 
 
-def get_api.opp, entry):
+def get_api(opp, entry):
     """Connect to Mikrotik hub."""
     _LOGGER.debug("Connecting to Mikrotik hub [%s]", entry[CONF_HOST])
 

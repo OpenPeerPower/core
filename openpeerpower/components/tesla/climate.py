@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 SUPPORT_HVAC = [HVAC_MODE_HEAT_COOL, HVAC_MODE_OFF]
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Tesla binary_sensors by config_entry."""
     async_add_entities(
         [

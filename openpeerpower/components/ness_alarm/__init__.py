@@ -104,10 +104,10 @@ async def async_setup(opp, config):
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _close)
 
     opp.async_create_task(
-        async_load_platform.opp, "binary_sensor", DOMAIN, {CONF_ZONES: zones}, config)
+        async_load_platform(opp, "binary_sensor", DOMAIN, {CONF_ZONES: zones}, config)
     )
     opp.async_create_task(
-        async_load_platform.opp, "alarm_control_panel", DOMAIN, {}, config)
+        async_load_platform(opp, "alarm_control_panel", DOMAIN, {}, config)
     )
 
     def on_zone_change(zone_id: int, state: bool):
@@ -118,7 +118,7 @@ async def async_setup(opp, config):
 
     def on_state_change(arming_state: ArmingState):
         """Receives and propagates arming state updates."""
-        async_dispatcher_send.opp, SIGNAL_ARMING_STATE_CHANGED, arming_state)
+        async_dispatcher_send(opp, SIGNAL_ARMING_STATE_CHANGED, arming_state)
 
     client.on_zone_change(on_zone_change)
     client.on_state_change(on_state_change)

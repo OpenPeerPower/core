@@ -14,7 +14,7 @@ from . import LUTRON_CONTROLLER, LUTRON_DEVICES, LutronDevice
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Lutron shades."""
     devs = []
     for (area_name, device) in.opp.data[LUTRON_DEVICES]["cover"]:

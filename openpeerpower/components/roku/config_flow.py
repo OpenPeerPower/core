@@ -27,12 +27,12 @@ ERROR_UNKNOWN = "unknown"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def validate_input.opp: OpenPeerPowerType, data: Dict) -> Dict:
+async def validate_input(opp: OpenPeerPowerType, data: Dict) -> Dict:
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     roku = Roku(data[CONF_HOST], session=session)
     device = await roku.update()
 

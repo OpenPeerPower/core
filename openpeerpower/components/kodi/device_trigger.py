@@ -29,9 +29,9 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for Kodi devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     triggers = []
 
     # Get all the integrations entities for this device
@@ -68,7 +68,7 @@ def _attach_trigger(
     @callback
     def _handle_event(event: Event):
         if event.data[ATTR_ENTITY_ID] == config[CONF_ENTITY_ID]:
-            opp.async_run.opp_job(
+            opp.async_run(opp_job(
                 job,
                 {"trigger": {**config, "description": event_type}},
                 event.context,
@@ -87,9 +87,9 @@ async def async_attach_trigger(
     config = TRIGGER_SCHEMA(config)
 
     if config[CONF_TYPE] == "turn_on":
-        return _attach_trigger.opp, config, action, EVENT_TURN_ON)
+        return _attach_trigger(opp, config, action, EVENT_TURN_ON)
 
     if config[CONF_TYPE] == "turn_off":
-        return _attach_trigger.opp, config, action, EVENT_TURN_OFF)
+        return _attach_trigger(opp, config, action, EVENT_TURN_OFF)
 
     return lambda: None

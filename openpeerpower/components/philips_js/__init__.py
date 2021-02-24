@@ -27,7 +27,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Philips TV from a config entry."""
 
     tvapi = PhilipsTV(entry.data[CONF_HOST], entry.data[CONF_API_VERSION])
@@ -45,7 +45,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -94,7 +94,7 @@ class PluggableAction:
     ):
         """Run all turn on triggers."""
         for job, variables in self._actions.values():
-            opp.async_run.opp_job(job, variables, context)
+            opp.async_run(opp_job(job, variables, context)
 
 
 class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):

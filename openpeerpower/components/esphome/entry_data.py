@@ -76,7 +76,7 @@ class RuntimeEntryData:
     ) -> None:
         """Schedule the update of an entity."""
         signal = f"esphome_{self.entry_id}_update_{component_key}_{key}"
-        async_dispatcher_send.opp, signal)
+        async_dispatcher_send(opp, signal)
 
     @callback
     def async_remove_entity(
@@ -84,7 +84,7 @@ class RuntimeEntryData:
     ) -> None:
         """Schedule the removal of an entity."""
         signal = f"esphome_{self.entry_id}_remove_{component_key}_{key}"
-        async_dispatcher_send.opp, signal)
+        async_dispatcher_send(opp, signal)
 
     async def _ensure_platforms_loaded(
         self, opp: OpenPeerPowerType, entry: ConfigEntry, platforms: Set[str]
@@ -111,23 +111,23 @@ class RuntimeEntryData:
                 if isinstance(info, info_type):
                     needed_platforms.add(platform)
                     break
-        await self._ensure_platforms_loaded.opp, entry, needed_platforms)
+        await self._ensure_platforms_loaded(opp, entry, needed_platforms)
 
         # Then send dispatcher event
         signal = f"esphome_{self.entry_id}_on_list"
-        async_dispatcher_send.opp, signal, infos)
+        async_dispatcher_send(opp, signal, infos)
 
     @callback
     def async_update_state(self, opp: OpenPeerPowerType, state: EntityState) -> None:
         """Distribute an update of state information to all platforms."""
         signal = f"esphome_{self.entry_id}_on_state"
-        async_dispatcher_send.opp, signal, state)
+        async_dispatcher_send(opp, signal, state)
 
     @callback
     def async_update_device_state(self, opp: OpenPeerPowerType) -> None:
         """Distribute an update of a core device state like availability."""
         signal = f"esphome_{self.entry_id}_on_device_update"
-        async_dispatcher_send.opp, signal)
+        async_dispatcher_send(opp, signal)
 
     async def async_load_from_store(self) -> Tuple[List[EntityInfo], List[UserService]]:
         """Load the retained data from store and return de-serialized data."""

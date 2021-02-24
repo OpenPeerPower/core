@@ -6,7 +6,7 @@ from .const import DOMAIN, NEXIA_DEVICE, UPDATE_COORDINATOR
 from .entity import NexiaThermostatEntity
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up sensors for a Nexia device."""
 
     nexia_data = opp.data[DOMAIN][config_entry.entry_id]

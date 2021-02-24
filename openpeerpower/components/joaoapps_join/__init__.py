@@ -41,7 +41,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def register_device.opp, api_key, name, device_id, device_ids, device_names):
+def register_device(opp, api_key, name, device_id, device_ids, device_names):
     """Register services for each join device listed."""
 
     def ring_service(service):
@@ -132,5 +132,5 @@ def setup(opp, config):
             )
             return False
 
-        register_device.opp, api_key, name, device_id, device_ids, device_names)
+        register_device(opp, api_key, name, device_id, device_ids, device_names)
     return True

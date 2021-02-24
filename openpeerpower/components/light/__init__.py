@@ -132,12 +132,12 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @bind.opp
-def is_on.opp, entity_id):
+def is_on(opp, entity_id):
     """Return if the lights are on based on the statemachine."""
     return.opp.states.is_state(entity_id, STATE_ON)
 
 
-def preprocess_turn_on_alternatives.opp, params):
+def preprocess_turn_on_alternatives(opp, params):
     """Process extra data for turn light on request.
 
     Async friendly.
@@ -198,7 +198,7 @@ async def async_setup(opp, config):
             if entity_field in data
         }
 
-        preprocess_turn_on_alternatives.opp, data)
+        preprocess_turn_on_alternatives(opp, data)
         base["params"] = data
         return base
 
@@ -223,7 +223,7 @@ async def async_setup(opp, config):
 
             params[ATTR_BRIGHTNESS] = max(0, min(255, brightness))
 
-            preprocess_turn_on_alternatives.opp, params)
+            preprocess_turn_on_alternatives(opp, params)
 
         if ATTR_PROFILE not in params:
             profiles.apply_default(light.entity_id, params)
@@ -265,12 +265,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 

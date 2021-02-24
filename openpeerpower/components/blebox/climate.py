@@ -14,7 +14,7 @@ from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS
 from . import BleBoxEntity, create_blebox_entities
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a BleBox climate entity."""
 
     create_blebox_entities(

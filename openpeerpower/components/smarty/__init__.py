@@ -53,19 +53,19 @@ def setup(opp, config):
     smarty.update()
 
     # Load platforms
-    discovery.load_platform.opp, "fan", DOMAIN, {}, config)
-    discovery.load_platform.opp, "sensor", DOMAIN, {}, config)
-    discovery.load_platform.opp, "binary_sensor", DOMAIN, {}, config)
+    discovery.load_platform(opp, "fan", DOMAIN, {}, config)
+    discovery.load_platform(opp, "sensor", DOMAIN, {}, config)
+    discovery.load_platform(opp, "binary_sensor", DOMAIN, {}, config)
 
     def poll_device_update(event_time):
         """Update Smarty device."""
         _LOGGER.debug("Updating Smarty device...")
         if smarty.update():
             _LOGGER.debug("Update success...")
-            dispatcher_send.opp, SIGNAL_UPDATE_SMARTY)
+            dispatcher_send(opp, SIGNAL_UPDATE_SMARTY)
         else:
             _LOGGER.debug("Update failed...")
 
-    track_time_interval.opp, poll_device_update, timedelta(seconds=30))
+    track_time_interval(opp, poll_device_update, timedelta(seconds=30))
 
     return True

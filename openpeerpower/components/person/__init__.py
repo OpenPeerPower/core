@@ -89,7 +89,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 @bind.opp
-async def async_create_person.opp, name, *, user_id=None, device_trackers=None):
+async def async_create_person(opp, name, *, user_id=None, device_trackers=None):
     """Create a new person."""
     await opp.data[DOMAIN][1].async_create_item(
         {
@@ -257,7 +257,7 @@ class PersonStorageCollection(collection.StorageCollection):
                 raise ValueError("User already taken")
 
 
-async def filter_yaml_data.opp: OpenPeerPowerType, persons: List[dict]) -> List[dict]:
+async def filter_yaml_data(opp: OpenPeerPowerType, persons: List[dict]) -> List[dict]:
     """Validate YAML data that we can't validate via schema."""
     filtered = []
     person_invalid_user = []
@@ -314,7 +314,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     )
 
     await yaml_collection.async_load(
-        await filter_yaml_data.opp, config.get(DOMAIN, []))
+        await filter_yaml_data(opp, config.get(DOMAIN, []))
     )
     await storage_collection.async_load()
 
@@ -324,7 +324,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
     ).async_setup_opp, create_list=False)
 
-    websocket_api.async_register_command.opp, ws_list_person)
+    websocket_api.async_register_command(opp, ws_list_person)
 
     async def _handle_user_removed(event: Event) -> None:
         """Handle a user being removed."""
@@ -343,7 +343,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
         if conf is None:
             return
         await yaml_collection.async_load(
-            await filter_yaml_data.opp, conf.get(DOMAIN, []))
+            await filter_yaml_data(opp, conf.get(DOMAIN, []))
         )
 
     service.async_register_admin_service(
@@ -432,11 +432,11 @@ class Person(RestoreEntity):
         else:
             # Wait for.opp start to not have race between person
             # and device trackers finishing setup.
-            async def person_start.opp(now):
+            async def person_start(opp(now):
                 await self.async_update_config(self._config)
 
             self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_START, person_start.opp
+                EVENT_OPENPEERPOWER_START, person_start(opp
             )
 
     async def async_update_config(self, config):

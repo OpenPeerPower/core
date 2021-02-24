@@ -26,15 +26,15 @@ MOCK_CONFIG_ENTRY = MockConfigEntry(
 )
 
 
-async def test_device_registry_insert.opp):
+async def test_device_registry_insert(opp):
     """Test that the device registry is initialized correctly."""
-    MOCK_CONFIG_ENTRY.add_to.opp.opp)
+    MOCK_CONFIG_ENTRY.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.opentherm_gw.OpenThermGatewayDevice.cleanup",
         return_value=None,
     ), patch("pyotgw.pyotgw.connect", return_value=MINIMAL_STATUS):
-        await setup.async_setup_component.opp, DOMAIN, {})
+        await setup.async_setup_component(opp, DOMAIN, {})
 
     await opp.async_block_till_done()
 
@@ -44,11 +44,11 @@ async def test_device_registry_insert.opp):
     assert gw_dev.sw_version == VERSION_OLD
 
 
-async def test_device_registry_update.opp):
+async def test_device_registry_update(opp):
     """Test that the device registry is updated correctly."""
-    MOCK_CONFIG_ENTRY.add_to.opp.opp)
+    MOCK_CONFIG_ENTRY.add_to(opp.opp)
 
-    dev_reg = mock_device_registry.opp)
+    dev_reg = mock_device_registry(opp)
     dev_reg.async_get_or_create(
         config_entry_id=MOCK_CONFIG_ENTRY.entry_id,
         identifiers={(DOMAIN, MOCK_GATEWAY_ID)},
@@ -62,7 +62,7 @@ async def test_device_registry_update.opp):
         "openpeerpower.components.opentherm_gw.OpenThermGatewayDevice.cleanup",
         return_value=None,
     ), patch("pyotgw.pyotgw.connect", return_value=MINIMAL_STATUS_UPD):
-        await setup.async_setup_component.opp, DOMAIN, {})
+        await setup.async_setup_component(opp, DOMAIN, {})
 
     await opp.async_block_till_done()
     gw_dev = dev_reg.async_get_device(identifiers={(DOMAIN, MOCK_GATEWAY_ID)})

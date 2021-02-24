@@ -80,6 +80,6 @@ def setup(opp, config):
         CONF_VERTICAL_FLIP: config_domain.get(CONF_VERTICAL_FLIP),
     }
 
-    discovery.load_platform.opp, "camera", DOMAIN, {}, config)
+    discovery.load_platform(opp, "camera", DOMAIN, {}, config)
 
     return True

@@ -30,10 +30,10 @@ def get_measures(station_data):
     return station_data["measures"]
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up UK Flood Monitoring Sensors."""
     station_key = config_entry.data["station"]
-    session = async_get_clientsession.opp.opp)
+    session = async_get_clientsession(opp.opp)
 
     measurements = set()
 

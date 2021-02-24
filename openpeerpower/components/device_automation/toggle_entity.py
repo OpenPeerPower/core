@@ -200,24 +200,24 @@ async def async_get_actions(
     opp: OpenPeerPower, device_id: str, domain: str
 ) -> List[dict]:
     """List device actions."""
-    return await _async_get_automations.opp, device_id, ENTITY_ACTIONS, domain)
+    return await _async_get_automations(opp, device_id, ENTITY_ACTIONS, domain)
 
 
 async def async_get_conditions(
     opp: OpenPeerPower, device_id: str, domain: str
 ) -> List[Dict[str, str]]:
     """List device conditions."""
-    return await _async_get_automations.opp, device_id, ENTITY_CONDITIONS, domain)
+    return await _async_get_automations(opp, device_id, ENTITY_CONDITIONS, domain)
 
 
 async def async_get_triggers(
     opp: OpenPeerPower, device_id: str, domain: str
 ) -> List[dict]:
     """List device triggers."""
-    return await _async_get_automations.opp, device_id, ENTITY_TRIGGERS, domain)
+    return await _async_get_automations(opp, device_id, ENTITY_TRIGGERS, domain)
 
 
-async def async_get_condition_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_condition_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List condition capabilities."""
     return {
         "extra_fields": vol.Schema(
@@ -226,7 +226,7 @@ async def async_get_condition_capabilities.opp: OpenPeerPower, config: dict) -> 
     }
 
 
-async def async_get_trigger_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_trigger_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List trigger capabilities."""
     return {
         "extra_fields": vol.Schema(

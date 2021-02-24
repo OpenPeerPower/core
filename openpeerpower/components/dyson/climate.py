@@ -64,7 +64,7 @@ SPEED_MAP = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Dyson fan components."""
     if discovery_info is None:
         return

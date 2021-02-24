@@ -31,7 +31,7 @@ ENTITY_ID = "script.test"
 
 
 @bind.opp
-def turn_on.opp, entity_id, variables=None, context=None):
+def turn_on(opp, entity_id, variables=None, context=None):
     """Turn script on.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -42,7 +42,7 @@ def turn_on.opp, entity_id, variables=None, context=None):
 
 
 @bind.opp
-def turn_off.opp, entity_id):
+def turn_off(opp, entity_id):
     """Turn script on.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -129,7 +129,7 @@ class TestScriptComponent(unittest.TestCase):
 
 
 @pytest.mark.parametrize("toggle", [False, True])
-async def test_turn_on_off_toggle.opp, toggle):
+async def test_turn_on_off_toggle(opp, toggle):
     """Verify turn_on, turn_off & toggle services."""
     event = "test_event"
     event_mock = Mock()
@@ -143,7 +143,7 @@ async def test_turn_on_off_toggle.opp, toggle):
         nonlocal was_on
         was_on = True
 
-    async_track_state_change.opp, ENTITY_ID, state_listener, to_state="on")
+    async_track_state_change(opp, ENTITY_ID, state_listener, to_state="on")
 
     if toggle:
         turn_off_step = {"service": "script.toggle", "entity_id": ENTITY_ID}
@@ -161,7 +161,7 @@ async def test_turn_on_off_toggle.opp, toggle):
         },
     )
 
-    assert not script.is_on.opp, ENTITY_ID)
+    assert not script.is_on(opp, ENTITY_ID)
 
     if toggle:
         await opp.services.async_call(
@@ -171,7 +171,7 @@ async def test_turn_on_off_toggle.opp, toggle):
         await opp.services.async_call(DOMAIN, split_entity_id(ENTITY_ID)[1])
     await opp.async_block_till_done()
 
-    assert not script.is_on.opp, ENTITY_ID)
+    assert not script.is_on(opp, ENTITY_ID)
     assert was_on
     assert 1 == event_mock.call_count
 
@@ -184,7 +184,7 @@ invalid_configs = [
 
 
 @pytest.mark.parametrize("value", invalid_configs)
-async def test_setup_with_invalid_configs.opp, value):
+async def test_setup_with_invalid_configs(opp, value):
     """Test setup with invalid configs."""
     assert await async_setup_component(
         opp. "script", {"script": value}
@@ -194,7 +194,7 @@ async def test_setup_with_invalid_configs.opp, value):
 
 
 @pytest.mark.parametrize("running", ["no", "same", "different"])
-async def test_reload_service.opp, running):
+async def test_reload_service(opp, running):
     """Verify the reload service."""
     event = "test_event"
     event_flag = asyncio.Event()
@@ -229,7 +229,7 @@ async def test_reload_service.opp, running):
         await opp.services.async_call(DOMAIN, object_id)
         await asyncio.wait_for(event_flag.wait(), 1)
 
-        assert script.is_on.opp, ENTITY_ID)
+        assert script.is_on(opp, ENTITY_ID)
 
     object_id = "test" if running == "same" else "test2"
     with patch(
@@ -251,7 +251,7 @@ async def test_reload_service.opp, running):
         assert.opp.services.has_service(script.DOMAIN, "test")
 
 
-async def test_service_descriptions.opp):
+async def test_service_descriptions(opp):
     """Test that service descriptions are loaded and reloaded correctly."""
     # Test 1: has "description" but no "fields"
     assert await async_setup_component(
@@ -267,7 +267,7 @@ async def test_service_descriptions.opp):
         },
     )
 
-    descriptions = await async_get_all_descriptions.opp)
+    descriptions = await async_get_all_descriptions(opp)
 
     assert descriptions[DOMAIN]["test"]["description"] == "test description"
     assert not descriptions[DOMAIN]["test"]["fields"]
@@ -291,7 +291,7 @@ async def test_service_descriptions.opp):
     ):
         await opp.services.async_call(DOMAIN, SERVICE_RELOAD, blocking=True)
 
-    descriptions = await async_get_all_descriptions.opp)
+    descriptions = await async_get_all_descriptions(opp)
 
     assert descriptions[script.DOMAIN]["test"]["description"] == ""
     assert (
@@ -304,7 +304,7 @@ async def test_service_descriptions.opp):
     )
 
 
-async def test_shared_context.opp):
+async def test_shared_context(opp):
     """Test that the shared context is passed down the chain."""
     event = "test_event"
     context = Context()
@@ -358,9 +358,9 @@ async def test_logging_script_error(opp, caplog):
     assert "Error executing script" in caplog.text
 
 
-async def test_turning_no_scripts_off.opp):
+async def test_turning_no_scripts_off(opp):
     """Test it is possible to turn two scripts off."""
-    assert await async_setup_component.opp, "script", {})
+    assert await async_setup_component(opp, "script", {})
 
     # Testing it doesn't raise
     await opp.services.async_call(
@@ -368,7 +368,7 @@ async def test_turning_no_scripts_off.opp):
     )
 
 
-async def test_async_get_descriptions_script.opp):
+async def test_async_get_descriptions_script(opp):
     """Test async_set_service_schema for the script integration."""
     script_config = {
         DOMAIN: {
@@ -386,7 +386,7 @@ async def test_async_get_descriptions_script.opp):
         }
     }
 
-    await async_setup_component.opp, DOMAIN, script_config)
+    await async_setup_component(opp, DOMAIN, script_config)
     descriptions = await opp.helpers.service.async_get_all_descriptions()
 
     assert descriptions[DOMAIN]["test1"]["description"] == ""
@@ -402,7 +402,7 @@ async def test_async_get_descriptions_script.opp):
     )
 
 
-async def test_extraction_functions.opp):
+async def test_extraction_functions(opp):
     """Test extraction functions."""
     assert await async_setup_component(
         opp,
@@ -457,25 +457,25 @@ async def test_extraction_functions.opp):
         },
     )
 
-    assert set(script.scripts_with_entity.opp, "light.in_both")) == {
+    assert set(script.scripts_with_entity(opp, "light.in_both")) == {
         "script.test1",
         "script.test2",
     }
-    assert set(script.entities_in_script.opp, "script.test1")) == {
+    assert set(script.entities_in_script(opp, "script.test1")) == {
         "light.in_both",
         "light.in_first",
     }
-    assert set(script.scripts_with_device.opp, "device-in-both")) == {
+    assert set(script.scripts_with_device(opp, "device-in-both")) == {
         "script.test1",
         "script.test2",
     }
-    assert set(script.devices_in_script.opp, "script.test2")) == {
+    assert set(script.devices_in_script(opp, "script.test2")) == {
         "device-in-both",
         "device-in-last",
     }
 
 
-async def test_config_basic.opp):
+async def test_config_basic(opp):
     """Test passing info in config."""
     assert await async_setup_component(
         opp,
@@ -496,11 +496,11 @@ async def test_config_basic.opp):
     assert test_script.attributes["icon"] == "mdi:party"
 
 
-async def test_logbook_humanify_script_started_event.opp):
+async def test_logbook_humanify_script_started_event(opp):
     """Test humanifying script started event."""
     opp.config.components.add("recorder")
-    await async_setup_component.opp, DOMAIN, {})
-    await async_setup_component.opp, "logbook", {})
+    await async_setup_component(opp, DOMAIN, {})
+    await async_setup_component(opp, "logbook", {})
     entity_attr_cache = logbook.EntityAttributeCache.opp)
 
     event1, event2 = list(
@@ -533,7 +533,7 @@ async def test_logbook_humanify_script_started_event.opp):
 
 
 @pytest.mark.parametrize("concurrently", [False, True])
-async def test_concurrent_script.opp, concurrently):
+async def test_concurrent_script(opp, concurrently):
     """Test calling script concurrently or not."""
     if concurrently:
         call_script_2 = {
@@ -588,8 +588,8 @@ async def test_concurrent_script.opp, concurrently):
     service_called.clear()
 
     assert "script2a" == service_values[-1]
-    assert script.is_on.opp, "script.script1")
-    assert script.is_on.opp, "script.script2")
+    assert script.is_on(opp, "script.script1")
+    assert script.is_on(opp, "script.script2")
 
     if not concurrently:
         opp.states.async_set("input_boolean.test2", "on")
@@ -603,7 +603,7 @@ async def test_concurrent_script.opp, concurrently):
     service_called.clear()
 
     assert "script1" == service_values[-1]
-    assert concurrently == script.is_on.opp, "script.script2")
+    assert concurrently == script.is_on(opp, "script.script2")
 
     if concurrently:
         opp.states.async_set("input_boolean.test2", "on")
@@ -614,11 +614,11 @@ async def test_concurrent_script.opp, concurrently):
 
     await opp.async_block_till_done()
 
-    assert not script.is_on.opp, "script.script1")
-    assert not script.is_on.opp, "script.script2")
+    assert not script.is_on(opp, "script.script1")
+    assert not script.is_on(opp, "script.script2")
 
 
-async def test_script_variables.opp, caplog):
+async def test_script_variables(opp, caplog):
     """Test defining scripts."""
     assert await async_setup_component(
         opp,
@@ -670,7 +670,7 @@ async def test_script_variables.opp, caplog):
         },
     )
 
-    mock_calls = async_mock_service.opp, "test", "script")
+    mock_calls = async_mock_service(opp, "test", "script")
 
     await opp.services.async_call(
         "script", "script1", {"var_from_service": "hello"}, blocking=True

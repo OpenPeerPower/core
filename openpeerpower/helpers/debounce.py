@@ -70,7 +70,7 @@ class Debouncer:
             if self._timer_task:
                 return
 
-            task = self.opp.async_run.opp_job(self._job)
+            task = self.opp.async_run(opp_job(self._job)
             if task:
                 await task
 
@@ -97,7 +97,7 @@ class Debouncer:
                 return  # type: ignore
 
             try:
-                task = self.opp.async_run.opp_job(self._job)
+                task = self.opp.async_run(opp_job(self._job)
                 if task:
                     await task
             except Exception:  # pylint: disable=broad-except

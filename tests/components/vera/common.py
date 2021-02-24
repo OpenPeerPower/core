@@ -98,7 +98,7 @@ class ComponentFactory:
         return ComponentData(
             controller_data=tuple(
                 [
-                    await self._configure_component.opp, controller_config)
+                    await self._configure_component(opp, controller_config)
                     for controller_config in configs
                 ]
             )
@@ -145,7 +145,7 @@ class ComponentFactory:
             opp.config[DOMAIN] = component_config
 
         # Setup Open Peer Power.
-        assert await async_setup_component.opp, DOMAIN, opp_config)
+        assert await async_setup_component(opp, DOMAIN, opp_config)
         await opp.async_block_till_done()
 
         # Setup component through config flow.
@@ -165,7 +165,7 @@ class ComponentFactory:
                 options=controller_config.options,
                 unique_id="12345",
             )
-            entry.add_to.opp.opp)
+            entry.add_to(opp.opp)
 
             await opp.config_entries.async_setup(entry.entry_id)
             await opp.async_block_till_done()

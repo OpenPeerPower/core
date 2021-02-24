@@ -12,7 +12,7 @@ from . import DATA_KEY
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Get the notification service."""
     if discovery_info is None:
         return

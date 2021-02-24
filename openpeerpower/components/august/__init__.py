@@ -63,7 +63,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_request_validation.opp, config_entry, august_gateway):
+async def async_request_validation(opp, config_entry, august_gateway):
     """Request a new verification code from the user."""
 
     #
@@ -86,7 +86,7 @@ async def async_request_validation.opp, config_entry, august_gateway):
                 "Invalid verification code, please make sure you are using the latest code and try again.",
             )
         elif result == ValidationResult.VALIDATED:
-            return await async_setup_august.opp, config_entry, august_gateway)
+            return await async_setup_august(opp, config_entry, august_gateway)
 
         return False
 
@@ -113,7 +113,7 @@ async def async_request_validation.opp, config_entry, august_gateway):
     return
 
 
-async def async_setup_august.opp, config_entry, august_gateway):
+async def async_setup_august(opp, config_entry, august_gateway):
     """Set up the August component."""
 
     entry_id = config_entry.entry_id
@@ -122,7 +122,7 @@ async def async_setup_august.opp, config_entry, august_gateway):
     try:
         await august_gateway.async_authenticate()
     except RequireValidation:
-        await async_request_validation.opp, config_entry, august_gateway)
+        await async_request_validation(opp, config_entry, august_gateway)
         raise
 
     # We still use the configurator to get a new 2fa code
@@ -170,22 +170,22 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up August from a config entry."""
 
     august_gateway = AugustGateway.opp)
 
     try:
         await august_gateway.async_setup(entry.data)
-        return await async_setup_august.opp, entry, august_gateway)
+        return await async_setup_august(opp, entry, august_gateway)
     except ClientResponseError as err:
         if err.status == HTTP_UNAUTHORIZED:
-            _async_start_reauth.opp, entry)
+            _async_start_reauth(opp, entry)
             return False
 
         raise ConfigEntryNotReady from err
     except InvalidAuth:
-        _async_start_reauth.opp, entry)
+        _async_start_reauth(opp, entry)
         return False
     except RequireValidation:
         return False
@@ -193,7 +193,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from err
 
 
-def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
+def _async_start_reauth(opp: OpenPeerPower, entry: ConfigEntry):
     opp.async_create_task(
         opp.config_entries.flow.async_init(
             DOMAIN,
@@ -204,7 +204,7 @@ def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
     _LOGGER.error("Password is no longer valid. Please reauthenticate")
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -78,10 +78,10 @@ SIGNAL_MAP = {
 
 
 @callback
-def async_register_webhook.opp, webhook_id, entry_id):
+def async_register_webhook(opp, webhook_id, entry_id):
     """Register a webhook."""
 
-    async def _async_handle_rachio_webhook.opp, webhook_id, request):
+    async def _async_handle_rachio_webhook(opp, webhook_id, request):
         """Handle webhook calls from the server."""
         data = await request.json()
 
@@ -93,7 +93,7 @@ def async_register_webhook.opp, webhook_id, entry_id):
 
         update_type = data[KEY_TYPE]
         if update_type in SIGNAL_MAP:
-            async_dispatcher_send.opp, SIGNAL_MAP[update_type], data)
+            async_dispatcher_send(opp, SIGNAL_MAP[update_type], data)
 
         return web.Response(status=web.HTTPNoContent.status_code)
 
@@ -102,7 +102,7 @@ def async_register_webhook.opp, webhook_id, entry_id):
     )
 
 
-async def async_get_or_create_registered_webhook_id_and_url.opp, entry):
+async def async_get_or_create_registered_webhook_id_and_url(opp, entry):
     """Generate webhook ID."""
     config = entry.data.copy()
 

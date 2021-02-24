@@ -7,7 +7,7 @@ SWITCH_PREFIX = "Switch"
 ICON = "mdi:toggle-switch"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Smappee Comfort Plugs."""
     smappee_base = opp.data[DOMAIN][config_entry.entry_id]
 

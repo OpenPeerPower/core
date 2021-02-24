@@ -52,10 +52,10 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-async def async_validate_config_item.opp, config, full_config=None):
+async def async_validate_config_item(opp, config, full_config=None):
     """Validate config item."""
     if blueprint.is_blueprint_instance_config(config):
-        blueprints = async_get_blueprints.opp)
+        blueprints = async_get_blueprints(opp)
         return await blueprints.async_inputs_from_config(config)
 
     config = PLATFORM_SCHEMA(config)
@@ -79,10 +79,10 @@ async def async_validate_config_item.opp, config, full_config=None):
     return config
 
 
-async def _try_async_validate_config_item.opp, config, full_config=None):
+async def _try_async_validate_config_item(opp, config, full_config=None):
     """Validate config item."""
     try:
-        config = await async_validate_config_item.opp, config, full_config)
+        config = await async_validate_config_item(opp, config, full_config)
     except (
         vol.Invalid,
         OpenPeerPowerError,
@@ -102,7 +102,7 @@ async def async_validate_config(opp, config):
             lambda x: x is not None,
             await asyncio.gather(
                 *(
-                    _try_async_validate_config_item.opp, p_config, config)
+                    _try_async_validate_config_item(opp, p_config, config)
                     for _, p_config in config_per_platform(config, DOMAIN)
                 )
             ),

@@ -44,12 +44,12 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up JuiceNet from a config entry."""
 
     config = entry.data
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     access_token = config[CONF_ACCESS_TOKEN]
     api = Api(access_token, session)
@@ -99,7 +99,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

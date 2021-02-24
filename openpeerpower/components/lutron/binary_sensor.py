@@ -9,7 +9,7 @@ from openpeerpower.components.binary_sensor import (
 from . import LUTRON_CONTROLLER, LUTRON_DEVICES, LutronDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Lutron occupancy sensors."""
     if discovery_info is None:
         return

@@ -104,7 +104,7 @@ async def async_get_conditions(
 ) -> List[Dict[str, str]]:
     """List device conditions."""
     conditions: List[Dict[str, str]] = []
-    entity_registry = await async_get_registry.opp)
+    entity_registry = await async_get_registry(opp)
     entries = [
         entry
         for entry in async_entries_for_device(entity_registry, device_id)
@@ -161,7 +161,7 @@ def async_condition_from_config(
     return condition.async_numeric_state_from_config(numeric_state_config)
 
 
-async def async_get_condition_capabilities.opp, config):
+async def async_get_condition_capabilities(opp, config):
     """List condition capabilities."""
     state = opp.states.get(config[CONF_ENTITY_ID])
     unit_of_measurement = (

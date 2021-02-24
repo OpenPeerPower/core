@@ -149,7 +149,7 @@ async def async_setup(opp, config):
         _LOGGER.debug("Dispatch %s (update from devices)", qsid)
         opp.helpers.dispatcher.async_dispatcher_send(qsid, None)
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     qsusb = QSUsb(
         url=url,
         dim_adj=dimmer_adjust,
@@ -201,7 +201,7 @@ async def async_setup(opp, config):
     # Load platforms
     for comp_name, comp_conf in comps.items():
         if comp_conf:
-            load_platform.opp, comp_name, DOMAIN, {DOMAIN: comp_conf}, config)
+            load_platform(opp, comp_name, DOMAIN, {DOMAIN: comp_conf}, config)
 
     def callback_qs_listen(qspacket):
         """Typically a button press or update signal."""

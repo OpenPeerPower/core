@@ -53,9 +53,9 @@ class StarlineEntity(Entity):
         await super().async_added_to_opp()
         self._unsubscribe_api = self._account.api.add_update_listener(self.update)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Call when entity is being removed from Open Peer Power."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         if self._unsubscribe_api is not None:
             self._unsubscribe_api()
             self._unsubscribe_api = None

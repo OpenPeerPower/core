@@ -47,7 +47,7 @@ async def test_rgb_light_state(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the WLED lights."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -104,7 +104,7 @@ async def test_segment_change_state(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test the change of state of the WLED segments."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("wled.WLED.segment") as light_mock:
         await opp.services.async_call(
@@ -162,7 +162,7 @@ async def test_master_change_state(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test the change of state of the WLED master light control."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("wled.WLED.master") as light_mock:
         await opp.services.async_call(
@@ -231,7 +231,7 @@ async def test_dynamically_handle_segments(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test if a new/deleted segment is dynamically added/removed."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     assert.opp.states.get("light.wled_rgb_light_master")
     assert.opp.states.get("light.wled_rgb_light_segment_0")
@@ -245,14 +245,14 @@ async def test_dynamically_handle_segments(
         "openpeerpower.components.wled.WLED.update",
         return_value=device,
     ):
-        async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
+        async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
         await opp.async_block_till_done()
         assert.opp.states.get("light.wled_rgb_light_segment_0")
         assert not.opp.states.get("light.wled_rgb_light_segment_1")
         assert not.opp.states.get("light.wled_rgb_light_master")
 
     # Test adding if segment shows up again, including the master entity
-    async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
+    async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
     await opp.async_block_till_done()
 
     assert.opp.states.get("light.wled_rgb_light_master")
@@ -264,7 +264,7 @@ async def test_single_segment_behavior(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, caplog
 ) -> None:
     """Test the behavior of the integration with a single segment."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     data = json.loads(load_fixture("wled/rgb_single_segment.json"))
     device = WLEDDevice(data)
@@ -274,7 +274,7 @@ async def test_single_segment_behavior(
         "openpeerpower.components.wled.WLED.update",
         return_value=device,
     ):
-        async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
+        async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
         assert not.opp.states.get("light.wled_rgb_light_master")
@@ -290,7 +290,7 @@ async def test_single_segment_behavior(
         "openpeerpower.components.wled.WLED.update",
         return_value=device,
     ):
-        async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
+        async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
         state = opp.states.get("light.wled_rgb_light_segment_0")
@@ -303,7 +303,7 @@ async def test_single_segment_behavior(
         "openpeerpower.components.wled.WLED.update",
         return_value=device,
     ):
-        async_fire_time_changed.opp, dt_util.utcnow() + SCAN_INTERVAL)
+        async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
         await opp.async_block_till_done()
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state
@@ -348,7 +348,7 @@ async def test_light_error(
 ) -> None:
     """Test error handling of the WLED lights."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
         await opp.services.async_call(
@@ -368,7 +368,7 @@ async def test_light_connection_error(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test error handling of the WLED switches."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"), patch(
         "openpeerpower.components.wled.WLED.segment", side_effect=WLEDConnectionError
@@ -389,7 +389,7 @@ async def test_rgbw_light(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test RGBW support for WLED."""
-    await init_integration.opp, aioclient_mock, rgbw=True)
+    await init_integration(opp, aioclient_mock, rgbw=True)
 
     state = opp.states.get("light.wled_rgbw_light")
     assert state.state == STATE_ON
@@ -447,7 +447,7 @@ async def test_effect_service(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the effect service of a WLED light."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("wled.WLED.segment") as light_mock:
         await opp.services.async_call(
@@ -574,7 +574,7 @@ async def test_effect_service_error(
 ) -> None:
     """Test error handling of the WLED effect service."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
         await opp.services.async_call(
@@ -594,7 +594,7 @@ async def test_preset_service(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the preset service of a WLED light."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("wled.WLED.preset") as light_mock:
         await opp.services.async_call(
@@ -617,7 +617,7 @@ async def test_preset_service_error(
 ) -> None:
     """Test error handling of the WLED preset service."""
     aioclient_mock.post("http://192.168.1.123:80/json/state", text="", status=400)
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.wled.WLED.update"):
         await opp.services.async_call(

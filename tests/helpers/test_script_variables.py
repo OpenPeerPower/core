@@ -46,14 +46,14 @@ async def test_static_vars_run_args_no_default():
     assert orig == orig_copy
 
 
-async def test_template_vars.opp):
+async def test_template_vars(opp):
     """Test template vars."""
     var = cv.SCRIPT_VARIABLES_SCHEMA({"hello": "{{ 1 + 1 }}"})
-    rendered = var.async_render.opp, None)
+    rendered = var.async_render(opp, None)
     assert rendered == {"hello": 2}
 
 
-async def test_template_vars_run_args.opp):
+async def test_template_vars_run_args(opp):
     """Test template vars."""
     var = cv.SCRIPT_VARIABLES_SCHEMA(
         {
@@ -75,14 +75,14 @@ async def test_template_vars_run_args.opp):
     }
 
 
-async def test_template_vars_no_default.opp):
+async def test_template_vars_no_default(opp):
     """Test template vars."""
     var = cv.SCRIPT_VARIABLES_SCHEMA({"hello": "{{ 1 + 1 }}"})
-    rendered = var.async_render.opp, None, render_as_defaults=False)
+    rendered = var.async_render(opp, None, render_as_defaults=False)
     assert rendered == {"hello": 2}
 
 
-async def test_template_vars_run_args_no_default.opp):
+async def test_template_vars_run_args_no_default(opp):
     """Test template vars."""
     var = cv.SCRIPT_VARIABLES_SCHEMA(
         {
@@ -109,4 +109,4 @@ async def test_template_vars_error(opp):
     """Test template vars."""
     var = cv.SCRIPT_VARIABLES_SCHEMA({"hello": "{{ canont.work }}"})
     with pytest.raises(template.TemplateError):
-        var.async_render.opp, None)
+        var.async_render(opp, None)

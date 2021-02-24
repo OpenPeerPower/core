@@ -16,7 +16,7 @@ from . import CONF_INVERT_LOGIC, CONF_PORTS, DATA_API, DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the configured Numato USB GPIO switch ports."""
     if discovery_info is None:
         return

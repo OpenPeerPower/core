@@ -16,18 +16,18 @@ from .common import setup_platform
 DEVICE_ID = "lock.test_lock"
 
 
-async def test_entity_registry.opp):
+async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
-    await setup_platform.opp, LOCK_DOMAIN)
+    await setup_platform(opp, LOCK_DOMAIN)
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(DEVICE_ID)
     assert entry.unique_id == "51cab3b545d2o34ed7fz02731bda5324"
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test the lock attributes are correct."""
-    await setup_platform.opp, LOCK_DOMAIN)
+    await setup_platform(opp, LOCK_DOMAIN)
 
     state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_LOCKED
@@ -38,9 +38,9 @@ async def test_attributes.opp):
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "Test Lock"
 
 
-async def test_lock.opp):
+async def test_lock(opp):
     """Test the lock can be locked."""
-    await setup_platform.opp, LOCK_DOMAIN)
+    await setup_platform(opp, LOCK_DOMAIN)
 
     with patch("abodepy.AbodeLock.lock") as mock_lock:
         await opp.services.async_call(
@@ -50,9 +50,9 @@ async def test_lock.opp):
         mock_lock.assert_called_once()
 
 
-async def test_unlock.opp):
+async def test_unlock(opp):
     """Test the lock can be unlocked."""
-    await setup_platform.opp, LOCK_DOMAIN)
+    await setup_platform(opp, LOCK_DOMAIN)
 
     with patch("abodepy.AbodeLock.unlock") as mock_unlock:
         await opp.services.async_call(

@@ -21,7 +21,7 @@ from .netatmo_entity_base import NetatmoBase
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Netatmo camera light platform."""
     if "access_camera" not in entry.data["token"]["scope"]:
         _LOGGER.info(

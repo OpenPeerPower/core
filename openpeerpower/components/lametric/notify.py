@@ -38,7 +38,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the LaMetric notification service."""
     hlmn = opp.data.get(LAMETRIC_DOMAIN)
     return LaMetricNotificationService(

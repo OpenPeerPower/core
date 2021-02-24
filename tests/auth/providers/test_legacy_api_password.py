@@ -45,14 +45,14 @@ async def test_only_one_credentials(manager, provider):
     assert credentials2.is_new is False
 
 
-async def test_verify_login.opp, provider):
+async def test_verify_login(opp, provider):
     """Test login using legacy api password auth provider."""
     provider.async_validate_login("test-password")
     with pytest.raises(legacy_api_password.InvalidAuthError):
         provider.async_validate_login("invalid-password")
 
 
-async def test_login_flow_works.opp, manager):
+async def test_login_flow_works(opp, manager):
     """Test wrong config."""
     result = await manager.login_flow.async_init(handler=("legacy_api_password", None))
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

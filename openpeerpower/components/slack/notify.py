@@ -115,7 +115,7 @@ async def async_get_service(
     discovery_info: Optional[DiscoveryInfoType] = None,
 ) -> Optional[SlackNotificationService]:
     """Set up the Slack notification service."""
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
     client = WebClient(token=config[CONF_API_KEY], run_async=True, session=session)
 
     try:
@@ -153,13 +153,13 @@ def _async_sanitize_channel_names(channel_list: List[str]) -> List[str]:
 
 
 @callback
-def _async_templatize_blocks.opp: OpenPeerPowerType, value: Any) -> Any:
+def _async_templatize_blocks(opp: OpenPeerPowerType, value: Any) -> Any:
     """Recursive template creator helper function."""
     if isinstance(value, list):
-        return [_async_templatize_blocks.opp, item) for item in value]
+        return [_async_templatize_blocks(opp, item) for item in value]
     if isinstance(value, dict):
         return {
-            key: _async_templatize_blocks.opp, item) for key, item in value.items()
+            key: _async_templatize_blocks(opp, item) for key, item in value.items()
         }
 
     tmpl = template.Template(value, opp.opp)  # type: ignore  # no-untyped-call

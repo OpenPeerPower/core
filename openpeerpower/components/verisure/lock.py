@@ -8,7 +8,7 @@ from . import HUB as hub
 from .const import CONF_CODE_DIGITS, CONF_DEFAULT_LOCK_CODE, CONF_LOCKS, LOGGER
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Verisure lock platform."""
     locks = []
     if int(hub.config.get(CONF_LOCKS, 1)):

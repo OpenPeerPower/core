@@ -16,7 +16,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=30)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Soma sensor platform."""
 
     devices = opp.data[DOMAIN][DEVICES]

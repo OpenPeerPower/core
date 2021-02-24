@@ -87,7 +87,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up an Insteon entry."""
 
     if not devices.modem:
@@ -147,11 +147,11 @@ async def async_setup_entry.opp, entry):
         device = devices[address]
         platforms = get_device_platforms(device)
         if ON_OFF_EVENTS in platforms:
-            add_on_off_event_device.opp, device)
+            add_on_off_event_device(opp, device)
 
     _LOGGER.debug("Insteon device count: %s", len(devices))
-    register_new_device_callback.opp)
-    async_register_services.opp)
+    register_new_device_callback(opp)
+    async_register_services(opp)
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(

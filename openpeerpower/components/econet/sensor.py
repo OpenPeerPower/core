@@ -23,7 +23,7 @@ WIFI_SIGNAL = "wifi_signal"
 RUNNING_STATE = "running_state"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up EcoNet sensor based on a config entry."""
     equipment = opp.data[DOMAIN][EQUIPMENT][entry.entry_id]
     sensors = []

@@ -43,14 +43,14 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_construct_device.opp: OpenPeerPowerType, udn: str, st: str) -> Device:
+async def async_construct_device(opp: OpenPeerPowerType, udn: str, st: str) -> Device:
     """Discovery devices and construct a Device for one."""
     # pylint: disable=invalid-name
     _LOGGER.debug("Constructing device: %s::%s", udn, st)
 
     discoveries = [
         discovery
-        for discovery in await Device.async_discover.opp)
+        for discovery in await Device.async_discover(opp)
         if discovery[DISCOVERY_UDN] == udn and discovery[DISCOVERY_ST] == st
     ]
     if not discoveries:
@@ -64,7 +64,7 @@ async def async_construct_device.opp: OpenPeerPowerType, udn: str, st: str) -> D
     discovery = discoveries[0]
     _LOGGER.debug("Constructing from discovery: %s", discovery)
     location = discovery[DISCOVERY_LOCATION]
-    return await Device.async_create_device.opp, location)
+    return await Device.async_create_device(opp, location)
 
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
@@ -91,7 +91,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Set up UPnP/IGD device from a config entry."""
     _LOGGER.debug("Setting up config entry: %s", config_entry.unique_id)
 
@@ -99,7 +99,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     udn = config_entry.data[CONFIG_ENTRY_UDN]
     st = config_entry.data[CONFIG_ENTRY_ST]  # pylint: disable=invalid-name
     try:
-        device = await async_construct_device.opp, udn, st)
+        device = await async_construct_device(opp, udn, st)
     except asyncio.TimeoutError as err:
         raise ConfigEntryNotReady from err
 
@@ -130,7 +130,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         )
 
     # Create device registry entry.
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(dr.CONNECTION_UPNP, device.udn)},

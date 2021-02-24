@@ -59,7 +59,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the RESTful switch."""
     body_off = config.get(CONF_BODY_OFF)
     body_on = config.get(CONF_BODY_ON)
@@ -79,11 +79,11 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         auth = aiohttp.BasicAuth(username, password=password)
 
     if is_on_template is not None:
-        is_on_template.opp = opp
+        is_on_template(opp = opp
     if body_on is not None:
-        body_on.opp = opp
+        body_on(opp = opp
     if body_off is not None:
-        body_off.opp = opp
+        body_off(opp = opp
     timeout = config.get(CONF_TIMEOUT)
 
     try:
@@ -102,7 +102,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             verify_ssl,
         )
 
-        req = await switch.get_device_state.opp)
+        req = await switch.get_device_state(opp)
         if req.status >= HTTP_BAD_REQUEST:
             _LOGGER.error("Got non-ok response from resource: %s", req.status)
         else:
@@ -215,7 +215,7 @@ class RestSwitch(SwitchEntity):
 
     async def get_device_state(self, opp):
         """Get the latest data from REST API and update the state."""
-        websession = async_get_clientsession.opp, self._verify_ssl)
+        websession = async_get_clientsession(opp, self._verify_ssl)
 
         with async_timeout.timeout(self._timeout):
             req = await websession.get(

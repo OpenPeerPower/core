@@ -135,7 +135,7 @@ def threaded_listener_factory(
 
         def remove() -> None:
             """Threadsafe removal."""
-            run_callback_threadsafe.opp.loop, async_remove).result()
+            run_callback_threadsafe(opp.loop, async_remove).result()
 
         return remove
 
@@ -203,7 +203,7 @@ def async_track_state_change(
     @callback
     def state_change_dispatcher(event: Event) -> None:
         """Handle specific state changes."""
-        opp.async_run.opp_job(
+        opp.async_run(opp_job(
             job,
             event.data.get("entity_id"),
             event.data.get("old_state"),
@@ -227,7 +227,7 @@ def async_track_state_change(
         # the entity_id does not match since usually
         # only one or two listeners want that specific
         # entity_id.
-        return async_track_state_change_event.opp, entity_ids, state_change_listener)
+        return async_track_state_change_event(opp, entity_ids, state_change_listener)
 
     return.opp.bus.async_listen(
         EVENT_STATE_CHANGED, state_change_dispatcher, event_filter=state_change_filter
@@ -277,7 +277,7 @@ def async_track_state_change_event(
 
             for job in entity_callbacks[entity_id][:]:
                 try:
-                    opp.async_run.opp_job(job, event)
+                    opp.async_run(opp_job(job, event)
                 except Exception:  # pylint: disable=broad-except
                     _LOGGER.exception(
                         "Error while processing state change for %s", entity_id
@@ -368,7 +368,7 @@ def async_track_entity_registry_updated_event(
 
             for job in entity_callbacks[entity_id][:]:
                 try:
-                    opp.async_run.opp_job(job, event)
+                    opp.async_run(opp_job(job, event)
                 except Exception:  # pylint: disable=broad-except
                     _LOGGER.exception(
                         "Error while processing entity registry update for %s",
@@ -413,7 +413,7 @@ def _async_dispatch_domain_event(
 
     for job in listeners:
         try:
-            opp.async_run.opp_job(job, event)
+            opp.async_run(opp_job(job, event)
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception(
                 "Error while processing event %s for domain %s", event, domain
@@ -446,7 +446,7 @@ def async_track_state_added_domain(
             if event.data.get("old_state") is not None:
                 return
 
-            _async_dispatch_domain_event.opp, event, domain_callbacks)
+            _async_dispatch_domain_event(opp, event, domain_callbacks)
 
         opp.data[TRACK_STATE_ADDED_DOMAIN_LISTENER] = opp.bus.async_listen(
             EVENT_STATE_CHANGED,
@@ -499,7 +499,7 @@ def async_track_state_removed_domain(
             if event.data.get("new_state") is not None:
                 return
 
-            _async_dispatch_domain_event.opp, event, domain_callbacks)
+            _async_dispatch_domain_event(opp, event, domain_callbacks)
 
         opp.data[TRACK_STATE_REMOVED_DOMAIN_LISTENER] = opp.bus.async_listen(
             EVENT_STATE_CHANGED,
@@ -758,7 +758,7 @@ def async_track_template(
         ):
             return
 
-        opp.async_run.opp_job(
+        opp.async_run(opp_job(
             job,
             event and event.data.get("entity_id"),
             event and event.data.get("old_state"),
@@ -1002,7 +1002,7 @@ class _TrackTemplateResultInfo:
         for track_result in updates:
             self._last_result[track_result.template] = track_result.result
 
-        self.opp.async_run.opp_job(self._job, event, updates)
+        self.opp.async_run(opp_job(self._job, event, updates)
 
 
 TrackTemplateResultListener = Callable[
@@ -1107,7 +1107,7 @@ def async_track_same_state(
         nonlocal async_remove_state_for_listener
         async_remove_state_for_listener = None
         clear_listener()
-        opp.async_run.opp_job(job)
+        opp.async_run(opp_job(job)
 
     @callback
     def state_for_cancel_listener(event: Event) -> None:
@@ -1153,9 +1153,9 @@ def async_track_point_in_time(
     @callback
     def utc_converter(utc_now: datetime) -> None:
         """Convert passed in UTC now to local now."""
-        opp.async_run.opp_job(job, dt_util.as_local(utc_now))
+        opp.async_run(opp_job(job, dt_util.as_local(utc_now))
 
-    return async_track_point_in_utc_time.opp, utc_converter, point_in_time)
+    return async_track_point_in_utc_time(opp, utc_converter, point_in_time)
 
 
 track_point_in_time = threaded_listener_factory(async_track_point_in_time)
@@ -1197,7 +1197,7 @@ def async_track_point_in_utc_time(
             cancel_callback = opp.loop.call_later(delta, run_action)
             return
 
-        opp.async_run.opp_job(job, utc_point_in_time)
+        opp.async_run(opp_job(job, utc_point_in_time)
 
     delta = utc_point_in_time.timestamp() - time.time()
     cancel_callback = opp.loop.call_later(delta, run_action)
@@ -1254,10 +1254,10 @@ def async_track_time_interval(
         remove = async_track_point_in_utc_time(
             opp. interval_listener_job, next_interval()  # type: ignore
         )
-        opp.async_run.opp_job(job, now)
+        opp.async_run(opp_job(job, now)
 
     interval_listener_job = OppJob(interval_listener)
-    remove = async_track_point_in_utc_time.opp, interval_listener_job, next_interval())
+    remove = async_track_point_in_utc_time(opp, interval_listener_job, next_interval())
 
     def remove_listener() -> None:
         """Remove interval listener."""
@@ -1318,7 +1318,7 @@ class SunListener:
         """Handle solar event."""
         self._unsub_sun = None
         self._listen_next_sun_event()
-        self.opp.async_run.opp_job(self.job)
+        self.opp.async_run(opp_job(self.job)
 
     @callback
     def _handle_config_event(self, _event: Any) -> None:
@@ -1379,7 +1379,7 @@ def async_track_utc_time_change(
         @callback
         def time_change_listener(event: Event) -> None:
             """Fire every time event that comes in."""
-            opp.async_run.opp_job(job, event.data[ATTR_NOW])
+            opp.async_run(opp_job(job, event.data[ATTR_NOW])
 
         return.opp.bus.async_listen(EVENT_TIME_CHANGED, time_change_listener)
 
@@ -1402,7 +1402,7 @@ def async_track_utc_time_change(
         nonlocal time_listener
 
         now = time_tracker_utcnow()
-        opp.async_run.opp_job(job, dt_util.as_local(now) if local else now)
+        opp.async_run(opp_job(job, dt_util.as_local(now) if local else now)
 
         time_listener = async_track_point_in_utc_time(
             opp,
@@ -1436,7 +1436,7 @@ def async_track_time_change(
     second: Optional[Any] = None,
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire if UTC time matches a pattern."""
-    return async_track_utc_time_change.opp, action, hour, minute, second, local=True)
+    return async_track_utc_time_change(opp, action, hour, minute, second, local=True)
 
 
 track_time_change = threaded_listener_factory(async_track_time_change)

@@ -86,7 +86,7 @@ def transmission_setup_fixture():
         yield
 
 
-def init_config_flow.opp):
+def init_config_flow(opp):
     """Init a configuration flow."""
     flow = config_flow.TransmissionFlowHandler()
     flow.opp = opp
@@ -102,7 +102,7 @@ async def test_flow_user_config(opp, api):
     assert result["step_id"] == "user"
 
 
-async def test_flow_required_fields.opp, api):
+async def test_flow_required_fields(opp, api):
     """Test with required fields only."""
     result = await opp.config_entries.flow.async_init(
         transmission.DOMAIN,
@@ -117,7 +117,7 @@ async def test_flow_required_fields.opp, api):
     assert result["data"][CONF_PORT] == PORT
 
 
-async def test_flow_all_provided.opp, api):
+async def test_flow_all_provided(opp, api):
     """Test with all provided."""
     result = await opp.config_entries.flow.async_init(
         transmission.DOMAIN, context={"source": "user"}, data=MOCK_ENTRY
@@ -132,7 +132,7 @@ async def test_flow_all_provided.opp, api):
     assert result["data"][CONF_PORT] == PORT
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test updating options."""
     entry = MockConfigEntry(
         domain=transmission.DOMAIN,
@@ -140,7 +140,7 @@ async def test_options.opp):
         data=MOCK_ENTRY,
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     options_flow = flow.async_get_options_flow(entry)
 
     result = await options_flow.async_step_init()
@@ -151,9 +151,9 @@ async def test_options.opp):
     assert result["data"][CONF_SCAN_INTERVAL] == 10
 
 
-async def test_import.opp, api):
+async def test_import(opp, api):
     """Test import step."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     # import with minimum fields only
     result = await flow.async_step_import(
@@ -196,14 +196,14 @@ async def test_import.opp, api):
     assert result["data"][CONF_SCAN_INTERVAL] == SCAN_INTERVAL
 
 
-async def test_host_already_configured.opp, api):
+async def test_host_already_configured(opp, api):
     """Test host is already configured."""
     entry = MockConfigEntry(
         domain=transmission.DOMAIN,
         data=MOCK_ENTRY,
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     mock_entry_unique_name = MOCK_ENTRY.copy()
     mock_entry_unique_name[CONF_NAME] = "Transmission 1"
@@ -230,14 +230,14 @@ async def test_host_already_configured.opp, api):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_name_already_configured.opp, api):
+async def test_name_already_configured(opp, api):
     """Test name is already configured."""
     entry = MockConfigEntry(
         domain=transmission.DOMAIN,
         data=MOCK_ENTRY,
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     mock_entry = MOCK_ENTRY.copy()
     mock_entry[CONF_HOST] = "0.0.0.0"
@@ -249,9 +249,9 @@ async def test_name_already_configured.opp, api):
     assert result["errors"] == {CONF_NAME: "name_exists"}
 
 
-async def test_error_on_wrong_credentials.opp, auth_error):
+async def test_error_on_wrong_credentials(opp, auth_error):
     """Test with wrong credentials."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user(
         {
@@ -269,9 +269,9 @@ async def test_error_on_wrong_credentials.opp, auth_error):
     }
 
 
-async def test_error_on_connection_failure.opp, conn_error):
+async def test_error_on_connection_failure(opp, conn_error):
     """Test when connection to host fails."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user(
         {
@@ -288,7 +288,7 @@ async def test_error_on_connection_failure.opp, conn_error):
 
 async def test_error_on_unknwon_error(opp, unknown_error):
     """Test when connection to host fails."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user(
         {

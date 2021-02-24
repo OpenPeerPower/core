@@ -155,7 +155,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
     """Set up the Elk M1 platform."""
     opp.data.setdefault(DOMAIN, {})
-    _create_elk_services.opp)
+    _create_elk_services(opp)
 
     if DOMAIN not in.opp_config:
         return True
@@ -189,13 +189,13 @@ async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
 
 
 @callback
-def _async_find_matching_config_entry.opp, prefix):
+def _async_find_matching_config_entry(opp, prefix):
     for entry in.opp.config_entries.async_entries(DOMAIN):
         if entry.unique_id == prefix:
             return entry
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Elk-M1 Control from a config entry."""
     conf = entry.data
 
@@ -277,14 +277,14 @@ def _included(ranges, set_to, values):
         values[rng[0] - 1 : rng[1]] = [set_to] * (rng[1] - rng[0] + 1)
 
 
-def _find_elk_by_prefix.opp, prefix):
+def _find_elk_by_prefix(opp, prefix):
     """Search all config entries for a given prefix."""
     for entry_id in.opp.data[DOMAIN]:
         if opp.data[DOMAIN][entry_id]["prefix"] == prefix:
             return.opp.data[DOMAIN][entry_id]["elk"]
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -340,10 +340,10 @@ async def async_wait_for_elk_to_sync(elk, timeout, conf_host):
     return success
 
 
-def _create_elk_services.opp):
+def _create_elk_services(opp):
     def _getelk(service):
         prefix = service.data["prefix"]
-        elk = _find_elk_by_prefix.opp, prefix)
+        elk = _find_elk_by_prefix(opp, prefix)
         if elk is None:
             raise OpenPeerPowerError(f"No ElkM1 with prefix '{prefix}' found")
         return elk

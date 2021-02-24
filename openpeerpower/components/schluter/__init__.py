@@ -43,7 +43,7 @@ def setup(opp, config):
         api,
         conf.get(CONF_USERNAME),
         conf.get(CONF_PASSWORD),
-        session_id_cache_file.opp.config.path(SCHLUTER_CONFIG_FILE),
+        session_id_cache_file(opp.config.path(SCHLUTER_CONFIG_FILE),
     )
 
     authentication = None
@@ -60,7 +60,7 @@ def setup(opp, config):
             DATA_SCHLUTER_API: api,
             DATA_SCHLUTER_SESSION: authentication.session_id,
         }
-        discovery.load_platform.opp, "climate", DOMAIN, {}, config)
+        discovery.load_platform(opp, "climate", DOMAIN, {}, config)
         return True
     if state == AuthenticationState.BAD_PASSWORD:
         _LOGGER.error("Invalid password provided")

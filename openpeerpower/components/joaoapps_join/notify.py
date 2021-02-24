@@ -29,7 +29,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Join notification service."""
     api_key = config.get(CONF_API_KEY)
     device_id = config.get(CONF_DEVICE_ID)

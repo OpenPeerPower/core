@@ -35,7 +35,7 @@ class ConfigEntrySmappeeApi(api.SmappeeApi):
             None,
             None,
             token=self.session.token,
-            farm=platform_to_farm.opp.data[DOMAIN][CONF_PLATFORM]],
+            farm=platform_to_farm(opp.data[DOMAIN][CONF_PLATFORM]],
         )
 
     def refresh_tokens(self) -> dict:

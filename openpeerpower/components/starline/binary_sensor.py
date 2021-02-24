@@ -20,7 +20,7 @@ SENSOR_TYPES = {
 }
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the StarLine sensors."""
     account: StarlineAccount = opp.data[DOMAIN][entry.entry_id]
     entities = []

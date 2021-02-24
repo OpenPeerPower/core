@@ -159,9 +159,9 @@ def setup(opp, config):
 
     opp.bus.listen_once(EVENT_OPENPEERPOWER_START, prepare_gpio)
 
-    load_platform.opp, "binary_sensor", DOMAIN, {}, config)
-    load_platform.opp, "sensor", DOMAIN, {}, config)
-    load_platform.opp, "switch", DOMAIN, {}, config)
+    load_platform(opp, "binary_sensor", DOMAIN, {}, config)
+    load_platform(opp, "sensor", DOMAIN, {}, config)
+    load_platform(opp, "switch", DOMAIN, {}, config)
     return True
 
 

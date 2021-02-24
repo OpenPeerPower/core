@@ -48,10 +48,10 @@ TOGGLE_TRIGGER_SCHEMA = toggle_entity.TRIGGER_SCHEMA.extend(
 TRIGGER_SCHEMA = vol.Any(TARGET_TRIGGER_SCHEMA, TOGGLE_TRIGGER_SCHEMA)
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for Humidifier devices."""
-    registry = await entity_registry.async_get_registry.opp)
-    triggers = await toggle_entity.async_get_triggers.opp, device_id, DOMAIN)
+    registry = await entity_registry.async_get_registry(opp)
+    triggers = await toggle_entity.async_get_triggers(opp, device_id, DOMAIN)
 
     # Get all the integrations entities for this device
     for entry in entity_registry.async_entries_for_device(registry, device_id):
@@ -105,7 +105,7 @@ async def async_attach_trigger(
     )
 
 
-async def async_get_trigger_capabilities.opp: OpenPeerPower, config):
+async def async_get_trigger_capabilities(opp: OpenPeerPower, config):
     """List trigger capabilities."""
     trigger_type = config[CONF_TYPE]
 
@@ -123,4 +123,4 @@ async def async_get_trigger_capabilities.opp: OpenPeerPower, config):
                 }
             )
         }
-    return await toggle_entity.async_get_trigger_capabilities.opp, config)
+    return await toggle_entity.async_get_trigger_capabilities(opp, config)

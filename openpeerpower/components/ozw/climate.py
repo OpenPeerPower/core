@@ -139,7 +139,7 @@ HVAC_MODE_ZW_MAPPINGS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Climate from Config Entry."""
 
     @callback
@@ -358,7 +358,7 @@ class ZWaveClimateEntity(ZWaveDeviceEntity, ClimateEntity):
                 if val[VALUE_ID] in MODES_LIST:
                     # treat value as hvac mode
                     opp.mode = ZW_HVAC_MODE_MAPPINGS.get(val[VALUE_ID])
-                    all_modes.opp_mode] = val[VALUE_ID]
+                    all_modes(opp_mode] = val[VALUE_ID]
                 else:
                     # treat value as hvac preset
                     all_presets[val[VALUE_LABEL]] = val[VALUE_ID]

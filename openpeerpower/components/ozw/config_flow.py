@@ -59,7 +59,7 @@ class DomainConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return await self.async_step_on_supervisor()
 
-    async def async_step.oppio(self, discovery_info):
+    async def async_step(oppio(self, discovery_info):
         """Receive configuration from add-on discovery info.
 
         This flow is triggered by the OpenZWave add-on.
@@ -67,9 +67,9 @@ class DomainConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         await self.async_set_unique_id(DOMAIN)
         self._abort_if_unique_id_configured()
 
-        return await self.async_step.oppio_confirm()
+        return await self.async_step(oppio_confirm()
 
-    async def async_step.oppio_confirm(self, user_input=None):
+    async def async_step(oppio_confirm(self, user_input=None):
         """Confirm the add-on discovery."""
         if user_input is not None:
             return await self.async_step_on_supervisor(

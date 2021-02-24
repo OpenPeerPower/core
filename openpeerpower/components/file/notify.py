@@ -23,7 +23,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the file notification service."""
     filename = config[CONF_FILENAME]
     timestamp = config[CONF_TIMESTAMP]

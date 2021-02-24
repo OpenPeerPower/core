@@ -30,7 +30,7 @@ SUPPORT_OPENHOME = SUPPORT_SELECT_SOURCE | SUPPORT_TURN_OFF | SUPPORT_TURN_ON
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Openhome platform."""
 
     if not discovery_info:

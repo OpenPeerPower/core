@@ -40,7 +40,7 @@ def get_size(files_list):
     return sum(size_list)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the folder sensor."""
     path = config.get(CONF_FOLDER_PATHS)
 

@@ -133,7 +133,7 @@ def add_test_config_entry(
         unique_id=TEST_SYSINFO_ID,
         options=TEST_CONFIG_ENTRY_OPTIONS,
     )
-    config_entry.add_to.opp.opp)  # type: ignore[no-untyped-call]
+    config_entry.add_to(opp.opp)  # type: ignore[no-untyped-call]
     return config_entry
 
 
@@ -143,7 +143,7 @@ async def setup_test_config_entry(
     hyperion_client: Optional[Mock] = None,
 ) -> ConfigEntry:
     """Add a test Hyperion entity to.opp."""
-    config_entry = config_entry or add_test_config_entry.opp)
+    config_entry = config_entry or add_test_config_entry(opp)
 
     hyperion_client = hyperion_client or create_mock_client()
     # pylint: disable=attribute-defined-outside-init

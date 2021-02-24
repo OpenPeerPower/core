@@ -44,7 +44,7 @@ async def async_validate_trigger_config(opp, config):
     config = TRIGGER_SCHEMA(config)
 
     # if device is available verify parameters against device capabilities
-    wrapper = get_device_wrapper.opp, config[CONF_DEVICE_ID])
+    wrapper = get_device_wrapper(opp, config[CONF_DEVICE_ID])
     if not wrapper:
         return config
 
@@ -60,11 +60,11 @@ async def async_validate_trigger_config(opp, config):
     )
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for Shelly devices."""
     triggers = []
 
-    wrapper = get_device_wrapper.opp, device_id)
+    wrapper = get_device_wrapper(opp, device_id)
     if not wrapper:
         raise InvalidDeviceAutomationConfig(f"Device not found: {device_id}")
 

@@ -32,7 +32,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Configure the base Nexia device for Open Peer Power."""
 
     conf = entry.data
@@ -47,7 +47,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
                 NexiaHome,
                 username=username,
                 password=password,
-                device_name.opp.config.location_name,
+                device_name(opp.config.location_name,
                 state_file=state_file,
             )
         )
@@ -88,7 +88,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

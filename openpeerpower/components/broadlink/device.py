@@ -51,12 +51,12 @@ class BroadlinkDevice:
         return self.config.unique_id
 
     @staticmethod
-    async def async_update.opp, entry):
+    async def async_update(opp, entry):
         """Update the device and related entities.
 
         Triggered when the device is renamed on the frontend.
         """
-        device_registry = await dr.async_get_registry.opp)
+        device_registry = await dr.async_get_registry(opp)
         device_entry = device_registry.async_get_device({(DOMAIN, entry.unique_id)})
         device_registry.async_update_device(device_entry.id, name=entry.title)
         await opp.config_entries.async_reload(entry.entry_id)

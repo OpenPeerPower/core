@@ -51,7 +51,7 @@ from .const import (
     UOM_TO_STATES,
 )
 from .entity import ISYNodeEntity
-from .helpers import convert_isy_value_to.opp, migrate_old_unique_ids
+from .helpers import convert_isy_value_to(opp, migrate_old_unique_ids
 
 ISY_SUPPORTED_FEATURES = (
     SUPPORT_FAN_MODE | SUPPORT_TARGET_TEMPERATURE | SUPPORT_TARGET_TEMPERATURE_RANGE
@@ -70,7 +70,7 @@ async def async_setup_entry(
     for node in.opp_isy_data[ISY994_NODES][CLIMATE]:
         entities.append(ISYThermostatEntity(node))
 
-    await migrate_old_unique_ids.opp, CLIMATE, entities)
+    await migrate_old_unique_ids(opp, CLIMATE, entities)
     async_add_entities(entities)
 
 
@@ -155,7 +155,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
     @property
     def current_temperature(self) -> Optional[float]:
         """Return the current temperature."""
-        return convert_isy_value_to.opp(
+        return convert_isy_value_to(opp(
             self._node.status, self._uom, self._node.prec, 1
         )
 
@@ -179,7 +179,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
         target = self._node.aux_properties.get(PROP_SETPOINT_COOL)
         if not target:
             return None
-        return convert_isy_value_to.opp(target.value, target.uom, target.prec, 1)
+        return convert_isy_value_to(opp(target.value, target.uom, target.prec, 1)
 
     @property
     def target_temperature_low(self) -> Optional[float]:
@@ -187,7 +187,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
         target = self._node.aux_properties.get(PROP_SETPOINT_HEAT)
         if not target:
             return None
-        return convert_isy_value_to.opp(target.value, target.uom, target.prec, 1)
+        return convert_isy_value_to(opp(target.value, target.uom, target.prec, 1)
 
     @property
     def fan_modes(self):

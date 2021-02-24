@@ -56,25 +56,25 @@ ATTR_NEIGHBORS = "neighbors"
 
 
 @callback
-def async_register_api.opp):
+def async_register_api(opp):
     """Register all of our api endpoints."""
-    websocket_api.async_register_command.opp, websocket_migrate_zwave)
-    websocket_api.async_register_command.opp, websocket_get_instances)
-    websocket_api.async_register_command.opp, websocket_get_nodes)
-    websocket_api.async_register_command.opp, websocket_network_status)
-    websocket_api.async_register_command.opp, websocket_network_statistics)
-    websocket_api.async_register_command.opp, websocket_node_metadata)
-    websocket_api.async_register_command.opp, websocket_node_status)
-    websocket_api.async_register_command.opp, websocket_node_statistics)
-    websocket_api.async_register_command.opp, websocket_refresh_node_info)
-    websocket_api.async_register_command.opp, websocket_get_config_parameters)
-    websocket_api.async_register_command.opp, websocket_set_config_parameter)
-    websocket_api.async_register_command.opp, websocket_set_usercode)
-    websocket_api.async_register_command.opp, websocket_clear_usercode)
-    websocket_api.async_register_command.opp, websocket_get_code_slots)
+    websocket_api.async_register_command(opp, websocket_migrate_zwave)
+    websocket_api.async_register_command(opp, websocket_get_instances)
+    websocket_api.async_register_command(opp, websocket_get_nodes)
+    websocket_api.async_register_command(opp, websocket_network_status)
+    websocket_api.async_register_command(opp, websocket_network_statistics)
+    websocket_api.async_register_command(opp, websocket_node_metadata)
+    websocket_api.async_register_command(opp, websocket_node_status)
+    websocket_api.async_register_command(opp, websocket_node_statistics)
+    websocket_api.async_register_command(opp, websocket_refresh_node_info)
+    websocket_api.async_register_command(opp, websocket_get_config_parameters)
+    websocket_api.async_register_command(opp, websocket_set_config_parameter)
+    websocket_api.async_register_command(opp, websocket_set_usercode)
+    websocket_api.async_register_command(opp, websocket_clear_usercode)
+    websocket_api.async_register_command(opp, websocket_get_code_slots)
 
 
-def _call_util_function.opp, connection, msg, send_result, function, *args):
+def _call_util_function(opp, connection, msg, send_result, function, *args):
     """Call an openzwavemqtt.util function."""
     try:
         node = get_node_from_manager(
@@ -176,7 +176,7 @@ def _get_config_params(node, *args):
         vol.Optional(DRY_RUN, default=True): bool,
     }
 )
-async def websocket_migrate_zwave.opp, connection, msg):
+async def websocket_migrate_zwave(opp, connection, msg):
     """Migrate the zwave integration device and entity data to ozw integration."""
     if "zwave" not in.opp.config.components:
         _LOGGER.error("Can not migrate, zwave integration is not loaded")
@@ -188,10 +188,10 @@ async def websocket_migrate_zwave.opp, connection, msg):
         return
 
     zwave = opp.components.zwave
-    zwave_data = await zwave.async_get_ozw_migration_data.opp)
+    zwave_data = await zwave.async_get_ozw_migration_data(opp)
     _LOGGER.debug("Migration zwave data: %s", zwave_data)
 
-    ozw_data = await async_get_migration_data.opp)
+    ozw_data = await async_get_migration_data(opp)
     _LOGGER.debug("Migration ozw data: %s", ozw_data)
 
     can_migrate = map_node_values(zwave_data, ozw_data)
@@ -211,7 +211,7 @@ async def websocket_migrate_zwave.opp, connection, msg):
     _LOGGER.debug("Migration entity map: %s", migration_entity_map)
 
     if not msg[DRY_RUN]:
-        await async_migrate.opp, can_migrate)
+        await async_migrate(opp, can_migrate)
 
     connection.send_result(
         msg[ID],
@@ -226,7 +226,7 @@ async def websocket_migrate_zwave.opp, connection, msg):
 
 
 @websocket_api.websocket_command({vol.Required(TYPE): "ozw/get_instances"})
-def websocket_get_instances.opp, connection, msg):
+def websocket_get_instances(opp, connection, msg):
     """Get a list of OZW instances."""
     manager = opp.data[DOMAIN][MANAGER]
     instances = []
@@ -246,7 +246,7 @@ def websocket_get_instances.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_get_nodes.opp, connection, msg):
+def websocket_get_nodes(opp, connection, msg):
     """Get a list of nodes for an OZW instance."""
     manager = opp.data[DOMAIN][MANAGER]
     nodes = []
@@ -289,7 +289,7 @@ def websocket_get_nodes.opp, connection, msg):
         vol.Required(ATTR_USERCODE): cv.string,
     }
 )
-def websocket_set_usercode.opp, connection, msg):
+def websocket_set_usercode(opp, connection, msg):
     """Set a usercode to a node code slot."""
     _call_util_function(
         opp. connection, msg, False, set_usercode, msg[ATTR_CODE_SLOT], ATTR_USERCODE
@@ -304,7 +304,7 @@ def websocket_set_usercode.opp, connection, msg):
         vol.Required(ATTR_CODE_SLOT): vol.Coerce(int),
     }
 )
-def websocket_clear_usercode.opp, connection, msg):
+def websocket_clear_usercode(opp, connection, msg):
     """Clear a node code slot."""
     _call_util_function(
         opp. connection, msg, False, clear_usercode, msg[ATTR_CODE_SLOT]
@@ -318,9 +318,9 @@ def websocket_clear_usercode.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_get_code_slots.opp, connection, msg):
+def websocket_get_code_slots(opp, connection, msg):
     """Get status of node's code slots."""
-    _call_util_function.opp, connection, msg, True, get_code_slots)
+    _call_util_function(opp, connection, msg, True, get_code_slots)
 
 
 @websocket_api.websocket_command(
@@ -330,9 +330,9 @@ def websocket_get_code_slots.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_get_config_parameters.opp, connection, msg):
+def websocket_get_config_parameters(opp, connection, msg):
     """Get a list of configuration parameters for an OZW node instance."""
-    _call_util_function.opp, connection, msg, True, _get_config_params)
+    _call_util_function(opp, connection, msg, True, _get_config_params)
 
 
 @websocket_api.websocket_command(
@@ -361,7 +361,7 @@ def websocket_get_config_parameters.opp, connection, msg):
         ),
     }
 )
-def websocket_set_config_parameter.opp, connection, msg):
+def websocket_set_config_parameter(opp, connection, msg):
     """Set a config parameter to a node."""
     _call_util_function(
         opp. connection, msg, True, set_config_parameter, msg[PARAMETER], msg[VALUE]
@@ -374,7 +374,7 @@ def websocket_set_config_parameter.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_network_status.opp, connection, msg):
+def websocket_network_status(opp, connection, msg):
     """Get Z-Wave network status."""
 
     manager = opp.data[DOMAIN][MANAGER]
@@ -391,7 +391,7 @@ def websocket_network_status.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_network_statistics.opp, connection, msg):
+def websocket_network_statistics(opp, connection, msg):
     """Get Z-Wave network statistics."""
 
     manager = opp.data[DOMAIN][MANAGER]
@@ -412,7 +412,7 @@ def websocket_network_statistics.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_node_status.opp, connection, msg):
+def websocket_node_status(opp, connection, msg):
     """Get the status for a Z-Wave node."""
     try:
         node = get_node_from_manager(
@@ -457,7 +457,7 @@ def websocket_node_status.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_node_metadata.opp, connection, msg):
+def websocket_node_metadata(opp, connection, msg):
     """Get the metadata for a Z-Wave node."""
     try:
         node = get_node_from_manager(
@@ -488,7 +488,7 @@ def websocket_node_metadata.opp, connection, msg):
         vol.Optional(OZW_INSTANCE, default=1): vol.Coerce(int),
     }
 )
-def websocket_node_statistics.opp, connection, msg):
+def websocket_node_statistics(opp, connection, msg):
     """Get the statistics for a Z-Wave node."""
     manager = opp.data[DOMAIN][MANAGER]
     stats = (
@@ -521,7 +521,7 @@ def websocket_node_statistics.opp, connection, msg):
         vol.Required(NODE_ID): vol.Coerce(int),
     }
 )
-def websocket_refresh_node_info.opp, connection, msg):
+def websocket_refresh_node_info(opp, connection, msg):
     """Tell OpenZWave to re-interview a node."""
 
     manager = opp.data[DOMAIN][MANAGER]

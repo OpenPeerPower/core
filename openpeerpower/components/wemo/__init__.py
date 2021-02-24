@@ -96,7 +96,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up a wemo config entry."""
     config = opp.data[DOMAIN].pop("config")
 
@@ -126,7 +126,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
             ],
         ):
             if device:
-                wemo_dispatcher.async_add_unique_device.opp, device)
+                wemo_dispatcher.async_add_unique_device(opp, device)
 
     if config.get(CONF_DISCOVERY, DEFAULT_DISCOVERY):
         await wemo_discovery.async_discover_and_schedule()

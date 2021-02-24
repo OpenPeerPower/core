@@ -40,7 +40,7 @@ OP_STATE_TO_ECONET = {value: key for key, value in ECONET_STATE_TO_HA.items()}
 SUPPORT_FLAGS_HEATER = SUPPORT_TARGET_TEMPERATURE | SUPPORT_OPERATION_MODE
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up EcoNet water heater based on a config entry."""
     equipment = opp.data[DOMAIN][EQUIPMENT][entry.entry_id]
     async_add_entities(

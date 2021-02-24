@@ -29,7 +29,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the MCP23017 devices."""
     invert_logic = config.get(CONF_INVERT_LOGIC)
     i2c_address = config.get(CONF_I2C_ADDRESS)

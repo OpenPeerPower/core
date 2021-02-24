@@ -59,7 +59,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Efergy sensor."""
     app_token = config.get(CONF_APPTOKEN)
     utc_offset = str(config.get(CONF_UTC_OFFSET))

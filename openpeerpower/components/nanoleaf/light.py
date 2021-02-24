@@ -53,7 +53,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Nanoleaf light."""
 
     if DATA_NANOLEAF not in.opp.data:
@@ -67,7 +67,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         if host in.opp.data[DATA_NANOLEAF]:
             return
         _LOGGER.info("Discovered a new Nanoleaf: %s", discovery_info)
-        conf = load_json.opp.config.path(CONFIG_FILE))
+        conf = load_json(opp.config.path(CONFIG_FILE))
         if conf.get(host, {}).get("token"):
             token = conf[host]["token"]
     else:
@@ -87,9 +87,9 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
                 name,
             )
             return
-        conf = load_json.opp.config.path(CONFIG_FILE))
+        conf = load_json(opp.config.path(CONFIG_FILE))
         conf[host] = {"token": token}
-        save_json.opp.config.path(CONFIG_FILE), conf)
+        save_json(opp.config.path(CONFIG_FILE), conf)
 
     nanoleaf_light.token = token
 

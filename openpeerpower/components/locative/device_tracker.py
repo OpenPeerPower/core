@@ -7,7 +7,7 @@ from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from . import DOMAIN as LT_DOMAIN, TRACKER_UPDATE
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback
@@ -22,7 +22,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
 
     opp.data[LT_DOMAIN]["unsub_device_tracker"][
         entry.entry_id
-    ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
+    ] = async_dispatcher_connect(opp, TRACKER_UPDATE, _receive_data)
 
     return True
 
@@ -68,7 +68,7 @@ class LocativeEntity(TrackerEntity):
             self.opp, TRACKER_UPDATE, self._async_receive_data
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Clean up after entity before removal."""
         self._unsub_dispatcher()
 

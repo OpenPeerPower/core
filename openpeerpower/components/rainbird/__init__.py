@@ -62,12 +62,12 @@ def setup(opp, config):
     opp.data[DATA_RAINBIRD] = []
     success = False
     for controller_config in config[DOMAIN]:
-        success = success or _setup_controller.opp, controller_config, config)
+        success = success or _setup_controller(opp, controller_config, config)
 
     return success
 
 
-def _setup_controller.opp, controller_config, config):
+def _setup_controller(opp, controller_config, config):
     """Set up a controller."""
     server = controller_config[CONF_HOST]
     password = controller_config[CONF_PASSWORD]

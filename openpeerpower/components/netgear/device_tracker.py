@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Validate the configuration and returns a Netgear scanner."""
     info = config[DOMAIN]
     host = info[CONF_HOST]

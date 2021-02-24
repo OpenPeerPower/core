@@ -68,7 +68,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry for Hisense AEH-W4A1."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
@@ -77,6 +77,6 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     return await opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)

@@ -53,7 +53,7 @@ async def test_fido_sensor(loop, opp):
             }
         }
         with assert_setup_component(1):
-            await async_setup_component.opp, "sensor", config)
+            await async_setup_component(opp, "sensor", config)
             await opp.async_block_till_done()
         state = opp.states.get("sensor.fido_1112223344_balance")
         assert state.state == "160.12"
@@ -69,5 +69,5 @@ async def test_error(opp, caplog):
     config = {}
     fake_async_add_entities = MagicMock()
     with patch("openpeerpower.components.fido.sensor.FidoClient", FidoClientMockError):
-        await fido.async_setup_platform.opp, config, fake_async_add_entities)
+        await fido.async_setup_platform(opp, config, fake_async_add_entities)
     assert fake_async_add_entities.called is False

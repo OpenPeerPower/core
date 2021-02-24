@@ -164,7 +164,7 @@ async def async_setup_platform(
         opp.data[DLNA_DMR_DATA]["lock"] = asyncio.Lock()
 
     # build upnp/aiohttp requester
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     requester = AiohttpSessionRequester(session, True)
 
     # ensure event handler has been started
@@ -211,14 +211,14 @@ class DlnaDmrDevice(MediaPlayerEntity):
 
         # Register unsubscribe on stop
         bus = self.opp.bus
-        bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._async_on.opp_stop)
+        bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self._async_on(opp_stop)
 
     @property
     def available(self):
         """Device is available."""
         return self._available
 
-    async def _async_on.opp_stop(self, event):
+    async def _async_on(opp_stop(self, event):
         """Event handler on Open Peer Power stop."""
         async with self.opp.data[DLNA_DMR_DATA]["lock"]:
             await self._device.async_unsubscribe_services()

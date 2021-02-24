@@ -18,7 +18,7 @@ SERVICE_LIGHT_FADE_STOP = "light_fade_stop"
 SERVICE_LIGHT_BLINK = "light_blink"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the UPB light based on a config entry."""
 
     upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]

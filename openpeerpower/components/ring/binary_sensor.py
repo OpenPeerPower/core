@@ -22,7 +22,7 @@ SENSOR_TYPES = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Ring binary sensors from a config entry."""
     ring = opp.data[DOMAIN][config_entry.entry_id]["api"]
     devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
@@ -64,9 +64,9 @@ class RingBinarySensor(RingEntityMixin, BinarySensorEntity):
         self.ring_objects["dings_data"].async_add_listener(self._dings_update_callback)
         self._dings_update_callback()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         self.ring_objects["dings_data"].async_remove_listener(
             self._dings_update_callback
         )

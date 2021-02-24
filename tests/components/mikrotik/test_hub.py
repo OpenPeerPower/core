@@ -11,7 +11,7 @@ from . import ARP_DATA, DHCP_DATA, MOCK_DATA, MOCK_OPTIONS, WIRELESS_DATA
 from tests.common import MockConfigEntry
 
 
-async def setup_mikrotik_entry.opp, **kwargs):
+async def setup_mikrotik_entry(opp, **kwargs):
     """Set up Mikrotik intergation successfully."""
     support_wireless = kwargs.get("support_wireless", True)
     dhcp_data = kwargs.get("dhcp_data", DHCP_DATA)
@@ -31,7 +31,7 @@ async def setup_mikrotik_entry.opp, **kwargs):
     config_entry = MockConfigEntry(
         domain=mikrotik.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     if "force_dhcp" in kwargs:
         config_entry.options = {**config_entry.options, "force_dhcp": True}
@@ -47,13 +47,13 @@ async def setup_mikrotik_entry.opp, **kwargs):
         return.opp.data[mikrotik.DOMAIN][config_entry.entry_id]
 
 
-async def test_hub_setup_successful.opp):
+async def test_hub_setup_successful(opp):
     """Successful setup of Mikrotik hub."""
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup",
         return_value=True,
     ) as forward_entry_setup:
-        hub = await setup_mikrotik_entry.opp)
+        hub = await setup_mikrotik_entry(opp)
 
     assert hub.config_entry.data == {
         mikrotik.CONF_NAME: "Mikrotik",
@@ -74,11 +74,11 @@ async def test_hub_setup_successful.opp):
     assert forward_entry_setup.mock_calls[0][1] == (hub.config_entry, "device_tracker")
 
 
-async def test_hub_setup_failed.opp):
+async def test_hub_setup_failed(opp):
     """Failed setup of Mikrotik hub."""
 
     config_entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=MOCK_DATA)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     # error when connection fails
     with patch(
         "librouteros.connect", side_effect=librouteros.exceptions.ConnectionClosed
@@ -90,7 +90,7 @@ async def test_hub_setup_failed.opp):
 
     # error when username or password is invalid
     config_entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=MOCK_DATA)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup"
     ) as forward_entry_setup, patch(
@@ -104,10 +104,10 @@ async def test_hub_setup_failed.opp):
         assert len(forward_entry_setup.mock_calls) == 0
 
 
-async def test_update_failed.opp):
+async def test_update_failed(opp):
     """Test failing to connect during update."""
 
-    hub = await setup_mikrotik_entry.opp)
+    hub = await setup_mikrotik_entry(opp)
 
     with patch.object(
         mikrotik.hub.MikrotikData, "command", side_effect=mikrotik.errors.CannotConnect
@@ -117,12 +117,12 @@ async def test_update_failed.opp):
     assert hub.api.available is False
 
 
-async def test_hub_not_support_wireless.opp):
+async def test_hub_not_support_wireless(opp):
     """Test updating hub devices when hub doesn't support wireless interfaces."""
 
     # test that the devices are constructed from dhcp data
 
-    hub = await setup_mikrotik_entry.opp, support_wireless=False)
+    hub = await setup_mikrotik_entry(opp, support_wireless=False)
 
     assert hub.api.devices["00:00:00:00:00:01"]._params == DHCP_DATA[0]
     assert hub.api.devices["00:00:00:00:00:01"]._wireless_params is None
@@ -130,12 +130,12 @@ async def test_hub_not_support_wireless.opp):
     assert hub.api.devices["00:00:00:00:00:02"]._wireless_params is None
 
 
-async def test_hub_support_wireless.opp):
+async def test_hub_support_wireless(opp):
     """Test updating hub devices when hub support wireless interfaces."""
 
     # test that the device list is from wireless data list
 
-    hub = await setup_mikrotik_entry.opp)
+    hub = await setup_mikrotik_entry(opp)
 
     assert hub.api.support_wireless is True
     assert hub.api.devices["00:00:00:00:00:01"]._params == DHCP_DATA[0]
@@ -145,12 +145,12 @@ async def test_hub_support_wireless.opp):
     assert "00:00:00:00:00:02" not in hub.api.devices
 
 
-async def test_force_dhcp.opp):
+async def test_force_dhcp(opp):
     """Test updating hub devices with forced dhcp method."""
 
     # test that the devices are constructed from dhcp data
 
-    hub = await setup_mikrotik_entry.opp, force_dhcp=True)
+    hub = await setup_mikrotik_entry(opp, force_dhcp=True)
 
     assert hub.api.support_wireless is True
     assert hub.api.devices["00:00:00:00:00:01"]._params == DHCP_DATA[0]
@@ -161,19 +161,19 @@ async def test_force_dhcp.opp):
     assert hub.api.devices["00:00:00:00:00:02"]._wireless_params is None
 
 
-async def test_arp_ping.opp):
+async def test_arp_ping(opp):
     """Test arp ping devices to confirm they are connected."""
 
     # test device show as home if arp ping returns value
     with patch.object(mikrotik.hub.MikrotikData, "do_arp_ping", return_value=True):
-        hub = await setup_mikrotik_entry.opp, arp_ping=True, force_dhcp=True)
+        hub = await setup_mikrotik_entry(opp, arp_ping=True, force_dhcp=True)
 
         assert hub.api.devices["00:00:00:00:00:01"].last_seen is not None
         assert hub.api.devices["00:00:00:00:00:02"].last_seen is not None
 
     # test device show as away if arp ping times out
     with patch.object(mikrotik.hub.MikrotikData, "do_arp_ping", return_value=False):
-        hub = await setup_mikrotik_entry.opp, arp_ping=True, force_dhcp=True)
+        hub = await setup_mikrotik_entry(opp, arp_ping=True, force_dhcp=True)
 
         assert hub.api.devices["00:00:00:00:00:01"].last_seen is not None
         # this device is not wireless so it will show as away

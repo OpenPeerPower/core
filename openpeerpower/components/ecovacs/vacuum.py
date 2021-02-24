@@ -39,7 +39,7 @@ ATTR_ERROR = "error"
 ATTR_COMPONENT_PREFIX = "component_"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Ecovacs vacuums."""
     vacuums = []
     for device in.opp.data[ECOVACS_DEVICES]:

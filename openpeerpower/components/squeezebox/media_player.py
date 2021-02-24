@@ -120,7 +120,7 @@ SQUEEZEBOX_MODE = {
 }
 
 
-async def start_server_discovery.opp):
+async def start_server_discovery(opp):
     """Start a server discovery task."""
 
     def _discovered_server(server):
@@ -144,7 +144,7 @@ async def start_server_discovery.opp):
         )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up squeezebox platform from platform entry in configuration.yaml (deprecated)."""
 
     if config:
@@ -153,7 +153,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up an LMS Server from a config entry."""
     config = config_entry.data
     _LOGGER.debug("Reached async_setup_entry for host=%s", config[CONF_HOST])
@@ -168,7 +168,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     known_players = opp.data[DOMAIN].setdefault(KNOWN_PLAYERS, [])
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     _LOGGER.debug("Creating LMS object for %s", host)
     lms = Server(session, host, port, username, password)
 
@@ -240,10 +240,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     # Start server discovery task if not already running
     if opp.is_running:
-        asyncio.create_task(start_server_discovery.opp))
+        asyncio.create_task(start_server_discovery(opp))
     else:
         opp.bus.async_listen_once(
-            EVENT_OPENPEERPOWER_START, start_server_discovery.opp)
+            EVENT_OPENPEERPOWER_START, start_server_discovery(opp)
         )
 
     return True
@@ -324,7 +324,7 @@ class SqueezeBoxEntity(MediaPlayerEntity):
                     self.opp, SIGNAL_PLAYER_REDISCOVERED, self.rediscovered
                 )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Remove from list of known players when removed from.opp."""
         self.opp.data[DOMAIN][KNOWN_PLAYERS].remove(self)
 

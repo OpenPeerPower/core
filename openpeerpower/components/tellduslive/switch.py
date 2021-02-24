@@ -6,7 +6,7 @@ from openpeerpower.helpers.entity import ToggleEntity
 from .entry import TelldusLiveEntity
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up tellduslive sensors dynamically."""
 
     async def async_discover_switch(device_id):

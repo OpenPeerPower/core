@@ -83,13 +83,13 @@ RELOAD_SERVICE_SCHEMA = vol.Schema({})
 
 
 @bind.opp
-def is_on.opp, entity_id):
+def is_on(opp, entity_id):
     """Return if the script is on based on the statemachine."""
     return.opp.states.is_state(entity_id, STATE_ON)
 
 
 @callback
-def scripts_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def scripts_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all scripts that reference the entity."""
     if DOMAIN not in.opp.data:
         return []
@@ -104,7 +104,7 @@ def scripts_with_entity.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 
 @callback
-def entities_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def entities_in_script(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all entities in script."""
     if DOMAIN not in.opp.data:
         return []
@@ -120,7 +120,7 @@ def entities_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
 
 
 @callback
-def scripts_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
+def scripts_with_device(opp: OpenPeerPower, device_id: str) -> List[str]:
     """Return all scripts that reference the device."""
     if DOMAIN not in.opp.data:
         return []
@@ -135,7 +135,7 @@ def scripts_with_device.opp: OpenPeerPower, device_id: str) -> List[str]:
 
 
 @callback
-def devices_in_script.opp: OpenPeerPower, entity_id: str) -> List[str]:
+def devices_in_script(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all devices in script."""
     if DOMAIN not in.opp.data:
         return []
@@ -244,7 +244,7 @@ async def _async_process_config(opp, config, component):
             CONF_DESCRIPTION: cfg[CONF_DESCRIPTION],
             CONF_FIELDS: cfg[CONF_FIELDS],
         }
-        async_set_service_schema.opp, DOMAIN, object_id, service_desc)
+        async_set_service_schema(opp, DOMAIN, object_id, service_desc)
 
 
 class ScriptEntity(ToggleEntity):
@@ -334,7 +334,7 @@ class ScriptEntity(ToggleEntity):
         """Turn script off."""
         await self.script.async_stop()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Stop script and remove service when it will be removed from Open Peer Power."""
         await self.script.async_stop()
 

@@ -36,7 +36,7 @@ FIXTURE_CONFIG_ENTRY = {
 }
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -67,7 +67,7 @@ async def test_connection_error(opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_full_user_flow_implementation.opp):
+async def test_full_user_flow_implementation(opp):
     """Test registering an integration and finishing flow works."""
     with patch(
         "bimmer_connected.account.ConnectedDriveAccount._get_vehicles",
@@ -91,7 +91,7 @@ async def test_full_user_flow_implementation.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_full_config_flow_implementation.opp):
+async def test_full_config_flow_implementation(opp):
     """Test registering an integration and finishing flow works."""
     with patch(
         "bimmer_connected.account.ConnectedDriveAccount._get_vehicles",
@@ -116,7 +116,7 @@ async def test_full_config_flow_implementation.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_options_flow_implementation.opp):
+async def test_options_flow_implementation(opp):
     """Test config flow options."""
     with patch(
         "bimmer_connected.account.ConnectedDriveAccount._get_vehicles",
@@ -128,7 +128,7 @@ async def test_options_flow_implementation.opp):
         return_value=True,
     ) as mock_setup_entry:
         config_entry = MockConfigEntry(**FIXTURE_CONFIG_ENTRY)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to(opp.opp)
 
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()

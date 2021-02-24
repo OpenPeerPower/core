@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the Search component."""
-    websocket_api.async_register_command.opp, websocket_search_related)
+    websocket_api.async_register_command(opp, websocket_search_related)
     return True
 
 
@@ -38,12 +38,12 @@ async def async_setup_opp: OpenPeerPower, config: dict):
         vol.Required("item_id"): str,
     }
 )
-async def websocket_search_related.opp, connection, msg):
+async def websocket_search_related(opp, connection, msg):
     """Handle search."""
     searcher = Searcher(
         opp,
-        await device_registry.async_get_registry.opp),
-        await entity_registry.async_get_registry.opp),
+        await device_registry.async_get_registry(opp),
+        await entity_registry.async_get_registry(opp),
     )
     connection.send_result(
         msg["id"], searcher.async_search(msg["item_type"], msg["item_id"])

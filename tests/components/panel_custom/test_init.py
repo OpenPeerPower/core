@@ -5,7 +5,7 @@ from openpeerpower import setup
 from openpeerpower.components import frontend
 
 
-async def test_webcomponent_custom_path_not_found.opp):
+async def test_webcomponent_custom_path_not_found(opp):
     """Test if a web component is found in config panels dir."""
     filename = "mock.file"
 
@@ -21,7 +21,7 @@ async def test_webcomponent_custom_path_not_found.opp):
     }
 
     with patch("os.path.isfile", Mock(return_value=False)):
-        result = await setup.async_setup_component.opp, "panel_custom", config)
+        result = await setup.async_setup_component(opp, "panel_custom", config)
         assert not result
 
         panels = opp.data.get(frontend.DATA_PANELS, [])
@@ -30,7 +30,7 @@ async def test_webcomponent_custom_path_not_found.opp):
         assert "nice_url" not in panels
 
 
-async def test_js_webcomponent.opp):
+async def test_js_webcomponent(opp):
     """Test if a web component is found in config panels dir."""
     config = {
         "panel_custom": {
@@ -45,7 +45,7 @@ async def test_js_webcomponent.opp):
         }
     }
 
-    result = await setup.async_setup_component.opp, "panel_custom", config)
+    result = await setup.async_setup_component(opp, "panel_custom", config)
     assert result
 
     panels = opp.data.get(frontend.DATA_PANELS, [])
@@ -69,7 +69,7 @@ async def test_js_webcomponent.opp):
     assert panel.sidebar_title == "Sidebar Title"
 
 
-async def test_module_webcomponent.opp):
+async def test_module_webcomponent(opp):
     """Test if a js module is found in config panels dir."""
     config = {
         "panel_custom": {
@@ -85,7 +85,7 @@ async def test_module_webcomponent.opp):
         }
     }
 
-    result = await setup.async_setup_component.opp, "panel_custom", config)
+    result = await setup.async_setup_component(opp, "panel_custom", config)
     assert result
 
     panels = opp.data.get(frontend.DATA_PANELS, [])
@@ -110,7 +110,7 @@ async def test_module_webcomponent.opp):
     assert panel.sidebar_title == "Sidebar Title"
 
 
-async def test_latest_and_es5_build.opp):
+async def test_latest_and_es5_build(opp):
     """Test specifying an es5 and latest build."""
     config = {
         "panel_custom": {
@@ -121,7 +121,7 @@ async def test_latest_and_es5_build.opp):
         }
     }
 
-    assert await setup.async_setup_component.opp, "panel_custom", config)
+    assert await setup.async_setup_component(opp, "panel_custom", config)
 
     panels = opp.data.get(frontend.DATA_PANELS, {})
 
@@ -142,7 +142,7 @@ async def test_latest_and_es5_build.opp):
     assert panel.frontend_url_path == "nice_url"
 
 
-async def test_url_path_conflict.opp):
+async def test_url_path_conflict(opp):
     """Test config with overlapping url path."""
     assert await setup.async_setup_component(
         opp,

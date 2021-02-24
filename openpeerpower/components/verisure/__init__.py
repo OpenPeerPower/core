@@ -89,7 +89,7 @@ def setup(opp, config):
         "camera",
         "binary_sensor",
     ):
-        discovery.load_platform.opp, component, DOMAIN, {}, config)
+        discovery.load_platform(opp, component, DOMAIN, {}, config)
 
     async def capture_smartcam(service):
         """Capture a new picture from a smartcam."""

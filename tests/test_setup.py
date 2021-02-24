@@ -479,9 +479,9 @@ class TestSetup:
 
 async def test_component_warn_slow_setup_opp):
     """Warn we log when a component setup takes a long time."""
-    mock_integration.opp, MockModule("test_component1"))
+    mock_integration(opp, MockModule("test_component1"))
     with patch.object.opp.loop, "call_later") as mock_call:
-        result = await setup.async_setup_component.opp, "test_component1", {})
+        result = await setup.async_setup_component(opp, "test_component1", {})
         assert result
         assert mock_call.called
 
@@ -494,13 +494,13 @@ async def test_component_warn_slow_setup_opp):
         assert mock_call().cancel.called
 
 
-async def test_platform_no_warn_slow.opp):
+async def test_platform_no_warn_slow(opp):
     """Do not warn for long entity setup time."""
     mock_integration(
         opp. MockModule("test_component1", platform_schema=PLATFORM_SCHEMA)
     )
     with patch.object.opp.loop, "call_later") as mock_call:
-        result = await setup.async_setup_component.opp, "test_component1", {})
+        result = await setup.async_setup_component(opp, "test_component1", {})
         assert result
         assert len(mock_call.mock_calls) == 0
 
@@ -516,18 +516,18 @@ async def test_platform_error_slow_setup_opp, caplog):
             called.append(1)
             await asyncio.sleep(2)
 
-        mock_integration.opp, MockModule("test_component1", async_setup=async_setup))
-        result = await setup.async_setup_component.opp, "test_component1", {})
+        mock_integration(opp, MockModule("test_component1", async_setup=async_setup))
+        result = await setup.async_setup_component(opp, "test_component1", {})
         assert len(called) == 1
         assert not result
         assert "test_component1 is taking longer than 1 seconds" in caplog.text
 
 
-async def test_when_setup_already_loaded.opp):
+async def test_when_setup_already_loaded(opp):
     """Test when setup."""
     calls = []
 
-    async def mock_callback.opp, component):
+    async def mock_callback(opp, component):
         """Mock callback."""
         calls.append(component)
 
@@ -551,22 +551,22 @@ async def test_when_setup_already_loaded.opp):
     assert calls == ["test", "test"]
 
 
-async def test_setup_import_blows_up.opp):
+async def test_setup_import_blows_up(opp):
     """Test that we handle it correctly when importing integration blows up."""
     with patch(
         "openpeerpower.loader.Integration.get_component", side_effect=ValueError
     ):
-        assert not await setup.async_setup_component.opp, "sun", {})
+        assert not await setup.async_setup_component(opp, "sun", {})
 
 
 async def test_parallel_entry_setup_opp):
     """Test config entries are set up in parallel."""
-    MockConfigEntry(domain="comp", data={"value": 1}).add_to_opp.opp)
-    MockConfigEntry(domain="comp", data={"value": 2}).add_to_opp.opp)
+    MockConfigEntry(domain="comp", data={"value": 1}).add_to_opp(opp)
+    MockConfigEntry(domain="comp", data={"value": 2}).add_to_opp(opp)
 
     calls = []
 
-    async def mock_async_setup_entry.opp, entry):
+    async def mock_async_setup_entry(opp, entry):
         """Mock setting up an entry."""
         calls.append(entry.data["value"])
         await asyncio.sleep(0)
@@ -580,19 +580,19 @@ async def test_parallel_entry_setup_opp):
             async_setup_entry=mock_async_setup_entry,
         ),
     )
-    mock_entity_platform.opp, "config_flow.comp", None)
-    await setup.async_setup_component.opp, "comp", {})
+    mock_entity_platform(opp, "config_flow.comp", None)
+    await setup.async_setup_component(opp, "comp", {})
 
     assert calls == [1, 2, 1, 2]
 
 
-async def test_integration_disabled.opp, caplog):
+async def test_integration_disabled(opp, caplog):
     """Test we can disable an integration."""
     disabled_reason = "Dependency contains code that breaks Open Peer Power"
     mock_integration(
         opp,
         MockModule("test_component1", partial_manifest={"disabled": disabled_reason}),
     )
-    result = await setup.async_setup_component.opp, "test_component1", {})
+    result = await setup.async_setup_component(opp, "test_component1", {})
     assert not result
     assert disabled_reason in caplog.text

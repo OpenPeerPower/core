@@ -25,14 +25,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Platform setup."""
     api = await real_time_api(config[CONF_IP_ADDRESS], config[CONF_PORT])
     endpoint = RealTimeDataEndpoint.opp, api)
     resp = await api.get_data()
     serial = resp.serial_number
     opp.async_add_job(endpoint.async_refresh)
-    async_track_time_interval.opp, endpoint.async_refresh, SCAN_INTERVAL)
+    async_track_time_interval(opp, endpoint.async_refresh, SCAN_INTERVAL)
     devices = []
     for sensor, (idx, unit) in api.inverter.sensor_map().items():
         if unit == "C":

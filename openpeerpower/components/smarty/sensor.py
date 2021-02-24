@@ -18,7 +18,7 @@ from . import DOMAIN, SIGNAL_UPDATE_SMARTY
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Smarty Sensor Platform."""
     smarty = opp.data[DOMAIN]["api"]
     name = opp.data[DOMAIN]["name"]

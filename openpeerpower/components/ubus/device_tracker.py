@@ -32,7 +32,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Validate the configuration and return an ubus scanner."""
     dhcp_sw = config[DOMAIN][CONF_DHCP_SOFTWARE]
     if dhcp_sw == "dnsmasq":

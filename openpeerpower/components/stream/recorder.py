@@ -14,7 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_recorder.opp):
+def async_setup_recorder(opp):
     """Only here so Provider Registry works."""
 
 

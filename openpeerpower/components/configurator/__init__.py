@@ -94,7 +94,7 @@ def request_config(opp, *args, **kwargs):
 
 @bind.opp
 @async_callback
-def async_notify_errors.opp, request_id, error):
+def async_notify_errors(opp, request_id, error):
     """Add errors to a config request."""
     try:
         opp.data[DATA_REQUESTS][request_id].async_notify_errors(request_id, error)
@@ -104,7 +104,7 @@ def async_notify_errors.opp, request_id, error):
 
 
 @bind.opp
-def notify_errors.opp, request_id, error):
+def notify_errors(opp, request_id, error):
     """Add errors to a config request."""
     return run_callback_threadsafe(
         opp.loop, async_notify_errors, opp, request_id, error
@@ -113,7 +113,7 @@ def notify_errors.opp, request_id, error):
 
 @bind.opp
 @async_callback
-def async_request_done.opp, request_id):
+def async_request_done(opp, request_id):
     """Mark a configuration request as done."""
     try:
         opp.data[DATA_REQUESTS].pop(request_id).async_request_done(request_id)
@@ -123,7 +123,7 @@ def async_request_done.opp, request_id):
 
 
 @bind.opp
-def request_done.opp, request_id):
+def request_done(opp, request_id):
     """Mark a configuration request as done."""
     return run_callback_threadsafe(
         opp.loop, async_request_done, opp, request_id

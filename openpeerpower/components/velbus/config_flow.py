@@ -11,7 +11,7 @@ from .const import DOMAIN
 
 
 @callback
-def velbus_entries.opp: OpenPeerPower):
+def velbus_entries(opp: OpenPeerPower):
     """Return connections for Velbus domain."""
     return {
         (entry.data[CONF_PORT]) for entry in.opp.config_entries.async_entries(DOMAIN)

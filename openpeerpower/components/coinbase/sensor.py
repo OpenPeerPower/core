@@ -19,7 +19,7 @@ ATTRIBUTION = "Data provided by coinbase.com"
 DATA_COINBASE = "coinbase_cache"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Coinbase sensors."""
     if discovery_info is None:
         return

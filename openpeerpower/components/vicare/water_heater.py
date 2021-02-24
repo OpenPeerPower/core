@@ -47,7 +47,7 @@ OP_TO_VICARE_HVAC_DHW = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Create the ViCare water_heater devices."""
     if discovery_info is None:
         return

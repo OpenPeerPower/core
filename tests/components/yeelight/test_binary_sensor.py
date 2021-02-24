@@ -11,13 +11,13 @@ from . import MODULE, NAME, PROPERTIES, YAML_CONFIGURATION, _mocked_bulb
 ENTITY_BINARY_SENSOR = f"binary_sensor.{NAME}_nightlight"
 
 
-async def test_nightlight.opp: OpenPeerPower):
+async def test_nightlight(opp: OpenPeerPower):
     """Test nightlight sensor."""
     mocked_bulb = _mocked_bulb()
     with patch(f"{MODULE}.Bulb", return_value=mocked_bulb), patch(
         f"{MODULE}.config_flow.yeelight.Bulb", return_value=mocked_bulb
     ):
-        await async_setup_component.opp, DOMAIN, YAML_CONFIGURATION)
+        await async_setup_component(opp, DOMAIN, YAML_CONFIGURATION)
         await opp.async_block_till_done()
 
     # active_mode
@@ -27,10 +27,10 @@ async def test_nightlight.opp: OpenPeerPower):
     properties = {**PROPERTIES}
     properties.pop("active_mode")
     mocked_bulb.last_properties = properties
-    await entity_component.async_update_entity.opp, ENTITY_BINARY_SENSOR)
+    await entity_component.async_update_entity(opp, ENTITY_BINARY_SENSOR)
     assert.opp.states.get(ENTITY_BINARY_SENSOR).state == "on"
 
     # default
     properties.pop("nl_br")
-    await entity_component.async_update_entity.opp, ENTITY_BINARY_SENSOR)
+    await entity_component.async_update_entity(opp, ENTITY_BINARY_SENSOR)
     assert.opp.states.get(ENTITY_BINARY_SENSOR).state == "off"

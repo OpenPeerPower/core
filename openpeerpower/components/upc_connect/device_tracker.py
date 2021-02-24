@@ -26,7 +26,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_get_scanner.opp, config):
+async def async_get_scanner(opp, config):
     """Return the UPC device scanner."""
     conf = config[DOMAIN]
     session = opp.helpers.aiohttp_client.async_get_clientsession()

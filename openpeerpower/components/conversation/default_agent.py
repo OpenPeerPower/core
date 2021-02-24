@@ -33,7 +33,7 @@ UTTERANCES = {
 
 
 @core.callback
-def async_register.opp, intent_type, utterances):
+def async_register(opp, intent_type, utterances):
     """Register utterances and any custom intents for the default agent.
 
     Registrations don't require conversations to be loaded. They will become

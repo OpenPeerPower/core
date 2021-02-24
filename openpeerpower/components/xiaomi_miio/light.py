@@ -125,7 +125,7 @@ SERVICE_TO_METHOD = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Xiaomi light from a config entry."""
     entities = []
 
@@ -144,7 +144,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     async_add_entities(entities, update_before_add=True)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the light from config."""
     if DATA_KEY not in.opp.data:
         opp.data[DATA_KEY] = {}

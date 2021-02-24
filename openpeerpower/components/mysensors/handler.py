@@ -28,7 +28,7 @@ async def handle_set(
 ) -> None:
     """Handle a mysensors set message."""
     validated = validate_set_msg(gateway_id, msg)
-    _handle_child_update.opp, gateway_id, validated)
+    _handle_child_update(opp, gateway_id, validated)
 
 
 @HANDLERS.register("internal")
@@ -48,7 +48,7 @@ async def handle_battery_level(
     opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an internal battery level message."""
-    _handle_node_update.opp, gateway_id, msg)
+    _handle_node_update(opp, gateway_id, msg)
 
 
 @HANDLERS.register("I_HEARTBEAT_RESPONSE")
@@ -56,7 +56,7 @@ async def handle_heartbeat(
     opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an heartbeat."""
-    _handle_node_update.opp, gateway_id, msg)
+    _handle_node_update(opp, gateway_id, msg)
 
 
 @HANDLERS.register("I_SKETCH_NAME")
@@ -64,7 +64,7 @@ async def handle_sketch_name(
     opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an internal sketch name message."""
-    _handle_node_update.opp, gateway_id, msg)
+    _handle_node_update(opp, gateway_id, msg)
 
 
 @HANDLERS.register("I_SKETCH_VERSION")
@@ -72,7 +72,7 @@ async def handle_sketch_version(
     opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message
 ) -> None:
     """Handle an internal sketch version message."""
-    _handle_node_update.opp, gateway_id, msg)
+    _handle_node_update(opp, gateway_id, msg)
 
 
 @HANDLERS.register("I_GATEWAY_READY")
@@ -99,7 +99,7 @@ def _handle_child_update(
     # Update all platforms for the device via dispatcher.
     # Add/update entity for validated children.
     for platform, dev_ids in validated.items():
-        devices = get_mysensors_devices.opp, platform)
+        devices = get_mysensors_devices(opp, platform)
         new_dev_ids: List[DevId] = []
         for dev_id in dev_ids:
             if dev_id in devices:
@@ -107,15 +107,15 @@ def _handle_child_update(
             else:
                 new_dev_ids.append(dev_id)
         if new_dev_ids:
-            discover_mysensors_platform.opp, gateway_id, platform, new_dev_ids)
+            discover_mysensors_platform(opp, gateway_id, platform, new_dev_ids)
     for signal in set(signals):
         # Only one signal per device is needed.
         # A device can have multiple platforms, ie multiple schemas.
-        async_dispatcher_send.opp, signal)
+        async_dispatcher_send(opp, signal)
 
 
 @callback
-def _handle_node_update.opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message):
+def _handle_node_update(opp: OpenPeerPowerType, gateway_id: GatewayId, msg: Message):
     """Handle a node update."""
     signal = NODE_CALLBACK.format(gateway_id, msg.node_id)
-    async_dispatcher_send.opp, signal)
+    async_dispatcher_send(opp, signal)

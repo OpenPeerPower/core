@@ -51,7 +51,7 @@ def mock_handle_entity_call():
 
 
 @pytest.fixture
-def mock_entities.opp):
+def mock_entities(opp):
     """Return mock entities in an ordered dict."""
     kitchen = MockEntity(
         entity_id="light.kitchen",
@@ -86,7 +86,7 @@ def mock_entities.opp):
 
 
 @pytest.fixture
-def area_mock.opp):
+def area_mock(opp):
     """Mock including area info."""
     opp.states.async_set("light.Bowl", STATE_ON)
     opp.states.async_set("light.Ceiling", STATE_OFF)
@@ -291,13 +291,13 @@ class TestServiceHelpers(unittest.TestCase):
         assert mock_log.call_count == 3
 
 
-async def test_extract_entity_ids.opp):
+async def test_extract_entity_ids(opp):
     """Test extract_entity_ids method."""
     opp.states.async_set("light.Bowl", STATE_ON)
     opp.states.async_set("light.Ceiling", STATE_OFF)
     opp.states.async_set("light.Kitchen", STATE_OFF)
 
-    assert await async_setup_component.opp, "group", {})
+    assert await async_setup_component(opp, "group", {})
     await opp.async_block_till_done()
     await opp.components.group.Group.async_create_group(
         opp. "test", ["light.Ceiling", "light.Kitchen"]
@@ -305,7 +305,7 @@ async def test_extract_entity_ids.opp):
 
     call = ha.ServiceCall("light", "turn_on", {ATTR_ENTITY_ID: "light.Bowl"})
 
-    assert {"light.bowl"} == await service.async_extract_entity_ids.opp, call)
+    assert {"light.bowl"} == await service.async_extract_entity_ids(opp, call)
 
     call = ha.ServiceCall("light", "turn_on", {ATTR_ENTITY_ID: "group.test"})
 
@@ -326,20 +326,20 @@ async def test_extract_entity_ids.opp):
     )
 
 
-async def test_extract_entity_ids_from_area.opp, area_mock):
+async def test_extract_entity_ids_from_area(opp, area_mock):
     """Test extract_entity_ids method with areas."""
     call = ha.ServiceCall("light", "turn_on", {"area_id": "own-area"})
 
     assert {
         "light.in_own_area",
-    } == await service.async_extract_entity_ids.opp, call)
+    } == await service.async_extract_entity_ids(opp, call)
 
     call = ha.ServiceCall("light", "turn_on", {"area_id": "test-area"})
 
     assert {
         "light.in_area",
         "light.assigned_to_area",
-    } == await service.async_extract_entity_ids.opp, call)
+    } == await service.async_extract_entity_ids(opp, call)
 
     call = ha.ServiceCall("light", "turn_on", {"area_id": ["test-area", "diff-area"]})
 
@@ -347,7 +347,7 @@ async def test_extract_entity_ids_from_area.opp, area_mock):
         "light.in_area",
         "light.diff_area",
         "light.assigned_to_area",
-    } == await service.async_extract_entity_ids.opp, call)
+    } == await service.async_extract_entity_ids(opp, call)
 
     assert (
         await service.async_extract_entity_ids(
@@ -357,12 +357,12 @@ async def test_extract_entity_ids_from_area.opp, area_mock):
     )
 
 
-async def test_async_get_all_descriptions.opp):
+async def test_async_get_all_descriptions(opp):
     """Test async_get_all_descriptions."""
     group = opp.components.group
     group_config = {group.DOMAIN: {}}
-    await async_setup_component.opp, group.DOMAIN, group_config)
-    descriptions = await service.async_get_all_descriptions.opp)
+    await async_setup_component(opp, group.DOMAIN, group_config)
+    descriptions = await service.async_get_all_descriptions(opp)
 
     assert len(descriptions) == 1
 
@@ -371,8 +371,8 @@ async def test_async_get_all_descriptions.opp):
 
     logger = opp.components.logger
     logger_config = {logger.DOMAIN: {}}
-    await async_setup_component.opp, logger.DOMAIN, logger_config)
-    descriptions = await service.async_get_all_descriptions.opp)
+    await async_setup_component(opp, logger.DOMAIN, logger_config)
+    descriptions = await service.async_get_all_descriptions(opp)
 
     assert len(descriptions) == 2
 
@@ -380,7 +380,7 @@ async def test_async_get_all_descriptions.opp):
     assert "fields" in descriptions[logger.DOMAIN]["set_level"]
 
 
-async def test_call_with_required_features.opp, mock_entities):
+async def test_call_with_required_features(opp, mock_entities):
     """Test service calls invoked only if entity has required features."""
     test_service_mock = AsyncMock(return_value=None)
     await service.entity_service_call(
@@ -400,7 +400,7 @@ async def test_call_with_required_features.opp, mock_entities):
     assert all(entity in actual for entity in expected)
 
 
-async def test_call_with_both_required_features.opp, mock_entities):
+async def test_call_with_both_required_features(opp, mock_entities):
     """Test service calls invoked only if entity has both features."""
     test_service_mock = AsyncMock(return_value=None)
     await service.entity_service_call(
@@ -417,7 +417,7 @@ async def test_call_with_both_required_features.opp, mock_entities):
     ]
 
 
-async def test_call_with_one_of_required_features.opp, mock_entities):
+async def test_call_with_one_of_required_features(opp, mock_entities):
     """Test service calls invoked with one entity having the required features."""
     test_service_mock = AsyncMock(return_value=None)
     await service.entity_service_call(
@@ -438,7 +438,7 @@ async def test_call_with_one_of_required_features.opp, mock_entities):
     assert all(entity in actual for entity in expected)
 
 
-async def test_call_with_sync_func.opp, mock_entities):
+async def test_call_with_sync_func(opp, mock_entities):
     """Test invoking sync service calls."""
     test_service_mock = Mock(return_value=None)
     await service.entity_service_call(
@@ -450,7 +450,7 @@ async def test_call_with_sync_func.opp, mock_entities):
     assert test_service_mock.call_count == 1
 
 
-async def test_call_with_sync_attr.opp, mock_entities):
+async def test_call_with_sync_attr(opp, mock_entities):
     """Test invoking sync service calls."""
     mock_method = mock_entities["light.kitchen"].sync_method = Mock(return_value=None)
     await service.entity_service_call(
@@ -468,7 +468,7 @@ async def test_call_with_sync_attr.opp, mock_entities):
     assert mock_method.mock_calls[0][2] == {}
 
 
-async def test_call_context_user_not_exist.opp):
+async def test_call_context_user_not_exist(opp):
     """Check we don't allow deleted users to do things."""
     with pytest.raises(exceptions.UnknownUser) as err:
         await service.entity_service_call(
@@ -485,7 +485,7 @@ async def test_call_context_user_not_exist.opp):
     assert err.value.context.user_id == "non-existing"
 
 
-async def test_call_context_target_all.opp, mock_handle_entity_call, mock_entities):
+async def test_call_context_target_all(opp, mock_handle_entity_call, mock_entities):
     """Check we only target allowed entities if targeting all."""
     with patch(
         "openpeerpower.auth.AuthManager.async_get_user",
@@ -564,7 +564,7 @@ async def test_call_context_target_specific_no_auth(
     assert err.value.entity_id == "light.kitchen"
 
 
-async def test_call_no_context_target_all.opp, mock_handle_entity_call, mock_entities):
+async def test_call_no_context_target_all(opp, mock_handle_entity_call, mock_entities):
     """Check we target all if no user context given."""
     await service.entity_service_call(
         opp,
@@ -617,7 +617,7 @@ async def test_call_with_match_all(
     )
 
 
-async def test_call_with_omit_entity_id.opp, mock_handle_entity_call, mock_entities):
+async def test_call_with_omit_entity_id(opp, mock_handle_entity_call, mock_entities):
     """Check service call if we do not pass an entity ID."""
     await service.entity_service_call(
         opp,
@@ -629,7 +629,7 @@ async def test_call_with_omit_entity_id.opp, mock_handle_entity_call, mock_entit
     assert len(mock_handle_entity_call.mock_calls) == 0
 
 
-async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
+async def test_register_admin_service(opp, opp_read_only_user, opp_admin_user):
     """Test the register admin service."""
     calls = []
 
@@ -660,7 +660,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
             "test",
             {},
             blocking=True,
-            context=ha.Context(user_id.opp_read_only_user.id),
+            context=ha.Context(user_id(opp_read_only_user.id),
         )
     assert len(calls) == 0
 
@@ -670,7 +670,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
             "test",
             {"invalid": True},
             blocking=True,
-            context=ha.Context(user_id.opp_admin_user.id),
+            context=ha.Context(user_id(opp_admin_user.id),
         )
     assert len(calls) == 0
 
@@ -680,7 +680,7 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
             "test2",
             {},
             blocking=True,
-            context=ha.Context(user_id.opp_admin_user.id),
+            context=ha.Context(user_id(opp_admin_user.id),
         )
     assert len(calls) == 0
 
@@ -689,13 +689,13 @@ async def test_register_admin_service.opp, opp_read_only_user, opp_admin_user):
         "test2",
         {"required": True},
         blocking=True,
-        context=ha.Context(user_id.opp_admin_user.id),
+        context=ha.Context(user_id(opp_admin_user.id),
     )
     assert len(calls) == 1
     assert calls[0].context.user_id == opp_admin_user.id
 
 
-async def test_domain_control_not_async.opp, mock_entities):
+async def test_domain_control_not_async(opp, mock_entities):
     """Test domain verification in a service call with an unknown user."""
     calls = []
 
@@ -707,7 +707,7 @@ async def test_domain_control_not_async.opp, mock_entities):
         opp.helpers.service.verify_domain_control("test_domain")(mock_service_log)
 
 
-async def test_domain_control_unknown.opp, mock_entities):
+async def test_domain_control_unknown(opp, mock_entities):
     """Test domain verification in a service call with an unknown user."""
     calls = []
 
@@ -738,7 +738,7 @@ async def test_domain_control_unknown.opp, mock_entities):
         assert len(calls) == 0
 
 
-async def test_domain_control_unauthorized.opp, opp_read_only_user):
+async def test_domain_control_unauthorized(opp, opp_read_only_user):
     """Test domain verification in a service call with an unauthorized user."""
     mock_registry(
         opp,
@@ -771,13 +771,13 @@ async def test_domain_control_unauthorized.opp, opp_read_only_user):
             "test_service",
             {},
             blocking=True,
-            context=ha.Context(user_id.opp_read_only_user.id),
+            context=ha.Context(user_id(opp_read_only_user.id),
         )
 
     assert len(calls) == 0
 
 
-async def test_domain_control_admin.opp, opp_admin_user):
+async def test_domain_control_admin(opp, opp_admin_user):
     """Test domain verification in a service call with an admin user."""
     mock_registry(
         opp,
@@ -809,13 +809,13 @@ async def test_domain_control_admin.opp, opp_admin_user):
         "test_service",
         {},
         blocking=True,
-        context=ha.Context(user_id.opp_admin_user.id),
+        context=ha.Context(user_id(opp_admin_user.id),
     )
 
     assert len(calls) == 1
 
 
-async def test_domain_control_no_user.opp):
+async def test_domain_control_no_user(opp):
     """Test domain verification in a service call with no user."""
     mock_registry(
         opp,
@@ -853,7 +853,7 @@ async def test_domain_control_no_user.opp):
     assert len(calls) == 1
 
 
-async def test_extract_from_service_available_device.opp):
+async def test_extract_from_service_available_device(opp):
     """Test the extraction of entity from service and device is available."""
     entities = [
         MockEntity(name="test_1", entity_id="test_domain.test_1"),
@@ -866,7 +866,7 @@ async def test_extract_from_service_available_device.opp):
 
     assert ["test_domain.test_1", "test_domain.test_3"] == [
         ent.entity_id
-        for ent in (await service.async_extract_entities.opp, entities, call_1))
+        for ent in (await service.async_extract_entities(opp, entities, call_1))
     ]
 
     call_2 = ha.ServiceCall(
@@ -877,7 +877,7 @@ async def test_extract_from_service_available_device.opp):
 
     assert ["test_domain.test_3"] == [
         ent.entity_id
-        for ent in (await service.async_extract_entities.opp, entities, call_2))
+        for ent in (await service.async_extract_entities(opp, entities, call_2))
     ]
 
     assert (
@@ -894,7 +894,7 @@ async def test_extract_from_service_available_device.opp):
     )
 
 
-async def test_extract_from_service_empty_if_no_entity_id.opp):
+async def test_extract_from_service_empty_if_no_entity_id(opp):
     """Test the extraction from service without specifying entity."""
     entities = [
         MockEntity(name="test_1", entity_id="test_domain.test_1"),
@@ -904,11 +904,11 @@ async def test_extract_from_service_empty_if_no_entity_id.opp):
 
     assert [] == [
         ent.entity_id
-        for ent in (await service.async_extract_entities.opp, entities, call))
+        for ent in (await service.async_extract_entities(opp, entities, call))
     ]
 
 
-async def test_extract_from_service_filter_out_non_existing_entities.opp):
+async def test_extract_from_service_filter_out_non_existing_entities(opp):
     """Test the extraction of non existing entities from service."""
     entities = [
         MockEntity(name="test_1", entity_id="test_domain.test_1"),
@@ -923,11 +923,11 @@ async def test_extract_from_service_filter_out_non_existing_entities.opp):
 
     assert ["test_domain.test_2"] == [
         ent.entity_id
-        for ent in (await service.async_extract_entities.opp, entities, call))
+        for ent in (await service.async_extract_entities(opp, entities, call))
     ]
 
 
-async def test_extract_from_service_area_id.opp, area_mock):
+async def test_extract_from_service_area_id(opp, area_mock):
     """Test the extraction using area ID as reference."""
     entities = [
         MockEntity(name="in_area", entity_id="light.in_area"),
@@ -936,12 +936,12 @@ async def test_extract_from_service_area_id.opp, area_mock):
     ]
 
     call = ha.ServiceCall("light", "turn_on", {"area_id": "test-area"})
-    extracted = await service.async_extract_entities.opp, entities, call)
+    extracted = await service.async_extract_entities(opp, entities, call)
     assert len(extracted) == 1
     assert extracted[0].entity_id == "light.in_area"
 
     call = ha.ServiceCall("light", "turn_on", {"area_id": ["test-area", "diff-area"]})
-    extracted = await service.async_extract_entities.opp, entities, call)
+    extracted = await service.async_extract_entities(opp, entities, call)
     assert len(extracted) == 2
     assert sorted(ent.entity_id for ent in extracted) == [
         "light.diff_area",
@@ -953,7 +953,7 @@ async def test_extract_from_service_area_id.opp, area_mock):
         "turn_on",
         {"area_id": ["test-area", "diff-area"], "device_id": "device-no-area-id"},
     )
-    extracted = await service.async_extract_entities.opp, entities, call)
+    extracted = await service.async_extract_entities(opp, entities, call)
     assert len(extracted) == 3
     assert sorted(ent.entity_id for ent in extracted) == [
         "light.diff_area",
@@ -962,7 +962,7 @@ async def test_extract_from_service_area_id.opp, area_mock):
     ]
 
 
-async def test_entity_service_call_warn_referenced.opp, caplog):
+async def test_entity_service_call_warn_referenced(opp, caplog):
     """Test we only warn for referenced entities in entity_service_call."""
     call = ha.ServiceCall(
         "light",
@@ -973,14 +973,14 @@ async def test_entity_service_call_warn_referenced.opp, caplog):
             "device_id": "non-existent-device",
         },
     )
-    await service.entity_service_call.opp, {}, "", call)
+    await service.entity_service_call(opp, {}, "", call)
     assert (
         "Unable to find referenced areas non-existent-area, devices non-existent-device, entities non.existent"
         in caplog.text
     )
 
 
-async def test_async_extract_entities_warn_referenced.opp, caplog):
+async def test_async_extract_entities_warn_referenced(opp, caplog):
     """Test we only warn for referenced entities in async_extract_entities."""
     call = ha.ServiceCall(
         "light",
@@ -991,7 +991,7 @@ async def test_async_extract_entities_warn_referenced.opp, caplog):
             "device_id": "non-existent-device",
         },
     )
-    extracted = await service.async_extract_entities.opp, {}, call)
+    extracted = await service.async_extract_entities(opp, {}, call)
     assert len(extracted) == 0
     assert (
         "Unable to find referenced areas non-existent-area, devices non-existent-device, entities non.existent"

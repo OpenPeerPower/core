@@ -187,14 +187,14 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry: config_entries.ConfigEntry):
+async def async_setup_entry(opp, entry: config_entries.ConfigEntry):
     """Set up the RFXtrx component."""
     opp.data.setdefault(DOMAIN, {})
 
     opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS] = []
 
     try:
-        await async_setup_internal.opp, entry)
+        await async_setup_internal(opp, entry)
     except asyncio.TimeoutError:
         # Library currently doesn't support reload
         _LOGGER.error(
@@ -210,7 +210,7 @@ async def async_setup_entry.opp, entry: config_entries.ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp, entry: config_entries.ConfigEntry):
+async def async_unload_entry(opp, entry: config_entries.ConfigEntry):
     """Unload RFXtrx component."""
     if not all(
         await asyncio.gather(
@@ -267,7 +267,7 @@ def _get_device_lookup(devices):
     return lookup
 
 
-async def async_setup_internal.opp, entry: config_entries.ConfigEntry):
+async def async_setup_internal(opp, entry: config_entries.ConfigEntry):
     """Set up the RFXtrx component."""
     config = entry.data
 
@@ -454,7 +454,7 @@ def get_device_id(device, data_bits=None):
     return (f"{device.packettype:x}", f"{device.subtype:x}", id_string)
 
 
-def connect_auto_add.opp, entry_data, callback_fun):
+def connect_auto_add(opp, entry_data, callback_fun):
     """Connect to dispatcher for automatic add."""
     if entry_data[CONF_AUTOMATIC_ADD]:
         opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS].append(

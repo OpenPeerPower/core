@@ -23,13 +23,13 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Logitech Harmony Hub from a config entry."""
     # As there currently is no way to import options from yaml
     # when setting up a config entry, we fallback to adding
     # the options to the config entry and pull them out here if
     # they are missing from the options
-    _async_import_options_from_data_if_missing.opp, entry)
+    _async_import_options_from_data_if_missing(opp, entry)
 
     address = entry.data[CONF_HOST]
     name = entry.data[CONF_NAME]
@@ -44,7 +44,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     opp.data[DOMAIN][entry.entry_id] = data
 
-    await _migrate_old_unique_ids.opp, entry.entry_id, data)
+    await _migrate_old_unique_ids(opp, entry.entry_id, data)
 
     entry.add_update_listener(_update_listener)
 
@@ -80,11 +80,11 @@ async def _migrate_old_unique_ids(
 
         return None
 
-    await entity_registry.async_migrate_entries.opp, entry_id, _async_migrator)
+    await entity_registry.async_migrate_entries(opp, entry_id, _async_migrator)
 
 
 @callback
-def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: ConfigEntry):
+def _async_import_options_from_data_if_missing(opp: OpenPeerPower, entry: ConfigEntry):
     options = dict(entry.options)
     modified = 0
     for importable_option in [ATTR_ACTIVITY, ATTR_DELAY_SECS]:
@@ -96,14 +96,14 @@ def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: Config
         opp.config_entries.async_update_entry(entry, options=options)
 
 
-async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     async_dispatcher_send(
         opp. f"{HARMONY_OPTIONS_UPDATE}-{entry.unique_id}", entry.options
     )
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

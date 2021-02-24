@@ -28,7 +28,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the LlamaLab Automate notification service."""
     secret = config.get(CONF_API_KEY)
     recipient = config.get(CONF_TO)

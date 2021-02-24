@@ -5,7 +5,7 @@ from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 from .const import CONF_LOADZONE, DOMAIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the August sensors."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id]
 

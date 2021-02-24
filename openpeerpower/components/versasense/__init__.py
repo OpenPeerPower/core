@@ -32,18 +32,18 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(opp, config):
     """Set up the versasense component."""
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
     consumer = pyv.Consumer(config[DOMAIN]["host"], session)
 
     opp.data[DOMAIN] = {KEY_CONSUMER: consumer}
 
-    await _configure_entities.opp, config, consumer)
+    await _configure_entities(opp, config, consumer)
 
     # Return boolean to indicate that initialization was successful.
     return True
 
 
-async def _configure_entities.opp, config, consumer):
+async def _configure_entities(opp, config, consumer):
     """Fetch all devices with their peripherals for representation."""
     devices = await consumer.fetchDevices()
     _LOGGER.debug(devices)
@@ -68,10 +68,10 @@ async def _configure_entities.opp, config, consumer):
                 )
 
     if sensor_info_list:
-        _load_platform.opp, config, "sensor", sensor_info_list)
+        _load_platform(opp, config, "sensor", sensor_info_list)
 
     if switch_info_list:
-        _load_platform.opp, config, "switch", switch_info_list)
+        _load_platform(opp, config, "switch", switch_info_list)
 
 
 def _add_entity_info_to_list(peripheral, device, entity_info_list):
@@ -90,8 +90,8 @@ def _add_entity_info_to_list(peripheral, device, entity_info_list):
     return entity_info_list
 
 
-def _load_platform.opp, config, entity_type, entity_info_list):
+def _load_platform(opp, config, entity_type, entity_info_list):
     """Load platform with list of entity info."""
     opp.async_create_task(
-        async_load_platform.opp, entity_type, DOMAIN, entity_info_list, config)
+        async_load_platform(opp, entity_type, DOMAIN, entity_info_list, config)
     )

@@ -96,7 +96,7 @@ async def async_setup_entry(
         KEY_COORDINATOR: coordinator,
     }
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections={(dr.CONNECTION_NETWORK_MAC, motion_gateway.mac)},

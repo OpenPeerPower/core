@@ -49,7 +49,7 @@ DEVICE_CLASSES_SCHEMA = vol.All(vol.Lower, vol.In(DEVICE_CLASSES))
 
 
 @bind.opp
-def is_on.opp, entity_id):
+def is_on(opp, entity_id):
     """Return if the humidifier is on based on the statemachine.
 
     Async friendly.
@@ -86,12 +86,12 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 

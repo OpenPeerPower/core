@@ -143,7 +143,7 @@ def listen_for_instance_updates(
     )
 
 
-async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up Hyperion from a config entry."""
     host = config_entry.data[CONF_HOST]
     port = config_entry.data[CONF_PORT]
@@ -181,13 +181,13 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         and token is None
     ):
         await hyperion_client.async_client_disconnect()
-        await _create_reauth_flow.opp, config_entry)
+        await _create_reauth_flow(opp, config_entry)
         return False
 
     # Client login doesn't work? => Reauth.
     if not await hyperion_client.async_client_login():
         await hyperion_client.async_client_disconnect()
-        await _create_reauth_flow.opp, config_entry)
+        await _create_reauth_flow(opp, config_entry)
         return False
 
     # Cannot switch instance or cannot load state? => Not ready.
@@ -215,7 +215,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
     async def async_instances_to_clients_raw(instances: List[Dict[str, Any]]) -> None:
         """Convert instances to Hyperion clients."""
-        registry = await async_get_registry.opp)
+        registry = await async_get_registry(opp)
         running_instances: Set[int] = set()
         stopped_instances: Set[int] = set()
         existing_instances = opp.data[DOMAIN][config_entry.entry_id][

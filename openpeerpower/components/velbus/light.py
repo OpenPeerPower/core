@@ -21,7 +21,7 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Velbus light based on config_entry."""
     cntrl = opp.data[DOMAIN][entry.entry_id]["cntrl"]
     modules_data = opp.data[DOMAIN][entry.entry_id]["light"]

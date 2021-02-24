@@ -26,7 +26,7 @@ def mock_command(self, cmd, params=None):
     return {}
 
 
-async def test_platform_manually_configured.opp):
+async def test_platform_manually_configured(opp):
     """Test that nothing happens when configuring mikrotik through device tracker platform."""
     assert (
         await async_setup_component(
@@ -39,11 +39,11 @@ async def test_platform_manually_configured.opp):
     assert mikrotik.DOMAIN not in.opp.data
 
 
-async def test_device_trackers.opp, legacy_patchable_time):
+async def test_device_trackers(opp, legacy_patchable_time):
     """Test device_trackers created by mikrotik."""
 
     # test devices are added from wireless list only
-    hub = await setup_mikrotik_entry.opp)
+    hub = await setup_mikrotik_entry(opp)
 
     device_1 = opp.states.get("device_tracker.device_1")
     assert device_1 is not None
@@ -94,14 +94,14 @@ async def test_device_trackers.opp, legacy_patchable_time):
         assert device_2.state == "not_home"
 
 
-async def test_restoring_devices.opp):
+async def test_restoring_devices(opp):
     """Test restoring existing device_tracker entities if not detected on startup."""
     config_entry = MockConfigEntry(
         domain=mikrotik.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     registry.async_get_or_create(
         device_tracker.DOMAIN,
         mikrotik.DOMAIN,
@@ -117,7 +117,7 @@ async def test_restoring_devices.opp):
         config_entry=config_entry,
     )
 
-    await setup_mikrotik_entry.opp)
+    await setup_mikrotik_entry(opp)
 
     # test device_2 which is not in wireless list is restored
     device_1 = opp.states.get("device_tracker.device_1")

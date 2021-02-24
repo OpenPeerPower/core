@@ -21,13 +21,13 @@ _LOGGER = logging.getLogger(__name__)
 FILTER_ATTRS = ("ip_address", "mac_address")
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up device tracker for Mikrotik component."""
     hub = opp.data[DOMAIN][config_entry.entry_id]
 
     tracked = {}
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     # Restore clients that is not a part of active clients list.
     for entity in registry.entities.values():
@@ -49,7 +49,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Update the status of the device."""
         update_items(hub, async_add_entities, tracked)
 
-    async_dispatcher_connect.opp, hub.signal_update, update_hub)
+    async_dispatcher_connect(opp, hub.signal_update, update_hub)
 
     update_hub()
 
@@ -155,7 +155,7 @@ class MikrotikHubTracker(ScannerEntity):
         )
         await self.hub.request_update()
 
-    async def will_remove_from.opp(self):
+    async def will_remove_from(opp(self):
         """Disconnect from dispatcher."""
         if self.unsub_dispatcher:
             self.unsub_dispatcher()

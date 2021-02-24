@@ -31,8 +31,8 @@ async def async_setup_entry(
     name = config_entry.data[CONF_NAME]
     pvpc_data_handler = PVPCData(
         tariff=config_entry.data[ATTR_TARIFF],
-        local_timezone.opp.config.time_zone,
-        websession=async_get_clientsession.opp),
+        local_timezone(opp.config.time_zone,
+        websession=async_get_clientsession(opp),
         logger=_LOGGER,
         timeout=_DEFAULT_TIMEOUT,
     )
@@ -58,7 +58,7 @@ class ElecPriceSensor(RestoreEntity):
         self._hourly_tracker = None
         self._price_tracker = None
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Cancel listeners for sensor updates."""
         self._hourly_tracker()
         self._price_tracker()

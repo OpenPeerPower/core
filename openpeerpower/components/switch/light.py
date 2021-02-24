@@ -141,7 +141,7 @@ class LightSwitch(LightEntity):
             self.opp, [self._switch_entity_id], async_state_changed_listener
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Handle removal from Open Peer Power."""
         if self._async_unsub_state_changed is not None:
             self._async_unsub_state_changed()

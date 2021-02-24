@@ -65,14 +65,14 @@ SET_HUMIDITY_SCHEMA = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up WeMo binary sensors."""
 
     async def _discovered_wemo(device):
         """Handle a discovered Wemo device."""
         async_add_entities([WemoHumidifier(device)])
 
-    async_dispatcher_connect.opp, f"{WEMO_DOMAIN}.fan", _discovered_wemo)
+    async_dispatcher_connect(opp, f"{WEMO_DOMAIN}.fan", _discovered_wemo)
 
     await asyncio.gather(
         *[

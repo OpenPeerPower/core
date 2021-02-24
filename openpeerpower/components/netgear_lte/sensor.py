@@ -6,7 +6,7 @@ from . import CONF_MONITORED_CONDITIONS, DATA_KEY, LTEEntity
 from .sensor_types import SENSOR_SMS, SENSOR_SMS_TOTAL, SENSOR_UNITS, SENSOR_USAGE
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info):
     """Set up Netgear LTE sensor devices."""
     if discovery_info is None:
         return

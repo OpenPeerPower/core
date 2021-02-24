@@ -44,7 +44,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry."""
 
     def token_updater(token):
@@ -121,7 +121,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload Ring entry."""
     unload_ok = all(
         await asyncio.gather(

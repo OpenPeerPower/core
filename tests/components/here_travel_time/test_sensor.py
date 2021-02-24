@@ -161,7 +161,7 @@ def requests_mock_car_disabled_response(requests_mock_credentials_check):
     )
 
 
-async def test_car.opp, requests_mock_car_disabled_response):
+async def test_car(opp, requests_mock_car_disabled_response):
     """Test that car works."""
     config = {
         DOMAIN: {
@@ -174,7 +174,7 @@ async def test_car.opp, requests_mock_car_disabled_response):
             "api_key": API_KEY,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -211,7 +211,7 @@ async def test_car.opp, requests_mock_car_disabled_response):
     )
 
 
-async def test_traffic_mode_enabled.opp, requests_mock_credentials_check):
+async def test_traffic_mode_enabled(opp, requests_mock_credentials_check):
     """Test that traffic mode enabled works."""
     modes = [ROUTE_MODE_FASTEST, TRAVEL_MODE_CAR, TRAFFIC_MODE_ENABLED]
     response_url = _build_mock_url(
@@ -236,7 +236,7 @@ async def test_traffic_mode_enabled.opp, requests_mock_credentials_check):
             "traffic_mode": True,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -249,7 +249,7 @@ async def test_traffic_mode_enabled.opp, requests_mock_credentials_check):
     )
 
 
-async def test_imperial.opp, requests_mock_car_disabled_response):
+async def test_imperial(opp, requests_mock_car_disabled_response):
     """Test that imperial units work."""
     config = {
         DOMAIN: {
@@ -263,7 +263,7 @@ async def test_imperial.opp, requests_mock_car_disabled_response):
             "unit_system": "imperial",
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -273,7 +273,7 @@ async def test_imperial.opp, requests_mock_car_disabled_response):
     assert sensor.attributes.get(ATTR_DISTANCE) == 14.852635608048994
 
 
-async def test_route_mode_shortest.opp, requests_mock_credentials_check):
+async def test_route_mode_shortest(opp, requests_mock_credentials_check):
     """Test that route mode shortest works."""
     origin = "38.902981,-77.048338"
     destination = "39.042158,-77.119116"
@@ -295,7 +295,7 @@ async def test_route_mode_shortest.opp, requests_mock_credentials_check):
             "route_mode": ROUTE_MODE_SHORTEST,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -305,7 +305,7 @@ async def test_route_mode_shortest.opp, requests_mock_credentials_check):
     assert sensor.attributes.get(ATTR_DISTANCE) == 18.388
 
 
-async def test_route_mode_fastest.opp, requests_mock_credentials_check):
+async def test_route_mode_fastest(opp, requests_mock_credentials_check):
     """Test that route mode fastest works."""
     origin = "38.902981,-77.048338"
     destination = "39.042158,-77.119116"
@@ -327,7 +327,7 @@ async def test_route_mode_fastest.opp, requests_mock_credentials_check):
             "traffic_mode": True,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -337,7 +337,7 @@ async def test_route_mode_fastest.opp, requests_mock_credentials_check):
     assert sensor.attributes.get(ATTR_DISTANCE) == 23.381
 
 
-async def test_truck.opp, requests_mock_truck_response):
+async def test_truck(opp, requests_mock_truck_response):
     """Test that truck works."""
     config = {
         DOMAIN: {
@@ -351,7 +351,7 @@ async def test_truck.opp, requests_mock_truck_response):
             "mode": TRAVEL_MODE_TRUCK,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -361,7 +361,7 @@ async def test_truck.opp, requests_mock_truck_response):
     _assert_truck_sensor(sensor)
 
 
-async def test_public_transport.opp, requests_mock_credentials_check):
+async def test_public_transport(opp, requests_mock_credentials_check):
     """Test that publicTransport works."""
     origin = "41.9798,-87.8801"
     destination = "41.9043,-87.9216"
@@ -383,7 +383,7 @@ async def test_public_transport.opp, requests_mock_credentials_check):
             "mode": TRAVEL_MODE_PUBLIC,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -411,7 +411,7 @@ async def test_public_transport.opp, requests_mock_credentials_check):
     assert sensor.attributes.get(ATTR_ICON) == ICON_PUBLIC
 
 
-async def test_public_transport_time_table.opp, requests_mock_credentials_check):
+async def test_public_transport_time_table(opp, requests_mock_credentials_check):
     """Test that publicTransportTimeTable works."""
     origin = "41.9798,-87.8801"
     destination = "41.9043,-87.9216"
@@ -434,7 +434,7 @@ async def test_public_transport_time_table.opp, requests_mock_credentials_check)
             "mode": TRAVEL_MODE_PUBLIC_TIME_TABLE,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -462,7 +462,7 @@ async def test_public_transport_time_table.opp, requests_mock_credentials_check)
     assert sensor.attributes.get(ATTR_ICON) == ICON_PUBLIC
 
 
-async def test_pedestrian.opp, requests_mock_credentials_check):
+async def test_pedestrian(opp, requests_mock_credentials_check):
     """Test that pedestrian works."""
     origin = "41.9798,-87.8801"
     destination = "41.9043,-87.9216"
@@ -485,7 +485,7 @@ async def test_pedestrian.opp, requests_mock_credentials_check):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -515,7 +515,7 @@ async def test_pedestrian.opp, requests_mock_credentials_check):
     assert sensor.attributes.get(ATTR_ICON) == ICON_PEDESTRIAN
 
 
-async def test_bicycle.opp, requests_mock_credentials_check):
+async def test_bicycle(opp, requests_mock_credentials_check):
     """Test that bicycle works."""
     origin = "41.9798,-87.8801"
     destination = "41.9043,-87.9216"
@@ -537,7 +537,7 @@ async def test_bicycle.opp, requests_mock_credentials_check):
             "mode": TRAVEL_MODE_BICYCLE,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -567,7 +567,7 @@ async def test_bicycle.opp, requests_mock_credentials_check):
     assert sensor.attributes.get(ATTR_ICON) == ICON_BICYCLE
 
 
-async def test_location_zone.opp, requests_mock_truck_response, legacy_patchable_time):
+async def test_location_zone(opp, requests_mock_truck_response, legacy_patchable_time):
     """Test that origin/destination supplied by a zone works."""
     utcnow = dt_util.utcnow()
     # Patching 'utcnow' to gain more control over the timed update.
@@ -600,8 +600,8 @@ async def test_location_zone.opp, requests_mock_truck_response, legacy_patchable
                 "mode": TRAVEL_MODE_TRUCK,
             }
         }
-        assert await async_setup_component.opp, "zone", zone_config)
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, "zone", zone_config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -611,7 +611,7 @@ async def test_location_zone.opp, requests_mock_truck_response, legacy_patchable
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
-        async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
+        async_fire_time_changed(opp, utcnow + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -643,7 +643,7 @@ async def test_location_sensor(
                 "mode": TRAVEL_MODE_TRUCK,
             }
         }
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -653,7 +653,7 @@ async def test_location_sensor(
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
-        async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
+        async_fire_time_changed(opp, utcnow + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -694,7 +694,7 @@ async def test_location_person(
                 "mode": TRAVEL_MODE_TRUCK,
             }
         }
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -704,7 +704,7 @@ async def test_location_person(
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
-        async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
+        async_fire_time_changed(opp, utcnow + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -745,7 +745,7 @@ async def test_location_device_tracker(
                 "mode": TRAVEL_MODE_TRUCK,
             }
         }
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -755,7 +755,7 @@ async def test_location_device_tracker(
         _assert_truck_sensor(sensor)
 
         # Test that update works more than once
-        async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
+        async_fire_time_changed(opp, utcnow + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -780,7 +780,7 @@ async def test_location_device_tracker_added_after_update(
                 "mode": TRAVEL_MODE_TRUCK,
             }
         }
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -810,7 +810,7 @@ async def test_location_device_tracker_added_after_update(
         )
 
         # Test that update works more than once
-        async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
+        async_fire_time_changed(opp, utcnow + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
         sensor = opp.states.get("sensor.test")
@@ -834,7 +834,7 @@ async def test_location_device_tracker_in_zone(
             }
         ]
     }
-    assert await async_setup_component.opp, "zone", zone_config)
+    assert await async_setup_component(opp, "zone", zone_config)
     opp.states.async_set(
         "device_tracker.origin", "origin", {"latitude": None, "longitude": None}
     )
@@ -849,7 +849,7 @@ async def test_location_device_tracker_in_zone(
             "mode": TRAVEL_MODE_TRUCK,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -860,7 +860,7 @@ async def test_location_device_tracker_in_zone(
     assert ", getting zone location" in caplog.text
 
 
-async def test_route_not_found.opp, requests_mock_credentials_check, caplog):
+async def test_route_not_found(opp, requests_mock_credentials_check, caplog):
     """Test that route not found error is correctly handled."""
     caplog.set_level(logging.ERROR)
     origin = "52.516,13.3779"
@@ -883,7 +883,7 @@ async def test_route_not_found.opp, requests_mock_credentials_check, caplog):
             "api_key": API_KEY,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -893,7 +893,7 @@ async def test_route_not_found.opp, requests_mock_credentials_check, caplog):
     assert NO_ROUTE_ERROR_MESSAGE in caplog.text
 
 
-async def test_pattern_origin.opp, caplog):
+async def test_pattern_origin(opp, caplog):
     """Test that pattern matching the origin works."""
     caplog.set_level(logging.ERROR)
     config = {
@@ -907,13 +907,13 @@ async def test_pattern_origin.opp, caplog):
             "api_key": API_KEY,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "invalid latitude" in caplog.text
 
 
-async def test_pattern_destination.opp, caplog):
+async def test_pattern_destination(opp, caplog):
     """Test that pattern matching the destination works."""
     caplog.set_level(logging.ERROR)
     config = {
@@ -927,13 +927,13 @@ async def test_pattern_destination.opp, caplog):
             "api_key": API_KEY,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "invalid latitude" in caplog.text
 
 
-async def test_invalid_credentials.opp, requests_mock, caplog):
+async def test_invalid_credentials(opp, requests_mock, caplog):
     """Test that invalid credentials error is correctly handled."""
     caplog.set_level(logging.ERROR)
     modes = [ROUTE_MODE_FASTEST, TRAVEL_MODE_CAR, TRAFFIC_MODE_DISABLED]
@@ -959,13 +959,13 @@ async def test_invalid_credentials.opp, requests_mock, caplog):
             "api_key": API_KEY,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
     assert len(caplog.records) == 1
     assert "Invalid credentials" in caplog.text
 
 
-async def test_attribution.opp, requests_mock_credentials_check):
+async def test_attribution(opp, requests_mock_credentials_check):
     """Test that attributions are correctly displayed."""
     origin = "50.037751372637686,14.39233448220898"
     destination = "50.07993838201255,14.42582157361062"
@@ -989,7 +989,7 @@ async def test_attribution.opp, requests_mock_credentials_check):
             "mode": TRAVEL_MODE_PUBLIC_TIME_TABLE,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -1002,7 +1002,7 @@ async def test_attribution.opp, requests_mock_credentials_check):
     )
 
 
-async def test_pattern_entity_state.opp, requests_mock_truck_response, caplog):
+async def test_pattern_entity_state(opp, requests_mock_truck_response, caplog):
     """Test that pattern matching the state of an entity works."""
     caplog.set_level(logging.ERROR)
     opp.states.async_set("sensor.origin", "invalid")
@@ -1018,7 +1018,7 @@ async def test_pattern_entity_state.opp, requests_mock_truck_response, caplog):
             "mode": TRAVEL_MODE_TRUCK,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -1028,7 +1028,7 @@ async def test_pattern_entity_state.opp, requests_mock_truck_response, caplog):
     assert "is not a valid set of coordinates" in caplog.text
 
 
-async def test_pattern_entity_state_with_space.opp, requests_mock_truck_response):
+async def test_pattern_entity_state_with_space(opp, requests_mock_truck_response):
     """Test that pattern matching the state including a space of an entity works."""
     opp.states.async_set(
         "sensor.origin", ", ".join([TRUCK_ORIGIN_LATITUDE, TRUCK_ORIGIN_LONGITUDE])
@@ -1045,11 +1045,11 @@ async def test_pattern_entity_state_with_space.opp, requests_mock_truck_response
             "mode": TRAVEL_MODE_TRUCK,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
 
-async def test_delayed_update.opp, requests_mock_truck_response, caplog):
+async def test_delayed_update(opp, requests_mock_truck_response, caplog):
     """Test that delayed update does not complain about missing entities."""
     caplog.set_level(logging.WARNING)
 
@@ -1072,9 +1072,9 @@ async def test_delayed_update.opp, requests_mock_truck_response, caplog):
             ],
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
-    assert await async_setup_component.opp, "sensor", sensor_config)
+    assert await async_setup_component(opp, "sensor", sensor_config)
     opp.states.async_set(
         "sensor.origin", ",".join([TRUCK_ORIGIN_LATITUDE, TRUCK_ORIGIN_LONGITUDE])
     )
@@ -1085,7 +1085,7 @@ async def test_delayed_update.opp, requests_mock_truck_response, caplog):
     assert "Unable to find entity" not in caplog.text
 
 
-async def test_arrival.opp, requests_mock_credentials_check):
+async def test_arrival(opp, requests_mock_credentials_check):
     """Test that arrival works."""
     origin = "41.9798,-87.8801"
     destination = "41.9043,-87.9216"
@@ -1113,7 +1113,7 @@ async def test_arrival.opp, requests_mock_credentials_check):
             "arrival": arrival,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -1123,7 +1123,7 @@ async def test_arrival.opp, requests_mock_credentials_check):
     assert sensor.state == "80"
 
 
-async def test_departure.opp, requests_mock_credentials_check):
+async def test_departure(opp, requests_mock_credentials_check):
     """Test that arrival works."""
     origin = "41.9798,-87.8801"
     destination = "41.9043,-87.9216"
@@ -1151,7 +1151,7 @@ async def test_departure.opp, requests_mock_credentials_check):
             "departure": departure,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -1161,7 +1161,7 @@ async def test_departure.opp, requests_mock_credentials_check):
     assert sensor.state == "80"
 
 
-async def test_arrival_only_allowed_for_timetable.opp, caplog):
+async def test_arrival_only_allowed_for_timetable(opp, caplog):
     """Test that arrival is only allowed when mode is publicTransportTimeTable."""
     caplog.set_level(logging.ERROR)
     origin = "41.9798,-87.8801"
@@ -1178,13 +1178,13 @@ async def test_arrival_only_allowed_for_timetable.opp, caplog):
             "arrival": "01:00:00",
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "[arrival] is an invalid option" in caplog.text
 
 
-async def test_exclusive_arrival_and_departure.opp, caplog):
+async def test_exclusive_arrival_and_departure(opp, caplog):
     """Test that arrival and departure are exclusive."""
     caplog.set_level(logging.ERROR)
     origin = "41.9798,-87.8801"
@@ -1203,7 +1203,7 @@ async def test_exclusive_arrival_and_departure.opp, caplog):
             "departure": "01:00:00",
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
     assert len(caplog.records) == 2
     assert "two or more values in the same group of exclusion" in caplog.text

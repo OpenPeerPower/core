@@ -27,7 +27,7 @@ EVENT_ATTRIBUTES = [
 ]
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up sensors for device."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id][EVENTS_COORDINATOR]
     sensors = [

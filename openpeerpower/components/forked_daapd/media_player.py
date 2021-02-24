@@ -62,16 +62,16 @@ WS_NOTIFY_EVENT_TYPES = ["player", "outputs", "volume", "options", "queue", "dat
 WEBSOCKET_RECONNECT_TIME = 30  # seconds
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up forked-daapd from a config entry."""
     host = config_entry.data[CONF_HOST]
     port = config_entry.data[CONF_PORT]
     password = config_entry.data[CONF_PASSWORD]
     forked_daapd_api = ForkedDaapdAPI(
-        async_get_clientsession.opp), host, port, password
+        async_get_clientsession(opp), host, port, password
     )
     forked_daapd_master = ForkedDaapdMaster(
-        clientsession=async_get_clientsession.opp),
+        clientsession=async_get_clientsession(opp),
         api=forked_daapd_api,
         ip_address=host,
         api_port=port,
@@ -109,7 +109,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     ] = forked_daapd_updater
 
 
-async def update_listener.opp, entry):
+async def update_listener(opp, entry):
     """Handle options update."""
     async_dispatcher_send(
         opp. SIGNAL_CONFIG_OPTIONS_UPDATE.format(entry.entry_id), entry.options

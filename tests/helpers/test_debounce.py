@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock
 from openpeerpower.helpers import debounce
 
 
-async def test_immediate_works.opp):
+async def test_immediate_works(opp):
     """Test immediate works."""
     calls = []
     debouncer = debounce.Debouncer(
@@ -57,7 +57,7 @@ async def test_immediate_works.opp):
     assert debouncer._job.target == debouncer.function
 
 
-async def test_not_immediate_works.opp):
+async def test_not_immediate_works(opp):
     """Test immediate works."""
     calls = []
     debouncer = debounce.Debouncer(
@@ -107,7 +107,7 @@ async def test_not_immediate_works.opp):
     assert debouncer._job.target == debouncer.function
 
 
-async def test_immediate_works_with_function_swapped.opp):
+async def test_immediate_works_with_function_swapped(opp):
     """Test immediate works and we can change out the function."""
     calls = []
 

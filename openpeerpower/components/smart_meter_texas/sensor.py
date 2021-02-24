@@ -19,7 +19,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Smart Meter Texas sensors."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     meters = opp.data[DOMAIN][config_entry.entry_id][DATA_SMART_METER].meters

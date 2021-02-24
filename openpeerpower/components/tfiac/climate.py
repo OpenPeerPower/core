@@ -62,7 +62,7 @@ SWING_MODE = "swing_mode"
 ON_MODE = "is_on"
 
 
-async def async_setup_platform.opp, config, async_add_devices, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_devices, discovery_info=None):
     """Set up the TFIAC climate device."""
     tfiac_client = Tfiac(config[CONF_HOST])
     try:

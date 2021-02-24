@@ -16,18 +16,18 @@ from .common import setup_platform
 DEVICE_ID = "cover.garage_door"
 
 
-async def test_entity_registry.opp):
+async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
-    await setup_platform.opp, COVER_DOMAIN)
+    await setup_platform(opp, COVER_DOMAIN)
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = entity_registry.async_get(DEVICE_ID)
     assert entry.unique_id == "61cbz3b542d2o33ed2fz02721bda3324"
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test the cover attributes are correct."""
-    await setup_platform.opp, COVER_DOMAIN)
+    await setup_platform(opp, COVER_DOMAIN)
 
     state = opp.states.get(DEVICE_ID)
     assert state.state == STATE_CLOSED
@@ -38,9 +38,9 @@ async def test_attributes.opp):
     assert state.attributes.get(ATTR_FRIENDLY_NAME) == "Garage Door"
 
 
-async def test_open.opp):
+async def test_open(opp):
     """Test the cover can be opened."""
-    await setup_platform.opp, COVER_DOMAIN)
+    await setup_platform(opp, COVER_DOMAIN)
 
     with patch("abodepy.AbodeCover.open_cover") as mock_open:
         await opp.services.async_call(
@@ -50,9 +50,9 @@ async def test_open.opp):
         mock_open.assert_called_once()
 
 
-async def test_close.opp):
+async def test_close(opp):
     """Test the cover can be closed."""
-    await setup_platform.opp, COVER_DOMAIN)
+    await setup_platform(opp, COVER_DOMAIN)
 
     with patch("abodepy.AbodeCover.close_cover") as mock_close:
         await opp.services.async_call(

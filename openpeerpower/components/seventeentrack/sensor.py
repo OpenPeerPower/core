@@ -62,10 +62,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Configure the platform and add the sensors."""
 
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
 
     client = SeventeenTrackClient(websession)
 

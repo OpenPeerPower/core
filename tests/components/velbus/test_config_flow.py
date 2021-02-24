@@ -28,16 +28,16 @@ def mock_controller():
         yield controller
 
 
-def init_config_flow.opp):
+def init_config_flow(opp):
     """Init a configuration flow."""
     flow = config_flow.VelbusConfigFlow()
     flow.opp = opp
     return flow
 
 
-async def test_user.opp, controller):
+async def test_user(opp, controller):
     """Test user config."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -58,9 +58,9 @@ async def test_user.opp, controller):
     assert result["data"][CONF_PORT] == PORT_TCP
 
 
-async def test_user_fail.opp, controller_assert):
+async def test_user_fail(opp, controller_assert):
     """Test user config."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user(
         {CONF_NAME: "Velbus Test Serial", CONF_PORT: PORT_SERIAL}
@@ -75,9 +75,9 @@ async def test_user_fail.opp, controller_assert):
     assert result["errors"] == {CONF_PORT: "cannot_connect"}
 
 
-async def test_import.opp, controller):
+async def test_import(opp, controller):
     """Test import step."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_import({CONF_PORT: PORT_TCP})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -86,10 +86,10 @@ async def test_import.opp, controller):
 
 async def test_abort_if_already_setup_opp):
     """Test we abort if Daikin is already setup."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     MockConfigEntry(
         domain="velbus", data={CONF_PORT: PORT_TCP, CONF_NAME: "velbus home"}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await flow.async_step_import(
         {CONF_PORT: PORT_TCP, CONF_NAME: "velbus import test"}

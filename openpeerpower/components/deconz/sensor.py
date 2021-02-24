@@ -68,9 +68,9 @@ UNIT_OF_MEASUREMENT = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the deCONZ sensors."""
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     gateway.entities[DOMAIN] = set()
 
     battery_handler = DeconzBatteryHandler(gateway)

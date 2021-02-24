@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def register_flow_implementation.opp, client_id, client_secret):
+def register_flow_implementation(opp, client_id, client_secret):
     """Register a ambiclimate implementation.
 
     client_id: Client id.

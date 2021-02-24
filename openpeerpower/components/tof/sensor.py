@@ -45,7 +45,7 @@ def init_tof_1(xshut):
     rpi_gpio.write_output(xshut, 1)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Reset and initialize the VL53L1X ToF Sensor from STMicroelectronics."""
 
     name = config.get(CONF_NAME)

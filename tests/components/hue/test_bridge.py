@@ -32,7 +32,7 @@ async def test_bridge_setup_opp):
     assert forward_entries == {"light", "binary_sensor", "sensor"}
 
 
-async def test_bridge_setup_invalid_username.opp):
+async def test_bridge_setup_invalid_username(opp):
     """Test we start config flow if username is no longer whitelisted."""
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
@@ -48,7 +48,7 @@ async def test_bridge_setup_invalid_username.opp):
     assert mock_init.mock_calls[0][2]["data"] == {"host": "1.2.3.4"}
 
 
-async def test_bridge_setup_timeout.opp):
+async def test_bridge_setup_timeout(opp):
     """Test we retry to connect if we cannot connect."""
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
@@ -61,7 +61,7 @@ async def test_bridge_setup_timeout.opp):
         await hue_bridge.async_setup()
 
 
-async def test_reset_if_entry_had_wrong_auth.opp):
+async def test_reset_if_entry_had_wrong_auth(opp):
     """Test calling reset when the entry contained wrong auth."""
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
@@ -102,7 +102,7 @@ async def test_reset_unloads_entry_if_setup_opp):
     assert len.opp.services.async_services()) == 0
 
 
-async def test_handle_unauthorized.opp):
+async def test_handle_unauthorized(opp):
     """Test handling an unauthorized error on update."""
     entry = Mock(async_setup=AsyncMock())
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
@@ -158,7 +158,7 @@ SCENE_RESPONSE = {
 }
 
 
-async def test_hue_activate_scene.opp, mock_api):
+async def test_hue_activate_scene(opp, mock_api):
     """Test successful hue_activate_scene."""
     config_entry = config_entries.ConfigEntry(
         1,
@@ -192,7 +192,7 @@ async def test_hue_activate_scene.opp, mock_api):
     assert mock_api.mock_requests[2]["path"] == "groups/group_1/action"
 
 
-async def test_hue_activate_scene_transition.opp, mock_api):
+async def test_hue_activate_scene_transition(opp, mock_api):
     """Test successful hue_activate_scene with transition."""
     config_entry = config_entries.ConfigEntry(
         1,
@@ -227,7 +227,7 @@ async def test_hue_activate_scene_transition.opp, mock_api):
     assert mock_api.mock_requests[2]["path"] == "groups/group_1/action"
 
 
-async def test_hue_activate_scene_group_not_found.opp, mock_api):
+async def test_hue_activate_scene_group_not_found(opp, mock_api):
     """Test failed hue_activate_scene due to missing group."""
     config_entry = config_entries.ConfigEntry(
         1,
@@ -257,7 +257,7 @@ async def test_hue_activate_scene_group_not_found.opp, mock_api):
         assert await hue_bridge.hue_activate_scene(call) is False
 
 
-async def test_hue_activate_scene_scene_not_found.opp, mock_api):
+async def test_hue_activate_scene_scene_not_found(opp, mock_api):
     """Test failed hue_activate_scene due to missing scene."""
     config_entry = config_entries.ConfigEntry(
         1,

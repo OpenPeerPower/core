@@ -39,7 +39,7 @@ from .hls import async_setup_hls
 _LOGGER = logging.getLogger(__name__)
 
 
-def create_stream.opp, stream_source, options=None):
+def create_stream(opp, stream_source, options=None):
     """Create a stream with the specified identfier based on the source url.
 
     The stream_source is typically an rtsp url and options are passed into
@@ -79,11 +79,11 @@ async def async_setup(opp, config):
     opp.data[DOMAIN][ATTR_STREAMS] = []
 
     # Setup HLS
-    hls_endpoint = async_setup_hls.opp)
+    hls_endpoint = async_setup_hls(opp)
     opp.data[DOMAIN][ATTR_ENDPOINTS]["hls"] = hls_endpoint
 
     # Setup Recorder
-    async_setup_recorder.opp)
+    async_setup_recorder(opp)
 
     @callback
     def shutdown(event):

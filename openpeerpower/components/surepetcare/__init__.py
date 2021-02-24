@@ -83,7 +83,7 @@ async def async_setup(opp, config) -> bool:
             conf[CONF_USERNAME],
             conf[CONF_PASSWORD],
             opp.loop,
-            async_get_clientsession.opp),
+            async_get_clientsession(opp),
             api_timeout=SURE_API_TIMEOUT,
         )
 
@@ -137,7 +137,7 @@ async def async_setup(opp, config) -> bool:
     # initial update
     await spc.async_update()
 
-    async_track_time_interval.opp, spc.async_update, scan_interval)
+    async_track_time_interval(opp, spc.async_update, scan_interval)
 
     # load platforms
     opp.async_create_task(

@@ -44,13 +44,13 @@ def _base_gw_schema(discovery_info):
     return vol.Schema(base_gw_schema)
 
 
-async def validate_gw_input.opp: core.OpenPeerPower, data):
+async def validate_gw_input(opp: core.OpenPeerPower, data):
     """
     Validate whether the user input allows us to connect to the gateray.
 
     Data has the keys from _base_gw_schema() with values provided by the user.
     """
-    websession = async_get_clientsession.opp, verify_ssl=False)
+    websession = async_get_clientsession(opp, verify_ssl=False)
 
     api = Smile(
         host=data[CONF_HOST],

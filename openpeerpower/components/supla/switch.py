@@ -13,7 +13,7 @@ from openpeerpower.components.switch import SwitchEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Supla switches."""
     if discovery_info is None:
         return

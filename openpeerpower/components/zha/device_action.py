@@ -54,10 +54,10 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions."""
     try:
-        zha_device = await async_get_zha_device.opp, device_id)
+        zha_device = await async_get_zha_device(opp, device_id)
     except (KeyError, AttributeError):
         return []
     cluster_channels = [
@@ -85,7 +85,7 @@ async def _execute_service_based_action(
     action_type = config[CONF_TYPE]
     service_name = SERVICE_NAMES[action_type]
     try:
-        zha_device = await async_get_zha_device.opp, config[CONF_DEVICE_ID])
+        zha_device = await async_get_zha_device(opp, config[CONF_DEVICE_ID])
     except (KeyError, AttributeError):
         return
 

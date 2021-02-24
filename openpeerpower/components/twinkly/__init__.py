@@ -15,7 +15,7 @@ async def async_setup_opp: OpenPeerPowerType, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry):
     """Set up entries from config flow."""
 
     # We setup the client here so if at some point we add any other entity for this device,
@@ -24,7 +24,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
     host = config_entry.data[CONF_ENTRY_HOST]
 
     opp.data.setdefault(DOMAIN, {})[uuid] = twinkly_client.TwinklyClient(
-        host, async_get_clientsession.opp)
+        host, async_get_clientsession(opp)
     )
 
     opp.async_create_task(
@@ -33,7 +33,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry):
     """Remove a twinkly entry."""
 
     # For now light entries don't have unload method, so we don't have to async_forward_entry_unload

@@ -43,7 +43,7 @@ SENSOR_TYPES_BATTERY = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the August sensors."""
     data = opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
     devices = []
@@ -97,14 +97,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     for device in operation_sensors:
         devices.append(AugustOperatorSensor(data, device))
 
-    await _async_migrate_old_unique_ids.opp, migrate_unique_id_devices)
+    await _async_migrate_old_unique_ids(opp, migrate_unique_id_devices)
 
     async_add_entities(devices, True)
 
 
-async def _async_migrate_old_unique_ids.opp, devices):
+async def _async_migrate_old_unique_ids(opp, devices):
     """Keypads now have their own serial number."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
     for device in devices:
         old_entity_id = registry.async_get_entity_id(
             "sensor", DOMAIN, device.old_unique_id

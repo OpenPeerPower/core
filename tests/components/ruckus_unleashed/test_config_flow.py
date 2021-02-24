@@ -12,7 +12,7 @@ from tests.common import async_fire_time_changed
 from tests.components.ruckus_unleashed import CONFIG, DEFAULT_SYSTEM_INFO, DEFAULT_TITLE
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -48,7 +48,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -67,7 +67,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -105,7 +105,7 @@ async def test_form_unknown_error(opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_form_cannot_connect_unknown_serial.opp):
+async def test_form_cannot_connect_unknown_serial(opp):
     """Test we handle cannot connect error on invalid serial number."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -154,7 +154,7 @@ async def test_form_duplicate_error(opp):
         )
 
         future = utcnow() + timedelta(minutes=60)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         result = await opp.config_entries.flow.async_init(

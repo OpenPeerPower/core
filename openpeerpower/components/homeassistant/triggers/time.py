@@ -37,7 +37,7 @@ TRIGGER_SCHEMA = vol.Schema(
 )
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     entities = {}
     removes = []
@@ -46,7 +46,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     @callback
     def time_automation_listener(description, now, *, entity_id=None):
         """Listen for time changes and calls action."""
-        opp.async_run.opp_job(
+        opp.async_run(opp_job(
             job,
             {
                 "trigger": {
@@ -149,7 +149,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
         if isinstance(at_time, str):
             # entity
             to_track.append(at_time)
-            update_entity_trigger(at_time, new_state.opp.states.get(at_time))
+            update_entity_trigger(at_time, new_state(opp.states.get(at_time))
         else:
             # datetime.time
             removes.append(
@@ -164,7 +164,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
 
     # Track state changes of any entities.
     removes.append(
-        async_track_state_change_event.opp, to_track, update_entity_trigger_event)
+        async_track_state_change_event(opp, to_track, update_entity_trigger_event)
     )
 
     @callback

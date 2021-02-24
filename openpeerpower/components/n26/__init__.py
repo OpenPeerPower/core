@@ -67,7 +67,7 @@ def setup(opp, config):
 
     # Load components for supported devices
     for component in N26_COMPONENTS:
-        load_platform.opp, component, DOMAIN, {}, config)
+        load_platform(opp, component, DOMAIN, {}, config)
 
     return True
 

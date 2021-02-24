@@ -4,7 +4,7 @@ from openpeerpower.components.notify import ATTR_DATA, BaseNotificationService
 from . import DOMAIN
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Return the notify service."""
 
     client = opp.data[DOMAIN]

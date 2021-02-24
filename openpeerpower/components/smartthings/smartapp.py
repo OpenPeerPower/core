@@ -60,7 +60,7 @@ def format_unique_id(app_id: str, location_id: str) -> str:
     return f"{app_id}_{location_id}"
 
 
-async def find_app.opp: OpenPeerPowerType, api):
+async def find_app(opp: OpenPeerPowerType, api):
     """Find an existing SmartApp for this installation of.opp."""
     apps = await api.apps()
     for app in [app for app in apps if app.app_name.startswith(APP_NAME_PREFIX)]:
@@ -92,16 +92,16 @@ async def validate_installed_app(api, installed_app_id: str):
     return installed_app
 
 
-def validate_webhook_requirements.opp: OpenPeerPowerType) -> bool:
+def validate_webhook_requirements(opp: OpenPeerPowerType) -> bool:
     """Ensure Open Peer Power is setup properly to receive webhooks."""
     if opp.components.cloud.async_active_subscription():
         return True
     if opp.data[DOMAIN][CONF_CLOUDHOOK_URL] is not None:
         return True
-    return get_webhook_url.opp).lower().startswith("https://")
+    return get_webhook_url(opp).lower().startswith("https://")
 
 
-def get_webhook_url.opp: OpenPeerPowerType) -> str:
+def get_webhook_url(opp: OpenPeerPowerType) -> str:
     """
     Get the URL of the webhook.
 
@@ -110,12 +110,12 @@ def get_webhook_url.opp: OpenPeerPowerType) -> str:
     cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if opp.components.cloud.async_active_subscription() and cloudhook_url is not None:
         return cloudhook_url
-    return webhook.async_generate_url.opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
+    return webhook.async_generate_url(opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
 
 
-def _get_app_template.opp: OpenPeerPowerType):
+def _get_app_template(opp: OpenPeerPowerType):
     try:
-        endpoint = f"at {get_url.opp, allow_cloud=False, prefer_external=True)}"
+        endpoint = f"at {get_url(opp, allow_cloud=False, prefer_external=True)}"
     except NoURLAvailableError:
         endpoint = ""
 
@@ -128,17 +128,17 @@ def _get_app_template.opp: OpenPeerPowerType):
         "app_name": APP_NAME_PREFIX + str(uuid4()),
         "display_name": "Open Peer Power",
         "description": description,
-        "webhook_target_url": get_webhook_url.opp),
+        "webhook_target_url": get_webhook_url(opp),
         "app_type": APP_TYPE_WEBHOOK,
         "single_instance": True,
         "classifications": [CLASSIFICATION_AUTOMATION],
     }
 
 
-async def create_app.opp: OpenPeerPowerType, api):
+async def create_app(opp: OpenPeerPowerType, api):
     """Create a SmartApp for this instance of.opp."""
     # Create app from template attributes
-    template = _get_app_template.opp)
+    template = _get_app_template(opp)
     app = App()
     for key, value in template.items():
         setattr(app, key, value)
@@ -163,9 +163,9 @@ async def create_app.opp: OpenPeerPowerType, api):
     return app, client
 
 
-async def update_app.opp: OpenPeerPowerType, app):
+async def update_app(opp: OpenPeerPowerType, app):
     """Ensure the SmartApp is up-to-date and update if necessary."""
-    template = _get_app_template.opp)
+    template = _get_app_template(opp)
     template.pop("app_name")  # don't update this
     update_required = False
     for key, value in template.items():
@@ -179,7 +179,7 @@ async def update_app.opp: OpenPeerPowerType, app):
         )
 
 
-def setup_smartapp.opp, app):
+def setup_smartapp(opp, app):
     """
     Configure an individual SmartApp in.opp,
 
@@ -199,7 +199,7 @@ def setup_smartapp.opp, app):
     return smartapp
 
 
-async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
+async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
     """
     Configure the SmartApp webhook in.opp,
 
@@ -272,11 +272,11 @@ async def setup_smartapp_endpoint.opp: OpenPeerPowerType):
         "Setup endpoint for %s",
         cloudhook_url
         if cloudhook_url
-        else webhook.async_generate_url.opp, config[CONF_WEBHOOK_ID]),
+        else webhook.async_generate_url(opp, config[CONF_WEBHOOK_ID]),
     )
 
 
-async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
+async def unload_smartapp_endpoint(opp: OpenPeerPowerType):
     """Tear down the component configuration."""
     if DOMAIN not in.opp.data:
         return
@@ -297,7 +297,7 @@ async def unload_smartapp_endpoint.opp: OpenPeerPowerType):
         )
         _LOGGER.debug("Cloudhook '%s' was removed", cloudhook_url)
     # Remove the webhook
-    webhook.async_unregister.opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
+    webhook.async_unregister(opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
     # Disconnect all brokers
     for broker in.opp.data[DOMAIN][DATA_BROKERS].values():
         broker.disconnect()
@@ -315,7 +315,7 @@ async def smartapp_sync_subscriptions(
     devices,
 ):
     """Synchronize subscriptions of an installed up."""
-    api = SmartThings(async_get_clientsession.opp), auth_token)
+    api = SmartThings(async_get_clientsession(opp), auth_token)
     tasks = []
 
     async def create_subscription(target: str):
@@ -429,7 +429,7 @@ async def _continue_flow(
         )
 
 
-async def smartapp_install.opp: OpenPeerPowerType, req, resp, app):
+async def smartapp_install(opp: OpenPeerPowerType, req, resp, app):
     """Handle a SmartApp installation and continue the config flow."""
     await _continue_flow(
         opp. app.app_id, req.location_id, req.installed_app_id, req.refresh_token
@@ -441,7 +441,7 @@ async def smartapp_install.opp: OpenPeerPowerType, req, resp, app):
     )
 
 
-async def smartapp_update.opp: OpenPeerPowerType, req, resp, app):
+async def smartapp_update(opp: OpenPeerPowerType, req, resp, app):
     """Handle a SmartApp update and either update the entry or continue the flow."""
     entry = next(
         (
@@ -470,7 +470,7 @@ async def smartapp_update.opp: OpenPeerPowerType, req, resp, app):
     )
 
 
-async def smartapp_uninstall.opp: OpenPeerPowerType, req, resp, app):
+async def smartapp_uninstall(opp: OpenPeerPowerType, req, resp, app):
     """
     Handle when a SmartApp is removed from a location by the user.
 
@@ -496,7 +496,7 @@ async def smartapp_uninstall.opp: OpenPeerPowerType, req, resp, app):
     )
 
 
-async def smartapp_webhook.opp: OpenPeerPowerType, webhook_id: str, request):
+async def smartapp_webhook(opp: OpenPeerPowerType, webhook_id: str, request):
     """
     Handle a smartapp lifecycle event callback from SmartThings.
 

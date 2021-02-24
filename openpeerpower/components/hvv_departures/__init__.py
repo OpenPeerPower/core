@@ -19,14 +19,14 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up HVV from a config entry."""
 
     hub = GTIHub(
         entry.data[CONF_HOST],
         entry.data[CONF_USERNAME],
         entry.data[CONF_PASSWORD],
-        aiohttp_client.async_get_clientsession.opp),
+        aiohttp_client.async_get_clientsession(opp),
     )
 
     opp.data.setdefault(DOMAIN, {})
@@ -40,7 +40,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

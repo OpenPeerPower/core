@@ -30,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the DTE energy bridge sensor."""
     name = config[CONF_NAME]
     ip_address = config[CONF_IP_ADDRESS]

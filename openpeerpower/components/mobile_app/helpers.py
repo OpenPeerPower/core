@@ -133,7 +133,7 @@ def safe_registration(registration: Dict) -> Dict:
     }
 
 
-def savable_state.opp: OpenPeerPowerType) -> Dict:
+def savable_state(opp: OpenPeerPowerType) -> Dict:
     """Return a clean object containing things that should be saved."""
     return {
         DATA_DELETED_IDS:.opp.data[DOMAIN][DATA_DELETED_IDS],

@@ -27,7 +27,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_nest_device_id.opp: OpenPeerPower, device_id: str) -> str:
+async def async_get_nest_device_id(opp: OpenPeerPower, device_id: str) -> str:
     """Get the nest API device_id from the OpenPeerPower device_id."""
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(device_id)
@@ -58,12 +58,12 @@ async def async_get_device_trigger_types(
     return trigger_types
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for a Nest device."""
-    nest_device_id = await async_get_nest_device_id.opp, device_id)
+    nest_device_id = await async_get_nest_device_id(opp, device_id)
     if not nest_device_id:
         raise InvalidDeviceAutomationConfig(f"Device not found {device_id}")
-    trigger_types = await async_get_device_trigger_types.opp, nest_device_id)
+    trigger_types = await async_get_device_trigger_types(opp, nest_device_id)
     return [
         {
             CONF_PLATFORM: DEVICE,

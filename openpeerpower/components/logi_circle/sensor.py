@@ -23,12 +23,12 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up a sensor for a Logi Circle device. Obsolete."""
     _LOGGER.warning("Logi Circle no longer works with sensor platform configuration")
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up a Logi Circle sensor based on a config entry."""
     devices = await opp.data[LOGI_CIRCLE_DOMAIN].cameras
     time_zone = str.opp.config.time_zone)

@@ -22,7 +22,7 @@ SENSOR_TYPES = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up sensors attached to a Konnected device from a config entry."""
     data = opp.data[KONNECTED_DOMAIN]
     device_id = config_entry.data["id"]
@@ -67,7 +67,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     # DS18B20 sensors entities are initialized when they report for the first
     # time. Set up a listener for that signal from the Konnected component.
-    async_dispatcher_connect.opp, SIGNAL_DS18B20_NEW, async_add_ds18b20)
+    async_dispatcher_connect(opp, SIGNAL_DS18B20_NEW, async_add_ds18b20)
 
 
 class KonnectedSensor(Entity):

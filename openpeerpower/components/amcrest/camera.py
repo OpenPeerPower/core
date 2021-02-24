@@ -116,7 +116,7 @@ CAMERA_SERVICES = {
 _BOOL_TO_STATE = {True: STATE_ON, False: STATE_OFF}
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up an Amcrest IP Camera."""
     if discovery_info is None:
         return
@@ -345,7 +345,7 @@ class AmcrestCam(Camera):
         )
         self.opp.data[DATA_AMCREST][CAMERAS].append(self.entity_id)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Remove camera from list and disconnect from signals."""
         self.opp.data[DATA_AMCREST][CAMERAS].remove(self.entity_id)
         for unsub_dispatcher in self._unsub_dispatcher:

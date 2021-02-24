@@ -29,14 +29,14 @@ async def async_setup(opp, config):
     return True
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle incoming webhook with Dialogflow requests."""
     message = await request.json()
 
     _LOGGER.debug("Received Dialogflow request: %s", message)
 
     try:
-        response = await async_handle_message.opp, message)
+        response = await async_handle_message(opp, message)
         return b"" if response is None else web.json_response(response)
 
     except DialogFlowError as err:
@@ -66,7 +66,7 @@ async def handle_webhook.opp, webhook_id, request):
         )
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Configure based on config entry."""
     opp.components.webhook.async_register(
         DOMAIN, "DialogFlow", entry.data[CONF_WEBHOOK_ID], handle_webhook
@@ -74,7 +74,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     return True
@@ -103,7 +103,7 @@ def get_api_version(message):
         return V2
 
 
-async def async_handle_message.opp, message):
+async def async_handle_message(opp, message):
     """Handle a DialogFlow message."""
     _api_version = get_api_version(message)
     if _api_version is V1:

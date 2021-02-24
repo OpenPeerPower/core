@@ -88,7 +88,7 @@ async def async_subscribe_topics(
         )
         # Get the current subscription state
         current = current_subscriptions.pop(key, None)
-        await requested.resubscribe_if_necessary.opp, current)
+        await requested.resubscribe_if_necessary(opp, current)
         new_state[key] = requested
 
     # Go through all remaining subscriptions and unsubscribe them
@@ -104,6 +104,6 @@ async def async_subscribe_topics(
 
 
 @bind.opp
-async def async_unsubscribe_topics.opp: OpenPeerPowerType, sub_state: dict):
+async def async_unsubscribe_topics(opp: OpenPeerPowerType, sub_state: dict):
     """Unsubscribe from all MQTT topics managed by async_subscribe_topics."""
-    return await async_subscribe_topics.opp, sub_state, {})
+    return await async_subscribe_topics(opp, sub_state, {})

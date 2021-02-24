@@ -21,21 +21,21 @@ REMOTES_RESPONSE = {"7": HUE_TAP_REMOTE_1, "8": HUE_DIMMER_REMOTE_1}
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_triggers.opp, mock_bridge, device_reg):
+async def test_get_triggers(opp, mock_bridge, device_reg):
     """Test we get the expected triggers from a hue remote."""
     mock_bridge.mock_sensor_responses.append(REMOTES_RESPONSE)
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
 
     assert len(mock_bridge.mock_requests) == 1
     # 2 remotes, just 1 battery sensor
@@ -45,7 +45,7 @@ async def test_get_triggers.opp, mock_bridge, device_reg):
     hue_tap_device = device_reg.async_get_device(
         {(hue.DOMAIN, "00:00:00:00:00:44:23:08")}
     )
-    triggers = await async_get_device_automations.opp, "trigger", hue_tap_device.id)
+    triggers = await async_get_device_automations(opp, "trigger", hue_tap_device.id)
 
     expected_triggers = [
         {
@@ -63,7 +63,7 @@ async def test_get_triggers.opp, mock_bridge, device_reg):
     hue_dimmer_device = device_reg.async_get_device(
         {(hue.DOMAIN, "00:17:88:01:10:3e:3a:dc")}
     )
-    triggers = await async_get_device_automations.opp, "trigger", hue_dimmer_device.id)
+    triggers = await async_get_device_automations(opp, "trigger", hue_dimmer_device.id)
 
     trigger_batt = {
         "platform": "device",
@@ -88,10 +88,10 @@ async def test_get_triggers.opp, mock_bridge, device_reg):
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_if_fires_on_state_change.opp, mock_bridge, device_reg, calls):
+async def test_if_fires_on_state_change(opp, mock_bridge, device_reg, calls):
     """Test for button press trigger firing."""
     mock_bridge.mock_sensor_responses.append(REMOTES_RESPONSE)
-    await setup_bridge.opp, mock_bridge)
+    await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     assert len.opp.states.async_all()) == 1
 

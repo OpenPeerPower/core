@@ -17,7 +17,7 @@ SPEED_LOWEST = "lowest"
 SUPPORTED_FEATURES = SUPPORT_DIRECTION + SUPPORT_SET_SPEED
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink platform."""
 
     for fan in pywink.get_fans():

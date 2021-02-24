@@ -5,10 +5,10 @@ from openpeerpower.const import STATE_ON
 from .util import async_init_integration
 
 
-async def test_create_binary_sensors.opp):
+async def test_create_binary_sensors(opp):
     """Test creation of binary_sensors."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("binary_sensor.happy_place_myq_gateway")
     assert state.state == STATE_ON

@@ -46,7 +46,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @bind.opp
-def is_on.opp, entity_id):
+def is_on(opp, entity_id):
     """Return if the switch is on based on the statemachine.
 
     Async friendly.
@@ -68,12 +68,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 

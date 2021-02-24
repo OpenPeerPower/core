@@ -20,7 +20,7 @@ from openpeerpower.const import (
 async def test_duplicate_error(opp, config_entry):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_LATITUDE: -41.2, CONF_LONGITUDE: 174.7, CONF_RADIUS: 25}
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=conf
@@ -29,7 +29,7 @@ async def test_duplicate_error(opp, config_entry):
     assert result["reason"] == "already_configured"
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -38,7 +38,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_import.opp):
+async def test_step_import(opp):
     """Test that the import step works."""
     conf = {
         CONF_LATITUDE: -41.2,
@@ -69,7 +69,7 @@ async def test_step_import.opp):
     }
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     opp.config.latitude = -41.2
     opp.config.longitude = 174.7

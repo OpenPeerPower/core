@@ -169,7 +169,7 @@ class Thermostat(HomeAccessory):
         # the value and if 0 is not a valid
         # value this will throw
         self.char_target_heat_cool = serv_thermostat.configure_char(
-            CHAR_TARGET_HEATING_COOLING, value=list(self.hc_homekit_to.opp)[0]
+            CHAR_TARGET_HEATING_COOLING, value=list(self.hc_homekit_to(opp)[0]
         )
         self.char_target_heat_cool.override_properties(
             valid_values=self.hc.opp_to_homekit
@@ -258,7 +258,7 @@ class Thermostat(HomeAccessory):
             # Ignore it if its the same mode
             if char_values[CHAR_TARGET_HEATING_COOLING] != homekit_hvac_mode:
                 target_hc = char_values[CHAR_TARGET_HEATING_COOLING]
-                if target_hc not in self.hc_homekit_to.opp:
+                if target_hc not in self.hc_homekit_to(opp:
                     # If the target heating cooling state we want does not
                     # exist on the device, we have to sort it out
                     # based on the the current and target temperature since
@@ -274,7 +274,7 @@ class Thermostat(HomeAccessory):
                     ):
                         hc_fallback_order = HC_HEAT_COOL_PREFER_COOL
                     for hc_fallback in hc_fallback_order:
-                        if hc_fallback in self.hc_homekit_to.opp:
+                        if hc_fallback in self.hc_homekit_to(opp:
                             _LOGGER.debug(
                                 "Siri requested target mode: %s and the device does not support, falling back to %s",
                                 target_hc,
@@ -284,7 +284,7 @@ class Thermostat(HomeAccessory):
                             break
 
                 service = SERVICE_SET_HVAC_MODE_THERMOSTAT
-                opp.value = self.hc_homekit_to.opp[target_hc]
+                opp.value = self.hc_homekit_to(opp[target_hc]
                 params = {ATTR_HVAC_MODE:.opp_value}
                 events.append(
                     f"{CHAR_TARGET_HEATING_COOLING} to {char_values[CHAR_TARGET_HEATING_COOLING]}"
@@ -392,7 +392,7 @@ class Thermostat(HomeAccessory):
                 )
             )
         }
-        self.hc.opp_to_homekit = {k: v for v, k in self.hc_homekit_to.opp.items()}
+        self.hc.opp_to_homekit = {k: v for v, k in self.hc_homekit_to(opp.items()}
 
     def get_temperature_range(self):
         """Return min and max temperature range."""
@@ -416,17 +416,17 @@ class Thermostat(HomeAccessory):
         """Update thermostat state after state changed."""
         # We always recheck valid hvac modes as the entity
         # may not have been fully setup when we saw it last
-        original_hc.opp_to_homekit = self.hc.opp_to_homekit
+        original_hc(opp_to_homekit = self.hc.opp_to_homekit
         self._configure_hvac_modes(new_state)
 
-        if self.hc.opp_to_homekit != original_hc.opp_to_homekit:
-            if self.char_target_heat_cool.value not in self.hc_homekit_to.opp:
+        if self.hc.opp_to_homekit != original_hc(opp_to_homekit:
+            if self.char_target_heat_cool.value not in self.hc_homekit_to(opp:
                 # We must make sure the char value is
                 # in the new valid values before
                 # setting the new valid values or
                 # changing them with throw
                 self.char_target_heat_cool.set_value(
-                    list(self.hc_homekit_to.opp)[0], should_notify=False
+                    list(self.hc_homekit_to(opp)[0], should_notify=False
                 )
             self.char_target_heat_cool.override_properties(
                 valid_values=self.hc.opp_to_homekit
@@ -443,14 +443,14 @@ class Thermostat(HomeAccessory):
         hvac_mode = new_state.state
         if hvac_mode and hvac_mode in HC_OPP_TO_HOMEKIT:
             homekit_hvac_mode = HC_OPP_TO_HOMEKIT[hvac_mode]
-            if homekit_hvac_mode in self.hc_homekit_to.opp:
+            if homekit_hvac_mode in self.hc_homekit_to(opp:
                 if self.char_target_heat_cool.value != homekit_hvac_mode:
                     self.char_target_heat_cool.set_value(homekit_hvac_mode)
             else:
                 _LOGGER.error(
                     "Cannot map hvac target mode: %s to homekit as only %s modes are supported",
                     hvac_mode,
-                    self.hc_homekit_to.opp,
+                    self.hc_homekit_to(opp,
                 )
 
         # Set current operation mode for supported thermostats

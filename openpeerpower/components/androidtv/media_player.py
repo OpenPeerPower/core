@@ -166,7 +166,7 @@ ANDROIDTV_STATES = {
 }
 
 
-def setup_androidtv.opp, config):
+def setup_androidtv(opp, config):
     """Generate an ADB key (if needed) and load it."""
     adbkey = config.get(CONF_ADBKEY, opp.config.path(STORAGE_DIR, "androidtv_adbkey"))
     if CONF_ADB_SERVER_IP not in config:
@@ -187,7 +187,7 @@ def setup_androidtv.opp, config):
     return adbkey, signer, adb_log
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Android TV / Fire TV platform."""
     opp.data.setdefault(ANDROIDTV_DOMAIN, {})
 

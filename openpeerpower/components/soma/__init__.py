@@ -43,11 +43,11 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Soma from a config entry."""
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN][API] = SomaApi(entry.data[HOST], entry.data[PORT])
-    devices = await opp.async_add_executor_job.opp.data[DOMAIN][API].list_devices)
+    devices = await opp.async_add_executor_job(opp.data[DOMAIN][API].list_devices)
     opp.data[DOMAIN][DEVICES] = devices["shades"]
 
     for component in SOMA_COMPONENTS:
@@ -58,7 +58,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

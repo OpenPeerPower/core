@@ -10,7 +10,7 @@ from openpeerpower.const import CONF_DEVICES
 from .const import CONF_CONNECTIONS, DOMAIN as FRITZBOX_DOMAIN, LOGGER
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Fritzbox binary sensor from config_entry."""
     entities = []
     devices = opp.data[FRITZBOX_DOMAIN][CONF_DEVICES]

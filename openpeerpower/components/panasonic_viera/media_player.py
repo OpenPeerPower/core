@@ -48,7 +48,7 @@ SUPPORT_VIERATV = (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Panasonic Viera TV from a config entry."""
 
     config = config_entry.data

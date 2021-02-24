@@ -48,7 +48,7 @@ async def async_setup(opp, config):
         if discovery_info is None:
             discovery_info = {}
 
-        platform = await async_prepare_setup_platform.opp, config, DOMAIN, p_type)
+        platform = await async_prepare_setup_platform(opp, config, DOMAIN, p_type)
 
         if platform is None:
             _LOGGER.error("Unknown mailbox platform specified")
@@ -95,7 +95,7 @@ async def async_setup(opp, config):
         """Handle for discovered platform."""
         await async_setup_platform(platform, discovery_info=info)
 
-    discovery.async_listen_platform.opp, DOMAIN, async_platform_discovered)
+    discovery.async_listen_platform(opp, DOMAIN, async_platform_discovered)
 
     return True
 

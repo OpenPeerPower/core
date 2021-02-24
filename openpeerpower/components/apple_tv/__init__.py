@@ -47,7 +47,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry for Apple TV."""
     manager = AppleTVManager.opp, entry)
     opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
@@ -73,7 +73,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload an Apple TV config entry."""
     unload_ok = all(
         await asyncio.gather(

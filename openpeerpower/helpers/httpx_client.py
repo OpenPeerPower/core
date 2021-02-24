@@ -32,7 +32,7 @@ def get_async_client(
     client: Optional[httpx.AsyncClient] = opp.data.get(key)
 
     if client is None:
-        client = opp.data[key] = create_async_httpx_client.opp, verify_ssl)
+        client = opp.data[key] = create_async_httpx_client(opp, verify_ssl)
 
     return client
 
@@ -64,7 +64,7 @@ def create_async_httpx_client(
     )
 
     if auto_cleanup:
-        _async_register_async_client_shutdown.opp, client, original_aclose)
+        _async_register_async_client_shutdown(opp, client, original_aclose)
 
     return client
 

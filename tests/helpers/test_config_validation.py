@@ -380,7 +380,7 @@ def test_slug():
         schema(value)
 
 
-def test_string.opp):
+def test_string(opp):
     """Test string validation."""
     schema = vol.Schema(cv.string)
 

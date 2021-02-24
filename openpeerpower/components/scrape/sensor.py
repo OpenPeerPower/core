@@ -53,7 +53,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Web scrape sensor."""
     name = config.get(CONF_NAME)
     resource = config.get(CONF_RESOURCE)
@@ -69,7 +69,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     password = config.get(CONF_PASSWORD)
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
-        value_template.opp = opp
+        value_template(opp = opp
 
     if username and password:
         if config.get(CONF_AUTHENTICATION) == HTTP_DIGEST_AUTHENTICATION:

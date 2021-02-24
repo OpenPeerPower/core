@@ -74,7 +74,7 @@ def _try_connect_and_fetch_basic_info(host, token):
     return result
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.

@@ -48,9 +48,9 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry_gw(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Plugwise Smiles from a config entry."""
-    websession = async_get_clientsession.opp, verify_ssl=False)
+    websession = async_get_clientsession(opp, verify_ssl=False)
 
     api = Smile(
         host=entry.data[CONF_HOST],
@@ -123,7 +123,7 @@ async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, api.gateway_id)},
@@ -147,7 +147,7 @@ async def async_setup_entry_gw.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
     coordinator.update_interval = timedelta(
@@ -155,7 +155,7 @@ async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
 
-async def async_unload_entry_gw.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry_gw(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

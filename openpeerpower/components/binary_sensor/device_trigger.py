@@ -186,7 +186,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     trigger_type = config[CONF_TYPE]
     if trigger_type in TURNED_ON:
@@ -208,7 +208,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     )
 
 
-async def async_get_triggers.opp, device_id):
+async def async_get_triggers(opp, device_id):
     """List device triggers."""
     triggers = []
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
@@ -243,7 +243,7 @@ async def async_get_triggers.opp, device_id):
     return triggers
 
 
-async def async_get_trigger_capabilities.opp, config):
+async def async_get_trigger_capabilities(opp, config):
     """List trigger capabilities."""
     return {
         "extra_fields": vol.Schema(

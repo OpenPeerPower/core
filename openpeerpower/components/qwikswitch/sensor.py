@@ -10,7 +10,7 @@ from . import DOMAIN as QWIKSWITCH, QSEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, _, add_entities, discovery_info=None):
+async def async_setup_platform(opp, _, add_entities, discovery_info=None):
     """Add sensor from the main Qwikswitch component."""
     if discovery_info is None:
         return

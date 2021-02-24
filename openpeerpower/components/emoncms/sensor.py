@@ -67,7 +67,7 @@ def get_id(sensorid, feedtag, feedname, feedid, feeduserid):
     return f"emoncms{sensorid}_{feedtag}_{feedname}_{feedid}_{feeduserid}"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Emoncms sensor."""
     apikey = config.get(CONF_API_KEY)
     url = config.get(CONF_URL)
@@ -80,7 +80,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
     interval = config.get(CONF_SCAN_INTERVAL)
 
     if value_template is not None:
-        value_template.opp = opp
+        value_template(opp = opp
 
     data = EmonCmsData.opp, url, apikey, interval)
 

@@ -89,7 +89,7 @@ MAP_STATE_ICONS = {
 }
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Create the IntesisHome climate devices."""
     ih_user = config[CONF_USERNAME]
     ih_pass = config[CONF_PASSWORD]
@@ -99,7 +99,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
         ih_user,
         ih_pass,
         opp.loop,
-        websession=async_get_clientsession.opp),
+        websession=async_get_clientsession(opp),
         device_type=device_type,
     )
     try:
@@ -349,7 +349,7 @@ class IntesisAC(ClimateEntity):
             self._device_id
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Shutdown the controller when the device is being removed."""
         await self._controller.stop()
 

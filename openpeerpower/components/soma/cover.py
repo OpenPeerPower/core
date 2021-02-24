@@ -10,7 +10,7 @@ from openpeerpower.components.soma import API, DEVICES, DOMAIN, SomaEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Soma cover platform."""
 
     devices = opp.data[DOMAIN][DEVICES]

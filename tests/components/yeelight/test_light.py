@@ -119,7 +119,7 @@ CONFIG_ENTRY_DATA = {
 }
 
 
-async def test_services.opp: OpenPeerPower, caplog):
+async def test_services(opp: OpenPeerPower, caplog):
     """Test Yeelight services."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -130,7 +130,7 @@ async def test_services.opp: OpenPeerPower, caplog):
             CONF_NIGHTLIGHT_SWITCH: True,
         },
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
@@ -331,7 +331,7 @@ async def test_services.opp: OpenPeerPower, caplog):
     )
 
 
-async def test_device_types.opp: OpenPeerPower):
+async def test_device_types(opp: OpenPeerPower):
     """Test different device types."""
     mocked_bulb = _mocked_bulb()
     properties = {**PROPERTIES}
@@ -359,7 +359,7 @@ async def test_device_types.opp: OpenPeerPower):
                 CONF_NIGHTLIGHT_SWITCH: False,
             },
         )
-        config_entry.add_to.opp.opp)
+        config_entry.add_to(opp.opp)
 
         mocked_bulb.bulb_type = bulb_type
         model_specs = _MODEL_SPECS.get(model)
@@ -375,8 +375,8 @@ async def test_device_types.opp: OpenPeerPower):
         assert dict(state.attributes) == target_properties
 
         await opp.config_entries.async_unload(config_entry.entry_id)
-        await config_entry.async_remove.opp)
-        registry = await entity_registry.async_get_registry.opp)
+        await config_entry.async_remove(opp)
+        registry = await entity_registry.async_get_registry(opp)
         registry.async_clear_config_entry(config_entry.entry_id)
 
         # nightlight
@@ -389,7 +389,7 @@ async def test_device_types.opp: OpenPeerPower):
                 CONF_NIGHTLIGHT_SWITCH: True,
             },
         )
-        config_entry.add_to.opp.opp)
+        config_entry.add_to(opp.opp)
         await _async_setup(config_entry)
 
         assert.opp.states.get(entity_id).state == "off"
@@ -403,7 +403,7 @@ async def test_device_types.opp: OpenPeerPower):
         assert dict(state.attributes) == nightlight_properties
 
         await opp.config_entries.async_unload(config_entry.entry_id)
-        await config_entry.async_remove.opp)
+        await config_entry.async_remove(opp)
         registry.async_clear_config_entry(config_entry.entry_id)
 
     bright = round(255 * int(PROPERTIES["bright"]) / 100)
@@ -538,7 +538,7 @@ async def test_device_types.opp: OpenPeerPower):
     )
 
 
-async def test_effects.opp: OpenPeerPower):
+async def test_effects(opp: OpenPeerPower):
     """Test effects."""
     assert await async_setup_component(
         opp,
@@ -567,7 +567,7 @@ async def test_effects.opp: OpenPeerPower):
         domain=DOMAIN,
         data=CONFIG_ENTRY_DATA,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):

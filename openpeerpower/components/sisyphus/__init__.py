@@ -42,17 +42,17 @@ async def async_setup(opp, config):
     logging.getLogger("socketIO-client").addFilter(SocketIONoiseFilter())
     tables = opp.data.setdefault(DATA_SISYPHUS, {})
     table_configs = config.get(DOMAIN)
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     async def add_table(host, name=None):
         """Add platforms for a single table with the given hostname."""
         tables[host] = TableHolder.opp, session, host, name)
 
         opp.async_create_task(
-            async_load_platform.opp, "light", DOMAIN, {CONF_HOST: host}, config)
+            async_load_platform(opp, "light", DOMAIN, {CONF_HOST: host}, config)
         )
         opp.async_create_task(
-            async_load_platform.opp, "media_player", DOMAIN, {CONF_HOST: host}, config)
+            async_load_platform(opp, "media_player", DOMAIN, {CONF_HOST: host}, config)
         )
 
     if isinstance(table_configs, dict):  # AUTODETECT_SCHEMA

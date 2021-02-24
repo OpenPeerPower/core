@@ -25,7 +25,7 @@ ON_STATE = "on"
 OFF_STATE = "off"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Create the lights for the Ring devices."""
     devices = opp.data[DOMAIN][config_entry.entry_id]["devices"]
 

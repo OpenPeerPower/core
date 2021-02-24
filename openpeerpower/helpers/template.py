@@ -772,13 +772,13 @@ class TemplateState(State):
         return f"<template TemplateState({self._state.__repr__()})>"
 
 
-def _collect_state.opp: OpenPeerPowerType, entity_id: str) -> None:
+def _collect_state(opp: OpenPeerPowerType, entity_id: str) -> None:
     entity_collect = opp.data.get(_RENDER_INFO)
     if entity_collect is not None:
         entity_collect.entities.add(entity_id)
 
 
-def _state_generator.opp: OpenPeerPowerType, domain: Optional[str]) -> Generator:
+def _state_generator(opp: OpenPeerPowerType, domain: Optional[str]) -> Generator:
     """State generator for a domain or all states."""
     for state in sorted.opp.states.async_all(domain), key=attrgetter("entity_id")):
         yield TemplateState.opp, state, collect=False)
@@ -790,11 +790,11 @@ def _get_state_if_valid(
     state = opp.states.get(entity_id)
     if state is None and not valid_entity_id(entity_id):
         raise TemplateError(f"Invalid entity ID '{entity_id}'")  # type: ignore
-    return _get_template_state_from_state.opp, entity_id, state)
+    return _get_template_state_from_state(opp, entity_id, state)
 
 
-def _get_state.opp: OpenPeerPowerType, entity_id: str) -> Optional[TemplateState]:
-    return _get_template_state_from_state.opp, entity_id, opp.states.get(entity_id))
+def _get_state(opp: OpenPeerPowerType, entity_id: str) -> Optional[TemplateState]:
+    return _get_template_state_from_state(opp, entity_id, opp.states.get(entity_id))
 
 
 def _get_template_state_from_state(
@@ -803,7 +803,7 @@ def _get_template_state_from_state(
     if state is None:
         # Only need to collect if none, if not none collect first actual
         # access to the state properties in the state wrapper.
-        _collect_state.opp, entity_id)
+        _collect_state(opp, entity_id)
         return None
     return TemplateState.opp, state)
 
@@ -815,7 +815,7 @@ def _resolve_state(
     if isinstance(entity_id_or_state, State):
         return entity_id_or_state
     if isinstance(entity_id_or_state, str):
-        return _get_state.opp, entity_id_or_state)
+        return _get_state(opp, entity_id_or_state)
     return None
 
 
@@ -845,7 +845,7 @@ def expand.opp: OpenPeerPowerType, *args: Any) -> Iterable[State]:
         entity = search.pop()
         if isinstance(entity, str):
             entity_id = entity
-            entity = _get_state.opp, entity)
+            entity = _get_state(opp, entity)
             if entity is None:
                 continue
         elif isinstance(entity, State):
@@ -863,15 +863,15 @@ def expand.opp: OpenPeerPowerType, *args: Any) -> Iterable[State]:
             if group_entities:
                 search += group_entities
         else:
-            _collect_state.opp, entity_id)
+            _collect_state(opp, entity_id)
             found[entity_id] = entity
 
     return sorted(found.values(), key=lambda a: a.entity_id)
 
 
-def device_entities.opp: OpenPeerPowerType, device_id: str) -> Iterable[str]:
+def device_entities(opp: OpenPeerPowerType, device_id: str) -> Iterable[str]:
     """Get entity ids for entities tied to a device."""
-    entity_reg = entity_registry.async_get.opp)
+    entity_reg = entity_registry.async_get(opp)
     entries = entity_registry.async_entries_for_device(entity_reg, device_id)
     return [entry.entity_id for entry in entries]
 
@@ -905,7 +905,7 @@ def closest.opp, *args):
         entities = args[0]
 
     elif len(args) == 2:
-        point_state = _resolve_state.opp, args[0])
+        point_state = _resolve_state(opp, args[0])
 
         if point_state is None:
             _LOGGER.warning("Closest:Unable to find state %s", args[0])
@@ -939,7 +939,7 @@ def closest.opp, *args):
     return loc_helper.closest(latitude, longitude, states)
 
 
-def closest_filter.opp, *args):
+def closest_filter(opp, *args):
     """Call closest as a filter. Need to reorder arguments."""
     new_args = list(args[1:])
     new_args.append(args[0])
@@ -961,7 +961,7 @@ def distance.opp, *args):
         if isinstance(value, str) and not valid_entity_id(value):
             point_state = None
         else:
-            point_state = _resolve_state.opp, value)
+            point_state = _resolve_state(opp, value)
 
         if point_state is None:
             # We expect this and next value to be lat&lng
@@ -1003,21 +1003,21 @@ def distance.opp, *args):
     )
 
 
-def is_state.opp: OpenPeerPowerType, entity_id: str, state: State) -> bool:
+def is_state(opp: OpenPeerPowerType, entity_id: str, state: State) -> bool:
     """Test if a state is a specific value."""
-    state_obj = _get_state.opp, entity_id)
+    state_obj = _get_state(opp, entity_id)
     return state_obj is not None and state_obj.state == state
 
 
-def is_state_attr.opp, entity_id, name, value):
+def is_state_attr(opp, entity_id, name, value):
     """Test if a state's attribute is a specific value."""
-    attr = state_attr.opp, entity_id, name)
+    attr = state_attr(opp, entity_id, name)
     return attr is not None and attr == value
 
 
-def state_attr.opp, entity_id, name):
+def state_attr(opp, entity_id, name):
     """Get a specific attribute from a state."""
-    state_obj = _get_state.opp, entity_id)
+    state_obj = _get_state(opp, entity_id)
     if state_obj is not None:
         return state_obj.attributes.get(name)
     return None

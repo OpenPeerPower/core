@@ -8,7 +8,7 @@ from openpeerpower.components.scene import Scene
 from . import DOMAIN, WinkDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink platform."""
 
     for scene in pywink.get_scenes():

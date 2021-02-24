@@ -68,7 +68,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Open Sky platform."""
     latitude = config.get(CONF_LATITUDE, opp.config.latitude)
     longitude = config.get(CONF_LONGITUDE, opp.config.longitude)

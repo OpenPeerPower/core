@@ -107,33 +107,33 @@ SCHEMA_RESET_ENERGY_COUNTER = vol.Schema(
 )
 
 
-async def async_setup_services.opp: OpenPeerPowerType) -> None:
+async def async_setup_services(opp: OpenPeerPowerType) -> None:
     """Set up the HomematicIP Cloud services."""
 
     if opp.services.async_services().get(HMIPC_DOMAIN):
         return
 
-    @verify_domain_control.opp, HMIPC_DOMAIN)
+    @verify_domain_control(opp, HMIPC_DOMAIN)
     async def async_call_hmipc_service(service: ServiceCallType):
         """Call correct HomematicIP Cloud service."""
         service_name = service.service
 
         if service_name == SERVICE_ACTIVATE_ECO_MODE_WITH_DURATION:
-            await _async_activate_eco_mode_with_duration.opp, service)
+            await _async_activate_eco_mode_with_duration(opp, service)
         elif service_name == SERVICE_ACTIVATE_ECO_MODE_WITH_PERIOD:
-            await _async_activate_eco_mode_with_period.opp, service)
+            await _async_activate_eco_mode_with_period(opp, service)
         elif service_name == SERVICE_ACTIVATE_VACATION:
-            await _async_activate_vacation.opp, service)
+            await _async_activate_vacation(opp, service)
         elif service_name == SERVICE_DEACTIVATE_ECO_MODE:
-            await _async_deactivate_eco_mode.opp, service)
+            await _async_deactivate_eco_mode(opp, service)
         elif service_name == SERVICE_DEACTIVATE_VACATION:
-            await _async_deactivate_vacation.opp, service)
+            await _async_deactivate_vacation(opp, service)
         elif service_name == SERVICE_DUMP_HAP_CONFIG:
             await _async_dump_hap_config(opp, service)
         elif service_name == SERVICE_RESET_ENERGY_COUNTER:
-            await _async_reset_energy_counter.opp, service)
+            await _async_reset_energy_counter(opp, service)
         elif service_name == SERVICE_SET_ACTIVE_CLIMATE_PROFILE:
-            await _set_active_climate_profile.opp, service)
+            await _set_active_climate_profile(opp, service)
 
     opp.services.async_register(
         domain=HMIPC_DOMAIN,
@@ -194,7 +194,7 @@ async def async_setup_services.opp: OpenPeerPowerType) -> None:
     )
 
 
-async def async_unload_services.opp: OpenPeerPowerType):
+async def async_unload_services(opp: OpenPeerPowerType):
     """Unload HomematicIP Cloud services."""
     if opp.data[HMIPC_DOMAIN]:
         return
@@ -211,7 +211,7 @@ async def _async_activate_eco_mode_with_duration(
     hapid = service.data.get(ATTR_ACCESSPOINT_ID)
 
     if hapid:
-        home = _get_home.opp, hapid)
+        home = _get_home(opp, hapid)
         if home:
             await home.activate_absence_with_duration(duration)
     else:
@@ -227,7 +227,7 @@ async def _async_activate_eco_mode_with_period(
     hapid = service.data.get(ATTR_ACCESSPOINT_ID)
 
     if hapid:
-        home = _get_home.opp, hapid)
+        home = _get_home(opp, hapid)
         if home:
             await home.activate_absence_with_period(endtime)
     else:
@@ -244,7 +244,7 @@ async def _async_activate_vacation(
     hapid = service.data.get(ATTR_ACCESSPOINT_ID)
 
     if hapid:
-        home = _get_home.opp, hapid)
+        home = _get_home(opp, hapid)
         if home:
             await home.activate_vacation(endtime, temperature)
     else:
@@ -259,7 +259,7 @@ async def _async_deactivate_eco_mode(
     hapid = service.data.get(ATTR_ACCESSPOINT_ID)
 
     if hapid:
-        home = _get_home.opp, hapid)
+        home = _get_home(opp, hapid)
         if home:
             await home.deactivate_absence()
     else:
@@ -274,7 +274,7 @@ async def _async_deactivate_vacation(
     hapid = service.data.get(ATTR_ACCESSPOINT_ID)
 
     if hapid:
-        home = _get_home.opp, hapid)
+        home = _get_home(opp, hapid)
         if home:
             await home.deactivate_vacation()
     else:
@@ -343,7 +343,7 @@ async def _async_reset_energy_counter(
                     await device.reset_energy_counter()
 
 
-def _get_home.opp: OpenPeerPowerType, hapid: str) -> Optional[AsyncHome]:
+def _get_home(opp: OpenPeerPowerType, hapid: str) -> Optional[AsyncHome]:
     """Return a HmIP home."""
     hap = opp.data[HMIPC_DOMAIN].get(hapid)
     if hap:

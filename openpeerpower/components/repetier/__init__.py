@@ -181,7 +181,7 @@ def setup(opp, config):
         sensors = repetier[CONF_SENSORS][CONF_MONITORED_CONDITIONS]
         api = PrinterAPI.opp, client, printers, sensors, repetier[CONF_NAME], config)
         api.update()
-        track_time_interval.opp, api.update, SCAN_INTERVAL)
+        track_time_interval(opp, api.update, SCAN_INTERVAL)
 
         opp.data[REPETIER_API][repetier[CONF_NAME]] = api
 

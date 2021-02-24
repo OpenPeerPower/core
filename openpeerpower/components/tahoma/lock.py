@@ -13,7 +13,7 @@ SCAN_INTERVAL = timedelta(seconds=120)
 TAHOMA_STATE_LOCKED = "locked"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Tahoma lock."""
     if discovery_info is None:
         return

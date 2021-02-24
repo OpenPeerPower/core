@@ -56,7 +56,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the OpenGarage covers."""
     covers = []
     devices = config.get(CONF_COVERS)
@@ -71,7 +71,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
             opengarage_url,
             device_config[CONF_DEVICE_KEY],
             device_config[CONF_VERIFY_SSL],
-            async_get_clientsession.opp),
+            async_get_clientsession(opp),
         )
         status = await open_garage.update_state()
         covers.append(

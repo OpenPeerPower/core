@@ -49,7 +49,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Shelly from a config entry."""
     opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id] = {}
     opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = None
@@ -63,16 +63,16 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         temperature_unit,
     )
 
-    coap_context = await get_coap_context.opp)
+    coap_context = await get_coap_context(opp)
 
     device = await aioshelly.Device.create(
-        aiohttp_client.async_get_clientsession.opp),
+        aiohttp_client.async_get_clientsession(opp),
         coap_context,
         options,
         False,
     )
 
-    dev_reg = await device_registry.async_get_registry.opp)
+    dev_reg = await device_registry.async_get_registry(opp)
     identifier = (DOMAIN, entry.unique_id)
     device_entry = dev_reg.async_get_device(identifiers={identifier}, connections=set())
 
@@ -305,7 +305,7 @@ class ShellyDeviceRestWrapper(update_coordinator.DataUpdateCoordinator):
         return self.device.settings["device"]["mac"]
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     device = opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id].get(DEVICE)
     if device is not None:

@@ -44,7 +44,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up a Vivotek IP Camera."""
     creds = f"{config[CONF_USERNAME]}:{config[CONF_PASSWORD]}"
     args = {

@@ -20,11 +20,11 @@ YAML__OPEN_PATH = "openpeerpower.util.yaml.loader.open"
 @pytest.fixture
 def registry.opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
-def update_events.opp):
+def update_events(opp):
     """Capture update events."""
     events = []
 
@@ -37,7 +37,7 @@ def update_events.opp):
     return events
 
 
-async def test_get_or_create_returns_same_entry.opp, registry, update_events):
+async def test_get_or_create_returns_same_entry(opp, registry, update_events):
     """Make sure we do not duplicate entries."""
     entry = registry.async_get_or_create("light", "hue", "1234")
     entry2 = registry.async_get_or_create("light", "hue", "1234")
@@ -132,14 +132,14 @@ def test_get_or_create_suggested_object_id_conflict_register(registry):
     assert entry2.entity_id == "light.beer_2"
 
 
-def test_get_or_create_suggested_object_id_conflict_existing.opp, registry):
+def test_get_or_create_suggested_object_id_conflict_existing(opp, registry):
     """Test that we don't generate an entity id that currently exists."""
     opp.states.async_set("light.hue_1234", "on")
     entry = registry.async_get_or_create("light", "hue", "1234")
     assert entry.entity_id == "light.hue_1234_2"
 
 
-def test_create_triggers_save.opp, registry):
+def test_create_triggers_save(opp, registry):
     """Test that registering entry triggers a save."""
     with patch.object(registry, "async_schedule_save") as mock_schedule_save:
         registry.async_get_or_create("light", "hue", "1234")
@@ -147,7 +147,7 @@ def test_create_triggers_save.opp, registry):
     assert len(mock_schedule_save.mock_calls) == 1
 
 
-async def test_loading_saving_data.opp, registry):
+async def test_loading_saving_data(opp, registry):
     """Test that we load/save data correctly."""
     mock_config = MockConfigEntry(domain="light")
 
@@ -204,7 +204,7 @@ def test_generate_entity_considers_registered_entities(registry):
     assert registry.async_generate_entity_id("light", "hue_1234") == "light.hue_1234_2"
 
 
-def test_generate_entity_considers_existing_entities.opp, registry):
+def test_generate_entity_considers_existing_entities(opp, registry):
     """Test that we don't create entity id that currently exists."""
     opp.states.async_set("light.kitchen", "on")
     assert registry.async_generate_entity_id("light", "kitchen") == "light.kitchen_2"
@@ -218,7 +218,7 @@ def test_is_registered(registry):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_loading_extra_values.opp, opp_storage):
+async def test_loading_extra_values(opp, opp_storage):
     """Test we load extra data from the registry."""
     opp.storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,
@@ -257,8 +257,8 @@ async def test_loading_extra_values.opp, opp_storage):
         },
     }
 
-    await entity_registry.async_load.opp)
-    registry = entity_registry.async_get.opp)
+    await entity_registry.async_load(opp)
+    registry = entity_registry.async_get(opp)
 
     assert len(registry.entities) == 4
 
@@ -278,8 +278,8 @@ async def test_loading_extra_values.opp, opp_storage):
     entry_disabled_user = registry.async_get_or_create(
         "test", "super_platform", "disabled-user"
     )
-    assert entry_disabled.opp.disabled
-    assert entry_disabled.opp.disabled_by == entity_registry.DISABLED_OPP
+    assert entry_disabled(opp.disabled
+    assert entry_disabled(opp.disabled_by == entity_registry.DISABLED_OPP
     assert entry_disabled_user.disabled
     assert entry_disabled_user.disabled_by == entity_registry.DISABLED_USER
 
@@ -292,7 +292,7 @@ def test_async_get_entity_id(registry):
     assert registry.async_get_entity_id("light", "hue", "123") is None
 
 
-async def test_updating_config_entry_id.opp, registry, update_events):
+async def test_updating_config_entry_id(opp, registry, update_events):
     """Test that we update config entry id in registry."""
     mock_config_1 = MockConfigEntry(domain="light", entry_id="mock-id-1")
     entry = registry.async_get_or_create(
@@ -316,7 +316,7 @@ async def test_updating_config_entry_id.opp, registry, update_events):
     assert update_events[1]["changes"] == ["config_entry_id"]
 
 
-async def test_removing_config_entry_id.opp, registry, update_events):
+async def test_removing_config_entry_id(opp, registry, update_events):
     """Test that we update config entry id in registry."""
     mock_config = MockConfigEntry(domain="light", entry_id="mock-id-1")
 
@@ -351,7 +351,7 @@ async def test_removing_area_id(registry):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_migration.opp):
+async def test_migration(opp):
     """Test migration from old data to new."""
     mock_config = MockConfigEntry(domain="test-platform", entry_id="test-config-id")
 
@@ -367,8 +367,8 @@ async def test_migration.opp):
     with patch("os.path.isfile", return_value=True), patch("os.remove"), patch(
         "openpeerpower.helpers.entity_registry.load_yaml", return_value=old_conf
     ):
-        await entity_registry.async_load.opp)
-        registry = entity_registry.async_get.opp)
+        await entity_registry.async_load(opp)
+        registry = entity_registry.async_get(opp)
 
     assert registry.async_is_registered("light.kitchen")
     entry = registry.async_get_or_create(
@@ -382,7 +382,7 @@ async def test_migration.opp):
     assert entry.config_entry_id == "test-config-id"
 
 
-async def test_loading_invalid_entity_id.opp, opp_storage):
+async def test_loading_invalid_entity_id(opp, opp_storage):
     """Test we autofix invalid entity IDs."""
     opp.storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,
@@ -408,7 +408,7 @@ async def test_loading_invalid_entity_id.opp, opp_storage):
         },
     }
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     entity_invalid_middle = registry.async_get_or_create(
         "test", "super_platform", "id-invalid-middle"
@@ -527,11 +527,11 @@ async def test_disabled_by_system_options(registry):
     assert entry2.disabled_by == "user"
 
 
-async def test_restore_states.opp):
+async def test_restore_states(opp):
     """Test restoring states."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     registry.async_get_or_create(
         "light",
@@ -593,11 +593,11 @@ async def test_restore_states.opp):
     assert.opp.states.get("light.all_info_set") is None
 
 
-async def test_async_get_device_class_lookup.opp):
+async def test_async_get_device_class_lookup(opp):
     """Test registry device class lookup."""
     opp.state = CoreState.not_running
 
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     ent_reg.async_get_or_create(
         "binary_sensor",
@@ -672,9 +672,9 @@ async def test_async_get_device_class_lookup.opp):
     }
 
 
-async def test_remove_device_removes_entities.opp, registry):
+async def test_remove_device_removes_entities(opp, registry):
     """Test that we remove entities tied to a device."""
-    device_registry = mock_device_registry.opp)
+    device_registry = mock_device_registry(opp)
     config_entry = MockConfigEntry(domain="light")
 
     device_entry = device_registry.async_get_or_create(
@@ -698,9 +698,9 @@ async def test_remove_device_removes_entities.opp, registry):
     assert not registry.async_is_registered(entry.entity_id)
 
 
-async def test_update_device_race.opp, registry):
+async def test_update_device_race(opp, registry):
     """Test race when a device is created, updated and removed."""
-    device_registry = mock_device_registry.opp)
+    device_registry = mock_device_registry(opp)
     config_entry = MockConfigEntry(domain="light")
 
     # Create device
@@ -731,11 +731,11 @@ async def test_update_device_race.opp, registry):
     assert not registry.async_is_registered(entry.entity_id)
 
 
-async def test_disable_device_disables_entities.opp, registry):
+async def test_disable_device_disables_entities(opp, registry):
     """Test that we disable entities tied to a device."""
-    device_registry = mock_device_registry.opp)
+    device_registry = mock_device_registry(opp)
     config_entry = MockConfigEntry(domain="light")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     device_entry = device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -796,11 +796,11 @@ async def test_disable_device_disables_entities.opp, registry):
     assert entry3.disabled_by == "config_entry"
 
 
-async def test_disable_config_entry_disables_entities.opp, registry):
+async def test_disable_config_entry_disables_entities(opp, registry):
     """Test that we disable entities tied to a config entry."""
-    device_registry = mock_device_registry.opp)
+    device_registry = mock_device_registry(opp)
     config_entry = MockConfigEntry(domain="light")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     device_entry = device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -861,9 +861,9 @@ async def test_disable_config_entry_disables_entities.opp, registry):
     assert not entry3.disabled_by
 
 
-async def test_disabled_entities_excluded_from_entity_list.opp, registry):
+async def test_disabled_entities_excluded_from_entity_list(opp, registry):
     """Test that disabled entities are excluded from async_entries_for_device."""
-    device_registry = mock_device_registry.opp)
+    device_registry = mock_device_registry(opp)
     config_entry = MockConfigEntry(domain="light")
 
     device_entry = device_registry.async_get_or_create(

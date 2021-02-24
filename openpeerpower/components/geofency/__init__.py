@@ -82,7 +82,7 @@ async def async_setup(opp, opp_config):
     return True
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle incoming webhook from Geofency."""
     try:
         data = WEBHOOK_SCHEMA(dict(await request.post()))
@@ -90,7 +90,7 @@ async def handle_webhook.opp, webhook_id, request):
         return web.Response(text=error.error_message, status=HTTP_UNPROCESSABLE_ENTITY)
 
     if _is_mobile_beacon(data, opp.data[DOMAIN]["beacons"]):
-        return _set_location.opp, data, None)
+        return _set_location(opp, data, None)
     if data["entry"] == LOCATION_ENTRY:
         location_name = data["name"]
     else:
@@ -99,7 +99,7 @@ async def handle_webhook.opp, webhook_id, request):
             data[ATTR_LATITUDE] = data[ATTR_CURRENT_LATITUDE]
             data[ATTR_LONGITUDE] = data[ATTR_CURRENT_LONGITUDE]
 
-    return _set_location.opp, data, location_name)
+    return _set_location(opp, data, location_name)
 
 
 def _is_mobile_beacon(data, mobile_beacons):
@@ -114,7 +114,7 @@ def _device_name(data):
     return data["device"]
 
 
-def _set_location.opp, data, location_name):
+def _set_location(opp, data, location_name):
     """Fire HA event to set location."""
     device = _device_name(data)
 
@@ -130,7 +130,7 @@ def _set_location.opp, data, location_name):
     return web.Response(text=f"Setting location for {device}", status=HTTP_OK)
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Configure based on config entry."""
     opp.components.webhook.async_register(
         DOMAIN, "Geofency", entry.data[CONF_WEBHOOK_ID], handle_webhook
@@ -142,7 +142,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()

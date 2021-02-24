@@ -71,7 +71,7 @@ MODE_TO_STATE = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the ZhongHong HVAC platform."""
 
     host = config.get(CONF_HOST)
@@ -105,7 +105,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         await opp.async_add_executor_job(_start_hub)
         hub_is_initialized = True
 
-    async_dispatcher_connect.opp, SIGNAL_DEVICE_ADDED, startup)
+    async_dispatcher_connect(opp, SIGNAL_DEVICE_ADDED, startup)
 
     # add devices after SIGNAL_DEVICE_SETTED_UP event is listened
     add_entities(devices)

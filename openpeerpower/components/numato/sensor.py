@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 ICON = "mdi:gauge"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the configured Numato USB GPIO ADC sensor ports."""
     if discovery_info is None:
         return

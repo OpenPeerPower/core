@@ -10,7 +10,7 @@ from openpeerpower.setup import async_setup_component
 from openpeerpower.util import dt as util_dt
 
 
-async def test_upload_image.opp, opp_client, opp_ws_client):
+async def test_upload_image(opp, opp_client, opp_ws_client):
     """Test we can upload an image."""
     now = util_dt.utcnow()
     test_image = pathlib.Path(__file__).parent / "logo.png"
@@ -18,7 +18,7 @@ async def test_upload_image.opp, opp_client, opp_ws_client):
     with tempfile.TemporaryDirectory() as tempdir, patch.object(
         opp.config, "path", return_value=tempdir
     ), patch("openpeerpower.util.dt.utcnow", return_value=now):
-        assert await async_setup_component.opp, "image", {})
+        assert await async_setup_component(opp, "image", {})
         ws_client: ClientWebSocketResponse = await opp_ws_client()
         client: ClientSession = await opp_client()
 

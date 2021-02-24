@@ -4,7 +4,7 @@ from openpeerpower.components.notify import BaseNotificationService
 EVENT_NOTIFY = "notify"
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the demo notification service."""
     return DemoNotificationService.opp)
 

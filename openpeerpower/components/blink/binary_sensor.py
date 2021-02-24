@@ -14,7 +14,7 @@ BINARY_SENSORS = {
 }
 
 
-async def async_setup_entry.opp, config, async_add_entities):
+async def async_setup_entry(opp, config, async_add_entities):
     """Set up the blink binary sensors."""
     data = opp.data[DOMAIN][config.entry_id]
 

@@ -15,7 +15,7 @@ def _handle_errors(func):
     """Handle error with WebSocket calls."""
 
     @wraps(func)
-    async def send_with_error_handling.opp, connection, msg):
+    async def send_with_error_handling(opp, connection, msg):
         url_path = msg.get(CONF_URL_PATH)
         config = opp.data[DOMAIN]["dashboards"].get(url_path)
 
@@ -47,7 +47,7 @@ def _handle_errors(func):
 
 @websocket_api.async_response
 @websocket_api.websocket_command({"type": "lovelace/resources"})
-async def websocket_lovelace_resources.opp, connection, msg):
+async def websocket_lovelace_resources(opp, connection, msg):
     """Send Lovelace UI resources over WebSocket configuration."""
     resources = opp.data[DOMAIN]["resources"]
 
@@ -103,7 +103,7 @@ async def websocket_lovelace_delete_config(opp, connection, msg, config):
 
 @websocket_api.websocket_command({"type": "lovelace/dashboards/list"})
 @callback
-def websocket_lovelace_dashboards.opp, connection, msg):
+def websocket_lovelace_dashboards(opp, connection, msg):
     """Delete Lovelace UI configuration."""
     connection.send_result(
         msg["id"],

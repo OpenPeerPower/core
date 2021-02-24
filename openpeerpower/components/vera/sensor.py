@@ -23,7 +23,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up the sensor config entry."""
-    controller_data = get_controller_data.opp, entry)
+    controller_data = get_controller_data(opp, entry)
     async_add_entities(
         [
             VeraSensor(device, controller_data)

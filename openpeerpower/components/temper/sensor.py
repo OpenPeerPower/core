@@ -33,7 +33,7 @@ def get_temper_devices():
     return TemperHandler().get_devices()
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Temper sensors."""
     temp_unit = opp.config.units.temperature_unit
     name = config.get(CONF_NAME)

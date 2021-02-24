@@ -28,7 +28,7 @@ async def async_validate_trigger_config(opp, config):
     if "zha" in.opp.config.components:
         trigger = (config[CONF_TYPE], config[CONF_SUBTYPE])
         try:
-            zha_device = await async_get_zha_device.opp, config[CONF_DEVICE_ID])
+            zha_device = await async_get_zha_device(opp, config[CONF_DEVICE_ID])
         except (KeyError, AttributeError) as err:
             raise InvalidDeviceAutomationConfig from err
         if (
@@ -40,11 +40,11 @@ async def async_validate_trigger_config(opp, config):
     return config
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     trigger = (config[CONF_TYPE], config[CONF_SUBTYPE])
     try:
-        zha_device = await async_get_zha_device.opp, config[CONF_DEVICE_ID])
+        zha_device = await async_get_zha_device(opp, config[CONF_DEVICE_ID])
     except (KeyError, AttributeError):
         return None
 
@@ -65,13 +65,13 @@ async def async_attach_trigger.opp, config, action, automation_info):
     )
 
 
-async def async_get_triggers.opp, device_id):
+async def async_get_triggers(opp, device_id):
     """List device triggers.
 
     Make sure the device supports device automations and
     if it does return the trigger list.
     """
-    zha_device = await async_get_zha_device.opp, device_id)
+    zha_device = await async_get_zha_device(opp, device_id)
 
     if not zha_device.device_automation_triggers:
         return

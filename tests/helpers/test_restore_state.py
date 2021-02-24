@@ -16,7 +16,7 @@ from openpeerpower.helpers.restore_state import (
 from openpeerpower.util import dt as dt_util
 
 
-async def test_caching_data.opp):
+async def test_caching_data(opp):
     """Test that we cache data."""
     now = dt_util.utcnow()
     stored_states = [
@@ -25,7 +25,7 @@ async def test_caching_data.opp):
         StoredState(State("input_boolean.b2", "on"), now),
     ]
 
-    data = await RestoreStateData.async_get_instance.opp)
+    data = await RestoreStateData.async_get_instance(opp)
     await opp.async_block_till_done()
     await data.store.async_save([state.as_dict() for state in stored_states])
 
@@ -50,7 +50,7 @@ async def test_caching_data.opp):
     assert mock_write_data.called
 
 
-async def test.opp_starting.opp):
+async def test.opp_starting(opp):
     """Test that we cache data."""
     opp.state = CoreState.starting
 
@@ -61,7 +61,7 @@ async def test.opp_starting.opp):
         StoredState(State("input_boolean.b2", "on"), now),
     ]
 
-    data = await RestoreStateData.async_get_instance.opp)
+    data = await RestoreStateData.async_get_instance(opp)
     await opp.async_block_till_done()
     await data.store.async_save([state.as_dict() for state in stored_states])
 
@@ -98,7 +98,7 @@ async def test.opp_starting.opp):
     assert mock_write_data.called
 
 
-async def test_dump_data.opp):
+async def test_dump_data(opp):
     """Test that we cache data."""
     states = [
         State("input_boolean.b0", "on"),
@@ -110,14 +110,14 @@ async def test_dump_data.opp):
     entity = Entity()
     entity.opp = opp
     entity.entity_id = "input_boolean.b0"
-    await entity.async_internal_added_to.opp()
+    await entity.async_internal_added_to(opp()
 
     entity = RestoreEntity()
     entity.opp = opp
     entity.entity_id = "input_boolean.b1"
-    await entity.async_internal_added_to.opp()
+    await entity.async_internal_added_to(opp()
 
-    data = await RestoreStateData.async_get_instance.opp)
+    data = await RestoreStateData.async_get_instance(opp)
     now = dt_util.utcnow()
     data.last_states = {
         "input_boolean.b0": StoredState(State("input_boolean.b0", "off"), now),
@@ -183,14 +183,14 @@ async def test_dump_error(opp):
     entity = Entity()
     entity.opp = opp
     entity.entity_id = "input_boolean.b0"
-    await entity.async_internal_added_to.opp()
+    await entity.async_internal_added_to(opp()
 
     entity = RestoreEntity()
     entity.opp = opp
     entity.entity_id = "input_boolean.b1"
-    await entity.async_internal_added_to.opp()
+    await entity.async_internal_added_to(opp()
 
-    data = await RestoreStateData.async_get_instance.opp)
+    data = await RestoreStateData.async_get_instance(opp)
 
     with patch(
         "openpeerpower.helpers.restore_state.Store.async_save",
@@ -216,19 +216,19 @@ async def test_load_error(opp):
     assert state is None
 
 
-async def test_state_saved_on_remove.opp):
+async def test_state_saved_on_remove(opp):
     """Test that we save entity state on removal."""
     entity = RestoreEntity()
     entity.opp = opp
     entity.entity_id = "input_boolean.b0"
-    await entity.async_internal_added_to.opp()
+    await entity.async_internal_added_to(opp()
 
     now = dt_util.utcnow()
     opp.states.async_set(
         "input_boolean.b0", "on", {"complicated": {"value": {1, 2, now}}}
     )
 
-    data = await RestoreStateData.async_get_instance.opp)
+    data = await RestoreStateData.async_get_instance(opp)
 
     # No last states should currently be saved
     assert not data.last_states
@@ -242,7 +242,7 @@ async def test_state_saved_on_remove.opp):
     assert set(state.attributes["complicated"]["value"]) == {1, 2, now.isoformat()}
 
 
-async def test_restoring_invalid_entity_id.opp, opp_storage):
+async def test_restoring_invalid_entity_id(opp, opp_storage):
     """Test restoring invalid entity IDs."""
     entity = RestoreEntity()
     entity.opp = opp

@@ -142,7 +142,7 @@ MQTT_JSON_ATTRS_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_entry_helper.opp, domain, async_setup, schema):
+async def async_setup_entry_helper(opp, domain, async_setup, schema):
     """Set up entity, automation or tag creation dynamically through MQTT discovery."""
 
     async def async_discover(discovery_payload):
@@ -153,7 +153,7 @@ async def async_setup_entry_helper.opp, domain, async_setup, schema):
             await async_setup(config, discovery_data=discovery_data)
         except Exception:
             discovery_hash = discovery_data[ATTR_DISCOVERY_HASH]
-            clear_discovery_hash.opp, discovery_hash)
+            clear_discovery_hash(opp, discovery_hash)
             async_dispatcher_send(
                 opp. MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
@@ -219,7 +219,7 @@ class MqttAttributes(Entity):
             },
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe when removed."""
         self._attributes_sub_state = await async_unsubscribe_topics(
             self.opp, self._attributes_sub_state
@@ -316,7 +316,7 @@ class MqttAvailability(Entity):
         if not self.opp.is_stopping:
             self.async_write_op_state()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe when removed."""
         self._availability_sub_state = await async_unsubscribe_topics(
             self.opp, self._availability_sub_state
@@ -336,7 +336,7 @@ class MqttAvailability(Entity):
         return self._available_latest
 
 
-async def cleanup_device_registry.opp, device_id):
+async def cleanup_device_registry(opp, device_id):
     """Remove device registry entry if there are no remaining entities or triggers."""
     # Local import to avoid circular dependencies
     # pylint: disable=import-outside-toplevel
@@ -349,8 +349,8 @@ async def cleanup_device_registry.opp, device_id):
         and not.opp.helpers.entity_registry.async_entries_for_device(
             entity_registry, device_id, include_disabled_entities=True
         )
-        and not await device_trigger.async_get_triggers.opp, device_id)
-        and not tag.async_has_tags.opp, device_id)
+        and not await device_trigger.async_get_triggers(opp, device_id)
+        and not tag.async_has_tags(opp, device_id)
     ):
         device_registry.async_remove_device(device_id)
 
@@ -432,7 +432,7 @@ class MqttDiscoveryUpdate(Entity):
 
     async def async_removed_from_registry(self) -> None:
         """Clear retained discovery topic in broker."""
-        if not self._removed_from.opp:
+        if not self._removed_from(opp:
             discovery_topic = self._discovery_data[ATTR_DISCOVERY_TOPIC]
             publish(self.opp, discovery_topic, "", retain=True)
 
@@ -447,13 +447,13 @@ class MqttDiscoveryUpdate(Entity):
             )
         super().add_to_platform_abort()
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Stop listening to signal and cleanup discovery data.."""
         self._cleanup_discovery_on_remove()
 
     def _cleanup_discovery_on_remove(self) -> None:
         """Stop listening to signal and cleanup discovery data."""
-        if self._discovery_data and not self._removed_from.opp:
+        if self._discovery_data and not self._removed_from(opp:
             debug_info.remove_entity_data(self.opp, self.entity_id)
             clear_discovery_hash(self.opp, self._discovery_data[ATTR_DISCOVERY_HASH])
             self._removed_from opp =True
@@ -554,14 +554,14 @@ class MqttEntity(
         await self._subscribe_topics()
         self.async_write_op_state()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe when removed."""
         self._sub_state = await subscription.async_unsubscribe_topics(
             self.opp, self._sub_state
         )
-        await MqttAttributes.async_will_remove_from.opp(self)
-        await MqttAvailability.async_will_remove_from.opp(self)
-        await MqttDiscoveryUpdate.async_will_remove_from.opp(self)
+        await MqttAttributes.async_will_remove_from(opp(self)
+        await MqttAvailability.async_will_remove_from(opp(self)
+        await MqttDiscoveryUpdate.async_will_remove_from(opp(self)
 
     @staticmethod
     @abstractmethod

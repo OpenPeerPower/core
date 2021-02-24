@@ -44,7 +44,7 @@ from .mock_classes import MockGDM
 from tests.common import MockConfigEntry
 
 
-async def test_bad_credentials.opp):
+async def test_bad_credentials(opp):
     """Test when provided credentials are rejected."""
     await async_process_op_core_config(
         opp,
@@ -77,7 +77,7 @@ async def test_bad_credentials.opp):
         assert result["errors"][CONF_TOKEN] == "faulty_credentials"
 
 
-async def test_bad_hostname.opp, mock_plex_calls):
+async def test_bad_hostname(opp, mock_plex_calls):
     """Test when an invalid address is provided."""
     await async_process_op_core_config(
         opp,
@@ -111,7 +111,7 @@ async def test_bad_hostname.opp, mock_plex_calls):
         assert result["errors"][CONF_HOST] == "not_found"
 
 
-async def test_unknown_exception.opp):
+async def test_unknown_exception(opp):
     """Test when an unknown exception is encountered."""
     await async_process_op_core_config(
         opp,
@@ -140,7 +140,7 @@ async def test_unknown_exception.opp):
         assert result["reason"] == "unknown"
 
 
-async def test_no_servers_found.opp, mock_plex_calls, requests_mock, empty_payload):
+async def test_no_servers_found(opp, mock_plex_calls, requests_mock, empty_payload):
     """Test when no servers are on an account."""
     requests_mock.get("https://plex.tv/api/resources", text=empty_payload)
 
@@ -172,7 +172,7 @@ async def test_no_servers_found.opp, mock_plex_calls, requests_mock, empty_paylo
         assert result["errors"]["base"] == "no_servers"
 
 
-async def test_single_available_server.opp, mock_plex_calls):
+async def test_single_available_server(opp, mock_plex_calls):
     """Test creating an entry with one server available."""
 
     await async_process_op_core_config(
@@ -287,7 +287,7 @@ async def test_adding_last_unconfigured_server(
             CONF_SERVER_IDENTIFIER: MOCK_SERVERS[1][CONF_SERVER_IDENTIFIER],
             CONF_SERVER: MOCK_SERVERS[1][CONF_SERVER],
         },
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -339,7 +339,7 @@ async def test_all_available_servers_configured(
         {"internal_url": "http://example.local:8123"},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     MockConfigEntry(
         domain=DOMAIN,
@@ -347,7 +347,7 @@ async def test_all_available_servers_configured(
             CONF_SERVER_IDENTIFIER: MOCK_SERVERS[1][CONF_SERVER_IDENTIFIER],
             CONF_SERVER: MOCK_SERVERS[1][CONF_SERVER],
         },
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -377,7 +377,7 @@ async def test_all_available_servers_configured(
         assert result["reason"] == "all_configured"
 
 
-async def test_option_flow.opp, entry, mock_plex_server):
+async def test_option_flow(opp, entry, mock_plex_server):
     """Test config options flow selection."""
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
@@ -409,7 +409,7 @@ async def test_option_flow.opp, entry, mock_plex_server):
     }
 
 
-async def test_missing_option_flow.opp, entry, mock_plex_server):
+async def test_missing_option_flow(opp, entry, mock_plex_server):
     """Test config options flow selection when no options stored."""
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
@@ -441,7 +441,7 @@ async def test_missing_option_flow.opp, entry, mock_plex_server):
     }
 
 
-async def test_option_flow_new_users_available.opp, entry, setup_plex_server):
+async def test_option_flow_new_users_available(opp, entry, setup_plex_server):
     """Test config options multiselect defaults when new Plex users are seen."""
     OPTIONS_OWNER_ONLY = copy.deepcopy(DEFAULT_OPTIONS)
     OPTIONS_OWNER_ONLY[MP_DOMAIN][CONF_MONITORED_USERS] = {"User 1": {"enabled": True}}
@@ -469,7 +469,7 @@ async def test_option_flow_new_users_available.opp, entry, setup_plex_server):
         assert "[New]" in multiselect_defaults[user]
 
 
-async def test_external_timed_out.opp):
+async def test_external_timed_out(opp):
     """Test when external flow times out."""
 
     await async_process_op_core_config(
@@ -499,7 +499,7 @@ async def test_external_timed_out.opp):
         assert result["reason"] == "token_request_timeout"
 
 
-async def test_callback_view.opp, aiohttp_client):
+async def test_callback_view(opp, aiohttp_client):
     """Test callback view."""
 
     await async_process_op_core_config(
@@ -521,7 +521,7 @@ async def test_callback_view.opp, aiohttp_client):
         )
         assert result["type"] == "external"
 
-        client = await aiohttp_client.opp.http.app)
+        client = await aiohttp_client(opp.http.app)
         forward_url = f'{config_flow.AUTH_CALLBACK_PATH}?flow_id={result["flow_id"]}'
 
         resp = await client.get(forward_url)
@@ -663,7 +663,7 @@ async def test_manual_config(opp, mock_plex_calls):
     assert result["data"][PLEX_SERVER_CONFIG][CONF_TOKEN] == MOCK_TOKEN
 
 
-async def test_manual_config_with_token.opp, mock_plex_calls):
+async def test_manual_config_with_token(opp, mock_plex_calls):
     """Test creating via manual configuration with only token."""
 
     result = await opp.config_entries.flow.async_init(
@@ -699,7 +699,7 @@ async def test_manual_config_with_token.opp, mock_plex_calls):
     assert result["data"][PLEX_SERVER_CONFIG][CONF_TOKEN] == MOCK_TOKEN
 
 
-async def test_setup_with_limited_credentials.opp, entry, setup_plex_server):
+async def test_setup_with_limited_credentials(opp, entry, setup_plex_server):
     """Test setup with a user with limited permissions."""
     with patch(
         "plexapi.server.PlexServer.systemAccounts",
@@ -717,12 +717,12 @@ async def test_setup_with_limited_credentials.opp, entry, setup_plex_server):
     assert entry.state == ENTRY_STATE_LOADED
 
 
-async def test_integration_discovery.opp):
+async def test_integration_discovery(opp):
     """Test integration self-discovery."""
     mock_gdm = MockGDM()
 
     with patch("openpeerpower.components.plex.config_flow.GDM", return_value=mock_gdm):
-        await config_flow.async_discover.opp)
+        await config_flow.async_discover(opp)
 
     flows = opp.config_entries.flow.async_progress()
 
@@ -739,9 +739,9 @@ async def test_integration_discovery.opp):
     assert flow["step_id"] == "user"
 
 
-async def test_trigger_reauth.opp, entry, mock_plex_server, mock_websocket):
+async def test_trigger_reauth(opp, entry, mock_plex_server, mock_websocket):
     """Test setup and reauthorization of a Plex token."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
     await async_process_op_core_config(
         opp,
         {"internal_url": "http://example.local:8123"},
@@ -753,7 +753,7 @@ async def test_trigger_reauth.opp, entry, mock_plex_server, mock_websocket):
         "plexapi.server.PlexServer.clients", side_effect=plexapi.exceptions.Unauthorized
     ), patch("plexapi.server.PlexServer", side_effect=plexapi.exceptions.Unauthorized):
         trigger_plex_update(mock_websocket)
-        await wait_for_debouncer.opp)
+        await wait_for_debouncer(opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state != ENTRY_STATE_LOADED

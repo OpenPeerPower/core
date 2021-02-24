@@ -7,7 +7,7 @@ from openpeerpower.components.binary_sensor import (
 from . import DATA_KEY
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Iterate through all MAX! Devices and add window shutters."""
     devices = []
     for handler in.opp.data[DATA_KEY].values():

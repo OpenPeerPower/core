@@ -27,7 +27,7 @@ async def test_device_setup_opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp)
+        mock_api, mock_entry = await device.setup_entry(opp)
 
     assert mock_entry.state == ENTRY_STATE_LOADED
     assert mock_api.auth.call_count == 1
@@ -50,7 +50,7 @@ async def test_device_setup_authentication_error(opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_SETUP_ERROR
     assert mock_api.auth.call_count == 1
@@ -63,7 +63,7 @@ async def test_device_setup_authentication_error(opp):
     }
 
 
-async def test_device_setup_network_timeout.opp):
+async def test_device_setup_network_timeout(opp):
     """Test we handle a network timeout."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
@@ -74,7 +74,7 @@ async def test_device_setup_network_timeout.opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
     assert mock_api.auth.call_count == 1
@@ -93,7 +93,7 @@ async def test_device_setup_os_error(opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
     assert mock_api.auth.call_count == 1
@@ -101,7 +101,7 @@ async def test_device_setup_os_error(opp):
     assert mock_init.call_count == 0
 
 
-async def test_device_setup_broadlink_exception.opp):
+async def test_device_setup_broadlink_exception(opp):
     """Test we handle a Broadlink exception."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
@@ -112,7 +112,7 @@ async def test_device_setup_broadlink_exception.opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_SETUP_ERROR
     assert mock_api.auth.call_count == 1
@@ -120,7 +120,7 @@ async def test_device_setup_broadlink_exception.opp):
     assert mock_init.call_count == 0
 
 
-async def test_device_setup_update_network_timeout.opp):
+async def test_device_setup_update_network_timeout(opp):
     """Test we handle a network timeout in the update step."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
@@ -131,7 +131,7 @@ async def test_device_setup_update_network_timeout.opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
     assert mock_api.auth.call_count == 1
@@ -151,7 +151,7 @@ async def test_device_setup_update_authorization_error(opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_LOADED
     assert mock_api.auth.call_count == 2
@@ -175,7 +175,7 @@ async def test_device_setup_update_authentication_error(opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
     assert mock_api.auth.call_count == 2
@@ -189,7 +189,7 @@ async def test_device_setup_update_authentication_error(opp):
     }
 
 
-async def test_device_setup_update_broadlink_exception.opp):
+async def test_device_setup_update_broadlink_exception(opp):
     """Test we handle a Broadlink exception in the update step."""
     device = get_device("Garage")
     mock_api = device.get_mock_api()
@@ -200,7 +200,7 @@ async def test_device_setup_update_broadlink_exception.opp):
     ) as mock_forward, patch.object(
         opp.config_entries.flow, "async_init"
     ) as mock_init:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
     assert mock_api.auth.call_count == 1
@@ -209,14 +209,14 @@ async def test_device_setup_update_broadlink_exception.opp):
     assert mock_init.call_count == 0
 
 
-async def test_device_setup_get_fwversion_broadlink_exception.opp):
+async def test_device_setup_get_fwversion_broadlink_exception(opp):
     """Test we load the device even if we cannot read the firmware version."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
     mock_api.get_fwversion.side_effect = blke.BroadlinkException()
 
     with patch.object.opp.config_entries, "async_forward_entry_setup") as mock_forward:
-        mock_api, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_LOADED
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
@@ -232,7 +232,7 @@ async def test_device_setup_get_fwversion_os_error(opp):
     mock_api.get_fwversion.side_effect = OSError()
 
     with patch.object.opp.config_entries, "async_forward_entry_setup") as mock_forward:
-        _, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        _, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_LOADED
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
@@ -241,14 +241,14 @@ async def test_device_setup_get_fwversion_os_error(opp):
     assert forward_entries == domains
 
 
-async def test_device_setup_registry.opp):
+async def test_device_setup_registry(opp):
     """Test we register the device and the entries correctly."""
     device = get_device("Office")
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    _, mock_entry = await device.setup_entry.opp)
+    _, mock_entry = await device.setup_entry(opp)
     await opp.async_block_till_done()
 
     assert len(device_registry.devices) == 1
@@ -264,12 +264,12 @@ async def test_device_setup_registry.opp):
         assert entry.original_name.startswith(device.name)
 
 
-async def test_device_unload_works.opp):
+async def test_device_unload_works(opp):
     """Test we unload the device."""
     device = get_device("Office")
 
     with patch.object.opp.config_entries, "async_forward_entry_setup"):
-        mock_api, mock_entry = await device.setup_entry.opp)
+        mock_api, mock_entry = await device.setup_entry(opp)
 
     with patch.object(
         opp.config_entries, "async_forward_entry_unload", return_value=True
@@ -292,7 +292,7 @@ async def test_device_unload_authentication_error(opp):
     with patch.object.opp.config_entries, "async_forward_entry_setup"), patch.object(
         opp.config_entries.flow, "async_init"
     ):
-        _, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        _, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     with patch.object(
         opp.config_entries, "async_forward_entry_unload", return_value=True
@@ -303,14 +303,14 @@ async def test_device_unload_authentication_error(opp):
     assert mock_forward.call_count == 0
 
 
-async def test_device_unload_update_failed.opp):
+async def test_device_unload_update_failed(opp):
     """Test we unload a device that failed the update step."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
     mock_api.check_sensors.side_effect = blke.NetworkTimeoutError()
 
     with patch.object.opp.config_entries, "async_forward_entry_setup"):
-        _, mock_entry = await device.setup_entry.opp, mock_api=mock_api)
+        _, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     with patch.object(
         opp.config_entries, "async_forward_entry_unload", return_value=True
@@ -321,14 +321,14 @@ async def test_device_unload_update_failed.opp):
     assert mock_forward.call_count == 0
 
 
-async def test_device_update_listener.opp):
+async def test_device_update_listener(opp):
     """Test we update device and entity registry when the entry is renamed."""
     device = get_device("Office")
 
-    device_registry = mock_device_registry.opp)
-    entity_registry = mock_registry.opp)
+    device_registry = mock_device_registry(opp)
+    entity_registry = mock_registry(opp)
 
-    mock_api, mock_entry = await device.setup_entry.opp)
+    mock_api, mock_entry = await device.setup_entry(opp)
     await opp.async_block_till_done()
 
     with patch(

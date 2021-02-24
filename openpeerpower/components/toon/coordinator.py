@@ -37,7 +37,7 @@ class ToonDataUpdateCoordinator(DataUpdateCoordinator[Status]):
 
         self.toon = Toon(
             token=session.token["access_token"],
-            session=async_get_clientsession.opp),
+            session=async_get_clientsession(opp),
             token_refresh_method=async_token_refresh,
         )
 

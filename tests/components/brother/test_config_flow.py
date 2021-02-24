@@ -14,7 +14,7 @@ from tests.common import MockConfigEntry, load_fixture
 CONFIG = {CONF_HOST: "localhost", CONF_TYPE: "laser"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -24,7 +24,7 @@ async def test_show_form.opp):
     assert result["step_id"] == SOURCE_USER
 
 
-async def test_create_entry_with_hostname.opp):
+async def test_create_entry_with_hostname(opp):
     """Test that the user step works with printer hostname."""
     with patch(
         "brother.Brother._get_data",
@@ -40,7 +40,7 @@ async def test_create_entry_with_hostname.opp):
         assert result["data"][CONF_TYPE] == CONFIG[CONF_TYPE]
 
 
-async def test_create_entry_with_ip_address.opp):
+async def test_create_entry_with_ip_address(opp):
     """Test that the user step works with printer IP address."""
     with patch(
         "brother.Brother._get_data",
@@ -58,7 +58,7 @@ async def test_create_entry_with_ip_address.opp):
         assert result["data"][CONF_TYPE] == "laser"
 
 
-async def test_invalid_hostname.opp):
+async def test_invalid_hostname(opp):
     """Test invalid hostname in user_input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -101,13 +101,13 @@ async def test_unsupported_model_error(opp):
         assert result["reason"] == "unsupported_model"
 
 
-async def test_device_exists_abort.opp):
+async def test_device_exists_abort(opp):
     """Test we abort config flow if Brother printer already configured."""
     with patch(
         "brother.Brother._get_data",
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id="0123456789", data=CONFIG).add_to.opp(
+        MockConfigEntry(domain=DOMAIN, unique_id="0123456789", data=CONFIG).add_to(opp(
             opp
         )
         result = await opp.config_entries.flow.async_init(
@@ -118,7 +118,7 @@ async def test_device_exists_abort.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_zeroconf_no_data.opp):
+async def test_zeroconf_no_data(opp):
     """Test we abort if zeroconf provides no data."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}
@@ -159,13 +159,13 @@ async def test_zeroconf_snmp_error(opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_zeroconf_device_exists_abort.opp):
+async def test_zeroconf_device_exists_abort(opp):
     """Test we abort zeroconf flow if Brother printer already configured."""
     with patch(
         "brother.Brother._get_data",
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id="0123456789", data=CONFIG).add_to.opp(
+        MockConfigEntry(domain=DOMAIN, unique_id="0123456789", data=CONFIG).add_to(opp(
             opp
         )
 
@@ -179,7 +179,7 @@ async def test_zeroconf_device_exists_abort.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_zeroconf_confirm_create_entry.opp):
+async def test_zeroconf_confirm_create_entry(opp):
     """Test zeroconf confirmation and create config entry."""
     with patch(
         "brother.Brother._get_data",

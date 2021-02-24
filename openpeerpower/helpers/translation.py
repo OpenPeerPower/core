@@ -155,7 +155,7 @@ async def async_get_component_strings(
             domains,
             await gather_with_concurrency(
                 MAX_LOAD_CONCURRENTLY,
-                *[async_get_integration.opp, domain) for domain in domains],
+                *[async_get_integration(opp, domain) for domain in domains],
             ),
         )
     )
@@ -297,7 +297,7 @@ async def async_get_translations(
     if integration is not None:
         components = {integration}
     elif config_flow:
-        components = (await async_get_config_flows.opp)) -.opp.config.components
+        components = (await async_get_config_flows(opp)) -.opp.config.components
     elif category == "state":
         components = set.opp.config.components)
     else:

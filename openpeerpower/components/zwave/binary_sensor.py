@@ -14,7 +14,7 @@ from .const import COMMAND_CLASS_SENSOR_BINARY
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave binary sensors from Config Entry."""
 
     @callback
@@ -22,7 +22,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Add Z-Wave  binary sensor."""
         async_add_entities([binary_sensor])
 
-    async_dispatcher_connect.opp, "zwave_new_binary_sensor", async_add_binary_sensor)
+    async_dispatcher_connect(opp, "zwave_new_binary_sensor", async_add_binary_sensor)
 
 
 def get_device(values, **kwargs):

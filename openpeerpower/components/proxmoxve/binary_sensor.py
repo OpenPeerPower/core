@@ -5,7 +5,7 @@ from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 from . import COORDINATOR, DOMAIN, ProxmoxEntity
 
 
-async def async_setup_platform.opp, config, add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up binary sensors."""
     if discovery_info is None:
         return

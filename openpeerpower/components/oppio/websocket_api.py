@@ -32,10 +32,10 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 @callback
-def async_load_websocket_api.opp.OpenPeerPower):
+def async_load_websocket_api(opp.OpenPeerPower):
     """Set up the websocket API."""
-    websocket_api.async_register_command.opp.websocket_supervisor_event)
-    websocket_api.async_register_command.opp.websocket_supervisor_api)
+    websocket_api.async_register_command(opp.websocket_supervisor_event)
+    websocket_api.async_register_command(opp.websocket_supervisor_api)
 
 
 @websocket_api.async_response

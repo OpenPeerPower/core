@@ -80,7 +80,7 @@ SRV_RECORDS = asyncio.Future()
 SRV_RECORDS.set_result([QueryMock()])
 
 
-async def test_show_config_form.opp: OpenPeerPowerType) -> None:
+async def test_show_config_form(opp: OpenPeerPowerType) -> None:
     """Test if initial configuration form is shown."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -90,7 +90,7 @@ async def test_show_config_form.opp: OpenPeerPowerType) -> None:
     assert result["step_id"] == "user"
 
 
-async def test_invalid_ip.opp: OpenPeerPowerType) -> None:
+async def test_invalid_ip(opp: OpenPeerPowerType) -> None:
     """Test error in case of an invalid IP address."""
     with patch("getmac.get_mac_address", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -101,7 +101,7 @@ async def test_invalid_ip.opp: OpenPeerPowerType) -> None:
         assert result["errors"] == {"base": "invalid_ip"}
 
 
-async def test_same_host.opp: OpenPeerPowerType) -> None:
+async def test_same_host(opp: OpenPeerPowerType) -> None:
     """Test abort in case of same host name."""
     with patch(
         "aiodns.DNSResolver.query",
@@ -120,7 +120,7 @@ async def test_same_host.opp: OpenPeerPowerType) -> None:
             mock_config_entry = MockConfigEntry(
                 domain=DOMAIN, unique_id=unique_id, data=config_data
             )
-            mock_config_entry.add_to.opp.opp)
+            mock_config_entry.add_to(opp.opp)
 
             result = await opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
@@ -130,7 +130,7 @@ async def test_same_host.opp: OpenPeerPowerType) -> None:
             assert result["reason"] == "already_configured"
 
 
-async def test_port_too_small.opp: OpenPeerPowerType) -> None:
+async def test_port_too_small(opp: OpenPeerPowerType) -> None:
     """Test error in case of a too small port."""
     with patch(
         "aiodns.DNSResolver.query",
@@ -144,7 +144,7 @@ async def test_port_too_small.opp: OpenPeerPowerType) -> None:
         assert result["errors"] == {"base": "invalid_port"}
 
 
-async def test_port_too_large.opp: OpenPeerPowerType) -> None:
+async def test_port_too_large(opp: OpenPeerPowerType) -> None:
     """Test error in case of a too large port."""
     with patch(
         "aiodns.DNSResolver.query",
@@ -158,7 +158,7 @@ async def test_port_too_large.opp: OpenPeerPowerType) -> None:
         assert result["errors"] == {"base": "invalid_port"}
 
 
-async def test_connection_failed.opp: OpenPeerPowerType) -> None:
+async def test_connection_failed(opp: OpenPeerPowerType) -> None:
     """Test error in case of a failed connection."""
     with patch(
         "aiodns.DNSResolver.query",
@@ -173,7 +173,7 @@ async def test_connection_failed.opp: OpenPeerPowerType) -> None:
             assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_connection_succeeded_with_srv_record.opp: OpenPeerPowerType) -> None:
+async def test_connection_succeeded_with_srv_record(opp: OpenPeerPowerType) -> None:
     """Test config entry in case of a successful connection with a SRV record."""
     with patch(
         "aiodns.DNSResolver.query",
@@ -193,7 +193,7 @@ async def test_connection_succeeded_with_srv_record.opp: OpenPeerPowerType) -> N
             assert result["data"][CONF_HOST] == USER_INPUT_SRV[CONF_HOST]
 
 
-async def test_connection_succeeded_with_host.opp: OpenPeerPowerType) -> None:
+async def test_connection_succeeded_with_host(opp: OpenPeerPowerType) -> None:
     """Test config entry in case of a successful connection with a host name."""
     with patch(
         "aiodns.DNSResolver.query",

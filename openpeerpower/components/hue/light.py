@@ -66,7 +66,7 @@ GAMUT_TYPE_UNAVAILABLE = "None"
 GROUP_MIN_API_VERSION = (1, 13, 0)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Old way of setting up Hue lights.
 
     Can only be called when a user accidentally mentions hue platform in their
@@ -89,7 +89,7 @@ def create_light(item_class, coordinator, bridge, is_group, api, item_id):
     return item_class(coordinator, bridge, is_group, api[item_id], supported_features)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Hue lights from a config entry."""
     bridge = opp.data[HUE_DOMAIN][config_entry.entry_id]
 
@@ -188,7 +188,7 @@ def async_update_items(bridge, api, current, async_add_entities, create_item):
         async_add_entities(new_items)
 
 
-def hue_brightness_to.opp(value):
+def hue_brightness_to(opp(value):
     """Convert hue brightness 1..254 to.opp format 0..255."""
     return min(255, round((value / 254) * 255))
 
@@ -261,7 +261,7 @@ class HueLight(CoordinatorEntity, LightEntity):
         if bri is None:
             return bri
 
-        return hue_brightness_to.opp(bri)
+        return hue_brightness_to(opp(bri)
 
     @property
     def _color_mode(self):

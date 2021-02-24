@@ -184,7 +184,7 @@ REST_SENSORS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up sensors for device."""
     if config_entry.data["sleep_period"]:
         await async_setup_entry_attribute_entities(

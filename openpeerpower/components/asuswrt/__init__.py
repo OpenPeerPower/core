@@ -112,7 +112,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up AsusWrt platform."""
 
     # import options from yaml if empty
@@ -146,7 +146,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -166,7 +166,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return unload_ok
 
 
-async def update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def update_listener(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Update when config_entry options update."""
     router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
 

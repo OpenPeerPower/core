@@ -85,7 +85,7 @@ def _inverted(data):
     return {v: k for k, v in data.items()}
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Philips TV platform."""
     opp.async_create_task(
         opp.config_entries.flow.async_init(

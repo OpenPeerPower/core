@@ -19,11 +19,11 @@ PLATFORMS = [MEDIA_PLAYER_PLATFORM]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def validate_projector.opp: OpenPeerPower, host, port):
+async def validate_projector(opp: OpenPeerPower, host, port):
     """Validate the given host and port allows us to connect."""
     epson_proj = Projector(
         host=host,
-        websession=async_get_clientsession.opp, verify_ssl=False),
+        websession=async_get_clientsession(opp, verify_ssl=False),
         port=port,
     )
     _power = await epson_proj.get_property(POWER)
@@ -38,7 +38,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up epson from a config entry."""
     try:
         projector = await validate_projector(
@@ -55,7 +55,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

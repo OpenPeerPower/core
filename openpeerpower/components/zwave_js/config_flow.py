@@ -34,7 +34,7 @@ ON_SUPERVISOR_SCHEMA = vol.Schema({vol.Optional(CONF_USE_ADDON, default=True): b
 STEP_USER_DATA_SCHEMA = vol.Schema({vol.Required(CONF_URL, default=DEFAULT_URL): str})
 
 
-async def validate_input.opp: core.OpenPeerPower, user_input: dict) -> VersionInfo:
+async def validate_input(opp: core.OpenPeerPower, user_input: dict) -> VersionInfo:
     """Validate if the user input allows us to connect."""
     ws_address = user_input[CONF_URL]
 
@@ -42,7 +42,7 @@ async def validate_input.opp: core.OpenPeerPower, user_input: dict) -> VersionIn
         raise InvalidInput("invalid_ws_url")
 
     try:
-        return await async_get_version_info.opp, ws_address)
+        return await async_get_version_info(opp, ws_address)
     except CannotConnect as err:
         raise InvalidInput("cannot_connect") from err
 
@@ -54,7 +54,7 @@ async def async_get_version_info(
     async with timeout(10):
         try:
             version_info: VersionInfo = await get_server_version(
-                ws_address, async_get_clientsession.opp)
+                ws_address, async_get_clientsession(opp)
             )
         except (asyncio.TimeoutError, aiohttp.ClientError) as err:
             _LOGGER.error("Failed to connect to Z-Wave JS server: %s", err)
@@ -119,7 +119,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="manual", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
 
-    async def async_step.oppio(  # type: ignore
+    async def async_step(oppio(  # type: ignore
         self, discovery_info: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Receive configuration from add-on discovery info.
@@ -135,9 +135,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         await self.async_set_unique_id(version_info.home_id)
         self._abort_if_unique_id_configured(updates={CONF_URL: self.ws_address})
 
-        return await self.async_step.oppio_confirm()
+        return await self.async_step(oppio_confirm()
 
-    async def async_step.oppio_confirm(
+    async def async_step(oppio_confirm(
         self, user_input: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Confirm the add-on discovery."""

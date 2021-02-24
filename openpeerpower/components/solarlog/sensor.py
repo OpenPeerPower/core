@@ -14,7 +14,7 @@ from .const import DOMAIN, SCAN_INTERVAL, SENSOR_TYPES
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the solarlog platform."""
     _LOGGER.warning(
         "Configuration of the solarlog platform in configuration.yaml is deprecated "
@@ -22,7 +22,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Add solarlog entry."""
     host_entry = entry.data[CONF_HOST]
     device_name = entry.title

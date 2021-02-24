@@ -63,7 +63,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the ITach connection and devices."""
     itachip2ir = pyitachip2ir.ITachIP2IR(
         config.get(CONF_MAC), config.get(CONF_HOST), int(config.get(CONF_PORT))

@@ -16,7 +16,7 @@ from openpeerpower.helpers.entity_component import EntityComponent
 from .const import ATTR_HOST_NAME, ATTR_IP, ATTR_MAC, ATTR_SOURCE_TYPE, DOMAIN, LOGGER
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up an entry."""
     component: Optional[EntityComponent] = opp.data.get(DOMAIN)
 
@@ -26,7 +26,7 @@ async def async_setup_entry.opp, entry):
     return await component.async_setup_entry(entry)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload an entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 

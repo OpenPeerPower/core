@@ -83,7 +83,7 @@ async def base_test(
                     {array_name_discovery: [{**config_device}]}
                 )
                 config_device = None
-            assert await async_setup_component.opp, DOMAIN, config_modbus)
+            assert await async_setup_component(opp, DOMAIN, config_modbus)
             await opp.async_block_till_done()
 
             # setup platform old style
@@ -100,7 +100,7 @@ async def base_test(
                 }
                 if scan_interval is not None:
                     config_device[entity_domain][CONF_SCAN_INTERVAL] = scan_interval
-                assert await async_setup_component.opp, entity_domain, config_device)
+                assert await async_setup_component(opp, entity_domain, config_device)
                 await opp.async_block_till_done()
 
         assert DOMAIN in.opp.data
@@ -115,7 +115,7 @@ async def base_test(
         # Trigger update call with time_changed event
         now = now + timedelta(seconds=scan_interval + 60)
         with mock.patch("openpeerpower.helpers.event.dt_util.utcnow", return_value=now):
-            async_fire_time_changed.opp, now)
+            async_fire_time_changed(opp, now)
             await opp.async_block_till_done()
 
         # Check state

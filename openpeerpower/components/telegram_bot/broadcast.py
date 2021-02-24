@@ -6,7 +6,7 @@ from . import initialize_bot
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config):
+async def async_setup_platform(opp, config):
     """Set up the Telegram broadcast platform."""
     bot = initialize_bot(config)
 

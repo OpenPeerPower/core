@@ -6,7 +6,7 @@ from openpeerpower.helpers.entity import ToggleEntity
 from . import DOMAIN, WinkDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink platform."""
 
     for switch in pywink.get_switches():

@@ -58,7 +58,7 @@ def get_average(temp_base):
     return temp_avg
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Sense HAT sensor platform."""
     data = SenseHatData(config.get(CONF_IS_HAT_ATTACHED))
     dev = []

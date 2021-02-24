@@ -5,7 +5,7 @@ from .const import ATTR_DISCOVER_DEVICES
 from .entity import HMDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the HomeMatic switch platform."""
     if discovery_info is None:
         return

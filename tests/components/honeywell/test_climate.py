@@ -64,7 +64,7 @@ class TestHoneywell(unittest.TestCase):
         locations[0].devices_by_id.values.return_value = devices_1
         locations[1].devices_by_id.values.return_value = devices_2
 
-        result = honeywell.setup_platform.opp, config, add_entities)
+        result = honeywell.setup_platform(opp, config, add_entities)
         assert result
         assert mock_sc.call_count == 1
         assert mock_sc.call_args == mock.call("user", "pass")
@@ -88,12 +88,12 @@ class TestHoneywell(unittest.TestCase):
         }
 
         mock_sc.side_effect = somecomfort.AuthError
-        result = honeywell.setup_platform.opp, config, add_entities)
+        result = honeywell.setup_platform(opp, config, add_entities)
         assert not result
         assert not add_entities.called
 
         mock_sc.side_effect = somecomfort.SomeComfortError
-        result = honeywell.setup_platform.opp, config, add_entities)
+        result = honeywell.setup_platform(opp, config, add_entities)
         assert not result
         assert not add_entities.called
 
@@ -128,7 +128,7 @@ class TestHoneywell(unittest.TestCase):
         mock_sc.return_value = mock.MagicMock(locations_by_id=locations)
        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
-        assert honeywell.setup_platform.opp, config, add_entities) is True
+        assert honeywell.setup_platform(opp, config, add_entities) is True
 
         return mock_ht.call_args_list, mock_sc
 
@@ -168,7 +168,7 @@ class TestHoneywell(unittest.TestCase):
         mock_evo.return_value.temperatures.return_value = [{"id": "foo"}, {"id": "bar"}]
        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
-        assert honeywell.setup_platform.opp, config, add_entities)
+        assert honeywell.setup_platform(opp, config, add_entities)
         assert mock_evo.call_count == 1
         assert mock_evo.call_args == mock.call("user", "pass")
         assert mock_evo.return_value.temperatures.call_count == 1
@@ -197,7 +197,7 @@ class TestHoneywell(unittest.TestCase):
 
        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
-        assert honeywell.setup_platform.opp, config, add_entities)
+        assert honeywell.setup_platform(opp, config, add_entities)
         mock_round.assert_has_calls(
             [
                 mock.call(mock_evo.return_value, "foo", True, 16),
@@ -232,7 +232,7 @@ class TestHoneywell(unittest.TestCase):
         )
         add_entities = mock.MagicMock()
        opp = mock.MagicMock()
-        assert not honeywell.setup_platform.opp, config, add_entities)
+        assert not honeywell.setup_platform(opp, config, add_entities)
 
 
 class TestHoneywellRound(unittest.TestCase):

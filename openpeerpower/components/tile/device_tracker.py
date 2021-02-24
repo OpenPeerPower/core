@@ -25,7 +25,7 @@ DEFAULT_ATTRIBUTION = "Data provided by Tile"
 DEFAULT_ICON = "mdi:view-grid"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Tile device trackers."""
     async_add_entities(
         [
@@ -37,7 +37,7 @@ async def async_setup_entry.opp, entry, async_add_entities):
     )
 
 
-async def async_setup_scanner.opp, config, async_see, discovery_info=None):
+async def async_setup_scanner(opp, config, async_see, discovery_info=None):
     """Detect a legacy configuration and import it."""
     opp.async_create_task(
         opp.config_entries.flow.async_init(

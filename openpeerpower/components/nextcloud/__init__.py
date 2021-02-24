@@ -114,10 +114,10 @@ def setup(opp, config):
         opp.data[DOMAIN]["instance"] = conf[CONF_URL]
 
     # Update sensors on time interval
-    track_time_interval.opp, nextcloud_update, conf[CONF_SCAN_INTERVAL])
+    track_time_interval(opp, nextcloud_update, conf[CONF_SCAN_INTERVAL])
 
     for component in NEXTCLOUD_COMPONENTS:
-        discovery.load_platform.opp, component, DOMAIN, {}, config)
+        discovery.load_platform(opp, component, DOMAIN, {}, config)
 
     return True
 

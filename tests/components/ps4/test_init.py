@@ -114,7 +114,7 @@ async def test_ps4_integration_setup_opp):
     assert.opp.data[PS4_DATA].protocol is not None
 
 
-async def test_creating_entry_sets_up_media_player.opp):
+async def test_creating_entry_sets_up_media_player(opp):
     """Test setting up PS4 loads the media player."""
     mock_flow = "openpeerpower.components.ps4.PlayStation4FlowHandler.async_step_user"
     with patch(
@@ -131,13 +131,13 @@ async def test_creating_entry_sets_up_media_player.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_config_flow_entry_migrate.opp):
+async def test_config_flow_entry_migrate(opp):
     """Test that config flow entry is migrated correctly."""
     # Start with the config entry at Version 1.
     manager = opp.config_entries
     mock_entry = MOCK_ENTRY_VERSION_1
     mock_entry.add_to_manager(manager)
-    mock_e_registry = mock_registry.opp)
+    mock_e_registry = mock_registry(opp)
     mock_entity_id = f"media_player.ps4_{MOCK_UNIQUE_ID}"
     mock_e_entry = mock_e_registry.async_get_or_create(
         "media_player",
@@ -157,7 +157,7 @@ async def test_config_flow_entry_migrate.opp):
         "openpeerpower.helpers.entity_registry.async_get_registry",
         return_value=mock_e_registry,
     ):
-        await ps4.async_migrate_entry.opp, mock_entry)
+        await ps4.async_migrate_entry(opp, mock_entry)
 
     await opp.async_block_till_done()
 
@@ -182,19 +182,19 @@ async def test_config_flow_entry_migrate.opp):
 
 async def test_media_player_is_setup_opp):
     """Test media_player is setup correctly."""
-    await setup_mock_component.opp)
+    await setup_mock_component(opp)
     assert len.opp.data[PS4_DATA].devices) == 1
 
 
-async def setup_mock_component.opp):
+async def setup_mock_component(opp):
     """Set up Mock Media Player."""
     entry = MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA, version=VERSION)
-    entry.add_to_manager.opp.config_entries)
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    entry.add_to_manager(opp.config_entries)
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
     await opp.async_block_till_done()
 
 
-def test_games_reformat_to_dict.opp):
+def test_games_reformat_to_dict(opp):
     """Test old data format is converted to new format."""
     with patch(
         "openpeerpower.components.ps4.load_json",
@@ -202,7 +202,7 @@ def test_games_reformat_to_dict.opp):
     ), patch("openpeerpower.components.ps4.save_json", side_effect=MagicMock()), patch(
         "os.path.isfile", return_value=True
     ):
-        mock_games = ps4.load_games.opp, MOCK_ENTRY_ID)
+        mock_games = ps4.load_games(opp, MOCK_ENTRY_ID)
 
     # New format is a nested dict.
     assert isinstance(mock_games, dict)
@@ -217,14 +217,14 @@ def test_games_reformat_to_dict.opp):
         assert mock_data[ATTR_MEDIA_CONTENT_TYPE] == MEDIA_TYPE_GAME
 
 
-def test_load_games.opp):
+def test_load_games(opp):
     """Test that games are loaded correctly."""
     with patch(
         "openpeerpower.components.ps4.load_json", return_value=MOCK_GAMES
     ), patch("openpeerpower.components.ps4.save_json", side_effect=MagicMock()), patch(
         "os.path.isfile", return_value=True
     ):
-        mock_games = ps4.load_games.opp, MOCK_ENTRY_ID)
+        mock_games = ps4.load_games(opp, MOCK_ENTRY_ID)
 
     assert isinstance(mock_games, dict)
 
@@ -236,14 +236,14 @@ def test_load_games.opp):
     assert mock_data[ATTR_MEDIA_CONTENT_TYPE] == MEDIA_TYPE_GAME
 
 
-def test_loading_games_returns_dict.opp):
+def test_loading_games_returns_dict(opp):
     """Test that loading games always returns a dict."""
     with patch(
         "openpeerpower.components.ps4.load_json", side_effect=OpenPeerPowerError
     ), patch("openpeerpower.components.ps4.save_json", side_effect=MagicMock()), patch(
         "os.path.isfile", return_value=True
     ):
-        mock_games = ps4.load_games.opp, MOCK_ENTRY_ID)
+        mock_games = ps4.load_games(opp, MOCK_ENTRY_ID)
 
     assert isinstance(mock_games, dict)
     assert not mock_games
@@ -253,7 +253,7 @@ def test_loading_games_returns_dict.opp):
     ), patch("openpeerpower.components.ps4.save_json", side_effect=MagicMock()), patch(
         "os.path.isfile", return_value=True
     ):
-        mock_games = ps4.load_games.opp, MOCK_ENTRY_ID)
+        mock_games = ps4.load_games(opp, MOCK_ENTRY_ID)
 
     assert isinstance(mock_games, dict)
     assert not mock_games
@@ -261,15 +261,15 @@ def test_loading_games_returns_dict.opp):
     with patch("openpeerpower.components.ps4.load_json", return_value=[]), patch(
         "openpeerpower.components.ps4.save_json", side_effect=MagicMock()
     ), patch("os.path.isfile", return_value=True):
-        mock_games = ps4.load_games.opp, MOCK_ENTRY_ID)
+        mock_games = ps4.load_games(opp, MOCK_ENTRY_ID)
 
     assert isinstance(mock_games, dict)
     assert not mock_games
 
 
-async def test_send_command.opp):
+async def test_send_command(opp):
     """Test send_command service."""
-    await setup_mock_component.opp)
+    await setup_mock_component(opp)
 
     mock_func = "{}{}".format(
         "openpeerpower.components.ps4", ".media_player.PS4Device.async_send_command"

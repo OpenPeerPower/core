@@ -39,8 +39,8 @@ async def async_get_conditions(
     opp: OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions for Humidifier devices."""
-    registry = await entity_registry.async_get_registry.opp)
-    conditions = await toggle_entity.async_get_conditions.opp, device_id, DOMAIN)
+    registry = await entity_registry.async_get_registry(opp)
+    conditions = await toggle_entity.async_get_conditions(opp, device_id, DOMAIN)
 
     # Get all the integrations entities for this device
     for entry in entity_registry.async_entries_for_device(registry, device_id):
@@ -76,7 +76,7 @@ def async_condition_from_config(
     else:
         return toggle_entity.async_condition_from_config(config)
 
-    def test_is_state.opp: OpenPeerPower, variables: TemplateVarsType) -> bool:
+    def test_is_state(opp: OpenPeerPower, variables: TemplateVarsType) -> bool:
         """Test if an entity is a certain state."""
         state = opp.states.get(config[ATTR_ENTITY_ID])
         return state and state.attributes.get(attribute) == config[attribute]
@@ -84,7 +84,7 @@ def async_condition_from_config(
     return test_is_state
 
 
-async def async_get_condition_capabilities.opp, config):
+async def async_get_condition_capabilities(opp, config):
     """List condition capabilities."""
     state = opp.states.get(config[CONF_ENTITY_ID])
     condition_type = config[CONF_TYPE]
@@ -101,4 +101,4 @@ async def async_get_condition_capabilities.opp, config):
 
         return {"extra_fields": vol.Schema(fields)}
 
-    return await toggle_entity.async_get_condition_capabilities.opp, config)
+    return await toggle_entity.async_get_condition_capabilities(opp, config)

@@ -26,25 +26,25 @@ HOME_LONGITUDE = -117.237561
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
-def setup_zone.opp):
+def setup_zone(opp):
     """Create test zone."""
     opp.loop.run_until_complete(
         async_setup_component(
@@ -62,10 +62,10 @@ def setup_zone.opp):
     )
 
 
-async def test_get_triggers.opp, device_reg, entity_reg):
+async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a device_tracker."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -87,11 +87,11 @@ async def test_get_triggers.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_if_fires_on_zone_change.opp, calls):
+async def test_if_fires_on_zone_change(opp, calls):
     """Test for enter and leave triggers firing."""
     opp.states.async_set(
         "device_tracker.entity",
@@ -173,10 +173,10 @@ async def test_if_fires_on_zone_change.opp, calls):
     )
 
 
-async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
+async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a device_tracker trigger."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},

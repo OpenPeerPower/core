@@ -16,7 +16,7 @@ FIXTURE_USER_INPUT = {CONF_USERNAME: "example@example.com", CONF_PASSWORD: "some
 UNIQUE_ID = "example@example.com"
 
 
-async def test_show_form.opp: OpenPeerPower) -> None:
+async def test_show_form(opp: OpenPeerPower) -> None:
     """Test that the setup form is served."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -72,7 +72,7 @@ async def test_connection_error(opp: OpenPeerPower) -> None:
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_full_flow_implementation.opp: OpenPeerPower) -> None:
+async def test_full_flow_implementation(opp: OpenPeerPower) -> None:
     """Test registering an integration and finishing flow works."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -149,7 +149,7 @@ async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "connection_error"}
 
 
-async def test_reauth_flow.opp: OpenPeerPower) -> None:
+async def test_reauth_flow(opp: OpenPeerPower) -> None:
     """Test reauth works."""
     with patch(
         "openpeerpower.components.ovo_energy.config_flow.OVOEnergy.authenticate",
@@ -158,7 +158,7 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
         mock_config = MockConfigEntry(
             domain=DOMAIN, unique_id=UNIQUE_ID, data=FIXTURE_USER_INPUT
         )
-        mock_config.add_to.opp.opp)
+        mock_config.add_to(opp.opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT

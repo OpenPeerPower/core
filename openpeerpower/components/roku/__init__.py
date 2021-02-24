@@ -44,7 +44,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up Roku from a config entry."""
     coordinator = RokuDataUpdateCoordinator.opp, host=entry.data[CONF_HOST])
     await coordinator.async_refresh()
@@ -62,7 +62,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -105,7 +105,7 @@ class RokuDataUpdateCoordinator(DataUpdateCoordinator[Device]):
         host: str,
     ):
         """Initialize global Roku data updater."""
-        self.roku = Roku(host=host, session=async_get_clientsession.opp))
+        self.roku = Roku(host=host, session=async_get_clientsession(opp))
 
         self.full_update_interval = timedelta(minutes=15)
         self.last_full_update = None

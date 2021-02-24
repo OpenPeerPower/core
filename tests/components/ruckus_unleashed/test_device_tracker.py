@@ -22,9 +22,9 @@ from tests.components.ruckus_unleashed import (
 )
 
 
-async def test_client_connected.opp):
+async def test_client_connected(opp):
     """Test client connected."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     future = utcnow() + timedelta(minutes=60)
     with patch(
@@ -33,7 +33,7 @@ async def test_client_connected.opp):
             TEST_CLIENT[API_MAC]: TEST_CLIENT,
         },
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
         await opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
 
@@ -41,16 +41,16 @@ async def test_client_connected.opp):
     assert test_client.state == STATE_HOME
 
 
-async def test_client_disconnected.opp):
+async def test_client_disconnected(opp):
     """Test client disconnected."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     future = utcnow() + timedelta(minutes=60)
     with patch(
         "openpeerpower.components.ruckus_unleashed.RuckusUnleashedDataUpdateCoordinator._fetch_clients",
         return_value={},
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         await opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
@@ -58,16 +58,16 @@ async def test_client_disconnected.opp):
         assert test_client.state == STATE_NOT_HOME
 
 
-async def test_clients_update_failed.opp):
+async def test_clients_update_failed(opp):
     """Test failed update."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     future = utcnow() + timedelta(minutes=60)
     with patch(
         "openpeerpower.components.ruckus_unleashed.RuckusUnleashedDataUpdateCoordinator._fetch_clients",
         side_effect=ConnectionError,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         await opp.helpers.entity_component.async_update_entity(TEST_CLIENT_ENTITY_ID)
@@ -75,12 +75,12 @@ async def test_clients_update_failed.opp):
         assert test_client.state == STATE_UNAVAILABLE
 
 
-async def test_restoring_clients.opp):
+async def test_restoring_clients(opp):
     """Test restoring existing device_tracker entities if not detected on startup."""
     entry = mock_config_entry()
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     registry.async_get_or_create(
         "device_tracker",
         DOMAIN,
@@ -105,7 +105,7 @@ async def test_restoring_clients.opp):
         "openpeerpower.components.ruckus_unleashed.RuckusUnleashedDataUpdateCoordinator._fetch_clients",
         return_value={},
     ):
-        entry.add_to.opp.opp)
+        entry.add_to(opp.opp)
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -116,7 +116,7 @@ async def test_restoring_clients.opp):
 
 async def test_client_device_setup_opp):
     """Test a client device is created."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     router_info = DEFAULT_AP_INFO[API_AP][API_ID]["1"]
 

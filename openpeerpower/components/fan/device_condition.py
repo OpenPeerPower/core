@@ -34,7 +34,7 @@ async def async_get_conditions(
     opp: OpenPeerPower, device_id: str
 ) -> List[Dict[str, str]]:
     """List device conditions for Fan devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     conditions = []
 
     # Get all the integrations entities for this device
@@ -77,7 +77,7 @@ def async_condition_from_config(
         state = STATE_OFF
 
     @callback
-    def test_is_state.opp: OpenPeerPower, variables: TemplateVarsType) -> bool:
+    def test_is_state(opp: OpenPeerPower, variables: TemplateVarsType) -> bool:
         """Test if an entity is a certain state."""
         return condition.state.opp, config[ATTR_ENTITY_ID], state)
 

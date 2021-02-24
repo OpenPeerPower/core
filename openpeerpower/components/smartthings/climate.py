@@ -81,7 +81,7 @@ UNIT_MAP = {"C": TEMP_CELSIUS, "F": TEMP_FAHRENHEIT}
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add climate entities for a config entry."""
     ac_capabilities = [
         Capability.air_conditioner_mode,

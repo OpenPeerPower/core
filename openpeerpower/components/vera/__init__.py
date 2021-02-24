@@ -81,7 +81,7 @@ async def async_setup_opp: OpenPeerPower, base_config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Do setup of vera."""
     # Use options entered during initial config flow or provided from configuration.yml
     if config_entry.data.get(CONF_LIGHTS) or config_entry.data.get(CONF_EXCLUDE):
@@ -140,7 +140,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         config_entry=config_entry,
     )
 
-    set_controller_data.opp, config_entry, controller_data)
+    set_controller_data(opp, config_entry, controller_data)
 
     # Forward the config data to the necessary platforms.
     for platform in get_configured_platforms(controller_data):
@@ -158,9 +158,9 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload Withings config entry."""
-    controller_data: ControllerData = get_controller_data.opp, config_entry)
+    controller_data: ControllerData = get_controller_data(opp, config_entry)
 
     tasks = [
         opp.config_entries.async_forward_entry_unload(config_entry, platform)

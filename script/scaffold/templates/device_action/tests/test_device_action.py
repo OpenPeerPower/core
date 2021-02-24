@@ -17,21 +17,21 @@ from tests.common import (
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
-async def test_get_actions.opp, device_reg, entity_reg):
+async def test_get_actions(opp, device_reg, entity_reg):
     """Test we get the expected actions from a NEW_DOMAIN."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -51,11 +51,11 @@ async def test_get_actions.opp, device_reg, entity_reg):
             "entity_id": "NEW_DOMAIN.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_action.opp):
+async def test_action(opp):
     """Test for turn_on and turn_off actions."""
     assert await async_setup_component(
         opp,
@@ -90,8 +90,8 @@ async def test_action.opp):
         },
     )
 
-    turn_off_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_off")
-    turn_on_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_on")
+    turn_off_calls = async_mock_service(opp, "NEW_DOMAIN", "turn_off")
+    turn_on_calls = async_mock_service(opp, "NEW_DOMAIN", "turn_on")
 
     opp.bus.async_fire("test_event_turn_off")
     await opp.async_block_till_done()

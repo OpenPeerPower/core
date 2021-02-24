@@ -37,7 +37,7 @@ async def test_config_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     assert not await opp.config_entries.async_setup(entry_id=config_entry.entry_id)
     await opp.async_block_till_done()
@@ -66,7 +66,7 @@ async def test_config_no_update(ismartgateapi_mock, opp: OpenPeerPower) -> None:
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     assert not await opp.config_entries.async_setup(entry_id=config_entry.entry_id)
     await opp.async_block_till_done()
@@ -78,7 +78,7 @@ async def test_config_no_update(ismartgateapi_mock, opp: OpenPeerPower) -> None:
     }
 
 
-async def test_auth_fail.opp: OpenPeerPower) -> None:
+async def test_auth_fail(opp: OpenPeerPower) -> None:
     """Test authorization failures."""
 
     coordinator_mock: DeviceDataUpdateCoordinator = MagicMock(
@@ -87,10 +87,10 @@ async def test_auth_fail.opp: OpenPeerPower) -> None:
     coordinator_mock.last_update_success = False
 
     config_entry = MockConfigEntry()
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.gogogate2.get_data_update_coordinator",
         return_value=coordinator_mock,
     ), pytest.raises(ConfigEntryNotReady):
-        await async_setup_entry.opp, config_entry)
+        await async_setup_entry(opp, config_entry)

@@ -11,7 +11,7 @@ from .const import DOMAIN, SWITCH_TYPES
 _LOGGING = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Transmission switch."""
 
     tm_client = opp.data[DOMAIN][config_entry.entry_id]
@@ -99,7 +99,7 @@ class TransmissionSwitch(ToggleEntity):
     def _schedule_immediate_update(self):
         self.async_schedule_update_op_state(True)
 
-    async def will_remove_from.opp(self):
+    async def will_remove_from(opp(self):
         """Unsubscribe from update dispatcher."""
         if self.unsub_update:
             self.unsub_update()

@@ -24,7 +24,7 @@ def mock_dev_track(mock_device_tracker_conf):
 @pytest.fixture
 async def locative_client(loop, opp, opp_client):
     """Locative mock client."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
     await opp.async_block_till_done()
 
     with patch("openpeerpower.components.device_tracker.legacy.update_config"):
@@ -32,7 +32,7 @@ async def locative_client(loop, opp, opp_client):
 
 
 @pytest.fixture
-async def webhook_id.opp, locative_client):
+async def webhook_id(opp, locative_client):
     """Initialize the Geofency component and get the webhook_id."""
     await async_process_op_core_config(
         opp,
@@ -110,7 +110,7 @@ async def test_missing_data(locative_client, webhook_id):
     assert req.status == HTTP_UNPROCESSABLE_ENTITY
 
 
-async def test_enter_and_exit.opp, locative_client, webhook_id):
+async def test_enter_and_exit(opp, locative_client, webhook_id):
     """Test when there is a known zone."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -179,7 +179,7 @@ async def test_enter_and_exit.opp, locative_client, webhook_id):
     assert state_name == "work"
 
 
-async def test_exit_after_enter.opp, locative_client, webhook_id):
+async def test_exit_after_enter(opp, locative_client, webhook_id):
     """Test when an exit message comes after an enter message."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -221,7 +221,7 @@ async def test_exit_after_enter.opp, locative_client, webhook_id):
     assert state.state == "work"
 
 
-async def test_exit_first.opp, locative_client, webhook_id):
+async def test_exit_first(opp, locative_client, webhook_id):
     """Test when an exit message is sent first on a new device."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -242,7 +242,7 @@ async def test_exit_first.opp, locative_client, webhook_id):
     assert state.state == "not_home"
 
 
-async def test_two_devices.opp, locative_client, webhook_id):
+async def test_two_devices(opp, locative_client, webhook_id):
     """Test updating two different devices."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -285,7 +285,7 @@ async def test_two_devices.opp, locative_client, webhook_id):
 @pytest.mark.xfail(
     reason="The device_tracker component does not support unloading yet."
 )
-async def test_load_unload_entry.opp, locative_client, webhook_id):
+async def test_load_unload_entry(opp, locative_client, webhook_id):
     """Test that the appropriate dispatch signals are added and removed."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -308,6 +308,6 @@ async def test_load_unload_entry.opp, locative_client, webhook_id):
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 
-    await locative.async_unload_entry.opp, entry)
+    await locative.async_unload_entry(opp, entry)
     await opp.async_block_till_done()
     assert not.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]

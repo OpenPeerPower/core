@@ -18,7 +18,7 @@ from tests.components.advantage_air import (
 )
 
 
-async def test_sensor_platform.opp, aioclient_mock):
+async def test_sensor_platform(opp, aioclient_mock):
     """Test sensor platform."""
 
     aioclient_mock.get(

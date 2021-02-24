@@ -83,9 +83,9 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Somfy MyLink from a config entry."""
-    _async_import_options_from_data_if_missing.opp, entry)
+    _async_import_options_from_data_if_missing(opp, entry)
 
     config = entry.data
     somfy_mylink = SomfyMyLinkSynergy(
@@ -129,13 +129,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 
 
 @callback
-def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: ConfigEntry):
+def _async_import_options_from_data_if_missing(opp: OpenPeerPower, entry: ConfigEntry):
     options = dict(entry.options)
     data = dict(entry.data)
     modified = False
@@ -177,7 +177,7 @@ def _async_migrate_entity_config(
     opp.config_entries.async_update_entry(entry, data=entry.data, options=options)
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

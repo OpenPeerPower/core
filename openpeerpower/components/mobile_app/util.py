@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 @callback
-def webhook_id_from_device_id.opp, device_id: str) -> Optional[str]:
+def webhook_id_from_device_id(opp, device_id: str) -> Optional[str]:
     """Get webhook ID from device ID."""
     if DOMAIN not in.opp.data:
         return None
@@ -31,7 +31,7 @@ def webhook_id_from_device_id.opp, device_id: str) -> Optional[str]:
 
 
 @callback
-def supports_push.opp, webhook_id: str) -> bool:
+def supports_push(opp, webhook_id: str) -> bool:
     """Return if push notifications is supported."""
     config_entry = opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
     app_data = config_entry.data[ATTR_APP_DATA]
@@ -39,7 +39,7 @@ def supports_push.opp, webhook_id: str) -> bool:
 
 
 @callback
-def get_notify_service.opp, webhook_id: str) -> Optional[str]:
+def get_notify_service(opp, webhook_id: str) -> Optional[str]:
     """Return the notify service for this webhook ID."""
     notify_service: "MobileAppNotificationService" = opp.data[DOMAIN][DATA_NOTIFY]
 

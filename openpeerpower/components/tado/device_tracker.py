@@ -33,7 +33,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Return a Tado scanner."""
     scanner = TadoDeviceScanner.opp, config[DOMAIN])
     return scanner if scanner.success_init else None

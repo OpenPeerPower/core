@@ -27,17 +27,17 @@ PRESET_MODES = [FAN_MODE_AUTO, FAN_MODE_SLEEP]
 SPEED_RANGE = (1, 3)  # off is not included
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the VeSync fan platform."""
 
     async def async_discover(devices):
         """Add new devices to platform."""
         _async_setup_entities(devices, async_add_entities)
 
-    disp = async_dispatcher_connect.opp, VS_DISCOVERY.format(VS_FANS), async_discover)
+    disp = async_dispatcher_connect(opp, VS_DISCOVERY.format(VS_FANS), async_discover)
     opp.data[DOMAIN][VS_DISPATCHERS].append(disp)
 
-    _async_setup_entities.opp.data[DOMAIN][VS_FANS], async_add_entities)
+    _async_setup_entities(opp.data[DOMAIN][VS_FANS], async_add_entities)
 
 
 @callback

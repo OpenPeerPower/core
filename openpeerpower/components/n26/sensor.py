@@ -23,7 +23,7 @@ ICON_CARD = "mdi:credit-card"
 ICON_SPACE = "mdi:crop-square"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the N26 sensor platform."""
     if discovery_info is None:
         return

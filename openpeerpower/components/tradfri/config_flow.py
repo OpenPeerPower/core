@@ -173,10 +173,10 @@ async def authenticate.opp, host, security_code):
     finally:
         await api_factory.shutdown()
 
-    return await get_gateway_info.opp, host, identity, key)
+    return await get_gateway_info(opp, host, identity, key)
 
 
-async def get_gateway_info.opp, host, identity, key):
+async def get_gateway_info(opp, host, identity, key):
     """Return info for the gateway."""
 
     try:

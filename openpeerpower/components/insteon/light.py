@@ -16,7 +16,7 @@ from .utils import async_add_insteon_entities
 MAX_BRIGHTNESS = 255
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Insteon lights from a config entry."""
 
     @callback
@@ -27,7 +27,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         )
 
     signal = f"{SIGNAL_ADD_ENTITIES}_{LIGHT_DOMAIN}"
-    async_dispatcher_connect.opp, signal, async_add_insteon_light_entities)
+    async_dispatcher_connect(opp, signal, async_add_insteon_light_entities)
     async_add_insteon_light_entities()
 
 

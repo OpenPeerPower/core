@@ -276,8 +276,8 @@ def mock_aiohttp_client():
     """Context manager to mock aiohttp client."""
     mocker = AiohttpClientMocker()
 
-    def create_session.opp, *args, **kwargs):
-        session = mocker.create_session.opp.loop)
+    def create_session(opp, *args, **kwargs):
+        session = mocker.create_session(opp.loop)
 
         async def close_session(event):
             """Close session."""

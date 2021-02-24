@@ -142,14 +142,14 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
 @callback
-def _async_save_refresh_token.opp, config_entry, token):
+def _async_save_refresh_token(opp, config_entry, token):
     """Save a refresh token to the config entry."""
     opp.config_entries.async_update_entry(
         config_entry, data={**config_entry.data, CONF_TOKEN: token}
     )
 
 
-async def async_get_client_id.opp):
+async def async_get_client_id(opp):
     """Get a client ID (based on the OPP unique ID) for the SimpliSafe API.
 
     Note that SimpliSafe requires full, "dashed" versions of UUIDs.
@@ -158,9 +158,9 @@ async def async_get_client_id.opp):
     return str(UUID.opp_id))
 
 
-async def async_register_base_station.opp, system, config_entry_id):
+async def async_register_base_station(opp, system, config_entry_id):
     """Register a new bridge."""
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=config_entry_id,
         identifiers={(DOMAIN, system.serial)},
@@ -176,7 +176,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up SimpliSafe as config entry."""
     opp.data[DOMAIN][DATA_LISTENER][config_entry.entry_id] = []
 
@@ -196,10 +196,10 @@ async def async_setup_entry.opp, config_entry):
     if entry_updates:
         opp.config_entries.async_update_entry(config_entry, **entry_updates)
 
-    _verify_domain_control = verify_domain_control.opp, DOMAIN)
+    _verify_domain_control = verify_domain_control(opp, DOMAIN)
 
-    client_id = await async_get_client_id.opp)
-    websession = aiohttp_client.async_get_clientsession.opp)
+    client_id = await async_get_client_id(opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
 
     try:
         api = await API.login_via_token(
@@ -212,7 +212,7 @@ async def async_setup_entry.opp, config_entry):
         LOGGER.error("Config entry failed: %s", err)
         raise ConfigEntryNotReady from err
 
-    _async_save_refresh_token.opp, config_entry, api.refresh_token)
+    _async_save_refresh_token(opp, config_entry, api.refresh_token)
 
     simplisafe = opp.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = SimpliSafe(
         opp. api, config_entry
@@ -313,7 +313,7 @@ async def async_setup_entry.opp, config_entry):
             SERVICE_SET_SYSTEM_PROPERTIES_SCHEMA,
         ),
     ]:
-        async_register_admin_service.opp, DOMAIN, service, method, schema=schema)
+        async_register_admin_service(opp, DOMAIN, service, method, schema=schema)
 
     opp.data[DOMAIN][DATA_LISTENER][config_entry.entry_id].append(
         config_entry.add_update_listener(async_reload_entry)
@@ -322,7 +322,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a SimpliSafe config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -340,7 +340,7 @@ async def async_unload_entry.opp, entry):
     return unload_ok
 
 
-async def async_reload_entry.opp, config_entry):
+async def async_reload_entry(opp, config_entry):
     """Handle an options update."""
     await opp.config_entries.async_reload(config_entry.entry_id)
 

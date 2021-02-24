@@ -14,7 +14,7 @@ ATTR_LOCATION_ID = "location_id"
 NAME_AWAY_MODE = "Water Away Mode"
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Set up the StreamLabsWater mode sensor."""
     client = opp.data[STREAMLABSWATER_DOMAIN]["client"]
     location_id = opp.data[STREAMLABSWATER_DOMAIN]["location_id"]

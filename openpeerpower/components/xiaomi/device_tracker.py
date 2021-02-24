@@ -23,7 +23,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Validate the configuration and return a Xiaomi Device Scanner."""
     scanner = XiaomiDeviceScanner(config[DOMAIN])
 

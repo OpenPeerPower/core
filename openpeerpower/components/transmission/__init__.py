@@ -111,7 +111,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the Transmission Component."""
     client = TransmissionClient.opp, config_entry)
     opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
@@ -122,7 +122,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload Transmission Entry from config_entry."""
     client = opp.data[DOMAIN].pop(config_entry.entry_id)
     if client.unsub_timer:
@@ -140,7 +140,7 @@ async def async_unload_entry.opp, config_entry):
     return True
 
 
-async def get_api.opp, entry):
+async def get_api(opp, entry):
     """Get Transmission client."""
     host = entry[CONF_HOST]
     port = entry[CONF_PORT]
@@ -331,7 +331,7 @@ class TransmissionClient:
         )
 
     @staticmethod
-    async def async_options_updated.opp, entry):
+    async def async_options_updated(opp, entry):
         """Triggered by config entry options updates."""
         tm_client = opp.data[DOMAIN][entry.entry_id]
         tm_client.set_scan_interval(entry.options[CONF_SCAN_INTERVAL])

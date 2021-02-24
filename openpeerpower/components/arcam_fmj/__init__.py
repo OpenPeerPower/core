@@ -49,7 +49,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: config_entries.ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: config_entries.ConfigEntry):
     """Set up config entry."""
     entries = opp.data[DOMAIN_DATA_ENTRIES]
     tasks = opp.data[DOMAIN_DATA_TASKS]
@@ -57,7 +57,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: config_entries.Config
     client = Client(entry.data[CONF_HOST], entry.data[CONF_PORT])
     entries[entry.entry_id] = client
 
-    task = asyncio.create_task(_run_client.opp, client, DEFAULT_SCAN_INTERVAL))
+    task = asyncio.create_task(_run_client(opp, client, DEFAULT_SCAN_INTERVAL))
     tasks[entry.entry_id] = task
 
     opp.async_create_task(
@@ -67,7 +67,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: config_entries.Config
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Cleanup before removing config entry."""
     await opp.config_entries.async_forward_entry_unload(entry, "media_player")
 
@@ -79,7 +79,7 @@ async def async_unload_entry.opp, entry):
     return True
 
 
-async def _run_client.opp, client, interval):
+async def _run_client(opp, client, interval):
     def _listen(_):
         opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_CLIENT_DATA, client.host)
 

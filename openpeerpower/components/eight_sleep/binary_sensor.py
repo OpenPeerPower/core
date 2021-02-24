@@ -8,7 +8,7 @@ from . import CONF_BINARY_SENSORS, DATA_EIGHT, NAME_MAP, EightSleepHeatEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the eight sleep binary sensor."""
     if discovery_info is None:
         return

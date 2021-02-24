@@ -72,12 +72,12 @@ DEMO_VACUUM_NONE = "4_Fourth_floor"
 DEMO_VACUUM_STATE = "5_Fifth_floor"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Demo config entry."""
-    await async_setup_platform.opp, {}, async_add_entities)
+    await async_setup_platform(opp, {}, async_add_entities)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Demo vacuums."""
     async_add_entities(
         [

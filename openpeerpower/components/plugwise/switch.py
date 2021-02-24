@@ -13,13 +13,13 @@ from .gateway import SmileGateway
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Smile switches from a config entry."""
     # PLACEHOLDER USB entry setup
-    return await async_setup_entry_gateway.opp, config_entry, async_add_entities)
+    return await async_setup_entry_gateway(opp, config_entry, async_add_entities)
 
 
-async def async_setup_entry_gateway.opp, config_entry, async_add_entities):
+async def async_setup_entry_gateway(opp, config_entry, async_add_entities):
     """Set up the Smile switches from a config entry."""
     api = opp.data[DOMAIN][config_entry.entry_id]["api"]
     coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]

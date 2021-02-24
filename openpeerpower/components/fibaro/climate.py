@@ -93,7 +93,7 @@ OP_OPMODES_HVAC = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Perform the setup for Fibaro controller devices."""
     if discovery_info is None:
         return

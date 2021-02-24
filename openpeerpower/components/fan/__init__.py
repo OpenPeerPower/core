@@ -109,7 +109,7 @@ class NotValidPresetModeError(ValueError):
 
 
 @bind.opp
-def is_on.opp, entity_id: str) -> bool:
+def is_on(opp, entity_id: str) -> bool:
     """Return if the fans are on based on the statemachine."""
     state = opp.states.get(entity_id)
     if ATTR_SPEED in state.attributes:
@@ -200,12 +200,12 @@ async def async_setup(opp, config: dict):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 

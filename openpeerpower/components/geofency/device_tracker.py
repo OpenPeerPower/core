@@ -10,7 +10,7 @@ from openpeerpower.helpers.restore_state import RestoreEntity
 from . import DOMAIN as GF_DOMAIN, TRACKER_UPDATE
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Geofency config entry."""
 
     @callback
@@ -25,10 +25,10 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     opp.data[GF_DOMAIN]["unsub_device_tracker"][
         config_entry.entry_id
-    ] = async_dispatcher_connect.opp, TRACKER_UPDATE, _receive_data)
+    ] = async_dispatcher_connect(opp, TRACKER_UPDATE, _receive_data)
 
     # Restore previously loaded devices
-    dev_reg = await device_registry.async_get_registry.opp)
+    dev_reg = await device_registry.async_get_registry(opp)
     dev_ids = {
         identifier[1]
         for device in dev_reg.devices.values()
@@ -114,9 +114,9 @@ class GeofencyEntity(TrackerEntity, RestoreEntity):
         attr = state.attributes
         self._gps = (attr.get(ATTR_LATITUDE), attr.get(ATTR_LONGITUDE))
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Clean up after entity before removal."""
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
         self._unsub_dispatcher()
         self.opp.data[GF_DOMAIN]["devices"].remove(self._unique_id)
 

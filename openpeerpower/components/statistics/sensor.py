@@ -67,10 +67,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Statistics sensor."""
 
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     entity_id = config.get(CONF_ENTITY_ID)
     name = config.get(CONF_NAME)
@@ -325,7 +325,7 @@ class StatisticsSensor(Entity):
 
         _LOGGER.debug("%s: initializing values from the database", self.entity_id)
 
-        with session_scope.opp=self.opp) as session:
+        with session_scope(opp=self.opp) as session:
             query = session.query(States).filter(
                 States.entity_id == self._entity_id.lower()
             )

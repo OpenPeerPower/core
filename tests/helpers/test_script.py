@@ -44,11 +44,11 @@ def async_watch_for_action(script_obj, message):
     return flag
 
 
-async def test_firing_event_basic.opp, caplog):
+async def test_firing_event_basic(opp, caplog):
     """Test the firing of events."""
     event = "test_event"
     context = Context()
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
 
     alias = "event step"
     sequence = cv.SCRIPT_SCHEMA(
@@ -69,11 +69,11 @@ async def test_firing_event_basic.opp, caplog):
     assert f"Executing step {alias}" in caplog.text
 
 
-async def test_firing_event_template.opp):
+async def test_firing_event_template(opp):
     """Test the firing of events."""
     event = "test_event"
     context = Context()
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
 
     sequence = cv.SCRIPT_SCHEMA(
         {
@@ -111,10 +111,10 @@ async def test_firing_event_template.opp):
     }
 
 
-async def test_calling_service_basic.opp, caplog):
+async def test_calling_service_basic(opp, caplog):
     """Test the calling of a service."""
     context = Context()
-    calls = async_mock_service.opp, "test", "script")
+    calls = async_mock_service(opp, "test", "script")
 
     alias = "service step"
     sequence = cv.SCRIPT_SCHEMA(
@@ -131,10 +131,10 @@ async def test_calling_service_basic.opp, caplog):
     assert f"Executing step {alias}" in caplog.text
 
 
-async def test_calling_service_template.opp):
+async def test_calling_service_template(opp):
     """Test the calling of a service."""
     context = Context()
-    calls = async_mock_service.opp, "test", "script")
+    calls = async_mock_service(opp, "test", "script")
 
     sequence = cv.SCRIPT_SCHEMA(
         {
@@ -165,10 +165,10 @@ async def test_calling_service_template.opp):
     assert calls[0].data.get("hello") == "world"
 
 
-async def test_data_template_with_templated_key.opp):
+async def test_data_template_with_templated_key(opp):
     """Test the calling of a service with a data_template with a templated key."""
     context = Context()
-    calls = async_mock_service.opp, "test", "script")
+    calls = async_mock_service(opp, "test", "script")
 
     sequence = cv.SCRIPT_SCHEMA(
         {"service": "test.script", "data_template": {"{{ hello_var }}": "world"}}
@@ -185,7 +185,7 @@ async def test_data_template_with_templated_key.opp):
     assert "hello" in calls[0].data
 
 
-async def test_multiple_runs_no_wait.opp):
+async def test_multiple_runs_no_wait(opp):
     """Test multiple runs with no wait in script."""
     logger = logging.getLogger("TEST")
     calls = []
@@ -258,10 +258,10 @@ async def test_multiple_runs_no_wait.opp):
     assert len(calls) == 4
 
 
-async def test_activating_scene.opp, caplog):
+async def test_activating_scene(opp, caplog):
     """Test the activation of a scene."""
     context = Context()
-    calls = async_mock_service.opp, scene.DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, scene.DOMAIN, SERVICE_TURN_ON)
 
     alias = "scene step"
     sequence = cv.SCRIPT_SCHEMA({"alias": alias, "scene": "scene.hello"})
@@ -277,12 +277,12 @@ async def test_activating_scene.opp, caplog):
 
 
 @pytest.mark.parametrize("count", [1, 3])
-async def test_stop_no_wait.opp, count):
+async def test_stop_no_wait(opp, count):
     """Test stopping script."""
     service_started_sem = asyncio.Semaphore(0)
     finish_service_event = asyncio.Event()
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
 
     async def async_simulate_long_service(service):
         """Simulate a service that takes a not insignificant time."""
@@ -327,7 +327,7 @@ async def test_stop_no_wait.opp, count):
     assert len(events) == 0
 
 
-async def test_delay_basic.opp):
+async def test_delay_basic(opp):
     """Test the delay."""
     delay_alias = "delay step"
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": 5}, "alias": delay_alias})
@@ -344,17 +344,17 @@ async def test_delay_basic.opp):
         await script_obj.async_stop()
         raise
     else:
-        async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=5))
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert script_obj.last_action is None
 
 
-async def test_multiple_runs_delay.opp):
+async def test_multiple_runs_delay(opp):
     """Test multiple runs with delay in script."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     delay = timedelta(seconds=5)
     sequence = cv.SCRIPT_SCHEMA(
         [
@@ -384,7 +384,7 @@ async def test_multiple_runs_delay.opp):
         delay_started_flag = async_watch_for_action(script_obj, "delay run 2")
         opp.async_create_task(script_obj.async_run(context=Context()))
         await asyncio.wait_for(delay_started_flag.wait(), 1)
-        async_fire_time_changed.opp, dt_util.utcnow() + delay)
+        async_fire_time_changed(opp, dt_util.utcnow() + delay)
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
@@ -394,7 +394,7 @@ async def test_multiple_runs_delay.opp):
         assert events[-1].data["value"] == 2
 
 
-async def test_delay_template_ok.opp):
+async def test_delay_template_ok(opp):
     """Test the delay as a template."""
     sequence = cv.SCRIPT_SCHEMA({"delay": "00:00:{{ 5 }}"})
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
@@ -409,16 +409,16 @@ async def test_delay_template_ok.opp):
         await script_obj.async_stop()
         raise
     else:
-        async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=5))
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
 
 
-async def test_delay_template_invalid.opp, caplog):
+async def test_delay_template_invalid(opp, caplog):
     """Test the delay as a template that fails."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA(
         [
             {"event": event},
@@ -442,7 +442,7 @@ async def test_delay_template_invalid.opp, caplog):
     assert len(events) == 1
 
 
-async def test_delay_template_complex_ok.opp):
+async def test_delay_template_complex_ok(opp):
     """Test the delay with a working complex template."""
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": "{{ 5 }}"}})
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
@@ -456,16 +456,16 @@ async def test_delay_template_complex_ok.opp):
         await script_obj.async_stop()
         raise
     else:
-        async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=5))
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
 
 
-async def test_delay_template_complex_invalid.opp, caplog):
+async def test_delay_template_complex_invalid(opp, caplog):
     """Test the delay with a complex template that fails."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA(
         [
             {"event": event},
@@ -489,10 +489,10 @@ async def test_delay_template_complex_invalid.opp, caplog):
     assert len(events) == 1
 
 
-async def test_cancel_delay.opp):
+async def test_cancel_delay(opp):
     """Test the cancelling while the delay is present."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA([{"delay": {"seconds": 5}}, {"event": event}])
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
     delay_started_flag = async_watch_for_action(script_obj, "delay")
@@ -513,7 +513,7 @@ async def test_cancel_delay.opp):
 
         # Make sure the script is really stopped.
 
-        async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=5))
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
@@ -521,7 +521,7 @@ async def test_cancel_delay.opp):
 
 
 @pytest.mark.parametrize("action_type", ["template", "trigger"])
-async def test_wait_basic.opp, action_type):
+async def test_wait_basic(opp, action_type):
     """Test wait actions."""
     wait_alias = "wait step"
     action = {"alias": wait_alias}
@@ -555,7 +555,7 @@ async def test_wait_basic.opp, action_type):
         assert script_obj.last_action is None
 
 
-async def test_wait_for_trigger_variables.opp):
+async def test_wait_for_trigger_variables(opp):
     """Test variables are passed to wait_for_trigger action."""
     context = Context()
     wait_alias = "wait step"
@@ -588,7 +588,7 @@ async def test_wait_for_trigger_variables.opp):
         opp.states.async_set("switch.test", "off")
         # the script task +  2 tasks created by wait_for_trigger script step
         await opp.async_wait_for_task_count(3)
-        async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
         await opp.async_block_till_done()
     except (AssertionError, asyncio.TimeoutError):
         await script_obj.async_stop()
@@ -599,7 +599,7 @@ async def test_wait_for_trigger_variables.opp):
 
 
 @pytest.mark.parametrize("action_type", ["template", "trigger"])
-async def test_wait_basic_times_out.opp, action_type):
+async def test_wait_basic_times_out(opp, action_type):
     """Test wait actions times out when the action does not happen."""
     wait_alias = "wait step"
     action = {"alias": wait_alias}
@@ -634,10 +634,10 @@ async def test_wait_basic_times_out.opp, action_type):
 
 
 @pytest.mark.parametrize("action_type", ["template", "trigger"])
-async def test_multiple_runs_wait.opp, action_type):
+async def test_multiple_runs_wait(opp, action_type):
     """Test multiple runs with wait in script."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     if action_type == "template":
         action = {"wait_template": "{{ states.switch.test.state == 'off' }}"}
     else:
@@ -688,10 +688,10 @@ async def test_multiple_runs_wait.opp, action_type):
 
 
 @pytest.mark.parametrize("action_type", ["template", "trigger"])
-async def test_cancel_wait.opp, action_type):
+async def test_cancel_wait(opp, action_type):
     """Test the cancelling while wait is present."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     if action_type == "template":
         action = {"wait_template": "{{ states.switch.test.state == 'off' }}"}
     else:
@@ -730,10 +730,10 @@ async def test_cancel_wait.opp, action_type):
         assert len(events) == 0
 
 
-async def test_wait_template_not_schedule.opp):
+async def test_wait_template_not_schedule(opp):
     """Test the wait template with correct condition."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA(
         [
             {"event": event},
@@ -755,10 +755,10 @@ async def test_wait_template_not_schedule.opp):
     "timeout_param", [5, "{{ 5 }}", {"seconds": 5}, {"seconds": "{{ 5 }}"}]
 )
 @pytest.mark.parametrize("action_type", ["template", "trigger"])
-async def test_wait_timeout.opp, caplog, timeout_param, action_type):
+async def test_wait_timeout(opp, caplog, timeout_param, action_type):
     """Test the wait timeout option."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     if action_type == "template":
         action = {"wait_template": "{{ states.switch.test.state == 'off' }}"}
     else:
@@ -787,12 +787,12 @@ async def test_wait_timeout.opp, caplog, timeout_param, action_type):
         raise
     else:
         cur_time = dt_util.utcnow()
-        async_fire_time_changed.opp, cur_time + timedelta(seconds=4))
+        async_fire_time_changed(opp, cur_time + timedelta(seconds=4))
         await asyncio.sleep(0)
 
         assert len(events) == 0
 
-        async_fire_time_changed.opp, cur_time + timedelta(seconds=5))
+        async_fire_time_changed(opp, cur_time + timedelta(seconds=5))
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
@@ -809,7 +809,7 @@ async def test_wait_continue_on_timeout(
 ):
     """Test the wait continue_on_timeout option."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     if action_type == "template":
         action = {"wait_template": "{{ states.switch.test.state == 'off' }}"}
     else:
@@ -838,14 +838,14 @@ async def test_wait_continue_on_timeout(
         await script_obj.async_stop()
         raise
     else:
-        async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=5))
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
         assert len(events) == n_events
 
 
-async def test_wait_template_variables_in.opp):
+async def test_wait_template_variables_in(opp):
     """Test the wait template with input variables."""
     sequence = cv.SCRIPT_SCHEMA({"wait_template": "{{ is_state(data, 'off') }}"})
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
@@ -869,7 +869,7 @@ async def test_wait_template_variables_in.opp):
         assert not script_obj.is_running
 
 
-async def test_wait_template_with_utcnow.opp):
+async def test_wait_template_with_utcnow(opp):
     """Test the wait template with utcnow."""
     sequence = cv.SCRIPT_SCHEMA({"wait_template": "{{ utcnow().hour == 12 }}"})
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
@@ -885,7 +885,7 @@ async def test_wait_template_with_utcnow.opp):
 
         match_time = start_time.replace(hour=12)
         with patch("openpeerpower.util.dt.utcnow", return_value=match_time):
-            async_fire_time_changed.opp, match_time)
+            async_fire_time_changed(opp, match_time)
     except (AssertionError, asyncio.TimeoutError):
         await script_obj.async_stop()
         raise
@@ -894,7 +894,7 @@ async def test_wait_template_with_utcnow.opp):
         assert not script_obj.is_running
 
 
-async def test_wait_template_with_utcnow_no_match.opp):
+async def test_wait_template_with_utcnow_no_match(opp):
     """Test the wait template with utcnow that does not match."""
     sequence = cv.SCRIPT_SCHEMA({"wait_template": "{{ utcnow().hour == 12 }}"})
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
@@ -913,7 +913,7 @@ async def test_wait_template_with_utcnow_no_match.opp):
         with patch(
             "openpeerpower.util.dt.utcnow", return_value=second_non_maching_time
         ):
-            async_fire_time_changed.opp, second_non_maching_time)
+            async_fire_time_changed(opp, second_non_maching_time)
 
         with timeout(0.1):
             await opp.async_block_till_done()
@@ -926,10 +926,10 @@ async def test_wait_template_with_utcnow_no_match.opp):
 
 @pytest.mark.parametrize("mode", ["no_timeout", "timeout_finish", "timeout_not_finish"])
 @pytest.mark.parametrize("action_type", ["template", "trigger"])
-async def test_wait_variables_out.opp, mode, action_type):
+async def test_wait_variables_out(opp, mode, action_type):
     """Test the wait output variable."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     if action_type == "template":
         action = {"wait_template": "{{ states.switch.test.state == 'off' }}"}
         event_key = "completed"
@@ -971,7 +971,7 @@ async def test_wait_variables_out.opp, mode, action_type):
         raise
     else:
         if mode == "timeout_not_finish":
-            async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=5))
+            async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=5))
         else:
             opp.states.async_set("switch.test", "off")
         await opp.async_block_till_done()
@@ -993,7 +993,7 @@ async def test_wait_variables_out.opp, mode, action_type):
             assert float(remaining) == 0.0
 
 
-async def test_wait_for_trigger_bad.opp, caplog):
+async def test_wait_for_trigger_bad(opp, caplog):
     """Test bad wait_for_trigger."""
     script_obj = script.Script(
         opp,
@@ -1017,7 +1017,7 @@ async def test_wait_for_trigger_bad.opp, caplog):
     assert "Unknown error while setting up trigger" in caplog.text
 
 
-async def test_wait_for_trigger_generated_exception.opp, caplog):
+async def test_wait_for_trigger_generated_exception(opp, caplog):
     """Test bad wait_for_trigger."""
     script_obj = script.Script(
         opp,
@@ -1043,10 +1043,10 @@ async def test_wait_for_trigger_generated_exception.opp, caplog):
     assert "something bad" in caplog.text
 
 
-async def test_condition_warning.opp, caplog):
+async def test_condition_warning(opp, caplog):
     """Test warning on condition."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA(
         [
             {"event": event},
@@ -1073,10 +1073,10 @@ async def test_condition_warning.opp, caplog):
     assert len(events) == 1
 
 
-async def test_condition_basic.opp, caplog):
+async def test_condition_basic(opp, caplog):
     """Test if we can use conditions in a script."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     alias = "condition step"
     sequence = cv.SCRIPT_SCHEMA(
         [
@@ -1132,7 +1132,7 @@ async def test_condition_created_once(async_from_config, opp):
     assert len(script_obj._config_cache) == 1
 
 
-async def test_condition_all_cached.opp):
+async def test_condition_all_cached(opp):
     """Test that multiple conditions get cached."""
     sequence = cv.SCRIPT_SCHEMA(
         [
@@ -1155,10 +1155,10 @@ async def test_condition_all_cached.opp):
     assert len(script_obj._config_cache) == 2
 
 
-async def test_repeat_count.opp, caplog):
+async def test_repeat_count(opp, caplog):
     """Test repeat action w/ count option."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     count = 3
 
     alias = "condition step"
@@ -1192,10 +1192,10 @@ async def test_repeat_count.opp, caplog):
 
 
 @pytest.mark.parametrize("condition", ["while", "until"])
-async def test_repeat_condition_warning.opp, caplog, condition):
+async def test_repeat_condition_warning(opp, caplog, condition):
     """Test warning on repeat conditions."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     count = 0 if condition == "while" else 1
 
     sequence = {
@@ -1225,7 +1225,7 @@ async def test_repeat_condition_warning.opp, caplog, condition):
     caplog.set_level(logging.WARNING)
 
     opp.async_create_task(script_obj.async_run(context=Context()))
-    await asyncio.wait_for.opp.async_block_till_done(), 1)
+    await asyncio.wait_for(opp.async_block_till_done(), 1)
 
     assert len(caplog.record_tuples) == 1
     assert caplog.record_tuples[0][1] == logging.WARNING
@@ -1235,10 +1235,10 @@ async def test_repeat_condition_warning.opp, caplog, condition):
 
 @pytest.mark.parametrize("condition", ["while", "until"])
 @pytest.mark.parametrize("direct_template", [False, True])
-async def test_repeat_conditional.opp, condition, direct_template):
+async def test_repeat_conditional(opp, condition, direct_template):
     """Test repeat action w/ while option."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     count = 3
 
     sequence = {
@@ -1296,7 +1296,7 @@ async def test_repeat_conditional.opp, condition, direct_template):
         await asyncio.wait_for(wait_started.wait(), 1)
         wait_started.clear()
         opp.states.async_set("sensor.test", "done")
-        await asyncio.wait_for.opp.async_block_till_done(), 1)
+        await asyncio.wait_for(opp.async_block_till_done(), 1)
     except asyncio.TimeoutError:
         await script_obj.async_stop()
         raise
@@ -1308,10 +1308,10 @@ async def test_repeat_conditional.opp, condition, direct_template):
 
 
 @pytest.mark.parametrize("condition", ["while", "until"])
-async def test_repeat_var_in_condition.opp, condition):
+async def test_repeat_var_in_condition(opp, condition):
     """Test repeat action w/ while option."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
 
     sequence = {"repeat": {"sequence": {"event": event}}}
     if condition == "while":
@@ -1344,10 +1344,10 @@ async def test_repeat_var_in_condition.opp, condition):
         (MappingProxyType({"x": 1}), {"repeat": None, "x": 1}, 1),
     ],
 )
-async def test_repeat_nested.opp, variables, first_last, inside_x):
+async def test_repeat_nested(opp, variables, first_last, inside_x):
     """Test nested repeats."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
 
     sequence = cv.SCRIPT_SCHEMA(
         [
@@ -1438,10 +1438,10 @@ async def test_repeat_nested.opp, variables, first_last, inside_x):
         }
 
 
-async def test_choose_warning.opp, caplog):
+async def test_choose_warning(opp, caplog):
     """Test warning on choose."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
 
     sequence = cv.SCRIPT_SCHEMA(
         {
@@ -1488,10 +1488,10 @@ async def test_choose_warning.opp, caplog):
 
 
 @pytest.mark.parametrize("var,result", [(1, "first"), (2, "second"), (3, "default")])
-async def test_choose.opp, caplog, var, result):
+async def test_choose(opp, caplog, var, result):
     """Test choose action."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     alias = "choose step"
     choice = {1: "choice one", 2: "choice two", 3: None}
     aliases = {1: "sequence one", 2: "sequence two", 3: "default sequence"}
@@ -1549,7 +1549,7 @@ async def test_choose.opp, caplog, var, result):
         {"choose": [], "default": {"event": "abc"}},
     ],
 )
-async def test_multiple_runs_repeat_choose.opp, caplog, action):
+async def test_multiple_runs_repeat_choose(opp, caplog, action):
     """Test parallel runs with repeat & choose actions & max_runs > default."""
     max_runs = script.DEFAULT_MAX + 1
     script_obj = script.Script(
@@ -1561,7 +1561,7 @@ async def test_multiple_runs_repeat_choose.opp, caplog, action):
         max_runs=max_runs,
     )
 
-    events = async_capture_events.opp, "abc")
+    events = async_capture_events(opp, "abc")
     for _ in range(max_runs):
         opp.async_create_task(script_obj.async_run(context=Context()))
     await opp.async_block_till_done()
@@ -1571,7 +1571,7 @@ async def test_multiple_runs_repeat_choose.opp, caplog, action):
     assert len(events) == max_runs
 
 
-async def test_last_triggered.opp):
+async def test_last_triggered(opp):
     """Test the last_triggered."""
     event = "test_event"
     sequence = cv.SCRIPT_SCHEMA({"event": event})
@@ -1587,10 +1587,10 @@ async def test_last_triggered.opp):
     assert script_obj.last_triggered == time
 
 
-async def test_propagate_error_service_not_found.opp):
+async def test_propagate_error_service_not_found(opp):
     """Test that a script aborts when a service is not found."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA([{"service": "test.script"}, {"event": event}])
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
 
@@ -1601,11 +1601,11 @@ async def test_propagate_error_service_not_found.opp):
     assert not script_obj.is_running
 
 
-async def test_propagate_error_invalid_service_data.opp):
+async def test_propagate_error_invalid_service_data(opp):
     """Test that a script aborts when we send invalid service data."""
     event = "test_event"
-    events = async_capture_events.opp, event)
-    calls = async_mock_service.opp, "test", "script", vol.Schema({"text": str}))
+    events = async_capture_events(opp, event)
+    calls = async_mock_service(opp, "test", "script", vol.Schema({"text": str}))
     sequence = cv.SCRIPT_SCHEMA(
         [{"service": "test.script", "data": {"text": 1}}, {"event": event}]
     )
@@ -1619,10 +1619,10 @@ async def test_propagate_error_invalid_service_data.opp):
     assert not script_obj.is_running
 
 
-async def test_propagate_error_service_exception.opp):
+async def test_propagate_error_service_exception(opp):
     """Test that a script aborts when a service throws an exception."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
 
     @callback
     def record_call(service):
@@ -1641,7 +1641,7 @@ async def test_propagate_error_service_exception.opp):
     assert not script_obj.is_running
 
 
-async def test_referenced_entities.opp):
+async def test_referenced_entities(opp):
     """Test referenced entities."""
     script_obj = script.Script(
         opp,
@@ -1698,7 +1698,7 @@ async def test_referenced_entities.opp):
     assert script_obj.referenced_entities is script_obj.referenced_entities
 
 
-async def test_referenced_devices.opp):
+async def test_referenced_devices(opp):
     """Test referenced entities."""
     script_obj = script.Script(
         opp,
@@ -1750,10 +1750,10 @@ def does_not_raise():
     yield
 
 
-async def test_script_mode_single.opp, caplog):
+async def test_script_mode_single(opp, caplog):
     """Test overlapping runs with max_runs = 1."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA(
         [
             {"event": event, "event_data": {"value": 1}},
@@ -1795,7 +1795,7 @@ async def test_script_mode_single.opp, caplog):
 @pytest.mark.parametrize(
     "script_mode,max_runs", [("single", 1), ("parallel", 2), ("queued", 2)]
 )
-async def test_max_exceeded.opp, caplog, max_exceeded, script_mode, max_runs):
+async def test_max_exceeded(opp, caplog, max_exceeded, script_mode, max_runs):
     """Test max_exceeded option."""
     sequence = cv.SCRIPT_SCHEMA(
         {"wait_template": "{{ states.switch.test.state == 'off' }}"}
@@ -1852,7 +1852,7 @@ async def test_max_exceeded.opp, caplog, max_exceeded, script_mode, max_runs):
 async def test_script_mode_2.opp, caplog, script_mode, messages, last_events):
     """Test overlapping runs with max_runs > 1."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA(
         [
             {"event": event, "event_data": {"value": 1}},
@@ -1913,10 +1913,10 @@ async def test_script_mode_2.opp, caplog, script_mode, messages, last_events):
             assert events[idx].data["value"] == value
 
 
-async def test_script_mode_queued.opp):
+async def test_script_mode_queued(opp):
     """Test overlapping runs with script_mode = 'queued' & max_runs > 1."""
     event = "test_event"
-    events = async_capture_events.opp, event)
+    events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA(
         [
             {"event": event, "event_data": {"value": 1}},
@@ -2010,7 +2010,7 @@ async def test_script_mode_queued.opp):
         assert events[3].data["value"] == 2
 
 
-async def test_script_mode_queued_cancel.opp):
+async def test_script_mode_queued_cancel(opp):
     """Test canceling with a queued run."""
     script_obj = script.Script(
         opp,
@@ -2052,7 +2052,7 @@ async def test_script_mode_queued_cancel.opp):
         raise
 
 
-async def test_script_logging.opp, caplog):
+async def test_script_logging(opp, caplog):
     """Test script logging."""
     script_obj = script.Script.opp, [], "Script with % Name", "test_domain")
     script_obj._log("Test message with name %s", 1)
@@ -2060,7 +2060,7 @@ async def test_script_logging.opp, caplog):
     assert "Script with % Name: Test message with name 1" in caplog.text
 
 
-async def test_shutdown_at.opp, caplog):
+async def test_shutdown_at(opp, caplog):
     """Test stopping scripts at shutdown."""
     delay_alias = "delay step"
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": 120}, "alias": delay_alias})
@@ -2084,7 +2084,7 @@ async def test_shutdown_at.opp, caplog):
         assert "Stopping scripts running at shutdown: test script" in caplog.text
 
 
-async def test_shutdown_after.opp, caplog):
+async def test_shutdown_after(opp, caplog):
     """Test stopping scripts at shutdown."""
     delay_alias = "delay step"
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": 120}, "alias": delay_alias})
@@ -2105,7 +2105,7 @@ async def test_shutdown_after.opp, caplog):
         await script_obj.async_stop()
         raise
     else:
-        async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=60))
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=60))
         await opp.async_block_till_done()
 
         assert not script_obj.is_running
@@ -2115,7 +2115,7 @@ async def test_shutdown_after.opp, caplog):
         )
 
 
-async def test_update_logger.opp, caplog):
+async def test_update_logger(opp, caplog):
     """Test updating logger."""
     sequence = cv.SCRIPT_SCHEMA({"event": "test_event"})
     script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
@@ -2134,7 +2134,7 @@ async def test_update_logger.opp, caplog):
     assert log_name in caplog.text
 
 
-async def test_started_action.opp, caplog):
+async def test_started_action(opp, caplog):
     """Test the callback of started_action."""
     event = "test_event"
     log_message = "The script started!"
@@ -2153,7 +2153,7 @@ async def test_started_action.opp, caplog):
     assert log_message in caplog.text
 
 
-async def test_set_variable.opp, caplog):
+async def test_set_variable(opp, caplog):
     """Test setting variables in scripts."""
     alias = "variables step"
     sequence = cv.SCRIPT_SCHEMA(
@@ -2164,7 +2164,7 @@ async def test_set_variable.opp, caplog):
     )
     script_obj = script.Script.opp, sequence, "test script", "test_domain")
 
-    mock_calls = async_mock_service.opp, "test", "script")
+    mock_calls = async_mock_service(opp, "test", "script")
 
     await script_obj.async_run(context=Context())
     await opp.async_block_till_done()
@@ -2173,7 +2173,7 @@ async def test_set_variable.opp, caplog):
     assert f"Executing step {alias}" in caplog.text
 
 
-async def test_set_redefines_variable.opp, caplog):
+async def test_set_redefines_variable(opp, caplog):
     """Test setting variables based on their current value."""
     sequence = cv.SCRIPT_SCHEMA(
         [
@@ -2185,7 +2185,7 @@ async def test_set_redefines_variable.opp, caplog):
     )
     script_obj = script.Script.opp, sequence, "test script", "test_domain")
 
-    mock_calls = async_mock_service.opp, "test", "script")
+    mock_calls = async_mock_service(opp, "test", "script")
 
     await script_obj.async_run(context=Context())
     await opp.async_block_till_done()
@@ -2251,7 +2251,7 @@ async def test_validate_action_config(opp):
             assert False, f"{action_type} config invalid: {err}"
 
 
-async def test_embedded_wait_for_trigger_in_automation.opp):
+async def test_embedded_wait_for_trigger_in_automation(opp):
     """Test an embedded wait for trigger."""
     assert await async_setup_component(
         opp,
@@ -2287,7 +2287,7 @@ async def test_embedded_wait_for_trigger_in_automation.opp):
 
     opp.states.async_set("test.value1", "trigger-while")
     opp.states.async_set("test.value2", "not-trigger-wait")
-    mock_calls = async_mock_service.opp, "test", "script")
+    mock_calls = async_mock_service(opp, "test", "script")
 
     async def trigger_wait_event(_):
         # give script the time to attach the trigger.

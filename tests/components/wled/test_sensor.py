@@ -34,7 +34,7 @@ async def test_sensors(
 ) -> None:
     """Test the creation and values of the WLED sensors."""
 
-    entry = await init_integration.opp, aioclient_mock, skip_setup=True)
+    entry = await init_integration(opp, aioclient_mock, skip_setup=True)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Pre-create registry entries for disabled by default sensors
@@ -184,7 +184,7 @@ async def test_disabled_by_default_sensors(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, entity_id: str
 ) -> None:
     """Test the disabled by default WLED sensors."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get(entity_id)

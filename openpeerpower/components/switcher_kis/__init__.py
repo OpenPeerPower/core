@@ -69,7 +69,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
         return False
     opp.data[DOMAIN] = {DATA_DEVICE: device_data}
 
-    opp.async_create_task(async_load_platform.opp, SWITCH_DOMAIN, DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, SWITCH_DOMAIN, DOMAIN, {}, config))
 
     @callback
     def device_updates(timestamp: Optional[datetime]) -> None:
@@ -84,6 +84,6 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
             except QueueEmpty:
                 pass
 
-    async_track_time_interval.opp, device_updates, timedelta(seconds=4))
+    async_track_time_interval(opp, device_updates, timedelta(seconds=4))
 
     return True

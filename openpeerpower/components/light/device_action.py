@@ -78,11 +78,11 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions."""
-    actions = await toggle_entity.async_get_actions.opp, device_id, DOMAIN)
+    actions = await toggle_entity.async_get_actions(opp, device_id, DOMAIN)
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     for entry in entity_registry.async_entries_for_device(registry, device_id):
         if entry.domain != DOMAIN:
@@ -128,12 +128,12 @@ async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
     return actions
 
 
-async def async_get_action_capabilities.opp: OpenPeerPower, config: dict) -> dict:
+async def async_get_action_capabilities(opp: OpenPeerPower, config: dict) -> dict:
     """List action capabilities."""
     if config[CONF_TYPE] != toggle_entity.CONF_TURN_ON:
         return {}
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     entry = registry.async_get(config[ATTR_ENTITY_ID])
     state = opp.states.get(config[ATTR_ENTITY_ID])
 

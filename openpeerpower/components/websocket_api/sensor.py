@@ -12,7 +12,7 @@ from .const import (
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the API streams platform."""
     entity = APICount()
 

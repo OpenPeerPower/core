@@ -50,7 +50,7 @@ def _records_schema(records: Optional[List] = None):
     return vol.Schema({vol.Required(CONF_RECORDS): cv.multi_select(records_dict)})
 
 
-async def validate_input.opp: OpenPeerPower, data: Dict):
+async def validate_input(opp: OpenPeerPower, data: Dict):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
@@ -59,7 +59,7 @@ async def validate_input.opp: OpenPeerPower, data: Dict):
     records = None
 
     cfupdate = CloudflareUpdater(
-        async_get_clientsession.opp),
+        async_get_clientsession(opp),
         data[CONF_API_TOKEN],
         zone,
         [],

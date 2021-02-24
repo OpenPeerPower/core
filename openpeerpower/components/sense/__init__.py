@@ -89,7 +89,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Sense from a config entry."""
 
     entry_data = entry.data
@@ -97,7 +97,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     password = entry_data[CONF_PASSWORD]
     timeout = entry_data[CONF_TIMEOUT]
 
-    client_session = async_get_clientsession.opp)
+    client_session = async_get_clientsession(opp)
 
     gateway = ASyncSenseable(
         api_timeout=timeout, wss_timeout=timeout, client_session=client_session
@@ -154,7 +154,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         data = gateway.get_realtime()
         if "devices" in data:
             sense_devices_data.set_devices_data(data["devices"])
-        async_dispatcher_send.opp, f"{SENSE_DEVICE_UPDATE}-{gateway.sense_monitor_id}")
+        async_dispatcher_send(opp, f"{SENSE_DEVICE_UPDATE}-{gateway.sense_monitor_id}")
 
     opp.data[DOMAIN][entry.entry_id][
         "track_time_remove_callback"
@@ -164,7 +164,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

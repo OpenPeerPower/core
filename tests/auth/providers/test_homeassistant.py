@@ -22,7 +22,7 @@ def data.opp):
 
 
 @pytest.fixture
-def legacy_data.opp):
+def legacy_data(opp):
     """Create a loaded legacy data class."""
     data = opp_auth.Data.opp)
     opp.loop.run_until_complete(data.async_load())
@@ -45,7 +45,7 @@ async def test_not_allow_set_id():
         )
 
 
-async def test_new_users_populate_values.opp, data):
+async def test_new_users_populate_values(opp, data):
     """Test that we populate data for new users."""
     data.add_auth("hello", "test-pass")
     await data.async_save()
@@ -148,7 +148,7 @@ async def test_saving_loading(data, opp):
     data.validate_login("second-user ", "second-pass")
 
 
-async def test_get_or_create_credentials.opp, data):
+async def test_get_or_create_credentials(opp, data):
     """Test that we can get or create credentials."""
     manager = await auth_manager_from_config(opp, [{"type": "openpeerpower"}], [])
     provider = manager.auth_providers[0]
@@ -253,7 +253,7 @@ async def test_legacy_saving_loading(legacy_data, opp):
         legacy_data.validate_login("test-user ", "test-pass")
 
 
-async def test_legacy_get_or_create_credentials.opp, legacy_data):
+async def test_legacy_get_or_create_credentials(opp, legacy_data):
     """Test in legacy mode that we can get or create credentials."""
     manager = await auth_manager_from_config(opp, [{"type": "openpeerpower"}], [])
     provider = manager.auth_providers[0]
@@ -273,7 +273,7 @@ async def test_legacy_get_or_create_credentials.opp, legacy_data):
     assert credentials1 is not credentials3
 
 
-async def test_race_condition_in_data_loading.opp):
+async def test_race_condition_in_data_loading(opp):
     """Test race condition in the.opp_auth.Data loading.
 
     Ref issue: https://github.com/open-peer-power/core/issues/21569

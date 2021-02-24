@@ -26,7 +26,7 @@ DEFAULT_UNIT_OF_MEASUREMENT = "quakes"
 PARALLEL_UPDATES = 0
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the GeoNet NZ Quakes Feed platform."""
     manager = opp.data[DOMAIN][FEED][entry.entry_id]
     sensor = GeonetnzQuakesSensor(entry.entry_id, entry.unique_id, entry.title, manager)
@@ -64,7 +64,7 @@ class GeonetnzQuakesSensor(Entity):
         # First update is manual because of how the feed entity manager is updated.
         await self.async_update()
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Call when entity will be removed from.opp."""
         if self._remove_signal_status:
             self._remove_signal_status()

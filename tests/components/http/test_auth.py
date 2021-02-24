@@ -67,7 +67,7 @@ def app2.opp):
 
 
 @pytest.fixture
-def trusted_networks_auth.opp):
+def trusted_networks_auth(opp):
     """Load trusted networks auth provider."""
     prv = trusted_networks.TrustedNetworksAuthProvider(
         opp,
@@ -78,10 +78,10 @@ def trusted_networks_auth.opp):
     return prv
 
 
-async def test_auth_middleware_loaded_by_default.opp):
+async def test_auth_middleware_loaded_by_default(opp):
     """Test accessing to server from banned IP when feature is off."""
     with patch("openpeerpower.components.http.setup_auth") as mock_setup:
-        await async_setup_component.opp, "http", {"http": {}})
+        await async_setup_component(opp, "http", {"http": {}})
 
     assert len(mock_setup.mock_calls) == 1
 
@@ -90,7 +90,7 @@ async def test_cant_access_with_password_in_header(
     app, aiohttp_client, legacy_auth, opp
 ):
     """Test access with password in header."""
-    setup_auth.opp, app)
+    setup_auth(opp, app)
     client = await aiohttp_client(app)
 
     req = await client.get("/", headers={HTTP_HEADER_OP_AUTH: API_PASSWORD})
@@ -104,7 +104,7 @@ async def test_cant_access_with_password_in_query(
     app, aiohttp_client, legacy_auth, opp
 ):
     """Test access with password in URL."""
-    setup_auth.opp, app)
+    setup_auth(opp, app)
     client = await aiohttp_client(app)
 
     resp = await client.get("/", params={"api_password": API_PASSWORD})
@@ -119,7 +119,7 @@ async def test_cant_access_with_password_in_query(
 
 async def test_basic_auth_does_not_work(app, aiohttp_client, opp, legacy_auth):
     """Test access with basic authentication."""
-    setup_auth.opp, app)
+    setup_auth(opp, app)
     client = await aiohttp_client(app)
 
     req = await client.get("/", auth=BasicAuth("openpeerpower", API_PASSWORD))
@@ -139,7 +139,7 @@ async def test_cannot_access_with_trusted_ip(
     opp. app2, trusted_networks_auth, aiohttp_client, opp_owner_user
 ):
     """Test access with an untrusted ip address."""
-    setup_auth.opp, app2)
+    setup_auth(opp, app2)
 
     set_mock_ip = mock_real_ip(app2)
     client = await aiohttp_client(app2)
@@ -160,9 +160,9 @@ async def test_auth_active_access_with_access_token_in_header(
 ):
     """Test access with access token in header."""
     token = opp_access_token
-    setup_auth.opp, app)
+    setup_auth(opp, app)
     client = await aiohttp_client(app)
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
     req = await client.get("/", headers={"Authorization": f"Bearer {token}"})
     assert req.status == 200
@@ -182,7 +182,7 @@ async def test_auth_active_access_with_access_token_in_header(
     req = await client.get("/", headers={"Authorization": f"BEARER {token}"})
     assert req.status == 401
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
     refresh_token.user.is_active = False
     req = await client.get("/", headers={"Authorization": f"Bearer {token}"})
     assert req.status == 401
@@ -192,7 +192,7 @@ async def test_auth_active_access_with_trusted_ip(
     opp. app2, trusted_networks_auth, aiohttp_client, opp_owner_user
 ):
     """Test access with an untrusted ip address."""
-    setup_auth.opp, app2)
+    setup_auth(opp, app2)
 
     set_mock_ip = mock_real_ip(app2)
     client = await aiohttp_client(app2)
@@ -212,7 +212,7 @@ async def test_auth_legacy_support_api_password_cannot_access(
     app, aiohttp_client, legacy_auth, opp
 ):
     """Test access using api_password if auth.support_legacy."""
-    setup_auth.opp, app)
+    setup_auth(opp, app)
     client = await aiohttp_client(app)
 
     req = await client.get("/", headers={HTTP_HEADER_OP_AUTH: API_PASSWORD})
@@ -225,16 +225,16 @@ async def test_auth_legacy_support_api_password_cannot_access(
     assert req.status == 401
 
 
-async def test_auth_access_signed_path.opp, app, aiohttp_client, opp_access_token):
+async def test_auth_access_signed_path(opp, app, aiohttp_client, opp_access_token):
     """Test access with signed url."""
     app.router.add_post("/", mock_handler)
     app.router.add_get("/another_path", mock_handler)
-    setup_auth.opp, app)
+    setup_auth(opp, app)
     client = await aiohttp_client(app)
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
-    signed_path = async_sign_path.opp, refresh_token.id, "/", timedelta(seconds=5))
+    signed_path = async_sign_path(opp, refresh_token.id, "/", timedelta(seconds=5))
 
     req = await client.get(signed_path)
     assert req.status == 200

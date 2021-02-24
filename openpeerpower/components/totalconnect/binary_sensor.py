@@ -9,7 +9,7 @@ from openpeerpower.components.binary_sensor import (
 from .const import DOMAIN
 
 
-async def async_setup_entry.opp, entry, async_add_entities) -> None:
+async def async_setup_entry(opp, entry, async_add_entities) -> None:
     """Set up TotalConnect device sensors based on a config entry."""
     sensors = []
 

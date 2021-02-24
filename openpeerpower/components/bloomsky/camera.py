@@ -8,7 +8,7 @@ from openpeerpower.components.camera import Camera
 from . import DOMAIN
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up access to BloomSky cameras."""
     if discovery_info is not None:
         return

@@ -100,7 +100,7 @@ NA_THERM = "NATherm1"
 NA_VALVE = "NRV"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Netatmo energy platform."""
     data_handler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 

@@ -72,7 +72,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> None:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Set up Aqualink from a config entry."""
     username = entry.data[CONF_USERNAME]
     password = entry.data[CONF_PASSWORD]
@@ -84,7 +84,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     sensors = opp.data[DOMAIN][SENSOR_DOMAIN] = []
     switches = opp.data[DOMAIN][SWITCH_DOMAIN] = []
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     aqualink = AqualinkClient(username, password, session)
     try:
         await aqualink.login()
@@ -148,14 +148,14 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
         elif success and not prev:
             _LOGGER.warning("Reconnected to iAqualink")
 
-        async_dispatcher_send.opp, DOMAIN)
+        async_dispatcher_send(opp, DOMAIN)
 
-    async_track_time_interval.opp, _async_systems_update, UPDATE_INTERVAL)
+    async_track_time_interval(opp, _async_systems_update, UPDATE_INTERVAL)
 
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     forward_unload = opp.config_entries.async_forward_entry_unload
 

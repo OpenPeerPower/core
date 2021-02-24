@@ -13,7 +13,7 @@ DOOR_LOCK_STATE = "door_lock_state"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the BMW ConnectedDrive binary sensors from config entry."""
     account = opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
     entities = []

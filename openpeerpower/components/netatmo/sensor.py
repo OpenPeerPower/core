@@ -125,7 +125,7 @@ BATTERY_VALUES = {
 PUBLIC = "public"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Netatmo weather and homecoach platform."""
     data_handler = opp.data[DOMAIN][entry.entry_id][DATA_HANDLER]
 
@@ -240,9 +240,9 @@ async def async_setup_entry.opp, entry, async_add_entities):
     await add_public_entities(False)
 
 
-async def async_config_entry_updated.opp: OpenPeerPower, entry: ConfigEntry) -> None:
+async def async_config_entry_updated(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Handle signals of config entry being updated."""
-    async_dispatcher_send.opp, f"signal-{DOMAIN}-public-update-{entry.entry_id}")
+    async_dispatcher_send(opp, f"signal-{DOMAIN}-public-update-{entry.entry_id}")
 
 
 class NetatmoSensor(NetatmoBase):

@@ -18,7 +18,7 @@ from .const import DEFAULT_RADIUS, DEFAULT_SCAN_INTERVAL, DOMAIN
 
 
 @callback
-def configured_instances.opp):
+def configured_instances(opp):
     """Return a set of configured GeoNet NZ Volcano instances."""
     return {
         f"{entry.data[CONF_LATITUDE]}, {entry.data[CONF_LONGITUDE]}"

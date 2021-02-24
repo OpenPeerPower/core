@@ -53,7 +53,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Import the platform into a config entry."""
     opp.async_create_task(
         opp.config_entries.flow.async_init(
@@ -62,7 +62,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Flume sensor."""
     flume_domain_data = opp.data[DOMAIN][config_entry.entry_id]
 
@@ -91,7 +91,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             http_session=http_session,
         )
 
-        coordinator = _create_flume_device_coordinator.opp, flume_device)
+        coordinator = _create_flume_device_coordinator(opp, flume_device)
 
         for flume_query_sensor in FLUME_QUERIES_SENSOR.items():
             flume_entity_list.append(
@@ -167,7 +167,7 @@ def _format_state_value(value):
     return round(value, 1) if isinstance(value, Number) else None
 
 
-def _create_flume_device_coordinator.opp, flume_device):
+def _create_flume_device_coordinator(opp, flume_device):
     """Create a data coordinator for the flume device."""
 
     async def _async_update_data():

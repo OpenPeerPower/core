@@ -83,12 +83,12 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 @singleton(DOMAIN)
-async def async_get_instance.opp):
+async def async_get_instance(opp):
     """Zeroconf instance to be shared with other integrations that use it."""
-    return await _async_get_instance.opp)
+    return await _async_get_instance(opp)
 
 
-async def _async_get_instance.opp, **zcargs):
+async def _async_get_instance(opp, **zcargs):
     logging.getLogger("zeroconf").setLevel(logging.NOTSET)
 
     zeroconf = await opp.async_add_executor_job(partial(HaZeroconf, **zcargs))
@@ -143,34 +143,34 @@ async def async_setup(opp, config):
     if not zc_config.get(CONF_IPV6, DEFAULT_IPV6):
         zc_args["ip_version"] = IPVersion.V4Only
 
-    zeroconf = opp.data[DOMAIN] = await _async_get_instance.opp, **zc_args)
+    zeroconf = opp.data[DOMAIN] = await _async_get_instance(opp, **zc_args)
 
-    async def _async_zeroconf.opp_start(_event):
+    async def _async_zeroconf(opp_start(_event):
         """Expose Open Peer Power on zeroconf when it starts.
 
         Wait till started or otherwise HTTP is not up and running.
         """
         uuid = await opp.helpers.instance_id.async_get()
         await opp.async_add_executor_job(
-            _register.opp_zc_service, opp, zeroconf, uuid
+            _register(opp_zc_service, opp, zeroconf, uuid
         )
 
-    async def _async_zeroconf.opp_started(_event):
+    async def _async_zeroconf(opp_started(_event):
         """Start the service browser."""
 
-        await _async_start_zeroconf_browser.opp, zeroconf)
+        await _async_start_zeroconf_browser(opp, zeroconf)
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf.opp_start)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf(opp_start)
     opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STARTED, _async_zeroconf.opp_started
+        EVENT_OPENPEERPOWER_STARTED, _async_zeroconf(opp_started
     )
 
     return True
 
 
-def _register.opp_zc_service.opp, zeroconf, uuid):
+def _register(opp_zc_service(opp, zeroconf, uuid):
     # Get instance UUID
-    valid_location_name = _truncate_location_name_to_valid.opp.config.location_name)
+    valid_location_name = _truncate_location_name_to_valid(opp.config.location_name)
 
     params = {
         "location_name": valid_location_name,
@@ -186,12 +186,12 @@ def _register.opp_zc_service.opp, zeroconf, uuid):
 
     # Get instance URL's
     try:
-        params["external_url"] = get_url.opp, allow_internal=False)
+        params["external_url"] = get_url(opp, allow_internal=False)
     except NoURLAvailableError:
         pass
 
     try:
-        params["internal_url"] = get_url.opp, allow_external=False)
+        params["internal_url"] = get_url(opp, allow_external=False)
     except NoURLAvailableError:
         pass
 
@@ -225,11 +225,11 @@ def _register.opp_zc_service.opp, zeroconf, uuid):
         )
 
 
-async def _async_start_zeroconf_browser.opp, zeroconf):
+async def _async_start_zeroconf_browser(opp, zeroconf):
     """Start the zeroconf browser."""
 
-    zeroconf_types = await async_get_zeroconf.opp)
-    homekit_models = await async_get_homekit.opp)
+    zeroconf_types = await async_get_zeroconf(opp)
+    homekit_models = await async_get_homekit(opp)
 
     types = list(zeroconf_types)
 
@@ -267,7 +267,7 @@ async def _async_start_zeroconf_browser.opp, zeroconf):
 
         # If we can handle it as a HomeKit discovery, we do that here.
         if service_type in HOMEKIT_TYPES:
-            discovery_was_forwarded = handle_homekit.opp, homekit_models, info)
+            discovery_was_forwarded = handle_homekit(opp, homekit_models, info)
             # Continue on here as homekit_controller
             # still needs to get updates on devices
             # so it can see when the 'c#' field is updated.
@@ -326,7 +326,7 @@ async def _async_start_zeroconf_browser.opp, zeroconf):
     HaServiceBrowser(zeroconf, types, handlers=[service_update])
 
 
-def handle_homekit.opp, homekit_models, info) -> bool:
+def handle_homekit(opp, homekit_models, info) -> bool:
     """Handle a HomeKit discovery.
 
     Return if discovery was forwarded.

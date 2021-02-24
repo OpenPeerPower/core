@@ -42,9 +42,9 @@ async def test_valid_config(opp):
     assert state.state == "off"
 
 
-async def test_restore_state_last_on.opp):
+async def test_restore_state_last_on(opp):
     """Test restoring state when the last state is on."""
-    mock_restore_cache.opp, [State("switch.flux", "on")])
+    mock_restore_cache(opp, [State("switch.flux", "on")])
 
     assert await async_setup_component(
         opp,
@@ -64,9 +64,9 @@ async def test_restore_state_last_on.opp):
     assert state.state == "on"
 
 
-async def test_restore_state_last_off.opp):
+async def test_restore_state_last_off(opp):
     """Test restoring state when the last state is off."""
-    mock_restore_cache.opp, [State("switch.flux", "off")])
+    mock_restore_cache(opp, [State("switch.flux", "off")])
 
     assert await async_setup_component(
         opp,
@@ -86,7 +86,7 @@ async def test_restore_state_last_off.opp):
     assert state.state == "off"
 
 
-async def test_valid_config_with_info.opp):
+async def test_valid_config_with_info(opp):
     """Test configuration."""
     assert await async_setup_component(
         opp,
@@ -107,7 +107,7 @@ async def test_valid_config_with_info.opp):
     await opp.async_block_till_done()
 
 
-async def test_valid_config_no_name.opp):
+async def test_valid_config_no_name(opp):
     """Test configuration."""
     with assert_setup_component(1, "switch"):
         assert await async_setup_component(
@@ -118,7 +118,7 @@ async def test_valid_config_no_name.opp):
         await opp.async_block_till_done()
 
 
-async def test_invalid_config_no_lights.opp):
+async def test_invalid_config_no_lights(opp):
     """Test configuration."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
@@ -127,7 +127,7 @@ async def test_invalid_config_no_lights.opp):
         await opp.async_block_till_done()
 
 
-async def test_flux_when_switch_is_off.opp, legacy_patchable_time):
+async def test_flux_when_switch_is_off(opp, legacy_patchable_time):
     """Test the flux switch when it is off."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -148,7 +148,7 @@ async def test_flux_when_switch_is_off.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -159,7 +159,7 @@ async def test_flux_when_switch_is_off.opp, legacy_patchable_time):
         "openpeerpower.components.flux.switch.get_astral_event_date",
         side_effect=event_date,
     ):
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         assert await async_setup_component(
             opp,
             switch.DOMAIN,
@@ -172,13 +172,13 @@ async def test_flux_when_switch_is_off.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
 
     assert not turn_on_calls
 
 
-async def test_flux_before_sunrise.opp, legacy_patchable_time):
+async def test_flux_before_sunrise(opp, legacy_patchable_time):
     """Test the flux switch before sunrise."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -199,7 +199,7 @@ async def test_flux_before_sunrise.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=5)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -223,21 +223,21 @@ async def test_flux_before_sunrise.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 112
     assert call.data[light.ATTR_XY_COLOR] == [0.606, 0.379]
 
 
-async def test_flux_before_sunrise_known_location.opp, legacy_patchable_time):
+async def test_flux_before_sunrise_known_location(opp, legacy_patchable_time):
     """Test the flux switch before sunrise."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -281,14 +281,14 @@ async def test_flux_before_sunrise_known_location.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 112
@@ -296,7 +296,7 @@ async def test_flux_before_sunrise_known_location.opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_sunrise_before_sunset.opp, legacy_patchable_time):
+async def test_flux_after_sunrise_before_sunset(opp, legacy_patchable_time):
     """Test the flux switch after sunrise and before sunset."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -317,7 +317,7 @@ async def test_flux_after_sunrise_before_sunset.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -340,14 +340,14 @@ async def test_flux_after_sunrise_before_sunset.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 173
@@ -355,7 +355,7 @@ async def test_flux_after_sunrise_before_sunset.opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_sunset_before_stop.opp, legacy_patchable_time):
+async def test_flux_after_sunset_before_stop(opp, legacy_patchable_time):
     """Test the flux switch after sunset and before stop."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -376,7 +376,7 @@ async def test_flux_after_sunset_before_stop.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -400,14 +400,14 @@ async def test_flux_after_sunset_before_stop.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 146
@@ -415,7 +415,7 @@ async def test_flux_after_sunset_before_stop.opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_stop_before_sunrise.opp, legacy_patchable_time):
+async def test_flux_after_stop_before_sunrise(opp, legacy_patchable_time):
     """Test the flux switch after stop and before sunrise."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -436,7 +436,7 @@ async def test_flux_after_stop_before_sunrise.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -459,14 +459,14 @@ async def test_flux_after_stop_before_sunrise.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 112
@@ -474,7 +474,7 @@ async def test_flux_after_stop_before_sunrise.opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_with_custom_start_stop_times.opp, legacy_patchable_time):
+async def test_flux_with_custom_start_stop_times(opp, legacy_patchable_time):
     """Test the flux with custom start and stop times."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -495,7 +495,7 @@ async def test_flux_with_custom_start_stop_times.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -520,21 +520,21 @@ async def test_flux_with_custom_start_stop_times.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 147
     assert call.data[light.ATTR_XY_COLOR] == [0.504, 0.385]
 
 
-async def test_flux_before_sunrise_stop_next_day.opp, legacy_patchable_time):
+async def test_flux_before_sunrise_stop_next_day(opp, legacy_patchable_time):
     """Test the flux switch before sunrise.
 
     This test has the stop_time on the next day (after midnight).
@@ -558,7 +558,7 @@ async def test_flux_before_sunrise_stop_next_day.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -582,14 +582,14 @@ async def test_flux_before_sunrise_stop_next_day.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 112
@@ -624,7 +624,7 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -648,14 +648,14 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 173
@@ -690,7 +690,7 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -714,14 +714,14 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 119
@@ -755,7 +755,7 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -779,14 +779,14 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 114
@@ -820,7 +820,7 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -844,14 +844,14 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 112
@@ -859,7 +859,7 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(
 
 
 # pylint: disable=invalid-name
-async def test_flux_with_custom_colortemps.opp, legacy_patchable_time):
+async def test_flux_with_custom_colortemps(opp, legacy_patchable_time):
     """Test the flux with custom start and stop colortemps."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -880,7 +880,7 @@ async def test_flux_with_custom_colortemps.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -906,14 +906,14 @@ async def test_flux_with_custom_colortemps.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 159
@@ -921,7 +921,7 @@ async def test_flux_with_custom_colortemps.opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_with_custom_brightness.opp, legacy_patchable_time):
+async def test_flux_with_custom_brightness(opp, legacy_patchable_time):
     """Test the flux with custom start and stop colortemps."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -942,7 +942,7 @@ async def test_flux_with_custom_brightness.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -967,21 +967,21 @@ async def test_flux_with_custom_brightness.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 255
     assert call.data[light.ATTR_XY_COLOR] == [0.506, 0.385]
 
 
-async def test_flux_with_multiple_lights.opp, legacy_patchable_time):
+async def test_flux_with_multiple_lights(opp, legacy_patchable_time):
     """Test the flux switch with multiple light entities."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -1019,7 +1019,7 @@ async def test_flux_with_multiple_lights.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             print(f"sunrise {sunrise_time}")
             return sunrise_time
@@ -1044,14 +1044,14 @@ async def test_flux_with_multiple_lights.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_BRIGHTNESS] == 163
@@ -1064,7 +1064,7 @@ async def test_flux_with_multiple_lights.opp, legacy_patchable_time):
     assert call.data[light.ATTR_XY_COLOR] == [0.46, 0.376]
 
 
-async def test_flux_with_mired.opp, legacy_patchable_time):
+async def test_flux_with_mired(opp, legacy_patchable_time):
     """Test the flux switch´s mode mired."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -1084,7 +1084,7 @@ async def test_flux_with_mired.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -1108,20 +1108,20 @@ async def test_flux_with_mired.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     assert call.data[light.ATTR_COLOR_TEMP] == 269
 
 
-async def test_flux_with_rgb.opp, legacy_patchable_time):
+async def test_flux_with_rgb(opp, legacy_patchable_time):
     """Test the flux switch´s mode rgb."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -1141,7 +1141,7 @@ async def test_flux_with_rgb.opp, legacy_patchable_time):
     sunset_time = test_time.replace(hour=17, minute=0, second=0)
     sunrise_time = test_time.replace(hour=5, minute=0, second=0)
 
-    def event_date.opp, event, now=None):
+    def event_date(opp, event, now=None):
         if event == SUN_EVENT_SUNRISE:
             return sunrise_time
         return sunset_time
@@ -1165,14 +1165,14 @@ async def test_flux_with_rgb.opp, legacy_patchable_time):
             },
         )
         await opp.async_block_till_done()
-        turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+        turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
         await opp.services.async_call(
             switch.DOMAIN,
             SERVICE_TURN_ON,
             {ATTR_ENTITY_ID: "switch.flux"},
             blocking=True,
         )
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
     call = turn_on_calls[-1]
     rgb = (255, 198, 152)

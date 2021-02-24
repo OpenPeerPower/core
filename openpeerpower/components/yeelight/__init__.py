@@ -178,7 +178,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Yeelight from a config entry."""
 
     async def _initialize(host: str, capabilities: Optional[dict] = None) -> None:
@@ -191,7 +191,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             DATA_REMOVE_INIT_DISPATCHER
         ] = remove_dispatcher
 
-        device = await _async_get_device.opp, host, entry, capabilities)
+        device = await _async_get_device(opp, host, entry, capabilities)
         opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id][DATA_DEVICE] = device
 
         await device.async_setup()
@@ -235,13 +235,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         await _initialize(entry.data[CONF_HOST])
     else:
         # discovery
-        scanner = YeelightScanner.async_get.opp)
+        scanner = YeelightScanner.async_get(opp)
         scanner.async_register_callback(entry.data[CONF_ID], _initialize)
 
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -261,7 +261,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
         data[DATA_DEVICE].async_unload()
         if entry.data[CONF_ID]:
             # discovery
-            scanner = YeelightScanner.async_get.opp)
+            scanner = YeelightScanner.async_get(opp)
             scanner.async_unregister_callback(entry.data[CONF_ID])
 
     return unload_ok
@@ -275,7 +275,7 @@ def _async_unique_name(capabilities: dict) -> str:
     return f"yeelight_{model}_{unique_id}"
 
 
-async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 

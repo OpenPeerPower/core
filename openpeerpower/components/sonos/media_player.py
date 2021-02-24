@@ -260,14 +260,14 @@ class SonosData:
         self.hosts_heartbeat = None
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Sonos platform. Obsolete."""
     _LOGGER.error(
         "Loading Sonos by media_player platform configuration is no longer supported"
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Sonos from a config entry."""
     if DATA_SONOS not in.opp.data:
         opp.data[DATA_SONOS] = SonosData()
@@ -302,7 +302,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                     opp.data[DATA_SONOS].discovered.append(soco.uid)
                     opp.add_job(async_add_entities, [SonosEntity(soco)])
                 else:
-                    entity = _get_entity_from_soco_uid.opp, soco.uid)
+                    entity = _get_entity_from_soco_uid(opp, soco.uid)
                     if entity and (entity.soco == soco or not entity.available):
                         _LOGGER.debug("Seen %s", entity)
                         opp.add_job(entity.async_seen(soco))
@@ -343,7 +343,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
     platform = entity_platform.current_platform.get()
 
-    @service.verify_domain_control.opp, SONOS_DOMAIN)
+    @service.verify_domain_control(opp, SONOS_DOMAIN)
     async def async_service_handle(service_call: ServiceCall):
         """Handle dispatched services."""
         entities = await platform.async_extract_from_service(service_call)
@@ -354,14 +354,14 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         if service_call.service == SERVICE_JOIN:
             master = platform.entities.get(service_call.data[ATTR_MASTER])
             if master:
-                await SonosEntity.join_multi.opp, master, entities)
+                await SonosEntity.join_multi(opp, master, entities)
             else:
                 _LOGGER.error(
                     "Invalid master specified for join service: %s",
                     service_call.data[ATTR_MASTER],
                 )
         elif service_call.service == SERVICE_UNJOIN:
-            await SonosEntity.unjoin_multi.opp, entities)
+            await SonosEntity.unjoin_multi(opp, entities)
         elif service_call.service == SERVICE_SNAPSHOT:
             await SonosEntity.snapshot_multi(
                 opp. entities, service_call.data[ATTR_WITH_GROUP]
@@ -459,7 +459,7 @@ class _ProcessSonosEventQueue:
             _LOGGER.warning("Error calling %s: %s", self._handler, ex)
 
 
-def _get_entity_from_soco_uid.opp, uid):
+def _get_entity_from_soco_uid(opp, uid):
     """Return SonosEntity from SoCo uid."""
     for entity in.opp.data[DATA_SONOS].entities:
         if uid == entity.unique_id:
@@ -1265,11 +1265,11 @@ class SonosEntity(MediaPlayerEntity):
         return group
 
     @staticmethod
-    async def join_multi.opp, master, entities):
+    async def join_multi(opp, master, entities):
         """Form a group with other players."""
         async with.opp.data[DATA_SONOS].topology_condition:
             group = await opp.async_add_executor_job(master.join, entities)
-            await SonosEntity.wait_for_groups.opp, [group])
+            await SonosEntity.wait_for_groups(opp, [group])
 
     @soco_error()
     def unjoin(self):
@@ -1278,7 +1278,7 @@ class SonosEntity(MediaPlayerEntity):
         self._coordinator = None
 
     @staticmethod
-    async def unjoin_multi.opp, entities):
+    async def unjoin_multi(opp, entities):
         """Unjoin several players from their group."""
 
         def _unjoin_all(entities):
@@ -1292,7 +1292,7 @@ class SonosEntity(MediaPlayerEntity):
 
         async with.opp.data[DATA_SONOS].topology_condition:
             await opp.async_add_executor_job(_unjoin_all, entities)
-            await SonosEntity.wait_for_groups.opp, [[e] for e in entities])
+            await SonosEntity.wait_for_groups(opp, [[e] for e in entities])
 
     @soco_error()
     def snapshot(self, with_group):
@@ -1305,7 +1305,7 @@ class SonosEntity(MediaPlayerEntity):
             self._snapshot_group = None
 
     @staticmethod
-    async def snapshot_multi.opp, entities, with_group):
+    async def snapshot_multi(opp, entities, with_group):
         """Snapshot all the entities and optionally their groups."""
         # pylint: disable=protected-access
 
@@ -1336,7 +1336,7 @@ class SonosEntity(MediaPlayerEntity):
         self._snapshot_group = None
 
     @staticmethod
-    async def restore_multi.opp, entities, with_group):
+    async def restore_multi(opp, entities, with_group):
         """Restore snapshots for all the entities."""
         # pylint: disable=protected-access
 
@@ -1381,12 +1381,12 @@ class SonosEntity(MediaPlayerEntity):
                 _restore_groups, entities, with_group
             )
 
-            await SonosEntity.wait_for_groups.opp, groups)
+            await SonosEntity.wait_for_groups(opp, groups)
 
             await opp.async_add_executor_job(_restore_players, entities)
 
     @staticmethod
-    async def wait_for_groups.opp, groups):
+    async def wait_for_groups(opp, groups):
         """Wait until all groups are present, or timeout."""
         # pylint: disable=protected-access
 

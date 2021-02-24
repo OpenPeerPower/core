@@ -380,10 +380,10 @@ class AlarmPanel:
             await self.client.put_settings(**self.async_desired_settings_payload())
 
 
-async def get_status.opp, host, port):
+async def get_status(opp, host, port):
     """Get the status of a Konnected Panel."""
     client = konnected.Client(
-        host, str(port), aiohttp_client.async_get_clientsession.opp)
+        host, str(port), aiohttp_client.async_get_clientsession(opp)
     )
     try:
         return await client.get_status()

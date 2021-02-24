@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_FAN_MODE
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Flexit Platform."""
     modbus_slave = config.get(CONF_SLAVE)
     name = config.get(CONF_NAME)

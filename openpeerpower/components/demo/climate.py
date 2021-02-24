@@ -26,7 +26,7 @@ from . import DOMAIN
 SUPPORT_FLAGS = 0
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Demo climate devices."""
     async_add_entities(
         [
@@ -89,9 +89,9 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Demo climate devices config entry."""
-    await async_setup_platform.opp, {}, async_add_entities)
+    await async_setup_platform(opp, {}, async_add_entities)
 
 
 class DemoClimate(ClimateEntity):

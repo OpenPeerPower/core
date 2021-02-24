@@ -31,7 +31,7 @@ DATA_INSTANCES = "entity_components"
 
 
 @bind.opp
-async def async_update_entity.opp: OpenPeerPower, entity_id: str) -> None:
+async def async_update_entity(opp: OpenPeerPower, entity_id: str) -> None:
     """Trigger an update for an entity."""
     domain = entity_id.split(".", 1)[0]
     entity_comp = opp.data.get(DATA_INSTANCES, {}).get(domain)

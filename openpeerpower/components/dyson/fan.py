@@ -95,7 +95,7 @@ SPEED_RANGE = (
 )  # off is not included
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Dyson fan components."""
 
     if discovery_info is None:
@@ -118,7 +118,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 dyson_entity = DysonPureCoolLinkEntity(device)
                 opp.data[DYSON_FAN_DEVICES].append(dyson_entity)
 
-    async_add_entities.opp.data[DYSON_FAN_DEVICES])
+    async_add_entities(opp.data[DYSON_FAN_DEVICES])
 
     # Register custom services
     platform = entity_platform.current_platform.get()

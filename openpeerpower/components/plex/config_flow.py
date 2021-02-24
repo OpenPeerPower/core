@@ -56,7 +56,7 @@ _LOGGER = logging.getLogger(__package__)
 
 
 @callback
-def configured_servers.opp):
+def configured_servers(opp):
     """Return a set of the configured Plex servers."""
     return {
         entry.data[CONF_SERVER_IDENTIFIER]
@@ -64,7 +64,7 @@ def configured_servers.opp):
     }
 
 
-async def async_discover.opp):
+async def async_discover(opp):
     """Scan for available Plex servers."""
     gdm = GDM()
     await opp.async_add_executor_job(gdm.scan)

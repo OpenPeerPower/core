@@ -26,7 +26,7 @@ async def async_setup_entry(
     for name, status, actions in.opp_isy_data[ISY994_PROGRAMS][SWITCH]:
         devices.append(ISYSwitchProgramEntity(name, status, actions))
 
-    await migrate_old_unique_ids.opp, SWITCH, devices)
+    await migrate_old_unique_ids(opp, SWITCH, devices)
     async_add_entities(devices)
 
 

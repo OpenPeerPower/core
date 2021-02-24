@@ -54,7 +54,7 @@ async def async_setup(opp, config):
             conf[CONF_ACTION] = script.Script(
                 opp. conf[CONF_ACTION], f"Intent Script {intent_type}", DOMAIN
             )
-        intent.async_register.opp, ScriptIntentHandler(intent_type, conf))
+        intent.async_register(opp, ScriptIntentHandler(intent_type, conf))
 
     return True
 
@@ -77,7 +77,7 @@ class ScriptIntentHandler(intent.IntentHandler):
 
         if action is not None:
             if is_async_action:
-                intent_obj.opp.async_create_task(
+                intent_obj(opp.async_create_task(
                     action.async_run(slots, intent_obj.context)
                 )
             else:

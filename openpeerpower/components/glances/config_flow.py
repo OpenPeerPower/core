@@ -41,7 +41,7 @@ DATA_SCHEMA = vol.Schema(
 )
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect."""
     for entry in.opp.config_entries.async_entries(DOMAIN):
         if entry.data[CONF_HOST] == data[CONF_HOST]:
@@ -50,7 +50,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
     if data[CONF_VERSION] not in SUPPORTED_VERSIONS:
         raise WrongVersion
     try:
-        api = get_api.opp, data)
+        api = get_api(opp, data)
         await api.get_data()
     except glances_api.exceptions.GlancesApiConnectionError as err:
         raise CannotConnect from err

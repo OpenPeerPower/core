@@ -125,10 +125,10 @@ async def async_setup(opp, config):
     # code will be called with update_before_add=False to intentionally delay
     # the first request, increasing chance that it is issued only when the
     # machine is less busy again.
-    opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
-    opp.async_create_task(async_load_platform.opp, "fan", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, "sensor", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, "fan", DOMAIN, {}, config))
 
-    async_track_time_interval.opp, state_proxy.async_update, SCAN_INTERVAL)
+    async_track_time_interval(opp, state_proxy.async_update, SCAN_INTERVAL)
 
     return True
 

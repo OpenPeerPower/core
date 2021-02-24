@@ -115,7 +115,7 @@ async def async_setup(opp, opp_config):
 
         # Download the image into a buffer for ColorThief to check against
         try:
-            session = aiohttp_client.async_get_clientsession.opp)
+            session = aiohttp_client.async_get_clientsession(opp)
 
             with async_timeout.timeout(10):
                 response = await session.get(url)

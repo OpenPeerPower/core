@@ -24,12 +24,12 @@ async def async_setup_opp):
 
 @async_response
 @websocket_api.websocket_command({vol.Required("type"): "config/entity_registry/list"})
-async def websocket_list_entities.opp, connection, msg):
+async def websocket_list_entities(opp, connection, msg):
     """Handle list registry entries command.
 
     Async friendly.
     """
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
     connection.send_message(
         websocket_api.result_message(
             msg["id"], [_entry_dict(entry) for entry in registry.entities.values()]
@@ -44,12 +44,12 @@ async def websocket_list_entities.opp, connection, msg):
         vol.Required("entity_id"): cv.entity_id,
     }
 )
-async def websocket_get_entity.opp, connection, msg):
+async def websocket_get_entity(opp, connection, msg):
     """Handle get entity registry entry command.
 
     Async friendly.
     """
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
     entry = registry.entities.get(msg["entity_id"])
 
     if entry is None:
@@ -78,12 +78,12 @@ async def websocket_get_entity.opp, connection, msg):
         vol.Optional("disabled_by"): vol.Any("user", None),
     }
 )
-async def websocket_update_entity.opp, connection, msg):
+async def websocket_update_entity(opp, connection, msg):
     """Handle update entity websocket command.
 
     Async friendly.
     """
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
 
     if msg["entity_id"] not in registry.entities:
         connection.send_message(
@@ -148,12 +148,12 @@ async def websocket_update_entity.opp, connection, msg):
         vol.Required("entity_id"): cv.entity_id,
     }
 )
-async def websocket_remove_entity.opp, connection, msg):
+async def websocket_remove_entity(opp, connection, msg):
     """Handle remove entity websocket command.
 
     Async friendly.
     """
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
 
     if msg["entity_id"] not in registry.entities:
         connection.send_message(

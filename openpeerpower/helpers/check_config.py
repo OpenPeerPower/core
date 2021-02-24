@@ -62,7 +62,7 @@ class OpenPeerPowerConfig(OrderedDict):
         return "\n".join([err.message for err in self.errors])
 
 
-async def async_check_op_config_file.opp: OpenPeerPower) -> OpenPeerPowerConfig:
+async def async_check_op_config_file(opp: OpenPeerPower) -> OpenPeerPowerConfig:
     """Load and check if Open Peer Power configuration file is valid.
 
     This method is a coroutine.
@@ -116,7 +116,7 @@ async def async_check_op_config_file.opp: OpenPeerPower) -> OpenPeerPowerConfig:
     # Process and validate config
     for domain in components:
         try:
-            integration = await async_get_integration_with_requirements.opp, domain)
+            integration = await async_get_integration_with_requirements(opp, domain)
         except (RequirementsNotFound, loader.IntegrationNotFound) as ex:
             result.add_error(f"Component error: {domain} - {ex}")
             continue

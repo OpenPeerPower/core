@@ -73,7 +73,7 @@ def check_binary_sensors(value):
     return value
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up a binary sensor for an Amcrest IP Camera."""
     if discovery_info is None:
         return
@@ -196,7 +196,7 @@ class AmcrestBinarySensor(BinarySensorEntity):
                 )
             )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect from update signal."""
         for unsub_dispatcher in self._unsub_dispatcher:
             unsub_dispatcher()

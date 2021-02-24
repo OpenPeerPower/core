@@ -45,7 +45,7 @@ def get_mock_bridge(
     return mock_bridge
 
 
-async def test_flow_works.opp):
+async def test_flow_works(opp):
     """Test config flow ."""
     mock_bridge = get_mock_bridge()
 
@@ -88,13 +88,13 @@ async def test_flow_works.opp):
     assert len(mock_bridge.initialize.mock_calls) == 1
 
 
-async def test_manual_flow_works.opp, aioclient_mock):
+async def test_manual_flow_works(opp, aioclient_mock):
     """Test config flow discovers only already configured bridges."""
     mock_bridge = get_mock_bridge()
 
     MockConfigEntry(
         domain="hue", source=config_entries.SOURCE_IGNORE, unique_id="bla"
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.hue.config_flow.discover_nupnp",
@@ -146,11 +146,11 @@ async def test_manual_flow_works.opp, aioclient_mock):
     assert entry.unique_id == "id-1234"
 
 
-async def test_manual_flow_bridge_exist.opp, aioclient_mock):
+async def test_manual_flow_bridge_exist(opp, aioclient_mock):
     """Test config flow discovers only already configured bridges."""
     MockConfigEntry(
         domain="hue", unique_id="id-1234", data={"host": "2.2.2.2"}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.hue.config_flow.discover_nupnp",
@@ -179,7 +179,7 @@ async def test_manual_flow_bridge_exist.opp, aioclient_mock):
     assert result["reason"] == "already_configured"
 
 
-async def test_manual_flow_no_discovered_bridges.opp, aioclient_mock):
+async def test_manual_flow_no_discovered_bridges(opp, aioclient_mock):
     """Test config flow discovers no bridges."""
     aioclient_mock.get(URL_NUPNP, json=[])
 
@@ -190,12 +190,12 @@ async def test_manual_flow_no_discovered_bridges.opp, aioclient_mock):
     assert result["step_id"] == "manual"
 
 
-async def test_flow_all_discovered_bridges_exist.opp, aioclient_mock):
+async def test_flow_all_discovered_bridges_exist(opp, aioclient_mock):
     """Test config flow discovers only already configured bridges."""
     aioclient_mock.get(URL_NUPNP, json=[{"internalipaddress": "1.2.3.4", "id": "bla"}])
     MockConfigEntry(
         domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
@@ -205,12 +205,12 @@ async def test_flow_all_discovered_bridges_exist.opp, aioclient_mock):
     assert result["step_id"] == "manual"
 
 
-async def test_flow_bridges_discovered.opp, aioclient_mock):
+async def test_flow_bridges_discovered(opp, aioclient_mock):
     """Test config flow discovers two bridges."""
     # Add ignored config entry. Should still show up as option.
     MockConfigEntry(
         domain="hue", source=config_entries.SOURCE_IGNORE, unique_id="bla"
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     aioclient_mock.get(
         URL_NUPNP,
@@ -234,7 +234,7 @@ async def test_flow_bridges_discovered.opp, aioclient_mock):
     result["data_schema"]({"id": "manual"})
 
 
-async def test_flow_two_bridges_discovered_one_new.opp, aioclient_mock):
+async def test_flow_two_bridges_discovered_one_new(opp, aioclient_mock):
     """Test config flow discovers two bridges."""
     aioclient_mock.get(
         URL_NUPNP,
@@ -245,7 +245,7 @@ async def test_flow_two_bridges_discovered_one_new.opp, aioclient_mock):
     )
     MockConfigEntry(
         domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
@@ -259,7 +259,7 @@ async def test_flow_two_bridges_discovered_one_new.opp, aioclient_mock):
         assert not result["data_schema"]({"id": "bla"})
 
 
-async def test_flow_timeout_discovery.opp):
+async def test_flow_timeout_discovery(opp):
     """Test config flow ."""
     with patch(
         "openpeerpower.components.hue.config_flow.discover_nupnp",
@@ -273,7 +273,7 @@ async def test_flow_timeout_discovery.opp):
     assert result["reason"] == "discover_timeout"
 
 
-async def test_flow_link_timeout.opp):
+async def test_flow_link_timeout(opp):
     """Test config flow."""
     mock_bridge = get_mock_bridge(
         mock_create_user=AsyncMock(side_effect=asyncio.TimeoutError),
@@ -324,7 +324,7 @@ async def test_flow_link_unknown_error(opp):
     assert result["errors"] == {"base": "linking"}
 
 
-async def test_flow_link_button_not_pressed.opp):
+async def test_flow_link_button_not_pressed(opp):
     """Test config flow ."""
     mock_bridge = get_mock_bridge(
         mock_create_user=AsyncMock(side_effect=aiohue.LinkButtonNotPressed),
@@ -350,7 +350,7 @@ async def test_flow_link_button_not_pressed.opp):
     assert result["errors"] == {"base": "register_failed"}
 
 
-async def test_flow_link_unknown_host.opp):
+async def test_flow_link_unknown_host(opp):
     """Test config flow ."""
     mock_bridge = get_mock_bridge(
         mock_create_user=AsyncMock(side_effect=client_exceptions.ClientOSError),
@@ -375,7 +375,7 @@ async def test_flow_link_unknown_host.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_bridge_ssdp.opp):
+async def test_bridge_ssdp(opp):
     """Test a bridge being discovered."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -391,7 +391,7 @@ async def test_bridge_ssdp.opp):
     assert result["step_id"] == "link"
 
 
-async def test_bridge_ssdp_discover_other_bridge.opp):
+async def test_bridge_ssdp_discover_other_bridge(opp):
     """Test that discovery ignores other bridges."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -403,7 +403,7 @@ async def test_bridge_ssdp_discover_other_bridge.opp):
     assert result["reason"] == "not_hue_bridge"
 
 
-async def test_bridge_ssdp_emulated_hue.opp):
+async def test_bridge_ssdp_emulated_hue(opp):
     """Test if discovery info is from an emulated hue instance."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -420,7 +420,7 @@ async def test_bridge_ssdp_emulated_hue.opp):
     assert result["reason"] == "not_hue_bridge"
 
 
-async def test_bridge_ssdp_missing_location.opp):
+async def test_bridge_ssdp_missing_location(opp):
     """Test if discovery info is missing a location attribute."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -435,7 +435,7 @@ async def test_bridge_ssdp_missing_location.opp):
     assert result["reason"] == "not_hue_bridge"
 
 
-async def test_bridge_ssdp_missing_serial.opp):
+async def test_bridge_ssdp_missing_serial(opp):
     """Test if discovery info is a serial attribute."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -450,7 +450,7 @@ async def test_bridge_ssdp_missing_serial.opp):
     assert result["reason"] == "not_hue_bridge"
 
 
-async def test_bridge_ssdp_espalexa.opp):
+async def test_bridge_ssdp_espalexa(opp):
     """Test if discovery info is from an Espalexa based device."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -467,11 +467,11 @@ async def test_bridge_ssdp_espalexa.opp):
     assert result["reason"] == "not_hue_bridge"
 
 
-async def test_bridge_ssdp_already_configured.opp):
+async def test_bridge_ssdp_already_configured(opp):
     """Test if a discovered bridge has already been configured."""
     MockConfigEntry(
         domain="hue", unique_id="1234", data={"host": "0.0.0.0"}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -499,7 +499,7 @@ async def test_import_with_no_config(opp):
     assert result["step_id"] == "link"
 
 
-async def test_creating_entry_removes_entries_for_same_host_or_bridge.opp):
+async def test_creating_entry_removes_entries_for_same_host_or_bridge(opp):
     """Test that we clean up entries for same host and bridge.
 
     An IP can only hold a single bridge and a single bridge can only be
@@ -511,13 +511,13 @@ async def test_creating_entry_removes_entries_for_same_host_or_bridge.opp):
         data={"host": "0.0.0.0", "username": "aaaa"},
         unique_id="id-1234",
     )
-    orig_entry.add_to.opp.opp)
+    orig_entry.add_to(opp.opp)
 
     MockConfigEntry(
         domain="hue",
         data={"host": "1.2.3.4", "username": "bbbb"},
         unique_id="id-5678",
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     assert len.opp.config_entries.async_entries("hue")) == 2
 
@@ -554,7 +554,7 @@ async def test_creating_entry_removes_entries_for_same_host_or_bridge.opp):
     assert new_entry.unique_id == "id-1234"
 
 
-async def test_bridge_homekit.opp, aioclient_mock):
+async def test_bridge_homekit(opp, aioclient_mock):
     """Test a bridge being discovered via HomeKit."""
     aioclient_mock.get(URL_NUPNP, json=[{"internalipaddress": "1.2.3.4", "id": "bla"}])
 
@@ -573,11 +573,11 @@ async def test_bridge_homekit.opp, aioclient_mock):
     assert result["step_id"] == "init"
 
 
-async def test_bridge_import_already_configured.opp):
+async def test_bridge_import_already_configured(opp):
     """Test if a import flow aborts if host is already configured."""
     MockConfigEntry(
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -589,11 +589,11 @@ async def test_bridge_import_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_bridge_homekit_already_configured.opp):
+async def test_bridge_homekit_already_configured(opp):
     """Test if a HomeKit discovered bridge has already been configured."""
     MockConfigEntry(
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -605,12 +605,12 @@ async def test_bridge_homekit_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_ssdp_discovery_update_configuration.opp):
+async def test_ssdp_discovery_update_configuration(opp):
     """Test if a discovered bridge is configured and updated with new host."""
     entry = MockConfigEntry(
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -627,14 +627,14 @@ async def test_ssdp_discovery_update_configuration.opp):
     assert entry.data["host"] == "1.1.1.1"
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test options config flow."""
     entry = MockConfigEntry(
         domain="hue",
         unique_id="aabbccddeeff",
         data={"host": "0.0.0.0"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

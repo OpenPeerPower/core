@@ -186,7 +186,7 @@ async def async_setup_entry(
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_shutdown)
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={},

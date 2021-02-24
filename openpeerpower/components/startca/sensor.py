@@ -56,9 +56,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the sensor platform."""
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
     apikey = config.get(CONF_API_KEY)
     bandwidthcap = config.get(CONF_TOTAL_BANDWIDTH)
 

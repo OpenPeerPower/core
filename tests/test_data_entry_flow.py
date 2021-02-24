@@ -191,7 +191,7 @@ async def test_discovery_init_flow(manager):
     assert entry["source"] == "discovery"
 
 
-async def test_finish_callback_change_result_type.opp):
+async def test_finish_callback_change_result_type(opp):
     """Test finish callback can change result type."""
 
     class TestFlow(data_entry_flow.FlowHandler):
@@ -237,7 +237,7 @@ async def test_finish_callback_change_result_type.opp):
     assert result["result"] == 2
 
 
-async def test_external_step.opp, manager):
+async def test_external_step(opp, manager):
     """Test external step logic."""
     manager opp =opp
 
@@ -285,7 +285,7 @@ async def test_external_step.opp, manager):
     assert result["title"] == "Hello"
 
 
-async def test_show_progress.opp, manager):
+async def test_show_progress(opp, manager):
     """Test show progress logic."""
     manager opp =opp
 

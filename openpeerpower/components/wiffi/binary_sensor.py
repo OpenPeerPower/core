@@ -8,7 +8,7 @@ from . import WiffiEntity
 from .const import CREATE_ENTITY_SIGNAL
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up platform for a new integration.
 
     Called by the HA framework after async_forward_entry_setup has been called
@@ -25,7 +25,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
 
         async_add_entities(entities)
 
-    async_dispatcher_connect.opp, CREATE_ENTITY_SIGNAL, _create_entity)
+    async_dispatcher_connect(opp, CREATE_ENTITY_SIGNAL, _create_entity)
 
 
 class BoolEntity(WiffiEntity, BinarySensorEntity):

@@ -163,19 +163,19 @@ async def async_setup(opp, config):
     def zones_updated_callback(data):
         """Handle zone timer updates."""
         _LOGGER.debug("Envisalink sent a zone update event. Updating zones...")
-        async_dispatcher_send.opp, SIGNAL_ZONE_UPDATE, data)
+        async_dispatcher_send(opp, SIGNAL_ZONE_UPDATE, data)
 
     @callback
     def alarm_data_updated_callback(data):
         """Handle non-alarm based info updates."""
         _LOGGER.debug("Envisalink sent new alarm info. Updating alarms...")
-        async_dispatcher_send.opp, SIGNAL_KEYPAD_UPDATE, data)
+        async_dispatcher_send(opp, SIGNAL_KEYPAD_UPDATE, data)
 
     @callback
     def partition_updated_callback(data):
         """Handle partition changes thrown by evl (including alarms)."""
         _LOGGER.debug("The envisalink sent a partition update event")
-        async_dispatcher_send.opp, SIGNAL_PARTITION_UPDATE, data)
+        async_dispatcher_send(opp, SIGNAL_PARTITION_UPDATE, data)
 
     @callback
     def stop_envisalink(event):

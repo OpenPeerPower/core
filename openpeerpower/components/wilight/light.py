@@ -21,7 +21,7 @@ from openpeerpower.core import OpenPeerPower
 from . import DOMAIN, WiLightDevice
 
 
-def entities_from_discovered_wilight.opp, api_device):
+def entities_from_discovered_wilight(opp, api_device):
     """Parse configuration and add WiLight light entities."""
     entities = []
     for item in api_device.items:
@@ -49,7 +49,7 @@ async def async_setup_entry(
     parent = opp.data[DOMAIN][entry.entry_id]
 
     # Handle a discovered WiLight device.
-    entities = entities_from_discovered_wilight.opp, parent.api)
+    entities = entities_from_discovered_wilight(opp, parent.api)
     async_add_entities(entities)
 
 
@@ -108,7 +108,7 @@ class WiLightLightDimmer(WiLightDevice, LightEntity):
         await self._client.turn_off(self._index)
 
 
-def wilight_to.opp_hue(value):
+def wilight_to(opp_hue(value):
     """Convert wilight hue 1..255 to.opp 0..360 scale."""
     return min(360, round((value * 360) / 255, 3))
 
@@ -118,7 +118,7 @@ def.opp_to_wilight_hue(value):
     return min(255, round((value * 255) / 360))
 
 
-def wilight_to.opp_saturation(value):
+def wilight_to(opp_saturation(value):
     """Convert wilight saturation 1..255 to.opp 0..100 scale."""
     return min(100, round((value * 100) / 255, 3))
 
@@ -145,8 +145,8 @@ class WiLightLightColor(WiLightDevice, LightEntity):
     def hs_color(self):
         """Return the hue and saturation color value [float, float]."""
         return [
-            wilight_to.opp_hue(int(self._status.get("hue", 0))),
-            wilight_to.opp_saturation(int(self._status.get("saturation", 0))),
+            wilight_to(opp_hue(int(self._status.get("hue", 0))),
+            wilight_to(opp_saturation(int(self._status.get("saturation", 0))),
         ]
 
     @property

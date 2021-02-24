@@ -27,7 +27,7 @@ async def _async_get_trigger_platform(
             platform = alias
             break
     try:
-        integration = await async_get_integration.opp, platform)
+        integration = await async_get_integration(opp, platform)
     except IntegrationNotFound:
         raise vol.Invalid(f"Invalid platform '{platform}' specified") from None
     try:
@@ -44,7 +44,7 @@ async def async_validate_trigger_config(
     """Validate triggers."""
     config = []
     for conf in trigger_config:
-        platform = await _async_get_trigger_platform.opp, conf)
+        platform = await _async_get_trigger_platform(opp, conf)
         if hasattr(platform, "async_validate_trigger_config"):
             conf = await platform.async_validate_trigger_config(opp, conf)
         else:
@@ -73,8 +73,8 @@ async def async_initialize_triggers(
 
     triggers = []
     for conf in trigger_config:
-        platform = await _async_get_trigger_platform.opp, conf)
-        triggers.append(platform.async_attach_trigger.opp, conf, action, info))
+        platform = await _async_get_trigger_platform(opp, conf)
+        triggers.append(platform.async_attach_trigger(opp, conf, action, info))
 
     attach_results = await asyncio.gather(*triggers, return_exceptions=True)
     removes = []

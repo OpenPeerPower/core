@@ -5,14 +5,14 @@ import voluptuous as vol
 from openpeerpower.components.broadlink.helpers import data_packet, mac_address
 
 
-async def test_padding.opp):
+async def test_padding(opp):
     """Verify that non padding strings are allowed."""
     assert data_packet("Jg") == b"&"
     assert data_packet("Jg=") == b"&"
     assert data_packet("Jg==") == b"&"
 
 
-async def test_valid_mac_address.opp):
+async def test_valid_mac_address(opp):
     """Test we convert a valid MAC address to bytes."""
     valid = [
         "A1B2C3D4E5F6",
@@ -30,7 +30,7 @@ async def test_valid_mac_address.opp):
         assert mac_address(mac) == b"\xa1\xb2\xc3\xd4\xe5\xf6"
 
 
-async def test_invalid_mac_address.opp):
+async def test_invalid_mac_address(opp):
     """Test we do not accept an invalid MAC address."""
     invalid = [
         None,

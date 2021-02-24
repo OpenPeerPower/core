@@ -16,7 +16,7 @@ from . import (
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up a Rain Bird sensor."""
     if discovery_info is None:
         return

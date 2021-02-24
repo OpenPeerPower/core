@@ -31,7 +31,7 @@ def mock_garmin():
         yield garmin.return_value
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -40,7 +40,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_user.opp, mock_garmin_connect):
+async def test_step_user(opp, mock_garmin_connect):
     """Test registering an integration and finishing flow works."""
 
     with patch(
@@ -98,7 +98,7 @@ async def test_unknown_error(opp, mock_garmin_connect):
 async def test_abort_if_already_setup_opp, mock_garmin_connect):
     """Test abort if already setup."""
     entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONF, unique_id=MOCK_CONF[CONF_ID])
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )

@@ -38,7 +38,7 @@ async def async_setup(opp, config):
     domain = config[DOMAIN][CONF_DOMAIN]
     password = config[DOMAIN][CONF_PASSWORD]
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     result = await _update_namecheapdns(session, host, domain, password)
 
@@ -49,7 +49,7 @@ async def async_setup(opp, config):
         """Update the namecheap DNS entry."""
         await _update_namecheapdns(session, host, domain, password)
 
-    async_track_time_interval.opp, update_domain_interval, INTERVAL)
+    async_track_time_interval(opp, update_domain_interval, INTERVAL)
 
     return result
 

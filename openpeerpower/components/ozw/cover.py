@@ -21,7 +21,7 @@ PRESS_BUTTON = True
 RELEASE_BUTTON = False
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Cover from Config Entry."""
 
     @callback
@@ -35,7 +35,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         async_add_entities([cover])
 
     opp.data[DOMAIN][config_entry.entry_id][DATA_UNSUBSCRIBE].append(
-        async_dispatcher_connect.opp, f"{DOMAIN}_new_{COVER_DOMAIN}", async_add_cover)
+        async_dispatcher_connect(opp, f"{DOMAIN}_new_{COVER_DOMAIN}", async_add_cover)
     )
 
 

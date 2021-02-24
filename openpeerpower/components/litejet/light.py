@@ -13,14 +13,14 @@ _LOGGER = logging.getLogger(__name__)
 ATTR_NUMBER = "number"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up lights for the LiteJet platform."""
     litejet_ = opp.data["litejet_system"]
 
     devices = []
     for i in litejet_.loads():
         name = litejet_.get_load_name(i)
-        if not litejet.is_ignored.opp, name):
+        if not litejet.is_ignored(opp, name):
             devices.append(LiteJetLight.opp, litejet_, i, name))
     add_entities(devices, True)
 

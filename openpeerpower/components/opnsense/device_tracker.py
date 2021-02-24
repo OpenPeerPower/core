@@ -3,7 +3,7 @@ from openpeerpower.components.device_tracker import DeviceScanner
 from openpeerpower.components.opnsense import CONF_TRACKER_INTERFACE, OPNSENSE_DATA
 
 
-async def async_get_scanner.opp, config, discovery_info=None):
+async def async_get_scanner(opp, config, discovery_info=None):
     """Configure the OPNSense device_tracker."""
     interface_client = opp.data[OPNSENSE_DATA]["interfaces"]
     scanner = OPNSenseDeviceScanner(

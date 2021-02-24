@@ -83,10 +83,10 @@ def platform_setup():
 
 
 @pytest.fixture()
-def sensor_with.opp_data(default_sensor, opp):
+def sensor_with(opp_data(default_sensor, opp):
     """Create a sensor with async_dispatcher_connected mocked."""
     opp.data = {}
-    default_sensor.opp = opp
+    default_sensor(opp = opp
     return default_sensor
 
 
@@ -100,7 +100,7 @@ def mock_dispatch():
 
 def test_setup_with_no_data(platform_setup, opp):
     """Test setup_platform with no data."""
-    arlo.setup_platform.opp, None, platform_setup.add_entities)
+    arlo.setup_platform(opp, None, platform_setup.add_entities)
     assert platform_setup.sensors is None
     assert not platform_setup.update
 
@@ -129,7 +129,7 @@ def test_setup_with_valid_data(platform_setup, opp):
         }
     )
 
-    arlo.setup_platform.opp, config, platform_setup.add_entities)
+    arlo.setup_platform(opp, config, platform_setup.add_entities)
     assert len(platform_setup.sensors) == 8
     assert platform_setup.update
 
@@ -139,14 +139,14 @@ def test_sensor_name(default_sensor):
     assert default_sensor.name == "Last"
 
 
-async def test_async_added_to_opp(sensor_with.opp_data, mock_dispatch):
+async def test_async_added_to_opp(sensor_with(opp_data, mock_dispatch):
     """Test dispatcher called when added."""
-    await sensor_with.opp_data.async_added_to_opp()
+    await sensor_with(opp_data.async_added_to_opp()
     assert len(mock_dispatch.mock_calls) == 1
     kall = mock_dispatch.call_args
     args, kwargs = kall
     assert len(args) == 3
-    assert args[0] == sensor_with.opp_data.opp
+    assert args[0] == sensor_with(opp_data(opp
     assert args[1] == "arlo_update"
     assert not kwargs
 

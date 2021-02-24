@@ -7,7 +7,7 @@ from .const import CARD_STATE_ACTIVE, CARD_STATE_BLOCKED, DATA
 SCAN_INTERVAL = DEFAULT_SCAN_INTERVAL
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the N26 switch platform."""
     if discovery_info is None:
         return

@@ -19,7 +19,7 @@ from .helpers import ChromecastInfo, ChromeCastZeroconf
 _LOGGER = logging.getLogger(__name__)
 
 
-def discover_chromecast.opp: OpenPeerPower, info: ChromecastInfo):
+def discover_chromecast(opp: OpenPeerPower, info: ChromecastInfo):
     """Discover a Chromecast."""
     if info.uuid is None:
         _LOGGER.error("Discovered chromecast without uuid %s", info)
@@ -32,17 +32,17 @@ def discover_chromecast.opp: OpenPeerPower, info: ChromecastInfo):
         _LOGGER.debug("Discovered chromecast %s", info)
 
     opp.data[KNOWN_CHROMECAST_INFO_KEY][info.uuid] = info
-    dispatcher_send.opp, SIGNAL_CAST_DISCOVERED, info)
+    dispatcher_send(opp, SIGNAL_CAST_DISCOVERED, info)
 
 
-def _remove_chromecast.opp: OpenPeerPower, info: ChromecastInfo):
+def _remove_chromecast(opp: OpenPeerPower, info: ChromecastInfo):
     # Removed chromecast
     _LOGGER.debug("Removed chromecast %s", info)
 
-    dispatcher_send.opp, SIGNAL_CAST_REMOVED, info)
+    dispatcher_send(opp, SIGNAL_CAST_REMOVED, info)
 
 
-def setup_internal_discovery.opp: OpenPeerPower) -> None:
+def setup_internal_discovery(opp: OpenPeerPower) -> None:
     """Set up the pychromecast internal discovery."""
     if INTERNAL_DISCOVERY_RUNNING_KEY not in.opp.data:
         opp.data[INTERNAL_DISCOVERY_RUNNING_KEY] = threading.Lock()

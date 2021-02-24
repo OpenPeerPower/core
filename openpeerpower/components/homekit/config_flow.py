@@ -444,7 +444,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
         )
 
 
-def _async_get_matching_entities.opp, domains=None):
+def _async_get_matching_entities(opp, domains=None):
     """Fetch all entities or entities in the given domains."""
     return {
         state.entity_id: f"{state.entity_id} ({state.attributes.get(ATTR_FRIENDLY_NAME, state.entity_id)})"

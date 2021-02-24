@@ -57,7 +57,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def _async_create_entities.opp, config):
+async def _async_create_entities(opp, config):
     """Create the template sensors."""
     sensors = []
 
@@ -93,10 +93,10 @@ async def _async_create_entities.opp, config):
     return sensors
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the template sensors."""
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
-    async_add_entities(await _async_create_entities.opp, config))
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
+    async_add_entities(await _async_create_entities(opp, config))
 
 
 class SensorTemplate(TemplateEntity, Entity):

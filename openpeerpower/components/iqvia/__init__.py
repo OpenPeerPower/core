@@ -41,7 +41,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up IQVIA as config entry."""
     opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
 
@@ -51,7 +51,7 @@ async def async_setup_entry.opp, entry):
             entry, **{"unique_id": entry.data[CONF_ZIP_CODE]}
         )
 
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
     client = Client(entry.data[CONF_ZIP_CODE], session=websession)
 
     async def async_get_data_from_api(api_coro):
@@ -92,7 +92,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload an OpenUV config entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -182,7 +182,7 @@ KODI_CALL_METHOD_SCHEMA = cv.make_entity_service_schema(
 )
 
 
-def find_matching_config_entries_for_host.opp, host):
+def find_matching_config_entries_for_host(opp, host):
     """Search existing config entries for one matching the host."""
     for entry in.opp.config_entries.async_entries(DOMAIN):
         if entry.data[CONF_HOST] == host:
@@ -190,14 +190,14 @@ def find_matching_config_entries_for_host.opp, host):
     return None
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Kodi platform."""
     if discovery_info:
         # Now handled by zeroconf in the config flow
         return
 
     host = config[CONF_HOST]
-    if find_matching_config_entries_for_host.opp, host):
+    if find_matching_config_entries_for_host(opp, host):
         return
 
     websocket = config.get(CONF_ENABLE_WEBSOCKET)
@@ -221,7 +221,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Kodi media player platform."""
     platform = entity_platform.current_platform.get()
     platform.async_register_entity_service(

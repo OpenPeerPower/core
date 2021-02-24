@@ -32,7 +32,7 @@ ATTR_PROFILE_FAN_SPEED_BOOST = {
 }
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the fan device."""
     if discovery_info is None:
         return

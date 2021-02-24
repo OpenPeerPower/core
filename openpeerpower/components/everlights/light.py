@@ -43,12 +43,12 @@ def color_int_to_rgb(value: int) -> Tuple[int, int, int]:
     return (value >> 16, (value >> 8) & 0xFF, value & 0xFF)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the EverLights lights from configuration.yaml."""
     lights = []
 
     for ipaddr in config[CONF_HOSTS]:
-        api = pyeverlights.EverLights(ipaddr, async_get_clientsession.opp))
+        api = pyeverlights.EverLights(ipaddr, async_get_clientsession(opp))
 
         try:
             status = await api.get_status()

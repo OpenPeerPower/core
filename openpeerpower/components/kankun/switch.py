@@ -37,7 +37,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities_callback, discovery_info=None):
+def setup_platform(opp, config, add_entities_callback, discovery_info=None):
     """Set up Kankun Wifi switches."""
     switches = config.get("switches", {})
     devices = []

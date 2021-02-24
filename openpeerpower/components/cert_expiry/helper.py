@@ -24,7 +24,7 @@ def get_cert(host, port):
             return cert
 
 
-async def get_cert_expiry_timestamp.opp, hostname, port):
+async def get_cert_expiry_timestamp(opp, hostname, port):
     """Return the certificate's expiration timestamp."""
     try:
         cert = await opp.async_add_executor_job(get_cert, hostname, port)

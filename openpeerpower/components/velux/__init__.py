@@ -36,7 +36,7 @@ async def async_setup(opp, config):
 
     for component in SUPPORTED_DOMAINS:
         opp.async_create_task(
-            discovery.async_load_platform.opp, component, DOMAIN, {}, config)
+            discovery.async_load_platform(opp, component, DOMAIN, {}, config)
         )
     return True
 

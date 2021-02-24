@@ -21,7 +21,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Remote Raspberry PI GPIO devices."""
     address = config[CONF_HOST]
     invert_logic = config[CONF_INVERT_LOGIC]

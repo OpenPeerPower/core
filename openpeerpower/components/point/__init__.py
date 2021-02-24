@@ -72,7 +72,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Point from a config entry."""
 
     async def token_saver(token, **kwargs):
@@ -97,7 +97,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
     opp.data[CONFIG_ENTRY_IS_SETUP] = set()
 
-    await async_setup_webhook.opp, entry, session)
+    await async_setup_webhook(opp, entry, session)
     client = MinutPointClient.opp, entry, session)
     opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: client})
     opp.async_create_task(client.update())
@@ -105,7 +105,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, session):
+async def async_setup_webhook(opp: OpenPeerPowerType, entry: ConfigEntry, session):
     """Set up a webhook to handle binary sensor events."""
     if CONF_WEBHOOK_ID not in entry.data:
         webhook_id = opp.components.webhook.async_generate_id()
@@ -131,7 +131,7 @@ async def async_setup_webhook.opp: OpenPeerPowerType, entry: ConfigEntry, sessio
     )
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     session = opp.data[DOMAIN].pop(entry.entry_id)
@@ -146,7 +146,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle webhook callback."""
     try:
         data = await request.json()
@@ -156,7 +156,7 @@ async def handle_webhook.opp, webhook_id, request):
 
     if isinstance(data, dict):
         data["webhook_id"] = webhook_id
-        async_dispatcher_send.opp, SIGNAL_WEBHOOK, data, data.get("hook_id"))
+        async_dispatcher_send(opp, SIGNAL_WEBHOOK, data, data.get("hook_id"))
     opp.bus.async_fire(EVENT_RECEIVED, data)
 
 
@@ -265,7 +265,7 @@ class MinutPointEntity(Entity):
         )
         await self._update_callback()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()

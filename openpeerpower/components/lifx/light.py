@@ -159,12 +159,12 @@ def aiolifx_effects():
     return aiolifx_effects_module
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the LIFX light platform. Obsolete."""
     _LOGGER.warning("LIFX no longer works with light platform configuration")
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up LIFX from a config entry."""
     if sys.platform == "win32":
         _LOGGER.warning(
@@ -199,11 +199,11 @@ def lifx_features(bulb):
     ) or aiolifx().products.features_map.get(1)
 
 
-def find_hsbk.opp, **kwargs):
+def find_hsbk(opp, **kwargs):
     """Find the desired color from a number of possible inputs."""
     hue, saturation, brightness, kelvin = [None] * 4
 
-    preprocess_turn_on_alternatives.opp, kwargs)
+    preprocess_turn_on_alternatives(opp, kwargs)
 
     if ATTR_HS_COLOR in kwargs:
         hue, saturation = kwargs[ATTR_HS_COLOR]

@@ -19,7 +19,7 @@ from openpeerpower.components.image_processing import (  # noqa: F401, isort:ski
 ATTR_LOCATION = "location"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Dlib Face detection platform."""
     entities = []
     for camera in config[CONF_SOURCE]:

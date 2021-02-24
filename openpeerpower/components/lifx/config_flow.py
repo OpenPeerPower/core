@@ -7,7 +7,7 @@ from openpeerpower.helpers import config_entry_flow
 from .const import DOMAIN
 
 
-async def _async_has_devices.opp):
+async def _async_has_devices(opp):
     """Return if there are devices that can be discovered."""
     lifx_ip_addresses = await aiolifx.LifxScan.opp.loop).scan()
     return len(lifx_ip_addresses) > 0

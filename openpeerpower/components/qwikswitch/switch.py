@@ -4,7 +4,7 @@ from openpeerpower.components.switch import SwitchEntity
 from . import DOMAIN as QWIKSWITCH, QSToggleEntity
 
 
-async def async_setup_platform.opp, _, add_entities, discovery_info=None):
+async def async_setup_platform(opp, _, add_entities, discovery_info=None):
     """Add switches from the main Qwikswitch component."""
     if discovery_info is None:
         return

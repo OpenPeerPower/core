@@ -116,12 +116,12 @@ async def async_configure_sabnzbd(
         api_key = conf.get(base_url, {}).get(CONF_API_KEY, "")
 
     sab_api = SabnzbdApi(
-        base_url, api_key, web_root=web_root, session=async_get_clientsession.opp)
+        base_url, api_key, web_root=web_root, session=async_get_clientsession(opp)
     )
     if await async_check_sabnzbd(sab_api):
-        async_setup_sabnzbd.opp, sab_api, config, name)
+        async_setup_sabnzbd(opp, sab_api, config, name)
     else:
-        async_request_configuration.opp, config, base_url, web_root)
+        async_request_configuration(opp, config, base_url, web_root)
 
 
 async def async_setup(opp, config):
@@ -130,28 +130,28 @@ async def async_setup(opp, config):
     async def sabnzbd_discovered(service, info):
         """Handle service discovery."""
         ssl = info.get("properties", {}).get("https", "0") == "1"
-        await async_configure_sabnzbd.opp, info, ssl)
+        await async_configure_sabnzbd(opp, info, ssl)
 
-    discovery.async_listen.opp, SERVICE_SABNZBD, sabnzbd_discovered)
+    discovery.async_listen(opp, SERVICE_SABNZBD, sabnzbd_discovered)
 
     conf = config.get(DOMAIN)
     if conf is not None:
         use_ssl = conf[CONF_SSL]
         name = conf.get(CONF_NAME)
         api_key = conf.get(CONF_API_KEY)
-        await async_configure_sabnzbd.opp, conf, use_ssl, name, api_key)
+        await async_configure_sabnzbd(opp, conf, use_ssl, name, api_key)
     return True
 
 
 @callback
-def async_setup_sabnzbd.opp, sab_api, config, name):
+def async_setup_sabnzbd(opp, sab_api, config, name):
     """Set up SABnzbd sensors and services."""
     sab_api_data = SabnzbdApiData(sab_api, name, config.get(CONF_SENSORS, {}))
 
     if config.get(CONF_SENSORS):
         opp.data[DATA_SABNZBD] = sab_api_data
         opp.async_create_task(
-            discovery.async_load_platform.opp, "sensor", DOMAIN, {}, config)
+            discovery.async_load_platform(opp, "sensor", DOMAIN, {}, config)
         )
 
     async def async_service_handler(service):
@@ -181,15 +181,15 @@ def async_setup_sabnzbd.opp, sab_api, config, name):
 
         try:
             await sab_api.refresh_data()
-            async_dispatcher_send.opp, SIGNAL_SABNZBD_UPDATED, None)
+            async_dispatcher_send(opp, SIGNAL_SABNZBD_UPDATED, None)
         except SabnzbdApiException as err:
             _LOGGER.error(err)
 
-    async_track_time_interval.opp, async_update_sabnzbd, UPDATE_INTERVAL)
+    async_track_time_interval(opp, async_update_sabnzbd, UPDATE_INTERVAL)
 
 
 @callback
-def async_request_configuration.opp, config, host, web_root):
+def async_request_configuration(opp, config, host, web_root):
     """Request configuration steps from the user."""
 
     configurator = opp.components.configurator
@@ -205,21 +205,21 @@ def async_request_configuration.opp, config, host, web_root):
         """Handle configuration changes."""
         api_key = data.get(CONF_API_KEY)
         sab_api = SabnzbdApi(
-            host, api_key, web_root=web_root, session=async_get_clientsession.opp)
+            host, api_key, web_root=web_root, session=async_get_clientsession(opp)
         )
         if not await async_check_sabnzbd(sab_api):
             return
 
         def success():
             """Signal successful setup."""
-            conf = load_json.opp.config.path(CONFIG_FILE))
+            conf = load_json(opp.config.path(CONFIG_FILE))
             conf[host] = {CONF_API_KEY: api_key}
-            save_json.opp.config.path(CONFIG_FILE), conf)
+            save_json(opp.config.path(CONFIG_FILE), conf)
             req_config = _CONFIGURING.pop(host)
             configurator.request_done(req_config)
 
         opp.async_add_job(success)
-        async_setup_sabnzbd.opp, sab_api, config, config.get(CONF_NAME, DEFAULT_NAME))
+        async_setup_sabnzbd(opp, sab_api, config, config.get(CONF_NAME, DEFAULT_NAME))
 
     _CONFIGURING[host] = configurator.async_request_config(
         DEFAULT_NAME,

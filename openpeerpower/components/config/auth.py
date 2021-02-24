@@ -29,7 +29,7 @@ async def async_setup_opp):
 
 @websocket_api.require_admin
 @websocket_api.async_response
-async def websocket_list.opp, connection, msg):
+async def websocket_list(opp, connection, msg):
     """Return a list of users."""
     result = [_user_info(u) for u in await opp.auth.async_get_users()]
 
@@ -38,7 +38,7 @@ async def websocket_list.opp, connection, msg):
 
 @websocket_api.require_admin
 @websocket_api.async_response
-async def websocket_delete.opp, connection, msg):
+async def websocket_delete(opp, connection, msg):
     """Delete a user."""
     if msg["user_id"] == connection.user.id:
         connection.send_message(
@@ -70,7 +70,7 @@ async def websocket_delete.opp, connection, msg):
         vol.Optional("group_ids"): [str],
     }
 )
-async def websocket_create.opp, connection, msg):
+async def websocket_create(opp, connection, msg):
     """Create a user."""
     user = await opp.auth.async_create_user(msg["name"], msg.get("group_ids"))
 
@@ -90,7 +90,7 @@ async def websocket_create.opp, connection, msg):
         vol.Optional("group_ids"): [str],
     }
 )
-async def websocket_update.opp, connection, msg):
+async def websocket_update(opp, connection, msg):
     """Update a user."""
     user = await opp.auth.async_get_user(msg.pop("user_id"))
 

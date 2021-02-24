@@ -249,13 +249,13 @@ class TokenView(OpenPeerPowerView):
         # The revocation request includes an additional parameter,
         # action=revoke.
         if data.get("action") == "revoke":
-            return await self._async_handle_revoke_token.opp, data)
+            return await self._async_handle_revoke_token(opp, data)
 
         if grant_type == "authorization_code":
-            return await self._async_handle_auth_code.opp, data, request.remote)
+            return await self._async_handle_auth_code(opp, data, request.remote)
 
         if grant_type == "refresh_token":
-            return await self._async_handle_refresh_token.opp, data, request.remote)
+            return await self._async_handle_refresh_token(opp, data, request.remote)
 
         return self.json(
             {"error": "unsupported_grant_type"}, status_code=HTTP_BAD_REQUEST

@@ -16,7 +16,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Logitech Squeezebox from a config entry."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, MP_DOMAIN)
@@ -24,7 +24,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     # Stop player discovery task for this config entry.
     opp.data[DOMAIN][entry.entry_id][PLAYER_DISCOVERY_UNSUB]()

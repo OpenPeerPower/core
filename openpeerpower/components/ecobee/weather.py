@@ -24,7 +24,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the ecobee weather platform."""
     data = opp.data[DOMAIN]
     dev = []

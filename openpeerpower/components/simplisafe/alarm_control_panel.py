@@ -61,7 +61,7 @@ ATTR_WALL_POWER_LEVEL = "wall_power_level"
 ATTR_WIFI_STRENGTH = "wifi_strength"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up a SimpliSafe alarm control panel based on a config entry."""
     simplisafe = opp.data[DOMAIN][DATA_CLIENT][entry.entry_id]
     async_add_entities(

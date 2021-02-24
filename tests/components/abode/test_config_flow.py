@@ -20,7 +20,7 @@ from tests.common import MockConfigEntry
 CONF_POLLING = "polling"
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     flow = config_flow.AbodeFlowHandler()
     flow.opp = opp
@@ -31,7 +31,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_one_config_allowed.opp):
+async def test_one_config_allowed(opp):
     """Test that only one Abode configuration is allowed."""
     flow = config_flow.AbodeFlowHandler()
     flow.opp = opp
@@ -39,7 +39,7 @@ async def test_one_config_allowed.opp):
     MockConfigEntry(
         domain=DOMAIN,
         data={CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"},
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     step_user_result = await flow.async_step_user()
 
@@ -58,7 +58,7 @@ async def test_one_config_allowed.opp):
     assert import_config_result["reason"] == "single_instance_allowed"
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test that invalid credentials throws an error."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
@@ -90,7 +90,7 @@ async def test_connection_error(opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_step_import.opp):
+async def test_step_import(opp):
     """Test that the import step works."""
     conf = {
         CONF_USERNAME: "user@email.com",
@@ -113,7 +113,7 @@ async def test_step_import.opp):
         }
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
@@ -134,7 +134,7 @@ async def test_step_user.opp):
         }
 
 
-async def test_step_mfa.opp):
+async def test_step_mfa(opp):
     """Test that the MFA step works."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
@@ -175,7 +175,7 @@ async def test_step_mfa.opp):
         }
 
 
-async def test_step_reauth.opp):
+async def test_step_reauth(opp):
     """Test the reauth flow."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
@@ -183,7 +183,7 @@ async def test_step_reauth.opp):
         domain=DOMAIN,
         unique_id="user@email.com",
         data=conf,
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
 
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"

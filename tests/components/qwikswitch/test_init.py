@@ -46,7 +46,7 @@ def qs_devices():
 EMPTY_PACKET = {"cmd": ""}
 
 
-async def test_binary_sensor_device.opp, aioclient_mock, qs_devices):
+async def test_binary_sensor_device(opp, aioclient_mock, qs_devices):
     """Test a binary sensor device."""
     config = {
         "qwikswitch": {
@@ -56,7 +56,7 @@ async def test_binary_sensor_device.opp, aioclient_mock, qs_devices):
     aioclient_mock.get("http://127.0.0.1:2020/&device", json=qs_devices)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
 
@@ -85,7 +85,7 @@ async def test_binary_sensor_device.opp, aioclient_mock, qs_devices):
     listen_mock.stop()
 
 
-async def test_sensor_device.opp, aioclient_mock, qs_devices):
+async def test_sensor_device(opp, aioclient_mock, qs_devices):
     """Test a sensor device."""
     config = {
         "qwikswitch": {
@@ -100,7 +100,7 @@ async def test_sensor_device.opp, aioclient_mock, qs_devices):
     aioclient_mock.get("http://127.0.0.1:2020/&device", json=qs_devices)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
 
@@ -119,7 +119,7 @@ async def test_sensor_device.opp, aioclient_mock, qs_devices):
     listen_mock.stop()
 
 
-async def test_switch_device.opp, aioclient_mock, qs_devices):
+async def test_switch_device(opp, aioclient_mock, qs_devices):
     """Test a switch device."""
 
     async def get_devices_json(method, url, data):
@@ -129,7 +129,7 @@ async def test_switch_device.opp, aioclient_mock, qs_devices):
     aioclient_mock.get("http://127.0.0.1:2020/&device", side_effect=get_devices_json)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
 
@@ -180,7 +180,7 @@ async def test_switch_device.opp, aioclient_mock, qs_devices):
     listen_mock.stop()
 
 
-async def test_light_device.opp, aioclient_mock, qs_devices):
+async def test_light_device(opp, aioclient_mock, qs_devices):
     """Test a light device."""
 
     async def get_devices_json(method, url, data):
@@ -190,7 +190,7 @@ async def test_light_device.opp, aioclient_mock, qs_devices):
     aioclient_mock.get("http://127.0.0.1:2020/&device", side_effect=get_devices_json)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
 
@@ -251,7 +251,7 @@ async def test_light_device.opp, aioclient_mock, qs_devices):
     listen_mock.stop()
 
 
-async def test_button.opp, aioclient_mock, qs_devices):
+async def test_button(opp, aioclient_mock, qs_devices):
     """Test that buttons fire an event."""
 
     async def get_devices_json(method, url, data):
@@ -261,7 +261,7 @@ async def test_button.opp, aioclient_mock, qs_devices):
     aioclient_mock.get("http://127.0.0.1:2020/&device", side_effect=get_devices_json)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
 
@@ -277,20 +277,20 @@ async def test_button.opp, aioclient_mock, qs_devices):
     listen_mock.stop()
 
 
-async def test_failed_update_devices.opp, aioclient_mock):
+async def test_failed_update_devices(opp, aioclient_mock):
     """Test that code behaves correctly when unable to get the devices."""
 
     config = {"qwikswitch": {}}
     aioclient_mock.get("http://127.0.0.1:2020/&device", exc=ClientError())
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert not await async_setup_component.opp, QWIKSWITCH, config)
+    assert not await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
     listen_mock.stop()
 
 
-async def test_single_invalid_sensor.opp, aioclient_mock, qs_devices):
+async def test_single_invalid_sensor(opp, aioclient_mock, qs_devices):
     """Test that a single misconfigured sensor doesn't block the others."""
 
     config = {
@@ -305,7 +305,7 @@ async def test_single_invalid_sensor.opp, aioclient_mock, qs_devices):
     aioclient_mock.get("http://127.0.0.1:2020/&device", json=qs_devices)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
@@ -336,7 +336,7 @@ async def test_non_binary_sensor_with_binary_args(
     aioclient_mock.get("http://127.0.0.1:2020/&device", json=qs_devices)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
@@ -346,14 +346,14 @@ async def test_non_binary_sensor_with_binary_args(
     listen_mock.stop()
 
 
-async def test_non_relay_switch.opp, aioclient_mock, qs_devices, caplog):
+async def test_non_relay_switch(opp, aioclient_mock, qs_devices, caplog):
     """Test that the system logs a warning when a switch is configured for a device that is not a relay."""
 
     config = {"qwikswitch": {"switches": ["@a00003"]}}
     aioclient_mock.get("http://127.0.0.1:2020/&device", json=qs_devices)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
@@ -363,7 +363,7 @@ async def test_non_relay_switch.opp, aioclient_mock, qs_devices, caplog):
     listen_mock.stop()
 
 
-async def test_unknown_device.opp, aioclient_mock, qs_devices, caplog):
+async def test_unknown_device(opp, aioclient_mock, qs_devices, caplog):
     """Test that the system logs a warning when a network device has unknown type."""
 
     config = {"qwikswitch": {}}
@@ -371,7 +371,7 @@ async def test_unknown_device.opp, aioclient_mock, qs_devices, caplog):
     aioclient_mock.get("http://127.0.0.1:2020/&device", json=qs_devices)
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, QWIKSWITCH, config)
+    assert await async_setup_component(opp, QWIKSWITCH, config)
     await opp.async_start()
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
@@ -383,7 +383,7 @@ async def test_unknown_device.opp, aioclient_mock, qs_devices, caplog):
     listen_mock.stop()
 
 
-async def test_no_discover_info.opp, opp_storage, aioclient_mock, caplog):
+async def test_no_discover_info(opp, opp_storage, aioclient_mock, caplog):
     """Test that discovery with no discovery_info does not result in errors."""
     config = {
         "qwikswitch": {},
@@ -407,10 +407,10 @@ async def test_no_discover_info.opp, opp_storage, aioclient_mock, caplog):
     )
     listen_mock = MockLongPollSideEffect()
     aioclient_mock.get("http://127.0.0.1:2020/&listen", side_effect=listen_mock)
-    assert await async_setup_component.opp, "light", config)
-    assert await async_setup_component.opp, "switch", config)
-    assert await async_setup_component.opp, "sensor", config)
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "light", config)
+    assert await async_setup_component(opp, "switch", config)
+    assert await async_setup_component(opp, "sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_start()
     await opp.async_block_till_done()
     assert "Error while setting up qwikswitch platform" not in caplog.text

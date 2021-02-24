@@ -16,7 +16,7 @@ from .discovery import async_start_discovery_service, async_stop_discovery_servi
 _LOGGER = logging.getLogger(__name__)
 
 
-async def _async_has_devices.opp):
+async def _async_has_devices(opp):
 
     controller_ready = asyncio.Event()
 
@@ -24,9 +24,9 @@ async def _async_has_devices.opp):
     def dispatch_discovered(_):
         controller_ready.set()
 
-    async_dispatcher_connect.opp, DISPATCH_CONTROLLER_DISCOVERED, dispatch_discovered)
+    async_dispatcher_connect(opp, DISPATCH_CONTROLLER_DISCOVERED, dispatch_discovered)
 
-    disco = await async_start_discovery_service.opp)
+    disco = await async_start_discovery_service(opp)
 
     try:
         async with timeout(TIMEOUT_DISCOVERY):
@@ -35,7 +35,7 @@ async def _async_has_devices.opp):
         pass
 
     if not disco.pi_disco.controllers:
-        await async_stop_discovery_service.opp)
+        await async_stop_discovery_service(opp)
         _LOGGER.debug("No controllers found")
         return False
 

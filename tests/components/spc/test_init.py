@@ -16,7 +16,7 @@ async def test_valid_device_config(opp, monkeypatch):
         "openpeerpower.components.spc.SpcWebGateway.async_load_parameters",
         return_value=mock_coro(True),
     ):
-        assert await async_setup_component.opp, "spc", config) is True
+        assert await async_setup_component(opp, "spc", config) is True
 
 
 async def test_invalid_device_config(opp, monkeypatch):
@@ -27,10 +27,10 @@ async def test_invalid_device_config(opp, monkeypatch):
         "openpeerpower.components.spc.SpcWebGateway.async_load_parameters",
         return_value=mock_coro(True),
     ):
-        assert await async_setup_component.opp, "spc", config) is False
+        assert await async_setup_component(opp, "spc", config) is False
 
 
-async def test_update_alarm_device.opp):
+async def test_update_alarm_device(opp):
     """Test that alarm panel state changes on incoming websocket data."""
     import pyspcwebgw
     from pyspcwebgw.const import AreaMode
@@ -54,7 +54,7 @@ async def test_update_alarm_device.opp):
             "openpeerpower.components.spc.SpcWebGateway.async_load_parameters",
             return_value=mock_coro(True),
         ):
-            assert await async_setup_component.opp, "spc", config) is True
+            assert await async_setup_component(opp, "spc", config) is True
 
         await opp.async_block_till_done()
 

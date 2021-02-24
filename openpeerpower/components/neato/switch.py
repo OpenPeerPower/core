@@ -18,7 +18,7 @@ SWITCH_TYPE_SCHEDULE = "schedule"
 SWITCH_TYPES = {SWITCH_TYPE_SCHEDULE: ["Schedule"]}
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Neato switch with config entry."""
     dev = []
     neato = opp.data.get(NEATO_LOGIN)

@@ -75,13 +75,13 @@ def register_node_in_dev_reg(
         manufacturer=node.device_config.manufacturer,
     )
 
-    async_dispatcher_send.opp, EVENT_DEVICE_ADDED_TO_REGISTRY, device)
+    async_dispatcher_send(opp, EVENT_DEVICE_ADDED_TO_REGISTRY, device)
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Z-Wave JS from a config entry."""
-    client = ZwaveClient(entry.data[CONF_URL], async_get_clientsession.opp))
-    dev_reg = await device_registry.async_get_registry.opp)
+    client = ZwaveClient(entry.data[CONF_URL], async_get_clientsession(opp))
+    dev_reg = await device_registry.async_get_registry(opp)
 
     @callback
     def async_on_node_ready(node: ZwaveNode) -> None:
@@ -89,7 +89,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         LOGGER.debug("Processing node %s", node)
 
         # register (or update) node in device registry
-        register_node_in_dev_reg.opp, entry, dev_reg, client, node)
+        register_node_in_dev_reg(opp, entry, dev_reg, client, node)
 
         # run discovery on all node values and create/update entities
         for disc_info in async_discover_values(node):
@@ -123,7 +123,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
         # we do submit the node to device registry so user has
         # some visual feedback that something is (in the process of) being added
-        register_node_in_dev_reg.opp, entry, dev_reg, client, node)
+        register_node_in_dev_reg(opp, entry, dev_reg, client, node)
 
     @callback
     def async_on_node_removed(node: ZwaveNode) -> None:
@@ -192,7 +192,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     }
 
     # Set up websocket API
-    async_register_api.opp)
+    async_register_api(opp)
 
     async def start_platforms() -> None:
         """Start platforms and perform discovery."""
@@ -208,10 +208,10 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
         async def handle_op_shutdown(event: Event) -> None:
             """Handle HA shutdown."""
-            await disconnect_client.opp, entry, client, listen_task, platform_task)
+            await disconnect_client(opp, entry, client, listen_task, platform_task)
 
         listen_task = asyncio.create_task(
-            client_listen.opp, entry, client, driver_ready)
+            client_listen(opp, entry, client, driver_ready)
         )
         opp.data[DOMAIN][entry.entry_id][DATA_CLIENT_LISTEN_TASK] = listen_task
         unsubscribe_callbacks.append(
@@ -276,7 +276,7 @@ async def client_listen(
     # All model instances will be replaced when the new state is acquired.
     if should_reload:
         LOGGER.info("Disconnected from server. Reloading integration")
-        asyncio.create_task.opp.config_entries.async_reload(entry.entry_id))
+        asyncio.create_task(opp.config_entries.async_reload(entry.entry_id))
 
 
 async def disconnect_client(
@@ -297,7 +297,7 @@ async def disconnect_client(
         LOGGER.info("Disconnected from Zwave JS Server")
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -327,7 +327,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry) -> None:
+async def async_remove_entry(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Remove a config entry."""
     if not entry.data.get(CONF_INTEGRATION_CREATED_ADDON):
         return

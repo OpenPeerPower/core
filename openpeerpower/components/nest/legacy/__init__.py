@@ -71,7 +71,7 @@ CANCEL_ETA_SCHEMA = vol.Schema(
 )
 
 
-def nest_update_event_broker.opp, nest):
+def nest_update_event_broker(opp, nest):
     """
     Dispatch SIGNAL_NEST_UPDATE to devices when nest stream API received data.
 
@@ -89,12 +89,12 @@ def nest_update_event_broker.opp, nest):
 
         nest.update_event.clear()
         _LOGGER.debug("Dispatching nest data update")
-        dispatcher_send.opp, SIGNAL_NEST_UPDATE)
+        dispatcher_send(opp, SIGNAL_NEST_UPDATE)
 
     _LOGGER.debug("Stop listening for nest.update_event")
 
 
-async def async_setup_legacy.opp, config):
+async def async_setup_legacy(opp, config):
     """Set up Nest components using the legacy nest API."""
     if DOMAIN not in config:
         return True
@@ -120,7 +120,7 @@ async def async_setup_legacy.opp, config):
     return True
 
 
-async def async_setup_legacy_entry.opp, entry):
+async def async_setup_legacy_entry(opp, entry):
     """Set up Nest from legacy config entry."""
 
     nest = Nest(access_token=entry.data["tokens"]["access_token"])
@@ -128,7 +128,7 @@ async def async_setup_legacy_entry.opp, entry):
     _LOGGER.debug("proceeding with setup")
     conf = opp.data.get(DATA_NEST_CONFIG, {})
     opp.data[DATA_NEST] = NestLegacyDevice.opp, conf, nest)
-    if not await opp.async_add_executor_job.opp.data[DATA_NEST].initialize):
+    if not await opp.async_add_executor_job(opp.data[DATA_NEST].initialize):
         return False
 
     for component in "climate", "camera", "sensor", "binary_sensor":

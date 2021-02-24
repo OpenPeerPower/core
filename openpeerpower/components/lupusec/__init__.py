@@ -54,7 +54,7 @@ def setup(opp, config):
         return False
 
     for platform in LUPUSEC_PLATFORMS:
-        discovery.load_platform.opp, platform, DOMAIN, {}, config)
+        discovery.load_platform(opp, platform, DOMAIN, {}, config)
 
     return True
 

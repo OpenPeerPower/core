@@ -124,7 +124,7 @@ def setup_mock_device(mock_device):
     """Prepare mock ONVIFDevice."""
     mock_device.async_setup = AsyncMock(return_value=True)
 
-    def mock_constructor.opp, config):
+    def mock_constructor(opp, config):
         """Fake the controller constructor."""
         return mock_device
 
@@ -158,7 +158,7 @@ async def setup_onvif_integration(
         entry_id=entry_id,
         unique_id=unique_id,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.onvif.config_flow.get_device"
@@ -176,7 +176,7 @@ async def setup_onvif_integration(
     return config_entry
 
 
-async def test_flow_discovered_devices.opp):
+async def test_flow_discovered_devices(opp):
     """Test that config flow works for discovered devices."""
 
     result = await opp.config_entries.flow.async_init(
@@ -240,9 +240,9 @@ async def test_flow_discovered_devices.opp):
         }
 
 
-async def test_flow_discovered_devices_ignore_configured_manual_input.opp):
+async def test_flow_discovered_devices_ignore_configured_manual_input(opp):
     """Test that config flow discovery ignores configured devices."""
-    await setup_onvif_integration.opp)
+    await setup_onvif_integration(opp)
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user"}
@@ -279,9 +279,9 @@ async def test_flow_discovered_devices_ignore_configured_manual_input.opp):
         assert result["step_id"] == "manual_input"
 
 
-async def test_flow_discovery_ignore_existing_and_abort.opp):
+async def test_flow_discovery_ignore_existing_and_abort(opp):
     """Test that config flow discovery ignores setup devices."""
-    await setup_onvif_integration.opp)
+    await setup_onvif_integration(opp)
     await setup_onvif_integration(
         opp,
         config={
@@ -345,7 +345,7 @@ async def test_flow_discovery_ignore_existing_and_abort.opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_flow_manual_entry.opp):
+async def test_flow_manual_entry(opp):
     """Test that config flow works for discovered devices."""
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user"}
@@ -414,7 +414,7 @@ async def test_flow_manual_entry.opp):
         }
 
 
-async def test_flow_import_no_mac.opp):
+async def test_flow_import_no_mac(opp):
     """Test that config flow uses Serial Number when no MAC available."""
     with patch(
         "openpeerpower.components.onvif.config_flow.get_device"
@@ -455,7 +455,7 @@ async def test_flow_import_no_mac.opp):
         }
 
 
-async def test_flow_import_no_mac_or_serial.opp):
+async def test_flow_import_no_mac_or_serial(opp):
     """Test that config flow fails when no MAC or Serial Number available."""
     with patch(
         "openpeerpower.components.onvif.config_flow.get_device"
@@ -556,9 +556,9 @@ async def test_flow_import_onvif_auth_error(opp):
         assert result["errors"]["base"] == "cannot_connect"
 
 
-async def test_option_flow.opp):
+async def test_option_flow(opp):
     """Test config flow options."""
-    entry = await setup_onvif_integration.opp)
+    entry = await setup_onvif_integration(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

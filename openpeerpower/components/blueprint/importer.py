@@ -144,7 +144,7 @@ async def fetch_blueprint_from_community_post(
     Caller needs to implement own timeout.
     """
     import_url = _get_community_post_import_url(url)
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     resp = await session.get(import_url, raise_for_status=True)
     json_resp = await resp.json()
@@ -157,7 +157,7 @@ async def fetch_blueprint_from_github_url(
 ) -> ImportedBlueprint:
     """Get a blueprint from a github url."""
     import_url = _get_github_import_url(url)
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     resp = await session.get(import_url, raise_for_status=True)
     raw_yaml = await resp.text()
@@ -180,7 +180,7 @@ async def fetch_blueprint_from_github_gist_url(
         raise UnsupportedUrl("Not a GitHub gist url")
 
     parsed_url = yarl.URL(url)
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     resp = await session.get(
         f"https://api.github.com/gists/{parsed_url.parts[2]}",
@@ -216,7 +216,7 @@ async def fetch_blueprint_from_github_gist_url(
     )
 
 
-async def fetch_blueprint_from_url.opp: OpenPeerPower, url: str) -> ImportedBlueprint:
+async def fetch_blueprint_from_url(opp: OpenPeerPower, url: str) -> ImportedBlueprint:
     """Get a blueprint from a url."""
     for func in (
         fetch_blueprint_from_community_post,

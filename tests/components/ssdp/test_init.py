@@ -10,7 +10,7 @@ from openpeerpower.components import ssdp
 from tests.common import mock_coro
 
 
-async def test_scan_match_st.opp, caplog):
+async def test_scan_match_st(opp, caplog):
     """Test matching based on ST."""
     scanner = ssdp.Scanner.opp, {"mock-domain": [{"st": "mock-st"}]})
 
@@ -47,7 +47,7 @@ async def test_scan_match_st.opp, caplog):
 @pytest.mark.parametrize(
     "key", (ssdp.ATTR_UPNP_MANUFACTURER, ssdp.ATTR_UPNP_DEVICE_TYPE)
 )
-async def test_scan_match_upnp_devicedesc.opp, aioclient_mock, key):
+async def test_scan_match_upnp_devicedesc(opp, aioclient_mock, key):
     """Test matching based on UPnP device description data."""
     aioclient_mock.get(
         "http://1.1.1.1",
@@ -79,7 +79,7 @@ async def test_scan_match_upnp_devicedesc.opp, aioclient_mock, key):
     assert mock_init.mock_calls[0][2]["context"] == {"source": "ssdp"}
 
 
-async def test_scan_not_all_present.opp, aioclient_mock):
+async def test_scan_not_all_present(opp, aioclient_mock):
     """Test match fails if some specified attributes are not present."""
     aioclient_mock.get(
         "http://1.1.1.1",
@@ -119,7 +119,7 @@ async def test_scan_not_all_present.opp, aioclient_mock):
     assert not mock_init.mock_calls
 
 
-async def test_scan_not_all_match.opp, aioclient_mock):
+async def test_scan_not_all_match(opp, aioclient_mock):
     """Test match fails if some specified attribute values differ."""
     aioclient_mock.get(
         "http://1.1.1.1",
@@ -161,7 +161,7 @@ async def test_scan_not_all_match.opp, aioclient_mock):
 
 
 @pytest.mark.parametrize("exc", [asyncio.TimeoutError, aiohttp.ClientError])
-async def test_scan_description_fetch_fail.opp, aioclient_mock, exc):
+async def test_scan_description_fetch_fail(opp, aioclient_mock, exc):
     """Test failing to fetch description."""
     aioclient_mock.get("http://1.1.1.1", exc=exc)
     scanner = ssdp.Scanner.opp, {})
@@ -178,7 +178,7 @@ async def test_scan_description_fetch_fail.opp, aioclient_mock, exc):
         await scanner.async_scan(None)
 
 
-async def test_scan_description_parse_fail.opp, aioclient_mock):
+async def test_scan_description_parse_fail(opp, aioclient_mock):
     """Test invalid XML."""
     aioclient_mock.get(
         "http://1.1.1.1",
@@ -200,7 +200,7 @@ async def test_scan_description_parse_fail.opp, aioclient_mock):
         await scanner.async_scan(None)
 
 
-async def test_invalid_characters.opp, aioclient_mock):
+async def test_invalid_characters(opp, aioclient_mock):
     """Test that we replace bad characters with placeholders."""
     aioclient_mock.get(
         "http://1.1.1.1",

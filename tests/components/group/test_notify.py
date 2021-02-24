@@ -10,7 +10,7 @@ import openpeerpower.components.notify as notify
 from openpeerpower.setup import async_setup_component
 
 
-async def test_send_message_with_data.opp):
+async def test_send_message_with_data(opp):
     """Test sending a message with to a notify group."""
     service1 = demo.DemoNotificationService.opp)
     service2 = demo.DemoNotificationService.opp)
@@ -18,7 +18,7 @@ async def test_send_message_with_data.opp):
     service1.send_message = MagicMock(autospec=True)
     service2.send_message = MagicMock(autospec=True)
 
-    def mock_get_service.opp, config, discovery_info=None):
+    def mock_get_service(opp, config, discovery_info=None):
         if config["name"] == "demo1":
             return service1
         return service2
@@ -79,7 +79,7 @@ async def test_send_message_with_data.opp):
     }
 
 
-async def test_reload_notify.opp):
+async def test_reload_notify(opp):
     """Verify we can reload the notify service."""
 
     assert await async_setup_component(

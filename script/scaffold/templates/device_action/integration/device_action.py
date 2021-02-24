@@ -29,16 +29,16 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device actions for NEW_NAME devices."""
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     actions = []
 
     # TODO Read this comment and remove it.
     # This example shows how to iterate over the entities of this device
     # that match this integration. If your actions instead rely on
     # calling services, do something like:
-    # zha_device = await _async_get_zha_device.opp, device_id)
+    # zha_device = await _async_get_zha_device(opp, device_id)
     # return zha_device.device_actions
 
     # Get all the integrations entities for this device

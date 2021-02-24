@@ -210,7 +210,7 @@ IDENTIFY_SCHEMA = vol.Schema(
 CONFIGURATION_FILE = ".ios.conf"
 
 
-def devices_with_push.opp):
+def devices_with_push(opp):
     """Return a dictionary of push enabled targets."""
     targets = {}
     for device_name, device in.opp.data[DOMAIN][ATTR_DEVICES].items():
@@ -219,7 +219,7 @@ def devices_with_push.opp):
     return targets
 
 
-def enabled_push_ids.opp):
+def enabled_push_ids(opp):
     """Return a list of push enabled target push IDs."""
     push_ids = []
     for device in.opp.data[DOMAIN][ATTR_DEVICES].values():
@@ -233,7 +233,7 @@ def devices.opp):
     return.opp.data[DOMAIN][ATTR_DEVICES]
 
 
-def device_name_for_push_id.opp, push_id):
+def device_name_for_push_id(opp, push_id):
     """Return the device name for the push ID."""
     for device_name, device in.opp.data[DOMAIN][ATTR_DEVICES].items():
         if device.get(ATTR_PUSH_ID) is push_id:
@@ -260,7 +260,7 @@ async def async_setup(opp, config):
     opp.data[DOMAIN] = ios_config
 
     # No entry support for notify component yet
-    discovery.load_platform.opp, "notify", DOMAIN, {}, config)
+    discovery.load_platform(opp, "notify", DOMAIN, {}, config)
 
     if conf is not None:
         opp.async_create_task(
@@ -272,7 +272,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up an iOS entry."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, "sensor")
@@ -351,7 +351,7 @@ class iOSIdentifyDeviceView(OpenPeerPowerView):
 
         opp.data[DOMAIN][ATTR_DEVICES][device_id] = data
 
-        async_dispatcher_send.opp, f"{DOMAIN}.{device_id}", data)
+        async_dispatcher_send(opp, f"{DOMAIN}.{device_id}", data)
 
         try:
             save_json(self._config_path, opp.data[DOMAIN])

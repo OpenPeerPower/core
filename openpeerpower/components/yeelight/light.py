@@ -261,7 +261,7 @@ async def async_setup_entry(
     opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up Yeelight from a config entry."""
-    custom_effects = _parse_custom_effects.opp.data[DOMAIN][DATA_CUSTOM_EFFECTS])
+    custom_effects = _parse_custom_effects(opp.data[DOMAIN][DATA_CUSTOM_EFFECTS])
 
     device = opp.data[DOMAIN][DATA_CONFIG_ENTRIES][config_entry.entry_id][DATA_DEVICE]
     _LOGGER.debug("Adding %s", device.name)
@@ -305,11 +305,11 @@ async def async_setup_entry(
         )
 
     async_add_entities(lights, True)
-    _async_setup_services.opp)
+    _async_setup_services(opp)
 
 
 @callback
-def _async_setup_services.opp: OpenPeerPower):
+def _async_setup_services(opp: OpenPeerPower):
     """Set up custom services."""
 
     async def _async_start_flow(entity, service_call):

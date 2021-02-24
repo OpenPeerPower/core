@@ -47,7 +47,7 @@ GOOD_CONFIG = {
 }
 
 
-async def test_valid_data.opp):
+async def test_valid_data(opp):
     """Test processing valid data."""
     sensor = plant.Plant("my plant", GOOD_CONFIG)
     sensor.entity_id = "sensor.mqtt_plant_battery"
@@ -65,7 +65,7 @@ async def test_valid_data.opp):
         assert attrib[reading] == value
 
 
-async def test_low_battery.opp):
+async def test_low_battery(opp):
     """Test processing with low battery data and limit set."""
     sensor = plant.Plant("other plant", GOOD_CONFIG)
     sensor.entity_id = "sensor.mqtt_plant_battery"
@@ -79,7 +79,7 @@ async def test_low_battery.opp):
     assert sensor.state_attributes["problem"] == "battery low"
 
 
-async def test_initial_states.opp):
+async def test_initial_states(opp):
     """Test plant initialises attributes if sensor already exists."""
     opp.states.async_set(MOISTURE_ENTITY, 5, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
     plant_name = "some_plant"
@@ -91,7 +91,7 @@ async def test_initial_states.opp):
     assert 5 == state.attributes[plant.READING_MOISTURE]
 
 
-async def test_update_states.opp):
+async def test_update_states(opp):
     """Test updating the state of a sensor.
 
     Make sure that plant processes this correctly.
@@ -107,7 +107,7 @@ async def test_update_states.opp):
     assert 5 == state.attributes[plant.READING_MOISTURE]
 
 
-async def test_unavailable_state.opp):
+async def test_unavailable_state(opp):
     """Test updating the state with unavailable.
 
     Make sure that plant processes this correctly.
@@ -125,7 +125,7 @@ async def test_unavailable_state.opp):
     assert state.attributes[plant.READING_MOISTURE] == STATE_UNAVAILABLE
 
 
-async def test_state_problem_if_unavailable.opp):
+async def test_state_problem_if_unavailable(opp):
     """Test updating the state with unavailable after setting it to valid value.
 
     Make sure that plant processes this correctly.
@@ -154,13 +154,13 @@ async def test_state_problem_if_unavailable.opp):
     "this feature is turned of until tests become"
     "stable",
 )
-async def test_load_from_db.opp):
+async def test_load_from_db(opp):
     """Test bootstrapping the brightness history from the database.
 
     This test can should only be executed if the loading of the history
     is enabled via plant.ENABLE_LOAD_HISTORY.
     """
-    init_recorder_component.opp)
+    init_recorder_component(opp)
     plant_name = "wise_plant"
     for value in [20, 30, 10]:
 
@@ -182,7 +182,7 @@ async def test_load_from_db.opp):
     assert 30 == max_brightness
 
 
-async def test_brightness_history.opp):
+async def test_brightness_history(opp):
     """Test the min_brightness check."""
     plant_name = "some_plant"
     assert await async_setup_component(
@@ -204,13 +204,13 @@ async def test_brightness_history.opp):
     assert STATE_OK == state.state
 
 
-def test_daily_history_no_data.opp):
+def test_daily_history_no_data(opp):
     """Test with empty history."""
     dh = plant.DailyHistory(3)
     assert dh.max is None
 
 
-def test_daily_history_one_day.opp):
+def test_daily_history_one_day(opp):
     """Test storing data for the same day."""
     dh = plant.DailyHistory(3)
     values = [-2, 10, 0, 5, 20]
@@ -221,7 +221,7 @@ def test_daily_history_one_day.opp):
         assert dh.max == max_value
 
 
-def test_daily_history_multiple_days.opp):
+def test_daily_history_multiple_days(opp):
     """Test storing data for different days."""
     dh = plant.DailyHistory(3)
     today = datetime.now()

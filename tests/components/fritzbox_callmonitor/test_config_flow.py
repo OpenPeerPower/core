@@ -74,7 +74,7 @@ MOCK_PHONEBOOK_INFO_2 = {FRITZ_ATTR_NAME: MOCK_PHONEBOOK_NAME_2}
 MOCK_UNIQUE_ID = f"{MOCK_SERIAL_NUMBER}-{MOCK_PHONEBOOK_ID}"
 
 
-async def test_yaml_import.opp: OpenPeerPower) -> None:
+async def test_yaml_import(opp: OpenPeerPower) -> None:
     """Test configuration.yaml import."""
 
     with patch(
@@ -112,7 +112,7 @@ async def test_yaml_import.opp: OpenPeerPower) -> None:
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_setup_one_phonebook.opp: OpenPeerPower) -> None:
+async def test_setup_one_phonebook(opp: OpenPeerPower) -> None:
     """Test setting up manually."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -154,7 +154,7 @@ async def test_setup_one_phonebook.opp: OpenPeerPower) -> None:
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_setup_multiple_phonebooks.opp: OpenPeerPower) -> None:
+async def test_setup_multiple_phonebooks(opp: OpenPeerPower) -> None:
     """Test setting up manually."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -214,7 +214,7 @@ async def test_setup_multiple_phonebooks.opp: OpenPeerPower) -> None:
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_setup_cannot_connect.opp: OpenPeerPower) -> None:
+async def test_setup_cannot_connect(opp: OpenPeerPower) -> None:
     """Test we handle cannot connect."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -233,7 +233,7 @@ async def test_setup_cannot_connect.opp: OpenPeerPower) -> None:
     assert result["reason"] == RESULT_NO_DEVIES_FOUND
 
 
-async def test_setup_insufficient_permissions.opp: OpenPeerPower) -> None:
+async def test_setup_insufficient_permissions(opp: OpenPeerPower) -> None:
     """Test we handle insufficient permissions."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -252,7 +252,7 @@ async def test_setup_insufficient_permissions.opp: OpenPeerPower) -> None:
     assert result["reason"] == RESULT_INSUFFICIENT_PERMISSIONS
 
 
-async def test_setup_invalid_auth.opp: OpenPeerPower) -> None:
+async def test_setup_invalid_auth(opp: OpenPeerPower) -> None:
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -271,7 +271,7 @@ async def test_setup_invalid_auth.opp: OpenPeerPower) -> None:
     assert result["errors"] == {"base": RESULT_INVALID_AUTH}
 
 
-async def test_options_flow_correct_prefixes.opp: OpenPeerPower) -> None:
+async def test_options_flow_correct_prefixes(opp: OpenPeerPower) -> None:
     """Test config flow options."""
 
     config_entry = MockConfigEntry(
@@ -280,7 +280,7 @@ async def test_options_flow_correct_prefixes.opp: OpenPeerPower) -> None:
         data=MOCK_CONFIG_ENTRY,
         options={CONF_PREFIXES: None},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
@@ -300,7 +300,7 @@ async def test_options_flow_correct_prefixes.opp: OpenPeerPower) -> None:
         assert config_entry.options == {CONF_PREFIXES: ["+49", "491234"]}
 
 
-async def test_options_flow_incorrect_prefixes.opp: OpenPeerPower) -> None:
+async def test_options_flow_incorrect_prefixes(opp: OpenPeerPower) -> None:
     """Test config flow options."""
 
     config_entry = MockConfigEntry(
@@ -309,7 +309,7 @@ async def test_options_flow_incorrect_prefixes.opp: OpenPeerPower) -> None:
         data=MOCK_CONFIG_ENTRY,
         options={CONF_PREFIXES: None},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
@@ -329,7 +329,7 @@ async def test_options_flow_incorrect_prefixes.opp: OpenPeerPower) -> None:
         assert result["errors"] == {"base": RESULT_MALFORMED_PREFIXES}
 
 
-async def test_options_flow_no_prefixes.opp: OpenPeerPower) -> None:
+async def test_options_flow_no_prefixes(opp: OpenPeerPower) -> None:
     """Test config flow options."""
 
     config_entry = MockConfigEntry(
@@ -338,7 +338,7 @@ async def test_options_flow_no_prefixes.opp: OpenPeerPower) -> None:
         data=MOCK_CONFIG_ENTRY,
         options={CONF_PREFIXES: None},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",

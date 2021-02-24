@@ -220,7 +220,7 @@ def test_customize_glob_is_ordered():
     assert isinstance(conf["customize_glob"], OrderedDict)
 
 
-async def _compute_state.opp, config):
+async def _compute_state(opp, config):
     await config_util.async_process_op_core_config(opp, config)
 
     entity = Entity()
@@ -233,7 +233,7 @@ async def _compute_state.opp, config):
     return.opp.states.get("test.test")
 
 
-async def test_entity_customization.opp):
+async def test_entity_customization(opp):
     """Test entity customization through configuration."""
     config = {
         CONF_LATITUDE: 50,
@@ -242,7 +242,7 @@ async def test_entity_customization.opp):
         CONF_CUSTOMIZE: {"test.test": {"hidden": True}},
     }
 
-    state = await _compute_state.opp, config)
+    state = await _compute_state(opp, config)
 
     assert state.attributes["hidden"]
 
@@ -260,7 +260,7 @@ def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil, opp):
         # pylint: disable=no-member
         opened_file.readline.return_value = op_version
         opp.config.path = mock.Mock()
-        config_util.process_op_config_upgrade.opp)
+        config_util.process_op_config_upgrade(opp)
         opp.path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
@@ -282,7 +282,7 @@ def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil, opp):
         # pylint: disable=no-member
         opened_file.readline.return_value = op_version
         opp.config.path = mock.Mock()
-        config_util.process_op_config_upgrade.opp)
+        config_util.process_op_config_upgrade(opp)
         opp.path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
@@ -291,7 +291,7 @@ def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil, opp):
         assert mock_shutil.rmtree.call_args == mock.call.opp_path)
 
 
-def test_process_config_upgrade.opp):
+def test_process_config_upgrade(opp):
     """Test update of version on upgrade."""
     op_version = "0.92.0"
 
@@ -303,13 +303,13 @@ def test_process_config_upgrade.opp):
         # pylint: disable=no-member
         opened_file.readline.return_value = op_version
 
-        config_util.process_op_config_upgrade.opp)
+        config_util.process_op_config_upgrade(opp)
 
         assert opened_file.write.call_count == 1
         assert opened_file.write.call_args == mock.call("0.91.0")
 
 
-def test_config_upgrade_same_version.opp):
+def test_config_upgrade_same_version(opp):
     """Test no update of version on no upgrade."""
     op_version = __version__
 
@@ -319,24 +319,24 @@ def test_config_upgrade_same_version.opp):
         # pylint: disable=no-member
         opened_file.readline.return_value = op_version
 
-        config_util.process_op_config_upgrade.opp)
+        config_util.process_op_config_upgrade(opp)
 
         assert opened_file.write.call_count == 0
 
 
-def test_config_upgrade_no_file.opp):
+def test_config_upgrade_no_file(opp):
     """Test update of version on upgrade, with no version file."""
     mock_open = mock.mock_open()
     mock_open.side_effect = [FileNotFoundError(), mock.DEFAULT, mock.DEFAULT]
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        config_util.process_op_config_upgrade.opp)
+        config_util.process_op_config_upgrade(opp)
         assert opened_file.write.call_count == 1
         assert opened_file.write.call_args == mock.call(__version__)
 
 
-async def test_loading_configuration_from_storage.opp, opp_storage):
+async def test_loading_configuration_from_storage(opp, opp_storage):
     """Test loading core config onto opp object."""
     opp.storage["core.config"] = {
         "data": {
@@ -369,7 +369,7 @@ async def test_loading_configuration_from_storage.opp, opp_storage):
     assert.opp.config.config_source == SOURCE_STORAGE
 
 
-async def test_loading_configuration_from_storage_with_yaml_only.opp, opp_storage):
+async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
     opp.storage["core.config"] = {
         "data": {
@@ -399,7 +399,7 @@ async def test_loading_configuration_from_storage_with_yaml_only.opp, opp_storag
     assert.opp.config.config_source == SOURCE_STORAGE
 
 
-async def test_updating_configuration.opp, opp_storage):
+async def test_updating_configuration(opp, opp_storage):
     """Test updating configuration stores the new configuration."""
     core_data = {
         "data": {
@@ -427,7 +427,7 @@ async def test_updating_configuration.opp, opp_storage):
     assert.opp.config.latitude == 50
 
 
-async def test_override_stored_configuration.opp, opp_storage):
+async def test_override_stored_configuration(opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
     opp.storage["core.config"] = {
         "data": {
@@ -456,7 +456,7 @@ async def test_override_stored_configuration.opp, opp_storage):
     assert.opp.config.config_source == config_util.SOURCE_YAML
 
 
-async def test_loading_configuration.opp):
+async def test_loading_configuration(opp):
     """Test loading core config onto opp object."""
     await config_util.async_process_op_core_config(
         opp,
@@ -491,7 +491,7 @@ async def test_loading_configuration.opp):
     assert.opp.config.legacy_templates is True
 
 
-async def test_loading_configuration_temperature_unit.opp):
+async def test_loading_configuration_temperature_unit(opp):
     """Test backward compatibility when loading core config."""
     await config_util.async_process_op_core_config(
         opp,
@@ -518,7 +518,7 @@ async def test_loading_configuration_temperature_unit.opp):
     assert.opp.config.config_source == config_util.SOURCE_YAML
 
 
-async def test_loading_configuration_default_media_dirs_docker.opp):
+async def test_loading_configuration_default_media_dirs_docker(opp):
     """Test loading core config onto opp object."""
     with patch("openpeerpower.config.is_docker_env", return_value=True):
         await config_util.async_process_op_core_config(
@@ -534,7 +534,7 @@ async def test_loading_configuration_default_media_dirs_docker.opp):
     assert.opp.config.media_dirs == {"local": "/media"}
 
 
-async def test_loading_configuration_from_packages.opp):
+async def test_loading_configuration_from_packages(opp):
     """Test loading packages config onto opp object config."""
     await config_util.async_process_op_core_config(
         opp,
@@ -603,7 +603,7 @@ async def test_async_opp_config_yaml_merge(merge_log_err, opp):
 
     files = {config_util.YAML_CONFIG_FILE: yaml.dump(config)}
     with patch_yaml_files(files, True):
-        conf = await config_util.async_opp_config_yaml.opp)
+        conf = await config_util.async_opp_config_yaml(opp)
 
     assert merge_log_err.call_count == 0
     assert conf[config_util.CONF_CORE].get(config_util.CONF_PACKAGES) is not None
@@ -614,7 +614,7 @@ async def test_async_opp_config_yaml_merge(merge_log_err, opp):
 
 # pylint: disable=redefined-outer-name
 @pytest.fixture
-def merge_log_err.opp):
+def merge_log_err(opp):
     """Patch _merge_log_error from packages."""
     with patch("openpeerpower.config._LOGGER.error") as logerr:
         yield logerr
@@ -730,7 +730,7 @@ async def test_merge_once_only_keys(merge_log_err, opp):
     assert merge_log_err.call_count == 1
 
 
-async def test_merge_once_only_lists.opp):
+async def test_merge_once_only_lists(opp):
     """Test if we have a merge for a comp that may occur only once. Lists."""
     packages = {
         "pack_2": {
@@ -749,7 +749,7 @@ async def test_merge_once_only_lists.opp):
     }
 
 
-async def test_merge_once_only_dictionaries.opp):
+async def test_merge_once_only_dictionaries(opp):
     """Test if we have a merge for a comp that may occur only once. Dicts."""
     packages = {
         "pack_2": {
@@ -775,7 +775,7 @@ async def test_merge_once_only_dictionaries.opp):
     }
 
 
-async def test_merge_id_schema.opp):
+async def test_merge_id_schema(opp):
     """Test if we identify the config schemas correctly."""
     types = {
         "panel_custom": "list",
@@ -786,7 +786,7 @@ async def test_merge_id_schema.opp):
         "qwikswitch": "dict",
     }
     for domain, expected_type in types.items():
-        integration = await async_get_integration.opp, domain)
+        integration = await async_get_integration(opp, domain)
         module = integration.get_component()
         typ = config_util._identify_config_schema(module)
         assert typ == expected_type, f"{domain} expected {expected_type}, got {typ}"
@@ -806,7 +806,7 @@ async def test_merge_duplicate_keys(merge_log_err, opp):
     assert len(config["input_select"]) == 1
 
 
-async def test_merge_customize.opp):
+async def test_merge_customize(opp):
     """Test loading core config onto opp object."""
     core_config = {
         "latitude": 60,
@@ -852,7 +852,7 @@ async def test_auth_provider_config(opp):
     assert.opp.auth.auth_mfa_modules[1].id == "second"
 
 
-async def test_auth_provider_config_default.opp):
+async def test_auth_provider_config_default(opp):
     """Test loading default auth provider config."""
     core_config = {
         "latitude": 60,
@@ -948,7 +948,7 @@ async def test_disallowed_duplicated_auth_mfa_module_config(opp):
         await config_util.async_process_op_core_config(opp, core_config)
 
 
-async def test_merge_split_component_definition.opp):
+async def test_merge_split_component_definition(opp):
     """Test components with trailing description in packages are merged."""
     packages = {
         "pack_1": {"light one": {"l1": None}},
@@ -963,7 +963,7 @@ async def test_merge_split_component_definition.opp):
     assert len(config["light three"]) == 1
 
 
-async def test_component_config_exceptions.opp, caplog):
+async def test_component_config_exceptions(opp, caplog):
     """Test unexpected exceptions validating component config."""
     # Config validator
     assert (

@@ -13,7 +13,7 @@ from .sensor_base import SENSOR_CONFIG_MAP, GenericZLLSensor
 PRESENCE_NAME_FORMAT = "{} motion"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Defer binary sensor setup to the shared sensor module."""
     await opp.data[HUE_DOMAIN][
         config_entry.entry_id

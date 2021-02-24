@@ -9,7 +9,7 @@ from . import DATA_UPDATED, DOMAIN as FASTDOTCOM_DOMAIN
 ICON = "mdi:speedometer"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Fast.com sensor."""
     async_add_entities([SpeedtestSensor.opp.data[FASTDOTCOM_DOMAIN])])
 

@@ -31,7 +31,7 @@ NOTIFICATION_ID = "leviton_notification"
 NOTIFICATION_TITLE = "myLeviton Decora Setup"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Decora WiFi platform."""
 
     email = config[CONF_USERNAME]

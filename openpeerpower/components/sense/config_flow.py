@@ -22,13 +22,13 @@ DATA_SCHEMA = vol.Schema(
 )
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
     timeout = data[CONF_TIMEOUT]
-    client_session = async_get_clientsession.opp)
+    client_session = async_get_clientsession(opp)
 
     gateway = ASyncSenseable(
         api_timeout=timeout, wss_timeout=timeout, client_session=client_session

@@ -172,7 +172,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the HomeKit from yaml."""
     opp.data.setdefault(DOMAIN, {})
 
-    _async_register_events_and_services.opp)
+    _async_register_events_and_services(opp)
 
     if DOMAIN not in config:
         return True
@@ -181,7 +181,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     entries_by_name = _async_get_entries_by_name(current_entries)
 
     for index, conf in enumerate(config[DOMAIN]):
-        if _async_update_config_entry_if_from_yaml.opp, entries_by_name, conf):
+        if _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf):
             continue
 
         conf[CONF_ENTRY_INDEX] = index
@@ -197,7 +197,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 
 @callback
-def _async_update_config_entry_if_from_yaml.opp, entries_by_name, conf):
+def _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf):
     """Update a config entry with the latest yaml.
 
     Returns True if a matching config entry was found
@@ -226,9 +226,9 @@ def _async_update_config_entry_if_from_yaml.opp, entries_by_name, conf):
     return False
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up HomeKit from a config entry."""
-    _async_import_options_from_data_if_missing.opp, entry)
+    _async_import_options_from_data_if_missing(opp, entry)
 
     conf = entry.data
     options = entry.options
@@ -259,7 +259,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
         advertise_ip,
         entry.entry_id,
     )
-    zeroconf_instance = await zeroconf.async_get_instance.opp)
+    zeroconf_instance = await zeroconf.async_get_instance(opp)
 
     # If the previous instance hasn't cleaned up yet
     # we need to wait a bit
@@ -287,16 +287,16 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     if entry.source == SOURCE_IMPORT:
         return
     await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    dismiss_setup_message.opp, entry.entry_id)
+    dismiss_setup_message(opp, entry.entry_id)
 
     opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
@@ -317,7 +317,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_remove_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Remove a config entry."""
     return await opp.async_add_executor_job(
         remove_state_files_for_entry_id, opp, entry.entry_id
@@ -325,7 +325,7 @@ async def async_remove_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 
 @callback
-def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: ConfigEntry):
+def _async_import_options_from_data_if_missing(opp: OpenPeerPower, entry: ConfigEntry):
     options = dict(entry.options)
     data = dict(entry.data)
     modified = False
@@ -340,7 +340,7 @@ def _async_import_options_from_data_if_missing.opp: OpenPeerPower, entry: Config
 
 
 @callback
-def _async_register_events_and_services.opp: OpenPeerPower):
+def _async_register_events_and_services(opp: OpenPeerPower):
     """Register events and services for HomeKit."""
     opp.http.register_view(HomeKitPairingQRView)
 
@@ -401,7 +401,7 @@ def _async_register_events_and_services.opp: OpenPeerPower):
         entries_by_name = _async_get_entries_by_name(current_entries)
 
         for conf in config[DOMAIN]:
-            _async_update_config_entry_if_from_yaml.opp, entries_by_name, conf)
+            _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf)
 
         reload_tasks = [
             opp.config_entries.async_reload(entry.entry_id)

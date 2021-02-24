@@ -8,7 +8,7 @@ from openpeerpower.components.notify import BaseNotificationService
 from .const import DOMAIN
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Get the KNX notification service."""
     notification_devices = []
     for device in.opp.data[DOMAIN].xknx.devices:

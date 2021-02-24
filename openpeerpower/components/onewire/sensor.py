@@ -233,7 +233,7 @@ def get_sensor_types(device_sub_type):
     return DEVICE_SENSORS
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Old way of setting up 1-Wire platform."""
     if config.get(CONF_HOST):
         config[CONF_TYPE] = CONF_TYPE_OWSERVER
@@ -251,7 +251,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up 1-Wire platform."""
     onewirehub = opp.data[DOMAIN][config_entry.unique_id]
     entities = await opp.async_add_executor_job(

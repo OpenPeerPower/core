@@ -58,7 +58,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=30)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Magicseaweed sensor."""
     name = config.get(CONF_NAME)
     spot_id = config[CONF_SPOT_ID]

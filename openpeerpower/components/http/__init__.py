@@ -192,7 +192,7 @@ async def async_setup(opp, config):
 
     opp.http = server
 
-    local_ip = await opp.async_add_executor_job.opp_util.get_local_ip)
+    local_ip = await opp.async_add_executor_job(opp_util.get_local_ip)
 
     host = local_ip
     if server_host is not None:
@@ -242,9 +242,9 @@ class OpenPeerPowerHTTP:
         setup_request_context(app, current_request)
 
         if is_ban_enabled:
-            setup_bans.opp, app, login_threshold)
+            setup_bans(opp, app, login_threshold)
 
-        setup_auth.opp, app)
+        setup_auth(opp, app)
 
         setup_cors(app, cors_origins)
 

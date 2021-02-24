@@ -22,7 +22,7 @@ from .const import (
 from .entity import PowerWallEntity
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the August sensors."""
     powerwall_data = opp.data[DOMAIN][config_entry.entry_id]
 

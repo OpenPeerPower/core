@@ -24,7 +24,7 @@ async def async_process_integration_platforms(
         if "." in component_name:
             return
 
-        integration = await async_get_integration.opp, component_name)
+        integration = await async_get_integration(opp, component_name)
 
         try:
             platform = integration.get_platform(platform_name)
@@ -38,7 +38,7 @@ async def async_process_integration_platforms(
             return
 
         try:
-            await process_platform.opp, component_name, platform)
+            await process_platform(opp, component_name, platform)
         except Exception:  # pylint: disable=broad-except
             _LOGGER.exception(
                 "Error processing platform %s.%s", component_name, platform_name

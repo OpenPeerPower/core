@@ -58,7 +58,7 @@ TREND_INCREASING = "Increasing"
 TREND_SUBSIDING = "Subsiding"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up IQVIA sensors based on a config entry."""
     sensor_class_mapping = {
         TYPE_ALLERGY_FORECAST: ForecastSensor,

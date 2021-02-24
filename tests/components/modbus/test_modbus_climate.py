@@ -14,7 +14,7 @@ from .conftest import base_config_test, base_test
 
 
 @pytest.mark.parametrize("do_options", [False, True])
-async def test_config_climate.opp, do_options):
+async def test_config_climate(opp, do_options):
     """Run test for climate."""
     device_name = "test_climate"
     device_config = {
@@ -50,7 +50,7 @@ async def test_config_climate.opp, do_options):
         ),
     ],
 )
-async def test_temperature_climate.opp, regs, expected):
+async def test_temperature_climate(opp, regs, expected):
     """Run test for given config."""
     climate_name = "modbus_test_climate"
     return

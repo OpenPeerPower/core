@@ -42,7 +42,7 @@ OP_STATE_TO_WINK = {
 WINK_STATE_TO_HA = {value: key for key, value in OP_STATE_TO_WINK.items()}
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink water heater devices."""
 
     for water_heater in pywink.get_water_heaters():

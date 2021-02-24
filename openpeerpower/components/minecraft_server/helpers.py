@@ -10,7 +10,7 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
 from .const import SRV_RECORD_PREFIX
 
 
-async def async_check_srv_record.opp: OpenPeerPowerType, host: str) -> Dict[str, Any]:
+async def async_check_srv_record(opp: OpenPeerPowerType, host: str) -> Dict[str, Any]:
     """Check if the given host is a valid Minecraft SRV record."""
     # Check if 'host' is a valid SRV record.
     return_value = None

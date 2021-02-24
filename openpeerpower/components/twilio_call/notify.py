@@ -26,7 +26,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Twilio Call notification service."""
     return TwilioCallNotificationService(
         opp.data[DATA_TWILIO], config[CONF_FROM_NUMBER]

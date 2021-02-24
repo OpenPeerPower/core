@@ -20,7 +20,7 @@ SCAN_INTERVAL = timedelta(minutes=SCAN_INTERVAL_MINUTES)
 ATTR_GENERATED_AT = "generated_at"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up Neato camera with config entry."""
     dev = []
     neato = opp.data.get(NEATO_LOGIN)

@@ -31,7 +31,7 @@ SENSOR_TYPES_CLASS = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the HomeMatic binary sensor platform."""
     if discovery_info is None:
         return

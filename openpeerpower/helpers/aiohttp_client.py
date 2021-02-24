@@ -41,7 +41,7 @@ def async_get_clientsession(
         key = DATA_CLIENTSESSION_NOTVERIFY
 
     if key not in.opp.data:
-        opp.data[key] = async_create_clientsession.opp, verify_ssl)
+        opp.data[key] = async_create_clientsession(opp, verify_ssl)
 
     return cast(aiohttp.ClientSession, opp.data[key])
 
@@ -62,7 +62,7 @@ def async_create_clientsession(
 
     This method must be run in the event loop.
     """
-    connector = _async_get_connector.opp, verify_ssl)
+    connector = _async_get_connector(opp, verify_ssl)
 
     clientsession = aiohttp.ClientSession(
         connector=connector,
@@ -75,7 +75,7 @@ def async_create_clientsession(
     )
 
     if auto_cleanup:
-        _async_register_clientsession_shutdown.opp, clientsession)
+        _async_register_clientsession_shutdown(opp, clientsession)
 
     return clientsession
 

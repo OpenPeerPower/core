@@ -8,7 +8,7 @@ from openpeerpower.helpers import config_entry_flow
 from . import DOMAIN
 
 
-async def _async_has_devices.opp):
+async def _async_has_devices(opp):
     """Return if there are devices that can be discovered."""
     return bool(await opp.async_add_executor_job(pywemo.discover_devices))
 

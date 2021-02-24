@@ -25,7 +25,7 @@ async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up a new config_entry for UPB PIM."""
 
     url = config_entry.data[CONF_HOST]
@@ -65,7 +65,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload the config_entry."""
 
     unload_ok = all(

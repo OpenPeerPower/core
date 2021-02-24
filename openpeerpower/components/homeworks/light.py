@@ -17,7 +17,7 @@ from . import CONF_ADDR, CONF_DIMMERS, CONF_RATE, HOMEWORKS_CONTROLLER, Homework
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_entities, discover_info=None):
+def setup_platform(opp, config, add_entities, discover_info=None):
     """Set up Homeworks lights."""
     if discover_info is None:
         return

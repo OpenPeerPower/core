@@ -250,7 +250,7 @@ NOTIFICATION_SENSORS = [
 ]
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave binary_sensor from config entry."""
 
     @callback

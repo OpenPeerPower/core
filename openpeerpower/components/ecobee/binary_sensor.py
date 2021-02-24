@@ -7,7 +7,7 @@ from openpeerpower.components.binary_sensor import (
 from .const import _LOGGER, DOMAIN, ECOBEE_MODEL_TO_NAME, MANUFACTURER
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up ecobee binary (occupancy) sensors."""
     data = opp.data[DOMAIN]
     dev = []

@@ -30,7 +30,7 @@ class IncompatibleMediaSource(MediaSourceError):
     """Incompatible media source attributes."""
 
 
-async def async_get_media_source.opp: OpenPeerPower):
+async def async_get_media_source(opp: OpenPeerPower):
     """Set up Netatmo media source."""
     return NetatmoSource.opp)
 

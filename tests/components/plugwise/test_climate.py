@@ -8,9 +8,9 @@ from openpeerpower.config_entries import ENTRY_STATE_LOADED
 from tests.components.plugwise.common import async_init_integration
 
 
-async def test_adam_climate_entity_attributes.opp, mock_smile_adam):
+async def test_adam_climate_entity_attributes(opp, mock_smile_adam):
     """Test creation of adam climate device environment."""
-    entry = await async_init_integration.opp, mock_smile_adam)
+    entry = await async_init_integration(opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("climate.zone_lisa_wk")
@@ -44,12 +44,12 @@ async def test_adam_climate_entity_attributes.opp, mock_smile_adam):
     assert attrs["preset_mode"] == "asleep"
 
 
-async def test_adam_climate_adjust_negative_testing.opp, mock_smile_adam):
+async def test_adam_climate_adjust_negative_testing(opp, mock_smile_adam):
     """Test exceptions of climate entities."""
     mock_smile_adam.set_preset.side_effect = PlugwiseException
     mock_smile_adam.set_schedule_state.side_effect = PlugwiseException
     mock_smile_adam.set_temperature.side_effect = PlugwiseException
-    entry = await async_init_integration.opp, mock_smile_adam)
+    entry = await async_init_integration(opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.services.async_call(
@@ -82,9 +82,9 @@ async def test_adam_climate_adjust_negative_testing.opp, mock_smile_adam):
     attrs = state.attributes
 
 
-async def test_adam_climate_entity_climate_changes.opp, mock_smile_adam):
+async def test_adam_climate_entity_climate_changes(opp, mock_smile_adam):
     """Test handling of user requests in adam climate device environment."""
-    entry = await async_init_integration.opp, mock_smile_adam)
+    entry = await async_init_integration(opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.services.async_call(
@@ -135,9 +135,9 @@ async def test_adam_climate_entity_climate_changes.opp, mock_smile_adam):
     assert attrs["preset_mode"] == "home"
 
 
-async def test_anna_climate_entity_attributes.opp, mock_smile_anna):
+async def test_anna_climate_entity_attributes(opp, mock_smile_anna):
     """Test creation of anna climate device environment."""
-    entry = await async_init_integration.opp, mock_smile_anna)
+    entry = await async_init_integration(opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("climate.anna")
@@ -160,9 +160,9 @@ async def test_anna_climate_entity_attributes.opp, mock_smile_anna):
     assert attrs["supported_features"] == 17
 
 
-async def test_anna_climate_entity_climate_changes.opp, mock_smile_anna):
+async def test_anna_climate_entity_climate_changes(opp, mock_smile_anna):
     """Test handling of user requests in anna climate device environment."""
-    entry = await async_init_integration.opp, mock_smile_anna)
+    entry = await async_init_integration(opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.services.async_call(

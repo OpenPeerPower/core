@@ -78,7 +78,7 @@ def motion_blinds_connect_fixture():
         yield
 
 
-async def test_config_flow_manual_host_success.opp):
+async def test_config_flow_manual_host_success(opp):
     """Successful flow manually initialized by the user."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -110,7 +110,7 @@ async def test_config_flow_manual_host_success.opp):
     }
 
 
-async def test_config_flow_discovery_1_success.opp):
+async def test_config_flow_discovery_1_success(opp):
     """Successful flow with 1 gateway discovered."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -142,7 +142,7 @@ async def test_config_flow_discovery_1_success.opp):
     }
 
 
-async def test_config_flow_discovery_2_success.opp):
+async def test_config_flow_discovery_2_success(opp):
     """Successful flow with 2 gateway discovered."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -223,7 +223,7 @@ async def test_config_flow_connection_error(opp):
     assert result["reason"] == "connection_error"
 
 
-async def test_config_flow_discovery_fail.opp):
+async def test_config_flow_discovery_fail(opp):
     """Failed flow with no gateways discovered."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

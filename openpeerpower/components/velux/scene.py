@@ -6,7 +6,7 @@ from openpeerpower.components.scene import Scene
 from . import _LOGGER, DATA_VELUX
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the scenes for Velux platform."""
     entities = [VeluxScene(scene) for scene in.opp.data[DATA_VELUX].pyvlx.scenes]
     async_add_entities(entities)

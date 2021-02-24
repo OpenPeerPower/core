@@ -7,7 +7,7 @@ from openpeerpower.helpers.entity import Entity
 from .const import DATA_UPDATED, DOMAIN, SENSOR_TYPES
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Glances sensors."""
 
     client = opp.data[DOMAIN][config_entry.entry_id]
@@ -127,7 +127,7 @@ class GlancesSensor(Entity):
     def _schedule_immediate_update(self):
         self.async_schedule_update_op_state(True)
 
-    async def will_remove_from.opp(self):
+    async def will_remove_from(opp(self):
         """Unsubscribe from update dispatcher."""
         if self.unsub_update:
             self.unsub_update()

@@ -26,7 +26,7 @@ ATTR_LIST = "list"
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_API_KEY): cv.string})
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Pushbullet notification service."""
 
     try:

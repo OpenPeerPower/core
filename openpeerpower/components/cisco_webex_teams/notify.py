@@ -21,7 +21,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the CiscoWebexTeams notification service."""
 
     client = WebexTeamsAPI(access_token=config[CONF_TOKEN])

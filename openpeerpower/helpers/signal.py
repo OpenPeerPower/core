@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @callback
 @bind.opp
-def async_register_signal_handling.opp: OpenPeerPower) -> None:
+def async_register_signal_handling(opp: OpenPeerPower) -> None:
     """Register system signal handler for core."""
     if sys.platform != "win32":
 
@@ -26,7 +26,7 @@ def async_register_signal_handling.opp: OpenPeerPower) -> None:
             """
             opp.loop.remove_signal_handler(signal.SIGTERM)
             opp.loop.remove_signal_handler(signal.SIGINT)
-            opp.async_create_task.opp.async_stop(exit_code))
+            opp.async_create_task(opp.async_stop(exit_code))
 
         try:
             opp.loop.add_signal_handler(signal.SIGTERM, async_signal_handle, 0)
@@ -58,7 +58,7 @@ def async_register_signal_handling.opp: OpenPeerPower) -> None:
             """
             signal.signal(signal.SIGTERM, old_sigterm)
             signal.signal(signal.SIGINT, old_sigint)
-            opp.async_create_task.opp.async_stop(exit_code))
+            opp.async_create_task(opp.async_stop(exit_code))
 
         try:
             old_sigterm = signal.signal(signal.SIGTERM, async_signal_handle)

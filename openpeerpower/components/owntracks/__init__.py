@@ -69,7 +69,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up OwnTracks entry."""
     config = opp.data[DOMAIN]["config"]
     max_gps_accuracy = config.get(CONF_MAX_GPS_ACCURACY)
@@ -112,7 +112,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload an OwnTracks config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     await opp.config_entries.async_forward_entry_unload(entry, "device_tracker")
@@ -121,7 +121,7 @@ async def async_unload_entry.opp, entry):
     return True
 
 
-async def async_remove_entry.opp, entry):
+async def async_remove_entry(opp, entry):
     """Remove an OwnTracks config entry."""
     if not entry.data.get("cloudhook"):
         return
@@ -129,7 +129,7 @@ async def async_remove_entry.opp, entry):
     await opp.components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
 
 
-async def async_connect_mqtt.opp, component):
+async def async_connect_mqtt(opp, component):
     """Subscribe to MQTT topic."""
     context = opp.data[DOMAIN]["context"]
 
@@ -152,7 +152,7 @@ async def async_connect_mqtt.opp, component):
     return True
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle webhook callback.
 
     iOS sets the "topic" as part of the payload.

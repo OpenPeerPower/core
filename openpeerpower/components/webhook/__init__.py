@@ -28,7 +28,7 @@ SCHEMA_WS_LIST = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 
 @callback
 @bind.opp
-def async_register.opp, domain, name, webhook_id, handler):
+def async_register(opp, domain, name, webhook_id, handler):
     """Register a webhook."""
     handlers = opp.data.setdefault(DOMAIN, {})
 
@@ -40,7 +40,7 @@ def async_register.opp, domain, name, webhook_id, handler):
 
 @callback
 @bind.opp
-def async_unregister.opp, webhook_id):
+def async_unregister(opp, webhook_id):
     """Remove a webhook."""
     handlers = opp.data.setdefault(DOMAIN, {})
     handlers.pop(webhook_id, None)
@@ -54,10 +54,10 @@ def async_generate_id():
 
 @callback
 @bind.opp
-def async_generate_url.opp, webhook_id):
+def async_generate_url(opp, webhook_id):
     """Generate the full URL for a webhook_id."""
     return "{}{}".format(
-        get_url.opp, prefer_external=True, allow_cloud=False),
+        get_url(opp, prefer_external=True, allow_cloud=False),
         async_generate_path(webhook_id),
     )
 
@@ -69,7 +69,7 @@ def async_generate_path(webhook_id):
 
 
 @bind.opp
-async def async_handle_webhook.opp, webhook_id, request):
+async def async_handle_webhook(opp, webhook_id, request):
     """Handle a webhook."""
     handlers = opp.data.setdefault(DOMAIN, {})
     webhook = handlers.get(webhook_id)
@@ -123,7 +123,7 @@ class WebhookView(OpenPeerPowerView):
         """Handle webhook call."""
         _LOGGER.debug("Handling webhook %s payload for %s", request.method, webhook_id)
        opp = request.app[.opp"]
-        return await async_handle_webhook.opp, webhook_id, request)
+        return await async_handle_webhook(opp, webhook_id, request)
 
     head = _handle
     post = _handle
@@ -131,7 +131,7 @@ class WebhookView(OpenPeerPowerView):
 
 
 @callback
-def websocket_list.opp, connection, msg):
+def websocket_list(opp, connection, msg):
     """Return a list of webhooks."""
     handlers = opp.data.setdefault(DOMAIN, {})
     result = [

@@ -90,7 +90,7 @@ async def async_setup(opp, base_config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up a bridge from a config entry."""
 
     host = config_entry.data[CONF_HOST]
@@ -123,7 +123,7 @@ async def async_setup_entry.opp, config_entry):
 
     devices = bridge.get_devices()
     bridge_device = devices[BRIDGE_DEVICE_ID]
-    await _async_register_bridge_device.opp, config_entry.entry_id, bridge_device)
+    await _async_register_bridge_device(opp, config_entry.entry_id, bridge_device)
     # Store this bridge (keyed by entry_id) so it can be retrieved by the
     # components we're setting up.
     opp.data[DOMAIN][config_entry.entry_id] = {
@@ -137,7 +137,7 @@ async def async_setup_entry.opp, config_entry):
         # If the bridge also supports LIP (Lutron Integration Protocol)
         # we can fire events when pico buttons are pressed to allow
         # pico remotes to control other devices.
-        await async_setup_lip.opp, config_entry, bridge.lip_devices)
+        await async_setup_lip(opp, config_entry, bridge.lip_devices)
 
     for component in LUTRON_CASETA_COMPONENTS:
         opp.async_create_task(
@@ -147,7 +147,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_setup_lip.opp, config_entry, lip_devices):
+async def async_setup_lip(opp, config_entry, lip_devices):
     """Connect to the bridge via Lutron Integration Protocol to watch for pico remotes."""
     host = config_entry.data[CONF_HOST]
     config_entry_id = config_entry.entry_id
@@ -170,7 +170,7 @@ async def async_setup_lip.opp, config_entry, lip_devices):
     button_devices_by_dr_id = await _async_register_button_devices(
         opp. config_entry_id, bridge_device, button_devices_by_lip_id
     )
-    _async_subscribe_pico_remote_events.opp, lip, button_devices_by_lip_id)
+    _async_subscribe_pico_remote_events(opp, lip, button_devices_by_lip_id)
     data[BUTTON_DEVICES] = button_devices_by_dr_id
     data[BRIDGE_LIP] = lip
 
@@ -204,9 +204,9 @@ def _async_merge_lip_leap_data(lip_devices, bridge):
     return button_devices_by_id
 
 
-async def _async_register_bridge_device.opp, config_entry_id, bridge_device):
+async def _async_register_bridge_device(opp, config_entry_id, bridge_device):
     """Register the bridge device in the device registry."""
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         name=bridge_device["name"],
         manufacturer=MANUFACTURER,
@@ -220,7 +220,7 @@ async def _async_register_button_devices(
     opp. config_entry_id, bridge_device, button_devices_by_id
 ):
     """Register button devices (Pico Remotes) in the device registry."""
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     button_devices_by_dr_id = {}
 
     for device in button_devices_by_id.values():
@@ -243,7 +243,7 @@ async def _async_register_button_devices(
 
 
 @callback
-def _async_subscribe_pico_remote_events.opp, lip, button_devices_by_id):
+def _async_subscribe_pico_remote_events(opp, lip, button_devices_by_id):
     """Subscribe to lutron events."""
 
     @callback
@@ -278,7 +278,7 @@ def _async_subscribe_pico_remote_events.opp, lip, button_devices_by_id):
     asyncio.create_task(lip.async_run())
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload the bridge bridge from a config entry."""
 
     data = opp.data[DOMAIN][config_entry.entry_id]

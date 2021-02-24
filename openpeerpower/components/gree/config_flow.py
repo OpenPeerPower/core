@@ -6,7 +6,7 @@ from .bridge import DeviceHelper
 from .const import DOMAIN
 
 
-async def _async_has_devices.opp) -> bool:
+async def _async_has_devices(opp) -> bool:
     """Return if there are devices that can be discovered."""
     devices = await DeviceHelper.find_devices()
     return len(devices) > 0

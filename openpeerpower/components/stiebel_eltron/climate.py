@@ -53,7 +53,7 @@ OP_TO_STE_HVAC = {
 OP_TO_STE_PRESET = {k: i for i, k in STE_TO_OP_PRESET.items()}
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the StiebelEltron platform."""
     name = opp.data[STE_DOMAIN]["name"]
     ste_data = opp.data[STE_DOMAIN]["ste_data"]

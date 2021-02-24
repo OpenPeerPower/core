@@ -143,7 +143,7 @@ def rewrite_legacy(config):
     return {"bridges": new_bridges}
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the LimitlessLED lights."""
 
     # Two legacy configuration formats are supported to maintain backwards

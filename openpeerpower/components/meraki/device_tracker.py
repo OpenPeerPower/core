@@ -24,7 +24,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_scanner.opp, config, async_see, discovery_info=None):
+async def async_setup_scanner(opp, config, async_see, discovery_info=None):
     """Set up an endpoint for the Meraki tracker."""
     opp.http.register_view(MerakiView(config, async_see))
 

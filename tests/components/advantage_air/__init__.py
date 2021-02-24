@@ -27,7 +27,7 @@ async def add_mock_config(opp):
         unique_id="0123456",
         data=USER_INPUT,
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
     return entry

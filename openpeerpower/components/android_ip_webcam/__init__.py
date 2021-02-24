@@ -187,7 +187,7 @@ async def async_setup(opp, config):
     """Set up the IP Webcam component."""
 
     webcams = opp.data[DATA_IP_WEBCAM] = {}
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
 
     async def async_setup_ipcamera(cam_config):
         """Set up an IP camera."""
@@ -226,9 +226,9 @@ async def async_setup(opp, config):
         async def async_update_data(now):
             """Update data from IP camera in SCAN_INTERVAL."""
             await cam.update()
-            async_dispatcher_send.opp, SIGNAL_UPDATE_DATA, host)
+            async_dispatcher_send(opp, SIGNAL_UPDATE_DATA, host)
 
-            async_track_point_in_utc_time.opp, async_update_data, utcnow() + interval)
+            async_track_point_in_utc_time(opp, async_update_data, utcnow() + interval)
 
         await async_update_data(None)
 
@@ -245,7 +245,7 @@ async def async_setup(opp, config):
             mjpeg_camera.update({CONF_USERNAME: username, CONF_PASSWORD: password})
 
         opp.async_create_task(
-            discovery.async_load_platform.opp, "camera", "mjpeg", mjpeg_camera, config)
+            discovery.async_load_platform(opp, "camera", "mjpeg", mjpeg_camera, config)
         )
 
         if sensors:

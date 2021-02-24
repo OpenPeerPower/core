@@ -18,7 +18,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a smarttub config entry."""
 
     controller = SmartTubController.opp)
@@ -37,7 +37,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Remove a smarttub config entry."""
     if not all(
         await asyncio.gather(

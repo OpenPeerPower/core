@@ -33,11 +33,11 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up PoolSense from a config entry."""
 
     poolsense = PoolSense(
-        aiohttp_client.async_get_clientsession.opp),
+        aiohttp_client.async_get_clientsession(opp),
         entry.data[CONF_EMAIL],
         entry.data[CONF_PASSWORD],
     )
@@ -64,7 +64,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -102,7 +102,7 @@ class PoolSenseDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(self, opp, entry):
         """Initialize."""
         self.poolsense = PoolSense(
-            aiohttp_client.async_get_clientsession.opp),
+            aiohttp_client.async_get_clientsession(opp),
             entry.data[CONF_EMAIL],
             entry.data[CONF_PASSWORD],
         )

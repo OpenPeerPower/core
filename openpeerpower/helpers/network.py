@@ -19,10 +19,10 @@ class NoURLAvailableError(OpenPeerPowerError):
 
 
 @bind.opp
-def is_internal_request.opp: OpenPeerPower) -> bool:
+def is_internal_request(opp: OpenPeerPower) -> bool:
     """Test if the current request is internal."""
     try:
-        _get_internal_url.opp, require_current_request=True)
+        _get_internal_url(opp, require_current_request=True)
         return True
     except NoURLAvailableError:
         return False
@@ -176,7 +176,7 @@ def _get_external_url(
     """Get external URL of this instance."""
     if prefer_cloud and allow_cloud:
         try:
-            return _get_cloud_url.opp)
+            return _get_cloud_url(opp)
         except NoURLAvailableError:
             pass
 
@@ -200,7 +200,7 @@ def _get_external_url(
 
     if allow_cloud:
         try:
-            return _get_cloud_url.opp, require_current_request=require_current_request)
+            return _get_cloud_url(opp, require_current_request=require_current_request)
         except NoURLAvailableError:
             pass
 
@@ -208,7 +208,7 @@ def _get_external_url(
 
 
 @bind.opp
-def _get_cloud_url.opp: OpenPeerPower, require_current_request: bool = False) -> str:
+def _get_cloud_url(opp: OpenPeerPower, require_current_request: bool = False) -> str:
     """Get external Open Peer Power Cloud URL of this instance."""
     if "cloud" in.opp.config.components:
         try:

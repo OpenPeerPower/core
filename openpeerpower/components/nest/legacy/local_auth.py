@@ -28,7 +28,7 @@ async def generate_auth_url(client_id, flow_id):
     return AUTHORIZE_URL.format(client_id, flow_id)
 
 
-async def resolve_auth_code.opp, client_id, client_secret, code):
+async def resolve_auth_code(opp, client_id, client_secret, code):
     """Resolve an authorization code."""
 
     result = asyncio.Future()

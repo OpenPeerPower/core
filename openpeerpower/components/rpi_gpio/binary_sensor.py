@@ -30,9 +30,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Raspberry PI GPIO devices."""
-    setup_reload_service.opp, DOMAIN, PLATFORMS)
+    setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     pull_mode = config.get(CONF_PULL_MODE)
     bouncetime = config.get(CONF_BOUNCETIME)

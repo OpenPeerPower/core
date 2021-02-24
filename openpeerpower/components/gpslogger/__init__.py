@@ -62,7 +62,7 @@ async def async_setup(opp, opp_config):
     return True
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle incoming webhook with GPSLogger request."""
     try:
         data = WEBHOOK_SCHEMA(dict(await request.post()))
@@ -92,7 +92,7 @@ async def handle_webhook.opp, webhook_id, request):
     return web.Response(text=f"Setting location for {device}", status=HTTP_OK)
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Configure based on config entry."""
     opp.components.webhook.async_register(
         DOMAIN, "GPSLogger", entry.data[CONF_WEBHOOK_ID], handle_webhook
@@ -104,7 +104,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()

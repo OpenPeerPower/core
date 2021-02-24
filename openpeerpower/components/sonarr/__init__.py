@@ -46,7 +46,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up Sonarr from a config entry."""
     if not entry.options:
         options = {
@@ -64,7 +64,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         port=entry.data[CONF_PORT],
         api_key=entry.data[CONF_API_KEY],
         base_path=entry.data[CONF_BASE_PATH],
-        session=async_get_clientsession.opp),
+        session=async_get_clientsession(opp),
         tls=entry.data[CONF_SSL],
         verify_ssl=entry.data[CONF_VERIFY_SSL],
     )
@@ -72,7 +72,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     try:
         await sonarr.update()
     except SonarrAccessRestricted:
-        _async_start_reauth.opp, entry)
+        _async_start_reauth(opp, entry)
         return False
     except SonarrError as err:
         raise ConfigEntryNotReady from err
@@ -92,7 +92,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -111,7 +111,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     return unload_ok
 
 
-def _async_start_reauth.opp: OpenPeerPowerType, entry: ConfigEntry):
+def _async_start_reauth(opp: OpenPeerPowerType, entry: ConfigEntry):
     opp.async_create_task(
         opp.config_entries.flow.async_init(
             DOMAIN,
@@ -122,7 +122,7 @@ def _async_start_reauth.opp: OpenPeerPowerType, entry: ConfigEntry):
     _LOGGER.error("API Key is no longer valid. Please reauthenticate")
 
 
-async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 

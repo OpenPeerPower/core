@@ -40,7 +40,7 @@ async def async_setup(opp, opp_config):
     hostname = credentials.pop(CONF_HOST)
 
     client = incomfort_data["client"] = InComfortGateway(
-        hostname, **credentials, session=async_get_clientsession.opp)
+        hostname, **credentials, session=async_get_clientsession(opp)
     )
 
     try:
@@ -54,7 +54,7 @@ async def async_setup(opp, opp_config):
 
     for platform in ["water_heater", "binary_sensor", "sensor", "climate"]:
         opp.async_create_task(
-            async_load_platform.opp, platform, DOMAIN, {}, opp_config)
+            async_load_platform(opp, platform, DOMAIN, {}, opp_config)
         )
 
     return True

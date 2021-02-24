@@ -15,7 +15,7 @@ from .const import (
 )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add Vilfo Router entities from a config_entry."""
     vilfo = opp.data[DOMAIN][config_entry.entry_id]
 

@@ -4,13 +4,13 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing NEW_NAME states."""
     opp.states.async_set("NEW_DOMAIN.entity_off", "off", {})
     opp.states.async_set("NEW_DOMAIN.entity_on", "on", {"color": "red"})
 
-    turn_on_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_on")
-    turn_off_calls = async_mock_service.opp, "NEW_DOMAIN", "turn_off")
+    turn_on_calls = async_mock_service(opp, "NEW_DOMAIN", "turn_on")
+    turn_off_calls = async_mock_service(opp, "NEW_DOMAIN", "turn_off")
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(

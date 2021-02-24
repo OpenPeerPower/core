@@ -136,7 +136,7 @@ MAP_SERVICE_API = {
 
 
 @bind_opp
-async def async_get_addon_info.opp.OpenPeerPowerType, slug: str) -> dict:
+async def async_get_addon_info(opp.OpenPeerPowerType, slug: str) -> dict:
     """Return add-on info.
 
     The caller of the function should handle OppioAPIError.
@@ -147,7 +147,7 @@ async def async_get_addon_info.opp.OpenPeerPowerType, slug: str) -> dict:
 
 @bind_opp
 @api_data
-async def async_install_addon.opp.OpenPeerPowerType, slug: str) -> dict:
+async def async_install_addon(opp.OpenPeerPowerType, slug: str) -> dict:
     """Install add-on.
 
     The caller of the function should handle OppioAPIError.
@@ -159,7 +159,7 @@ async def async_install_addon.opp.OpenPeerPowerType, slug: str) -> dict:
 
 @bind_opp
 @api_data
-async def async_uninstall_addon.opp.OpenPeerPowerType, slug: str) -> dict:
+async def async_uninstall_addon(opp.OpenPeerPowerType, slug: str) -> dict:
     """Uninstall add-on.
 
     The caller of the function should handle OppioAPIError.
@@ -171,7 +171,7 @@ async def async_uninstall_addon.opp.OpenPeerPowerType, slug: str) -> dict:
 
 @bind_opp
 @api_data
-async def async_start_addon.opp.OpenPeerPowerType, slug: str) -> dict:
+async def async_start_addon(opp.OpenPeerPowerType, slug: str) -> dict:
     """Start add-on.
 
     The caller of the function should handle OppioAPIError.
@@ -183,7 +183,7 @@ async def async_start_addon.opp.OpenPeerPowerType, slug: str) -> dict:
 
 @bind_opp
 @api_data
-async def async_stop_addon.opp.OpenPeerPowerType, slug: str) -> dict:
+async def async_stop_addon(opp.OpenPeerPowerType, slug: str) -> dict:
     """Stop add-on.
 
     The caller of the function should handle OppioAPIError.
@@ -220,7 +220,7 @@ async def async_get_addon_discovery_info(
 
 @callback
 @bind_opp
-def get_info.opp,
+def get_info(opp,
     """Return generic information from Supervisor.
 
     Async friendly.
@@ -230,7 +230,7 @@ def get_info.opp,
 
 @callback
 @bind_opp
-def get_host_info.opp,
+def get_host_info(opp,
     """Return generic host information.
 
     Async friendly.
@@ -240,7 +240,7 @@ def get_host_info.opp,
 
 @callback
 @bind_opp
-def get_supervisor_info.opp,
+def get_supervisor_info(opp,
     """Return Supervisor information.
 
     Async friendly.
@@ -250,7 +250,7 @@ def get_supervisor_info.opp,
 
 @callback
 @bind_opp
-def get_os_info.opp,
+def get_os_info(opp,
     """Return OS information.
 
     Async friendly.
@@ -260,7 +260,7 @@ def get_os_info.opp,
 
 @callback
 @bind_opp
-def get_core_info.opp,
+def get_core_info(opp,
     """Return Open Peer Power Core information from Supervisor.
 
     Async friendly.
@@ -270,7 +270,7 @@ def get_core_info.opp,
 
 @callback
 @bind_opp
-def is_opp.opp,
+def is_opp(opp,
     """Return true if Opp.io is loaded.
 
     Async friendly.
@@ -295,7 +295,7 @@ async def async_setup_opp.config):
         _LOGGER.error("Missing %s environment variable", env)
         return False
 
-    async_load_websocket_api.opp)
+    async_load_websocket_api(opp)
 
     host = os.environ["OPPIO"]
     websession = opp.elpers.aiohttp_client.async_get_clientsession()
@@ -444,15 +444,15 @@ async def async_setup_opp.config):
         opp.ervices.async_register(OPP_DOMAIN, service, async_op.dle_core_service)
 
     # Init discovery Opp.io feature
-    async_setup_discovery_view.opp.opp.)
+    async_setup_discovery_view(opp.opp.)
 
     # Init auth Opp.io feature
-    async_setup_auth_view.opp.user)
+    async_setup_auth_view(opp.user)
 
     # Init ingress Opp.io feature
-    async_setup_ingress_view.opp.host)
+    async_setup_ingress_view(opp.host)
 
     # Init add-on ingress panels
-    await async_setup_addon_panel.opp.opp.)
+    await async_setup_addon_panel(opp.opp.)
 
     return True

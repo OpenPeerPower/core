@@ -37,7 +37,7 @@ def provider.opp, store):
 
 
 @pytest.fixture
-def provider_with_user.opp, store):
+def provider_with_user(opp, store):
     """Mock provider with trusted users config."""
     return tn_auth.TrustedNetworksAuthProvider(
         opp,
@@ -63,7 +63,7 @@ def provider_with_user.opp, store):
 
 
 @pytest.fixture
-def provider_bypass_login.opp, store):
+def provider_bypass_login(opp, store):
     """Mock provider with allow_bypass_login config."""
     return tn_auth.TrustedNetworksAuthProvider(
         opp,
@@ -90,7 +90,7 @@ def manager.opp, store, provider):
 
 
 @pytest.fixture
-def manager_with_user.opp, store, provider_with_user):
+def manager_with_user(opp, store, provider_with_user):
     """Mock manager with trusted user."""
     return auth.AuthManager(
         opp,
@@ -101,7 +101,7 @@ def manager_with_user.opp, store, provider_with_user):
 
 
 @pytest.fixture
-def manager_bypass_login.opp, store, provider_bypass_login):
+def manager_bypass_login(opp, store, provider_bypass_login):
     """Mock manager with allow bypass login."""
     return auth.AuthManager(
         opp,

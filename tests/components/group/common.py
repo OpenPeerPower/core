@@ -24,9 +24,9 @@ def reload.opp):
 
 @callback
 @bind.opp
-def async_reload.opp):
+def async_reload(opp):
     """Reload the automation from config."""
-    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_RELOAD))
+    opp.async_add_job(opp.services.async_call(DOMAIN, SERVICE_RELOAD))
 
 
 @bind.opp
@@ -73,12 +73,12 @@ def async_set_group(
         if value is not None
     }
 
-    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_SET, data))
+    opp.async_add_job(opp.services.async_call(DOMAIN, SERVICE_SET, data))
 
 
 @callback
 @bind.opp
-def async_remove.opp, object_id):
+def async_remove(opp, object_id):
     """Remove a user group."""
     data = {ATTR_OBJECT_ID: object_id}
-    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_REMOVE, data))
+    opp.async_add_job(opp.services.async_call(DOMAIN, SERVICE_REMOVE, data))

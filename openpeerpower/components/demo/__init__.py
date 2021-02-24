@@ -65,7 +65,7 @@ async def async_setup(opp, config):
     if not.opp.config.longitude:
         opp.config.longitude = 117.22743
 
-    tasks = [bootstrap.async_setup_component.opp, "sun", config)]
+    tasks = [bootstrap.async_setup_component(opp, "sun", config)]
 
     # Set up input select
     tasks.append(
@@ -143,7 +143,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set the config entry up."""
     # Set up demo platforms with config entry
     for component in COMPONENTS_WITH_CONFIG_ENTRY_DEMO_PLATFORM:

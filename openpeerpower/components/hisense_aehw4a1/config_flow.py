@@ -7,7 +7,7 @@ from openpeerpower.helpers import config_entry_flow
 from .const import DOMAIN
 
 
-async def _async_has_devices.opp):
+async def _async_has_devices(opp):
     """Return if there are devices that can be discovered."""
     aehw4a1_ip_addresses = await AehW4a1().discovery()
     return len(aehw4a1_ip_addresses) > 0

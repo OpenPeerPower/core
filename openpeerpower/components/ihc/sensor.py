@@ -6,7 +6,7 @@ from . import IHC_CONTROLLER, IHC_INFO
 from .ihcdevice import IHCDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the IHC sensor platform."""
     if discovery_info is None:
         return

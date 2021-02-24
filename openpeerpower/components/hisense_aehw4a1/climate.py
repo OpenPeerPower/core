@@ -131,7 +131,7 @@ def _build_entity(device):
     return ClimateAehW4a1(device)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the AEH-W4A1 climate platform."""
     # Priority 1: manual config
     if opp.data[DOMAIN].get(CONF_IP_ADDRESS):

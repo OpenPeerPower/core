@@ -63,7 +63,7 @@ async def run_command(args):
     await opp.async_stop()
 
 
-async def list_users.opp, provider, args):
+async def list_users(opp, provider, args):
     """List the users."""
     count = 0
     for user in provider.data.users:
@@ -74,7 +74,7 @@ async def list_users.opp, provider, args):
     print("Total users:", count)
 
 
-async def add_user.opp, provider, args):
+async def add_user(opp, provider, args):
     """Create a user."""
     try:
         provider.data.add_auth(args.username, args.password)
@@ -87,7 +87,7 @@ async def add_user.opp, provider, args):
     print("Auth created")
 
 
-async def validate_login.opp, provider, args):
+async def validate_login(opp, provider, args):
     """Validate a login."""
     try:
         provider.data.validate_login(args.username, args.password)
@@ -96,7 +96,7 @@ async def validate_login.opp, provider, args):
         print("Auth invalid")
 
 
-async def change_password.opp, provider, args):
+async def change_password(opp, provider, args):
     """Change password."""
     try:
         provider.data.change_password(args.username, args.new_password)

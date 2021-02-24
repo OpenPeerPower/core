@@ -14,7 +14,7 @@ CONFIG_IP = {CONF_HOST: "10.10.10.12"}
 DUNEHD_STATE = {"protocol_version": "4", "player_state": "navigator"}
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test that the import works."""
     with patch("pdunehd.DuneHDPlayer.update_state", return_value=DUNEHD_STATE):
         result = await opp.config_entries.flow.async_init(
@@ -26,7 +26,7 @@ async def test_import.opp):
         assert result["data"] == {CONF_HOST: "dunehd-host"}
 
 
-async def test_import_cannot_connect.opp):
+async def test_import_cannot_connect(opp):
     """Test that errors are shown when cannot connect to the host during import."""
     with patch("pdunehd.DuneHDPlayer.update_state", return_value={}):
         result = await opp.config_entries.flow.async_init(
@@ -44,7 +44,7 @@ async def test_import_duplicate_error(opp):
         data={CONF_HOST: "dunehd-host"},
         title="dunehd-host",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch("pdunehd.DuneHDPlayer.update_state", return_value=DUNEHD_STATE):
         result = await opp.config_entries.flow.async_init(
@@ -55,7 +55,7 @@ async def test_import_duplicate_error(opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_user_invalid_host.opp):
+async def test_user_invalid_host(opp):
     """Test that errors are shown when the host is invalid."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "invalid/host"}
@@ -64,7 +64,7 @@ async def test_user_invalid_host.opp):
     assert result["errors"] == {CONF_HOST: "invalid_host"}
 
 
-async def test_user_cannot_connect.opp):
+async def test_user_cannot_connect(opp):
     """Test that errors are shown when cannot connect to the host."""
     with patch("pdunehd.DuneHDPlayer.update_state", return_value={}):
         result = await opp.config_entries.flow.async_init(
@@ -81,7 +81,7 @@ async def test_duplicate_error(opp):
         data=CONFIG_HOSTNAME,
         title="dunehd-host",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to(opp.opp)
 
     with patch("pdunehd.DuneHDPlayer.update_state", return_value=DUNEHD_STATE):
         result = await opp.config_entries.flow.async_init(
@@ -91,7 +91,7 @@ async def test_duplicate_error(opp):
         assert result["errors"] == {CONF_HOST: "already_configured"}
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test that the user step works."""
     with patch("pdunehd.DuneHDPlayer.update_state", return_value=DUNEHD_STATE):
         result = await opp.config_entries.flow.async_init(

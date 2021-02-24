@@ -69,7 +69,7 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Glances from config entry."""
     client = GlancesData.opp, config_entry)
     opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
@@ -79,7 +79,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
     opp.data[DOMAIN].pop(config_entry.entry_id)
@@ -158,17 +158,17 @@ class GlancesData:
         )
 
     @staticmethod
-    async def async_options_updated.opp, entry):
+    async def async_options_updated(opp, entry):
         """Triggered by config entry options updates."""
         opp.data[DOMAIN][entry.entry_id].set_scan_interval(
             entry.options[CONF_SCAN_INTERVAL]
         )
 
 
-def get_api.opp, entry):
+def get_api(opp, entry):
     """Return the api from glances_api."""
     params = entry.copy()
     params.pop(CONF_NAME)
     verify_ssl = params.pop(CONF_VERIFY_SSL)
-    session = async_get_clientsession.opp, verify_ssl)
+    session = async_get_clientsession(opp, verify_ssl)
     return Glances.opp.loop, session, **params)

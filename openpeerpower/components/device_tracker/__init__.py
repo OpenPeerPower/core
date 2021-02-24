@@ -42,13 +42,13 @@ from .legacy import (  # noqa: F401 pylint: disable=unused-import
 
 
 @bind.opp
-def is_on.opp: OpenPeerPowerType, entity_id: str):
+def is_on(opp: OpenPeerPowerType, entity_id: str):
     """Return the state if any or a specified device is home."""
     return.opp.states.is_state(entity_id, STATE_HOME)
 
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Set up the device tracker."""
-    await async_setup_legacy_integration.opp, config)
+    await async_setup_legacy_integration(opp, config)
 
     return True

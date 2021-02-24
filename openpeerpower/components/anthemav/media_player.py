@@ -50,7 +50,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up our socket to the AVR."""
 
     host = config[CONF_HOST]
@@ -64,7 +64,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     def async_anthemav_update_callback(message):
         """Receive notification from transport that new data exists."""
         _LOGGER.debug("Received update callback from AVR: %s", message)
-        async_dispatcher_send.opp, DOMAIN)
+        async_dispatcher_send(opp, DOMAIN)
 
     avr = await anthemav.Connection.create(
         host=host, port=port, update_callback=async_anthemav_update_callback

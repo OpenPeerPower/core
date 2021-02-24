@@ -8,7 +8,7 @@ from . import SleepIQSensor
 from .const import DOMAIN, IS_IN_BED, SENSOR_TYPES, SIDES
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the SleepIQ sensors."""
     if discovery_info is None:
         return

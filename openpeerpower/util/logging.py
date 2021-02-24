@@ -50,7 +50,7 @@ class OpenPeerPowerQueueHandler(logging.handlers.QueueHandler):
 
 
 @callback
-def async_activate_log_queue_handler.opp: OpenPeerPower) -> None:
+def async_activate_log_queue_handler(opp: OpenPeerPower) -> None:
     """
     Migrate the existing log handlers to use the queue.
 

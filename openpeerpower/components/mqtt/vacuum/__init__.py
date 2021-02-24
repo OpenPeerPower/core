@@ -24,18 +24,18 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up MQTT vacuum through configuration.yaml."""
-    await async_setup_reload_service.opp, MQTT_DOMAIN, PLATFORMS)
+    await async_setup_reload_service(opp, MQTT_DOMAIN, PLATFORMS)
     await _async_setup_entity(async_add_entities, config)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up MQTT vacuum dynamically through MQTT discovery."""
     setup = functools.partial(
         _async_setup_entity, async_add_entities, config_entry=config_entry
     )
-    await async_setup_entry_helper.opp, DOMAIN, setup, PLATFORM_SCHEMA)
+    await async_setup_entry_helper(opp, DOMAIN, setup, PLATFORM_SCHEMA)
 
 
 async def _async_setup_entity(

@@ -25,11 +25,11 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Nightscout from a config entry."""
     server_url = entry.data[CONF_URL]
     api_key = entry.data.get(CONF_API_KEY)
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     api = NightscoutAPI(server_url, session=session, api_secret=api_key)
     try:
         status = await api.get_server_status()
@@ -38,7 +38,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     opp.data[DOMAIN][entry.entry_id] = api
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, server_url)},
@@ -56,7 +56,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -46,7 +46,7 @@ REVERSE_PRESET_MAPPING = {v: k for k, v in PRESETS_MAPPING.items()}
 HVAC_MODES_MAPPING = {HvacState.COOL: HVAC_MODE_COOL, HvacState.HEAT: HVAC_MODE_HEAT}
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Somfy climate platform."""
     domain_data = opp.data[DOMAIN]
     coordinator = domain_data[COORDINATOR]

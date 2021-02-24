@@ -13,7 +13,7 @@ from . import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Return the notify service."""
 
     if discovery_info is None:

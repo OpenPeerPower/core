@@ -49,4 +49,4 @@ def async_see(
     }
     if attributes:
         data[ATTR_ATTRIBUTES] = attributes
-    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_SEE, data))
+    opp.async_add_job(opp.services.async_call(DOMAIN, SERVICE_SEE, data))

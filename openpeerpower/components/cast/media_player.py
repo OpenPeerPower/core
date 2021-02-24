@@ -97,7 +97,7 @@ ENTITY_SCHEMA = vol.All(
 
 
 @callback
-def _async_create_cast_device.opp: OpenPeerPowerType, info: ChromecastInfo):
+def _async_create_cast_device(opp: OpenPeerPowerType, info: ChromecastInfo):
     """Create a CastDevice Entity from the chromecast object.
 
     Returns None if the cast device has already been added.
@@ -125,7 +125,7 @@ def _async_create_cast_device.opp: OpenPeerPowerType, info: ChromecastInfo):
     return CastDevice(info)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Cast from a config entry."""
     config = opp.data[CAST_DOMAIN].get("media_player") or {}
     if not isinstance(config, list):
@@ -134,7 +134,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     # no pending task
     done, _ = await asyncio.wait(
         [
-            _async_setup_platform.opp, ENTITY_SCHEMA(cfg), async_add_entities)
+            _async_setup_platform(opp, ENTITY_SCHEMA(cfg), async_add_entities)
             for cfg in config
         ]
     )
@@ -166,17 +166,17 @@ async def _async_setup_platform(
             # UUID not matching, this is not it.
             return
 
-        cast_device = _async_create_cast_device.opp, discover)
+        cast_device = _async_create_cast_device(opp, discover)
         if cast_device is not None:
             async_add_entities([cast_device])
 
-    async_dispatcher_connect.opp, SIGNAL_CAST_DISCOVERED, async_cast_discovered)
+    async_dispatcher_connect(opp, SIGNAL_CAST_DISCOVERED, async_cast_discovered)
     # Re-play the callback for all past chromecasts, store the objects in
     # a list to avoid concurrent modification resulting in exception.
     for chromecast in.opp.data[KNOWN_CHROMECAST_INFO_KEY].values():
         async_cast_discovered(chromecast)
 
-    ChromeCastZeroconf.set_zeroconf(await zeroconf.async_get_instance.opp))
+    ChromeCastZeroconf.set_zeroconf(await zeroconf.async_get_instance(opp))
     opp.async_add_executor_job(setup_internal_discovery, opp)
 
 
@@ -222,7 +222,7 @@ class CastDevice(MediaPlayerEntity):
             self.opp, SIGNAL_OPP_CAST_SHOW_VIEW, self._handle_signal_show_view
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect Chromecast object when removed."""
         await self._async_disconnect()
         if self._cast_info.uuid is not None:

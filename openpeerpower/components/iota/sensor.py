@@ -15,7 +15,7 @@ CONF_TESTNET = "testnet"
 SCAN_INTERVAL = timedelta(minutes=3)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the IOTA sensor."""
     iota_config = discovery_info
     sensors = [

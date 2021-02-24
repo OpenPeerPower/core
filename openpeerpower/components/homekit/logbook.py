@@ -6,7 +6,7 @@ from .const import ATTR_DISPLAY_NAME, ATTR_VALUE, DOMAIN, EVENT_HOMEKIT_CHANGED
 
 
 @callback
-def async_describe_events.opp, async_describe_event):
+def async_describe_events(opp, async_describe_event):
     """Describe logbook events."""
 
     @callback

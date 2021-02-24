@@ -25,21 +25,21 @@ from . import const, decorators, messages
 
 
 @callback
-def async_register_commands.opp, async_reg):
+def async_register_commands(opp, async_reg):
     """Register commands."""
-    async_reg.opp, handle_subscribe_events)
-    async_reg.opp, handle_unsubscribe_events)
-    async_reg.opp, handle_call_service)
-    async_reg.opp, handle_get_states)
-    async_reg.opp, handle_get_services)
-    async_reg.opp, handle_get_config)
-    async_reg.opp, handle_ping)
-    async_reg.opp, handle_render_template)
-    async_reg.opp, handle_manifest_list)
-    async_reg.opp, handle_manifest_get)
-    async_reg.opp, handle_entity_source)
-    async_reg.opp, handle_subscribe_trigger)
-    async_reg.opp, handle_test_condition)
+    async_reg(opp, handle_subscribe_events)
+    async_reg(opp, handle_unsubscribe_events)
+    async_reg(opp, handle_call_service)
+    async_reg(opp, handle_get_states)
+    async_reg(opp, handle_get_services)
+    async_reg(opp, handle_get_config)
+    async_reg(opp, handle_ping)
+    async_reg(opp, handle_render_template)
+    async_reg(opp, handle_manifest_list)
+    async_reg(opp, handle_manifest_get)
+    async_reg(opp, handle_entity_source)
+    async_reg(opp, handle_subscribe_trigger)
+    async_reg(opp, handle_test_condition)
 
 
 def pong_message(iden):
@@ -54,7 +54,7 @@ def pong_message(iden):
         vol.Optional("event_type", default=MATCH_ALL): str,
     }
 )
-def handle_subscribe_events.opp, connection, msg):
+def handle_subscribe_events(opp, connection, msg):
     """Handle subscribe events command."""
     # Circular dep
     # pylint: disable=import-outside-toplevel
@@ -101,7 +101,7 @@ def handle_subscribe_events.opp, connection, msg):
         vol.Required("subscription"): cv.positive_int,
     }
 )
-def handle_unsubscribe_events.opp, connection, msg):
+def handle_unsubscribe_events(opp, connection, msg):
     """Handle unsubscribe events command."""
     subscription = msg["subscription"]
 
@@ -126,7 +126,7 @@ def handle_unsubscribe_events.opp, connection, msg):
     }
 )
 @decorators.async_response
-async def handle_call_service.opp, connection, msg):
+async def handle_call_service(opp, connection, msg):
     """Handle call service command."""
     blocking = True
     if msg["domain"] == OPP_DOMAIN and msg["service"] in ["restart", "stop"]:
@@ -176,7 +176,7 @@ async def handle_call_service.opp, connection, msg):
 
 @callback
 @decorators.websocket_command({vol.Required("type"): "get_states"})
-def handle_get_states.opp, connection, msg):
+def handle_get_states(opp, connection, msg):
     """Handle get states command."""
     if connection.user.permissions.access_all_entities("read"):
         states = opp.states.async_all()
@@ -193,9 +193,9 @@ def handle_get_states.opp, connection, msg):
 
 @decorators.websocket_command({vol.Required("type"): "get_services"})
 @decorators.async_response
-async def handle_get_services.opp, connection, msg):
+async def handle_get_services(opp, connection, msg):
     """Handle get services command."""
-    descriptions = await async_get_all_descriptions.opp)
+    descriptions = await async_get_all_descriptions(opp)
     connection.send_message(messages.result_message(msg["id"], descriptions))
 
 
@@ -208,11 +208,11 @@ def handle_get_config(opp, connection, msg):
 
 @decorators.websocket_command({vol.Required("type"): "manifest/list"})
 @decorators.async_response
-async def handle_manifest_list.opp, connection, msg):
+async def handle_manifest_list(opp, connection, msg):
     """Handle integrations command."""
     integrations = await asyncio.gather(
         *[
-            async_get_integration.opp, domain)
+            async_get_integration(opp, domain)
             for domain in.opp.config.components
             # Filter out platforms.
             if "." not in domain
@@ -227,10 +227,10 @@ async def handle_manifest_list.opp, connection, msg):
     {vol.Required("type"): "manifest/get", vol.Required("integration"): str}
 )
 @decorators.async_response
-async def handle_manifest_get.opp, connection, msg):
+async def handle_manifest_get(opp, connection, msg):
     """Handle integrations command."""
     try:
-        integration = await async_get_integration.opp, msg["integration"])
+        integration = await async_get_integration(opp, msg["integration"])
         connection.send_result(msg["id"], integration.manifest)
     except IntegrationNotFound:
         connection.send_error(msg["id"], const.ERR_NOT_FOUND, "Integration not found")
@@ -238,7 +238,7 @@ async def handle_manifest_get.opp, connection, msg):
 
 @callback
 @decorators.websocket_command({vol.Required("type"): "ping"})
-def handle_ping.opp, connection, msg):
+def handle_ping(opp, connection, msg):
     """Handle ping command."""
     connection.send_message(pong_message(msg["id"]))
 
@@ -253,7 +253,7 @@ def handle_ping.opp, connection, msg):
     }
 )
 @decorators.async_response
-async def handle_render_template.opp, connection, msg):
+async def handle_render_template(opp, connection, msg):
     """Handle render_template command."""
     template_str = msg["template"]
     template = Template(template_str, opp)
@@ -313,9 +313,9 @@ async def handle_render_template.opp, connection, msg):
 @decorators.websocket_command(
     {vol.Required("type"): "entity/source", vol.Optional("entity_id"): [cv.entity_id]}
 )
-def handle_entity_source.opp, connection, msg):
+def handle_entity_source(opp, connection, msg):
     """Handle entity source command."""
-    raw_sources = entity.entity_sources.opp)
+    raw_sources = entity.entity_sources(opp)
     entity_perm = connection.user.permissions.check_entity
 
     if "entity_id" not in msg:
@@ -362,7 +362,7 @@ def handle_entity_source.opp, connection, msg):
 )
 @decorators.require_admin
 @decorators.async_response
-async def handle_subscribe_trigger.opp, connection, msg):
+async def handle_subscribe_trigger(opp, connection, msg):
     """Handle subscribe trigger command."""
     # Circular dep
     # pylint: disable=import-outside-toplevel
@@ -406,7 +406,7 @@ async def handle_subscribe_trigger.opp, connection, msg):
 )
 @decorators.require_admin
 @decorators.async_response
-async def handle_test_condition.opp, connection, msg):
+async def handle_test_condition(opp, connection, msg):
     """Handle test condition command."""
     # Circular dep
     # pylint: disable=import-outside-toplevel
@@ -414,5 +414,5 @@ async def handle_test_condition.opp, connection, msg):
 
     check_condition = await condition.async_from_config(opp, msg["condition"])
     connection.send_result(
-        msg["id"], {"result": check_condition.opp, msg.get("variables"))}
+        msg["id"], {"result": check_condition(opp, msg.get("variables"))}
     )

@@ -26,7 +26,7 @@ from openpeerpower.core import callback
 from . import DATA_VELUX
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up cover(s) for Velux platform."""
     entities = []
     for node in.opp.data[DATA_VELUX].pyvlx.nodes:

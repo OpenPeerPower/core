@@ -26,7 +26,7 @@ async def async_setup_entry(
         add_entities(account, async_add_entities, tracked)
 
     account.listeners.append(
-        async_dispatcher_connect.opp, account.signal_device_new, update_account)
+        async_dispatcher_connect(opp, account.signal_device_new, update_account)
     )
 
     update_account()
@@ -116,6 +116,6 @@ class IcloudDeviceBatterySensor(Entity):
             self.opp, self._account.signal_device_update, self.async_write_op_state
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Clean up after entity before removal."""
         self._unsub_dispatcher()

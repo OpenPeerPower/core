@@ -66,7 +66,7 @@ ATTRIBUTE_ALIAS = {
 }
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Validate the configuration and return Synology SRM scanner."""
     scanner = SynologySrmDeviceScanner(config[DOMAIN])
 

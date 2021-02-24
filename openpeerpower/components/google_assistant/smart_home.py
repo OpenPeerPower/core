@@ -21,13 +21,13 @@ HANDLERS = Registry()
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_handle_message.opp, config, user_id, message, source):
+async def async_handle_message(opp, config, user_id, message, source):
     """Handle incoming API messages."""
     data = RequestData(
         config, user_id, source, message["requestId"], message.get("devices")
     )
 
-    response = await _process.opp, data, message)
+    response = await _process(opp, data, message)
 
     if response and "errorCode" in response["payload"]:
         _LOGGER.error("Error handling message %s: %s", message, response["payload"])
@@ -35,7 +35,7 @@ async def async_handle_message.opp, config, user_id, message, source):
     return response
 
 
-async def _process.opp, data, message):
+async def _process(opp, data, message):
     """Process a message."""
     inputs: list = message.get("inputs")
 
@@ -71,7 +71,7 @@ async def _process.opp, data, message):
 
 
 @HANDLERS.register("action.devices.SYNC")
-async def async_devices_sync.opp, data, payload):
+async def async_devices_sync(opp, data, payload):
     """Handle action.devices.SYNC request.
 
     https://developers.google.com/assistant/smarthome/develop/process-intents#SYNC
@@ -83,7 +83,7 @@ async def async_devices_sync.opp, data, payload):
     )
 
     agent_user_id = data.config.get_agent_user_id(data.context)
-    entities = async_get_entities.opp, data.config)
+    entities = async_get_entities(opp, data.config)
     results = await asyncio.gather(
         *(
             entity.sync_serialize(agent_user_id)
@@ -111,7 +111,7 @@ async def async_devices_sync.opp, data, payload):
 
 
 @HANDLERS.register("action.devices.QUERY")
-async def async_devices_query.opp, data, payload):
+async def async_devices_query(opp, data, payload):
     """Handle action.devices.QUERY request.
 
     https://developers.google.com/assistant/smarthome/develop/process-intents#QUERY
@@ -165,7 +165,7 @@ async def _entity_execute(entity, data, executions):
 
 
 @HANDLERS.register("action.devices.EXECUTE")
-async def handle_devices_execute.opp, data, payload):
+async def handle_devices_execute(opp, data, payload):
     """Handle action.devices.EXECUTE request.
 
     https://developers.google.com/assistant/smarthome/develop/process-intents#EXECUTE
@@ -241,7 +241,7 @@ async def handle_devices_execute.opp, data, payload):
 
 
 @HANDLERS.register("action.devices.DISCONNECT")
-async def async_devices_disconnect.opp, data: RequestData, payload):
+async def async_devices_disconnect(opp, data: RequestData, payload):
     """Handle action.devices.DISCONNECT request.
 
     https://developers.google.com/assistant/smarthome/develop/process-intents#DISCONNECT
@@ -251,7 +251,7 @@ async def async_devices_disconnect.opp, data: RequestData, payload):
 
 
 @HANDLERS.register("action.devices.IDENTIFY")
-async def async_devices_identify.opp, data: RequestData, payload):
+async def async_devices_identify(opp, data: RequestData, payload):
     """Handle action.devices.IDENTIFY request.
 
     https://developers.google.com/assistant/smarthome/develop/local#implement_the_identify_handler
@@ -272,7 +272,7 @@ async def async_devices_identify.opp, data: RequestData, payload):
 
 
 @HANDLERS.register("action.devices.REACHABLE_DEVICES")
-async def async_devices_reachable.opp, data: RequestData, payload):
+async def async_devices_reachable(opp, data: RequestData, payload):
     """Handle action.devices.REACHABLE_DEVICES request.
 
     https://developers.google.com/actions/smarthome/create#actiondevicesdisconnect
@@ -282,7 +282,7 @@ async def async_devices_reachable.opp, data: RequestData, payload):
     return {
         "devices": [
             entity.reachable_device_serialize()
-            for entity in async_get_entities.opp, data.config)
+            for entity in async_get_entities(opp, data.config)
             if entity.entity_id in google_ids and entity.should_expose_local()
         ]
     }

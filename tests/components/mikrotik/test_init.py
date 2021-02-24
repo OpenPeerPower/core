@@ -11,17 +11,17 @@ from tests.common import MockConfigEntry
 
 async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a hub."""
-    assert await async_setup_component.opp, mikrotik.DOMAIN, {}) is True
+    assert await async_setup_component(opp, mikrotik.DOMAIN, {}) is True
     assert mikrotik.DOMAIN not in.opp.data
 
 
-async def test_successful_config_entry.opp):
+async def test_successful_config_entry(opp):
     """Test config entry successful setup."""
     entry = MockConfigEntry(
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     mock_registry = Mock()
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub, patch(
@@ -33,7 +33,7 @@ async def test_successful_config_entry.opp):
         mock_hub.return_value.model = "RB750"
         mock_hub.return_value.hostname = "mikrotik"
         mock_hub.return_value.firmware = "3.65"
-        assert await mikrotik.async_setup_entry.opp, entry) is True
+        assert await mikrotik.async_setup_entry(opp, entry) is True
 
     assert len(mock_hub.mock_calls) == 2
     p.opp, p_entry = mock_hub.mock_calls[0][1]
@@ -58,22 +58,22 @@ async def test_hub_fail_setup_opp):
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub:
         mock_hub.return_value.async_setup = AsyncMock(return_value=False)
-        assert await mikrotik.async_setup_entry.opp, entry) is False
+        assert await mikrotik.async_setup_entry(opp, entry) is False
 
     assert mikrotik.DOMAIN not in.opp.data
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test being able to unload an entry."""
     entry = MockConfigEntry(
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub, patch(
         "openpeerpower.helpers.device_registry.async_get_registry",
@@ -84,9 +84,9 @@ async def test_unload_entry.opp):
         mock_hub.return_value.model = "RB750"
         mock_hub.return_value.hostname = "mikrotik"
         mock_hub.return_value.firmware = "3.65"
-        assert await mikrotik.async_setup_entry.opp, entry) is True
+        assert await mikrotik.async_setup_entry(opp, entry) is True
 
     assert len(mock_hub.return_value.mock_calls) == 1
 
-    assert await mikrotik.async_unload_entry.opp, entry)
+    assert await mikrotik.async_unload_entry(opp, entry)
     assert entry.entry_id not in.opp.data[mikrotik.DOMAIN]

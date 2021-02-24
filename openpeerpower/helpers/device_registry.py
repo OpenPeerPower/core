@@ -652,12 +652,12 @@ class DeviceRegistry:
 
 
 @callback
-def async_get.opp: OpenPeerPowerType) -> DeviceRegistry:
+def async_get(opp: OpenPeerPowerType) -> DeviceRegistry:
     """Get device registry."""
     return cast(DeviceRegistry, opp.data[DATA_REGISTRY])
 
 
-async def async_load.opp: OpenPeerPowerType) -> None:
+async def async_load(opp: OpenPeerPowerType) -> None:
     """Load device registry."""
     assert DATA_REGISTRY not in.opp.data
     opp.data[DATA_REGISTRY] = DeviceRegistry.opp)
@@ -665,12 +665,12 @@ async def async_load.opp: OpenPeerPowerType) -> None:
 
 
 @bind.opp
-async def async_get_registry.opp: OpenPeerPowerType) -> DeviceRegistry:
+async def async_get_registry(opp: OpenPeerPowerType) -> DeviceRegistry:
     """Get device registry.
 
     This is deprecated and will be removed in the future. Use async_get instead.
     """
-    return async_get.opp)
+    return async_get(opp)
 
 
 @callback
@@ -730,14 +730,14 @@ def async_cleanup(
 
 
 @callback
-def async_setup_cleanup.opp: OpenPeerPowerType, dev_reg: DeviceRegistry) -> None:
+def async_setup_cleanup(opp: OpenPeerPowerType, dev_reg: DeviceRegistry) -> None:
     """Clean up device registry when entities removed."""
     from . import entity_registry  # pylint: disable=import-outside-toplevel
 
     async def cleanup() -> None:
         """Cleanup."""
-        ent_reg = await entity_registry.async_get_registry.opp)
-        async_cleanup.opp, dev_reg, ent_reg)
+        ent_reg = await entity_registry.async_get_registry(opp)
+        async_cleanup(opp, dev_reg, ent_reg)
 
     debounced_cleanup = Debouncer(
         opp. _LOGGER, cooldown=CLEANUP_DELAY, immediate=False, function=cleanup

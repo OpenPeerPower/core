@@ -11,7 +11,7 @@ from .const import DATA_AUGUST, DEFAULT_NAME, DEFAULT_TIMEOUT, DOMAIN
 from .entity import AugustEntityMixin
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up August cameras."""
     data = opp.data[DOMAIN][config_entry.entry_id][DATA_AUGUST]
     devices = []

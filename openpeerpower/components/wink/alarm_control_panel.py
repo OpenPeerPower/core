@@ -17,7 +17,7 @@ from . import DOMAIN, WinkDevice
 STATE_ALARM_PRIVACY = "Private"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink platform."""
 
     for camera in pywink.get_cameras():

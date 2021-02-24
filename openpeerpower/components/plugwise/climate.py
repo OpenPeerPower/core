@@ -36,7 +36,7 @@ SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Smile Thermostats from a config entry."""
     api = opp.data[DOMAIN][config_entry.entry_id]["api"]
     coordinator = opp.data[DOMAIN][config_entry.entry_id][COORDINATOR]

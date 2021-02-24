@@ -309,7 +309,7 @@ async def async_setup(opp, config):
 
         _LOGGER.info("Setting up %s.%s", DOMAIN, p_type)
         try:
-            receiver_service = await platform.async_setup_platform.opp, p_config)
+            receiver_service = await platform.async_setup_platform(opp, p_config)
             if receiver_service is False:
                 _LOGGER.error("Failed to initialize Telegram bot %s", p_type)
                 return False
@@ -334,7 +334,7 @@ async def async_setup(opp, config):
                 ):
                     data[attribute] = attribute_templ
                 else:
-                    attribute_templ.opp = opp
+                    attribute_templ(opp = opp
                     try:
                         data[attribute] = attribute_templ.async_render(
                             parse_result=False

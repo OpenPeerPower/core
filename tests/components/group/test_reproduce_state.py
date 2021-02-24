@@ -7,7 +7,7 @@ from openpeerpower.components.group.reproduce_state import async_reproduce_state
 from openpeerpower.core import Context, State
 
 
-async def test_reproduce_group.opp):
+async def test_reproduce_group(opp):
     """Test reproduce_state with group."""
     context = Context()
 
@@ -39,7 +39,7 @@ async def test_reproduce_group.opp):
 
         state = State("group.test", "on")
 
-        await async_reproduce_states.opp, [state], context=context)
+        await async_reproduce_states(opp, [state], context=context)
 
         fun.assert_called_once_with(
             opp,

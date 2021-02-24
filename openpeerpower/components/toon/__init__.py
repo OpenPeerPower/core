@@ -70,7 +70,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     return True
 
 
-async def async_migrate_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_migrate_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Handle migration of a previous version config entry."""
     if entry.version == 1:
         # There is no usable data in version 1 anymore.
@@ -89,9 +89,9 @@ async def async_migrate_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Toon from a config entry."""
-    implementation = await async_get_config_entry_implementation.opp, entry)
+    implementation = await async_get_config_entry_implementation(opp, entry)
     session = OAuth2Session.opp, entry, implementation)
 
     coordinator = ToonDataUpdateCoordinator.opp, entry=entry, session=session)
@@ -107,7 +107,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     opp.data[DOMAIN][entry.entry_id] = coordinator
 
     # Register device for the Meter Adapter, since it will have no entities.
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={
@@ -136,7 +136,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Toon config entry."""
 
     # Remove webhooks registration

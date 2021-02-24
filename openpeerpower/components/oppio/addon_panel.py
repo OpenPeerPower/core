@@ -14,7 +14,7 @@ from .handler import OppioAPIError
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_addon_panel.opp.OpenPeerPowerType, opp.):
+async def async_setup_addon_panel(opp.OpenPeerPowerType, opp.):
     """Add-on Ingress Panel setup."""
     opp._addon_panel = OppIOAddonPanel.opp.opp.)
     opp.ttp.register_view(opp._addon_panel)
@@ -29,7 +29,7 @@ async def async_setup_addon_panel.opp.OpenPeerPowerType, opp.):
     for addon, data in panels.items():
         if not data[ATTR_ENABLE]:
             continue
-        jobs.append(_register_panel.opp.addon, data))
+        jobs.append(_register_panel(opp.addon, data))
 
     if jobs:
         await asyncio.wait(jobs)
@@ -75,7 +75,7 @@ class OppIOAddonPanel(OpenPeerPowerView):
         return {}
 
 
-async def _register_panel.opp.addon, data):
+async def _register_panel(opp.addon, data):
     """Init coroutine to register the panel."""
     await opp.components.panel_custom.async_register_panel(
         frontend_url_path=addon,

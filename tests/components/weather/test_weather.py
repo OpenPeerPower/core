@@ -19,7 +19,7 @@ from openpeerpower.setup import async_setup_component
 from openpeerpower.util.unit_system import METRIC_SYSTEM
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test weather attributes."""
     assert await async_setup_component(
         opp. weather.DOMAIN, {"weather": {"platform": "demo"}}
@@ -55,7 +55,7 @@ async def test_attributes.opp):
     assert len(data.get(ATTR_FORECAST)) == 7
 
 
-async def test_temperature_convert.opp):
+async def test_temperature_convert(opp):
     """Test temperature conversion."""
     assert await async_setup_component(
         opp. weather.DOMAIN, {"weather": {"platform": "demo"}}

@@ -31,7 +31,7 @@ ATTR_FILE_KIND_IMAGE = "image"
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Notify.Events notification service."""
     return NotifyEventsNotificationService.opp.data[DOMAIN][CONF_TOKEN])
 

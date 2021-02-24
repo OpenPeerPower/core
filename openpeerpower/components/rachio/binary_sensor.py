@@ -32,14 +32,14 @@ from .webhooks import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Rachio binary sensors."""
     entities = await opp.async_add_executor_job(_create_entities, opp, config_entry)
     async_add_entities(entities)
     _LOGGER.info("%d Rachio binary sensor(s) added", len(entities))
 
 
-def _create_entities.opp, config_entry):
+def _create_entities(opp, config_entry):
     entities = []
     for controller in.opp.data[DOMAIN_RACHIO][config_entry.entry_id].controllers:
         entities.append(RachioControllerOnlineBinarySensor(controller))

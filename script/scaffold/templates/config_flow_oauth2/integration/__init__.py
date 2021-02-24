@@ -54,7 +54,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up NEW_NAME from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # If using an aiohttp-based API lib
     opp.data[DOMAIN][entry.entry_id] = api.AsyncConfigEntryAuth(
-        aiohttp_client.async_get_clientsession.opp), session
+        aiohttp_client.async_get_clientsession(opp), session
     )
 
     for component in PLATFORMS:
@@ -80,7 +80,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

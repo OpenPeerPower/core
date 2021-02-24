@@ -10,7 +10,7 @@ DATA_KEY_PROTO_V1 = "status"
 DATA_KEY_PROTO_V2 = "curtain_status"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Perform the setup for Xiaomi devices."""
     entities = []
     gateway = opp.data[DOMAIN][GATEWAYS_KEY][config_entry.entry_id]

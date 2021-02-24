@@ -7,7 +7,7 @@ from openpeerpower.helpers import ratelimit
 from openpeerpower.util import dt as dt_util
 
 
-async def test_hit.opp):
+async def test_hit(opp):
     """Test hitting the rate limit."""
 
     refresh_called = False
@@ -44,7 +44,7 @@ async def test_hit.opp):
     rate_limiter.async_remove()
 
 
-async def test_miss.opp):
+async def test_miss(opp):
     """Test missing the rate limit."""
 
     refresh_called = False
@@ -76,7 +76,7 @@ async def test_miss.opp):
     rate_limiter.async_remove()
 
 
-async def test_no_limit.opp):
+async def test_no_limit(opp):
     """Test async_schedule_action always return None when there is no rate limit."""
 
     refresh_called = False

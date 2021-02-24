@@ -14,7 +14,7 @@ ATTR_TOTAL_ENERGY_KWH = "total_energy_kwh"
 DEFAULT_NAME = "PCA 301"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the PCA switch platform."""
 
     if discovery_info is None:

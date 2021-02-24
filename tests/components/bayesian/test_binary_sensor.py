@@ -20,7 +20,7 @@ from openpeerpower.core import Context, callback
 from openpeerpower.setup import async_setup_component
 
 
-async def test_load_values_when_added_to.opp.opp):
+async def test_load_values_when_added_to(opp.opp):
     """Test that sensor initializes with observations of relevant entities."""
 
     config = {
@@ -44,7 +44,7 @@ async def test_load_values_when_added_to.opp.opp):
     opp.states.async_set("sensor.test_monitored", "off")
     await opp.async_block_till_done()
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test_binary")
@@ -52,7 +52,7 @@ async def test_load_values_when_added_to.opp.opp):
     assert state.attributes.get("observations")[0]["prob_given_false"] == 0.4
 
 
-async def test_unknown_state_does_not_influence_probability.opp):
+async def test_unknown_state_does_not_influence_probability(opp):
     """Test that an unknown state does not change the output probability."""
 
     config = {
@@ -76,14 +76,14 @@ async def test_unknown_state_does_not_influence_probability.opp):
     opp.states.async_set("sensor.test_monitored", STATE_UNKNOWN)
     await opp.async_block_till_done()
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.test_binary")
     assert state.attributes.get("observations") == []
 
 
-async def test_sensor_numeric_state.opp):
+async def test_sensor_numeric_state(opp):
     """Test sensor on numeric state platform observations."""
     config = {
         "binary_sensor": {
@@ -110,7 +110,7 @@ async def test_sensor_numeric_state.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", 4)
@@ -158,7 +158,7 @@ async def test_sensor_numeric_state.opp):
     assert state.state == "off"
 
 
-async def test_sensor_state.opp):
+async def test_sensor_state(opp):
     """Test sensor on state platform observations."""
     config = {
         "binary_sensor": {
@@ -178,7 +178,7 @@ async def test_sensor_state.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", "on")
@@ -215,7 +215,7 @@ async def test_sensor_state.opp):
     assert state.state == "off"
 
 
-async def test_sensor_value_template.opp):
+async def test_sensor_value_template(opp):
     """Test sensor on template platform observations."""
     config = {
         "binary_sensor": {
@@ -234,7 +234,7 @@ async def test_sensor_value_template.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", "on")
@@ -271,7 +271,7 @@ async def test_sensor_value_template.opp):
     assert state.state == "off"
 
 
-async def test_threshold.opp):
+async def test_threshold(opp):
     """Test sensor on probability threshold limits."""
     config = {
         "binary_sensor": {
@@ -290,7 +290,7 @@ async def test_threshold.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", "on")
@@ -302,7 +302,7 @@ async def test_threshold.opp):
     assert state.state == "on"
 
 
-async def test_multiple_observations.opp):
+async def test_multiple_observations(opp):
     """Test sensor with multiple observations of same entity."""
     config = {
         "binary_sensor": {
@@ -329,7 +329,7 @@ async def test_multiple_observations.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", "off")
@@ -369,7 +369,7 @@ async def test_multiple_observations.opp):
     assert state.state == "off"
 
 
-async def test_probability_updates.opp):
+async def test_probability_updates(opp):
     """Test probability update function."""
     prob_given_true = [0.3, 0.6, 0.8]
     prob_given_false = [0.7, 0.4, 0.2]
@@ -390,7 +390,7 @@ async def test_probability_updates.opp):
     assert round(abs(0.9130434782608695 - prior), 7) == 0
 
 
-async def test_observed_entities.opp):
+async def test_observed_entities(opp):
     """Test sensor on observed entities."""
     config = {
         "binary_sensor": {
@@ -415,7 +415,7 @@ async def test_observed_entities.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", "on")
@@ -443,7 +443,7 @@ async def test_observed_entities.opp):
     )
 
 
-async def test_state_attributes_are_serializable.opp):
+async def test_state_attributes_are_serializable(opp):
     """Test sensor on observed entities."""
     config = {
         "binary_sensor": {
@@ -468,7 +468,7 @@ async def test_state_attributes_are_serializable.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", "on")
@@ -517,7 +517,7 @@ async def test_template_error(opp, caplog):
         }
     }
 
-    await async_setup_component.opp, "binary_sensor", config)
+    await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
@@ -526,7 +526,7 @@ async def test_template_error(opp, caplog):
     assert "xyz" in caplog.text
 
 
-async def test_update_request_with_template.opp):
+async def test_update_request_with_template(opp):
     """Test sensor on template platform observations that gets an update request."""
     config = {
         "binary_sensor": {
@@ -545,8 +545,8 @@ async def test_update_request_with_template.opp):
         }
     }
 
-    await async_setup_component.opp, "binary_sensor", config)
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, "binary_sensor", config)
+    await async_setup_component(opp, OP_DOMAIN, {})
 
     await opp.async_block_till_done()
 
@@ -562,7 +562,7 @@ async def test_update_request_with_template.opp):
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
 
-async def test_update_request_without_template.opp):
+async def test_update_request_without_template(opp):
     """Test sensor on template platform observations that gets an update request."""
     config = {
         "binary_sensor": {
@@ -582,8 +582,8 @@ async def test_update_request_without_template.opp):
         }
     }
 
-    await async_setup_component.opp, "binary_sensor", config)
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, "binary_sensor", config)
+    await async_setup_component(opp, OP_DOMAIN, {})
 
     await opp.async_block_till_done()
 
@@ -602,7 +602,7 @@ async def test_update_request_without_template.opp):
     assert.opp.states.get("binary_sensor.test_binary").state == "off"
 
 
-async def test_monitored_sensor_goes_away.opp):
+async def test_monitored_sensor_goes_away(opp):
     """Test sensor on template platform observations that goes away."""
     config = {
         "binary_sensor": {
@@ -622,8 +622,8 @@ async def test_monitored_sensor_goes_away.opp):
         }
     }
 
-    await async_setup_component.opp, "binary_sensor", config)
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, "binary_sensor", config)
+    await async_setup_component(opp, OP_DOMAIN, {})
 
     await opp.async_block_till_done()
 
@@ -638,7 +638,7 @@ async def test_monitored_sensor_goes_away.opp):
     assert.opp.states.get("binary_sensor.test_binary").state == "on"
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload bayesian sensors."""
 
     config = {
@@ -659,7 +659,7 @@ async def test_reload.opp):
         }
     }
 
-    await async_setup_component.opp, "binary_sensor", config)
+    await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
@@ -690,7 +690,7 @@ def _get_fixtures_base_path():
     return path.dirname(path.dirname(path.dirname(__file__)))
 
 
-async def test_template_triggers.opp):
+async def test_template_triggers(opp):
     """Test sensor with template triggers."""
     opp.states.async_set("input_boolean.test", STATE_OFF)
     config = {
@@ -709,7 +709,7 @@ async def test_template_triggers.opp):
         }
     }
 
-    await async_setup_component.opp, "binary_sensor", config)
+    await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == STATE_OFF
@@ -727,7 +727,7 @@ async def test_template_triggers.opp):
     assert events[0].context == context
 
 
-async def test_state_triggers.opp):
+async def test_state_triggers(opp):
     """Test sensor with state triggers."""
     opp.states.async_set("sensor.test_monitored", STATE_OFF)
 
@@ -748,7 +748,7 @@ async def test_state_triggers.opp):
             "probability_threshold": 0.32,
         }
     }
-    await async_setup_component.opp, "binary_sensor", config)
+    await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     assert.opp.states.get("binary_sensor.test_binary").state == STATE_OFF

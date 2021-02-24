@@ -58,7 +58,7 @@ def modbus_setup(
             (CONF_COVER, CONF_COVERS),
         ):
             if conf_key in conf_hub:
-                load_platform.opp, component, DOMAIN, conf_hub, config)
+                load_platform(opp, component, DOMAIN, conf_hub, config)
 
     def stop_modbus(event):
         """Stop Modbus service."""

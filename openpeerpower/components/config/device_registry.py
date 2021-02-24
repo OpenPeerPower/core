@@ -39,9 +39,9 @@ async def async_setup_opp):
 
 
 @async_response
-async def websocket_list_devices.opp, connection, msg):
+async def websocket_list_devices(opp, connection, msg):
     """Handle list devices command."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
     connection.send_message(
         websocket_api.result_message(
             msg["id"], [_entry_dict(entry) for entry in registry.devices.values()]
@@ -51,9 +51,9 @@ async def websocket_list_devices.opp, connection, msg):
 
 @require_admin
 @async_response
-async def websocket_update_device.opp, connection, msg):
+async def websocket_update_device(opp, connection, msg):
     """Handle update area websocket command."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
 
     msg.pop("type")
     msg_id = msg.pop("id")

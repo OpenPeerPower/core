@@ -17,7 +17,7 @@ def async_register(
     register.async_register_info(system_health_info, "/config/cloud")
 
 
-async def system_health_info.opp):
+async def system_health_info(opp):
     """Get info for the info page."""
     cloud: Cloud = opp.data[DOMAIN]
     client: CloudClient = cloud.client

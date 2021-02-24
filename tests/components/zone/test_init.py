@@ -51,14 +51,14 @@ def storage_setup_opp, opp_storage):
             }
         if config is None:
             config = {}
-        return await setup.async_setup_component.opp, DOMAIN, config)
+        return await setup.async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
 
-async def test_setup_no_zones_still_adds_home_zone.opp):
+async def test_setup_no_zones_still_adds_home_zone(opp):
     """Test if no config is passed in we still get the home zone."""
-    assert await setup.async_setup_component.opp, zone.DOMAIN, {"zone": None})
+    assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": None})
     assert len.opp.states.async_entity_ids("zone")) == 1
     state = opp.states.get("zone.home")
     assert.opp.config.location_name == state.name
@@ -76,7 +76,7 @@ async def test_setup_opp):
         "radius": 250,
         "passive": True,
     }
-    assert await setup.async_setup_component.opp, zone.DOMAIN, {"zone": info})
+    assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": info})
 
     assert len.opp.states.async_entity_ids("zone")) == 2
     state = opp.states.get("zone.test_zone")
@@ -87,24 +87,24 @@ async def test_setup_opp):
     assert info["passive"] == state.attributes["passive"]
 
 
-async def test_setup_zone_skips_home_zone.opp):
+async def test_setup_zone_skips_home_zone(opp):
     """Test that zone named Home should override.opp home zone."""
     info = {"name": "Home", "latitude": 1.1, "longitude": -2.2}
-    assert await setup.async_setup_component.opp, zone.DOMAIN, {"zone": info})
+    assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": info})
 
     assert len.opp.states.async_entity_ids("zone")) == 1
     state = opp.states.get("zone.home")
     assert info["name"] == state.name
 
 
-async def test_setup_name_can_be_same_on_multiple_zones.opp):
+async def test_setup_name_can_be_same_on_multiple_zones(opp):
     """Test that zone named Home should override.opp home zone."""
     info = {"name": "Test Zone", "latitude": 1.1, "longitude": -2.2}
-    assert await setup.async_setup_component.opp, zone.DOMAIN, {"zone": [info, info]})
+    assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": [info, info]})
     assert len.opp.states.async_entity_ids("zone")) == 3
 
 
-async def test_active_zone_skips_passive_zones.opp):
+async def test_active_zone_skips_passive_zones(opp):
     """Test active and passive zones."""
     assert await setup.async_setup_component(
         opp,
@@ -122,7 +122,7 @@ async def test_active_zone_skips_passive_zones.opp):
         },
     )
     await opp.async_block_till_done()
-    active = zone.async_active_zone.opp, 32.880600, -117.237561)
+    active = zone.async_active_zone(opp, 32.880600, -117.237561)
     assert active is None
 
 
@@ -143,11 +143,11 @@ async def test_active_zone_skips_passive_zones_2.opp):
         },
     )
     await opp.async_block_till_done()
-    active = zone.async_active_zone.opp, 32.880700, -117.237561)
+    active = zone.async_active_zone(opp, 32.880700, -117.237561)
     assert "zone.active_zone" == active.entity_id
 
 
-async def test_active_zone_prefers_smaller_zone_if_same_distance.opp):
+async def test_active_zone_prefers_smaller_zone_if_same_distance(opp):
     """Test zone size preferences."""
     latitude = 32.880600
     longitude = -117.237561
@@ -172,7 +172,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance.opp):
         },
     )
 
-    active = zone.async_active_zone.opp, latitude, longitude)
+    active = zone.async_active_zone(opp, latitude, longitude)
     assert "zone.small_zone" == active.entity_id
 
 
@@ -195,11 +195,11 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance_2.opp):
         },
     )
 
-    active = zone.async_active_zone.opp, latitude, longitude)
+    active = zone.async_active_zone(opp, latitude, longitude)
     assert "zone.smallest_zone" == active.entity_id
 
 
-async def test_in_zone_works_for_passive_zones.opp):
+async def test_in_zone_works_for_passive_zones(opp):
     """Test working in passive zones."""
     latitude = 32.880600
     longitude = -117.237561
@@ -219,12 +219,12 @@ async def test_in_zone_works_for_passive_zones.opp):
         },
     )
 
-    assert zone.in_zone.opp.states.get("zone.passive_zone"), latitude, longitude)
+    assert zone.in_zone(opp.states.get("zone.passive_zone"), latitude, longitude)
 
 
-async def test_core_config_update.opp):
+async def test_core_config_update(opp):
     """Test updating core config will update home zone."""
-    assert await setup.async_setup_component.opp, "zone", {})
+    assert await setup.async_setup_component(opp, "zone", {})
 
     home = opp.states.get("zone.home")
 
@@ -241,10 +241,10 @@ async def test_core_config_update.opp):
     assert home_updated.attributes["longitude"] == 20
 
 
-async def test_reload.opp, opp_admin_user, opp_read_only_user):
+async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     assert await setup.async_setup_component(
         opp,
@@ -287,13 +287,13 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
-                context=Context(user_id.opp_read_only_user.id),
+                context=Context(user_id(opp_read_only_user.id),
             )
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id(opp_admin_user.id),
         )
         await opp.async_block_till_done()
 
@@ -312,7 +312,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     assert state_3.attributes["longitude"] == 6
 
 
-async def test_load_from_storage.opp, storage_setup):
+async def test_load_from_storage(opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
     state = opp.states.get(f"{DOMAIN}.from_storage")
@@ -321,7 +321,7 @@ async def test_load_from_storage.opp, storage_setup):
     assert state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_editable_state_attribute.opp, storage_setup):
+async def test_editable_state_attribute(opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(
         config={DOMAIN: [{"name": "yaml option", "latitude": 3, "longitude": 4}]}
@@ -337,13 +337,13 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert not state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(
         config={DOMAIN: [{"name": "yaml option", "latitude": 3, "longitude": 4}]}
     )
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -359,19 +359,19 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -384,7 +384,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update.opp, opp_ws_client, storage_setup):
+async def test_update(opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     items = [
@@ -401,14 +401,14 @@ async def test_update.opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes["latitude"] == 1
     assert state.attributes["longitude"] == 2
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -429,19 +429,19 @@ async def test_update.opp, opp_ws_client, storage_setup):
     assert state.attributes["passive"] is True
 
 
-async def test_ws_create.opp, opp_ws_client, storage_setup):
+async def test_ws_create(opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 
     input_id = "new_input"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -463,7 +463,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup):
     assert state.attributes["passive"] is True
 
 
-async def test_import_config_entry.opp):
+async def test_import_config_entry(opp):
     """Test we import config entry and then delete it."""
     entry = MockConfigEntry(
         domain="zone",
@@ -476,8 +476,8 @@ async def test_import_config_entry.opp):
             "icon": "mdi:from-config-entry",
         },
     )
-    entry.add_to.opp.opp)
-    assert await setup.async_setup_component.opp, DOMAIN, {})
+    entry.add_to(opp.opp)
+    assert await setup.async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
     assert len.opp.config_entries.async_entries()) == 0
 
@@ -492,14 +492,14 @@ async def test_import_config_entry.opp):
 
 async def test_zone_empty_setup_opp):
     """Set up zone with empty config."""
-    assert await setup.async_setup_component.opp, DOMAIN, {"zone": {}})
+    assert await setup.async_setup_component(opp, DOMAIN, {"zone": {}})
 
 
-async def test_unavailable_zone.opp):
+async def test_unavailable_zone(opp):
     """Test active zone with unavailable zones."""
-    assert await setup.async_setup_component.opp, DOMAIN, {"zone": {}})
+    assert await setup.async_setup_component(opp, DOMAIN, {"zone": {}})
     opp.states.async_set("zone.bla", "unavailable", {"restored": True})
 
-    assert zone.async_active_zone.opp, 0.0, 0.01) is None
+    assert zone.async_active_zone(opp, 0.0, 0.01) is None
 
-    assert zone.in_zone.opp.states.get("zone.bla"), 0, 0) is False
+    assert zone.in_zone(opp.states.get("zone.bla"), 0, 0) is False

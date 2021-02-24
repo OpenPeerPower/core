@@ -42,7 +42,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 ATTR_DISPLAYTIME = "displaytime"
 
 
-async def async_get_service.opp, config, discovery_info=None):
+async def async_get_service(opp, config, discovery_info=None):
     """Return the notify service."""
     url = f"{config.get(CONF_HOST)}:{config.get(CONF_PORT)}"
 
@@ -79,7 +79,7 @@ class KodiNotificationService(BaseNotificationService):
         """Initialize the service."""
         self._url = url
 
-        kwargs = {"timeout": DEFAULT_TIMEOUT, "session": async_get_clientsession.opp)}
+        kwargs = {"timeout": DEFAULT_TIMEOUT, "session": async_get_clientsession(opp)}
 
         if auth is not None:
             kwargs["auth"] = auth

@@ -55,7 +55,7 @@ def setup(opp, base_config):
     opp.data[DOMAIN] = WaterFurnaceData.opp, wfconn)
     opp.data[DOMAIN].start()
 
-    discovery.load_platform.opp, "sensor", DOMAIN, {}, config)
+    discovery.load_platform(opp, "sensor", DOMAIN, {}, config)
     return True
 
 

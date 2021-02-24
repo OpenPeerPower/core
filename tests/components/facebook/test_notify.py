@@ -12,7 +12,7 @@ def facebook():
     return fb.FacebookNotificationService(access_token)
 
 
-async def test_send_simple_message.opp, facebook):
+async def test_send_simple_message(opp, facebook):
     """Test sending a simple message with success."""
     with requests_mock.Mocker() as mock:
         mock.register_uri(requests_mock.POST, fb.BASE_URL, status_code=200)
@@ -36,7 +36,7 @@ async def test_send_simple_message.opp, facebook):
         assert mock.last_request.qs == expected_params
 
 
-async def test_send_multiple_message.opp, facebook):
+async def test_send_multiple_message(opp, facebook):
     """Test sending a message to multiple targets."""
     with requests_mock.Mocker() as mock:
         mock.register_uri(requests_mock.POST, fb.BASE_URL, status_code=200)
@@ -62,7 +62,7 @@ async def test_send_multiple_message.opp, facebook):
             assert request.qs == expected_params
 
 
-async def test_send_message_attachment.opp, facebook):
+async def test_send_message_attachment(opp, facebook):
     """Test sending a message with a remote attachment."""
     with requests_mock.Mocker() as mock:
         mock.register_uri(requests_mock.POST, fb.BASE_URL, status_code=200)
@@ -91,7 +91,7 @@ async def test_send_message_attachment.opp, facebook):
         expected_params = {"access_token": ["page-access-token"]}
         assert mock.last_request.qs == expected_params
 
-    async def test_send_targetless_message.opp, facebook):
+    async def test_send_targetless_message(opp, facebook):
         """Test sending a message without a target."""
         with requests_mock.Mocker() as mock:
             mock.register_uri(requests_mock.POST, fb.BASE_URL, status_code=200)

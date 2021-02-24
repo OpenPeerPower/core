@@ -7,7 +7,7 @@ from openpeerpower.helpers import config_entry_flow
 from .const import DOMAIN
 
 
-async def _async_has_devices.opp):
+async def _async_has_devices(opp):
     """Return if there are devices that can be discovered."""
     return await opp.async_add_executor_job(pysonos.discover)
 

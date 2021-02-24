@@ -5,7 +5,7 @@ from . import BleBoxEntity, create_blebox_entities
 from .const import BLEBOX_TO_OPP_DEVICE_CLASSES
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a BleBox switch entity."""
     create_blebox_entities(
         opp. config_entry, async_add_entities, BleBoxSwitchEntity, "switches"

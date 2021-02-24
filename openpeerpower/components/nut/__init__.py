@@ -44,7 +44,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Network UPS Tools (NUT) from a config entry."""
 
     config = entry.data
@@ -109,7 +109,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 
@@ -173,7 +173,7 @@ def find_resources_in_config_entry(config_entry):
     return config_entry.data[CONF_RESOURCES]
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

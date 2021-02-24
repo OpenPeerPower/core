@@ -60,10 +60,10 @@ async def test_registering_view_while_running(
     opp.http.register_view(TestView)
 
 
-async def test_not_log_password.opp, aiohttp_client, caplog, legacy_auth):
+async def test_not_log_password(opp, aiohttp_client, caplog, legacy_auth):
     """Test access with password doesn't get logged."""
-    assert await async_setup_component.opp, "api", {"http": {}})
-    client = await aiohttp_client.opp.http.app)
+    assert await async_setup_component(opp, "api", {"http": {}})
+    client = await aiohttp_client(opp.http.app)
     logging.getLogger("aiohttp.access").setLevel(logging.INFO)
 
     resp = await client.get("/api/", params={"api_password": "test-password"})
@@ -93,7 +93,7 @@ async def test_proxy_config(opp):
     )
 
 
-async def test_proxy_config_only_use_xff.opp):
+async def test_proxy_config_only_use_xff(opp):
     """Test use_x_forwarded_for must config together with trusted_proxies."""
     assert (
         await async_setup_component(
@@ -103,7 +103,7 @@ async def test_proxy_config_only_use_xff.opp):
     )
 
 
-async def test_proxy_config_only_trust_proxies.opp):
+async def test_proxy_config_only_trust_proxies(opp):
     """Test use_x_forwarded_for must config together with trusted_proxies."""
     assert (
         await async_setup_component(
@@ -113,9 +113,9 @@ async def test_proxy_config_only_trust_proxies.opp):
     )
 
 
-async def test_ssl_profile_defaults_modern.opp):
+async def test_ssl_profile_defaults_modern(opp):
     """Test default ssl profile."""
-    assert await async_setup_component.opp, "http", {}) is True
+    assert await async_setup_component(opp, "http", {}) is True
 
     opp.http.ssl_certificate = "bla"
 
@@ -129,7 +129,7 @@ async def test_ssl_profile_defaults_modern.opp):
     assert len(mock_context.mock_calls) == 1
 
 
-async def test_ssl_profile_change_intermediate.opp):
+async def test_ssl_profile_change_intermediate(opp):
     """Test setting ssl profile to intermediate."""
     assert (
         await async_setup_component(
@@ -150,10 +150,10 @@ async def test_ssl_profile_change_intermediate.opp):
     assert len(mock_context.mock_calls) == 1
 
 
-async def test_ssl_profile_change_modern.opp):
+async def test_ssl_profile_change_modern(opp):
     """Test setting ssl profile to modern."""
     assert (
-        await async_setup_component.opp, "http", {"http": {"ssl_profile": "modern"}})
+        await async_setup_component(opp, "http", {"http": {"ssl_profile": "modern"}})
         is True
     )
 
@@ -169,10 +169,10 @@ async def test_ssl_profile_change_modern.opp):
     assert len(mock_context.mock_calls) == 1
 
 
-async def test_cors_defaults.opp):
+async def test_cors_defaults(opp):
     """Test the CORS default settings."""
     with patch("openpeerpower.components.http.setup_cors") as mock_setup:
-        assert await async_setup_component.opp, "http", {})
+        assert await async_setup_component(opp, "http", {})
 
     assert len(mock_setup.mock_calls) == 1
     assert mock_setup.mock_calls[0][1][1] == [
@@ -189,7 +189,7 @@ async def test_storing_config(opp, aiohttp_client, aiohttp_unused_port):
         "trusted_proxies": ["192.168.1.100"],
     }
 
-    assert await async_setup_component.opp, http.DOMAIN, {http.DOMAIN: config})
+    assert await async_setup_component(opp, http.DOMAIN, {http.DOMAIN: config})
 
     await opp.async_start()
     restored = await opp.components.http.async_get_last_config()

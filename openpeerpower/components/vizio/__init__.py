@@ -54,7 +54,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Load the saved entities."""
 
     opp.data.setdefault(DOMAIN, {})

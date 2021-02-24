@@ -22,7 +22,7 @@ from .sensor import Battery
 STRICT_MATCH = functools.partial(ZOP_ENTITIES.strict_match, DOMAIN)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation device tracker from config entry."""
     entities_to_create = opp.data[DATA_ZHA][DOMAIN]
 

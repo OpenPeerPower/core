@@ -21,10 +21,10 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up BSB-Lan from a config entry."""
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     bsblan = BSBLan(
         entry.data[CONF_HOST],
         passkey=entry.data[CONF_PASSKEY],
@@ -49,7 +49,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload BSBLan config entry."""
 
     await opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)

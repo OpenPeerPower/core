@@ -104,13 +104,13 @@ def setup(opp, config):
         gateway = call.data.get(ATTR_GW_MAC)
         gateway.write_to_hub(gateway.sid, remove_device=device_id)
 
-    gateway_only_schema = _add_gateway_to_schema.opp, vol.Schema({}))
+    gateway_only_schema = _add_gateway_to_schema(opp, vol.Schema({}))
 
     opp.services.register(
         DOMAIN,
         SERVICE_PLAY_RINGTONE,
         play_ringtone_service,
-        schema=_add_gateway_to_schema.opp, SERVICE_SCHEMA_PLAY_RINGTONE),
+        schema=_add_gateway_to_schema(opp, SERVICE_SCHEMA_PLAY_RINGTONE),
     )
 
     opp.services.register(
@@ -125,7 +125,7 @@ def setup(opp, config):
         DOMAIN,
         SERVICE_REMOVE_DEVICE,
         remove_device_service,
-        schema=_add_gateway_to_schema.opp, SERVICE_SCHEMA_REMOVE_DEVICE),
+        schema=_add_gateway_to_schema(opp, SERVICE_SCHEMA_REMOVE_DEVICE),
     )
 
     return True
@@ -174,7 +174,7 @@ async def async_setup_entry(
         entry.data[CONF_HOST],
     )
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, entry.unique_id)},
@@ -376,7 +376,7 @@ class XiaomiDevice(Entity):
         raise NotImplementedError()
 
 
-def _add_gateway_to_schema.opp, schema):
+def _add_gateway_to_schema(opp, schema):
     """Extend a voluptuous schema with a gateway validator."""
 
     def gateway(sid):

@@ -23,7 +23,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for device."""
     triggers = []
     triggers.append(
@@ -45,7 +45,7 @@ async def async_attach_trigger(
     automation_info: dict,
 ) -> Optional[CALLBACK_TYPE]:
     """Attach a trigger."""
-    registry: DeviceRegistry = await async_get_registry.opp)
+    registry: DeviceRegistry = await async_get_registry(opp)
     if config[CONF_TYPE] == TRIGGER_TYPE_TURN_ON:
         variables = {
             "trigger": {

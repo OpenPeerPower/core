@@ -33,7 +33,7 @@ from .errors import AuthenticationRequired, CannotConnect
 
 
 @callback
-def get_gateway_from_config_entry.opp, config_entry):
+def get_gateway_from_config_entry(opp, config_entry):
     """Return gateway with a matching bridge id."""
     return.opp.data[DECONZ_DOMAIN][config_entry.unique_id]
 
@@ -200,13 +200,13 @@ class DeconzGateway:
         return True
 
     @staticmethod
-    async def async_config_entry_updated.opp, entry) -> None:
+    async def async_config_entry_updated(opp, entry) -> None:
         """Handle signals of config entry being updated.
 
         This is a static method because a class method (bound method), can not be used with weak references.
         Causes for this is either discovery updating host address or config entry options changing.
         """
-        gateway = get_gateway_from_config_entry.opp, entry)
+        gateway = get_gateway_from_config_entry(opp, entry)
 
         if gateway.api.host != gateway.host:
             gateway.api.close()
@@ -278,7 +278,7 @@ async def get_gateway(
     opp. config, async_add_device_callback, async_connection_status_callback
 ) -> DeconzSession:
     """Create a gateway object and verify configuration."""
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     deconz = DeconzSession(
         session,

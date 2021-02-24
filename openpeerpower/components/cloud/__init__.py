@@ -110,22 +110,22 @@ class CloudNotAvailable(OpenPeerPowerError):
 
 @bind.opp
 @callback
-def async_is_logged_in.opp) -> bool:
+def async_is_logged_in(opp) -> bool:
     """Test if user is logged in."""
     return DOMAIN in.opp.data and.opp.data[DOMAIN].is_logged_in
 
 
 @bind.opp
 @callback
-def async_active_subscription.opp) -> bool:
+def async_active_subscription(opp) -> bool:
     """Test if user has an active subscription."""
-    return async_is_logged_in.opp) and not.opp.data[DOMAIN].subscription_expired
+    return async_is_logged_in(opp) and not.opp.data[DOMAIN].subscription_expired
 
 
 @bind.opp
-async def async_create_cloudhook.opp, webhook_id: str) -> str:
+async def async_create_cloudhook(opp, webhook_id: str) -> str:
     """Create a cloudhook."""
-    if not async_is_logged_in.opp):
+    if not async_is_logged_in(opp):
         raise CloudNotAvailable
 
     hook = await opp.data[DOMAIN].cloudhooks.async_create(webhook_id, True)
@@ -133,7 +133,7 @@ async def async_create_cloudhook.opp, webhook_id: str) -> str:
 
 
 @bind.opp
-async def async_delete_cloudhook.opp, webhook_id: str) -> None:
+async def async_delete_cloudhook(opp, webhook_id: str) -> None:
     """Delete a cloudhook."""
     if DOMAIN not in.opp.data:
         raise CloudNotAvailable
@@ -143,9 +143,9 @@ async def async_delete_cloudhook.opp, webhook_id: str) -> None:
 
 @bind.opp
 @callback
-def async_remote_ui_url.opp) -> str:
+def async_remote_ui_url(opp) -> str:
     """Get the remote UI URL."""
-    if not async_is_logged_in.opp):
+    if not async_is_logged_in(opp):
         raise CloudNotAvailable
 
     if not.opp.data[DOMAIN].client.prefs.remote_enabled:

@@ -35,7 +35,7 @@ def _get_alarm_state(area):
     return mode_to_state.get(area.mode)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the SPC alarm control panel platform."""
     if discovery_info is None:
         return

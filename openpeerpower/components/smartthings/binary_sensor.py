@@ -41,7 +41,7 @@ ATTRIB_TO_CLASS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add binary sensors for a config entry."""
     broker = opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id]
     sensors = []

@@ -80,7 +80,7 @@ class HomeAirQualitySensor(HomeKitEntity, AirQualityEntity):
         return data
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Homekit air quality sensor."""
     hkid = config_entry.data["AccessoryPairingID"]
     conn = opp.data[KNOWN_DEVICES][hkid]

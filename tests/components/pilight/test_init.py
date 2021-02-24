@@ -90,10 +90,10 @@ async def test_connection_timeout_error(mock_error, opp):
 
 
 @patch("pilight.pilight.Client", PilightDaemonSim)
-async def test_send_code_no_protocol.opp):
+async def test_send_code_no_protocol(opp):
     """Try to send data without protocol information, should give error."""
     with assert_setup_component(4):
-        assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
+        assert await async_setup_component(opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
 
         # Call without protocol info, should raise an error
         try:
@@ -114,7 +114,7 @@ async def test_send_code_no_protocol.opp):
 async def test_send_code(mock_pilight_error, opp):
     """Try to send proper data."""
     with assert_setup_component(4):
-        assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
+        assert await async_setup_component(opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
 
         # Call with protocol info, should not give error
         service_data = {"protocol": "test", "value": 42}
@@ -183,13 +183,13 @@ async def test_send_code_delay(mock_pilight_error, opp):
         service_data1["protocol"] = [service_data1["protocol"]]
         service_data2["protocol"] = [service_data2["protocol"]]
 
-        async_fire_time_changed.opp, dt_util.utcnow())
+        async_fire_time_changed(opp, dt_util.utcnow())
         await opp.async_block_till_done()
         error_log_call = mock_pilight_error.call_args_list[-1]
         assert str(service_data1) in str(error_log_call)
 
         new_time = dt_util.utcnow() + timedelta(seconds=5)
-        async_fire_time_changed.opp, new_time)
+        async_fire_time_changed(opp, new_time)
         await opp.async_block_till_done()
         error_log_call = mock_pilight_error.call_args_list[-1]
         assert str(service_data2) in str(error_log_call)
@@ -201,7 +201,7 @@ async def test_send_code_delay(mock_pilight_error, opp):
 async def test_start_stop(mock_pilight_error, opp):
     """Check correct startup and stop of pilight daemon."""
     with assert_setup_component(4):
-        assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
+        assert await async_setup_component(opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
 
         # Test startup
         await opp.async_start()
@@ -224,7 +224,7 @@ async def test_start_stop(mock_pilight_error, opp):
 async def test_receive_code(mock_debug, opp):
     """Check if code receiving via pilight daemon works."""
     with assert_setup_component(4):
-        assert await async_setup_component.opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
+        assert await async_setup_component(opp, pilight.DOMAIN, {pilight.DOMAIN: {}})
 
         # Test startup
         await opp.async_start()
@@ -363,7 +363,7 @@ async def test_whitelist_no_match(mock_debug, opp):
         assert not ("Event pilight_received" in debug_log_call)
 
 
-async def test_call_rate_delay_throttle_enabled.opp):
+async def test_call_rate_delay_throttle_enabled(opp):
     """Test that throttling actually work."""
     runs = []
     delay = 5.0
@@ -382,12 +382,12 @@ async def test_call_rate_delay_throttle_enabled.opp):
     for i in range(3):
         exp.append(i)
         shifted_time = now + (timedelta(seconds=delay + 0.1) * i)
-        async_fire_time_changed.opp, shifted_time)
+        async_fire_time_changed(opp, shifted_time)
         await opp.async_block_till_done()
         assert runs == exp
 
 
-def test_call_rate_delay_throttle_disabled.opp):
+def test_call_rate_delay_throttle_disabled(opp):
     """Test that the limiter is a noop if no delay set."""
     runs = []
 

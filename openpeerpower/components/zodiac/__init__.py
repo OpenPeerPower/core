@@ -14,6 +14,6 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup_opp: OpenPeerPower, config: dict):
     """Set up the zodiac component."""
-    opp.async_create_task(async_load_platform.opp, "sensor", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, "sensor", DOMAIN, {}, config))
 
     return True

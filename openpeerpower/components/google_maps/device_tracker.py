@@ -38,7 +38,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_scanner.opp, config: ConfigType, see, discovery_info=None):
+def setup_scanner(opp, config: ConfigType, see, discovery_info=None):
     """Set up the Google Maps Location sharing scanner."""
     scanner = GoogleMapsScanner.opp, config, see)
     return scanner.success_init
@@ -60,7 +60,7 @@ class GoogleMapsScanner:
             self.service = Service(credfile, self.username)
             self._update_info()
 
-            track_time_interval.opp, self._update_info, self.scan_interval)
+            track_time_interval(opp, self._update_info, self.scan_interval)
 
             self.success_init = True
 

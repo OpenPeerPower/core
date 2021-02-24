@@ -81,7 +81,7 @@ def setup(opp, config):
 
     opp.data[DOMAIN] = {"channels": channels, "client": qvrpro}
 
-    load_platform.opp, CAMERA_DOMAIN, DOMAIN, {}, config)
+    load_platform(opp, CAMERA_DOMAIN, DOMAIN, {}, config)
 
     # Register services
     def handle_start_record(call):

@@ -180,7 +180,7 @@ async def async_setup(opp, config):
         camera = opp.components.camera
 
         try:
-            image = await camera.async_get_image.opp, camera_entity)
+            image = await camera.async_get_image(opp, camera_entity)
 
             await face.call_api(
                 "post",
@@ -246,7 +246,7 @@ class MicrosoftFace:
     def __init__(self, opp, server_loc, api_key, timeout, entities):
         """Initialize Microsoft Face api."""
         self.opp = opp
-        self.websession = async_get_clientsession.opp)
+        self.websession = async_get_clientsession(opp)
         self.timeout = timeout
         self._api_key = api_key
         self._server_url = f"https://{server_loc}.{FACE_API_URL}"

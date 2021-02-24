@@ -32,7 +32,7 @@ SENSORS = [
 ]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the MyChevy sensors."""
     if discovery_info is None:
         return

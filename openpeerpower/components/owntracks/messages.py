@@ -179,7 +179,7 @@ def encrypt_message(secret, topic, message):
 
 
 @HANDLERS.register("location")
-async def async_handle_location_message.opp, context, message):
+async def async_handle_location_message(opp, context, message):
     """Handle a location message."""
     if not context.async_valid_accuracy(message):
         return
@@ -197,10 +197,10 @@ async def async_handle_location_message.opp, context, message):
         return
 
     context.async_see(**kwargs)
-    context.async_see_beacons.opp, dev_id, kwargs)
+    context.async_see_beacons(opp, dev_id, kwargs)
 
 
-async def _async_transition_message_enter.opp, context, message, location):
+async def _async_transition_message_enter(opp, context, message, location):
     """Execute enter event."""
     zone = opp.states.get(f"zone.{slugify(location)}")
     dev_id, kwargs = _parse_see_args(message, context.mqtt_topic)
@@ -214,7 +214,7 @@ async def _async_transition_message_enter.opp, context, message, location):
         if location not in beacons:
             beacons.add(location)
         _LOGGER.info("Added beacon %s", location)
-        context.async_see_beacons.opp, dev_id, kwargs)
+        context.async_see_beacons(opp, dev_id, kwargs)
     else:
         # Normal region
         regions = context.regions_entered[dev_id]
@@ -223,10 +223,10 @@ async def _async_transition_message_enter.opp, context, message, location):
         _LOGGER.info("Enter region %s", location)
         _set_gps_from_zone(kwargs, location, zone)
         context.async_see(**kwargs)
-        context.async_see_beacons.opp, dev_id, kwargs)
+        context.async_see_beacons(opp, dev_id, kwargs)
 
 
-async def _async_transition_message_leave.opp, context, message, location):
+async def _async_transition_message_leave(opp, context, message, location):
     """Execute leave event."""
     dev_id, kwargs = _parse_see_args(message, context.mqtt_topic)
     regions = context.regions_entered[dev_id]
@@ -238,7 +238,7 @@ async def _async_transition_message_leave.opp, context, message, location):
     if location in beacons:
         beacons.remove(location)
         _LOGGER.info("Remove beacon %s", location)
-        context.async_see_beacons.opp, dev_id, kwargs)
+        context.async_see_beacons(opp, dev_id, kwargs)
     else:
         new_region = regions[-1] if regions else None
         if new_region:
@@ -247,7 +247,7 @@ async def _async_transition_message_leave.opp, context, message, location):
             _set_gps_from_zone(kwargs, new_region, zone)
             _LOGGER.info("Exit to %s", new_region)
             context.async_see(**kwargs)
-            context.async_see_beacons.opp, dev_id, kwargs)
+            context.async_see_beacons(opp, dev_id, kwargs)
             return
 
         _LOGGER.info("Exit to GPS")
@@ -255,11 +255,11 @@ async def _async_transition_message_leave.opp, context, message, location):
         # Check for GPS accuracy
         if context.async_valid_accuracy(message):
             context.async_see(**kwargs)
-            context.async_see_beacons.opp, dev_id, kwargs)
+            context.async_see_beacons(opp, dev_id, kwargs)
 
 
 @HANDLERS.register("transition")
-async def async_handle_transition_message.opp, context, message):
+async def async_handle_transition_message(opp, context, message):
     """Handle a transition message."""
     if message.get("desc") is None:
         _LOGGER.error(
@@ -280,16 +280,16 @@ async def async_handle_transition_message.opp, context, message):
         location = STATE_HOME
 
     if message["event"] == "enter":
-        await _async_transition_message_enter.opp, context, message, location)
+        await _async_transition_message_enter(opp, context, message, location)
     elif message["event"] == "leave":
-        await _async_transition_message_leave.opp, context, message, location)
+        await _async_transition_message_leave(opp, context, message, location)
     else:
         _LOGGER.error(
             "Misformatted mqtt msgs, _type=transition, event=%s", message["event"]
         )
 
 
-async def async_handle_waypoint.opp, name_base, waypoint):
+async def async_handle_waypoint(opp, name_base, waypoint):
     """Handle a waypoint."""
     name = waypoint["desc"]
     pretty_name = f"{name_base} - {name}"
@@ -321,7 +321,7 @@ async def async_handle_waypoint.opp, name_base, waypoint):
 
 @HANDLERS.register("waypoint")
 @HANDLERS.register("waypoints")
-async def async_handle_waypoints_message.opp, context, message):
+async def async_handle_waypoints_message(opp, context, message):
     """Handle a waypoints message."""
     if not context.import_waypoints:
         return
@@ -342,11 +342,11 @@ async def async_handle_waypoints_message.opp, context, message):
     name_base = " ".join(_parse_topic(message["topic"], context.mqtt_topic))
 
     for wayp in wayps:
-        await async_handle_waypoint.opp, name_base, wayp)
+        await async_handle_waypoint(opp, name_base, wayp)
 
 
 @HANDLERS.register("encrypted")
-async def async_handle_encrypted_message.opp, context, message):
+async def async_handle_encrypted_message(opp, context, message):
     """Handle an encrypted message."""
     if "topic" not in message and isinstance(context.secret, dict):
         _LOGGER.error("You cannot set per topic secrets when using HTTP")
@@ -363,7 +363,7 @@ async def async_handle_encrypted_message.opp, context, message):
     if "topic" in message and "topic" not in decrypted:
         decrypted["topic"] = message["topic"]
 
-    await async_handle_message.opp, context, decrypted)
+    await async_handle_message(opp, context, decrypted)
 
 
 @HANDLERS.register("lwt")
@@ -372,17 +372,17 @@ async def async_handle_encrypted_message.opp, context, message):
 @HANDLERS.register("cmd")
 @HANDLERS.register("steps")
 @HANDLERS.register("card")
-async def async_handle_not_impl_msg.opp, context, message):
+async def async_handle_not_impl_msg(opp, context, message):
     """Handle valid but not implemented message types."""
     _LOGGER.debug("Not handling %s message: %s", message.get("_type"), message)
 
 
-async def async_handle_unsupported_msg.opp, context, message):
+async def async_handle_unsupported_msg(opp, context, message):
     """Handle an unsupported or invalid message type."""
     _LOGGER.warning("Received unsupported message type: %s", message.get("_type"))
 
 
-async def async_handle_message.opp, context, message):
+async def async_handle_message(opp, context, message):
     """Handle an OwnTracks message."""
     msgtype = message.get("_type")
 

@@ -7,9 +7,9 @@ from openpeerpower.config_entries import ENTRY_STATE_LOADED
 from tests.components.plugwise.common import async_init_integration
 
 
-async def test_adam_climate_switch_entities.opp, mock_smile_adam):
+async def test_adam_climate_switch_entities(opp, mock_smile_adam):
     """Test creation of climate related switch entities."""
-    entry = await async_init_integration.opp, mock_smile_adam)
+    entry = await async_init_integration(opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("switch.cv_pomp")
@@ -19,10 +19,10 @@ async def test_adam_climate_switch_entities.opp, mock_smile_adam):
     assert str(state.state) == "on"
 
 
-async def test_adam_climate_switch_negative_testing.opp, mock_smile_adam):
+async def test_adam_climate_switch_negative_testing(opp, mock_smile_adam):
     """Test exceptions of climate related switch entities."""
     mock_smile_adam.set_relay_state.side_effect = PlugwiseException
-    entry = await async_init_integration.opp, mock_smile_adam)
+    entry = await async_init_integration(opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.services.async_call(
@@ -44,9 +44,9 @@ async def test_adam_climate_switch_negative_testing.opp, mock_smile_adam):
     assert str(state.state) == "on"
 
 
-async def test_adam_climate_switch_changes.opp, mock_smile_adam):
+async def test_adam_climate_switch_changes(opp, mock_smile_adam):
     """Test changing of climate related switch entities."""
-    entry = await async_init_integration.opp, mock_smile_adam)
+    entry = await async_init_integration(opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.services.async_call(
@@ -77,9 +77,9 @@ async def test_adam_climate_switch_changes.opp, mock_smile_adam):
     assert str(state.state) == "on"
 
 
-async def test_stretch_switch_entities.opp, mock_stretch):
+async def test_stretch_switch_entities(opp, mock_stretch):
     """Test creation of climate related switch entities."""
-    entry = await async_init_integration.opp, mock_stretch)
+    entry = await async_init_integration(opp, mock_stretch)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("switch.koelkast_92c4a")
@@ -89,9 +89,9 @@ async def test_stretch_switch_entities.opp, mock_stretch):
     assert str(state.state) == "on"
 
 
-async def test_stretch_switch_changes.opp, mock_stretch):
+async def test_stretch_switch_changes(opp, mock_stretch):
     """Test changing of power related switch entities."""
-    entry = await async_init_integration.opp, mock_stretch)
+    entry = await async_init_integration(opp, mock_stretch)
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.services.async_call(

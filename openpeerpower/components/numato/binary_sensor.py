@@ -24,14 +24,14 @@ _LOGGER = logging.getLogger(__name__)
 NUMATO_SIGNAL = "numato_signal_{}_{}"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the configured Numato USB GPIO binary sensor ports."""
     if discovery_info is None:
         return
 
     def read_gpio(device_id, port, level):
         """Send signal to entity to have it update state."""
-        dispatcher_send.opp, NUMATO_SIGNAL.format(device_id, port), level)
+        dispatcher_send(opp, NUMATO_SIGNAL.format(device_id, port), level)
 
     api = opp.data[DOMAIN][DATA_API]
     binary_sensors = []

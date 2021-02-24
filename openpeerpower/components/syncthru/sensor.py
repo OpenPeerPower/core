@@ -37,7 +37,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the SyncThru component."""
     _LOGGER.warning(
         "Loading syncthru via platform config is deprecated and no longer "
@@ -56,7 +56,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     return True
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up from config entry."""
 
     printer = opp.data[DOMAIN][config_entry.entry_id]

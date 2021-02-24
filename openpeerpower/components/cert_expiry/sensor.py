@@ -28,13 +28,13 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up certificate expiry sensor."""
 
     @callback
     def schedule_import(_):
         """Schedule delayed import after HA is fully started."""
-        async_call_later.opp, 10, do_import)
+        async_call_later(opp, 10, do_import)
 
     @callback
     def do_import(_):
@@ -48,7 +48,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, schedule_import)
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Add cert-expiry entry."""
     coordinator = opp.data[DOMAIN][entry.entry_id]
 

@@ -26,7 +26,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the PiFace Digital Input devices."""
     binary_sensors = []
     ports = config.get(CONF_PORTS)
@@ -40,7 +40,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         )
     add_entities(binary_sensors, True)
 
-    rpi_pfio.activate_listener.opp)
+    rpi_pfio.activate_listener(opp)
 
 
 class RPiPFIOBinarySensor(BinarySensorEntity):
@@ -58,7 +58,7 @@ class RPiPFIOBinarySensor(BinarySensorEntity):
             self._state = rpi_pfio.read_input(self._port)
             self.schedule_update_op_state()
 
-        rpi_pfio.edge_detect.opp, self._port, read_pfio, settle_time)
+        rpi_pfio.edge_detect(opp, self._port, read_pfio, settle_time)
 
     @property
     def should_poll(self):

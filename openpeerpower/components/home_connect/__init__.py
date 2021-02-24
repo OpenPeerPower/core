@@ -57,7 +57,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Home Connect from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
@@ -69,7 +69,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     opp.data[DOMAIN][entry.entry_id] = hc_api
 
-    await update_all_devices.opp, entry)
+    await update_all_devices(opp, entry)
 
     for component in PLATFORMS:
         opp.async_create_task(
@@ -79,7 +79,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -96,7 +96,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 
 @Throttle(SCAN_INTERVAL)
-async def update_all_devices.opp, entry):
+async def update_all_devices(opp, entry):
     """Update all the devices."""
     data = opp.data[DOMAIN]
     hc_api = data[entry.entry_id]

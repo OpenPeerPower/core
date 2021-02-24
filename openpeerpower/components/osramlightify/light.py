@@ -68,7 +68,7 @@ DEFAULT_BRIGHTNESS = 2
 DEFAULT_KELVIN = 2700
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Osram Lightify lights."""
     host = config[CONF_HOST]
     try:

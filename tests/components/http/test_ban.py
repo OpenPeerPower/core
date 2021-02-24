@@ -51,11 +51,11 @@ def gethostbyaddr_mock():
         yield
 
 
-async def test_access_from_banned_ip.opp, aiohttp_client):
+async def test_access_from_banned_ip(opp, aiohttp_client):
     """Test accessing to server from banned IP. Both trusted and not."""
     app = web.Application()
     app[.opp"] = opp
-    setup_bans.opp, app, 5)
+    setup_bans(opp, app, 5)
     set_real_ip = mock_real_ip(app)
 
     with patch(
@@ -90,7 +90,7 @@ async def test_access_from_supervisor_ip(
         raise HTTPUnauthorized
 
     app.router.add_get("/", unauth_handler)
-    setup_bans.opp, app, 1)
+    setup_bans(opp, app, 1)
     mock_real_ip(app)(remote_addr)
 
     with patch(
@@ -98,7 +98,7 @@ async def test_access_from_supervisor_ip(
     ):
         client = await aiohttp_client(app)
 
-    assert await async_setup_component.opp,  opp.o", {.oppio": {}})
+    assert await async_setup_component(opp,  opp.o", {.oppio": {}})
 
     m_open = mock_open()
 
@@ -126,17 +126,17 @@ async def test_ban_middleware_not_loaded_by_config(opp):
     assert len(mock_setup.mock_calls) == 0
 
 
-async def test_ban_middleware_loaded_by_default.opp):
+async def test_ban_middleware_loaded_by_default(opp):
     """Test accessing to server from banned IP when feature is off."""
     with patch("openpeerpower.components.http.setup_bans") as mock_setup:
-        await async_setup_component.opp, "http", {"http": {}})
+        await async_setup_component(opp, "http", {"http": {}})
 
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_ip_bans_file_creation.opp, aiohttp_client):
+async def test_ip_bans_file_creation(opp, aiohttp_client):
     """Testing if banned IP file created."""
-    notification_calls = async_mock_service.opp, "persistent_notification", "create")
+    notification_calls = async_mock_service(opp, "persistent_notification", "create")
 
     app = web.Application()
     app[.opp"] = opp
@@ -146,7 +146,7 @@ async def test_ip_bans_file_creation.opp, aiohttp_client):
         raise HTTPUnauthorized
 
     app.router.add_get("/", unauth_handler)
-    setup_bans.opp, app, 2)
+    setup_bans(opp, app, 2)
     mock_real_ip(app)("200.201.202.204")
 
     with patch(
@@ -166,7 +166,7 @@ async def test_ip_bans_file_creation.opp, aiohttp_client):
         resp = await client.get("/")
         assert resp.status == 401
         assert len(app[KEY_BANNED_IPS]) == len(BANNED_IPS) + 1
-        m_open.assert_called_once_with.opp.config.path(IP_BANS_FILE), "a")
+        m_open.assert_called_once_with(opp.config.path(IP_BANS_FILE), "a")
 
         resp = await client.get("/")
         assert resp.status == HTTP_FORBIDDEN
@@ -179,7 +179,7 @@ async def test_ip_bans_file_creation.opp, aiohttp_client):
         )
 
 
-async def test_failed_login_attempts_counter.opp, aiohttp_client):
+async def test_failed_login_attempts_counter(opp, aiohttp_client):
     """Testing if failed login attempts counter increased."""
     app = web.Application()
     app[.opp"] = opp
@@ -198,7 +198,7 @@ async def test_failed_login_attempts_counter.opp, aiohttp_client):
         "/", request_handler_factory(Mock(requires_auth=False), auth_handler)
     )
 
-    setup_bans.opp, app, 5)
+    setup_bans(opp, app, 5)
     remote_ip = ip_address("200.201.202.204")
     mock_real_ip(app)("200.201.202.204")
 

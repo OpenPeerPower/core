@@ -98,7 +98,7 @@ async def test_refresh_library(
     assert refresh.call_count == 1
 
 
-async def test_scan_clients.opp, mock_plex_server):
+async def test_scan_clients(opp, mock_plex_server):
     """Test scan_for_clients service call."""
     assert await opp.services.async_call(
         DOMAIN,
@@ -130,7 +130,7 @@ async def test_sonos_play_media(
 
     # Test with no Plex integration available
     with pytest.raises(OpenPeerPowerError) as excinfo:
-        play_on_sonos.opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
+        play_on_sonos(opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
     assert "Plex integration not configured" in str(excinfo.value)
 
     with patch(
@@ -142,7 +142,7 @@ async def test_sonos_play_media(
 
         # Test with no Plex servers available
         with pytest.raises(OpenPeerPowerError) as excinfo:
-            play_on_sonos.opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
+            play_on_sonos(opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
         assert "No Plex servers available" in str(excinfo.value)
 
     # Complete setup of a Plex server
@@ -152,7 +152,7 @@ async def test_sonos_play_media(
     # Test with no speakers available
     requests_mock.get("https://sonos.plex.tv/resources", text=empty_payload)
     with pytest.raises(OpenPeerPowerError) as excinfo:
-        play_on_sonos.opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
+        play_on_sonos(opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
     assert f"Sonos speaker '{sonos_speaker_name}' is not associated with" in str(
         excinfo.value
     )
@@ -161,29 +161,29 @@ async def test_sonos_play_media(
     # Test with speakers available
     requests_mock.get("https://sonos.plex.tv/resources", text=sonos_resources)
     with patch.object(mock_plex_server.account, "_sonos_cache_timestamp", 0):
-        play_on_sonos.opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
+        play_on_sonos(opp, MEDIA_TYPE_MUSIC, media_content_id, sonos_speaker_name)
     assert playback_mock.call_count == 1
 
     # Test with speakers available and media key payload
-    play_on_sonos.opp, MEDIA_TYPE_MUSIC, "100", sonos_speaker_name)
+    play_on_sonos(opp, MEDIA_TYPE_MUSIC, "100", sonos_speaker_name)
     assert playback_mock.call_count == 2
 
     # Test with speakers available and Plex server specified
     content_id_with_server = '{"plex_server": "Plex Server 1", "library_name": "Music", "artist_name": "Artist", "album_name": "Album"}'
-    play_on_sonos.opp, MEDIA_TYPE_MUSIC, content_id_with_server, sonos_speaker_name)
+    play_on_sonos(opp, MEDIA_TYPE_MUSIC, content_id_with_server, sonos_speaker_name)
     assert playback_mock.call_count == 3
 
     # Test with speakers available but media not found
     content_id_bad_media = '{"library_name": "Music", "artist_name": "Not an Artist"}'
     with pytest.raises(OpenPeerPowerError) as excinfo:
-        play_on_sonos.opp, MEDIA_TYPE_MUSIC, content_id_bad_media, sonos_speaker_name)
+        play_on_sonos(opp, MEDIA_TYPE_MUSIC, content_id_bad_media, sonos_speaker_name)
     assert "Plex media not found" in str(excinfo.value)
     assert playback_mock.call_count == 3
 
     # Test with speakers available and playqueue
     requests_mock.get("https://1.2.3.4:32400/playQueues/1234", text=playqueue_1234)
     content_id_with_playqueue = '{"playqueue_id": 1234}'
-    play_on_sonos.opp, MEDIA_TYPE_MUSIC, content_id_with_playqueue, sonos_speaker_name)
+    play_on_sonos(opp, MEDIA_TYPE_MUSIC, content_id_with_playqueue, sonos_speaker_name)
     assert playback_mock.call_count == 4
 
     # Test with speakers available and invalid playqueue

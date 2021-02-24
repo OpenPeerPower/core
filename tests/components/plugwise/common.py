@@ -17,7 +17,7 @@ async def async_init_integration(
     entry = MockConfigEntry(
         domain=DOMAIN, data={"host": "1.1.1.1", "password": "test-password"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     if not skip_setup:
         await opp.config_entries.async_setup(entry.entry_id)

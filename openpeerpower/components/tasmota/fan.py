@@ -21,7 +21,7 @@ OP_TO_TASMOTA_SPEED_MAP = {
 TASMOTA_TO_OP_SPEED_MAP = {v: k for k, v in OP_TO_TASMOTA_SPEED_MAP.items()}
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Tasmota fan dynamically through discovery."""
 
     @callback

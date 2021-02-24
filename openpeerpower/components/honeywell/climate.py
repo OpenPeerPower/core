@@ -106,7 +106,7 @@ HW_FAN_MODE_TO_HA = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Honeywell thermostat."""
     username = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)

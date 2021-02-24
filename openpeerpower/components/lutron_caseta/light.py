@@ -27,7 +27,7 @@ def to.opp_level(level):
     return int((level * 255) // 100)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Lutron Caseta light platform.
 
     Adds dimmers from the Caseta bridge associated with the config_entry as

@@ -11,7 +11,7 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-async def _async_has_devices.opp) -> bool:
+async def _async_has_devices(opp) -> bool:
     """Return if there are devices that can be discovered."""
     try:
         devices = await pyzerproc.discover()

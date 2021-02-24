@@ -11,7 +11,7 @@ from .const import DOMAIN
 from .helpers import ChromeCastZeroconf
 
 
-async def _async_has_devices.opp):
+async def _async_has_devices(opp):
     """
     Return if there are devices that can be discovered.
 
@@ -21,7 +21,7 @@ async def _async_has_devices.opp):
 
     zeroconf_instance = ChromeCastZeroconf.get_zeroconf()
     if zeroconf_instance is None:
-        zeroconf_instance = await zeroconf.async_get_instance.opp)
+        zeroconf_instance = await zeroconf.async_get_instance(opp)
 
     casts, browser = await opp.async_add_executor_job(
         functools.partial(discover_chromecasts, zeroconf_instance=zeroconf_instance)

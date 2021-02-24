@@ -51,10 +51,10 @@ async def async_setup_opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Control4 from a config entry."""
     entry_data = opp.data[DOMAIN].setdefault(entry.entry_id, {})
-    account_session = aiohttp_client.async_get_clientsession.opp)
+    account_session = aiohttp_client.async_get_clientsession(opp)
 
     config = entry.data
     account = C4Account(config[CONF_USERNAME], config[CONF_PASSWORD], account_session)
@@ -75,7 +75,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     entry_data[CONF_CONTROLLER_UNIQUE_ID] = controller_unique_id
 
     director_token_dict = await account.getDirectorBearerToken(controller_unique_id)
-    director_session = aiohttp_client.async_get_clientsession.opp, verify_ssl=False)
+    director_session = aiohttp_client.async_get_clientsession(opp, verify_ssl=False)
 
     director = C4Director(
         config[CONF_HOST], director_token_dict[CONF_TOKEN], director_session
@@ -92,7 +92,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     _, model, mac_address = controller_unique_id.split("_", 3)
     entry_data[CONF_DIRECTOR_MODEL] = model.upper()
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, controller_unique_id)},
@@ -123,13 +123,13 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def update_listener.opp, config_entry):
+async def update_listener(opp, config_entry):
     """Update when config_entry options update."""
     _LOGGER.debug("Config entry was updated, rerunning setup")
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -147,7 +147,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def get_items_of_category.opp: OpenPeerPower, entry: ConfigEntry, category: str):
+async def get_items_of_category(opp: OpenPeerPower, entry: ConfigEntry, category: str):
     """Return a list of all Control4 items with the specified category."""
     director_all_items = opp.data[DOMAIN][entry.entry_id][CONF_DIRECTOR_ALL_ITEMS]
     return_list = []

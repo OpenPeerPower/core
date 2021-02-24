@@ -11,7 +11,7 @@ from . import LIGHTWAVE_LINK
 MAX_BRIGHTNESS = 255
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Find and return LightWave lights."""
     if not discovery_info:
         return

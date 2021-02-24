@@ -130,7 +130,7 @@ class InsteonEntity(Entity):
             )
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe to INSTEON update events."""
         _LOGGER.debug(
             "Remove tracking updates for device %s group %d name %s",

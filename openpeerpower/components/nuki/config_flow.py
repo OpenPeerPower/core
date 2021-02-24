@@ -27,7 +27,7 @@ USER_SCHEMA = vol.Schema(
 )
 
 
-async def validate_input.opp, data):
+async def validate_input(opp, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from USER_SCHEMA with values provided by the user.

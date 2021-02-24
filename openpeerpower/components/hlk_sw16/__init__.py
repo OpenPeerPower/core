@@ -70,7 +70,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up the HLK-SW16 switch."""
     opp.data.setdefault(DOMAIN, {})
     host = entry.data[CONF_HOST]
@@ -91,7 +91,7 @@ async def async_setup_entry.opp, entry):
     def reconnected():
         """Schedule reconnect after connection has been lost."""
         _LOGGER.warning("HLK-SW16 %s connected", address)
-        async_dispatcher_send.opp, f"hlk_sw16_device_available_{entry.entry_id}", True)
+        async_dispatcher_send(opp, f"hlk_sw16_device_available_{entry.entry_id}", True)
 
     async def connect():
         """Set up connection and hook it into HA for reconnect/shutdown."""
@@ -122,7 +122,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     client = opp.data[DOMAIN][entry.entry_id].pop(DATA_DEVICE_REGISTER)
     client.stop()

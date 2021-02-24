@@ -13,10 +13,10 @@ async def test_sensor_setup_opp, requests_mock):
     """Test for successfully setting up the SleepIQ platform."""
     mock_responses(requests_mock)
 
-    await async_setup_component.opp, "sleepiq", {"sleepiq": CONFIG})
+    await async_setup_component(opp, "sleepiq", {"sleepiq": CONFIG})
 
     device_mock = MagicMock()
-    sleepiq.setup_platform.opp, CONFIG, device_mock, MagicMock())
+    sleepiq.setup_platform(opp, CONFIG, device_mock, MagicMock())
     devices = device_mock.call_args[0][0]
     assert 2 == len(devices)
 
@@ -29,14 +29,14 @@ async def test_sensor_setup_opp, requests_mock):
     assert "off" == right_side.state
 
 
-async def test_setup_single.opp, requests_mock):
+async def test_setup_single(opp, requests_mock):
     """Test for successfully setting up the SleepIQ platform."""
     mock_responses(requests_mock, single=True)
 
-    await async_setup_component.opp, "sleepiq", {"sleepiq": CONFIG})
+    await async_setup_component(opp, "sleepiq", {"sleepiq": CONFIG})
 
     device_mock = MagicMock()
-    sleepiq.setup_platform.opp, CONFIG, device_mock, MagicMock())
+    sleepiq.setup_platform(opp, CONFIG, device_mock, MagicMock())
     devices = device_mock.call_args[0][0]
     assert 1 == len(devices)
 

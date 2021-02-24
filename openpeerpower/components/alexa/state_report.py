@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 DEFAULT_TIMEOUT = 10
 
 
-async def async_enable_proactive_mode.opp, smart_home_config):
+async def async_enable_proactive_mode(opp, smart_home_config):
     """Enable the proactive mode.
 
     Proactive mode makes this component report state changes to Alexa.
@@ -41,7 +41,7 @@ async def async_enable_proactive_mode.opp, smart_home_config):
         """Check if the serialized data has changed."""
         return old_extra_arg is not None and old_extra_arg != new_extra_arg
 
-    checker = await create_checker.opp, DOMAIN, extra_significant_check)
+    checker = await create_checker(opp, DOMAIN, extra_significant_check)
 
     async def async_entity_state_listener(
         changed_entity: str,
@@ -176,7 +176,7 @@ async def async_send_changereport_message(
     )
 
 
-async def async_send_add_or_update_message.opp, config, entity_ids):
+async def async_send_add_or_update_message(opp, config, entity_ids):
     """Send an AddOrUpdateReport message for entities.
 
     https://developer.amazon.com/docs/device-apis/alexa-discovery.html#add-or-update-report
@@ -210,7 +210,7 @@ async def async_send_add_or_update_message.opp, config, entity_ids):
     )
 
 
-async def async_send_delete_message.opp, config, entity_ids):
+async def async_send_delete_message(opp, config, entity_ids):
     """Send an DeleteReport message for entities.
 
     https://developer.amazon.com/docs/device-apis/alexa-discovery.html#deletereport-event
@@ -243,7 +243,7 @@ async def async_send_delete_message.opp, config, entity_ids):
     )
 
 
-async def async_send_doorbell_event_message.opp, config, alexa_entity):
+async def async_send_doorbell_event_message(opp, config, alexa_entity):
     """Send a DoorbellPress event message for an Alexa entity.
 
     https://developer.amazon.com/docs/smarthome/send-events-to-the-alexa-event-gateway.html

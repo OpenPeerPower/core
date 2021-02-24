@@ -44,7 +44,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up AlarmDecoder config flow."""
     undo_listener = entry.add_update_listener(_update_listener)
 
@@ -137,7 +137,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a AlarmDecoder entry."""
     opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
 
@@ -155,7 +155,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
 
     opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_UPDATE_LISTENER]()
     opp.data[DOMAIN][entry.entry_id][DATA_REMOVE_STOP_LISTENER]()
-    await opp.async_add_executor_job.opp.data[DOMAIN][entry.entry_id][DATA_AD].close)
+    await opp.async_add_executor_job(opp.data[DOMAIN][entry.entry_id][DATA_AD].close)
 
     if opp.data[DOMAIN][entry.entry_id]:
         opp.data[DOMAIN].pop(entry.entry_id)
@@ -165,7 +165,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def _update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def _update_listener(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle options update."""
     _LOGGER.debug("AlarmDecoder options updated: %s", entry.as_dict()["options"])
     await opp.config_entries.async_reload(entry.entry_id)

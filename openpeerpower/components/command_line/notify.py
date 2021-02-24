@@ -21,7 +21,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Command Line notification service."""
     command = config[CONF_COMMAND]
     timeout = config[CONF_COMMAND_TIMEOUT]

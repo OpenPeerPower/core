@@ -4,7 +4,7 @@ from openpeerpower.components.binary_sensor import BinarySensorEntity
 from . import BINARY_SENSORS, DOMAIN
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Nextcloud sensors."""
     if discovery_info is None:
         return

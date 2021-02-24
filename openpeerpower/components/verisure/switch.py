@@ -6,7 +6,7 @@ from openpeerpower.components.switch import SwitchEntity
 from . import CONF_SMARTPLUGS, HUB as hub
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Verisure switch platform."""
     if not int(hub.config.get(CONF_SMARTPLUGS, 1)):
         return False

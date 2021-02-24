@@ -13,25 +13,25 @@ from openpeerpower.helpers.temperature import display_temp
 TEMP = 24.636626
 
 
-def test_temperature_not_a_number.opp):
+def test_temperature_not_a_number(opp):
     """Test that temperature is a number."""
     temp = "Temperature"
     with pytest.raises(Exception) as exception:
-        display_temp.opp, temp, TEMP_CELSIUS, PRECISION_HALVES)
+        display_temp(opp, temp, TEMP_CELSIUS, PRECISION_HALVES)
 
     assert f"Temperature is not a number: {temp}" in str(exception.value)
 
 
-def test_celsius_halves.opp):
+def test_celsius_halves(opp):
     """Test temperature to celsius rounding to halves."""
-    assert display_temp.opp, TEMP, TEMP_CELSIUS, PRECISION_HALVES) == 24.5
+    assert display_temp(opp, TEMP, TEMP_CELSIUS, PRECISION_HALVES) == 24.5
 
 
-def test_celsius_tenths.opp):
+def test_celsius_tenths(opp):
     """Test temperature to celsius rounding to tenths."""
-    assert display_temp.opp, TEMP, TEMP_CELSIUS, PRECISION_TENTHS) == 24.6
+    assert display_temp(opp, TEMP, TEMP_CELSIUS, PRECISION_TENTHS) == 24.6
 
 
-def test_fahrenheit_wholes.opp):
+def test_fahrenheit_wholes(opp):
     """Test temperature to fahrenheit rounding to wholes."""
-    assert display_temp.opp, TEMP, TEMP_FAHRENHEIT, PRECISION_WHOLE) == -4
+    assert display_temp(opp, TEMP, TEMP_FAHRENHEIT, PRECISION_WHOLE) == -4

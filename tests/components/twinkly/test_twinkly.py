@@ -25,7 +25,7 @@ from tests.components.twinkly import (
 )
 
 
-async def test_missing_client.opp: OpenPeerPower):
+async def test_missing_client(opp: OpenPeerPower):
     """Validate that if client has not been setup, it fails immediately in setup."""
     try:
         config_entry = MockConfigEntry(
@@ -43,9 +43,9 @@ async def test_missing_client.opp: OpenPeerPower):
     assert False
 
 
-async def test_initial_state.opp: OpenPeerPower):
+async def test_initial_state(opp: OpenPeerPower):
     """Validate that entity and device states are updated on startup."""
-    entity, device, _ = await _create_entries.opp)
+    entity, device, _ = await _create_entries(opp)
 
     state = opp.states.get(entity.entity_id)
 
@@ -68,11 +68,11 @@ async def test_initial_state.opp: OpenPeerPower):
     assert device.manufacturer == "LEDWORKS"
 
 
-async def test_initial_state_offline.opp: OpenPeerPower):
+async def test_initial_state_offline(opp: OpenPeerPower):
     """Validate that entity and device are restored from config is offline on startup."""
     client = ClientMock()
     client.is_offline = True
-    entity, device, _ = await _create_entries.opp, client)
+    entity, device, _ = await _create_entries(opp, client)
 
     state = opp.states.get(entity.entity_id)
 
@@ -89,12 +89,12 @@ async def test_initial_state_offline.opp: OpenPeerPower):
     assert device.manufacturer == "LEDWORKS"
 
 
-async def test_turn_on.opp: OpenPeerPower):
+async def test_turn_on(opp: OpenPeerPower):
     """Test support of the light.turn_on service."""
     client = ClientMock()
     client.is_on = False
     client.brightness = 20
-    entity, _, _ = await _create_entries.opp, client)
+    entity, _, _ = await _create_entries(opp, client)
 
     assert.opp.states.get(entity.entity_id).state == "off"
 
@@ -109,12 +109,12 @@ async def test_turn_on.opp: OpenPeerPower):
     assert state.attributes["brightness"] == 51
 
 
-async def test_turn_on_with_brightness.opp: OpenPeerPower):
+async def test_turn_on_with_brightness(opp: OpenPeerPower):
     """Test support of the light.turn_on service with a brightness parameter."""
     client = ClientMock()
     client.is_on = False
     client.brightness = 20
-    entity, _, _ = await _create_entries.opp, client)
+    entity, _, _ = await _create_entries(opp, client)
 
     assert.opp.states.get(entity.entity_id).state == "off"
 
@@ -131,9 +131,9 @@ async def test_turn_on_with_brightness.opp: OpenPeerPower):
     assert state.attributes["brightness"] == 255
 
 
-async def test_turn_off.opp: OpenPeerPower):
+async def test_turn_off(opp: OpenPeerPower):
     """Test support of the light.turn_off service."""
-    entity, _, _ = await _create_entries.opp)
+    entity, _, _ = await _create_entries(opp)
 
     assert.opp.states.get(entity.entity_id).state == "on"
 
@@ -148,7 +148,7 @@ async def test_turn_off.opp: OpenPeerPower):
     assert state.attributes["brightness"] == 0
 
 
-async def test_update_name.opp: OpenPeerPower):
+async def test_update_name(opp: OpenPeerPower):
     """
     Validate device's name update behavior.
 
@@ -156,7 +156,7 @@ async def test_update_name.opp: OpenPeerPower):
     then the name of the entity is updated and it's also persisted,
     so it can be restored when starting HA while Twinkly is offline.
     """
-    entity, _, client = await _create_entries.opp)
+    entity, _, client = await _create_entries(opp)
 
     updated_config_entry = None
 
@@ -179,10 +179,10 @@ async def test_update_name.opp: OpenPeerPower):
     assert state.attributes["friendly_name"] == "new_device_name"
 
 
-async def test_unload.opp: OpenPeerPower):
+async def test_unload(opp: OpenPeerPower):
     """Validate that entities can be unloaded from the UI."""
 
-    _, _, client = await _create_entries.opp)
+    _, _, client = await _create_entries(opp)
     entry_id = client.id
 
     assert await opp.config_entries.async_unload(entry_id)
@@ -207,7 +207,7 @@ async def _create_entries(
             },
             entry_id=client.id,
         )
-        config_entry.add_to.opp.opp)
+        config_entry.add_to(opp.opp)
         assert await opp.config_entries.async_setup(client.id)
         await opp.async_block_till_done()
 

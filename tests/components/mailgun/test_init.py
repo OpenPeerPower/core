@@ -15,14 +15,14 @@ API_KEY = "abc123"
 
 
 @pytest.fixture
-async def http_client.opp, aiohttp_client):
+async def http_client(opp, aiohttp_client):
     """Initialize a Open Peer Power Server for testing this module."""
-    await async_setup_component.opp, webhook.DOMAIN, {})
-    return await aiohttp_client.opp.http.app)
+    await async_setup_component(opp, webhook.DOMAIN, {})
+    return await aiohttp_client(opp.http.app)
 
 
 @pytest.fixture
-async def webhook_id_with_api_key.opp):
+async def webhook_id_with_api_key(opp):
     """Initialize the Mailgun component and get the webhook_id."""
     await async_setup_component(
         opp,
@@ -46,9 +46,9 @@ async def webhook_id_with_api_key.opp):
 
 
 @pytest.fixture
-async def webhook_id_without_api_key.opp):
+async def webhook_id_without_api_key(opp):
     """Initialize the Mailgun component and get the webhook_id w/o API key."""
-    await async_setup_component.opp, mailgun.DOMAIN, {})
+    await async_setup_component(opp, mailgun.DOMAIN, {})
 
     await async_process_op_core_config(
         opp,
@@ -66,7 +66,7 @@ async def webhook_id_without_api_key.opp):
 
 
 @pytest.fixture
-async def mailgun_events.opp):
+async def mailgun_events(opp):
     """Return a list of mailgun_events triggered."""
     events = []
 

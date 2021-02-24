@@ -308,7 +308,7 @@ class HuaweiLteData:
     routers: Dict[str, Router] = attr.ib(init=False, factory=dict)
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Set up Huawei LTE component from config entry."""
     url = config_entry.data[CONF_URL]
 
@@ -379,7 +379,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     def signal_update() -> None:
         """Signal updates to data."""
-        dispatcher_send.opp, UPDATE_SIGNAL, url)
+        dispatcher_send(opp, UPDATE_SIGNAL, url)
 
     try:
         connection = await opp.async_add_executor_job(get_connection)
@@ -408,7 +408,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         sw_version = router.data[KEY_DEVICE_BASIC_INFORMATION].get("SoftwareVersion")
     if sw_version:
         device_data["sw_version"] = sw_version
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections=router.device_connections,
@@ -451,7 +451,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     # Set up periodic update
     router.unload_handlers.append(
-        async_track_time_interval.opp, _update_router, SCAN_INTERVAL)
+        async_track_time_interval(opp, _update_router, SCAN_INTERVAL)
     )
 
     # Clean up at end
@@ -563,7 +563,7 @@ async def async_signal_options_update(
     opp: OpenPeerPowerType, config_entry: ConfigEntry
 ) -> None:
     """Handle config entry options update."""
-    async_dispatcher_send.opp, UPDATE_OPTIONS_SIGNAL, config_entry)
+    async_dispatcher_send(opp, UPDATE_OPTIONS_SIGNAL, config_entry)
 
 
 async def async_migrate_entry(
@@ -656,7 +656,7 @@ class HuaweiLteBaseEntity(Entity):
         if config_entry.data[CONF_URL] == self.router.url:
             await self.async_update_options(config_entry)
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Invoke unsubscription handlers."""
         for unsub in self._unsub_handlers:
             unsub()

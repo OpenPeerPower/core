@@ -256,7 +256,7 @@ def async_publish(
     """Publish message to an MQTT topic."""
     data = _build_publish_data(topic, qos, retain)
     data[ATTR_PAYLOAD] = payload
-    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
+    opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
 
 
 @bind.opp
@@ -274,7 +274,7 @@ def async_publish_template(
     """Publish message to an MQTT topic using a template payload."""
     data = _build_publish_data(topic, qos, retain)
     data[ATTR_PAYLOAD_TEMPLATE] = payload_template
-    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
+    opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
 
 
 def wrap_msg_callback(msg_callback: MessageCallbackType) -> MessageCallbackType:
@@ -359,12 +359,12 @@ def subscribe(
 ) -> Callable[[], None]:
     """Subscribe to an MQTT topic."""
     async_remove = asyncio.run_coroutine_threadsafe(
-        async_subscribe.opp, topic, msg_callback, qos, encoding), opp.loop
+        async_subscribe(opp, topic, msg_callback, qos, encoding), opp.loop
     ).result()
 
     def remove():
         """Remove listener convert."""
-        run_callback_threadsafe.opp.loop, async_remove).result()
+        run_callback_threadsafe(opp.loop, async_remove).result()
 
     return remove
 
@@ -387,9 +387,9 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Start the MQTT protocol service."""
     conf: Optional[ConfigType] = config.get(DOMAIN)
 
-    websocket_api.async_register_command.opp, websocket_subscribe)
-    websocket_api.async_register_command.opp, websocket_remove_device)
-    websocket_api.async_register_command.opp, websocket_mqtt_info)
+    websocket_api.async_register_command(opp, websocket_subscribe)
+    websocket_api.async_register_command(opp, websocket_remove_device)
+    websocket_api.async_register_command(opp, websocket_mqtt_info)
 
     if conf is None:
         # If we have a config entry, setup is done by that config entry.
@@ -416,14 +416,14 @@ def _merge_config(entry, conf):
     return {**conf, **entry.data}
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Load a config entry."""
     conf = opp.data.get(DATA_MQTT_CONFIG)
 
     # Config entry was created because user had configuration.yaml entry
     # They removed that, so remove entry.
     if conf is None and entry.source == config_entries.SOURCE_IMPORT:
-        opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+        opp.async_create_task(opp.config_entries.async_remove(entry.entry_id))
         return False
 
     # If user didn't have configuration.yaml config, generate defaults
@@ -492,7 +492,7 @@ async def async_setup_entry.opp, entry):
         def collect_msg(msg):
             messages.append((msg.topic, msg.payload.replace("\n", "")))
 
-        unsub = await async_subscribe.opp, call.data["topic"], collect_msg)
+        unsub = await async_subscribe(opp, call.data["topic"], collect_msg)
 
         def write_dump():
             with open.opp.config.path("mqtt_dump.txt"), "wt") as fp:
@@ -504,7 +504,7 @@ async def async_setup_entry.opp, entry):
             unsub()
             await opp.async_add_executor_job(write_dump)
 
-        event.async_call_later.opp, call.data["duration"], finish_dump)
+        event.async_call_later(opp, call.data["duration"], finish_dump)
 
     opp.services.async_register(
         DOMAIN,
@@ -519,7 +519,7 @@ async def async_setup_entry.opp, entry):
     )
 
     if conf.get(CONF_DISCOVERY):
-        await _async_setup_discovery.opp, conf, entry)
+        await _async_setup_discovery(opp, conf, entry)
 
     return True
 
@@ -575,7 +575,7 @@ class MQTT:
         self.config_entry.add_update_listener(self.async_config_entry_updated)
 
     @staticmethod
-    async def async_config_entry_updated.opp, entry) -> None:
+    async def async_config_entry_updated(opp, entry) -> None:
         """Handle signals of config entry being updated.
 
         This is a static method because a class method (bound method), can not be used with weak references.
@@ -592,9 +592,9 @@ class MQTT:
         self.init_client()
         await self.async_connect()
 
-        await discovery.async_stop.opp)
+        await discovery.async_stop(opp)
         if self.conf.get(CONF_DISCOVERY):
-            await _async_setup_discovery.opp, self.conf, entry)
+            await _async_setup_discovery(opp, self.conf, entry)
 
     def init_client(self):
         """Initialize paho client."""
@@ -885,7 +885,7 @@ class MQTT:
                     )
                     continue
 
-            self.opp.async_run.opp_job(
+            self.opp.async_run(opp_job(
                 subscription.job,
                 Message(
                     msg.topic,
@@ -981,10 +981,10 @@ def _matcher_for_topic(subscription: str) -> Any:
     {vol.Required("type"): "mqtt/device/debug_info", vol.Required("device_id"): str}
 )
 @websocket_api.async_response
-async def websocket_mqtt_info.opp, connection, msg):
+async def websocket_mqtt_info(opp, connection, msg):
     """Get MQTT debug info for device."""
     device_id = msg["device_id"]
-    mqtt_info = await debug_info.info_for_device.opp, device_id)
+    mqtt_info = await debug_info.info_for_device(opp, device_id)
 
     connection.send_result(msg["id"], mqtt_info)
 
@@ -993,7 +993,7 @@ async def websocket_mqtt_info.opp, connection, msg):
     {vol.Required("type"): "mqtt/device/remove", vol.Required("device_id"): str}
 )
 @websocket_api.async_response
-async def websocket_remove_device.opp, connection, msg):
+async def websocket_remove_device(opp, connection, msg):
     """Delete device."""
     device_id = msg["device_id"]
     dev_registry = await opp.helpers.device_registry.async_get_registry()
@@ -1025,7 +1025,7 @@ async def websocket_remove_device.opp, connection, msg):
         vol.Required("topic"): valid_subscribe_topic,
     }
 )
-async def websocket_subscribe.opp, connection, msg):
+async def websocket_subscribe(opp, connection, msg):
     """Subscribe to a MQTT topic."""
     if not connection.user.is_admin:
         raise Unauthorized
@@ -1052,23 +1052,23 @@ async def websocket_subscribe.opp, connection, msg):
 
 
 @callback
-def async_subscribe_connection_status.opp, connection_status_callback):
+def async_subscribe_connection_status(opp, connection_status_callback):
     """Subscribe to MQTT connection changes."""
     connection_status_callback_job = OppJob(connection_status_callback)
 
     async def connected():
-        task = opp.async_run.opp_job(connection_status_callback_job, True)
+        task = opp.async_run(opp_job(connection_status_callback_job, True)
         if task:
             await task
 
     async def disconnected():
-        task = opp.async_run.opp_job(connection_status_callback_job, False)
+        task = opp.async_run(opp_job(connection_status_callback_job, False)
         if task:
             await task
 
     subscriptions = {
-        "connect": async_dispatcher_connect.opp, MQTT_CONNECTED, connected),
-        "disconnect": async_dispatcher_connect.opp, MQTT_DISCONNECTED, disconnected),
+        "connect": async_dispatcher_connect(opp, MQTT_CONNECTED, connected),
+        "disconnect": async_dispatcher_connect(opp, MQTT_DISCONNECTED, disconnected),
     }
 
     @callback
@@ -1079,6 +1079,6 @@ def async_subscribe_connection_status.opp, connection_status_callback):
     return unsubscribe
 
 
-def is_connected.opp):
+def is_connected(opp):
     """Return if MQTT client is connected."""
     return.opp.data[DATA_MQTT].connected

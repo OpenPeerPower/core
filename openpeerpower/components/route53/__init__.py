@@ -60,7 +60,7 @@ def setup(opp, config):
             aws_access_key_id, aws_secret_access_key, zone, domain, records, ttl
         )
 
-    track_time_interval.opp, update_records_interval, INTERVAL)
+    track_time_interval(opp, update_records_interval, INTERVAL)
 
     opp.services.register(DOMAIN, "update_records", update_records_service)
     return True

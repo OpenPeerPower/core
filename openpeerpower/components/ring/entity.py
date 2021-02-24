@@ -18,7 +18,7 @@ class RingEntityMixin:
         """Register callbacks."""
         self.ring_objects["device_data"].async_add_listener(self._update_callback)
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect callbacks."""
         self.ring_objects["device_data"].async_remove_listener(self._update_callback)
 

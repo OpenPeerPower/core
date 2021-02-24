@@ -17,7 +17,7 @@ SCAN_INTERVAL = timedelta(minutes=SCAN_INTERVAL_MINUTES)
 BATTERY = "Battery"
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up the Neato sensor using config entry."""
     dev = []
     neato = opp.data.get(NEATO_LOGIN)

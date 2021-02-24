@@ -11,7 +11,7 @@ from tests.components.advantage_air import (
 )
 
 
-async def test_binary_sensor_async_setup_entry.opp, aioclient_mock):
+async def test_binary_sensor_async_setup_entry(opp, aioclient_mock):
     """Test binary sensor setup."""
 
     aioclient_mock.get(

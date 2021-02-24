@@ -59,7 +59,7 @@ async def async_setup(opp, config):
     conf = config[DOMAIN]
     scan_interval = conf[CONF_SCAN_INTERVAL]
     devices = conf[CONF_DEVICES]
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     api = opp.data[DOMAIN] = KaiterraApiData.opp, conf, session)
 
     await api.async_update()
@@ -68,7 +68,7 @@ async def async_setup(opp, config):
         """Periodic update."""
         await api.async_update()
 
-    async_track_time_interval.opp, _update, scan_interval)
+    async_track_time_interval(opp, _update, scan_interval)
 
     # Load platforms for each device
     for device in devices:

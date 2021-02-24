@@ -8,7 +8,7 @@ from . import DATA_CLIMATE, DATA_LEAF, LeafEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Nissan Leaf switch platform setup."""
     if discovery_info is None:
         return

@@ -17,7 +17,7 @@ TYPE_BLIND = "blind"
 TYPE_GATEWAY = "gateway"
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Perform the setup for Motion Blinds."""
     entities = []
     motion_gateway = opp.data[DOMAIN][config_entry.entry_id][KEY_GATEWAY]
@@ -97,10 +97,10 @@ class MotionBatterySensor(CoordinatorEntity, Entity):
         self._blind.Register_callback(self.unique_id, self.schedule_update_op_state)
         await super().async_added_to_opp()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe when removed."""
         self._blind.Remove_callback(self.unique_id)
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
 
 class MotionTDBUBatterySensor(MotionBatterySensor):
@@ -201,7 +201,7 @@ class MotionSignalStrengthSensor(CoordinatorEntity, Entity):
         self._device.Register_callback(self.unique_id, self.schedule_update_op_state)
         await super().async_added_to_opp()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe when removed."""
         self._device.Remove_callback(self.unique_id)
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()

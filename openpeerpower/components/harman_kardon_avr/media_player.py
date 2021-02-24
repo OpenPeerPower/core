@@ -33,7 +33,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discover_info=None):
+def setup_platform(opp, config, add_entities, discover_info=None):
     """Set up the AVR platform."""
     name = config[CONF_NAME]
     host = config[CONF_HOST]

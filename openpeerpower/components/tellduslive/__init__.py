@@ -50,7 +50,7 @@ NEW_CLIENT_TASK = "telldus_new_client_task"
 INTERVAL_TRACKER = f"{DOMAIN}_INTERVAL"
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Create a tellduslive session."""
 
     conf = entry.data[KEY_SESSION]
@@ -71,13 +71,13 @@ async def async_setup_entry.opp, entry):
     opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
     opp.data[CONFIG_ENTRY_IS_SETUP] = set()
     opp.data[NEW_CLIENT_TASK] = opp.loop.create_task(
-        async_new_client.opp, session, entry)
+        async_new_client(opp, session, entry)
     )
 
     return True
 
 
-async def async_new_client.opp, session, entry):
+async def async_new_client(opp, session, entry):
     """Add the hubs associated with the current client to device_registry."""
     interval = entry.data[KEY_SCAN_INTERVAL]
     _LOGGER.debug("Update interval %s seconds", interval)
@@ -115,7 +115,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     if not.opp.data[NEW_CLIENT_TASK].done():
         opp.data[NEW_CLIENT_TASK].cancel()

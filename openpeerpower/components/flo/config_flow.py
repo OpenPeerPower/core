@@ -12,13 +12,13 @@ from .const import DOMAIN, LOGGER  # pylint:disable=unused-import
 DATA_SCHEMA = vol.Schema({"username": str, "password": str})
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     try:
         api = await async_get_api(
             data[CONF_USERNAME], data[CONF_PASSWORD], session=session

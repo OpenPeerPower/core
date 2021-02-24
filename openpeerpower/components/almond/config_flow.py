@@ -14,9 +14,9 @@ from openpeerpower.helpers import aiohttp_client, config_entry_oauth2_flow
 from .const import DOMAIN as ALMOND_DOMAIN, TYPE_LOCAL, TYPE_OAUTH2
 
 
-async def async_verify_local_connection.opp: core.OpenPeerPower, host: str):
+async def async_verify_local_connection(opp: core.OpenPeerPower, host: str):
     """Verify that a local connection works."""
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
     api = WebAlmondAPI(AlmondLocalAuth(host, websession))
 
     try:
@@ -94,16 +94,16 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
             data={"type": TYPE_LOCAL, "host": user_input["host"]},
         )
 
-    async def async_step.oppio(self, discovery_info):
+    async def async_step(oppio(self, discovery_info):
         """Receive a Opp.io discovery."""
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
 
         self.oppio_discovery = discovery_info
 
-        return await self.async_step.oppio_confirm()
+        return await self.async_step(oppio_confirm()
 
-    async def async_step.oppio_confirm(self, user_input=None):
+    async def async_step(oppio_confirm(self, user_input=None):
         """Confirm a Opp.io discovery."""
         data = self.oppio_discovery
 

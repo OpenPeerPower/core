@@ -4,7 +4,7 @@ from openpeerpower.components.lock import DOMAIN, LockEntity
 from . import FIBARO_DEVICES, FibaroDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Fibaro locks."""
     if discovery_info is None:
         return

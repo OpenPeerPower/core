@@ -103,7 +103,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_service.opp, config, discovery_info=None):
+def get_service(opp, config, discovery_info=None):
     """Get the Notifications for Android TV notification service."""
     remoteip = config.get(CONF_HOST)
     duration = config.get(CONF_DURATION)

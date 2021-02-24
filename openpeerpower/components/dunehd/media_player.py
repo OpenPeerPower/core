@@ -43,7 +43,7 @@ DUNEHD_PLAYER_SUPPORT = (
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Dune HD media player platform."""
     host = config.get(CONF_HOST)
 
@@ -54,7 +54,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add Dune HD entities from a config_entry."""
     unique_id = config_entry.entry_id
 

@@ -61,7 +61,7 @@ TEMP_WARM_OPP = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 3 * 2 + TEMP_COLOR_MIN
 TEMP_COLD_OPP = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 3 + TEMP_COLOR_MIN
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Z-Wave Light from Config Entry."""
 
     @callback
@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
         """Add Z-Wave Light."""
         async_add_entities([light])
 
-    async_dispatcher_connect.opp, "zwave_new_light", async_add_light)
+    async_dispatcher_connect(opp, "zwave_new_light", async_add_light)
 
 
 def get_device(node, values, node_config, **kwargs):

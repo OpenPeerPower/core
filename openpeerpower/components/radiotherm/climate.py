@@ -101,7 +101,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_FAN_MODE | SUPPORT_PRESET_MODE
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Radio Thermostat."""
     hosts = []
     if CONF_HOST in config:

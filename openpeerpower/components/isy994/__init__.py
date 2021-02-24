@@ -74,7 +74,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
         return True
 
     # Only import if we haven't before.
-    config_entry = _async_find_matching_config_entry.opp)
+    config_entry = _async_find_matching_config_entry(opp)
     if not config_entry:
         opp.async_create_task(
             opp.config_entries.flow.async_init(
@@ -91,7 +91,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
 
 
 @callback
-def _async_find_matching_config_entry.opp):
+def _async_find_matching_config_entry(opp):
     for entry in.opp.config_entries.async_entries(DOMAIN):
         if entry.source == config_entries.SOURCE_IMPORT:
             return entry
@@ -105,7 +105,7 @@ async def async_setup_entry(
     # when setting up a config entry, we fallback to adding
     # the options to the config entry and pull them out here if
     # they are missing from the options
-    _async_import_options_from_data_if_missing.opp, entry)
+    _async_import_options_from_data_if_missing(opp, entry)
 
     opp.data[DOMAIN][entry.entry_id] = {}
     opp.isy_data = opp.data[DOMAIN][entry.entry_id]
@@ -165,15 +165,15 @@ async def async_setup_entry(
     # Trigger a status update for all nodes, not done automatically in PyISY v2.x
     await opp.async_add_executor_job(isy.nodes.update)
 
-    _categorize_nodes.opp_isy_data, isy.nodes, ignore_identifier, sensor_identifier)
-    _categorize_programs.opp_isy_data, isy.programs)
-    _categorize_variables.opp_isy_data, isy.variables, variable_identifier)
+    _categorize_nodes(opp_isy_data, isy.nodes, ignore_identifier, sensor_identifier)
+    _categorize_programs(opp_isy_data, isy.programs)
+    _categorize_variables(opp_isy_data, isy.variables, variable_identifier)
 
     # Dump ISY Clock Information. Future: Add ISY as sensor to OPP with attrs
     _LOGGER.info(repr(isy.clock))
 
     opp.isy_data[ISY994_ISY] = isy
-    await _async_get_or_create_isy_device_in_registry.opp, entry, isy)
+    await _async_get_or_create_isy_device_in_registry(opp, entry, isy)
 
     # Load platforms for the devices in the ISY controller that we support.
     for platform in SUPPORTED_PLATFORMS:
@@ -193,7 +193,7 @@ async def async_setup_entry(
     opp.isy_data[UNDO_UPDATE_LISTENER] = undo_listener
 
     # Register Integration-wide Services:
-    async_setup_services.opp)
+    async_setup_services(opp)
 
     return True
 
@@ -227,7 +227,7 @@ def _async_import_options_from_data_if_missing(
 async def _async_get_or_create_isy_device_in_registry(
     opp: OpenPeerPower, entry: config_entries.ConfigEntry, isy
 ) -> None:
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
 
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
@@ -269,6 +269,6 @@ async def async_unload_entry(
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 
-    async_unload_services.opp)
+    async_unload_services(opp)
 
     return unload_ok

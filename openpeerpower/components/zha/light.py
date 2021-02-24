@@ -97,7 +97,7 @@ class LightColorMode(enum.IntEnum):
     COLOR_TEMP = 0x02
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Zigbee Home Automation light from config entry."""
     entities_to_create = opp.data[DATA_ZHA][light.DOMAIN]
 
@@ -412,10 +412,10 @@ class Light(BaseLight, ZhaEntity):
             signal_override=True,
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect entity object when removed."""
         self._cancel_refresh_handle()
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
     @callback
     def async_restore_last_state(self, last_state):

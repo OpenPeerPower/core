@@ -14,7 +14,7 @@ from openpeerpower.setup import async_setup_component
 BASE_COMPONENT = "notify"
 
 
-async def test_signal_messenger_init.opp):
+async def test_signal_messenger_init(opp):
     """Test that service loads successfully."""
 
     config = {
@@ -28,7 +28,7 @@ async def test_signal_messenger_init.opp):
     }
 
     with patch("pysignalclirestapi.SignalCliRestApi.send_message", return_value=None):
-        assert await async_setup_component.opp, BASE_COMPONENT, config)
+        assert await async_setup_component(opp, BASE_COMPONENT, config)
         await opp.async_block_till_done()
 
         # Test that service loads successfully

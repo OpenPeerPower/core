@@ -28,7 +28,7 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the REST binary sensor."""
     # Must update the sensor now (including fetching the rest resource) to
     # ensure it's updating its state.
@@ -52,7 +52,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     resource_template = conf.get(CONF_RESOURCE_TEMPLATE)
 
     if value_template is not None:
-        value_template.opp = opp
+        value_template(opp = opp
 
     async_add_entities(
         [

@@ -16,7 +16,7 @@ from . import HUB as hub
 from .const import CONF_ALARM, CONF_CODE_DIGITS, CONF_GIID, LOGGER
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Verisure platform."""
     alarms = []
     if int(hub.config.get(CONF_ALARM, 1)):

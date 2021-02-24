@@ -134,7 +134,7 @@ def convert_time_to_utc(timestr):
     return dt_util.as_timestamp(combined)
 
 
-def setup_platform.opp, config, add_entities_callback, discovery_info=None):
+def setup_platform(opp, config, add_entities_callback, discovery_info=None):
     """Set up the Google travel time platform."""
 
     def run_setup(event):

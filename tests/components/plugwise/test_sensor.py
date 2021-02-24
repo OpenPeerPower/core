@@ -6,9 +6,9 @@ from tests.common import Mock
 from tests.components.plugwise.common import async_init_integration
 
 
-async def test_adam_climate_sensor_entities.opp, mock_smile_adam):
+async def test_adam_climate_sensor_entities(opp, mock_smile_adam):
     """Test creation of climate related sensor entities."""
-    entry = await async_init_integration.opp, mock_smile_adam)
+    entry = await async_init_integration(opp, mock_smile_adam)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("sensor.adam_outdoor_temperature")
@@ -31,9 +31,9 @@ async def test_adam_climate_sensor_entities.opp, mock_smile_adam):
     assert int(state.state) == 34
 
 
-async def test_anna_as_smt_climate_sensor_entities.opp, mock_smile_anna):
+async def test_anna_as_smt_climate_sensor_entities(opp, mock_smile_anna):
     """Test creation of climate related sensor entities."""
-    entry = await async_init_integration.opp, mock_smile_anna)
+    entry = await async_init_integration(opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("sensor.auxiliary_outdoor_temperature")
@@ -46,19 +46,19 @@ async def test_anna_as_smt_climate_sensor_entities.opp, mock_smile_anna):
     assert float(state.state) == 86.0
 
 
-async def test_anna_climate_sensor_entities.opp, mock_smile_anna):
+async def test_anna_climate_sensor_entities(opp, mock_smile_anna):
     """Test creation of climate related sensor entities as single master thermostat."""
     mock_smile_anna.single_master_thermostat.side_effect = Mock(return_value=False)
-    entry = await async_init_integration.opp, mock_smile_anna)
+    entry = await async_init_integration(opp, mock_smile_anna)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("sensor.auxiliary_outdoor_temperature")
     assert float(state.state) == 18.0
 
 
-async def test_p1_dsmr_sensor_entities.opp, mock_smile_p1):
+async def test_p1_dsmr_sensor_entities(opp, mock_smile_p1):
     """Test creation of power related sensor entities."""
-    entry = await async_init_integration.opp, mock_smile_p1)
+    entry = await async_init_integration(opp, mock_smile_p1)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("sensor.p1_net_electricity_point")
@@ -77,9 +77,9 @@ async def test_p1_dsmr_sensor_entities.opp, mock_smile_p1):
     assert float(state.state) == 584.85
 
 
-async def test_stretch_sensor_entities.opp, mock_stretch):
+async def test_stretch_sensor_entities(opp, mock_stretch):
     """Test creation of power related sensor entities."""
-    entry = await async_init_integration.opp, mock_stretch)
+    entry = await async_init_integration(opp, mock_stretch)
     assert entry.state == ENTRY_STATE_LOADED
 
     state = opp.states.get("sensor.koelkast_92c4a_electricity_consumed")

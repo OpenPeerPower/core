@@ -73,5 +73,5 @@ def setup(opp, config):
         CONF_TRACKER_INTERFACE: tracker_interfaces,
     }
 
-    load_platform.opp, "device_tracker", DOMAIN, tracker_interfaces, config)
+    load_platform(opp, "device_tracker", DOMAIN, tracker_interfaces, config)
     return True

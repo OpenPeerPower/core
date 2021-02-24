@@ -28,7 +28,7 @@ async def async_setup_entry(
     for name, status, actions in.opp_isy_data[ISY994_PROGRAMS][LOCK]:
         devices.append(ISYLockProgramEntity(name, status, actions))
 
-    await migrate_old_unique_ids.opp, LOCK, devices)
+    await migrate_old_unique_ids(opp, LOCK, devices)
     async_add_entities(devices)
 
 

@@ -180,7 +180,7 @@ TRIGGER_FINDERS = {
 }
 
 
-async def async_setup_triggers_for_entry.opp: OpenPeerPower, config_entry):
+async def async_setup_triggers_for_entry(opp: OpenPeerPower, config_entry):
     """Triggers aren't entities as they have no state, but we still need to set them up for a config entry."""
     hkid = config_entry.data["AccessoryPairingID"]
     conn = opp.data[KNOWN_DEVICES][hkid]
@@ -226,7 +226,7 @@ def async_fire_triggers(conn, events):
                 source.fire(iid, ev)
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for homekit devices."""
 
     if device_id not in.opp.data.get(TRIGGERS, {}):

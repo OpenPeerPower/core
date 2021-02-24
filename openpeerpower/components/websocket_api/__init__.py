@@ -64,5 +64,5 @@ def async_register_command(
 async def async_setup(opp, config):
     """Initialize the websocket API."""
     opp.http.register_view(http.WebsocketAPIView)
-    commands.async_register_commands.opp, async_register_command)
+    commands.async_register_commands(opp, async_register_command)
     return True

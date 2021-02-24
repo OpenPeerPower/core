@@ -29,12 +29,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Tile as config entry."""
     opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = {}
     opp.data[DOMAIN][DATA_TILE][entry.entry_id] = {}
 
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
 
     try:
         client = await async_login(
@@ -82,7 +82,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a Tile config entry."""
     unload_ok = all(
         await asyncio.gather(

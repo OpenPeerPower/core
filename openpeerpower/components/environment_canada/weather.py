@@ -72,7 +72,7 @@ ICON_CONDITION_MAP = {
 }
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Set up the Environment Canada weather."""
     if config.get(CONF_STATION):
         ec_data = ECData(station_id=config[CONF_STATION])

@@ -9,7 +9,7 @@ from openpeerpower.components.binary_sensor import (
 from . import DOMAIN, IncomfortChild
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up an InComfort/InTouch binary_sensor device."""
     if discovery_info is None:
         return

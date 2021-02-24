@@ -7,7 +7,7 @@ from openpeerpower.components import cast
 from openpeerpower.setup import async_setup_component
 
 
-async def test_creating_entry_sets_up_media_player.opp):
+async def test_creating_entry_sets_up_media_player(opp):
     """Test setting up Cast loads the media player."""
     with patch(
         "openpeerpower.components.cast.media_player.async_setup_entry",
@@ -32,7 +32,7 @@ async def test_creating_entry_sets_up_media_player.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_configuring_cast_creates_entry.opp):
+async def test_configuring_cast_creates_entry(opp):
     """Test that specifying config will create an entry."""
     with patch(
         "openpeerpower.components.cast.async_setup_entry", return_value=True
@@ -45,12 +45,12 @@ async def test_configuring_cast_creates_entry.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_not_configuring_cast_not_creates_entry.opp):
+async def test_not_configuring_cast_not_creates_entry(opp):
     """Test that no config will not create an entry."""
     with patch(
         "openpeerpower.components.cast.async_setup_entry", return_value=True
     ) as mock_setup:
-        await async_setup_component.opp, cast.DOMAIN, {})
+        await async_setup_component(opp, cast.DOMAIN, {})
         await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 0

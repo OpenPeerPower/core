@@ -40,7 +40,7 @@ def async_setup_opp):
     opp.http.register_view(AlexaIntentsView)
 
 
-async def async_setup_intents.opp):
+async def async_setup_intents(opp):
     """
     Do intents setup.
 
@@ -68,11 +68,11 @@ class AlexaIntentsView(http.OpenPeerPowerView):
         _LOGGER.debug("Received Alexa request: %s", message)
 
         try:
-            response = await async_handle_message.opp, message)
+            response = await async_handle_message(opp, message)
             return b"" if response is None else self.json(response)
         except UnknownRequest as err:
             _LOGGER.warning(str(err))
-            return self.json(intent_error_response.opp, message, str(err)))
+            return self.json(intent_error_response(opp, message, str(err)))
 
         except intent.UnknownIntent as err:
             _LOGGER.warning(str(err))
@@ -95,11 +95,11 @@ class AlexaIntentsView(http.OpenPeerPowerView):
         except intent.IntentError as err:
             _LOGGER.exception(str(err))
             return self.json(
-                intent_error_response.opp, message, "Error handling intent.")
+                intent_error_response(opp, message, "Error handling intent.")
             )
 
 
-def intent_error_response.opp, message, error):
+def intent_error_response(opp, message, error):
     """Return an Alexa response that will speak the error message."""
     alexa_intent_info = message.get("request").get("intent")
     alexa_response = AlexaResponse.opp, alexa_intent_info)
@@ -107,7 +107,7 @@ def intent_error_response.opp, message, error):
     return alexa_response.as_dict()
 
 
-async def async_handle_message.opp, message):
+async def async_handle_message(opp, message):
     """Handle an Alexa intent.
 
     Raises:
@@ -129,14 +129,14 @@ async def async_handle_message.opp, message):
 
 
 @HANDLERS.register("SessionEndedRequest")
-async def async_handle_session_end.opp, message):
+async def async_handle_session_end(opp, message):
     """Handle a session end request."""
     return None
 
 
 @HANDLERS.register("IntentRequest")
 @HANDLERS.register("LaunchRequest")
-async def async_handle_intent.opp, message):
+async def async_handle_intent(opp, message):
     """Handle an intent request.
 
     Raises:

@@ -35,7 +35,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Set up the MCP23017 binary sensors."""
     pull_mode = config[CONF_PULL_MODE]
     invert_logic = config[CONF_INVERT_LOGIC]

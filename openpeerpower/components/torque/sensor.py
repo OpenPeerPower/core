@@ -39,7 +39,7 @@ def convert_pid(value):
     return int(value, 16)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Torque platform."""
     vehicle = config.get(CONF_NAME)
     email = config.get(CONF_EMAIL)

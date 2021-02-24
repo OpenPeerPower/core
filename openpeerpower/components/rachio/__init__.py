@@ -34,7 +34,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -51,13 +51,13 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def async_remove_entry.opp, entry):
+async def async_remove_entry(opp, entry):
     """Remove a rachio config entry."""
     if CONF_CLOUDHOOK_URL in entry.data:
         await opp.components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up the Rachio config entry."""
 
     config = entry.data
@@ -101,7 +101,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
     # Enable component
     opp.data[DOMAIN][entry.entry_id] = person
-    async_register_webhook.opp, webhook_id, entry.entry_id)
+    async_register_webhook(opp, webhook_id, entry.entry_id)
 
     for component in SUPPORTED_DOMAINS:
         opp.async_create_task(

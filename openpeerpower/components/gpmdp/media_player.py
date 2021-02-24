@@ -57,7 +57,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def request_configuration.opp, config, url, add_entities_callback):
+def request_configuration(opp, config, url, add_entities_callback):
     """Request configuration steps from the user."""
     configurator = opp.components.configurator
     if "gpmdp" in _CONFIGURING:
@@ -109,8 +109,8 @@ def request_configuration.opp, config, url, add_entities_callback):
             code = tmpmsg["payload"]
             if code == "CODE_REQUIRED":
                 continue
-            setup_gpmdp.opp, config, code, add_entities_callback)
-            save_json.opp.config.path(GPMDP_CONFIG_FILE), {"CODE": code})
+            setup_gpmdp(opp, config, code, add_entities_callback)
+            save_json(opp.config.path(GPMDP_CONFIG_FILE), {"CODE": code})
             websocket.send(
                 json.dumps(
                     {
@@ -135,7 +135,7 @@ def request_configuration.opp, config, url, add_entities_callback):
     )
 
 
-def setup_gpmdp.opp, config, code, add_entities):
+def setup_gpmdp(opp, config, code, add_entities):
     """Set up gpmdp."""
     name = config.get(CONF_NAME)
     host = config.get(CONF_HOST)
@@ -143,7 +143,7 @@ def setup_gpmdp.opp, config, code, add_entities):
     url = f"ws://{host}:{port}"
 
     if not code:
-        request_configuration.opp, config, url, add_entities)
+        request_configuration(opp, config, url, add_entities)
         return
 
     if "gpmdp" in _CONFIGURING:
@@ -153,9 +153,9 @@ def setup_gpmdp.opp, config, code, add_entities):
     add_entities([GPMDP(name, url, code)], True)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the GPMDP platform."""
-    codeconfig = load_json.opp.config.path(GPMDP_CONFIG_FILE))
+    codeconfig = load_json(opp.config.path(GPMDP_CONFIG_FILE))
     if codeconfig:
         code = codeconfig.get("CODE")
     elif discovery_info is not None:
@@ -164,7 +164,7 @@ def setup_platform.opp, config, add_entities, discovery_info=None):
         code = None
     else:
         code = None
-    setup_gpmdp.opp, config, code, add_entities)
+    setup_gpmdp(opp, config, code, add_entities)
 
 
 class GPMDP(MediaPlayerEntity):

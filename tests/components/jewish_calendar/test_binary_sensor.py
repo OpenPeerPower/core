@@ -103,7 +103,7 @@ async def test_issur_melacha_sensor(
         await opp.async_block_till_done()
 
         future = dt_util.utcnow() + timedelta(seconds=30)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         assert (

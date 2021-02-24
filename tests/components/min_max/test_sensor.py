@@ -26,7 +26,7 @@ MEAN_4_DIGITS = round(sum(VALUES) / COUNT, 4)
 MEDIAN = round(statistics.median(VALUES), 2)
 
 
-async def test_min_sensor.opp):
+async def test_min_sensor(opp):
     """Test the min sensor."""
     config = {
         "sensor": {
@@ -37,7 +37,7 @@ async def test_min_sensor.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -56,7 +56,7 @@ async def test_min_sensor.opp):
     assert MEDIAN == state.attributes.get("median")
 
 
-async def test_max_sensor.opp):
+async def test_max_sensor(opp):
     """Test the max sensor."""
     config = {
         "sensor": {
@@ -67,7 +67,7 @@ async def test_max_sensor.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -86,7 +86,7 @@ async def test_max_sensor.opp):
     assert MEDIAN == state.attributes.get("median")
 
 
-async def test_mean_sensor.opp):
+async def test_mean_sensor(opp):
     """Test the mean sensor."""
     config = {
         "sensor": {
@@ -97,7 +97,7 @@ async def test_mean_sensor.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -116,7 +116,7 @@ async def test_mean_sensor.opp):
     assert MEDIAN == state.attributes.get("median")
 
 
-async def test_mean_1_digit_sensor.opp):
+async def test_mean_1_digit_sensor(opp):
     """Test the mean with 1-digit precision sensor."""
     config = {
         "sensor": {
@@ -128,7 +128,7 @@ async def test_mean_1_digit_sensor.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -147,7 +147,7 @@ async def test_mean_1_digit_sensor.opp):
     assert MEDIAN == state.attributes.get("median")
 
 
-async def test_mean_4_digit_sensor.opp):
+async def test_mean_4_digit_sensor(opp):
     """Test the mean with 1-digit precision sensor."""
     config = {
         "sensor": {
@@ -159,7 +159,7 @@ async def test_mean_4_digit_sensor.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -178,7 +178,7 @@ async def test_mean_4_digit_sensor.opp):
     assert MEDIAN == state.attributes.get("median")
 
 
-async def test_median_sensor.opp):
+async def test_median_sensor(opp):
     """Test the median sensor."""
     config = {
         "sensor": {
@@ -189,7 +189,7 @@ async def test_median_sensor.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -208,7 +208,7 @@ async def test_median_sensor.opp):
     assert MEAN == state.attributes.get("mean")
 
 
-async def test_not_enough_sensor_value.opp):
+async def test_not_enough_sensor_value(opp):
     """Test that there is nothing done if not enough values available."""
     config = {
         "sensor": {
@@ -219,7 +219,7 @@ async def test_not_enough_sensor_value.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -266,7 +266,7 @@ async def test_not_enough_sensor_value.opp):
     assert state.attributes.get("max_value") is None
 
 
-async def test_different_unit_of_measurement.opp):
+async def test_different_unit_of_measurement(opp):
     """Test for different unit of measurement."""
     config = {
         "sensor": {
@@ -277,7 +277,7 @@ async def test_different_unit_of_measurement.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -313,7 +313,7 @@ async def test_different_unit_of_measurement.opp):
     assert state.attributes.get("unit_of_measurement") == "ERR"
 
 
-async def test_last_sensor.opp):
+async def test_last_sensor(opp):
     """Test the last sensor."""
     config = {
         "sensor": {
@@ -324,7 +324,7 @@ async def test_last_sensor.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     entity_ids = config["sensor"]["entity_ids"]
@@ -342,7 +342,7 @@ async def test_last_sensor.opp):
     assert MEDIAN == state.attributes.get("median")
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload filter sensors."""
     opp.states.async_set("sensor.test_1", 12345)
     opp.states.async_set("sensor.test_2", 45678)

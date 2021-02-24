@@ -33,12 +33,12 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Risco from a config entry."""
     data = entry.data
     risco = RiscoAPI(data[CONF_USERNAME], data[CONF_PASSWORD], data[CONF_PIN])
     try:
-        await risco.login(async_get_clientsession.opp))
+        await risco.login(async_get_clientsession(opp))
     except CannotConnectError as error:
         raise ConfigEntryNotReady() from error
     except UnauthorizedError:
@@ -74,7 +74,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -92,7 +92,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def _update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 

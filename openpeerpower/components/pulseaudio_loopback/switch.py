@@ -31,7 +31,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Read in all of our configuration, and initialize the loopback switch."""
     name = config.get(CONF_NAME)
     sink_name = config.get(CONF_SINK_NAME)

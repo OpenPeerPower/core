@@ -34,7 +34,7 @@ AUTH_HELP_URL_VALUE = (
 )
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.
@@ -47,7 +47,7 @@ async def validate_input.opp: core.OpenPeerPower, data):
         delay=data[CONF_DELAY],
     )
 
-    info = await async_connect_or_timeout.opp, roomba)
+    info = await async_connect_or_timeout(opp, roomba)
 
     return {
         ROOMBA_SESSION: info[ROOMBA_SESSION],

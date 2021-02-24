@@ -14,7 +14,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_engine.opp, config, discovery_info=None):
+def get_engine(opp, config, discovery_info=None):
     """Set up Demo speech component."""
     return DemoProvider(config.get(CONF_LANG, DEFAULT_LANG))
 

@@ -14,7 +14,7 @@ from openpeerpower.components.hue import sensor_base as hue_sensor_base
 from openpeerpower.setup import async_setup_component
 
 
-async def setup_component.opp):
+async def setup_component(opp):
     """Hue component."""
     with patch.object(hue, "async_setup_entry", return_value=True):
         assert (
@@ -32,10 +32,10 @@ async def test_hue_activate_scene_both_responds(
 ):
     """Test that makes both bridges successfully activate a scene."""
 
-    await setup_component.opp)
+    await setup_component(opp)
 
-    await setup_bridge.opp, mock_bridge1, mock_config_entry1)
-    await setup_bridge.opp, mock_bridge2, mock_config_entry2)
+    await setup_bridge(opp, mock_bridge1, mock_config_entry1)
+    await setup_bridge(opp, mock_bridge2, mock_config_entry2)
 
     with patch.object(
         mock_bridge1, "hue_activate_scene", return_value=None
@@ -58,10 +58,10 @@ async def test_hue_activate_scene_one_responds(
 ):
     """Test that makes only one bridge successfully activate a scene."""
 
-    await setup_component.opp)
+    await setup_component(opp)
 
-    await setup_bridge.opp, mock_bridge1, mock_config_entry1)
-    await setup_bridge.opp, mock_bridge2, mock_config_entry2)
+    await setup_bridge(opp, mock_bridge1, mock_config_entry1)
+    await setup_bridge(opp, mock_bridge2, mock_config_entry2)
 
     with patch.object(
         mock_bridge1, "hue_activate_scene", return_value=None
@@ -84,10 +84,10 @@ async def test_hue_activate_scene_zero_responds(
 ):
     """Test that makes no bridge successfully activate a scene."""
 
-    await setup_component.opp)
+    await setup_component(opp)
 
-    await setup_bridge.opp, mock_bridge1, mock_config_entry1)
-    await setup_bridge.opp, mock_bridge2, mock_config_entry2)
+    await setup_bridge(opp, mock_bridge1, mock_config_entry1)
+    await setup_bridge(opp, mock_bridge2, mock_config_entry2)
 
     with patch.object(
         mock_bridge1, "hue_activate_scene", return_value=False
@@ -106,7 +106,7 @@ async def test_hue_activate_scene_zero_responds(
     assert mock_hue_activate_scene2.call_count == 2
 
 
-async def setup_bridge.opp, mock_bridge, config_entry):
+async def setup_bridge(opp, mock_bridge, config_entry):
     """Load the Hue light platform with the provided bridge."""
     mock_bridge.config_entry = config_entry
     opp.data[hue.DOMAIN][config_entry.entry_id] = mock_bridge
@@ -143,16 +143,16 @@ def create_config_entry():
 @pytest.fixture
 def mock_bridge1.opp):
     """Mock a Hue bridge."""
-    return create_mock_bridge.opp)
+    return create_mock_bridge(opp)
 
 
 @pytest.fixture
 def mock_bridge2.opp):
     """Mock a Hue bridge."""
-    return create_mock_bridge.opp)
+    return create_mock_bridge(opp)
 
 
-def create_mock_bridge.opp):
+def create_mock_bridge(opp):
     """Create a mock Hue bridge."""
     bridge = Mock(
         opp.opp,

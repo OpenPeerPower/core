@@ -153,27 +153,27 @@ def test_valid_file_path():
     assert not fb.valid_file_path("test_path")
 
 
-async def test_setup_platform.opp, mock_healthybox):
+async def test_setup_platform(opp, mock_healthybox):
     """Set up platform with one entity."""
-    await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
 
-async def test_setup_platform_with_auth.opp, mock_healthybox):
+async def test_setup_platform_with_auth(opp, mock_healthybox):
     """Set up platform with one entity and auth."""
     valid_config_auth = VALID_CONFIG.copy()
     valid_config_auth[ip.DOMAIN][CONF_USERNAME] = MOCK_USERNAME
     valid_config_auth[ip.DOMAIN][CONF_PASSWORD] = MOCK_PASSWORD
 
-    await async_setup_component.opp, ip.DOMAIN, valid_config_auth)
+    await async_setup_component(opp, ip.DOMAIN, valid_config_auth)
     await opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
 
-async def test_process_image.opp, mock_healthybox, mock_image):
+async def test_process_image(opp, mock_healthybox, mock_image):
     """Test successful processing of an image."""
-    await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
@@ -215,9 +215,9 @@ async def test_process_image.opp, mock_healthybox, mock_image):
     )
 
 
-async def test_process_image_errors.opp, mock_healthybox, mock_image, caplog):
+async def test_process_image_errors(opp, mock_healthybox, mock_image, caplog):
     """Test process_image errors."""
-    await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
@@ -249,7 +249,7 @@ async def test_teach_service(
     opp. mock_healthybox, mock_image, mock_isfile, mock_open_file, caplog
 ):
     """Test teaching of facebox."""
-    await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
     assert.opp.states.get(VALID_ENTITY_ID)
 
@@ -316,14 +316,14 @@ async def test_teach_service(
         assert "ConnectionError: Is facebox running?" in caplog.text
 
 
-async def test_setup_platform_with_name.opp, mock_healthybox):
+async def test_setup_platform_with_name(opp, mock_healthybox):
     """Set up platform with one entity and a name."""
     named_entity_id = f"image_processing.{MOCK_NAME}"
 
     valid_config_named = VALID_CONFIG.copy()
     valid_config_named[ip.DOMAIN][ip.CONF_SOURCE][ip.CONF_NAME] = MOCK_NAME
 
-    await async_setup_component.opp, ip.DOMAIN, valid_config_named)
+    await async_setup_component(opp, ip.DOMAIN, valid_config_named)
     await opp.async_block_till_done()
     assert.opp.states.get(named_entity_id)
     state = opp.states.get(named_entity_id)

@@ -60,13 +60,13 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
             pass
 
     opp.async_create_task(
-        discovery.async_load_platform.opp, "notify", DOMAIN, {}, config)
+        discovery.async_load_platform(opp, "notify", DOMAIN, {}, config)
     )
 
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up a mobile_app entry."""
     registration = entry.data
 
@@ -74,7 +74,7 @@ async def async_setup_entry.opp, entry):
 
     opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id] = entry
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
 
     device = device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
@@ -88,19 +88,19 @@ async def async_setup_entry.opp, entry):
     opp.data[DOMAIN][DATA_DEVICES][webhook_id] = device
 
     registration_name = f"Mobile App: {registration[ATTR_DEVICE_NAME]}"
-    webhook_register.opp, DOMAIN, registration_name, webhook_id, handle_webhook)
+    webhook_register(opp, DOMAIN, registration_name, webhook_id, handle_webhook)
 
     for domain in PLATFORMS:
         opp.async_create_task(
             opp.config_entries.async_forward_entry_setup(entry, domain)
         )
 
-    await opp_notify.async_reload.opp, DOMAIN)
+    await opp_notify.async_reload(opp, DOMAIN)
 
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a mobile app entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -115,22 +115,22 @@ async def async_unload_entry.opp, entry):
 
     webhook_id = entry.data[CONF_WEBHOOK_ID]
 
-    webhook_unregister.opp, webhook_id)
+    webhook_unregister(opp, webhook_id)
     del.opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
     del.opp.data[DOMAIN][DATA_DEVICES][webhook_id]
-    await opp_notify.async_reload.opp, DOMAIN)
+    await opp_notify.async_reload(opp, DOMAIN)
 
     return True
 
 
-async def async_remove_entry.opp, entry):
+async def async_remove_entry(opp, entry):
     """Cleanup when entry is removed."""
     opp.data[DOMAIN][DATA_DELETED_IDS].append(entry.data[CONF_WEBHOOK_ID])
     store = opp.data[DOMAIN][DATA_STORE]
-    await store.async_save(savable_state.opp))
+    await store.async_save(savable_state(opp))
 
     if CONF_CLOUDHOOK_URL in entry.data:
         try:
-            await cloud.async_delete_cloudhook.opp, entry.data[CONF_WEBHOOK_ID])
+            await cloud.async_delete_cloudhook(opp, entry.data[CONF_WEBHOOK_ID])
         except cloud.CloudNotAvailable:
             pass

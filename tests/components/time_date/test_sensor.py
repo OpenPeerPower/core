@@ -17,7 +17,7 @@ def restore_ts():
 
 
 # pylint: disable=protected-access
-async def test_intervals.opp):
+async def test_intervals(opp):
     """Test timing intervals of sensors."""
     device = time_date.TimeDateSensor.opp, "time")
     now = dt_util.utc_from_timestamp(45.5)
@@ -43,7 +43,7 @@ async def test_intervals.opp):
     assert next_time > now
 
 
-async def test_states.opp):
+async def test_states(opp):
     """Test states of sensors."""
     now = dt_util.utc_from_timestamp(1495068856)
     device = time_date.TimeDateSensor.opp, "time")
@@ -77,7 +77,7 @@ async def test_states.opp):
     assert device.state == "2017-05-18T00:54:00"
 
 
-async def test_states_non_default_timezone.opp):
+async def test_states_non_default_timezone(opp):
     """Test states of sensors in a timezone other than UTC."""
     new_tz = dt_util.get_time_zone("America/New_York")
     assert new_tz is not None
@@ -114,7 +114,7 @@ async def test_states_non_default_timezone.opp):
 
 
 # pylint: disable=no-member
-async def test_timezone_intervals.opp):
+async def test_timezone_intervals(opp):
     """Test date sensor behavior in a timezone besides UTC."""
     new_tz = dt_util.get_time_zone("America/New_York")
     assert new_tz is not None
@@ -168,7 +168,7 @@ async def test_timezone_intervals.opp):
     "openpeerpower.util.dt.utcnow",
     return_value=dt_util.parse_datetime("2017-11-14 02:47:19-00:00"),
 )
-async def test_timezone_intervals_empty_parameter.opp):
+async def test_timezone_intervals_empty_parameter(opp):
     """Test get_interval() without parameters."""
     new_tz = dt_util.get_time_zone("America/Edmonton")
     assert new_tz is not None
@@ -178,7 +178,7 @@ async def test_timezone_intervals_empty_parameter.opp):
     assert next_time.timestamp() == dt_util.as_timestamp("2017-11-14 00:00:00-07:00")
 
 
-async def test_icons.opp):
+async def test_icons(opp):
     """Test attributes of sensors."""
     device = time_date.TimeDateSensor.opp, "time")
     assert device.icon == "mdi:clock"

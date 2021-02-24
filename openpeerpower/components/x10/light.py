@@ -38,7 +38,7 @@ def get_unit_status(code):
     return int(output.decode("utf-8")[0])
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the x10 Light platform."""
     is_cm11a = True
     try:

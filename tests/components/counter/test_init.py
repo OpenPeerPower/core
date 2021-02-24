@@ -65,7 +65,7 @@ def storage_setup_opp, opp_storage):
             }
         if config is None:
             config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
@@ -75,10 +75,10 @@ async def test_config(opp):
     invalid_configs = [None, 1, {}, {"name with space": None}]
 
     for cfg in invalid_configs:
-        assert not await async_setup_component.opp, DOMAIN, {DOMAIN: cfg})
+        assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
-async def test_config_options.opp):
+async def test_config_options(opp):
     """Test configuration options."""
     count_start = len.opp.states.async_entity_ids())
 
@@ -98,7 +98,7 @@ async def test_config_options.opp):
         }
     }
 
-    assert await async_setup_component.opp, "counter", config)
+    assert await async_setup_component(opp, "counter", config)
     await opp.async_block_till_done()
 
     _LOGGER.debug("ENTITIES: %s", opp.states.async_entity_ids())
@@ -126,36 +126,36 @@ async def test_config_options.opp):
     assert DEFAULT_STEP == state_3.attributes.get(ATTR_STEP)
 
 
-async def test_methods.opp):
+async def test_methods(opp):
     """Test increment, decrement, and reset methods."""
     config = {DOMAIN: {"test_1": {}}}
 
-    assert await async_setup_component.opp, "counter", config)
+    assert await async_setup_component(opp, "counter", config)
 
     entity_id = "counter.test_1"
 
     state = opp.states.get(entity_id)
     assert 0 == int(state.state)
 
-    async_increment.opp, entity_id)
+    async_increment(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 1 == int(state.state)
 
-    async_increment.opp, entity_id)
+    async_increment(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 2 == int(state.state)
 
-    async_decrement.opp, entity_id)
+    async_decrement(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 1 == int(state.state)
 
-    async_reset.opp, entity_id)
+    async_reset(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -168,33 +168,33 @@ async def test_methods_with_config(opp):
         DOMAIN: {"test": {CONF_NAME: "Hello World", CONF_INITIAL: 10, CONF_STEP: 5}}
     }
 
-    assert await async_setup_component.opp, "counter", config)
+    assert await async_setup_component(opp, "counter", config)
 
     entity_id = "counter.test"
 
     state = opp.states.get(entity_id)
     assert 10 == int(state.state)
 
-    async_increment.opp, entity_id)
+    async_increment(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 15 == int(state.state)
 
-    async_increment.opp, entity_id)
+    async_increment(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 20 == int(state.state)
 
-    async_decrement.opp, entity_id)
+    async_decrement(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 15 == int(state.state)
 
 
-async def test_initial_state_overrules_restore_state.opp):
+async def test_initial_state_overrules_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp. (State("counter.test1", "11"), State("counter.test2", "-22"))
@@ -222,7 +222,7 @@ async def test_initial_state_overrules_restore_state.opp):
     assert int(state.state) == 10
 
 
-async def test_restore_state_overrules_initial_state.opp):
+async def test_restore_state_overrules_initial_state(opp):
     """Ensure states are restored on startup."""
 
     attr = {"initial": 6, "minimum": 1, "maximum": 8, "step": 2}
@@ -259,20 +259,20 @@ async def test_restore_state_overrules_initial_state.opp):
     assert state.attributes.get("step") == 2
 
 
-async def test_no_initial_state_and_no_restore_state.opp):
+async def test_no_initial_state_and_no_restore_state(opp):
     """Ensure that entity is create without initial and restore feature."""
     opp.state = CoreState.starting
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_STEP: 5}}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"test1": {CONF_STEP: 5}}})
 
     state = opp.states.get("counter.test1")
     assert state
     assert int(state.state) == 0
 
 
-async def test_counter_context.opp, opp_admin_user):
+async def test_counter_context(opp, opp_admin_user):
     """Test that counter context works."""
-    assert await async_setup_component.opp, "counter", {"counter": {"test": {}}})
+    assert await async_setup_component(opp, "counter", {"counter": {"test": {}}})
 
     state = opp.states.get("counter.test")
     assert state is not None
@@ -282,7 +282,7 @@ async def test_counter_context.opp, opp_admin_user):
         "increment",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -291,7 +291,7 @@ async def test_counter_context.opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_counter_min.opp, opp_admin_user):
+async def test_counter_min(opp, opp_admin_user):
     """Test that min works."""
     assert await async_setup_component(
         opp. "counter", {"counter": {"test": {"minimum": "0", "initial": "0"}}}
@@ -306,7 +306,7 @@ async def test_counter_min.opp, opp_admin_user):
         "decrement",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -318,7 +318,7 @@ async def test_counter_min.opp, opp_admin_user):
         "increment",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -326,7 +326,7 @@ async def test_counter_min.opp, opp_admin_user):
     assert state2.state == "1"
 
 
-async def test_counter_max.opp, opp_admin_user):
+async def test_counter_max(opp, opp_admin_user):
     """Test that max works."""
     assert await async_setup_component(
         opp. "counter", {"counter": {"test": {"maximum": "0", "initial": "0"}}}
@@ -341,7 +341,7 @@ async def test_counter_max.opp, opp_admin_user):
         "increment",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -353,7 +353,7 @@ async def test_counter_max.opp, opp_admin_user):
         "decrement",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -361,7 +361,7 @@ async def test_counter_max.opp, opp_admin_user):
     assert state2.state == "-1"
 
 
-async def test_configure.opp, opp_admin_user):
+async def test_configure(opp, opp_admin_user):
     """Test that setting values through configure works."""
     assert await async_setup_component(
         opp. "counter", {"counter": {"test": {"maximum": "10", "initial": "10"}}}
@@ -378,7 +378,7 @@ async def test_configure.opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "maximum": 0},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -392,7 +392,7 @@ async def test_configure.opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "maximum": None},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -407,7 +407,7 @@ async def test_configure.opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "minimum": 5},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -421,7 +421,7 @@ async def test_configure.opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "minimum": None},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -436,7 +436,7 @@ async def test_configure.opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "step": 3},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -450,7 +450,7 @@ async def test_configure.opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "value": 6},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -463,7 +463,7 @@ async def test_configure.opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "initial": 5},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -484,7 +484,7 @@ async def test_configure.opp, opp_admin_user):
             "initial": 6,
         },
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id(opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -496,7 +496,7 @@ async def test_configure.opp, opp_admin_user):
     assert 6 == state.attributes.get("initial")
 
 
-async def test_load_from_storage.opp, storage_setup):
+async def test_load_from_storage(opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
     state = opp.states.get(f"{DOMAIN}.from_storage")
@@ -505,7 +505,7 @@ async def test_load_from_storage.opp, storage_setup):
     assert state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_editable_state_attribute.opp, storage_setup):
+async def test_editable_state_attribute(opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(
         config={
@@ -531,7 +531,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert state.attributes[ATTR_EDITABLE] is False
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(
         config={
@@ -547,7 +547,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
         }
     )
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -563,19 +563,19 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -588,7 +588,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update_min_max.opp, opp_ws_client, storage_setup):
+async def test_update_min_max(opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     items = [
@@ -606,7 +606,7 @@ async def test_update_min_max.opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
@@ -616,7 +616,7 @@ async def test_update_min_max.opp, opp_ws_client, storage_setup):
     assert state.attributes[ATTR_STEP] == 3
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -674,7 +674,7 @@ async def test_update_min_max.opp, opp_ws_client, storage_setup):
     assert state.attributes[ATTR_STEP] == 6
 
 
-async def test_create.opp, opp_ws_client, storage_setup):
+async def test_create(opp, opp_ws_client, storage_setup):
     """Test creating counter using WS."""
 
     items = []
@@ -683,13 +683,13 @@ async def test_create.opp, opp_ws_client, storage_setup):
 
     counter_id = "new_counter"
     input_entity_id = f"{DOMAIN}.{counter_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, counter_id) is None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/create", "name": "new counter"})
     resp = await client.receive_json()

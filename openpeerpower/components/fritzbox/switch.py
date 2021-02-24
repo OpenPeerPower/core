@@ -23,7 +23,7 @@ from .const import (
 ATTR_TOTAL_CONSUMPTION_UNIT_VALUE = ENERGY_KILO_WATT_HOUR
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Fritzbox smarthome switch from config_entry."""
     entities = []
     devices = opp.data[FRITZBOX_DOMAIN][CONF_DEVICES]

@@ -22,7 +22,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the World clock sensor."""
     name = config.get(CONF_NAME)
     time_zone = dt_util.get_time_zone(config.get(CONF_TIME_ZONE))

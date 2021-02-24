@@ -77,11 +77,11 @@ def setup(opp, config):
         """Call ArloHub to refresh information."""
         _LOGGER.debug("Updating Arlo Hub component")
         opp.data[DATA_ARLO].update(update_cameras=True, update_base_station=True)
-        dispatcher_send.opp, SIGNAL_UPDATE_ARLO)
+        dispatcher_send(opp, SIGNAL_UPDATE_ARLO)
 
     # register service
     opp.services.register(DOMAIN, "update", hub_refresh)
 
     # register scan interval for ArloHub
-    track_time_interval.opp, hub_refresh, scan_interval)
+    track_time_interval(opp, hub_refresh, scan_interval)
     return True

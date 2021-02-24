@@ -77,7 +77,7 @@ async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up Canary from a config entry."""
     if not entry.options:
         options = {
@@ -115,7 +115,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -133,7 +133,7 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     return unload_ok
 
 
-async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 

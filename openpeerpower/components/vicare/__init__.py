@@ -91,6 +91,6 @@ def setup(opp, config):
     opp.data[DOMAIN][VICARE_HEATING_TYPE] = heating_type
 
     for platform in VICARE_PLATFORMS:
-        discovery.load_platform.opp, platform, DOMAIN, {}, config)
+        discovery.load_platform(opp, platform, DOMAIN, {}, config)
 
     return True

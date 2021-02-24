@@ -81,7 +81,7 @@ def setup(opp, config):
     _LOGGER.debug("Loading components for XS1 platform...")
     # Load components for supported devices
     for component in XS1_COMPONENTS:
-        discovery.load_platform.opp, component, DOMAIN, {}, config)
+        discovery.load_platform(opp, component, DOMAIN, {}, config)
 
     return True
 

@@ -123,6 +123,6 @@ class OpenWeatherMapOptionsFlow(config_entries.OptionsFlow):
         )
 
 
-async def _is_owm_api_online.opp, api_key, lat, lon):
+async def _is_owm_api_online(opp, api_key, lat, lon):
     owm = OWM(api_key).weather_manager()
     return await opp.async_add_executor_job(owm.one_call, lat, lon)

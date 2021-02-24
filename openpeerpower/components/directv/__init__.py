@@ -34,9 +34,9 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up DirecTV from a config entry."""
-    dtv = DIRECTV(entry.data[CONF_HOST], session=async_get_clientsession.opp))
+    dtv = DIRECTV(entry.data[CONF_HOST], session=async_get_clientsession(opp))
 
     try:
         await dtv.update()
@@ -53,7 +53,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

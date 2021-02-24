@@ -67,11 +67,11 @@ async def async_setup(opp, config):
         entity_ids = service.data.get(ATTR_ENTITY_ID)
 
         if service.service == SERVICE_START:
-            async_dispatcher_send.opp, SIGNAL_FFMPEG_START, entity_ids)
+            async_dispatcher_send(opp, SIGNAL_FFMPEG_START, entity_ids)
         elif service.service == SERVICE_STOP:
-            async_dispatcher_send.opp, SIGNAL_FFMPEG_STOP, entity_ids)
+            async_dispatcher_send(opp, SIGNAL_FFMPEG_STOP, entity_ids)
         else:
-            async_dispatcher_send.opp, SIGNAL_FFMPEG_RESTART, entity_ids)
+            async_dispatcher_send(opp, SIGNAL_FFMPEG_RESTART, entity_ids)
 
     opp.services.async_register(
         DOMAIN, SERVICE_START, async_service_handle, schema=SERVICE_FFMPEG_SCHEMA

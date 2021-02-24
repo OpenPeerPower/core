@@ -58,7 +58,7 @@ TUYA_STATE_TO_HA = {value: key for key, value in OP_STATE_TO_TUYA.items()}
 FAN_MODES = {FAN_LOW, FAN_MEDIUM, FAN_HIGH}
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up tuya sensors dynamically through tuya discovery."""
 
     platform = config_entry.data[CONF_PLATFORM]
@@ -83,7 +83,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
     await async_discover_sensor(devices_ids)
 
 
-def _setup_entities.opp, dev_ids, platform):
+def _setup_entities(opp, dev_ids, platform):
     """Set up Tuya Climate device."""
     tuya = opp.data[DOMAIN][TUYA_DATA]
     entities = []

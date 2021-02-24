@@ -13,7 +13,7 @@ from tests.components.advantage_air import (
 )
 
 
-async def test_async_setup_entry.opp, aioclient_mock):
+async def test_async_setup_entry(opp, aioclient_mock):
     """Test a successful setup entry and unload."""
 
     aioclient_mock.get(
@@ -29,7 +29,7 @@ async def test_async_setup_entry.opp, aioclient_mock):
     assert entry.state == ENTRY_STATE_NOT_LOADED
 
 
-async def test_async_setup_entry_failure.opp, aioclient_mock):
+async def test_async_setup_entry_failure(opp, aioclient_mock):
     """Test a unsuccessful setup entry."""
 
     aioclient_mock.get(

@@ -9,14 +9,14 @@ from openpeerpower.config import async_process_op_core_config
 from tests.common import MockConfigEntry, async_mock_signal
 
 
-async def test_service_show_view.opp, mock_zeroconf):
+async def test_service_show_view(opp, mock_zeroconf):
     """Test we don't set app id in prod."""
     await async_process_op_core_config(
         opp,
         {"external_url": "https://example.com"},
     )
-    await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
-    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
+    await open_peer_power_cast.async_setup_op_cast(opp, MockConfigEntry())
+    calls = async_mock_signal(opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
     await opp.services.async_call(
         "cast",
@@ -36,14 +36,14 @@ async def test_service_show_view.opp, mock_zeroconf):
     assert url_path is None
 
 
-async def test_service_show_view_dashboard.opp, mock_zeroconf):
+async def test_service_show_view_dashboard(opp, mock_zeroconf):
     """Test casting a specific dashboard."""
     await async_process_op_core_config(
         opp,
         {"external_url": "https://example.com"},
     )
-    await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
-    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
+    await open_peer_power_cast.async_setup_op_cast(opp, MockConfigEntry())
+    calls = async_mock_signal(opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
     await opp.services.async_call(
         "cast",
@@ -63,7 +63,7 @@ async def test_service_show_view_dashboard.opp, mock_zeroconf):
     assert url_path == "mock-dashboard"
 
 
-async def test_use_cloud_url.opp, mock_zeroconf):
+async def test_use_cloud_url(opp, mock_zeroconf):
     """Test that we fall back to cloud url."""
     await async_process_op_core_config(
         opp,
@@ -71,8 +71,8 @@ async def test_use_cloud_url.opp, mock_zeroconf):
     )
     opp.config.components.add("cloud")
 
-    await open_peer_power_cast.async_setup_op_cast.opp, MockConfigEntry())
-    calls = async_mock_signal.opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
+    await open_peer_power_cast.async_setup_op_cast(opp, MockConfigEntry())
+    calls = async_mock_signal(opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
 
     with patch(
         "openpeerpower.components.cloud.async_remote_ui_url",

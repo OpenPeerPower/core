@@ -54,7 +54,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up an Meteo-France account from a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -180,7 +180,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     if opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]:
 
@@ -210,6 +210,6 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return unload_ok
 
 
-async def _async_update_listener.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)

@@ -29,7 +29,7 @@ CAMERA_SERVICE_UPDATE_FILE_PATH = CAMERA_SERVICE_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Camera that works with local files."""
     if DATA_LOCAL_FILE not in.opp.data:
         opp.data[DATA_LOCAL_FILE] = []

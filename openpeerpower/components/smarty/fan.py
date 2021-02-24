@@ -22,7 +22,7 @@ DEFAULT_ON_PERCENTAGE = 66
 SPEED_RANGE = (1, 3)  # off is not included
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Smarty Fan Platform."""
     smarty = opp.data[DOMAIN]["api"]
     name = opp.data[DOMAIN]["name"]

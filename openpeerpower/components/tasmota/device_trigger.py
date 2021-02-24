@@ -152,7 +152,7 @@ class Trigger:
         self.subtype = tasmota_trigger_cfg.subtype
 
 
-async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash):
+async def async_setup_trigger(opp, tasmota_trigger, config_entry, discovery_hash):
     """Set up a discovered Tasmota device trigger."""
     discovery_id = tasmota_trigger.cfg.trigger_id
     remove_update_signal = None
@@ -172,7 +172,7 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash
                 device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
                 await device_trigger.tasmota_trigger.unsubscribe_topics()
                 device_trigger.detach_trigger()
-                clear_discovery_hash.opp, discovery_hash)
+                clear_discovery_hash(opp, discovery_hash)
                 remove_update_signal()
             return
 
@@ -224,9 +224,9 @@ async def async_setup_trigger.opp, tasmota_trigger, config_entry, discovery_hash
     await device_trigger.arm_tasmota_trigger()
 
 
-async def async_remove_triggers.opp: OpenPeerPower, device_id: str):
+async def async_remove_triggers(opp: OpenPeerPower, device_id: str):
     """Cleanup any device triggers for a Tasmota device."""
-    triggers = await async_get_triggers.opp, device_id)
+    triggers = await async_get_triggers(opp, device_id)
     for trig in triggers:
         device_trigger = opp.data[DEVICE_TRIGGERS].pop(trig[CONF_DISCOVERY_ID])
         if device_trigger:
@@ -234,11 +234,11 @@ async def async_remove_triggers.opp: OpenPeerPower, device_id: str):
 
             await device_trigger.tasmota_trigger.unsubscribe_topics()
             device_trigger.detach_trigger()
-            clear_discovery_hash.opp, discovery_hash)
+            clear_discovery_hash(opp, discovery_hash)
             device_trigger.remove_update_signal()
 
 
-async def async_get_triggers.opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for a Tasmota device."""
     triggers = []
 

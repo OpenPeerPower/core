@@ -149,7 +149,7 @@ def test_entities_all_control():
     assert compiled("switch.kitchen", "control") is True
 
 
-def test_entities_device_id_boolean.opp):
+def test_entities_device_id_boolean(opp):
     """Test entity ID policy applying control on device id."""
     entity_registry = mock_registry(
         opp,
@@ -168,7 +168,7 @@ def test_entities_device_id_boolean.opp):
             ),
         },
     )
-    device_registry = mock_device_registry.opp)
+    device_registry = mock_device_registry(opp)
 
     policy = {"device_ids": {"mock-allowed-dev-id": {"read": True}}}
     ENTITY_POLICY_SCHEMA(policy)
@@ -189,7 +189,7 @@ def test_entities_areas_true():
     assert compiled("light.kitchen", "read") is True
 
 
-def test_entities_areas_area_true.opp):
+def test_entities_areas_area_true(opp):
     """Test entity ID policy for areas with specific area."""
     entity_registry = mock_registry(
         opp,

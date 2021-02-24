@@ -55,9 +55,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the departure sensor."""
-    httpsession = async_get_clientsession.opp)
+    httpsession = async_get_clientsession(opp)
     train_api = TrafikverketTrain(httpsession, config[CONF_API_KEY])
     sensors = []
     station_cache = {}

@@ -7,7 +7,7 @@ from openpeerpower.helpers.entity import ToggleEntity
 from . import ACTUATORS, DOMAIN as COMPONENT_DOMAIN, XS1DeviceEntity
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the XS1 switch platform."""
     actuators = opp.data[COMPONENT_DOMAIN][ACTUATORS]
 

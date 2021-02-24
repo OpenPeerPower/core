@@ -31,7 +31,7 @@ ATTRIBUTION = "Data provided by https://creativecommons.tankerkoenig.de"
 ICON = "mdi:gas-station"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the tankerkoenig sensors."""
 
     if discovery_info is None:

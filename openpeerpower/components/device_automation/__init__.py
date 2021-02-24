@@ -78,7 +78,7 @@ async def async_get_device_automation_platform(
     """
     platform_name = TYPES[automation_type][0]
     try:
-        integration = await async_get_integration_with_requirements.opp, domain)
+        integration = await async_get_integration_with_requirements(opp, domain)
         platform = integration.get_platform(platform_name)
     except IntegrationNotFound as err:
         raise InvalidDeviceAutomationConfig(
@@ -108,7 +108,7 @@ async def _async_get_device_automations_from_domain(
     return await getattr(platform, function_name).opp, device_id)
 
 
-async def _async_get_device_automations.opp, automation_type, device_id):
+async def _async_get_device_automations(opp, automation_type, device_id):
     """List device automations."""
     device_registry, entity_registry = await asyncio.gather(
         opp.helpers.device_registry.async_get_registry(),
@@ -145,7 +145,7 @@ async def _async_get_device_automations.opp, automation_type, device_id):
     return automations
 
 
-async def _async_get_device_automation_capabilities.opp, automation_type, automation):
+async def _async_get_device_automation_capabilities(opp, automation_type, automation):
     """List device automations."""
     try:
         platform = await async_get_device_automation_platform(
@@ -182,7 +182,7 @@ def handle_device_errors(func):
     """Handle device automation errors."""
 
     @wraps(func)
-    async def with_error_handling.opp, connection, msg):
+    async def with_error_handling(opp, connection, msg):
         try:
             await func.opp, connection, msg)
         except DeviceNotFound:
@@ -201,10 +201,10 @@ def handle_device_errors(func):
 )
 @websocket_api.async_response
 @handle_device_errors
-async def websocket_device_automation_list_actions.opp, connection, msg):
+async def websocket_device_automation_list_actions(opp, connection, msg):
     """Handle request for device actions."""
     device_id = msg["device_id"]
-    actions = await _async_get_device_automations.opp, "action", device_id)
+    actions = await _async_get_device_automations(opp, "action", device_id)
     connection.send_result(msg["id"], actions)
 
 
@@ -216,10 +216,10 @@ async def websocket_device_automation_list_actions.opp, connection, msg):
 )
 @websocket_api.async_response
 @handle_device_errors
-async def websocket_device_automation_list_conditions.opp, connection, msg):
+async def websocket_device_automation_list_conditions(opp, connection, msg):
     """Handle request for device conditions."""
     device_id = msg["device_id"]
-    conditions = await _async_get_device_automations.opp, "condition", device_id)
+    conditions = await _async_get_device_automations(opp, "condition", device_id)
     connection.send_result(msg["id"], conditions)
 
 
@@ -231,10 +231,10 @@ async def websocket_device_automation_list_conditions.opp, connection, msg):
 )
 @websocket_api.async_response
 @handle_device_errors
-async def websocket_device_automation_list_triggers.opp, connection, msg):
+async def websocket_device_automation_list_triggers(opp, connection, msg):
     """Handle request for device triggers."""
     device_id = msg["device_id"]
-    triggers = await _async_get_device_automations.opp, "trigger", device_id)
+    triggers = await _async_get_device_automations(opp, "trigger", device_id)
     connection.send_result(msg["id"], triggers)
 
 
@@ -246,7 +246,7 @@ async def websocket_device_automation_list_triggers.opp, connection, msg):
 )
 @websocket_api.async_response
 @handle_device_errors
-async def websocket_device_automation_get_action_capabilities.opp, connection, msg):
+async def websocket_device_automation_get_action_capabilities(opp, connection, msg):
     """Handle request for device action capabilities."""
     action = msg["action"]
     capabilities = await _async_get_device_automation_capabilities(
@@ -263,7 +263,7 @@ async def websocket_device_automation_get_action_capabilities.opp, connection, m
 )
 @websocket_api.async_response
 @handle_device_errors
-async def websocket_device_automation_get_condition_capabilities.opp, connection, msg):
+async def websocket_device_automation_get_condition_capabilities(opp, connection, msg):
     """Handle request for device condition capabilities."""
     condition = msg["condition"]
     capabilities = await _async_get_device_automation_capabilities(
@@ -280,7 +280,7 @@ async def websocket_device_automation_get_condition_capabilities.opp, connection
 )
 @websocket_api.async_response
 @handle_device_errors
-async def websocket_device_automation_get_trigger_capabilities.opp, connection, msg):
+async def websocket_device_automation_get_trigger_capabilities(opp, connection, msg):
     """Handle request for device trigger capabilities."""
     trigger = msg["trigger"]
     capabilities = await _async_get_device_automation_capabilities(

@@ -59,7 +59,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Version sensor platform."""
 
     beta = config.get(CONF_BETA)
@@ -67,7 +67,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     name = config.get(CONF_NAME)
     source = config.get(CONF_SOURCE)
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     if beta:
         branch = "beta"

@@ -113,7 +113,7 @@ async def test_setup_name_config(opp):
     )
 
 
-async def test_switch.opp, caplog):
+async def test_switch(opp, caplog):
     """Test Pi-hole switch."""
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
@@ -161,7 +161,7 @@ async def test_switch.opp, caplog):
         assert errors[-1].message == "Unable to disable Pi-hole: Error2"
 
 
-async def test_disable_service_call.opp):
+async def test_disable_service_call(opp):
     """Test disable service call with no Pi-hole named."""
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
@@ -190,7 +190,7 @@ async def test_disable_service_call.opp):
         mocked_hole.disable.assert_called_once_with(1)
 
 
-async def test_unload.opp):
+async def test_unload(opp):
     """Test unload entities."""
     entry = MockConfigEntry(
         domain=pi_hole.DOMAIN,
@@ -203,7 +203,7 @@ async def test_unload.opp):
             CONF_STATISTICS_ONLY: True,
         },
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         await opp.config_entries.async_setup(entry.entry_id)
@@ -215,10 +215,10 @@ async def test_unload.opp):
     assert entry.entry_id not in.opp.data[pi_hole.DOMAIN]
 
 
-async def test_migrate.opp):
+async def test_migrate(opp):
     """Test migrate from old config entry."""
     entry = MockConfigEntry(domain=pi_hole.DOMAIN, data=CONF_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
@@ -228,12 +228,12 @@ async def test_migrate.opp):
     assert entry.data == CONF_CONFIG_ENTRY
 
 
-async def test_migrate_statistics_only.opp):
+async def test_migrate_statistics_only(opp):
     """Test migrate from old config entry with statistics only."""
     conf_data = {**CONF_DATA}
     conf_data[CONF_API_KEY] = ""
     entry = MockConfigEntry(domain=pi_hole.DOMAIN, data=conf_data)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):

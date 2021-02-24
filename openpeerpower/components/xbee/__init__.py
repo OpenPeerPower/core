@@ -78,7 +78,7 @@ def setup(opp, config):
         Pickles the frame, then encodes it into base64 since it contains
         non JSON serializable binary.
         """
-        dispatcher_send.opp, SIGNAL_XBEE_FRAME_RECEIVED, frame)
+        dispatcher_send(opp, SIGNAL_XBEE_FRAME_RECEIVED, frame)
 
     opp.data[DOMAIN] = zigbee_device
     opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, close_serial_port)

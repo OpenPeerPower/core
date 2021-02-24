@@ -251,7 +251,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up panel from a config entry."""
     client = AlarmPanel.opp, entry)
     # creates a panel data store in.opp.data[DOMAIN][CONF_DEVICES]
@@ -273,7 +273,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -293,7 +293,7 @@ async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def async_entry_updated.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_entry_updated(opp: OpenPeerPower, entry: ConfigEntry):
     """Reload the config entry when options change."""
     await opp.config_entries.async_reload(entry.entry_id)
 

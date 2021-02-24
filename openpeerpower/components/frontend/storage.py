@@ -11,7 +11,7 @@ DATA_STORAGE = "frontend_storage"
 STORAGE_VERSION_USER_DATA = 1
 
 
-async def async_setup_frontend_storage.opp):
+async def async_setup_frontend_storage(opp):
     """Set up frontend storage."""
     opp.data[DATA_STORAGE] = ({}, {})
     opp.components.websocket_api.async_register_command(websocket_set_user_data)
@@ -22,7 +22,7 @@ def with_store(orig_func):
     """Decorate function to provide data."""
 
     @wraps(orig_func)
-    async def with_store_func.opp, connection, msg):
+    async def with_store_func(opp, connection, msg):
         """Provide user specific data and store to function."""
         stores, data = opp.data[DATA_STORAGE]
         user_id = connection.user.id
@@ -36,7 +36,7 @@ def with_store(orig_func):
         if user_id not in data:
             data[user_id] = await store.async_load() or {}
 
-        await orig_func.opp, connection, msg, store, data[user_id])
+        await orig_func(opp, connection, msg, store, data[user_id])
 
     return with_store_func
 
@@ -50,7 +50,7 @@ def with_store(orig_func):
 )
 @websocket_api.async_response
 @with_store
-async def websocket_set_user_data.opp, connection, msg, store, data):
+async def websocket_set_user_data(opp, connection, msg, store, data):
     """Handle set global data command.
 
     Async friendly.
@@ -65,7 +65,7 @@ async def websocket_set_user_data.opp, connection, msg, store, data):
 )
 @websocket_api.async_response
 @with_store
-async def websocket_get_user_data.opp, connection, msg, store, data):
+async def websocket_get_user_data(opp, connection, msg, store, data):
     """Handle get global data command.
 
     Async friendly.

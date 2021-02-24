@@ -11,7 +11,7 @@ _LOGGER = logging.getLogger(__name__)
 ICON = "mdi:remote"
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up a Kira sensor."""
     if discovery_info is not None:
         name = discovery_info.get(CONF_NAME)

@@ -70,7 +70,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Serial sensor platform."""
     name = config.get(CONF_NAME)
     port = config.get(CONF_SERIAL_PORT)
@@ -84,7 +84,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
-        value_template.opp = opp
+        value_template(opp = opp
 
     sensor = SerialSensor(
         name,

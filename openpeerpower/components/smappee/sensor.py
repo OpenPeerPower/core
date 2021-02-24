@@ -141,7 +141,7 @@ VOLTAGE_SENSORS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Smappee sensor."""
     smappee_base = opp.data[DOMAIN][config_entry.entry_id]
 

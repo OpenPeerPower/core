@@ -20,12 +20,12 @@ async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up GIOS as config entry."""
     station_id = config_entry.data[CONF_STATION_ID]
     _LOGGER.debug("Using station_id: %s", station_id)
 
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
 
     coordinator = GiosDataUpdateCoordinator.opp, websession, station_id)
     await coordinator.async_refresh()
@@ -42,7 +42,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     opp.data[DOMAIN].pop(config_entry.entry_id)
     await opp.config_entries.async_forward_entry_unload(config_entry, "air_quality")

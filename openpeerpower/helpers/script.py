@@ -729,7 +729,7 @@ class _QueuedScriptRun(_ScriptRun):
         super()._finish()
 
 
-async def _async_stop_scripts_after_shutdown.opp, point_in_time):
+async def _async_stop_scripts_after_shutdown(opp, point_in_time):
     """Stop running Script objects started after shutdown."""
     running_scripts = [
         script for script in.opp.data[DATA_SCRIPTS] if script["instance"].is_running
@@ -745,7 +745,7 @@ async def _async_stop_scripts_after_shutdown.opp, point_in_time):
         )
 
 
-async def _async_stop_scripts_at_shutdown.opp, event):
+async def _async_stop_scripts_at_shutdown(opp, event):
     """Stop running Script objects started before shutdown."""
     async_call_later(
         opp. _SHUTDOWN_MAX_WAIT, partial(_async_stop_scripts_after_shutdown, opp)
@@ -885,7 +885,7 @@ class Script:
 
     def _changed(self) -> None:
         if self._change_listener_job:
-            self.opp.async_run.opp_job(self._change_listener_job)
+            self.opp.async_run(opp_job(self._change_listener_job)
 
     def _chain_change_listener(self, sub_script):
         if sub_script.is_running:

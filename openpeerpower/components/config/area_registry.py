@@ -52,9 +52,9 @@ async def async_setup_opp):
 
 
 @async_response
-async def websocket_list_areas.opp, connection, msg):
+async def websocket_list_areas(opp, connection, msg):
     """Handle list areas command."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
     connection.send_message(
         websocket_api.result_message(
             msg["id"],
@@ -68,9 +68,9 @@ async def websocket_list_areas.opp, connection, msg):
 
 @require_admin
 @async_response
-async def websocket_create_area.opp, connection, msg):
+async def websocket_create_area(opp, connection, msg):
     """Create area command."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
     try:
         entry = registry.async_create(msg["name"])
     except ValueError as err:
@@ -85,9 +85,9 @@ async def websocket_create_area.opp, connection, msg):
 
 @require_admin
 @async_response
-async def websocket_delete_area.opp, connection, msg):
+async def websocket_delete_area(opp, connection, msg):
     """Delete area command."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
 
     try:
         registry.async_delete(msg["area_id"])
@@ -103,9 +103,9 @@ async def websocket_delete_area.opp, connection, msg):
 
 @require_admin
 @async_response
-async def websocket_update_area.opp, connection, msg):
+async def websocket_update_area(opp, connection, msg):
     """Handle update area websocket command."""
-    registry = await async_get_registry.opp)
+    registry = await async_get_registry(opp)
 
     try:
         entry = registry.async_update(msg["area_id"], msg["name"])

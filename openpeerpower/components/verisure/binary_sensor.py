@@ -7,7 +7,7 @@ from openpeerpower.components.binary_sensor import (
 from . import CONF_DOOR_WINDOW, HUB as hub
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Verisure binary sensors."""
     sensors = []
     hub.update_overview()

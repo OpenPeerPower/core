@@ -31,7 +31,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Set up Minecraft Server from a config entry."""
     domain_data = opp.data.setdefault(DOMAIN, {})
 
@@ -289,7 +289,7 @@ class MinecraftServerEntity(Entity):
             self.opp, self._server.signal_name, self._update_callback
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect dispatcher before removal."""
         self._disconnect_dispatcher()
 

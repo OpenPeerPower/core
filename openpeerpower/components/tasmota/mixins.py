@@ -33,10 +33,10 @@ class TasmotaEntity(Entity):
         self._tasmota_entity.set_on_state_callback(self.state_updated)
         await self._subscribe_topics()
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Unsubscribe when removed."""
         await self._tasmota_entity.unsubscribe_topics()
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()
 
     async def discovery_update(self, update, write_state=True):
         """Handle updated discovery message."""
@@ -158,9 +158,9 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
         clear_discovery_hash(self.opp, self._discovery_hash)
         super().add_to_platform_abort()
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Stop listening to signal and cleanup discovery data.."""
-        if not self._removed_from.opp:
+        if not self._removed_from(opp:
             clear_discovery_hash(self.opp, self._discovery_hash)
             self._removed_from opp =True
-        await super().async_will_remove_from.opp()
+        await super().async_will_remove_from(opp()

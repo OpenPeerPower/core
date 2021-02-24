@@ -56,7 +56,7 @@ MEDIA_IMAGE_DEFAULT = None
 DEFAULT_RETRIES = 2
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up PS4 from a config entry."""
     config = config_entry
     creds = config.data[CONF_TOKEN]
@@ -364,7 +364,7 @@ class PS4Device(MediaPlayerEntity):
 
             self._unique_id = format_unique_id(self._creds, status["host-id"])
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Remove Entity from Open Peer Power."""
         # Close TCP Transport.
         if self._ps4.connected:

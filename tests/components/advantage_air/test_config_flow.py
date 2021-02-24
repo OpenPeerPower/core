@@ -8,7 +8,7 @@ from openpeerpower.components.advantage_air.const import DOMAIN
 from tests.components.advantage_air import TEST_SYSTEM_DATA, TEST_SYSTEM_URL, USER_INPUT
 
 
-async def test_form.opp, aioclient_mock):
+async def test_form(opp, aioclient_mock):
     """Test that form shows up."""
 
     aioclient_mock.get(
@@ -50,7 +50,7 @@ async def test_form.opp, aioclient_mock):
     assert result4["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_form_cannot_connect.opp, aioclient_mock):
+async def test_form_cannot_connect(opp, aioclient_mock):
     """Test we handle cannot connect error."""
 
     aioclient_mock.get(

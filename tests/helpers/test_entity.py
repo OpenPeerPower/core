@@ -20,7 +20,7 @@ from tests.common import (
 )
 
 
-def test_generate_entity_id_requires.opp_or_ids():
+def test_generate_entity_id_requires(opp_or_ids():
     """Ensure we require at least.opp or current ids."""
     with pytest.raises(ValueError):
         entity.generate_entity_id("test.{}", "hello world")
@@ -44,7 +44,7 @@ def test_generate_entity_id_given_keys():
     )
 
 
-async def test_async_update_support.opp):
+async def test_async_update_support(opp):
     """Test async update getting called."""
     sync_update = []
     async_update = []
@@ -93,7 +93,7 @@ class TestHelpersEntity:
         """Stop everything that was started."""
         self.opp.stop()
 
-    def test_generate_entity_id_given.opp(self):
+    def test_generate_entity_id_given(opp(self):
         """Test generating an entity id given.opp object."""
         fmt = "test.{}"
         assert (
@@ -114,7 +114,7 @@ class TestHelpersEntity:
         assert state.attributes.get(ATTR_DEVICE_CLASS) == "test_class"
 
 
-async def test_warn_slow_update.opp, caplog):
+async def test_warn_slow_update(opp, caplog):
     """Warn we log when entity update takes a long time."""
     update_call = False
 
@@ -125,7 +125,7 @@ async def test_warn_slow_update.opp, caplog):
         update_call = True
 
     mock_entity = entity.Entity()
-    mock_entity.opp = opp
+    mock_entity(opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -138,7 +138,7 @@ async def test_warn_slow_update.opp, caplog):
         assert update_call
 
 
-async def test_warn_slow_update_with_exception.opp, caplog):
+async def test_warn_slow_update_with_exception(opp, caplog):
     """Warn we log when entity update takes a long time and trow exception."""
     update_call = False
 
@@ -150,7 +150,7 @@ async def test_warn_slow_update_with_exception.opp, caplog):
         raise AssertionError("Fake update error")
 
     mock_entity = entity.Entity()
-    mock_entity.opp = opp
+    mock_entity(opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -163,7 +163,7 @@ async def test_warn_slow_update_with_exception.opp, caplog):
         assert update_call
 
 
-async def test_warn_slow_device_update_disabled.opp, caplog):
+async def test_warn_slow_device_update_disabled(opp, caplog):
     """Disable slow update warning with async_device_update."""
     update_call = False
 
@@ -174,7 +174,7 @@ async def test_warn_slow_device_update_disabled.opp, caplog):
         update_call = True
 
     mock_entity = entity.Entity()
-    mock_entity.opp = opp
+    mock_entity(opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -187,7 +187,7 @@ async def test_warn_slow_device_update_disabled.opp, caplog):
         assert update_call
 
 
-async def test_async_schedule_update_op_state.opp):
+async def test_async_schedule_update_op_state(opp):
     """Warn we log when entity update takes a long time and trow exception."""
     update_call = False
 
@@ -197,7 +197,7 @@ async def test_async_schedule_update_op_state.opp):
         update_call = True
 
     mock_entity = entity.Entity()
-    mock_entity.opp = opp
+    mock_entity(opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -207,7 +207,7 @@ async def test_async_schedule_update_op_state.opp):
     assert update_call is True
 
 
-async def test_async_async_request_call_without_lock.opp):
+async def test_async_async_request_call_without_lock(opp):
     """Test for async_requests_call works without a lock."""
     updates = []
 
@@ -242,7 +242,7 @@ async def test_async_async_request_call_without_lock.opp):
     assert updates == [1, 2]
 
 
-async def test_async_async_request_call_with_lock.opp):
+async def test_async_async_request_call_with_lock(opp):
     """Test for async_requests_call works with a semaphore."""
     updates = []
 
@@ -293,7 +293,7 @@ async def test_async_async_request_call_with_lock.opp):
     assert updates == [1, 2]
 
 
-async def test_async_parallel_updates_with_zero.opp):
+async def test_async_parallel_updates_with_zero(opp):
     """Test parallel updates with 0 (disabled)."""
     updates = []
     test_lock = asyncio.Event()
@@ -330,7 +330,7 @@ async def test_async_parallel_updates_with_zero.opp):
         test_lock.set()
 
 
-async def test_async_parallel_updates_with_zero_on_sync_update.opp):
+async def test_async_parallel_updates_with_zero_on_sync_update(opp):
     """Test parallel updates with 0 (disabled)."""
     updates = []
     test_lock = threading.Event()
@@ -370,7 +370,7 @@ async def test_async_parallel_updates_with_zero_on_sync_update.opp):
         await asyncio.sleep(0)
 
 
-async def test_async_parallel_updates_with_one.opp):
+async def test_async_parallel_updates_with_one(opp):
     """Test parallel updates with 1 (sequential)."""
     updates = []
     test_lock = asyncio.Lock()
@@ -446,7 +446,7 @@ async def test_async_parallel_updates_with_one.opp):
         test_lock.release()
 
 
-async def test_async_parallel_updates_with_two.opp):
+async def test_async_parallel_updates_with_two(opp):
     """Test parallel updates with 2 (parallel)."""
     updates = []
     test_lock = asyncio.Lock()
@@ -516,7 +516,7 @@ async def test_async_parallel_updates_with_two.opp):
         test_lock.release()
 
 
-async def test_async_remove_no_platform.opp):
+async def test_async_remove_no_platform(opp):
     """Test async_remove method when no platform set."""
     ent = entity.Entity()
     ent.opp = opp
@@ -527,7 +527,7 @@ async def test_async_remove_no_platform.opp):
     assert len.opp.states.async_entity_ids()) == 0
 
 
-async def test_async_remove_runs_callbacks.opp):
+async def test_async_remove_runs_callbacks(opp):
     """Test async_remove method when no platform set."""
     result = []
 
@@ -539,7 +539,7 @@ async def test_async_remove_runs_callbacks.opp):
     assert len(result) == 1
 
 
-async def test_set_context.opp):
+async def test_set_context(opp):
     """Test setting context."""
     context = Context()
     ent = entity.Entity()
@@ -550,7 +550,7 @@ async def test_set_context.opp):
     assert.opp.states.get("hello.world").context == context
 
 
-async def test_set_context_expired.opp):
+async def test_set_context_expired(opp):
     """Test setting context."""
     context = Context()
 
@@ -569,7 +569,7 @@ async def test_set_context_expired.opp):
     assert ent._context_set is None
 
 
-async def test_warn_disabled.opp, caplog):
+async def test_warn_disabled(opp, caplog):
     """Test we warn once if we write to a disabled entity."""
     entry = entity_registry.RegistryEntry(
         entity_id="hello.world",
@@ -577,7 +577,7 @@ async def test_warn_disabled.opp, caplog):
         platform="test-platform",
         disabled_by="user",
     )
-    mock_registry.opp, {"hello.world": entry})
+    mock_registry(opp, {"hello.world": entry})
 
     ent = entity.Entity()
     ent.opp = opp
@@ -596,7 +596,7 @@ async def test_warn_disabled.opp, caplog):
     assert caplog.text == ""
 
 
-async def test_disabled_in_entity_registry.opp):
+async def test_disabled_in_entity_registry(opp):
     """Test entity is removed if we disable entity registry entry."""
     entry = entity_registry.RegistryEntry(
         entity_id="hello.world",
@@ -604,7 +604,7 @@ async def test_disabled_in_entity_registry.opp):
         platform="test-platform",
         disabled_by=None,
     )
-    registry = mock_registry.opp, {"hello.world": entry})
+    registry = mock_registry(opp, {"hello.world": entry})
 
     ent = entity.Entity()
     ent.opp = opp
@@ -612,7 +612,7 @@ async def test_disabled_in_entity_registry.opp):
     ent.registry_entry = entry
     assert ent.enabled is True
 
-    ent.add_to_platform_start.opp, MagicMock(platform_name="test-platform"), None)
+    ent.add_to_platform_start(opp, MagicMock(platform_name="test-platform"), None)
     await ent.add_to_platform_finish()
     assert.opp.states.get("hello.world") is not None
 
@@ -630,7 +630,7 @@ async def test_disabled_in_entity_registry.opp):
     assert ent.registry_entry == entry2
 
 
-async def test_capability_attrs.opp):
+async def test_capability_attrs(opp):
     """Test we still include capabilities even when unavailable."""
     with patch.object(
         entity.Entity, "available", PropertyMock(return_value=False)
@@ -650,10 +650,10 @@ async def test_capability_attrs.opp):
     assert state.attributes["always"] == "there"
 
 
-async def test_warn_slow_write_state.opp, caplog):
+async def test_warn_slow_write_state(opp, caplog):
     """Check that we log a warning if reading properties takes too long."""
     mock_entity = entity.Entity()
-    mock_entity.opp = opp
+    mock_entity(opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.platform = MagicMock(platform_name="hue")
 
@@ -669,7 +669,7 @@ async def test_warn_slow_write_state.opp, caplog):
     ) in caplog.text
 
 
-async def test_warn_slow_write_state_custom_component.opp, caplog):
+async def test_warn_slow_write_state_custom_component(opp, caplog):
     """Check that we log a warning if reading properties takes too long."""
 
     class CustomComponentEntity(entity.Entity):
@@ -678,7 +678,7 @@ async def test_warn_slow_write_state_custom_component.opp, caplog):
         __module__ = "custom_components.bla.sensor"
 
     mock_entity = CustomComponentEntity()
-    mock_entity.opp = opp
+    mock_entity(opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.platform = MagicMock(platform_name="hue")
 
@@ -692,7 +692,7 @@ async def test_warn_slow_write_state_custom_component.opp, caplog):
     ) in caplog.text
 
 
-async def test_setup_source.opp):
+async def test_setup_source(opp):
     """Check that we register sources correctly."""
     platform = MockEntityPlatform.opp)
 
@@ -703,7 +703,7 @@ async def test_setup_source.opp):
     entity_entry = MockEntity(name="Config Entry Source")
     await platform.async_add_entities([entity_entry])
 
-    assert entity.entity_sources.opp) == {
+    assert entity.entity_sources(opp) == {
         "test_domain.platform_config_source": {
             "source": entity.SOURCE_PLATFORM_CONFIG,
             "domain": "test_platform",
@@ -717,10 +717,10 @@ async def test_setup_source.opp):
 
     await platform.async_reset()
 
-    assert entity.entity_sources.opp) == {}
+    assert entity.entity_sources(opp) == {}
 
 
-async def test_removing_entity_unavailable.opp):
+async def test_removing_entity_unavailable(opp):
     """Test removing an entity that is still registered creates an unavailable state."""
     entry = entity_registry.RegistryEntry(
         entity_id="hello.world",

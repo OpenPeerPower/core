@@ -107,9 +107,9 @@ def update_probability(prior, prob_given_true, prob_given_false):
     return numerator / denominator
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Bayesian Binary sensor."""
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     name = config[CONF_NAME]
     observations = config[CONF_OBSERVATIONS]

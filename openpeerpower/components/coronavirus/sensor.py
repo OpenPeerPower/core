@@ -13,9 +13,9 @@ SENSORS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Defer sensor setup to the shared sensor module."""
-    coordinator = await get_coordinator.opp)
+    coordinator = await get_coordinator(opp)
 
     async_add_entities(
         CoronavirusSensor(coordinator, config_entry.data["country"], info_type)

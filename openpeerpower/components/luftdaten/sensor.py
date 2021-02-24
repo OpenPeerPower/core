@@ -24,7 +24,7 @@ from .const import ATTR_SENSOR_ID
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, entry, async_add_entities):
+async def async_setup_entry(opp, entry, async_add_entities):
     """Set up a Luftdaten sensor based on a config entry."""
     luftdaten = opp.data[DOMAIN][DATA_LUFTDATEN_CLIENT][entry.entry_id]
 
@@ -126,7 +126,7 @@ class LuftdatenSensor(Entity):
             self.opp, TOPIC_UPDATE, update
         )
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()

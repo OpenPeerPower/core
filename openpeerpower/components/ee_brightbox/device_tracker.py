@@ -30,7 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_scanner.opp, config):
+def get_scanner(opp, config):
     """Return a router scanner instance."""
     scanner = EEBrightBoxScanner(config[DOMAIN])
 

@@ -15,7 +15,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up a config entry."""
     host = config_entry.data[CONF_HOST]
     mac = config_entry.data[CONF_MAC]
@@ -36,7 +36,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -55,6 +55,6 @@ async def async_unload_entry.opp, config_entry):
     return unload_ok
 
 
-async def update_listener.opp, config_entry):
+async def update_listener(opp, config_entry):
     """Handle options update."""
     await opp.config_entries.async_reload(config_entry.entry_id)

@@ -13,9 +13,9 @@ from tests.common import MockConfigEntry
 from tests.components.brother import init_integration
 
 
-async def test_async_setup_entry.opp):
+async def test_async_setup_entry(opp):
     """Test a successful setup entry."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     state = opp.states.get("sensor.hl_l2340dw_status")
     assert state is not None
@@ -23,7 +23,7 @@ async def test_async_setup_entry.opp):
     assert state.state == "waiting"
 
 
-async def test_config_not_ready.opp):
+async def test_config_not_ready(opp):
     """Test for setup failure if connection to broker is missing."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -33,14 +33,14 @@ async def test_config_not_ready.opp):
     )
 
     with patch("brother.Brother._get_data", side_effect=ConnectionError()):
-        entry.add_to.opp.opp)
+        entry.add_to(opp.opp)
         await opp.config_entries.async_setup(entry.entry_id)
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test successful unload of entry."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED

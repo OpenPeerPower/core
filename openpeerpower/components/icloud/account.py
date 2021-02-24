@@ -427,7 +427,7 @@ class IcloudDevice:
             ):
                 location = self._status[DEVICE_LOCATION]
                 if self._location is None:
-                    dispatcher_send(self._account.opp, self._account.signal_device_new)
+                    dispatcher_send(self._account(opp, self._account.signal_device_new)
                 self._location = location
 
     def play_sound(self) -> None:

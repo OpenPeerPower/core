@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 ICON_RANGE = "mdi:speedometer"
 
 
-def setup_platform.opp, config, add_devices, discovery_info=None):
+def setup_platform(opp, config, add_devices, discovery_info=None):
     """Sensors setup."""
     if discovery_info is None:
         return

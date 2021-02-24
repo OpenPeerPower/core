@@ -20,21 +20,21 @@ PLATFORM_SCHEMA = mqtt.MQTT_BASE_PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up MQTT device automation dynamically through MQTT discovery."""
 
     async def async_device_removed(event):
         """Handle the removal of a device."""
         if event.data["action"] != "remove":
             return
-        await device_trigger.async_device_removed.opp, event.data["device_id"])
+        await device_trigger.async_device_removed(opp, event.data["device_id"])
 
     setup = functools.partial(_async_setup_automation, opp, config_entry=config_entry)
-    await async_setup_entry_helper.opp, "device_automation", setup, PLATFORM_SCHEMA)
+    await async_setup_entry_helper(opp, "device_automation", setup, PLATFORM_SCHEMA)
     opp.bus.async_listen(EVENT_DEVICE_REGISTRY_UPDATED, async_device_removed)
 
 
-async def _async_setup_automation.opp, config, config_entry, discovery_data):
+async def _async_setup_automation(opp, config, config_entry, discovery_data):
     """Set up an MQTT device automation."""
     if config[CONF_AUTOMATION_TYPE] == AUTOMATION_TYPE_TRIGGER:
         await device_trigger.async_setup_trigger(

@@ -100,7 +100,7 @@ async def generate_psk(self, code):
     return "mock"
 
 
-async def setup_integration.opp):
+async def setup_integration(opp):
     """Load the Tradfri platform with a mock gateway."""
     entry = MockConfigEntry(
         domain=tradfri.DOMAIN,
@@ -113,7 +113,7 @@ async def setup_integration.opp):
         },
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -153,7 +153,7 @@ def mock_light(test_features=None, test_state=None, light_number=0):
     return _mock_light
 
 
-async def test_light.opp, mock_gateway, api_factory):
+async def test_light(opp, mock_gateway, api_factory):
     """Test that lights are correctly added."""
     features = {"can_set_dimmer": True, "can_set_color": True, "can_set_temp": True}
 
@@ -167,7 +167,7 @@ async def test_light.opp, mock_gateway, api_factory):
     mock_gateway.mock_devices.append(
         mock_light(test_features=features, test_state=state)
     )
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     lamp_1 = opp.states.get("light.tradfri_light_0")
     assert lamp_1 is not None
@@ -176,15 +176,15 @@ async def test_light.opp, mock_gateway, api_factory):
     assert lamp_1.attributes["hs_color"] == (0.549, 0.153)
 
 
-async def test_light_observed.opp, mock_gateway, api_factory):
+async def test_light_observed(opp, mock_gateway, api_factory):
     """Test that lights are correctly observed."""
     light = mock_light()
     mock_gateway.mock_devices.append(light)
-    await setup_integration.opp)
+    await setup_integration(opp)
     assert len(light.observe.mock_calls) > 0
 
 
-async def test_light_available.opp, mock_gateway, api_factory):
+async def test_light_available(opp, mock_gateway, api_factory):
     """Test light available property."""
     light = mock_light({"state": True}, light_number=1)
     light.reachable = True
@@ -194,7 +194,7 @@ async def test_light_available.opp, mock_gateway, api_factory):
 
     mock_gateway.mock_devices.append(light)
     mock_gateway.mock_devices.append(light2)
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     assert.opp.states.get("light.tradfri_light_1").state == "on"
 
@@ -245,7 +245,7 @@ async def test_turn_on(
         test_features=test_features, test_state=initial_state, light_number=device_id
     )
     mock_gateway.mock_devices.append(light)
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     # Use the turn_on service call to change the light state.
     await opp.services.async_call(
@@ -288,13 +288,13 @@ async def test_turn_on(
             assert states.attributes[result] == pytest.approx(value, abs=0.01)
 
 
-async def test_turn_off.opp, mock_gateway, api_factory):
+async def test_turn_off(opp, mock_gateway, api_factory):
     """Test turning off a light."""
     state = {"state": True, "dimmer": 100}
 
     light = mock_light(test_state=state)
     mock_gateway.mock_devices.append(light)
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     # Use the turn_off service call to change the light state.
     await opp.services.async_call(
@@ -341,12 +341,12 @@ def mock_group(test_state=None, group_number=0):
     return _mock_group
 
 
-async def test_group.opp, mock_gateway, api_factory):
+async def test_group(opp, mock_gateway, api_factory):
     """Test that groups are correctly added."""
     mock_gateway.mock_groups.append(mock_group())
     state = {"state": True, "dimmer": 100}
     mock_gateway.mock_groups.append(mock_group(state, 1))
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     group = opp.states.get("light.tradfri_group_0")
     assert group is not None
@@ -358,7 +358,7 @@ async def test_group.opp, mock_gateway, api_factory):
     assert group.attributes["brightness"] == 100
 
 
-async def test_group_turn_on.opp, mock_gateway, api_factory):
+async def test_group_turn_on(opp, mock_gateway, api_factory):
     """Test turning on a group."""
     group = mock_group()
     group2 = mock_group(group_number=1)
@@ -366,7 +366,7 @@ async def test_group_turn_on.opp, mock_gateway, api_factory):
     mock_gateway.mock_groups.append(group)
     mock_gateway.mock_groups.append(group2)
     mock_gateway.mock_groups.append(group3)
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     # Use the turn_off service call to change the light state.
     await opp.services.async_call(
@@ -391,11 +391,11 @@ async def test_group_turn_on.opp, mock_gateway, api_factory):
     group3.set_dimmer.assert_called_with(100, transition_time=10)
 
 
-async def test_group_turn_off.opp, mock_gateway, api_factory):
+async def test_group_turn_off(opp, mock_gateway, api_factory):
     """Test turning off a group."""
     group = mock_group({"state": True})
     mock_gateway.mock_groups.append(group)
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     # Use the turn_off service call to change the light state.
     await opp.services.async_call(

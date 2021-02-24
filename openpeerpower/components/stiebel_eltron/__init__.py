@@ -43,7 +43,7 @@ def setup(opp, config):
         "ste_data": StiebelEltronData(name, modbus_client),
     }
 
-    discovery.load_platform.opp, "climate", DOMAIN, {}, config)
+    discovery.load_platform(opp, "climate", DOMAIN, {}, config)
     return True
 
 

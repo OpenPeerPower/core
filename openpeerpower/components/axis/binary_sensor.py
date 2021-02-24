@@ -39,7 +39,7 @@ DEVICE_CLASS = {
 }
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a Axis binary sensor."""
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
@@ -54,7 +54,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
             async_add_entities([AxisBinarySensor(event, device)])
 
     device.listeners.append(
-        async_dispatcher_connect.opp, device.signal_new_event, async_add_sensor)
+        async_dispatcher_connect(opp, device.signal_new_event, async_add_sensor)
     )
 
 

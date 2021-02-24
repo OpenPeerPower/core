@@ -160,7 +160,7 @@ def valid_file_path(file_path):
         return False
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the classifier."""
     if DATA_FACEBOX not in.opp.data:
         opp.data[DATA_FACEBOX] = []

@@ -163,7 +163,7 @@ async def _async_signal_options_update(
     )
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Set up the UpCloud config entry."""
 
     manager = upcloud_api.CloudManager(
@@ -234,7 +234,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload the config entry."""
     for domain in CONFIG_ENTRY_DOMAINS:
         await opp.config_entries.async_forward_entry_unload(config_entry, domain)

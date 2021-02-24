@@ -25,7 +25,7 @@ EVENT_TYPE_MAP = {
 }
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle webhook callback."""
     try:
         data = await request.json()
@@ -38,17 +38,17 @@ async def handle_webhook.opp, webhook_id, request):
     event_type = data.get(ATTR_EVENT_TYPE)
 
     if event_type in EVENT_TYPE_MAP:
-        async_send_event.opp, event_type, data)
+        async_send_event(opp, event_type, data)
 
         for event_data in data.get(EVENT_TYPE_MAP[event_type], []):
-            async_evaluate_event.opp, event_data)
+            async_evaluate_event(opp, event_data)
 
     else:
-        async_evaluate_event.opp, data)
+        async_evaluate_event(opp, data)
 
 
 @callback
-def async_evaluate_event.opp, event_data):
+def async_evaluate_event(opp, event_data):
     """Evaluate events from webhook."""
     event_type = event_data.get(ATTR_EVENT_TYPE)
 
@@ -62,15 +62,15 @@ def async_evaluate_event.opp, event_data):
             person_event_data[ATTR_IS_KNOWN] = person.get(ATTR_IS_KNOWN)
             person_event_data[ATTR_FACE_URL] = person.get(ATTR_FACE_URL)
 
-            async_send_event.opp, event_type, person_event_data)
+            async_send_event(opp, event_type, person_event_data)
 
     else:
         _LOGGER.debug("%s: %s", event_type, event_data)
-        async_send_event.opp, event_type, event_data)
+        async_send_event(opp, event_type, event_data)
 
 
 @callback
-def async_send_event.opp, event_type, data):
+def async_send_event(opp, event_type, data):
     """Send events."""
     opp.bus.async_fire(
         event_type=NETATMO_EVENT, event_data={"type": event_type, "data": data}

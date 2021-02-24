@@ -88,7 +88,7 @@ def setup(opp, config):
         _LOGGER.error("HTTPError when connecting to Zabbix API: %s", http_error)
         zapi = None
         _LOGGER.error(RETRY_MESSAGE, http_error)
-        event_helper.call_later.opp, RETRY_INTERVAL, lambda _: setup_opp, config))
+        event_helper.call_later(opp, RETRY_INTERVAL, lambda _: setup_opp, config))
         return True
 
     opp.data[DOMAIN] = zapi

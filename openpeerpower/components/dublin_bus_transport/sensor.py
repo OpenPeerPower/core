@@ -55,7 +55,7 @@ def due_in_minutes(timestamp):
     return str(int(diff.total_seconds() / 60))
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Dublin public transport sensor."""
     name = config[CONF_NAME]
     stop = config[CONF_STOP_ID]

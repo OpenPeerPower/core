@@ -26,7 +26,7 @@ SWITCH_TYPES = {
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Optional(CONF_HOST): cv.string})
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the ThinkingCleaner platform."""
     host = config.get(CONF_HOST)
     if host:

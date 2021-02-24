@@ -38,7 +38,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up EcoNet as config entry."""
 
     email = config_entry.data[CONF_EMAIL]
@@ -69,7 +69,7 @@ async def async_setup_entry.opp, config_entry):
 
     def update_published():
         """Handle a push update."""
-        dispatcher_send.opp, PUSH_UPDATE)
+        dispatcher_send(opp, PUSH_UPDATE)
 
     for _eqip in equipment[EquipmentType.WATER_HEATER]:
         _eqip.set_update_callback(update_published)
@@ -83,13 +83,13 @@ async def async_setup_entry.opp, config_entry):
         """Fetch the latest changes from the API."""
         await api.refresh_equipment()
 
-    async_track_time_interval.opp, resubscribe, INTERVAL)
-    async_track_time_interval.opp, fetch_update, INTERVAL + timedelta(minutes=1))
+    async_track_time_interval(opp, resubscribe, INTERVAL)
+    async_track_time_interval(opp, fetch_update, INTERVAL + timedelta(minutes=1))
 
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a EcoNet config entry."""
     tasks = [
         opp.config_entries.async_forward_entry_unload(entry, component)

@@ -127,7 +127,7 @@ def validate_schema(schema):
         """Wrap function so we validate schema."""
 
         @wraps(func)
-        async def validate_and_run.opp, config_entry, data):
+        async def validate_and_run(opp, config_entry, data):
             """Validate input and call handler."""
             try:
                 data = schema(data)
@@ -214,7 +214,7 @@ async def handle_webhook(
         vol.Optional(ATTR_SERVICE_DATA, default={}): dict,
     }
 )
-async def webhook_call_service.opp, config_entry, data):
+async def webhook_call_service(opp, config_entry, data):
     """Handle a call service webhook."""
     try:
         await opp.services.async_call(
@@ -243,7 +243,7 @@ async def webhook_call_service.opp, config_entry, data):
         vol.Optional(ATTR_EVENT_DATA, default={}): dict,
     }
 )
-async def webhook_fire_event.opp, config_entry, data):
+async def webhook_fire_event(opp, config_entry, data):
     """Handle a fire event webhook."""
     event_type = data[ATTR_EVENT_TYPE]
     opp.bus.async_fire(
@@ -257,7 +257,7 @@ async def webhook_fire_event.opp, config_entry, data):
 
 @WEBHOOK_COMMANDS.register("stream_camera")
 @validate_schema({vol.Required(ATTR_CAMERA_ENTITY_ID): cv.string})
-async def webhook_stream_camera.opp, config_entry, data):
+async def webhook_stream_camera(opp, config_entry, data):
     """Handle a request to HLS-stream a camera."""
     camera = opp.states.get(data[ATTR_CAMERA_ENTITY_ID])
 
@@ -292,7 +292,7 @@ async def webhook_stream_camera.opp, config_entry, data):
         }
     }
 )
-async def webhook_render_template.opp, config_entry, data):
+async def webhook_render_template(opp, config_entry, data):
     """Handle a render template webhook."""
     resp = {}
     for key, item in data.items():
@@ -318,7 +318,7 @@ async def webhook_render_template.opp, config_entry, data):
         vol.Optional(ATTR_VERTICAL_ACCURACY): cv.positive_int,
     }
 )
-async def webhook_update_location.opp, config_entry, data):
+async def webhook_update_location(opp, config_entry, data):
     """Handle an update location webhook."""
     opp.helpers.dispatcher.async_dispatcher_send(
         SIGNAL_LOCATION_UPDATE.format(config_entry.entry_id), data
@@ -337,11 +337,11 @@ async def webhook_update_location.opp, config_entry, data):
         vol.Optional(ATTR_OS_VERSION): cv.string,
     }
 )
-async def webhook_update_registration.opp, config_entry, data):
+async def webhook_update_registration(opp, config_entry, data):
     """Handle an update registration webhook."""
     new_registration = {**config_entry.data, **data}
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
 
     device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -354,7 +354,7 @@ async def webhook_update_registration.opp, config_entry, data):
 
     opp.config_entries.async_update_entry(config_entry, data=new_registration)
 
-    await opp_notify.async_reload.opp, DOMAIN)
+    await opp_notify.async_reload(opp, DOMAIN)
 
     return webhook_response(
         safe_registration(new_registration),
@@ -363,7 +363,7 @@ async def webhook_update_registration.opp, config_entry, data):
 
 
 @WEBHOOK_COMMANDS.register("enable_encryption")
-async def webhook_enable_encryption.opp, config_entry, data):
+async def webhook_enable_encryption(opp, config_entry, data):
     """Handle a encryption enable webhook."""
     if config_entry.data[ATTR_SUPPORTS_ENCRYPTION]:
         _LOGGER.warning(
@@ -407,14 +407,14 @@ async def webhook_enable_encryption.opp, config_entry, data):
         vol.Optional(ATTR_SENSOR_ICON, default="mdi:cellphone"): cv.icon,
     }
 )
-async def webhook_register_sensor.opp, config_entry, data):
+async def webhook_register_sensor(opp, config_entry, data):
     """Handle a register sensor webhook."""
     entity_type = data[ATTR_SENSOR_TYPE]
     unique_id = data[ATTR_SENSOR_UNIQUE_ID]
     device_name = config_entry.data[ATTR_DEVICE_NAME]
 
     unique_store_key = f"{config_entry.data[CONF_WEBHOOK_ID]}_{unique_id}"
-    entity_registry = await er.async_get_registry.opp)
+    entity_registry = await er.async_get_registry(opp)
     existing_sensor = entity_registry.async_get_entity_id(
         entity_type, DOMAIN, unique_store_key
     )
@@ -427,10 +427,10 @@ async def webhook_register_sensor.opp, config_entry, data):
             "Re-register for %s of existing sensor %s", device_name, unique_id
         )
 
-        async_dispatcher_send.opp, SIGNAL_SENSOR_UPDATE, data)
+        async_dispatcher_send(opp, SIGNAL_SENSOR_UPDATE, data)
     else:
         register_signal = f"{DOMAIN}_{data[ATTR_SENSOR_TYPE]}_register"
-        async_dispatcher_send.opp, register_signal, data)
+        async_dispatcher_send(opp, register_signal, data)
 
     return webhook_response(
         {"success": True},
@@ -457,7 +457,7 @@ async def webhook_register_sensor.opp, config_entry, data):
         ],
     )
 )
-async def webhook_update_sensor_states.opp, config_entry, data):
+async def webhook_update_sensor_states(opp, config_entry, data):
     """Handle an update sensor states webhook."""
     sensor_schema_full = vol.Schema(
         {
@@ -478,7 +478,7 @@ async def webhook_update_sensor_states.opp, config_entry, data):
 
         unique_store_key = f"{config_entry.data[CONF_WEBHOOK_ID]}_{unique_id}"
 
-        entity_registry = await er.async_get_registry.opp)
+        entity_registry = await er.async_get_registry(opp)
         if not entity_registry.async_get_entity_id(
             entity_type, DOMAIN, unique_store_key
         ):
@@ -514,7 +514,7 @@ async def webhook_update_sensor_states.opp, config_entry, data):
 
         new_state = {**entry, **sensor}
 
-        async_dispatcher_send.opp, SIGNAL_SENSOR_UPDATE, new_state)
+        async_dispatcher_send(opp, SIGNAL_SENSOR_UPDATE, new_state)
 
         resp[unique_id] = {"success": True}
 
@@ -522,7 +522,7 @@ async def webhook_update_sensor_states.opp, config_entry, data):
 
 
 @WEBHOOK_COMMANDS.register("get_zones")
-async def webhook_get_zones.opp, config_entry, data):
+async def webhook_get_zones(opp, config_entry, data):
     """Handle a get zones webhook."""
     zones = [
         opp.states.get(entity_id)
@@ -561,7 +561,7 @@ async def webhook_get_config(opp, config_entry, data):
 
 @WEBHOOK_COMMANDS.register("scan_tag")
 @validate_schema({vol.Required("tag_id"): cv.string})
-async def webhook_scan_tag.opp, config_entry, data):
+async def webhook_scan_tag(opp, config_entry, data):
     """Handle a fire event webhook."""
     await tag.async_scan_tag(
         opp,

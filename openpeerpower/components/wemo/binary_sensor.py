@@ -11,14 +11,14 @@ from .entity import WemoSubscriptionEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up WeMo binary sensors."""
 
     async def _discovered_wemo(device):
         """Handle a discovered Wemo device."""
         async_add_entities([WemoBinarySensor(device)])
 
-    async_dispatcher_connect.opp, f"{WEMO_DOMAIN}.binary_sensor", _discovered_wemo)
+    async_dispatcher_connect(opp, f"{WEMO_DOMAIN}.binary_sensor", _discovered_wemo)
 
     await asyncio.gather(
         *[

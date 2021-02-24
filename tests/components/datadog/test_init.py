@@ -23,7 +23,7 @@ async def test_invalid_config(opp):
         )
 
 
-async def test_datadog_setup_full.opp):
+async def test_datadog_setup_full(opp):
     """Test setup with all data."""
     config = {datadog.DOMAIN: {"host": "host", "port": 123, "rate": 1, "prefix": "foo"}}
     opp.bus.listen = MagicMock()
@@ -31,7 +31,7 @@ async def test_datadog_setup_full.opp):
     with patch("openpeerpower.components.datadog.initialize") as mock_init, patch(
         "openpeerpower.components.datadog.statsd"
     ):
-        assert await async_setup_component.opp, datadog.DOMAIN, config)
+        assert await async_setup_component(opp, datadog.DOMAIN, config)
 
         assert mock_init.call_count == 1
         assert mock_init.call_args == mock.call(statsd_host="host", statsd_port=123)
@@ -41,7 +41,7 @@ async def test_datadog_setup_full.opp):
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[1][0][0]
 
 
-async def test_datadog_setup_defaults.opp):
+async def test_datadog_setup_defaults(opp):
     """Test setup with defaults."""
     opp.bus.listen = mock.MagicMock()
 
@@ -65,7 +65,7 @@ async def test_datadog_setup_defaults.opp):
     assert.opp.bus.listen.called
 
 
-async def test_logbook_entry.opp):
+async def test_logbook_entry(opp):
     """Test event listener."""
     opp.bus.listen = mock.MagicMock()
 
@@ -99,7 +99,7 @@ async def test_logbook_entry.opp):
         mock_statsd.event.reset_mock()
 
 
-async def test_state_changed.opp):
+async def test_state_changed(opp):
     """Test event listener."""
     opp.bus.listen = mock.MagicMock()
 

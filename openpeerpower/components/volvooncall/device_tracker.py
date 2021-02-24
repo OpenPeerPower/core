@@ -6,7 +6,7 @@ from openpeerpower.util import slugify
 from . import DATA_KEY, SIGNAL_STATE_UPDATED
 
 
-async def async_setup_scanner.opp, config, async_see, discovery_info=None):
+async def async_setup_scanner(opp, config, async_see, discovery_info=None):
     """Set up the Volvo tracker."""
     if discovery_info is None:
         return
@@ -27,6 +27,6 @@ async def async_setup_scanner.opp, config, async_see, discovery_info=None):
             icon="mdi:car",
         )
 
-    async_dispatcher_connect.opp, SIGNAL_STATE_UPDATED, see_vehicle)
+    async_dispatcher_connect(opp, SIGNAL_STATE_UPDATED, see_vehicle)
 
     return True

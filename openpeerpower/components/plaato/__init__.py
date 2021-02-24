@@ -91,15 +91,15 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Configure based on config entry."""
 
     use_webhook = entry.data[CONF_USE_WEBHOOK]
 
     if use_webhook:
-        async_setup_webhook.opp, entry)
+        async_setup_webhook(opp, entry)
     else:
-        await async_setup_coordinator.opp, entry)
+        await async_setup_coordinator(opp, entry)
 
     for platform in PLATFORMS:
         if entry.options.get(platform, True):
@@ -111,7 +111,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
 
 
 @callback
-def async_setup_webhook.opp: OpenPeerPower, entry: ConfigEntry):
+def async_setup_webhook(opp: OpenPeerPower, entry: ConfigEntry):
     """Init webhook based on config entry."""
     webhook_id = entry.data[CONF_WEBHOOK_ID]
     device_name = entry.data[CONF_DEVICE_NAME]
@@ -123,7 +123,7 @@ def async_setup_webhook.opp: OpenPeerPower, entry: ConfigEntry):
     )
 
 
-async def async_setup_coordinator.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_coordinator(opp: OpenPeerPower, entry: ConfigEntry):
     """Init auth token based on config entry."""
     auth_token = entry.data[CONF_TOKEN]
     device_type = entry.data[CONF_DEVICE_TYPE]
@@ -160,31 +160,31 @@ def _set_entry_data(entry, opp, coordinator=None, device_id=None):
     }
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     use_webhook = entry.data[CONF_USE_WEBHOOK]
     opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if use_webhook:
-        return await async_unload_webhook.opp, entry)
+        return await async_unload_webhook(opp, entry)
 
-    return await async_unload_coordinator.opp, entry)
+    return await async_unload_coordinator(opp, entry)
 
 
-async def async_unload_webhook.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_webhook(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload webhook based entry."""
     if entry.data[CONF_WEBHOOK_ID] is not None:
         opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-    return await async_unload_platforms.opp, entry, PLATFORMS)
+    return await async_unload_platforms(opp, entry, PLATFORMS)
 
 
-async def async_unload_coordinator.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_coordinator(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload auth token based entry."""
     coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
-    return await async_unload_platforms.opp, entry, coordinator.platforms)
+    return await async_unload_platforms(opp, entry, coordinator.platforms)
 
 
-async def async_unload_platforms.opp: OpenPeerPower, entry: ConfigEntry, platforms):
+async def async_unload_platforms(opp: OpenPeerPower, entry: ConfigEntry, platforms):
     """Unload platforms."""
     unloaded = all(
         await asyncio.gather(
@@ -200,12 +200,12 @@ async def async_unload_platforms.opp: OpenPeerPower, entry: ConfigEntry, platfor
     return unloaded
 
 
-async def _async_update_listener.opp: OpenPeerPower, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle incoming webhook from Plaato."""
     try:
         data = WEBHOOK_SCHEMA(await request.json())
@@ -216,7 +216,7 @@ async def handle_webhook.opp, webhook_id, request):
     device_id = _device_id(data)
     sensor_data = PlaatoAirlock.from_web_hook(data)
 
-    async_dispatcher_send.opp, SENSOR_UPDATE, *(device_id, sensor_data))
+    async_dispatcher_send(opp, SENSOR_UPDATE, *(device_id, sensor_data))
 
     return web.Response(text=f"Saving status for {device_id}", status=HTTP_OK)
 

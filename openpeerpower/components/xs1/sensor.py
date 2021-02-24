@@ -6,7 +6,7 @@ from openpeerpower.helpers.entity import Entity
 from . import ACTUATORS, DOMAIN as COMPONENT_DOMAIN, SENSORS, XS1DeviceEntity
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the XS1 sensor platform."""
     sensors = opp.data[COMPONENT_DOMAIN][SENSORS]
     actuators = opp.data[COMPONENT_DOMAIN][ACTUATORS]

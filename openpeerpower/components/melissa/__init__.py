@@ -32,5 +32,5 @@ async def async_setup(opp, config):
     await api.async_connect()
     opp.data[DATA_MELISSA] = api
 
-    opp.async_create_task(async_load_platform.opp, "climate", DOMAIN, {}, config))
+    opp.async_create_task(async_load_platform(opp, "climate", DOMAIN, {}, config))
     return True

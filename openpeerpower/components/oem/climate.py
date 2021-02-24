@@ -38,7 +38,7 @@ SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE
 SUPPORT_HVAC = [HVAC_MODE_AUTO, HVAC_MODE_HEAT, HVAC_MODE_OFF]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the oemthermostat platform."""
     name = config.get(CONF_NAME)
     host = config.get(CONF_HOST)

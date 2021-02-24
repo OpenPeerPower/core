@@ -69,10 +69,10 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Cloudflare from a config entry."""
     cfupdate = CloudflareUpdater(
-        async_get_clientsession.opp),
+        async_get_clientsession(opp),
         entry.data[CONF_API_TOKEN],
         entry.data[CONF_ZONE],
         entry.data[CONF_RECORDS],
@@ -101,7 +101,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             _LOGGER.error("Error updating zone %s: %s", entry.data[CONF_ZONE], error)
 
     update_interval = timedelta(minutes=DEFAULT_UPDATE_INTERVAL)
-    undo_interval = async_track_time_interval.opp, update_records, update_interval)
+    undo_interval = async_track_time_interval(opp, update_records, update_interval)
 
     opp.data[DOMAIN][entry.entry_id] = {
         DATA_UNDO_UPDATE_INTERVAL: undo_interval,
@@ -112,7 +112,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Cloudflare config entry."""
     opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_INTERVAL]()
     opp.data[DOMAIN].pop(entry.entry_id)

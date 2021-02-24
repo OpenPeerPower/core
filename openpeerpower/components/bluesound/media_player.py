@@ -104,7 +104,7 @@ SERVICE_TO_METHOD = {
 }
 
 
-def _add_player.opp, async_add_entities, host, port=None, name=None):
+def _add_player(opp, async_add_entities, host, port=None, name=None):
     """Add Bluesound players."""
     if host in [x.host for x in.opp.data[DATA_BLUESOUND]]:
         return
@@ -146,7 +146,7 @@ def _add_player.opp, async_add_entities, host, port=None, name=None):
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _init_player)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Bluesound platforms."""
     if DATA_BLUESOUND not in.opp.data:
         opp.data[DATA_BLUESOUND] = []
@@ -208,7 +208,7 @@ class BluesoundPlayer(MediaPlayerEntity):
         self.host = host
         self.opp = opp
         self.port = port
-        self._polling_session = async_get_clientsession.opp)
+        self._polling_session = async_get_clientsession(opp)
         self._polling_task = None  # The actual polling task.
         self._name = name
         self._icon = None

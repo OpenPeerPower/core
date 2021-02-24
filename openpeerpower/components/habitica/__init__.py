@@ -95,7 +95,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up habitica from a config entry."""
 
     class HAHabitipyAsync(HabitipyAsync):
@@ -127,7 +127,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
     data = opp.data.setdefault(DOMAIN, {})
     config = config_entry.data
-    websession = async_get_clientsession.opp)
+    websession = async_get_clientsession(opp)
     url = config[CONF_URL]
     username = config[CONF_API_USER]
     password = config[CONF_API_KEY]
@@ -156,7 +156,7 @@ async def async_setup_entry.opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

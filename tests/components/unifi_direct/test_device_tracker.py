@@ -29,9 +29,9 @@ scanner_path = "openpeerpower.components.unifi_direct.device_tracker.UnifiDevice
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp):
+def setup_comp(opp):
     """Initialize components."""
-    mock_component.opp, "zone")
+    mock_component(opp, "zone")
     yaml_devices = opp.config.path(YAML_DEVICES)
     yield
     if os.path.isfile(yaml_devices):
@@ -54,7 +54,7 @@ async def test_get_scanner(unifi_mock, opp):
     }
 
     with assert_setup_component(1, DOMAIN):
-        assert await async_setup_component.opp, DOMAIN, conf_dict)
+        assert await async_setup_component(opp, DOMAIN, conf_dict)
 
     conf_dict[DOMAIN][CONF_PORT] = 22
     assert unifi_mock.call_args == call(conf_dict[DOMAIN])
@@ -75,7 +75,7 @@ async def test_get_device_name(mock_ssh, opp):
         }
     }
     mock_ssh.return_value.before = load_fixture("unifi_direct.txt")
-    scanner = get_scanner.opp, conf_dict)
+    scanner = get_scanner(opp, conf_dict)
     devices = scanner.scan_devices()
     assert 23 == len(devices)
     assert "iPhone" == scanner.get_device_name("98:00:c6:56:34:12")
@@ -101,7 +101,7 @@ async def test_failed_to_log_in(mock_login, mock_logout, opp):
     }
 
     mock_login.side_effect = exceptions.EOF("Test")
-    scanner = get_scanner.opp, conf_dict)
+    scanner = get_scanner(opp, conf_dict)
     assert not scanner
 
 
@@ -123,20 +123,20 @@ async def test_to_get_update(mock_sendline, mock_prompt, mock_login, mock_logout
         }
     }
 
-    scanner = get_scanner.opp, conf_dict)
+    scanner = get_scanner(opp, conf_dict)
     # mock_sendline.side_effect = AssertionError("Test")
     mock_prompt.side_effect = AssertionError("Test")
     devices = scanner._get_update()  # pylint: disable=protected-access
     assert devices is None
 
 
-def test_good_response_parses.opp):
+def test_good_response_parses(opp):
     """Test that the response form the AP parses to JSON correctly."""
     response = _response_to_json(load_fixture("unifi_direct.txt"))
     assert response != {}
 
 
-def test_bad_response_returns_none.opp):
+def test_bad_response_returns_none(opp):
     """Test that a bad response form the AP parses to JSON correctly."""
     assert _response_to_json("{(}") == {}
 

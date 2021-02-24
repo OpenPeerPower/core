@@ -146,14 +146,14 @@ def see(
     opp.services.call(DOMAIN, SERVICE_SEE, data)
 
 
-async def async_setup_integration.opp: OpenPeerPowerType, config: ConfigType) -> None:
+async def async_setup_integration(opp: OpenPeerPowerType, config: ConfigType) -> None:
     """Set up the legacy integration."""
-    tracker = await get_tracker.opp, config)
+    tracker = await get_tracker(opp, config)
 
     legacy_platforms = await async_extract_config(opp, config)
 
     setup_tasks = [
-        asyncio.create_task(legacy_platform.async_setup_legacy.opp, tracker))
+        asyncio.create_task(legacy_platform.async_setup_legacy(opp, tracker))
         for legacy_platform in legacy_platforms
     ]
 
@@ -162,14 +162,14 @@ async def async_setup_integration.opp: OpenPeerPowerType, config: ConfigType) ->
 
     async def async_platform_discovered(p_type, info):
         """Load a platform."""
-        platform = await async_create_platform_type.opp, config, p_type, {})
+        platform = await async_create_platform_type(opp, config, p_type, {})
 
         if platform is None or platform.type != PLATFORM_TYPE_LEGACY:
             return
 
-        await platform.async_setup_legacy.opp, tracker, info)
+        await platform.async_setup_legacy(opp, tracker, info)
 
-    discovery.async_listen_platform.opp, DOMAIN, async_platform_discovered)
+    discovery.async_listen_platform(opp, DOMAIN, async_platform_discovered)
 
     # Clean up stale devices
     async_track_utc_time_change(
@@ -266,7 +266,7 @@ async def async_extract_config(opp, config):
 
     for platform in await asyncio.gather(
         *(
-            async_create_platform_type.opp, config, p_type, p_config)
+            async_create_platform_type(opp, config, p_type, p_config)
             for p_type, p_config in config_per_platform(config, DOMAIN)
         )
     ):
@@ -287,7 +287,7 @@ async def async_create_platform_type(
     opp. config, p_type, p_config
 ) -> Optional[DeviceTrackerPlatform]:
     """Determine type of platform."""
-    platform = await async_prepare_setup_platform.opp, config, DOMAIN, p_type)
+    platform = await async_prepare_setup_platform(opp, config, DOMAIN, p_type)
 
     if platform is None:
         return None
@@ -360,11 +360,11 @@ def async_setup_scanner_platform(
 
             opp.async_create_task(async_see_device(**kwargs))
 
-    async_track_time_interval.opp, async_device_tracker_scan, interval)
+    async_track_time_interval(opp, async_device_tracker_scan, interval)
     opp.async_create_task(async_device_tracker_scan(None))
 
 
-async def get_tracker.opp, config):
+async def get_tracker(opp, config):
     """Create a tracker."""
     yaml_path = opp.config.path(YAML_DEVICES)
 

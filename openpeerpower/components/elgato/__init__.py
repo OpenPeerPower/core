@@ -17,9 +17,9 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Elgato Key Light from a config entry."""
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     elgato = Elgato(
         entry.data[CONF_HOST],
         port=entry.data[CONF_PORT],
@@ -42,7 +42,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Elgato Key Light config entry."""
     # Unload entities for this entry/device.
     await opp.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)

@@ -7,7 +7,7 @@ from openpeerpower.components.binary_sensor import (
 from . import CONF_HOST, CONF_NAME, DATA_IP_WEBCAM, KEY_MAP, AndroidIPCamEntity
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the IP Webcam binary sensors."""
     if discovery_info is None:
         return

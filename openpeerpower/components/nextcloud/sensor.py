@@ -4,7 +4,7 @@ from openpeerpower.helpers.entity import Entity
 from . import DOMAIN, SENSORS
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Nextcloud sensors."""
     if discovery_info is None:
         return

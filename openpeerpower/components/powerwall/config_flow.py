@@ -27,7 +27,7 @@ def _login_and_fetch_site_info(power_wall: Powerwall, password: str):
     return power_wall.get_site_info()
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate the user input allows us to connect.
 
     Data has the keys from schema with values provided by the user.

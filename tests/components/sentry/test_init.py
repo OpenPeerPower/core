@@ -21,13 +21,13 @@ from openpeerpower.core import OpenPeerPower
 from tests.common import MockConfigEntry
 
 
-async def test_setup_entry.opp: OpenPeerPower) -> None:
+async def test_setup_entry(opp: OpenPeerPower) -> None:
     """Test integration setup from entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_DSN: "http://public@example.com/1", CONF_ENVIRONMENT: "production"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch(
         "openpeerpower.components.sentry.AioHttpIntegration"
@@ -74,14 +74,14 @@ async def test_setup_entry.opp: OpenPeerPower) -> None:
     assert call_args["before_send"]
 
 
-async def test_setup_entry_with_tracing.opp: OpenPeerPower) -> None:
+async def test_setup_entry_with_tracing(opp: OpenPeerPower) -> None:
     """Test integration setup from entry with tracing enabled."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_DSN: "http://public@example.com/1"},
         options={CONF_TRACING: True, CONF_TRACING_SAMPLE_RATE: 0.5},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch("openpeerpower.components.sentry.AioHttpIntegration"), patch(
         "openpeerpower.components.sentry.SqlalchemyIntegration"
@@ -117,7 +117,7 @@ async def test_get_channel(version, channel) -> None:
     assert get_channel(version) == channel
 
 
-async def test_process_before_send.opp: OpenPeerPower):
+async def test_process_before_send(opp: OpenPeerPower):
     """Test regular use of the Sentry process before sending function."""
     opp.config.components.add("puppies")
     opp.config.components.add("a_integration")
@@ -156,7 +156,7 @@ async def test_process_before_send.opp: OpenPeerPower):
     assert user["id"] == "12345"
 
 
-async def test_event_with_platform_context.opp: OpenPeerPower):
+async def test_event_with_platform_context(opp: OpenPeerPower):
     """Test extraction of platform context information during Sentry events."""
 
     current_platform_mock = Mock()
@@ -235,7 +235,7 @@ async def test_event_with_platform_context.opp: OpenPeerPower):
         ("tuyapi.test", {"package": "tuyapi"}),
     ],
 )
-async def test_logger_event_extraction.opp: OpenPeerPower, logger, tags):
+async def test_logger_event_extraction(opp: OpenPeerPower, logger, tags):
     """Test extraction of information from Sentry logger events."""
 
     result = process_before_send(
@@ -278,7 +278,7 @@ async def test_logger_event_extraction.opp: OpenPeerPower, logger, tags):
         ),
     ],
 )
-async def test_filter_log_events.opp: OpenPeerPower, logger, options, event):
+async def test_filter_log_events(opp: OpenPeerPower, logger, options, event):
     """Test filtering of events based on configuration options."""
     result = process_before_send(
         opp,
@@ -306,7 +306,7 @@ async def test_filter_log_events.opp: OpenPeerPower, logger, options, event):
         ("no", {CONF_EVENT_HANDLED: True}, True),
     ],
 )
-async def test_filter_handled_events.opp: OpenPeerPower, handled, options, event):
+async def test_filter_handled_events(opp: OpenPeerPower, handled, options, event):
     """Tests filtering of handled events based on configuration options."""
 
     event_mock = MagicMock()

@@ -39,14 +39,14 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Notion as a config entry."""
     if not entry.unique_id:
         opp.config_entries.async_update_entry(
             entry, unique_id=entry.data[CONF_USERNAME]
         )
 
-    session = aiohttp_client.async_get_clientsession.opp)
+    session = aiohttp_client.async_get_clientsession(opp)
 
     try:
         client = await async_get_client(
@@ -82,7 +82,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             for item in result:
                 if attr == "bridges" and item["id"] not in data["bridges"]:
                     # If a new bridge is discovered, register it:
-                    opp.async_create_task(async_register_new_bridge.opp, item, entry))
+                    opp.async_create_task(async_register_new_bridge(opp, item, entry))
                 data[attr][item["id"]] = item
 
         return data
@@ -107,7 +107,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a Notion config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -127,7 +127,7 @@ async def async_register_new_bridge(
     opp: OpenPeerPower, bridge: dict, entry: ConfigEntry
 ):
     """Register a new bridge."""
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, bridge["hardware_id"])},

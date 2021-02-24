@@ -25,7 +25,7 @@ from . import DATA_NESS, SIGNAL_ARMING_STATE_CHANGED
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Ness Alarm alarm control panel devices."""
     if discovery_info is None:
         return

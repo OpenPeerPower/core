@@ -10,7 +10,7 @@ from . import (
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up Tellstick switches."""
     if discovery_info is None or discovery_info[ATTR_DISCOVER_DEVICES] is None:
         return

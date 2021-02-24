@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Binary Sensor platform to w800rf32."""
     binary_sensors = []
     # device_id --> "c1 or a3" X10 device. entity (type dictionary)

@@ -6,7 +6,7 @@ from openpeerpower.auth.models import Credentials
 from tests.common import MockUser
 
 
-async def test_validate.opp):
+async def test_validate(opp):
     """Test validating pin."""
     auth_module = await auth_mfa_module_from_config(
         opp,
@@ -26,7 +26,7 @@ async def test_validate.opp):
     assert result is False
 
 
-async def test_setup_user.opp):
+async def test_setup_user(opp):
     """Test setup user."""
     auth_module = await auth_mfa_module_from_config(
         opp. {"type": "insecure_example", "data": []}
@@ -39,7 +39,7 @@ async def test_setup_user.opp):
     assert result is True
 
 
-async def test_depose_user.opp):
+async def test_depose_user(opp):
     """Test despose user."""
     auth_module = await auth_mfa_module_from_config(
         opp,
@@ -67,7 +67,7 @@ async def test_is_user_setup_opp):
     assert await auth_module.async_is_user_setup("invalid-user") is False
 
 
-async def test_login.opp):
+async def test_login(opp):
     """Test login flow with auth module."""
     opp.auth = await auth.auth_manager_from_config(
         opp,
@@ -86,7 +86,7 @@ async def test_login.opp):
     )
     user = MockUser(
         id="mock-user", is_owner=False, is_active=False, name="Paulus"
-    ).add_to_auth_manager.opp.auth)
+    ).add_to_auth_manager(opp.auth)
     await opp.auth.async_link_user(
         user,
         Credentials(
@@ -134,7 +134,7 @@ async def test_login.opp):
     assert result["data"].id == "mock-id"
 
 
-async def test_setup_flow.opp):
+async def test_setup_flow(opp):
     """Test validating pin."""
     auth_module = await auth_mfa_module_from_config(
         opp,

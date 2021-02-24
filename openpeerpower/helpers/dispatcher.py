@@ -24,7 +24,7 @@ def dispatcher_connect(
 
     def remove_dispatcher() -> None:
         """Remove signal listener."""
-        run_callback_threadsafe.opp.loop, async_unsub).result()
+        run_callback_threadsafe(opp.loop, async_unsub).result()
 
     return remove_dispatcher
 
@@ -69,14 +69,14 @@ def async_dispatcher_connect(
 
 
 @bind.opp
-def dispatcher_send.opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
+def dispatcher_send(opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
     """Send signal and data."""
     opp.loop.call_soon_threadsafe(async_dispatcher_send, opp, signal, *args)
 
 
 @callback
 @bind.opp
-def async_dispatcher_send.opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
+def async_dispatcher_send(opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
     """Send signal and data.
 
     This method must be run in the event loop.
@@ -84,4 +84,4 @@ def async_dispatcher_send.opp: OpenPeerPowerType, signal: str, *args: Any) -> No
     target_list = opp.data.get(DATA_DISPATCHER, {}).get(signal, [])
 
     for job in target_list:
-        opp.async_add.opp_job(job, *args)
+        opp.async_add(opp_job(job, *args)

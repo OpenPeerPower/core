@@ -36,7 +36,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Time and Date sensor."""
     if opp.config.time_zone is None:
         _LOGGER.error("Timezone is not set in Open Peer Power configuration")
@@ -85,7 +85,7 @@ class TimeDateSensor(Entity):
             self.opp, self.point_in_time_listener, self.get_next_interval()
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Cancel next update."""
         if self.unsub:
             self.unsub()

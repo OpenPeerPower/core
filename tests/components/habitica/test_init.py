@@ -8,7 +8,7 @@ from openpeerpower.components.habitica.const import (
 from tests.common import MockConfigEntry
 
 
-async def test_entry_setup_unload.opp, aioclient_mock):
+async def test_entry_setup_unload(opp, aioclient_mock):
     """Test integration setup and unload."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -19,7 +19,7 @@ async def test_entry_setup_unload.opp, aioclient_mock):
             "url": DEFAULT_URL,
         },
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     aioclient_mock.get(
         "https://habitica.com/api/v3/user",

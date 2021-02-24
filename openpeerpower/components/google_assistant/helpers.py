@@ -58,7 +58,7 @@ async def _get_entity_and_device(
     return entity_entry, device_entry
 
 
-async def _get_area.opp, entity_entry, device_entry) -> Optional[AreaEntry]:
+async def _get_area(opp, entity_entry, device_entry) -> Optional[AreaEntry]:
     """Calculate the area for an entity."""
     if entity_entry and entity_entry.area_id:
         area_id = entity_entry.area_id
@@ -578,7 +578,7 @@ def deep_update(target, source):
 
 
 @callback
-def async_get_entities.opp, config) -> List[GoogleEntity]:
+def async_get_entities(opp, config) -> List[GoogleEntity]:
     """Return all entities that are supported by Google."""
     entities = []
     for state in.opp.states.async_all():

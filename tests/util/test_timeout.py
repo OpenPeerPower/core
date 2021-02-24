@@ -16,7 +16,7 @@ async def test_simple_global_timeout():
             await asyncio.sleep(0.3)
 
 
-async def test_simple_global_timeout_with_executor_job.opp):
+async def test_simple_global_timeout_with_executor_job(opp):
     """Test a simple global timeout with executor job."""
     timeout = TimeoutManager()
 
@@ -34,7 +34,7 @@ async def test_simple_global_timeout_freeze():
             await asyncio.sleep(0.3)
 
 
-async def test_simple_zone_timeout_freeze_inside_executor_job.opp):
+async def test_simple_zone_timeout_freeze_inside_executor_job(opp):
     """Test a simple zone timeout freeze inside an executor job."""
     timeout = TimeoutManager()
 
@@ -47,7 +47,7 @@ async def test_simple_zone_timeout_freeze_inside_executor_job.opp):
             await opp.async_add_executor_job(_some_sync_work)
 
 
-async def test_simple_global_timeout_freeze_inside_executor_job.opp):
+async def test_simple_global_timeout_freeze_inside_executor_job(opp):
     """Test a simple global timeout freeze inside an executor job."""
     timeout = TimeoutManager()
 
@@ -59,7 +59,7 @@ async def test_simple_global_timeout_freeze_inside_executor_job.opp):
         await opp.async_add_executor_job(_some_sync_work)
 
 
-async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job.opp):
+async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job(opp):
     """Test a simple global timeout freeze inside an executor job."""
     timeout = TimeoutManager()
 
@@ -72,7 +72,7 @@ async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job.opp
             await opp.async_add_executor_job(_some_sync_work)
 
 
-async def test_mix_global_timeout_freeze_and_zone_freeze_different_order.opp):
+async def test_mix_global_timeout_freeze_and_zone_freeze_different_order(opp):
     """Test a simple global timeout freeze inside an executor job before timeout was set."""
     timeout = TimeoutManager()
 
@@ -120,7 +120,7 @@ async def test_mix_global_timeout_freeze_and_zone_freeze_inside_executor_job_sec
             await opp.async_add_executor_job(lambda: time.sleep(0.2))
 
 
-async def test_simple_global_timeout_freeze_with_executor_job.opp):
+async def test_simple_global_timeout_freeze_with_executor_job(opp):
     """Test a simple global timeout freeze with executor job."""
     timeout = TimeoutManager()
 
@@ -268,7 +268,7 @@ async def test_mix_zone_timeout_trigger_global_cool_down():
         await asyncio.sleep(0.2)
 
 
-async def test_simple_zone_timeout_freeze_without_timeout_cleanup.opp):
+async def test_simple_zone_timeout_freeze_without_timeout_cleanup(opp):
     """Test a simple zone timeout freeze on a zone that does not have a timeout set."""
     timeout = TimeoutManager()
 

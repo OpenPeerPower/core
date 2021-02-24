@@ -239,7 +239,7 @@ class HeosMediaPlayer(MediaPlayerEntity):
         if self._source_manager is None:
             self._source_manager = self.opp.data[HEOS_DOMAIN][DATA_SOURCE_MANAGER]
 
-    async def async_will_remove_from.opp(self):
+    async def async_will_remove_from(opp(self):
         """Disconnect the device when removed."""
         for signal_remove in self._signals:
             signal_remove()

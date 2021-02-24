@@ -24,7 +24,7 @@ def broadlink_setup_fixture():
         yield
 
 
-async def test_flow_user_works.opp):
+async def test_flow_user_works(opp):
     """Test a config flow initiated by the user.
 
     Best case scenario with no errors or locks.
@@ -63,7 +63,7 @@ async def test_flow_user_works.opp):
     assert mock_api.auth.call_count == 1
 
 
-async def test_flow_user_already_in_progress.opp):
+async def test_flow_user_already_in_progress(opp):
     """Test we do not accept more than one config flow per device."""
     device = get_device("Living Room")
 
@@ -91,14 +91,14 @@ async def test_flow_user_already_in_progress.opp):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_flow_user_mac_already_configured.opp):
+async def test_flow_user_mac_already_configured(opp):
     """Test we do not accept more than one config entry per device.
 
     We need to abort the flow and update the existing entry.
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -121,7 +121,7 @@ async def test_flow_user_mac_already_configured.opp):
     assert mock_api.auth.call_count == 0
 
 
-async def test_flow_user_invalid_ip_address.opp):
+async def test_flow_user_invalid_ip_address(opp):
     """Test we handle an invalid IP address in the user step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -138,7 +138,7 @@ async def test_flow_user_invalid_ip_address.opp):
     assert result["errors"] == {"base": "invalid_host"}
 
 
-async def test_flow_user_invalid_hostname.opp):
+async def test_flow_user_invalid_hostname(opp):
     """Test we handle an invalid hostname in the user step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -155,7 +155,7 @@ async def test_flow_user_invalid_hostname.opp):
     assert result["errors"] == {"base": "invalid_host"}
 
 
-async def test_flow_user_device_not_found.opp):
+async def test_flow_user_device_not_found(opp):
     """Test we handle a device not found in the user step."""
     device = get_device("Living Room")
 
@@ -174,7 +174,7 @@ async def test_flow_user_device_not_found.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_user_device_not_supported.opp):
+async def test_flow_user_device_not_supported(opp):
     """Test we handle a device not supported in the user step."""
     device = get_device("Kitchen")
     mock_api = device.get_mock_api()
@@ -193,7 +193,7 @@ async def test_flow_user_device_not_supported.opp):
     assert result["reason"] == "not_supported"
 
 
-async def test_flow_user_network_unreachable.opp):
+async def test_flow_user_network_unreachable(opp):
     """Test we handle a network unreachable in the user step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -248,7 +248,7 @@ async def test_flow_auth_authentication_error(opp):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_flow_auth_network_timeout.opp):
+async def test_flow_auth_network_timeout(opp):
     """Test we handle a network timeout in the auth step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -290,7 +290,7 @@ async def test_flow_auth_firmware_error(opp):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_flow_auth_network_unreachable.opp):
+async def test_flow_auth_network_unreachable(opp):
     """Test we handle a network unreachable in the auth step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -332,7 +332,7 @@ async def test_flow_auth_os_error(opp):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_flow_reset_works.opp):
+async def test_flow_reset_works(opp):
     """Test we finish a config flow after a manual unlock."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -364,7 +364,7 @@ async def test_flow_reset_works.opp):
     assert result["data"] == device.get_entry_data()
 
 
-async def test_flow_unlock_works.opp):
+async def test_flow_unlock_works(opp):
     """Test we finish a config flow with an unlock request."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -402,7 +402,7 @@ async def test_flow_unlock_works.opp):
     assert mock_api.set_lock.call_count == 1
 
 
-async def test_flow_unlock_network_timeout.opp):
+async def test_flow_unlock_network_timeout(opp):
     """Test we handle a network timeout in the unlock step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -456,7 +456,7 @@ async def test_flow_unlock_firmware_error(opp):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_flow_unlock_network_unreachable.opp):
+async def test_flow_unlock_network_unreachable(opp):
     """Test we handle a network unreachable in the unlock step."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -510,7 +510,7 @@ async def test_flow_unlock_os_error(opp):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_flow_do_not_unlock.opp):
+async def test_flow_do_not_unlock(opp):
     """Test we do not unlock the device if the user does not want to."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -543,7 +543,7 @@ async def test_flow_do_not_unlock.opp):
     assert mock_api.set_lock.call_count == 0
 
 
-async def test_flow_import_works.opp):
+async def test_flow_import_works(opp):
     """Test an import flow."""
     device = get_device("Living Room")
     mock_api = device.get_mock_api()
@@ -574,7 +574,7 @@ async def test_flow_import_works.opp):
     assert mock_discover.call_count == 1
 
 
-async def test_flow_import_already_in_progress.opp):
+async def test_flow_import_already_in_progress(opp):
     """Test we do not import more than one flow per device."""
     device = get_device("Living Room")
     data = {"host": device.host}
@@ -593,11 +593,11 @@ async def test_flow_import_already_in_progress.opp):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_flow_import_host_already_configured.opp):
+async def test_flow_import_host_already_configured(opp):
     """Test we do not import a host that is already configured."""
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to(opp.opp)
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
@@ -611,14 +611,14 @@ async def test_flow_import_host_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_flow_import_mac_already_configured.opp):
+async def test_flow_import_mac_already_configured(opp):
     """Test we do not import more than one config entry per device.
 
     We need to abort the flow and update the existing entry.
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to(opp.opp)
 
     device.host = "192.168.1.16"
     mock_api = device.get_mock_api()
@@ -639,7 +639,7 @@ async def test_flow_import_mac_already_configured.opp):
     assert mock_api.auth.call_count == 0
 
 
-async def test_flow_import_device_not_found.opp):
+async def test_flow_import_device_not_found(opp):
     """Test we handle a device not found in the import step."""
     with patch(DEVICE_DISCOVERY, return_value=[]):
         result = await opp.config_entries.flow.async_init(
@@ -652,7 +652,7 @@ async def test_flow_import_device_not_found.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_flow_import_device_not_supported.opp):
+async def test_flow_import_device_not_supported(opp):
     """Test we handle a device not supported in the import step."""
     device = get_device("Kitchen")
     mock_api = device.get_mock_api()
@@ -668,7 +668,7 @@ async def test_flow_import_device_not_supported.opp):
     assert result["reason"] == "not_supported"
 
 
-async def test_flow_import_invalid_ip_address.opp):
+async def test_flow_import_invalid_ip_address(opp):
     """Test we handle an invalid IP address in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError(errno.EINVAL, None)):
         result = await opp.config_entries.flow.async_init(
@@ -681,7 +681,7 @@ async def test_flow_import_invalid_ip_address.opp):
     assert result["reason"] == "invalid_host"
 
 
-async def test_flow_import_invalid_hostname.opp):
+async def test_flow_import_invalid_hostname(opp):
     """Test we handle an invalid hostname in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError(socket.EAI_NONAME, None)):
         result = await opp.config_entries.flow.async_init(
@@ -694,7 +694,7 @@ async def test_flow_import_invalid_hostname.opp):
     assert result["reason"] == "invalid_host"
 
 
-async def test_flow_import_network_unreachable.opp):
+async def test_flow_import_network_unreachable(opp):
     """Test we handle a network unreachable in the import step."""
     with patch(DEVICE_DISCOVERY, side_effect=OSError(errno.ENETUNREACH, None)):
         result = await opp.config_entries.flow.async_init(
@@ -720,11 +720,11 @@ async def test_flow_import_os_error(opp):
     assert result["reason"] == "unknown"
 
 
-async def test_flow_reauth_works.opp):
+async def test_flow_reauth_works(opp):
     """Test a reauthentication flow."""
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to(opp.opp)
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
     data = {"name": device.name, **device.get_entry_data()}
@@ -753,14 +753,14 @@ async def test_flow_reauth_works.opp):
     assert mock_discover.call_count == 1
 
 
-async def test_flow_reauth_invalid_host.opp):
+async def test_flow_reauth_invalid_host(opp):
     """Test we do not accept an invalid host for reauthentication.
 
     The MAC address cannot change.
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to(opp.opp)
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
     data = {"name": device.name, **device.get_entry_data()}
@@ -787,14 +787,14 @@ async def test_flow_reauth_invalid_host.opp):
     assert mock_api.auth.call_count == 0
 
 
-async def test_flow_reauth_valid_host.opp):
+async def test_flow_reauth_valid_host(opp):
     """Test we accept a valid host for reauthentication.
 
     The hostname/IP address may change. We need to update the entry.
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to(opp.opp)
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
     data = {"name": device.name, **device.get_entry_data()}

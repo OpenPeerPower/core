@@ -23,7 +23,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the sensor platform."""
     api_connector = OpenERZConnector(config[CONF_ZIP], config[CONF_WASTE_TYPE])
     add_entities([OpenERZSensor(api_connector, config.get(CONF_NAME))], True)

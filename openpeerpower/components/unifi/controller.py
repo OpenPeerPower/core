@@ -409,7 +409,7 @@ class UniFiController:
                 )
 
     @staticmethod
-    async def async_config_entry_updated.opp, config_entry) -> None:
+    async def async_config_entry_updated(opp, config_entry) -> None:
         """Handle signals of config entry being updated.
 
         If config entry is updated due to reauth flow
@@ -419,7 +419,7 @@ class UniFiController:
             return
         controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
         controller.load_config_entry_options()
-        async_dispatcher_send.opp, controller.signal_options_update)
+        async_dispatcher_send(opp, controller.signal_options_update)
 
     @callback
     def reconnect(self, log=False) -> None:
@@ -490,7 +490,7 @@ async def get_controller(
     sslcontext = None
 
     if verify_ssl:
-        session = aiohttp_client.async_get_clientsession.opp)
+        session = aiohttp_client.async_get_clientsession(opp)
         if isinstance(verify_ssl, str):
             sslcontext = ssl.create_default_context(cafile=verify_ssl)
     else:

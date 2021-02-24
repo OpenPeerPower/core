@@ -71,7 +71,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up config entry."""
     if CONF_TOKEN not in entry.data:
         # Init reauth flow
@@ -111,7 +111,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigType) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     """Unload config entry."""
     unload_functions = (
         opp.config_entries.async_forward_entry_unload(entry, platform)

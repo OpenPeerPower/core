@@ -127,7 +127,7 @@ async def activate_automation(
 
         Async friendly.
         """
-        next_setting = get_astral_event_next.opp, SUN_EVENT_SUNSET)
+        next_setting = get_astral_event_next(opp, SUN_EVENT_SUNSET)
         if not next_setting:
             return None
         return next_setting - LIGHT_TRANSITION_TIME * len(light_ids)
@@ -177,19 +177,19 @@ async def activate_automation(
             )
 
     async_track_point_in_utc_time(
-        opp. schedule_light_turn_on, get_astral_event_next.opp, SUN_EVENT_SUNRISE)
+        opp. schedule_light_turn_on, get_astral_event_next(opp, SUN_EVENT_SUNRISE)
     )
 
     # If the sun is already above horizon schedule the time-based pre-sun set
     # event.
-    if is_up.opp):
+    if is_up(opp):
         schedule_light_turn_on(None)
 
     @callback
     def check_light_on_dev_state_change(entity, old_state, new_state):
         """Handle tracked device state changes."""
         lights_are_on = any_light_on()
-        light_needed = not (lights_are_on or is_up.opp))
+        light_needed = not (lights_are_on or is_up(opp))
 
         # These variables are needed for the elif check
         now = dt_util.utcnow()

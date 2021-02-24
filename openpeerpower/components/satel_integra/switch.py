@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 DEPENDENCIES = ["satel_integra"]
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Satel Integra switch devices."""
     if not discovery_info:
         return

@@ -25,12 +25,12 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up the UniFi component."""
     opp.data.setdefault(UNIFI_DOMAIN, {})
 
     # Flat configuration was introduced with 2021.3
-    await async_flatten_entry_data.opp, config_entry)
+    await async_flatten_entry_data(opp, config_entry)
 
     controller = UniFiController.opp, config_entry)
     if not await controller.async_setup():
@@ -63,13 +63,13 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     controller = opp.data[UNIFI_DOMAIN].pop(config_entry.entry_id)
     return await controller.async_reset()
 
 
-async def async_flatten_entry_data.opp, config_entry):
+async def async_flatten_entry_data(opp, config_entry):
     """Simpler configuration structure for entry data.
 
     Keep controller key layer in case user rollbacks.

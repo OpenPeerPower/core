@@ -19,7 +19,7 @@ from openpeerpower.const import CONF_HOST
 from tests.common import MockConfigEntry, mock_coro
 
 
-def init_config_flow.opp, side_effect=None):
+def init_config_flow(opp, side_effect=None):
     """Init a configuration flow."""
     flow = config_flow.FlowHandler()
     flow.opp = opp
@@ -58,7 +58,7 @@ def mock_tellduslive(supports_local_api, authorize):
 
 async def test_abort_if_already_setup_opp):
     """Test we abort if TelldusLive is already setup."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_user()
@@ -71,9 +71,9 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "already_setup"
 
 
-async def test_full_flow_implementation.opp, mock_tellduslive):
+async def test_full_flow_implementation(opp, mock_tellduslive):
     """Test registering an implementation and finishing flow works."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     flow.context = {"source": SOURCE_DISCOVERY}
     result = await flow.async_step_discovery(["localhost", "tellstick"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -100,18 +100,18 @@ async def test_full_flow_implementation.opp, mock_tellduslive):
     assert result["data"]["session"] == {"token": "token", "host": "localhost"}
 
 
-async def test_step_import.opp, mock_tellduslive):
+async def test_step_import(opp, mock_tellduslive):
     """Test that we trigger auth when configuring from import."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_import({CONF_HOST: DOMAIN, KEY_SCAN_INTERVAL: 0})
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "auth"
 
 
-async def test_step_import_add_host.opp, mock_tellduslive):
+async def test_step_import_add_host(opp, mock_tellduslive):
     """Test that we add host and trigger user when configuring from import."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_import(
         {CONF_HOST: "localhost", KEY_SCAN_INTERVAL: 0}
@@ -120,9 +120,9 @@ async def test_step_import_add_host.opp, mock_tellduslive):
     assert result["step_id"] == "user"
 
 
-async def test_step_import_no_config_file.opp, mock_tellduslive):
+async def test_step_import_no_config_file(opp, mock_tellduslive):
     """Test that we trigger user with no config_file configuring from import."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_import(
         {CONF_HOST: "localhost", KEY_SCAN_INTERVAL: 0}
@@ -131,9 +131,9 @@ async def test_step_import_no_config_file.opp, mock_tellduslive):
     assert result["step_id"] == "user"
 
 
-async def test_step_import_load_json_matching_host.opp, mock_tellduslive):
+async def test_step_import_load_json_matching_host(opp, mock_tellduslive):
     """Test that we add host and trigger user when configuring from import."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     with patch(
         "openpeerpower.components.tellduslive.config_flow.load_json",
@@ -146,9 +146,9 @@ async def test_step_import_load_json_matching_host.opp, mock_tellduslive):
     assert result["step_id"] == "user"
 
 
-async def test_step_import_load_json.opp, mock_tellduslive):
+async def test_step_import_load_json(opp, mock_tellduslive):
     """Test that we create entry when configuring from import."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     with patch(
         "openpeerpower.components.tellduslive.config_flow.load_json",
@@ -165,9 +165,9 @@ async def test_step_import_load_json.opp, mock_tellduslive):
 
 
 @pytest.mark.parametrize("supports_local_api", [False])
-async def test_step_disco_no_local_api.opp, mock_tellduslive):
+async def test_step_disco_no_local_api(opp, mock_tellduslive):
     """Test that we trigger when configuring from discovery, not supporting local api."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     flow.context = {"source": SOURCE_DISCOVERY}
 
     result = await flow.async_step_discovery(["localhost", "tellstick"])
@@ -176,9 +176,9 @@ async def test_step_disco_no_local_api.opp, mock_tellduslive):
     assert len(flow._hosts) == 1
 
 
-async def test_step_auth.opp, mock_tellduslive):
+async def test_step_auth(opp, mock_tellduslive):
     """Test that create cloud entity from auth."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     await flow.async_step_auth()
     result = await flow.async_step_auth(["localhost", "tellstick"])
@@ -193,9 +193,9 @@ async def test_step_auth.opp, mock_tellduslive):
 
 
 @pytest.mark.parametrize("authorize", [False])
-async def test_wrong_auth_flow_implementation.opp, mock_tellduslive):
+async def test_wrong_auth_flow_implementation(opp, mock_tellduslive):
     """Test wrong auth."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     await flow.async_step_auth()
     result = await flow.async_step_auth("")
@@ -204,27 +204,27 @@ async def test_wrong_auth_flow_implementation.opp, mock_tellduslive):
     assert result["errors"]["base"] == "invalid_auth"
 
 
-async def test_not_pick_host_if_only_one.opp, mock_tellduslive):
+async def test_not_pick_host_if_only_one(opp, mock_tellduslive):
     """Test not picking host if we have just one."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "auth"
 
 
-async def test_abort_if_timeout_generating_auth_url.opp, mock_tellduslive):
+async def test_abort_if_timeout_generating_auth_url(opp, mock_tellduslive):
     """Test abort if generating authorize url timeout."""
-    flow = init_config_flow.opp, side_effect=asyncio.TimeoutError)
+    flow = init_config_flow(opp, side_effect=asyncio.TimeoutError)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "authorize_url_timeout"
 
 
-async def test_abort_no_auth_url.opp, mock_tellduslive):
+async def test_abort_no_auth_url(opp, mock_tellduslive):
     """Test abort if generating authorize url returns none."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     flow._get_auth_url = Mock(return_value=False)
 
     result = await flow.async_step_user()
@@ -232,19 +232,19 @@ async def test_abort_no_auth_url.opp, mock_tellduslive):
     assert result["reason"] == "unknown_authorize_url_generation"
 
 
-async def test_abort_if_exception_generating_auth_url.opp, mock_tellduslive):
+async def test_abort_if_exception_generating_auth_url(opp, mock_tellduslive):
     """Test we abort if generating authorize url blows up."""
-    flow = init_config_flow.opp, side_effect=ValueError)
+    flow = init_config_flow(opp, side_effect=ValueError)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "unknown_authorize_url_generation"
 
 
-async def test_discovery_already_configured.opp, mock_tellduslive):
+async def test_discovery_already_configured(opp, mock_tellduslive):
     """Test abort if already configured fires from discovery."""
-    MockConfigEntry(domain="tellduslive", data={"host": "some-host"}).add_to.opp.opp)
-    flow = init_config_flow.opp)
+    MockConfigEntry(domain="tellduslive", data={"host": "some-host"}).add_to(opp.opp)
+    flow = init_config_flow(opp)
     flow.context = {"source": SOURCE_DISCOVERY}
 
     with pytest.raises(data_entry_flow.AbortFlow):

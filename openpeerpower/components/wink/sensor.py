@@ -12,7 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 SENSOR_TYPES = ["temperature", "humidity", "balance", "proximity"]
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink platform."""
 
     for sensor in pywink.get_sensors():

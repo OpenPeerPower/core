@@ -54,7 +54,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Netdata sensor."""
 
     name = config.get(CONF_NAME)
@@ -62,7 +62,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     port = config.get(CONF_PORT)
     resources = config.get(CONF_RESOURCES)
 
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
     netdata = NetdataData(Netdata(host, opp.loop, session, port=port))
     await netdata.async_update()
 

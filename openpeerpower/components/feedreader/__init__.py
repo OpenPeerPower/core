@@ -71,7 +71,7 @@ class FeedManager:
         self._event_type = EVENT_FEEDREADER
         self._feed_id = url
         opp.bus.listen_once(EVENT_OPENPEERPOWER_START, lambda _: self._update())
-        self._init_regular_updates.opp)
+        self._init_regular_updates(opp)
 
     def _log_no_entries(self):
         """Send no entries log at debug level."""
@@ -79,7 +79,7 @@ class FeedManager:
 
     def _init_regular_updates(self, opp):
         """Schedule regular updates at the top of the clock."""
-        track_time_interval.opp, lambda now: self._update(), self._scan_interval)
+        track_time_interval(opp, lambda now: self._update(), self._scan_interval)
 
     @property
     def last_update_successful(self):

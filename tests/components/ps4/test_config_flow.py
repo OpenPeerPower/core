@@ -96,7 +96,7 @@ def ps4_setup_fixture():
         yield
 
 
-async def test_full_flow_implementation.opp):
+async def test_full_flow_implementation(opp):
     """Test registering an implementation and flow works."""
     # User Step Started, results in Step Creds
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
@@ -137,7 +137,7 @@ async def test_full_flow_implementation.opp):
     assert result["title"] == MOCK_TITLE
 
 
-async def test_multiple_flow_implementation.opp):
+async def test_multiple_flow_implementation(opp):
     """Test multiple device flows."""
     # User Step Started, results in Step Creds
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
@@ -242,7 +242,7 @@ async def test_multiple_flow_implementation.opp):
     assert entry_1 is not entry_2
 
 
-async def test_port_bind_abort.opp):
+async def test_port_bind_abort(opp):
     """Test that flow aborted when cannot bind to ports 987, 997."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=MOCK_UDP_PORT):
         reason = "port_987_bind_error"
@@ -261,9 +261,9 @@ async def test_port_bind_abort.opp):
     assert result["reason"] == reason
 
 
-async def test_duplicate_abort.opp):
+async def test_duplicate_abort(opp):
     """Test that Flow aborts when found devices already configured."""
-    MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA).add_to.opp.opp)
+    MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA).add_to(opp.opp)
 
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -289,11 +289,11 @@ async def test_duplicate_abort.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_additional_device.opp):
+async def test_additional_device(opp):
     """Test that Flow can configure another device."""
     # Mock existing entry.
     entry = MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -328,7 +328,7 @@ async def test_additional_device.opp):
     assert result["title"] == MOCK_TITLE
 
 
-async def test_0_pin.opp):
+async def test_0_pin(opp):
     """Test Pin with leading '0' is passed correctly."""
     with patch("pyps4_2ndscreen.Helper.get_creds", return_value=MOCK_CREDS):
         result = await opp.config_entries.flow.async_init(
@@ -366,7 +366,7 @@ async def test_0_pin.opp):
     )
 
 
-async def test_no_devices_found_abort.opp):
+async def test_no_devices_found_abort(opp):
     """Test that failure to find devices aborts flow."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -391,7 +391,7 @@ async def test_no_devices_found_abort.opp):
     assert result["reason"] == "no_devices_found"
 
 
-async def test_manual_mode.opp):
+async def test_manual_mode(opp):
     """Test host specified in manual mode is passed to Step Link."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -419,7 +419,7 @@ async def test_manual_mode.opp):
     assert result["step_id"] == "link"
 
 
-async def test_credential_abort.opp):
+async def test_credential_abort(opp):
     """Test that failure to get credentials aborts flow."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -437,7 +437,7 @@ async def test_credential_abort.opp):
     assert result["reason"] == "credential_error"
 
 
-async def test_credential_timeout.opp):
+async def test_credential_timeout(opp):
     """Test that Credential Timeout shows error."""
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(

@@ -59,7 +59,7 @@ def validate_integration(config: Config, integration: Integration):
 
     needs_unique_id = integration.domain not in UNIQUE_ID_IGNORE and (
         "async_step_discovery" in config_flow
-        or "async_step.oppio" in config_flow
+        or "async_step(oppio" in config_flow
         or "async_step_homekit" in config_flow
         or "async_step_mqtt" in config_flow
         or "async_step_ssdp" in config_flow

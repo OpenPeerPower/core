@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def setup_scanner.opp, config, see, discovery_info=None):
+def setup_scanner(opp, config, see, discovery_info=None):
     """Set up the Bluetooth LE Scanner."""
 
     new_devices = {}
@@ -195,7 +195,7 @@ def setup_scanner.opp, config, see, discovery_info=None):
                     _LOGGER.info("Discovered Bluetooth LE device %s", address)
                     see_device(address, devs[address], new_device=True)
 
-        track_point_in_utc_time.opp, update_ble, dt_util.utcnow() + interval)
+        track_point_in_utc_time(opp, update_ble, dt_util.utcnow() + interval)
 
     update_ble(dt_util.utcnow())
     return True

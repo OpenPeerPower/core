@@ -21,7 +21,7 @@ CONTROLLER_MODES_INV = {value: key for key, value in CONTROLLER_MODES.items()}
 PRESET_MODES_INV = {value: key for key, value in PRESET_MODES.items()}
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up climate(s) for KNX platform."""
     entities = []
     for device in.opp.data[DOMAIN].xknx.devices:

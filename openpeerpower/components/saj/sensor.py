@@ -56,7 +56,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the SAJ sensors."""
 
     remove_interval_update = None
@@ -96,7 +96,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 SAJsensor(saj.serialnumber, sensor, inverter_name=config.get(CONF_NAME))
             )
 
-    async_add_entities.opp_sensors)
+    async_add_entities(opp_sensors)
 
     async def async_saj():
         """Update all the SAJ sensors."""
@@ -123,7 +123,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     def start_update_interval(event):
         """Start the update interval scheduling."""
         nonlocal remove_interval_update
-        remove_interval_update = async_track_time_interval_backoff.opp, async_saj)
+        remove_interval_update = async_track_time_interval_backoff(opp, async_saj)
 
     def stop_update_interval(event):
         """Properly cancel the scheduled update."""
@@ -134,7 +134,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
 
 
 @callback
-def async_track_time_interval_backoff.opp, action) -> CALLBACK_TYPE:
+def async_track_time_interval_backoff(opp, action) -> CALLBACK_TYPE:
     """Add a listener that fires repetitively and increases the interval when failed."""
     remove = None
     interval = MIN_INTERVAL
@@ -148,7 +148,7 @@ def async_track_time_interval_backoff.opp, action) -> CALLBACK_TYPE:
             else:
                 interval = min(interval * 2, MAX_INTERVAL)
         finally:
-            remove = async_call_later.opp, interval, interval_listener)
+            remove = async_call_later(opp, interval, interval_listener)
 
     opp.async_create_task(interval_listener())
 

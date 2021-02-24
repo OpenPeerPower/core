@@ -55,11 +55,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
     """Initialize the SmartThings platform."""
-    await setup_smartapp_endpoint.opp)
+    await setup_smartapp_endpoint(opp)
     return True
 
 
-async def async_migrate_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_migrate_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Handle migration of a previous version config entry.
 
     A config entry created under a previous version must go through the
@@ -67,7 +67,7 @@ async def async_migrate_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     elements. Force this by removing the entry and triggering a new flow.
     """
     # Remove the entry which will invoke the callback to delete the app.
-    opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+    opp.async_create_task(opp.config_entries.async_remove(entry.entry_id))
     # only create new flow if there isn't a pending one for SmartThings.
     flows = opp.config_entries.flow.async_progress()
     if not [flow for flow in flows if flow["handler"] == DOMAIN]:
@@ -79,7 +79,7 @@ async def async_migrate_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return False
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Initialize config entry which represents an installed SmartApp."""
     # For backwards compat
     if entry.unique_id is None:
@@ -90,13 +90,13 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
             ),
         )
 
-    if not validate_webhook_requirements.opp):
+    if not validate_webhook_requirements(opp):
         _LOGGER.warning(
             "The 'base_url' of the 'http' integration must be configured and start with 'https://'"
         )
         return False
 
-    api = SmartThings(async_get_clientsession.opp), entry.data[CONF_ACCESS_TOKEN])
+    api = SmartThings(async_get_clientsession(opp), entry.data[CONF_ACCESS_TOKEN])
 
     remove_entry = False
     try:
@@ -107,7 +107,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         if not smart_app:
             # Validate and setup the app.
             app = await api.app(entry.data[CONF_APP_ID])
-            smart_app = setup_smartapp.opp, app)
+            smart_app = setup_smartapp(opp, app)
 
         # Validate and retrieve the installed app.
         installed_app = await validate_installed_app(
@@ -173,7 +173,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
         raise ConfigEntryNotReady from ex
 
     if remove_entry:
-        opp.async_create_task.opp.config_entries.async_remove(entry.entry_id))
+        opp.async_create_task(opp.config_entries.async_remove(entry.entry_id))
         # only create new flow if there isn't a pending one for SmartThings.
         flows = opp.config_entries.flow.async_progress()
         if not [flow for flow in flows if flow["handler"] == DOMAIN]:
@@ -206,7 +206,7 @@ async def async_get_entry_scenes(entry: ConfigEntry, api):
     return []
 
 
-async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Unload a config entry."""
     broker = opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
     if broker:
@@ -219,9 +219,9 @@ async def async_unload_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return all(await asyncio.gather(*tasks))
 
 
-async def async_remove_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def async_remove_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
     """Perform clean-up when entry is being removed."""
-    api = SmartThings(async_get_clientsession.opp), entry.data[CONF_ACCESS_TOKEN])
+    api = SmartThings(async_get_clientsession(opp), entry.data[CONF_ACCESS_TOKEN])
 
     # Remove the installed_app, which if already removed raises a HTTP_FORBIDDEN error.
     installed_app_id = entry.data[CONF_INSTALLED_APP_ID]
@@ -260,7 +260,7 @@ async def async_remove_entry.opp: OpenPeerPowerType, entry: ConfigEntry) -> None
     _LOGGER.debug("Removed app %s", app_id)
 
     if len(all_entries) == 1:
-        await unload_smartapp_endpoint.opp)
+        await unload_smartapp_endpoint(opp)
 
 
 class DeviceBroker:
@@ -429,7 +429,7 @@ class SmartThingsEntity(Entity):
             self.opp, SIGNAL_SMARTTHINGS_UPDATE, async_update_state
         )
 
-    async def async_will_remove_from.opp(self) -> None:
+    async def async_will_remove_from(opp(self) -> None:
         """Disconnect the device when removed."""
         if self._dispatcher_remove:
             self._dispatcher_remove()

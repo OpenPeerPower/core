@@ -38,7 +38,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Smart Meter Texas from a config entry."""
 
     username = entry.data[CONF_USERNAME]
@@ -98,7 +98,7 @@ class SmartMeterTexasData:
         """Initialize the data coordintator."""
         self._entry = entry
         self.account = account
-        websession = aiohttp_client.async_get_clientsession.opp)
+        websession = aiohttp_client.async_get_clientsession(opp)
         self.client = Client(websession, account)
         self.meters = []
 
@@ -117,7 +117,7 @@ class SmartMeterTexasData:
         return self.meters
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

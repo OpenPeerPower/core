@@ -12,7 +12,7 @@ from openpeerpower.util.network import is_local
 _LOGGER = logging.getLogger(__name__)
 
 
-async def verify_redirect_uri.opp, client_id, redirect_uri):
+async def verify_redirect_uri(opp, client_id, redirect_uri):
     """Verify that the client and redirect uri match."""
     try:
         client_id_parts = _parse_client_id(client_id)
@@ -40,7 +40,7 @@ async def verify_redirect_uri.opp, client_id, redirect_uri):
 
     # IndieAuth 4.2.2 allows for redirect_uri to be on different domain
     # but needs to be specified in link tag when fetching `client_id`.
-    redirect_uris = await fetch_redirect_uris.opp, client_id)
+    redirect_uris = await fetch_redirect_uris(opp, client_id)
     return redirect_uri in redirect_uris
 
 
@@ -64,7 +64,7 @@ class LinkTagParser(HTMLParser):
             self.found.append(attrs.get("href"))
 
 
-async def fetch_redirect_uris.opp, url):
+async def fetch_redirect_uris(opp, url):
     """Find link tag with redirect_uri values.
 
     IndieAuth 4.2.2

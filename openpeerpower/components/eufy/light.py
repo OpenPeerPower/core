@@ -20,7 +20,7 @@ EUFY_MAX_KELVIN = 6500
 EUFY_MIN_KELVIN = 2700
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up Eufy bulbs."""
     if discovery_info is None:
         return

@@ -54,7 +54,7 @@ async def test_capped_setup_opp, aioclient_mock):
         "https://www.start.ca/support/usage/api?key=NOTAKEY", text=result
     )
 
-    await async_setup_component.opp, "sensor", {"sensor": config})
+    await async_setup_component(opp, "sensor", {"sensor": config})
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.start_ca_usage_ratio")
@@ -150,7 +150,7 @@ async def test_unlimited_setup_opp, aioclient_mock):
         "https://www.start.ca/support/usage/api?key=NOTAKEY", text=result
     )
 
-    await async_setup_component.opp, "sensor", {"sensor": config})
+    await async_setup_component(opp, "sensor", {"sensor": config})
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.start_ca_usage_ratio")
@@ -202,25 +202,25 @@ async def test_unlimited_setup_opp, aioclient_mock):
     assert state.state == "inf"
 
 
-async def test_bad_return_code.opp, aioclient_mock):
+async def test_bad_return_code(opp, aioclient_mock):
     """Test handling a return code that isn't HTTP OK."""
     aioclient_mock.get(
         "https://www.start.ca/support/usage/api?key=NOTAKEY", status=HTTP_NOT_FOUND
     )
 
-    scd = StartcaData.opp.loop, async_get_clientsession.opp), "NOTAKEY", 400)
+    scd = StartcaData.opp.loop, async_get_clientsession(opp), "NOTAKEY", 400)
 
     result = await scd.async_update()
     assert result is False
 
 
-async def test_bad_json_decode.opp, aioclient_mock):
+async def test_bad_json_decode(opp, aioclient_mock):
     """Test decoding invalid json result."""
     aioclient_mock.get(
         "https://www.start.ca/support/usage/api?key=NOTAKEY", text="this is not xml"
     )
 
-    scd = StartcaData.opp.loop, async_get_clientsession.opp), "NOTAKEY", 400)
+    scd = StartcaData.opp.loop, async_get_clientsession(opp), "NOTAKEY", 400)
 
     result = await scd.async_update()
     assert result is False

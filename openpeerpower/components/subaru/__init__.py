@@ -43,10 +43,10 @@ async def async_setup(opp, base_config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Subaru from a config entry."""
     config = entry.data
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
     try:
         controller = SubaruAPI(
             websession,
@@ -102,7 +102,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

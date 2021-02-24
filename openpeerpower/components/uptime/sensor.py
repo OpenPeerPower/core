@@ -23,7 +23,7 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the uptime sensor platform."""
     name = config.get(CONF_NAME)
 

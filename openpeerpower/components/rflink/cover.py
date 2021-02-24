@@ -106,7 +106,7 @@ def devices_from_config(domain_config):
     return devices
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Rflink cover platform."""
     async_add_entities(devices_from_config(config))
 

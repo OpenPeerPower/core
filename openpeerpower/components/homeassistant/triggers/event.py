@@ -88,7 +88,7 @@ async def async_attach_trigger(
             # If event doesn't match, skip event
             return
 
-        opp.async_run.opp_job(
+        opp.async_run(opp_job(
             job,
             {
                 "trigger": {

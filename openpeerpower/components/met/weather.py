@@ -66,7 +66,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Met.no weather platform."""
     _LOGGER.warning("Loading Met.no via platform config is deprecated")
 
@@ -83,7 +83,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     )
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Add a weather entity from a config_entry."""
     coordinator = opp.data[DOMAIN][config_entry.entry_id]
     async_add_entities(

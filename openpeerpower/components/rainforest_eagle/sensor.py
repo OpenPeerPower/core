@@ -69,7 +69,7 @@ def hwtest(cloud_id, install_code, ip_address):
     raise ValueError("Couldn't determine device model.")
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Create the Eagle-200 sensor."""
     ip_address = config[CONF_IP_ADDRESS]
     cloud_id = config[CONF_CLOUD_ID]

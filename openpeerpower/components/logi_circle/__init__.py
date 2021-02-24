@@ -115,14 +115,14 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up Logi Circle from a config entry."""
     logi_circle = LogiCircle(
         client_id=entry.data[CONF_CLIENT_ID],
         client_secret=entry.data[CONF_CLIENT_SECRET],
         api_key=entry.data[CONF_API_KEY],
         redirect_uri=entry.data[CONF_REDIRECT_URI],
-        cache_file.opp.config.path(DEFAULT_CACHEDB),
+        cache_file(opp.config.path(DEFAULT_CACHEDB),
     )
 
     if not logi_circle.authorized:
@@ -181,11 +181,11 @@ async def async_setup_entry.opp, entry):
         params = dict(service.data)
 
         if service.service == SERVICE_SET_CONFIG:
-            async_dispatcher_send.opp, SIGNAL_LOGI_CIRCLE_RECONFIGURE, params)
+            async_dispatcher_send(opp, SIGNAL_LOGI_CIRCLE_RECONFIGURE, params)
         if service.service == SERVICE_LIVESTREAM_SNAPSHOT:
-            async_dispatcher_send.opp, SIGNAL_LOGI_CIRCLE_SNAPSHOT, params)
+            async_dispatcher_send(opp, SIGNAL_LOGI_CIRCLE_SNAPSHOT, params)
         if service.service == SERVICE_LIVESTREAM_RECORD:
-            async_dispatcher_send.opp, SIGNAL_LOGI_CIRCLE_RECORD, params)
+            async_dispatcher_send(opp, SIGNAL_LOGI_CIRCLE_RECORD, params)
 
     opp.services.async_register(
         DOMAIN,
@@ -217,7 +217,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     for component in "camera", "sensor":
         await opp.config_entries.async_forward_entry_unload(entry, component)

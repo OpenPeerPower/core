@@ -6,7 +6,7 @@ from . import CONF_MONITORED_CONDITIONS, DATA_KEY, LTEEntity
 from .sensor_types import BINARY_SENSOR_CLASSES
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info):
     """Set up Netgear LTE binary sensor devices."""
     if discovery_info is None:
         return

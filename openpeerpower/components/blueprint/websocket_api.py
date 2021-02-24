@@ -18,10 +18,10 @@ from .errors import FileAlreadyExists
 @callback
 def async_setup_opp: OpenPeerPower):
     """Set up the websocket API."""
-    websocket_api.async_register_command.opp, ws_list_blueprints)
-    websocket_api.async_register_command.opp, ws_import_blueprint)
-    websocket_api.async_register_command.opp, ws_save_blueprint)
-    websocket_api.async_register_command.opp, ws_delete_blueprint)
+    websocket_api.async_register_command(opp, ws_list_blueprints)
+    websocket_api.async_register_command(opp, ws_import_blueprint)
+    websocket_api.async_register_command(opp, ws_save_blueprint)
+    websocket_api.async_register_command(opp, ws_delete_blueprint)
 
 
 @websocket_api.async_response
@@ -31,7 +31,7 @@ def async_setup_opp: OpenPeerPower):
         vol.Required("domain"): cv.string,
     }
 )
-async def ws_list_blueprints.opp, connection, msg):
+async def ws_list_blueprints(opp, connection, msg):
     """List available blueprints."""
     domain_blueprints: Optional[Dict[str, models.DomainBlueprints]] = opp.data.get(
         DOMAIN, {}
@@ -62,10 +62,10 @@ async def ws_list_blueprints.opp, connection, msg):
         vol.Required("url"): cv.url,
     }
 )
-async def ws_import_blueprint.opp, connection, msg):
+async def ws_import_blueprint(opp, connection, msg):
     """Import a blueprint."""
     async with async_timeout.timeout(10):
-        imported_blueprint = await importer.fetch_blueprint_from_url.opp, msg["url"])
+        imported_blueprint = await importer.fetch_blueprint_from_url(opp, msg["url"])
 
     if imported_blueprint is None:
         connection.send_error(
@@ -96,7 +96,7 @@ async def ws_import_blueprint.opp, connection, msg):
         vol.Optional("source_url"): cv.url,
     }
 )
-async def ws_save_blueprint.opp, connection, msg):
+async def ws_save_blueprint(opp, connection, msg):
     """Save a blueprint."""
 
     path = msg["path"]
@@ -143,7 +143,7 @@ async def ws_save_blueprint.opp, connection, msg):
         vol.Required("path"): cv.path,
     }
 )
-async def ws_delete_blueprint.opp, connection, msg):
+async def ws_delete_blueprint(opp, connection, msg):
     """Delete a blueprint."""
 
     path = msg["path"]

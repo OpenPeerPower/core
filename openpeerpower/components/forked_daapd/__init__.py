@@ -9,7 +9,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry.opp, entry):
+async def async_setup_entry(opp, entry):
     """Set up forked-daapd from a config entry by forwarding to platform."""
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, MP_DOMAIN)
@@ -17,7 +17,7 @@ async def async_setup_entry.opp, entry):
     return True
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Remove forked-daapd component."""
     status = await opp.config_entries.async_forward_entry_unload(entry, MP_DOMAIN)
     if status and.opp.data.get(DOMAIN) and.opp.data[DOMAIN].get(entry.entry_id):

@@ -56,7 +56,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigEntry):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Establish connection with MELClooud."""
     conf = entry.data
     mel_devices = await mel_devices_setup_opp, conf[CONF_TOKEN])
@@ -68,7 +68,7 @@ async def async_setup_entry.opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry.opp, config_entry):
+async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     await asyncio.gather(
         *[

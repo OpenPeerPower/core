@@ -162,7 +162,7 @@ async def test_rmvtransport_min_config(opp):
         "RMVtransport.RMVtransport.get_departures",
         return_value=get_departures_mock(),
     ):
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL) is True
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG_MINIMAL) is True
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.frankfurt_main_hauptbahnhof")
@@ -183,7 +183,7 @@ async def test_rmvtransport_name_config(opp):
         "RMVtransport.RMVtransport.get_departures",
         return_value=get_departures_mock(),
     ):
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG_NAME)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG_NAME)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.my_station")
@@ -196,7 +196,7 @@ async def test_rmvtransport_misc_config(opp):
         "RMVtransport.RMVtransport.get_departures",
         return_value=get_departures_mock(),
     ):
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG_MISC)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG_MISC)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.frankfurt_main_hauptbahnhof")
@@ -210,7 +210,7 @@ async def test_rmvtransport_dest_config(opp):
         "RMVtransport.RMVtransport.get_departures",
         return_value=get_departures_mock(),
     ):
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG_DEST)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG_DEST)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.frankfurt_main_hauptbahnhof")
@@ -223,13 +223,13 @@ async def test_rmvtransport_dest_config(opp):
     assert state.attributes["departure_time"] == datetime.datetime(2018, 8, 6, 14, 25)
 
 
-async def test_rmvtransport_no_departures.opp):
+async def test_rmvtransport_no_departures(opp):
     """Test for no departures."""
     with patch(
         "RMVtransport.RMVtransport.get_departures",
         return_value=get_no_departures_mock(),
     ):
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG_MINIMAL)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.frankfurt_main_hauptbahnhof")

@@ -18,7 +18,7 @@ from .entity import HMDevice
 SUPPORT_HOMEMATIC = SUPPORT_BRIGHTNESS
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Homematic light platform."""
     if discovery_info is None:
         return

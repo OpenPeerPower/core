@@ -29,9 +29,9 @@ async def async_setup_opp: OpenPeerPower, config):
     return True
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Atag integration from a config entry."""
-    session = async_get_clientsession.opp)
+    session = async_get_clientsession(opp)
 
     coordinator = AtagDataUpdateCoordinator.opp, session, entry)
     await coordinator.async_refresh()
@@ -73,7 +73,7 @@ class AtagDataUpdateCoordinator(DataUpdateCoordinator):
         return self.atag.report
 
 
-async def async_unload_entry.opp, entry):
+async def async_unload_entry(opp, entry):
     """Unload Atag config entry."""
     unload_ok = all(
         await asyncio.gather(

@@ -175,7 +175,7 @@ def async_prepare_call_from_config(
 
     if isinstance(domain_service, template.Template):
         try:
-            domain_service.opp = opp
+            domain_service(opp = opp
             domain_service = domain_service.async_render(variables)
             domain_service = cv.service(domain_service)
         except TemplateError as ex:
@@ -225,7 +225,7 @@ def extract_entity_ids(
     Will convert group entity ids to the entity ids it represents.
     """
     return asyncio.run_coroutine_threadsafe(
-        async_extract_entity_ids.opp, service_call, expand_group), opp.loop
+        async_extract_entity_ids(opp, service_call, expand_group), opp.loop
     ).result()
 
 
@@ -322,9 +322,9 @@ async def async_extract_referenced_entity_ids(
             entity_registry.EntityRegistry,
         ],
         await asyncio.gather(
-            area_registry.async_get_registry.opp),
-            device_registry.async_get_registry.opp),
-            entity_registry.async_get_registry.opp),
+            area_registry.async_get_registry(opp),
+            device_registry.async_get_registry(opp),
+            entity_registry.async_get_registry(opp),
         ),
     )
 
@@ -374,7 +374,7 @@ async def async_extract_referenced_entity_ids(
     return selected
 
 
-def _load_services_file.opp: OpenPeerPowerType, integration: Integration) -> JSON_TYPE:
+def _load_services_file(opp: OpenPeerPowerType, integration: Integration) -> JSON_TYPE:
     """Load services file for an integration."""
     try:
         return load_yaml(str(integration.file_path / "services.yaml"))
@@ -394,7 +394,7 @@ def _load_services_files(
     opp: OpenPeerPowerType, integrations: Iterable[Integration]
 ) -> List[JSON_TYPE]:
     """Load service files for multiple intergrations."""
-    return [_load_services_file.opp, integration) for integration in integrations]
+    return [_load_services_file(opp, integration) for integration in integrations]
 
 
 @bind.opp
@@ -421,7 +421,7 @@ async def async_get_all_descriptions(
     if missing:
         integrations = await gather_with_concurrency(
             MAX_LOAD_CONCURRENTLY,
-            *(async_get_integration.opp, domain) for domain in missing),
+            *(async_get_integration(opp, domain) for domain in missing),
         )
 
         contents = await opp.async_add_executor_job(
@@ -508,7 +508,7 @@ async def entity_service_call(
         all_referenced: Optional[Set[str]] = None
     else:
         # A set of entities we're trying to target.
-        referenced = await async_extract_referenced_entity_ids.opp, call, True)
+        referenced = await async_extract_referenced_entity_ids(opp, call, True)
         all_referenced = referenced.referenced | referenced.indirectly_referenced
 
     # If the service function is a string, we'll pass it the service call data
@@ -610,7 +610,7 @@ async def entity_service_call(
         [
             asyncio.create_task(
                 entity.async_request_call(
-                    _handle_entity_call.opp, entity, func, data, call.context)
+                    _handle_entity_call(opp, entity, func, data, call.context)
                 )
             )
             for entity in entities

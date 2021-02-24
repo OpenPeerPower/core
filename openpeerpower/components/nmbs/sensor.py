@@ -64,7 +64,7 @@ def get_ride_duration(departure_time, arrival_time, delay=0):
     return duration_time + get_delay_in_minutes(delay)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the NMBS sensor with iRail API."""
 
     api_client = iRail()

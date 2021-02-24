@@ -37,10 +37,10 @@ async def async_setup_entry(
     """Set up the Xiaomi Miio components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     if entry.data[CONF_FLOW_TYPE] == CONF_GATEWAY:
-        if not await async_setup_gateway_entry.opp, entry):
+        if not await async_setup_gateway_entry(opp, entry):
             return False
     if entry.data[CONF_FLOW_TYPE] == CONF_DEVICE:
-        if not await async_setup_device_entry.opp, entry):
+        if not await async_setup_device_entry(opp, entry):
             return False
 
     return True
@@ -67,7 +67,7 @@ async def async_setup_gateway_entry(
 
     gateway_model = f"{gateway_info.model}-{gateway_info.hardware_version}"
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections={(dr.CONNECTION_NETWORK_MAC, gateway_info.mac_address)},

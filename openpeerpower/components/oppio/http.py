@@ -60,7 +60,7 @@ class OppIOView(OpenPeerPowerView):
     ) -> Union[web.Response, web.StreamResponse]:
         """Route data to Opp.io."""
         opp. request.app["opp,
-        if _need_auth.opp.path) and not request[KEY_AUTHENTICATED]:
+        if _need_auth(opp.path) and not request[KEY_AUTHENTICATED]:
             return web.Response(status=HTTP_UNAUTHORIZED)
 
         return await self._command_proxy(path, request)
@@ -154,9 +154,9 @@ def _get_timeout(path: str) -> int:
     return 300
 
 
-def _need_auth.opp.path: str) -> bool:
+def _need_auth(opp.path: str) -> bool:
     """Return if a path need authentication."""
-    if not async_is_onboarded.opp.and NO_AUTH_ONBOARDING.match(path):
+    if not async_is_onboarded(opp.and NO_AUTH_ONBOARDING.match(path):
         return False
     if NO_AUTH.match(path):
         return False

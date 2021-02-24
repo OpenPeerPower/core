@@ -78,7 +78,7 @@ def mock_api_connection_error():
         yield
 
 
-async def test_import.opp, api):
+async def test_import(opp, api):
     """Test import step."""
     result = await opp.config_entries.flow.async_init(
         mikrotik.DOMAIN, context={"source": "import"}, data=DEMO_CONFIG
@@ -94,7 +94,7 @@ async def test_import.opp, api):
     assert result["data"][CONF_VERIFY_SSL] is False
 
 
-async def test_flow_works.opp, api):
+async def test_flow_works(opp, api):
     """Test config flow."""
 
     result = await opp.config_entries.flow.async_init(
@@ -116,10 +116,10 @@ async def test_flow_works.opp, api):
     assert result["data"][CONF_PORT] == 8278
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test updating options."""
     entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=DEMO_CONFIG_ENTRY)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -143,11 +143,11 @@ async def test_options.opp):
     }
 
 
-async def test_host_already_configured.opp, auth_error):
+async def test_host_already_configured(opp, auth_error):
     """Test host already configured."""
 
     entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=DEMO_CONFIG_ENTRY)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
 
     result = await opp.config_entries.flow.async_init(
         mikrotik.DOMAIN, context={"source": "user"}
@@ -163,7 +163,7 @@ async def test_name_exists(opp, api):
     """Test name already configured."""
 
     entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=DEMO_CONFIG_ENTRY)
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     user_input = DEMO_USER_INPUT.copy()
     user_input[CONF_HOST] = "0.0.0.1"
 
@@ -191,7 +191,7 @@ async def test_connection_error(opp, conn_error):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_wrong_credentials.opp, auth_error):
+async def test_wrong_credentials(opp, auth_error):
     """Test error when credentials are wrong."""
 
     result = await opp.config_entries.flow.async_init(

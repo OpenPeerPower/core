@@ -129,7 +129,7 @@ def get_test_open_peer_power():
 
     def start_opp(*mocks):
         """Start.opp."""
-        asyncio.run_coroutine_threadsafe.opp.async_start(), loop).result()
+        asyncio.run_coroutine_threadsafe(opp.async_start(), loop).result()
 
     def stop_opp():
         """Stop.opp."""
@@ -151,7 +151,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
    opp =  op.OpenPeerPower()
     store = auth_store.AuthStore.opp)
     opp.auth = auth.AuthManager.opp, store, {}, {})
-    ensure_auth_manager_loaded.opp.auth)
+    ensure_auth_manager_loaded(opp.auth)
     INSTANCES.append.opp)
 
     orig_async_add_job = opp.async_add_job
@@ -283,9 +283,9 @@ async def async_test_open_peer_power(loop, load_registries=True):
     # Load the registries
     if load_registries:
         await asyncio.gather(
-            device_registry.async_load.opp),
-            entity_registry.async_load.opp),
-            area_registry.async_load.opp),
+            device_registry.async_load(opp),
+            entity_registry.async_load(opp),
+            area_registry.async_load(opp),
         )
         await opp.async_block_till_done()
 
@@ -314,7 +314,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
     return.opp
 
 
-def async_mock_service.opp, domain, service, schema=None):
+def async_mock_service(opp, domain, service, schema=None):
     """Set up a fake service & return a calls log list to this service."""
     calls = []
 
@@ -332,7 +332,7 @@ mock_service = threadsafe_callback_factory(async_mock_service)
 
 
 @op.callback
-def async_mock_intent.opp, intent_typ):
+def async_mock_intent(opp, intent_typ):
     """Set up a fake intent handler."""
     intents = []
 
@@ -344,13 +344,13 @@ def async_mock_intent.opp, intent_typ):
             intents.append(intent)
             return intent.create_response()
 
-    intent.async_register.opp, MockIntentHandler())
+    intent.async_register(opp, MockIntentHandler())
 
     return intents
 
 
 @op.callback
-def async_fire_mqtt_message.opp, topic, payload, qos=0, retain=False):
+def async_fire_mqtt_message(opp, topic, payload, qos=0, retain=False):
     """Fire the MQTT message."""
     if isinstance(payload, str):
         payload = payload.encode("utf-8")
@@ -362,7 +362,7 @@ fire_mqtt_message = threadsafe_callback_factory(async_fire_mqtt_message)
 
 
 @op.callback
-def async_fire_time_changed.opp, datetime_, fire_all=False):
+def async_fire_time_changed(opp, datetime_, fire_all=False):
     """Fire a time changes event."""
     opp.bus.async_fire(EVENT_TIME_CHANGED, {"now": date_util.as_utc(datetime_)})
 
@@ -387,7 +387,7 @@ def async_fire_time_changed.opp, datetime_, fire_all=False):
 fire_time_changed = threadsafe_callback_factory(async_fire_time_changed)
 
 
-def fire_service_discovered.opp, service, info):
+def fire_service_discovered(opp, service, info):
     """Fire the MQTT message."""
     opp.bus.fire(
         EVENT_PLATFORM_DISCOVERED, {ATTR_SERVICE: service, ATTR_DISCOVERED: info}
@@ -395,7 +395,7 @@ def fire_service_discovered.opp, service, info):
 
 
 @op.callback
-def async_fire_service_discovered.opp, service, info):
+def async_fire_service_discovered(opp, service, info):
     """Fire the MQTT message."""
     opp.bus.async_fire(
         EVENT_PLATFORM_DISCOVERED, {ATTR_SERVICE: service, ATTR_DISCOVERED: info}
@@ -409,7 +409,7 @@ def load_fixture(filename):
         return fptr.read()
 
 
-def mock_state_change_event.opp, new_state, old_state=None):
+def mock_state_change_event(opp, new_state, old_state=None):
     """Mock state change envent."""
     event_data = {"entity_id": new_state.entity_id, "new_state": new_state}
 
@@ -420,7 +420,7 @@ def mock_state_change_event.opp, new_state, old_state=None):
 
 
 @op.callback
-def mock_component.opp, component):
+def mock_component(opp, component):
     """Mock a component is setup."""
     if component in.opp.config.components:
         AssertionError(f"Integration {component} is already setup")
@@ -428,7 +428,7 @@ def mock_component.opp, component):
     opp.config.components.add(component)
 
 
-def mock_registry.opp, mock_entries=None):
+def mock_registry(opp, mock_entries=None):
     """Mock the Entity Registry."""
     registry = entity_registry.EntityRegistry.opp)
     registry.entities = mock_entries or OrderedDict()
@@ -438,7 +438,7 @@ def mock_registry.opp, mock_entries=None):
     return registry
 
 
-def mock_area_registry.opp, mock_entries=None):
+def mock_area_registry(opp, mock_entries=None):
     """Mock the Area Registry."""
     registry = area_registry.AreaRegistry.opp)
     registry.areas = mock_entries or OrderedDict()
@@ -447,7 +447,7 @@ def mock_area_registry.opp, mock_entries=None):
     return registry
 
 
-def mock_device_registry.opp, mock_entries=None, mock_deleted_entries=None):
+def mock_device_registry(opp, mock_entries=None, mock_deleted_entries=None):
     """Mock the Device Registry."""
     registry = device_registry.DeviceRegistry.opp)
     registry.devices = mock_entries or OrderedDict()
@@ -471,7 +471,7 @@ class MockGroup(auth_models.Group):
 
     def add_to_opp(self, opp):
         """Test helper to add entry to.opp."""
-        return self.add_to_auth_manager.opp.auth)
+        return self.add_to_auth_manager(opp.auth)
 
     def add_to_auth_manager(self, auth_mgr):
         """Test helper to add entry to.opp."""
@@ -507,7 +507,7 @@ class MockUser(auth_models.User):
 
     def add_to_opp(self, opp):
         """Test helper to add entry to.opp."""
-        return self.add_to_auth_manager.opp.auth)
+        return self.add_to_auth_manager(opp.auth)
 
     def add_to_auth_manager(self, auth_mgr):
         """Test helper to add entry to.opp."""
@@ -520,7 +520,7 @@ class MockUser(auth_models.User):
         self._permissions = auth_permissions.PolicyPermissions(policy, self.perm_lookup)
 
 
-async def register_auth_provider.opp, config):
+async def register_auth_provider(opp, config):
     """Register an auth provider."""
     provider = await auth_providers.auth_provider_from_config(
         opp. opp.auth._store, config
@@ -835,12 +835,12 @@ def assert_setup_component(count, domain=None):
 
     Use as a context manager around setup.setup_component
         with assert_setup_component(0) as result_config:
-            setup_component.opp, domain, start_config)
+            setup_component(opp, domain, start_config)
             # using result_config is optional
     """
     config = {}
 
-    async def mock_psc.opp, config_input, integration):
+    async def mock_psc(opp, config_input, integration):
         """Mock the prepare_setup_component to capture config."""
         domain_input = integration.domain
         res = await async_process_component_config(opp, config_input, integration)
@@ -870,18 +870,18 @@ def assert_setup_component(count, domain=None):
     ), f"setup_component failed, expected {count} got {res_len}: {res}"
 
 
-def init_recorder_component.opp, add_config=None):
+def init_recorder_component(opp, add_config=None):
     """Initialize the recorder."""
     config = dict(add_config) if add_config else {}
     config[recorder.CONF_DB_URL] = "sqlite://"  # In memory DB
 
     with patch("openpeerpower.components.recorder.migration.migrate_schema"):
-        assert setup_component.opp, recorder.DOMAIN, {recorder.DOMAIN: config})
+        assert setup_component(opp, recorder.DOMAIN, {recorder.DOMAIN: config})
         assert recorder.DOMAIN in.opp.config.components
     _LOGGER.info("In-memory recorder successfully started")
 
 
-async def async_init_recorder_component.opp, add_config=None):
+async def async_init_recorder_component(opp, add_config=None):
     """Initialize the recorder asynchronously."""
     config = dict(add_config) if add_config else {}
     config[recorder.CONF_DB_URL] = "sqlite://"
@@ -894,7 +894,7 @@ async def async_init_recorder_component.opp, add_config=None):
     _LOGGER.info("In-memory recorder successfully started")
 
 
-def mock_restore_cache.opp, states):
+def mock_restore_cache(opp, states):
     """Mock the DATA_RESTORE_CACHE."""
     key = restore_state.DATA_RESTORE_STATE_TASK
     data = restore_state.RestoreStateData.opp)
@@ -1057,12 +1057,12 @@ async def flush_store(store):
     await store._async_handle_write_data()
 
 
-async def get_system_health_info.opp, domain):
+async def get_system_health_info(opp, domain):
     """Get system health info."""
-    return await opp.data["system_health"][domain].info_callback.opp)
+    return await opp.data["system_health"][domain].info_callback(opp)
 
 
-def mock_integration.opp, module):
+def mock_integration(opp, module):
     """Mock an integration."""
     integration = loader.Integration(
         opp. f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
@@ -1083,17 +1083,17 @@ def mock_integration.opp, module):
     return integration
 
 
-def mock_entity_platform.opp, platform_path, module):
+def mock_entity_platform(opp, platform_path, module):
     """Mock a entity platform.
 
     platform_path is in form light.hue. Will create platform
     hue.light.
     """
     domain, platform_name = platform_path.split(".")
-    mock_platform.opp, f"{platform_name}.{domain}", module)
+    mock_platform(opp, f"{platform_name}.{domain}", module)
 
 
-def mock_platform.opp, platform_path, module=None):
+def mock_platform(opp, platform_path, module=None):
     """Mock a platform.
 
     platform_path is in form hue.config_flow.
@@ -1103,13 +1103,13 @@ def mock_platform.opp, platform_path, module=None):
     module_cache = opp.data.setdefault(loader.DATA_COMPONENTS, {})
 
     if domain not in integration_cache:
-        mock_integration.opp, MockModule(domain))
+        mock_integration(opp, MockModule(domain))
 
     _LOGGER.info("Adding mock integration platform: %s", platform_path)
     module_cache[platform_path] = module or Mock()
 
 
-def async_capture_events.opp, event_name):
+def async_capture_events(opp, event_name):
     """Create a helper that captures events."""
     events = []
 
@@ -1123,7 +1123,7 @@ def async_capture_events.opp, event_name):
 
 
 @op.callback
-def async_mock_signal.opp, signal):
+def async_mock_signal(opp, signal):
     """Catch all dispatches to a signal."""
     calls = []
 

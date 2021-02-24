@@ -252,7 +252,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
     return True
 
 
-async def async_entry_changed.opp: OpenPeerPower, entry: ConfigEntry) -> None:
+async def async_entry_changed(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Reload entry since the data has changed."""
     LOGGER.debug("Reconfiguring entry %s", entry.data)
     bridge = opp.data[DOMAIN][entry.entry_id]
@@ -260,7 +260,7 @@ async def async_entry_changed.opp: OpenPeerPower, entry: ConfigEntry) -> None:
     LOGGER.debug("Reconfiguring entry finished %s", entry.data)
 
 
-async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a bridge from a config entry."""
     LOGGER.debug("Setting up entry %s", entry.data)
     bridge = DynaliteBridge.opp, entry.data)
@@ -278,7 +278,7 @@ async def async_setup_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry.opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     LOGGER.debug("Unloading entry %s", entry.data)
     opp.data[DOMAIN].pop(entry.entry_id)

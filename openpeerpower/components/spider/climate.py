@@ -24,7 +24,7 @@ OP_STATE_TO_SPIDER = {
 SPIDER_STATE_TO_HA = {value: key for key, value in OP_STATE_TO_SPIDER.items()}
 
 
-async def async_setup_entry.opp, config, async_add_entities):
+async def async_setup_entry(opp, config, async_add_entities):
     """Initialize a Spider thermostat."""
     api = opp.data[DOMAIN][config.entry_id]
 

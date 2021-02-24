@@ -64,7 +64,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_proximity_component.opp, name, config):
+def setup_proximity_component(opp, name, config):
     """Set up the individual proximity component."""
     ignored_zones = config.get(CONF_IGNORED_ZONES)
     proximity_devices = config.get(CONF_DEVICES)
@@ -91,7 +91,7 @@ def setup_proximity_component.opp, name, config):
 
     proximity.schedule_update_op_state()
 
-    track_state_change.opp, proximity_devices, proximity.check_proximity_state_change)
+    track_state_change(opp, proximity_devices, proximity.check_proximity_state_change)
 
     return True
 
@@ -99,7 +99,7 @@ def setup_proximity_component.opp, name, config):
 def setup(opp, config):
     """Get the zones and offsets from configuration.yaml."""
     for zone, proximity_config in config[DOMAIN].items():
-        setup_proximity_component.opp, zone, proximity_config)
+        setup_proximity_component(opp, zone, proximity_config)
 
     return True
 

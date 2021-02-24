@@ -57,7 +57,7 @@ CURRENT_SONG_PATTERN = re.compile(r'"(.*?)"\s+by\s+"(.*?)"\son\s+"(.*?)"', re.MU
 STATION_PATTERN = re.compile(r'Station\s"(.+?)"', re.MULTILINE)
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Pandora media player platform."""
     if not _pianobar_exists():
         return False

@@ -134,11 +134,11 @@ class TestHelpersDiscovery:
 
         def component_setup_opp, config):
             """Set up mock component."""
-            discovery.load_platform.opp, "switch", "test_circular", "disc", config)
+            discovery.load_platform(opp, "switch", "test_circular", "disc", config)
             component_calls.append(1)
             return True
 
-        def setup_platform.opp, config, add_entities_callback, discovery_info=None):
+        def setup_platform(opp, config, add_entities_callback, discovery_info=None):
             """Set up mock platform."""
             platform_calls.append("disc" if discovery_info else "component")
 

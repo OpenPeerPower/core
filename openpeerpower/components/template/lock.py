@@ -38,7 +38,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def _async_create_entities.opp, config):
+async def _async_create_entities(opp, config):
     """Create the Template lock."""
     device = config.get(CONF_NAME)
     value_template = config.get(CONF_VALUE_TEMPLATE)
@@ -58,10 +58,10 @@ async def _async_create_entities.opp, config):
     ]
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the template lock."""
-    await async_setup_reload_service.opp, DOMAIN, PLATFORMS)
-    async_add_entities(await _async_create_entities.opp, config))
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
+    async_add_entities(await _async_create_entities(opp, config))
 
 
 class TemplateLock(TemplateEntity, LockEntity):

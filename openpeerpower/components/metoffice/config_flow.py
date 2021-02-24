@@ -13,7 +13,7 @@ from .data import MetOfficeData
 _LOGGER = logging.getLogger(__name__)
 
 
-async def validate_input.opp: core.OpenPeerPower, data):
+async def validate_input(opp: core.OpenPeerPower, data):
     """Validate that the user input allows us to connect to DataPoint.
 
     Data has the keys from DATA_SCHEMA with values provided by the user.

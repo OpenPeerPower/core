@@ -18,7 +18,7 @@ from tests.common import MockConfigEntry
         (True, False, "create_entry", "setup_retry", ""),
     ],
 )
-async def test_flow.opp, first_con, second_con, exp_type, exp_result, exp_reason):
+async def test_flow(opp, first_con, second_con, exp_type, exp_result, exp_reason):
     """Run a flow with or without errors and return result."""
     host = "1.2.3.4"
     with patch(
@@ -38,12 +38,12 @@ async def test_flow.opp, first_con, second_con, exp_type, exp_result, exp_reason
         assert result["reason"] == exp_reason
 
 
-async def test_existing.opp):
+async def test_existing(opp):
     """Test when the entry exists with the same config."""
     host = "1.2.3.4"
     MockConfigEntry(
         domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,
@@ -57,7 +57,7 @@ async def test_existing.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_existing_update.opp):
+async def test_existing_update(opp):
     """Test when the entry exists with a different config."""
     host = "1.2.3.4"
     port1 = 7777
@@ -66,7 +66,7 @@ async def test_existing_update.opp):
         domain=dynalite.DOMAIN,
         data={dynalite.CONF_HOST: host, dynalite.CONF_PORT: port1},
     )
-    entry.add_to.opp.opp)
+    entry.add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -87,13 +87,13 @@ async def test_existing_update.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_two_entries.opp):
+async def test_two_entries(opp):
     """Test when two different entries exist with different hosts."""
     host1 = "1.2.3.4"
     host2 = "5.6.7.8"
     MockConfigEntry(
         domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host1}
-    ).add_to.opp.opp)
+    ).add_to(opp.opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,

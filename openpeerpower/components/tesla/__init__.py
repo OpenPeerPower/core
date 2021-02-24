@@ -61,7 +61,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 @callback
-def _async_save_tokens.opp, config_entry, access_token, refresh_token):
+def _async_save_tokens(opp, config_entry, access_token, refresh_token):
     opp.config_entries.async_update_entry(
         config_entry,
         data={
@@ -73,7 +73,7 @@ def _async_save_tokens.opp, config_entry, access_token, refresh_token):
 
 
 @callback
-def _async_configured_emails.opp):
+def _async_configured_emails(opp):
     """Return a set of configured Tesla emails."""
     return {
         entry.data[CONF_USERNAME]
@@ -102,9 +102,9 @@ async def async_setup(opp, base_config):
     email = config[CONF_USERNAME]
     password = config[CONF_PASSWORD]
     scan_interval = config[CONF_SCAN_INTERVAL]
-    if email in _async_configured_emails.opp):
+    if email in _async_configured_emails(opp):
         try:
-            info = await validate_input.opp, config)
+            info = await validate_input(opp, config)
         except (CannotConnect, InvalidAuth):
             return False
         _update_entry(
@@ -130,11 +130,11 @@ async def async_setup(opp, base_config):
     return True
 
 
-async def async_setup_entry.opp, config_entry):
+async def async_setup_entry(opp, config_entry):
     """Set up Tesla as config entry."""
     opp.data.setdefault(DOMAIN, {})
     config = config_entry.data
-    websession = aiohttp_client.async_get_clientsession.opp)
+    websession = aiohttp_client.async_get_clientsession(opp)
     email = config_entry.title
     if email in.opp.data[DOMAIN] and CONF_SCAN_INTERVAL in.opp.data[DOMAIN][email]:
         scan_interval = opp.data[DOMAIN][email][CONF_SCAN_INTERVAL]
@@ -159,14 +159,14 @@ async def async_setup_entry.opp, config_entry):
             )
         )
     except IncompleteCredentials:
-        _async_start_reauth.opp, config_entry)
+        _async_start_reauth(opp, config_entry)
         return False
     except TeslaException as ex:
         if ex.code == HTTP_UNAUTHORIZED:
-            _async_start_reauth.opp, config_entry)
+            _async_start_reauth(opp, config_entry)
         _LOGGER.error("Unable to communicate with Tesla API: %s", ex.message)
         return False
-    _async_save_tokens.opp, config_entry, access_token, refresh_token)
+    _async_save_tokens(opp, config_entry, access_token, refresh_token)
     coordinator = TeslaDataUpdateCoordinator(
         opp. config_entry=config_entry, controller=controller
     )
@@ -198,7 +198,7 @@ async def async_setup_entry.opp, config_entry):
     return True
 
 
-async def async_unload_entry.opp, config_entry) -> bool:
+async def async_unload_entry(opp, config_entry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
@@ -218,7 +218,7 @@ async def async_unload_entry.opp, config_entry) -> bool:
     return False
 
 
-def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
+def _async_start_reauth(opp: OpenPeerPower, entry: ConfigEntry):
     opp.async_create_task(
         opp.config_entries.flow.async_init(
             DOMAIN,
@@ -229,7 +229,7 @@ def _async_start_reauth.opp: OpenPeerPower, entry: ConfigEntry):
     _LOGGER.error("Credentials are no longer valid. Please reauthenticate")
 
 
-async def update_listener.opp, config_entry):
+async def update_listener(opp, config_entry):
     """Update when config_entry options update."""
     controller = opp.data[DOMAIN][config_entry.entry_id]["coordinator"].controller
     old_update_interval = controller.update_interval

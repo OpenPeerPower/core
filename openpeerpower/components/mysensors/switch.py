@@ -55,7 +55,7 @@ async def async_setup_entry(
         """Set IR code as device state attribute."""
         entity_ids = service.data.get(ATTR_ENTITY_ID)
         ir_code = service.data.get(ATTR_IR_CODE)
-        devices = mysensors.get_mysensors_devices.opp, DOMAIN)
+        devices = mysensors.get_mysensors_devices(opp, DOMAIN)
 
         if entity_ids:
             _devices = [

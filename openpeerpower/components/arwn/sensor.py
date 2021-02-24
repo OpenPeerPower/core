@@ -61,7 +61,7 @@ def _slug(name):
     return f"sensor.arwn_{slugify(name)}"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the ARWN platform."""
 
     @callback
@@ -110,7 +110,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
                 )
                 store[sensor.name].set_event(event)
 
-    await mqtt.async_subscribe.opp, TOPIC, async_sensor_event_received, 0)
+    await mqtt.async_subscribe(opp, TOPIC, async_sensor_event_received, 0)
     return True
 
 

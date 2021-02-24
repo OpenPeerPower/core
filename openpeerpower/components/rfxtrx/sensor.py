@@ -126,7 +126,7 @@ async def async_setup_entry(
             async_add_entities([entity])
 
     # Subscribe to main RFXtrx events
-    connect_auto_add.opp, discovery_info, sensor_update)
+    connect_auto_add(opp, discovery_info, sensor_update)
 
 
 class RfxtrxSensor(RfxtrxEntity):

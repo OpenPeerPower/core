@@ -42,7 +42,7 @@ def min_kelvin(model: str):
     return KELVIN_MIN_VALUE
 
 
-async def async_setup_entry.opp, config_entry, async_add_entities):
+async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up lights for device."""
     wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry.entry_id][COAP]
 
@@ -59,7 +59,7 @@ async def async_setup_entry.opp, config_entry, async_add_entities):
                 unique_id = (
                     f'{wrapper.device.shelly["mac"]}-{block.type}_{block.channel}'
                 )
-                await async_remove_shelly_entity.opp, "switch", unique_id)
+                await async_remove_shelly_entity(opp, "switch", unique_id)
 
     if not blocks:
         return

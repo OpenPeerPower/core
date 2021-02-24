@@ -34,7 +34,7 @@ from openpeerpower.const import (
 from openpeerpower.setup import async_setup_component
 
 
-async def test_default_state.opp):
+async def test_default_state(opp):
     """Test light group default state."""
     opp.states.async_set("light.kitchen", "on")
     await async_setup_component(
@@ -65,7 +65,7 @@ async def test_default_state.opp):
     assert state.attributes.get(ATTR_EFFECT) is None
 
 
-async def test_state_reporting.opp):
+async def test_state_reporting(opp):
     """Test the state reporting."""
     await async_setup_component(
         opp,
@@ -102,7 +102,7 @@ async def test_state_reporting.opp):
     assert.opp.states.get("light.light_group").state == STATE_UNAVAILABLE
 
 
-async def test_brightness.opp):
+async def test_brightness(opp):
     """Test brightness reporting."""
     await async_setup_component(
         opp,
@@ -145,7 +145,7 @@ async def test_brightness.opp):
     assert state.attributes[ATTR_BRIGHTNESS] == 100
 
 
-async def test_color.opp):
+async def test_color(opp):
     """Test RGB reporting."""
     await async_setup_component(
         opp,
@@ -185,7 +185,7 @@ async def test_color.opp):
     assert state.attributes[ATTR_HS_COLOR] == (0, 50)
 
 
-async def test_white_value.opp):
+async def test_white_value(opp):
     """Test white value reporting."""
     await async_setup_component(
         opp,
@@ -223,7 +223,7 @@ async def test_white_value.opp):
     assert state.attributes[ATTR_WHITE_VALUE] == 100
 
 
-async def test_color_temp.opp):
+async def test_color_temp(opp):
     """Test color temp reporting."""
     await async_setup_component(
         opp,
@@ -261,7 +261,7 @@ async def test_color_temp.opp):
     assert state.attributes[ATTR_COLOR_TEMP] == 1000
 
 
-async def test_emulated_color_temp_group.opp):
+async def test_emulated_color_temp_group(opp):
     """Test emulated color temperature in a group."""
     await async_setup_component(
         opp,
@@ -315,7 +315,7 @@ async def test_emulated_color_temp_group.opp):
     assert state.attributes[ATTR_HS_COLOR] == (27.001, 19.243)
 
 
-async def test_min_max_mireds.opp):
+async def test_min_max_mireds(opp):
     """Test min/max mireds reporting."""
     await async_setup_component(
         opp,
@@ -362,7 +362,7 @@ async def test_min_max_mireds.opp):
     assert state.attributes[ATTR_MAX_MIREDS] == 1234567890
 
 
-async def test_effect_list.opp):
+async def test_effect_list(opp):
     """Test effect_list reporting."""
     await async_setup_component(
         opp,
@@ -417,7 +417,7 @@ async def test_effect_list.opp):
     }
 
 
-async def test_effect.opp):
+async def test_effect(opp):
     """Test effect reporting."""
     await async_setup_component(
         opp,
@@ -465,7 +465,7 @@ async def test_effect.opp):
     assert state.attributes[ATTR_EFFECT] == "Random"
 
 
-async def test_supported_features.opp):
+async def test_supported_features(opp):
     """Test supported features reporting."""
     await async_setup_component(
         opp,
@@ -502,7 +502,7 @@ async def test_supported_features.opp):
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 41
 
 
-async def test_service_calls.opp):
+async def test_service_calls(opp):
     """Test service calls."""
     await async_setup_component(
         opp,
@@ -588,7 +588,7 @@ async def test_service_calls.opp):
     assert state.attributes[ATTR_RGB_COLOR] == (42, 255, 255)
 
 
-async def test_invalid_service_calls.opp):
+async def test_invalid_service_calls(opp):
     """Test invalid service call arguments get discarded."""
     add_entities = MagicMock()
     await group.async_setup_platform(
@@ -600,7 +600,7 @@ async def test_invalid_service_calls.opp):
 
     assert add_entities.call_count == 1
     grouped_light = add_entities.call_args[0][0][0]
-    grouped_light.opp = opp
+    grouped_light(opp = opp
 
     with unittest.mock.patch.object.opp.services, "async_call") as mock_call:
         await grouped_light.async_turn_on(brightness=150, four_oh_four="404")
@@ -636,7 +636,7 @@ async def test_invalid_service_calls.opp):
         )
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Test the ability to reload lights."""
     await async_setup_component(
         opp,
@@ -763,7 +763,7 @@ async def test_reload_with_base_integration_platform_not_setup_opp):
     assert.opp.states.get("light.outside_patio_lights_g").state == STATE_OFF
 
 
-async def test_nested_group.opp):
+async def test_nested_group(opp):
     """Test nested light group."""
     opp.states.async_set("light.kitchen", "on")
     await async_setup_component(

@@ -393,7 +393,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-def _get_deconz_event_from_device_id.opp, device_id):
+def _get_deconz_event_from_device_id(opp, device_id):
     """Resolve deconz event from device id."""
     for gateway in.opp.data.get(DOMAIN, {}).values():
 
@@ -432,7 +432,7 @@ async def async_validate_trigger_config(opp, config):
     return config
 
 
-async def async_attach_trigger.opp, config, action, automation_info):
+async def async_attach_trigger(opp, config, action, automation_info):
     """Listen for state changes based on configuration."""
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(config[CONF_DEVICE_ID])
@@ -441,7 +441,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
 
     trigger = REMOTES[device.model][trigger]
 
-    deconz_event = _get_deconz_event_from_device_id.opp, device.id)
+    deconz_event = _get_deconz_event_from_device_id(opp, device.id)
     if deconz_event is None:
         LOGGER.error("No deconz_event tied to device %s found", device.name)
         raise InvalidDeviceAutomationConfig
@@ -460,7 +460,7 @@ async def async_attach_trigger.opp, config, action, automation_info):
     )
 
 
-async def async_get_triggers.opp, device_id):
+async def async_get_triggers(opp, device_id):
     """List device triggers.
 
     Make sure device is a supported remote model.

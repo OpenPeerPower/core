@@ -48,13 +48,13 @@ ENTITY_2 = "media_player.test2"
         (SERVICE_MEDIA_PAUSE, STATE_PAUSED),
     ],
 )
-async def test_state.opp, service, state):
+async def test_state(opp, service, state):
     """Test that we can turn a state into a service call."""
-    calls_1 = async_mock_service.opp, DOMAIN, service)
+    calls_1 = async_mock_service(opp, DOMAIN, service)
     if service != SERVICE_TURN_ON:
-        async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
+        async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
 
-    await async_reproduce_states.opp, [State(ENTITY_1, state)])
+    await async_reproduce_states(opp, [State(ENTITY_1, state)])
 
     await opp.async_block_till_done()
 
@@ -62,10 +62,10 @@ async def test_state.opp, service, state):
     assert calls_1[0].data == {"entity_id": ENTITY_1}
 
 
-async def test_turn_on_with_mode.opp):
+async def test_turn_on_with_mode(opp):
     """Test that state with additional attributes call multiple services."""
-    calls_1 = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    calls_2 = async_mock_service.opp, DOMAIN, SERVICE_SELECT_SOUND_MODE)
+    calls_1 = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    calls_2 = async_mock_service(opp, DOMAIN, SERVICE_SELECT_SOUND_MODE)
 
     await async_reproduce_states(
         opp. [State(ENTITY_1, "on", {ATTR_SOUND_MODE: "dummy"})]
@@ -80,11 +80,11 @@ async def test_turn_on_with_mode.opp):
     assert calls_2[0].data == {"entity_id": ENTITY_1, ATTR_SOUND_MODE: "dummy"}
 
 
-async def test_multiple_same_state.opp):
+async def test_multiple_same_state(opp):
     """Test that multiple states with same state gets calls."""
-    calls_1 = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
+    calls_1 = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
 
-    await async_reproduce_states.opp, [State(ENTITY_1, "on"), State(ENTITY_2, "on")])
+    await async_reproduce_states(opp, [State(ENTITY_1, "on"), State(ENTITY_2, "on")])
 
     await opp.async_block_till_done()
 
@@ -94,12 +94,12 @@ async def test_multiple_same_state.opp):
     assert any(call.data == {"entity_id": "media_player.test2"} for call in calls_1)
 
 
-async def test_multiple_different_state.opp):
+async def test_multiple_different_state(opp):
     """Test that multiple states with different state gets calls."""
-    calls_1 = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    calls_2 = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
+    calls_1 = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    calls_2 = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
 
-    await async_reproduce_states.opp, [State(ENTITY_1, "on"), State(ENTITY_2, "off")])
+    await async_reproduce_states(opp, [State(ENTITY_1, "on"), State(ENTITY_2, "off")])
 
     await opp.async_block_till_done()
 
@@ -109,13 +109,13 @@ async def test_multiple_different_state.opp):
     assert calls_2[0].data == {"entity_id": "media_player.test2"}
 
 
-async def test_state_with_context.opp):
+async def test_state_with_context(opp):
     """Test that context is forwarded."""
-    calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
 
     context = Context()
 
-    await async_reproduce_states.opp, [State(ENTITY_1, "on")], context=context)
+    await async_reproduce_states(opp, [State(ENTITY_1, "on")], context=context)
 
     await opp.async_block_till_done()
 
@@ -124,11 +124,11 @@ async def test_state_with_context.opp):
     assert calls[0].context == context
 
 
-async def test_attribute_no_state.opp):
+async def test_attribute_no_state(opp):
     """Test that no state service call is made with none state."""
-    calls_1 = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    calls_2 = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    calls_3 = async_mock_service.opp, DOMAIN, SERVICE_SELECT_SOUND_MODE)
+    calls_1 = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    calls_2 = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    calls_3 = async_mock_service(opp, DOMAIN, SERVICE_SELECT_SOUND_MODE)
 
     value = "dummy"
 
@@ -153,13 +153,13 @@ async def test_attribute_no_state.opp):
         (SERVICE_SELECT_SOUND_MODE, ATTR_SOUND_MODE),
     ],
 )
-async def test_attribute.opp, service, attribute):
+async def test_attribute(opp, service, attribute):
     """Test that service call is made for each attribute."""
-    calls_1 = async_mock_service.opp, DOMAIN, service)
+    calls_1 = async_mock_service(opp, DOMAIN, service)
 
     value = "dummy"
 
-    await async_reproduce_states.opp, [State(ENTITY_1, None, {attribute: value})])
+    await async_reproduce_states(opp, [State(ENTITY_1, None, {attribute: value})])
 
     await opp.async_block_till_done()
 
@@ -167,9 +167,9 @@ async def test_attribute.opp, service, attribute):
     assert calls_1[0].data == {"entity_id": ENTITY_1, attribute: value}
 
 
-async def test_play_media.opp):
+async def test_play_media(opp):
     """Test that no state service call is made with none state."""
-    calls_1 = async_mock_service.opp, DOMAIN, SERVICE_PLAY_MEDIA)
+    calls_1 = async_mock_service(opp, DOMAIN, SERVICE_PLAY_MEDIA)
 
     value_1 = "dummy_1"
     value_2 = "dummy_2"

@@ -58,7 +58,7 @@ def benchmark(func: CALLABLE_T) -> CALLABLE_T:
 
 
 @benchmark
-async def fire_events.opp):
+async def fire_events(opp):
     """Fire a million events."""
     count = 0
     event_name = "benchmark_event"
@@ -85,7 +85,7 @@ async def fire_events.opp):
 
 
 @benchmark
-async def fire_events_with_filter.opp):
+async def fire_events_with_filter(opp):
     """Fire a million events with a filter that rejects them."""
     count = 0
     event_name = "benchmark_event"
@@ -117,7 +117,7 @@ async def fire_events_with_filter.opp):
 
 
 @benchmark
-async def time_changed_helper.opp):
+async def time_changed_helper(opp):
     """Run a million events through time changed helper."""
     count = 0
     event = asyncio.Event()
@@ -145,7 +145,7 @@ async def time_changed_helper.opp):
 
 
 @benchmark
-async def state_changed_helper.opp):
+async def state_changed_helper(opp):
     """Run a million events through state changed helper with 1000 entities."""
     count = 0
     entity_id = "light.kitchen"
@@ -181,7 +181,7 @@ async def state_changed_helper.opp):
 
 
 @benchmark
-async def state_changed_event_helper.opp):
+async def state_changed_event_helper(opp):
     """Run a million events through state changed event helper with 1000 entities."""
     count = 0
     entity_id = "light.kitchen"
@@ -216,7 +216,7 @@ async def state_changed_event_helper.opp):
 
 
 @benchmark
-async def state_changed_event_filter_helper.opp):
+async def state_changed_event_filter_helper(opp):
     """Run a million events through state changed event helper with 1000 entities that all get filtered."""
     count = 0
     entity_id = "light.kitchen"
@@ -251,19 +251,19 @@ async def state_changed_event_filter_helper.opp):
 
 
 @benchmark
-async def logbook_filtering_state.opp):
+async def logbook_filtering_state(opp):
     """Filter state changes."""
-    return await _logbook_filtering.opp, 1, 1)
+    return await _logbook_filtering(opp, 1, 1)
 
 
 @benchmark
-async def logbook_filtering_attributes.opp):
+async def logbook_filtering_attributes(opp):
     """Filter attribute changes."""
-    return await _logbook_filtering.opp, 1, 2)
+    return await _logbook_filtering(opp, 1, 2)
 
 
 @benchmark
-async def _logbook_filtering.opp, last_changed, last_updated):
+async def _logbook_filtering(opp, last_changed, last_updated):
     # pylint: disable=import-outside-toplevel
     from openpeerpower.components import logbook
 
@@ -291,7 +291,7 @@ async def _logbook_filtering.opp, last_changed, last_updated):
     def yield_events(event):
         for _ in range(10 ** 5):
             # pylint: disable=protected-access
-            if logbook._keep_event.opp, event, entities_filter):
+            if logbook._keep_event(opp, event, entities_filter):
                 yield event
 
     start = timer()
@@ -302,7 +302,7 @@ async def _logbook_filtering.opp, last_changed, last_updated):
 
 
 @benchmark
-async def filtering_entity_id.opp):
+async def filtering_entity_id(opp):
     """Run a 100k state changes through entity filter."""
     config = {
         "include": {
@@ -367,7 +367,7 @@ async def filtering_entity_id.opp):
 
 
 @benchmark
-async def valid_entity_id.opp):
+async def valid_entity_id(opp):
     """Run valid entity ID a million times."""
     start = timer()
     for _ in range(10 ** 6):
@@ -376,7 +376,7 @@ async def valid_entity_id.opp):
 
 
 @benchmark
-async def json_serialize_states.opp):
+async def json_serialize_states(opp):
     """Serialize million states with websocket default encoder."""
     states = [
         core.State("light.kitchen", "on", {"friendly_name": "Kitchen Lights"})

@@ -46,7 +46,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Push Camera platform."""
     if PUSH_CAMERA_DATA not in.opp.data:
         opp.data[PUSH_CAMERA_DATA] = {}
@@ -67,7 +67,7 @@ async def async_setup_platform.opp, config, async_add_entities, discovery_info=N
     async_add_entities(cameras)
 
 
-async def handle_webhook.opp, webhook_id, request):
+async def handle_webhook(opp, webhook_id, request):
     """Handle incoming webhook POST with image files."""
     try:
         with async_timeout.timeout(5):

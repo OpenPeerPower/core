@@ -38,7 +38,7 @@ STATES = {
 }
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Egardia Alarm Control Panael platform."""
     if discovery_info is None:
         return

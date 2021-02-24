@@ -57,7 +57,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 ATTR_SECONDS = "seconds"
 
 
-async def async_setup_platform.opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Channels platform."""
     device = ChannelsPlayer(config[CONF_NAME], config[CONF_HOST], config[CONF_PORT])
     async_add_entities([device], True)

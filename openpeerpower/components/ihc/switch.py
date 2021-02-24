@@ -7,7 +7,7 @@ from .ihcdevice import IHCDevice
 from .util import async_pulse, async_set_bool
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the IHC switch platform."""
     if discovery_info is None:
         return

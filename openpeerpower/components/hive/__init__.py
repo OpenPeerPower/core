@@ -128,7 +128,7 @@ async def async_setup(opp, config):
         devicelist = devices.get(DEVICETYPES[op_type])
         if devicelist:
             opp.async_create_task(
-                async_load_platform.opp, op_type, DOMAIN, devicelist, config)
+                async_load_platform(opp, op_type, DOMAIN, devicelist, config)
             )
             if op_type == "climate":
                 opp.services.async_register(

@@ -18,7 +18,7 @@ from openpeerpower.util.color import (
 from . import DOMAIN, WinkDevice
 
 
-def setup_platform.opp, config, add_entities, discovery_info=None):
+def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink lights."""
 
     for light in pywink.get_light_bulbs():

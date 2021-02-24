@@ -158,7 +158,7 @@ class AxisNetworkDevice:
             async_dispatcher_send(self.opp, self.signal_new_event, event_id)
 
     @staticmethod
-    async def async_new_address_callback.opp, entry):
+    async def async_new_address_callback(opp, entry):
         """Handle signals of device getting new address.
 
         Called when config entry is updated.
@@ -167,7 +167,7 @@ class AxisNetworkDevice:
         """
         device = opp.data[AXIS_DOMAIN][entry.unique_id]
         device.api.config.host = device.host
-        async_dispatcher_send.opp, device.signal_new_address)
+        async_dispatcher_send(opp, device.signal_new_address)
 
     async def async_update_device_registry(self):
         """Update device registry."""
@@ -295,9 +295,9 @@ class AxisNetworkDevice:
         return True
 
 
-async def get_device.opp, host, port, username, password):
+async def get_device(opp, host, port, username, password):
     """Create a Axis device."""
-    session = get_async_client.opp, verify_ssl=False)
+    session = get_async_client(opp, verify_ssl=False)
 
     device = axis.AxisDevice(
         Configuration(session, host, port=port, username=username, password=password)

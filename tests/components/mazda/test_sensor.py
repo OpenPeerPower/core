@@ -15,9 +15,9 @@ from openpeerpower.util.unit_system import IMPERIAL_SYSTEM
 from tests.components.mazda import init_integration
 
 
-async def test_device_nickname.opp):
+async def test_device_nickname(opp):
     """Test creation of the device when vehicle has a nickname."""
-    await init_integration.opp, use_nickname=True)
+    await init_integration(opp, use_nickname=True)
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     reg_device = device_registry.async_get_device(
@@ -29,9 +29,9 @@ async def test_device_nickname.opp):
     assert reg_device.name == "My Mazda3"
 
 
-async def test_device_no_nickname.opp):
+async def test_device_no_nickname(opp):
     """Test creation of the device when vehicle has no nickname."""
-    await init_integration.opp, use_nickname=False)
+    await init_integration(opp, use_nickname=False)
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     reg_device = device_registry.async_get_device(
@@ -43,9 +43,9 @@ async def test_device_no_nickname.opp):
     assert reg_device.name == "2021 MAZDA3 2.5 S SE AWD"
 
 
-async def test_sensors.opp):
+async def test_sensors(opp):
     """Test creation of the sensors."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -141,11 +141,11 @@ async def test_sensors.opp):
     assert entry.unique_id == "JM000000000000000_rear_right_tire_pressure"
 
 
-async def test_sensors_imperial_units.opp):
+async def test_sensors_imperial_units(opp):
     """Test that the sensors work properly with imperial units."""
     opp.config.units = IMPERIAL_SYSTEM
 
-    await init_integration.opp)
+    await init_integration(opp)
 
     # Fuel Distance Remaining
     state = opp.states.get("sensor.my_mazda3_fuel_distance_remaining")
